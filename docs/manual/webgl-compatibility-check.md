@@ -312,7 +312,7 @@ app.contextHealth.onChange((snap) => {
 - `requestReload()` 有门掣：`healthy` 态调用返回 `false` 且不动作；仅 `failed` 态真正执行。
 - 测试注入：`createAirApp({ contextLoss: { reload: () => recordCall() } })` 可在不真实导航的前提下断言重载合同。
 - 人为复现：`WEBGL_lose_context` 扩展（`gl.getExtension('WEBGL_lose_context')` → `loseContext()` / `restoreContext()`）。
-- 回归锁定：`tools/verify/w01-context-loss.cjs`（双后端 × 全相位，证据 `docs/evidence/w01-context-loss.json`）。
+- 回归锁定：`tools/verify/context-loss.cjs`（双后端 × 全相位，证据 `docs/evidence/w01-context-loss.json`）。
 
 ## API 参考
 

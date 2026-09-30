@@ -162,7 +162,7 @@ webkit `Can't find variable: notDefinedAnywhere`——文案按引擎，条数�
 `smoke-30` 会核对 `contractFingerprint`、逐记录 `failedAssertions: []`、png 字节 sha 与全契约覆盖。
 
 规格侧的 r38 收尾链（顺序不可换，否则自伤 `S11-STALE-EVIDENCE`）：刷新正文计时数字 →
-`generate-manifest.cjs` → `tools/verify/v11-examples-verify.cjs --ids=webview-basic`（脚本在 `tools/verify/`，
+`generate-manifest.cjs` → `tools/verify/example-spec-browser.cjs --ids=webview-basic`（脚本在 `tools/verify/`，
 不在 `tools/examples/`）→ `spec-validate --strict` `55 frozen / 0 issues` → `spec-compliance-audit` `0 fail / 1 warn`
 ⇒ `promotion verified 29 / attested 7 / units 36`、`spec 529cf6946419`、`source 9d93e842f1716162`、
 `candidate 9fa85f88b968d5f1`；`docs/evidence/v11-examples-verified.json` 为 **50 记录 / 50 PASS**、

@@ -34,12 +34,12 @@ npm run verify:perf-lifecycle
 npm run verify:release
 ```
 
-这些命令需要对应浏览器环境及已构建产物。浏览器采集器会重新生成 JSON 和截图；子集结果不得用作全量验收。V1.1 示例、DevTools 和 Gallery 的采集器分别位于 `tools/verify/v11-examples-verify.cjs`、`tools/verify/v11-devtools-examples.cjs`、`tools/verify/v11-gallery-artifact.cjs`；按各脚本的参数说明执行完整采集，再生成 API 覆盖报告。
+这些命令需要对应浏览器环境及已构建产物。浏览器采集器会重新生成 JSON 和截图；子集结果不得用作全量验收。V1.1 示例、DevTools 和 Gallery 的采集器分别位于 `tools/verify/example-spec-browser.cjs`、`tools/verify/devtools-examples.cjs`、`tools/verify/gallery-artifact.cjs`；按各脚本的参数说明执行完整采集，再生成 API 覆盖报告。
 
 原有发布证据已经清理，当前应以实际门禁结果为准。`verify:release` 必须拒绝缺失、过时或不属于当前候选的证据；发布前还要求工作区干净。保留在 `docs/evidence/examples/`、`docs/evidence/manual/` 和 `docs/evidence/recipes/` 的截图本身不能替代汇总和指纹检查。
 
 ## 历史性能比较值
 
-`tools/verify/v051-runtime-baseline.cjs` 保留了 V0.5 的 BoxTextured 冷加载中位数 **4.1 ms**，作为该旧版对标脚本的固定比较值。这是旧环境测量值，不是当前设备的性能承诺。当前性能应重新采样，并记录浏览器、设备、模型、构建指纹、加载条件和测量方法。
+`tools/verify/runtime-baseline.cjs` 保留了 V0.5 的 BoxTextured 冷加载中位数 **4.1 ms**，作为该旧版对标脚本的固定比较值。这是旧环境测量值，不是当前设备的性能承诺。当前性能应重新采样，并记录浏览器、设备、模型、构建指纹、加载条件和测量方法。
 
-V0.6 汇总报告由 `tools/verify/v06-report.cjs` 在运行时生成；历史报告已删除，重新生成仍需要其 Golden Reference、Catalog 和 Recipe 输入。报告输出不是当前发布通过的替代证据。
+V0.6 汇总报告由 `tools/verify/recipe-review-gate.cjs` 在运行时生成；历史报告已删除，重新生成仍需要其 Golden Reference、Catalog 和 Recipe 输入。报告输出不是当前发布通过的替代证据。

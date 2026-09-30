@@ -124,7 +124,7 @@ describe('V0.6 §67-71 — 分发边界', () => {
     test('build/devtools 工件脚本存在（由 v06-fresh-consumer 产出）', () => {
         const devtools = path.join(REPO, 'build', 'devtools');
         // 工件由 Fresh Consumer Gate 生成；此处验证脚本在场
-        expect(fs.existsSync(path.join(REPO, 'tools', 'verify', 'v06-fresh-consumer.cjs'))).toBe(true);
+        expect(fs.existsSync(path.join(REPO, 'tools', 'verify', 'devtools-consumer.cjs'))).toBe(true);
         void devtools;
     });
 });

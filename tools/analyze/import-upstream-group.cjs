@@ -10,7 +10,7 @@
  * ④ 校验：逐文件 cmp 上游，报告 byte-identical / DIFF / MISSING
  *
  * 安全约束：只处理本次 --prefix/--exports 指定的 source，绝不遍历全量 manifest
- * （裸跑 tools/extract.cjs 会以上游原文覆盖 src/ 下全部条目，抹掉已登记的 Air 修改）。
+ * （裸跑 tools/analyze/extract-upstream.cjs 会以上游原文覆盖 src/ 下全部条目，抹掉已登记的 Air 修改）。
  */
 const fs = require('fs');
 const path = require('path');

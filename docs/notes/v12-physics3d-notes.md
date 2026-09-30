@@ -247,7 +247,7 @@ NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules \
 → `NODE_PATH=… node tools/examples/spec-expectations.cjs apply --ids=physics-3d-basic`
 （`graph=9 corroborated=8 gaps=1 unresolved=11 executed=35`、`authored transform-equals:9`、`gaps=0`）
 → 写 `specStatus:"frozen"` 后重复前三步
-→ `NODE_PATH=… node tools/verify/v11-examples-verify.cjs --ids=physics-3d-basic` ⇒ **PASS + promoted**，
+→ `NODE_PATH=… node tools/verify/example-spec-browser.cjs --ids=physics-3d-basic` ⇒ **PASS + promoted**，
 `promotion = { spec 938c8a329fed, source 8118a226cff6f5af, candidate 9fa85f88b968d5f1, verified 35, attested 34, units 69 }`
 → `node tools/examples/spec-validate.cjs --strict` ⇒ `56 examples: 56 frozen / 0 draft / 0 blocked`
 → `node tools/examples/spec-compliance-audit.cjs` ⇒ `56 examples: 0 fail / 1 warn`（warn 仍是 draco BLOCKED）
@@ -295,7 +295,7 @@ NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/
    因为头部注释把下方代码整体推下 6/9 行。`api.evidence` 是机器派生，重跑即自愈。
 3. **陷阱**：`validationExpectations.*.provenance[].line` 同样是行号，但它由
    `tools/examples/spec-expectations.cjs apply` 派生并写死在 `example.json` 里。我这次漏跑了这一步，
-   于是 `v11-examples-verify.cjs` 依然 **PASS + promoted**（它不看这些行），而
+   于是 `example-spec-browser.cjs` 依然 **PASS + promoted**（它不看这些行），而
    `spec-validate --strict` **EXIT=1**：`[physics-3d-basic] 出处指向注释行：main.js:L282`
    —— 插入的注释正好落在 Trimesh 的原出处行上。校验器实现在
    `tools/verify/expectation-checks.cjs:232-252`（`出处无法定位 / 出处行不存在 / 出处指向注释行 / 出处行号与引文不符`）。

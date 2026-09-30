@@ -1,135 +1,193 @@
-/* V1.1 F1 — Public API Inventory（tier 分类 + 仅 public + 含 constructor/property）。
- * 执行：node tools/examples/api-inventory.cjs
- * 产出：docs/example-api-inventory.json
- *
- * tier 分类规则：
- *   core     — Runtime / glTF / Camera / Input / Material 的导出类和顶层函数
- *   important — Animation / Skeleton / Tween / Primitive / Texture / Skeleton
- *   advanced  — 其余（Physics / Particle / Legacy / 内部模块等）
- */
-var fs = require('fs');
-var path = require('path');
-var REPO = path.resolve(__dirname, '..', '..');
-var DTS = path.join(REPO, 'build', 'cocosair.module.d.ts');
-var OUT = path.join(REPO, 'docs', 'example-api-inventory.json');
+/* Public API inventory from the bundled declaration AST. Use --out=PATH for a trial or --write for the canonical file. */
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+const ts = require('typescript');
 
-var CORE_NS = /^((utils|geometry|math|gfx)\.|(Scene|Node|MeshRenderer|Camera|DirectionalLight|Light|SpotLight|PointLight|SphereLight|AmbientLight|ModelRenderer|Layers|Color|Vec3|Mesh|Material|Texture2D|GLTFLoader|GLTFAsset|GLTFInstance|GLTFExtensionRegistry|input|Input|createAirApp|frameObject|createMesh|builtinResMgr|primitives|MeshUtils|BatchingUtility|director|game|isValid|instantiate))/;
-var IMPORTANT_NS = /((Animation|AnimationClip|SkeletalAnimation|Skeleton|SkinnedMeshRenderer|SkinnedMeshUnit|tween|TweenSystem|primitives|Texture2D|TextureCube|Material|EffectAsset|MeshUtils|Particle|Billboard|Line|Circle|Ellipse|Filled|Graphics|UIRenderer|widget|label|sprite))/i;
+const root = path.resolve(__dirname, '../..');
+const dts = path.join(root, 'build/cocosair.module.d.ts');
+const write = process.argv.includes('--write');
+const out = write
+    ? path.join(root, 'docs/example-api-inventory.json')
+    : process.argv.find((arg) => arg.startsWith('--out='))?.slice(6);
+if (!out) throw new Error('Use --out=PATH for a trial or --write for the canonical inventory');
+const source = fs.readFileSync(dts, 'utf8');
+const ast = ts.createSourceFile(dts, source, ts.ScriptTarget.Latest, true);
+if (ast.parseDiagnostics.length) throw new Error(`declaration parse errors: ${ast.parseDiagnostics.length}`);
 
-function classifyTier(fqName, kind) {
-  if (CORE_NS.test(fqName)) return 'core';
-  if (IMPORTANT_NS.test(fqName)) return 'important';
-  return 'advanced';
+const core =
+    /^(?:math\.|(?:Scene|Node|MeshRenderer|Camera|DirectionalLight|Light|SpotLight|PointLight|SphereLight|AmbientLight|ModelRenderer|Layers|Color|Vec3|Mesh|Material|Texture2D|GLTFLoader|GLTFAsset|GLTFInstance|GLTFExtensionRegistry|Input|createAirApp|frameObject|createMesh|builtinResMgr|primitives|MeshUtils|BatchingUtility|director|game|isValid|instantiate)(?:\.|$))/;
+const important =
+    /^(?:Animation|AnimationClip|SkeletalAnimation|Skeleton|SkinnedMeshRenderer|SkinnedMeshUnit|Tween|TweenSystem|tween|TextureCube|EffectAsset|Particle|Billboard|Line|Circle|Ellipse|Filled|Graphics|UIRenderer|Widget|Label|Sprite)(?:\.|$)/;
+const supporting =
+    /^(?:gfx|geometry|utils|renderer|rendering|pipeline|native|js|physics|dragonBones|sp\.spine)(?:\.|$)/;
+const requiredAdvancedFeature =
+    /^(?:dragonBones\.(?:DragonBonesAsset|DragonBonesAtlasAsset|ArmatureDisplay|CCFactory|AnimationCacheMode)|geometry\.(?:Ray|AABB|intersect)|renderer\.scene\.Camera|(?:createMeshoptDecoder|isMeshoptAvailable|createDracoDecoder|createKTX2Transcoder|isKTX2Available|meshQuantizationFactory|KHR_MESH_QUANTIZATION|meshoptCompressionFactory|KHR_MESHOPT_COMPRESSION|EXT_MESHOPT_COMPRESSION|dracoCompressionFactory|KHR_DRACO_MESH_COMPRESSION|AirTransmissionCapture|isTransmissionMaterial|TRANSMISSION_LAYER|defaultTransmissionVisibility))(?:\.|$)/;
+const documentedOnly = {
+    'dragonBones.CCFactory.constructor':
+        'CCFactory is a process-wide singleton. Its constructor subscribes to game restart and registers the global DragonBones update schedule; direct extra construction can duplicate global ownership. Use the verified getInstance() entry point.',
+    'dragonBones.CCFactory.onRestart':
+        'Engine restart callback only. Direct invocation clears the singleton while live armatures may still reference the current factory; restart ownership remains with the engine event.',
+    'dragonBones.ArmatureDisplay.destroyRenderData':
+        'Tagged engine-internal render lifecycle hook. Clearing draw data outside component/render ownership can invalidate submitted UI geometry; the live draw list and component render path are verified.',
+    'dragonBones.ArmatureDisplay.onDestroy':
+        'Component lifecycle callback paired with base cleanup. Node.destroy owns this path; direct invocation on a live node bypasses component teardown ordering.',
+    KHR_MESH_QUANTIZATION:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable decoder example checks its runtime value; keep it documented-only until primitive-export read tracing is supported.',
+    KHR_MESHOPT_COMPRESSION:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable decoder example checks its runtime value; keep it documented-only until primitive-export read tracing is supported.',
+    EXT_MESHOPT_COMPRESSION:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable decoder example checks its runtime value; keep it documented-only until primitive-export read tracing is supported.',
+    KHR_DRACO_MESH_COMPRESSION:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable decoder example checks its runtime value; keep it documented-only until primitive-export read tracing is supported.',
+    TRANSMISSION_LAYER:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable viewer checks its layer bit against the capture visibility; keep it documented-only until primitive-export read tracing is supported.',
+    defaultTransmissionVisibility:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable viewer checks it against the capture layer; keep it documented-only until primitive-export read tracing is supported.',
+    'AirTransmissionCapture.onDestroy':
+        'Engine-managed destruction owns the capture camera, render texture, and restoration order. Direct invocation bypasses that ownership contract; actual component creation, enable/disable, and lateUpdate behavior are verified.',
+};
+const units = {};
+const aliases = [];
+const has = (node, kind) => !!node.modifiers?.some((modifier) => modifier.kind === kind);
+const tags = (node) => new Set(ts.getJSDocTags(node).map((tag) => tag.tagName.text));
+const nameOf = (node) =>
+    node?.name && (ts.isIdentifier(node.name) || ts.isStringLiteral(node.name)) ? node.name.text : null;
+const privateName = (name) => name.split('.').some((part) => part.startsWith('_'));
+const tierOf = (name, node) => {
+    const nodeTags = tags(node);
+    if (privateName(name) || nodeTags.has('internal')) return 'internal';
+    if (nodeTags.has('deprecated')) return 'supporting';
+    if (requiredAdvancedFeature.test(name)) return 'advanced';
+    if (supporting.test(name)) return 'supporting';
+    if (core.test(name)) return 'core';
+    if (important.test(name)) return 'important';
+    // Release tiers are opt-in by declared user-facing scope. Unknown exports remain
+    // visible as Supporting until an explicit API policy promotes them; treating every
+    // unmatched engine declaration as Advanced made implementation/vendor surfaces a
+    // release obligation without any feature-scope decision.
+    return 'supporting';
+};
+const add = (name, kind, node, parent, parentTier) => {
+    if (units[name]) return;
+    const tier =
+        parentTier && !privateName(name) && !tags(node).has('internal') && !tags(node).has('deprecated')
+            ? parentTier
+            : tierOf(name, node);
+    units[name] = { kind, tier, coverageRequired: !['supporting', 'internal'].includes(tier), parent: parent || null };
+    if (documentedOnly[name]) {
+        units[name].coverageStatus = 'documented-only';
+        units[name].coverageReason = documentedOnly[name];
+    }
+};
+
+function visit(statements, prefix = '') {
+    for (const node of statements) {
+        if (!has(node, ts.SyntaxKind.ExportKeyword)) continue;
+        if (ts.isModuleDeclaration(node) && node.body && ts.isModuleBlock(node.body)) {
+            visit(node.body.statements, `${prefix}${node.name.text}.`);
+            continue;
+        }
+        const bare = nameOf(node);
+        if (ts.isClassDeclaration(node) && bare) {
+            const fq = prefix + bare;
+            add(fq, 'class', node);
+            const parentTier = units[fq].tier;
+            for (const member of node.members) {
+                if (has(member, ts.SyntaxKind.PrivateKeyword) || has(member, ts.SyntaxKind.ProtectedKeyword)) continue;
+                if (ts.isConstructorDeclaration(member)) {
+                    add(`${fq}.constructor`, 'constructor', member, fq, parentTier);
+                    continue;
+                }
+                const memberName = nameOf(member);
+                if (!memberName) continue;
+                const kind = ts.isMethodDeclaration(member)
+                    ? has(member, ts.SyntaxKind.StaticKeyword)
+                        ? 'static'
+                        : 'method'
+                    : ts.isGetAccessorDeclaration(member) ||
+                        ts.isSetAccessorDeclaration(member) ||
+                        ts.isPropertyDeclaration(member)
+                      ? 'property'
+                      : null;
+                if (kind) {
+                    const memberFq = `${fq}.${memberName}`;
+                    const prior = units[memberFq];
+                    if (
+                        prior &&
+                        ((prior.kind === 'static' && kind === 'method') ||
+                            (prior.kind === 'method' && kind === 'static'))
+                    ) {
+                        // A static and an instance method with the same name
+                        // are separate public API units, not overloads.
+                        if (kind === 'method') {
+                            add(`${fq}.prototype.${memberName}`, kind, member, fq, parentTier);
+                        } else {
+                            units[`${fq}.prototype.${memberName}`] = prior;
+                            delete units[memberFq];
+                            add(memberFq, kind, member, fq, parentTier);
+                        }
+                    } else {
+                        add(memberFq, kind, member, fq, parentTier);
+                    }
+                }
+            }
+        } else if (ts.isFunctionDeclaration(node) && bare) {
+            add(prefix + bare, 'function', node);
+        } else if (ts.isVariableStatement(node)) {
+            for (const declaration of node.declarationList.declarations) {
+                const variableName = nameOf(declaration);
+                if (variableName) add(prefix + variableName, 'constant', node);
+            }
+        } else if (ts.isEnumDeclaration(node) && bare) {
+            add(prefix + bare, 'enum', node);
+        } else if (ts.isImportEqualsDeclaration(node) && bare) {
+            aliases.push({ alias: prefix + bare, target: node.moduleReference.getText(ast), node });
+        }
+    }
 }
 
-(function main() {
-  if (!fs.existsSync(DTS)) {
-    console.error('[api-inventory] .d.ts not found. Run `npm run build:dts` first.');
-    process.exit(1);
-  }
-  var source = fs.readFileSync(DTS, 'utf8');
-  var lines = source.split('\n');
-  var nsStack = [];
-  var classStack = [];
-  var units = {};
-  var order = [];
-
-  function addUnit(fqName, kind, tier, parent) {
-    if (units[fqName]) return;
-    units[fqName] = { kind: kind, tier: tier, coverageRequired: tier !== 'advanced', parent: parent || null };
-    order.push(fqName);
-  }
-
-  for (var i = 0; i < lines.length; i++) {
-    var line = lines[i];
-    var trimmed = line.trim();
-    var nsPath = nsStack.join('.');
-    var fqPrefix = nsPath ? nsPath + '.' : '';
-
-    // Namespace open
-    var ns = trimmed.match(/^export (?:declare )?namespace (\w+)/);
-    if (ns) { nsStack.push(ns[1]); continue; }
-
-    // Class open
-    var cls = trimmed.match(/^export (?:declare )?class (\w+)/);
-    if (cls) {
-      var clsFq = fqPrefix + cls[1];
-      classStack.push(clsFq);
-      var tier = classifyTier(clsFq, 'class');
-      addUnit(clsFq, 'class', tier);
-      // Constructor as coverage unit
-      addUnit(clsFq + '.constructor', 'constructor', tier, clsFq);
-      continue;
+visit(ast.statements);
+for (const { alias, target, node } of aliases) {
+    const original = units[target];
+    if (!original) continue;
+    add(alias, original.kind, node);
+    for (const [name, member] of Object.entries(units)) {
+        if (!name.startsWith(`${target}.`)) continue;
+        const aliasedName = alias + name.slice(target.length);
+        if (units[aliasedName]) continue;
+        units[aliasedName] = {
+            ...member,
+            tier: 'supporting',
+            coverageRequired: false,
+            parent: alias,
+            aliasOf: name,
+        };
     }
-
-    // Close brace: pop class or namespace
-    if (trimmed === '}') {
-      if (classStack.length) { classStack.pop(); continue; }
-      if (nsStack.length) { nsStack.pop(); continue; }
-      continue;
-    }
-
-    // Skip private/protected
-    if (/^\s*(private|protected)\s/.test(line)) continue;
-
-    // Inside class: methods, properties
-    if (classStack.length) {
-      var curFq = classStack[classStack.length - 1];
-      var curTier = units[curFq] ? units[curFq].tier : 'advanced';
-      // Method
-      var mm = trimmed.match(/^(?:(?:public|static|override|async|abstract)\s+)*(\w+)\s*\(/);
-      if (mm && mm[1] !== 'constructor' && !trimmed.startsWith('*') && !trimmed.startsWith('/') && !trimmed.startsWith('#')) {
-        var mFq = curFq + '.' + mm[1];
-        var mKind = /\bstatic\b/.test(trimmed) ? 'static' : 'method';
-        addUnit(mFq, mKind, curTier, curFq);
-        continue;
-      }
-      // Constructor
-      if (/constructor\s*\(/.test(trimmed)) {
-        addUnit(curFq + '.constructor', 'constructor', curTier, curFq);
-        continue;
-      }
-      // Property (public or readonly, no parens)
-      var pm = trimmed.match(/^(?:(?:public|readonly|get\s|set\s)\s+)?(\w+)\s*[:;]/);
-      if (pm && !trimmed.includes('(') && !trimmed.startsWith('*') && !trimmed.startsWith('/') &&
-          !trimmed.startsWith('import') && !trimmed.startsWith('export') &&
-          pm[1] !== 'if' && pm[1] !== 'for' && pm[1] !== 'while' && pm[1] !== 'return') {
-        var pFq = curFq + '.' + pm[1];
-        addUnit(pFq, 'property', curTier, curFq);
-        continue;
-      }
-      continue;
-    }
-
-    // Top-level / namespace-level: functions and constants
-    var fn = trimmed.match(/^export (?:declare )?function (\w+)/);
-    if (fn) {
-      var fnFq = fqPrefix + fn[1];
-      addUnit(fnFq, 'function', classifyTier(fnFq, 'function'));
-      continue;
-    }
-    var cst = trimmed.match(/^export (?:declare )?const (\w+)\s*[:=]/);
-    if (cst) {
-      var cstFq = fqPrefix + cst[1];
-      addUnit(cstFq, 'constant', classifyTier(cstFq, 'constant'));
-      continue;
-    }
-  }
-
-  // Build output
-  var tierCounts = { core: 0, important: 0, advanced: 0 };
-  var output = { generatedAt: new Date().toISOString(), source: 'build/cocosair.module.d.ts', units: {}, tierSummary: {} };
-  for (var j = 0; j < order.length; j++) {
-    var fq = order[j];
-    output.units[fq] = units[fq];
-    tierCounts[units[fq].tier] = (tierCounts[units[fq].tier] || 0) + 1;
-  }
-  output.tierSummary = tierCounts;
-  output.totalUnits = order.length;
-  output.coverageRequiredUnits = order.filter(function(fq) { return units[fq].coverageRequired; }).length;
-
-  fs.writeFileSync(OUT, JSON.stringify(output, null, 2) + '\n');
-  console.log('[api-inventory] total=' + order.length +
-    ' core=' + tierCounts.core + ' important=' + tierCounts.important + ' advanced=' + tierCounts.advanced +
-    ' coverageRequired=' + output.coverageRequiredUnits);
-})();
+}
+const summary = { core: 0, important: 0, advanced: 0, supporting: 0, internal: 0 };
+for (const unit of Object.values(units)) summary[unit.tier]++;
+const result = {
+    source: 'build/cocosair.module.d.ts',
+    sourceFingerprint: crypto.createHash('sha256').update(source).digest('hex').slice(0, 16),
+    apiInventoryRevision: crypto.createHash('sha256').update(JSON.stringify(units)).digest('hex').slice(0, 16),
+    units,
+    tierSummary: summary,
+    totalUnits: Object.keys(units).length,
+    coverageRequiredUnits: Object.values(units).filter((unit) => unit.coverageRequired).length,
+};
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'examples/files.json'), 'utf8'));
+const claims = new Set(manifest.examples.flatMap((example) => example.api?.claims || []));
+const unmatchedClaims = [...claims].filter((name) => !units[name]);
+const unknownRuntimeClaims = unmatchedClaims.filter((name) => !name.startsWith('DevToolsSession.'));
+if (unknownRuntimeClaims.length)
+    throw new Error(`Manifest claims absent from public inventory: ${unknownRuntimeClaims.join(', ')}`);
+fs.writeFileSync(out, JSON.stringify(result, null, 2) + '\n');
+console.log(
+    `[api-inventory] ${Object.entries(summary)
+        .map(([tier, count]) => `${tier}=${count}`)
+        .join(' ')} required=${result.coverageRequiredUnits}`,
+);
+console.log(
+    `[api-inventory] ${unmatchedClaims.length}/${claims.size} external DevTools claims excluded from runtime inventory → ${out}`,
+);

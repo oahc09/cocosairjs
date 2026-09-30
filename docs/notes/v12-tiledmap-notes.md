@@ -80,7 +80,7 @@ P8 读数（`…-r4.json` → `records[0].probe.results.p8TileAnimation`）：`a
 ```
 node tools/examples/spec-evidence.cjs --check   → 1004 entries checked: 0 drifted, 0 detached-validator, 0 errors
 node tools/examples/spec-validate.cjs --strict  → 52 examples: 52 frozen / 0 draft / 0 blocked（exit 0）
-NODE_PATH=… node tools/verify/v11-examples-verify.cjs --ids=tiledmap-basic → PASS，1 promoted
+NODE_PATH=… node tools/verify/example-spec-browser.cjs --ids=tiledmap-basic → PASS，1 promoted
 ```
 
 三引擎矩阵（含本示例）：见 §6。

@@ -40,7 +40,7 @@ function addLabel(node, text, fontSize, color) {
 
 ### 溢出模式语义矩阵（W07 实测，2026-09-28）
 
-验证器 `tools/verify/w07-label-semantics.cjs`（几何断言读 `UITransform.getContentSize()`、
+验证器 `tools/verify/label-semantics.cjs`（几何断言读 `UITransform.getContentSize()`、
 像素断言做墨迹统计；证据 `docs/evidence/w07-label-semantics.json`）。测试载荷：固定盒
 300×40、fontSize 40、长句 "A rather long single-line sentence..."：
 

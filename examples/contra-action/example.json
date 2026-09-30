@@ -21,16 +21,8 @@
     "visual": "深色星空背景横向卷屏；绿色草皮+棕色土方地形（含两处深坑与两座台地）；蓝色小人主角（跑步摆腿两帧、枪管指向、受伤闪烁）；红色巡逻兵与紫色炮塔；黄色玩家弹/橙色敌弹；x=56 处白杆黄旗终点；画布内 HUD 显示 hp 心/kills/坐标，左上角 DOM 面板显示全量计数"
   },
   "api": {
-    "primary": [
-      "Texture2D.reset",
-      "Component",
-      "AudioSource.play"
-    ],
-    "supporting": [
-      "input",
-      "assetManager",
-      "isValid"
-    ],
+    "primary": ["Texture2D.reset", "Component", "AudioSource.play"],
+    "supporting": ["input", "assetManager", "isValid"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -238,21 +230,11 @@
       }
     ]
   },
-  "capabilities": [
-    "game",
-    "audio"
-  ],
-  "assets": [
-    "assets/tone.wav"
-  ],
+  "capabilities": ["game", "audio"],
+  "assets": ["assets/tone.wav"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Board",
-        "Driver",
-        "Audio"
-      ]
+      "nodes": ["Main Camera", "Board", "Driver", "Audio"]
     }
   },
   "interaction": {
@@ -264,28 +246,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "material-property",
-      "asset-loaded",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "material-property", "asset-loaded", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -299,11 +266,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          0,
-          6
-        ],
+        "position": [0, 0, 6],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -313,16 +276,8 @@
         ]
       },
       "Board": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          90,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [90, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -337,11 +292,7 @@
         ]
       },
       "Driver": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -351,11 +302,7 @@
         ]
       },
       "Audio": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -370,12 +317,7 @@
         "effect": "builtin-unlit",
         "props": {
           "mainColor": {
-            "value": [
-              255,
-              255,
-              255,
-              255
-            ],
+            "value": [255, 255, 255, 255],
             "encoding": "0-255",
             "tolerance": 0.01,
             "provenance": {

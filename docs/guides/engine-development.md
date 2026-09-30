@@ -49,7 +49,7 @@ V0.3 前置审查补充 `tools/build/incremental.cjs`，为 ccbuild 原有 Rollu
 ## 示例验证
 
 ```bash
-NODE_PATH=<playwright 所在目录> node tools/verify/v02-examples.cjs
+NODE_PATH=<playwright 所在目录> node tools/verify/basic-examples-browser.cjs
 # starter / hello-cube / static-model / skinned-animation → ALL-EXAMPLES-PASS
 ```
 

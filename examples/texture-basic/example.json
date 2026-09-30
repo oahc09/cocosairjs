@@ -19,10 +19,7 @@
     "visual": "立方体六个面呈现灰白棋盘格纹理，随自转可确认纹理 UV 正确包裹（非纯色、非渐变）"
   },
   "api": {
-    "primary": [
-      "Texture2D",
-      "ImageAsset"
-    ],
+    "primary": ["Texture2D", "ImageAsset"],
     "supporting": [
       "Material.initialize",
       "Material.setProperty",
@@ -84,10 +81,7 @@
       "TextureCube.initDefault",
       "TextureCube.validate"
     ],
-    "forbiddenShortcut": [
-      "从外网 URL 拉图（示例必须离线可跑）",
-      "用纯色 mainColor 冒充贴图效果"
-    ],
+    "forbiddenShortcut": ["从外网 URL 拉图（示例必须离线可跑）", "用纯色 mainColor 冒充贴图效果"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -331,41 +325,24 @@
       }
     ]
   },
-  "capabilities": [
-    "materials"
-  ],
+  "capabilities": ["materials"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "TexturedCube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "TexturedCube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "material-property",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "material-property", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -379,11 +356,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          2.4,
-          6.5
-        ],
+        "position": [0, 2.4, 6.5],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -393,11 +366,7 @@
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -410,18 +379,10 @@
             "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "TexturedCube": {
-        "position": [
-          0,
-          0.5,
-          0
-        ],
+        "position": [0, 0.5, 0],
         "provenance": [
           {
             "source": "src/main.ts",

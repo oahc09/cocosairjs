@@ -103,7 +103,7 @@ node tools/verify/serve-static.cjs $site 7464
 
 ```bash
 npx --yes --package @playwright/cli playwright-cli -s=v03 open http://127.0.0.1:7464/nested/demo/normal/starter/ --browser chrome
-npx --yes --package @playwright/cli playwright-cli -s=v03 run-code --filename=tools/verify/v03-browser.js
+npx --yes --package @playwright/cli playwright-cli -s=v03 run-code --filename=tools/verify/bundle-variants-callback.js
 ```
 
 脚本遇到验证错误会抛出并使 CLI 非零退出，不能只看工具调用完成。结果包含 `ok`、每个示例的资源数/前景像素、材质变化像素、动画变化和生命周期计数；截图放入 output/playwright。临时目录可用于本地演示，不自动发布远端。

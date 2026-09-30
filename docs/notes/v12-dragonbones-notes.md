@@ -108,12 +108,12 @@ node tools/examples/spec-expectations.cjs apply --ids=dragonbones-basic   # 写 
 node E:/AIProMax/cocosair-scratch/db-probe/apply-evidence-one.cjs          # 单示例版 spec-evidence（全量工具无 --ids，避免在共用工作树重写 57 份）
 node tools/examples/spec-evidence.cjs --check                              → 1220 evidence entries checked: 0 drifted / 0 detached-validator / 0 errors（exit 0，r2 现读 `db-probe/spec-evidence-check-r2.txt`）
 node tools/examples/spec-validate.cjs --strict                            → 57 examples: 57 frozen / 0 draft / 0 blocked（docs/evidence/v11-spec-validate.json，issues:[]）
-NODE_PATH=… node tools/verify/v11-examples-verify.cjs --ids=dragonbones-basic → PASS + promoted，46 units = 15 verified + 31 attested + 0 unproven
+NODE_PATH=… node tools/verify/example-spec-browser.cjs --ids=dragonbones-basic → PASS + promoted，46 units = 15 verified + 31 attested + 0 unproven
 node tools/examples/generate-manifest.cjs                                 → examples/files.json 该行为 stable / specStatus frozen
 node tools/examples/spec-compliance-audit.cjs                              → S11-STALE-EVIDENCE 必须 0 fail（见下）
 ```
 
-- **`verified` 只到 15/46 是 tracer 机制边界，不是证据缺口**：`tools/verify/api-trace.cjs` 只包装 bundle 顶层导出表与 `Class.prototype`；只在 `dragonBones` 命名空间下可达的类（`ArmatureDisplay / CCFactory / Armature / Animation / ArmatureData / DragonBonesData …`）实测报 `no own descriptor on prototype` ⇒ state `unresolved` ⇒ 按 `tools/verify/v11-spec-common.cjs:87-135` 的公式至多 `attested`。仓库内**没有**任何 PASS 示例的 `unproven>0`，本例保持 0。
+- **`verified` 只到 15/46 是 tracer 机制边界，不是证据缺口**：`tools/verify/api-trace.cjs` 只包装 bundle 顶层导出表与 `Class.prototype`；只在 `dragonBones` 命名空间下可达的类（`ArmatureDisplay / CCFactory / Armature / Animation / ArmatureData / DragonBonesData …`）实测报 `no own descriptor on prototype` ⇒ state `unresolved` ⇒ 按 `tools/verify/example-spec-common.cjs:87-135` 的公式至多 `attested`。仓库内**没有**任何 PASS 示例的 `unproven>0`，本例保持 0。
 - **规格链顺序是承重的**：`main.js` 行号一动，`api.evidence[].sourceLocation` 与 `validationExpectations[].provenance` 同时漂移。跳过刷新步的实测后果：`spec-expectations` 报 `出处行号与引文不符：main.js 引文实际在 L216，出处写 L210`；`v11-examples-verify` 报 23 个 `unproven`（`L509 未出现 playAnimation（行内容漂移）`）且 `0 promoted`。⇒ 改完 `main.js` 必须按上面顺序重跑，`example.json` 的任何编辑必须**早于**最后一次 `v11-examples-verify`。
 - **S11-STALE-EVIDENCE 有牙**：本次在 `example.json` 追加 learning 条目后，`docs/evidence/v11-spec-compliance.json` 立刻给出 `fail：证据 specFingerprint 66029ac700c7 ≠ 当前 example.json b2dffc7d449c`（陈旧证据冒充当期通过）。处置不是改阈值，而是用当期 spec 重跑 `v11-examples-verify` 再复审（§6 记录复跑结果）。
 
@@ -163,7 +163,7 @@ npm run build:min → EXIT 0
 
 ```
 node tools/examples/spec-evidence.cjs --check → 1220 entries checked: 0 drifted / 0 detached-validator / 0 errors
-NODE_PATH=… node tools/verify/v11-examples-verify.cjs --ids=dragonbones-basic → PASS dragonbones-basic，1/1 PASS，1 promoted / 0 demoted
+NODE_PATH=… node tools/verify/example-spec-browser.cjs --ids=dragonbones-basic → PASS dragonbones-basic，1/1 PASS，1 promoted / 0 demoted
 node tools/examples/spec-validate.cjs --strict → 57 examples: 57 frozen / 0 draft / 0 blocked
 node tools/examples/spec-compliance-audit.cjs  → 57 examples: 0 fail / 1 warn（唯一 warn 是既有 gltf-draco §25）
 node tools/examples/generate-manifest.cjs      → 57 examples, 23 categories
@@ -176,7 +176,7 @@ node tools/examples/generate-manifest.cjs      → 57 examples, 23 categories
 （52 条记录本身仍全 PASS、`unproven 0`）⇒ 批次口径失真。收尾命令与现读：
 
 ```
-NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/v11-examples-verify.cjs
+NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/example-spec-browser.cjs
 → 末行 "== Examples spec-driven verify: 52/52 PASS, 0 promoted / 0 demoted =="（日志 db-probe/v11-full-r41.log）
 node db-probe/read-v11-full.cjs → {completed:true, partial:false, total/pass/runTotal/runPass:52, fail:0,
                                    apiProofTotals {verified:1004, attested:129, unproven:0},

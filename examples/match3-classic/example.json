@@ -20,15 +20,8 @@
     "visual": "深色背景上 8×8 彩色宝石棋盘（六色、canvas 动态纹理单 quad）；消除白闪、落下补牌逐波播放；选中格白色呼吸高亮（空闲期持续 frame-diff）；左上角 DOM 面板显示 state/score/moves/chain/locks/rollbacks"
   },
   "api": {
-    "primary": [
-      "Texture2D.reset",
-      "Material.setProperty",
-      "Component"
-    ],
-    "supporting": [
-      "input",
-      "utils.createMesh"
-    ],
+    "primary": ["Texture2D.reset", "Material.setProperty", "Component"],
+    "supporting": ["input", "utils.createMesh"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -194,17 +187,11 @@
       }
     ]
   },
-  "capabilities": [
-    "game"
-  ],
+  "capabilities": ["game"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Board",
-        "Driver"
-      ]
+      "nodes": ["Main Camera", "Board", "Driver"]
     }
   },
   "interaction": {
@@ -216,27 +203,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "material-property",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "material-property", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -250,11 +223,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          0,
-          6
-        ],
+        "position": [0, 0, 6],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -264,16 +233,8 @@
         ]
       },
       "Board": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          90,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [90, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -288,11 +249,7 @@
         ]
       },
       "Driver": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -307,12 +264,7 @@
         "effect": "builtin-unlit",
         "props": {
           "mainColor": {
-            "value": [
-              255,
-              255,
-              255,
-              255
-            ],
+            "value": [255, 255, 255, 255],
             "encoding": "0-255",
             "tolerance": 0.01,
             "provenance": {

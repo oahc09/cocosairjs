@@ -26,7 +26,7 @@ const CONTRACT = CONTRACT_ARG ? path.resolve(REPO, CONTRACT_ARG.slice(11)) : pat
 const OUT_DIR = path.join(REPO, 'docs', 'evidence', 'v12');
 const OUT_ARG = process.argv.find((a) => a.startsWith('--out='));
 const OUT = OUT_ARG ? path.resolve(REPO, OUT_ARG.slice(6)) : path.join(OUT_DIR, 'browser-matrix.json');
-const specCommon = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
+const specCommon = require(path.join(REPO, 'tools', 'verify', 'example-spec-common.cjs'));
 
 // 三引擎二进制：Playwright 包版本与 ms-playwright 缓存构建号不一致，必须显式指路
 const ENGINES = {

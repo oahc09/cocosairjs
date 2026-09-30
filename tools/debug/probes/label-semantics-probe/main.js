@@ -11,7 +11,7 @@
  *   P1 左对齐带：左半屏墨迹 > 右半屏；P2 右对齐带：右 > 左；
  *   P3 字影开关：同位同文，enableShadow 前后帧哈希不同（现有字影能力实证）。
  *
- * 运行：NODE_PATH=<playwright> node tools/verify/w07-label-semantics.cjs
+ * 运行：NODE_PATH=<playwright> node tools/verify/label-semantics.cjs
  * 证据：docs/evidence/w07-label-semantics.json
  */
 import {

@@ -1,6 +1,6 @@
 # API 场景覆盖差距矩阵（G0 交付件）
 
-> 立项计划书：`ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例任务计划书.md`。
+> 立项计划书：`ai/plans/api-scenarios-shaders.md`。
 > 本文件是 **G0 基线与覆盖诊断交付件**：基线记录、未 verified 的 `coverageRequired` 单元差距形状、
 > Top 20 组合路径（含实施去向）、重复/断链盘点与过期证据隔离。
 > 口径与 `docs/api-coverage-report.json` 的语义块一致：claimed ≠ attested ≠ verified，分母 = inventory 中
@@ -49,7 +49,7 @@ example 侧签名与当期 d.ts 不符——属于并行线的修复范围，本
   1 个诊断探针被清除（docs/、tools/ 新增文件幸存）。判定为并行线全量验证前的工作区复位动作。
 - **处置**：G1 全部在制品迁移至隔离工作区 g1-staging（含 shared 副本；导入路径保持正典形态
   `../../shared/`。该工作区已于 2026-09-26 整目录清退：示例正典在 examples/，探针迁 `tools/debug/probes/`，
-  见 v12-owner-decisions §10）。试验运行器 `tools/verify/g1-trial-run.cjs`
+  见 v12-owner-decisions §10）。试验运行器 `tools/verify/trial-probes.cjs`
   支持 `--root=`；正典集成（files.json 再生成、v11 全链证据、coverage 回填、smoke 计数、specStatus
   冻结）统一推迟到并行线落定后执行，避免共享正典文件并发写。
 - 并行线新目录与 Top 20 的 P02/P03/P17（Node/Camera/math）高度重叠——本计划线不触碰其文件；
@@ -402,7 +402,7 @@ example 侧签名与当期 d.ts 不符——属于并行线的修复范围，本
   mainLit\* 同属 CCCamera UBO 且 ambient 生效 → 缺口在 UBOCamera MAIN_LIT_* 字段写入-上传一致性，
   或 builtin-standard glsl1/3 降写变体对 cc_mainLitDir/cc_mainLitColor 的消费路径；与 register.ts 注记的
   「fixture UBO 含引擎 4.0 已移除成员」布局漂移同族嫌疑。
-- **复现**：`tools/debug/probes/tmp-light-probe/`（13 相位像素采样全记录）。
+- **复现**：`tools/debug/probes/light-contribution-probe/`（13 相位像素采样全记录）。
 - **证据**：`docs/evidence/g1-light-contribution-gap.json`。
 - **修复依赖**：src/cocos/rendering/pipeline-ubo.ts（UBOCameraEnum 偏移 vs 实际块布局）、
   src/air/builtin/register.ts 降写产物、webgl-descriptor-set 逐名 uniform 绑定路径。

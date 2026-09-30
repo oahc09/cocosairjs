@@ -10,7 +10,7 @@
  *                  往返 ≈ 子节点 localPosition（ε=1e-3）——设计/世界→局部必须经世界矩阵；
  *   E_trap       — 「朴素对画面中心相减」的伪局部坐标与真值偏差显著（反例留证）。
  *
- * 运行：NODE_PATH=<playwright> node tools/verify/w05-coordinate-spaces.cjs
+ * 运行：NODE_PATH=<playwright> node tools/verify/coordinate-spaces.cjs
  * 证据：docs/evidence/w05-coordinate-spaces.json
  */
 import {

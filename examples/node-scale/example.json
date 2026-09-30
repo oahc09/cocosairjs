@@ -19,13 +19,8 @@
     "visual": "左侧绿色基准立方体，右侧蓝色被 X 拉伸一倍的父块，其上浮动橙色小块；父块缓慢旋转带动子块"
   },
   "api": {
-    "primary": [
-      "Node.setScale"
-    ],
-    "supporting": [
-      "Node.addChild",
-      "primitives.box"
-    ],
+    "primary": ["Node.setScale"],
+    "supporting": ["Node.addChild", "primitives.box"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -47,9 +42,7 @@
       "Node.setScale",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "用加大尺寸的 primitives 参数冒充节点缩放"
-    ],
+    "forbiddenShortcut": ["用加大尺寸的 primitives 参数冒充节点缩放"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -167,40 +160,23 @@
       }
     ]
   },
-  "capabilities": [
-    "basics"
-  ],
+  "capabilities": ["basics"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Base",
-        "ScaledParent",
-        "ScaledChild"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Base", "ScaledParent", "ScaledChild"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error",
-      "material-property"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -215,11 +191,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -227,18 +199,10 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "Base": {
-        "position": [
-          -2,
-          0.5,
-          0
-        ],
+        "position": [-2, 0.5, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -248,11 +212,7 @@
         ]
       },
       "ScaledParent": {
-        "position": [
-          2,
-          0.5,
-          0
-        ],
+        "position": [2, 0.5, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -273,18 +233,10 @@
         "rotationEuler": {
           "vary": true
         },
-        "scale": [
-          2,
-          1,
-          1
-        ]
+        "scale": [2, 1, 1]
       },
       "ScaledChild": {
-        "position": [
-          0,
-          1,
-          0
-        ],
+        "position": [0, 1, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -297,11 +249,7 @@
             "text": "child.setScale(new Vec3(0.5, 0.5, 0.5));"
           }
         ],
-        "scale": [
-          0.5,
-          0.5,
-          0.5
-        ]
+        "scale": [0.5, 0.5, 0.5]
       }
     },
     "material-property": {
@@ -309,12 +257,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              95,
-              205,
-              120,
-              255
-            ],
+            "value": [95, 205, 120, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -329,12 +272,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              65,
-              155,
-              235,
-              255
-            ],
+            "value": [65, 155, 235, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -349,12 +287,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              235,
-              125,
-              65,
-              255
-            ],
+            "value": [235, 125, 65, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {

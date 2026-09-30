@@ -9,7 +9,7 @@
  *                     默认材质在 POST_PROJECT_INIT 消费前就位、PhysicsSystem 就绪。
  *
  * 记录：初始化阶段时间线、默认材质存在性、errorID(9642) 是否出现、退出清理（game.pause 静默）。
- * 运行：NODE_PATH=<playwright> node tools/verify/w02-coldstart.cjs
+ * 运行：NODE_PATH=<playwright> node tools/verify/coldstart.cjs
  * 证据：docs/evidence/w02-coldstart.json
  */
 import {

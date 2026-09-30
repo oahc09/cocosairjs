@@ -1,6 +1,6 @@
 # Cocos Creator 4.0 指南对照 · AIR 覆盖矩阵（G0 台账）
 
-> 立项计划书：`ai/Cocos Air — 对照 Cocos Creator 4.0 开发指南的手册与示例补缺任务计划书.md`。
+> 立项计划书：`ai/plans/manual-creator-guide-coverage.md`。
 > 本文件是 **G0 基线交付件**：记录官方指南版本、当期 AIR 产物指纹，并把计划书 §三 的每个主题按
 > 「官方路径 → AIR 三层证据（源码导出 / 默认 bundle / 浏览器行为）→ 现有页面/示例 → 本计划行动」登记。
 > 状态四态与计划书一致：`FULL` ｜ `PARTIAL` ｜ `N/A` ｜ `待验证`。
@@ -132,7 +132,7 @@
 | S3         | `manual-post-processing`（旧 41/41 证据内，ANIMATED 集）——但计划书判定"用户侧装配能力未在本次证实"，旧证据不作为当期通过                                                                                   |
 | 现有页面   | `post-processing.md`（N/A）、`how-to-use-post-processing.md`（PARTIAL）、`debugging-glsl.md`（N/A）、`shadertoy.md`（N/A）保留早期探针结论                                                                 |
 | AIR 状态   | **待验证**                                                                                                                                                                                                 |
-| 本计划行动 | G4：小范围能力复核——API→样例→**像素级变化**（参数变化 + 故意编译错误定位），通过后才改手册状态；正式 Shader 示例与 `ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例任务计划书.md` 衔接，不重复计工作量 |
+| 本计划行动 | G4：小范围能力复核——API→样例→**像素级变化**（参数变化 + 故意编译错误定位），通过后才改手册状态；正式 Shader 示例与 `ai/plans/api-scenarios-shaders.md` 衔接，不重复计工作量 |
 
 ### 边界外主题（进边界页说明，不做教程）
 
@@ -170,7 +170,7 @@ Creator 编辑器/Inspector/Prefab 工作流、Dashboard、原生 JSB、平台�
    "装配成功"≠"效果生效"。
 3. **阻断点（升级 FULL 的剩余信号）**：像素级 A/B 可归因（确定性场景下开/关或参数变化产生
    稳定像素差异）+ 最小 bloom 示例进验证清单 + 自定义 pass/材质装配链验证
-   （衔接 `ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例任务计划书.md`，Shader 创作面的
+   （衔接 `ai/plans/api-scenarios-shaders.md`，Shader 创作面的
    故意编译错误定位在该计划实施）。
 
 ### Spine（P1-10）——保持 `待验证`

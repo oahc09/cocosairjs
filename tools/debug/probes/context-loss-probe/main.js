@@ -12,7 +12,7 @@
  *   F_gateFailed     — requestReload() 在 failed 态生效（true 且注入的重载记录器恰好一次）；
  *   G_secondLoss     — 第二轮 lose/restore：lostCount=2、状态迁移稳定、无异常。
  *
- * 运行：NODE_PATH=<playwright> node tools/verify/w01-context-loss.cjs
+ * 运行：NODE_PATH=<playwright> node tools/verify/context-loss.cjs
  * 证据：docs/evidence/w01-context-loss.json
  */
 import {

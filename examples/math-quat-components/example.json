@@ -35,21 +35,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Quat 构造（默认单位四元数）与四分量直存直取。",
-    "points": [
-      "默认 (0,0,0,1) 单位旋转",
-      "按位注入",
-      "赋值即读"
-    ]
+    "points": ["默认 (0,0,0,1) 单位旋转", "按位注入", "赋值即读"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 165,215,235）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "math.Quat.constructor",
-      "math.Quat.w"
-    ],
+    "primary": ["math.Quat.constructor", "math.Quat.w"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -91,9 +84,7 @@
       "math.Quat.z",
       "math.Quat.w"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -238,32 +229,21 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],

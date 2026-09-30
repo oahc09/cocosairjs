@@ -12,7 +12,7 @@
  *     直接 toDataURL 仍返回上一帧（preserveDrawingBuffer 合同，AIR 上下文属性）。
  *   dprChain — window.devicePixelRatio / CSS 尺寸 / 绘图缓冲尺寸 链路留证（W06 共用）。
  *
- * 运行：NODE_PATH=<playwright> node tools/verify/w03-capture.cjs
+ * 运行：NODE_PATH=<playwright> node tools/verify/capture.cjs
  * 证据：docs/evidence/w03-capture.json
  */
 import {

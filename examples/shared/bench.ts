@@ -11,7 +11,7 @@
  *  - debug overhead ：同一场景同一操作序列（inspectScene/inspectNode ×N）面板开/关对比；
  *  - memory         ：performance.memory（不可用则记 unavailable）。
  *
- * 页面在 window.__benchReady 上暴露结果，供 tools/verify/v051-runtime-baseline.cjs 采集。
+ * 页面在 window.__benchReady 上暴露结果，供 tools/verify/runtime-baseline.cjs 采集。
  */
 import {
     createAirApp,

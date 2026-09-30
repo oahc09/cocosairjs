@@ -26,7 +26,7 @@
 
 ## 规格驱动验证器（v2）——验证器真正消费 Example Spec
 
-`tools/verify/v11-examples-verify.cjs`（spec-driven-v2）按每个示例的规格逐条执行：
+`tools/verify/example-spec-browser.cjs`（spec-driven-v2）按每个示例的规格逐条执行：
 
 | 合同 | 执行方式 |
 |---|---|
@@ -38,7 +38,7 @@
 | Lifecycle | `validation.lifecycle` 声明 `resource-released` → 调用示例页内 `window.__lifecycle()`（`examples/shared/asset-lifecycle.js` 安装）：真实释放持有资源 → 等两帧 + 250ms 让帧末延迟销毁落地 → `isValid` 泄漏核对 → 重新获取并挂回；再核对重载后画面非空、无新增运行期错误、`inspectAsset` 无 `DESTROYED_RESOURCE`，并以重载帧充当 §11 当期截图（11 例 PASS） |
 | §10 Capability | `validation.capability` 声明 `capability-status` → 现场实例化 `new cc.GLTFLoader()` 读取 `getExtensionSupport()`，与 `validation.capabilityExpectations` 逐项比对（status 必须在允许集合内，非 `supported` 必须携带 reason）：gltf-draco / gltf-meshopt = `decoder-required`、gltf-clearcoat = `supported`（V0.5 五态合同） |
 | 声明-执行一致性 | 规格声明的每个 validator id 必须有执行器真正跑过；否则合成 `declared in Example Spec but no executor ran it` FAIL（杜绝"声明未执行"计入 PASS） |
-| §11 Stable 公式 | 全部规格声明检查 PASS → `status: draft→stable` 写回 example.json，`promotionEvidence = specFingerprint`（规范化哈希：排除 status/promotionEvidence，晋级写回不破坏证据绑定；指纹与晋级逻辑由 `tools/verify/v11-spec-common.cjs` 单一实现，runner / DevTools 门禁 / coverage-report 共用，不再三处漂移） |
+| §11 Stable 公式 | 全部规格声明检查 PASS → `status: draft→stable` 写回 example.json，`promotionEvidence = specFingerprint`（规范化哈希：排除 status/promotionEvidence，晋级写回不破坏证据绑定；指纹与晋级逻辑由 `tools/verify/example-spec-common.cjs` 单一实现，runner / DevTools 门禁 / coverage-report 共用，不再三处漂移） |
 
 证据：`docs/evidence/v11-examples-verified.json`（40/40 PASS，含逐项 validatorResults +
 specFingerprint）+ `docs/evidence/examples/<id>.png` 截图工件。
@@ -77,13 +77,13 @@ specFingerprint）+ `docs/evidence/examples/<id>.png` 截图工件。
 
 | 项 | 交付 |
 |---|---|
-| Gallery 发布 Artifact | `tools/verify/v11-gallery-artifact.cjs build` → `build/examples/` 自包含静态部署物（引擎 + 解码器 + 45 示例 + files.json + 45 张缩略图；入口 esbuild 预编译为 main.boot.js，全部路径相对化） |
+| Gallery 发布 Artifact | `tools/verify/gallery-artifact.cjs build` → `build/examples/` 自包含静态部署物（引擎 + 解码器 + 45 示例 + files.json + 45 张缩略图；入口 esbuild 预编译为 main.boot.js，全部路径相对化） |
 | 嵌套部署 + 路由回归 | `verify` 模式以 `/apps/gallery/` 嵌套前缀自宿主，Playwright 回归 13/13：静态 200 ×4 + 缩略图 ×3 + Gallery 列表渲染（45 链接）+ `#deep-link` 路由 + 3 个示例在 artifact 内真实启动 + 零页面错误（`docs/evidence/v11-gallery-artifact.json`） |
-| DevTools 示例证据 | `tools/verify/v11-devtools-examples.cjs`：规格驱动的 V0.5.1 会话门禁，覆盖全部 5 个 `requiresDevTools` 示例（automation + rc-inspect-scene / rc-create-node / rc-capture-frame / rc-error-report）→ 5/5 PASS（详见下节） |
+| DevTools 示例证据 | `tools/verify/devtools-examples.cjs`：规格驱动的 V0.5.1 会话门禁，覆盖全部 5 个 `requiresDevTools` 示例（automation + rc-inspect-scene / rc-create-node / rc-capture-frame / rc-error-report）→ 5/5 PASS（详见下节） |
 
 ## DevTools 会话门禁（requiresDevTools 示例）
 
-`tools/verify/v11-devtools-examples.cjs` 消费每个示例自己的 Example Spec，经 bench 会话桥
+`tools/verify/devtools-examples.cjs` 消费每个示例自己的 Example Spec，经 bench 会话桥
 （`/__debug/agent-session.js`，`BrowserRuntime` 注入 `window.__benchSession`）断言冻结合同本身，
 而非"场景是否跑起来"：
 

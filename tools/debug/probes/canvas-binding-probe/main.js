@@ -11,7 +11,7 @@
  * （聚焦收到/失焦不收）、焦点可读（activeElement）可恢复（再点击复焦）、tabIndex 默认 0、
  * 真实触摸（hasTouch 上下文 tap → TOUCH_START）。
  *
- * 运行：NODE_PATH=<playwright> node tools/verify/w04-canvas-binding.cjs
+ * 运行：NODE_PATH=<playwright> node tools/verify/canvas-binding.cjs
  * 证据：docs/evidence/w04-canvas-binding.json
  */
 const params = new URLSearchParams(location.search);

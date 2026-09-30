@@ -35,20 +35,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Light 基面：两类光通量常量语义标记、attach/detach 场景挂接入口与 update/onLoad 钩子（try 兜底）。",
-    "points": [
-      "LUMINOUS_FLUX/LUMINANCE 常量存在",
-      "attach/detach 在运行光上的安全路径",
-      "update 无参安全"
-    ]
+    "points": ["LUMINOUS_FLUX/LUMINANCE 常量存在", "attach/detach 在运行光上的安全路径", "update 无参安全"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 255,225,165）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "Light.PhotometricTerm"
-    ],
+    "primary": ["Light.PhotometricTerm"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -90,9 +84,7 @@
       "renderer.scene.DirectionalLight.update",
       "Light.onLoad"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -237,32 +229,21 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],

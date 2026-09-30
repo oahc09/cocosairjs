@@ -2,7 +2,6 @@
 
 > 当前支持范围（2026-09-30）：浏览器渲染要求 WebGL 2；WebGL 1 已正式退役。启动不可用时返回 `WEBGL2_REQUIRED`，不会回退到空渲染设备。详见 [支持策略](../webgl2-only.md)。
 
-
 > 状态：**FULL（2026-09-26）**。用户手写 GLSL 的完整链路在 WebGL2 上实测
 > （`docs/evidence/g4-shader-probe.json`，当前 WebGL2 probe 的结果以报告为准；旧的双后端结果为历史证据）；
 > 两级示例 `shader-custom-gradient`（渐变 + uniform）与 `shader-dissolve`（贴图 + 溶解 + 交互）
@@ -139,11 +138,11 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 
 ## 6. 参考实现索引
 
-| 文件                                      | 内容                                                                       |
-| ----------------------------------------- | -------------------------------------------------------------------------- |
+| 文件                                      | 内容                                                                      |
+| ----------------------------------------- | ------------------------------------------------------------------------- |
 | `tools/debug/probes/shader-probe/main.js` | WebGL2 全链路探针（注册/uniform/动画/冻结/编译错误/remove/重复注册/销毁） |
-| `examples/shader-custom-gradient/`        | 一级示例：渐变 + colorA/colorB/timeScale uniform + 交互切换 + lifecycle    |
-| `examples/shader-dissolve/`               | 二级示例：sampler2D 棋盘 + discard 溶解 + 边缘发光 + 逐帧 uniform 动画     |
-| `examples/shared/shader-blocks.js`        | UBO 块样板 + standardVert + makeUserEffectJson                             |
-| `src/air/builtin/register.ts`             | 引擎内建注册路径（glsl4→3 转换 + set/binding 分配的同源参考）          |
-| `docs/evidence/g4-shader-probe.json`      | 当前 WebGL2 探针证据（14/14 PASS，含 registerBeforeBoot 边界）    |
+| `examples/shader-custom-gradient/`        | 一级示例：渐变 + colorA/colorB/timeScale uniform + 交互切换 + lifecycle   |
+| `examples/shader-dissolve/`               | 二级示例：sampler2D 棋盘 + discard 溶解 + 边缘发光 + 逐帧 uniform 动画    |
+| `examples/shared/shader-blocks.js`        | UBO 块样板 + standardVert + makeUserEffectJson                            |
+| `src/air/builtin/register.ts`             | 引擎内建注册路径（glsl4→3 转换 + set/binding 分配的同源参考）             |
+| `docs/evidence/g4-shader-probe.json`      | 当前 WebGL2 探针证据（14/14 PASS，含 registerBeforeBoot 边界）            |

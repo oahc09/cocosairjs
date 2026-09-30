@@ -13,7 +13,7 @@
   丢弃 8 条 `eventLog.*`（事件顺序本身不稳定）与 3 条 `*WithinMs` 计时叶子后写入 118 条 `probeEquals`。
 - 示例规格链：`tools/examples/spec-evidence.cjs` 的行号定位 + `spec-expectations.cjs apply --ids=video-basic`
   （8 节点 `transform-equals`，其中 5 条源码字面量佐证、3 条注明「未赋值 ⇒ 引擎默认 identity」）+
-  `tools/verify/v11-examples-verify.cjs --ids=video-basic` PASS 并晋升 stable。
+  `tools/verify/example-spec-browser.cjs --ids=video-basic` PASS 并晋升 stable。
 
 ## 1. `stayOnBottom` 的透明合成不是「组件 clear color」
 

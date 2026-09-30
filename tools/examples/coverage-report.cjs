@@ -33,7 +33,7 @@
 var fs = require('fs');
 var path = require('path');
 var REPO = path.resolve(__dirname, '..', '..');
-var specCommon = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
+var specCommon = require(path.join(REPO, 'tools', 'verify', 'example-spec-common.cjs'));
 var apiTrace = require(path.join(REPO, 'tools', 'verify', 'api-trace.cjs'));
 var INVENTORY_PATH = path.join(REPO, 'docs', 'example-api-inventory.json');
 var MANIFEST_PATH = path.join(REPO, 'examples', 'files.json');

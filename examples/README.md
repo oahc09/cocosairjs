@@ -37,14 +37,16 @@ npm run gallery:manifest     # tools/examples/generate-manifest.cjs → examples
 npm run gallery:api          # API 覆盖清单（example.json 的 apiClaims 来源核对）
 ```
 
-> 2026-09-18：`gallery.html` 的 `showSource()` 末尾有一个多余 `});`，内联脚本报 SyntaxError 导致整段不执行（左侧示例列表渲染为 0 条）。已删除该行，deep-link 选中、iframe 预览与源码查看均正常（当时 40 examples / 10 categories；2026-09-19 清单扩至 45 examples / 14 categories，Gallery artifact 回归 45 链接 + 45 缩略图）。
+当前示例集合以 `files.json` 为准；历史故障和当期验收记录由 Git 历史追溯。
 
 ## 3. 示例目录约定
+
+新示例遵循 [仓库组织约定](../docs/reference/repository-layout.md)。已有示例 ID 是规格、Gallery 和证据的关联键，保持稳定；JS 示例继续用于其对应的教学内容。
 
 ```
 examples/<id>/
 ├── index.html        # 必须含 <canvas id="GameCanvas">（见下方注意事项）
-├── main.ts | main.js # 入口；部分新示例放在 src/main.ts
+├── src/main.ts       # 新示例默认入口；已有示例也可能用根 main.ts/main.js
 └── example.json      # Example Specification（§24 全量）：learning/effect/api/scene/interaction/ready/validation/coverage/screenshot/license + Gallery 元数据
 ```
 
@@ -95,9 +97,9 @@ node tools/verify/serve-static.cjs <站点目录> 7464             # 通用静�
 NODE_PATH=<含 playwright 的 node_modules 路径> node tools/verify/examples-smoke.cjs
 ```
 
-判定：0 console/着色器错误 + 画面存在与背景不同的像素。当前脚本只覆盖 `hello-cube`、`static-model`、`skinned-animation` 三例；V1.1 的 Gallery/清单类验证见 `tools/verify/v051-examples-browser.cjs`。
+判定：0 console/着色器错误 + 画面存在与背景不同的像素。当前脚本只覆盖 `hello-cube`、`static-model`、`skinned-animation` 三例；V1.1 的 Gallery/清单类验证见 `tools/verify/runtime-inspection-browser.cjs`。
 
-2026-09-18 实测（headless Chromium）：`static-model` / `skinned-animation` PASS，`hello-cube` **FAIL** —— `standard` 效果顶点着色器在无头驱动上编译失败；同一 bundle 在有 GPU 的浏览器里编译通过且正常渲染。属环境差异，未定性为引擎回归。无头跑 glTF/着色器类示例需要软件光栅化启动参数（`--use-gl=angle --enable-unsafe-swiftshader`，见 `tools/verify/v11-examples-verify.cjs`），`examples-smoke.cjs` 目前未传。
+2026-09-18 实测（headless Chromium）：`static-model` / `skinned-animation` PASS，`hello-cube` **FAIL** —— `standard` 效果顶点着色器在无头驱动上编译失败；同一 bundle 在有 GPU 的浏览器里编译通过且正常渲染。属环境差异，未定性为引擎回归。无头跑 glTF/着色器类示例需要软件光栅化启动参数（`--use-gl=angle --enable-unsafe-swiftshader`，见 `tools/verify/example-spec-browser.cjs`），`examples-smoke.cjs` 目前未传。
 
 ## 7. glTF 类示例的额外前提
 
@@ -121,8 +123,8 @@ NODE_PATH=<含 playwright 的 node_modules 路径> node tools/verify/examples-sm
 | 事实                        | 来源                                                                                                                                                                                                                                            |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 规格冻结 / 校验问题         | `node tools/examples/spec-validate.cjs` → `docs/evidence/v11-spec-validate.json`（当前 45 frozen / 0 draft / 0 blocked）                                                                                                                        |
-| 浏览器验证                  | `node tools/verify/v11-examples-verify.cjs` → `docs/evidence/v11-examples-verified.json`（当前 40/40 PASS）                                                                                                                                     |
-| DevTools 会话验证           | `node tools/verify/v11-devtools-examples.cjs` → `docs/evidence/v11-devtools-examples.json`（当前 5/5 PASS：`automation` + `rc-*`×4）                                                                                                            |
+| 浏览器验证                  | `node tools/verify/example-spec-browser.cjs` → `docs/evidence/v11-examples-verified.json`（当前 40/40 PASS）                                                                                                                                     |
+| DevTools 会话验证           | `node tools/verify/devtools-examples.cjs` → `docs/evidence/v11-devtools-examples.json`（当前 5/5 PASS：`automation` + `rc-*`×4）                                                                                                            |
 | 缩略图 / 逐步 validator     | `docs/evidence/examples/<id>.png`（45 张）                                                                                                                                                                                                      |
 | API 覆盖（verified 口径）   | `node tools/examples/coverage-report.cjs` → `docs/api-coverage-report.json`（core 49/717 · important 6/793 · advanced 8/3219，claimed=verified 零冒充，但三道门禁仍 FAIL，需按 Wave 扩量）                                                      |
 | 规范符合性（§1-§26 证据链） | `node tools/examples/spec-compliance-audit.cjs` → `docs/evidence/v11-spec-compliance.json`（当前 0 fail / 1 warn；唯一 warn 是 gltf-draco 缺 Lifecycle Contract 的机器可读豁免——解码器不在随包工件内，无已解码资产可释放，如实 BLOCKED 不伪造） |

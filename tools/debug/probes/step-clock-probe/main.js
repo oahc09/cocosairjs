@@ -8,7 +8,7 @@
  *   E_resume          — end() 后真实时钟恢复（500ms 内 sum 增长）；
  *   F_hashStability   — 两轮相同步进序列，同帧像素 sha256_16 相同（SwiftShader 确定性）。
  *
- * 运行：NODE_PATH=<playwright> node tools/verify/w08-step-clock.cjs
+ * 运行：NODE_PATH=<playwright> node tools/verify/step-clock.cjs
  * 证据：docs/evidence/w08-step-clock.json
  */
 import {

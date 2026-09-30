@@ -46,7 +46,7 @@ function captureFrame(): Promise<ImageData> {
   swapchain 都以 `preserveDrawingBuffer: true` 创建上下文（[UPSTREAM.md](../UPSTREAM.md)
   「preserveDrawingBuffer on both WebGL backends」），因此**帧外读取保留最后一帧**。
   2026-09-28 之前 WebGL2 后端漏配该项：resize/暂停后 `toDataURL`/`readPixels` 恒黑而 WebGL1 正常
-  ——W03 矩阵实测捕获并已修复，`tools/verify/w03-capture.cjs` 锁定回归。
+  ——W03 矩阵实测捕获并已修复，`tools/verify/capture.cjs` 锁定回归。
 - **等待式采集遇到暂停**：`captureFrame` 这类「等下一个 `AFTER_DRAW`」的封装在 `game.pause()` 下
   永远等不到帧，必须以显式超时失败（错误码 `CAPTURE_FAILED`），**不得**把超时静默当作成功。
 - **离屏 FBO**：`readPixels` 前先 `bindFramebuffer` 到目标 FBO 并确认 `checkFramebufferStatus ===

@@ -7,50 +7,26 @@
   "requiresDevTools": false,
   "title": "glTF Viewer",
   "category": "gltf",
-  "apiClaims": [
-    "GLTFLoader.parseAsync",
-    "GLTFAsset.instantiate",
-    "GLTFInstance"
-  ],
-  "capabilities": [
-    "gltf"
-  ],
+  "apiClaims": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate", "GLTFInstance"],
+  "capabilities": ["gltf"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "asset-loaded",
-      "no-runtime-error",
-      "material-property"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "asset-loaded", "no-runtime-error", "material-property"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
     "goal": "综合 glTF 查看器：URL 参数驱动加载、动画播放与 transmission 捕获相机",
-    "points": [
-      "GLTFLoader 加载本地/参数化模型",
-      "AnimationClip 播放控制",
-      "AirTransmissionCapture 两相机捕获合同"
-    ]
+    "points": ["GLTFLoader 加载本地/参数化模型", "AnimationClip 播放控制", "AirTransmissionCapture 两相机捕获合同"]
   },
   "effect": {
     "functional": "app 启动后按 URL 参数加载模型（默认本地资产），instantiate 挂场景；transmission-capture 节点在启动时武装捕获相机；模型带动画时播放。",
     "visual": "视口中央渲染模型，可拖动旋转缩放；状态提示区显示加载状态"
   },
   "api": {
-    "primary": [
-      "GLTFLoader",
-      "AirTransmissionCapture"
-    ],
+    "primary": ["GLTFLoader", "AirTransmissionCapture"],
     "supporting": [
       "Animation",
       "AirTransmissionCapture.mainCamera",
@@ -84,10 +60,7 @@
       "TRANSMISSION_LAYER",
       "defaultTransmissionVisibility"
     ],
-    "forbiddenShortcut": [
-      "渲染外网远端模型（本地资产为准）",
-      "静态贴图冒充 transmission 折射"
-    ],
+    "forbiddenShortcut": ["渲染外网远端模型（本地资产为准）", "静态贴图冒充 transmission 折射"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -214,12 +187,7 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "transmission-capture",
-        "node__1"
-      ]
+      "nodes": ["Main Camera", "Main Light", "transmission-capture", "node__1"]
     }
   },
   "interaction": {
@@ -233,9 +201,7 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -252,12 +218,7 @@
         "effect": "air-gltf-standard",
         "props": {
           "albedo": {
-            "value": [
-              1,
-              1,
-              1,
-              1
-            ],
+            "value": [1, 1, 1, 1],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {

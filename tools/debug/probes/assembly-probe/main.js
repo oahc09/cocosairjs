@@ -7,7 +7,7 @@
  * W11 audio-service：BGM currentTime 实测推进（判据纪律，不单独信 playing）、暂停冻结、
  *   续播前进、双 ID 切台、SFX 并发上限（7 发 5 中 2 弃）、音乐/音效开关独立、dispose。
  *
- * 运行：NODE_PATH=<playwright> node tools/verify/w09-w11-assembly.cjs
+ * 运行：NODE_PATH=<playwright> node tools/verify/assembly.cjs
  * 证据：docs/evidence/w09-w11-assembly.json
  */
 import {

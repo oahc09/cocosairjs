@@ -24,7 +24,9 @@ Start with [README.md](README.md) for the current quick start and capability bou
 | `tools/` | Build, development server, analysis, and verification tooling. `tools/debug/` contains optional development tools. |
 | `tools/build/`, `tools/analyze/`, `tools/verify/` | Dependency vendoring and builds; dependency analysis and upstream group import; static gates and browser probes. Organize active tools by purpose, not release version. |
 | `test/` | Smoke tests and fixtures. |
-| `ai/` | Version plans and implementation briefs; these describe intended work and are not proof that a feature shipped. |
+| `ai/` | Topic-based plans, execution ledgers, and prompts; see `ai/README.md`. These are not proof that a feature shipped. |
+
+工具入口见 [tools/README.md](tools/README.md)，目录与命名规则见 [仓库组织约定](docs/reference/repository-layout.md)。新示例默认使用 `src/main.ts`；已有示例 ID、上游路径和证据文件名作为稳定关联保留。
 
 ## Development workflow
 

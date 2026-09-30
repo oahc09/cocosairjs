@@ -78,7 +78,7 @@ NODE_PATH=… node E:/AIProMax/cocosair-scratch/v12-logs/wav-dom-durations.cjs
 第一版用 `clip.destroy()`，v11 验证器判 FAIL：
 
 ```
-node tools/verify/v11-examples-verify.cjs --ids=audio-basic
+node tools/verify/example-spec-browser.cjs --ids=audio-basic
 → resource-released FAIL: reacquire: toneClip invalid after reacquire
    快照 E:/AIProMax/cocosair-scratch/v12-diag/pre-audio-v11/v11-examples-verified-FAIL-destroyonly.json
    同批 console: 'Invalid audio clip' ×2（src/cocos/audio/audio-source.ts:133/433）
@@ -105,7 +105,7 @@ P1 里另钉了 `results.p1Asset.cacheHasUrl = assetManager.assets.has(URL) === 
 | `npm run build` / `npm run build:min` | 产物字节不变（`35496aebda066ab5…` / `8795c8685ace28a1…`）⇒ `candidateFingerprint` 未漂移 | `sha256sum build/cocosair.module*.js` 前后对比 |
 | V1.2 三引擎矩阵（无 `--ids` 全量） | **24/24 PASS**，`completed=true subset=false`，`contractFingerprint 812863c5dd1a827a`，`bundle 35496aebda066ab5` | `docs/evidence/v12/browser-matrix.json`；截图 `docs/evidence/v12/audio-basic/matrix-{chromium,firefox,webkit}.png`（12,432 / 18,235 / 13,003 B，
 sha256-16 `06ffd260f8bc9f27` / `a4c0c89d96512ce6` / `5f9aa43156b03887`） |
-| V1.1 spec 链 | `spec-evidence --check` 0 drifted / 0 detached / 0 errors；`spec-validate --strict` 53 frozen / 0 draft；`v11-examples-verify.cjs --ids=audio-basic` **PASS / 1 promoted** ⇒ `status=stable`、`promotion{spec 9df8c691b6ad, source 002fb0bcb6e664a6, candidate 9fa85f88b968d5f1, verified 26 + attested 2 = units 28}` | `docs/evidence/v11-spec-validate.json`、`docs/evidence/v11-examples-verified.json`（注：该文件当前是**子集**捕获，`partial` 口径见台账） |
+| V1.1 spec 链 | `spec-evidence --check` 0 drifted / 0 detached / 0 errors；`spec-validate --strict` 53 frozen / 0 draft；`example-spec-browser.cjs --ids=audio-basic` **PASS / 1 promoted** ⇒ `status=stable`、`promotion{spec 9df8c691b6ad, source 002fb0bcb6e664a6, candidate 9fa85f88b968d5f1, verified 26 + attested 2 = units 28}` | `docs/evidence/v11-spec-validate.json`、`docs/evidence/v11-examples-verified.json`（注：该文件当前是**子集**捕获，`partial` 口径见台账） |
 | 证据链符合性 | `spec-compliance-audit.cjs` 53 examples：**0 fail / 1 warn**（唯一 warn 是 gltf-draco 的诚实 BLOCKED） | `docs/evidence/v11-spec-compliance.json` |
 
 矩阵合同量：`probeEquals` 67 条三引擎逐字等值（含 `duration 1.6`、`state` 名与码、`volume` clamp、

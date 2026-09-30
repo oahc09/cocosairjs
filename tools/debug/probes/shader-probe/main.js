@@ -12,7 +12,7 @@
  *   H. Material.destroy / EffectAsset.destroy 行为记录
  *
  * 结论纪律：探针结果记录在 docs/evidence/g4-shader-probe.json；PASS 之前不宣称 SDK
- * 支持用户自定义 Shader。运行器：tools/verify/g4-shader-probe.cjs（双后端：默认 + 强制 WebGL1）。
+ * 支持用户自定义 Shader。运行器：tools/verify/shader-probe.cjs（双后端：默认 + 强制 WebGL1）。
  *
  * 结构参照：src/air/builtin/register.ts（引擎内建 effect 的注册路径，同源做法）：
  *   Object.assign(new EffectAsset(), json) → 补 glsl4/3/1 源码 → onLoaded()。

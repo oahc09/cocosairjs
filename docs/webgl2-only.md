@@ -21,9 +21,9 @@ Regression commands (configured Playwright environment required):
 ```bash
 npm run build:all
 node tools/verify/webgl2-only.cjs
-node tools/verify/w01-context-loss.cjs
-node tools/verify/w03-capture.cjs
-node tools/verify/g4-shader-probe.cjs
+node tools/verify/context-loss.cjs
+node tools/verify/capture.cjs
+node tools/verify/shader-probe.cjs
 ```
 
 The WebGL 2-only probe verifies both the development and minified npm bundles, actual

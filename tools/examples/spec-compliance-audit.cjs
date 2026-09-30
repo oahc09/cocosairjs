@@ -18,7 +18,7 @@ const crypto = require('crypto');
 const REPO = path.resolve(__dirname, '..', '..');
 const EXAMPLES_DIR = path.join(REPO, 'examples');
 const OUT_PATH = path.join(REPO, 'docs', 'evidence', 'v11-spec-compliance.json');
-const { specFingerprintOf, listAssetTree, readEvidence } = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
+const { specFingerprintOf, listAssetTree, readEvidence } = require(path.join(REPO, 'tools', 'verify', 'example-spec-common.cjs'));
 const { findSymbolLine } = require(path.join(__dirname, 'spec-evidence.cjs'));
 
 const EVIDENCE_FILES = ['docs/evidence/v11-examples-verified.json', 'docs/evidence/v11-devtools-examples.json'];
@@ -390,7 +390,7 @@ function main () {
   const dirs = fs.readdirSync(EXAMPLES_DIR, { withFileTypes: true })
     .filter((e) => e.isDirectory() && e.name !== 'shared' && e.name !== 'node_modules')
     .map((e) => e.name).sort();
-  const report = { measuredAt: new Date().toISOString(), tool: 'tools/examples/spec-compliance-audit.cjs', spec: 'ai/Cocos Air — Example Specification 补充执行规范.md', total: 0, examples: [], globalFindings };
+  const report = { measuredAt: new Date().toISOString(), tool: 'tools/examples/spec-compliance-audit.cjs', spec: 'ai/example-spec-execution.md', total: 0, examples: [], globalFindings };
   for (const dir of dirs) {
     const file = path.join(EXAMPLES_DIR, dir, 'example.json');
     if (!fs.existsSync(file)) { continue; }

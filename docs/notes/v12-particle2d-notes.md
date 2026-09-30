@@ -24,7 +24,7 @@ ps.file = asset;                                                    // 走 _appl
 `ps.file` setter（`particle-system-2d.ts:922-949`）在 `custom=false` 分支会读 `file.nativeUrl` 并调 `_initWithDictionary(file._nativeAsset)`，即与 Creator 资产同一条通路。
 
 证据：`examples/particle-2d-basic/`（`main.js` 的 `applyPlist()` / `plistXml()`）·
-`node tools/verify/v11-examples-verify.cjs --ids=particle-2d-basic` → `PASS particle-2d-basic`、`1 promoted`（`docs/evidence/v11-examples-verified.json`）·
+`node tools/verify/example-spec-browser.cjs --ids=particle-2d-basic` → `PASS particle-2d-basic`、`1 promoted`（`docs/evidence/v11-examples-verified.json`）·
 `node tools/verify/browser-matrix.cjs --ids=particle-2d-basic` → `3/3 PASS across 3 engines`、`completed=true`（`docs/evidence/v12/browser-matrix.json`，截图 `docs/evidence/v12/particle-2d-basic/matrix-{chromium,firefox,webkit}.png`）。
 
 ## 3. Code First 入口二：`loadRemote('.plist')` —— 可用（spike1 的"零粒子"是 spike 自己的键名 bug，见 §3.1 与 §4.4）
@@ -98,7 +98,7 @@ A/B 实测：同一条 URL 加 `?gfxblend=1`（把三个系统改回 gfx 枚举�
 |---|---|---|
 | `node tools/examples/spec-validate.cjs --strict` | EXIT 0，`51 examples: 51 frozen / 0 draft / 0 blocked` | `docs/evidence/v11-spec-validate.json` |
 | `node tools/examples/spec-evidence.cjs` | `3 drifted / 0 detached-validator / 0 errors`（P11 插入后行号回填） | 回填 `api.evidence[].sourceLocation` |
-| `…node tools/verify/v11-examples-verify.cjs --ids=particle-2d-basic` | `PASS`，`1 promoted` ⇒ `status=stable`，`promotion{spec:d8a9dd22b4c3, source:e87330f4b1d52ba0, candidate:9fa85f88b968d5f1, verified:22, attested:12, units:34}`（0 unproven） | `docs/evidence/v11-examples-verified.json` |
+| `…node tools/verify/example-spec-browser.cjs --ids=particle-2d-basic` | `PASS`，`1 promoted` ⇒ `status=stable`，`promotion{spec:d8a9dd22b4c3, source:e87330f4b1d52ba0, candidate:9fa85f88b968d5f1, verified:22, attested:12, units:34}`（0 unproven） | `docs/evidence/v11-examples-verified.json` |
 | `…node tools/verify/browser-matrix.cjs`（**全量，不带 `--ids`**） | `18/18 PASS across 3 engines`，`completed=true`，`subset=false`，contract `b35292f9fe29d1ca`（61 条 `probeEquals`） | `docs/evidence/v12/browser-matrix.json` + `docs/evidence/v12/<例>/matrix-{chromium,firefox,webkit}.png` |
 | `npx jest --ci` / `npm run typecheck` / `npm run verify:test-inventory` | 252/252（31 套件）/ EXIT 0 / `failures=[]` | `docs/test-inventory.json` |
 | `node tools/examples/spec-compliance-audit.cjs --warn-ok` | 51 例 `0 fail / 1 warn`（唯一 warn 是 gltf-draco 的诚实 BLOCKED） | `docs/evidence/v11-spec-compliance.json` |
@@ -109,7 +109,7 @@ A/B 实测：同一条 URL 加 `?gfxblend=1`（把三个系统改回 gfx 枚举�
 
 1. ~~`loadRemote('.plist')` 出图未证~~ ⇒ r34 已结（§3.1），LV12-07 对计划书 B2 的两条 Code First 入口均为 PASS。
 2. 引擎侧对 plist 的两处静默口径（blend 越界、缺 `particleLifespan` 反推出 `Number.MAX_VALUE`）是否加校验/告警：属官方逐字节文件改动，不动，待 owner 决策；示例与合同已把当前行为钉成回归断言。
-3. 全量 `npm run verify:browser-matrix`（6 例 × 3 引擎）r34 已跑（18/18、`subset=false`）；**全量 `v11-examples-verify.cjs`（51 例，不带 `--ids`）仍未跑**，当前 `docs/evidence/v11-examples-verified.json` 是逐例子集补采的合成结果 ⇒ 报数时必须说明这一点。
+3. 全量 `npm run verify:browser-matrix`（6 例 × 3 引擎）r34 已跑（18/18、`subset=false`）；**全量 `example-spec-browser.cjs`（51 例，不带 `--ids`）仍未跑**，当前 `docs/evidence/v11-examples-verified.json` 是逐例子集补采的合成结果 ⇒ 报数时必须说明这一点。
 4. `particle-2d` 的 34 个 unit 里 12 个只能是 `attested`（引擎侧无 instrument 点），要升到 `verified` 需要 api-coverage 口径决策（见 #9）。
 
 相关：`docs/audits/global-quality-audit-2026-09-19/findings.jsonl` F-96 / F-97。

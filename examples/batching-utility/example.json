@@ -33,20 +33,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握静态合批工具的双入口：batchStaticModel/unbatchStaticModel 在非静态节点上走安全路径（try 兜底确定性回读）。",
-    "points": [
-      "入口为静态函数",
-      "非静态场景下调用不破坏渲染",
-      "unbatch 与 batch 成对出现"
-    ]
+    "points": ["入口为静态函数", "非静态场景下调用不破坏渲染", "unbatch 与 batch 成对出现"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 220,230,200）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "BatchingUtility.batchStaticModel"
-    ],
+    "primary": ["BatchingUtility.batchStaticModel"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -86,9 +80,7 @@
       "BatchingUtility.batchStaticModel",
       "BatchingUtility.unbatchStaticModel"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -221,32 +213,21 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],

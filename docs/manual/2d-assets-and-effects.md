@@ -59,7 +59,7 @@ plist 文本在运行时**程序化生成**，交给引擎自己的解析器（`
 | 导出面     | `sp` 命名空间 + `loadWasmModuleSpine` 在默认聚合导出内（d.ts 在册）                                                                                                |
 | 浏览器证据 | **无**——仓库没有任何已验证的 Spine 示例                                                                                                                            |
 | 阻断点     | ① wasm 模块装载路径未在浏览器实跑（`loadWasmModuleSpine` 需要可用 wasm 二进制来源）；② 无自产最小 Spine 资产（.json/.skel + atlas）；③ Skeleton 组件装配链路无样例 |
-| 结论       | **待验证**——不由 DragonBones 的可用性推断；待最小样例 + 探针后再升级状态（衔接 `ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例任务计划书.md` 的示例批次）     |
+| 结论       | **待验证**——不由 DragonBones 的可用性推断；待最小样例 + 探针后再升级状态（衔接 `ai/plans/api-scenarios-shaders.md` 的示例批次）     |
 
 ## 5. 验证与运行
 

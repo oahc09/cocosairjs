@@ -95,6 +95,6 @@
   setTransform 原子性与 setWorldScale、pending capture 生命周期、
   close 全映射清理、hub 去重与类别保留）。
 - G4 浏览器闭环：automation 示例 13 pass / 0 fail（真实 WebGL 截图 + 新帧差异）。
-- G5 面板浏览器验证：`tools/verify/v051-panel-browser.cjs` 7/7
+- G5 面板浏览器验证：`tools/verify/devtools-panel-browser.cjs` 7/7
   （显式启用、树+详情、错误定位、截图、性能、Alt+D、关闭无残留）。
 - 隔离守卫：smoke-23（默认 bundle 零 debug 标识 + 包清单 + 示例动态 import 形态）。
