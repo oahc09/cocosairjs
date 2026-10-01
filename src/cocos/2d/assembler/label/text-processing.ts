@@ -149,6 +149,11 @@ export class TextProcessing {
     ): void {
         if (!isBmFont) {
             this._updateLabelDimensions(style, layout, outputLayoutData);
+            outputLayoutData.renderSize.set(outputLayoutData.nodeContentSize);
+            if (layout.overFlow === Overflow.NONE || layout.overFlow === Overflow.RESIZE_HEIGHT) {
+                // Logical layout stays stable; rendering follows the integer raster extent.
+                outputLayoutData.renderSize.set(this._canvas!.width / this._fontScale, this._canvas!.height / this._fontScale);
+            }
             this._updateTexture(style, layout, outputLayoutData, outputRenderData);
             this.generateVertexData(isBmFont, style, layout, outputLayoutData, outputRenderData, inputString, callback);
         } else {
@@ -208,8 +213,12 @@ export class TextProcessing {
         const _fontDesc = this._getFontDesc(style.actualFontSize, style.fontFamily, style.isBold, style.isItalic);
         this._context.font = style.fontDesc = _fontDesc;
 
-        const { canvasSize, nodeContentSize, canvasPadding, contentSizeExtend } = outputLayoutData;
+        const { canvasSize, nodeContentSize, canvasPadding, contentSizeExtend, shadowPadding } = outputLayoutData;
         const fontScale = this._fontScale;
+        if (layout.overFlow !== Overflow.NONE && layout.overFlow !== Overflow.RESIZE_HEIGHT) {
+            // Fixed-size overflow modes keep their existing clipping/shrinking contract.
+            shadowPadding.set(0, 0, 0, 0);
+        }
 
         switch (layout.overFlow) {
         case Overflow.NONE: {
@@ -247,7 +256,7 @@ export class TextProcessing {
             const rawHeight = (outputLayoutData.parsedString.length + BASELINE_RATIO)
             * this._getLineHeight(layout.lineHeight, style.actualFontSize, style.fontSize);
 
-            canvasSize.width  = nodeContentSize.width * fontScale;
+            canvasSize.width  = (nodeContentSize.width + shadowPadding.width) * fontScale;
             canvasSize.height = (rawHeight + canvasPadding.height * fontScale);
             // set node height
             nodeContentSize.height = (rawHeight + contentSizeExtend.height * fontScale) / fontScale;
@@ -433,6 +442,12 @@ export class TextProcessing {
         canvasPadding.y = top;
         canvasPadding.width = left + right;
         canvasPadding.height = top + bottom;
+        outputLayoutData.shadowPadding.set(
+            style.hasShadow ? Math.max(0, left - outlineWidth) : 0,
+            style.hasShadow ? Math.max(0, bottom - outlineWidth) : 0,
+            style.hasShadow ? Math.max(0, canvasPadding.width - contentSizeExtend.width) : 0,
+            style.hasShadow ? Math.max(0, canvasPadding.height - contentSizeExtend.height) : 0,
+        );
     }
 
     // -------------------- String Processing Part --------------------------
@@ -485,6 +500,13 @@ export class TextProcessing {
 
         firstLinelabelY += _BASELINE_OFFSET * style.actualFontSize;
 
+        // Preserve the original glyph origin while scaling only the added shadow margin.
+        const { shadowPadding } = outputLayoutData;
+        const scaleDelta = this._fontScale - 1;
+        labelX += scaleDelta * (shadowPadding.x - layout.horizontalAlign * 0.5 * shadowPadding.width);
+        firstLinelabelY += scaleDelta * (shadowPadding.height - shadowPadding.y
+            - layout.verticalAlign * 0.5 * shadowPadding.height);
+
         outputLayoutData.startPosition.set(labelX + canvasPadding.x, firstLinelabelY + canvasPadding.y);
     }
 
@@ -526,7 +548,9 @@ export class TextProcessing {
         this._drawTextEffect(tempPos, lineHeight, style, layout, outputLayoutData);
         const { parsedString } = outputLayoutData;
         // draw text and outline
-        for (let i = 0; i < parsedString.length; ++i) {
+        // Multiline shadows already paint text/outline in _drawTextEffect; do not overpaint them.
+        const lineCount = style.hasShadow && parsedString.length > 1 ? 0 : parsedString.length;
+        for (let i = 0; i < lineCount; ++i) {
             drawTextPosY = tempPos.y + i * lineHeight;
             //draw shadow
             if (style.hasShadow) {

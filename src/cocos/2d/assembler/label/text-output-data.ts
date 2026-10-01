@@ -40,6 +40,9 @@ export class TextOutputLayoutData {
 
     public canvasPadding = new Rect(); // ttf
     public contentSizeExtend = Size.ZERO.clone(); // ttf
+    // Shadow-only visual overflow: left, bottom, total width, total height in logical units.
+    public shadowPadding = new Rect(); // ttf
+    public renderSize = Size.ZERO.clone(); // ttf: actual integer canvas extent in logical units
 
     public startPosition = Vec2.ZERO.clone(); // ttf
 
@@ -49,6 +52,8 @@ export class TextOutputLayoutData {
         this.canvasSize.set();
         this.canvasPadding.set();
         this.contentSizeExtend.set();
+        this.shadowPadding.set();
+        this.renderSize.set();
         this.startPosition.set();
     }
 }

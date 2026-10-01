@@ -74,6 +74,10 @@ function addLabel(node, text, fontSize, color) {
 
 ## 下一步
 
+Label 原生 shadow 通过 `enableShadow`、`shadowBlur`、`shadowOffset` 和 `shadowColor` 配置。
+在 `Overflow.NONE` 和 `RESIZE_HEIGHT` 下，影的扩边只影响渲染范围，不增加 UITransform 的逻辑布局尺寸；RichText 分段间距与折行因此保持稳定。
+RichText 子 Label 在分段重建时需按业务样式重新应用 shadow；该修复没有新增 RichText 的全局 shadow 配置接口。
+
 - 屏幕 HUD/按钮文字：[2D/UI 快速上手](./2d-ui.md)、[examples/ui-components/](../../examples/ui-components/)
 - 世界空间文字牌：[Canvas Textures 画布贴图](./canvas-textures.md)
 - DOM 文字贴住 3D 物体：[Align HTML Elements to 3D 将 HTML 对齐到 3D](./align-html-elements-to-3d.md)

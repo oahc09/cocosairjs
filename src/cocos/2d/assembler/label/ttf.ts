@@ -125,10 +125,11 @@ export class TTF extends TTFUtils implements IAssembler {
             return;
         }
         const uiTrans = comp.node._getUITransformComp()!;
-        const width = uiTrans.width;
-        const height = uiTrans.height;
-        const appX = uiTrans.anchorX * width;
-        const appY = uiTrans.anchorY * height;
+        const { shadowPadding, renderSize } = comp.textLayoutData;
+        const width = renderSize.width;
+        const height = renderSize.height;
+        const appX = uiTrans.anchorX * uiTrans.width + shadowPadding.x;
+        const appY = uiTrans.anchorY * uiTrans.height + shadowPadding.y;
 
         const data = renderData.data;
         data[0].x = -appX; // l

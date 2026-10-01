@@ -169,10 +169,11 @@ export class TTFUtils {
     generateVertexData (style: TextStyle, outputLayoutData: TextOutputLayoutData, outputRenderData: TextOutputRenderData): void {
         const data = outputRenderData.vertexBuffer;
         const nodeContentSize = outputLayoutData.nodeContentSize;
-        const width = nodeContentSize.width;
-        const height = nodeContentSize.height;
-        const appX = outputRenderData.uiTransAnchorX * width;
-        const appY = outputRenderData.uiTransAnchorY * height;
+        const { shadowPadding, renderSize } = outputLayoutData;
+        const width = renderSize.width;
+        const height = renderSize.height;
+        const appX = outputRenderData.uiTransAnchorX * nodeContentSize.width + shadowPadding.x;
+        const appY = outputRenderData.uiTransAnchorY * nodeContentSize.height + shadowPadding.y;
 
         data[0].x = -appX; // l
         data[0].y = -appY; // b

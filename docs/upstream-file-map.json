@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 36
+    "modifiedCount": 40
   },
   "mapping": [
     {
@@ -170,15 +170,15 @@
       "airPath": "src/cocos/2d/assembler/label/text-output-data.ts",
       "upstreamPath": "cocos/2d/assembler/label/text-output-data.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates."
     },
     {
       "airPath": "src/cocos/2d/assembler/label/text-processing.ts",
       "upstreamPath": "cocos/2d/assembler/label/text-processing.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates."
     },
     {
       "airPath": "src/cocos/2d/assembler/label/text-style.ts",
@@ -191,15 +191,15 @@
       "airPath": "src/cocos/2d/assembler/label/ttf.ts",
       "upstreamPath": "cocos/2d/assembler/label/ttf.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates."
     },
     {
       "airPath": "src/cocos/2d/assembler/label/ttfUtils.ts",
       "upstreamPath": "cocos/2d/assembler/label/ttfUtils.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates."
     },
     {
       "airPath": "src/cocos/2d/assembler/sprite/bar-filled.ts",

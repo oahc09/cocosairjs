@@ -2,6 +2,7 @@
 module.exports = {
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
+    "modulePathIgnorePatterns": ["<rootDir>/build/reports/"],
     "setupFiles": ["<rootDir>/test/setup-dom.js", "<rootDir>/test/setup-engine.js"],
     "testRegex": "/test/smoke/.*\\.test\\.ts$",
     "transform": {

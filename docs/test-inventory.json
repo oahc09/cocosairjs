@@ -425,12 +425,20 @@
         "smoke 32 — LV12-14/16：三族 wasm 后端的 asm.js 兜底分支 三族 loader 在未开 LOAD_*_MANUALLY 时常驻挂在 game.onPostInfrastructureInitDelegate 上（接线面）",
         "smoke 32 — LV12-14/16：三族 wasm 后端的 asm.js 兜底分支 两支的实例落地方式不对称：bullet 只有 wasm 支写 globalThis.Bullet；physx 的 asm 用 Object.assign、wasm 重绑定 PX"
       ]
+    },
+    {
+      "file": "test/smoke/smoke-33-label-shadow.test.ts",
+      "tests": [
+        "Label shadow preserves glyph scale and logical layout CLAMP and SHRINK retain their fixed quad and reset shadow overflow",
+        "Label shadow preserves glyph scale and logical layout NONE and RESIZE_HEIGHT keep layout and glyph origin across offsets, styles and DPR",
+        "Label shadow preserves glyph scale and logical layout anchor-only vertex updates retain shadow overflow",
+        "Label shadow preserves glyph scale and logical layout multiline shadow paints each text line once"
+      ]
     }
   ],
   "totals": {
-    "suites": 32,
-    "tests": 265,
-    "passed": 265,
-    "failed": 0
-  }
+    "suites": 33,
+    "tests": 269
+  },
+  "note": "Expected suite/test registration. Current pass/fail status must be read from a fresh Jest run; totals are inventory counts, not a full-run success claim."
 }

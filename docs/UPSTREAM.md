@@ -230,3 +230,9 @@ See [browser support policy](webgl2-only.md) for validation and release-evidence
 旧版基线差集和依赖图快照已移出 docs。比较工具默认输出 build/reports/baseline-compare.json；依赖图默认输出 build/reports/web-dependency-graph.json。登记数据仍由 extraction-manifest 和 upstream-file-map 保存。
 
 WASM 门禁 A7 改为现场比较五个物理后端子树，仅允许 EXPECT.jsbInClosure 列出的具体 JSB 文件缺失；其他缺件必须失败。更新报告不会扩大排除集合，旧版报告中的 registeredFace 读数仅为历史记录。
+
+## TTF shadow geometry — E-RICHTEXT-SHADOW-KERNEL-001
+
+AIR modifies cocos/2d/assembler/label/{text-output-data,text-processing,ttfUtils,ttf}.ts to keep TTF logical content dimensions separate from shadow visual overflow. Overflow.NONE and RESIZE_HEIGHT render the full integer canvas at its font scale; shadow-only margins offset the quad and drawing origin without changing UITransform layout dimensions. RESIZE_HEIGHT reserves horizontal shadow margins without changing wrapping width. CLAMP/SHRINK retain fixed-box behavior. Anchor-only vertex updates use the same bounds.
+
+This preserves RichText segment advance, wrapping and alignment without a RichText-specific position patch or a new SDK export. Padding uses the existing outline/shadow union, including positive and negative offsets; it is not an independent 2*blur+abs(offset) estimate. Regression: test/smoke/smoke-33-label-shadow.test.ts and tools/debug/probes/label-shadow-probe/. Browser test runtime may include source RichText through tools/verify/build-label-shadow.cjs; default SDK export policy is unchanged. Multiline shadow text is painted once instead of being overpainted by both effect and text passes. Auto-sized quads also honor canvas integer dimensions when shadow is disabled, preventing a sampling-scale jump on shadow toggles.
