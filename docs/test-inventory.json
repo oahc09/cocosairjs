@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-27T16:13:22.887Z",
+  "generatedAt": "2026-10-01T05:41:10.779Z",
   "suites": [
     {
       "file": "test/smoke/smoke-01-bootstrap.test.ts",
@@ -261,6 +261,7 @@
         "agent session — 操作合同（G4） 关闭中完成的异步加载：资产被释放、响应 SESSION_CLOSED",
         "agent session — 操作合同（G4） 只读 session：写操作 OUT_OF_SCOPE，观察不受影响",
         "agent session — 操作合同（G4） 白名单外组件 INVALID_ARGUMENT；未知 action UNSUPPORTED_ACTION；缺 targetId INVALID_ARGUMENT",
+        "agent session — 观察合同（G3） UI and SpriteFrame inspection keeps stable asset identity without creating material instances",
         "agent session — 观察合同（G3） inspectNode 返回完整视图；父子链可追溯",
         "agent session — 观察合同（G3） inspectScene 区分节点数/组件数/唯一资源数，并给出可发现节点树",
         "agent session — 观察合同（G3） 销毁节点 → STALE_TARGET；场景替换后旧 ID → STALE_TARGET",
@@ -377,7 +378,7 @@
         "smoke 30 — V1.2 回归组产物面与运行时 F-3 簿记完整性：upstream-file-map / extraction-manifest 与磁盘事实一致",
         "smoke 30 — V1.2 回归组产物面与运行时 G1 physics builtin 3D 的代表符号在产物导出表中",
         "smoke 30 — V1.2 回归组产物面与运行时 H post-process（命名空间 postProcess） 的代表符号在产物导出表中",
-        "smoke 30 — V1.2 回归组产物面与运行时 PAL 的唯一 AIR 改动是已登记且文档化的 Web DPR cap",
+        "smoke 30 — V1.2 回归组产物面与运行时 PAL 来源、MIT 许可与 AIR 画布适配均有可复现登记",
         "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 产物绑定：矩阵记录的 bundle 与 d.ts 哈希就是当期构建产物",
         "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 契约绑定：矩阵断言自采证后未被放松",
         "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 每张截图仍在盘且与记录逐字节一致；断言全部为真",
@@ -387,7 +388,7 @@
         "smoke 30 — V1.2 回归组产物面与运行时 V1.2 新增导出在 .d.ts 发布面中可见（类型与产物同源）",
         "smoke 30 — V1.2 回归组产物面与运行时 Web DPR cap applies the host value and falls back safely",
         "smoke 30 — V1.2 回归组产物面与运行时 spine 运行时资产缺失走可读降级提示（D2/P2 口径）",
-        "smoke 30 — V1.2 回归组产物面与运行时 src/pal 除已登记的 AIR DPR cap 外均与 @cocos/engine-pal dist 逐字节一致",
+        "smoke 30 — V1.2 回归组产物面与运行时 src/pal 与冻结 MIT 源码的可复现生成结果完全一致",
         "smoke 30 — V1.2 回归组产物面与运行时 vendored 运行库与已安装 npm 包逐字节一致",
         "smoke 30 — V1.2 回归组产物面与运行时 产物自包含：无 bare @cocos/* 与 pal/* import",
         "smoke 30 — V1.2 回归组产物面与运行时 批次 D-4 / G-3（Deviation-05）：三个 wasm 后端子图「已抽取、未接线、暂不类型核对」 82 个抽取文件全部在册且落盘（豁免只作用于类型核对，不改内容）",
@@ -438,7 +439,8 @@
   ],
   "totals": {
     "suites": 33,
-    "tests": 269
-  },
-  "note": "Expected suite/test registration. Current pass/fail status must be read from a fresh Jest run; totals are inventory counts, not a full-run success claim."
+    "tests": 270,
+    "passed": 270,
+    "failed": 0
+  }
 }

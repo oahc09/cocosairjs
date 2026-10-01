@@ -38,6 +38,11 @@ const EXPECT = {
         'cocos/core/utils/path.ts',
         'cocos/rendering/global-descriptor-set-manager.ts',
         'cocos/gfx/device-manager.ts', // Owner-approved WebGL 2-only startup policy.
+        // Registered E-RICHTEXT-SHADOW-KERNEL-001, verified by smoke-33; preserve strict drift accounting.
+        'cocos/2d/assembler/label/text-output-data.ts',
+        'cocos/2d/assembler/label/text-processing.ts',
+        'cocos/2d/assembler/label/ttf.ts',
+        'cocos/2d/assembler/label/ttfUtils.ts',
     ],
     emscriptenSpecs: [
         'external:emscripten/box2d/box2d.release.asm.js',

@@ -54,7 +54,7 @@
       "`play()` 在 player 尚未 `_isLoaded` 时不会丢操作：`_operationsBeforeLoading` 把它排队（实测调用前 0 → 调用后 1），加载完成由 `_syncStates` 重放，队列随之清空（`opsQueueEmptyAfterLoad true`）。⚠️ 这条队列在 webkit 上永不清空，见下面 DOM 后端一组",
       "自动播放策略：手势前 `srcA.play()` 不 emit STARTED（`autoplayBlocked true`、`startedCountBeforeGesture 0`、300 ms 后仍 `INIT(0)`）。解锁靠 `AudioContextAgent.runContext()` 往 `#GameCanvas` 挂 **capture 阶段的 `touchend`/`mouseup`** 调 `context.resume()`，`_doPlay()` 走 `onceRunning` 延后。实测三引擎都拦（headless 也拦），但解锁耗时 512/599/1660 ms 逐次不同 ⇒ 判据只能是轮询到的 `waitFor(() => srcB.playing)`，不能是固定 sleep",
       "`AudioTimer.currentTime` 是 `performance.now()` 换算，不是 AudioContext 时钟，并且 `% duration` 回绕：所以 `pause()` 把它冻住（`frozenWhilePaused 0`）、`seek()` 设偏移、`checkEnded` 用 `setTimeout(duration - currentTime)` 判尾。非循环播完 ⇒ emit ENDED 且状态回 `INIT(0)`、`playing false`、位置归 0；`loop=true` 时实测 `endedDeltaDuringLoop 0`（不判尾，播放头回绕）",
-      "`volume` setter 做 `clamp01` 且 NaN 保留前值（只 warn，不 error）：实测 `0.35` 读回 0.35、`2 → 1`、`NaN → 仍是 1`。WebAudio 后端能顺到 `srcB._player._ccprivate$_player._ccprivate$_gainNode.gain.value`，读回恰好 0.35 ⇒ 「属性生效」有第二路独立证据。`playOneShot(clip, 0.5)` 另开 OneShot 通道，主播放头不受影响（`stillPlayingAfterOneShot true`）",
+      "`volume` setter 做 `clamp01` 且 NaN 保留前值（只 warn，不 error）：实测 `0.35` 读回 0.35、`2 → 1`、`NaN → 仍是 1`。WebAudio 后端能顺到 `srcB._player._player._gainNode.gain.value`，读回恰好 0.35 ⇒ 「属性生效」有第二路独立证据。`playOneShot(clip, 0.5)` 另开 OneShot 通道，主播放头不受影响（`stillPlayingAfterOneShot true`）",
       "`seek(999)` 被 `clamp(0, duration)` 夹到 1.6，且因为此时状态已 `INIT(0)`，夹完仍是停的（`stillStoppedAfterClampSeek true`）⇒ 「endTime/越界」不能只看返回值，必须连状态一起断言",
       "`decodeAudioData` 一定把资产**重采样到 AudioContext 采样率**：8000 Hz 资产在 48 kHz context 下 `getSampleRate() 48000`、`getPCMData(0).length 76800`（= 1.6 × 48000），而 `duration` 仍是 1.6。⇒ 断言 PCM 长度必须按 context 采样率算，照资产头里的数字写期望会永久红。单声道上 `getPCMData(1)` 直接抛 `IndexSizeError`（WebAudio `getChannelData(1)`），越界声道不是返回 undefined",
       "⚠️ Playwright 的 webkit-2361（Windows）**根本没有 Web Audio API**：`AudioContext / webkitAudioContext / OfflineAudioContext / webkitOfflineAudioContext` 全是 `undefined`（`typeof` 实测，UA `Version/26.5 Safari/605.1.15`）。于是引擎退回 `AudioPlayerDOM`：`clip._nativeAsset.type` 从 `WEB_AUDIO(1)` 变成 `0`、`AudioSource._player` 的 impl 是 `AudioPlayerDOM`、`getPCMData()` 返回 undefined、`sampleRate` getter 恒 0。⇒ 本示例「PCM 解码/峰值/bin 包络」这一组在 webkit 上结构性不可能，只能钉在 chromium/firefox 的 probeNonEmpty，不进 probeEquals",
@@ -388,9 +388,9 @@
     "assets": "无第三方资产：`assets/tone.wav`（25,644 B，sha256 前 16 位 744d7e437a5235ac）由仓库内 `tools/fixtures/make-tone-wav.cjs` 手写 RIFF/PCM 生成（mono/16-bit/8000 Hz/1.600 s，前半 440 Hz@0.50、后半 660 Hz@0.25，段首尾 88 样本线性包络），无编码器依赖。audio 模块为 cocos4 上游 TypeScript 端口（`src/cocos/audio/*` 6 文件逐字节同源，登记在 `docs/upstream-file-map.json`），`pal/audio` 为官方发布物 vendored（`src/pal/audio/**`，许可按 UNLICENSED 口径单独登记）"
   },
   "promotion": {
-    "spec": "7ac2fe951476",
-    "source": "38d2fec0f38626ee",
-    "candidate": "2360fa3fb4cea194",
+    "spec": "f5eba590706f",
+    "source": "8f64df2951fdb0c7",
+    "candidate": "b583e4c7d8588d5f",
     "verified": 28,
     "attested": 0,
     "units": 28

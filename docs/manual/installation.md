@@ -1,6 +1,6 @@
 # Installation 安装与引入
 
-> Cocos AIR 的形态：**一个 ESM 构建产物 + importmap**——没有运行时依赖、没有打包器要求，产物由本仓库自己构建（`npm run build`），不从 npm 拉取。
+> Cocos AIR 提供 ESM SDK，外部运行时依赖为零。可以安装发布包并使用打包器，也可以从源码构建后通过 importmap 加载。浏览器渲染要求 WebGL 2。
 > 本篇把"从零到一个能看见的立方体"这条最短链路走完，并教你怎么在页面上确认引擎版本、平台与渲染后端。
 
 > 下一篇：[Creating a Scene 创建场景](./creating-a-scene.md)
@@ -9,33 +9,40 @@
 
 | 做法                                                     | 说明                                                                                   |
 | -------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `npm install && npm run build`                           | AIR 目前从源码构建，产物是 `build/cocosair.module.js`（package.json `version: 0.1.0`） |
+| `npm install && npm run build`                           | 从源码生成开发 bundle 与 source map；声明需另跑 `build:dts` |
 | `importmap: { "cocosair": "/build/cocosair.module.js" }` | 裸说明符统一叫 `cocosair`                                                              |
-| `import { createAirApp, Scene, Node } from 'cocosair'`   | AIR 导出 368 个具名符号，**没有默认导出**，不要写 `import cc from 'cocosair'`          |
+| `import { createAirApp, Scene, Node } from 'cocosair'`   | 使用下文 importmap 别名；SDK 提供具名导出，**没有默认导出**          |
 | `await createAirApp({ canvas })`                         | 异步；渲染器由 app 托管，你拿不到 renderer 对象                                        |
 
 ## 1. 获取构建产物
 
+发布包可用后，在使用打包器的项目中执行 `npm install cocosair.js@1.0.0`，
+然后以 `import { createAirApp, Scene } from 'cocosair.js'` 引入。
+在动态导入引擎前创建 `#GameCanvas`；它是模块初始化的前置条件。
+该 npm 包名与下文 importmap 中的 `cocosair` 别名不同。
+当前公开发布仍受许可与验收门禁约束，状态见 [验证与发布检查](../reference/verification.md)。
+
 ```bash
 git clone <repo> && cd cocosair.js
 npm install
-npm run build          # → build/cocosair.module.js（+ .d.ts / .map）
+npm run build          # → build/cocosair.module.js + .map
+npm run build:dts      # → build/cocosair.module.d.ts
 ```
 
-`package.json` 的入口字段都指向同一个文件：
+发布包的运行时入口指向无 source map 的副本，声明入口单独保留：
 
 ```json
 {
   "name": "cocosair.js",
-  "version": "0.1.0",
-  "main": "build/cocosair.module.js",
-  "module": "build/cocosair.module.js",
+  "version": "1.0.0",
+  "main": "build/npm/cocosair.module.js",
+  "module": "build/npm/cocosair.module.js",
   "types": "./build/cocosair.module.d.ts",
   "exports": {
     ".": {
       "types": "./build/cocosair.module.d.ts",
-      "import": "./build/cocosair.module.js",
-      "default": "./build/cocosair.module.js"
+      "import": "./build/npm/cocosair.module.js",
+      "default": "./build/npm/cocosair.module.js"
     }
   }
 }
@@ -209,7 +216,7 @@ frameRate: 60
 
 几点值得注意：
 
-- `VERSION` 是 `4.0.0`（引擎基线），而 `package.json` 的 `version` 是 `0.1.0`（AIR 封装层版本）—— 两个版本号含义不同，别混。
+- `VERSION` 是 `4.0.0`（引擎基线），而 `AIR_VERSION` 与 `package.json` 的 `version` 是 `1.0.0`（AIR SDK 版本）—— 两个版本号含义不同，别混。
 - `device.constructor.name` 给出真实后端：`WebGL2Device`；显式 HEADLESS 为 `EmptyDevice`。`gfx.API` 枚举同时列出了 `WEBGL2`、`WEBGL`、`WEBGPU` 等取值，但 AIR 浏览器发行版要求 WebGL2，枚举中的 WEBGL 不表示继续支持 WebGL1（见 [WebGL Compatibility Check](./webgl-compatibility-check.md)）。
 - `device.capabilities`（**不是 `device.caps`**）才是能力查询入口，字段包含 `maxTextureSize`、`maxVertexAttributes`、`maxColorRenderTargets`、`supportQuery` 等。
 - 上面这次 `maxColorRenderTargets` 报 `0`，是软件光栅化环境的结果；真机 GPU 上通常 >1。写代码时不要假设它非零。

@@ -81,7 +81,6 @@
   "@cocos/cannon": "1.2.8",
   "@cocos/ccbuild": "^2.3.21",
   "@cocos/dragonbones-js": "^1.0.1",
-  "@cocos/engine-pal": "^1.0.4",
   "@types/jest": "^24.9.1",
   "babel-jest": "28.1.3",
   "esbuild": "^0.28.2",

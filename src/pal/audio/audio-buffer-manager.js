@@ -1,5 +1,67 @@
-import { warnID } from '@cocos/engine/cocos/core/platform/debug';
+/*
+ Copyright (c) 2022-2023 Xiamen Yaji Software Co., Ltd.
 
-class AudioBufferManager{_ccprivate$_audioBufferDataMap={};_ccprivate$addCache(url,audioBuffer){const audioBufferData=this._ccprivate$_audioBufferDataMap[url];if(audioBufferData){warnID(5204,url);return}this._ccprivate$_audioBufferDataMap[url]={_ccprivate$usedCount:1,_ccprivate$audioBuffer:audioBuffer};}_ccprivate$retainCache(url){const audioBufferData=this._ccprivate$_audioBufferDataMap[url];if(!audioBufferData){warnID(5203,url);return}audioBufferData._ccprivate$usedCount++;}_ccprivate$getCache(url){const audioBufferData=this._ccprivate$_audioBufferDataMap[url];return audioBufferData?._ccprivate$audioBuffer}_ccprivate$tryReleasingCache(url){const audioBufferData=this._ccprivate$_audioBufferDataMap[url];if(!audioBufferData){warnID(5203,url);return}if(--audioBufferData._ccprivate$usedCount<=0){delete this._ccprivate$_audioBufferDataMap[url];}}}const audioBufferManager=new AudioBufferManager;
+ https://www.cocos.com/
 
-export { audioBufferManager };
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do so,
+ subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+*/
+import { warnID } from '../../cocos/core/platform/debug';
+/**
+ * This is a manager to manage the cache of audio buffer for web audio.
+ * @mangle
+ */
+class AudioBufferManager {
+    constructor() {
+        this._audioBufferDataMap = {};
+    }
+    addCache(url, audioBuffer) {
+        const audioBufferData = this._audioBufferDataMap[url];
+        if (audioBufferData) {
+            warnID(5204, url);
+            return;
+        }
+        this._audioBufferDataMap[url] = {
+            usedCount: 1,
+            audioBuffer,
+        };
+    }
+    retainCache(url) {
+        const audioBufferData = this._audioBufferDataMap[url];
+        if (!audioBufferData) {
+            warnID(5203, url);
+            return;
+        }
+        audioBufferData.usedCount++;
+    }
+    getCache(url) {
+        const audioBufferData = this._audioBufferDataMap[url];
+        return audioBufferData?.audioBuffer;
+    }
+    tryReleasingCache(url) {
+        const audioBufferData = this._audioBufferDataMap[url];
+        if (!audioBufferData) {
+            warnID(5203, url);
+            return;
+        }
+        if (--audioBufferData.usedCount <= 0) {
+            delete this._audioBufferDataMap[url];
+        }
+    }
+}
+export const audioBufferManager = new AudioBufferManager();

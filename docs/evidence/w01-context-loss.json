@@ -1,10 +1,10 @@
 {
-  "measuredAt": "2026-09-29T22:53:23.506Z",
+  "measuredAt": "2026-10-01T05:21:09.488Z",
   "evidence": "w01-context-loss (Code First 与 Web 可靠性任务清单 W01)",
-  "taskDoc": "ai/Cocos Air Code First 与 Web 可靠性优化任务清单.md",
+  "taskDoc": "ai/plans/code-first-web-reliability.md",
   "bundle": {
-    "sha256_16": "9edc4be858de13fe",
-    "bytes": 6432928
+    "sha256_16": "20a95e6d7e2f348e",
+    "bytes": 6422573
   },
   "browser": {
     "name": "chromium headless (ANGLE/SwiftShader)",
@@ -31,7 +31,7 @@
       "mode": "webgl2",
       "expectBackend": "webgl2",
       "pass": true,
-      "durationMs": 3309,
+      "durationMs": 3684,
       "probe": {
         "ok": true,
         "ready": true,
@@ -47,16 +47,16 @@
               186,
               255
             ],
-            "afterDrawCount": 36,
-            "clockSum": 1.591
+            "afterDrawCount": 10,
+            "clockSum": 0.899
           },
           "C_lost": {
             "state": "lost",
             "isContextLost": true,
             "gamePaused": true,
             "lostCount": 1,
-            "afterDrawCount": 36,
-            "clockSum": 1.591,
+            "afterDrawCount": 10,
+            "clockSum": 0.899,
             "lastEvent": "lost"
           },
           "D_noSubmission": {
@@ -73,17 +73,17 @@
             "afterDrawDeltaAfterRestore": 0,
             "timeline": [
               {
-                "at": 1790722401917,
+                "at": 1790832067801,
                 "type": "lost",
                 "detail": "webglcontextlost"
               },
               {
-                "at": 1790722402600,
+                "at": 1790832068476,
                 "type": "restoring",
                 "detail": "webglcontextrestored"
               },
               {
-                "at": 1790722402600,
+                "at": 1790832068476,
                 "type": "failed",
                 "detail": "context-restored-but-gpu-resources-not-rebuilt"
               }
@@ -112,41 +112,41 @@
             "reason": "context-restored-but-gpu-resources-not-rebuilt",
             "suggestion": "reload",
             "lastEvent": "failed",
-            "lastEventAt": 1790722403112,
+            "lastEventAt": 1790832069003,
             "timeline": [
               {
-                "at": 1790722401917,
+                "at": 1790832067801,
                 "type": "lost",
                 "detail": "webglcontextlost"
               },
               {
-                "at": 1790722402600,
+                "at": 1790832068476,
                 "type": "restoring",
                 "detail": "webglcontextrestored"
               },
               {
-                "at": 1790722402600,
+                "at": 1790832068476,
                 "type": "failed",
                 "detail": "context-restored-but-gpu-resources-not-rebuilt"
               },
               {
-                "at": 1790722403056,
+                "at": 1790832068931,
                 "type": "lost",
                 "detail": "webglcontextlost"
               },
               {
-                "at": 1790722403112,
+                "at": 1790832069003,
                 "type": "restoring",
                 "detail": "webglcontextrestored"
               },
               {
-                "at": 1790722403112,
+                "at": 1790832069003,
                 "type": "failed",
                 "detail": "context-restored-but-gpu-resources-not-rebuilt"
               }
             ]
           },
-          "afterDrawTotal": 36,
+          "afterDrawTotal": 10,
           "reloadCalls": 1
         },
         "checks": [

@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-09-29T22:50:31.481Z",
-  "runner": "tools/verify/g4-shader-probe.cjs",
+  "measuredAt": "2026-10-01T05:20:16.670Z",
+  "runner": "tools/verify/shader-probe.cjs",
   "mode": "g4-shader-probe-v1",
-  "head": "785060473b5e757767ae490bef6fbcefeb307e3a",
-  "candidateFingerprint": "8f686f81dee48023",
+  "head": "e9d30f21cfceb8b754af36090ce546acf8ca9fc8",
+  "candidateFingerprint": "b583e4c7d8588d5f",
   "browser": {
     "name": "chromium",
     "headless": true,
@@ -19,7 +19,7 @@
     {
       "mode": "default",
       "verdict": "PASS",
-      "ms": 5032,
+      "ms": 4647,
       "runError": null,
       "fatal": null,
       "checks": [
@@ -36,17 +36,17 @@
         {
           "name": "B1-user-frag-on-screen",
           "result": "PASS",
-          "detail": "center=[175,70,17,255]（预期橙色系 r 主导，背景 (20,24,32)）"
+          "detail": "center=[214,86,21,255]（预期橙色系 r 主导，背景 (20,24,32)）"
         },
         {
           "name": "C1-uniform-vec4-update",
           "result": "PASS",
-          "detail": "center=[0,138,35,255]（预期绿色系 g 主导）"
+          "detail": "center=[0,171,43,255]（预期绿色系 g 主导）"
         },
         {
           "name": "D1-time-animation-frame-diff",
           "result": "PASS",
-          "detail": "maxDiff=9"
+          "detail": "maxDiff=32"
         },
         {
           "name": "E1-uniform-float-freeze",
@@ -61,7 +61,7 @@
         {
           "name": "F2-page-survives-broken-shader",
           "result": "PASS",
-          "detail": "center=[0,246,62,255]（好盒子仍绿）"
+          "detail": "center=[0,213,53,255]（好盒子仍绿）"
         },
         {
           "name": "G1-remove",
@@ -76,12 +76,12 @@
         {
           "name": "G3-reregister-renders",
           "result": "PASS",
-          "detail": "center=[25,75,249,255]（预期蓝色系 b 主导）"
+          "detail": "center=[25,76,252,255]（预期蓝色系 b 主导）"
         },
         {
           "name": "H1-material-destroy-no-crash",
           "result": "PASS",
-          "detail": "threw=null center=[23,68,228,255]"
+          "detail": "threw=null center=[25,76,253,255]"
         },
         {
           "name": "H2-effect-destroy-no-throw",
@@ -91,7 +91,7 @@
         {
           "name": "H3-page-alive-final",
           "result": "PASS",
-          "detail": "center=[19,58,194,255]"
+          "detail": "center=[24,71,237,255]"
         }
       ],
       "info": {
@@ -120,37 +120,37 @@
       },
       "samples": {
         "firstFrame": [
-          175,
-          70,
-          17,
+          214,
+          86,
+          21,
           255
         ],
         "afterColorUniform": [
           0,
-          138,
-          35,
+          171,
+          43,
           255
         ],
         "animDiff": {
           "d0": [
             0,
-            137,
-            34,
+            169,
+            42,
             255
           ],
           "d1": [
             0,
-            128,
-            32,
+            150,
+            38,
             255
           ],
           "d2": [
             0,
-            128,
-            32,
+            137,
+            34,
             255
           ],
-          "maxDiff": 9
+          "maxDiff": 32
         },
         "frozen": {
           "f0": [
@@ -173,20 +173,20 @@
         ],
         "afterBroken": [
           0,
-          246,
-          62,
+          213,
+          53,
           255
         ],
         "afterReregister": [
           25,
-          75,
-          249,
+          76,
+          252,
           255
         ],
         "final": [
-          19,
-          58,
-          194,
+          24,
+          71,
+          237,
           255
         ]
       },

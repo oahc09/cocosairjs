@@ -1,3 +1,66 @@
-let OS;(function(OS){OS["UNKNOWN"]="Unknown";OS["IOS"]="iOS";OS["ANDROID"]="Android";OS["WINDOWS"]="Windows";OS["LINUX"]="Linux";OS["OSX"]="OS X";OS["OHOS"]="OHOS";OS["OPENHARMONY"]="OpenHarmony";})(OS||(OS={}));
+/*
+ Copyright (c) 2022-2023 Xiamen Yaji Software Co., Ltd.
 
-export { OS };
+ https://www.cocos.com/
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do so,
+ subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+*/
+export var OS;
+(function (OS) {
+    /**
+     * @en Operating System - Unknown
+     * @zh 操作系统 - 未知
+     */
+    OS["UNKNOWN"] = "Unknown";
+    /**
+     * @en Operating System - iOS
+     * @zh 操作系统 - iOS
+     */
+    OS["IOS"] = "iOS";
+    /**
+     * @en Operating System - Android
+     * @zh 操作系统 - 安卓
+     */
+    OS["ANDROID"] = "Android";
+    /**
+     * @en Operating System - Windows
+     * @zh 操作系统 - Windows
+     */
+    OS["WINDOWS"] = "Windows";
+    /**
+     * @en Operating System - Linux
+     * @zh 操作系统 - Linux
+     */
+    OS["LINUX"] = "Linux";
+    /**
+     * @en Operating System - Mac OS X
+     * @zh 操作系统 - Mac OS X
+     */
+    OS["OSX"] = "OS X";
+    /**
+     * @en Operating System - HarmonyOS
+     * @zh 操作系统 - 鸿蒙
+     */
+    OS["OHOS"] = "OHOS";
+    /**
+     * @en Operating System - OpenHarmony
+     * @zh 操作系统 - OpenHarmony
+     */
+    OS["OPENHARMONY"] = "OpenHarmony";
+})(OS || (OS = {}));

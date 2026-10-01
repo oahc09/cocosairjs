@@ -1,0 +1,247 @@
+{
+  "measuredAt": "2026-10-01T04:59:13.037Z",
+  "evidence": "w04-canvas-binding (Code First 与 Web 可靠性任务清单 W04)",
+  "taskDoc": "ai/plans/code-first-web-reliability.md",
+  "bundle": {
+    "sha256_16": "f60378ed1bffb84b",
+    "bytes": 6422491
+  },
+  "browser": {
+    "name": "chromium headless (ANGLE/SwiftShader)",
+    "viewport": "1280x720",
+    "hasTouchNote": "anyid 模式 hasTouch=true（真实触摸 tap）；鼠标模拟触摸路径由引擎 input 系统在无触摸能力平台自处理，未单测"
+  },
+  "contract": {
+    "override": "globalThis.__CC_CANVAS__ = <canvas> 必须在引擎 import 前设置（静态页内联脚本或动态 import 前）",
+    "conflict": "页面已有另一 #GameCanvas + 传入自定义 id 画布 ⇒ createAirApp 显式抛错",
+    "focus": "tabIndex 默认 0；PAL mousedown/touchstart 自动 canvas.focus()；键盘事件仅聚焦时到达"
+  },
+  "runs": [
+    {
+      "mode": "classic",
+      "hasTouch": false,
+      "pass": true,
+      "durationMs": 3086,
+      "probe": {
+        "ok": true,
+        "checks": [
+          {
+            "name": "boot_canvas_id_preserved",
+            "pass": true,
+            "detail": "GameCanvas"
+          },
+          {
+            "name": "boot_tabindex_focusable",
+            "pass": true,
+            "detail": "tabIndex=0"
+          },
+          {
+            "name": "boot_scene_running",
+            "pass": true,
+            "detail": "binding-probe"
+          },
+          {
+            "name": "boot_anyid_override_render",
+            "pass": true,
+            "detail": "30,40,60,255"
+          },
+          {
+            "name": "mouse_location_mapping",
+            "pass": true,
+            "detail": "{\"x\":400,\"y\":420} expect {\"x\":400,\"y\":420}"
+          },
+          {
+            "name": "focus_on_click",
+            "pass": true
+          },
+          {
+            "name": "keyboard_gated_by_focus",
+            "pass": true,
+            "detail": "focused=1 blurred=0"
+          },
+          {
+            "name": "focus_restorable",
+            "pass": true
+          }
+        ],
+        "samples": {
+          "focusBefore": {
+            "activeIsCanvas": false,
+            "tabIndex": 0
+          },
+          "interaction": {
+            "mouseDown": {
+              "x": 400,
+              "y": 420
+            },
+            "expectedMouse": {
+              "x": 400,
+              "y": 420
+            },
+            "focusAfterClick": true,
+            "keyWhileFocused": 1,
+            "keyWhileBlurred": 0,
+            "focusAfterReclick": true,
+            "touchTested": false,
+            "touchStart": null
+          }
+        },
+        "info": {
+          "canvasIdAtCreate": "GameCanvas",
+          "tabIndex": 0
+        }
+      },
+      "failedChecks": [],
+      "pageErrors": [],
+      "runError": null,
+      "consoleSummary": {
+        "total": 9,
+        "warns": 0
+      }
+    },
+    {
+      "mode": "anyid",
+      "hasTouch": true,
+      "pass": true,
+      "durationMs": 2877,
+      "probe": {
+        "ok": true,
+        "checks": [
+          {
+            "name": "boot_canvas_id_preserved",
+            "pass": true,
+            "detail": "my-game"
+          },
+          {
+            "name": "boot_tabindex_focusable",
+            "pass": true,
+            "detail": "tabIndex=0"
+          },
+          {
+            "name": "boot_scene_running",
+            "pass": true,
+            "detail": "binding-probe"
+          },
+          {
+            "name": "boot_anyid_override_render",
+            "pass": true,
+            "detail": "30,40,60,255"
+          },
+          {
+            "name": "mouse_location_mapping",
+            "pass": true,
+            "detail": "{\"x\":400,\"y\":420} expect {\"x\":400,\"y\":420}"
+          },
+          {
+            "name": "focus_on_click",
+            "pass": true
+          },
+          {
+            "name": "keyboard_gated_by_focus",
+            "pass": true,
+            "detail": "focused=1 blurred=0"
+          },
+          {
+            "name": "focus_restorable",
+            "pass": true
+          },
+          {
+            "name": "touch_event_received",
+            "pass": true,
+            "detail": "TOUCH_START recorded: true"
+          }
+        ],
+        "samples": {
+          "focusBefore": {
+            "activeIsCanvas": false,
+            "tabIndex": 0
+          },
+          "interaction": {
+            "mouseDown": {
+              "x": 400,
+              "y": 420
+            },
+            "expectedMouse": {
+              "x": 400,
+              "y": 420
+            },
+            "focusAfterClick": true,
+            "keyWhileFocused": 1,
+            "keyWhileBlurred": 0,
+            "focusAfterReclick": true,
+            "touchTested": true,
+            "touchStart": true
+          }
+        },
+        "info": {
+          "canvasIdAtCreate": "my-game",
+          "tabIndex": 0
+        }
+      },
+      "failedChecks": [],
+      "pageErrors": [],
+      "runError": null,
+      "consoleSummary": {
+        "total": 9,
+        "warns": 0
+      }
+    },
+    {
+      "mode": "decoy",
+      "hasTouch": false,
+      "pass": true,
+      "durationMs": 1135,
+      "probe": {
+        "ok": true,
+        "checks": [
+          {
+            "name": "decoy_rejects_explicitly",
+            "pass": true,
+            "detail": "[cocosair] createAirApp: page already contains another element with id \"GameCanvas\" (found <canvas>), and the passed canvas has id \"real-canvas\". Engine input binds by that id — rename/remove the other element, or pass it as the canvas."
+          }
+        ],
+        "samples": {
+          "decoyRejection": "[cocosair] createAirApp: page already contains another element with id \"GameCanvas\" (found <canvas>), and the passed canvas has id \"real-canvas\". Engine input binds by that id — rename/remove the other element, or pass it as the canvas."
+        },
+        "info": {}
+      },
+      "failedChecks": [],
+      "pageErrors": [],
+      "runError": null,
+      "consoleSummary": {
+        "total": 0,
+        "warns": 0
+      }
+    },
+    {
+      "mode": "unbound",
+      "hasTouch": false,
+      "pass": true,
+      "durationMs": 913,
+      "probe": {
+        "ok": true,
+        "checks": [
+          {
+            "name": "unbound_rejects_explicitly",
+            "pass": true,
+            "detail": "[cocosair] GameCanvas or __CC_CANVAS__ must exist before importing the engine."
+          },
+          {
+            "name": "unbound_id_preserved",
+            "pass": true
+          }
+        ],
+        "samples": {},
+        "info": {}
+      },
+      "failedChecks": [],
+      "pageErrors": [],
+      "runError": null,
+      "consoleSummary": {
+        "total": 0,
+        "warns": 0
+      }
+    }
+  ],
+  "verdict": "PASS"
+}

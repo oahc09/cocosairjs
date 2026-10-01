@@ -1,9 +1,110 @@
-import { EventTarget } from '@cocos/engine/cocos/core/event/event-target';
-import { EventHMD } from '@cocos/engine/cocos/input/types';
-import { InputSourcePosition, InputSourceOrientation } from '../input-source.js';
-import { Quat, Vec3 } from '@cocos/engine/cocos/core/math';
-import legacyCC from '@cocos/engine/predefine';
+/*
+ Copyright (c) 2022-2023 Xiamen Yaji Software Co., Ltd.
 
-var Pose;(function(Pose){Pose[Pose["VIEW_LEFT"]=0]="VIEW_LEFT";Pose[Pose["VIEW_RIGHT"]=3]="VIEW_RIGHT";Pose[Pose["HEAD_MIDDLE"]=6]="HEAD_MIDDLE";})(Pose||(Pose={}));class HMDInputDevice{get viewLeftPosition(){return this._ccprivate$_viewLeftPosition}get viewLeftOrientation(){return this._ccprivate$_viewLeftOrientation}get viewRightPosition(){return this._ccprivate$_viewRightPosition}get viewRightOrientation(){return this._ccprivate$_viewRightOrientation}get headMiddlePosition(){return this._ccprivate$_headMiddlePosition}get headMiddleOrientation(){return this._ccprivate$_headMiddleOrientation}_ccprivate$_eventTarget=new EventTarget;_ccprivate$_intervalId=-1;_ccprivate$_webPoseState={[Pose.VIEW_LEFT]:{position:Vec3.ZERO,orientation:Quat.IDENTITY},[Pose.VIEW_RIGHT]:{position:Vec3.ZERO,orientation:Quat.IDENTITY},[Pose.HEAD_MIDDLE]:{position:Vec3.ZERO,orientation:Quat.IDENTITY}};constructor(){this._ccprivate$_initInputSource();this._ccprivate$_registerEvent();}_ccprivate$_ensureDirectorDefined(){return new Promise(resolve=>{this._ccprivate$_intervalId=setInterval(()=>{if(legacyCC.director&&legacyCC.Director){clearInterval(this._ccprivate$_intervalId);this._ccprivate$_intervalId=-1;resolve();}},50);})}_ccprivate$_registerEvent(){this._ccprivate$_ensureDirectorDefined().then(()=>{legacyCC.director.on(legacyCC.Director.EVENT_BEGIN_FRAME,this._ccprivate$_scanHmd,this);}).catch(e=>{});}_ccprivate$_scanHmd(){const infoList=globalThis.__globalXR?.webxrHmdPoseInfos;if(!infoList){return}for(let i=0;i<infoList.length;++i){const info=infoList[i];this._ccprivate$_updateWebPoseState(info);}this._ccprivate$_eventTarget.emit("hmd-pose-input",new EventHMD("hmd-pose-input",this));}_on(eventType,callback,target){this._ccprivate$_eventTarget.on(eventType,callback,target);}_ccprivate$_updateWebPoseState(info){if(info.code!==Pose.VIEW_LEFT&&info.code!==Pose.VIEW_RIGHT&&info.code!==Pose.HEAD_MIDDLE){return}this._ccprivate$_webPoseState[info.code]={position:new Vec3(info.position.x,info.position.y,info.position.z),orientation:new Quat(info.orientation.x,info.orientation.y,info.orientation.z,info.orientation.w)};}_ccprivate$_initInputSource(){this._ccprivate$_viewLeftPosition=new InputSourcePosition;this._ccprivate$_viewLeftPosition.getValue=()=>this._ccprivate$_webPoseState[Pose.VIEW_LEFT].position;this._ccprivate$_viewLeftOrientation=new InputSourceOrientation;this._ccprivate$_viewLeftOrientation.getValue=()=>this._ccprivate$_webPoseState[Pose.VIEW_LEFT].orientation;this._ccprivate$_viewRightPosition=new InputSourcePosition;this._ccprivate$_viewRightPosition.getValue=()=>this._ccprivate$_webPoseState[Pose.VIEW_RIGHT].position;this._ccprivate$_viewRightOrientation=new InputSourceOrientation;this._ccprivate$_viewRightOrientation.getValue=()=>this._ccprivate$_webPoseState[Pose.VIEW_RIGHT].orientation;this._ccprivate$_headMiddlePosition=new InputSourcePosition;this._ccprivate$_headMiddlePosition.getValue=()=>this._ccprivate$_webPoseState[Pose.HEAD_MIDDLE].position;this._ccprivate$_headMiddleOrientation=new InputSourceOrientation;this._ccprivate$_headMiddleOrientation.getValue=()=>this._ccprivate$_webPoseState[Pose.HEAD_MIDDLE].orientation;}}
+ https://www.cocos.com/
 
-export { HMDInputDevice };
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do so,
+ subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+*/
+import { InputEventType } from '../../../cocos/input/types/event-enum';
+import { EventTarget } from '../../../cocos/core/event/event-target';
+import { EventHMD } from '../../../cocos/input/types';
+import { InputSourcePosition, InputSourceOrientation } from '../input-source';
+import { Vec3, Quat } from '../../../cocos/core/math';
+import legacyCC from '../../../predefine';
+var Pose;
+(function (Pose) {
+    Pose[Pose["VIEW_LEFT"] = 0] = "VIEW_LEFT";
+    Pose[Pose["VIEW_RIGHT"] = 3] = "VIEW_RIGHT";
+    Pose[Pose["HEAD_MIDDLE"] = 6] = "HEAD_MIDDLE";
+})(Pose || (Pose = {}));
+export class HMDInputDevice {
+    get viewLeftPosition() { return this._viewLeftPosition; }
+    get viewLeftOrientation() { return this._viewLeftOrientation; }
+    get viewRightPosition() { return this._viewRightPosition; }
+    get viewRightOrientation() { return this._viewRightOrientation; }
+    get headMiddlePosition() { return this._headMiddlePosition; }
+    get headMiddleOrientation() { return this._headMiddleOrientation; }
+    constructor() {
+        this._eventTarget = new EventTarget();
+        this._intervalId = -1;
+        this._webPoseState = {
+            [Pose.VIEW_LEFT]: { position: Vec3.ZERO, orientation: Quat.IDENTITY },
+            [Pose.VIEW_RIGHT]: { position: Vec3.ZERO, orientation: Quat.IDENTITY },
+            [Pose.HEAD_MIDDLE]: { position: Vec3.ZERO, orientation: Quat.IDENTITY },
+        };
+        this._initInputSource();
+        this._registerEvent();
+    }
+    _ensureDirectorDefined() {
+        return new Promise((resolve) => {
+            this._intervalId = setInterval(() => {
+                if (legacyCC.director && legacyCC.Director) {
+                    clearInterval(this._intervalId);
+                    this._intervalId = -1;
+                    resolve();
+                }
+            }, 50);
+        });
+    }
+    _registerEvent() {
+        this._ensureDirectorDefined().then(() => {
+            legacyCC.director.on(legacyCC.Director.EVENT_BEGIN_FRAME, this._scanHmd, this);
+        }).catch((e) => { });
+    }
+    _scanHmd() {
+        const infoList = globalThis.__globalXR?.webxrHmdPoseInfos;
+        if (!infoList) {
+            return;
+        }
+        for (let i = 0; i < infoList.length; ++i) {
+            const info = infoList[i];
+            this._updateWebPoseState(info);
+        }
+        this._eventTarget.emit(InputEventType.HMD_POSE_INPUT, new EventHMD(InputEventType.HMD_POSE_INPUT, this));
+    }
+    /**
+     * @engineInternal
+     */
+    _on(eventType, callback, target) {
+        this._eventTarget.on(eventType, callback, target);
+    }
+    _updateWebPoseState(info) {
+        if (info.code !== Pose.VIEW_LEFT && info.code !== Pose.VIEW_RIGHT && info.code !== Pose.HEAD_MIDDLE) {
+            return;
+        }
+        this._webPoseState[info.code] = {
+            position: new Vec3(info.position.x, info.position.y, info.position.z),
+            orientation: new Quat(info.orientation.x, info.orientation.y, info.orientation.z, info.orientation.w),
+        };
+    }
+    _initInputSource() {
+        this._viewLeftPosition = new InputSourcePosition();
+        this._viewLeftPosition.getValue = () => this._webPoseState[Pose.VIEW_LEFT].position;
+        this._viewLeftOrientation = new InputSourceOrientation();
+        this._viewLeftOrientation.getValue = () => this._webPoseState[Pose.VIEW_LEFT].orientation;
+        this._viewRightPosition = new InputSourcePosition();
+        this._viewRightPosition.getValue = () => this._webPoseState[Pose.VIEW_RIGHT].position;
+        this._viewRightOrientation = new InputSourceOrientation();
+        this._viewRightOrientation.getValue = () => this._webPoseState[Pose.VIEW_RIGHT].orientation;
+        this._headMiddlePosition = new InputSourcePosition();
+        this._headMiddlePosition.getValue = () => this._webPoseState[Pose.HEAD_MIDDLE].position;
+        this._headMiddleOrientation = new InputSourceOrientation();
+        this._headMiddleOrientation.getValue = () => this._webPoseState[Pose.HEAD_MIDDLE].orientation;
+    }
+}

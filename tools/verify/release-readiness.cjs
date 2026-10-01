@@ -20,6 +20,19 @@ const sha16 = (file) =>
 const manifest = read('examples/files.json');
 const coverage = read('docs/api-coverage-report.json');
 const inventory = read('docs/example-api-inventory.json');
+const currentCandidate = require('./api-trace.cjs').candidateFingerprint();
+requireCheck(coverage.candidateFingerprint === currentCandidate, 'coverage report uses a different live candidate');
+try {
+    execFileSync(process.execPath, [path.join(root, 'tools/examples/coverage-report.cjs'), '--check'], {
+        cwd: root,
+        stdio: 'pipe',
+        maxBuffer: 8 * 1024 * 1024,
+    });
+} catch (error) {
+    failures.push('coverage --check failed: report, specs and runtime evidence must agree');
+}
+const licenseAudit = require('./verify-licenses.cjs').check();
+for (const failure of licenseAudit.failures) failures.push(`license: ${failure}`);
 const requiredEvidence = [
     'docs/evidence/v11-examples-verified.json',
     'docs/evidence/v11-devtools-examples.json',
@@ -28,8 +41,11 @@ const requiredEvidence = [
 ];
 const missingEvidence = requiredEvidence.filter((file) => !fs.existsSync(path.join(root, file)));
 if (missingEvidence.length) {
+    for (const failure of failures) console.error(`[release] FAIL ${failure}`);
     for (const file of missingEvidence) console.error(`[release] FAIL missing evidence: ${file}`);
-    console.log(`[release] NOT READY (${missingEvidence.length} missing evidence files)`);
+    console.log(
+        `[release] NOT READY (${failures.length + missingEvidence.length} blockers; ${missingEvidence.length} missing evidence files)`,
+    );
     process.exit(1);
 }
 const v11 = read('docs/evidence/v11-examples-verified.json');

@@ -6395,6 +6395,21 @@
       "source": "exports/physics-2d-box2d-wasm.ts",
       "destination": "src/exports/physics-2d-box2d-wasm.ts",
       "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "pal/integrity-check.js",
+      "destination": "src/pal/integrity-check.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/screen-adapter/enum-type/screen-event.js",
+      "destination": "src/pal/screen-adapter/enum-type/screen-event.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/system-info/enum-type/event.js",
+      "destination": "src/pal/system-info/enum-type/event.js",
+      "category": "COMMON_REQUIRED"
     }
   ]
 }

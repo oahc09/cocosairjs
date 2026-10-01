@@ -1,0 +1,238 @@
+{
+  "schema": "pal-public-source-v1",
+  "repository": "https://github.com/cocos/cocos4",
+  "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
+  "retirementCommit": "db5462603e20d5fa56814380274ad475bf388fb2",
+  "licenseSha256": "efa0a98867b0aa26251ebf1e523545357cc762a0d9e6570c0a48ec441a43bdf6",
+  "typescriptVersion": "4.9.5",
+  "inputs": [
+    {
+      "source": "pal/audio/audio-buffer-manager.ts",
+      "output": "src/pal/audio/audio-buffer-manager.js",
+      "sha256": "d552ab13660d9f75f81e6edcd8ab6a07fc3343def6c0abbf930661f424a6de87",
+      "gitBlob": "7cd539334ec6581d6a5e55018b0ebb22c5fcab39"
+    },
+    {
+      "source": "pal/audio/audio-timer.ts",
+      "output": "src/pal/audio/audio-timer.js",
+      "sha256": "ea61d8c026a161f1246645e6cf99dd39694aea849cb7b4d65a2dc7f65230dd4e",
+      "gitBlob": "dac75ce42080ccc7469cf34199c3180c4569fddd"
+    },
+    {
+      "source": "pal/audio/operation-queue.ts",
+      "output": "src/pal/audio/operation-queue.js",
+      "sha256": "abc36366061ce25948c21b32fcad31c6697ee6df9248e0213b50e2f62504a31d",
+      "gitBlob": "285a93dd203115e51d3d27140fe2eda24768dd65"
+    },
+    {
+      "source": "pal/audio/type.ts",
+      "output": "src/pal/audio/type.js",
+      "sha256": "b245fb3ac18e0213335956af781e178cbc5e718dba751194d562f7df46823ef0",
+      "gitBlob": "0051b84d6daf82804ce0e4392026fb55f5a7cfc1"
+    },
+    {
+      "source": "pal/audio/web/player-dom.ts",
+      "output": "src/pal/audio/web/player-dom.js",
+      "sha256": "80f0fb6ec969eb9e004b287e1b2ea254548ce9dc6763f6ccf344e79faf6713fa",
+      "gitBlob": "b0e397a7a8376c6ce91783705fc131a8f8eb6c3a"
+    },
+    {
+      "source": "pal/audio/web/player-web.ts",
+      "output": "src/pal/audio/web/player-web.js",
+      "sha256": "5b64e3747612631db07c1ba393fa832aa37dd7b2ae649195044f675d71cc941e",
+      "gitBlob": "2fa7dad6158e6a8e4f1bfa73c16ea3127658a113"
+    },
+    {
+      "source": "pal/audio/web/player.ts",
+      "output": "src/pal/audio/web/player.js",
+      "sha256": "e1b2cdd3b680628f5f091d9f307a96bfc379a0cacf39605bbd2f82171928d44f",
+      "gitBlob": "c171805432475b5185407494b09a15c4b1d55ef4"
+    },
+    {
+      "source": "pal/env/web/env.ts",
+      "output": "src/pal/env/web/env.js",
+      "sha256": "ac32e8f058600ae01cde5cabdd5052c6b190337050324ff2d8b397ba0f3c3daa",
+      "gitBlob": "e0aee6672a7918daf3db63364456626f8bfb906e"
+    },
+    {
+      "source": "pal/input/input-source.ts",
+      "output": "src/pal/input/input-source.js",
+      "sha256": "0e0b254cc9942e3c10b5c47057821ebd6853c12d9ad321f888862f860f9c19dc",
+      "gitBlob": "165732fb067365e09dedc45fc4c06a72e556edee"
+    },
+    {
+      "source": "pal/input/keycodes.ts",
+      "output": "src/pal/input/keycodes.js",
+      "sha256": "bce90d00b04cf7988ded56dd1a2f67dba87ae66674a3ee716e428597330297c1",
+      "gitBlob": "8159e43ae5d84233cab6c71e2c1834968f1dac52"
+    },
+    {
+      "source": "pal/input/touch-manager.ts",
+      "output": "src/pal/input/touch-manager.js",
+      "sha256": "1eb12d9f49cf7d4e4e293c9be0cd4e5e72295508d9c4c84ccb9ad8cb1b8702b6",
+      "gitBlob": "7fec3e6628e384df360ba56032e1fddbb6b1799b"
+    },
+    {
+      "source": "pal/input/web/accelerometer-input.ts",
+      "output": "src/pal/input/web/accelerometer-input.js",
+      "sha256": "1d95d3681c846c447d8f8287c4357e70ef4b7a2077e8768f8bb67a66bd706099",
+      "gitBlob": "c29672f30230c89999ed047d59e2e20bfff14375"
+    },
+    {
+      "source": "pal/input/web/gamepad-input.ts",
+      "output": "src/pal/input/web/gamepad-input.js",
+      "sha256": "a213964ab6dd083ff62116c7e360e873918414c5f3e147ea07868676cc5b688c",
+      "gitBlob": "9a3f4fc854022196c658e65339a144de4fac8e4d"
+    },
+    {
+      "source": "pal/input/web/handheld-input.ts",
+      "output": "src/pal/input/web/handheld-input.js",
+      "sha256": "ad2c39fbc0a19d9c17b399296f212327a07cc81462065ace9dbf67fe2a1b496f",
+      "gitBlob": "e4d2f4e781843c163d2db3adf52d150b200cfb89"
+    },
+    {
+      "source": "pal/input/web/handle-input.ts",
+      "output": "src/pal/input/web/handle-input.js",
+      "sha256": "91a8c2e4d6778010c918d54c3d844cc6ec16e2a3cf1b1ade18888e34494b3749",
+      "gitBlob": "f7b879a54829124d9fb27d8bf7790ac787495f17"
+    },
+    {
+      "source": "pal/input/web/hmd-input.ts",
+      "output": "src/pal/input/web/hmd-input.js",
+      "sha256": "03b8979e03e2093ba0ffcbdbd4d070ac63b762d59dfddf44bc1c22eacf6a10aa",
+      "gitBlob": "0feb2fb2a5344dfddacf0894f924f07d7f9a9112"
+    },
+    {
+      "source": "pal/input/web/index.ts",
+      "output": "src/pal/input/web/index.js",
+      "sha256": "58d97ff62016bcd946a7913d341170041dcf1b926719551f6fed09185338aec0",
+      "gitBlob": "a30638e3682b7d130c8ffc41e218207280dcedc0"
+    },
+    {
+      "source": "pal/input/web/keyboard-input.ts",
+      "output": "src/pal/input/web/keyboard-input.js",
+      "sha256": "42a74bc5f54bc2acc750ec65441e041078a28e280e0ec4fe4d308ad9fa285c4f",
+      "gitBlob": "b69c763af0a83d2a4dc31429a0ba89b9392478ab"
+    },
+    {
+      "source": "pal/input/web/mouse-input.ts",
+      "output": "src/pal/input/web/mouse-input.js",
+      "sha256": "075299d2e31b8581473eac0798be775495668e7f87c938753f3aff61615dc197",
+      "gitBlob": "d204c99fc25998012637f1b00603a679628b711b"
+    },
+    {
+      "source": "pal/input/web/touch-input.ts",
+      "output": "src/pal/input/web/touch-input.js",
+      "sha256": "1e06883ca560d2d227e92877d60e5808e685f907544e0d3a7a21aff097c512a6",
+      "gitBlob": "f17c40b469700ce00b0c15519021d970cefb8c4f"
+    },
+    {
+      "source": "pal/integrity-check.ts",
+      "output": "src/pal/integrity-check.js",
+      "sha256": "f60d9c93fae4a75d45c9918053417ea90170699618552a8ceea8457b283bdc94",
+      "gitBlob": "8e4597c1956d92dc47257439432fe1703b8b07ec"
+    },
+    {
+      "source": "pal/minigame/non-minigame.ts",
+      "output": "src/pal/minigame/non-minigame.js",
+      "sha256": "abd5ba639cd8ed51dec665fd72288230929fe8a652f01c4b53d798cbd8ff9bd1",
+      "gitBlob": "4e70986d6e978a20681811c5e2607079ca84864e"
+    },
+    {
+      "source": "pal/pacer/pacer-web.ts",
+      "output": "src/pal/pacer/pacer-web.js",
+      "sha256": "778f2a808a564751a6ba49d200c34b56b6f461eef76cbad3d5b2b4d3b411f7b3",
+      "gitBlob": "4496d3589adfd491088812675f8b26adb3d61e4f"
+    },
+    {
+      "source": "pal/screen-adapter/enum-type/index.ts",
+      "output": "src/pal/screen-adapter/enum-type/index.js",
+      "sha256": "d00fd4ff17695a9763c52c88d902fd08b2f82d53b535054531e7e14f0c2ab2ea",
+      "gitBlob": "36ab0c4cfdadfb242a86cf5957aac365f9b04360"
+    },
+    {
+      "source": "pal/screen-adapter/enum-type/orientation.ts",
+      "output": "src/pal/screen-adapter/enum-type/orientation.js",
+      "sha256": "338c9330fec8b95103b8e822e4425549c11b9b75c05cb76387ccb9e9f56d0373",
+      "gitBlob": "f1dff3d14fb6ba759d9b010c7550fa12259b464d"
+    },
+    {
+      "source": "pal/screen-adapter/enum-type/screen-event.ts",
+      "output": "src/pal/screen-adapter/enum-type/screen-event.js",
+      "sha256": "5190e46e8f5ab88727fddc62796fb0725c455f06331669c91e0f814ac1ceb3b4",
+      "gitBlob": "d9224f241fac6cc821b2f705e4b0a2b4e9597767"
+    },
+    {
+      "source": "pal/screen-adapter/web/screen-adapter.ts",
+      "output": "src/pal/screen-adapter/web/screen-adapter.js",
+      "sha256": "4850172d4a900786f9955bc38fa41d5c92c7f8d4de968706edd76975087d3f9a",
+      "gitBlob": "8c06e3aba10842db6118b9a05b6a4230dba1717f"
+    },
+    {
+      "source": "pal/system-info/enum-type/browser-type.ts",
+      "output": "src/pal/system-info/enum-type/browser-type.js",
+      "sha256": "624e2bcdce285360fff10f75005102f8815c8aac9bbb7476506cd7023fbf1098",
+      "gitBlob": "6437093d26fd4b39ceca039c2f3f449cf9294714"
+    },
+    {
+      "source": "pal/system-info/enum-type/event.ts",
+      "output": "src/pal/system-info/enum-type/event.js",
+      "sha256": "23c44ccc70f9ea3c2f494e012cf0f7cfcbcea7312222bba491d5215bfc5bbbe5",
+      "gitBlob": "aadc531552d766b48d9595d4b95c1cf35cb08597"
+    },
+    {
+      "source": "pal/system-info/enum-type/feature.ts",
+      "output": "src/pal/system-info/enum-type/feature.js",
+      "sha256": "c64eb1f86246dde56cad8a41940a5c71757cc301608c0945311911377bec648f",
+      "gitBlob": "43aeefc19a4f5d2320de7c151b0839f1a4961b47"
+    },
+    {
+      "source": "pal/system-info/enum-type/index.ts",
+      "output": "src/pal/system-info/enum-type/index.js",
+      "sha256": "dfcf4c3305ff9174b49c1ba579dbd2a0080b3410c639003d345cdef0cacce94f",
+      "gitBlob": "9c79deb6493873f492c01f43ac2939bb5a9378e3"
+    },
+    {
+      "source": "pal/system-info/enum-type/language.ts",
+      "output": "src/pal/system-info/enum-type/language.js",
+      "sha256": "1c9cd286da803f12ca2c8a12d3e7741c96e41fa3d63554b386011851eca0fced",
+      "gitBlob": "4ae71fb08acc1e7d533b23d82c591857a9f487f0"
+    },
+    {
+      "source": "pal/system-info/enum-type/network-type.ts",
+      "output": "src/pal/system-info/enum-type/network-type.js",
+      "sha256": "e9ff60d9eff4bdc990d9cea5ff537478c347912964961e36b3278df7a14c7905",
+      "gitBlob": "45ad52704f66f2b9e148b6594dd79d53b4c3d0cb"
+    },
+    {
+      "source": "pal/system-info/enum-type/operating-system.ts",
+      "output": "src/pal/system-info/enum-type/operating-system.js",
+      "sha256": "ab19b92ed6ca99349b751b7773750a0a1917803e040489f5f0c737a12d1733c3",
+      "gitBlob": "128c6b77a580657b6e78c52f0d05f96ffbb1dbe4"
+    },
+    {
+      "source": "pal/system-info/enum-type/platform.ts",
+      "output": "src/pal/system-info/enum-type/platform.js",
+      "sha256": "12bce66abbc8f3f6c89b0145cbc6a397a593bfabd8895ed18f9c232870a6e9ed",
+      "gitBlob": "3905ea228ee92f071eaf028871dbd08d1c2b0e21"
+    },
+    {
+      "source": "pal/system-info/web/system-info.ts",
+      "output": "src/pal/system-info/web/system-info.js",
+      "sha256": "da8fdd8dae9c7d54bf8f9823a7266ce276272dd6c517a7ffa07ca873dedb7072",
+      "gitBlob": "7047883474d77c86f460ea0fdea8f2916d8454c6"
+    },
+    {
+      "source": "pal/utils.ts",
+      "output": "src/pal/utils.js",
+      "sha256": "933e5f0f4d8344faec5c2cb9165b53e1b5a385d89c5304c2272b06b8f7448692",
+      "gitBlob": "cc25ebce0e4762027a374aefd3ed19854b8212da"
+    },
+    {
+      "source": "pal/wasm/wasm-web.ts",
+      "output": "src/pal/wasm/wasm-web.js",
+      "sha256": "f24b3c92c4e32fe2d3cb8a09f9128be5a6abcb76d2362e0836bee886e93f9d0c",
+      "gitBlob": "9eeb6fb24d622a28c9b038a2c7ca4e408cdbe138"
+    }
+  ]
+}

@@ -201,9 +201,8 @@ function checkDecoderSet () {
   const root = path.join(ARTIFACT, 'gltf-decoders');
   const required = [
     'meshopt/meshopt_decoder.mjs',
-    // draco 的发布形制是 draco3d.js（浏览器侧单文件构建）+ draco_decoder.wasm；
-    // 经典 emscripten 拆分形的 draco_decoder.js 不在本部署合同内（与 tools/verify/decoder-audit.cjs 的
-    // 权威清单一致：draco3d.js / draco_decoder.wasm / basis_transcoder.js / meshopt_decoder.cjs）。
+    // Draco ships the Node/CommonJS entry and wasm. Presence is packaging evidence,
+    // not browser decode evidence; apps must inject their own browser decoder factory.
     'draco/draco3d.js',
     'draco/draco_decoder.wasm',
     'basis/basis_transcoder.js',

@@ -36,7 +36,10 @@ npm run verify:release
 
 这些命令需要对应浏览器环境及已构建产物。浏览器采集器会重新生成 JSON 和截图；子集结果不得用作全量验收。V1.1 示例、DevTools 和 Gallery 的采集器分别位于 `tools/verify/example-spec-browser.cjs`、`tools/verify/devtools-examples.cjs`、`tools/verify/gallery-artifact.cjs`；按各脚本的参数说明执行完整采集，再生成 API 覆盖报告。
 
-原有发布证据已经清理，当前应以实际门禁结果为准。`verify:release` 必须拒绝缺失、过时或不属于当前候选的证据；发布前还要求工作区干净。保留在 `docs/evidence/examples/`、`docs/evidence/manual/` 和 `docs/evidence/recipes/` 的截图本身不能替代汇总和指纹检查。
+历史清理不豁免当前候选的完整验收。`verify:release` 会现算候选指纹、以 `coverage-report.cjs --check` 核对库存、规格与逐 API 执行证据，并调用许可门禁；缺失、过时、授权未闭环均阻断发布。发布前还要求工作区干净。单独截图不能替代汇总和指纹检查。
+
+2026-09-30 已重新采集当前候选的完整示例、DevTools、Gallery、三浏览器矩阵及 Recipe 证据。
+执行与未解决项见 [发布复核记录](release-review.md)。2026-10-01 已改用公开 MIT PAL 源码，旧 npm 包退出发行来源；固定来源与复现步骤见 [PAL 来源](pal-source.md)。新构建仍须以对应指纹的完整运行证据通过发布门禁。
 
 ## 历史性能比较值
 

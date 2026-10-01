@@ -892,9 +892,9 @@
   },
   "validationExpectations": {},
   "promotion": {
-    "spec": "40a35227bec3",
-    "source": "2e2366b4936ed1f8",
-    "candidate": "2360fa3fb4cea194",
+    "spec": "9784ade4e206",
+    "source": "b6ae4901f3c74129",
+    "candidate": "b583e4c7d8588d5f",
     "verified": 96,
     "attested": 0,
     "units": 96

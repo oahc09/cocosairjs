@@ -419,7 +419,7 @@ async function runSequence() {
     const afterNaN = r(srcB.volume, 3);
     srcB.volume = 0.35;
     await sleep(150);
-    const gain = safe(() => r(srcB['_player']['_ccprivate$_player']['_ccprivate$_gainNode'].gain.value, 3));
+    const gain = safe(() => r(srcB['_player']['_player']['_gainNode'].gain.value, 3));
     results.p6Volume = {
         volReadback,
         clampedHigh,
@@ -550,8 +550,8 @@ window.__assets = () => ({
 app.run(scene);
 
 /**
- * 底层播放器视图：`AudioSource._player`(facade) → `_ccprivate$_player`(pal impl)。
- * webkit 走 DOM 分支（`_ccprivate$_domAudio`），chromium/firefox 走 WebAudio 分支。
+ * 底层播放器视图：`AudioSource._player`(facade) → `_player`(pal impl)。
+ * webkit 走 DOM 分支（`_domAudio`），chromium/firefox 走 WebAudio 分支。
  * 两次采样差 `srcBDelta` 用来判别「AudioSource 报 PLAYING 但媒体元素没走表」这类假播放。
  */
 function playerView(src) {
@@ -559,8 +559,8 @@ function playerView(src) {
     if (!facade) {
         return null;
     }
-    const impl = facade['_ccprivate$_player'];
-    const dom = safe(() => impl['_ccprivate$_domAudio']);
+    const impl = facade['_player'];
+    const dom = safe(() => impl['_domAudio']);
     const out = {
         backend: dom && dom !== 'ERR' ? 'dom' : 'web',
         facadeState: stateOf(facade.state),
@@ -580,7 +580,7 @@ function playerView(src) {
             playedLen: dom.played.length,
         });
     } else {
-        const buf = safe(() => impl['_ccprivate$_nativeAudio']);
+        const buf = safe(() => impl['_nativeAudio']);
         out.nativeCtor = buf && buf !== 'ERR' && buf.constructor ? buf.constructor.name : null;
     }
     return out;

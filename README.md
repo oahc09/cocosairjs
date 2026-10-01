@@ -3,7 +3,7 @@
 **Cocos Agent-first Interactive Runtime** — 基于 cocos4 的纯 TypeScript Web 引擎，
 脱离 Cocos Creator、Editor 与 Native Engine 的 **Code First** Web 运行时。
 
-浏览器运行要求 WebGL 2，支持边界见 [支持策略](docs/webgl2-only.md)。旧版验收快照与部分原始证据已清理；当前发布状态须重新运行门禁确认，见 [验证与发布检查](docs/reference/verification.md)。
+浏览器运行要求 WebGL 2，支持边界见 [支持策略](docs/webgl2-only.md)。当前发布状态由对应候选的完整验收证据与许可门禁决定，见 [验证与发布检查](docs/reference/verification.md)。
 
 ```bash
 npm install
@@ -114,7 +114,7 @@ V1.x 回归期新增（**能力名**，逐名对账见下）：**2D/UI**（`2d` 
 
 - **上面括号里已声明、且在默认构建集的 unit**：`2d` `ui` `tiled-map` `particle-2d` `video` `webview` `profiler` `custom-pipeline` `physics-builtin` `physics-2d-box2d` `physics-2d-framework` `dragon-bones` `spine-3.8` `spine-4.2` `custom-pipeline-post-process`（默认集共 **26** 项，全表见 `docs/reference/web-features.md` §7.2）。
 - **已声明但不在默认集**：`audio` `physics-2d-builtin` `physics-ammo` `physics-physx` `physics-2d-box2d-wasm` `physics-cannon` `marionette` `procedural-animation`（共 8 项，逐条理由见 `docs/reference/web-features.md` §7.3）。
-- **不是 Air 声明的 feature unit，但能力确在默认产物里**：`mask` `graphics` `sorting` `intersection-2d` `geometry-renderer` `spine`（真实 unit 名是 `spine-3.8`/`spine-4.2`）`physics-framework`。机制：`src/exports/air.ts` 把它们**静态再导出**（`export * from` 一行一个）挂进 bundle 入口，走的是 **import 图**而不是 feature 开关（`src/exports/` 39 个文件里 **9** 个的名字未在册 unit：`geometry-renderer` `gfx-webgpu` `graphics` `intersection-2d` `mask` `physics-framework` `sorting` `sorting-2d` `spine`；其中 `gfx-webgpu.ts` **没有**被 `air.ts` 聚合，其余 8 个是）。
+- **不是 Air 声明的 feature unit，但能力确在默认产物里**：`mask` `graphics` `sorting` `intersection-2d` `geometry-renderer` `spine`（真实 unit 名是 `spine-3.8`/`spine-4.2`）`physics-framework`。机制：`src/exports/air.ts` 把它们**静态再导出**（`export * from` 一行一个）挂进 bundle 入口，走的是 **import 图**而不是 feature 开关（`src/exports/` 39 个文件里 **10** 个的名字未在册 unit：`geometry-renderer` `gfx-webgl` `gfx-webgpu` `graphics` `intersection-2d` `mask` `physics-framework` `sorting` `sorting-2d` `spine`；其中退役的 `gfx-webgl.ts` 与 `gfx-webgpu.ts` **没有**被 `air.ts` 聚合，其余 8 个是）。
   产物侧核对（整词计数，`build/cocosair.module.js`）：`Graphics` 19、`Mask` 14、`Sorting2D` 4、`GeometryRenderer` 10、`PhysicsSystem` 33、`PhysicsSystem2D` 30、`AudioSource` 11、`TiledMap` 5、`UIRenderer` 31 ⇒ 「产物里有这个能力」为真；「它是可关掉的 feature unit」为假。
   ⇒ 讲**开关面 / 变体构建**必须用 §7 的 unit 名；讲**发行产物含什么**才用上面的能力名。自查（仓库内只读门禁）：`npm run verify:feature-exports` —— D2 打印「入口文件名不是已声明 unit」的集合，D3 打印被 `air.ts` 聚合的那批，D4 是**默认产物组成锁**（在册能力符号整词命中 ≥1 + 非默认后端的世界类整词命中 == 0），D5 逐个复核上面每个能力名的依据还在不在。
 
@@ -151,4 +151,6 @@ V1.x 回归期新增（**能力名**，逐名对账见下）：**2D/UI**（`2d` 
 
 ## 许可
 
-MIT（见 LICENSE）。第三方许可见 [docs/THIRD_PARTY_LICENSES.md](docs/THIRD_PARTY_LICENSES.md)。
+本项目自有代码使用 MIT（见 LICENSE），内嵌第三方代码分别遵循其许可。
+默认 bundle 包含 Spine 相关代码，使用与再分发须满足随包的 Spine Runtimes License Agreement 及其引用的 Spine Editor 授权条件；不能将整个 bundle 视为仅受 MIT 约束。
+PAL 已改由公开、带 MIT 许可的 cocos4 固定源码生成，旧 `@cocos/engine-pal` 包不再使用。许可及版权 notice 随包提供，完整来源登记见 [第三方许可](docs/THIRD_PARTY_LICENSES.md)。

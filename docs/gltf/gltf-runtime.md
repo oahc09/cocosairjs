@@ -84,6 +84,10 @@ asset.decRef(); // 业务不再持有
 | 动画 | 多 clip、TRS 和 Morph weights、STEP/LINEAR/CUBICSPLINE、原生播放/暂停/切换；四元数 Hermite 求值后归一化 |
 | Morph | POSITION/NORMAL/TANGENT 位移、mesh/node 初始权重、独立实例权重 |
 > 机器可读支持矩阵：`examples/gltf-catalog/capabilities.json`（`npm run capabilities` 重新生成）。
+
+Draco 的 adapter 支持应用注入 decoder；随包提供的 Draco 入口是 Node/CommonJS 形态。
+浏览器正向解码需要应用另外提供兼容的浏览器 factory。当前验证等级为 smoke，
+不能视为随包浏览器解码已验收，详见 [decoder 部署边界](gltf-decoder-deployment.md)。
 > 每个扩展携带 registry 实时 status、decoder/设备要求、自动化证据（smoke / 真机浏览器脚本）、
 > 计划对照的官方模型与 catalog revision；稳定错误码清单在 `errorCodes`。V0.5.1 直接消费本文件。
 

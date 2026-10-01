@@ -91,6 +91,7 @@ function startServer() {
     const { server, port } = await startServer();
     const browser = await playwright.chromium.launch({
         headless: true,
+        ...require('./browser-engines.cjs').launchOptions('chromium'),
         args: ['--use-gl=angle', '--enable-unsafe-swiftshader'],
     });
 

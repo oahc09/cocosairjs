@@ -451,9 +451,9 @@
     "assets": "无第三方资产（粒子贴图为运行时 canvas 程序化绘制；plist 文本运行时程序化生成；particle-2d 模块为 cocos4 上游 TypeScript 端口，逐字节同源于 src/cocos/particle-2d，随 bundle 出处登记）"
   },
   "promotion": {
-    "spec": "dc33c48be26c",
-    "source": "af9084853704646e",
-    "candidate": "2360fa3fb4cea194",
+    "spec": "3dbfe3f05aa1",
+    "source": "4586f5c58d215249",
+    "candidate": "b583e4c7d8588d5f",
     "verified": 23,
     "attested": 11,
     "units": 34

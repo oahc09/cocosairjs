@@ -1,5 +1,98 @@
-import { clamp } from '@cocos/engine/cocos/core/math/utils';
+/*
+ Copyright (c) 2022-2023 Xiamen Yaji Software Co., Ltd.
 
-class AudioTimer{_ccprivate$_nativeAudio;_ccprivate$_startTime=0;_ccprivate$_startOffset=0;_ccprivate$_isPaused=true;constructor(nativeAudio){this._ccprivate$_nativeAudio=nativeAudio;}destroy(){this._ccprivate$_nativeAudio=undefined;}get duration(){return this._ccprivate$_nativeAudio.duration}get currentTime(){if(this._ccprivate$_isPaused){return this._ccprivate$_startOffset}else {return this._ccprivate$_calculateCurrentTime()}}_ccprivate$_now(){return performance.now()/1000}_ccprivate$_calculateCurrentTime(){const timePassed=this._ccprivate$_now()-this._ccprivate$_startTime;const currentTime=this._ccprivate$_startOffset+timePassed;if(currentTime>=this.duration){this._ccprivate$_startTime=this._ccprivate$_now();this._ccprivate$_startOffset=0;}return currentTime%this.duration}start(){this._ccprivate$_isPaused=false;this._ccprivate$_startTime=this._ccprivate$_now();}pause(){if(this._ccprivate$_isPaused){return}this._ccprivate$_isPaused=true;this._ccprivate$_startOffset=this._ccprivate$_calculateCurrentTime();}stop(){this._ccprivate$_isPaused=true;this._ccprivate$_startOffset=0;}seek(time){this._ccprivate$_startTime=this._ccprivate$_now();this._ccprivate$_startOffset=clamp(time,0,this.duration);}}
+ https://www.cocos.com/
 
-export { AudioTimer as default };
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do so,
+ subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+*/
+import { clamp } from '../../cocos/core/math/utils';
+export default class AudioTimer {
+    constructor(nativeAudio) {
+        this._startTime = 0;
+        this._startOffset = 0;
+        this._isPaused = true;
+        this._nativeAudio = nativeAudio;
+    }
+    destroy() {
+        // NOTE: 'undefined' is not assignable to type 'IDuration'
+        this._nativeAudio = undefined;
+    }
+    get duration() {
+        return this._nativeAudio.duration;
+    }
+    /**
+     * Get the current time of audio timer.
+     */
+    get currentTime() {
+        if (this._isPaused) {
+            return this._startOffset;
+        }
+        else {
+            return this._calculateCurrentTime();
+        }
+    }
+    _now() {
+        return performance.now() / 1000;
+    }
+    _calculateCurrentTime() {
+        const timePassed = this._now() - this._startTime;
+        const currentTime = this._startOffset + timePassed;
+        if (currentTime >= this.duration) {
+            // timer loop
+            this._startTime = this._now();
+            this._startOffset = 0;
+        }
+        return currentTime % this.duration;
+    }
+    /**
+     * Start the audio timer.
+     * Call this method when audio is played.
+     */
+    start() {
+        this._isPaused = false;
+        this._startTime = this._now();
+    }
+    /**
+     * Pause the audio timer.
+     * Call this method when audio is paused or interrupted.
+     */
+    pause() {
+        if (this._isPaused) {
+            return;
+        }
+        this._isPaused = true;
+        this._startOffset = this._calculateCurrentTime();
+    }
+    /**
+     * Stop the audio timer.
+     * Call this method when audio playing ended or audio is stopped.
+     */
+    stop() {
+        this._isPaused = true;
+        this._startOffset = 0;
+    }
+    /**
+     * Seek the audio timer.
+     * Call this method when audio is seeked.
+     */
+    seek(time) {
+        this._startTime = this._now();
+        this._startOffset = clamp(time, 0, this.duration);
+    }
+}

@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "e2ac5e19a6178322",
-  "apiInventoryRevision": "c09904afe9dbe2ea",
+  "sourceFingerprint": "9870f32ddb01bec0",
+  "apiInventoryRevision": "f31acb17272e382c",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -57643,6 +57643,18 @@
       "coverageRequired": false,
       "parent": "__private._cocos_2d_assembler_label_text_output_data__TextOutputLayoutData"
     },
+    "__private._cocos_2d_assembler_label_text_output_data__TextOutputLayoutData.shadowPadding": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_2d_assembler_label_text_output_data__TextOutputLayoutData"
+    },
+    "__private._cocos_2d_assembler_label_text_output_data__TextOutputLayoutData.renderSize": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_2d_assembler_label_text_output_data__TextOutputLayoutData"
+    },
     "__private._cocos_2d_assembler_label_text_output_data__TextOutputLayoutData.startPosition": {
       "kind": "property",
       "tier": "internal",
@@ -74153,8 +74165,8 @@
     "important": 272,
     "advanced": 191,
     "supporting": 8153,
-    "internal": 2621
+    "internal": 2623
   },
-  "totalUnits": 12200,
+  "totalUnits": 12202,
   "coverageRequiredUnits": 1426
 }

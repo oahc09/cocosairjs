@@ -1,5 +1,101 @@
+/*
+ Copyright (c) 2023 Xiamen Yaji Software Co., Ltd.
+
+ https://www.cocos.com/
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do so,
+ subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+*/
 import { EDITOR, PREVIEW } from 'internal:constants';
-
-function instantiateWasm(wasmUrl,importObject){return fetchBuffer(wasmUrl).then(arrayBuffer=>WebAssembly.instantiate(arrayBuffer,importObject))}function fetchBuffer(binaryUrl){return new Promise((resolve,reject)=>{try{if(EDITOR){Editor.Message.request("engine","query-engine-info").then(info=>{const externalRoot=`${info.native.path}/external/`;binaryUrl=binaryUrl.replace("external:",externalRoot);const fs=require("fs");const arrayBuffer=fs.readFileSync(binaryUrl);resolve(arrayBuffer);});return}else if(PREVIEW){fetch(`/engine_external/?url=${binaryUrl}`).then(response=>response.arrayBuffer().then(resolve)).catch(e=>{});return}binaryUrl=new URL(binaryUrl,import.meta.url).href;fetch(binaryUrl).then(response=>response.arrayBuffer().then(resolve)).catch(e=>{});}catch(e){reject(e);}})}function fetchUrl(binaryUrl){return new Promise((resolve,reject)=>{try{if(EDITOR){Editor.Message.request("engine","query-engine-info").then(info=>{const externalRoot=`${info.native.path}/external/`;binaryUrl=binaryUrl.replace("external:",externalRoot);resolve(binaryUrl);});return}else if(PREVIEW){resolve(`/engine_external/?url=${binaryUrl}`);return}binaryUrl=new URL(binaryUrl,import.meta.url).href;resolve(binaryUrl);}catch(e){reject(e);}})}function ensureWasmModuleReady(){return Promise.resolve()}
-
-export { ensureWasmModuleReady, fetchBuffer, fetchUrl, instantiateWasm };
+import { checkPalIntegrity, withImpl } from '../integrity-check';
+export function instantiateWasm(wasmUrl, importObject) {
+    return fetchBuffer(wasmUrl).then((arrayBuffer) => WebAssembly.instantiate(arrayBuffer, importObject));
+}
+export function fetchBuffer(binaryUrl) {
+    return new Promise((resolve, reject) => {
+        try {
+            // NOTE: when it's in EDITOR or PREVIEW, binaryUrl is a url with `external:` protocol.
+            if (EDITOR) {
+                Editor.Message.request('engine', 'query-engine-info').then((info) => {
+                    const externalRoot = `${info.native.path}/external/`;
+                    binaryUrl = binaryUrl.replace('external:', externalRoot);
+                    // IDEA: it's better we implement another PAL for nodejs platform.
+                    // eslint-disable-next-line @typescript-eslint/no-var-requires
+                    const fs = require('fs');
+                    const arrayBuffer = fs.readFileSync(binaryUrl);
+                    resolve(arrayBuffer);
+                });
+                return;
+            }
+            else if (PREVIEW) {
+                // NOTE: we resolve '/engine_external/' in editor preview server.
+                fetch(`/engine_external/?url=${binaryUrl}`).then((response) => response.arrayBuffer().then(resolve)).catch((e) => {
+                    // noop
+                });
+                return;
+            }
+            // here is in the BUILD mode
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore NOTE: we need to use 'import.meta' here, but the tsc won't allow this, so we need to force ignoring this error here.
+            binaryUrl = new URL(binaryUrl, import.meta.url).href;
+            fetch(binaryUrl).then((response) => response.arrayBuffer().then(resolve)).catch((e) => {
+                // noop
+            });
+        }
+        catch (e) {
+            reject(e);
+        }
+    });
+}
+/**
+ * @en Translate virtual addresses within the engine to actual addresses of paths, such as external:emscripten/webgpu/glslang.wasm
+ * @zh 把引擎内部的虚拟地址转为路径的实际地址，如external:emscripten/webgpu/glslang.wasm
+ */
+export function fetchUrl(binaryUrl) {
+    return new Promise((resolve, reject) => {
+        try {
+            // NOTE: when it's in EDITOR or PREVIEW, binaryUrl is a url with `external:` protocol.
+            if (EDITOR) {
+                Editor.Message.request('engine', 'query-engine-info').then((info) => {
+                    const externalRoot = `${info.native.path}/external/`;
+                    binaryUrl = binaryUrl.replace('external:', externalRoot);
+                    // IDEA: it's better we implement another PAL for nodejs platform.
+                    // eslint-disable-next-line @typescript-eslint/no-var-requires
+                    resolve(binaryUrl);
+                });
+                return;
+            }
+            else if (PREVIEW) {
+                resolve(`/engine_external/?url=${binaryUrl}`);
+                return;
+            }
+            // here is in the BUILD mode
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore NOTE: we need to use 'import.meta' here, but the tsc won't allow this, so we need to force ignoring this error here.
+            binaryUrl = new URL(binaryUrl, import.meta.url).href;
+            resolve(binaryUrl);
+        }
+        catch (e) {
+            reject(e);
+        }
+    });
+}
+export function ensureWasmModuleReady() {
+    return Promise.resolve();
+}
+checkPalIntegrity(withImpl());

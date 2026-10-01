@@ -79,8 +79,7 @@ const VENDORED: Array<{ pkg: string; files: string[] }> = [
     { pkg: '@cocos/dragonbones-js', files: ['out/dragonBones.js'] },
 ];
 
-/** src/pal 的官方来源：@cocos/engine-pal 的 dist（上游靠 postinstall spread-pal 复制到 <engineRoot>/pal）。 */
-const PAL_DIST = join(ROOT, 'node_modules', '@cocos', 'engine-pal', 'dist');
+/** PAL is generated from a pinned, public MIT snapshot; npm engine-pal is retired. */
 
 function listFiles(dir: string, base = dir): string[] {
     const out: string[] = [];
@@ -149,28 +148,18 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         }
     });
 
-    test('PAL 的 AIR 改动均已登记且文档化（DPR cap + W04 画布覆盖）', () => {
+    test('PAL 来源、MIT 许可与 AIR 画布适配均有可复现登记', () => {
         const fileMap = JSON.parse(readFileSync(join(ROOT, 'docs', 'upstream-file-map.json'), 'utf8'));
-        const modified = fileMap.mapping.filter((row: any) => row.airPath.startsWith('src/pal/') && row.modified);
-        // W04（2026-09-28）：三个 Web 输入源加入画布覆盖；与 screen-adapter 同为已登记 PAL 差异。
-        expect(modified.map((row: any) => row.airPath)).toEqual([
-            'src/pal/input/web/keyboard-input.js',
-            'src/pal/input/web/mouse-input.js',
-            'src/pal/input/web/touch-input.js',
-            'src/pal/screen-adapter/web/screen-adapter.js',
-        ]);
-        for (const row of modified) {
-            expect(row.reason).toContain('__CC_CANVAS__');
-        }
-        expect(modified[3].reason).toContain('window.__CCDPR_CAP__');
-
-        const source = readFileSync(join(ROOT, 'src', 'pal', 'screen-adapter', 'web', 'screen-adapter.js'), 'utf8');
-        const manual = readFileSync(join(ROOT, 'docs', 'manual', 'responsive.md'), 'utf8');
-        expect(source).toContain('window.__CCDPR_CAP__');
-        expect(source).toContain('Number.isFinite(cap)&&cap>0?cap:2');
-        expect(source).toContain('globalThis.__CC_CANVAS__');
-        expect(manual).toContain('window.__CCDPR_CAP__');
-        expect(manual).toContain('默认上限 2');
+        const source = JSON.parse(readFileSync(join(ROOT, 'vendor/pal-source/manifest.json'), 'utf8'));
+        expect(source.revision).toBe('9f0e30acb31f6d670f2c0bf818d61039846a2860');
+        expect(readFileSync(join(ROOT, 'vendor/pal-source/LICENSE'), 'utf8')).toContain('MIT License');
+        const palRows = fileMap.mapping.filter((row: any) => row.airPath.startsWith('src/pal/'));
+        expect(palRows).toHaveLength(39);
+        expect(palRows.every((row: any) => row.upstreamPath.startsWith('public-pal/') && row.modified && row.reason)).toBe(true);
+        expect(palRows.filter((row: any) => row.reason.includes('AIR host')).map((row: any) => row.airPath).sort()).toEqual([
+            'src/pal/env/web/env.js', 'src/pal/input/web/keyboard-input.js', 'src/pal/input/web/mouse-input.js',
+            'src/pal/input/web/touch-input.js', 'src/pal/screen-adapter/web/screen-adapter.js',
+        ].sort());
     });
 
     test('Web DPR cap applies the host value and falls back safely', () => {
@@ -197,28 +186,10 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         }
     });
 
-    test('src/pal 除已登记的 AIR DPR cap 外均与 @cocos/engine-pal dist 逐字节一致', () => {
-        const localDir = join(ROOT, 'src', 'pal');
-        const files = listFiles(localDir);
-        expect(files.length).toBeGreaterThan(30);
-        const fileMap = JSON.parse(readFileSync(join(ROOT, 'docs', 'upstream-file-map.json'), 'utf8'));
-        const rows = new Map(fileMap.mapping.map((row: any) => [row.airPath, row]));
-        for (const rel of files) {
-            const up = join(PAL_DIST, rel);
-            expect({ rel, upstreamExists: existsSync(up) }).toEqual({ rel, upstreamExists: true });
-            const airPath = `src/pal/${rel.replace(/\\/g, '/')}`;
-            const row: any = rows.get(airPath);
-            const sameBytes = digest(join(localDir, rel)) === digest(up);
-            if (row?.modified) {
-                expect({ rel, reason: Boolean(row.reason), sameBytes }).toEqual({
-                    rel,
-                    reason: true,
-                    sameBytes: false,
-                });
-            } else {
-                expect({ rel, sameBytes }).toEqual({ rel, sameBytes: true });
-            }
-        }
+    test('src/pal 与冻结 MIT 源码的可复现生成结果完全一致', () => {
+        const failures = require(join(ROOT, 'tools/build/pal-source.cjs')).check();
+        expect(failures).toEqual([]);
+        expect(listFiles(join(ROOT, 'src/pal')).length).toBe(39);
     });
 
     test('V1.2 新增导出在 .d.ts 发布面中可见（类型与产物同源）', () => {
@@ -575,17 +546,9 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             const EVIDENCE_DIR = join(ROOT, 'docs', 'evidence', 'v12');
             // 记录里的 png 是 Windows 反斜杠相对路径，统一分隔符后取目录名
             const referenced = new Set<string>(json.records.map((r: any) => r.png.split(/[\\/]/).slice(0, -1).pop()));
-            const ACCOUNTED: Record<string, string> = {
-                d10: 'LV12-18 gfx-webgpu 的 D10 诊断证据（README + 回退探测腿），不是矩阵捕获；见 docs/evidence/v12/d10/README.md 与 UPSTREAM.md Deviation-04',
-                // r46（#13(b) 已批复执行）：原游离目录 LV12-02-profiler-overlay/ 已改名并入
-                // profiler-overlay/early-manual-capture-chromium.png（正典目录、被矩阵记录引用），豁免条目随之移除。
-                'pilot12-r45i':
-                    'r45i 批次的 V1.1 规格驱动链 firefox/webkit 两腿捕获（待批 #15 选项 (a) 的 11 例可跑面，非正典、[skip-promote] 零回写），不是矩阵捕获；命令 / 三引擎对账 / 边界见 docs/evidence/v12/pilot12-r45i/README.md',
-                'v11chain-r45j':
-                    'r45j 批次：V1.1 规格驱动链余下 41 例 × firefox/webkit（与 pilot12-r45i 合并成 52 例全量三引擎对账），非正典、[skip-promote] 零回写，不是矩阵捕获；命令原件 / 结果账 / 4 个红格归因 / F-133·F-134·F-135 在册缺陷见 docs/evidence/v12/v11chain-r45j/README.md，判据与 10 臂负控在 docs/audits/global-quality-audit-2026-09-19/raw/gates/r45j-reconcile-k.cjs 与同目录 r45j-negctl.cjs',
-                'mesh-sphere-r45m':
-                    'r45m 批次：mesh-sphere × {firefox, webkit} 单例重采（r45j 那两格的归因前提——工作树注入的假 validator——已随 r45k 提交消失，由 r45j 自家判据现读自报 STALE），非正典、[skip-promote] 零回写、subset=["mesh-sphere"] 且 partial=true ⇒ 不得读成 52 例整批的一部分；口径 / 命令 / 成本订正 / 六臂负控见 docs/evidence/v12/mesh-sphere-r45m/README.md，判据在 docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-recapture-reconcile.cjs',
-            };
+            // Historical diagnostic directories were removed during evidence cleanup.
+            // Keep the orphan/stale-exemption checks; add exemptions only for actual files.
+            const ACCOUNTED: Record<string, string> = {};
             const dirs = readdirSync(EVIDENCE_DIR, { withFileTypes: true })
                 .filter((e) => e.isDirectory())
                 .map((e) => e.name);

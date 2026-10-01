@@ -1,14 +1,14 @@
 {
-  "measuredAt": "2026-09-29T22:49:47.032Z",
+  "measuredAt": "2026-10-01T04:59:02.359Z",
   "runner": "tools/verify/webgl2-only.cjs",
   "bundles": [
     {
       "file": "build/cocosair.module.js",
-      "sha256_16": "9edc4be858de13fe"
+      "sha256_16": "f60378ed1bffb84b"
     },
     {
       "file": "build/npm/cocosair.module.min.js",
-      "sha256_16": "ef27ccdb823ada0b"
+      "sha256_16": "17fde90c7603e5a5"
     }
   ],
   "completed": true,

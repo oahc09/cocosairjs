@@ -47,6 +47,7 @@ function walk(dir, base, out) {
 function upstreamOf(row) {
     const u = row.upstreamPath;
     if (!u) return null;
+    if (u.startsWith('public-pal/')) return path.join(ROOT, 'vendor/pal-source', u.slice('public-pal/'.length));
     if (u.startsWith('pal/')) return path.join(PAL_DIST, u.slice(4));
     // npm 行：形如 "@cocos/box2d@1.0.2/build/box2d/box2d.umd.js" → 仓库根已安装包内路径
     const npm = u.match(/^(@cocos\/[^/]+)@[^/]+\/(.+)$/);
@@ -148,7 +149,10 @@ function overridePairs(cfgPath) {
 // 虚拟模块与模板路径不可按文件比对；pal/* 走上游 npm 产物解析（与 upstreamOf 同口径）
 function resolveSide(rel) {
     if (rel.startsWith('internal:') || rel.includes('{{')) return null;
-    if (rel.startsWith('pal/')) return { air: path.join(ROOT, 'src', rel), up: path.join(PAL_DIST, rel.slice(4)) };
+    if (rel.startsWith('pal/')) {
+        const row = byAir.get(`src/${rel}`);
+        return { air: path.join(ROOT, 'src', rel), up: row ? upstreamOf(row) : path.join(ROOT, 'vendor/pal-source', rel.replace(/\.js$/, '.ts')) };
+    }
     return { air: path.join(ROOT, 'src', rel), up: path.join(UPSTREAM, rel) };
 }
 
@@ -220,6 +224,11 @@ if (errors.length) {
     }
     errors.slice(0, 60).forEach((e) => console.error('  ' + e));
     if (errors.length > 60) console.error(`  ...另有 ${errors.length - 60} 项`);
+    process.exit(1);
+}
+const palFailures = require('../build/pal-source.cjs').check();
+if (palFailures.length) {
+    console.error(palFailures.join('\n'));
     process.exit(1);
 }
 console.log('[file-map] PASS');

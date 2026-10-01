@@ -111,7 +111,14 @@ if (cc) {
         app.run(scene);
         await sleep(500);
         check('boot_scene_running', app.getScene() === scene, app.getScene() && app.getScene().name);
-        check('boot_anyid_override_render', true, 'render path OK in ' + mode);
+        const gl = canvas.getContext('webgl2');
+        const pixel = new Uint8Array(4);
+        if (gl) gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+        check(
+            'boot_anyid_override_render',
+            !!gl && pixel[3] === 255 && pixel[0] >= 25 && pixel[0] <= 35,
+            Array.from(pixel),
+        );
 
         probe.mouseEvents = [];
         probe.keyEvents = [];

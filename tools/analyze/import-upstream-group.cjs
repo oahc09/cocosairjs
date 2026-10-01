@@ -51,8 +51,8 @@ const PAL_DIST = path.join(ROOT, 'node_modules', '@cocos', 'engine-pal', 'dist')
 const PAL_PKG = path.join(ROOT, 'node_modules', '@cocos', 'engine-pal', 'package.json');
 const PAL_VERSION = fs.existsSync(PAL_PKG) ? JSON.parse(fs.readFileSync(PAL_PKG, 'utf8')).version : null;
 const upstreamFileOf = (rel) => (rel.startsWith('pal/') ? path.join(PAL_DIST, rel.slice('pal/'.length)) : path.join(UPSTREAM, rel));
-if (prefixes.some((p) => p.startsWith('pal/')) && !PAL_VERSION) {
-    console.error('[regress] pal/* 来源需要已安装 @cocos/engine-pal（npm run 前置：npm ci）');
+if (prefixes.some((p) => p === 'pal' || p.startsWith('pal/'))) {
+    console.error('[regress] PAL is pinned to public MIT source. Use node tools/build/pal-source.cjs --write; do not import engine-pal npm bytes.');
     process.exit(2);
 }
 

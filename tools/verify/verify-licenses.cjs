@@ -71,14 +71,14 @@ const REGISTRY = [
         probes: ['notepack'],
     },
     {
-        component: '@cocos/engine-pal (src/pal/** 原始字节)',
-        licenseFile: null,
-        sourceOfTruth: { kind: 'npm', path: 'node_modules/@cocos/engine-pal/package.json' },
-        licenseId: 'UNLICENSED（npm 包元数据），README 标注「Cocos 内部使用」',
+        component: 'Cocos PAL (public MIT source)',
+        licenseFile: 'licenses/LICENSE_pal.txt',
+        sourceOfTruth: { kind: 'vendored', path: 'vendor/pal-source/LICENSE' },
+        licenseId: 'MIT (cocos4 public source @ 9f0e30ac)',
         ships: 'default',
         probes: ['AudioContext'],
         decisionRequired: true,
-        note: '无许可原文可录：许可文本缺失属实质风险，THIRD_PARTY_LICENSES.md §2 旧述「MIT」与此冲突，已在 V1.2 更正为待处置。',
+        note: 'Derived exclusively from the frozen public MIT PAL tree; engine-pal npm bytes are retired.',
     },
     {
         component: 'meshoptimizer (glTF 解码器)',
@@ -166,13 +166,13 @@ function check () {
             problems.push('需要许可处置登记（docs/license-decisions.json）但缺失');
         }
         const pending = Boolean(decision && decision.disposition && decision.disposition !== 'accepted');
-        // r48 语义扩展（owner 指令「完成剩余事项」授权）：riskAccepted = owner 已批复「来源包无许可文本」
-        // 这一客观缺口的风险接受处置（docs/license-decisions.json 逐组件登记）。它与 pending 不同：
-        // pending 是「还没人决定」（ATTENTION，不得发布）；riskAccepted 是「决定了，接受无文本」——
-        // 只豁免文本缺口本身，其余不一致（指纹/发布面）仍然 FAIL，且输出行必须带 RISK-ACCEPTED 标记，
-        // 不允许静默冒充「许可清晰」。
+        // Preserve the historical decision in diagnostics; it never waives missing grants.
         const riskAccepted = Boolean(decision && decision.disposition === 'accepted' && decision.riskAccepted);
-        problems.push(...gaps.filter(() => !pending && !riskAccepted));
+        // A local risk decision cannot grant redistribution rights for third-party code.
+        problems.push(...gaps);
+        if (pending && entry.ships === 'default') {
+            problems.push(`默认产物许可处置未完成：${decision.disposition}`);
+        }
         if (problems.length) {
             failures.push(`${entry.component}: ${problems.join('; ')}`);
         }
@@ -198,6 +198,15 @@ function check () {
     const needsShipped = REGISTRY.some((r) => r.licenseFile && r.licenseFile.startsWith('licenses/') && r.ships === 'default');
     if (needsShipped && !shipsLicensesDir) { failures.push('licenses/ 未列入 package.json files[]：默认产物内嵌的第三方许可未随包发布'); }
 
+    failures.push(...require('../build/pal-source.cjs').check());
+    for (const file of ['build/cocosair.module.js', 'build/cocosair.module.min.js']) {
+        const target = path.join(ROOT, file);
+        if (!fs.existsSync(target)) { failures.push(`PAL published bundle missing: ${file}`); continue; }
+        const text = fs.readFileSync(target, 'utf8');
+        if (['_ccprivate$_gameCanvas', '_ccprivate$_battery'].some(marker => text.includes(marker))) {
+            failures.push(`${file}: retired engine-pal binary fingerprints remain; rebuild from public MIT PAL`);
+        }
+    }
     return { records, failures, attention, shipsLicensesDir };
 }
 

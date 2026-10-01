@@ -1,7 +1,69 @@
-import { EventKeyboard } from '@cocos/engine/cocos/input/types';
-import { EventTarget } from '@cocos/engine/cocos/core/event';
-import { code2KeyCode } from '../keycodes.js';
+/*
+ Copyright (c) 2022-2023 Xiamen Yaji Software Co., Ltd.
 
-function getKeyCode(code){return code2KeyCode[code]||0}class KeyboardInputSource{_ccprivate$_eventTarget=new EventTarget;constructor(){this._ccprivate$_registerEvent();}dispatchKeyboardDownEvent(nativeKeyboardEvent){this._ccprivate$_handleKeyboardDown(nativeKeyboardEvent);}dispatchKeyboardUpEvent(nativeKeyboardEvent){this._ccprivate$_handleKeyboardUp(nativeKeyboardEvent);}on(eventType,callback,target){this._ccprivate$_eventTarget.on(eventType,callback,target);}_ccprivate$_registerEvent(){const canvas=globalThis.__CC_CANVAS__||document.getElementById("GameCanvas");canvas?.addEventListener("keydown",this._ccprivate$_handleKeyboardDown.bind(this));canvas?.addEventListener("keyup",this._ccprivate$_handleKeyboardUp.bind(this));}_ccprivate$_getInputEvent(event,eventType){const keyCode=getKeyCode(event.code);const eventKeyboard=new EventKeyboard(keyCode,eventType);return eventKeyboard}_ccprivate$_handleKeyboardDown(event){event.stopPropagation();event.preventDefault();if(!event.repeat){const keyDownInputEvent=this._ccprivate$_getInputEvent(event,"keydown");this._ccprivate$_eventTarget.emit("keydown",keyDownInputEvent);}else {const keyPressingInputEvent=this._ccprivate$_getInputEvent(event,"key-pressing");this._ccprivate$_eventTarget.emit("key-pressing",keyPressingInputEvent);}}_ccprivate$_handleKeyboardUp(event){const inputEvent=this._ccprivate$_getInputEvent(event,"keyup");event.stopPropagation();event.preventDefault();this._ccprivate$_eventTarget.emit("keyup",inputEvent);}}
+ https://www.cocos.com/
 
-export { KeyboardInputSource };
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do so,
+ subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+*/
+import { KeyCode, EventKeyboard } from '../../../cocos/input/types';
+import { EventTarget } from '../../../cocos/core/event';
+import { InputEventType } from '../../../cocos/input/types/event-enum';
+import { code2KeyCode } from '../keycodes';
+function getKeyCode(code) {
+    return code2KeyCode[code] || KeyCode.NONE;
+}
+export class KeyboardInputSource {
+    constructor() {
+        this._eventTarget = new EventTarget();
+        this._registerEvent();
+    }
+    dispatchKeyboardDownEvent(nativeKeyboardEvent) { this._handleKeyboardDown(nativeKeyboardEvent); }
+    dispatchKeyboardUpEvent(nativeKeyboardEvent) { this._handleKeyboardUp(nativeKeyboardEvent); }
+    on(eventType, callback, target) {
+        this._eventTarget.on(eventType, callback, target);
+    }
+    _registerEvent() {
+        const canvas = (globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas'));
+        canvas?.addEventListener('keydown', this._handleKeyboardDown.bind(this));
+        canvas?.addEventListener('keyup', this._handleKeyboardUp.bind(this));
+    }
+    _getInputEvent(event, eventType) {
+        const keyCode = getKeyCode(event.code);
+        const eventKeyboard = new EventKeyboard(keyCode, eventType);
+        return eventKeyboard;
+    }
+    _handleKeyboardDown(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        if (!event.repeat) {
+            const keyDownInputEvent = this._getInputEvent(event, InputEventType.KEY_DOWN);
+            this._eventTarget.emit(InputEventType.KEY_DOWN, keyDownInputEvent);
+        }
+        else {
+            const keyPressingInputEvent = this._getInputEvent(event, InputEventType.KEY_PRESSING);
+            this._eventTarget.emit(InputEventType.KEY_PRESSING, keyPressingInputEvent);
+        }
+    }
+    _handleKeyboardUp(event) {
+        const inputEvent = this._getInputEvent(event, InputEventType.KEY_UP);
+        event.stopPropagation();
+        event.preventDefault();
+        this._eventTarget.emit(InputEventType.KEY_UP, inputEvent);
+    }
+}

@@ -22,22 +22,21 @@ Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source Li
 
 ## 2. PAL 平台层（src/pal/**）
 
-- 来源：`@cocos/engine-pal@1.0.4`（npm）预编译产物，逐字节抽取（`npm run verify:licenses` 断言）。
-- 形态：按 HTML5 平台虚拟模块映射抽取（web 实现 + non-minigame + 共享类型），
-  原始 `_ccprivate$` 属性名变换保持原样。
-- **许可状态（2026-09-22 V1.2 审计更正）**：该包 `package.json` 标 `license: "UNLICENSED"`，
-  其 `README.md:16` 写「UNLICENSED — Cocos 内部使用」，包内不含许可原文。
-  本节此前所述「MIT」**不成立**，已改登记为 `pending-owner-decision`
-  （见 `docs/license-decisions.json` 与 §7）；候选处置：以 cocos4 仓库 MIT（Copyright 2025 SUD）
-  作为 pal 源码许可依据并登记依据链 / 取得书面澄清 / 改从上游源码路径抽取。
+- 当前来源：公开 cocos4 提交 `9f0e30acb31f6d670f2c0bf818d61039846a2860` 的 PAL TypeScript 源码（移入私有仓库前的父提交），覆盖当前 Web 平台子集。
+- 许可：该公开树的 MIT LICENSE，加上源码中的版权和许可声明；原文保存在 `vendor/pal-source/`，发布包携带 `licenses/LICENSE_pal.txt` 与 `licenses/NOTICE_pal.txt`。
+- 重现：`node tools/build/pal-source.cjs --check` 校验源码 SHA-256 / Git blob、固定编译器、39 个 JS/声明产物和随包 notice。`--write` 显式重建，不下载文件。
+- AIR 适配限于五个 Web 模块的画布绑定与 DPR：env.findCanvas、keyboard/mouse/touch、screen-adapter。引擎核心的 alpha.34 基线保持不变。
+- 原 `@cocos/engine-pal@1.0.4` 明确为 UNLICENSED，现已停止使用其源码、类型和二进制，并移除依赖。没有把历史风险接受解释为该 npm 包的新授权。
 
-## 3. 构建期依赖（devDependencies，不进入运行时产物）
+## 3. 构建工具依赖
 
 | 包 | 许可 | 用途 |
 |---|---|---|
 | @cocos/ccbuild | MIT | 引擎构建器（与上游一致） |
 | @cocos/babel-preset-cc | MIT | Babel 预设（与上游一致） |
 | typescript / tslib | Apache-2.0 | 编译 |
+
+Box2D、Cannon 和 DragonBones 为源码构建及类型检查保留在 devDependencies 中，但其运行时代码已内嵌 bundle；第三方发布许可仍按下表单独登记。
 | jest / ts-jest / jest-environment-jsdom | MIT | 测试 |
 | chalk / fs-extra | MIT | 构建脚本 |
 | @types/* | MIT | 类型 |
@@ -86,21 +85,19 @@ Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source Li
 | cannon.js（`@cocos/cannon@1.2.8`） | `src/node_modules/@cocos/cannon/` | MIT（c) 2015 cannon.js Authors | `licenses/LICENSE_cannon.txt` | 默认 bundle 内嵌（r46，#8(a)：交付期 3D 后端 builtin+cannon 双编入，默认仍 builtin） |
 | zlib.js（`src/external/compression/zlib.min.js`） | 上游原文 | MIT（imaya/zlib.js） | `licenses/LICENSE_zlibjs.txt` | 默认 bundle 内嵌 |
 | notepack.io（`src/external/deserialize/`） | 上游原文 | MIT（c) 2014 Ion Drive Software Ltd. | `licenses/LICENSE_notepack.io.txt` | 默认 bundle 内嵌 |
-| `@cocos/engine-pal@1.0.4` | `src/pal/**` | **UNLICENSED**（见 §2） | 无（来源包未附文本） | 默认 bundle 内嵌 |
+| Cocos PAL（公开 MIT 快照） | `src/pal/**` | MIT（见 §2） | `licenses/LICENSE_pal.txt` + `licenses/NOTICE_pal.txt` | 默认 bundle 内嵌 |
 
-两条需要所有者决定（`docs/license-decisions.json`，门禁以 ATTENTION 呈现）：
+第三方使用条件与当前发布阻塞（`docs/license-decisions.json`）：
 
-1. **Spine**：该协议要求「产品的每个用户须自备 Spine Editor 许可」且「任何形式的再分发必须附带本许可与版权声明」。
+1. **Spine**：集成须满足 Spine Editor License Agreement §2 的适用条件；否则按 Runtimes 协议的替代条款要求产品用户各自取得 Spine Editor 许可。再分发必须附带对应许可与版权声明。
    现状已满足第二项（文本随包发布），第一项与仓库根 `license: MIT` 的单文件引擎发行姿态并不等价。
    风险面比字面看起来小：按 `docs/notes/v12-spine-asset-sourcing.md` 的实测，alpha.34 的 Web 侧 spine 只有
    wasm/asm 后端，随仓库抽取的 `spine-core.js` 实际是枚举/类型桩，而 emscripten 运行资产并未取得（D2 受阻），
    故默认产物目前并不含 Esoteric 的完整运行时实现。
    ~~选项：保留默认产物 + 显式声明该条件（当前做法）/ 移入常量变体 / 移除该组（与计划书「16 组全部回归」冲突）。~~
    **〔r48 处置（2026-09-25，owner 指令「完成剩余事项」）〕批复选项 1：保留默认产物 + 本节即为显式声明——
-   使用本包 spine 相关能力的集成方，其产品的每个最终用户须自备 Spine Editor 许可；许可原文随包发布。**
-2. **engine-pal**：见 §2 —— 无许可原文可录。
-   **〔r48 处置〕风险接受：来源为 Cocos 官方 npm 渠道、以源码形态（`src/pal/**`）随本仓库再分发，§2 如实登记
-   「UNLICENSED（npm 元数据）」不声称 MIT；上游若发布明确许可则依其升级（`docs/license-decisions.json` 触发条件在案）。**
+   使用本包 Spine 相关能力的集成方须核验适用的 Editor / Runtimes 授权条件，不能将第三方代码视为仅受 MIT 约束；许可原文随包发布。**
+2. **PAL**：2026-10-01 已换用可核验的公开 MIT 源码并携带原文/notice；许可检查同时阻止旧 engine-pal 二进制残留。旧 npm 包的限制仍有效，但它已不属于本项目当前发行来源。
 
 许可元数据缺口（不阻塞，但记录在案）：`@cocos/dragonbones-js@1.0.2` 的 npm 包既无 `LICENSE` 文件也无
 `license` 字段，许可原文是从上游 cocos4 `licenses/` 取的；`@cocos/box2d`、`@cocos/cannon` 的

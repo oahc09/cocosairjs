@@ -1,11 +1,11 @@
 {
   "runner": "tools/verify/tarball-browser-consumer.cjs",
-  "measuredAt": "2026-09-29T22:53:19.279Z",
+  "measuredAt": "2026-10-01T05:39:05.083Z",
   "tarball": "cocosair.js-1.0.0.tgz",
   "installed": {
     "files": 4,
     "entry": "build/npm/cocosair.module.js",
-    "bundleSha256_16": "113d4c4068a2932d"
+    "bundleSha256_16": "41b9103f5ad43b14"
   },
   "sourceMap": {
     "present": false,

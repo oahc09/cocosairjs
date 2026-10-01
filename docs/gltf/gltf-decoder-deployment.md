@@ -3,6 +3,13 @@
 > 原则：引擎主 bundle **永不内嵌** decoder（JS/WASM/worker 均不打包、不初始化）；decoder 是
 > 随包分发的**独立静态资产**，由应用注入 provider。缺文件/哈希/离线复现证据即阻断验收。
 
+> **Draco 浏览器边界（2026-09-30）**：随包的 `draco3d.js` 与 `draco_decoder_nodejs.js`
+> 是 CommonJS / Node 入口，不能直接作为浏览器 `<script>` 或 ESM 动态 import 的 factory。
+> 当前包没有提供浏览器版 `DracoDecoderModule` glue；需要 Draco 正向解码的应用必须另行取得
+> 兼容的浏览器 decoder，并向 `createDracoDecoder()` 注入其 factory。
+> 下文 `DracoDecoderModule` 表示应用提供的浏览器模块，不由随包 `draco3d.js` 创建。
+> `verify:decoders` 只证明发布资产及哈希完整、Meshopt 可加载，不证明 Draco 浏览器正向解码。
+
 ## 1. 资产清单（权威 = MANIFEST）
 
 ```

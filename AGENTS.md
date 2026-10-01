@@ -26,6 +26,8 @@ Start with [README.md](README.md) for the current quick start and capability bou
 | `test/` | Smoke tests and fixtures. |
 | `ai/` | Topic-based plans, execution ledgers, and prompts; see `ai/README.md`. These are not proof that a feature shipped. |
 
+PAL 使用 `vendor/pal-source/` 中冻结的公开 MIT 源码；`node tools/build/pal-source.cjs --check` 只读校验来源哈希、生成产物及版权 notice，`--write` 显式重建 `src/pal/`。不要重新引入旧 `@cocos/engine-pal` 包字节。
+
 工具入口见 [tools/README.md](tools/README.md)，目录与命名规则见 [仓库组织约定](docs/reference/repository-layout.md)。新示例默认使用 `src/main.ts`；已有示例 ID、上游路径和证据文件名作为稳定关联保留。
 
 ## Development workflow

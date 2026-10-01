@@ -2,7 +2,12 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 40
+    "modifiedCount": 75,
+    "pal": {
+      "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "license": "MIT",
+      "source": "vendor/pal-source/manifest.json"
+    }
   },
   "mapping": [
     {
@@ -7224,199 +7229,199 @@
     },
     {
       "airPath": "src/pal/env/web/env.js",
-      "upstreamPath": "pal/env/web/env.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/env/web/env.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation"
     },
     {
       "airPath": "src/pal/input/input-source.js",
-      "upstreamPath": "pal/input/input-source.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/input/input-source.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/input/keycodes.js",
-      "upstreamPath": "pal/input/keycodes.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/input/keycodes.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/input/touch-manager.js",
-      "upstreamPath": "pal/input/touch-manager.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/input/touch-manager.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/input/web/accelerometer-input.js",
-      "upstreamPath": "pal/input/web/accelerometer-input.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/input/web/accelerometer-input.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/input/web/gamepad-input.js",
-      "upstreamPath": "pal/input/web/gamepad-input.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/input/web/gamepad-input.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/input/web/handheld-input.js",
-      "upstreamPath": "pal/input/web/handheld-input.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/input/web/handheld-input.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/input/web/handle-input.js",
-      "upstreamPath": "pal/input/web/handle-input.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/input/web/handle-input.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/input/web/hmd-input.js",
-      "upstreamPath": "pal/input/web/hmd-input.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/input/web/hmd-input.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/input/web/index.js",
-      "upstreamPath": "pal/input/web/index.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/input/web/index.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/input/web/keyboard-input.js",
-      "upstreamPath": "pal/input/web/keyboard-input.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "upstreamPath": "public-pal/pal/input/web/keyboard-input.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "AIR: 画布解析支持 globalThis.__CC_CANVAS__ 元素引用覆盖（W04 任意 id 画布输入绑定；import 前设置）"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation"
     },
     {
       "airPath": "src/pal/input/web/mouse-input.js",
-      "upstreamPath": "pal/input/web/mouse-input.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "upstreamPath": "public-pal/pal/input/web/mouse-input.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "AIR: 画布解析支持 globalThis.__CC_CANVAS__ 元素引用覆盖（W04 任意 id 画布输入绑定；import 前设置）"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation"
     },
     {
       "airPath": "src/pal/input/web/touch-input.js",
-      "upstreamPath": "pal/input/web/touch-input.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "upstreamPath": "public-pal/pal/input/web/touch-input.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "AIR: 画布解析支持 globalThis.__CC_CANVAS__ 元素引用覆盖（W04 任意 id 画布输入绑定；import 前设置）"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation"
     },
     {
       "airPath": "src/pal/minigame/non-minigame.js",
-      "upstreamPath": "pal/minigame/non-minigame.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/minigame/non-minigame.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/pacer/pacer-web.js",
-      "upstreamPath": "pal/pacer/pacer-web.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/pacer/pacer-web.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/screen-adapter/enum-type/index.js",
-      "upstreamPath": "pal/screen-adapter/enum-type/index.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/screen-adapter/enum-type/index.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/screen-adapter/enum-type/orientation.js",
-      "upstreamPath": "pal/screen-adapter/enum-type/orientation.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/screen-adapter/enum-type/orientation.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/screen-adapter/web/screen-adapter.js",
-      "upstreamPath": "pal/screen-adapter/web/screen-adapter.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "upstreamPath": "public-pal/pal/screen-adapter/web/screen-adapter.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "AIR: ①window.__CCDPR_CAP__ 可配置 Web DPR 上限（默认 2，responsive.md §3）；②画布解析支持 globalThis.__CC_CANVAS__ 元素引用覆盖（W04，与三输入源同源）；③导入期无画布时给出明确错误，而非在 appendChild 抛出不明 TypeError"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation"
     },
     {
       "airPath": "src/pal/system-info/enum-type/browser-type.js",
-      "upstreamPath": "pal/system-info/enum-type/browser-type.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/system-info/enum-type/browser-type.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/system-info/enum-type/feature.js",
-      "upstreamPath": "pal/system-info/enum-type/feature.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/system-info/enum-type/feature.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/system-info/enum-type/index.js",
-      "upstreamPath": "pal/system-info/enum-type/index.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/system-info/enum-type/index.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/system-info/enum-type/language.js",
-      "upstreamPath": "pal/system-info/enum-type/language.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/system-info/enum-type/language.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/system-info/enum-type/network-type.js",
-      "upstreamPath": "pal/system-info/enum-type/network-type.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/system-info/enum-type/network-type.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/system-info/enum-type/operating-system.js",
-      "upstreamPath": "pal/system-info/enum-type/operating-system.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/system-info/enum-type/operating-system.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/system-info/enum-type/platform.js",
-      "upstreamPath": "pal/system-info/enum-type/platform.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/system-info/enum-type/platform.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/system-info/web/system-info.js",
-      "upstreamPath": "pal/system-info/web/system-info.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/system-info/web/system-info.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/utils.js",
-      "upstreamPath": "pal/utils.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/utils.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/wasm/wasm-web.js",
-      "upstreamPath": "pal/wasm/wasm-web.js",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "upstreamPath": "public-pal/pal/wasm/wasm-web.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/predefine.ts",
@@ -8141,59 +8146,59 @@
     },
     {
       "airPath": "src/pal/audio/audio-buffer-manager.js",
-      "upstreamPath": "pal/audio/audio-buffer-manager.js",
-      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+      "upstreamPath": "public-pal/pal/audio/audio-buffer-manager.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/audio/audio-timer.js",
-      "upstreamPath": "pal/audio/audio-timer.js",
-      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+      "upstreamPath": "public-pal/pal/audio/audio-timer.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/audio/operation-queue.js",
-      "upstreamPath": "pal/audio/operation-queue.js",
-      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+      "upstreamPath": "public-pal/pal/audio/operation-queue.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/audio/type.d.ts",
-      "upstreamPath": "pal/audio/type.d.ts",
-      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+      "upstreamPath": "public-pal/pal/audio/type.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "Declaration emitted from the frozen MIT public audio type source by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/audio/type.js",
-      "upstreamPath": "pal/audio/type.js",
-      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+      "upstreamPath": "public-pal/pal/audio/type.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/audio/web/player-dom.js",
-      "upstreamPath": "pal/audio/web/player-dom.js",
-      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+      "upstreamPath": "public-pal/pal/audio/web/player-dom.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/audio/web/player-web.js",
-      "upstreamPath": "pal/audio/web/player-web.js",
-      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+      "upstreamPath": "public-pal/pal/audio/web/player-web.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/pal/audio/web/player.js",
-      "upstreamPath": "pal/audio/web/player.js",
-      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+      "upstreamPath": "public-pal/pal/audio/web/player.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     },
     {
       "airPath": "src/node_modules/@cocos/box2d/index.js",
@@ -9216,6 +9221,27 @@
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
       "reason": "AIR 新增（r46，owner 批复 #8(a)/D12）：交付期 3D 物理后端选择 selectPhysicsBackend——官方两个 instantiate 在 Game.EVENT_PRE_SUBSYSTEM_INIT 监听器内 register（builtin 先、cannon 后），本文件在 createAirApp 内向同一事件注册第三个监听器使用户后端确定性最后胜出（默认 builtin）；并预置 default-physics-material（无 Creator 资产包时 initDefaultMaterial 的 errorID 9642 对 cannon 是致命面，材质缺失会令 cannon-shape.setMaterial 崩溃），零引擎改动。世界创建后选择显式报错（官方 switchTo 仅编辑器面放行）。"
+    },
+    {
+      "airPath": "src/pal/integrity-check.js",
+      "upstreamPath": "public-pal/pal/integrity-check.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
+    },
+    {
+      "airPath": "src/pal/screen-adapter/enum-type/screen-event.js",
+      "upstreamPath": "public-pal/pal/screen-adapter/enum-type/screen-event.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
+    },
+    {
+      "airPath": "src/pal/system-info/enum-type/event.js",
+      "upstreamPath": "public-pal/pal/system-info/enum-type/event.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
     }
   ]
 }

@@ -946,9 +946,9 @@
     "assets": "无第三方资产：`AirDragon.json` / `AirDragon_atlas.json` / `AirDragon_atlas.png`（64×64、三个纯色 region）全部由本仓库 `tools/fixtures/make-dragonbones-skeleton.cjs` 现生成（PNG 由工具自带的极简 encoder 写出，无外部图像库）。vendored `@cocos/dragonbones-js@1.0.2`（MIT，DragonBones team）随 bundle 出处已在许可门禁登记；dragon-bones 模块为 cocos4 上游 TypeScript 端口，逐字节同源于 src/cocos/dragon-bones"
   },
   "promotion": {
-    "spec": "a4eee0d7c11b",
-    "source": "771ca54965703158",
-    "candidate": "2360fa3fb4cea194",
+    "spec": "92e456f2b202",
+    "source": "42d1fb47022aa7e5",
+    "candidate": "b583e4c7d8588d5f",
     "verified": 93,
     "attested": 5,
     "units": 98
