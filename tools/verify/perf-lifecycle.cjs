@@ -10,7 +10,7 @@
  *      unavailable，不伪造内存读数。
  *
  * 执行：NODE_PATH=<playwright> node tools/verify/perf-lifecycle.cjs
- * 产物：docs/evidence/v11-perf-lifecycle.json
+ * 产物：docs/evidence/perf-lifecycle.json
  */
 const fs = require('fs');
 const path = require('path');
@@ -18,7 +18,7 @@ const http = require('http');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const ARTIFACT = path.join(REPO, 'build', 'examples'); // 已编译 boot.js 的静态部署物（原始 examples 是 TS 入口，静态服务跑不动）
-const OUT = path.join(REPO, 'docs', 'evidence', 'v11-perf-lifecycle.json');
+const OUT = path.join(REPO, 'docs', 'evidence', 'perf-lifecycle.json');
 const EXE = path.join(process.env.LOCALAPPDATA || '', 'ms-playwright', 'chromium-1228', 'chrome-win64', 'chrome.exe');
 const EXT = { '.js': 'text/javascript', '.html': 'text/html', '.json': 'application/json', '.glb': 'model/gltf-binary', '.md': 'text/markdown' };
 

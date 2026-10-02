@@ -4,7 +4,7 @@
  * 默认 bundle 里 marionette/pose-graph 的 runtime 导出被 src/cc.config.json 的
  * `!MARIONETTE` / `!PROCEDURAL_ANIMATION` 虚拟模块覆盖成了空模块，所以示例（浏览器）级取证不可达；
  * 依计划书 C3/R10 的既定口径降级为「闭包完整 + 单元级 pose node 求值正确」，理由与实测见
- * docs/notes/v12-pose-graph-notes.md。ts-jest 直接 import src/，绕开 esbuild 的虚拟模块覆盖，
+ * docs/notes/pose-graph-notes.md。ts-jest 直接 import src/，绕开 esbuild 的虚拟模块覆盖，
  * 因此这里能真正把姿势图跑起来并断言数值。
  */
 import { existsSync, readFileSync, readdirSync } from 'node:fs';

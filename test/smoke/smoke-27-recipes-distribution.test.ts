@@ -60,8 +60,8 @@ describe('V0.6 §58-§61 — Recipe 门禁', () => {
         const requested = RECIPES.map((r) => ({ ...r, status: r.targetStatus! }));
         const noEvidence = checkCoverage(requested, ctx);
         expect(noEvidence.length).toBeGreaterThan(0);
-        // 有 evidence 时（来自 v06-recipes.json）coverageProof 通过 → 无 dangling
-        const evPath = path.join(REPO, 'docs', 'evidence', 'v06-recipes.json');
+        // 有 evidence 时（来自 recipes-browser.json）coverageProof 通过 → 无 dangling
+        const evPath = path.join(REPO, 'docs', 'evidence', 'recipes-browser.json');
         const evidence = JSON.parse(fs.readFileSync(evPath, 'utf8')).runs;
         const promoted = promoteRecipes(RECIPES, { ...ctx, evidence });
         const withEv = checkCoverage(promoted, { ...ctx, evidence });

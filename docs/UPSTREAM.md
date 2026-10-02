@@ -2,6 +2,8 @@
 
 本项目 `cocosair.js`（Cocos AIR）的源码基线来自 Cocos 引擎（cocos4）本地完整快照。
 
+2026-10-02 文档命名整理同步更新 AIR 自有 `air-spine-instantiate-js.ts` 的资产部署提示和 `emscripten-assets.d.ts` 的说明引用，使用 `docs/notes/spine-asset-sourcing.md`、`docs/notes/physics-asset-sourcing.md`。此改动仅调整文档路径，不改变资产部署要求或后端行为。
+
 ## 基线标识
 
 | 项 | 值 |
@@ -62,7 +64,7 @@
 - 已完成：`cocos/gfx/webgpu/**`（24）+ `cocos/webgpu/instantiated.ts` + `exports/gfx-webgpu.ts` 共 26 文件按官方原文逐字节抽取
   （`node tools/analyze/import-upstream-group.cjs --group E1 …` → `wrote 26/26; byte-identical 26; DIFF 0; MISSING 0`），并已登记进
   `docs/extraction-manifest.json` 与 `docs/upstream-file-map.json`；类型面补上官方逐字节 `@types/webGPU.d.ts`（3258 行）。
-- 受阻事实（三条，均可复现，证据见 `docs/evidence/v12/d10/README.md`）：
+- 受阻事实（三条，均可复现，证据见 `docs/evidence/browser-matrix/d10/README.md`）：
   1. **上游引用图本身不经过 Web**：`cocos/gfx/index.ts`（web 变体）对 webgpu 零引用，唯一接线者是 `cocos/gfx/index.ems.ts`
      （emscripten 平台变体，与 54 个 `*.jsb.ts` 同类，按 §1.3/护栏 5 不抽取）。
   2. **运行时与类型资产不在基线快照内**：`cocos4/native/external/` 整个目录不存在，`webgpu_wasm/glslang/twgsl` 的 `.js/.wasm`
@@ -122,7 +124,7 @@
 - 待确认（D3 / R8，见 `docs/reference/owner-decisions.md` §2 #10 与 §2.1）：本行只覆盖**编译面**的处置。运行级取证
   （box2d-wasm / ammo / physx 三示例 × 三引擎矩阵）仍卡在同一资产缺口——`external:emscripten/**` 既不在上游快照也不在上游 git
   （`git ls-files external` 仅 11 文件，Air 11/11 逐字节镜像），且 `@cocos/box2d@1.0.2` 包内 `.wasm` 计数为 **0**，
-  故计划书 D3「来源 = @cocos/box2d 包内资产」前提为假（明细 `docs/notes/v12-physics-asset-sourcing.md`）。三选一：
+  故计划书 D3「来源 = @cocos/box2d 包内资产」前提为假（明细 `docs/notes/physics-asset-sourcing.md`）。三选一：
   (a) 按计划书自带默认 D8 口径结案（代码回归 + 选择器可达 + 降级路径可测 = 部分通过、显著标注、不阻塞 Gate）；
   (b) 从官方 npm/CDN 引入 wasm 资产入发行物（需许可登记 + `verify:licenses` / `verify:web-only` / bundle 预算三处门禁同步改 + 全量重采）；
   (c) 记「不达」。答复前 LV12-14 / LV12-16 不计入验收通过。

@@ -4,7 +4,7 @@
  *   claimed   — example.json 的 api.claims 与 inventory 精确匹配（仅声明，零执行证据）
  *   attested  — 当期证据显示该 API 真被执行（trace state=executed），但没有一条仍成立的
  *               证据行把它绑到通过的 validator 上；或不可插桩的别名/数据成员。
- *   verified  — 逐 API 执行证明：example 在 v11-examples-verified.json / v11-devtools-examples.json
+ *   verified  — 逐 API 执行证明：example 在 examples-verified.json / devtools-examples.json
  *               中 result=PASS，且证据里该 API 的 apiProof[].proof === 'verified'
  *               （= 运行期被 trace 计到调用次数 ∧ 至少一条 validator PASS ∧ 该 validator 的
  *                 证据行仍能在当前源码里找到该 API token）。
@@ -38,8 +38,8 @@ var apiTrace = require(path.join(REPO, 'tools', 'verify', 'api-trace.cjs'));
 var INVENTORY_PATH = path.join(REPO, 'docs', 'example-api-inventory.json');
 var MANIFEST_PATH = path.join(REPO, 'examples', 'files.json');
 var EVIDENCE_PATHS = [
-  'docs/evidence/v11-examples-verified.json',
-  'docs/evidence/v11-devtools-examples.json',
+  'docs/evidence/examples-verified.json',
+  'docs/evidence/devtools-examples.json',
 ];
 var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
 var CHECK_ONLY = process.argv.includes('--check');

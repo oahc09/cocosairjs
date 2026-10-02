@@ -19,7 +19,7 @@
  *
  * 执行：NODE_PATH=<playwright> node tools/verify/example-spec-browser.cjs [--ids=a,b]
  *       [--browser=chromium|firefox|webkit] [--out=<证据路径>] [--artifact-dir=<截图目录>]
- * 产出：docs/evidence/v11-examples-verified.json + docs/evidence/examples/<id>.png
+ * 产出：docs/evidence/examples-verified.json + docs/evidence/examples/<id>.png
  * 三引擎铺开（LV12-01）：默认即上式（chromium 整批口径，且只有写回该路径才做证据驱动晋级）。
  * 非 chromium 必须同时显式 --out=，否则 EXIT=2 —— 否则会把另一种浏览器的结果并进 chromium 的批次字段（F-117 那类自伤）。
  */
@@ -37,7 +37,7 @@ const apiTrace = require(path.join(REPO, 'tools', 'verify', 'api-trace.cjs'));
 const readback = require(path.join(REPO, 'tools', 'verify', 'runtime-readback.cjs'));
 const expChecks = require(path.join(REPO, 'tools', 'verify', 'expectation-checks.cjs'));
 
-const CANON_EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'v11-examples-verified.json');
+const CANON_EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'examples-verified.json');
 const CANON_ARTIFACT_DIR = path.join(REPO, 'docs', 'evidence', 'examples');
 const PER_EXAMPLE_TIMEOUT = 120000;
 const SETTLE_MS = 2500;

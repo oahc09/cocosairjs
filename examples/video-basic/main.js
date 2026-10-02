@@ -20,7 +20,7 @@
  *   TypeError 并 `console.error`，且错误回调把 `impl._fullScreenOnAwake` 写成 false 后组件再赋 false
  *   会被 setter 的同值卫兵吞掉 ⇒ 永远退不出来。三引擎矩阵的 `noConsoleError` 不容许这条，所以
  *   本示例用第二个播放器只跑 awake 路，跑完即销毁（同时充当 `<video>` 泄漏计数器）。完整链见
- *   `docs/notes/v12-video-notes.md` 与台账 F-103。
+ *   `docs/notes/video-notes.md` 与台账 F-103。
  * ④ **事件回调**（P2/P3/P7）：`__preload` 把 8 个事件名装进 `componentEventList`
  *   （video-player.ts:402-410），而 `dispatchEvent` 只在表里有 key 时才改 `_state`
  *   （video-player-impl.ts:229-235）⇒ `player.state` 的取值序列本身就是回调链跑通的证据；
@@ -28,7 +28,7 @@
  *
  * 资产 `assets/clip.mp4`（H.264 baseline / yuv420p / 160x120 / 15fps / 3.000 s / 无音频轨 /
  * faststart，25,279 B）由 `tools/fixtures/make-video-mp4.cjs` 再生成；**格式是三引擎真实解码探测选出来的，
- * 不是 canPlayType**（详见 docs/notes/v12-video-notes.md 与 §6.4 的教训：webkit 对 vp8 webm 报
+ * 不是 canPlayType**（详见 docs/notes/video-notes.md 与 §6.4 的教训：webkit 对 vp8 webm 报
  * "probably" 却 `duration=NaN`、`play()` 仍 resolve、`currentTime` 跳到 3、帧恒黑）。
  * 160x120 这个尺寸本身就是断言值：`keepAspectRatio` 会用 videoWidth/Height 覆盖 UITransform
  * （video-player-impl.ts:237-243 `syncUITransform`）。

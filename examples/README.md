@@ -122,12 +122,12 @@ NODE_PATH=<含 playwright 的 node_modules 路径> node tools/verify/examples-sm
 
 | 事实                        | 来源                                                                                                                                                                                                                                            |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 规格冻结 / 校验问题         | `node tools/examples/spec-validate.cjs` → `docs/evidence/v11-spec-validate.json`（当前 45 frozen / 0 draft / 0 blocked）                                                                                                                        |
-| 浏览器验证                  | `node tools/verify/example-spec-browser.cjs` → `docs/evidence/v11-examples-verified.json`（当前 40/40 PASS）                                                                                                                                     |
-| DevTools 会话验证           | `node tools/verify/devtools-examples.cjs` → `docs/evidence/v11-devtools-examples.json`（当前 5/5 PASS：`automation` + `rc-*`×4）                                                                                                            |
+| 规格冻结 / 校验问题         | `node tools/examples/spec-validate.cjs` → `docs/evidence/spec-validation.json`（当前 45 frozen / 0 draft / 0 blocked）                                                                                                                        |
+| 浏览器验证                  | `node tools/verify/example-spec-browser.cjs` → `docs/evidence/examples-verified.json`（当前 40/40 PASS）                                                                                                                                     |
+| DevTools 会话验证           | `node tools/verify/devtools-examples.cjs` → `docs/evidence/devtools-examples.json`（当前 5/5 PASS：`automation` + `rc-*`×4）                                                                                                            |
 | 缩略图 / 逐步 validator     | `docs/evidence/examples/<id>.png`（45 张）                                                                                                                                                                                                      |
 | API 覆盖（verified 口径）   | `node tools/examples/coverage-report.cjs` → `docs/api-coverage-report.json`（core 49/717 · important 6/793 · advanced 8/3219，claimed=verified 零冒充，但三道门禁仍 FAIL，需按 Wave 扩量）                                                      |
-| 规范符合性（§1-§26 证据链） | `node tools/examples/spec-compliance-audit.cjs` → `docs/evidence/v11-spec-compliance.json`（当前 0 fail / 1 warn；唯一 warn 是 gltf-draco 缺 Lifecycle Contract 的机器可读豁免——解码器不在随包工件内，无已解码资产可释放，如实 BLOCKED 不伪造） |
+| 规范符合性（§1-§26 证据链） | `node tools/examples/spec-compliance-audit.cjs` → `docs/evidence/spec-compliance.json`（当前 0 fail / 1 warn；唯一 warn 是 gltf-draco 缺 Lifecycle Contract 的机器可读豁免——解码器不在随包工件内，无已解码资产可释放，如实 BLOCKED 不伪造） |
 
 新增示例后：写 `example.json`（§24 全量规格）→ `npm run gallery:manifest` → `node tools/examples/spec-validate.cjs`
 → 起 dev server 访问 `/<id>/` 目视确认 → 跑上表对应验证器晋级 stable。

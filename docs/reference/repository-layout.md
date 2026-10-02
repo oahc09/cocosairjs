@@ -27,6 +27,8 @@
 - 计划文档名不重复项目全名；正文保留完整中文标题。计划和台账使用相同主题名、不同目录。
 - 工具按行为命名。只有案例编号、版本化合同或历史证据确需区分时保留编号；编号不能替代用途说明。
 
+文档和报告使用主题名，例如 `notes/audio-notes.md`、`reference/api-stability.md`、`evidence/examples-verified.json` 和 `evidence/recipes-browser.json`。跨浏览器证据集中于 `evidence/browser-matrix/`。移动报告时同步生产脚本、门禁、测试及报告内的资源路径；既有 schema、场景 ID 和合同编号保持其协议含义。运行日志写入被忽略的 `output/`。
+
 ## 临时内容与清理
 
 本地 `node_modules/`、`output/`、`.playwright-cli/`、构建缓存和 `tools/**/.tmp-*/` 不作为项目源码入库。临时目录由创建工具负责收尾；有复用价值的增量缓存不因体积较大而删除。

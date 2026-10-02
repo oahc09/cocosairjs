@@ -5,7 +5,7 @@
  *
  * 立门禁的理由（先证伪再建，勿重复造轮子）：三引擎矩阵证据的字节货币**早已**是 jest 断言
  * （`test/smoke/smoke-30-v12-regression.test.ts` 的「三浏览器矩阵证据字节货币」5 条），而
- * `docs/evidence/v11-examples-verified.json` 在 `test/` 里 **grep 0 命中** ⇒ V1.1 链的完整性
+ * `docs/evidence/examples-verified.json` 在 `test/` 里 **grep 0 命中** ⇒ V1.1 链的完整性
  * 至今**没有任何消费端**：把它改坏（删标记、清空 results、掺入 FAIL、混入第二个候选指纹）没人拦。
  *
  * 七条不变量（全部只读盘上证据，不启动浏览器、不 build、不改写任何文件）：
@@ -29,7 +29,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..', '..');
-const DEFAULT_EVIDENCE = path.join(ROOT, 'docs', 'evidence', 'v11-examples-verified.json');
+const DEFAULT_EVIDENCE = path.join(ROOT, 'docs', 'evidence', 'examples-verified.json');
 
 const arg = (name) => {
     const hit = process.argv.find((s) => s.startsWith(`--${name}=`));

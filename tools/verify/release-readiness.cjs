@@ -34,10 +34,10 @@ try {
 const licenseAudit = require('./verify-licenses.cjs').check();
 for (const failure of licenseAudit.failures) failures.push(`license: ${failure}`);
 const requiredEvidence = [
-    'docs/evidence/v11-examples-verified.json',
-    'docs/evidence/v11-devtools-examples.json',
-    'docs/evidence/v11-gallery-artifact.json',
-    'docs/evidence/v12/browser-matrix.json',
+    'docs/evidence/examples-verified.json',
+    'docs/evidence/devtools-examples.json',
+    'docs/evidence/gallery-artifact.json',
+    'docs/evidence/browser-matrix/browser-matrix.json',
 ];
 const missingEvidence = requiredEvidence.filter((file) => !fs.existsSync(path.join(root, file)));
 if (missingEvidence.length) {
@@ -48,10 +48,10 @@ if (missingEvidence.length) {
     );
     process.exit(1);
 }
-const v11 = read('docs/evidence/v11-examples-verified.json');
-const devtools = read('docs/evidence/v11-devtools-examples.json');
-const gallery = read('docs/evidence/v11-gallery-artifact.json');
-const v12 = read('docs/evidence/v12/browser-matrix.json');
+const v11 = read('docs/evidence/examples-verified.json');
+const devtools = read('docs/evidence/devtools-examples.json');
+const gallery = read('docs/evidence/gallery-artifact.json');
+const v12 = read('docs/evidence/browser-matrix/browser-matrix.json');
 const bundle = sha16('build/cocosair.module.js');
 const verifiedUnits = new Set((coverage.verifiedList || []).map((entry) => entry.unit));
 const worktreeChanges = execFileSync('git', ['status', '--porcelain=v1'], { cwd: root, encoding: 'utf8' }).trim();

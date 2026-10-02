@@ -1,0 +1,30 @@
+{
+  "runner": "tools/verify/tarball-browser-consumer.cjs",
+  "measuredAt": "2026-10-02T02:14:27.045Z",
+  "tarball": "cocosair.js-1.0.0.tgz",
+  "installed": {
+    "files": 4,
+    "entry": "build/npm/cocosair.module.js",
+    "bundleSha256_16": "3ccfdde16441c04d"
+  },
+  "sourceMap": {
+    "present": false,
+    "linked": false
+  },
+  "developmentSourceMap": {
+    "present": true,
+    "linked": true
+  },
+  "booted": true,
+  "probe": {
+    "apiRoundtrip": "function,Scene,Node,Camera,MeshRenderer,Material,Color",
+    "nonZeroAlphaPixels": 100,
+    "canvasSize": "480x320"
+  },
+  "pageErrors": [],
+  "nested": {
+    "booted": true,
+    "cspErrors": []
+  },
+  "ok": true
+}

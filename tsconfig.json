@@ -73,7 +73,7 @@
       // bullet / physx / box2d-wasm 三后端子图已按上游原文抽取并逐字节核对（82 文件，manifest + upstream-file-map 在册），
       // 但它们的类型与运行时资产同源同缺 —— 上游 tsconfig.json 的 types[] 指着
       // native/external/emscripten/{bullet/bullet,physx/physx,box2d/box2d}.d.ts（由 `npm run update:native-external` 拉取，
-      // 不在基线快照内，见 docs/notes/v12-physics-asset-sourcing.md = R8 结论）。实测纳入本子图时
+      // 不在基线快照内，见 docs/notes/physics-asset-sourcing.md = R8 结论）。实测纳入本子图时
       // npm run typecheck 从 0 红到 118（Cannot find namespace 'Bullet' ×35 / 'PhysX'、Namespace 'B2' has no exported member ×…、
       // Cannot find module 'external:emscripten/{bullet,physx}/…'）。上游自身 tsc 在本快照同样 exit=2，
       // 故按上游引用图对等移出；未写任何替代实现或 any 垫片。解禁条件与 LV12-14/16 的运行级取证同卡 owner 批复（#10）。

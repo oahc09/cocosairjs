@@ -2,10 +2,10 @@
  * r46（owner-decisions #7 = D10 批复 (b)）：gfx-webgpu 的「三浏览器回退探测证据」。
  *
  * 发行姿态事实：默认 bundle 不含 webgpu 后端（WEBGPU=false、glslang/twgsl 资产不在册，
- * 见 docs/evidence/v12/d10/ 与 UPSTREAM.md Deviation-04）。本探针对三引擎各回答两个问题：
+ * 见 docs/evidence/browser-matrix/d10/ 与 UPSTREAM.md Deviation-04）。本探针对三引擎各回答两个问题：
  *   1) 该浏览器是否暴露 navigator.gpu（WebGPU 页面能力探测）；
  *   2) 默认 bundle 在该浏览器是否照常完成 WebGL2 初始化并出图（回退路径可用）。
- * 产物：docs/evidence/v12/d10/fallback-probe-<engine>.json + .png（只读现有 example 页面，不改产物）。
+ * 产物：docs/evidence/browser-matrix/d10/fallback-probe-<engine>.json + .png（只读现有 example 页面，不改产物）。
  *
  * 执行：NODE_PATH=<playwright> node tools/verify/webgpu-fallback-probe.cjs
  */
@@ -14,7 +14,7 @@ const path = require('path');
 const http = require('http');
 
 const REPO = path.resolve(__dirname, '..', '..');
-const OUT_DIR = path.join(REPO, 'docs', 'evidence', 'v12', 'd10');
+const OUT_DIR = path.join(REPO, 'docs', 'evidence', 'browser-matrix', 'd10');
 const { ENGINES, launchOptions } = require('./browser-engines.cjs');
 const EXT = { '.js': 'text/javascript', '.html': 'text/html', '.json': 'application/json', '.png': 'image/png' };
 

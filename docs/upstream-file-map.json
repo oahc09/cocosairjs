@@ -6294,7 +6294,7 @@
       "upstreamPath": "cocos/spine/lib/spine-instantiate.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "AIR 新增（非上游文件）：经 src/cc.config.json moduleOverrides 顶替 spine-instantiate 入口。alpha.34 的 spine 运行时真实实现只在 external:emscripten/spine/{3.8,4.2}/* 外部产物内（仓库内 spine-core.js 仅 177 行枚举桩），该产物不随引擎快照分发；本文件让缺失资产的构建通过、运行期输出可读提示而非崩溃（计划书 D2/P2）。上游 spine-instantiate.ts / -3.8 / -4.2 / -dynamic 四个文件均按官方原文保留未改，资产落位后删除该 override 即回到官方行为"
+      "reason": "AIR 新增（非上游文件）：经 src/cc.config.json moduleOverrides 顶替 spine-instantiate 入口。alpha.34 的 spine 运行时真实实现只在 external:emscripten/spine/{3.8,4.2}/* 外部产物内（仓库内 spine-core.js 仅 177 行枚举桩），该产物不随引擎快照分发；本文件让缺失资产的构建通过、运行期输出可读提示而非崩溃（计划书 D2/P2）。上游 spine-instantiate.ts / -3.8 / -4.2 / -dynamic 四个文件均按官方原文保留未改，资产落位后删除该 override 即回到官方行为；2026-10-02 文档主题化命名：同步资产来源说明路径，未改变后端行为。"
     },
     {
       "airPath": "src/cocos/spine/lib/instantiated.ts",
@@ -8289,7 +8289,7 @@
       "upstreamPath": "cc.config.json",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/v12-pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。"
+      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。"
     },
     {
       "airPath": "src/tsconfig.json",
@@ -8338,7 +8338,7 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "V1.2 新增 Air 原创声明：上游 `external:emscripten/{spine,meshopt,box2d,...}/*.{js,wasm}` 模块（不随快照分发的 emscripten 资产）在 Air 树内无 native/external 目录可引用，本文件补 ambient 声明使 build:dts 与 typecheck 通过；不改变运行时行为（资产缺失由 air-spine-instantiate-js / 物理后端降级路径处理）。"
+      "reason": "V1.2 新增 Air 原创声明：上游 `external:emscripten/{spine,meshopt,box2d,...}/*.{js,wasm}` 模块（不随快照分发的 emscripten 资产）在 Air 树内无 native/external 目录可引用，本文件补 ambient 声明使 build:dts 与 typecheck 通过；不改变运行时行为（资产缺失由 air-spine-instantiate-js / 物理后端降级路径处理）。；2026-10-02 文档主题化命名：同步资产来源说明路径，未改变后端行为。"
     },
     {
       "airPath": "src/@types/box2d.d.ts",

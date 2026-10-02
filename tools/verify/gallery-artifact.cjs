@@ -15,7 +15,7 @@
  *      · §25 资源释放合同在部署物内成立（window.__lifecycle 全跑）
  *      · 压缩示例确实请求解码文件 + 稳定状态（meshopt wasm / draco 缺失码）
  *      · 零 4xx/5xx 与失败请求、零 page error、零外部 origin 请求（不依赖 DevTools/agent）
- *    证据：docs/evidence/v11-gallery-artifact.json
+ *    证据：docs/evidence/gallery-artifact.json
  */
 const fs = require('fs');
 const path = require('path');
@@ -31,7 +31,7 @@ if (overrideArtifact) {
     throw new Error('COCOSAIR_GALLERY_ARTIFACT must be a child directory of the system temp directory');
   }
 }
-const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'v11-gallery-artifact.json');
+const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'gallery-artifact.json');
 
 function buildArtifact () {
   fs.rmSync(ARTIFACT, { recursive: true, force: true });

@@ -57,7 +57,7 @@ Recipe 不能通过“引用一个存在的 Benchmark/Example”晋级。每条�
 
 必须实现并产出：
 
-   docs/evidence/v06-recipes.json
+   docs/evidence/recipes-browser.json
 
 其中每条 evidence 至少包含：
 

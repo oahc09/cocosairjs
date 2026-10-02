@@ -525,7 +525,7 @@ installAssetLifecycle({
         // loadRemote 在 asset-manager.ts:654 命中缓存并把这个已销毁实例交回 AudioSource ⇒
         // console.error 'Invalid audio clip'（audio-source.ts:133）、reacquire 拿到 invalid asset。
         // 实测：本合同先前用 clip.destroy() 时 v11 验证器 resource-released FAIL
-        // （"toneClip invalid after reacquire"，docs/evidence/v11-examples-verified.json）。
+        // （"toneClip invalid after reacquire"，docs/evidence/examples-verified.json）。
         // 正解是在 asset 仍有效时走 releaseAsset（tryRelease 的 force 分支才会 assets.remove + destroy）。
         assetManager.releaseAsset(clip);
         clip = null;

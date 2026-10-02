@@ -3,7 +3,7 @@
  * 与 V1.1 的 spec-driven 门禁互补：V1.1 矩阵在 Chromium 上验 Example Specification，
  * 本工具把同一份示例在三个引擎上各跑一次，按 tools/verify/browser-matrix-contract.json
  * 的机器可读断言（示例页内 window.__probe() 回读值 + 帧变化 + 截图字节下界）判定通过，
- * 截图与逐引擎记录入库 docs/evidence/v12/。
+ * 截图与逐引擎记录入库 docs/evidence/browser-matrix/。
  *
  * 断言只来自契约文件，不来自示例自报（示例自证不算证据）。
  * 契约可选步骤：click="x,y"（真实鼠标点击）、resize="WxH"（真实改变视口，自适应类示例用）。
@@ -13,7 +13,7 @@
  * 只有完整跑完全部契约条目才盖 completed:true（F-72 口径，消费端缺标记即 NOT_RUN）。
  *
  * 执行：NODE_PATH=<playwright> node tools/verify/browser-matrix.cjs [--ids=a,b] [--engines=chromium,firefox,webkit]
- * 产出：docs/evidence/v12/browser-matrix.json + docs/evidence/v12/<id>/matrix-<engine>.png
+ * 产出：docs/evidence/browser-matrix/browser-matrix.json + docs/evidence/browser-matrix/<id>/matrix-<engine>.png
  */
 const fs = require('fs');
 const path = require('path');
@@ -23,7 +23,7 @@ const crypto = require('crypto');
 const REPO = path.resolve(__dirname, '..', '..');
 const CONTRACT_ARG = process.argv.find((a) => a.startsWith('--contract='));
 const CONTRACT = CONTRACT_ARG ? path.resolve(REPO, CONTRACT_ARG.slice(11)) : path.join(REPO, 'tools', 'verify', 'browser-matrix-contract.json');
-const OUT_DIR = path.join(REPO, 'docs', 'evidence', 'v12');
+const OUT_DIR = path.join(REPO, 'docs', 'evidence', 'browser-matrix');
 const OUT_ARG = process.argv.find((a) => a.startsWith('--out='));
 const OUT = OUT_ARG ? path.resolve(REPO, OUT_ARG.slice(6)) : path.join(OUT_DIR, 'browser-matrix.json');
 const specCommon = require(path.join(REPO, 'tools', 'verify', 'example-spec-common.cjs'));
@@ -130,11 +130,11 @@ async function runOne (pw, id, contract, port, engines) {
       }
       const dir = path.join(OUT_DIR, id);
       fs.mkdirSync(dir, { recursive: true });
-      const pngRel = path.join('docs', 'evidence', 'v12', id, `matrix-${engine}.png`);
+      const pngRel = path.join('docs', 'evidence', 'browser-matrix', id, `matrix-${engine}.png`);
       fs.writeFileSync(path.join(REPO, pngRel), shotB);
       let pngBeforeRel = null;
       if (shotBefore) {
-        pngBeforeRel = path.join('docs', 'evidence', 'v12', id, `matrix-${engine}-before.png`);
+        pngBeforeRel = path.join('docs', 'evidence', 'browser-matrix', id, `matrix-${engine}-before.png`);
         fs.writeFileSync(path.join(REPO, pngBeforeRel), shotBefore);
       }
       const benign = consoleErrors.filter((t) => BENIGN_CONSOLE.some((b) => t.includes(b)));

@@ -9,7 +9,7 @@
  *
  * 执行：node tools/examples/spec-compliance-audit.cjs [--warn-ok]
  *   默认任何 severity=fail 使退出码为 1；--warn-ok 仅报告不失败。
- * 产出：docs/evidence/v11-spec-compliance.json
+ * 产出：docs/evidence/spec-compliance.json
  */
 const fs = require('fs');
 const path = require('path');
@@ -17,11 +17,11 @@ const crypto = require('crypto');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const EXAMPLES_DIR = path.join(REPO, 'examples');
-const OUT_PATH = path.join(REPO, 'docs', 'evidence', 'v11-spec-compliance.json');
+const OUT_PATH = path.join(REPO, 'docs', 'evidence', 'spec-compliance.json');
 const { specFingerprintOf, listAssetTree, readEvidence } = require(path.join(REPO, 'tools', 'verify', 'example-spec-common.cjs'));
 const { findSymbolLine } = require(path.join(__dirname, 'spec-evidence.cjs'));
 
-const EVIDENCE_FILES = ['docs/evidence/v11-examples-verified.json', 'docs/evidence/v11-devtools-examples.json'];
+const EVIDENCE_FILES = ['docs/evidence/examples-verified.json', 'docs/evidence/devtools-examples.json'];
 const DEVTOOLS_UNITS = new Set([
   'DevToolsSession.inspectScene', 'DevToolsSession.inspectNode', 'DevToolsSession.inspectAsset',
   'DevToolsSession.dispatch', 'DevToolsSession.captureFrame', 'DevToolsSession.getRuntimeErrors',

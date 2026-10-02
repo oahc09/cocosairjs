@@ -158,7 +158,7 @@
 | W04、W09–W11 复审修复 | 行为修复完成 | `w04-canvas-binding.json` 四模式 PASS；`w09-w11-assembly.json` PASS。修复画布 ID 保留/导入期错误、跨 Bank 引用、淘汰页出栈、SFX 独立播放器按 ENDED 回收。 |
 | W12 调试树 | 已实现 | `inspectNode.visual` 返回 UI 尺寸/锚点、Label、SpriteFrame rect、texture/material/mesh 稳定资产 ID；业务可注册 frame/texture label，未知值返回 null。`smoke-22` 24/24。仅 DevTools 导出，不进默认 bundle。 |
 | W13 性能分轴 | 工具完成；设备呈现待测 | `w13-performance-axes.json` 记录逻辑更新、主线程 BEFORE_DRAW→AFTER_DRAW、WebGL2 timer query GPU 时间；headless present 明确 unavailable。`--present-json=` 支持单独导入带设备名的 SurfaceFlinger 时间戳。无设备数据不得宣称设备 FPS 达标。 |
-| W14 独立消费 | 包消费 PASS；release 仍阻塞 | `w14-package-readiness.json` 与 `v11-tarball-browser-consumer.json`：离线 pack/install、声明消费、浏览器运行、嵌套 URL、nonce CSP（不含 unsafe-eval）、sourcemap、normal/min/gzip/brotli 尺寸。Web 构建将 `SUPPORT_JIT` 设为 false，复用上游非 JIT scheduler。`verify:release` 仍因工作树未提交、API inventory/Gallery/矩阵旧 bundle 指纹而 NOT READY；需集成后重采。 |
+| W14 独立消费 | 包消费 PASS；release 仍阻塞 | `w14-package-readiness.json` 与 `tarball-browser-consumer.json`：离线 pack/install、声明消费、浏览器运行、嵌套 URL、nonce CSP（不含 unsafe-eval）、sourcemap、normal/min/gzip/brotli 尺寸。Web 构建将 `SUPPORT_JIT` 设为 false，复用上游非 JIT scheduler。`verify:release` 仍因工作树未提交、API inventory/Gallery/矩阵旧 bundle 指纹而 NOT READY；需集成后重采。 |
 
 证据一致性修正：W03 runner 原先把 bundle **路径**交给 `sha256_16`，导致哈希不随内容变化；现改为 `sha256_16(fs.readFileSync(bundlePath))`。W03 四模式复跑 PASS，记录指纹与本轮 `build/cocosair.module.js` 一致。W09 的 ui-kit 为保留现有公共 API 仍由默认入口导出；如要做到字节级独立子包，需要另起兼容迁移，不可仅靠注释声称已拆包。
 

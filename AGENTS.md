@@ -28,7 +28,7 @@ Start with [README.md](README.md) for the current quick start and capability bou
 
 PAL 使用 `vendor/pal-source/` 中冻结的公开 MIT 源码；`node tools/build/pal-source.cjs --check` 只读校验来源哈希、生成产物及版权 notice，`--write` 显式重建 `src/pal/`。不要重新引入旧 `@cocos/engine-pal` 包字节。
 
-工具入口见 [tools/README.md](tools/README.md)，目录与命名规则见 [仓库组织约定](docs/reference/repository-layout.md)。新示例默认使用 `src/main.ts`；已有示例 ID、上游路径和证据文件名作为稳定关联保留。
+工具入口见 [tools/README.md](tools/README.md)，目录与命名规则见 [仓库组织约定](docs/reference/repository-layout.md)。新示例默认使用 `src/main.ts`；已有示例 ID、上游路径和证据 schema 标识作为稳定关联保留；文档和证据文件按用途命名，路径迁移必须同步生成器、消费者和报告内资源路径。
 
 ## Development workflow
 
@@ -113,9 +113,9 @@ npm run dev
 
 | 命令 | 含义与前置条件 | 产物与写入行为 |
 |---|---|---|
-| `npm run verify:browser-matrix` | 按 `tools/verify/browser-matrix-contract.json` 在 Chromium、Firefox、WebKit 执行契约条目；需要 bundle、示例资产和相应浏览器。范围由契约决定，不等于所有 Gallery 示例。 | 默认重写 `docs/evidence/v12/browser-matrix.json`，截图写入 `docs/evidence/v12/<id>/matrix-<engine>.png`（部分还有 `-before.png`）。子集运行不是全量证明；`--out=` 只重定向 JSON，截图仍写上述目录。 |
-| `npm run verify:perf-lifecycle` | 使用已生成的 `build/examples/` 静态 Gallery，在 Chromium 中验证重复加载/实例化/销毁与加载耗时稳定性。 | 重写 `docs/evidence/v11-perf-lifecycle.json`；不构建静态 Gallery，内存读数不可用会记录 unavailable。 |
-| `npm run verify:tarball-consumer` | 临时打包并离线安装到新项目，让 Chromium 实际运行安装包，验证启动、API、像素、无 sourcemap 的 npm 入口、本地 dev sourcemap 和嵌套路径/CSP 场景。 | 重写 `docs/evidence/v11-tarball-browser-consumer.json`；`prepack` 刷新 `build/npm/`，临时包和 consumer 目录完成后清理。 |
+| `npm run verify:browser-matrix` | 按 `tools/verify/browser-matrix-contract.json` 在 Chromium、Firefox、WebKit 执行契约条目；需要 bundle、示例资产和相应浏览器。范围由契约决定，不等于所有 Gallery 示例。 | 默认重写 `docs/evidence/browser-matrix/browser-matrix.json`，截图写入 `docs/evidence/browser-matrix/<id>/matrix-<engine>.png`（部分还有 `-before.png`）。子集运行不是全量证明；`--out=` 只重定向 JSON，截图仍写上述目录。 |
+| `npm run verify:perf-lifecycle` | 使用已生成的 `build/examples/` 静态 Gallery，在 Chromium 中验证重复加载/实例化/销毁与加载耗时稳定性。 | 重写 `docs/evidence/perf-lifecycle.json`；不构建静态 Gallery，内存读数不可用会记录 unavailable。 |
+| `npm run verify:tarball-consumer` | 临时打包并离线安装到新项目，让 Chromium 实际运行安装包，验证启动、API、像素、无 sourcemap 的 npm 入口、本地 dev sourcemap 和嵌套路径/CSP 场景。 | 重写 `docs/evidence/tarball-browser-consumer.json`；`prepack` 刷新 `build/npm/`，临时包和 consumer 目录完成后清理。 |
 | `npm run verify:g3-dev` | 自动启动开发服务器和 Chromium，检查 `starter`、`hello-cube`、`scene-switch-reentry` 的模块加载、组件更新与交互。 | 成功后写 `docs/evidence/g3-dev-samples.json`；截图为 `output/playwright/g3-<id>.png`，收尾关闭服务和浏览器。 |
 
 报告文件存在不表示本次运行成功：检查命令退出码、报告时间、完成/子集标记和适用的源码/bundle/契约指纹。不要仅为查询命令含义而运行会改写证据的脚本。新增或修改 npm script 时，同步维护本节的用途、输出路径和写入行为。

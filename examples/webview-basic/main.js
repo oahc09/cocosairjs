@@ -25,7 +25,7 @@
  *   既 `dispatchEvent(ERROR, e)` 又 `error(e)`（web-view-impl-web.ts:116-128），一条写坏的注入脚本会
  *   同时污染 error 事件通道并留下一条 `console.error` ⇒ 矩阵的 `noConsoleError` 直接判死。
  *   该行为只在诊断脚本里单次取证：三引擎实测各新落 1 条 `console.error`，`state` 由 `loaded` 变 `error`，
- *   事件流尾部多出 `cb:error` + `error`（证据见 `docs/notes/v12-webview-notes.md`）。
+ *   事件流尾部多出 `cb:error` + `error`（证据见 `docs/notes/webview-notes.md`）。
  *
  * ⚠️ 几何断言必须等第一次 `syncMatrix` 落地：`__preload` 只把 wrapper `append` 进 container，
  *   CSS `transform/width/height` 要等 `update → syncMatrix` 才写。在那之前读 wrapper 拿到的是 iframe
@@ -564,7 +564,7 @@ installAssetLifecycle({
 
 window.__airApp = app;
 window.__runSequence = runSequence;
-/** 诊断脚本入口（`docs/notes/v12-webview-notes.md` 用它单次取证 `evaluateJS` 的失败路径，示例本身不触发）。 */
+/** 诊断脚本入口（`docs/notes/webview-notes.md` 用它单次取证 `evaluateJS` 的失败路径，示例本身不触发）。 */
 window.__webView = () => webView;
 window.__assets = () => ({
     wrapperCount: wrappers().length,

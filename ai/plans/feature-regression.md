@@ -243,7 +243,7 @@ Example：examples/webview-basic（内嵌本地静态页，避免外网依赖）
 
 ```text
 抽取：cocos/particle-2d（10 文件）
-关键评估（写入 docs/notes/v12-particle2d-notes.md）：
+关键评估（写入 docs/notes/particle-2d-notes.md）：
   官方 plist 资产解析链在无 Creator 管线时的 Code First 入口——
   支持 PlistAsset 运行时构造 + loadRemote('.plist') 两种路径
 Example：examples/particle-2d-basic（火焰/烟花粒子，程序化 plist）
@@ -319,7 +319,7 @@ Example：examples/dragonbones-basic
       修改记录同步关闭；这是 16 组中唯一「恢复 Air 修改」项，必须先于抽取执行，
       否则 pose-nodes 导入面断裂）
 常量验证：MARIONETTE / PROCEDURAL_ANIMATION 内部常量的 true 变体构建通过
-关键评估（写入 docs/notes/v12-pose-graph-notes.md）：
+关键评估（写入 docs/notes/pose-graph-notes.md）：
   无 Creator 动画图编辑器时的 Code First 构造入口——
   marionette 图（AnimationGraph）+ pose node 手工装配是否可达；
   若不可达，验收口径降级为「闭包完整 + 单元级 pose node 求值正确」并登记
@@ -362,7 +362,7 @@ D-3 physics-2d-box2d / box2d-wasm
 关键差异（与既有 WebGL 主链路）：
   - 设备选择策略：createAirApp 新增 device 偏好参数（'webgl2' 默认 | 'webgpu' | 'auto'），
     'auto' 在 navigator.gpu 可用且通过适配探测时选 WebGPU，否则回退 WebGL2 —— API 变更走 v08
-    API Stability 的 additive 通道并在 docs/reference/v08-api-stability.md 登记
+    API Stability 的 additive 通道并在 docs/reference/api-stability.md 登记
   - 常量开关：WEBGPU=true 构建变体单独出验证产物，不影响默认 bundle
 验证要点：
   - WebGPUDevice 初始化、swapchain、buffer/texture/pipeline 走通
@@ -501,7 +501,7 @@ F-3 簿记回填：
 | LV12-20 | 回归护栏 | 第 13 节全部 PASS |
 | LV12-21 | 簿记完整性 | 第 11 节 F-3 清单逐项核对 |
 
-通用标准：每个 LV12 项 = `npm run typecheck` + `npm test` + `npm run build` + `npm run build:min` + 对应 example 的 Browser Matrix（WebGPU 项按第 8 节口径，bullet/physx 按 G-3 口径）+ 截图证据入库 `docs/evidence/v12/`。
+通用标准：每个 LV12 项 = `npm run typecheck` + `npm test` + `npm run build` + `npm run build:min` + 对应 example 的 Browser Matrix（WebGPU 项按第 8 节口径，bullet/physx 按 G-3 口径）+ 截图证据入库 `docs/evidence/browser-matrix/`。
 
 ---
 
@@ -513,7 +513,7 @@ F-3 簿记回填：
    总量超预算即触发 D1 决策复议（默认单文件原则不动摇，wasm/大运行库走运行时资产）
 3. benchmark 回归：npm run verify:benchmark 不劣化超阈值（沿用现行阈值）
 4. API 稳定性：对已冻结的公共 API 仅允许 additive 变更（createAirApp device 参数、
-   物理后端选择项等），全部经 docs/reference/v08-api-stability.md 登记
+   物理后端选择项等），全部经 docs/reference/api-stability.md 登记
 5. verify:web-only 通过（回归文件不得引入 native/minigame 闭包；
    54 个 jsb 变体依旧零进入；box2d-jsb 等指名跳过项除外）
 6. 许可合规：spine-core.js（Spine Runtimes License）、@cocos/box2d、
@@ -549,7 +549,7 @@ F-3 簿记回填：
 |---|---|---|
 | D1 | bundle 组织：单文件 vs 分包 | 维持 three.js 风格单文件 ESM；wasm/大型运行库走运行时资产（P2 模式）；超预算再复议 |
 | D2 | spine 运行时：js(3.8/4.2 dynamic) vs wasm | 默认对齐官方 exports/spine.ts 行为（version-dynamic 自动选择）；wasm 资产就绪后作为增强 |
-| D3 | box2d wasm 资产来源与部署路径 | ~~来源 @cocos/box2d 包内资产（G1 实测确认）；部署进 P2 运行时资产目录~~ **〔r46 更正留痕〕该前提已被实测证伪**：`@cocos/box2d@1.0.2` 包内 `.wasm` 计数为 0，`external:emscripten/**` 不在上游快照也不在上游 git（`docs/notes/v12-physics-asset-sourcing.md` §2）。Owner 批复 #10=(a)：按 D8 口径结案（「代码回归+选择器可达+降级可测」部分通过），(b) 引资产路线不执行 |
+| D3 | box2d wasm 资产来源与部署路径 | ~~来源 @cocos/box2d 包内资产（G1 实测确认）；部署进 P2 运行时资产目录~~ **〔r46 更正留痕〕该前提已被实测证伪**：`@cocos/box2d@1.0.2` 包内 `.wasm` 计数为 0，`external:emscripten/**` 不在上游快照也不在上游 git（`docs/notes/physics-asset-sourcing.md` §2）。Owner 批复 #10=(a)：按 D8 口径结案（「代码回归+选择器可达+降级可测」部分通过），(b) 引资产路线不执行 |
 | D4 | root.jsb.ts 处置 | 默认不抽取 + 双处 Deviation 登记；评审要求物理对齐则「复制但不接线」 |
 | D5 | air.ts 聚合导出面扩大的范围 | 每特性单独评审：优先并入（与官方 exports 同名导出保持一致），体积/命名冲突项挂到独立出口 |
 | D6 | WebGPU 设备选择 API | createAirApp 增加 device 偏好（'webgl2' 默认/'webgpu'/'auto'），additive 登记 |
@@ -577,11 +577,11 @@ M8  批次 F（收尾 + 簿记回填 + 全量验收报告）           → LV12-
 最终产出物清单：
 
 ```text
-历史记录（acceptance-report-v12.md，已清理）        # LV12 全矩阵验收报告（证据截图 docs/evidence/v12/）
+历史记录（acceptance-report-v12.md，已清理）        # LV12 全矩阵验收报告（证据截图 docs/evidence/browser-matrix/）
 历史记录（v12-bundle-budget.md，已清理）            # bundle 预算与实际增量表
 历史记录（v12-upstream-regression.md，已清理）      # 16 组回归的抽取/接线/偏差逐项记录
-docs/notes/v12-particle2d-notes.md 等      # 各特性 spike 结论
-docs/notes/v12-physics-asset-sourcing.md   # R8 资产来源结论（bullet/physx/box2d）
+docs/notes/particle-2d-notes.md 等      # 各特性 spike 结论
+docs/notes/physics-asset-sourcing.md   # R8 资产来源结论（bullet/physx/box2d）
 更新：UPSTREAM.md / 00-upstream-baseline.md / 17-baseline-comparison.md /
      01-web-feature-set.md / README.md / api-coverage-report.json / capabilities
 examples/ 新增 15+：profiler-overlay、audio-basic、video-basic、webview-basic、

@@ -91,7 +91,7 @@ Box2D、Cannon 和 DragonBones 为源码构建及类型检查保留在 devDepend
 
 1. **Spine**：集成须满足 Spine Editor License Agreement §2 的适用条件；否则按 Runtimes 协议的替代条款要求产品用户各自取得 Spine Editor 许可。再分发必须附带对应许可与版权声明。
    现状已满足第二项（文本随包发布），第一项与仓库根 `license: MIT` 的单文件引擎发行姿态并不等价。
-   风险面比字面看起来小：按 `docs/notes/v12-spine-asset-sourcing.md` 的实测，alpha.34 的 Web 侧 spine 只有
+   风险面比字面看起来小：按 `docs/notes/spine-asset-sourcing.md` 的实测，alpha.34 的 Web 侧 spine 只有
    wasm/asm 后端，随仓库抽取的 `spine-core.js` 实际是枚举/类型桩，而 emscripten 运行资产并未取得（D2 受阻），
    故默认产物目前并不含 Esoteric 的完整运行时实现。
    ~~选项：保留默认产物 + 显式声明该条件（当前做法）/ 移入常量变体 / 移除该组（与计划书「16 组全部回归」冲突）。~~

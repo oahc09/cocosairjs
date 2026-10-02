@@ -18,7 +18,7 @@
 | 手册现状          | 10 组 64 条目 → 60 篇文档 + 索引；磁盘 61 个 .md；手册专属示例 41 个（`docs/manual/examples/manual-*`）                |
 | 主示例            | `examples/files.json` 58 例（非 shared）                                                                               |
 | 旧手册示例证据    | `docs/evidence/manual-examples-verified.json`：41/41 PASS，measuredAt 2026-09-20（**旧，仅线索**）                     |
-| 主示例链证据      | `docs/evidence/v11-examples-verified.json`：53/53 PASS、52 promoted（r48 期，随 G5 复核）                              |
+| 主示例链证据      | `docs/evidence/examples-verified.json`：53/53 PASS、52 promoted（r48 期，随 G5 复核）                              |
 
 「三层核对」口径：**S1** 源码导出（`src/exports/*.ts`）；**S2** 默认 bundle 可用（`build/cocosair.module.d.ts` 含符号且非 feature-variant 独占）；**S3** 浏览器行为通过（仓库内证据文件的当期记录）。S1✓S2✓ 但 S3 缺 → 最高只评 `待验证`；S3 过但带平台/后端条件 → `PARTIAL` 并写明条件。
 

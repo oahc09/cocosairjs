@@ -19,7 +19,7 @@
   成员表不计为证据，evidence 绑定的 validator 必须在本示例 `ready/validation` 声明集合内
   （否则 DECLARE 补声明或 REBIND 改绑），`--check` 当前 0 drifted / 0 detached / 0 errors。
   冻结门禁 `spec-validate.cjs` 与回填器共用同一 `findSymbolLine` 实现，标准不松于回填器。
-- **写盘纪律（F-132）**：`spec-validate.cjs` 的发布证据 `docs/evidence/v11-spec-validate.json` **只由绿跑写出**——
+- **写盘纪律（F-132）**：`spec-validate.cjs` 的发布证据 `docs/evidence/spec-validation.json` **只由绿跑写出**——
   任何 issue（含故意负控与 `--strict` 下的 draft）一律拒绝覆写正典并提示改落 `--out=<非正典路径>`；
   `--out=` / `--examples-dir=` 供子集与仓库外副本运行（`--examples-dir` 缺 `--out` 直接 `EXIT=2`），
   扫到 0 例判红（反空转）。消费端断言在 jest `smoke-29`，故负控不再污染共享工作树。
@@ -40,13 +40,13 @@
 | 声明-执行一致性 | 规格声明的每个 validator id 必须有执行器真正跑过；否则合成 `declared in Example Spec but no executor ran it` FAIL（杜绝"声明未执行"计入 PASS） |
 | §11 Stable 公式 | 全部规格声明检查 PASS → `status: draft→stable` 写回 example.json，`promotionEvidence = specFingerprint`（规范化哈希：排除 status/promotionEvidence，晋级写回不破坏证据绑定；指纹与晋级逻辑由 `tools/verify/example-spec-common.cjs` 单一实现，runner / DevTools 门禁 / coverage-report 共用，不再三处漂移） |
 
-证据：`docs/evidence/v11-examples-verified.json`（40/40 PASS，含逐项 validatorResults +
+证据：`docs/evidence/examples-verified.json`（40/40 PASS，含逐项 validatorResults +
 specFingerprint）+ `docs/evidence/examples/<id>.png` 截图工件。
 
 ## 规范符合性核查（§1–§26 逐条机器门禁）
 
 结构冻结由 `spec-validate` 保证，但"规范是否真的被执行"需要另一条证据链门禁：
-`tools/examples/spec-compliance-audit.cjs` → `docs/evidence/v11-spec-compliance.json`
+`tools/examples/spec-compliance-audit.cjs` → `docs/evidence/spec-compliance.json`
 （45 示例 / **0 fail / 1 warn**，只报告不改写，每条 finding 带规则号 + 示例 id 可复核；
 唯一 warn 是 gltf-draco 的 §25 机器可读豁免，见 Deviation-1/7）。
 
@@ -78,7 +78,7 @@ specFingerprint）+ `docs/evidence/examples/<id>.png` 截图工件。
 | 项 | 交付 |
 |---|---|
 | Gallery 发布 Artifact | `tools/verify/gallery-artifact.cjs build` → `build/examples/` 自包含静态部署物（引擎 + 解码器 + 45 示例 + files.json + 45 张缩略图；入口 esbuild 预编译为 main.boot.js，全部路径相对化） |
-| 嵌套部署 + 路由回归 | `verify` 模式以 `/apps/gallery/` 嵌套前缀自宿主，Playwright 回归 13/13：静态 200 ×4 + 缩略图 ×3 + Gallery 列表渲染（45 链接）+ `#deep-link` 路由 + 3 个示例在 artifact 内真实启动 + 零页面错误（`docs/evidence/v11-gallery-artifact.json`） |
+| 嵌套部署 + 路由回归 | `verify` 模式以 `/apps/gallery/` 嵌套前缀自宿主，Playwright 回归 13/13：静态 200 ×4 + 缩略图 ×3 + Gallery 列表渲染（45 链接）+ `#deep-link` 路由 + 3 个示例在 artifact 内真实启动 + 零页面错误（`docs/evidence/gallery-artifact.json`） |
 | DevTools 示例证据 | `tools/verify/devtools-examples.cjs`：规格驱动的 V0.5.1 会话门禁，覆盖全部 5 个 `requiresDevTools` 示例（automation + rc-inspect-scene / rc-create-node / rc-capture-frame / rc-error-report）→ 5/5 PASS（详见下节） |
 
 ## DevTools 会话门禁（requiresDevTools 示例）
@@ -104,7 +104,7 @@ specFingerprint）+ `docs/evidence/examples/<id>.png` 截图工件。
 | 声明-执行一致性 | 规格 `ready/validation` 声明的每个 validator id 必须由本门禁执行器真正跑过，否则合成 FAIL（与浏览器矩阵同一规则） |
 | `runtime-bundle-boundary` | 全局：runtime-only bundle 不含 DevTools/agent-session 实现 |
 
-证据：`docs/evidence/v11-devtools-examples.json`（per-example `result`/`specFingerprint`/
+证据：`docs/evidence/devtools-examples.json`（per-example `result`/`specFingerprint`/
 `validatorResults`/`artifact`，与浏览器矩阵同构，故 coverage-report 可直接消费）+
 `docs/evidence/examples/rc-*.png`。
 

@@ -93024,7 +93024,7 @@ function isJsonCompatible(json) {
   return false;
 }
 
-const NOT_DEPLOYED = '[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。' + ' 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/v12-spine-asset-sourcing.md 落位 wasm/asm 产物。';
+const NOT_DEPLOYED = '[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。' + ' 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。';
 function reportNotDeployed() {
   warn(NOT_DEPLOYED);
 }

@@ -10,7 +10,7 @@ glTF/GLB 使用原生 Mesh、Material、Skeleton 和 AnimationClip。模型扩�
 
 ## 源码、导出与运行行为
 
-目录中存在源码不代表默认 bundle 已包含该功能；声明中存在 API 也不代表外部运行资产已经部署。例如 Spine 和部分 WASM 后端仍受外部资产限制，具体记录见 [Spine 资产来源](../notes/v12-spine-asset-sourcing.md) 与 [物理后端资产来源](../notes/v12-physics-asset-sourcing.md)。
+目录中存在源码不代表默认 bundle 已包含该功能；声明中存在 API 也不代表外部运行资产已经部署。例如 Spine 和部分 WASM 后端仍受外部资产限制，具体记录见 [Spine 资产来源](../notes/spine-asset-sourcing.md) 与 [物理后端资产来源](../notes/physics-asset-sourcing.md)。
 
 feature 声明来自 `src/cc.config.json`，默认构建集合来自 `tools/build/build.cjs`；`AIR_FEATURES` 用于显式构建变体。变体构建不会自动更新默认发布产物或运行证据。custom pipeline / post-process 的上游聚合方式与默认发布边界由专门门禁检查，不能仅因某个 feature 名称存在就判其像素效果已交付。
 
@@ -21,4 +21,4 @@ npm run verify:custom-exports
 npm run verify:wasm-backends
 ```
 
-这些检查分别验证依赖闭包、默认组成、custom pipeline 导出及 WASM 后端登记；浏览器行为需要另行验证。上游基线和有意差异见 [UPSTREAM.md](../UPSTREAM.md)，API 兼容约定见 [稳定性登记](v08-api-stability.md)。
+这些检查分别验证依赖闭包、默认组成、custom pipeline 导出及 WASM 后端登记；浏览器行为需要另行验证。上游基线和有意差异见 [UPSTREAM.md](../UPSTREAM.md)，API 兼容约定见 [稳定性登记](api-stability.md)。

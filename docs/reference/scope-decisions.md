@@ -132,7 +132,7 @@ airDangling = []   ← Air 没有任何 feature 指向「已声明但文件不�
   `terrain` 贡献 4 个 Air 缺失文件、`particle` 贡献 1 个、`xr` 贡献 **0** 个（`cocos/xr/` 3 个文件 Air 全有，只差 `exports/xr.ts` 门面与声明）；
   其余 22 个未声明 feature 的 `modules` 名在上游 `cocos/` 下**没有同名目录**（如 `mask`/`graphics`/`light-probe` 的实现分散在 `cocos/2d/**`、`cocos/gi/light-probe/**`），
   本方法对它们**不能判定文件面**——它们的缺失文件全集只能从 14 项残留反推：8 个 `exports/*.ts` 门面 + 5 个 terrain + 1 个 `optimized-curve.ts` + 1 个构建替换件。
-  ⇒ 该断言要么改为「以 feature **声明**为单位对齐」（则 25 项全部需要补声明，r43 已实测其中 2 项的成本：`marionette`+`procedural-animation` 若同时进默认集 = **+339,301 B（+5.58%）未压缩产物**，见 `docs/notes/v12-pose-graph-notes.md` §4.3；其余 23 项多数 `modules: []` 不引文件，但任何默认集变更都要 36 条矩阵记录与 V1.1 证据链全量重采），
+  ⇒ 该断言要么改为「以 feature **声明**为单位对齐」（则 25 项全部需要补声明，r43 已实测其中 2 项的成本：`marionette`+`procedural-animation` 若同时进默认集 = **+339,301 B（+5.58%）未压缩产物**，见 `docs/notes/pose-graph-notes.md` §4.3；其余 23 项多数 `modules: []` 不引文件，但任何默认集变更都要 36 条矩阵记录与 V1.1 证据链全量重采），
   要么按本节 A/C/D 口径逐条豁免；两者都需 owner 定夺，**不该由实现方默认缩小**。
 
 ## 6. 批复结果（r46，2026-09-24）—— 本文件从「提案」转「已批复结案」

@@ -384,7 +384,7 @@
         "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 每张截图仍在盘且与记录逐字节一致；断言全部为真",
         "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 覆盖率：契约里每个示例 × 每个声明引擎都有 PASS 记录（不许静默漏跑）",
         "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 证据在案且已完成：completed=true（缺标记即 NOT_RUN）",
-        "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 证据目录对账：docs/evidence/v12/ 下每个目录要么被矩阵记录引用，要么在册豁免（不许静默堆积孤儿捕获，也不许留僵尸豁免）",
+        "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 证据目录对账：docs/evidence/browser-matrix/ 下每个目录要么被矩阵记录引用，要么在册豁免（不许静默堆积孤儿捕获，也不许留僵尸豁免）",
         "smoke 30 — V1.2 回归组产物面与运行时 V1.2 新增导出在 .d.ts 发布面中可见（类型与产物同源）",
         "smoke 30 — V1.2 回归组产物面与运行时 Web DPR cap applies the host value and falls back safely",
         "smoke 30 — V1.2 回归组产物面与运行时 spine 运行时资产缺失走可读降级提示（D2/P2 口径）",

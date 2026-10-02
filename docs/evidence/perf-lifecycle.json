@@ -1,0 +1,25 @@
+{
+  "runner": "tools/verify/perf-lifecycle.cjs",
+  "measuredAt": "2026-10-02T02:13:37.442Z",
+  "env": {
+    "exclusive": true,
+    "browser": "chromium-1228 headless"
+  },
+  "thirtyLoad": {
+    "loads": 30,
+    "medianMs": 32.7,
+    "baselineMedianMs": 32.9,
+    "driftPct": 0.6,
+    "memory": {
+      "usedJSHeapMB": 36
+    }
+  },
+  "disposeLoop": {
+    "rounds": 50,
+    "destroyed": 50,
+    "stillValid": 0,
+    "instantiateFail": 0
+  },
+  "pageErrors": [],
+  "ok": true
+}

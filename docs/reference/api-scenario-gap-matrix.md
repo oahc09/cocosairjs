@@ -20,7 +20,7 @@
 | Jest                 | 32 套件 / 263 用例全绿（r49 门禁日志）                                                       | `docs/audits/global-quality-audit-2026-09-19/raw/gates/r49-jest.log`               |
 | Gallery 示例         | `examples/files.json` 登记 61 例（revision `7a33e11`，07:46Z 再生成）；目录 ↔ 登记双向无断链 | 本期脚本比对                                                                       |
 | 手册示例             | `docs/manual/examples/` 44 例，独立验证器 44/44 PASS（07:20Z，非 partial）                   | `docs/evidence/manual-examples-verified.json`                                      |
-| Recipes              | V0.6 期 30 条（R001–R030）全部 promoted/stable                                               | `docs/evidence/v06-recipes-promoted.json`、`tools/benchmark/recipes/scenarios.cjs` |
+| Recipes              | V0.6 期 30 条（R001–R030）全部 promoted/stable                                               | `docs/evidence/recipes-promoted.json`、`tools/benchmark/recipes/scenarios.cjs` |
 
 **计划书快照数值勘误**：计划书写于 58 例快照；当期 `files.json` 已为 **61 例**（新增
 `camera-screen-world`、`math-bits`、`node-events`，见 §0.1）。计划书引用的「5 个 stale evidence examples」
@@ -32,7 +32,7 @@ G0 开工观测到**另一条并行会话正在实时修改本仓库**（计划�
 
 - 未跟踪新目录：`examples/camera-screen-world/`、`examples/math-bits/`、`examples/node-events/`（15:40–15:42 创建，持续编辑中）；
 - `examples/files.json` 已修改（58 → 61 例登记）；
-- `docs/evidence/v11-examples-verified.json` 被 partial 运行覆写（07:42Z，`subset=[camera-screen-world, math-bits, node-events]`，53/55 PASS，其中 `camera-screen-world`、`math-bits` 因 TS 编译错误 FAIL，且文件在观测期间仍在被更新）。
+- `docs/evidence/examples-verified.json` 被 partial 运行覆写（07:42Z，`subset=[camera-screen-world, math-bits, node-events]`，53/55 PASS，其中 `camera-screen-world`、`math-bits` 因 TS 编译错误 FAIL，且文件在观测期间仍在被更新）。
 
 **处置**：本计划线不触碰上述文件与三个示例目录（计划书规定「不得并发改同一示例的规格或正典证据」）；
 Top 20 中与并行线重叠的路径（P02/P03/P17）标记为「并行线进行中」，只做登记不做实施。
@@ -350,9 +350,9 @@ example 侧签名与当期 d.ts 不符——属于并行线的修复范围，本
 | --------------------------------------------- | ------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `docs/api-coverage-report.json`               | 07:30Z（HEAD 同期） | —                         | 指纹当期重算一致，**可用**                                                                                                 |
 | `docs/evidence/manual-examples-verified.json` | 07:20Z              | false                     | 44/44 PASS，**可用**                                                                                                       |
-| `docs/evidence/v11-devtools-examples.json`    | 07:29Z              | false                     | 5/5 PASS，**可用**                                                                                                         |
-| `docs/evidence/v11-examples-verified.json`    | 07:42Z              | **true**（subset=3 新例） | 53/55；2 FAIL 为并行线在制品编译错误；**基线冻结为 r49 全量 53/53 记录 + 本 partial 状态如实登记**，不据此推断存量示例回归 |
-| `docs/evidence/v11-gallery-artifact.json`     | 03:51Z              | —                         | 102 项检查（r47 期全绿记录），当期未重跑，**线索级**                                                                       |
+| `docs/evidence/devtools-examples.json`    | 07:29Z              | false                     | 5/5 PASS，**可用**                                                                                                         |
+| `docs/evidence/examples-verified.json`    | 07:42Z              | **true**（subset=3 新例） | 53/55；2 FAIL 为并行线在制品编译错误；**基线冻结为 r49 全量 53/53 记录 + 本 partial 状态如实登记**，不据此推断存量示例回归 |
+| `docs/evidence/gallery-artifact.json`     | 03:51Z              | —                         | 102 项检查（r47 期全绿记录），当期未重跑，**线索级**                                                                       |
 
 ## 5. 隔离项（不得计入已覆盖）
 

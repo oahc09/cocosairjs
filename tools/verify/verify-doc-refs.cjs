@@ -6,7 +6,7 @@
  * 只读。不传文件参数时扫默认面：根 `README.md` + `docs/{gltf,guides,reference,manual,notes}/*.md` + `docs/*.md`。
  * 判据：文档里以 **反引号** 或 **`](…)`** 形式写出的仓库内路径必须真实存在。
  * 三类引用**只登记不判红**（写进报告 `skipped`，便于人工抽查而不是把门禁天然弄红）：
- *   S1 通配/brace/占位：含 `* ? { } < >`（如 `docs/evidence/v12/**`、`matrix-{chromium,firefox,webkit}.png`、`matrix-<engine>.png`）
+ *   S1 通配/brace/占位：含 `* ? { } < >`（如 `docs/evidence/browser-matrix/**`、`matrix-{chromium,firefox,webkit}.png`、`matrix-<engine>.png`）
  *   S2 外链与锚点：`http(s)://`、`#…`、`mailto:`
  *   S3 仓库外绝对路径：盘符 `X:/…`、`/…`、`~`（台账里指向 scratch/上游快照的路径属这类）。
  * 已按清理要求移除的 `docs/evidence/` 非保留组和 `docs/audits/` 历史材料单独登记，不作为当前证据通过。

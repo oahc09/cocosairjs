@@ -9,7 +9,7 @@
  * createAirApp 启动、Scene/Node/Camera/MeshRenderer API 往返、canvas 有非零像素帧。
  *
  * 执行：node tools/verify/tarball-browser-consumer.cjs
- * 产物：docs/evidence/v11-tarball-browser-consumer.json
+ * 产物：docs/evidence/tarball-browser-consumer.json
  */
 const fs = require('fs');
 const path = require('path');
@@ -19,7 +19,7 @@ const { execFileSync } = require('child_process');
 const NPM = process.platform === 'win32' ? 'npm.cmd' : 'npm'; // win32 spawnSync 需要 .cmd 解析
 
 const REPO = path.resolve(__dirname, '..', '..');
-const OUT = path.join(REPO, 'docs', 'evidence', 'v11-tarball-browser-consumer.json');
+const OUT = path.join(REPO, 'docs', 'evidence', 'tarball-browser-consumer.json');
 
 (async () => {
   const report = { runner: 'tools/verify/tarball-browser-consumer.cjs', measuredAt: new Date().toISOString() };

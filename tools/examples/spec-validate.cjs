@@ -13,7 +13,7 @@
  *   --strict        任何 specStatus != frozen 视为失败。
  *   --out=          报告落点（仓库相对或绝对）；默认写发布证据正典。
  *   --examples-dir= 被校验的 examples 目录（负控/子集用）；必须与 --out= 同时给出。
- * 产出：docs/evidence/v11-spec-validate.json
+ * 产出：docs/evidence/spec-validation.json
  *
  * F-132 写盘纪律：发布证据正典**只由绿跑写出**。任何 issue（含故意负控、--strict 下的 draft）
  * 一律不落正典，红态报告必须显式 --out= 到非正典路径。
@@ -25,7 +25,7 @@ const Module = require('module');
 const REPO = path.resolve(__dirname, '..', '..');
 const CANONICAL_EXAMPLES_DIR = path.join(REPO, 'examples');
 const INVENTORY_PATH = process.env.COCOSAIR_API_INVENTORY || path.join(REPO, 'docs', 'example-api-inventory.json');
-const CANONICAL_OUT = path.join(REPO, 'docs', 'evidence', 'v11-spec-validate.json');
+const CANONICAL_OUT = path.join(REPO, 'docs', 'evidence', 'spec-validation.json');
 const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
 
 function loadTs (file) {

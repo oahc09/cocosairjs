@@ -119,13 +119,13 @@ describe('V1.1 — Example Specification 门禁', () => {
         }
     });
 
-    // F-132：`spec-validate` 曾无条件覆写 docs/evidence/v11-spec-validate.json，而退出码在写盘之后才设
+    // F-132：`spec-validate` 曾无条件覆写 docs/evidence/spec-validation.json，而退出码在写盘之后才设
     // ⇒ 故意负控同样改写发布证据，并让共享工作树的 npm test 对所有会话转红。现纪律＝正典只由绿跑写出。
     // 五臂各自断在命中的那一层（只比 EXIT≠0 是零信息判据），末尾统一复核正典字节未动。
     test('F-132 正典发布证据只由绿跑写出（红跑零覆写）', () => {
         const fs = nodeRequire('fs') as typeof import('fs');
         const crypto = nodeRequire('crypto') as typeof import('crypto');
-        const canonical = path.join(REPO, 'docs', 'evidence', 'v11-spec-validate.json');
+        const canonical = path.join(REPO, 'docs', 'evidence', 'spec-validation.json');
         const stamp = (): string => {
             const buf = fs.readFileSync(canonical);
             return `${buf.length}B/${crypto.createHash('sha256').update(buf).digest('hex').slice(0, 16)}`;

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-01T05:39:39.956Z",
-  "revision": "f245e2b",
+  "generatedAt": "2026-10-02T02:19:39.963Z",
+  "revision": "f37579f",
   "examples": [
     {
       "dir": "anim-position",
@@ -194,7 +194,7 @@
       "promotion": {
         "spec": "113419aed33a",
         "source": "9630b2703491c62c",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 68,
         "attested": 0,
         "units": 68
@@ -289,7 +289,7 @@
       "promotion": {
         "spec": "87b16f3be7f8",
         "source": "e354b22cadf41979",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -426,8 +426,8 @@
       },
       "promotion": {
         "spec": "f5eba590706f",
-        "source": "8f64df2951fdb0c7",
-        "candidate": "b583e4c7d8588d5f",
+        "source": "0373eaa5b4d394e0",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -510,7 +510,7 @@
       "promotion": {
         "spec": "735d00cae975",
         "source": "e89d32ce3ed3bbb6",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 9,
         "attested": 2,
         "units": 11
@@ -614,7 +614,7 @@
       "promotion": {
         "spec": "247bafa0cca7",
         "source": "cc42645c22e9dab1",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -721,7 +721,7 @@
       "promotion": {
         "spec": "d314861ea3a2",
         "source": "0af7f6b33b45bf6e",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 13,
         "attested": 0,
         "units": 13
@@ -923,7 +923,7 @@
       "promotion": {
         "spec": "b615901b7e17",
         "source": "eff5486133ed2729",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 117,
         "attested": 0,
         "units": 117
@@ -1026,7 +1026,7 @@
       "promotion": {
         "spec": "466cfd2b2403",
         "source": "ef1843dfdc0ab7c7",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1125,7 +1125,7 @@
       "promotion": {
         "spec": "e428c783e31d",
         "source": "7fec7450acdbcb31",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1232,7 +1232,7 @@
       "promotion": {
         "spec": "91aa75cbfdff",
         "source": "376aa633d7649377",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1338,7 +1338,7 @@
       "promotion": {
         "spec": "98df9ed498e9",
         "source": "04ea132be64e31c5",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -1441,7 +1441,7 @@
       "promotion": {
         "spec": "7aed442e9832",
         "source": "1c0678748c512bc0",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -1612,7 +1612,7 @@
       "promotion": {
         "spec": "be7616c97447",
         "source": "a2a681a948975be9",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 54,
         "attested": 0,
         "units": 54
@@ -1744,7 +1744,7 @@
       "promotion": {
         "spec": "a7f63fc705a1",
         "source": "097992b17ba74405",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -1848,7 +1848,7 @@
       "promotion": {
         "spec": "47b4bae22ade",
         "source": "1103976d73d8af6a",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -1958,7 +1958,7 @@
       "promotion": {
         "spec": "f8dbf91bb42e",
         "source": "441178b88666598b",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 18,
         "attested": 8,
         "units": 26
@@ -2079,7 +2079,7 @@
       "promotion": {
         "spec": "5224b3c3a036",
         "source": "01feed613351fe17",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -2181,7 +2181,7 @@
       "promotion": {
         "spec": "455a02a48175",
         "source": "aa06a11253115b53",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -2213,9 +2213,9 @@
           "崩溃前置条件也要当事实采：`TimelineState.init` 读 `this._animationData.parent.frameRate`，`AnimationData.parent` 为 null（资产已 destroy / 对象池回收后）会直接抛 `Cannot read properties of null (reading 'frameRate')` ⇒ 本合同把 `animationsHaveParent [['flap',true],['idle',true]]` 与 `parentIsArmatureData true` 钉成显式事实，并规定**生命周期释放/重建取证必须排在动画事实冻结之后**（否则 pageerror 会被误读成渲染链坏了）",
           "缓存模式决定钉帧有没有意义：`_defaultCacheModeValue` 默认即 `AnimationCacheMode.REALTIME`（实测 `_cacheMode REALTIME:0`、`isAnimationCached() false`），本例仍显式 `setAnimationCacheMode(REALTIME)` 把意图写进代码。SHARED_CACHE/PRIVATE_CACHE 下出图由**缓存帧表按挂钟采样**，`gotoAndStopByFrame` 改的是实时状态而不改渲染帧 ⇒ 想用钉帧做确定性像素证据就必须 REALTIME",
           "矩阵取证只调**一次** `window.__probe()`（`tools/verify/browser-matrix.cjs`：waitMs → 点击 → afterClickMs → probe），所以任何「靠多次采样累积」的事实都不能进 `probeEquals`。实测踩过：`live.tipSeenInLiveSampling`（由 `__probe` 自己那一次像素采样置位）在三引擎上一致为 `false` ⇒ 整条矩阵红（快照 `E:/AIProMax/cocosair-scratch/db-probe/matrix-dry-r1.json`）。同一事实改由钉帧通路的 `live.tipSeenInPerFrameSampling`（帧 6/12 采样累积）给出后三引擎一致 `true`，改判据不改代码即转绿（`matrix-dry-r2.json`，247 条 probeEquals 全 PASS）。`live.tailIndex/tailRegion` 同理属挂钟相位量，只进 `probePresent`",
-          "三引擎决定性实测（当期全量矩阵 `docs/evidence/v12/browser-matrix.json`，`waitMs 9000 / click 240,180 / afterClickMs 2000`）：**钉帧通路逐字段一致**——`tipRenderedAtFrames [6,12]`、`plateRenderedAtFrames [0,6,12,18,23]`、`regionSequence` 五条、70 条 `goToFrame.*` 姿态读数在 chromium(swiftshader)/firefox/webkit 上全部为 `probeEquals` 且全绿；而**终态 `live.pixels.counts` 属挂钟量**（probe 那一刻 tail 正贴 plate）：chromium/firefox 同为 `{plate:120, wing:137, tip:0, background:0}`，webkit `{plate:117, wing:136, tip:0}`（2 步长采样 + ±24 容差下的光栅化差 ±3 点）⇒ 合同只对它用 `probeNonEmpty`/`probePresent`，不钉数值。截图字节 10898/12867/11521，`minPngBytes` 定 8000（对最小值留 ~27% 余量）。本例龙骨图形只占约 0.6% 采样点（终态 plate+wing = 257 / 43200；`litRatio` 0.0237~0.0252 里还含顶部状态文字），帧间变化来源是龙骨自己的逐帧换图（wing skew + tail display），因此 `frameChanged true` 与钉帧像素事实一起，才构成「三引擎真的出图且出的是同一张图」而不是「都画了点什么」"
+          "三引擎决定性实测（当期全量矩阵 `docs/evidence/browser-matrix/browser-matrix.json`，`waitMs 9000 / click 240,180 / afterClickMs 2000`）：**钉帧通路逐字段一致**——`tipRenderedAtFrames [6,12]`、`plateRenderedAtFrames [0,6,12,18,23]`、`regionSequence` 五条、70 条 `goToFrame.*` 姿态读数在 chromium(swiftshader)/firefox/webkit 上全部为 `probeEquals` 且全绿；而**终态 `live.pixels.counts` 属挂钟量**（probe 那一刻 tail 正贴 plate）：chromium/firefox 同为 `{plate:120, wing:137, tip:0, background:0}`，webkit `{plate:117, wing:136, tip:0}`（2 步长采样 + ±24 容差下的光栅化差 ±3 点）⇒ 合同只对它用 `probeNonEmpty`/`probePresent`，不钉数值。截图字节 10898/12867/11521，`minPngBytes` 定 8000（对最小值留 ~27% 余量）。本例龙骨图形只占约 0.6% 采样点（终态 plate+wing = 257 / 43200；`litRatio` 0.0237~0.0252 里还含顶部状态文字），帧间变化来源是龙骨自己的逐帧换图（wing skew + tail display），因此 `frameChanged true` 与钉帧像素事实一起，才构成「三引擎真的出图且出的是同一张图」而不是「都画了点什么」"
         ],
-        "evidenceMix": "本合同 46 units 的逐 API 证明实测为 15 verified + 31 attested（`docs/evidence/v11-examples-verified.json` 行 `dragonbones-basic`，promotion 三元组见 `examples/files.json` 行 `dragonbones-basic` 的 `promotion`（**规格文本里不印自己的 spec 指纹**：一印就自我作废——本例实测把 `66029ac700c7` 写进这段后，追加一条 learning 就触发 `spec-compliance-audit` 的 `S11-STALE-EVIDENCE fail：证据 specFingerprint ≠ 当前 example.json`，只能重取证据。所有指纹值留在产物里，不留在规格里）。分界不是「证据强弱」而是 tracer 的机制：`tools/verify/api-trace.cjs` 只在**顶层导出的 export table** 上装 wrapper/prototype descriptor（`DragonBonesAsset` 这类挂在 `dragonBones` 命名空间下的类，实测 `notes: 'Animation.gotoAndStopByFrame: no own descriptor on prototype'`、state `unresolved`）⇒ 31 个龙骨侧 unit 只能 attested（bound 到 PASS 的 validator 且出处行号逐字节对得上），15 个 cc 顶层 unit 拿到 executed 计数。⚠️ 另一条实测坑：`spec-evidence.cjs` 与 `spec-expectations.cjs` 写的都是**行号**，改过 `main.js` 之后必须重跑这两步再跑 `v11-examples-verify`，否则 `bound` 会因「L210 未出现 DragonBonesAsset（行内容漂移）」整片退成 unproven（本例 r2 就是这样从 promoted 退回再转绿的）"
+        "evidenceMix": "本合同 46 units 的逐 API 证明实测为 15 verified + 31 attested（`docs/evidence/examples-verified.json` 行 `dragonbones-basic`，promotion 三元组见 `examples/files.json` 行 `dragonbones-basic` 的 `promotion`（**规格文本里不印自己的 spec 指纹**：一印就自我作废——本例实测把 `66029ac700c7` 写进这段后，追加一条 learning 就触发 `spec-compliance-audit` 的 `S11-STALE-EVIDENCE fail：证据 specFingerprint ≠ 当前 example.json`，只能重取证据。所有指纹值留在产物里，不留在规格里）。分界不是「证据强弱」而是 tracer 的机制：`tools/verify/api-trace.cjs` 只在**顶层导出的 export table** 上装 wrapper/prototype descriptor（`DragonBonesAsset` 这类挂在 `dragonBones` 命名空间下的类，实测 `notes: 'Animation.gotoAndStopByFrame: no own descriptor on prototype'`、state `unresolved`）⇒ 31 个龙骨侧 unit 只能 attested（bound 到 PASS 的 validator 且出处行号逐字节对得上），15 个 cc 顶层 unit 拿到 executed 计数。⚠️ 另一条实测坑：`spec-evidence.cjs` 与 `spec-expectations.cjs` 写的都是**行号**，改过 `main.js` 之后必须重跑这两步再跑 `v11-examples-verify`，否则 `bound` 会因「L210 未出现 DragonBonesAsset（行内容漂移）」整片退成 unproven（本例 r2 就是这样从 promoted 退回再转绿的）"
       },
       "effect": {
         "functional": "Scene 含 Canvas + UICamera + Status + airdragon 四/五个节点，`ArmatureDisplay` 挂在 `airdragon` 上。P1 构造：`atlasCtor DragonBonesAtlasAsset` / `dragonCtor DragonBonesAsset` / `displayCtor ArmatureDisplay` / `factoryType CCFactory`，`loadRemote` 对 `.png` 回 `ImageAsset`、对两份 `.json` 回 `JsonAsset`；`atlasUuid dragonUuid 'AirDragon'`、`armatureKey 'AirDragon#AirDragon'`、`armatureKeyIsUuidHashAtlas true`、`setterRoundTrip true`、`cacheMode {_cacheMode, REALTIME:0, isAnimationCached false}`、`sameDataFromFactory true`。P2 图集（读 `atlasAsset._textureAtlasData`，ctor `CCTextureAtlasData`）：`{name:'AirDragon', width:64, height:64, imagePath:'AirDragon_atlas.png', scale:1, regionCount:3, textureNames:['plate','tip','wing'], regions:[plate [2,2,20,20], wing [26,2,20,20], tip [2,26,12,28]]（均 rotated false / hasFrame true）, renderTextureAttached true`；`factory.getTextureAtlasData(uuid)` 的形状记为 `factoryReturnShape {ctor:'Array', ownKeys:['0']}`（事实登记，不当访问器用）。P3 骨架数据：`dataName AirDragon`、`dataVersion 5.5`、`armatureNames ['airdragon']`、bones `[root, body, wing-left, wing-right, tail]` 带 parents（root 的 parent 为 null）与 lengths `[0,24,20,20,28]`、slots `[body, wing-left, wing-right, tail]` 的 `zOrder [0,1,2,3]`、`skinDisplays {body:[plate], wing-left:[wing], wing-right:[wing], tail:[plate,tip]}`、`animations`：flap `{duration 1, frameCount 24, playTimes 0, fadeInTime 0, cacheFrameRate 0, boneTimelines {root:[[11,0,0]], wing-left:[[12,10,25]], wing-right:[[12,18,50]]}, slotTimelines {tail:[[20,26,75]]}, cachedFramesLength 0}` / idle `{0.5, 12, -1, boneTimelines {body:[[12,34,100]]}, slotTimelines {tail:[[20,42,-1]]}}`，两条 `parentIsArmatureData true`。P4 运行层（`app.run` + 3 帧之后采）：`armatureIsMethodOnDisplay true`、ctor `Armature`、`name 'airdragon'`、`slotSource 'getSlots()'`、slotNames `[body, wing-left, wing-right, tail]`、boneNames 五条与数据层全等、`drawListLength 1`、`nodeParent 'Canvas'`、`dataSlotCount 4`、逐 slot `displayIndex/region/displayListLength/rawDisplayDataNames`（tail 唯一有 2 个候选 display）。P5 动画：ctor `Animation`，`stateShape.ctor AnimationState`、`stateTimeKey 'currentTime'`、`lastAnimationName 'flap'`、`animationStateNames ['flap','idle']`、`tailDisplayCount 2`；对帧 [0,6,12,18,23] 逐个 `gotoAndStopByFrame` + `advanceTime(0)` → 读姿态 → 真实渲染帧采样像素 → 再读姿态，结果 `allFramesStable true`，`regionSequence [[0,0,'plate'],[6,1,'tip'],[12,1,'tip'],[18,0,'plate'],[23,0,'plate']]`、`displayIndexSwapped true`、`tipRenderedAtFrames [6,12]`、`plateRenderedAtFrames [0,6,12,18,23]`、`wingSkewKey 'skew'` 且 `wingSkew` 逐帧 0.7/0.24/0.63/0.7/0.7、`rootY` 0/-1.67/8.33/1.67/0、`stateTime` 0/0.25/0.5/0.75/0.96；换到 idle 后 `{animationName idle, playTimesProp -1, isPlaying true, stateName 'idle'}`，切回 flap 仍 `isPlaying true`。P6 生命周期合同面：释放路径 `display.dragonAtlasAsset=null → dragonAsset=null → 三个资产 destroy()`，重建路径 `重新 new + 填 setter → atlasAsset.init(factory) → wireDisplay → dragonAsset.init → playAnimation(-1)`，判定量由 `window.__lifecycle()` 产出（released/leaked/reloaded）。终态 live（当期全量矩阵三引擎）：`slotCount 4`、`drawListLength 1`、`isPlaying true`、`animationName idle`、`tailRegion plate`、像素 counts chromium/firefox `{plate 120, wing 137, tip 0, background 0}`、webkit `{117, 136, 0, 0}`（`litRatio` 0.0237~0.0252）。⚠️ 终态 counts 是 `__probe()` 调用那一刻的挂钟快照：页面级另一次捕获（钉帧停在 tip 帧）读到的是 `{plate 19, wing 146, tip 78}` ⇒ 合同不钉它的数值，像素事实全部由钉帧通路（`tipRenderedAtFrames` / `regionSequence` / `goToFrame.*`）承担",
@@ -2455,9 +2455,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "92e456f2b202",
-        "source": "42d1fb47022aa7e5",
-        "candidate": "b583e4c7d8588d5f",
+        "spec": "8a974b0bce33",
+        "source": "13925128ed9b6d46",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 93,
         "attested": 5,
         "units": 98
@@ -2579,7 +2579,7 @@
       "promotion": {
         "spec": "c3c81d03e1e2",
         "source": "180b2cc46b5dc471",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -2673,7 +2673,7 @@
       "promotion": {
         "spec": "ee8c608d946f",
         "source": "59577d7d6b6c60e8",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -2838,7 +2838,7 @@
       "promotion": {
         "spec": "e12caf84b432",
         "source": "9b899fb6acdb4dc8",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -2934,7 +2934,7 @@
       "promotion": {
         "spec": "c40482afd5b5",
         "source": "3a80645a70f5b245",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -3053,7 +3053,7 @@
       "promotion": {
         "spec": "410987ea135f",
         "source": "213a22d7c2c3ca48",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 29,
         "attested": 0,
         "units": 29
@@ -3187,7 +3187,7 @@
       "promotion": {
         "spec": "1e6e4a0eac13",
         "source": "f41fd530b51a57df",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 26,
         "attested": 4,
         "units": 30
@@ -3288,7 +3288,7 @@
       "promotion": {
         "spec": "893b7107261d",
         "source": "21bd135b88e06777",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -3389,7 +3389,7 @@
       "promotion": {
         "spec": "010a7e23807e",
         "source": "dcb70602a02a0180",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -3504,7 +3504,7 @@
       "promotion": {
         "spec": "12776fd319de",
         "source": "714d772e43d01663",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 18,
         "attested": 2,
         "units": 20
@@ -3598,7 +3598,7 @@
       "promotion": {
         "spec": "1eec40a9fdad",
         "source": "037467dd34348936",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -3700,7 +3700,7 @@
       "promotion": {
         "spec": "aeed6a7d4db8",
         "source": "37642ffb95c12375",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -3817,7 +3817,7 @@
       "promotion": {
         "spec": "1eaac15002c1",
         "source": "31b545ce974e0261",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -3924,7 +3924,7 @@
       "promotion": {
         "spec": "e5337b3cc8f9",
         "source": "286de09ae2f442c2",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -4040,7 +4040,7 @@
       "promotion": {
         "spec": "e22465e2753e",
         "source": "171eaa9512f3bb0e",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 26,
         "attested": 0,
         "units": 26
@@ -4146,7 +4146,7 @@
       "promotion": {
         "spec": "2f25b8264944",
         "source": "0eb2fcf420ce8b42",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -4253,7 +4253,7 @@
       "promotion": {
         "spec": "ea400d8377c2",
         "source": "44280f19ae58d54e",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -4362,7 +4362,7 @@
       "promotion": {
         "spec": "e8dffc14e4ae",
         "source": "b2706d215970847c",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -4511,7 +4511,7 @@
       "promotion": {
         "spec": "c42cdd481052",
         "source": "b03352118c34029e",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 45,
         "attested": 0,
         "units": 45
@@ -4653,7 +4653,7 @@
       "promotion": {
         "spec": "516c502017cf",
         "source": "0de72aa96c0cbf42",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -4763,7 +4763,7 @@
       "promotion": {
         "spec": "691785c7d88e",
         "source": "ccc6fc2c4637ea1e",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -4854,7 +4854,7 @@
       "promotion": {
         "spec": "3dc08a803d09",
         "source": "77978071ea70ce35",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -4948,7 +4948,7 @@
       "promotion": {
         "spec": "d332c2a0874b",
         "source": "1c35d1d3e8c24f0e",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -5054,7 +5054,7 @@
       "promotion": {
         "spec": "03d09d051045",
         "source": "8c2c756a8e99932b",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -5179,7 +5179,7 @@
       "promotion": {
         "spec": "bb797e169f9a",
         "source": "485715f20cfa3290",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -5281,7 +5281,7 @@
       "promotion": {
         "spec": "0e56120cfac1",
         "source": "dabc87c41be93d5e",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -5372,7 +5372,7 @@
       "promotion": {
         "spec": "57a35450dc95",
         "source": "7517caefdbe8802f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -5481,7 +5481,7 @@
       "promotion": {
         "spec": "fc9bfe4f1c26",
         "source": "20f11d26e9b06084",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -5620,7 +5620,7 @@
       "promotion": {
         "spec": "0dac7344c814",
         "source": "3185e7f6fe4b2b48",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 36,
         "attested": 0,
         "units": 36
@@ -5727,7 +5727,7 @@
       "promotion": {
         "spec": "a60808cc9b2d",
         "source": "4a090376a6375b36",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -5832,7 +5832,7 @@
       "promotion": {
         "spec": "f2bd11247de3",
         "source": "8d183eb8d031b279",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -5941,7 +5941,7 @@
       "promotion": {
         "spec": "4e2e445e2a98",
         "source": "ce052ed83cc90a95",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -6123,7 +6123,7 @@
       "promotion": {
         "spec": "89ecaa27ffdb",
         "source": "a51f6d658d115a46",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 62,
         "attested": 0,
         "units": 62
@@ -6227,7 +6227,7 @@
       "promotion": {
         "spec": "203f4f311c0b",
         "source": "fd979e704b0fa6c1",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -6328,7 +6328,7 @@
       "promotion": {
         "spec": "abe438ba1222",
         "source": "f83475ba04b23763",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -6434,7 +6434,7 @@
       "promotion": {
         "spec": "f7a11b7992de",
         "source": "8a562381af5876cb",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -6611,7 +6611,7 @@
       "promotion": {
         "spec": "4aa1b0553603",
         "source": "b46ab04ed8c9b2e2",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 61,
         "attested": 0,
         "units": 61
@@ -6724,7 +6724,7 @@
       "promotion": {
         "spec": "c0d42af29914",
         "source": "16bbc63646599b56",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -6840,7 +6840,7 @@
       "promotion": {
         "spec": "11d86aca4ffd",
         "source": "b910e492ab3c99fd",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -6947,7 +6947,7 @@
       "promotion": {
         "spec": "414e57637b2f",
         "source": "23ff32f2b04abb5a",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -7171,7 +7171,7 @@
       "promotion": {
         "spec": "6cf98c815458",
         "source": "c4d2a3f10503ceb9",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 85,
         "attested": 0,
         "units": 85
@@ -7279,7 +7279,7 @@
       "promotion": {
         "spec": "679348ba6ca7",
         "source": "c7aaaf8d7e935e74",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -7395,7 +7395,7 @@
       "promotion": {
         "spec": "3a33e8470406",
         "source": "b0d669079a3e27a3",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -7571,7 +7571,7 @@
       "promotion": {
         "spec": "31ad85d68ae2",
         "source": "0b9d615d0b38693d",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 57,
         "attested": 0,
         "units": 57
@@ -7678,7 +7678,7 @@
       "promotion": {
         "spec": "eb9e9de757e9",
         "source": "a51696c718c2af5c",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -7787,7 +7787,7 @@
       "promotion": {
         "spec": "ba5cfcc9eb5b",
         "source": "a8aa732d8837e6c8",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -7905,7 +7905,7 @@
       "promotion": {
         "spec": "ffa5adffa8a9",
         "source": "4cbb6eb95ec9b214",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -8006,7 +8006,7 @@
       "promotion": {
         "spec": "79c65346c480",
         "source": "cfd361f0e1369cc3",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -8137,7 +8137,7 @@
       "promotion": {
         "spec": "aa2c9c573424",
         "source": "8d1360c7ffb96155",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 35,
         "attested": 0,
         "units": 35
@@ -8259,7 +8259,7 @@
       "promotion": {
         "spec": "027f9c6f22cf",
         "source": "7c55d767a20d0caa",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 35,
         "attested": 0,
         "units": 35
@@ -8414,7 +8414,7 @@
       "promotion": {
         "spec": "55b98a111bc1",
         "source": "860768f3941d7dff",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 47,
         "attested": 0,
         "units": 47
@@ -8536,7 +8536,7 @@
       "promotion": {
         "spec": "1c0010ce0740",
         "source": "cd75dcb9b3c7a69f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 32,
         "attested": 0,
         "units": 32
@@ -8643,7 +8643,7 @@
       "promotion": {
         "spec": "8fb0300091bb",
         "source": "ac2ad052249e06af",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -8837,7 +8837,7 @@
       "promotion": {
         "spec": "2924ef8c463d",
         "source": "2e6dbc83e69176ef",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 69,
         "attested": 0,
         "units": 69
@@ -8942,7 +8942,7 @@
       "promotion": {
         "spec": "df85dd1e8123",
         "source": "1e97ac75f2a9f38f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -9056,7 +9056,7 @@
       "promotion": {
         "spec": "070df733f068",
         "source": "f5ad1388893fcc15",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 29,
         "attested": 0,
         "units": 29
@@ -9168,7 +9168,7 @@
       "promotion": {
         "spec": "5e9a56f9e4d6",
         "source": "7d9357f712fd6afd",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 27,
         "attested": 0,
         "units": 27
@@ -9268,7 +9268,7 @@
       "promotion": {
         "spec": "359302f37ee8",
         "source": "bfb3b149c978500f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -9375,7 +9375,7 @@
       "promotion": {
         "spec": "42ac85f4d283",
         "source": "888e4f69808a0c53",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -9519,7 +9519,7 @@
       "promotion": {
         "spec": "30f3848c9bf2",
         "source": "7391fe4bff75816e",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 44,
         "attested": 0,
         "units": 44
@@ -9625,7 +9625,7 @@
       "promotion": {
         "spec": "09efb0d2382c",
         "source": "ba28a0e1f5ed04ad",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -9740,7 +9740,7 @@
       "promotion": {
         "spec": "103676084a48",
         "source": "1721c45a5d158484",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -9938,7 +9938,7 @@
       "promotion": {
         "spec": "5708a65d0f42",
         "source": "02d565acd823bc68",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 70,
         "attested": 0,
         "units": 70
@@ -10038,7 +10038,7 @@
       "promotion": {
         "spec": "39e4aa1ca1b9",
         "source": "476470486c6d0c4f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -10249,7 +10249,7 @@
       "promotion": {
         "spec": "b143498dced9",
         "source": "8fa976235c18bda7",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 76,
         "attested": 0,
         "units": 76
@@ -10356,7 +10356,7 @@
       "promotion": {
         "spec": "8d3ecabd9775",
         "source": "f63c8c756aa249fa",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -10471,7 +10471,7 @@
       "promotion": {
         "spec": "aba2d336dced",
         "source": "0aba272be450bb84",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -10578,7 +10578,7 @@
       "promotion": {
         "spec": "7331fcb3f758",
         "source": "27a3e28361542221",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -10673,7 +10673,7 @@
       "promotion": {
         "spec": "facc0dffdcae",
         "source": "368e3df77b65f7b7",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -10809,7 +10809,7 @@
       "promotion": {
         "spec": "83e8aa4de17a",
         "source": "22ad5db42f3d1a3a",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -10914,7 +10914,7 @@
       "promotion": {
         "spec": "d84e10888320",
         "source": "e269d7b6ad864d3d",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -11009,7 +11009,7 @@
       "promotion": {
         "spec": "aaa92922c830",
         "source": "3248cf0cb2aab8c6",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -11105,7 +11105,7 @@
       "promotion": {
         "spec": "2a0473dbdd79",
         "source": "c58257e3098e3e82",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -11210,7 +11210,7 @@
       "promotion": {
         "spec": "ea18270871e1",
         "source": "013fd4d57716343e",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -11305,7 +11305,7 @@
       "promotion": {
         "spec": "5e1972835b36",
         "source": "f5b889e8a655bb9c",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -11399,7 +11399,7 @@
       "promotion": {
         "spec": "4ada25082207",
         "source": "10bae6c176697a46",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -11563,7 +11563,7 @@
       "promotion": {
         "spec": "5921a5fa608c",
         "source": "d9b62d4d799956ec",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 50,
         "attested": 0,
         "units": 50
@@ -11701,7 +11701,7 @@
       "promotion": {
         "spec": "1e712e56bb86",
         "source": "a6f36b8c7acce1c3",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 45,
         "attested": 0,
         "units": 45
@@ -11795,7 +11795,7 @@
       "promotion": {
         "spec": "1600f4b3bd82",
         "source": "5a3ed945031356f0",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -11905,7 +11905,7 @@
       "promotion": {
         "spec": "f434218d7b1e",
         "source": "04d21d6a2f961c24",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -12010,7 +12010,7 @@
       "promotion": {
         "spec": "1e951dea23af",
         "source": "143ddfb3b88e6fa4",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -12128,7 +12128,7 @@
       "promotion": {
         "spec": "349a6cfe97c5",
         "source": "e7104fac7b11ed58",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -12329,7 +12329,7 @@
       "promotion": {
         "spec": "9cad82ae2901",
         "source": "6647945ed1133b9b",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 81,
         "attested": 0,
         "units": 81
@@ -12434,7 +12434,7 @@
       "promotion": {
         "spec": "d86a708ca70d",
         "source": "76793cbeacb700ba",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -12530,7 +12530,7 @@
       "promotion": {
         "spec": "adcedee647c1",
         "source": "58438f35cfba2029",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -12631,7 +12631,7 @@
       "promotion": {
         "spec": "4b30e4fbe723",
         "source": "734a03c5b92dfce8",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -12649,7 +12649,7 @@
       "learning": {
         "goal": "V1.2 回归：程序化生成的 plist 必须走引擎自己的 `assetManager.parser.parsePlist → ParticleAsset._nativeAsset → ParticleSystem2D.file → _applyFile → _initWithDictionary` 真实通路，字段映射、两种发射器模式、三种 positionType、duration 收尾与贴图/混合状态都要在种子化随机 + 手工定步下三引擎逐字节一致，并且真的出图",
         "points": [
-          "决定性三件套：plist 文本运行时程序化生成后交引擎解析（不是手写组件属性）；`math.setRandGenerator(seededRandom)` 换掉随机源让所有 variance 抽样跨引擎同串；求值用 `simulator.step(1/60)×N` 手工定步。实测 chromium/firefox/webkit 三份 `__probe()` 的 28 个 phase 键、约 50 项读回逐字节相同（`tools/verify/browser-matrix-contract.json` 的 probeEquals 全等，`docs/evidence/v12/browser-matrix.json` 三引擎 records 全 PASS）",
+          "决定性三件套：plist 文本运行时程序化生成后交引擎解析（不是手写组件属性）；`math.setRandGenerator(seededRandom)` 换掉随机源让所有 variance 抽样跨引擎同串；求值用 `simulator.step(1/60)×N` 手工定步。实测 chromium/firefox/webkit 三份 `__probe()` 的 28 个 phase 键、约 50 项读回逐字节相同（`tools/verify/browser-matrix-contract.json` 的 probeEquals 全等，`docs/evidence/browser-matrix/browser-matrix.json` 三引擎 records 全 PASS）",
           "`step(dt)` 会把 dt 夹到 `assembler.maxParticleDeltaTime`，而该值只在**第一次**取 assembler 时由 `cclegacy.game.frameTime/1000*2` 定死（本例首取实测 0.033333）。不定住它，同一段定步代码在慢机器上会被悄悄夹小 ⇒ 本例首行就把它读到 results 里再显式设成 0.05，收尾时还原",
           "`custom = true` 会整段跳过 `_initWithDictionary` ⇒ 号称「程序化 plist」其实 plist 解析与字段映射一行都没跑。本例恒置 `custom = false`，并断言 `emitterMode/gravity/speed/startSize/endSize/life/emissionRate/duration/rotationIsDir` 全部由 plist 推导出来（P1 读回 gravity=[0,-100]、speed=60、life=1、emissionRate=10、duration=-1）",
           "plist 缺省推导规则实测：无 `emissionRate` 键 ⇒ `min(maxParticles/life)`（24/1.5=16）；`finishParticleSize: -1` ⇒ `endSize=-1` 且尺寸不随寿命衰减（P4 60 步后首粒 size 仍是 6）；`maxParticles: 40.7` ⇒ `totalParticles` 取整为 40；`rotationIsDir` 的 plist 布尔被解析成 JSON `true` 并映射为组件 `rotationIsDir=true`",
@@ -12776,9 +12776,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "3dbfe3f05aa1",
-        "source": "4586f5c58d215249",
-        "candidate": "b583e4c7d8588d5f",
+        "spec": "b0aac0b89ee8",
+        "source": "fc10897d37d4d02b",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 11,
         "units": 34
@@ -12909,7 +12909,7 @@
       "promotion": {
         "spec": "2992f3827c45",
         "source": "0c29ffa9f366c5cf",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 33,
         "attested": 3,
         "units": 36
@@ -13048,7 +13048,7 @@
       "promotion": {
         "spec": "1146afbe7bfc",
         "source": "651f615374c33ffe",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 30,
         "attested": 3,
         "units": 33
@@ -13232,7 +13232,7 @@
       "promotion": {
         "spec": "c8e36fab4e52",
         "source": "5a37fd3d3300ace6",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 63,
         "attested": 6,
         "units": 69
@@ -13357,7 +13357,7 @@
       "promotion": {
         "spec": "3ff3f3d53ed9",
         "source": "6f5ec74fcc298655",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 30,
         "attested": 1,
         "units": 31
@@ -13492,7 +13492,7 @@
       "promotion": {
         "spec": "58000f69e95e",
         "source": "4753b596e6ba21cb",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 41,
         "attested": 0,
         "units": 41
@@ -13598,7 +13598,7 @@
       "promotion": {
         "spec": "50bc153ddb1c",
         "source": "0fda4c96ce7a51a5",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -13702,7 +13702,7 @@
       "promotion": {
         "spec": "e76a8b021e50",
         "source": "047accd37ce78909",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -13807,7 +13807,7 @@
       "promotion": {
         "spec": "924c2a4ebd0a",
         "source": "5f322ef65443e136",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -13958,7 +13958,7 @@
       "promotion": {
         "spec": "e568b27b4292",
         "source": "ce8c2f3d46c24e7f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 41,
         "attested": 0,
         "units": 41
@@ -14057,7 +14057,7 @@
       "promotion": {
         "spec": "7452de8c11ca",
         "source": "86784386074fa41c",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -14147,7 +14147,7 @@
       "promotion": {
         "spec": "4daffe289d95",
         "source": "14dcaa1b1f04abd7",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 17,
         "attested": 1,
         "units": 18
@@ -14244,7 +14244,7 @@
       "promotion": {
         "spec": "4533f62e9a73",
         "source": "adc7fb751d03f149",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 17,
         "attested": 3,
         "units": 20
@@ -14336,7 +14336,7 @@
       "promotion": {
         "spec": "01b9b4271da2",
         "source": "8d42f5b915ecd42a",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -14431,7 +14431,7 @@
       "promotion": {
         "spec": "dc7942ac2896",
         "source": "8dbf1e634cee45fa",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -14554,7 +14554,7 @@
       "promotion": {
         "spec": "2722e26e69ef",
         "source": "387281ea52cc532e",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 31,
         "attested": 1,
         "units": 32
@@ -14647,7 +14647,7 @@
       "promotion": {
         "spec": "f628bd4d35b5",
         "source": "4a9f2c0d68b5473f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -14752,7 +14752,7 @@
       "promotion": {
         "spec": "6e068a897412",
         "source": "da38bbe3d694f92f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -14865,7 +14865,7 @@
       "promotion": {
         "spec": "a9702becc446",
         "source": "ea8fcfd16e2050b1",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 19,
         "attested": 10,
         "units": 29
@@ -14990,7 +14990,7 @@
       "promotion": {
         "spec": "72ed9b905b71",
         "source": "99edfa6fc0060f0f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -15110,7 +15110,7 @@
       "promotion": {
         "spec": "df4aafe4741e",
         "source": "fd48cef4ffe8c97f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 32,
         "attested": 0,
         "units": 32
@@ -15239,7 +15239,7 @@
       "promotion": {
         "spec": "b433fdcd5f3f",
         "source": "4cab0849e36df44f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -15359,7 +15359,7 @@
       "promotion": {
         "spec": "7cada7a1d2e8",
         "source": "d5ef856a78549703",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -15532,7 +15532,7 @@
       "promotion": {
         "spec": "01fa4e3a9f64",
         "source": "a454e3685141457c",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 54,
         "attested": 0,
         "units": 54
@@ -15620,7 +15620,7 @@
       "promotion": {
         "spec": "caf382e1364f",
         "source": "5c2b55c4103485c7",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 9,
         "attested": 0,
         "units": 9
@@ -15724,7 +15724,7 @@
       "promotion": {
         "spec": "1c8e43051896",
         "source": "a7fbfefe053020bf",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -15844,7 +15844,7 @@
       "promotion": {
         "spec": "b73eafe44754",
         "source": "ff2b442ea1080e8f",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 27,
         "attested": 0,
         "units": 27
@@ -15955,7 +15955,7 @@
       "promotion": {
         "spec": "67d84f00e67a",
         "source": "3ec71c4754dfb103",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -16088,7 +16088,7 @@
       "promotion": {
         "spec": "95ed047131ee",
         "source": "f3342765dca75676",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 40,
         "attested": 0,
         "units": 40
@@ -16206,7 +16206,7 @@
       "promotion": {
         "spec": "94f1a97e35bc",
         "source": "5d1037188542fa8c",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -16313,7 +16313,7 @@
       "promotion": {
         "spec": "bfa4c738187b",
         "source": "6512223704e49e45",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -16487,7 +16487,7 @@
       "promotion": {
         "spec": "7cc79446c2a9",
         "source": "d190ac5740586673",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 48,
         "attested": 0,
         "units": 48
@@ -16583,7 +16583,7 @@
       "promotion": {
         "spec": "80b0c3becc83",
         "source": "1a37f130b093f25a",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -16743,7 +16743,7 @@
       "promotion": {
         "spec": "4f2be6f5dca5",
         "source": "ab152be635b54e0b",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 59,
         "attested": 0,
         "units": 59
@@ -16848,7 +16848,7 @@
       "promotion": {
         "spec": "fb73abcb354f",
         "source": "59231c951d6a22fd",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -16970,7 +16970,7 @@
       "promotion": {
         "spec": "ac1d1fe9483f",
         "source": "cbda0eef993792c8",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 29,
         "attested": 1,
         "units": 30
@@ -17224,7 +17224,7 @@
       "promotion": {
         "spec": "9784ade4e206",
         "source": "b6ae4901f3c74129",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 96,
         "attested": 0,
         "units": 96
@@ -17386,7 +17386,7 @@
       "promotion": {
         "spec": "e56f7afefc3a",
         "source": "0044e517969554d1",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 49,
         "attested": 0,
         "units": 49
@@ -17490,7 +17490,7 @@
       "promotion": {
         "spec": "a8faeac6500a",
         "source": "b4fadffb071fd409",
-        "candidate": "b583e4c7d8588d5f",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -17641,8 +17641,8 @@
       },
       "promotion": {
         "spec": "131f1ec448fd",
-        "source": "a978e194071300d9",
-        "candidate": "b583e4c7d8588d5f",
+        "source": "6bf9e6f3199f8aa6",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 29,
         "attested": 7,
         "units": 36
@@ -17667,7 +17667,7 @@
           "事件回调的参数形状不对称：`onLoading/onLoaded` 只 `node.emit(type, this)`，`onError(...args)` 拿到的是 impl 传出的**再包一层的数组**（`dispatchEvent` 用 `callback.call(this, args)` 把 rest 参数当单参数转发）⇒ `error` 监听收到的第二参是 `[[innerHTML]]`，`JSON.stringify` 里含 404 但 `Array.isArray` 为真且长度为 1 的嵌套（实测 `errorArgIsArray true`、`errorArgMentions404 true`、`lastHandlerHasView true`、`handlerHits 2`、`updateHookCallable true`）。断言只能按这个真实形状写，别按文档签名写",
           "`enabled=false` 只是把 wrapper 的 `style.visibility` 置 `hidden`（`enable/disable`），而 `syncMatrix` 在 `visibility === 'hidden'` 时**整帧早退**（`web-view-impl-web.ts:139`）⇒ 隐藏期移动节点，DOM `transform` 保持旧值；重新启用后必须由 `update` 追平。判别点选「只属于旧位置」的坐标：`hitAtOldOnlyPoint` 追平后是 `CANVAS`、没追平是 `IFRAME`（实测 `transformFrozenWhileHidden true`、`transformCaughtUpAfterEnable true`、`visibilityAfterDisable 'hidden'`）",
           "穿透行为没有开关：web 实现不做任何命中屏蔽，`elementFromPoint` 在 iframe 中心 enabled 时是 `IFRAME`、禁用后是 `CANVAS`；矩阵真实点击落在 iframe 上时页内计数器 `__clicks` +1，而 `engineTouchEvents` 与 `canvasDomClicks` 都是 0 ⇒ 「点进了 iframe 的东西，引擎完全看不见」就是 web 端 WebView 的全部真相",
-          "⚠️ `evaluateJS` 的失败路径不能进示例：`WebViewImplWeb.evaluateJS` 对 `win.eval` 的 catch 里既 `dispatchEvent(ERROR, e)` 又 `error(e)`（`web-view-impl-web.ts:116-128`）⇒ 一条写坏的注入脚本会同时污染 ERROR 事件通道并留下一条 `console.error`（矩阵 `noConsoleError` 必红）。本例只做成功注入（标题/全局变量/dataset 三处回读），失败面单独在诊断脚本里取证（`docs/notes/v12-webview-notes.md`）",
+          "⚠️ `evaluateJS` 的失败路径不能进示例：`WebViewImplWeb.evaluateJS` 对 `win.eval` 的 catch 里既 `dispatchEvent(ERROR, e)` 又 `error(e)`（`web-view-impl-web.ts:116-128`）⇒ 一条写坏的注入脚本会同时污染 ERROR 事件通道并留下一条 `console.error`（矩阵 `noConsoleError` 必红）。本例只做成功注入（标题/全局变量/dataset 三处回读），失败面单独在诊断脚本里取证（`docs/notes/webview-notes.md`）",
           "`WebViewImplManager.getImpl()` 每次都 `new WebViewImplWeb(component)`，`WebView` 也从不复用 impl ⇒ DOM 里 `#webview-wrapper` 的个数就是真实泄漏计数器：销毁后必须回 0（`nativeWebView` 同时变 `null`、`state` 回 `none`），重建后必须**恰好 1**（`wrapperCountIsExactlyOne true`，且 `reloadedWithinMs 21/41/58 ms`）。§25 生命周期合同以此复跑「release → 延迟销毁落地 → 泄漏核对 → reacquire」（实测 `isValidAfterDestroy false`、`stateAfterDestroy 'none'`、`hitAfterDestroy 'CANVAS'`）",
           "两个只 warn 的 API 在 web 端是 no-op：`setJavascriptInterfaceScheme`/`setOnJSCallback` 的 impl 实现体只有 `warn('The platform does not support')`（`web-view-impl-web.ts:130-136`）⇒ 返回值恒 `undefined`、传入的 JS 回调永不被调（`jsCallbackFired 0`）、`state` 不受影响。要断言的是「不抛错、不改状态、回调不触发」，不是「生效」（实测两个 setter 返回 `'undefined'`、`jsCallbackFired 0`、`stateUnchangedAfterNoop true`、`stateAfterNoop 'loaded'`）",
           "wrapper 的定位**不是挂载即到位**：`__preload` 只把 wrapper append 进 `game.container`，CSS `transform/width/height` 要等第一次 `update → syncMatrix` 才写入。在那之前读几何会拿到 iframe 的内在盒（未显式定尺寸的 `<iframe>` 默认 300×154 ⇒ 中心 (150,281)），把终态几何断言直接判红——本任务 r3 的 chromium `p9Unload.finalCenter '150,281'` 就是这么来的（证据 `matrix-webview-contract-r3.json`）。正确做法：几何断言前先用 `waitMatrixSize()` 轮询 wrapper 的 `style.width` 到目标值（实测 `matrixSizeWithinMs` P1 为 107/0/0 ms、P9 为 0/0/0 ms），再 `nextFrames(2)` 让 `syncMatrix` 的矩阵缓存落定。同理，`wrapperOffsetWH` 只有等到位后才是三引擎一致的 `200x150`。"
@@ -17788,9 +17788,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e89eeb6727b1",
-        "source": "aedf98de2ac6dc18",
-        "candidate": "b583e4c7d8588d5f",
+        "spec": "293bf690ec0f",
+        "source": "dba2e31f1d56561a",
+        "candidate": "0b9588dc80fd7afd",
         "verified": 31,
         "attested": 5,
         "units": 36

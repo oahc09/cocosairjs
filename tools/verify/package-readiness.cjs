@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const zlib = require('zlib');
 const root = path.resolve(__dirname, '../..');
 const evidence = JSON.parse(
-    fs.readFileSync(path.join(root, 'docs/evidence/v11-tarball-browser-consumer.json'), 'utf8'),
+    fs.readFileSync(path.join(root, 'docs/evidence/tarball-browser-consumer.json'), 'utf8'),
 );
 const sizes = {};
 for (const relative of [

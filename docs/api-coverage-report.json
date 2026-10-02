@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-10-01T05:41:51.554Z",
+  "generatedAt": "2026-10-02T02:20:24.350Z",
   "evidenceSources": [
     {
-      "path": "docs/evidence/v11-examples-verified.json",
+      "path": "docs/evidence/examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-10-01T05:37:59.698Z",
+      "measuredAt": "2026-10-02T02:19:38.836Z",
       "mode": "spec-driven-v3"
     },
     {
-      "path": "docs/evidence/v11-devtools-examples.json",
+      "path": "docs/evidence/devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-10-01T05:39:38.619Z",
+      "measuredAt": "2026-10-02T02:14:26.271Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -23,7 +23,7 @@
     "verifiedChannels": "verified 再按观察通道拆分：call=被当作函数/构造器执行；read=仅观察到顶层导出的成员读取（命名空间用法）；unknown=证据行未记录通道。门禁数字含 read，引用时必须一并给出 call/read 拆分",
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
-  "candidateFingerprint": "b583e4c7d8588d5f",
+  "candidateFingerprint": "0b9588dc80fd7afd",
   "inventoryFingerprint": "46523415384a4e3f",
   "apiInventoryRevision": "f31acb17272e382c",
   "inventoryConsistency": [],

@@ -9,7 +9,7 @@
  * 另含 Runtime 包边界检查：Runtime-only bundle 不得包含 DevTools 会话实现。
  *
  * 执行：NODE_PATH=<playwright> node tools/verify/devtools-examples.cjs [--ids=a,b]
- * 证据：docs/evidence/v11-devtools-examples.json（results 形状与 v11-examples-verified.json 一致，
+ * 证据：docs/evidence/devtools-examples.json（results 形状与 examples-verified.json 一致，
  *      coverage-report 据此计入 verified）
  */
 const fs = require('fs');
@@ -25,7 +25,7 @@ const apiTrace = require(path.join(REPO, 'tools', 'verify', 'api-trace.cjs'));
 const readback = require(path.join(REPO, 'tools', 'verify', 'runtime-readback.cjs'));
 const expChecks = require(path.join(REPO, 'tools', 'verify', 'expectation-checks.cjs'));
 
-const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'v11-devtools-examples.json');
+const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'devtools-examples.json');
 const ARTIFACT_DIR = path.join(REPO, 'docs', 'evidence', 'examples');
 const SETTLE_MS = 2000;
 const CLEAR_COLOR = [30, 40, 60];

@@ -471,7 +471,7 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
     });
 
     describe('V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币', () => {
-        const EVIDENCE = join(ROOT, 'docs', 'evidence', 'v12', 'browser-matrix.json');
+        const EVIDENCE = join(ROOT, 'docs', 'evidence', 'browser-matrix', 'browser-matrix.json');
         const CONTRACT = join(ROOT, 'tools', 'verify', 'browser-matrix-contract.json');
         const sha16 = (path: string): string => digest(path).slice(0, 16);
 
@@ -541,9 +541,9 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             expect(missing).toEqual([]);
         });
 
-        test('证据目录对账：docs/evidence/v12/ 下每个目录要么被矩阵记录引用，要么在册豁免（不许静默堆积孤儿捕获，也不许留僵尸豁免）', () => {
+        test('证据目录对账：docs/evidence/browser-matrix/ 下每个目录要么被矩阵记录引用，要么在册豁免（不许静默堆积孤儿捕获，也不许留僵尸豁免）', () => {
             const json = JSON.parse(readFileSync(EVIDENCE, 'utf8'));
-            const EVIDENCE_DIR = join(ROOT, 'docs', 'evidence', 'v12');
+            const EVIDENCE_DIR = join(ROOT, 'docs', 'evidence', 'browser-matrix');
             // 记录里的 png 是 Windows 反斜杠相对路径，统一分隔符后取目录名
             const referenced = new Set<string>(json.records.map((r: any) => r.png.split(/[\\/]/).slice(0, -1).pop()));
             // Historical diagnostic directories were removed during evidence cleanup.
