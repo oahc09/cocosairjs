@@ -25,6 +25,13 @@ import type { AirContextHealth, AirContextLossOptions } from './context-health';
  */
 export const AIR_VERSION = '1.0.0';
 
+/**
+ * @en Numeric AIR version with dots removed: 1.0.0 → 100, 1.0.1 → 101.
+ * Keep this literal in sync with AIR_VERSION.
+ * @zh AIR_VERSION 去掉点号后的数字版本：1.0.0 → 100，1.0.1 → 101。
+ */
+export const AIR_REVISION = 100;
+
 export interface AirAppOptions {
     /** canvas 元素，或 CSS selector 字符串（如 '#game'）。 */
     canvas: HTMLCanvasElement | string;
