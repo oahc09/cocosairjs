@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Cocos AIR — Animated Character Showcase</title>
+        <style>
+            html,
+            body,
+            #GameDiv,
+            #Cocos3dGameContainer {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #1d2532;
+            }
+            #GameCanvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+            aside {
+                position: absolute;
+                left: 24px;
+                top: 18px;
+                color: #e0e8f4;
+                font: 14px/1.6 system-ui;
+            }
+            h1 {
+                margin: 0;
+                font-size: 21px;
+            }
+            button {
+                padding: 5px 10px;
+                background: #36465d;
+                color: #e0e8f4;
+                border: 1px solid #64768b;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            button:hover {
+                background: #51647d;
+            }
+            button:active {
+                background: #6b819a;
+            }
+            button:disabled {
+                opacity: 0.45;
+                cursor: default;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div>
+        </div>
+        <aside>
+            <h1>One asset · two independent characters</h1>
+            <div>Real GLB skinning and native clip states</div>
+            <button data-ui="anim-a-idle" data-bench="anim-a-idle">A idle</button
+            ><button data-ui="anim-a-walk" data-bench="anim-a-walk">A walk</button>
+            <button data-ui="anim-b-idle" data-bench="anim-b-idle">B idle</button
+            ><button data-ui="anim-b-walk" data-bench="anim-b-walk">B walk</button>
+            <button data-ui="destroy-a" data-bench="destroy-a">Destroy A</button
+            ><button data-ui="reset" data-bench="reset">Reset</button>
+            <div id="status">Loading licensed local character…</div>
+        </aside>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

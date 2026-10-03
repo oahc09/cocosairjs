@@ -186,7 +186,7 @@
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L27"
+        "sourceLocation": "L30"
       },
       {
         "api": "createDracoDecoder",
@@ -336,9 +336,9 @@
     }
   },
   "promotion": {
-    "spec": "1e6e4a0eac13",
-    "source": "f41fd530b51a57df",
-    "candidate": "0b9588dc80fd7afd",
+    "spec": "0065082f5534",
+    "source": "7e2ac80d6bed00b5",
+    "candidate": "ba485e1b91643c46",
     "verified": 26,
     "attested": 4,
     "units": 30

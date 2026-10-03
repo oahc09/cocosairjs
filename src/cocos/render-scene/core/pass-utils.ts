@@ -24,6 +24,7 @@
 
 import { Type } from '../../gfx';
 import { Color, Mat3, Mat4, Vec2, Vec3, Vec4, Quat, IVec2Like, IVec3Like, IVec4Like, IMat3Like, IMat4Like, warnID } from '../../core';
+import { isFiniteShaderNumber, propertyTypeError } from '../../core/platform/property-validation';
 
 const typeMask    = 0xfc000000; //  6 bits => 64 types
 const bindingMask = 0x03f00000; //  6 bits => 64 bindings
@@ -84,6 +85,48 @@ export const type2validator = {
     [Type.MAT3]: (v: Mat3): boolean => !!(v instanceof Mat3),
     [Type.MAT4]: (v: Mat4): boolean => !!(v instanceof Mat4),
 };
+
+const uniformExamples: Partial<Record<Type, string>> = {
+    [Type.INT]: '1', [Type.FLOAT]: '1',
+    [Type.INT2]: 'new Vec2(1, 2)', [Type.FLOAT2]: 'new Vec2(1, 2)',
+    [Type.INT3]: 'new Vec3(1, 2, 3)', [Type.FLOAT3]: 'new Vec3(1, 2, 3)',
+    [Type.INT4]: 'new Vec4(1, 2, 3, 4)',
+    [Type.FLOAT4]: 'new Vec4(1, 2, 3, 4), new Color(255, 128, 64, 255), or new Quat(0, 0, 0, 1)',
+    [Type.MAT3]: 'new Mat3()', [Type.MAT4]: 'new Mat4()',
+};
+const vectorKeys = ['x', 'y', 'z', 'w'] as const;
+const matrixKeys = Array.from({ length: 16 }, (_, i) => `m${String(i).padStart(2, '0')}`);
+
+function validUniformElement (type: Type, value: MaterialProperty): boolean {
+    const validator = type2validator[type];
+    if (!validator || !validator(value)) { return false; }
+    if (typeof value === 'number') { return isFiniteShaderNumber(value); }
+    const keys = type === Type.MAT3 ? matrixKeys.slice(0, 9) : type === Type.MAT4 ? matrixKeys
+        : vectorKeys.slice(0, (type === Type.INT2 || type === Type.FLOAT2) ? 2 : (type === Type.INT3 || type === Type.FLOAT3) ? 3 : 4);
+    return keys.every((key) => isFiniteShaderNumber(value[key]));
+}
+
+/** Validate the entire write before touching a staging block (including partial array updates). */
+export function validateUniformValue (
+    type: Type, value: MaterialProperty | MaterialProperty[], count: number, property: string | (() => string), array = false,
+): void {
+    let valid = !Array.isArray(value) && !array && validUniformElement(type, value as MaterialProperty);
+    if (array) {
+        valid = Array.isArray(value) && value.length <= count;
+        if (valid) {
+            const values = value as MaterialProperty[];
+            // Array.every skips holes, while the writer visits each index.
+            for (let i = 0; i < values.length; ++i) {
+                if (values[i] !== null && !validUniformElement(type, values[i])) { valid = false; break; }
+            }
+        }
+    }
+    if (valid) { return; }
+    const name = typeof property === 'function' ? property() : property;
+    const example = uniformExamples[type] || Type[type];
+    throw propertyTypeError('AIR_E_MATERIAL_TYPE', name, `${Type[type]} with finite components${array ? `; array count <= ${count}` : ''}`,
+        array ? `[${example}] (one typed value per uniform element)` : example);
+}
 
 const defaultValues = [
     Object.freeze([0]),

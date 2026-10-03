@@ -139,7 +139,7 @@
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L27"
+        "sourceLocation": "L30"
       },
       {
         "api": "GLTFAsset.destroy",
@@ -215,9 +215,9 @@
     }
   },
   "promotion": {
-    "spec": "ee8c608d946f",
-    "source": "59577d7d6b6c60e8",
-    "candidate": "0b9588dc80fd7afd",
+    "spec": "bad5fe27a560",
+    "source": "77c2ebc0212d3f0b",
+    "candidate": "ba485e1b91643c46",
     "verified": 17,
     "attested": 0,
     "units": 17

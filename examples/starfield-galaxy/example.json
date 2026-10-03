@@ -1,0 +1,95 @@
+{
+  "id": "starfield-galaxy",
+  "version": "1.0.0",
+  "title": "Fifty Thousand Suns",
+  "category": "particles",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "用原生POINT_LIST批量提交50k星点，在GPU进行旋转与颜色梯度，交互真实相机并披露fps测量边界",
+    "points": ["mesh和pass拓扑须匹配", "uniform使用Vec4", "render-loop fps不是GPU或present吞吐"]
+  },
+  "effect": {
+    "functional": "四条程序化对数旋臂和7000颗核球星；GPU旋转/色彩；平滑视差、滚轮穿行、实时HUD、Reset与资源重建",
+    "visual": "暖白核球、蓝色旋臂与深黑宇宙"
+  },
+  "api": {
+    "primary": ["utils.createMesh", "Material.setProperty"],
+    "supporting": [],
+    "claims": ["utils.createMesh", "Material.setProperty"],
+    "forbiddenShortcut": ["用图片冒充星点", "假fps或虚报顶点数", "CPU逐星点提交或CSS替代3D旋转"],
+    "evidence": [
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L96",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L125",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": ["rendering", "shader"],
+  "assets": ["galaxy.effect.json"],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Observatory Camera", "Galaxy"]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "移动指针至右侧产生真实相机视差",
+        "expected": "parallaxOffset与画面变化"
+      },
+      {
+        "action": "滚轮向上600 CSS像素",
+        "expected": "相机距离在40..400范围内平滑缩短"
+      },
+      {
+        "action": "reset",
+        "buttonText": "reset",
+        "expected": "epoch递增、相机/phase/视差复位"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创程序化星点与shader，无模型或图片依赖"
+  },
+  "benchmarkOrigin": {
+    "briefId": "E01",
+    "briefVersion": "1.0.0",
+    "frozen": true,
+    "sha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+    "source": "assets/benchmark-spec.json",
+    "implementation": "Original code from the public frozen specification; no private reference imported"
+  },
+  "promotion": {
+    "spec": "5a055cbc312f",
+    "source": "71fe39e265d47e5f",
+    "candidate": "ba485e1b91643c46",
+    "verified": 2,
+    "attested": 0,
+    "units": 2
+  }
+}

@@ -27,6 +27,7 @@ import { Event } from './event';
 import { Vec2, cclegacy } from '../../../core';
 import { SystemEventTypeUnion } from '../event-enum';
 import type { View } from '../../../ui/view';
+import { locationOutput } from '../location-output';
 
 /**
  * @en The mouse event
@@ -201,10 +202,7 @@ export class EventMouse extends Event {
      * @param out - Pass the out object to avoid object creation, very good practice
      */
     public getLocation (out?: Vec2): Vec2 {
-        if (!out) {
-            out = new Vec2();
-        }
-
+        out = locationOutput(out, 'EventMouse.getLocation');
         Vec2.set(out, this._x, this._y);
         return out;
     }

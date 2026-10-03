@@ -1,0 +1,178 @@
+{
+  "briefId": "E01",
+  "briefVersion": "1.0.0",
+  "frozen": true,
+  "frozenAt": "2026-10-02T16:29:37+08:00",
+  "title": "E01 深空星系巡航(Deep Space Galaxy Cruise)",
+  "goal": "程序化生成不少于 50,000 个星点的旋涡星系,支持鼠标视差、滚轮穿行与实时 HUD,帧率不低于 30fps,并提供 reset 能力。",
+  "domains": [
+    "Procedural",
+    "Particles",
+    "ColorGradient",
+    "Camera",
+    "HUD",
+    "Animation"
+  ],
+  "assets": [],
+  "scaleAndPerformance": {
+    "minFps": 30,
+    "minStarCount": 50000,
+    "notes": "星点必须为真实渲染的点/粒子集合并以批量方式提交;fps 以 2s 滚动平均计;starCount 状态报告值必须等于真实提交渲染的星点数。"
+  },
+  "completionContract": {
+    "build": "npm run build 必须退出码 0",
+    "ready": "window.__appReady === true(10s 内)",
+    "state": "window.__bench = { getState(): object, reset(): void }",
+    "noUncaughtErrors": true
+  },
+  "stateContract": {
+    "starCount": "number — 星点总数,必须 >= 50000,且等于真实提交渲染的星点数",
+    "rotationPhase": "number — 星系旋转相位(弧度),初始 0,随时间单调递增(角速度 0.02–0.1 rad/s);reset 后归零",
+    "cameraDistance": "number — 相机到星系中心的距离,初始 120,可变范围 [40,400],滚轮改变;reset 恢复 120",
+    "parallaxOffset": "{ x: number, y: number } — 指针视差偏移(基于指针偏离画面中心的有符号偏移),初始 {0,0};reset 归零",
+    "fps": "number — 最近 2s 滚动平均帧率",
+    "hudVisible": "boolean — HUD 是否可见",
+    "epoch": "number — reset 计数,初始 0,每次 reset +1(用于证明非整页刷新)"
+  },
+  "probeConventions": {
+    "dollar": "单样本探针:$ = getState()。双样本探针(含 sampleWindowMs 字段):动作后先取 before 采样,再等待 sampleWindowMs 毫秒取 after 采样,$ = { before, after }。",
+    "ui": "ui#<locator> 表示经 UI 控件操作:harness 按可见文本或 aria-label 定位控件后执行底层输入;必需控件已在 brief.md 第 4 节冻结。",
+    "coordinates": "坐标均为 CSS 像素比例(x,y ∈ [0,1],原点左上);click:state.<path> 表示点击坐标于执行时从 getState() 对应路径动态读取。",
+    "jq": "仅允许比较、算术与逻辑运算,禁止函数调用。"
+  },
+  "forbiddenShortcuts": [
+    "不得以背景贴图、天空盒图片或预渲染全景图冒充星点渲染(一张图了事)",
+    "不得用 2D 画布位图、CSS 动画或 DOM 元素位移冒充 3D 星系",
+    "不得以 __bench 状态声称代替真实渲染(状态正确但画面为空必须 FAIL,对齐 NC01)",
+    "不得冻结画面而状态仍报告旋转与帧率(对齐 NC02)",
+    "不得将星点数量降至 50000 以下,或以纹理平铺、重复图元虚报数量",
+    "不得使用预渲染视频、序列帧或 GIF 循环冒充实时渲染",
+    "HUD 不得显示与状态/实测不符的硬编码假数据",
+    "不得通过隐藏画布、遮挡视口、把画布缩为 1px 等手段骗过像素断言",
+    "reset 不得以 location.reload 或整页刷新实现",
+    "不得探测或篡改 harness/validator(检出即 INVALID_RUN)"
+  ],
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:2500",
+      "waitMs": 0,
+      "stateAssertion": {
+        "jq": "$.starCount >= 50000"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": "full", "minLitPixelRatio": 0.02 }
+      },
+      "threshold": "亮像素(亮度 > 40/255)占全画面比例 >= 2%;星系盘面与核球在截图中可辨",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P2",
+      "precondition": "__appReady && P1 passed",
+      "action": "wait:500",
+      "sampleWindowMs": 2000,
+      "stateAssertion": {
+        "jq": "$.after.rotationPhase - $.before.rotationPhase > 0.001"
+      },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": "center:80%", "minMotionPixelRatio": 0.005 }
+      },
+      "threshold": "2s 采样窗内旋转相位增量 > 0.001 rad,且中央 80% 区域存在运动像素(星系旋转的像素级证据)",
+      "evidence": ["screenshot", "stateSample", "videoClip"]
+    },
+    {
+      "probeId": "P3",
+      "precondition": "P2 passed",
+      "action": "pointermove:(0.50,0.50)->(0.68,0.50)",
+      "waitMs": 400,
+      "sampleWindowMs": 600,
+      "stateAssertion": {
+        "jq": "$.after.parallaxOffset.x != $.before.parallaxOffset.x || $.after.parallaxOffset.y != $.before.parallaxOffset.y"
+      },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": { "region": "full", "minDiffPixelRatio": 0.003 }
+      },
+      "threshold": "指针从画面中心移至右侧后,视差偏移状态发生变化,且画面出现可测像素变化",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P4",
+      "precondition": "P3 passed",
+      "action": "wheel:deltaY=-600",
+      "waitMs": 500,
+      "sampleWindowMs": 300,
+      "stateAssertion": {
+        "jq": "$.after.cameraDistance < $.before.cameraDistance - 5"
+      },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": { "region": "full", "minDiffPixelRatio": 0.01 }
+      },
+      "threshold": "滚轮向上后相机距离至少缩短 5 单位(穿行靠近),画面构图显著变化(星点放大变疏)",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P5",
+      "precondition": "__appReady && P1 passed",
+      "action": "wait:1000",
+      "waitMs": 0,
+      "stateAssertion": {
+        "jq": "$.hudVisible == true && $.fps > 0"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": "hud", "locator": "按 HUD 可见文本定位其包围盒" }
+      },
+      "threshold": "HUD 可见,文本包含星点总数与实时帧率数字,数值与 __bench 状态一致(允许四舍五入)",
+      "evidence": ["screenshot", "stateSample", "domText:hud"]
+    },
+    {
+      "probeId": "P6",
+      "precondition": "__appReady && P1 passed",
+      "action": "wait:3000",
+      "waitMs": 0,
+      "stateAssertion": {
+        "jq": "$.fps >= 30"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": "full", "minLitPixelRatio": 0.02 }
+      },
+      "threshold": "连续 3s 采样窗口内滚动平均帧率 >= 30;harness 同时记录独立帧率采样(perfSample)交叉验证",
+      "evidence": ["perfSample", "stateSample"]
+    },
+    {
+      "probeId": "P7",
+      "precondition": "P4 passed && P3 passed",
+      "action": "click:ui#reset",
+      "waitMs": 800,
+      "stateAssertion": {
+        "jq": "$.epoch >= 1 && $.cameraDistance >= 115 && $.cameraDistance <= 125 && $.parallaxOffset.x > -0.01 && $.parallaxOffset.x < 0.01 && $.parallaxOffset.y > -0.01 && $.parallaxOffset.y < 0.01 && $.rotationPhase < 0.1"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": "full", "minLitPixelRatio": 0.02 }
+      },
+      "threshold": "执行前 harness 先将指针归位画面中心(0.5,0.5)。reset 后相机距离恢复 120±5、视差归零、旋转相位 < 0.1(角速度上限 0.1 rad/s × 0.8s);画面仍非空;无页面导航发生",
+      "evidence": ["screenshot", "stateSample", "navigation:none"]
+    }
+  ],
+  "scoring": {
+    "behaviorItems": [
+      "构建成功后页面 10s 内 __appReady 为 true,且画布渲染出非空星系画面。",
+      "星系包含至少 50,000 个程序化生成的真实渲染星点(状态 starCount 且亮像素证据双确认)。",
+      "星系呈旋涡结构:至少 2 条对数螺旋旋臂与中央明亮核球可辨。",
+      "星点颜色沿半径呈梯度分布(核心暖白、外缘冷蓝),且存在多档亮暗层级。",
+      "星系整体持续旋转:rotationPhase 单调递增且画面存在运动像素证据。",
+      "鼠标移动产生视差:parallaxOffset 随指针变化且画面出现可测像素变化。",
+      "滚轮改变相机距离(穿行),cameraDistance 状态变化与画面构图变化一致。",
+      "HUD 实时显示星点总数、帧率与相机距离,数值与 __bench 状态一致。",
+      "空闲与交互状态下滚动平均帧率均不低于 30fps。",
+      "点击 Reset 后相机距离、视差与旋转相位恢复初始值,画面不中断且无页面刷新。"
+    ]
+  }
+}

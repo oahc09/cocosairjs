@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="data:," />
+        <title>Cocos AIR — Black Hole Accretion</title>
+        <style>
+            html,
+            body,
+            #GameDiv,
+            #Cocos3dGameContainer {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #010205;
+            }
+            #GameCanvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+            aside {
+                position: absolute;
+                left: 24px;
+                top: 18px;
+                color: #b8c2d4;
+                font: 13px/1.5 system-ui;
+                pointer-events: none;
+            }
+            h1 {
+                font-size: 19px;
+                margin: 0;
+                color: #e8edf5;
+            }
+            button {
+                position: absolute;
+                top: 22px;
+                right: 28px;
+                padding: 8px 16px;
+                background: #283045;
+                color: #e6ebf4;
+                border: 1px solid #51617c;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            button:hover {
+                background: #40516c;
+            }
+            button:active {
+                background: #5b6e8c;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div>
+        </div>
+        <aside>
+            <h1>Black Hole Accretion</h1>
+            <div>Wheel to approach · continuous native shader motion</div>
+            <div>Analytic additive glow · bloom-impostor</div>
+        </aside>
+        <button data-ui="reset" data-bench="reset">Reset</button>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-10-02T02:14:26.271Z",
+  "measuredAt": "2026-10-03T09:18:48.297Z",
   "runner": "tools/verify/devtools-examples.cjs",
   "mode": "devtools-session-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
-  "candidateFingerprint": "0b9588dc80fd7afd",
+  "candidateFingerprint": "ba485e1b91643c46",
   "apiProofTotals": {
     "verified": 77,
     "attested": 10,
@@ -17,13 +17,13 @@
       "result": "PASS",
       "specFingerprint": "735d00cae975",
       "sourceFingerprint": "e89d32ce3ed3bbb6",
-      "candidateFingerprint": "0b9588dc80fd7afd",
+      "candidateFingerprint": "ba485e1b91643c46",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 582,
+        "exports": 584,
         "unitCount": 11,
-        "bytes": 55121,
-        "hash": "8b159e7f421aa3f5",
+        "bytes": 55278,
+        "hash": "2d2639b54f08c9a2",
         "notes": [
           "Node.addChild: no own descriptor on static"
         ],
@@ -323,7 +323,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→56 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -340,13 +340,13 @@
       "result": "PASS",
       "specFingerprint": "4daffe289d95",
       "sourceFingerprint": "14dcaa1b1f04abd7",
-      "candidateFingerprint": "0b9588dc80fd7afd",
+      "candidateFingerprint": "ba485e1b91643c46",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 582,
+        "exports": 584,
         "unitCount": 18,
-        "bytes": 55822,
-        "hash": "e797db3bd1ba9bbe",
+        "bytes": 55979,
+        "hash": "54965e28b099d325",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -761,7 +761,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -778,13 +778,13 @@
       "result": "PASS",
       "specFingerprint": "4533f62e9a73",
       "sourceFingerprint": "adc7fb751d03f149",
-      "candidateFingerprint": "0b9588dc80fd7afd",
+      "candidateFingerprint": "ba485e1b91643c46",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 582,
+        "exports": 584,
         "unitCount": 20,
-        "bytes": 56013,
-        "hash": "e1ade51e3ec5612d",
+        "bytes": 56170,
+        "hash": "516fa955b1b7db51",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1273,13 +1273,13 @@
       "result": "PASS",
       "specFingerprint": "01b9b4271da2",
       "sourceFingerprint": "8d42f5b915ecd42a",
-      "candidateFingerprint": "0b9588dc80fd7afd",
+      "candidateFingerprint": "ba485e1b91643c46",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 582,
+        "exports": 584,
         "unitCount": 19,
-        "bytes": 55925,
-        "hash": "2293ee2595278a36",
+        "bytes": 56082,
+        "hash": "8a7446f5f99185cd",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1697,7 +1697,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10814 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -1732,13 +1732,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-error-report.png",
-        "bytes": 8092,
-        "hash": "c692055cc4c1622b"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -1749,13 +1749,13 @@
       "result": "PASS",
       "specFingerprint": "dc7942ac2896",
       "sourceFingerprint": "8dbf1e634cee45fa",
-      "candidateFingerprint": "0b9588dc80fd7afd",
+      "candidateFingerprint": "ba485e1b91643c46",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 582,
+        "exports": 584,
         "unitCount": 19,
-        "bytes": 55922,
-        "hash": "020ee4e7670424eb",
+        "bytes": 56079,
+        "hash": "bef14df7e3414bb4",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -2188,7 +2188,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2207,13 +2207,13 @@
       "result": "PASS",
       "specFingerprint": "735d00cae975",
       "sourceFingerprint": "e89d32ce3ed3bbb6",
-      "candidateFingerprint": "0b9588dc80fd7afd",
+      "candidateFingerprint": "ba485e1b91643c46",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 582,
+        "exports": 584,
         "unitCount": 11,
-        "bytes": 55121,
-        "hash": "8b159e7f421aa3f5",
+        "bytes": 55278,
+        "hash": "2d2639b54f08c9a2",
         "notes": [
           "Node.addChild: no own descriptor on static"
         ],
@@ -2513,7 +2513,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→56 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2530,13 +2530,13 @@
       "result": "PASS",
       "specFingerprint": "4daffe289d95",
       "sourceFingerprint": "14dcaa1b1f04abd7",
-      "candidateFingerprint": "0b9588dc80fd7afd",
+      "candidateFingerprint": "ba485e1b91643c46",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 582,
+        "exports": 584,
         "unitCount": 18,
-        "bytes": 55822,
-        "hash": "e797db3bd1ba9bbe",
+        "bytes": 55979,
+        "hash": "54965e28b099d325",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -2951,7 +2951,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2968,13 +2968,13 @@
       "result": "PASS",
       "specFingerprint": "4533f62e9a73",
       "sourceFingerprint": "adc7fb751d03f149",
-      "candidateFingerprint": "0b9588dc80fd7afd",
+      "candidateFingerprint": "ba485e1b91643c46",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 582,
+        "exports": 584,
         "unitCount": 20,
-        "bytes": 56013,
-        "hash": "e1ade51e3ec5612d",
+        "bytes": 56170,
+        "hash": "516fa955b1b7db51",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3463,13 +3463,13 @@
       "result": "PASS",
       "specFingerprint": "01b9b4271da2",
       "sourceFingerprint": "8d42f5b915ecd42a",
-      "candidateFingerprint": "0b9588dc80fd7afd",
+      "candidateFingerprint": "ba485e1b91643c46",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 582,
+        "exports": 584,
         "unitCount": 19,
-        "bytes": 55925,
-        "hash": "2293ee2595278a36",
+        "bytes": 56082,
+        "hash": "8a7446f5f99185cd",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3887,7 +3887,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10814 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -3922,13 +3922,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-error-report.png",
-        "bytes": 8092,
-        "hash": "c692055cc4c1622b"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -3939,13 +3939,13 @@
       "result": "PASS",
       "specFingerprint": "dc7942ac2896",
       "sourceFingerprint": "8dbf1e634cee45fa",
-      "candidateFingerprint": "0b9588dc80fd7afd",
+      "candidateFingerprint": "ba485e1b91643c46",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 582,
+        "exports": 584,
         "unitCount": 19,
-        "bytes": 55922,
-        "hash": "020ee4e7670424eb",
+        "bytes": 56079,
+        "hash": "bef14df7e3414bb4",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -4378,7 +4378,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {

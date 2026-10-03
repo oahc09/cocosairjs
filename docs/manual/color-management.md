@@ -3,8 +3,9 @@
 > 颜色空间、伽马、色调映射这套"颜色从哪来、到哪去"的规矩。
 > 配套可运行示例：[`examples/manual-color-management/`](examples/manual-color-management/)（hex 色板排 + 逐帧 lerp 渐变带 + 色调映射 A/B 开关）。
 
-**状态：PARTIAL。** AIR 的导出面里**没有**颜色空间管理 API（全 d.ts grep `ColorSpace|colorSpace|gamma` 零命中；
-顶层颜色相关导出仅 `Color` / `ColorKey` / `color` 三个，浏览器侧探针实测）。
+**状态：PARTIAL。** AIR 没有全局颜色空间管理开关或逐资产 `colorSpace` 属性。
+公开 `Texture2D.PixelFormat.SRGB888` / `SRGBA8888` 提供显式硬件采样解码；须配合自己的颜色处理 effect，
+不能直接叠加标准材质现有软件解码。用法与独立 GPU 验收见[显式纹理颜色空间](../reference/texture-color-space.md)。
 能用的是：`Color` 工具类（hex/HSV/插值/运算）、以及场景级色调映射开关 `scene.globals.postSettings.toneMappingType`
 （枚举仅 DEFAULT/LINEAR 两值，且本环境实测**无像素级效果**，见 §3）。本篇如实写"有什么、没有什么"，不伪装色彩管理管线。
 
@@ -52,14 +53,15 @@ post.toneMappingType = 0;
 | ------------------------------- | --------------------------------------------------------------------------------- |
 | 颜色管理总开关                  | 无对应物（导出面不存在）                                                          |
 | 线性工作空间                    | 无用户级开关；管线内部行为不暴露                                                  |
-| 输出色彩空间（sRGB 编码）       | 无对应物                                                                          |
+| 输出色彩空间（sRGB 编码）       | 无全局选择器；自定义 effect 可显式编码，标准 shader 保持现有输出行为              |
 | 贴图色彩空间标注（sRGB/Linear） | `Texture2D` 上无 colorSpace 字段（grep 零命中）                                   |
 | HSL 取色                        | 只有 HSV（`fromHSV` / `toHSV`）                                                   |
 | 色调映射算子                    | 仅 `postSettings.toneMappingType` 的 DEFAULT/LINEAR 两值，无 ACES/Reinhard 等预设 |
 
-实践含义：**把 `Color` 的 0–255 分量当作显示参考值（display-referred）直接用**——
+实践含义：本示例把 `Color` 的 0–255 分量作为显示参考值（display-referred）使用——
 示例上排 unlit 色板的截图色相与 hex 意图目检一致（§3），没有可见的二次空间转换；
-不要指望"线性空间算完再编码"的工作流，AIR 当前不给这个旋钮。
+这不是统一颜色空间管理的证明。自定义 effect 可以通过明确纹理格式、线性运算与一次输出编码建立显式链路；
+原示例与标准材质的颜色、HDR 和 tone mapping 语义保持原样。
 
 ## 3. 实测读图与读数
 
@@ -85,8 +87,7 @@ toneMapping: postSettings.toneMappingType=0 (0=DEFAULT 1=LINEAR, toggles every 3
 
 ## 4. 实现备忘
 
-- AIR 的颜色管线**无全局单例、无每资产色彩空间标注**，颜色值从 `Color` 直达材质 uniform，
-  中间没有用户可见的空间转换层。
+- AIR 无全局颜色空间管理单例或每资产 colorSpace 字段。显式格式与自定义 effect 的链路不应与标准材质已有 property/贴图转换混用。
 - `Color` 分量是 **0–255 整数语义**（`new Color(235, 125, 65, 255)`），不是 0–1 浮点——
   参考 0–1 分量的素材/代码时第一件事是乘 255。
 - 色调映射：入口在 `scene.globals.postSettings`，仅 DEFAULT/LINEAR 两值，且本环境无视觉效果（§3）。

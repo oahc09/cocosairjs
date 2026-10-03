@@ -4,7 +4,6 @@ import {
     Vec3,
     Node,
     Animation,
-    AnimationClip,
     GLTFLoader,
     MeshRenderer,
     AirTransmissionCapture,
@@ -187,9 +186,7 @@ async function load(name, sourceURL) {
             document.querySelector('#pause').disabled =
             time.disabled =
                 instance.animations.length === 0;
-        for (const clip of instance.animations) {
-            clip.wrapMode = AnimationClip.WrapMode.Loop;
-        }
+        instance.setAnimationLoop(true);
         time.max = String(instance.animations[0]?.duration || 1);
         time.value = '0';
         sample(0);

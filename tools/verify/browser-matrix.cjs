@@ -19,6 +19,8 @@ const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const crypto = require('crypto');
+const esbuild = require('esbuild');
+const { resolveScript } = require('../dev/resolve-script.cjs');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const CONTRACT_ARG = process.argv.find((a) => a.startsWith('--contract='));
@@ -27,6 +29,9 @@ const OUT_DIR = path.join(REPO, 'docs', 'evidence', 'browser-matrix');
 const OUT_ARG = process.argv.find((a) => a.startsWith('--out='));
 const OUT = OUT_ARG ? path.resolve(REPO, OUT_ARG.slice(6)) : path.join(OUT_DIR, 'browser-matrix.json');
 const specCommon = require(path.join(REPO, 'tools', 'verify', 'example-spec-common.cjs'));
+const { evaluateProbeRanges } = require('./probe-ranges.cjs');
+const { readBrowserProbe } = require('./browser-probe.cjs');
+const { loopbackBrowserEnv } = require('./loopback-browser-env.cjs');
 
 // 三引擎二进制：Playwright 包版本与 ms-playwright 缓存构建号不一致，必须显式指路
 const ENGINES = {
@@ -46,8 +51,15 @@ function serveRepo () {
     const server = http.createServer((req, res) => {
       const url = decodeURIComponent(req.url.split('?')[0]);
       if (url === '/favicon.ico') { res.writeHead(204); res.end(); return; }
-      const file = path.join(REPO, url === '/' ? 'index.html' : url);
-      if (!file.startsWith(REPO) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); res.end('404'); return; }
+      const file = resolveScript(path.resolve(REPO, '.' + (url === '/' ? '/index.html' : url)));
+      if (!file.startsWith(REPO + path.sep) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); res.end('404'); return; }
+      if (file.endsWith('.ts')) {
+        try {
+          const result = esbuild.transformSync(fs.readFileSync(file, 'utf8'), { loader: 'ts', format: 'esm', target: 'es2022' });
+          res.writeHead(200, { 'Content-Type': 'text/javascript' }); res.end(result.code);
+        } catch (error) { res.writeHead(500); res.end(String(error)); }
+        return;
+      }
       res.writeHead(200, { 'Content-Type': EXT[path.extname(file).toLowerCase()] || 'application/octet-stream' });
       fs.createReadStream(file).pipe(res);
     });
@@ -73,6 +85,7 @@ function evalProbe (probe, contract) {
   for (const p of (contract.checks && contract.checks.probePresent) || []) {
     out.push({ assertion: `probePresent:${p}`, ok: dig(probe, p) !== undefined, actual: dig(probe, p) });
   }
+  out.push(...evaluateProbeRanges(probe, contract.checks && contract.checks.probeRanges));
   return out;
 }
 
@@ -83,7 +96,7 @@ async function runOne (pw, id, contract, port, engines) {
     const rec = { engine, example: id, group: contract.group };
     let browser;
     try {
-      browser = await pw[engine].launch({ executablePath: path.join(process.env.LOCALAPPDATA || '', 'ms-playwright', conf.dir, conf.exe), args: conf.args });
+      browser = await pw[engine].launch({ executablePath: path.join(process.env.LOCALAPPDATA || '', 'ms-playwright', conf.dir, conf.exe), args: conf.args, env: loopbackBrowserEnv() });
     } catch (e) {
       records.push({ ...rec, result: 'NOT_RUN', reason: 'launch failed: ' + String(e).split('\n')[0].slice(0, 200) });
       continue;
@@ -103,7 +116,7 @@ async function runOne (pw, id, contract, port, engines) {
       let probeBefore = null;
       let shotBefore = null;
       if (contract.resize) {
-        probeBefore = await page.evaluate(() => (typeof window.__probe === 'function' ? window.__probe() : null));
+        probeBefore = await page.evaluate(readBrowserProbe, contract.probePath || '__probe');
         shotBefore = await page.screenshot();
         const [rw, rh] = String(contract.resize).split('x').map(Number);
         await page.setViewportSize({ width: rw, height: rh });
@@ -115,7 +128,7 @@ async function runOne (pw, id, contract, port, engines) {
         viewports.push({ width: rw, height: rh });
       }
       if (contract.click) { const [x, y] = String(contract.click).split(',').map(Number); await page.mouse.click(x, y); await page.waitForTimeout(contract.afterClickMs || 1200); }
-      const probe = await page.evaluate(() => (typeof window.__probe === 'function' ? window.__probe() : null));
+      const probe = await page.evaluate(readBrowserProbe, contract.probePath || '__probe');
       if (probe && probeBefore) { probe.before = probeBefore; }
       const shotA = await page.screenshot();
       await page.waitForTimeout(500);
@@ -213,6 +226,8 @@ async function runOne (pw, id, contract, port, engines) {
     bundle: { path: 'build/cocosair.module.js', bytes: bundleBuf.length, sha256_16: sha16(bundleBuf) },
     contractFile: path.relative(REPO, CONTRACT).replace(/\\/g, '/'),
     contractFingerprint: sha16(fs.readFileSync(CONTRACT)),
+    runnerFingerprint: sha16(fs.readFileSync(__filename)),
+    probeReaderFingerprint: sha16(fs.readFileSync(path.join(__dirname, 'browser-probe.cjs'))),
     engines: Object.keys(ENGINES),
     benignConsoleAllowlist: BENIGN_CONSOLE,
     records,

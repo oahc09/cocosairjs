@@ -1,0 +1,26 @@
+{
+  "name": "air-starfield-galaxy",
+  "primitive": "POINT_LIST",
+  "attributes": [
+    {
+      "name": "a_position",
+      "type": "vec3",
+      "location": 0
+    }
+  ],
+  "varyings": [
+    {
+      "name": "starColor",
+      "type": "vec4"
+    }
+  ],
+  "uniforms": [
+    {
+      "name": "motion",
+      "type": "vec4",
+      "value": [0, 1, 0, 0]
+    }
+  ],
+  "vertex": "void main() { float c=cos(motion.x), s=sin(motion.x); vec3 p=vec3(c*a_position.x+s*a_position.z,a_position.y,-s*a_position.x+c*a_position.z); vec4 view=cc_matView*cc_matWorld*vec4(p,1.0); gl_Position=cc_matProj*view; float radius=length(a_position.xz)/75.0; float seed=fract(sin(dot(a_position,vec3(12.9898,78.233,37.719)))*43758.5453); vec3 rgb=mix(vec3(1.0,0.76,0.42),vec3(0.35,0.7,1.0),smoothstep(0.0,1.0,radius)); starColor=vec4(rgb,0.22+seed*0.78); gl_PointSize=clamp((1.4+seed*2.8)*120.0/max(-view.z,20.0)*motion.y,1.0,12.0); }",
+  "fragment": "void main() { vec2 p=gl_PointCoord-vec2(0.5); float d2=dot(p,p)*4.0; if(d2>1.0) discard; float glow=1.0-d2; cc_FragColor=vec4(starColor.rgb,starColor.a*glow*glow); }"
+}

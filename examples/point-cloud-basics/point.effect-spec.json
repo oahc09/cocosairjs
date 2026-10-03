@@ -1,0 +1,11 @@
+{
+  "name": "air-point-cloud-basics",
+  "primitive": "POINT_LIST",
+  "attributes": [{ "name": "a_position", "type": "vec3", "location": 0 }],
+  "uniforms": [
+    { "name": "tint", "type": "vec4", "value": [0.1, 0.8, 1, 1] },
+    { "name": "params", "type": "vec4", "value": [8, 0, 0, 0] }
+  ],
+  "vertex": "void main() { gl_Position = cc_matViewProj * cc_matWorld * vec4(a_position, 1.0); gl_PointSize = params.x; }",
+  "fragment": "void main() { cc_FragColor = tint; }"
+}

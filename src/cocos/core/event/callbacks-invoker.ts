@@ -333,33 +333,43 @@ export class CallbacksInvoker<EventTypeClass extends EventType = EventType> {
             list.isInvoking = true;
 
             const infos = list.callbackInfos;
-            for (let i = 0, len = infos.length; i < len; ++i) {
-                const info = infos[i];
-                if (info) {
-                    const callback = info.callback;
-                    const target = info.target;
-                    // Pre off once callbacks to avoid influence on logic in callback
-                    if (info.once) {
-                        this.off(key, callback, target);
+            try {
+                for (let i = 0, len = infos.length; i < len; ++i) {
+                    const info = infos[i];
+                    if (info) {
+                        const callback = info.callback;
+                        const target = info.target;
+                        // Pre off once callbacks to avoid influence on logic in callback
+                        if (info.once) {
+                            this.off(key, callback, target);
+                        }
+                        // Lazy check validity of callback target,
+                        // if target is CCObject and is no longer valid, then remove the callback info directly
+                        if (!info.check()) {
+                            this.off(key, callback, target);
+                        } else {
+                            this._invokeCallback(key, callback, target, arg0, arg1, arg2, arg3, arg4);
+                        }
                     }
-                    // Lazy check validity of callback target,
-                    // if target is CCObject and is no longer valid, then remove the callback info directly
-                    if (!info.check()) {
-                        this.off(key, callback, target);
-                    } else if (target) {
-                        callback.call(target, arg0, arg1, arg2, arg3, arg4);
-                    } else {
-                        callback(arg0, arg1, arg2, arg3, arg4);
+                }
+            } finally {
+                if (rootInvoker) {
+                    list.isInvoking = false;
+                    if (list.containCanceled) {
+                        list.purgeCanceled();
                     }
                 }
             }
+        }
+    }
 
-            if (rootInvoker) {
-                list.isInvoking = false;
-                if (list.containCanceled) {
-                    list.purgeCanceled();
-                }
-            }
+    /** Internal policy hook. Ordinary event targets retain synchronous exception propagation. */
+    protected _invokeCallback (key: EventTypeClass, callback: AnyFunction, target: unknown,
+        arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void {
+        if (target) {
+            callback.call(target, arg0, arg1, arg2, arg3, arg4);
+        } else {
+            callback(arg0, arg1, arg2, arg3, arg4);
         }
     }
 

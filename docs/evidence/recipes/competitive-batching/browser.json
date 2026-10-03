@@ -1,0 +1,5642 @@
+{
+  "schema": "competitive-batching-evidence-v1",
+  "scope": "competitive-batching",
+  "runId": "bdaf911e-6362-4414-b0b5-f1c861895d95",
+  "measuredAt": "2026-10-03T08:11:29.335Z",
+  "completed": true,
+  "recipes": [
+    "CB-BATCH-SHARED",
+    "CB-BATCH-MERGED",
+    "CB-BATCH-DYNAMIC"
+  ],
+  "fingerprints": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6434974,
+      "sha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3095160,
+      "sha256": "21eef2e8d7107f306b3d4d61c31f9a79610e4e8209c9b9ee3e9a0dbbba3872e8"
+    },
+    {
+      "path": "examples/shared/batching-routes.ts",
+      "bytes": 10732,
+      "sha256": "181c96f75142e4a487d5dc5dfcc8a885e86e2308d1c019a4cba6a6be5661bfc6"
+    },
+    {
+      "path": "examples/shared/asset-lifecycle.js",
+      "bytes": 5595,
+      "sha256": "c2bc01e8c73ab866f11194fc802bb8ce464b3738bfecf8d30cf5967907e5e346"
+    },
+    {
+      "path": "tools/benchmark/recipes/competitive-batching.cjs",
+      "bytes": 2207,
+      "sha256": "dd389718889ad4011d617348859a65ecc649220a6f06066774753b8a4e48d1f9"
+    },
+    {
+      "path": "tools/benchmark/recipes/run-competitive-batching.cjs",
+      "bytes": 11626,
+      "sha256": "46ac3f7d81e800755ead8130f38315b050c5732031cf237b604ba95dc1a8e228"
+    },
+    {
+      "path": "tools/verify/competitive-batching-evidence.cjs",
+      "bytes": 7909,
+      "sha256": "3e06e83c0dda5ff6bcb8a138b98857805ce45688f3413e0039a263d76b2a3f98"
+    },
+    {
+      "path": "tools/verify/competitive-batching-gate.cjs",
+      "bytes": 1684,
+      "sha256": "a123edf003a630c0cf5393d3e63246774f779cb65f2b56a099f4b4659f65583e"
+    },
+    {
+      "path": "tools/verify/recipe-review-gate.cjs",
+      "bytes": 7844,
+      "sha256": "06c2717d30ce978b285a7e9622b4ef318f03823f366c92bcbbf24cde41e45bc4"
+    },
+    {
+      "path": "tools/verify/browser-engines.cjs",
+      "bytes": 2307,
+      "sha256": "de3d9bc852cc82e0c5a9c8a9f80845511f6ae8a0785f072bf6881c23427b3893"
+    },
+    {
+      "path": "tools/verify/loopback-browser-env.cjs",
+      "bytes": 484,
+      "sha256": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929"
+    },
+    {
+      "path": "tools/dev/resolve-script.cjs",
+      "bytes": 462,
+      "sha256": "26c5232408b38cd10356b8180916dbf560c17832b2a08857634326e59e97dcca"
+    },
+    {
+      "path": "examples/batching-shared/index.html",
+      "bytes": 765,
+      "sha256": "6e8b2c423b0bf8f2677183d180da330303d4cd30e0e7da0b155863a9c2c7e09d"
+    },
+    {
+      "path": "examples/batching-shared/src/main.ts",
+      "bytes": 129,
+      "sha256": "4c5f2490a0f12c894e225f048c2c27fb28f7ef69ea98e62e0d41315ecb44a426"
+    },
+    {
+      "path": "examples/batching-shared/example.json",
+      "bytes": 2205,
+      "sha256": "62cfe42cfe2efbe19c524c5ea6f29554c8a122848acd31391cd6fe21c1ae6386"
+    },
+    {
+      "path": "examples/batching-merged/index.html",
+      "bytes": 765,
+      "sha256": "764fcce4c18c0dd944b97154a5841b6260e1f2405e5e134fdc8be4e24ed9fcfa"
+    },
+    {
+      "path": "examples/batching-merged/src/main.ts",
+      "bytes": 129,
+      "sha256": "0d0af07bbe8098729bfa0a2c8f730a7cf50e1c38619cc8abbc9caa33dbf340d4"
+    },
+    {
+      "path": "examples/batching-merged/example.json",
+      "bytes": 2205,
+      "sha256": "c655e55bf511059a7d60cc2582e7690aa1265751641c0ed557a0585629f9e0e9"
+    },
+    {
+      "path": "examples/batching-dynamic/index.html",
+      "bytes": 766,
+      "sha256": "b4cb6a77c9f1f2d1b30022f1765b175d46ac4369b941563f7047643ca4dc8885"
+    },
+    {
+      "path": "examples/batching-dynamic/src/main.ts",
+      "bytes": 130,
+      "sha256": "8aa46b883172182f2aa366f137ec4e2e94d58cd5a87e2301c90f7f039099800f"
+    },
+    {
+      "path": "examples/batching-dynamic/example.json",
+      "bytes": 2475,
+      "sha256": "2d6095592af0684de8fdfd0b38ea9d02f798369a8c013c437d804f248239dc99"
+    }
+  ],
+  "records": [
+    {
+      "id": "shared-256",
+      "route": "shared",
+      "count": 256,
+      "instancing": false,
+      "draws": 256,
+      "recipeId": "CB-BATCH-SHARED",
+      "recipeVersion": "1.0.0",
+      "compositeBenchmarkId": "recipe:competitive-batching:shared",
+      "errors": [],
+      "geometry": {
+        "rendererCount": 256,
+        "meshCount": 1,
+        "materialCount": 1,
+        "cameraCount": 1,
+        "materials": [
+          {
+            "effect": "builtin-unlit",
+            "passCount": 1,
+            "blend": false,
+            "batchingScheme": 0
+          }
+        ],
+        "meshes": [
+          {
+            "primitiveCount": 1,
+            "vertices": 4,
+            "indices": 6
+          }
+        ]
+      },
+      "pixels": {
+        "lit": 116900,
+        "changed": 0,
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "measurement": {
+        "route": "shared",
+        "instancing": false,
+        "count": 256,
+        "samples": 120,
+        "warmupFrames": 30,
+        "setupMs": 8.5,
+        "framebuffer": [
+          1280,
+          720
+        ],
+        "dpr": 1,
+        "draws": [
+          256,
+          256
+        ],
+        "frameIntervalMs": {
+          "p50": 16.69999998807907,
+          "p95": 17.400000005960464
+        },
+        "cpuRenderSubmissionMs": {
+          "p50": 1.4000000059604645,
+          "p95": 1.899999976158142
+        },
+        "cpuDynamicUpdateMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "gpuTimeMs": null,
+        "presentTiming": null,
+        "timingScope": "rAF intervals and CPU submission only; no GPU or display-present proof"
+      },
+      "rawSamples": [
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 1.7999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 1.9000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.7000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 15.800000011920929,
+          "submissionMs": 0.7000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 18.099999994039536,
+          "submissionMs": 1.800000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.7000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 18.69999998807907,
+          "submissionMs": 2.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 14.700000017881393,
+          "submissionMs": 1.7000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 1.600000023841858,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 1.399999976158142,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.5999999940395355,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.19999998807907,
+          "submissionMs": 1.699999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.9000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.299999982118607,
+          "submissionMs": 1.899999976158142,
+          "draws": 256
+        },
+        {
+          "intervalMs": 15.700000017881393,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 0.800000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.400000005960464,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 1.0999999940395355,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.399999976158142,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.199999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.5999999940395355,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 15.899999976158142,
+          "submissionMs": 0.699999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.400000005960464,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.0999999940395355,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 0.8999999761581421,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.5,
+          "submissionMs": 1.399999976158142,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 1.2000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.5999999940395355,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 1,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.100000023841858,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.899999976158142,
+          "submissionMs": 1.5999999940395355,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 1.7000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16,
+          "submissionMs": 1,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.299999982118607,
+          "submissionMs": 1.699999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 1.7000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 15.699999988079071,
+          "submissionMs": 0.9000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.400000005960464,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.199999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.199999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 15.799999982118607,
+          "submissionMs": 0.699999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 1.199999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1.199999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.800000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 1.0999999940395355,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 1.399999976158142,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.400000005960464,
+          "submissionMs": 2.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 15.300000011920929,
+          "submissionMs": 0.9000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.2000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.199999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.2000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 1.399999976158142,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.199999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 15.700000017881393,
+          "submissionMs": 0.7000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.299999982118607,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 1.5,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 1.2000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 1.0999999940395355,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.4000000059604645,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.199999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.2000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 18.299999982118607,
+          "submissionMs": 2.899999976158142,
+          "draws": 256
+        },
+        {
+          "intervalMs": 15,
+          "submissionMs": 0.8999999761581421,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 1.2000000178813934,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.0999999940395355,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.300000011920929,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.2999999821186066,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.199999988079071,
+          "draws": 256
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 1.0999999940395355,
+          "draws": 256
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/recipes/competitive-batching/shared-256.png",
+        "bytes": 6333,
+        "sha256": "c9854e8bf09c7f1ca4f618d08f47bb85f1721a952862d82505bd212abfee6e36"
+      },
+      "lifecycle": {
+        "label": "batching-shared",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "restoredPixels": 116900
+    },
+    {
+      "id": "instancing-256",
+      "route": "shared",
+      "count": 256,
+      "instancing": true,
+      "draws": 1,
+      "recipeId": "CB-BATCH-SHARED",
+      "recipeVersion": "1.0.0",
+      "compositeBenchmarkId": "recipe:competitive-batching:shared",
+      "errors": [],
+      "geometry": {
+        "rendererCount": 256,
+        "meshCount": 1,
+        "materialCount": 1,
+        "cameraCount": 1,
+        "materials": [
+          {
+            "effect": "builtin-unlit",
+            "passCount": 1,
+            "blend": false,
+            "batchingScheme": 1
+          }
+        ],
+        "meshes": [
+          {
+            "primitiveCount": 1,
+            "vertices": 4,
+            "indices": 6
+          }
+        ]
+      },
+      "pixels": {
+        "lit": 116900,
+        "changed": 0,
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "measurement": {
+        "route": "shared",
+        "instancing": true,
+        "count": 256,
+        "samples": 120,
+        "warmupFrames": 30,
+        "setupMs": 9.199999988079071,
+        "framebuffer": [
+          1280,
+          720
+        ],
+        "dpr": 1,
+        "draws": [
+          1,
+          1
+        ],
+        "frameIntervalMs": {
+          "p50": 16.69999998807907,
+          "p95": 17.200000017881393
+        },
+        "cpuRenderSubmissionMs": {
+          "p50": 0.8999999761581421,
+          "p95": 1.2000000178813934
+        },
+        "cpuDynamicUpdateMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "gpuTimeMs": null,
+        "presentTiming": null,
+        "timingScope": "rAF intervals and CPU submission only; no GPU or display-present proof"
+      },
+      "rawSamples": [
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1.100000023841858,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.0999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 1.100000023841858,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1.0999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.300000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.0999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 1.199999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 1.0999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1.199999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.30000001192093,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1.0999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.8999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1.0999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.599999994039536,
+          "submissionMs": 2.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15,
+          "submissionMs": 1.199999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1.0999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.299999982118607,
+          "submissionMs": 1.0999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.8999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.400000005960464,
+          "submissionMs": 1.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.300000011920929,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.200000017881393,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 1.2000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1.0999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.100000023841858,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.8999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.8999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.199999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 1.199999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.200000017881393,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.399999976158142,
+          "submissionMs": 0.8999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.299999982118607,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 1,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.899999976158142,
+          "submissionMs": 0.8999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/recipes/competitive-batching/instancing-256.png",
+        "bytes": 6333,
+        "sha256": "c9854e8bf09c7f1ca4f618d08f47bb85f1721a952862d82505bd212abfee6e36"
+      },
+      "lifecycle": {
+        "label": "batching-shared",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "restoredPixels": 116900
+    },
+    {
+      "id": "instancing-2048",
+      "route": "shared",
+      "count": 2048,
+      "instancing": true,
+      "draws": 2,
+      "recipeId": "CB-BATCH-SHARED",
+      "recipeVersion": "1.0.0",
+      "compositeBenchmarkId": "recipe:competitive-batching:shared",
+      "errors": [],
+      "geometry": {
+        "rendererCount": 2048,
+        "meshCount": 1,
+        "materialCount": 1,
+        "cameraCount": 1,
+        "materials": [
+          {
+            "effect": "builtin-unlit",
+            "passCount": 1,
+            "blend": false,
+            "batchingScheme": 1
+          }
+        ],
+        "meshes": [
+          {
+            "primitiveCount": 1,
+            "vertices": 4,
+            "indices": 6
+          }
+        ]
+      },
+      "pixels": {
+        "lit": 114688,
+        "changed": 0,
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "measurement": {
+        "route": "shared",
+        "instancing": true,
+        "count": 2048,
+        "samples": 120,
+        "warmupFrames": 30,
+        "setupMs": 23.5,
+        "framebuffer": [
+          1280,
+          720
+        ],
+        "dpr": 1,
+        "draws": [
+          2,
+          2
+        ],
+        "frameIntervalMs": {
+          "p50": 16.69999998807907,
+          "p95": 18.30000001192093
+        },
+        "cpuRenderSubmissionMs": {
+          "p50": 2.9000000059604645,
+          "p95": 3.7000000178813934
+        },
+        "cpuDynamicUpdateMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "gpuTimeMs": null,
+        "presentTiming": null,
+        "timingScope": "rAF intervals and CPU submission only; no GPU or display-present proof"
+      },
+      "rawSamples": [
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 3.4000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.800000011920929,
+          "submissionMs": 2.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 3,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 3.5999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 3.5,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15,
+          "submissionMs": 2,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.100000023841858,
+          "submissionMs": 1.5,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.69999998807907,
+          "submissionMs": 3.5,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 2.699999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.400000005960464,
+          "submissionMs": 3.699999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 3.300000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 3.7000000178813934,
+          "draws": 2
+        },
+        {
+          "intervalMs": 14.900000005960464,
+          "submissionMs": 1.800000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.19999998807907,
+          "submissionMs": 3.4000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.699999988079071,
+          "submissionMs": 2.5,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.100000023841858,
+          "submissionMs": 2.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.599999994039536,
+          "submissionMs": 1.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.900000005960464,
+          "submissionMs": 3.100000023841858,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.399999976158142,
+          "submissionMs": 3.699999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 3.5,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.099999994039536,
+          "submissionMs": 2,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.30000001192093,
+          "submissionMs": 3.5999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 3,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 2.7000000178813934,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.400000005960464,
+          "submissionMs": 3.4000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 3.300000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.5,
+          "submissionMs": 4.200000017881393,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.799999982118607,
+          "submissionMs": 3.2999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.200000017881393,
+          "submissionMs": 1.800000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.400000005960464,
+          "submissionMs": 3.600000023841858,
+          "draws": 2
+        },
+        {
+          "intervalMs": 14.599999994039536,
+          "submissionMs": 1.5999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 1.2999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.200000017881393,
+          "submissionMs": 2.800000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 2.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 14.900000005960464,
+          "submissionMs": 1.300000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.099999994039536,
+          "submissionMs": 2.699999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 2.800000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 2.800000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 2.5,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.5,
+          "submissionMs": 3.0999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 3.7000000178813934,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 3.199999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.199999988079071,
+          "submissionMs": 1.699999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.600000023841858,
+          "submissionMs": 3.7000000178813934,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 3.199999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 14.599999994039536,
+          "submissionMs": 1.2999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 1.5999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.30000001192093,
+          "submissionMs": 3.0999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 2.7000000178813934,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16,
+          "submissionMs": 2.300000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.19999998807907,
+          "submissionMs": 2.699999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 2.199999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 2.300000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.099999994039536,
+          "submissionMs": 3.5999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 3.0999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15,
+          "submissionMs": 1.5999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.30000001192093,
+          "submissionMs": 3,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 2.800000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 14.800000011920929,
+          "submissionMs": 1.2000000178813934,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.599999994039536,
+          "submissionMs": 2.0999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.69999998807907,
+          "submissionMs": 3.0999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 3.2000000178813934,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.799999982118607,
+          "submissionMs": 2.2999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.5,
+          "submissionMs": 3.199999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.800000011920929,
+          "submissionMs": 1.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 1.7999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.200000017881393,
+          "submissionMs": 3.2000000178813934,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.099999994039536,
+          "submissionMs": 1.7000000178813934,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 1.899999976158142,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.100000023841858,
+          "submissionMs": 3.300000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 2.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 2.2999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.30000001192093,
+          "submissionMs": 3,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 3,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 2.699999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 2.100000023841858,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.299999982118607,
+          "submissionMs": 2.7999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 3.0999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 3,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 3,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16,
+          "submissionMs": 2.4000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.699999988079071,
+          "submissionMs": 1.4000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1.5999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.700000017881393,
+          "submissionMs": 3.4000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15,
+          "submissionMs": 1.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.599999994039536,
+          "submissionMs": 2.699999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.699999988079071,
+          "submissionMs": 1.7999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.900000005960464,
+          "submissionMs": 3,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.900000005960464,
+          "submissionMs": 2.300000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.5,
+          "submissionMs": 3,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.30000001192093,
+          "submissionMs": 3.800000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.799999982118607,
+          "submissionMs": 2.7999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 3,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 2.7999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 3.300000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.799999982118607,
+          "submissionMs": 2.5,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.5,
+          "submissionMs": 3.199999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 2.899999976158142,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.200000017881393,
+          "submissionMs": 1.5999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 1.699999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.900000005960464,
+          "submissionMs": 2.800000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.30000001192093,
+          "submissionMs": 3.4000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16,
+          "submissionMs": 2.800000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 2.399999976158142,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.900000005960464,
+          "submissionMs": 4.4000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 14.200000017881393,
+          "submissionMs": 2.300000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.099999994039536,
+          "submissionMs": 3.4000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.799999982118607,
+          "submissionMs": 2.7999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.900000005960464,
+          "submissionMs": 2,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.30000001192093,
+          "submissionMs": 2.5999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.19999998807907,
+          "submissionMs": 3.2999999821186066,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 2.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.299999982118607,
+          "submissionMs": 1.699999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 18.30000001192093,
+          "submissionMs": 3.0999999940395355,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 3.199999988079071,
+          "draws": 2
+        },
+        {
+          "intervalMs": 15.400000005960464,
+          "submissionMs": 1.800000011920929,
+          "draws": 2
+        },
+        {
+          "intervalMs": 17.80000001192093,
+          "submissionMs": 2.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 2.9000000059604645,
+          "draws": 2
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 2.9000000059604645,
+          "draws": 2
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/recipes/competitive-batching/instancing-2048.png",
+        "bytes": 6466,
+        "sha256": "468446168233822bc40a35fd132fa3b71bef89f630c1e07b5cf8d32f67d1b30f"
+      },
+      "lifecycle": {
+        "label": "batching-shared",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "restoredPixels": 114688
+    },
+    {
+      "id": "merged-256",
+      "route": "merged",
+      "count": 256,
+      "instancing": false,
+      "draws": 1,
+      "recipeId": "CB-BATCH-MERGED",
+      "recipeVersion": "1.0.0",
+      "compositeBenchmarkId": "recipe:competitive-batching:merged",
+      "errors": [],
+      "geometry": {
+        "rendererCount": 1,
+        "meshCount": 1,
+        "materialCount": 1,
+        "cameraCount": 1,
+        "materials": [
+          {
+            "effect": "builtin-unlit",
+            "passCount": 1,
+            "blend": false,
+            "batchingScheme": 0
+          }
+        ],
+        "meshes": [
+          {
+            "primitiveCount": 1,
+            "vertices": 1024,
+            "indices": 1536
+          }
+        ]
+      },
+      "pixels": {
+        "lit": 116900,
+        "changed": 0,
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "measurement": {
+        "route": "merged",
+        "instancing": false,
+        "count": 256,
+        "samples": 120,
+        "warmupFrames": 30,
+        "setupMs": 4.0999999940395355,
+        "framebuffer": [
+          1280,
+          720
+        ],
+        "dpr": 1,
+        "draws": [
+          1,
+          1
+        ],
+        "frameIntervalMs": {
+          "p50": 16.69999998807907,
+          "p95": 17
+        },
+        "cpuRenderSubmissionMs": {
+          "p50": 0.5,
+          "p95": 0.6000000238418579
+        },
+        "cpuDynamicUpdateMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "gpuTimeMs": null,
+        "presentTiming": null,
+        "timingScope": "rAF intervals and CPU submission only; no GPU or display-present proof"
+      },
+      "rawSamples": [
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.899999976158142,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.6000000238418579,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.19999998807907104,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.09999999403953552,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.19999998807907104,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.19999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.30000001192093,
+          "submissionMs": 0.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.20000001788139343,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.6000000238418579,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.20000001788139343,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/recipes/competitive-batching/merged-256.png",
+        "bytes": 6333,
+        "sha256": "c9854e8bf09c7f1ca4f618d08f47bb85f1721a952862d82505bd212abfee6e36"
+      },
+      "lifecycle": {
+        "label": "batching-merged",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "restoredPixels": 116900
+    },
+    {
+      "id": "merged-50000",
+      "route": "merged",
+      "count": 50000,
+      "instancing": false,
+      "draws": 1,
+      "recipeId": "CB-BATCH-MERGED",
+      "recipeVersion": "1.0.0",
+      "compositeBenchmarkId": "recipe:competitive-batching:merged",
+      "errors": [],
+      "geometry": {
+        "rendererCount": 1,
+        "meshCount": 1,
+        "materialCount": 1,
+        "cameraCount": 1,
+        "materials": [
+          {
+            "effect": "builtin-unlit",
+            "passCount": 1,
+            "blend": false,
+            "batchingScheme": 0
+          }
+        ],
+        "meshes": [
+          {
+            "primitiveCount": 1,
+            "vertices": 200000,
+            "indices": 300000
+          }
+        ]
+      },
+      "pixels": {
+        "lit": 71907,
+        "changed": 0,
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "measurement": {
+        "route": "merged",
+        "instancing": false,
+        "count": 50000,
+        "samples": 120,
+        "warmupFrames": 30,
+        "setupMs": 71.90000000596046,
+        "framebuffer": [
+          1280,
+          720
+        ],
+        "dpr": 1,
+        "draws": [
+          1,
+          1
+        ],
+        "frameIntervalMs": {
+          "p50": 16.600000023841858,
+          "p95": 17.100000023841858
+        },
+        "cpuRenderSubmissionMs": {
+          "p50": 0.5,
+          "p95": 0.6000000238418579
+        },
+        "cpuDynamicUpdateMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "gpuTimeMs": null,
+        "presentTiming": null,
+        "timingScope": "rAF intervals and CPU submission only; no GPU or display-present proof"
+      },
+      "rawSamples": [
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.19999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.6000000238418579,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.899999976158142,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.899999976158142,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.5,
+          "submissionMs": 1.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.899999976158142,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.100000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.200000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.7999999821186066,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.19999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.100000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.100000023841858,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.100000023841858,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.200000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.6000000238418579,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/recipes/competitive-batching/merged-50000.png",
+        "bytes": 34029,
+        "sha256": "ebaa1e4b44a6f07d01bd41e6ef7a3f41bd4162d1659ddc00928ddf113d2d93f5"
+      },
+      "lifecycle": {
+        "label": "batching-merged",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "restoredPixels": 71907
+    },
+    {
+      "id": "dynamic-256",
+      "route": "dynamic",
+      "count": 256,
+      "instancing": false,
+      "draws": 1,
+      "recipeId": "CB-BATCH-DYNAMIC",
+      "recipeVersion": "1.0.0",
+      "compositeBenchmarkId": "recipe:competitive-batching:dynamic",
+      "errors": [],
+      "geometry": {
+        "rendererCount": 1,
+        "meshCount": 1,
+        "materialCount": 1,
+        "cameraCount": 1,
+        "materials": [
+          {
+            "effect": "builtin-unlit",
+            "passCount": 1,
+            "blend": false,
+            "batchingScheme": 0
+          }
+        ],
+        "meshes": [
+          {
+            "primitiveCount": 1,
+            "vertices": 1024,
+            "indices": 1536
+          }
+        ]
+      },
+      "pixels": {
+        "lit": 116582,
+        "changed": 23348,
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "measurement": {
+        "route": "dynamic",
+        "instancing": false,
+        "count": 256,
+        "samples": 120,
+        "warmupFrames": 30,
+        "setupMs": 3.300000011920929,
+        "framebuffer": [
+          1280,
+          720
+        ],
+        "dpr": 1,
+        "draws": [
+          1,
+          1
+        ],
+        "frameIntervalMs": {
+          "p50": 16.69999998807907,
+          "p95": 17
+        },
+        "cpuRenderSubmissionMs": {
+          "p50": 0.5,
+          "p95": 0.6000000238418579
+        },
+        "cpuDynamicUpdateMs": {
+          "p50": 0.09999999403953552,
+          "p95": 0.20000001788139343
+        },
+        "gpuTimeMs": null,
+        "presentTiming": null,
+        "timingScope": "rAF intervals and CPU submission only; no GPU or display-present proof"
+      },
+      "rawSamples": [
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.20000001788139343,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.19999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.899999976158142,
+          "submissionMs": 2.199999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 14.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/recipes/competitive-batching/dynamic-256.png",
+        "bytes": 7004,
+        "sha256": "1018b2f9b67bf657910e644e3fb4161feeb08d3aeefb851f15009536f3160529"
+      },
+      "lifecycle": {
+        "label": "batching-dynamic",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "restoredPixels": 116582
+    },
+    {
+      "id": "dynamic-50000",
+      "route": "dynamic",
+      "count": 50000,
+      "instancing": false,
+      "draws": 1,
+      "recipeId": "CB-BATCH-DYNAMIC",
+      "recipeVersion": "1.0.0",
+      "compositeBenchmarkId": "recipe:competitive-batching:dynamic",
+      "errors": [],
+      "geometry": {
+        "rendererCount": 1,
+        "meshCount": 1,
+        "materialCount": 1,
+        "cameraCount": 1,
+        "materials": [
+          {
+            "effect": "builtin-unlit",
+            "passCount": 1,
+            "blend": false,
+            "batchingScheme": 0
+          }
+        ],
+        "meshes": [
+          {
+            "primitiveCount": 1,
+            "vertices": 200000,
+            "indices": 300000
+          }
+        ]
+      },
+      "pixels": {
+        "lit": 72199,
+        "changed": 50894,
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "measurement": {
+        "route": "dynamic",
+        "instancing": false,
+        "count": 50000,
+        "samples": 120,
+        "warmupFrames": 30,
+        "setupMs": 8.599999994039536,
+        "framebuffer": [
+          1280,
+          720
+        ],
+        "dpr": 1,
+        "draws": [
+          1,
+          1
+        ],
+        "frameIntervalMs": {
+          "p50": 16.69999998807907,
+          "p95": 17.899999976158142
+        },
+        "cpuRenderSubmissionMs": {
+          "p50": 0.4000000059604645,
+          "p95": 0.5999999940395355
+        },
+        "cpuDynamicUpdateMs": {
+          "p50": 2.300000011920929,
+          "p95": 2.600000023841858
+        },
+        "gpuTimeMs": null,
+        "presentTiming": null,
+        "timingScope": "rAF intervals and CPU submission only; no GPU or display-present proof"
+      },
+      "rawSamples": [
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.800000011920929,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.5,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.100000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.200000017881393,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.400000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.30000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.100000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.200000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.400000005960464,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 13.5,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.20000001788139343,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.19999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.199999988079071,
+          "submissionMs": 0.19999998807907104,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.099999994039536,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 1.9000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.80000001192093,
+          "submissionMs": 0.800000011920929,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.099999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/recipes/competitive-batching/dynamic-50000.png",
+        "bytes": 60634,
+        "sha256": "f8289fdd8811dc9d801fc8a0353d856497937ae6fea6cec7feaa6d49cda906da"
+      },
+      "lifecycle": {
+        "label": "batching-dynamic",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "restoredPixels": 72199
+    },
+    {
+      "id": "dynamic-100000",
+      "route": "dynamic",
+      "count": 100000,
+      "instancing": false,
+      "draws": 1,
+      "recipeId": "CB-BATCH-DYNAMIC",
+      "recipeVersion": "1.0.0",
+      "compositeBenchmarkId": "recipe:competitive-batching:dynamic",
+      "errors": [],
+      "geometry": {
+        "rendererCount": 1,
+        "meshCount": 1,
+        "materialCount": 1,
+        "cameraCount": 1,
+        "materials": [
+          {
+            "effect": "builtin-unlit",
+            "passCount": 1,
+            "blend": false,
+            "batchingScheme": 0
+          }
+        ],
+        "meshes": [
+          {
+            "primitiveCount": 1,
+            "vertices": 400000,
+            "indices": 600000
+          }
+        ]
+      },
+      "pixels": {
+        "lit": 54330,
+        "changed": 50634,
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "measurement": {
+        "route": "dynamic",
+        "instancing": false,
+        "count": 100000,
+        "samples": 120,
+        "warmupFrames": 30,
+        "setupMs": 10.400000005960464,
+        "framebuffer": [
+          1280,
+          720
+        ],
+        "dpr": 1,
+        "draws": [
+          1,
+          1
+        ],
+        "frameIntervalMs": {
+          "p50": 16.69999998807907,
+          "p95": 18.69999998807907
+        },
+        "cpuRenderSubmissionMs": {
+          "p50": 0.4000000059604645,
+          "p95": 0.6000000238418579
+        },
+        "cpuDynamicUpdateMs": {
+          "p50": 4.199999988079071,
+          "p95": 5
+        },
+        "gpuTimeMs": null,
+        "presentTiming": null,
+        "timingScope": "rAF intervals and CPU submission only; no GPU or display-present proof"
+      },
+      "rawSamples": [
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.200000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.799999982118607,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.699999988079071,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.6000000238418579,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.400000005960464,
+          "submissionMs": 0.7000000178813934,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.5,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.700000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.099999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.299999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.600000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.899999976158142,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.200000017881393,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 14.400000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.399999976158142,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.399999976158142,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.200000017881393,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.19999998807907,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.100000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.400000005960464,
+          "submissionMs": 0.6000000238418579,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.599999994039536,
+          "submissionMs": 0.19999998807907104,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.200000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.100000023841858,
+          "submissionMs": 0.20000001788139343,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.299999982118607,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 14.800000011920929,
+          "submissionMs": 0.5999999940395355,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 14.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.299999982118607,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.100000023841858,
+          "submissionMs": 0.6000000238418579,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.100000023841858,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.099999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.799999982118607,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.5,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 13.599999994039536,
+          "submissionMs": 0.20000001788139343,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.599999994039536,
+          "submissionMs": 0.20000001788139343,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 14.599999994039536,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 18.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.400000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.30000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 13.699999988079071,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 19.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.099999994039536,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 14.099999994039536,
+          "submissionMs": 0.19999998807907104,
+          "draws": 1
+        },
+        {
+          "intervalMs": 20.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 13.799999982118607,
+          "submissionMs": 0.19999998807907104,
+          "draws": 1
+        },
+        {
+          "intervalMs": 15.599999994039536,
+          "submissionMs": 0.19999998807907104,
+          "draws": 1
+        },
+        {
+          "intervalMs": 19.200000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.799999982118607,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.19999998807907,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.700000017881393,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.299999982118607,
+          "submissionMs": 0.29999998211860657,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.599999994039536,
+          "submissionMs": 0.3999999761581421,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.19999998807907104,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.30000001192093,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 17.599999994039536,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.69999998807907,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.80000001192093,
+          "submissionMs": 0.4000000059604645,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.900000005960464,
+          "submissionMs": 0.5,
+          "draws": 1
+        },
+        {
+          "intervalMs": 16.5,
+          "submissionMs": 0.30000001192092896,
+          "draws": 1
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/recipes/competitive-batching/dynamic-100000.png",
+        "bytes": 55864,
+        "sha256": "7218d95158d21334928709ecfdf449c2ac8f4d58c6c5aa2ee94620f8cd828f0c"
+      },
+      "lifecycle": {
+        "label": "batching-dynamic",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "restoredPixels": 54303
+    }
+  ],
+  "environment": {
+    "os": "win32 10.0.28120",
+    "cpu": "AMD Ryzen AI 9 HX 370 w/ Radeon 890M           ",
+    "viewport": [
+      1280,
+      720
+    ],
+    "dpr": 1,
+    "browser": "chromium",
+    "independentRuns": 1,
+    "gpuTimeMs": null,
+    "presentTiming": null,
+    "browserVersion": "149.0.7827.55",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  "errors": [],
+  "result": "PASS"
+}

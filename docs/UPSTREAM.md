@@ -246,3 +246,17 @@ Core cocos4 remains pinned to alpha.34 / 557b06f7e636572a15a426eb8c2387f40b92798
 38 frozen TS inputs in vendor/pal-source generate 38 JS files plus audio/type.d.ts. The manifest pins SHA-256, Git blob identity and TypeScript 4.9.5. tools/build/pal-source.cjs reproduces all outputs and notices; verify:file-map and verify:licenses consume this check. All derived rows are marked modified in upstream-file-map with their public source path. LICENSE_pal.txt and NOTICE_pal.txt retain the root grant and original source notices.
 
 Five sources have host adaptations: env/web/env.ts now returns __CC_CANVAS__ from findCanvas, the three Web input sources use the same binding, and screen-adapter preserves binding/DPR and explicit unbound rejection. The env change fixes an existing omission: input/screen binding alone did not give game.init the custom canvas. W04 now verifies actual framebuffer pixels rather than an unconditional success assertion.
+
+## Competitive runtime contracts
+
+Material and Pass uniform setters now validate types, finite shader components and array capacity before writes. Native Color/Quat/vector/matrix values and partial uniform-array updates remain supported. Component Light uses Color; rendering Light uses Vec3. Both color contracts and temperature setters are validated without changing that distinction. The internal property-validation helper has no AIR bootstrap dependency.
+
+CallbacksInvoker restores invocation state with finally and preserves ordinary EventTarget rethrow behavior. Input specializes the callback hook to report and isolate listener failures. UI pointer dispatch depth and terminal touch claims also recover after exceptions. Mouse/touch location methods consistently validate and reuse declared Vec2 outputs.
+
+createMesh uses nullish defaults so POINT_LIST=0 survives static and dynamic construction. Rendering still uses explicit effect pass topology; this adaptation does not claim a mesh-only topology coordination API.
+
+Changed paths are registered in upstream-file-map. The competitive uniform/input/point smoke tests, development GPU probe and point-cloud/orbit examples provide acceptance beyond field assignment. Current verification and open work are recorded in the [execution ledger](../ai/ledgers/competitive-benchmark-remediation.md).
+
+PixelFormat adds SRGB888/SRGBA8888 names for existing GFX sRGB formats, preserving old enum values. These opt-in formats perform hardware sampling decode; standard effects retain their software decode, so callers must not combine both paths. GPU acceptance covers equivalent color inputs, row orientation, alpha and linear normal data in three browsers.
+
+EffectAsset early registration also differs between source/headless and full Web bundles. Before a device exists, the full bundle may expose the effect-import library that game.init later disables for the legacy configuration. AIR now registers effect metadata immediately and defers program registration until renderer initialization, selecting the active library at that time. Destroy removes pending callbacks. This keeps legal early onLoaded calls usable instead of requiring a blanket prohibition; dedicated tests cover both library choices and a full-bundle browser probe verifies actual drawing.

@@ -27,6 +27,8 @@ if (instance.animations.length) {
 
 默认实例化文件默认 scene；无默认 scene 时选择第一个。没有 scenes 时使用无父节点构建场景。`instantiate(index)` 可选择其他 scene。实例默认不挂载、不播放；模型不会自动归一化尺寸、居中或改变坐标系。
 
+动画默认按原生 `WrapMode.Normal` 单次播放，正常完成后停在末帧。需要循环时，在 `play()` 前调用 `instance.setAnimationLoop(true, clipName)`；省略名称会配置该实例的所有剪辑，`false` 恢复单次播放。该入口初始化并配置实例的原生 `AnimationState`，不修改共享 `AnimationClip`；配置在首次场景激活后仍保持有效，不自动播放。动态改变 wrap mode 会重置选定 state 的时间与重复计数，不要每帧调用。非法选项、未知名称和已释放实例抛 `AIR_E_GLTF_ANIMATION_OPTIONS`。共享资源与私有材质变体、暂停/切换的完整示例见 [glTF Animation Instances](../../examples/gltf-animation-contract/README.md) 和 [动画手册](../manual/animation-system.md)。
+
 ### 其他加载入口
 
 ```ts
@@ -72,22 +74,24 @@ asset.decRef(); // 业务不再持有
 
 ## 支持边界
 
-| 类别 | 支持 |
-|---|---|
-| 容器 | glTF 2.0、GLB 2.0、外部 BIN、Data URI、内嵌 BIN/PNG/JPEG |
-| Accessor | 合法 offset/stride、normalized 整数、sparse、矩阵列对齐；单 accessor 最多 16M 个解码分量 |
-| 几何 | 多 primitive、索引/非索引、点/线/三角形及 strip/fan/loop；POSITION、NORMAL、TANGENT、COLOR_0、UV0/UV1 |
-| 缺省数据 | 无法线三角网格生成平面法线并展开相关顶点数据；法线贴图缺少切线时生成正交化切线 |
-| 材质 | metallic-roughness PBR、baseColor/MR/normal/occlusion/emissive 贴图及因子、独立 UV0/UV1、采样器、OPAQUE/MASK/BLEND、doubleSided |
-| 场景 | TRS、可无损分解的 matrix、多场景、负缩放与运行时祖先镜像 |
-| 蒙皮 | 多 skin、共享 skin、非关节祖先、任意 joint 顺序、有/无 inverseBindMatrices、JOINTS_0/WEIGHTS_0 四权重、原生实时蒙皮 |
-| 动画 | 多 clip、TRS 和 Morph weights、STEP/LINEAR/CUBICSPLINE、原生播放/暂停/切换；四元数 Hermite 求值后归一化 |
-| Morph | POSITION/NORMAL/TANGENT 位移、mesh/node 初始权重、独立实例权重 |
+| 类别     | 支持                                                                                                                            |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| 容器     | glTF 2.0、GLB 2.0、外部 BIN、Data URI、内嵌 BIN/PNG/JPEG                                                                        |
+| Accessor | 合法 offset/stride、normalized 整数、sparse、矩阵列对齐；单 accessor 最多 16M 个解码分量                                        |
+| 几何     | 多 primitive、索引/非索引、点/线/三角形及 strip/fan/loop；POSITION、NORMAL、TANGENT、COLOR_0、UV0/UV1                           |
+| 缺省数据 | 无法线三角网格生成平面法线并展开相关顶点数据；法线贴图缺少切线时生成正交化切线                                                  |
+| 材质     | metallic-roughness PBR、baseColor/MR/normal/occlusion/emissive 贴图及因子、独立 UV0/UV1、采样器、OPAQUE/MASK/BLEND、doubleSided |
+| 场景     | TRS、可无损分解的 matrix、多场景、负缩放与运行时祖先镜像                                                                        |
+| 蒙皮     | 多 skin、共享 skin、非关节祖先、任意 joint 顺序、有/无 inverseBindMatrices、JOINTS_0/WEIGHTS_0 四权重、原生实时蒙皮             |
+| 动画     | 多 clip、TRS 和 Morph weights、STEP/LINEAR/CUBICSPLINE、原生播放/暂停/切换；四元数 Hermite 求值后归一化                         |
+| Morph    | POSITION/NORMAL/TANGENT 位移、mesh/node 初始权重、独立实例权重                                                                  |
+
 > 机器可读支持矩阵：`examples/gltf-catalog/capabilities.json`（`npm run capabilities` 重新生成）。
 
 Draco 的 adapter 支持应用注入 decoder；随包提供的 Draco 入口是 Node/CommonJS 形态。
 浏览器正向解码需要应用另外提供兼容的浏览器 factory。当前验证等级为 smoke，
 不能视为随包浏览器解码已验收，详见 [decoder 部署边界](gltf-decoder-deployment.md)。
+
 > 每个扩展携带 registry 实时 status、decoder/设备要求、自动化证据（smoke / 真机浏览器脚本）、
 > 计划对照的官方模型与 catalog revision；稳定错误码清单在 `errorCodes`。V0.5.1 直接消费本文件。
 

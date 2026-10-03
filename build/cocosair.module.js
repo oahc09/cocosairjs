@@ -3464,29 +3464,37 @@ class CallbacksInvoker {
       const rootInvoker = !list.isInvoking;
       list.isInvoking = true;
       const infos = list.callbackInfos;
-      for (let i = 0, len = infos.length; i < len; ++i) {
-        const info = infos[i];
-        if (info) {
-          const callback = info.callback;
-          const target = info.target;
-          if (info.once) {
-            this.off(key, callback, target);
+      try {
+        for (let i = 0, len = infos.length; i < len; ++i) {
+          const info = infos[i];
+          if (info) {
+            const callback = info.callback;
+            const target = info.target;
+            if (info.once) {
+              this.off(key, callback, target);
+            }
+            if (!info.check()) {
+              this.off(key, callback, target);
+            } else {
+              this._invokeCallback(key, callback, target, arg0, arg1, arg2, arg3, arg4);
+            }
           }
-          if (!info.check()) {
-            this.off(key, callback, target);
-          } else if (target) {
-            callback.call(target, arg0, arg1, arg2, arg3, arg4);
-          } else {
-            callback(arg0, arg1, arg2, arg3, arg4);
+        }
+      } finally {
+        if (rootInvoker) {
+          list.isInvoking = false;
+          if (list.containCanceled) {
+            list.purgeCanceled();
           }
         }
       }
-      if (rootInvoker) {
-        list.isInvoking = false;
-        if (list.containCanceled) {
-          list.purgeCanceled();
-        }
-      }
+    }
+  }
+  _invokeCallback(key, callback, target, arg0, arg1, arg2, arg3, arg4) {
+    if (target) {
+      callback.call(target, arg0, arg1, arg2, arg3, arg4);
+    } else {
+      callback(arg0, arg1, arg2, arg3, arg4);
     }
   }
   clear() {
@@ -16522,7 +16530,7 @@ var _decorator = /*#__PURE__*/Object.freeze({
     visible: visible$5
 });
 
-var _dec$34, _class$35, _class2$2y, _initializer$2r, _initializer2$1W, _initializer3$1p, _initializer4$19, _CompactValueTypeArray;
+var _dec$35, _class$36, _class2$2y, _initializer$2r, _initializer2$1W, _initializer3$1p, _initializer4$19, _CompactValueTypeArray;
 let StorageUnit;
 (function (StorageUnit) {
   StorageUnit[StorageUnit["Uint8"] = 0] = "Uint8";
@@ -16553,7 +16561,7 @@ function extractStorageUnitElementType(combined) {
     elementType: combined >> elementTypeBits
   };
 }
-let CompactValueTypeArray = (_dec$34 = ccclass$w('cc.CompactValueTypeArray'), _dec$34(_class$35 = (_class2$2y = (_CompactValueTypeArray = class CompactValueTypeArray {
+let CompactValueTypeArray = (_dec$35 = ccclass$w('cc.CompactValueTypeArray'), _dec$35(_class$36 = (_class2$2y = (_CompactValueTypeArray = class CompactValueTypeArray {
   constructor() {
     this._byteOffset = _initializer$2r && _initializer$2r();
     this._unitCount = _initializer2$1W && _initializer2$1W();
@@ -16601,7 +16609,7 @@ let CompactValueTypeArray = (_dec$34 = ccclass$w('cc.CompactValueTypeArray'), _d
   return combineStorageUnitElementType(StorageUnit.Uint8, ElementType.Scalar);
 }), _initializer4$19 = applyDecoratedInitializer(_class2$2y.prototype, "_length", [serializable$c], function () {
   return 0;
-})), _class2$2y)) || _class$35);
+})), _class2$2y)) || _class$36);
 function getElementTraits(elementType) {
   return BuiltinElementTypeTraits[elementType];
 }
@@ -17672,13 +17680,13 @@ function bezierByTime(controlPoints, x) {
 }
 legacyCC.bezierByTime = bezierByTime;
 
-var _dec$33, _class$34, _class2$2x, _initializer$2q, _initializer2$1V, _initializer3$1o, _dec2$28, _class3$m, _class4$l, _initializer4$18, _initializer5$U;
+var _dec$34, _class$35, _class2$2x, _initializer$2q, _initializer2$1V, _initializer3$1o, _dec2$29, _class3$m, _class4$l, _initializer4$18, _initializer5$U;
 let QuatInterpolationMode;
 (function (QuatInterpolationMode) {
   QuatInterpolationMode[QuatInterpolationMode["SLERP"] = 0] = "SLERP";
   QuatInterpolationMode[QuatInterpolationMode["CONSTANT"] = 1] = "CONSTANT";
 })(QuatInterpolationMode || (QuatInterpolationMode = {}));
-let QuatKeyframeValue = (_dec$33 = ccclass$w('cc.QuatKeyframeValue'), _dec$33(_class$34 = uniquelyReferenced(_class$34 = (_class2$2x = class QuatKeyframeValue {
+let QuatKeyframeValue = (_dec$34 = ccclass$w('cc.QuatKeyframeValue'), _dec$34(_class$35 = uniquelyReferenced(_class$35 = (_class2$2x = class QuatKeyframeValue {
   constructor({
     value,
     interpolationMode,
@@ -17697,11 +17705,11 @@ let QuatKeyframeValue = (_dec$33 = ccclass$w('cc.QuatKeyframeValue'), _dec$33(_c
   return Quat.clone(Quat.IDENTITY);
 }), _initializer3$1o = applyDecoratedInitializer(_class2$2x.prototype, "easingMethod", [serializable$c], function () {
   return EasingMethod.LINEAR;
-})), _class2$2x)) || _class$34) || _class$34);
+})), _class2$2x)) || _class$35) || _class$35);
 function createQuatKeyframeValue(params) {
   return new QuatKeyframeValue(params);
 }
-let QuatCurve = (_dec2$28 = ccclass$w('cc.QuatCurve'), _dec2$28(_class3$m = (_class4$l = class QuatCurve extends KeyframeCurve {
+let QuatCurve = (_dec2$29 = ccclass$w('cc.QuatCurve'), _dec2$29(_class3$m = (_class4$l = class QuatCurve extends KeyframeCurve {
   constructor() {
     super();
     this.preExtrapolation = _initializer4$18 && _initializer4$18();
@@ -17951,8 +17959,8 @@ const EASING_METHOD_BYTES = 1;
 const EASING_METHOD_BEZIER_TAG = 255;
 const EASING_METHOD_BEZIER_COMPONENT_BYTES = 4;
 
-var _dec$32, _class$33;
-let ObjectCurve = (_dec$32 = ccclass$w('cc.ObjectCurve'), _dec$32(_class$33 = class ObjectCurve extends KeyframeCurve {
+var _dec$33, _class$34;
+let ObjectCurve = (_dec$33 = ccclass$w('cc.ObjectCurve'), _dec$33(_class$34 = class ObjectCurve extends KeyframeCurve {
   evaluate(time) {
     const iSearch = this.searchKeyframe(time);
     if (iSearch >= 0) {
@@ -17961,7 +17969,7 @@ let ObjectCurve = (_dec$32 = ccclass$w('cc.ObjectCurve'), _dec$32(_class$33 = cl
     const iPrev = clamp$1(~iSearch - 1, 0, this._values.length - 1);
     return this._values[iPrev];
   }
-}) || _class$33);
+}) || _class$34);
 
 var GradientMode;
 (function (GradientMode) {
@@ -21969,13 +21977,13 @@ var helper = /*#__PURE__*/Object.freeze({
     transform: transform
 });
 
-var _dec$31, _class$32, _class2$2w, _initializer$2p;
+var _dec$32, _class$33, _class2$2w, _initializer$2p;
 const {
   ccclass: ccclass$v,
   serializable: serializable$b,
   property: property$2
 } = _decorator;
-let Asset = (_dec$31 = ccclass$v('cc.Asset'), _dec$31(_class$32 = (_class2$2w = class Asset extends Eventify(CCObject) {
+let Asset = (_dec$32 = ccclass$v('cc.Asset'), _dec$32(_class$33 = (_class2$2w = class Asset extends Eventify(CCObject) {
   static deserialize(data) {
     return cclegacy.deserialize(data);
   }
@@ -22080,7 +22088,7 @@ let Asset = (_dec$31 = ccclass$v('cc.Asset'), _dec$31(_class$32 = (_class2$2w = 
   }
 }, (_initializer$2p = applyDecoratedInitializer(_class2$2w.prototype, "_native", [serializable$b], function () {
   return '';
-}), _applyDecoratedDescriptor(_class2$2w.prototype, "_nativeAsset", [property$2], Object.getOwnPropertyDescriptor(_class2$2w.prototype, "_nativeAsset"), _class2$2w.prototype)), _class2$2w)) || _class$32);
+}), _applyDecoratedDescriptor(_class2$2w.prototype, "_nativeAsset", [property$2], Object.getOwnPropertyDescriptor(_class2$2w.prototype, "_nativeAsset"), _class2$2w.prototype)), _class2$2w)) || _class$33);
 
 Asset.prototype.createNode = null;
 cclegacy.Asset = Asset;
@@ -22097,6 +22105,8 @@ let PixelFormat;
   PixelFormat[PixelFormat["RGB888"] = Format.RGB8] = "RGB888";
   PixelFormat[PixelFormat["RGB32F"] = Format.RGB32F] = "RGB32F";
   PixelFormat[PixelFormat["RGBA8888"] = Format.RGBA8] = "RGBA8888";
+  PixelFormat[PixelFormat["SRGB888"] = Format.SRGB8] = "SRGB888";
+  PixelFormat[PixelFormat["SRGBA8888"] = Format.SRGB8_A8] = "SRGBA8888";
   PixelFormat[PixelFormat["BGRA8888"] = Format.BGRA8] = "BGRA8888";
   PixelFormat[PixelFormat["RGBA32F"] = Format.RGBA32F] = "RGBA32F";
   PixelFormat[PixelFormat["A8"] = Format.A8] = "A8";
@@ -22141,7 +22151,7 @@ let TextureFilter;
   TextureFilter[TextureFilter["NEAREST"] = Filter.POINT] = "NEAREST";
 })(TextureFilter || (TextureFilter = {}));
 
-var _dec$30, _class$31, _class2$2v, _ImageAsset;
+var _dec$31, _class$32, _class2$2v, _ImageAsset;
 const COMPRESSED_HEADER_LENGTH = 4;
 const COMPRESSED_MIPMAP_DATA_SIZE_LENGTH = 4;
 const COMPRESSED_MIPMAP_LEVEL_COUNT_LENGTH = 4;
@@ -22221,7 +22231,7 @@ function isImageBitmap(imageSource) {
 function isNativeImage(imageSource) {
   return imageSource instanceof HTMLImageElement || imageSource instanceof HTMLCanvasElement || isImageBitmap(imageSource);
 }
-let ImageAsset = (_dec$30 = ccclass$w('cc.ImageAsset'), _dec$30(_class$31 = (_class2$2v = (_ImageAsset = class ImageAsset extends Asset {
+let ImageAsset = (_dec$31 = ccclass$w('cc.ImageAsset'), _dec$31(_class$32 = (_class2$2v = (_ImageAsset = class ImageAsset extends Asset {
   static mergeCompressedTextureMips(files) {
     let out = new Uint8Array(0);
     let err = null;
@@ -22569,16 +22579,16 @@ let ImageAsset = (_dec$30 = ccclass$w('cc.ImageAsset'), _dec$30(_class$31 = (_cl
   validate() {
     return !!this.data;
   }
-}, _ImageAsset.extnames = ['.png', '.jpg', '.jpeg', '.bmp', '.webp', '.pvr', '.pkm', '.astc'], _ImageAsset._sharedPlaceHolderCanvas = null, _ImageAsset), (_applyDecoratedDescriptor(_class2$2v.prototype, "_nativeAsset", [override$1], Object.getOwnPropertyDescriptor(_class2$2v.prototype, "_nativeAsset"), _class2$2v.prototype)), _class2$2v)) || _class$31);
+}, _ImageAsset.extnames = ['.png', '.jpg', '.jpeg', '.bmp', '.webp', '.pvr', '.pkm', '.astc'], _ImageAsset._sharedPlaceHolderCanvas = null, _ImageAsset), (_applyDecoratedDescriptor(_class2$2v.prototype, "_nativeAsset", [override$1], Object.getOwnPropertyDescriptor(_class2$2v.prototype, "_nativeAsset"), _class2$2v.prototype)), _class2$2v)) || _class$32);
 function _getGlobalDevice() {
   return deviceManager.gfxDevice;
 }
 cclegacy.ImageAsset = ImageAsset;
 
-var _dec$2$, _class$30, _class2$2u, _initializer$2o, _initializer2$1U, _initializer3$1n, _initializer4$17, _initializer5$T, _initializer6$H, _initializer7$y, _initializer8$w, _TextureBase;
+var _dec$30, _class$31, _class2$2u, _initializer$2o, _initializer2$1U, _initializer3$1n, _initializer4$17, _initializer5$T, _initializer6$H, _initializer7$y, _initializer8$w, _TextureBase;
 ccenum(Format);
 const idGenerator$2 = new IDGenerator('Tex');
-let TextureBase = (_dec$2$ = ccclass$w('cc.TextureBase'), _dec$2$(_class$30 = (_class2$2u = (_TextureBase = class TextureBase extends Asset {
+let TextureBase = (_dec$30 = ccclass$w('cc.TextureBase'), _dec$30(_class$31 = (_class2$2u = (_TextureBase = class TextureBase extends Asset {
   get isCompressed() {
     return this._format >= PixelFormat.RGB_ETC1 && this._format <= PixelFormat.RGBA_ASTC_12x12 || this._format >= PixelFormat.RGB_A_PVRTC_2BPPV1 && this._format <= PixelFormat.RGBA_ETC1;
   }
@@ -22735,17 +22745,17 @@ let TextureBase = (_dec$2$ = ccclass$w('cc.TextureBase'), _dec$2$(_class$30 = (_
   return WrapMode$1.REPEAT;
 }), _initializer8$w = applyDecoratedInitializer(_class2$2u.prototype, "_anisotropy", [serializable$c], function () {
   return 0;
-})), _class2$2u)) || _class$30);
+})), _class2$2u)) || _class$31);
 cclegacy.TextureBase = TextureBase;
 
-var _dec$2_, _class$2$, _dec2$27, _class2$2t, _dec3$1s, _class3$l;
-let Script = (_dec$2_ = ccclass$w('cc.Script'), _dec$2_(_class$2$ = class Script extends Asset {
+var _dec$2$, _class$30, _dec2$28, _class2$2t, _dec3$1s, _class3$l;
+let Script = (_dec$2$ = ccclass$w('cc.Script'), _dec$2$(_class$30 = class Script extends Asset {
   constructor(name) {
     super(name);
   }
-}) || _class$2$);
+}) || _class$30);
 cclegacy._Script = Script;
-let JavaScript = (_dec2$27 = ccclass$w('cc.JavaScript'), _dec2$27(_class2$2t = class JavaScript extends Script {
+let JavaScript = (_dec2$28 = ccclass$w('cc.JavaScript'), _dec2$28(_class2$2t = class JavaScript extends Script {
   constructor(name) {
     super(name);
   }
@@ -22758,8 +22768,8 @@ let TypeScript = (_dec3$1s = ccclass$w('cc.TypeScript'), _dec3$1s(_class3$l = cl
 }) || _class3$l);
 cclegacy._TypeScript = TypeScript;
 
-var _dec$2Z, _class$2_, _class2$2s, _initializer$2n, _initializer2$1T, _initializer3$1m, _initializer4$16, _initializer5$S;
-let EventHandler = (_dec$2Z = ccclass$w('cc.ClickEvent'), _dec$2Z(_class$2_ = (_class2$2s = class EventHandler {
+var _dec$2_, _class$2$, _class2$2s, _initializer$2n, _initializer2$1T, _initializer3$1m, _initializer4$16, _initializer5$S;
+let EventHandler = (_dec$2_ = ccclass$w('cc.ClickEvent'), _dec$2_(_class$2$ = (_class2$2s = class EventHandler {
   constructor() {
     this.target = _initializer$2n && _initializer$2n();
     this.component = _initializer2$1T && _initializer2$1T();
@@ -22829,13 +22839,13 @@ let EventHandler = (_dec$2Z = ccclass$w('cc.ClickEvent'), _dec$2Z(_class$2_ = (_
   return '';
 }), _initializer5$S = applyDecoratedInitializer(_class2$2s.prototype, "customEventData", [serializable$c], function () {
   return '';
-})), _class2$2s)) || _class$2_);
+})), _class2$2s)) || _class$2$);
 
-var _dec$2Y, _dec2$26, _class$2Z, _class2$2r, _initializer$2m, _initializer2$1S, _initializer3$1l, _Component;
+var _dec$2Z, _dec2$27, _class$2_, _class2$2r, _initializer$2m, _initializer2$1S, _initializer3$1l, _Component;
 const idGenerator$1 = new IDGenerator('Comp');
 const IsOnLoadCalled$1 = CCObjectFlags.IsOnLoadCalled;
 const NullNode = null;
-let Component = (_dec$2Y = ccclass$w('cc.Component'), _dec2$26 = type$a(Script), _dec$2Y(_class$2Z = (_class2$2r = (_Component = class Component extends CCObject {
+let Component = (_dec$2Z = ccclass$w('cc.Component'), _dec2$27 = type$a(Script), _dec$2Z(_class$2_ = (_class2$2r = (_Component = class Component extends CCObject {
   constructor() {
     super();
     this.node = _initializer$2m && _initializer$2m();
@@ -22993,13 +23003,13 @@ let Component = (_dec$2Y = ccclass$w('cc.Component'), _dec2$26 = type$a(Script),
   get internalOnDestroy() {
     return this.onDestroy;
   }
-}, _Component.EventHandler = EventHandler, _Component._executionOrder = 0, _Component._requireComponent = null, _Component.system = null, _Component), (_applyDecoratedDescriptor(_class2$2r.prototype, "__scriptAsset", [_dec2$26], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "__scriptAsset"), _class2$2r.prototype), _initializer$2m = applyDecoratedInitializer(_class2$2r.prototype, "node", [serializable$c], function () {
+}, _Component.EventHandler = EventHandler, _Component._executionOrder = 0, _Component._requireComponent = null, _Component.system = null, _Component), (_applyDecoratedDescriptor(_class2$2r.prototype, "__scriptAsset", [_dec2$27], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "__scriptAsset"), _class2$2r.prototype), _initializer$2m = applyDecoratedInitializer(_class2$2r.prototype, "node", [serializable$c], function () {
   return NullNode;
 }), _initializer2$1S = applyDecoratedInitializer(_class2$2r.prototype, "_enabled", [serializable$c], function () {
   return true;
 }), _initializer3$1l = applyDecoratedInitializer(_class2$2r.prototype, "__prefab", [serializable$c], function () {
   return null;
-})), _class2$2r)) || _class$2Z);
+})), _class2$2r)) || _class$2_);
 value(Component, '_registerEditorProps', (cls, props) => {
   let reqComp = props.requireComponent;
   if (reqComp) {
@@ -23015,8 +23025,8 @@ value(Component, '_registerEditorProps', (cls, props) => {
 });
 legacyCC.Component = Component;
 
-var _dec$2X, _class$2Y, _class2$2q, _initializer$2l;
-let MissingScript = (_dec$2X = ccclass$w('cc.MissingScript'), _dec$2X(_class$2Y = (_class2$2q = class MissingScript extends Component {
+var _dec$2Y, _class$2Z, _class2$2q, _initializer$2l;
+let MissingScript = (_dec$2Y = ccclass$w('cc.MissingScript'), _dec$2Y(_class$2Z = (_class2$2q = class MissingScript extends Component {
   static safeFindClass(id) {
     const cls = getClassById(id);
     if (cls) {
@@ -23035,7 +23045,7 @@ let MissingScript = (_dec$2X = ccclass$w('cc.MissingScript'), _dec$2X(_class$2Y 
   }
 }, (_initializer$2l = applyDecoratedInitializer(_class2$2q.prototype, "_$erialized", [serializable$c, editorOnly], function () {
   return null;
-})), _class2$2q)) || _class$2Y);
+})), _class2$2q)) || _class$2Z);
 cclegacy._MissingScript = MissingScript;
 try {
   const props = MissingScript.__values__;
@@ -24832,7 +24842,7 @@ class DependUtil {
 DependUtil._instance = void 0;
 var dependUtil = DependUtil.instance;
 
-var _dec$2W, _class$2X;
+var _dec$2X, _class$2Y;
 const _regions = [new BufferTextureCopy()];
 function getMipLevel(width, height) {
   let size = Math.max(width, height);
@@ -24853,7 +24863,7 @@ function canGenerateMipmap(device, w, h) {
   }
   return true;
 }
-let SimpleTexture = (_dec$2W = ccclass$w('cc.SimpleTexture'), _dec$2W(_class$2X = class SimpleTexture extends TextureBase {
+let SimpleTexture = (_dec$2X = ccclass$w('cc.SimpleTexture'), _dec$2X(_class$2Y = class SimpleTexture extends TextureBase {
   constructor(name) {
     super(name);
     this._gfxTexture = null;
@@ -25016,12 +25026,12 @@ let SimpleTexture = (_dec$2W = ccclass$w('cc.SimpleTexture'), _dec$2W(_class$2X 
       this._gfxTextureView = null;
     }
   }
-}) || _class$2X);
+}) || _class$2Y);
 cclegacy.SimpleTexture = SimpleTexture;
 
-var _dec$2V, _dec2$25, _class$2W, _class2$2p, _initializer$2k;
+var _dec$2W, _dec2$26, _class$2X, _class2$2p, _initializer$2k;
 
-let Texture2D = (_dec$2V = ccclass$w('cc.Texture2D'), _dec2$25 = type$a([ImageAsset]), _dec$2V(_class$2W = (_class2$2p = class Texture2D extends SimpleTexture {
+let Texture2D = (_dec$2W = ccclass$w('cc.Texture2D'), _dec2$26 = type$a([ImageAsset]), _dec$2W(_class$2X = (_class2$2p = class Texture2D extends SimpleTexture {
   constructor(name) {
     super(name);
     this._mipmaps = _initializer$2k && _initializer$2k();
@@ -25170,12 +25180,12 @@ let Texture2D = (_dec$2V = ccclass$w('cc.Texture2D'), _dec2$25 = type$a([ImageAs
   validate() {
     return this.mipmaps && this.mipmaps.length !== 0;
   }
-}, (_initializer$2k = applyDecoratedInitializer(_class2$2p.prototype, "_mipmaps", [_dec2$25], function () {
+}, (_initializer$2k = applyDecoratedInitializer(_class2$2p.prototype, "_mipmaps", [_dec2$26], function () {
   return [];
-})), _class2$2p)) || _class$2W);
+})), _class2$2p)) || _class$2X);
 cclegacy.Texture2D = Texture2D;
 
-var _dec$2U, _class$2V, _class2$2o, _initializer$2j, _initializer2$1R, _initializer3$1k, _initializer4$15, _TextureCube;
+var _dec$2V, _class$2W, _class2$2o, _initializer$2j, _initializer2$1R, _initializer3$1k, _initializer4$15, _TextureCube;
 var FaceIndex;
 (function (FaceIndex) {
   FaceIndex[FaceIndex["right"] = 0] = "right";
@@ -25191,7 +25201,7 @@ let MipmapMode;
   MipmapMode[MipmapMode["AUTO"] = 1] = "AUTO";
   MipmapMode[MipmapMode["BAKED_CONVOLUTION_MAP"] = 2] = "BAKED_CONVOLUTION_MAP";
 })(MipmapMode || (MipmapMode = {}));
-let TextureCube = (_dec$2U = ccclass$w('cc.TextureCube'), _dec$2U(_class$2V = (_class2$2o = (_TextureCube = class TextureCube extends SimpleTexture {
+let TextureCube = (_dec$2V = ccclass$w('cc.TextureCube'), _dec$2V(_class$2W = (_class2$2o = (_TextureCube = class TextureCube extends SimpleTexture {
   constructor(name) {
     super(name);
     this.isRGBE = _initializer$2j && _initializer$2j();
@@ -25528,7 +25538,7 @@ let TextureCube = (_dec$2U = ccclass$w('cc.TextureCube'), _dec$2U(_class$2V = (_
   return MipmapMode.NONE;
 }), _initializer4$15 = applyDecoratedInitializer(_class2$2o.prototype, "_mipmaps", [serializable$c], function () {
   return [];
-})), _class2$2o)) || _class$2V);
+})), _class2$2o)) || _class$2W);
 legacyCC.TextureCube = TextureCube;
 function _forEachFace(mipmap, callback) {
   callback(mipmap.front, FaceIndex.front);
@@ -26842,19 +26852,19 @@ Downloader._instance = void 0;
 const downloader = Downloader.instance;
 var downloader$1 = Downloader.instance;
 
-var _dec$2T, _class$2U, _class2$2n, _initializer$2i;
-let JsonAsset = (_dec$2T = ccclass$w('cc.JsonAsset'), _dec$2T(_class$2U = (_class2$2n = class JsonAsset extends Asset {
+var _dec$2U, _class$2V, _class2$2n, _initializer$2i;
+let JsonAsset = (_dec$2U = ccclass$w('cc.JsonAsset'), _dec$2U(_class$2V = (_class2$2n = class JsonAsset extends Asset {
   constructor(name) {
     super(name);
     this.json = _initializer$2i && _initializer$2i();
   }
 }, (_initializer$2i = applyDecoratedInitializer(_class2$2n.prototype, "json", [serializable$c], function () {
   return null;
-})), _class2$2n)) || _class$2U);
+})), _class2$2n)) || _class$2V);
 cclegacy.JsonAsset = JsonAsset;
 
-var _dec$2S, _class$2T, _class2$2m, _initializer$2h;
-let TextAsset = (_dec$2S = ccclass$w('cc.TextAsset'), _dec$2S(_class$2T = (_class2$2m = class TextAsset extends Asset {
+var _dec$2T, _class$2U, _class2$2m, _initializer$2h;
+let TextAsset = (_dec$2T = ccclass$w('cc.TextAsset'), _dec$2T(_class$2U = (_class2$2m = class TextAsset extends Asset {
   toString() {
     return this.text;
   }
@@ -26864,11 +26874,11 @@ let TextAsset = (_dec$2S = ccclass$w('cc.TextAsset'), _dec$2S(_class$2T = (_clas
   }
 }, (_initializer$2h = applyDecoratedInitializer(_class2$2m.prototype, "text", [serializable$c], function () {
   return '';
-})), _class2$2m)) || _class$2T);
+})), _class2$2m)) || _class$2U);
 cclegacy.TextAsset = TextAsset;
 
-var _dec$2R, _class$2S, _class2$2l;
-let BufferAsset = (_dec$2R = ccclass$w('cc.BufferAsset'), _dec$2R(_class$2S = (_class2$2l = class BufferAsset extends Asset {
+var _dec$2S, _class$2T, _class2$2l;
+let BufferAsset = (_dec$2S = ccclass$w('cc.BufferAsset'), _dec$2S(_class$2T = (_class2$2l = class BufferAsset extends Asset {
   constructor(name) {
     super(name);
     this._buffer = null;
@@ -26890,7 +26900,7 @@ let BufferAsset = (_dec$2R = ccclass$w('cc.BufferAsset'), _dec$2R(_class$2S = (_
   validate() {
     return !!this._buffer;
   }
-}, (_applyDecoratedDescriptor(_class2$2l.prototype, "_nativeAsset", [override$1], Object.getOwnPropertyDescriptor(_class2$2l.prototype, "_nativeAsset"), _class2$2l.prototype)), _class2$2l)) || _class$2S);
+}, (_applyDecoratedDescriptor(_class2$2l.prototype, "_nativeAsset", [override$1], Object.getOwnPropertyDescriptor(_class2$2l.prototype, "_nativeAsset"), _class2$2l.prototype)), _class2$2l)) || _class$2T);
 cclegacy.BufferAsset = BufferAsset;
 
 function createImageAsset(id, data, options, onComplete) {
@@ -28557,6 +28567,23 @@ const getPhaseID$1 = (() => {
   };
 })();
 
+function propertyTypeError(code, property, expected, example) {
+  return Object.assign(new TypeError(`[${code}] ${property}: expected ${expected}. Example: ${example}`), {
+    code,
+    property,
+    expected,
+    example
+  });
+}
+function isFiniteShaderNumber(value) {
+  return typeof value === 'number' && Number.isFinite(value) && Number.isFinite(Math.fround(value));
+}
+function validateLightNumber(property, value) {
+  if (!isFiniteShaderNumber(value)) {
+    throw propertyTypeError('AIR_E_LIGHT_TYPE', property, 'a finite float32 number', `${property} = 1`);
+  }
+}
+
 const typeMask = 0xfc000000;
 const bindingMask = 0x03f00000;
 const countMask = 0x000ff000;
@@ -28606,6 +28633,54 @@ const type2validator = {
   [Type.MAT3]: v => !!(v instanceof Mat3),
   [Type.MAT4]: v => !!(v instanceof Mat4)
 };
+const uniformExamples = {
+  [Type.INT]: '1',
+  [Type.FLOAT]: '1',
+  [Type.INT2]: 'new Vec2(1, 2)',
+  [Type.FLOAT2]: 'new Vec2(1, 2)',
+  [Type.INT3]: 'new Vec3(1, 2, 3)',
+  [Type.FLOAT3]: 'new Vec3(1, 2, 3)',
+  [Type.INT4]: 'new Vec4(1, 2, 3, 4)',
+  [Type.FLOAT4]: 'new Vec4(1, 2, 3, 4), new Color(255, 128, 64, 255), or new Quat(0, 0, 0, 1)',
+  [Type.MAT3]: 'new Mat3()',
+  [Type.MAT4]: 'new Mat4()'
+};
+const vectorKeys = ['x', 'y', 'z', 'w'];
+const matrixKeys = Array.from({
+  length: 16
+}, (_, i) => `m${String(i).padStart(2, '0')}`);
+function validUniformElement(type, value) {
+  const validator = type2validator[type];
+  if (!validator || !validator(value)) {
+    return false;
+  }
+  if (typeof value === 'number') {
+    return isFiniteShaderNumber(value);
+  }
+  const keys = type === Type.MAT3 ? matrixKeys.slice(0, 9) : type === Type.MAT4 ? matrixKeys : vectorKeys.slice(0, type === Type.INT2 || type === Type.FLOAT2 ? 2 : type === Type.INT3 || type === Type.FLOAT3 ? 3 : 4);
+  return keys.every(key => isFiniteShaderNumber(value[key]));
+}
+function validateUniformValue(type, value, count, property, array = false) {
+  let valid = !Array.isArray(value) && !array && validUniformElement(type, value);
+  if (array) {
+    valid = Array.isArray(value) && value.length <= count;
+    if (valid) {
+      const values = value;
+      for (let i = 0; i < values.length; ++i) {
+        if (values[i] !== null && !validUniformElement(type, values[i])) {
+          valid = false;
+          break;
+        }
+      }
+    }
+  }
+  if (valid) {
+    return;
+  }
+  const name = typeof property === 'function' ? property() : property;
+  const example = uniformExamples[type] || Type[type];
+  throw propertyTypeError('AIR_E_MATERIAL_TYPE', name, `${Type[type]} with finite components${array ? `; array count <= ${count}` : ''}`, array ? `[${example}] (one typed value per uniform element)` : example);
+}
 const defaultValues = [Object.freeze([0]), Object.freeze([0, 0]), Object.freeze([0, 0, 0, 0]), Object.freeze([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])];
 function getDefaultFromType(type) {
   switch (type) {
@@ -29335,11 +29410,8 @@ class Pass {
     const binding = getBindingFromHandle(handle);
     const type = getTypeFromHandle(handle);
     const ofs = getOffsetFromHandle(handle);
+    validateUniformValue(type, value, getCountFromHandle(handle), () => this._uniformName(handle));
     const block = this._getBlockView(type, binding);
-    {
-      const validator = type2validator[type];
-      assertID(Boolean(validator && validator(value)), 12011, binding, Type[type]);
-    }
     type2writer[type](block, value, ofs);
     this._rootBufferDirty = true;
   }
@@ -29353,6 +29425,7 @@ class Pass {
   setUniformArray(handle, value) {
     const binding = getBindingFromHandle(handle);
     const type = getTypeFromHandle(handle);
+    validateUniformValue(type, value, getCountFromHandle(handle), () => this._uniformName(handle), true);
     const stride = GetTypeSize(type) >> 2;
     const block = this._getBlockView(type, binding);
     let ofs = getOffsetFromHandle(handle);
@@ -29363,6 +29436,9 @@ class Pass {
       type2writer[type](block, value[i], ofs);
     }
     this._rootBufferDirty = true;
+  }
+  _uniformName(handle) {
+    return Object.keys(this._propertyHandleMap).find(name => this._propertyHandleMap[name] === handle) || `uniform handle ${handle}`;
   }
   bindTexture(binding, value, index) {
     this._descriptorSet.bindTexture(binding, value, index || 0);
@@ -30152,9 +30228,9 @@ class SubModel {
   }
 }
 
-var _dec$2Q, _class$2R, _class2$2k, _initializer$2g, _initializer2$1Q, _initializer3$1j, _initializer4$14, _EffectAsset;
+var _dec$2R, _class$2S, _class2$2k, _initializer$2g, _initializer2$1Q, _initializer3$1j, _initializer4$14, _EffectAsset;
 const legacyBuiltinEffectNames = ['planar-shadow', 'skybox', 'deferred-lighting', 'bloom', 'hbao', 'copy-pass', 'post-process', 'profiler', 'splash-screen', 'unlit', 'sprite', 'particle', 'particle-gpu', 'particle-trail', 'billboard', 'terrain', 'graphics', 'clear-stencil', 'spine', 'occlusion-query', 'geometry-renderer', 'debug-renderer', 'ssss-blur', 'float-output-process'];
-let EffectAsset = (_dec$2Q = ccclass$w('cc.EffectAsset'), _dec$2Q(_class$2R = (_class2$2k = (_EffectAsset = class EffectAsset extends Asset {
+let EffectAsset = (_dec$2R = ccclass$w('cc.EffectAsset'), _dec$2R(_class$2S = (_class2$2k = (_EffectAsset = class EffectAsset extends Asset {
   static register(asset) {
     EffectAsset._effects[asset.name] = asset;
     EffectAsset._layoutValid = false;
@@ -30210,6 +30286,18 @@ let EffectAsset = (_dec$2Q = ccclass$w('cc.EffectAsset'), _dec$2Q(_class$2R = (_
     this.hideInEditor = _initializer4$14 && _initializer4$14();
   }
   onLoaded() {
+    EffectAsset.register(this);
+    if (!deviceManager.gfxDevice) {
+      cclegacy.game.off(cclegacy.Game.EVENT_RENDERER_INITED, this._onRendererReady, this);
+      cclegacy.game.once(cclegacy.Game.EVENT_RENDERER_INITED, this._onRendererReady, this);
+      return;
+    }
+    this._registerPrograms();
+    {
+      cclegacy.game.once(cclegacy.Game.EVENT_RENDERER_INITED, this._precompile, this);
+    }
+  }
+  _registerPrograms() {
     if (cclegacy.rendering && cclegacy.rendering.enableEffectImport) {
       addEffectDefaultProperties(this);
       const programLib = cclegacy.rendering.programLib;
@@ -30218,10 +30306,13 @@ let EffectAsset = (_dec$2Q = ccclass$w('cc.EffectAsset'), _dec$2Q(_class$2R = (_
     } else {
       programLib$1.register(this);
     }
-    EffectAsset.register(this);
-    {
-      cclegacy.game.once(cclegacy.Game.EVENT_RENDERER_INITED, this._precompile, this);
+  }
+  _onRendererReady() {
+    if (!this.isValid) {
+      return;
     }
+    this._registerPrograms();
+    this._precompile();
   }
   _precompile() {
     if (cclegacy.rendering && cclegacy.rendering.enableEffectImport) {
@@ -30240,6 +30331,10 @@ let EffectAsset = (_dec$2Q = ccclass$w('cc.EffectAsset'), _dec$2Q(_class$2R = (_
     }
   }
   destroy() {
+    {
+      cclegacy.game.off(cclegacy.Game.EVENT_RENDERER_INITED, this._onRendererReady, this);
+      cclegacy.game.off(cclegacy.Game.EVENT_RENDERER_INITED, this._precompile, this);
+    }
     EffectAsset.remove(this);
     return super.destroy();
   }
@@ -30262,7 +30357,7 @@ let EffectAsset = (_dec$2Q = ccclass$w('cc.EffectAsset'), _dec$2Q(_class$2R = (_
   return [];
 }), _initializer4$14 = applyDecoratedInitializer(_class2$2k.prototype, "hideInEditor", [serializable$c, editorOnly], function () {
   return false;
-})), _class2$2k)) || _class$2R);
+})), _class2$2k)) || _class$2S);
 cclegacy.EffectAsset = EffectAsset;
 
 class PipelineStateManager {
@@ -30347,10 +30442,8 @@ function renderProfiler(device, renderPass, cmdBuff, profiler, camera) {
   cmdBuff.draw(inputAssembler);
 }
 
-var _dec$2P, _dec2$24, _class$2Q, _class2$2j, _initializer$2f, _initializer2$1P, _initializer3$1i, _initializer4$13, _initializer5$R;
-const v4_1 = new Vec4();
-
-let Material = (_dec$2P = ccclass$w('cc.Material'), _dec2$24 = type$a(EffectAsset), _dec$2P(_class$2Q = (_class2$2j = class Material extends Asset {
+var _dec$2Q, _dec2$25, _class$2R, _class2$2j, _initializer$2f, _initializer2$1P, _initializer3$1i, _initializer4$13, _initializer5$R;
+let Material = (_dec$2Q = ccclass$w('cc.Material'), _dec2$25 = type$a(EffectAsset), _dec$2Q(_class$2R = (_class2$2j = class Material extends Asset {
   static getHash(material) {
     let hash = 0;
     for (const pass of material.passes) {
@@ -30437,13 +30530,28 @@ let Material = (_dec$2P = ccclass$w('cc.Material'), _dec2$24 = type$a(EffectAsse
     }
   }
   setProperty(name, val, passIdx) {
+    const targets = passIdx === undefined ? this._passes : [this._passes[passIdx]];
+    const preparedUniforms = new Map();
+    for (const pass of targets) {
+      if (!pass) {
+        continue;
+      }
+      const handle = pass.getHandle(name);
+      if (!handle || val === null) {
+        continue;
+      }
+      const type = getTypeFromHandle(handle);
+      if (type < Type.SAMPLER1D) {
+        preparedUniforms.set(pass, this._prepareUniformProperty(pass, name, val));
+      }
+    }
     let success = false;
     if (passIdx === undefined) {
       const passes = this._passes;
       const len = passes.length;
       for (let i = 0; i < len; i++) {
         const pass = passes[i];
-        if (this._uploadProperty(pass, name, val)) {
+        if (this._uploadProperty(pass, name, val, preparedUniforms.get(pass))) {
           this._props[pass.propertyIndex][name] = val;
           success = true;
         }
@@ -30453,7 +30561,7 @@ let Material = (_dec$2P = ccclass$w('cc.Material'), _dec2$24 = type$a(EffectAsse
         warnID(16372, passIdx);
       }
       const pass = this._passes[passIdx];
-      if (this._uploadProperty(pass, name, val)) {
+      if (this._uploadProperty(pass, name, val, preparedUniforms.get(pass))) {
         this._props[pass.propertyIndex][name] = val;
         success = true;
       }
@@ -30555,7 +30663,11 @@ let Material = (_dec$2P = ccclass$w('cc.Material'), _dec2$24 = type$a(EffectAsse
       if (passInfo.switch && !defines[passInfo.switch]) {
         continue;
       }
-      const pass = new Pass(cclegacy.director.root);
+      const root = cclegacy.director.root;
+      if (!(root != null && root.device)) {
+        throw propertyTypeError('AIR_E_MATERIAL_NOT_READY', this._effectAsset.name || 'Material.initialize', 'an initialized renderer before creating material passes', 'await createAirApp({ canvas }); then material.initialize({ effectAsset })');
+      }
+      const pass = new Pass(root);
       pass.initialize(passInfo);
       passes.push(pass);
     }
@@ -30587,26 +30699,41 @@ let Material = (_dec$2P = ccclass$w('cc.Material'), _dec2$24 = type$a(EffectAsse
     }
     this._hash = Material.getHash(this);
   }
-  _uploadProperty(pass, name, val) {
+  _prepareUniformProperty(pass, name, value) {
+    var _pass$properties$name;
+    const handle = pass.getHandle(name);
+    const type = getTypeFromHandle(handle);
+    const count = getCountFromHandle(handle);
+    const array = Array.isArray(value);
+    validateUniformValue(type, value, count, name, array);
+    const snapshot = v => typeof v === 'number' ? v : v.clone();
+    let prepared = array ? value.map(v => v === null ? null : snapshot(v)) : snapshot(value);
+    if (!array && (_pass$properties$name = pass.properties[name]) != null && _pass$properties$name.linear) {
+      const original = prepared;
+      const converted = new Vec4();
+      SRGBToLinear(converted, original);
+      converted.w = original.w;
+      prepared = converted;
+    }
+    validateUniformValue(type, prepared, count, name, array);
+    return prepared;
+  }
+  _uploadProperty(pass, name, val, preparedUniform) {
     const handle = pass.getHandle(name);
     if (!handle) {
       return false;
     }
     const type = getTypeFromHandle(handle);
     if (type < Type.SAMPLER1D) {
-      if (Array.isArray(val)) {
-        pass.setUniformArray(handle, val);
-      } else if (val !== null) {
-        var _pass$properties$name;
-        if ((_pass$properties$name = pass.properties[name]) != null && _pass$properties$name.linear) {
-          const v4 = val;
-          SRGBToLinear(v4_1, v4);
-          v4_1.w = v4.w;
-          val = v4_1;
-        }
-        pass.setUniform(handle, val);
-      } else {
+      if (val === null) {
         pass.resetUniform(name);
+      } else {
+        const actual = preparedUniform !== null && preparedUniform !== void 0 ? preparedUniform : this._prepareUniformProperty(pass, name, val);
+        if (Array.isArray(actual)) {
+          pass.setUniformArray(handle, actual);
+        } else {
+          pass.setUniform(handle, actual);
+        }
       }
     } else if (Array.isArray(val)) {
       val.forEach((v, i) => {
@@ -30654,7 +30781,7 @@ let Material = (_dec$2P = ccclass$w('cc.Material'), _dec2$24 = type$a(EffectAsse
   validate() {
     return !!this._effectAsset && !this._effectAsset.isDefault && this.passes.length > 0;
   }
-}, (_initializer$2f = applyDecoratedInitializer(_class2$2j.prototype, "_effectAsset", [_dec2$24], function () {
+}, (_initializer$2f = applyDecoratedInitializer(_class2$2j.prototype, "_effectAsset", [_dec2$25], function () {
   return null;
 }), _initializer2$1P = applyDecoratedInitializer(_class2$2j.prototype, "_techIdx", [serializable$c], function () {
   return 0;
@@ -30664,7 +30791,7 @@ let Material = (_dec$2P = ccclass$w('cc.Material'), _dec2$24 = type$a(EffectAsse
   return [];
 }), _initializer5$R = applyDecoratedInitializer(_class2$2j.prototype, "_props", [serializable$c], function () {
   return [];
-})), _class2$2j)) || _class$2Q);
+})), _class2$2j)) || _class$2R);
 cclegacy.Material = Material;
 
 const ShadowSize = Enum({
@@ -31080,6 +31207,20 @@ class EventKeyboard extends Event {
 }
 Event.EventKeyboard = EventKeyboard;
 
+function locationOutput(out, method) {
+  if (out === undefined) {
+    return new Vec2();
+  }
+  if (!(out instanceof Vec2) || Object.isFrozen(out)) {
+    throw Object.assign(new TypeError(`[AIR_E_INPUT_LOCATION_OUT] ${method}(out) expects a writable Vec2 instance or an omitted argument; use new Vec2().`), {
+      code: 'AIR_E_INPUT_LOCATION_OUT',
+      method,
+      expected: 'writable Vec2 | undefined'
+    });
+  }
+  return out;
+}
+
 class EventMouse extends Event {
   get eventType() {
     return this._eventType;
@@ -31119,9 +31260,7 @@ class EventMouse extends Event {
     this._y = y;
   }
   getLocation(out) {
-    if (!out) {
-      out = new Vec2();
-    }
+    out = locationOutput(out, 'EventMouse.getLocation');
     Vec2.set(out, this._x, this._y);
     return out;
   }
@@ -31243,7 +31382,8 @@ class EventTouch extends Event {
     }
   }
   getLocation(out) {
-    return this.touch ? this.touch.getLocation(out) : new Vec2();
+    out = locationOutput(out, 'EventTouch.getLocation');
+    return this.touch ? this.touch.getLocation(out) : out.set(0, 0);
   }
   getUILocation(out) {
     return this.touch ? this.touch.getUILocation(out) : new Vec2();
@@ -31447,9 +31587,7 @@ class Touch {
     this.setTouchInfo(id, x, y);
   }
   getLocation(out) {
-    if (!out) {
-      out = new Vec2();
-    }
+    out = locationOutput(out, 'Touch.getLocation');
     out.set(this._point.x, this._point.y);
     return out;
   }
@@ -32076,7 +32214,7 @@ NodeEventProcessor._maskComp = null;
 NodeEventProcessor.callbacksInvoker = globalCallbacksInvoker;
 cclegacy.NodeEventProcessor = NodeEventProcessor;
 
-var _dec$2O, _dec2$23, _dec3$1r, _class$2P, _class2$2i, _initializer$2e, _initializer2$1O, _initializer3$1h, _initializer4$12, _initializer5$Q, _initializer6$G, _initializer7$x, _initializer8$v, _initializer9$s, _initializer10$q, _initializer11$o, _Node;
+var _dec$2P, _dec2$24, _dec3$1r, _class$2Q, _class2$2i, _initializer$2e, _initializer2$1O, _initializer3$1h, _initializer4$12, _initializer5$Q, _initializer6$G, _initializer7$x, _initializer8$v, _initializer9$s, _initializer10$q, _initializer11$o, _Node;
 const Destroying = CCObjectFlags.Destroying;
 const DontDestroy = CCObjectFlags.DontDestroy;
 const Deactivating$1 = CCObjectFlags.Deactivating;
@@ -32106,7 +32244,7 @@ const m4_2$3 = mat4();
 const dirtyNodes = [];
 const reserveContentsForAllSyncablePrefabTag = Symbol('ReserveContentsForAllSyncablePrefab');
 let globalFlagChangeVersion = 0;
-let Node$1 = (_dec$2O = ccclass$w('cc.Node'), _dec2$23 = type$a(Vec3), _dec3$1r = type$a(MobilityMode), _dec$2O(_class$2P = (_class2$2i = (_Node = class Node extends CCObject {
+let Node$1 = (_dec$2P = ccclass$w('cc.Node'), _dec2$24 = type$a(Vec3), _dec3$1r = type$a(MobilityMode), _dec$2P(_class$2Q = (_class2$2i = (_Node = class Node extends CCObject {
   get components() {
     return this._components;
   }
@@ -33463,10 +33601,10 @@ let Node$1 = (_dec$2O = ccclass$w('cc.Node'), _dec2$23 = type$a(Vec3), _dec3$1r 
   return Layers.Enum.DEFAULT;
 }), _initializer11$o = applyDecoratedInitializer(_class2$2i.prototype, "_euler", [serializable$c], function () {
   return new Vec3();
-}), _applyDecoratedDescriptor(_class2$2i.prototype, "eulerAngles", [_dec2$23], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "eulerAngles"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "mobility", [_dec3$1r], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "mobility"), _class2$2i.prototype)), _class2$2i)) || _class$2P);
+}), _applyDecoratedDescriptor(_class2$2i.prototype, "eulerAngles", [_dec2$24], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "eulerAngles"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "mobility", [_dec3$1r], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "mobility"), _class2$2i.prototype)), _class2$2i)) || _class$2Q);
 cclegacy.Node = Node$1;
 
-var _dec$2N, _class$2O;
+var _dec$2O, _class$2P;
 const _colorAttachment = new ColorAttachment();
 _colorAttachment.format = Format.RGBA8;
 const _depthStencilAttachment = new DepthStencilAttachment();
@@ -33477,7 +33615,7 @@ const _windowInfo = {
   height: 1,
   renderPassInfo: passInfo
 };
-let RenderTexture = (_dec$2N = ccclass$w('cc.RenderTexture'), _dec$2N(_class$2O = class RenderTexture extends TextureBase {
+let RenderTexture = (_dec$2O = ccclass$w('cc.RenderTexture'), _dec$2O(_class$2P = class RenderTexture extends TextureBase {
   constructor(name) {
     super(name);
     this._window = null;
@@ -33584,7 +33722,7 @@ let RenderTexture = (_dec$2N = ccclass$w('cc.RenderTexture'), _dec$2N(_class$2O 
     gfxDevice == null ? void 0 : gfxDevice.copyTextureToBuffers(gfxTexture, bufferViews, regions);
     return buffer;
   }
-}) || _class$2O);
+}) || _class$2P);
 cclegacy.RenderTexture = RenderTexture;
 
 let ProbeClearFlag;
@@ -35386,6 +35524,9 @@ let Light$1 = class Light {
     this._baked = val;
   }
   set color(color) {
+    if (!(color instanceof Vec3) || ![color.x, color.y, color.z].every(isFiniteShaderNumber)) {
+      throw propertyTypeError('AIR_E_LIGHT_TYPE', 'render-scene Light.color', 'Vec3 with finite RGB components', 'light.color = new Vec3(1, 1, 1)');
+    }
     this._color.set(color);
     if (this._useColorTemperature) {
       Vec3.multiply(this._finalColor, this._color, this._colorTempRGB);
@@ -35404,6 +35545,7 @@ let Light$1 = class Light {
     return this._useColorTemperature;
   }
   set colorTemperature(val) {
+    validateLightNumber('render-scene Light.colorTemperature', val);
     this._colorTemp = val;
     ColorTemperatureToRGB(this._colorTempRGB, this._colorTemp);
     if (this._useColorTemperature) {
@@ -37408,7 +37550,8 @@ var renderer = /*#__PURE__*/Object.freeze({
     scene: index$3,
     type2reader: type2reader,
     type2validator: type2validator,
-    type2writer: type2writer
+    type2writer: type2writer,
+    validateUniformValue: validateUniformValue
 });
 
 class PipelineInputAssemblerData {
@@ -37826,7 +37969,7 @@ class RenderingSubMesh {
   }
 }
 
-var _dec$2M, _dec2$22, _dec3$1q, _dec4$$, _dec5$T, _class$2N, _class2$2h, _initializer$2d, _initializer2$1N, _initializer3$1g, _initializer4$11, _initializer5$P, _initializer6$F, _dec6$F, _dec7$x, _dec8$n, _dec9$k, _dec10$c, _dec11$8, _dec12$8, _dec13$7, _dec14$6, _dec15$6, _dec16$5, _dec17$5, _dec18$5, _dec19$5, _dec20$5, _class3$k, _class4$k, _initializer7$w, _initializer8$u, _initializer9$r, _initializer10$p, _initializer11$n, _initializer12$k, _initializer13$h, _initializer14$f, _initializer15$c, _initializer16$c, _initializer17$9, _dec21$5, _dec22$5, _dec23$5, _dec24$5, _dec25$5, _dec26$5, _dec27$5, _dec28$5, _class5$8, _class6$6, _initializer18$9, _initializer19$8, _initializer20$7, _initializer21$7, _initializer22$6, _initializer23$5, _initializer24$5, _initializer25$4, _initializer26$4, _initializer27$3, _FogInfo, _dec29$4, _dec30$3, _dec31$3, _dec32$2, _dec33$2, _dec34$2, _class7$5, _class8$5, _initializer28$3, _initializer29$3, _initializer30$3, _initializer31$3, _initializer32$3, _initializer33$3, _initializer34$3, _initializer35$3, _dec35$2, _dec36$2, _class9$5, _class10$5, _initializer36$2, _initializer37$2, _initializer38$2, _initializer39$2, _dec37$2, _dec38$2, _dec39$2, _class11$3, _class12$3, _initializer40$2, _initializer41$2, _initializer42$2, _dec40$1, _dec41$1, _class13$2, _class14$2, _initializer43$2, _dec42$1, _dec43$1, _dec44$1, _dec45$1, _dec46$1, _dec47$1, _class15$2, _class16$2, _initializer44$1, _initializer45$1, _initializer46$1, _initializer47, _initializer48, _initializer49, _initializer50, _initializer51, _initializer52, _dec48$1, _dec49$1, _class17, _class18, _initializer53, _initializer54, _initializer55, _initializer56, _initializer57, _initializer58, _initializer59, _initializer60, _initializer61, _initializer62;
+var _dec$2N, _dec2$23, _dec3$1q, _dec4$$, _dec5$T, _class$2O, _class2$2h, _initializer$2d, _initializer2$1N, _initializer3$1g, _initializer4$11, _initializer5$P, _initializer6$F, _dec6$F, _dec7$x, _dec8$n, _dec9$k, _dec10$c, _dec11$8, _dec12$8, _dec13$7, _dec14$6, _dec15$6, _dec16$5, _dec17$5, _dec18$5, _dec19$5, _dec20$5, _class3$k, _class4$k, _initializer7$w, _initializer8$u, _initializer9$r, _initializer10$p, _initializer11$n, _initializer12$k, _initializer13$h, _initializer14$f, _initializer15$c, _initializer16$c, _initializer17$9, _dec21$5, _dec22$5, _dec23$5, _dec24$5, _dec25$5, _dec26$5, _dec27$5, _dec28$5, _class5$8, _class6$6, _initializer18$9, _initializer19$8, _initializer20$7, _initializer21$7, _initializer22$6, _initializer23$5, _initializer24$5, _initializer25$4, _initializer26$4, _initializer27$3, _FogInfo, _dec29$4, _dec30$3, _dec31$3, _dec32$2, _dec33$2, _dec34$2, _class7$5, _class8$5, _initializer28$3, _initializer29$3, _initializer30$3, _initializer31$3, _initializer32$3, _initializer33$3, _initializer34$3, _initializer35$3, _dec35$2, _dec36$2, _class9$5, _class10$5, _initializer36$2, _initializer37$2, _initializer38$2, _initializer39$2, _dec37$2, _dec38$2, _dec39$2, _class11$3, _class12$3, _initializer40$2, _initializer41$2, _initializer42$2, _dec40$1, _dec41$1, _class13$2, _class14$2, _initializer43$2, _dec42$1, _dec43$1, _dec44$1, _dec45$1, _dec46$1, _dec47$1, _class15$2, _class16$2, _initializer44$1, _initializer45$1, _initializer46$1, _initializer47, _initializer48, _initializer49, _initializer50, _initializer51, _initializer52, _dec48$1, _dec49$1, _class17, _class18, _initializer53, _initializer54, _initializer55, _initializer56, _initializer57, _initializer58, _initializer59, _initializer60, _initializer61, _initializer62;
 const _up = new Vec3(0, 1, 0);
 const _v3$3 = new Vec3();
 const _v4$1 = new Vec4();
@@ -37840,7 +37983,7 @@ const normalizeHDRColor = color => {
     color.z *= intensity;
   }
 };
-let AmbientInfo = (_dec$2M = ccclass$w('cc.AmbientInfo'), _dec2$22 = type$a(CCFloat), _dec3$1q = formerlySerializedAs$3('_skyColor'), _dec4$$ = formerlySerializedAs$3('_skyIllum'), _dec5$T = formerlySerializedAs$3('_groundAlbedo'), _dec$2M(_class$2N = (_class2$2h = class AmbientInfo {
+let AmbientInfo = (_dec$2N = ccclass$w('cc.AmbientInfo'), _dec2$23 = type$a(CCFloat), _dec3$1q = formerlySerializedAs$3('_skyColor'), _dec4$$ = formerlySerializedAs$3('_skyIllum'), _dec5$T = formerlySerializedAs$3('_groundAlbedo'), _dec$2N(_class$2O = (_class2$2h = class AmbientInfo {
   constructor() {
     this._skyColorHDR = _initializer$2d && _initializer$2d();
     this._skyIllumHDR = _initializer2$1N && _initializer2$1N();
@@ -37943,7 +38086,7 @@ let AmbientInfo = (_dec$2M = ccclass$w('cc.AmbientInfo'), _dec2$22 = type$a(CCFl
     this._resource = resource;
     resource.initialize(this);
   }
-}, (_applyDecoratedDescriptor(_class2$2h.prototype, "skyIllum", [_dec2$22], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "skyIllum"), _class2$2h.prototype), _initializer$2d = applyDecoratedInitializer(_class2$2h.prototype, "_skyColorHDR", [serializable$c, _dec3$1q], function () {
+}, (_applyDecoratedDescriptor(_class2$2h.prototype, "skyIllum", [_dec2$23], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "skyIllum"), _class2$2h.prototype), _initializer$2d = applyDecoratedInitializer(_class2$2h.prototype, "_skyColorHDR", [serializable$c, _dec3$1q], function () {
   return new Vec4(0.2, 0.5, 0.8, 1.0);
 }), _initializer2$1N = applyDecoratedInitializer(_class2$2h.prototype, "_skyIllumHDR", [serializable$c, _dec4$$], function () {
   return Ambient.SKY_ILLUM;
@@ -37955,7 +38098,7 @@ let AmbientInfo = (_dec$2M = ccclass$w('cc.AmbientInfo'), _dec2$22 = type$a(CCFl
   return Ambient.SKY_ILLUM;
 }), _initializer6$F = applyDecoratedInitializer(_class2$2h.prototype, "_groundAlbedoLDR", [serializable$c], function () {
   return new Vec4(0.2, 0.2, 0.2, 1.0);
-})), _class2$2h)) || _class$2N);
+})), _class2$2h)) || _class$2O);
 legacyCC.AmbientInfo = AmbientInfo;
 let SkyboxInfo = (_dec6$F = ccclass$w('cc.SkyboxInfo'), _dec7$x = type$a(EnvironmentLightingType), _dec8$n = type$a(TextureCube), _dec9$k = type$a(CCFloat), _dec10$c = type$a(TextureCube), _dec11$8 = type$a(TextureCube), _dec12$8 = type$a(Material), _dec13$7 = type$a(TextureCube), _dec14$6 = formerlySerializedAs$3('_envmap'), _dec15$6 = type$a(TextureCube), _dec16$5 = type$a(TextureCube), _dec17$5 = type$a(TextureCube), _dec18$5 = type$a(Material), _dec19$5 = type$a(TextureCube), _dec20$5 = type$a(TextureCube), _dec6$F(_class3$k = (_class4$k = class SkyboxInfo {
   constructor() {
@@ -38910,14 +39053,14 @@ let SceneGlobals = (_dec48$1 = ccclass$w('cc.SceneGlobals'), _dec49$1 = type$a(S
 })), _class18)) || _class17);
 legacyCC.SceneGlobals = SceneGlobals;
 
-var _dec$2L, _dec2$21, _class$2M, _class2$2g, _initializer$2c, _dec3$1p, _dec4$_, _dec5$S, _dec6$E, _dec7$w, _dec8$m, _class3$j, _class4$j, _initializer2$1M, _initializer3$1f, _initializer4$10, _initializer5$O, _initializer6$E, _dec9$j, _class5$7, _class6$5, _initializer7$v, _dec10$b, _dec11$7, _dec12$7, _class7$4, _class8$4, _initializer8$t, _initializer9$q, _initializer10$o, _dec13$6, _dec14$5, _dec15$5, _class9$4, _class10$4, _initializer11$m, _initializer12$j, _dec16$4, _dec17$4, _dec18$4, _class11$2, _class12$2, _initializer13$g, _initializer14$e, _dec19$4, _dec20$4, _dec21$4, _dec22$4, _dec23$4, _dec24$4, _class13$1, _class14$1, _initializer15$b, _initializer16$b, _initializer17$8, _initializer18$8, _initializer19$7, _initializer20$6, _dec25$4, _dec26$4, _dec27$4, _dec28$4, _class15$1, _class16$1, _initializer21$6, _initializer22$5, _initializer23$4, _initializer24$4, _initializer25$3, _initializer26$3;
-let TargetInfo = (_dec$2L = ccclass$w('cc.TargetInfo'), _dec2$21 = type$a([CCString]), _dec$2L(_class$2M = (_class2$2g = class TargetInfo {
+var _dec$2M, _dec2$22, _class$2N, _class2$2g, _initializer$2c, _dec3$1p, _dec4$_, _dec5$S, _dec6$E, _dec7$w, _dec8$m, _class3$j, _class4$j, _initializer2$1M, _initializer3$1f, _initializer4$10, _initializer5$O, _initializer6$E, _dec9$j, _class5$7, _class6$5, _initializer7$v, _dec10$b, _dec11$7, _dec12$7, _class7$4, _class8$4, _initializer8$t, _initializer9$q, _initializer10$o, _dec13$6, _dec14$5, _dec15$5, _class9$4, _class10$4, _initializer11$m, _initializer12$j, _dec16$4, _dec17$4, _dec18$4, _class11$2, _class12$2, _initializer13$g, _initializer14$e, _dec19$4, _dec20$4, _dec21$4, _dec22$4, _dec23$4, _dec24$4, _class13$1, _class14$1, _initializer15$b, _initializer16$b, _initializer17$8, _initializer18$8, _initializer19$7, _initializer20$6, _dec25$4, _dec26$4, _dec27$4, _dec28$4, _class15$1, _class16$1, _initializer21$6, _initializer22$5, _initializer23$4, _initializer24$4, _initializer25$3, _initializer26$3;
+let TargetInfo = (_dec$2M = ccclass$w('cc.TargetInfo'), _dec2$22 = type$a([CCString]), _dec$2M(_class$2N = (_class2$2g = class TargetInfo {
   constructor() {
     this.localID = _initializer$2c && _initializer$2c();
   }
-}, (_initializer$2c = applyDecoratedInitializer(_class2$2g.prototype, "localID", [serializable$c, _dec2$21], function () {
+}, (_initializer$2c = applyDecoratedInitializer(_class2$2g.prototype, "localID", [serializable$c, _dec2$22], function () {
   return [];
-})), _class2$2g)) || _class$2M);
+})), _class2$2g)) || _class$2N);
 let TargetOverrideInfo = (_dec3$1p = ccclass$w('cc.TargetOverrideInfo'), _dec4$_ = type$a(CCObject), _dec5$S = type$a(TargetInfo), _dec6$E = type$a([CCString]), _dec7$w = type$a(Node$1), _dec8$m = type$a(TargetInfo), _dec3$1p(_class3$j = (_class4$j = class TargetOverrideInfo {
   constructor() {
     this.source = _initializer2$1M && _initializer2$1M();
@@ -39361,8 +39504,8 @@ var utils$1 = /*#__PURE__*/Object.freeze({
     getTarget: getTarget
 });
 
-var _dec$2K, _class$2L, _class2$2f, _initializer$2b, _initializer2$1L;
-let Scene = (_dec$2K = ccclass$w('cc.Scene'), _dec$2K(_class$2L = (_class2$2f = class Scene extends Node$1 {
+var _dec$2L, _class$2M, _class2$2f, _initializer$2b, _initializer2$1L;
+let Scene = (_dec$2L = ccclass$w('cc.Scene'), _dec$2L(_class$2M = (_class2$2f = class Scene extends Node$1 {
   get renderScene() {
     return this._renderScene;
   }
@@ -39438,11 +39581,11 @@ let Scene = (_dec$2K = ccclass$w('cc.Scene'), _dec$2K(_class$2L = (_class2$2f = 
   return false;
 }), _initializer2$1L = applyDecoratedInitializer(_class2$2f.prototype, "_globals", [serializable$c], function () {
   return new SceneGlobals();
-})), _class2$2f)) || _class$2L);
+})), _class2$2f)) || _class$2M);
 legacyCC.Scene = Scene;
 
-var _dec$2J, _class$2K, _class2$2e, _initializer$2a;
-let SceneAsset = (_dec$2J = ccclass$w('cc.SceneAsset'), _dec$2J(_class$2K = (_class2$2e = class SceneAsset extends Asset {
+var _dec$2K, _class$2L, _class2$2e, _initializer$2a;
+let SceneAsset = (_dec$2K = ccclass$w('cc.SceneAsset'), _dec$2K(_class$2L = (_class2$2e = class SceneAsset extends Asset {
   constructor(name) {
     super(name);
     this.scene = _initializer$2a && _initializer$2a();
@@ -39456,7 +39599,7 @@ let SceneAsset = (_dec$2J = ccclass$w('cc.SceneAsset'), _dec$2J(_class$2K = (_cl
   }
 }, (_initializer$2a = applyDecoratedInitializer(_class2$2e.prototype, "scene", [serializable$c], function () {
   return null;
-})), _class2$2e)) || _class$2K);
+})), _class2$2e)) || _class$2L);
 cclegacy.SceneAsset = SceneAsset;
 
 const _mat4Trans = new Mat4();
@@ -42011,6 +42154,27 @@ let EventDispatcherPriority;
   EventDispatcherPriority[EventDispatcherPriority["GLOBAL"] = 0] = "GLOBAL";
   EventDispatcherPriority[EventDispatcherPriority["UI"] = 1] = "UI";
 })(EventDispatcherPriority || (EventDispatcherPriority = {}));
+function reportInputException(eventType, cause) {
+  const diagnostic = Object.assign(new Error(`[AIR_E_INPUT_LISTENER] Input listener failed for ${String(eventType)}; subsequent input will continue.`), {
+    code: 'AIR_E_INPUT_LISTENER',
+    eventType,
+    cause
+  });
+  error(diagnostic);
+}
+class InputEventTarget extends EventTarget {
+  _invokeCallback(key, callback, target, arg0, arg1, arg2, arg3, arg4) {
+    try {
+      if (target) {
+        callback.call(target, arg0, arg1, arg2, arg3, arg4);
+      } else {
+        callback(arg0, arg1, arg2, arg3, arg4);
+      }
+    } catch (cause) {
+      reportInputException(key, cause);
+    }
+  }
+}
 class InputEventDispatcher {
   constructor(inputEventTarget) {
     this.priority = EventDispatcherPriority.GLOBAL;
@@ -42030,7 +42194,7 @@ const pointerEventTypeMap = {
 };
 class Input {
   constructor() {
-    this._eventTarget = new EventTarget();
+    this._eventTarget = new InputEventTarget();
     this._touchInput = new TouchInputSource();
     this._mouseInput = new MouseInputSource();
     this._keyboardInput = new KeyboardInputSource();
@@ -42137,9 +42301,8 @@ class Input {
           break;
         }
       } catch (e) {
-        this._clearEvents();
         dispatcher.onThrowException();
-        throw e;
+        reportInputException(event.type, e);
       }
     }
   }
@@ -42430,7 +42593,7 @@ markAsWarning(macro, 'macro', [{
   suggest: 'please use KeyCode instead'
 }]);
 
-var _dec$2I, _class$2J;
+var _dec$2J, _class$2K;
 replaceProperty(Node$1.prototype, 'Node', [{
   name: 'childrenCount',
   newName: 'children.length',
@@ -42627,13 +42790,13 @@ removeProperty(Layers.BitMask, 'Layers.BitMask', [{
 }]);
 const HideInHierarchy = CCObjectFlags.HideInHierarchy;
 const DontSave = CCObjectFlags.DontSave;
-let PrivateNode = (_dec$2I = ccclass$w('cc.PrivateNode'), _dec$2I(_class$2J = class PrivateNode extends Node$1 {
+let PrivateNode = (_dec$2J = ccclass$w('cc.PrivateNode'), _dec$2J(_class$2K = class PrivateNode extends Node$1 {
   constructor(name) {
     super(name);
     warnID(12003, this.name);
     this.hideFlags |= DontSave | HideInHierarchy;
   }
-}) || _class$2J);
+}) || _class$2K);
 replaceProperty(SystemEventType, 'SystemEventType', ['MOUSE_ENTER', 'MOUSE_LEAVE', 'TRANSFORM_CHANGED', 'SCENE_CHANGED_FOR_PERSISTS', 'SIZE_CHANGED', 'ANCHOR_CHANGED', 'COLOR_CHANGED', 'CHILD_ADDED', 'CHILD_REMOVED', 'PARENT_CHANGED', 'NODE_DESTROYED', 'LAYER_CHANGED', 'SIBLING_ORDER_CHANGED'].map(name => ({
   name,
   target: Node$1.EventType,
@@ -43175,13 +43338,13 @@ class NodeActivator {
   }
 }
 
-var _dec$2H, _class$2I, _class2$2d, _initializer$29, _initializer2$1K, _initializer3$1e, _Prefab;
+var _dec$2I, _class$2J, _class2$2d, _initializer$29, _initializer2$1K, _initializer3$1e, _Prefab;
 const OptimizationPolicy = Enum({
   AUTO: 0,
   SINGLE_INSTANCE: 1,
   MULTI_INSTANCE: 2
 });
-let Prefab = (_dec$2H = ccclass$w('cc.Prefab'), _dec$2H(_class$2I = (_class2$2d = (_Prefab = class Prefab extends Asset {
+let Prefab = (_dec$2I = ccclass$w('cc.Prefab'), _dec$2I(_class$2J = (_class2$2d = (_Prefab = class Prefab extends Asset {
   constructor() {
     super();
     this.data = _initializer$29 && _initializer$29();
@@ -43237,7 +43400,7 @@ let Prefab = (_dec$2H = ccclass$w('cc.Prefab'), _dec$2H(_class$2I = (_class2$2d 
   return OptimizationPolicy.AUTO;
 }), _initializer3$1e = applyDecoratedInitializer(_class2$2d.prototype, "persistent", [serializable$c], function () {
   return false;
-})), _class2$2d)) || _class$2I);
+})), _class2$2d)) || _class$2J);
 value(Prefab, '_utils', utils$1);
 legacyCC.Prefab = Prefab;
 {
@@ -43461,8 +43624,8 @@ intersect.rayModel = rayModel;
 intersect.raySubMesh = raySubMesh;
 intersect.rayMesh = rayMesh;
 
-var _dec$2G, _class$2H, _class2$2c, _initializer$28, _initializer2$1J, _initializer3$1d, _PostProcess;
-let PostProcess = (_dec$2G = ccclass$w('cc.PostProcess'), _dec$2G(_class$2H = disallowMultiple$1(_class$2H = (_class2$2c = (_PostProcess = class PostProcess extends Component {
+var _dec$2H, _class$2I, _class2$2c, _initializer$28, _initializer2$1J, _initializer3$1d, _PostProcess;
+let PostProcess = (_dec$2H = ccclass$w('cc.PostProcess'), _dec$2H(_class$2I = disallowMultiple$1(_class$2I = (_class2$2c = (_PostProcess = class PostProcess extends Component {
   constructor() {
     super();
     this.global = _initializer$28 && _initializer$28();
@@ -43500,9 +43663,9 @@ let PostProcess = (_dec$2G = ccclass$w('cc.PostProcess'), _dec$2G(_class$2H = di
   return 1;
 }), _applyDecoratedDescriptor(_class2$2c.prototype, "shadingScale", [property$3], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "shadingScale"), _class2$2c.prototype), _initializer3$1d = applyDecoratedInitializer(_class2$2c.prototype, "enableShadingScaleInEditor", [property$3, serializable$c], function () {
   return false;
-})), _class2$2c)) || _class$2H) || _class$2H);
+})), _class2$2c)) || _class$2I) || _class$2I);
 
-var _dec$2F, _dec2$20, _dec3$1o, _dec4$Z, _dec5$R, _dec6$D, _dec7$v, _dec8$l, _dec9$i, _dec10$a, _class$2G, _class2$2b, _initializer$27, _initializer2$1I, _initializer3$1c, _initializer4$$, _initializer5$N, _initializer6$D, _initializer7$u, _initializer8$s, _initializer9$p, _initializer10$n, _initializer11$l, _initializer12$i, _initializer13$f, _initializer14$d, _initializer15$a, _initializer16$a, _initializer17$7, _initializer18$7, _initializer19$6, _initializer20$5, _initializer21$5, _initializer22$4, _Camera;
+var _dec$2G, _dec2$21, _dec3$1o, _dec4$Z, _dec5$R, _dec6$D, _dec7$v, _dec8$l, _dec9$i, _dec10$a, _class$2H, _class2$2b, _initializer$27, _initializer2$1I, _initializer3$1c, _initializer4$$, _initializer5$N, _initializer6$D, _initializer7$u, _initializer8$s, _initializer9$p, _initializer10$n, _initializer11$l, _initializer12$i, _initializer13$f, _initializer14$d, _initializer15$a, _initializer16$a, _initializer17$7, _initializer18$7, _initializer19$6, _initializer20$5, _initializer21$5, _initializer22$4, _Camera;
 const _temp_vec3_1 = new Vec3();
 const ProjectionType = Enum(CameraProjection);
 const FOVAxis = Enum(CameraFOVAxis);
@@ -43520,7 +43683,7 @@ let CameraEvent;
 (function (CameraEvent) {
   CameraEvent["TARGET_TEXTURE_CHANGE"] = "tex-change";
 })(CameraEvent || (CameraEvent = {}));
-let Camera = (_dec$2F = ccclass$w('cc.Camera'), _dec2$20 = type$a(Layers.BitMask), _dec3$1o = type$a(ClearFlag), _dec4$Z = type$a(ProjectionType), _dec5$R = type$a(FOVAxis), _dec6$D = type$a(Aperture), _dec7$v = type$a(Shutter), _dec8$l = type$a(ISO), _dec9$i = type$a(RenderTexture), _dec10$a = type$a(PostProcess), _dec$2F(_class$2G = (_class2$2b = (_Camera = class Camera extends Component {
+let Camera = (_dec$2G = ccclass$w('cc.Camera'), _dec2$21 = type$a(Layers.BitMask), _dec3$1o = type$a(ClearFlag), _dec4$Z = type$a(ProjectionType), _dec5$R = type$a(FOVAxis), _dec6$D = type$a(Aperture), _dec7$v = type$a(Shutter), _dec8$l = type$a(ISO), _dec9$i = type$a(RenderTexture), _dec10$a = type$a(PostProcess), _dec$2G(_class$2H = (_class2$2b = (_Camera = class Camera extends Component {
   constructor() {
     super();
     this._projection = _initializer$27 && _initializer$27();
@@ -43965,10 +44128,10 @@ let Camera = (_dec$2F = ccclass$w('cc.Camera'), _dec2$20 = type$a(Layers.BitMask
   return CameraType.DEFAULT;
 }), _initializer22$4 = applyDecoratedInitializer(_class2$2b.prototype, "_trackingType", [serializable$c], function () {
   return TrackingType.NO_TRACKING;
-}), _applyDecoratedDescriptor(_class2$2b.prototype, "visibility", [_dec2$20], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "visibility"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "clearFlags", [_dec3$1o], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "clearFlags"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "projection", [_dec4$Z], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "projection"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "fovAxis", [_dec5$R], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "fovAxis"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "aperture", [_dec6$D], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "aperture"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "shutter", [_dec7$v], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "shutter"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "iso", [_dec8$l], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "iso"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "targetTexture", [_dec9$i], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "targetTexture"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "usePostProcess", [property$3], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "usePostProcess"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "postProcess", [_dec10$a], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "postProcess"), _class2$2b.prototype)), _class2$2b)) || _class$2G);
+}), _applyDecoratedDescriptor(_class2$2b.prototype, "visibility", [_dec2$21], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "visibility"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "clearFlags", [_dec3$1o], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "clearFlags"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "projection", [_dec4$Z], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "projection"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "fovAxis", [_dec5$R], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "fovAxis"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "aperture", [_dec6$D], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "aperture"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "shutter", [_dec7$v], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "shutter"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "iso", [_dec8$l], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "iso"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "targetTexture", [_dec9$i], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "targetTexture"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "usePostProcess", [property$3], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "usePostProcess"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "postProcess", [_dec10$a], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "postProcess"), _class2$2b.prototype)), _class2$2b)) || _class$2H);
 cclegacy.Camera = Camera;
 
-var _dec$2E, _dec2$1$, _dec3$1n, _class$2F, _class2$2a, _initializer$26;
+var _dec$2F, _dec2$20, _dec3$1n, _class$2G, _class2$2a, _initializer$26;
 const _matInsInfo = {
   parent: null,
   owner: null,
@@ -43982,7 +44145,7 @@ const {
   displayOrder: displayOrder$2,
   displayName: displayName$1
 } = _decorator;
-let Renderer = (_dec$2E = ccclass$u('cc.Renderer'), _dec2$1$ = type$9(Material), _dec3$1n = type$9([Material]), _dec$2E(_class$2F = disallowMultiple(_class$2F = (_class2$2a = class Renderer extends Component {
+let Renderer = (_dec$2F = ccclass$u('cc.Renderer'), _dec2$20 = type$9(Material), _dec3$1n = type$9([Material]), _dec$2F(_class$2G = disallowMultiple(_class$2G = (_class2$2a = class Renderer extends Component {
   constructor() {
     super();
     this._materials = _initializer$26 && _initializer$26();
@@ -44107,13 +44270,13 @@ let Renderer = (_dec$2E = ccclass$u('cc.Renderer'), _dec2$1$ = type$9(Material),
   }
   _clearMaterials() {
   }
-}, (_applyDecoratedDescriptor(_class2$2a.prototype, "sharedMaterials", [_dec2$1$], Object.getOwnPropertyDescriptor(_class2$2a.prototype, "sharedMaterials"), _class2$2a.prototype), _initializer$26 = applyDecoratedInitializer(_class2$2a.prototype, "_materials", [_dec3$1n], function () {
+}, (_applyDecoratedDescriptor(_class2$2a.prototype, "sharedMaterials", [_dec2$20], Object.getOwnPropertyDescriptor(_class2$2a.prototype, "sharedMaterials"), _class2$2a.prototype), _initializer$26 = applyDecoratedInitializer(_class2$2a.prototype, "_materials", [_dec3$1n], function () {
   return [];
-})), _class2$2a)) || _class$2F) || _class$2F);
+})), _class2$2a)) || _class$2G) || _class$2G);
 
-var _dec$2D, _class$2E, _class2$29, _initializer$25;
+var _dec$2E, _class$2F, _class2$29, _initializer$25;
 getPhaseID$1('specular-pass');
-let ModelRenderer = (_dec$2D = ccclass$w('cc.ModelRenderer'), _dec$2D(_class$2E = (_class2$29 = class ModelRenderer extends Renderer {
+let ModelRenderer = (_dec$2E = ccclass$w('cc.ModelRenderer'), _dec$2E(_class$2F = (_class2$29 = class ModelRenderer extends Renderer {
   constructor() {
     super();
     this._visFlags = _initializer$25 && _initializer$25();
@@ -44153,31 +44316,31 @@ let ModelRenderer = (_dec$2D = ccclass$w('cc.ModelRenderer'), _dec$2D(_class$2E 
   }
 }, (_initializer$25 = applyDecoratedInitializer(_class2$29.prototype, "_visFlags", [serializable$c], function () {
   return Layers.Enum.NONE;
-})), _class2$29)) || _class$2E);
+})), _class2$29)) || _class$2F);
 
-var _dec$2C, _dec2$1_, _class$2D, _class2$28, _initializer$24;
+var _dec$2D, _dec2$1$, _class$2E, _class2$28, _initializer$24;
 const {
   ccclass: ccclass$t,
   serializable: serializable$9,
   type: type$8,
   visible: visible$4
 } = _decorator;
-let PrefabLink = (_dec$2C = ccclass$t('cc.PrefabLink'), _dec2$1_ = type$8(Prefab), _dec$2C(_class$2D = (_class2$28 = class PrefabLink extends Component {
+let PrefabLink = (_dec$2D = ccclass$t('cc.PrefabLink'), _dec2$1$ = type$8(Prefab), _dec$2D(_class$2E = (_class2$28 = class PrefabLink extends Component {
   constructor() {
     super();
     this.prefab = _initializer$24 && _initializer$24();
   }
-}, (_initializer$24 = applyDecoratedInitializer(_class2$28.prototype, "prefab", [_dec2$1_, serializable$9], function () {
+}, (_initializer$24 = applyDecoratedInitializer(_class2$28.prototype, "prefab", [_dec2$1$, serializable$9], function () {
   return null;
-})), _class2$28)) || _class$2D);
+})), _class2$28)) || _class$2E);
 
-var _dec$2B, _dec2$1Z, _class$2C;
+var _dec$2C, _dec2$1_, _class$2D;
 const {
   ccclass: ccclass$s,
   menu: menu$g,
   executionOrder: executionOrder$1
 } = _decorator;
-let FeedStatusController = (_dec$2B = ccclass$s('FeedStatusController'), _dec2$1Z = executionOrder$1(90), _dec$2B(_class$2C = _dec2$1Z(_class$2C = class FeedStatusController extends Component {
+let FeedStatusController = (_dec$2C = ccclass$s('FeedStatusController'), _dec2$1_ = executionOrder$1(90), _dec$2C(_class$2D = _dec2$1_(_class$2D = class FeedStatusController extends Component {
   constructor() {
     super();
   }
@@ -44192,7 +44355,7 @@ let FeedStatusController = (_dec$2B = ccclass$s('FeedStatusController'), _dec2$1
       minigame.offFeedStatusChange(this.feedStatusChangeCallBack);
     }
   }
-}) || _class$2C) || _class$2C);
+}) || _class$2D) || _class$2D);
 
 replaceProperty(Camera, 'Camera', [{
   name: 'CameraClearFlag',
@@ -48245,7 +48408,7 @@ _p.Inflate = _p["Inflate"];
 _p.Inflate.BufferType = _p.Inflate["BufferType"];
 _p.Inflate.prototype.decompress = _p.Inflate.prototype["decompress"];
 
-var _dec$2A, _class$2B, _class2$27, _initializer$23, _initializer2$1H, _initializer3$1b;
+var _dec$2B, _class$2C, _class2$27, _initializer$23, _initializer2$1H, _initializer3$1b;
 const vec3Add = Vec3.add;
 const vec3MultiplyScalar = Vec3.multiplyScalar;
 const vec3Subtract = Vec3.subtract;
@@ -48270,7 +48433,7 @@ function getIndexStrideCtor(stride) {
 const v3_1$5 = new Vec3();
 const v3_2$1 = new Vec3();
 const globalEmptyMeshBuffer = new Uint8Array();
-let Mesh = (_dec$2A = ccclass$w('cc.Mesh'), _dec$2A(_class$2B = (_class2$27 = class Mesh extends Asset {
+let Mesh = (_dec$2B = ccclass$w('cc.Mesh'), _dec$2B(_class$2C = (_class2$27 = class Mesh extends Asset {
   get _nativeAsset() {
     return this._data.buffer;
   }
@@ -49065,7 +49228,7 @@ let Mesh = (_dec$2A = ccclass$w('cc.Mesh'), _dec$2A(_class$2B = (_class2$27 = cl
   return 0;
 }), _initializer3$1b = applyDecoratedInitializer(_class2$27.prototype, "_allowDataAccess", [serializable$c], function () {
   return true;
-})), _class2$27)) || _class$2B);
+})), _class2$27)) || _class$2C);
 cclegacy.Mesh = Mesh;
 function getOffset(attributes, attributeIndex) {
   let result = 0;
@@ -49383,6 +49546,7 @@ function dequantizeMesh(mesh) {
 const _defAttrs = [new Attribute(AttributeName.ATTR_POSITION, Format.RGB32F), new Attribute(AttributeName.ATTR_NORMAL, Format.RGB32F), new Attribute(AttributeName.ATTR_TEX_COORD, Format.RG32F), new Attribute(AttributeName.ATTR_TANGENT, Format.RGBA32F), new Attribute(AttributeName.ATTR_COLOR, Format.RGBA32F)];
 const v3_1$4 = new Vec3();
 function createMesh(geometry, out, options) {
+  var _geometry$primitiveMo;
   options = options || {};
   const attributes = [];
   let stride = 0;
@@ -49529,7 +49693,7 @@ function createMesh(geometry, out, options) {
     writeBuffer(indexBufferView, indices, indexFormat);
   }
   const primitive = {
-    primitiveMode: geometry.primitiveMode || PrimitiveMode.TRIANGLE_LIST,
+    primitiveMode: (_geometry$primitiveMo = geometry.primitiveMode) !== null && _geometry$primitiveMo !== void 0 ? _geometry$primitiveMo : PrimitiveMode.TRIANGLE_LIST,
     vertexBundelIndices: [0]
   };
   if (indexBuffer) {
@@ -49623,9 +49787,10 @@ function createDynamicMesh(primitiveIndex, geometry, out, options) {
   const primitives = [];
   let dataSize = 0;
   for (let i = 0; i < options.maxSubMeshes; i++) {
+    var _geometry$primitiveMo2;
     const primitive = {
       vertexBundelIndices: [],
-      primitiveMode: geometry.primitiveMode || PrimitiveMode.TRIANGLE_LIST
+      primitiveMode: (_geometry$primitiveMo2 = geometry.primitiveMode) !== null && _geometry$primitiveMo2 !== void 0 ? _geometry$primitiveMo2 : PrimitiveMode.TRIANGLE_LIST
     };
     for (const attr of attributes) {
       const formatInfo = FormatInfos[attr.format];
@@ -49759,7 +49924,7 @@ class MorphModel extends Model {
   }
 }
 
-var _dec$2z, _dec2$1Y, _dec3$1m, _dec4$Y, _dec5$Q, _dec6$C, _dec7$u, _class$2A, _class2$26, _initializer$22, _initializer2$1G, _initializer3$1a, _initializer4$_, _initializer5$M, _initializer6$C, _initializer7$t, _initializer8$r, _initializer9$o, _initializer10$m, _ModelBakeSettings, _dec8$k, _dec9$h, _dec10$9, _dec11$6, _dec12$6, _dec13$5, _dec14$4, _dec15$4, _class3$i, _class4$i, _initializer11$k, _initializer12$h, _initializer13$e, _initializer14$c, _initializer15$9, _initializer16$9, _initializer17$6, _initializer18$6, _initializer19$5, _initializer20$4, _initializer21$4, _MeshRenderer;
+var _dec$2A, _dec2$1Z, _dec3$1m, _dec4$Y, _dec5$Q, _dec6$C, _dec7$u, _class$2B, _class2$26, _initializer$22, _initializer2$1G, _initializer3$1a, _initializer4$_, _initializer5$M, _initializer6$C, _initializer7$t, _initializer8$r, _initializer9$o, _initializer10$m, _ModelBakeSettings, _dec8$k, _dec9$h, _dec10$9, _dec11$6, _dec12$6, _dec13$5, _dec14$4, _dec15$4, _class3$i, _class4$i, _initializer11$k, _initializer12$h, _initializer13$e, _initializer14$c, _initializer15$9, _initializer16$9, _initializer17$6, _initializer18$6, _initializer19$5, _initializer20$4, _initializer21$4, _MeshRenderer;
 const {
   ccclass: ccclass$r,
   help: help$3,
@@ -49799,7 +49964,7 @@ var ModelBakeSettingsEvent;
   ModelBakeSettingsEvent["REFLECTION_PROBE_CHANGED"] = "reflection_probe_changed";
   ModelBakeSettingsEvent["BAKE_TO_REFLECTION_PROBE_CHANGED"] = "bake_to_reflection_probe_changed";
 })(ModelBakeSettingsEvent || (ModelBakeSettingsEvent = {}));
-let ModelBakeSettings = (_dec$2z = ccclass$r('cc.ModelBakeSettings'), _dec2$1Y = formerlySerializedAs$2('_recieveShadow'), _dec3$1m = type$7(CCInteger), _dec4$Y = type$7(CCBoolean), _dec5$Q = type$7(CCBoolean), _dec6$C = type$7(Enum(ReflectionProbeType)), _dec7$u = type$7(CCBoolean), _dec$2z(_class$2A = (_class2$26 = (_ModelBakeSettings = class ModelBakeSettings extends EventTarget {
+let ModelBakeSettings = (_dec$2A = ccclass$r('cc.ModelBakeSettings'), _dec2$1Z = formerlySerializedAs$2('_recieveShadow'), _dec3$1m = type$7(CCInteger), _dec4$Y = type$7(CCBoolean), _dec5$Q = type$7(CCBoolean), _dec6$C = type$7(Enum(ReflectionProbeType)), _dec7$u = type$7(CCBoolean), _dec$2A(_class$2B = (_class2$26 = (_ModelBakeSettings = class ModelBakeSettings extends EventTarget {
   constructor() {
     super();
     this.texture = _initializer$22 && _initializer$22();
@@ -49875,7 +50040,7 @@ let ModelBakeSettings = (_dec$2z = ccclass$r('cc.ModelBakeSettings'), _dec2$1Y =
   return false;
 }), _initializer4$_ = applyDecoratedInitializer(_class2$26.prototype, "_castShadow", [serializable$8], function () {
   return false;
-}), _initializer5$M = applyDecoratedInitializer(_class2$26.prototype, "_receiveShadow", [_dec2$1Y], function () {
+}), _initializer5$M = applyDecoratedInitializer(_class2$26.prototype, "_receiveShadow", [_dec2$1Z], function () {
   return false;
 }), _initializer6$C = applyDecoratedInitializer(_class2$26.prototype, "_lightmapSize", [serializable$8], function () {
   return 64;
@@ -49887,7 +50052,7 @@ let ModelBakeSettings = (_dec$2z = ccclass$r('cc.ModelBakeSettings'), _dec2$1Y =
   return ReflectionProbeType.NONE;
 }), _initializer10$m = applyDecoratedInitializer(_class2$26.prototype, "_bakeToReflectionProbe", [serializable$8], function () {
   return true;
-}), _applyDecoratedDescriptor(_class2$26.prototype, "lightmapSize", [_dec3$1m], Object.getOwnPropertyDescriptor(_class2$26.prototype, "lightmapSize"), _class2$26.prototype), _applyDecoratedDescriptor(_class2$26.prototype, "useLightProbe", [_dec4$Y], Object.getOwnPropertyDescriptor(_class2$26.prototype, "useLightProbe"), _class2$26.prototype), _applyDecoratedDescriptor(_class2$26.prototype, "bakeToLightProbe", [_dec5$Q], Object.getOwnPropertyDescriptor(_class2$26.prototype, "bakeToLightProbe"), _class2$26.prototype), _applyDecoratedDescriptor(_class2$26.prototype, "reflectionProbe", [_dec6$C], Object.getOwnPropertyDescriptor(_class2$26.prototype, "reflectionProbe"), _class2$26.prototype), _applyDecoratedDescriptor(_class2$26.prototype, "bakeToReflectionProbe", [_dec7$u], Object.getOwnPropertyDescriptor(_class2$26.prototype, "bakeToReflectionProbe"), _class2$26.prototype)), _class2$26)) || _class$2A);
+}), _applyDecoratedDescriptor(_class2$26.prototype, "lightmapSize", [_dec3$1m], Object.getOwnPropertyDescriptor(_class2$26.prototype, "lightmapSize"), _class2$26.prototype), _applyDecoratedDescriptor(_class2$26.prototype, "useLightProbe", [_dec4$Y], Object.getOwnPropertyDescriptor(_class2$26.prototype, "useLightProbe"), _class2$26.prototype), _applyDecoratedDescriptor(_class2$26.prototype, "bakeToLightProbe", [_dec5$Q], Object.getOwnPropertyDescriptor(_class2$26.prototype, "bakeToLightProbe"), _class2$26.prototype), _applyDecoratedDescriptor(_class2$26.prototype, "reflectionProbe", [_dec6$C], Object.getOwnPropertyDescriptor(_class2$26.prototype, "reflectionProbe"), _class2$26.prototype), _applyDecoratedDescriptor(_class2$26.prototype, "bakeToReflectionProbe", [_dec7$u], Object.getOwnPropertyDescriptor(_class2$26.prototype, "bakeToReflectionProbe"), _class2$26.prototype)), _class2$26)) || _class$2B);
 let MeshRenderer = (_dec8$k = ccclass$r('cc.MeshRenderer'), _dec9$h = executionOrder(100), _dec10$9 = type$7(CCFloat), _dec11$6 = type$7(CCFloat), _dec12$6 = type$7(ModelShadowCastingMode), _dec13$5 = type$7(ModelShadowReceivingMode), _dec14$4 = type$7(Mesh), _dec15$4 = type$7(CCBoolean), _dec8$k(_class3$i = _dec9$h(_class3$i = (_class4$i = (_MeshRenderer = class MeshRenderer extends ModelRenderer {
   get shadowBias() {
     return this._shadowBias;
@@ -50709,8 +50874,8 @@ removeProperty(Mesh.prototype, 'Mesh.prototype', [{
   name: 'destroyFlatBuffers'
 }]);
 
-var _dec$2y, _dec2$1X, _dec3$1l, _class$2z, _class2$25, _initializer$21, _initializer2$1F, _initializer3$19;
-let Skeleton$1 = (_dec$2y = ccclass$w('cc.Skeleton'), _dec2$1X = type$a([CCString]), _dec3$1l = type$a([Mat4]), _dec$2y(_class$2z = (_class2$25 = class Skeleton extends Asset {
+var _dec$2z, _dec2$1Y, _dec3$1l, _class$2A, _class2$25, _initializer$21, _initializer2$1F, _initializer3$19;
+let Skeleton$1 = (_dec$2z = ccclass$w('cc.Skeleton'), _dec2$1Y = type$a([CCString]), _dec3$1l = type$a([Mat4]), _dec$2z(_class$2A = (_class2$25 = class Skeleton extends Asset {
   constructor(name) {
     super(name);
     this._joints = _initializer$21 && _initializer$21();
@@ -50760,13 +50925,13 @@ let Skeleton$1 = (_dec$2y = ccclass$w('cc.Skeleton'), _dec2$1X = type$a([CCStrin
   validate() {
     return this.joints.length > 0 && this.bindposes.length > 0;
   }
-}, (_initializer$21 = applyDecoratedInitializer(_class2$25.prototype, "_joints", [_dec2$1X], function () {
+}, (_initializer$21 = applyDecoratedInitializer(_class2$25.prototype, "_joints", [_dec2$1Y], function () {
   return [];
 }), _initializer2$1F = applyDecoratedInitializer(_class2$25.prototype, "_bindposes", [_dec3$1l], function () {
   return [];
 }), _initializer3$19 = applyDecoratedInitializer(_class2$25.prototype, "_hash", [serializable$c], function () {
   return 0;
-})), _class2$25)) || _class$2z);
+})), _class2$25)) || _class$2A);
 cclegacy.Skeleton = Skeleton$1;
 
 removeProperty(MeshRenderer.prototype, 'MeshRenderer.prototype', [{
@@ -50777,13 +50942,13 @@ removeProperty(MeshRenderer.prototype, 'MeshRenderer.prototype', [{
 cclegacy.ModelComponent = MeshRenderer;
 setClassAlias(MeshRenderer, 'cc.ModelComponent');
 
-var _dec$2x, _class$2y, _class2$24, _initializer$20, _initializer2$1E, _initializer3$18, _dec2$1W, _dec3$1k, _dec4$X, _class3$h, _class4$h, _initializer4$Z, _initializer5$L, _initializer6$B, _initializer7$s, _initializer8$q, _Light;
+var _dec$2y, _class$2z, _class2$24, _initializer$20, _initializer2$1E, _initializer3$18, _dec2$1X, _dec3$1k, _dec4$X, _class3$h, _class4$h, _initializer4$Z, _initializer5$L, _initializer6$B, _initializer7$s, _initializer8$q, _Light;
 const _color_tmp = new Vec3();
 const PhotometricTerm = Enum({
   LUMINOUS_FLUX: 0,
   LUMINANCE: 1
 });
-let StaticLightSettings = (_dec$2x = ccclass$w('cc.StaticLightSettings'), _dec$2x(_class$2y = (_class2$24 = class StaticLightSettings {
+let StaticLightSettings = (_dec$2y = ccclass$w('cc.StaticLightSettings'), _dec$2y(_class$2z = (_class2$24 = class StaticLightSettings {
   constructor() {
     this._baked = _initializer$20 && _initializer$20();
     this._editorOnly = _initializer2$1E && _initializer2$1E();
@@ -50813,12 +50978,15 @@ let StaticLightSettings = (_dec$2x = ccclass$w('cc.StaticLightSettings'), _dec$2
   return false;
 }), _initializer3$18 = applyDecoratedInitializer(_class2$24.prototype, "_castShadow", [serializable$c], function () {
   return false;
-})), _class2$24)) || _class$2y);
-let Light = (_dec2$1W = ccclass$w('cc.Light'), _dec3$1k = type$a(StaticLightSettings), _dec4$X = type$a(Layers.BitMask), _dec2$1W(_class3$h = (_class4$h = (_Light = class Light extends Component {
+})), _class2$24)) || _class$2z);
+let Light = (_dec2$1X = ccclass$w('cc.Light'), _dec3$1k = type$a(StaticLightSettings), _dec4$X = type$a(Layers.BitMask), _dec2$1X(_class3$h = (_class4$h = (_Light = class Light extends Component {
   get color() {
     return this._color;
   }
   set color(val) {
+    if (!(val instanceof Color)) {
+      throw propertyTypeError('AIR_E_LIGHT_TYPE', 'Light.color', 'Color (component RGB channels use 0..255)', 'light.color = new Color(255, 255, 255)');
+    }
     this._color = val.clone();
     if (this._light) {
       _color_tmp.x = val.r / 255.0;
@@ -50840,6 +51008,7 @@ let Light = (_dec2$1W = ccclass$w('cc.Light'), _dec3$1k = type$a(StaticLightSett
     return this._colorTemperature;
   }
   set colorTemperature(val) {
+    validateLightNumber('Light.colorTemperature', val);
     this._colorTemperature = val;
     if (this._light) {
       this._light.colorTemperature = val;
@@ -50975,7 +51144,7 @@ let Light = (_dec2$1W = ccclass$w('cc.Light'), _dec3$1k = type$a(StaticLightSett
   return CAMERA_DEFAULT_MASK;
 }), _applyDecoratedDescriptor(_class4$h.prototype, "staticSettings", [_dec3$1k], Object.getOwnPropertyDescriptor(_class4$h.prototype, "staticSettings"), _class4$h.prototype), _applyDecoratedDescriptor(_class4$h.prototype, "visibility", [_dec4$X], Object.getOwnPropertyDescriptor(_class4$h.prototype, "visibility"), _class4$h.prototype)), _class4$h)) || _class3$h);
 
-var _dec$2w, _dec2$1V, _dec3$1j, _dec4$W, _dec5$P, _dec6$B, _dec7$t, _dec8$j, _dec9$g, _dec10$8, _dec11$5, _dec12$5, _dec13$4, _dec14$3, _dec15$3, _dec16$3, _dec17$3, _dec18$3, _dec19$3, _dec20$3, _dec21$3, _dec22$3, _dec23$3, _dec24$3, _dec25$3, _dec26$3, _dec27$3, _dec28$3, _dec29$3, _dec30$2, _dec31$2, _dec32$1, _dec33$1, _dec34$1, _dec35$1, _dec36$1, _dec37$1, _dec38$1, _dec39$1, _class$2x, _class2$23, _initializer$1$, _initializer2$1D, _initializer3$17, _initializer4$Y, _initializer5$K, _initializer6$A, _initializer7$r, _initializer8$p, _initializer9$n, _initializer10$l, _initializer11$j, _initializer12$g, _initializer13$d, _initializer14$b, _initializer15$8, _initializer16$8, _initializer17$5, _initializer18$5, _initializer19$4;
+var _dec$2x, _dec2$1W, _dec3$1j, _dec4$W, _dec5$P, _dec6$B, _dec7$t, _dec8$j, _dec9$g, _dec10$8, _dec11$5, _dec12$5, _dec13$4, _dec14$3, _dec15$3, _dec16$3, _dec17$3, _dec18$3, _dec19$3, _dec20$3, _dec21$3, _dec22$3, _dec23$3, _dec24$3, _dec25$3, _dec26$3, _dec27$3, _dec28$3, _dec29$3, _dec30$2, _dec31$2, _dec32$1, _dec33$1, _dec34$1, _dec35$1, _dec36$1, _dec37$1, _dec38$1, _dec39$1, _class$2y, _class2$23, _initializer$1$, _initializer2$1D, _initializer3$17, _initializer4$Y, _initializer5$K, _initializer6$A, _initializer7$r, _initializer8$p, _initializer9$n, _initializer10$l, _initializer11$j, _initializer12$g, _initializer13$d, _initializer14$b, _initializer15$8, _initializer16$8, _initializer17$5, _initializer18$5, _initializer19$4;
 const {
   ccclass: ccclass$q,
   menu: menu$e,
@@ -50991,7 +51160,7 @@ const {
   slide: slide$1,
   range: range$1
 } = _decorator;
-let DirectionalLight = (_dec$2w = ccclass$q('cc.DirectionalLight'), _dec2$1V = formerlySerializedAs$1('_illuminance'), _dec3$1j = type$6(CCInteger), _dec4$W = property$1({
+let DirectionalLight = (_dec$2x = ccclass$q('cc.DirectionalLight'), _dec2$1W = formerlySerializedAs$1('_illuminance'), _dec3$1j = type$6(CCInteger), _dec4$W = property$1({
   group: {
     name: 'DynamicShadowSettings',
     displayOrder: 1
@@ -51081,7 +51250,7 @@ let DirectionalLight = (_dec$2w = ccclass$q('cc.DirectionalLight'), _dec2$1V = f
     name: 'DynamicShadowSettings',
     displayOrder: 21
   }
-}), _dec39$1 = type$6(CCFloat), _dec$2w(_class$2x = (_class2$23 = class DirectionalLight extends Light {
+}), _dec39$1 = type$6(CCFloat), _dec$2x(_class$2y = (_class2$23 = class DirectionalLight extends Light {
   get illuminance() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -51342,7 +51511,7 @@ let DirectionalLight = (_dec$2w = ccclass$q('cc.DirectionalLight'), _dec2$1V = f
       meshRender.onUpdateReceiveDirLight(this._visibility);
     }
   }
-}, (_initializer$1$ = applyDecoratedInitializer(_class2$23.prototype, "_illuminanceHDR", [property$1, _dec2$1V], function () {
+}, (_initializer$1$ = applyDecoratedInitializer(_class2$23.prototype, "_illuminanceHDR", [property$1, _dec2$1W], function () {
   return 65000;
 }), _initializer2$1D = applyDecoratedInitializer(_class2$23.prototype, "_illuminanceLDR", [serializable$7], function () {
   return 65000 * Camera$1.standardExposureValue;
@@ -51380,10 +51549,10 @@ let DirectionalLight = (_dec$2w = ccclass$q('cc.DirectionalLight'), _dec2$1V = f
   return 10.0;
 }), _initializer19$4 = applyDecoratedInitializer(_class2$23.prototype, "_shadowOrthoSize", [serializable$7], function () {
   return 5;
-}), _applyDecoratedDescriptor(_class2$23.prototype, "illuminance", [_dec3$1j], Object.getOwnPropertyDescriptor(_class2$23.prototype, "illuminance"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowEnabled", [_dec4$W, _dec5$P], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowEnabled"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowPcf", [_dec6$B, _dec7$t], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowPcf"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowBias", [_dec8$j, _dec9$g], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowBias"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowNormalBias", [_dec10$8, _dec11$5], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowNormalBias"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowSaturation", [_dec12$5, _dec13$4], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowSaturation"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowDistance", [_dec14$3, _dec15$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowDistance"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowInvisibleOcclusionRange", [_dec16$3, _dec17$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowInvisibleOcclusionRange"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmLevel", [_dec18$3, _dec19$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmLevel"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "enableCSM", [_dec20$3, _dec21$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "enableCSM"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmLayerLambda", [_dec22$3, _dec23$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmLayerLambda"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmOptimizationMode", [_dec24$3, _dec25$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmOptimizationMode"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowFixedArea", [_dec26$3, _dec27$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowFixedArea"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowNear", [_dec28$3, _dec29$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowNear"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowFar", [_dec30$2, _dec31$2], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowFar"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowOrthoSize", [_dec32$1, _dec33$1], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowOrthoSize"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmAdvancedOptions", [_dec34$1, _dec35$1], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmAdvancedOptions"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmLayersTransition", [_dec36$1, _dec37$1], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmLayersTransition"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmTransitionRange", [_dec38$1, _dec39$1], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmTransitionRange"), _class2$23.prototype)), _class2$23)) || _class$2x);
+}), _applyDecoratedDescriptor(_class2$23.prototype, "illuminance", [_dec3$1j], Object.getOwnPropertyDescriptor(_class2$23.prototype, "illuminance"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowEnabled", [_dec4$W, _dec5$P], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowEnabled"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowPcf", [_dec6$B, _dec7$t], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowPcf"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowBias", [_dec8$j, _dec9$g], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowBias"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowNormalBias", [_dec10$8, _dec11$5], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowNormalBias"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowSaturation", [_dec12$5, _dec13$4], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowSaturation"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowDistance", [_dec14$3, _dec15$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowDistance"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowInvisibleOcclusionRange", [_dec16$3, _dec17$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowInvisibleOcclusionRange"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmLevel", [_dec18$3, _dec19$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmLevel"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "enableCSM", [_dec20$3, _dec21$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "enableCSM"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmLayerLambda", [_dec22$3, _dec23$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmLayerLambda"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmOptimizationMode", [_dec24$3, _dec25$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmOptimizationMode"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowFixedArea", [_dec26$3, _dec27$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowFixedArea"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowNear", [_dec28$3, _dec29$3], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowNear"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowFar", [_dec30$2, _dec31$2], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowFar"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "shadowOrthoSize", [_dec32$1, _dec33$1], Object.getOwnPropertyDescriptor(_class2$23.prototype, "shadowOrthoSize"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmAdvancedOptions", [_dec34$1, _dec35$1], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmAdvancedOptions"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmLayersTransition", [_dec36$1, _dec37$1], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmLayersTransition"), _class2$23.prototype), _applyDecoratedDescriptor(_class2$23.prototype, "csmTransitionRange", [_dec38$1, _dec39$1], Object.getOwnPropertyDescriptor(_class2$23.prototype, "csmTransitionRange"), _class2$23.prototype)), _class2$23)) || _class$2y);
 
-var _dec$2v, _dec2$1U, _dec3$1i, _dec4$V, _dec5$O, _dec6$A, _dec7$s, _class$2w, _class2$22, _initializer$1_, _initializer2$1C, _initializer3$16, _initializer4$X, _initializer5$J;
-let SphereLight = (_dec$2v = ccclass$w('cc.SphereLight'), _dec2$1U = formerlySerializedAs$3('_luminance'), _dec3$1i = type$a(CCInteger), _dec4$V = type$a(CCInteger), _dec5$O = type$a(PhotometricTerm), _dec6$A = type$a(CCFloat), _dec7$s = type$a(CCFloat), _dec$2v(_class$2w = (_class2$22 = class SphereLight extends Light {
+var _dec$2w, _dec2$1V, _dec3$1i, _dec4$V, _dec5$O, _dec6$A, _dec7$s, _class$2x, _class2$22, _initializer$1_, _initializer2$1C, _initializer3$16, _initializer4$X, _initializer5$J;
+let SphereLight = (_dec$2w = ccclass$w('cc.SphereLight'), _dec2$1V = formerlySerializedAs$3('_luminance'), _dec3$1i = type$a(CCInteger), _dec4$V = type$a(CCInteger), _dec5$O = type$a(PhotometricTerm), _dec6$A = type$a(CCFloat), _dec7$s = type$a(CCFloat), _dec$2w(_class$2x = (_class2$22 = class SphereLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -51467,7 +51636,7 @@ let SphereLight = (_dec$2v = ccclass$w('cc.SphereLight'), _dec2$1U = formerlySer
   }
 }, (_initializer$1_ = applyDecoratedInitializer(_class2$22.prototype, "_size", [serializable$c], function () {
   return 0.15;
-}), _initializer2$1C = applyDecoratedInitializer(_class2$22.prototype, "_luminanceHDR", [serializable$c, _dec2$1U], function () {
+}), _initializer2$1C = applyDecoratedInitializer(_class2$22.prototype, "_luminanceHDR", [serializable$c, _dec2$1V], function () {
   return 1700 / nt2lm(0.15);
 }), _initializer3$16 = applyDecoratedInitializer(_class2$22.prototype, "_luminanceLDR", [serializable$c], function () {
   return 1700 / nt2lm(0.15) * Camera$1.standardExposureValue * Camera$1.standardLightMeterScale;
@@ -51475,9 +51644,9 @@ let SphereLight = (_dec$2v = ccclass$w('cc.SphereLight'), _dec2$1U = formerlySer
   return PhotometricTerm.LUMINOUS_FLUX;
 }), _initializer5$J = applyDecoratedInitializer(_class2$22.prototype, "_range", [serializable$c], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$22.prototype, "luminousFlux", [_dec3$1i], Object.getOwnPropertyDescriptor(_class2$22.prototype, "luminousFlux"), _class2$22.prototype), _applyDecoratedDescriptor(_class2$22.prototype, "luminance", [_dec4$V], Object.getOwnPropertyDescriptor(_class2$22.prototype, "luminance"), _class2$22.prototype), _applyDecoratedDescriptor(_class2$22.prototype, "term", [_dec5$O], Object.getOwnPropertyDescriptor(_class2$22.prototype, "term"), _class2$22.prototype), _applyDecoratedDescriptor(_class2$22.prototype, "size", [_dec6$A], Object.getOwnPropertyDescriptor(_class2$22.prototype, "size"), _class2$22.prototype), _applyDecoratedDescriptor(_class2$22.prototype, "range", [_dec7$s], Object.getOwnPropertyDescriptor(_class2$22.prototype, "range"), _class2$22.prototype)), _class2$22)) || _class$2w);
+}), _applyDecoratedDescriptor(_class2$22.prototype, "luminousFlux", [_dec3$1i], Object.getOwnPropertyDescriptor(_class2$22.prototype, "luminousFlux"), _class2$22.prototype), _applyDecoratedDescriptor(_class2$22.prototype, "luminance", [_dec4$V], Object.getOwnPropertyDescriptor(_class2$22.prototype, "luminance"), _class2$22.prototype), _applyDecoratedDescriptor(_class2$22.prototype, "term", [_dec5$O], Object.getOwnPropertyDescriptor(_class2$22.prototype, "term"), _class2$22.prototype), _applyDecoratedDescriptor(_class2$22.prototype, "size", [_dec6$A], Object.getOwnPropertyDescriptor(_class2$22.prototype, "size"), _class2$22.prototype), _applyDecoratedDescriptor(_class2$22.prototype, "range", [_dec7$s], Object.getOwnPropertyDescriptor(_class2$22.prototype, "range"), _class2$22.prototype)), _class2$22)) || _class$2x);
 
-var _dec$2u, _dec2$1T, _dec3$1h, _dec4$U, _dec5$N, _dec6$z, _dec7$r, _dec8$i, _dec9$f, _dec10$7, _dec11$4, _dec12$4, _class$2v, _class2$21, _initializer$1Z, _initializer2$1B, _initializer3$15, _initializer4$W, _initializer5$I, _initializer6$z, _initializer7$q, _initializer8$o, _initializer9$m, _initializer10$k, _initializer11$i;
+var _dec$2v, _dec2$1U, _dec3$1h, _dec4$U, _dec5$N, _dec6$z, _dec7$r, _dec8$i, _dec9$f, _dec10$7, _dec11$4, _dec12$4, _class$2w, _class2$21, _initializer$1Z, _initializer2$1B, _initializer3$15, _initializer4$W, _initializer5$I, _initializer6$z, _initializer7$q, _initializer8$o, _initializer9$m, _initializer10$k, _initializer11$i;
 const {
   ccclass: ccclass$p,
   range,
@@ -51494,7 +51663,7 @@ const {
   visible: visible$1,
   property
 } = _decorator;
-let SpotLight = (_dec$2u = ccclass$p('cc.SpotLight'), _dec2$1T = formerlySerializedAs('_luminance'), _dec3$1h = type$5(PhotometricTerm), _dec4$U = type$5(CCFloat), _dec5$N = property({
+let SpotLight = (_dec$2v = ccclass$p('cc.SpotLight'), _dec2$1U = formerlySerializedAs('_luminance'), _dec3$1h = type$5(PhotometricTerm), _dec4$U = type$5(CCFloat), _dec5$N = property({
   group: {
     name: 'DynamicShadowSettings',
     displayOrder: 1
@@ -51514,7 +51683,7 @@ let SpotLight = (_dec$2u = ccclass$p('cc.SpotLight'), _dec2$1T = formerlySeriali
     name: 'DynamicShadowSettings',
     displayOrder: 4
   }
-}), _dec12$4 = type$5(CCFloat), _dec$2u(_class$2v = (_class2$21 = class SpotLight extends Light {
+}), _dec12$4 = type$5(CCFloat), _dec$2v(_class$2w = (_class2$21 = class SpotLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -51665,7 +51834,7 @@ let SpotLight = (_dec$2u = ccclass$p('cc.SpotLight'), _dec2$1T = formerlySeriali
   }
 }, (_initializer$1Z = applyDecoratedInitializer(_class2$21.prototype, "_size", [serializable$6], function () {
   return 0.15;
-}), _initializer2$1B = applyDecoratedInitializer(_class2$21.prototype, "_luminanceHDR", [serializable$6, _dec2$1T], function () {
+}), _initializer2$1B = applyDecoratedInitializer(_class2$21.prototype, "_luminanceHDR", [serializable$6, _dec2$1U], function () {
   return 1700 / nt2lm(0.15);
 }), _initializer3$15 = applyDecoratedInitializer(_class2$21.prototype, "_luminanceLDR", [serializable$6], function () {
   return 1700 / nt2lm(0.15) * Camera$1.standardExposureValue * Camera$1.standardLightMeterScale;
@@ -51685,10 +51854,10 @@ let SpotLight = (_dec$2u = ccclass$p('cc.SpotLight'), _dec2$1T = formerlySeriali
   return 0.00001;
 }), _initializer11$i = applyDecoratedInitializer(_class2$21.prototype, "_shadowNormalBias", [serializable$6], function () {
   return 0.0;
-}), _applyDecoratedDescriptor(_class2$21.prototype, "term", [_dec3$1h], Object.getOwnPropertyDescriptor(_class2$21.prototype, "term"), _class2$21.prototype), _applyDecoratedDescriptor(_class2$21.prototype, "size", [_dec4$U], Object.getOwnPropertyDescriptor(_class2$21.prototype, "size"), _class2$21.prototype), _applyDecoratedDescriptor(_class2$21.prototype, "shadowEnabled", [_dec5$N, _dec6$z], Object.getOwnPropertyDescriptor(_class2$21.prototype, "shadowEnabled"), _class2$21.prototype), _applyDecoratedDescriptor(_class2$21.prototype, "shadowPcf", [_dec7$r, _dec8$i], Object.getOwnPropertyDescriptor(_class2$21.prototype, "shadowPcf"), _class2$21.prototype), _applyDecoratedDescriptor(_class2$21.prototype, "shadowBias", [_dec9$f, _dec10$7], Object.getOwnPropertyDescriptor(_class2$21.prototype, "shadowBias"), _class2$21.prototype), _applyDecoratedDescriptor(_class2$21.prototype, "shadowNormalBias", [_dec11$4, _dec12$4], Object.getOwnPropertyDescriptor(_class2$21.prototype, "shadowNormalBias"), _class2$21.prototype)), _class2$21)) || _class$2v);
+}), _applyDecoratedDescriptor(_class2$21.prototype, "term", [_dec3$1h], Object.getOwnPropertyDescriptor(_class2$21.prototype, "term"), _class2$21.prototype), _applyDecoratedDescriptor(_class2$21.prototype, "size", [_dec4$U], Object.getOwnPropertyDescriptor(_class2$21.prototype, "size"), _class2$21.prototype), _applyDecoratedDescriptor(_class2$21.prototype, "shadowEnabled", [_dec5$N, _dec6$z], Object.getOwnPropertyDescriptor(_class2$21.prototype, "shadowEnabled"), _class2$21.prototype), _applyDecoratedDescriptor(_class2$21.prototype, "shadowPcf", [_dec7$r, _dec8$i], Object.getOwnPropertyDescriptor(_class2$21.prototype, "shadowPcf"), _class2$21.prototype), _applyDecoratedDescriptor(_class2$21.prototype, "shadowBias", [_dec9$f, _dec10$7], Object.getOwnPropertyDescriptor(_class2$21.prototype, "shadowBias"), _class2$21.prototype), _applyDecoratedDescriptor(_class2$21.prototype, "shadowNormalBias", [_dec11$4, _dec12$4], Object.getOwnPropertyDescriptor(_class2$21.prototype, "shadowNormalBias"), _class2$21.prototype)), _class2$21)) || _class$2w);
 
-var _dec$2t, _dec2$1S, _dec3$1g, _dec4$T, _dec5$M, _dec6$y, _class$2u, _class2$20, _initializer$1Y, _initializer2$1A, _initializer3$14, _initializer4$V;
-let PointLight = (_dec$2t = ccclass$w('cc.PointLight'), _dec2$1S = formerlySerializedAs$3('_luminance'), _dec3$1g = type$a(CCInteger), _dec4$T = type$a(CCInteger), _dec5$M = type$a(PhotometricTerm), _dec6$y = type$a(CCFloat), _dec$2t(_class$2u = (_class2$20 = class PointLight extends Light {
+var _dec$2u, _dec2$1T, _dec3$1g, _dec4$T, _dec5$M, _dec6$y, _class$2v, _class2$20, _initializer$1Y, _initializer2$1A, _initializer3$14, _initializer4$V;
+let PointLight = (_dec$2u = ccclass$w('cc.PointLight'), _dec2$1T = formerlySerializedAs$3('_luminance'), _dec3$1g = type$a(CCInteger), _dec4$T = type$a(CCInteger), _dec5$M = type$a(PhotometricTerm), _dec6$y = type$a(CCFloat), _dec$2u(_class$2v = (_class2$20 = class PointLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -51759,7 +51928,7 @@ let PointLight = (_dec$2t = ccclass$w('cc.PointLight'), _dec2$1S = formerlySeria
       this._light.luminanceLDR = this._luminanceLDR;
     }
   }
-}, (_initializer$1Y = applyDecoratedInitializer(_class2$20.prototype, "_luminanceHDR", [serializable$c, _dec2$1S], function () {
+}, (_initializer$1Y = applyDecoratedInitializer(_class2$20.prototype, "_luminanceHDR", [serializable$c, _dec2$1T], function () {
   return 1700 / nt2lm(0.15);
 }), _initializer2$1A = applyDecoratedInitializer(_class2$20.prototype, "_luminanceLDR", [serializable$c], function () {
   return 1700 / nt2lm(0.15) * Camera$1.standardExposureValue * Camera$1.standardLightMeterScale;
@@ -51767,10 +51936,10 @@ let PointLight = (_dec$2t = ccclass$w('cc.PointLight'), _dec2$1S = formerlySeria
   return PhotometricTerm.LUMINOUS_FLUX;
 }), _initializer4$V = applyDecoratedInitializer(_class2$20.prototype, "_range", [serializable$c], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$20.prototype, "luminousFlux", [_dec3$1g], Object.getOwnPropertyDescriptor(_class2$20.prototype, "luminousFlux"), _class2$20.prototype), _applyDecoratedDescriptor(_class2$20.prototype, "luminance", [_dec4$T], Object.getOwnPropertyDescriptor(_class2$20.prototype, "luminance"), _class2$20.prototype), _applyDecoratedDescriptor(_class2$20.prototype, "term", [_dec5$M], Object.getOwnPropertyDescriptor(_class2$20.prototype, "term"), _class2$20.prototype), _applyDecoratedDescriptor(_class2$20.prototype, "range", [_dec6$y], Object.getOwnPropertyDescriptor(_class2$20.prototype, "range"), _class2$20.prototype)), _class2$20)) || _class$2u);
+}), _applyDecoratedDescriptor(_class2$20.prototype, "luminousFlux", [_dec3$1g], Object.getOwnPropertyDescriptor(_class2$20.prototype, "luminousFlux"), _class2$20.prototype), _applyDecoratedDescriptor(_class2$20.prototype, "luminance", [_dec4$T], Object.getOwnPropertyDescriptor(_class2$20.prototype, "luminance"), _class2$20.prototype), _applyDecoratedDescriptor(_class2$20.prototype, "term", [_dec5$M], Object.getOwnPropertyDescriptor(_class2$20.prototype, "term"), _class2$20.prototype), _applyDecoratedDescriptor(_class2$20.prototype, "range", [_dec6$y], Object.getOwnPropertyDescriptor(_class2$20.prototype, "range"), _class2$20.prototype)), _class2$20)) || _class$2v);
 
-var _dec$2s, _dec2$1R, _dec3$1f, _class$2t, _class2$1$, _initializer$1X, _initializer2$1z;
-let RangedDirectionalLight = (_dec$2s = ccclass$w('cc.RangedDirectionalLight'), _dec2$1R = formerlySerializedAs$3('_illuminance'), _dec3$1f = type$a(CCInteger), _dec$2s(_class$2t = (_class2$1$ = class RangedDirectionalLight extends Light {
+var _dec$2t, _dec2$1S, _dec3$1f, _class$2u, _class2$1$, _initializer$1X, _initializer2$1z;
+let RangedDirectionalLight = (_dec$2t = ccclass$w('cc.RangedDirectionalLight'), _dec2$1S = formerlySerializedAs$3('_illuminance'), _dec3$1f = type$a(CCInteger), _dec$2t(_class$2u = (_class2$1$ = class RangedDirectionalLight extends Light {
   get illuminance() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -51803,11 +51972,11 @@ let RangedDirectionalLight = (_dec$2s = ccclass$w('cc.RangedDirectionalLight'), 
       this._light.illuminanceLDR = this._illuminanceLDR;
     }
   }
-}, (_initializer$1X = applyDecoratedInitializer(_class2$1$.prototype, "_illuminanceHDR", [property$3, _dec2$1R], function () {
+}, (_initializer$1X = applyDecoratedInitializer(_class2$1$.prototype, "_illuminanceHDR", [property$3, _dec2$1S], function () {
   return 65000;
 }), _initializer2$1z = applyDecoratedInitializer(_class2$1$.prototype, "_illuminanceLDR", [serializable$c], function () {
   return 65000 * Camera$1.standardExposureValue;
-}), _applyDecoratedDescriptor(_class2$1$.prototype, "illuminance", [_dec3$1f], Object.getOwnPropertyDescriptor(_class2$1$.prototype, "illuminance"), _class2$1$.prototype)), _class2$1$)) || _class$2t);
+}), _applyDecoratedDescriptor(_class2$1$.prototype, "illuminance", [_dec3$1f], Object.getOwnPropertyDescriptor(_class2$1$.prototype, "illuminance"), _class2$1$.prototype)), _class2$1$)) || _class$2u);
 
 cclegacy.LightComponent = Light;
 setClassAlias(Light, 'cc.LightComponent');
@@ -52825,8 +52994,8 @@ class BakedSkinningModel extends MorphModel {
   }
 }
 
-var _dec$2r, _dec2$1Q, _dec3$1e, _dec4$S, _dec5$L, _dec6$x, _class$2s, _class2$1_, _initializer$1W, _initializer2$1y;
-let SkinnedMeshRenderer = (_dec$2r = ccclass$w('cc.SkinnedMeshRenderer'), _dec2$1Q = executionOrder$2(100), _dec3$1e = type$a(Skeleton$1), _dec4$S = type$a(Node$1), _dec5$L = type$a(Skeleton$1), _dec6$x = type$a(Node$1), _dec$2r(_class$2s = _dec2$1Q(_class$2s = (_class2$1_ = class SkinnedMeshRenderer extends MeshRenderer {
+var _dec$2s, _dec2$1R, _dec3$1e, _dec4$S, _dec5$L, _dec6$x, _class$2t, _class2$1_, _initializer$1W, _initializer2$1y;
+let SkinnedMeshRenderer = (_dec$2s = ccclass$w('cc.SkinnedMeshRenderer'), _dec2$1R = executionOrder$2(100), _dec3$1e = type$a(Skeleton$1), _dec4$S = type$a(Node$1), _dec5$L = type$a(Skeleton$1), _dec6$x = type$a(Node$1), _dec$2s(_class$2t = _dec2$1R(_class$2t = (_class2$1_ = class SkinnedMeshRenderer extends MeshRenderer {
   get skeleton() {
     return this._skeleton;
   }
@@ -52942,14 +53111,14 @@ let SkinnedMeshRenderer = (_dec$2r = ccclass$w('cc.SkinnedMeshRenderer'), _dec2$
   return null;
 }), _initializer2$1y = applyDecoratedInitializer(_class2$1_.prototype, "_skinningRoot", [_dec4$S], function () {
   return null;
-}), _applyDecoratedDescriptor(_class2$1_.prototype, "skeleton", [_dec5$L], Object.getOwnPropertyDescriptor(_class2$1_.prototype, "skeleton"), _class2$1_.prototype), _applyDecoratedDescriptor(_class2$1_.prototype, "skinningRoot", [_dec6$x], Object.getOwnPropertyDescriptor(_class2$1_.prototype, "skinningRoot"), _class2$1_.prototype)), _class2$1_)) || _class$2s) || _class$2s);
+}), _applyDecoratedDescriptor(_class2$1_.prototype, "skeleton", [_dec5$L], Object.getOwnPropertyDescriptor(_class2$1_.prototype, "skeleton"), _class2$1_.prototype), _applyDecoratedDescriptor(_class2$1_.prototype, "skinningRoot", [_dec6$x], Object.getOwnPropertyDescriptor(_class2$1_.prototype, "skinningRoot"), _class2$1_.prototype)), _class2$1_)) || _class$2t) || _class$2t);
 
-var _dec$2q, _dec2$1P, _dec3$1d, _dec4$R, _dec5$K, _class$2r, _class2$1Z, _initializer$1V, _initializer2$1x, _initializer3$13, _initializer4$U, _initializer5$H, _initializer6$y, _dec6$w, _dec7$q, _dec8$h, _dec9$e, _class3$g, _class4$g, _initializer7$p, _initializer8$n, _initializer9$l;
+var _dec$2r, _dec2$1Q, _dec3$1d, _dec4$R, _dec5$K, _class$2s, _class2$1Z, _initializer$1V, _initializer2$1x, _initializer3$13, _initializer4$U, _initializer5$H, _initializer6$y, _dec6$w, _dec7$q, _dec8$h, _dec9$e, _class3$g, _class4$g, _initializer7$p, _initializer8$n, _initializer9$l;
 const repeat$1 = n => n - Math.floor(n);
 const batch_id = new Attribute(AttributeName.ATTR_BATCH_ID, Format.R32F);
 const batch_uv = new Attribute(AttributeName.ATTR_BATCH_UV, Format.RG32F);
 const batch_extras_size = FormatInfos[batch_id.format].size + FormatInfos[batch_uv.format].size;
-let SkinnedMeshUnit = (_dec$2q = ccclass$w('cc.SkinnedMeshUnit'), _dec2$1P = type$a(Mesh), _dec3$1d = type$a(Skeleton$1), _dec4$R = type$a(Material), _dec5$K = type$a(SkinnedMeshRenderer), _dec$2q(_class$2r = (_class2$1Z = class SkinnedMeshUnit {
+let SkinnedMeshUnit = (_dec$2r = ccclass$w('cc.SkinnedMeshUnit'), _dec2$1Q = type$a(Mesh), _dec3$1d = type$a(Skeleton$1), _dec4$R = type$a(Material), _dec5$K = type$a(SkinnedMeshRenderer), _dec$2r(_class$2s = (_class2$1Z = class SkinnedMeshUnit {
   constructor() {
     this.mesh = _initializer$1V && _initializer$1V();
     this.skeleton = _initializer2$1x && _initializer2$1x();
@@ -52984,7 +53153,7 @@ let SkinnedMeshUnit = (_dec$2q = ccclass$w('cc.SkinnedMeshUnit'), _dec2$1P = typ
   get copyFrom() {
     return null;
   }
-}, (_initializer$1V = applyDecoratedInitializer(_class2$1Z.prototype, "mesh", [_dec2$1P], function () {
+}, (_initializer$1V = applyDecoratedInitializer(_class2$1Z.prototype, "mesh", [_dec2$1Q], function () {
   return null;
 }), _initializer2$1x = applyDecoratedInitializer(_class2$1Z.prototype, "skeleton", [_dec3$1d], function () {
   return null;
@@ -52996,7 +53165,7 @@ let SkinnedMeshUnit = (_dec$2q = ccclass$w('cc.SkinnedMeshUnit'), _dec2$1P = typ
   return new Vec2(0, 0);
 }), _initializer6$y = applyDecoratedInitializer(_class2$1Z.prototype, "_size", [serializable$c], function () {
   return new Vec2(1, 1);
-}), _applyDecoratedDescriptor(_class2$1Z.prototype, "copyFrom", [_dec5$K], Object.getOwnPropertyDescriptor(_class2$1Z.prototype, "copyFrom"), _class2$1Z.prototype)), _class2$1Z)) || _class$2r);
+}), _applyDecoratedDescriptor(_class2$1Z.prototype, "copyFrom", [_dec5$K], Object.getOwnPropertyDescriptor(_class2$1Z.prototype, "copyFrom"), _class2$1Z.prototype)), _class2$1Z)) || _class$2s);
 const m4_local$1 = new Mat4();
 new Mat4();
 const v3_1$2 = new Vec3();
@@ -53456,9 +53625,9 @@ setClassAlias(SkinnedMeshUnit, 'cc.SkinningModelUnit');
 cclegacy.BatchedSkinningModelComponent = SkinnedMeshBatchRenderer;
 setClassAlias(SkinnedMeshBatchRenderer, 'cc.BatchedSkinningModelComponent');
 
-var _dec$2p, _dec2$1O, _dec3$1c, _dec4$Q, _dec5$J, _class$2q, _class2$1Y, _initializer$1U, _initializer2$1w, _dec6$v, _dec7$p, _dec8$g, _class3$f, _class4$f, _initializer3$12, _initializer4$T, _initializer5$G;
+var _dec$2q, _dec2$1P, _dec3$1c, _dec4$Q, _dec5$J, _class$2r, _class2$1Y, _initializer$1U, _initializer2$1w, _dec6$v, _dec7$p, _dec8$g, _class3$f, _class4$f, _initializer3$12, _initializer4$T, _initializer5$G;
 const DEFAULT_SCREEN_OCCUPATION = [0.25, 0.125, 0.01];
-let LOD = (_dec$2p = ccclass$w('cc.LOD'), _dec2$1O = type$a([MeshRenderer]), _dec3$1c = type$a(CCFloat), _dec4$Q = type$a([MeshRenderer]), _dec5$J = type$a([CCInteger]), _dec$2p(_class$2q = (_class2$1Y = class LOD {
+let LOD = (_dec$2q = ccclass$w('cc.LOD'), _dec2$1P = type$a([MeshRenderer]), _dec3$1c = type$a(CCFloat), _dec4$Q = type$a([MeshRenderer]), _dec5$J = type$a([CCInteger]), _dec$2q(_class$2r = (_class2$1Y = class LOD {
   constructor() {
     this._screenUsagePercentage = _initializer$1U && _initializer$1U();
     this._renderers = _initializer2$1w && _initializer2$1w();
@@ -53557,9 +53726,9 @@ let LOD = (_dec$2p = ccclass$w('cc.LOD'), _dec2$1O = type$a([MeshRenderer]), _de
   }
 }, (_initializer$1U = applyDecoratedInitializer(_class2$1Y.prototype, "_screenUsagePercentage", [serializable$c], function () {
   return 1.0;
-}), _initializer2$1w = applyDecoratedInitializer(_class2$1Y.prototype, "_renderers", [_dec2$1O, serializable$c], function () {
+}), _initializer2$1w = applyDecoratedInitializer(_class2$1Y.prototype, "_renderers", [_dec2$1P, serializable$c], function () {
   return [];
-}), _applyDecoratedDescriptor(_class2$1Y.prototype, "screenUsagePercentage", [_dec3$1c], Object.getOwnPropertyDescriptor(_class2$1Y.prototype, "screenUsagePercentage"), _class2$1Y.prototype), _applyDecoratedDescriptor(_class2$1Y.prototype, "renderers", [_dec4$Q], Object.getOwnPropertyDescriptor(_class2$1Y.prototype, "renderers"), _class2$1Y.prototype), _applyDecoratedDescriptor(_class2$1Y.prototype, "triangleCount", [_dec5$J], Object.getOwnPropertyDescriptor(_class2$1Y.prototype, "triangleCount"), _class2$1Y.prototype)), _class2$1Y)) || _class$2q);
+}), _applyDecoratedDescriptor(_class2$1Y.prototype, "screenUsagePercentage", [_dec3$1c], Object.getOwnPropertyDescriptor(_class2$1Y.prototype, "screenUsagePercentage"), _class2$1Y.prototype), _applyDecoratedDescriptor(_class2$1Y.prototype, "renderers", [_dec4$Q], Object.getOwnPropertyDescriptor(_class2$1Y.prototype, "renderers"), _class2$1Y.prototype), _applyDecoratedDescriptor(_class2$1Y.prototype, "triangleCount", [_dec5$J], Object.getOwnPropertyDescriptor(_class2$1Y.prototype, "triangleCount"), _class2$1Y.prototype)), _class2$1Y)) || _class$2r);
 let LODGroup = (_dec6$v = ccclass$w('cc.LODGroup'), _dec7$p = type$a(CCFloat), _dec8$g = type$a([LOD]), _dec6$v(_class3$f = (_class4$f = class LODGroup extends Component {
   constructor() {
     super();
@@ -55281,7 +55450,7 @@ var util = /*#__PURE__*/Object.freeze({
     shrinkPositions: shrinkPositions
 });
 
-var _dec$2o, _dec2$1N, _dec3$1b, _dec4$P, _dec5$I, _dec6$u, _dec7$o, _dec8$f, _dec9$d, _dec10$6, _class$2p, _class2$1X, _initializer$1T, _initializer2$1v, _initializer3$11, _initializer4$S, _initializer5$F, _initializer6$x, _initializer7$o, _initializer8$m, _initializer9$k, _initializer10$j, _ReflectionProbe;
+var _dec$2p, _dec2$1O, _dec3$1b, _dec4$P, _dec5$I, _dec6$u, _dec7$o, _dec8$f, _dec9$d, _dec10$6, _class$2q, _class2$1X, _initializer$1T, _initializer2$1v, _initializer3$11, _initializer4$S, _initializer5$F, _initializer6$x, _initializer7$o, _initializer8$m, _initializer9$k, _initializer10$j, _ReflectionProbe;
 const tmpVec3 = v3();
 let ProbeResolution;
 (function (ProbeResolution) {
@@ -55289,7 +55458,7 @@ let ProbeResolution;
   ProbeResolution[ProbeResolution["Medium_512x512"] = 512] = "Medium_512x512";
   ProbeResolution[ProbeResolution["High_768x768"] = 768] = "High_768x768";
 })(ProbeResolution || (ProbeResolution = {}));
-let ReflectionProbe = (_dec$2o = ccclass$w('cc.ReflectionProbe'), _dec2$1N = type$a(Vec3), _dec3$1b = type$a(Enum(ProbeType)), _dec4$P = type$a(Enum(ProbeResolution)), _dec5$I = type$a(Enum(ProbeClearFlag)), _dec6$u = type$a(Color), _dec7$o = type$a(Layers.BitMask), _dec8$f = type$a(Camera), _dec9$d = type$a(CCBoolean), _dec10$6 = type$a(TextureCube), _dec$2o(_class$2p = (_class2$1X = (_ReflectionProbe = class ReflectionProbe extends Component {
+let ReflectionProbe = (_dec$2p = ccclass$w('cc.ReflectionProbe'), _dec2$1O = type$a(Vec3), _dec3$1b = type$a(Enum(ProbeType)), _dec4$P = type$a(Enum(ProbeResolution)), _dec5$I = type$a(Enum(ProbeClearFlag)), _dec6$u = type$a(Color), _dec7$o = type$a(Layers.BitMask), _dec8$f = type$a(Camera), _dec9$d = type$a(CCBoolean), _dec10$6 = type$a(TextureCube), _dec$2p(_class$2q = (_class2$1X = (_ReflectionProbe = class ReflectionProbe extends Component {
   constructor(...args) {
     super(...args);
     this._lastSize = v3();
@@ -55551,15 +55720,15 @@ let ReflectionProbe = (_dec$2o = ccclass$w('cc.ReflectionProbe'), _dec2$1N = typ
   return -1;
 }), _initializer10$j = applyDecoratedInitializer(_class2$1X.prototype, "_fastBake", [serializable$c], function () {
   return false;
-}), _applyDecoratedDescriptor(_class2$1X.prototype, "size", [_dec2$1N], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "size"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "probeType", [_dec3$1b], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "probeType"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "resolution", [_dec4$P], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "resolution"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "clearFlag", [_dec5$I], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "clearFlag"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "backgroundColor", [_dec6$u], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "backgroundColor"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "visibility", [_dec7$o], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "visibility"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "sourceCamera", [_dec8$f], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "sourceCamera"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "fastBake", [_dec9$d], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "fastBake"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "cubemap", [_dec10$6], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "cubemap"), _class2$1X.prototype)), _class2$1X)) || _class$2p);
+}), _applyDecoratedDescriptor(_class2$1X.prototype, "size", [_dec2$1O], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "size"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "probeType", [_dec3$1b], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "probeType"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "resolution", [_dec4$P], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "resolution"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "clearFlag", [_dec5$I], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "clearFlag"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "backgroundColor", [_dec6$u], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "backgroundColor"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "visibility", [_dec7$o], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "visibility"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "sourceCamera", [_dec8$f], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "sourceCamera"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "fastBake", [_dec9$d], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "fastBake"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "cubemap", [_dec10$6], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "cubemap"), _class2$1X.prototype)), _class2$1X)) || _class$2q);
 
 legacyCC.utils = utils;
 
 const CLASS_NAME_PREFIX_ANIM = 'cc.animation.';
 const createEvalSymbol = Symbol('CreateEval');
 
-var _dec$2n, _class$2o, _class2$1W, _initializer$1S, _initializer2$1u, _initializer3$10, _initializer4$R;
-(_dec$2n = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}EmbeddedPlayer`), _dec$2n(_class$2o = (_class2$1W = class EmbeddedPlayer extends EditorExtendable {
+var _dec$2o, _class$2p, _class2$1W, _initializer$1S, _initializer2$1u, _initializer3$10, _initializer4$R;
+(_dec$2o = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}EmbeddedPlayer`), _dec$2o(_class$2p = (_class2$1W = class EmbeddedPlayer extends EditorExtendable {
   constructor(...args) {
     super(...args);
     this.begin = _initializer$1S && _initializer$1S();
@@ -55575,7 +55744,7 @@ var _dec$2n, _class$2o, _class2$1W, _initializer$1S, _initializer2$1u, _initiali
   return false;
 }), _initializer4$R = applyDecoratedInitializer(_class2$1W.prototype, "playable", [serializable$c], function () {
   return null;
-})), _class2$1W)) || _class$2o);
+})), _class2$1W)) || _class$2p);
 class EmbeddedPlayable {}
 class EmbeddedPlayableState {
   constructor(randomAccess) {
@@ -56169,8 +56338,8 @@ let AnimationState$1 = class AnimationState extends Playable {
 };
 cclegacy.AnimationState = AnimationState$1;
 
-var _dec$2m, _class$2n, _class2$1V, _initializer$1R, _initializer2$1t;
-(_dec$2m = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}EmbeddedAnimationClipPlayable`), _dec$2m(_class$2n = (_class2$1V = class EmbeddedAnimationClipPlayable extends EmbeddedPlayable {
+var _dec$2n, _class$2o, _class2$1V, _initializer$1R, _initializer2$1t;
+(_dec$2n = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}EmbeddedAnimationClipPlayable`), _dec$2n(_class$2o = (_class2$1V = class EmbeddedAnimationClipPlayable extends EmbeddedPlayable {
   constructor(...args) {
     super(...args);
     this.path = _initializer$1R && _initializer$1R();
@@ -56197,7 +56366,7 @@ var _dec$2m, _class$2n, _class2$1V, _initializer$1R, _initializer2$1t;
   return '';
 }), _initializer2$1t = applyDecoratedInitializer(_class2$1V.prototype, "clip", [serializable$c], function () {
   return null;
-})), _class2$1V)) || _class$2n);
+})), _class2$1V)) || _class$2o);
 class EmbeddedAnimationClipPlayableState extends EmbeddedPlayableState {
   constructor(animationState) {
     super(true);
@@ -56224,8 +56393,8 @@ class EmbeddedAnimationClipPlayableState extends EmbeddedPlayableState {
   }
 }
 
-var _dec$2l, _class$2m, _class2$1U, _initializer$1Q;
-(_dec$2l = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}EmbeddedParticleSystemPlayable`), _dec$2l(_class$2m = (_class2$1U = class EmbeddedParticleSystemPlayable extends EmbeddedPlayable {
+var _dec$2m, _class$2n, _class2$1U, _initializer$1Q;
+(_dec$2m = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}EmbeddedParticleSystemPlayable`), _dec$2m(_class$2n = (_class2$1U = class EmbeddedParticleSystemPlayable extends EmbeddedPlayable {
   constructor(...args) {
     super(...args);
     this.path = _initializer$1Q && _initializer$1Q();
@@ -56250,7 +56419,7 @@ var _dec$2l, _class$2m, _class2$1U, _initializer$1Q;
   }
 }, (_initializer$1Q = applyDecoratedInitializer(_class2$1U.prototype, "path", [serializable$c], function () {
   return '';
-})), _class2$1U)) || _class$2m);
+})), _class2$1U)) || _class$2n);
 class EmbeddedParticleSystemPlayableState extends EmbeddedPlayableState {
   constructor(particleSystem) {
     super(false);
@@ -56273,14 +56442,14 @@ class EmbeddedParticleSystemPlayableState extends EmbeddedPlayableState {
   }
 }
 
-var _dec$2k, _class$2l, _class2$1T, _initializer$1P, _dec2$1M, _class3$e, _class4$e, _initializer2$1s;
+var _dec$2l, _class$2m, _class2$1T, _initializer$1P, _dec2$1N, _class3$e, _class4$e, _initializer2$1s;
 function isPropertyPath(path) {
   return typeof path === 'string' || typeof path === 'number';
 }
 function isCustomPath(path, constructor) {
   return path instanceof constructor;
 }
-let HierarchyPath = (_dec$2k = ccclass$w('cc.animation.HierarchyPath'), _dec$2k(_class$2l = (_class2$1T = class HierarchyPath {
+let HierarchyPath = (_dec$2l = ccclass$w('cc.animation.HierarchyPath'), _dec$2l(_class$2m = (_class2$1T = class HierarchyPath {
   constructor(path) {
     this.path = _initializer$1P && _initializer$1P();
     this.path = path || '';
@@ -56299,8 +56468,8 @@ let HierarchyPath = (_dec$2k = ccclass$w('cc.animation.HierarchyPath'), _dec$2k(
   }
 }, (_initializer$1P = applyDecoratedInitializer(_class2$1T.prototype, "path", [serializable$c], function () {
   return '';
-})), _class2$1T)) || _class$2l);
-let ComponentPath = (_dec2$1M = ccclass$w('cc.animation.ComponentPath'), _dec2$1M(_class3$e = (_class4$e = class ComponentPath {
+})), _class2$1T)) || _class$2m);
+let ComponentPath = (_dec2$1N = ccclass$w('cc.animation.ComponentPath'), _dec2$1N(_class3$e = (_class4$e = class ComponentPath {
   constructor(component) {
     this.component = _initializer2$1s && _initializer2$1s();
     this.component = component || '';
@@ -56321,11 +56490,11 @@ let ComponentPath = (_dec2$1M = ccclass$w('cc.animation.ComponentPath'), _dec2$1
   return '';
 })), _class4$e)) || _class3$e);
 
-var _dec$2j, _class$2k, _class2$1S, _initializer$1O, _dec2$1L, _class3$d, _class4$d, _initializer2$1r, _initializer3$$, _TrackBinding, _dec3$1a, _class5$6, _class6$4, _initializer4$Q, _dec4$O, _class7$3, _class8$3, _initializer5$E, _dec5$H, _class9$3, _class10$3, _initializer6$w;
+var _dec$2k, _class$2l, _class2$1S, _initializer$1O, _dec2$1M, _class3$d, _class4$d, _initializer2$1r, _initializer3$$, _TrackBinding, _dec3$1a, _class5$6, _class6$4, _initializer4$Q, _dec4$O, _class7$3, _class8$3, _initializer5$E, _dec5$H, _class9$3, _class10$3, _initializer6$w;
 const normalizedFollowTag = Symbol('NormalizedFollow');
 const parseTrsPathTag = Symbol('ConvertAsTrsPath');
 const trackBindingTag = Symbol('TrackBinding');
-let TrackPath = (_dec$2j = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec$2j(_class$2k = (_class2$1S = class TrackPath {
+let TrackPath = (_dec$2k = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec$2k(_class$2l = (_class2$1S = class TrackPath {
   constructor() {
     this._paths = _initializer$1O && _initializer$1O();
   }
@@ -56461,8 +56630,8 @@ let TrackPath = (_dec$2j = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec
   }
 }, (_initializer$1O = applyDecoratedInitializer(_class2$1S.prototype, "_paths", [serializable$c], function () {
   return [];
-})), _class2$1S)) || _class$2k);
-let TrackBinding = (_dec2$1L = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}TrackBinding`), _dec2$1L(_class3$d = uniquelyReferenced(_class3$d = (_class4$d = (_TrackBinding = class TrackBinding {
+})), _class2$1S)) || _class$2l);
+let TrackBinding = (_dec2$1M = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}TrackBinding`), _dec2$1M(_class3$d = uniquelyReferenced(_class3$d = (_class4$d = (_TrackBinding = class TrackBinding {
   constructor() {
     this.path = _initializer2$1r && _initializer2$1r();
     this.proxy = _initializer3$$ && _initializer3$$();
@@ -56632,12 +56801,12 @@ class SingleChannelTrackEval {
   }
 }
 
-var _dec$2i, _class$2j, _class2$1R, _initializer$1N;
+var _dec$2j, _class$2k, _class2$1R, _initializer$1N;
 const {
   ccclass: ccclass$o,
   serializable: serializable$5
 } = _decorator;
-(_dec$2i = ccclass$o(`${CLASS_NAME_PREFIX_ANIM}RealArrayTrack`), _dec$2i(_class$2j = (_class2$1R = class RealArrayTrack extends Track {
+(_dec$2j = ccclass$o(`${CLASS_NAME_PREFIX_ANIM}RealArrayTrack`), _dec$2j(_class$2k = (_class2$1R = class RealArrayTrack extends Track {
   constructor(...args) {
     super(...args);
     this._channels = _initializer$1N && _initializer$1N();
@@ -56668,7 +56837,7 @@ const {
   }
 }, (_initializer$1N = applyDecoratedInitializer(_class2$1R.prototype, "_channels", [serializable$5], function () {
   return [];
-})), _class2$1R)) || _class$2j);
+})), _class2$1R)) || _class$2k);
 class RealArrayTrackEval {
   constructor(_curves) {
     this._curves = _curves;
@@ -56689,8 +56858,8 @@ class RealArrayTrackEval {
   }
 }
 
-var _dec$2h, _class$2i, _class2$1Q, _initializer$1M, _initializer2$1q, _descriptor;
-let UniformProxyFactory = (_dec$2h = ccclass$w('cc.animation.UniformProxyFactory'), _dec$2h(_class$2i = (_class2$1Q = class UniformProxyFactory {
+var _dec$2i, _class$2j, _class2$1Q, _initializer$1M, _initializer2$1q, _descriptor;
+let UniformProxyFactory = (_dec$2i = ccclass$w('cc.animation.UniformProxyFactory'), _dec$2i(_class$2j = (_class2$1Q = class UniformProxyFactory {
   constructor(uniformName, passIndex) {
     this.passIndex = _initializer$1M && _initializer$1M();
     this.uniformName = _initializer2$1q && _initializer2$1q();
@@ -56774,7 +56943,7 @@ let UniformProxyFactory = (_dec$2h = ccclass$w('cc.animation.UniformProxyFactory
   initializer: function () {
     return undefined;
   }
-})), _class2$1Q)) || _class$2i);
+})), _class2$1Q)) || _class$2j);
 function isUniformArray(pass, name) {
   for (const block of pass.shaderInfo.blocks) {
     for (const uniform of block.members) {
@@ -56786,8 +56955,8 @@ function isUniformArray(pass, name) {
   return false;
 }
 
-var _dec$2g, _class$2h, _class2$1P, _initializer$1L, _initializer2$1p, _dec2$1K, _class3$c, _class4$c, _initializer3$_, _dec3$19, _class5$5;
-let MorphWeightValueProxy = (_dec$2g = ccclass$w('cc.animation.MorphWeightValueProxy'), _dec$2g(_class$2h = (_class2$1P = class MorphWeightValueProxy {
+var _dec$2h, _class$2i, _class2$1P, _initializer$1L, _initializer2$1p, _dec2$1L, _class3$c, _class4$c, _initializer3$_, _dec3$19, _class5$5;
+let MorphWeightValueProxy = (_dec$2h = ccclass$w('cc.animation.MorphWeightValueProxy'), _dec$2h(_class$2i = (_class2$1P = class MorphWeightValueProxy {
   constructor() {
     this.subMeshIndex = _initializer$1L && _initializer$1L();
     this.shapeIndex = _initializer2$1p && _initializer2$1p();
@@ -56803,8 +56972,8 @@ let MorphWeightValueProxy = (_dec$2g = ccclass$w('cc.animation.MorphWeightValueP
   return 0;
 }), _initializer2$1p = applyDecoratedInitializer(_class2$1P.prototype, "shapeIndex", [serializable$c], function () {
   return 0;
-})), _class2$1P)) || _class$2h);
-let MorphWeightsValueProxy = (_dec2$1K = ccclass$w('cc.animation.MorphWeightsValueProxy'), _dec2$1K(_class3$c = (_class4$c = class MorphWeightsValueProxy {
+})), _class2$1P)) || _class$2i);
+let MorphWeightsValueProxy = (_dec2$1L = ccclass$w('cc.animation.MorphWeightsValueProxy'), _dec2$1L(_class3$c = (_class4$c = class MorphWeightsValueProxy {
   constructor() {
     this.subMeshIndex = _initializer3$_ && _initializer3$_();
   }
@@ -56832,7 +57001,7 @@ let MorphWeightsAllValueProxy = (_dec3$19 = ccclass$w('cc.animation.MorphWeights
   }
 }) || _class5$5);
 
-var _dec2$1J, _class3$b, _class4$b, _initializer4$P, _initializer5$D, _initializer6$v;
+var _dec2$1K, _class3$b, _class4$b, _initializer4$P, _initializer5$D, _initializer6$v;
 function makeCubicSplineValueConstructor(name, ConstructorX, scaleFx, scaleAndAdd) {
   var _dec, _class, _class2, _initializer, _initializer2, _initializer3;
   let tempValue = new ConstructorX();
@@ -56891,7 +57060,7 @@ const CubicSplineVec3Value = makeCubicSplineValueConstructor('cc.CubicSplineVec3
 const CubicSplineVec4Value = makeCubicSplineValueConstructor('cc.CubicSplineVec4Value', Vec4, Vec4.multiplyScalar, Vec4.scaleAndAdd);
 
 const CubicSplineQuatValue = makeCubicSplineValueConstructor('cc.CubicSplineQuatValue', Quat, Quat.multiplyScalar, Quat.scaleAndAdd);
-let CubicSplineNumberValue = (_dec2$1J = ccclass$w('cc.CubicSplineNumberValue'), _dec2$1J(_class3$b = (_class4$b = class CubicSplineNumberValue {
+let CubicSplineNumberValue = (_dec2$1K = ccclass$w('cc.CubicSplineNumberValue'), _dec2$1K(_class3$b = (_class4$b = class CubicSplineNumberValue {
   constructor(dataPoint, inTangent, outTangent) {
     this.dataPoint = _initializer4$P && _initializer4$P();
     this.inTangent = _initializer5$D && _initializer5$D();
@@ -56924,20 +57093,20 @@ let CubicSplineNumberValue = (_dec2$1J = ccclass$w('cc.CubicSplineNumberValue'),
   return 0;
 })), _class4$b)) || _class3$b);
 
-var _dec$2f, _class$2g;
-let RealTrack = (_dec$2f = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}RealTrack`), _dec$2f(_class$2g = class RealTrack extends SingleChannelTrack {
+var _dec$2g, _class$2h;
+let RealTrack = (_dec$2g = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}RealTrack`), _dec$2g(_class$2h = class RealTrack extends SingleChannelTrack {
   createCurve() {
     return new RealCurve();
   }
-}) || _class$2g);
+}) || _class$2h);
 
 function maskIfEmpty(curve) {
   return curve.keyFramesCount === 0 ? undefined : curve;
 }
 
-var _dec$2e, _class$2f, _class2$1O, _initializer$1K, _initializer2$1o;
+var _dec$2f, _class$2g, _class2$1O, _initializer$1K, _initializer2$1o;
 const CHANNEL_NAMES$2 = ['X', 'Y', 'Z', 'W'];
-let VectorTrack = (_dec$2e = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), _dec$2e(_class$2f = (_class2$1O = class VectorTrack extends Track {
+let VectorTrack = (_dec$2f = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), _dec$2f(_class$2g = (_class2$1O = class VectorTrack extends Track {
   constructor() {
     super();
     this._channels = _initializer$1K && _initializer$1K();
@@ -56971,7 +57140,7 @@ let VectorTrack = (_dec$2e = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), 
   }
 }, (_initializer$1K = applyDecoratedInitializer(_class2$1O.prototype, "_channels", [serializable$c], null), _initializer2$1o = applyDecoratedInitializer(_class2$1O.prototype, "_nComponents", [serializable$c], function () {
   return 4;
-})), _class2$1O)) || _class$2f);
+})), _class2$1O)) || _class$2g);
 class Vec2TrackEval {
   constructor(_x, _y) {
     this._result = new Vec2();
@@ -57057,15 +57226,15 @@ class Vec4TrackEval {
   }
 }
 
-var _dec$2d, _class$2e;
-let QuatTrack = (_dec$2d = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}QuatTrack`), _dec$2d(_class$2e = class QuatTrack extends SingleChannelTrack {
+var _dec$2e, _class$2f;
+let QuatTrack = (_dec$2e = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}QuatTrack`), _dec$2e(_class$2f = class QuatTrack extends SingleChannelTrack {
   createCurve() {
     return new QuatCurve();
   }
   [createEvalSymbol]() {
     return new QuatTrackEval(this.channels()[0].curve);
   }
-}) || _class$2e);
+}) || _class$2f);
 class QuatTrackEval {
   constructor(_curve) {
     this._result = new Quat();
@@ -57080,9 +57249,9 @@ class QuatTrackEval {
   }
 }
 
-var _dec$2c, _class$2d, _class2$1N, _initializer$1J;
+var _dec$2d, _class$2e, _class2$1N, _initializer$1J;
 const CHANNEL_NAMES$1 = ['Red', 'Green', 'Blue', 'Alpha'];
-let ColorTrack = (_dec$2c = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _dec$2c(_class$2d = (_class2$1N = class ColorTrack extends Track {
+let ColorTrack = (_dec$2d = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _dec$2d(_class$2e = (_class2$1N = class ColorTrack extends Track {
   constructor() {
     super();
     this._channels = _initializer$1J && _initializer$1J();
@@ -57099,7 +57268,7 @@ let ColorTrack = (_dec$2c = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _d
   [createEvalSymbol]() {
     return new ColorTrackEval(maskIfEmpty(this._channels[0].curve), maskIfEmpty(this._channels[1].curve), maskIfEmpty(this._channels[2].curve), maskIfEmpty(this._channels[3].curve));
   }
-}, (_initializer$1J = applyDecoratedInitializer(_class2$1N.prototype, "_channels", [serializable$c], null)), _class2$1N)) || _class$2d);
+}, (_initializer$1J = applyDecoratedInitializer(_class2$1N.prototype, "_channels", [serializable$c], null)), _class2$1N)) || _class$2e);
 class ColorTrackEval {
   constructor(_x, _y, _z, _w) {
     this._result = new Color();
@@ -57131,9 +57300,9 @@ class ColorTrackEval {
   }
 }
 
-var _dec$2b, _class$2c, _class2$1M, _initializer$1I;
+var _dec$2c, _class$2d, _class2$1M, _initializer$1I;
 const CHANNEL_NAMES = ['Width', 'Height'];
-let SizeTrack = (_dec$2b = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec$2b(_class$2c = (_class2$1M = class SizeTrack extends Track {
+let SizeTrack = (_dec$2c = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec$2c(_class$2d = (_class2$1M = class SizeTrack extends Track {
   constructor() {
     super();
     this._channels = _initializer$1I && _initializer$1I();
@@ -57150,7 +57319,7 @@ let SizeTrack = (_dec$2b = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec
   [createEvalSymbol]() {
     return new SizeTrackEval(maskIfEmpty(this._channels[0].curve), maskIfEmpty(this._channels[1].curve));
   }
-}, (_initializer$1I = applyDecoratedInitializer(_class2$1M.prototype, "_channels", [serializable$c], null)), _class2$1M)) || _class$2c);
+}, (_initializer$1I = applyDecoratedInitializer(_class2$1M.prototype, "_channels", [serializable$c], null)), _class2$1M)) || _class$2d);
 class SizeTrackEval {
   constructor(_width, _height) {
     this._result = new Size();
@@ -57175,12 +57344,12 @@ class SizeTrackEval {
   }
 }
 
-var _dec$2a, _class$2b;
-let ObjectTrack = (_dec$2a = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}ObjectTrack`), _dec$2a(_class$2b = class ObjectTrack extends SingleChannelTrack {
+var _dec$2b, _class$2c;
+let ObjectTrack = (_dec$2b = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}ObjectTrack`), _dec$2b(_class$2c = class ObjectTrack extends SingleChannelTrack {
   createCurve() {
     return new ObjectCurve();
   }
-}) || _class$2b);
+}) || _class$2c);
 
 var animation = /*#__PURE__*/Object.freeze({
     __proto__: null,
@@ -57436,16 +57605,16 @@ const selectLerpFx = (() => {
   };
 })();
 
-var _dec$29, _class$2a, _class2$1L, _initializer$1H, _dec2$1I, _class3$a, _class4$a, _initializer2$1n;
-let UntypedTrackChannel = (_dec$29 = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}UntypedTrackChannel`), _dec$29(_class$2a = (_class2$1L = class UntypedTrackChannel extends Channel {
+var _dec$2a, _class$2b, _class2$1L, _initializer$1H, _dec2$1J, _class3$a, _class4$a, _initializer2$1n;
+let UntypedTrackChannel = (_dec$2a = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}UntypedTrackChannel`), _dec$2a(_class$2b = (_class2$1L = class UntypedTrackChannel extends Channel {
   constructor() {
     super(new RealCurve());
     this.property = _initializer$1H && _initializer$1H();
   }
 }, (_initializer$1H = applyDecoratedInitializer(_class2$1L.prototype, "property", [serializable$c], function () {
   return '';
-})), _class2$1L)) || _class$2a);
-let UntypedTrack = (_dec2$1I = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}UntypedTrack`), _dec2$1I(_class3$a = (_class4$a = class UntypedTrack extends Track {
+})), _class2$1L)) || _class$2b);
+let UntypedTrack = (_dec2$1J = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}UntypedTrack`), _dec2$1J(_class3$a = (_class4$a = class UntypedTrack extends Track {
   constructor(...args) {
     super(...args);
     this._channels = _initializer2$1n && _initializer2$1n();
@@ -58040,7 +58209,7 @@ function ensureRightTangentWeightMode(tangentWeightMode) {
   }
 }
 
-var _dec$28, _class$29, _class2$1K, _initializer$1G, _dec2$1H, _class3$9, _class4$9, _initializer2$1m, _initializer3$Z, _initializer4$O, _initializer5$C, _dec3$18, _class5$4, _class6$3, _initializer6$u, _initializer7$n, _dec4$N, _class7$2, _dec5$G, _class8$2, _dec6$t, _class9$2, _class10$2, _initializer8$l, _initializer9$j, _dec7$n, _class11$1, _class12$1, _initializer10$i, _initializer11$h, _initializer12$f, _initializer13$c;
+var _dec$29, _class$2a, _class2$1K, _initializer$1G, _dec2$1I, _class3$9, _class4$9, _initializer2$1m, _initializer3$Z, _initializer4$O, _initializer5$C, _dec3$18, _class5$4, _class6$3, _initializer6$u, _initializer7$n, _dec4$N, _class7$2, _dec5$G, _class8$2, _dec6$t, _class9$2, _class10$2, _initializer8$l, _initializer9$j, _dec7$n, _class11$1, _class12$1, _initializer10$i, _initializer11$h, _initializer12$f, _initializer13$c;
 const {
   ccclass: ccclass$n,
   serializable: serializable$4
@@ -58048,7 +58217,7 @@ const {
 function throwIfSplitMethodIsNotValid() {
   throw new Error(`split() only valid in Editor.`);
 }
-(_dec$28 = ccclass$n(`${CLASS_NAME_PREFIX_ANIM}ExoticAnimation`), _dec$28(_class$29 = (_class2$1K = class ExoticAnimation {
+(_dec$29 = ccclass$n(`${CLASS_NAME_PREFIX_ANIM}ExoticAnimation`), _dec$29(_class$2a = (_class2$1K = class ExoticAnimation {
   constructor() {
     this._nodeAnimations = _initializer$1G && _initializer$1G();
   }
@@ -58078,8 +58247,8 @@ function throwIfSplitMethodIsNotValid() {
   }
 }, (_initializer$1G = applyDecoratedInitializer(_class2$1K.prototype, "_nodeAnimations", [serializable$4], function () {
   return [];
-})), _class2$1K)) || _class$29);
-let ExoticNodeAnimation = (_dec2$1H = ccclass$n(`${CLASS_NAME_PREFIX_ANIM}ExoticNodeAnimation`), _dec2$1H(_class3$9 = (_class4$9 = class ExoticNodeAnimation {
+})), _class2$1K)) || _class$2a);
+let ExoticNodeAnimation = (_dec2$1I = ccclass$n(`${CLASS_NAME_PREFIX_ANIM}ExoticNodeAnimation`), _dec2$1I(_class3$9 = (_class4$9 = class ExoticNodeAnimation {
   constructor(path) {
     this._path = _initializer2$1m && _initializer2$1m();
     this._position = _initializer3$Z && _initializer3$Z();
@@ -58507,8 +58676,8 @@ function loadQuatFromQuantized(values, index, out) {
   Quat.set(out, indexQuantized(values, 4 * index + 0), indexQuantized(values, 4 * index + 1), indexQuantized(values, 4 * index + 2), indexQuantized(values, 4 * index + 3));
 }
 
-var _dec$27, _class$28, _class2$1J, _initializer$1F, _initializer2$1l;
-let AuxiliaryCurveEntry = (_dec$27 = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}AuxiliaryCurveEntry`), _dec$27(_class$28 = (_class2$1J = class AuxiliaryCurveEntry {
+var _dec$28, _class$29, _class2$1J, _initializer$1F, _initializer2$1l;
+let AuxiliaryCurveEntry = (_dec$28 = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}AuxiliaryCurveEntry`), _dec$28(_class$29 = (_class2$1J = class AuxiliaryCurveEntry {
   constructor() {
     this.name = _initializer$1F && _initializer$1F();
     this.curve = _initializer2$1l && _initializer2$1l();
@@ -58517,7 +58686,7 @@ let AuxiliaryCurveEntry = (_dec$27 = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}Auxilia
   return '';
 }), _initializer2$1l = applyDecoratedInitializer(_class2$1J.prototype, "curve", [serializable$c], function () {
   return new RealCurve();
-})), _class2$1J)) || _class$28);
+})), _class2$1J)) || _class$29);
 
 function invokeComponentMethodsEngagedInAnimationEvent(node, methodName, args) {
   const components = node.components;
@@ -58531,7 +58700,7 @@ function invokeComponentMethodsEngagedInAnimationEvent(node, methodName, args) {
   }
 }
 
-var _dec$26, _class$27, _class2$1I, _initializer$1E, _initializer2$1k, _initializer3$Y, _initializer4$N, _initializer5$B, _initializer6$t, _initializer7$m, _initializer8$k, _initializer9$i, _initializer10$h, _initializer11$g, _initializer12$e, _AnimationClip, _dec2$1G, _class3$8, _class4$8, _initializer13$b, _initializer14$a;
+var _dec$27, _class$28, _class2$1I, _initializer$1E, _initializer2$1k, _initializer3$Y, _initializer4$N, _initializer5$B, _initializer6$t, _initializer7$m, _initializer8$k, _initializer9$i, _initializer10$h, _initializer11$g, _initializer12$e, _AnimationClip, _dec2$1H, _class3$8, _class4$8, _initializer13$b, _initializer14$a;
 const searchForRootBonePathSymbol = Symbol('SearchForRootBonePath');
 
 const exoticAnimationTag = Symbol('ExoticAnimation');
@@ -58541,7 +58710,7 @@ const addEmbeddedPlayerTag = Symbol('[[AddEmbeddedPlayer]]');
 const removeEmbeddedPlayerTag = Symbol('[[RemoveEmbeddedPlayer]]');
 const clearEmbeddedPlayersTag = Symbol('[[ClearEmbeddedPlayers]]');
 const additiveSettingsTag = Symbol('[[Additive Settings]]');
-let AnimationClip = (_dec$26 = ccclass$w('cc.AnimationClip'), _dec$26(_class$27 = (_class2$1I = (_AnimationClip = class AnimationClip extends Asset {
+let AnimationClip = (_dec$27 = ccclass$w('cc.AnimationClip'), _dec$27(_class$28 = (_class2$1I = (_AnimationClip = class AnimationClip extends Asset {
   static createWithSpriteFrames(spriteFrames, sample) {
     const clip = new AnimationClip();
     clip.sample = sample || clip.sample;
@@ -59097,8 +59266,8 @@ let AnimationClip = (_dec$26 = ccclass$w('cc.AnimationClip'), _dec$26(_class$27 
   return new AdditiveSettings();
 }), _initializer12$e = applyDecoratedInitializer(_class2$1I.prototype, "_auxiliaryCurveEntries", [serializable$c], function () {
   return [];
-})), _class2$1I)) || _class$27);
-let AdditiveSettings = (_dec2$1G = ccclass$w('cc.AnimationClipAdditiveSettings'), _dec2$1G(_class3$8 = (_class4$8 = class AdditiveSettings {
+})), _class2$1I)) || _class$28);
+let AdditiveSettings = (_dec2$1H = ccclass$w('cc.AnimationClipAdditiveSettings'), _dec2$1H(_class3$8 = (_class4$8 = class AdditiveSettings {
   constructor() {
     this.enabled = _initializer13$b && _initializer13$b();
     this.refClip = _initializer14$a && _initializer14$a();
@@ -59863,8 +60032,8 @@ function mixAveragedQuat(result, previous, accumulatedWeight, input, weight) {
   return newSum;
 }
 
-var _class$26, _AnimationManager;
-let AnimationManager = ccclass$w(_class$26 = (_AnimationManager = class AnimationManager extends System {
+var _class$27, _AnimationManager;
+let AnimationManager = ccclass$w(_class$27 = (_AnimationManager = class AnimationManager extends System {
   constructor(...args) {
     super(...args);
     this._anims = new MutableForwardIterator([]);
@@ -59981,7 +60150,7 @@ let AnimationManager = ccclass$w(_class$26 = (_AnimationManager = class Animatio
       }
     }
   }
-}, _AnimationManager.ID = 'animation', _AnimationManager)) || _class$26;
+}, _AnimationManager.ID = 'animation', _AnimationManager)) || _class$27;
 director.on(DirectorEvent.INIT, () => {
   const animationManager = new AnimationManager();
   director.registerSystem(AnimationManager.ID, animationManager, SystemPriority.HIGH);
@@ -60137,8 +60306,8 @@ class CrossFade extends Playable {
   }
 }
 
-var _dec$25, _dec2$1F, _dec3$17, _dec4$M, _dec5$F, _class$25, _class2$1H, _initializer$1D, _initializer2$1j, _initializer3$X, _Animation;
-let Animation$1 = (_dec$25 = ccclass$w('cc.Animation'), _dec2$1F = executionOrder$2(99), _dec3$17 = type$a([AnimationClip]), _dec4$M = type$a(AnimationClip), _dec5$F = type$a([AnimationClip]), _dec$25(_class$25 = _dec2$1F(_class$25 = (_class2$1H = (_Animation = class Animation extends Eventify(Component) {
+var _dec$26, _dec2$1G, _dec3$17, _dec4$M, _dec5$F, _class$26, _class2$1H, _initializer$1D, _initializer2$1j, _initializer3$X, _Animation;
+let Animation$1 = (_dec$26 = ccclass$w('cc.Animation'), _dec2$1G = executionOrder$2(99), _dec3$17 = type$a([AnimationClip]), _dec4$M = type$a(AnimationClip), _dec5$F = type$a([AnimationClip]), _dec$26(_class$26 = _dec2$1G(_class$26 = (_class2$1H = (_Animation = class Animation extends Eventify(Component) {
   constructor(...args) {
     super(...args);
     this.playOnLoad = _initializer$1D && _initializer$1D();
@@ -60366,7 +60535,7 @@ let Animation$1 = (_dec$25 = ccclass$w('cc.Animation'), _dec2$1F = executionOrde
   return [];
 }), _initializer3$X = applyDecoratedInitializer(_class2$1H.prototype, "_defaultClip", [serializable$c], function () {
   return null;
-})), _class2$1H)) || _class$25) || _class$25);
+})), _class2$1H)) || _class$26) || _class$26);
 function equalClips(clip1, clip2) {
   if (clip1 === clip2) {
     return true;
@@ -60551,8 +60720,8 @@ class SkeletalAnimationState extends AnimationState$1 {
   }
 }
 
-var _dec$24, _dec2$1E, _class$24, _class2$1G, _initializer$1C, _initializer2$1i, _dec3$16, _dec4$L, _dec5$E, _dec6$s, _class3$7, _class4$7, _initializer3$W, _initializer4$M, _SkeletalAnimation;
-let Socket = (_dec$24 = ccclass$w('cc.SkeletalAnimation.Socket'), _dec2$1E = type$a(Node$1), _dec$24(_class$24 = (_class2$1G = class Socket {
+var _dec$25, _dec2$1F, _class$25, _class2$1G, _initializer$1C, _initializer2$1i, _dec3$16, _dec4$L, _dec5$E, _dec6$s, _class3$7, _class4$7, _initializer3$W, _initializer4$M, _SkeletalAnimation;
+let Socket = (_dec$25 = ccclass$w('cc.SkeletalAnimation.Socket'), _dec2$1F = type$a(Node$1), _dec$25(_class$25 = (_class2$1G = class Socket {
   constructor(path = '', target = null) {
     this.path = _initializer$1C && _initializer$1C();
     this.target = _initializer2$1i && _initializer2$1i();
@@ -60561,9 +60730,9 @@ let Socket = (_dec$24 = ccclass$w('cc.SkeletalAnimation.Socket'), _dec2$1E = typ
   }
 }, (_initializer$1C = applyDecoratedInitializer(_class2$1G.prototype, "path", [serializable$c], function () {
   return '';
-}), _initializer2$1i = applyDecoratedInitializer(_class2$1G.prototype, "target", [_dec2$1E], function () {
+}), _initializer2$1i = applyDecoratedInitializer(_class2$1G.prototype, "target", [_dec2$1F], function () {
   return null;
-})), _class2$1G)) || _class$24);
+})), _class2$1G)) || _class$25);
 setClassAlias(Socket, 'cc.SkeletalAnimationComponent.Socket');
 const m4_1$1 = new Mat4();
 const m4_2 = new Mat4();
@@ -60807,7 +60976,7 @@ let SkeletalAnimation = (_dec3$16 = ccclass$w('cc.SkeletalAnimation'), _dec4$L =
 cclegacy.SkeletalAnimationComponent = SkeletalAnimation;
 setClassAlias(SkeletalAnimation, 'cc.SkeletalAnimationComponent');
 
-var _dec$23, _dec2$1D, _class$23, _class2$1F, _initializer$1B, _initializer2$1h, _Primitive;
+var _dec$24, _dec2$1E, _class$24, _class2$1F, _initializer$1B, _initializer2$1h, _Primitive;
 var PrimitiveType;
 (function (PrimitiveType) {
   PrimitiveType[PrimitiveType["BOX"] = 0] = "BOX";
@@ -60820,7 +60989,7 @@ var PrimitiveType;
   PrimitiveType[PrimitiveType["QUAD"] = 7] = "QUAD";
 })(PrimitiveType || (PrimitiveType = {}));
 Enum(PrimitiveType);
-let Primitive = (_dec$23 = ccclass$w('cc.Primitive'), _dec2$1D = type$a(PrimitiveType), _dec$23(_class$23 = (_class2$1F = (_Primitive = class Primitive extends Mesh {
+let Primitive = (_dec$24 = ccclass$w('cc.Primitive'), _dec2$1E = type$a(PrimitiveType), _dec$24(_class$24 = (_class2$1F = (_Primitive = class Primitive extends Mesh {
   constructor(type = PrimitiveType.BOX) {
     super();
     this.type = _initializer$1B && _initializer$1B();
@@ -60831,11 +61000,11 @@ let Primitive = (_dec$23 = ccclass$w('cc.Primitive'), _dec2$1D = type$a(Primitiv
     const factory = primitives[PrimitiveType[this.type].toLowerCase()];
     createMesh(factory(this.info), this);
   }
-}, _Primitive.PrimitiveType = PrimitiveType, _Primitive), (_initializer$1B = applyDecoratedInitializer(_class2$1F.prototype, "type", [_dec2$1D], function () {
+}, _Primitive.PrimitiveType = PrimitiveType, _Primitive), (_initializer$1B = applyDecoratedInitializer(_class2$1F.prototype, "type", [_dec2$1E], function () {
   return PrimitiveType.BOX;
 }), _initializer2$1h = applyDecoratedInitializer(_class2$1F.prototype, "info", [serializable$c], function () {
   return {};
-})), _class2$1F)) || _class$23);
+})), _class2$1F)) || _class$24);
 cclegacy.Primitive = Primitive;
 
 legacyCC.primitives = primitives;
@@ -63022,8 +63191,8 @@ class Counter {
   }
 }
 
-var _dec$22, _class$22;
-let PerfCounter = (_dec$22 = ccclass$w('cc.PerfCounter'), _dec$22(_class$22 = class PerfCounter extends Counter {
+var _dec$23, _class$23;
+let PerfCounter = (_dec$23 = ccclass$w('cc.PerfCounter'), _dec$23(_class$23 = class PerfCounter extends Counter {
   constructor(id, opts, now) {
     super(id, opts, now);
     this._time = now;
@@ -63052,7 +63221,7 @@ let PerfCounter = (_dec$22 = ccclass$w('cc.PerfCounter'), _dec$22(_class$22 = cl
       this._average(this._value);
     }
   }
-}) || _class$22);
+}) || _class$23);
 
 const _characters = '0123456789. ';
 const _average = 500;
@@ -63533,8 +63702,8 @@ const profiler = new Profiler();
 director.registerSystem('profiler', profiler, 0);
 cclegacy.profiler = profiler;
 
-var _dec$21, _class$21, _class2$1E, _initializer$1A;
-let VideoClip = (_dec$21 = ccclass$w('cc.VideoClip'), _dec$21(_class$21 = (_class2$1E = class VideoClip extends Asset {
+var _dec$22, _class$22, _class2$1E, _initializer$1A;
+let VideoClip = (_dec$22 = ccclass$w('cc.VideoClip'), _dec$22(_class$22 = (_class2$1E = class VideoClip extends Asset {
   constructor() {
     super();
     this._duration = _initializer$1A && _initializer$1A();
@@ -63553,7 +63722,7 @@ let VideoClip = (_dec$21 = ccclass$w('cc.VideoClip'), _dec$21(_class$21 = (_clas
   }
 }, (_initializer$1A = applyDecoratedInitializer(_class2$1E.prototype, "_duration", [serializable$c], function () {
   return 0;
-})), _class2$1E)) || _class$21);
+})), _class2$1E)) || _class$22);
 
 const ccdocument$4 = ccwindow.document;
 function downloadVideo(url, options, onComplete) {
@@ -63637,7 +63806,7 @@ deprecateModuleExportedName({
   }
 });
 
-var _dec$20, _dec2$1C, _class$20, _class2$1D, _initializer$1z, _initializer2$1g, _UITransform;
+var _dec$21, _dec2$1D, _class$21, _class2$1D, _initializer$1z, _initializer2$1g, _UITransform;
 const _vec2a = new Vec2();
 const _vec2b = new Vec2();
 const _vec3a = new Vec3();
@@ -63646,7 +63815,7 @@ const _matrix$1 = new Mat4();
 const _worldMatrix$1 = new Mat4();
 const _zeroMatrix = new Mat4(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 const _rect = new Rect();
-let UITransform = (_dec$20 = ccclass$w('cc.UITransform'), _dec2$1C = executionOrder$2(110), _dec$20(_class$20 = _dec2$1C(_class$20 = disallowMultiple$1(_class$20 = (_class2$1D = (_UITransform = class UITransform extends Component {
+let UITransform = (_dec$21 = ccclass$w('cc.UITransform'), _dec2$1D = executionOrder$2(110), _dec$21(_class$21 = _dec2$1D(_class$21 = disallowMultiple$1(_class$21 = (_class2$1D = (_UITransform = class UITransform extends Component {
   constructor() {
     super();
     this._priority = 0;
@@ -64067,12 +64236,12 @@ let UITransform = (_dec$20 = ccclass$w('cc.UITransform'), _dec2$1C = executionOr
   return new Size(100, 100);
 }), _initializer2$1g = applyDecoratedInitializer(_class2$1D.prototype, "_anchorPoint", [serializable$c], function () {
   return new Vec2(0.5, 0.5);
-})), _class2$1D)) || _class$20) || _class$20) || _class$20);
+})), _class2$1D)) || _class$21) || _class$21) || _class$21);
 director.on(DirectorEvent.AFTER_UPDATE, UITransform._sortSiblings);
 director.on(DirectorEvent.BEFORE_SCENE_LAUNCH, UITransform._cleanChangeMap);
 
-var _dec$1$, _dec2$1B, _dec3$15, _class$1$;
-let RenderRoot2D = (_dec$1$ = ccclass$w('cc.RenderRoot2D'), _dec2$1B = executionOrder$2(100), _dec3$15 = requireComponent(UITransform), _dec$1$(_class$1$ = _dec2$1B(_class$1$ = _dec3$15(_class$1$ = disallowMultiple$1(_class$1$ = class RenderRoot2D extends Component {
+var _dec$20, _dec2$1C, _dec3$15, _class$20;
+let RenderRoot2D = (_dec$20 = ccclass$w('cc.RenderRoot2D'), _dec2$1C = executionOrder$2(100), _dec3$15 = requireComponent(UITransform), _dec$20(_class$20 = _dec2$1C(_class$20 = _dec3$15(_class$20 = disallowMultiple$1(_class$20 = class RenderRoot2D extends Component {
   onEnable() {
     cclegacy.director.root.batcher2D.addScreen(this);
   }
@@ -64082,16 +64251,16 @@ let RenderRoot2D = (_dec$1$ = ccclass$w('cc.RenderRoot2D'), _dec2$1B = execution
   onDestroy() {
     cclegacy.director.root.batcher2D.removeScreen(this);
   }
-}) || _class$1$) || _class$1$) || _class$1$) || _class$1$);
+}) || _class$20) || _class$20) || _class$20) || _class$20);
 
-var _dec$1_, _dec2$1A, _dec3$14, _dec4$K, _class$1_, _class2$1C, _initializer$1y, _initializer2$1f;
+var _dec$1$, _dec2$1B, _dec3$14, _dec4$K, _class$1$, _class2$1C, _initializer$1y, _initializer2$1f;
 const _worldPos = new Vec3();
 var CanvasRenderMode;
 (function (CanvasRenderMode) {
   CanvasRenderMode[CanvasRenderMode["OVERLAY"] = 0] = "OVERLAY";
   CanvasRenderMode[CanvasRenderMode["INTERSPERSE"] = 1] = "INTERSPERSE";
 })(CanvasRenderMode || (CanvasRenderMode = {}));
-let Canvas = (_dec$1_ = ccclass$w('cc.Canvas'), _dec2$1A = executionOrder$2(100), _dec3$14 = type$a(Camera), _dec4$K = type$a(Camera), _dec$1_(_class$1_ = _dec2$1A(_class$1_ = disallowMultiple$1(_class$1_ = (_class2$1C = class Canvas extends RenderRoot2D {
+let Canvas = (_dec$1$ = ccclass$w('cc.Canvas'), _dec2$1B = executionOrder$2(100), _dec3$14 = type$a(Camera), _dec4$K = type$a(Camera), _dec$1$(_class$1$ = _dec2$1B(_class$1$ = disallowMultiple$1(_class$1$ = (_class2$1C = class Canvas extends RenderRoot2D {
   get renderMode() {
     return this._renderMode;
   }
@@ -64185,7 +64354,7 @@ let Canvas = (_dec$1_ = ccclass$w('cc.Canvas'), _dec2$1A = executionOrder$2(100)
   return null;
 }), _initializer2$1f = applyDecoratedInitializer(_class2$1C.prototype, "_alignCanvasWithScreen", [serializable$c], function () {
   return true;
-})), _class2$1C)) || _class$1_) || _class$1_) || _class$1_);
+})), _class2$1C)) || _class$1$) || _class$1$) || _class$1$);
 cclegacy.Canvas = Canvas;
 
 let Stage;
@@ -64354,8 +64523,8 @@ class StencilManager {
 StencilManager.sharedManager = null;
 StencilManager.sharedManager = new StencilManager();
 
-var _dec$1Z, _dec2$1z, _dec3$13, _class$1Z;
-let UIComponent = (_dec$1Z = ccclass$w('cc.UIComponent'), _dec2$1z = requireComponent(UITransform), _dec3$13 = executionOrder$2(110), _dec$1Z(_class$1Z = _dec2$1z(_class$1Z = _dec3$13(_class$1Z = disallowMultiple$1(_class$1Z = class UIComponent extends Component {
+var _dec$1_, _dec2$1A, _dec3$13, _class$1_;
+let UIComponent = (_dec$1_ = ccclass$w('cc.UIComponent'), _dec2$1A = requireComponent(UITransform), _dec3$13 = executionOrder$2(110), _dec$1_(_class$1_ = _dec2$1A(_class$1_ = _dec3$13(_class$1_ = disallowMultiple$1(_class$1_ = class UIComponent extends Component {
   constructor() {
     super();
     this._lastParent = null;
@@ -64377,7 +64546,7 @@ let UIComponent = (_dec$1Z = ccclass$w('cc.UIComponent'), _dec2$1z = requireComp
 
   setNodeDirty() {}
   setTextureDirty() {}
-}) || _class$1Z) || _class$1Z) || _class$1Z) || _class$1Z);
+}) || _class$1_) || _class$1_) || _class$1_) || _class$1_);
 
 const ATTR_POSITION = AttributeName.ATTR_POSITION;
 const ATTR_COLOR = AttributeName.ATTR_COLOR;
@@ -65682,7 +65851,7 @@ SortingLayers.nameMap = new Map();
 SortingLayers.indexMap = new Map();
 SortingLayers.Enum = Enum(SortingLayer);
 
-var _dec$1Y, _dec2$1y, _dec3$12, _dec4$J, _class$1Y, _class2$1B, _initializer$1x, _initializer2$1e, _initializer3$V, _initializer4$L, _initializer5$A, _UIRenderer;
+var _dec$1Z, _dec2$1z, _dec3$12, _dec4$J, _class$1Z, _class2$1B, _initializer$1x, _initializer2$1e, _initializer3$V, _initializer4$L, _initializer5$A, _UIRenderer;
 ccenum(BlendFactor);
 ccenum(BlendOp);
 ccenum(ColorMask);
@@ -65694,7 +65863,7 @@ let InstanceMaterialType;
   InstanceMaterialType[InstanceMaterialType["USE_ALPHA_SEPARATED"] = 3] = "USE_ALPHA_SEPARATED";
   InstanceMaterialType[InstanceMaterialType["USE_ALPHA_SEPARATED_AND_GRAY"] = 4] = "USE_ALPHA_SEPARATED_AND_GRAY";
 })(InstanceMaterialType || (InstanceMaterialType = {}));
-let UIRenderer = (_dec$1Y = ccclass$w('cc.UIRenderer'), _dec2$1y = requireComponent(UITransform), _dec3$12 = type$a(Material), _dec4$J = type$a(Material), _dec$1Y(_class$1Y = _dec2$1y(_class$1Y = (_class2$1B = (_UIRenderer = class UIRenderer extends Renderer {
+let UIRenderer = (_dec$1Z = ccclass$w('cc.UIRenderer'), _dec2$1z = requireComponent(UITransform), _dec3$12 = type$a(Material), _dec4$J = type$a(Material), _dec$1Z(_class$1Z = _dec2$1z(_class$1Z = (_class2$1B = (_UIRenderer = class UIRenderer extends Renderer {
   constructor() {
     super();
     this._renderData = null;
@@ -66047,7 +66216,7 @@ let UIRenderer = (_dec$1Y = ccclass$w('cc.UIRenderer'), _dec2$1y = requireCompon
   return BlendFactor.ONE_MINUS_SRC_ALPHA;
 }), _initializer5$A = applyDecoratedInitializer(_class2$1B.prototype, "_color", [serializable$c], function () {
   return Color.WHITE.clone();
-})), _class2$1B)) || _class$1Y) || _class$1Y);
+})), _class2$1B)) || _class$1Z) || _class$1Z);
 cclegacy.internal.UIRenderer = UIRenderer;
 
 removeProperty(UIComponent.prototype, 'UIComponent', [{
@@ -66377,7 +66546,7 @@ const dynamicAtlasManager = DynamicAtlasManager.instance = new DynamicAtlasManag
 director.registerSystem('dynamicAtlasManager', dynamicAtlasManager, 0);
 cclegacy.internal.dynamicAtlasManager = dynamicAtlasManager;
 
-var _dec$1X, _class$1X, _SpriteFrame;
+var _dec$1Y, _class$1Y, _SpriteFrame;
 const INSET_LEFT = 0;
 const INSET_TOP = 1;
 const INSET_RIGHT = 2;
@@ -66408,7 +66577,7 @@ let SpriteFrameEvent;
 (function (SpriteFrameEvent) {
   SpriteFrameEvent["UV_UPDATED"] = "uv_updated";
 })(SpriteFrameEvent || (SpriteFrameEvent = {}));
-let SpriteFrame = (_dec$1X = ccclass$w('cc.SpriteFrame'), _dec$1X(_class$1X = (_SpriteFrame = class SpriteFrame extends Asset {
+let SpriteFrame = (_dec$1Y = ccclass$w('cc.SpriteFrame'), _dec$1Y(_class$1Y = (_SpriteFrame = class SpriteFrame extends Asset {
   static createWithImage(imageSourceOrImageAsset) {
     const img = imageSourceOrImageAsset instanceof ImageAsset ? imageSourceOrImageAsset : new ImageAsset(imageSourceOrImageAsset);
     const tex = new Texture2D();
@@ -67163,17 +67332,17 @@ let SpriteFrame = (_dec$1X = ccclass$w('cc.SpriteFrame'), _dec$1X(_class$1X = (_
     this._initVertices();
     this._createMesh();
   }
-}, _SpriteFrame.EVENT_UV_UPDATED = SpriteFrameEvent.UV_UPDATED, _SpriteFrame.MeshType = MeshType, _SpriteFrame)) || _class$1X);
+}, _SpriteFrame.EVENT_UV_UPDATED = SpriteFrameEvent.UV_UPDATED, _SpriteFrame.MeshType = MeshType, _SpriteFrame)) || _class$1Y);
 cclegacy.SpriteFrame = SpriteFrame;
 
-var _dec$1W, _dec2$1x, _dec3$11, _class$1W, _class2$1A, _initializer$1w, _initializer2$1d, _initializer3$U, _initializer4$K, _initializer5$z, _initializer6$s;
+var _dec$1X, _dec2$1y, _dec3$11, _class$1X, _class2$1A, _initializer$1w, _initializer2$1d, _initializer3$U, _initializer4$K, _initializer5$z, _initializer6$s;
 var SpriteMode;
 (function (SpriteMode) {
   SpriteMode[SpriteMode["SIMPLE"] = 0] = "SIMPLE";
   SpriteMode[SpriteMode["SLICED"] = 1] = "SLICED";
   SpriteMode[SpriteMode["TILED"] = 2] = "TILED";
 })(SpriteMode || (SpriteMode = {}));
-let SpriteRenderer = (_dec$1W = ccclass$w('cc.SpriteRenderer'), _dec2$1x = executionOrder$2(100), _dec3$11 = type$a(SpriteFrame), _dec$1W(_class$1W = _dec2$1x(_class$1W = (_class2$1A = class SpriteRenderer extends ModelRenderer {
+let SpriteRenderer = (_dec$1X = ccclass$w('cc.SpriteRenderer'), _dec2$1y = executionOrder$2(100), _dec3$11 = type$a(SpriteFrame), _dec$1X(_class$1X = _dec2$1y(_class$1X = (_class2$1A = class SpriteRenderer extends ModelRenderer {
   constructor() {
     super();
     this._spriteFrame = _initializer$1w && _initializer$1w();
@@ -67351,7 +67520,7 @@ let SpriteRenderer = (_dec$1W = ccclass$w('cc.SpriteRenderer'), _dec2$1x = execu
   return false;
 }), _initializer6$s = applyDecoratedInitializer(_class2$1A.prototype, "_size", [serializable$c], function () {
   return new Vec2();
-})), _class2$1A)) || _class$1W) || _class$1W);
+})), _class2$1A)) || _class$1X) || _class$1X);
 
 const ResourceType = Enum({
   REMOTE: 0,
@@ -67896,8 +68065,8 @@ class VideoPlayerImplManager {
 }
 legacyCC.internal.VideoPlayerImplManager = VideoPlayerImplManager;
 
-var _dec$1V, _dec2$1w, _dec3$10, _dec4$I, _dec5$D, _dec6$r, _class$1V, _class2$1z, _initializer$1v, _initializer2$1c, _initializer3$T, _initializer4$J, _initializer5$y, _initializer6$r, _initializer7$l, _initializer8$j, _initializer9$h, _initializer10$g, _initializer11$f, _initializer12$d, _VideoPlayer;
-let VideoPlayer = (_dec$1V = ccclass$w('cc.VideoPlayer'), _dec2$1w = requireComponent(UITransform), _dec3$10 = type$a(VideoClip), _dec4$I = type$a(ResourceType), _dec5$D = type$a(VideoClip), _dec6$r = type$a([EventHandler]), _dec$1V(_class$1V = _dec2$1w(_class$1V = (_class2$1z = (_VideoPlayer = class VideoPlayer extends Component {
+var _dec$1W, _dec2$1x, _dec3$10, _dec4$I, _dec5$D, _dec6$r, _class$1W, _class2$1z, _initializer$1v, _initializer2$1c, _initializer3$T, _initializer4$J, _initializer5$y, _initializer6$r, _initializer7$l, _initializer8$j, _initializer9$h, _initializer10$g, _initializer11$f, _initializer12$d, _VideoPlayer;
+let VideoPlayer = (_dec$1W = ccclass$w('cc.VideoPlayer'), _dec2$1x = requireComponent(UITransform), _dec3$10 = type$a(VideoClip), _dec4$I = type$a(ResourceType), _dec5$D = type$a(VideoClip), _dec6$r = type$a([EventHandler]), _dec$1W(_class$1W = _dec2$1x(_class$1W = (_class2$1z = (_VideoPlayer = class VideoPlayer extends Component {
   constructor() {
     super();
     this._resourceType = _initializer$1v && _initializer$1v();
@@ -68199,7 +68368,7 @@ let VideoPlayer = (_dec$1V = ccclass$w('cc.VideoPlayer'), _dec2$1w = requireComp
   return true;
 }), _applyDecoratedDescriptor(_class2$1z.prototype, "resourceType", [_dec4$I], Object.getOwnPropertyDescriptor(_class2$1z.prototype, "resourceType"), _class2$1z.prototype), _applyDecoratedDescriptor(_class2$1z.prototype, "clip", [_dec5$D], Object.getOwnPropertyDescriptor(_class2$1z.prototype, "clip"), _class2$1z.prototype), _initializer12$d = applyDecoratedInitializer(_class2$1z.prototype, "videoPlayerEvent", [serializable$c, _dec6$r], function () {
   return [];
-})), _class2$1z)) || _class$1V) || _class$1V);
+})), _class2$1z)) || _class$1W) || _class$1W);
 legacyCC.internal.VideoPlayer = VideoPlayer;
 
 replaceProperty(VideoPlayer.prototype, 'VideoPlayer.prototype', [{
@@ -68432,8 +68601,8 @@ class WebViewImplManager {
 }
 legacyCC.internal.WebViewImplManager = WebViewImplManager;
 
-var _dec$1U, _dec2$1v, _dec3$$, _class$1U, _class2$1y, _initializer$1u, _initializer2$1b, _WebView;
-let WebView = (_dec$1U = ccclass$w('cc.WebView'), _dec2$1v = requireComponent(UITransform), _dec3$$ = type$a([EventHandler]), _dec$1U(_class$1U = _dec2$1v(_class$1U = (_class2$1y = (_WebView = class WebView extends Component {
+var _dec$1V, _dec2$1w, _dec3$$, _class$1V, _class2$1y, _initializer$1u, _initializer2$1b, _WebView;
+let WebView = (_dec$1V = ccclass$w('cc.WebView'), _dec2$1w = requireComponent(UITransform), _dec3$$ = type$a([EventHandler]), _dec$1V(_class$1V = _dec2$1w(_class$1V = (_class2$1y = (_WebView = class WebView extends Component {
   constructor() {
     super();
     this._url = _initializer$1u && _initializer$1u();
@@ -68521,7 +68690,7 @@ let WebView = (_dec$1U = ccclass$w('cc.WebView'), _dec2$1v = requireComponent(UI
   return 'https://cocos.com';
 }), _initializer2$1b = applyDecoratedInitializer(_class2$1y.prototype, "webviewEvents", [serializable$c, _dec3$$], function () {
   return [];
-})), _class2$1y)) || _class$1U) || _class$1U);
+})), _class2$1y)) || _class$1V) || _class$1V);
 legacyCC.internal.WebView = WebView;
 
 const _col$1 = new Vec4();
@@ -68609,8 +68778,8 @@ function updateOpacity(renderData, opacity) {
   }
 }
 
-var _dec$1T, _class$1T, _class2$1x, _initializer$1t;
-let SpriteAtlas = (_dec$1T = ccclass$w('cc.SpriteAtlas'), _dec$1T(_class$1T = (_class2$1x = class SpriteAtlas extends Asset {
+var _dec$1U, _class$1U, _class2$1x, _initializer$1t;
+let SpriteAtlas = (_dec$1U = ccclass$w('cc.SpriteAtlas'), _dec$1U(_class$1U = (_class2$1x = class SpriteAtlas extends Asset {
   constructor(name) {
     super(name);
     this.spriteFrames = _initializer$1t && _initializer$1t();
@@ -68656,19 +68825,19 @@ let SpriteAtlas = (_dec$1T = ccclass$w('cc.SpriteAtlas'), _dec$1T(_class$1T = (_
   }
 }, (_initializer$1t = applyDecoratedInitializer(_class2$1x.prototype, "spriteFrames", [serializable$c], function () {
   return createMap();
-})), _class2$1x)) || _class$1T);
+})), _class2$1x)) || _class$1U);
 cclegacy.SpriteAtlas = SpriteAtlas;
 
-var _dec$1S, _class$1S;
-let Font = (_dec$1S = ccclass$w('cc.Font'), _dec$1S(_class$1S = class Font extends Asset {
+var _dec$1T, _class$1T;
+let Font = (_dec$1T = ccclass$w('cc.Font'), _dec$1T(_class$1T = class Font extends Asset {
   constructor(name) {
     super(name);
   }
-}) || _class$1S);
+}) || _class$1T);
 cclegacy.Font = Font;
 
-var _dec$1R, _class$1R, _class2$1w, _initializer$1s;
-let TTFFont = (_dec$1R = ccclass$w('cc.TTFFont'), _dec$1R(_class$1R = (_class2$1w = class TTFFont extends Font {
+var _dec$1S, _class$1S, _class2$1w, _initializer$1s;
+let TTFFont = (_dec$1S = ccclass$w('cc.TTFFont'), _dec$1S(_class$1S = (_class2$1w = class TTFFont extends Font {
   constructor() {
     super();
     this._fontFamily = _initializer$1s && _initializer$1s();
@@ -68693,7 +68862,7 @@ let TTFFont = (_dec$1R = ccclass$w('cc.TTFFont'), _dec$1R(_class$1R = (_class2$1
   }
 }, (_initializer$1s = applyDecoratedInitializer(_class2$1w.prototype, "_fontFamily", [serializable$c], function () {
   return null;
-}), _applyDecoratedDescriptor(_class2$1w.prototype, "_nativeAsset", [override$1, string], Object.getOwnPropertyDescriptor(_class2$1w.prototype, "_nativeAsset"), _class2$1w.prototype), _applyDecoratedDescriptor(_class2$1w.prototype, "_nativeDep", [override$1], Object.getOwnPropertyDescriptor(_class2$1w.prototype, "_nativeDep"), _class2$1w.prototype)), _class2$1w)) || _class$1R);
+}), _applyDecoratedDescriptor(_class2$1w.prototype, "_nativeAsset", [override$1, string], Object.getOwnPropertyDescriptor(_class2$1w.prototype, "_nativeAsset"), _class2$1w.prototype), _applyDecoratedDescriptor(_class2$1w.prototype, "_nativeDep", [override$1], Object.getOwnPropertyDescriptor(_class2$1w.prototype, "_nativeDep"), _class2$1w.prototype)), _class2$1w)) || _class$1S);
 cclegacy.TTFFont = TTFFont;
 
 const minigame$1 = {};
@@ -69570,7 +69739,7 @@ class HtmlTextParser {
   }
 }
 
-var _dec$1Q, _dec2$1u, _class$1Q, _class2$1v, _initializer$1r, _initializer2$1a, _initializer3$S, _initializer4$I;
+var _dec$1R, _dec2$1v, _class$1R, _class2$1v, _initializer$1r, _initializer2$1a, _initializer3$S, _initializer4$I;
 class FontLetterDefinition {
   constructor() {
     this.u = 0;
@@ -69637,7 +69806,7 @@ class FontAtlas {
     this.letterDefinitions = {};
   }
 }
-let BitmapFont = (_dec$1Q = ccclass$w('cc.BitmapFont'), _dec2$1u = type$a(SpriteFrame), _dec$1Q(_class$1Q = (_class2$1v = class BitmapFont extends Font {
+let BitmapFont = (_dec$1R = ccclass$w('cc.BitmapFont'), _dec2$1v = type$a(SpriteFrame), _dec$1R(_class$1R = (_class2$1v = class BitmapFont extends Font {
   constructor() {
     super();
     this.fntDataStr = _initializer$1r && _initializer$1r();
@@ -69673,17 +69842,17 @@ let BitmapFont = (_dec$1Q = ccclass$w('cc.BitmapFont'), _dec2$1u = type$a(Sprite
   }
 }, (_initializer$1r = applyDecoratedInitializer(_class2$1v.prototype, "fntDataStr", [serializable$c], function () {
   return '';
-}), _initializer2$1a = applyDecoratedInitializer(_class2$1v.prototype, "spriteFrame", [_dec2$1u], function () {
+}), _initializer2$1a = applyDecoratedInitializer(_class2$1v.prototype, "spriteFrame", [_dec2$1v], function () {
   return null;
 }), _initializer3$S = applyDecoratedInitializer(_class2$1v.prototype, "fontSize", [serializable$c], function () {
   return -1;
 }), _initializer4$I = applyDecoratedInitializer(_class2$1v.prototype, "fntConfig", [serializable$c], function () {
   return null;
-})), _class2$1v)) || _class$1Q);
+})), _class2$1v)) || _class$1R);
 cclegacy.BitmapFont = BitmapFont;
 
-var _dec$1P, _class$1P;
-let LabelAtlas = (_dec$1P = ccclass$w('cc.LabelAtlas'), _dec$1P(_class$1P = class LabelAtlas extends BitmapFont {}) || _class$1P);
+var _dec$1Q, _class$1Q;
+let LabelAtlas = (_dec$1Q = ccclass$w('cc.LabelAtlas'), _dec$1Q(_class$1Q = class LabelAtlas extends BitmapFont {}) || _class$1Q);
 cclegacy.LabelAtlas = LabelAtlas;
 
 let _canvasPool;
@@ -70080,7 +70249,7 @@ class TextOutputRenderData {
   }
 }
 
-var _dec$1O, _dec2$1t, _dec3$_, _dec4$H, _dec5$C, _dec6$q, _dec7$m, _class$1O, _class2$1u, _initializer$1q, _initializer2$19, _initializer3$R, _initializer4$H, _initializer5$x, _initializer6$q, _initializer7$k, _initializer8$i, _initializer9$g, _initializer10$f, _initializer11$e, _initializer12$c, _initializer13$a, _initializer14$9, _initializer15$7, _initializer16$7, _initializer17$4, _initializer18$4, _initializer19$3, _initializer20$3, _initializer21$3, _initializer22$3, _initializer23$3, _initializer24$3, _Label;
+var _dec$1P, _dec2$1u, _dec3$_, _dec4$H, _dec5$C, _dec6$q, _dec7$m, _class$1P, _class2$1u, _initializer$1q, _initializer2$19, _initializer3$R, _initializer4$H, _initializer5$x, _initializer6$q, _initializer7$k, _initializer8$i, _initializer9$g, _initializer10$f, _initializer11$e, _initializer12$c, _initializer13$a, _initializer14$9, _initializer15$7, _initializer16$7, _initializer17$4, _initializer18$4, _initializer19$3, _initializer20$3, _initializer21$3, _initializer22$3, _initializer23$3, _initializer24$3, _Label;
 Color.WHITE.clone();
 let HorizontalTextAlignment;
 (function (HorizontalTextAlignment) {
@@ -70111,7 +70280,7 @@ let CacheMode;
   CacheMode[CacheMode["CHAR"] = 2] = "CHAR";
 })(CacheMode || (CacheMode = {}));
 ccenum(CacheMode);
-let Label = (_dec$1O = ccclass$w('cc.Label'), _dec2$1t = executionOrder$2(110), _dec3$_ = type$a(HorizontalTextAlignment), _dec4$H = type$a(VerticalTextAlignment), _dec5$C = type$a(Overflow$1), _dec6$q = type$a(Font), _dec7$m = type$a(CacheMode), _dec$1O(_class$1O = _dec2$1t(_class$1O = (_class2$1u = (_Label = class Label extends UIRenderer {
+let Label = (_dec$1P = ccclass$w('cc.Label'), _dec2$1u = executionOrder$2(110), _dec3$_ = type$a(HorizontalTextAlignment), _dec4$H = type$a(VerticalTextAlignment), _dec5$C = type$a(Overflow$1), _dec6$q = type$a(Font), _dec7$m = type$a(CacheMode), _dec$1P(_class$1P = _dec2$1u(_class$1P = (_class2$1u = (_Label = class Label extends UIRenderer {
   get string() {
     return this._string;
   }
@@ -70649,10 +70818,10 @@ let Label = (_dec$1O = ccclass$w('cc.Label'), _dec2$1t = executionOrder$2(110), 
   return new Vec2(2, 2);
 }), _initializer24$3 = applyDecoratedInitializer(_class2$1u.prototype, "_shadowBlur", [serializable$c], function () {
   return 2;
-})), _class2$1u)) || _class$1O) || _class$1O);
+})), _class2$1u)) || _class$1P) || _class$1P);
 cclegacy.Label = Label;
 
-var _dec$1N, _dec2$1s, _dec3$Z, _dec4$G, _dec5$B, _dec6$p, _dec7$l, _class$1N, _class2$1t, _initializer$1p, _initializer2$18, _initializer3$Q, _initializer4$G, _initializer5$w, _initializer6$p, _initializer7$j, _initializer8$h, _initializer9$f, _initializer10$e, _Sprite;
+var _dec$1O, _dec2$1t, _dec3$Z, _dec4$G, _dec5$B, _dec6$p, _dec7$l, _class$1O, _class2$1t, _initializer$1p, _initializer2$18, _initializer3$Q, _initializer4$G, _initializer5$w, _initializer6$p, _initializer7$j, _initializer8$h, _initializer9$f, _initializer10$e, _Sprite;
 let SpriteType$1;
 (function (SpriteType) {
   SpriteType[SpriteType["SIMPLE"] = 0] = "SIMPLE";
@@ -70679,7 +70848,7 @@ let SpriteEventType;
 (function (SpriteEventType) {
   SpriteEventType["SPRITE_FRAME_CHANGED"] = "spriteframe-changed";
 })(SpriteEventType || (SpriteEventType = {}));
-let Sprite = (_dec$1N = ccclass$w('cc.Sprite'), _dec2$1s = executionOrder$2(110), _dec3$Z = type$a(SpriteAtlas), _dec4$G = type$a(SpriteFrame), _dec5$B = type$a(SpriteType$1), _dec6$p = type$a(FillType$2), _dec7$l = type$a(SizeMode$1), _dec$1N(_class$1N = _dec2$1s(_class$1N = (_class2$1t = (_Sprite = class Sprite extends UIRenderer {
+let Sprite = (_dec$1O = ccclass$w('cc.Sprite'), _dec2$1t = executionOrder$2(110), _dec3$Z = type$a(SpriteAtlas), _dec4$G = type$a(SpriteFrame), _dec5$B = type$a(SpriteType$1), _dec6$p = type$a(FillType$2), _dec7$l = type$a(SizeMode$1), _dec$1O(_class$1O = _dec2$1t(_class$1O = (_class2$1t = (_Sprite = class Sprite extends UIRenderer {
   constructor() {
     super();
     this._spriteFrame = _initializer$1p && _initializer$1p();
@@ -71001,11 +71170,11 @@ let Sprite = (_dec$1N = ccclass$w('cc.Sprite'), _dec2$1s = executionOrder$2(110)
   return false;
 }), _initializer10$e = applyDecoratedInitializer(_class2$1t.prototype, "_atlas", [serializable$c], function () {
   return null;
-})), _class2$1t)) || _class$1N) || _class$1N);
+})), _class2$1t)) || _class$1O) || _class$1O);
 cclegacy.Sprite = Sprite;
 
-var _dec$1M, _dec2$1r, _class$1M;
-let UIMeshRenderer = (_dec$1M = ccclass$w('cc.UIMeshRenderer'), _dec2$1r = executionOrder$2(110), _dec$1M(_class$1M = _dec2$1r(_class$1M = class UIMeshRenderer extends Component {
+var _dec$1N, _dec2$1s, _class$1N;
+let UIMeshRenderer = (_dec$1N = ccclass$w('cc.UIMeshRenderer'), _dec2$1s = executionOrder$2(110), _dec$1N(_class$1N = _dec2$1s(_class$1N = class UIMeshRenderer extends Component {
   constructor() {
     super();
     this._modelComponent = null;
@@ -71122,11 +71291,11 @@ let UIMeshRenderer = (_dec$1M = ccclass$w('cc.UIMeshRenderer'), _dec2$1r = execu
   get renderData() {
     return this._renderData;
   }
-}) || _class$1M) || _class$1M);
+}) || _class$1N) || _class$1N);
 cclegacy.UIMeshRenderer = UIMeshRenderer;
 
-var _dec$1L, _dec2$1q, _dec3$Y, _class$1L;
-let LabelOutline = (_dec$1L = ccclass$w('cc.LabelOutline'), _dec2$1q = executionOrder$2(110), _dec3$Y = requireComponent(Label), _dec$1L(_class$1L = _dec2$1q(_class$1L = _dec3$Y(_class$1L = class LabelOutline extends Component {
+var _dec$1M, _dec2$1r, _dec3$Y, _class$1M;
+let LabelOutline = (_dec$1M = ccclass$w('cc.LabelOutline'), _dec2$1r = executionOrder$2(110), _dec3$Y = requireComponent(Label), _dec$1M(_class$1M = _dec2$1r(_class$1M = _dec3$Y(_class$1M = class LabelOutline extends Component {
   get color() {
     const label = this.node.getComponent(Label);
     assertIsTrue(label);
@@ -71157,7 +71326,7 @@ let LabelOutline = (_dec$1L = ccclass$w('cc.LabelOutline'), _dec2$1q = execution
     assertIsTrue(label);
     label.enableOutline = false;
   }
-}) || _class$1L) || _class$1L) || _class$1L);
+}) || _class$1M) || _class$1M) || _class$1M);
 cclegacy.LabelOutline = LabelOutline;
 
 const UI_VIS_FLAG = Layers.Enum.NONE | Layers.Enum.UI_3D;
@@ -71223,8 +71392,8 @@ class DrawBatch2D {
   }
 }
 
-var _dec$1K, _dec2$1p, _class$1K, _class2$1s;
-let UIStaticBatch = (_dec$1K = ccclass$w('cc.UIStaticBatch'), _dec2$1p = executionOrder$2(110), _dec$1K(_class$1K = _dec2$1p(_class$1K = (_class2$1s = class UIStaticBatch extends UIRenderer {
+var _dec$1L, _dec2$1q, _class$1L, _class2$1s;
+let UIStaticBatch = (_dec$1L = ccclass$w('cc.UIStaticBatch'), _dec2$1q = executionOrder$2(110), _dec$1L(_class$1L = _dec2$1q(_class$1L = (_class2$1s = class UIStaticBatch extends UIRenderer {
   constructor() {
     super();
     this._init = false;
@@ -71273,10 +71442,10 @@ let UIStaticBatch = (_dec$1K = ccclass$w('cc.UIStaticBatch'), _dec2$1p = executi
     warnID(9301);
     return null;
   }
-}, (_applyDecoratedDescriptor(_class2$1s.prototype, "color", [override$1], Object.getOwnPropertyDescriptor(_class2$1s.prototype, "color"), _class2$1s.prototype)), _class2$1s)) || _class$1K) || _class$1K);
+}, (_applyDecoratedDescriptor(_class2$1s.prototype, "color", [override$1], Object.getOwnPropertyDescriptor(_class2$1s.prototype, "color"), _class2$1s.prototype)), _class2$1s)) || _class$1L) || _class$1L);
 
-var _dec$1J, _dec2$1o, _dec3$X, _class$1J;
-let LabelShadow = (_dec$1J = ccclass$w('cc.LabelShadow'), _dec2$1o = executionOrder$2(110), _dec3$X = requireComponent(Label), _dec$1J(_class$1J = _dec2$1o(_class$1J = _dec3$X(_class$1J = class LabelShadow extends Component {
+var _dec$1K, _dec2$1p, _dec3$X, _class$1K;
+let LabelShadow = (_dec$1K = ccclass$w('cc.LabelShadow'), _dec2$1p = executionOrder$2(110), _dec3$X = requireComponent(Label), _dec$1K(_class$1K = _dec2$1p(_class$1K = _dec3$X(_class$1K = class LabelShadow extends Component {
   get color() {
     const label = this.node.getComponent(Label);
     assertIsTrue(label);
@@ -71317,10 +71486,10 @@ let LabelShadow = (_dec$1J = ccclass$w('cc.LabelShadow'), _dec2$1o = executionOr
     assertIsTrue(label);
     label.enableShadow = false;
   }
-}) || _class$1J) || _class$1J) || _class$1J);
+}) || _class$1K) || _class$1K) || _class$1K);
 
-var _dec$1I, _dec2$1n, _class$1I, _class2$1r, _initializer$1o;
-let UIOpacity = (_dec$1I = ccclass$w('cc.UIOpacity'), _dec2$1n = executionOrder$2(110), _dec$1I(_class$1I = _dec2$1n(_class$1I = disallowMultiple$1(_class$1I = (_class2$1r = class UIOpacity extends Component {
+var _dec$1J, _dec2$1o, _class$1J, _class2$1r, _initializer$1o;
+let UIOpacity = (_dec$1J = ccclass$w('cc.UIOpacity'), _dec2$1o = executionOrder$2(110), _dec$1J(_class$1J = _dec2$1o(_class$1J = disallowMultiple$1(_class$1J = (_class2$1r = class UIOpacity extends Component {
   constructor() {
     super();
     this._opacity = _initializer$1o && _initializer$1o();
@@ -71347,7 +71516,7 @@ let UIOpacity = (_dec$1I = ccclass$w('cc.UIOpacity'), _dec2$1n = executionOrder$
   }
 }, (_initializer$1o = applyDecoratedInitializer(_class2$1r.prototype, "_opacity", [serializable$c], function () {
   return 255;
-})), _class2$1r)) || _class$1I) || _class$1I) || _class$1I);
+})), _class2$1r)) || _class$1J) || _class$1J) || _class$1J);
 
 let LineCap;
 (function (LineCap) {
@@ -71687,11 +71856,11 @@ class Impl {
   }
 }
 
-var _dec$1H, _dec2$1m, _dec3$W, _dec4$F, _class$1H, _class2$1q, _initializer$1n, _initializer2$17, _initializer3$P, _initializer4$F, _initializer5$v, _initializer6$o, _Graphics;
+var _dec$1I, _dec2$1n, _dec3$W, _dec4$F, _class$1I, _class2$1q, _initializer$1n, _initializer2$17, _initializer3$P, _initializer4$F, _initializer5$v, _initializer6$o, _Graphics;
 const attributes = vfmtPosColor.concat([new Attribute('a_dist', Format.R32F)]);
 const componentPerVertex = getComponentPerVertex(attributes);
 const stride = getAttributeStride(attributes);
-let Graphics = (_dec$1H = ccclass$w('cc.Graphics'), _dec2$1m = executionOrder$2(110), _dec3$W = type$a(LineJoin), _dec4$F = type$a(LineCap), _dec$1H(_class$1H = _dec2$1m(_class$1H = (_class2$1q = (_Graphics = class Graphics extends UIRenderer {
+let Graphics = (_dec$1I = ccclass$w('cc.Graphics'), _dec2$1n = executionOrder$2(110), _dec3$W = type$a(LineJoin), _dec4$F = type$a(LineCap), _dec$1I(_class$1I = _dec2$1n(_class$1I = (_class2$1q = (_Graphics = class Graphics extends UIRenderer {
   get lineWidth() {
     return this._lineWidth;
   }
@@ -72019,10 +72188,10 @@ let Graphics = (_dec$1H = ccclass$w('cc.Graphics'), _dec2$1m = executionOrder$2(
   return Color.WHITE.clone();
 }), _initializer6$o = applyDecoratedInitializer(_class2$1q.prototype, "_miterLimit", [serializable$c], function () {
   return 10;
-})), _class2$1q)) || _class$1H) || _class$1H);
+})), _class2$1q)) || _class$1I) || _class$1I);
 cclegacy.Graphics = Graphics;
 
-var _dec$1G, _dec2$1l, _dec3$V, _class$1G, _class2$1p, _initializer$1m, _initializer2$16, _initializer3$O, _initializer4$E, _initializer5$u, _Mask;
+var _dec$1H, _dec2$1m, _dec3$V, _class$1H, _class2$1p, _initializer$1m, _initializer2$16, _initializer3$O, _initializer4$E, _initializer5$u, _Mask;
 const _worldMatrix = new Mat4();
 const _vec2_temp$1 = new Vec2();
 const _mat4_temp$2 = new Mat4();
@@ -72045,7 +72214,7 @@ let MaskType;
 ccenum(MaskType);
 const SEGMENTS_MIN = 3;
 const SEGMENTS_MAX = 10000;
-let Mask = (_dec$1G = ccclass$w('cc.Mask'), _dec2$1l = executionOrder$2(110), _dec3$V = type$a(MaskType), _dec$1G(_class$1G = _dec2$1l(_class$1G = (_class2$1p = (_Mask = class Mask extends Component {
+let Mask = (_dec$1H = ccclass$w('cc.Mask'), _dec2$1m = executionOrder$2(110), _dec3$V = type$a(MaskType), _dec$1H(_class$1H = _dec2$1m(_class$1H = (_class2$1p = (_Mask = class Mask extends Component {
   constructor() {
     super();
     this._type = _initializer$1m && _initializer$1m();
@@ -72452,11 +72621,11 @@ let Mask = (_dec$1G = ccclass$w('cc.Mask'), _dec2$1l = executionOrder$2(110), _d
   return 0;
 }), _initializer5$u = applyDecoratedInitializer(_class2$1p.prototype, "_alphaThreshold", [serializable$c], function () {
   return 0.1;
-})), _class2$1p)) || _class$1G) || _class$1G);
+})), _class2$1p)) || _class$1H) || _class$1H);
 NodeEventProcessor._maskComp = Mask;
 cclegacy.Mask = Mask;
 
-var _dec$1F, _dec2$1k, _dec3$U, _dec4$E, _dec5$A, _dec6$o, _dec7$k, _dec8$e, _dec9$c, _class$1F, _class2$1o, _initializer$1l, _initializer2$15, _initializer3$N, _initializer4$D, _initializer5$t, _initializer6$n, _initializer7$i, _initializer8$g, _initializer9$e, _initializer10$d, _initializer11$d, _initializer12$b, _initializer13$9, _initializer14$8, _RichText;
+var _dec$1G, _dec2$1l, _dec3$U, _dec4$E, _dec5$A, _dec6$o, _dec7$k, _dec8$e, _dec9$c, _class$1G, _class2$1o, _initializer$1l, _initializer2$15, _initializer3$N, _initializer4$D, _initializer5$t, _initializer6$n, _initializer7$i, _initializer8$g, _initializer9$e, _initializer10$d, _initializer11$d, _initializer12$b, _initializer13$9, _initializer14$8, _RichText;
 const _htmlTextParser = new HtmlTextParser();
 const RichTextChildName = 'RICHTEXT_CHILD';
 const RichTextChildImageName = 'RICHTEXT_Image_CHILD';
@@ -72525,7 +72694,7 @@ function getSegmentByPool(type, content) {
   seg.clickHandler = '';
   return seg;
 }
-let RichText = (_dec$1F = ccclass$w('cc.RichText'), _dec2$1k = requireComponent(UITransform), _dec3$U = executionOrder$2(110), _dec4$E = type$a(HorizontalTextAlignment), _dec5$A = type$a(VerticalTextAlignment), _dec6$o = type$a(Color), _dec7$k = type$a(Font), _dec8$e = type$a(CacheMode), _dec9$c = type$a(SpriteAtlas), _dec$1F(_class$1F = _dec2$1k(_class$1F = _dec3$U(_class$1F = (_class2$1o = (_RichText = class RichText extends Component {
+let RichText = (_dec$1G = ccclass$w('cc.RichText'), _dec2$1l = requireComponent(UITransform), _dec3$U = executionOrder$2(110), _dec4$E = type$a(HorizontalTextAlignment), _dec5$A = type$a(VerticalTextAlignment), _dec6$o = type$a(Color), _dec7$k = type$a(Font), _dec8$e = type$a(CacheMode), _dec9$c = type$a(SpriteAtlas), _dec$1G(_class$1G = _dec2$1l(_class$1G = _dec3$U(_class$1G = (_class2$1o = (_RichText = class RichText extends Component {
   get string() {
     return this._string;
   }
@@ -73397,7 +73566,7 @@ let RichText = (_dec$1F = ccclass$w('cc.RichText'), _dec2$1k = requireComponent(
   return null;
 }), _initializer14$8 = applyDecoratedInitializer(_class2$1o.prototype, "_handleTouchEvent", [serializable$c], function () {
   return true;
-})), _class2$1o)) || _class$1F) || _class$1F) || _class$1F);
+})), _class2$1o)) || _class$1G) || _class$1G) || _class$1G);
 cclegacy.RichText = RichText;
 
 cclegacy.MaskComponent = Mask;
@@ -76354,16 +76523,20 @@ class PointerEventDispatcher {
     callbacksInvoker.on(DispatcherEventType.MARK_LIST_DIRTY, this._markListDirty, this);
   }
   onThrowException() {
-    this._inDispatchCount = 0;
   }
   dispatchEvent(event) {
     const eventType = event.type;
-    if (touchEvents.includes(eventType)) {
-      return this.dispatchEventTouch(event);
-    } else if (mouseEvents.includes(eventType)) {
-      return this.dispatchEventMouse(event);
+    if (!touchEvents.includes(eventType) && !mouseEvents.includes(eventType)) {
+      return true;
     }
-    return true;
+    this._inDispatchCount++;
+    try {
+      return touchEvents.includes(eventType) ? this.dispatchEventTouch(event) : this.dispatchEventMouse(event);
+    } finally {
+      if (--this._inDispatchCount === 0) {
+        this._updatePointerEventProcessorList();
+      }
+    }
   }
   addPointerEventProcessor(pointerEventProcessor) {
     if (this._inDispatchCount === 0) {
@@ -76386,7 +76559,6 @@ class PointerEventDispatcher {
     remove(this._processorListToAdd, pointerEventProcessor);
   }
   dispatchEventMouse(eventMouse) {
-    this._inDispatchCount++;
     this._sortPointerEventProcessorList();
     const pointerEventProcessorList = this._pointerEventProcessorList;
     const length = pointerEventProcessorList.length;
@@ -76403,13 +76575,9 @@ class PointerEventDispatcher {
       }
     }
 
-    if (--this._inDispatchCount <= 0) {
-      this._updatePointerEventProcessorList();
-    }
     return dispatchToNextEventDispatcher;
   }
   dispatchEventTouch(eventTouch) {
-    this._inDispatchCount++;
     this._sortPointerEventProcessorList();
     const pointerEventProcessorList = this._pointerEventProcessorList;
     const length = pointerEventProcessorList.length;
@@ -76438,11 +76606,14 @@ class PointerEventDispatcher {
         } else if (pointerEventProcessor.claimedTouchIdList.length > 0) {
           const index = pointerEventProcessor.claimedTouchIdList.indexOf(touch.getID());
           if (index !== -1) {
-            pointerEventProcessor._handleEventTouch(eventTouch);
-            if (eventTouch.type === InputEventType.TOUCH_END || eventTouch.type === InputEventType.TOUCH_CANCEL) {
-              removeAt(pointerEventProcessor.claimedTouchIdList, index);
-              if (!eventTouch.preventSwallow) {
-                this._removeClaimedTouch(i + 1, touch.getID());
+            try {
+              pointerEventProcessor._handleEventTouch(eventTouch);
+            } finally {
+              if (eventTouch.type === InputEventType.TOUCH_END || eventTouch.type === InputEventType.TOUCH_CANCEL) {
+                removeAt(pointerEventProcessor.claimedTouchIdList, index);
+                if (!eventTouch.preventSwallow) {
+                  this._removeClaimedTouch(i + 1, touch.getID());
+                }
               }
             }
             dispatchToNextEventDispatcher = false;
@@ -76456,9 +76627,6 @@ class PointerEventDispatcher {
       }
     }
 
-    if (--this._inDispatchCount <= 0) {
-      this._updatePointerEventProcessorList();
-    }
     return dispatchToNextEventDispatcher;
   }
   _removeClaimedTouch(eventProcessorIndex, touchID) {
@@ -78287,10 +78455,10 @@ Graphics.Assembler = graphicsAssemblerManager;
 
 cclegacy.UI.graphicsAssembler = graphicsAssemblerManager;
 
-var _dec$1E, _dec2$1j, _class$1E, _class2$1n, _initializer$1k, _initializer2$14;
+var _dec$1F, _dec2$1k, _class$1F, _class2$1n, _initializer$1k, _initializer2$14;
 const MAX_INT16$1 = (1 << 15) - 1;
 const MIN_INT16$1 = -1 << 15;
-let Sorting = (_dec$1E = ccclass$w('cc.Sorting'), _dec2$1j = type$a(SortingLayers.Enum), _dec$1E(_class$1E = disallowMultiple$1(_class$1E = (_class2$1n = class Sorting extends Component {
+let Sorting = (_dec$1F = ccclass$w('cc.Sorting'), _dec2$1k = type$a(SortingLayers.Enum), _dec$1F(_class$1F = disallowMultiple$1(_class$1F = (_class2$1n = class Sorting extends Component {
   constructor() {
     super();
     this._sortingLayer = _initializer$1k && _initializer$1k();
@@ -78327,11 +78495,11 @@ let Sorting = (_dec$1E = ccclass$w('cc.Sorting'), _dec2$1j = type$a(SortingLayer
       this._modelRenderer.priority = sortingPriority;
     }
   }
-}, (_applyDecoratedDescriptor(_class2$1n.prototype, "sortingLayer", [_dec2$1j], Object.getOwnPropertyDescriptor(_class2$1n.prototype, "sortingLayer"), _class2$1n.prototype), _initializer$1k = applyDecoratedInitializer(_class2$1n.prototype, "_sortingLayer", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$1n.prototype, "sortingLayer", [_dec2$1k], Object.getOwnPropertyDescriptor(_class2$1n.prototype, "sortingLayer"), _class2$1n.prototype), _initializer$1k = applyDecoratedInitializer(_class2$1n.prototype, "_sortingLayer", [serializable$c], function () {
   return SortingLayers.Enum.default;
 }), _initializer2$14 = applyDecoratedInitializer(_class2$1n.prototype, "_sortingOrder", [serializable$c], function () {
   return 0;
-})), _class2$1n)) || _class$1E) || _class$1E);
+})), _class2$1n)) || _class$1F) || _class$1F);
 
 function At(i, vertices) {
   const s = vertices.length;
@@ -79482,13 +79650,13 @@ let Physics2DManifoldType;
   Physics2DManifoldType[Physics2DManifoldType["FaceB"] = 2] = "FaceB";
 })(Physics2DManifoldType || (Physics2DManifoldType = {}));
 
-var _dec$1D, _dec2$1i, _dec3$T, _dec4$D, _dec5$z, _dec6$n, _dec7$j, _dec8$d, _dec9$b, _dec10$5, _class$1D, _class2$1m, _initializer$1j, _initializer2$13, _initializer3$M, _initializer4$C, _initializer5$s, _initializer6$m, _initializer7$h, _initializer8$f, _initializer9$d, _initializer10$c, _initializer11$c, _initializer12$a;
+var _dec$1E, _dec2$1j, _dec3$T, _dec4$D, _dec5$z, _dec6$n, _dec7$j, _dec8$d, _dec9$b, _dec10$5, _class$1E, _class2$1m, _initializer$1j, _initializer2$13, _initializer3$M, _initializer4$C, _initializer5$s, _initializer6$m, _initializer7$h, _initializer8$f, _initializer9$d, _initializer10$c, _initializer11$c, _initializer12$a;
 const {
   type: type$4,
   menu: menu$c,
   ccclass: ccclass$m
 } = _decorator;
-let RigidBody2D = (_dec$1D = ccclass$m('cc.RigidBody2D'), _dec2$1i = type$4(PhysicsGroup), _dec3$T = type$4(ERigidBody2DType), _dec4$D = type$4(CCBoolean), _dec5$z = type$4(CCFloat), _dec6$n = type$4(CCFloat), _dec7$j = type$4(CCFloat), _dec8$d = type$4(Vec2), _dec9$b = type$4(CCFloat), _dec10$5 = type$4(CCBoolean), _dec$1D(_class$1D = (_class2$1m = class RigidBody2D extends Component {
+let RigidBody2D = (_dec$1E = ccclass$m('cc.RigidBody2D'), _dec2$1j = type$4(PhysicsGroup), _dec3$T = type$4(ERigidBody2DType), _dec4$D = type$4(CCBoolean), _dec5$z = type$4(CCFloat), _dec6$n = type$4(CCFloat), _dec7$j = type$4(CCFloat), _dec8$d = type$4(Vec2), _dec9$b = type$4(CCFloat), _dec10$5 = type$4(CCBoolean), _dec$1E(_class$1E = (_class2$1m = class RigidBody2D extends Component {
   constructor(...args) {
     super(...args);
     this.enabledContactListener = _initializer$1j && _initializer$1j();
@@ -79718,7 +79886,7 @@ let RigidBody2D = (_dec$1D = ccclass$m('cc.RigidBody2D'), _dec2$1i = type$4(Phys
   get impl() {
     return this._body;
   }
-}, (_applyDecoratedDescriptor(_class2$1m.prototype, "group", [_dec2$1i], Object.getOwnPropertyDescriptor(_class2$1m.prototype, "group"), _class2$1m.prototype), _initializer$1j = applyDecoratedInitializer(_class2$1m.prototype, "enabledContactListener", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$1m.prototype, "group", [_dec2$1j], Object.getOwnPropertyDescriptor(_class2$1m.prototype, "group"), _class2$1m.prototype), _initializer$1j = applyDecoratedInitializer(_class2$1m.prototype, "enabledContactListener", [serializable$c], function () {
   return false;
 }), _initializer2$13 = applyDecoratedInitializer(_class2$1m.prototype, "bullet", [serializable$c], function () {
   return false;
@@ -79742,15 +79910,15 @@ let RigidBody2D = (_dec$1D = ccclass$m('cc.RigidBody2D'), _dec2$1i = type$4(Phys
   return 0;
 }), _initializer12$a = applyDecoratedInitializer(_class2$1m.prototype, "_fixedRotation", [serializable$c], function () {
   return false;
-})), _class2$1m)) || _class$1D);
+})), _class2$1m)) || _class$1E);
 
-var _dec$1C, _dec2$1h, _dec3$S, _dec4$C, _dec5$y, _dec6$m, _dec7$i, _dec8$c, _class$1C, _class2$1l, _initializer$1i, _initializer2$12, _initializer3$L, _initializer4$B, _initializer5$r, _initializer6$l, _initializer7$g;
+var _dec$1D, _dec2$1i, _dec3$S, _dec4$C, _dec5$y, _dec6$m, _dec7$i, _dec8$c, _class$1D, _class2$1l, _initializer$1i, _initializer2$12, _initializer3$L, _initializer4$B, _initializer5$r, _initializer6$l, _initializer7$g;
 const {
   ccclass: ccclass$l,
   editable: editable$2,
   type: type$3
 } = _decorator;
-let Collider2D = (_dec$1C = ccclass$l('cc.Collider2D'), _dec2$1h = type$3(CCFloat), _dec3$S = type$3(PhysicsGroup), _dec4$C = type$3(CCFloat), _dec5$y = type$3(CCBoolean), _dec6$m = type$3(CCFloat), _dec7$i = type$3(CCFloat), _dec8$c = type$3(Vec2), _dec$1C(_class$1C = (_class2$1l = class Collider2D extends Eventify(Component) {
+let Collider2D = (_dec$1D = ccclass$l('cc.Collider2D'), _dec2$1i = type$3(CCFloat), _dec3$S = type$3(PhysicsGroup), _dec4$C = type$3(CCFloat), _dec5$y = type$3(CCBoolean), _dec6$m = type$3(CCFloat), _dec7$i = type$3(CCFloat), _dec8$c = type$3(Vec2), _dec$1D(_class$1D = (_class2$1l = class Collider2D extends Eventify(Component) {
   constructor(...args) {
     super(...args);
     this.editing = false;
@@ -79846,7 +80014,7 @@ let Collider2D = (_dec$1C = ccclass$l('cc.Collider2D'), _dec2$1h = type$3(CCFloa
     }
     return new Rect();
   }
-}, (_initializer$1i = applyDecoratedInitializer(_class2$1l.prototype, "tag", [_dec2$1h, serializable$c], function () {
+}, (_initializer$1i = applyDecoratedInitializer(_class2$1l.prototype, "tag", [_dec2$1i, serializable$c], function () {
   return 0;
 }), _applyDecoratedDescriptor(_class2$1l.prototype, "group", [_dec3$S], Object.getOwnPropertyDescriptor(_class2$1l.prototype, "group"), _class2$1l.prototype), _applyDecoratedDescriptor(_class2$1l.prototype, "density", [_dec4$C], Object.getOwnPropertyDescriptor(_class2$1l.prototype, "density"), _class2$1l.prototype), _applyDecoratedDescriptor(_class2$1l.prototype, "sensor", [_dec5$y], Object.getOwnPropertyDescriptor(_class2$1l.prototype, "sensor"), _class2$1l.prototype), _applyDecoratedDescriptor(_class2$1l.prototype, "friction", [_dec6$m], Object.getOwnPropertyDescriptor(_class2$1l.prototype, "friction"), _class2$1l.prototype), _applyDecoratedDescriptor(_class2$1l.prototype, "restitution", [_dec7$i], Object.getOwnPropertyDescriptor(_class2$1l.prototype, "restitution"), _class2$1l.prototype), _applyDecoratedDescriptor(_class2$1l.prototype, "offset", [_dec8$c], Object.getOwnPropertyDescriptor(_class2$1l.prototype, "offset"), _class2$1l.prototype), _initializer2$12 = applyDecoratedInitializer(_class2$1l.prototype, "_group", [serializable$c], function () {
   return PhysicsGroup.DEFAULT;
@@ -79860,14 +80028,14 @@ let Collider2D = (_dec$1C = ccclass$l('cc.Collider2D'), _dec2$1h = type$3(CCFloa
   return 0;
 }), _initializer7$g = applyDecoratedInitializer(_class2$1l.prototype, "_offset", [serializable$c], function () {
   return new Vec2();
-})), _class2$1l)) || _class$1C);
+})), _class2$1l)) || _class$1D);
 
-var _dec$1B, _dec2$1g, _class$1B, _class2$1k, _initializer$1h;
+var _dec$1C, _dec2$1h, _class$1C, _class2$1k, _initializer$1h;
 const {
   ccclass: ccclass$k,
   menu: menu$b
 } = _decorator;
-let BoxCollider2D = (_dec$1B = ccclass$k('cc.BoxCollider2D'), _dec2$1g = type$a(Size), _dec$1B(_class$1B = (_class2$1k = class BoxCollider2D extends Collider2D {
+let BoxCollider2D = (_dec$1C = ccclass$k('cc.BoxCollider2D'), _dec2$1h = type$a(Size), _dec$1C(_class$1C = (_class2$1k = class BoxCollider2D extends Collider2D {
   constructor(...args) {
     super(...args);
     this._size = _initializer$1h && _initializer$1h();
@@ -79887,14 +80055,14 @@ let BoxCollider2D = (_dec$1B = ccclass$k('cc.BoxCollider2D'), _dec2$1g = type$a(
   }
 }, (_initializer$1h = applyDecoratedInitializer(_class2$1k.prototype, "_size", [serializable$c], function () {
   return new Size(1, 1);
-}), _applyDecoratedDescriptor(_class2$1k.prototype, "size", [_dec2$1g], Object.getOwnPropertyDescriptor(_class2$1k.prototype, "size"), _class2$1k.prototype)), _class2$1k)) || _class$1B);
+}), _applyDecoratedDescriptor(_class2$1k.prototype, "size", [_dec2$1h], Object.getOwnPropertyDescriptor(_class2$1k.prototype, "size"), _class2$1k.prototype)), _class2$1k)) || _class$1C);
 
-var _dec$1A, _dec2$1f, _class$1A, _class2$1j, _initializer$1g;
+var _dec$1B, _dec2$1g, _class$1B, _class2$1j, _initializer$1g;
 const {
   ccclass: ccclass$j,
   menu: menu$a
 } = _decorator;
-let CircleCollider2D = (_dec$1A = ccclass$j('cc.CircleCollider2D'), _dec2$1f = type$a(CCFloat), _dec$1A(_class$1A = (_class2$1j = class CircleCollider2D extends Collider2D {
+let CircleCollider2D = (_dec$1B = ccclass$j('cc.CircleCollider2D'), _dec2$1g = type$a(CCFloat), _dec$1B(_class$1B = (_class2$1j = class CircleCollider2D extends Collider2D {
   constructor(...args) {
     super(...args);
     this._radius = _initializer$1g && _initializer$1g();
@@ -79920,14 +80088,14 @@ let CircleCollider2D = (_dec$1A = ccclass$j('cc.CircleCollider2D'), _dec2$1f = t
   }
 }, (_initializer$1g = applyDecoratedInitializer(_class2$1j.prototype, "_radius", [serializable$c], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$1j.prototype, "radius", [_dec2$1f], Object.getOwnPropertyDescriptor(_class2$1j.prototype, "radius"), _class2$1j.prototype)), _class2$1j)) || _class$1A);
+}), _applyDecoratedDescriptor(_class2$1j.prototype, "radius", [_dec2$1g], Object.getOwnPropertyDescriptor(_class2$1j.prototype, "radius"), _class2$1j.prototype)), _class2$1j)) || _class$1B);
 
-var _dec$1z, _dec2$1e, _dec3$R, _class$1z, _class2$1i, _initializer$1f, _initializer2$11;
+var _dec$1A, _dec2$1f, _dec3$R, _class$1A, _class2$1i, _initializer$1f, _initializer2$11;
 const {
   ccclass: ccclass$i,
   menu: menu$9
 } = _decorator;
-let PolygonCollider2D = (_dec$1z = ccclass$i('cc.PolygonCollider2D'), _dec2$1e = type$a(CCFloat), _dec3$R = type$a([Vec2]), _dec$1z(_class$1z = (_class2$1i = class PolygonCollider2D extends Collider2D {
+let PolygonCollider2D = (_dec$1A = ccclass$i('cc.PolygonCollider2D'), _dec2$1f = type$a(CCFloat), _dec3$R = type$a([Vec2]), _dec$1A(_class$1A = (_class2$1i = class PolygonCollider2D extends Collider2D {
   constructor(...args) {
     super(...args);
     this.threshold = _initializer$1f && _initializer$1f();
@@ -79946,18 +80114,18 @@ let PolygonCollider2D = (_dec$1z = ccclass$i('cc.PolygonCollider2D'), _dec2$1e =
     }
     return [];
   }
-}, (_initializer$1f = applyDecoratedInitializer(_class2$1i.prototype, "threshold", [_dec2$1e], function () {
+}, (_initializer$1f = applyDecoratedInitializer(_class2$1i.prototype, "threshold", [_dec2$1f], function () {
   return 1;
 }), _initializer2$11 = applyDecoratedInitializer(_class2$1i.prototype, "_points", [serializable$c], function () {
   return [new Vec2(-1, -1), new Vec2(1, -1), new Vec2(1, 1), new Vec2(-1, 1)];
-}), _applyDecoratedDescriptor(_class2$1i.prototype, "points", [_dec3$R], Object.getOwnPropertyDescriptor(_class2$1i.prototype, "points"), _class2$1i.prototype)), _class2$1i)) || _class$1z);
+}), _applyDecoratedDescriptor(_class2$1i.prototype, "points", [_dec3$R], Object.getOwnPropertyDescriptor(_class2$1i.prototype, "points"), _class2$1i.prototype)), _class2$1i)) || _class$1A);
 
-var _dec$1y, _dec2$1d, _class$1y, _class2$1h, _initializer$1e, _initializer2$10, _initializer3$K, _initializer4$A;
+var _dec$1z, _dec2$1e, _class$1z, _class2$1h, _initializer$1e, _initializer2$10, _initializer3$K, _initializer4$A;
 const {
   ccclass: ccclass$h,
   type: type$2
 } = _decorator;
-let Joint2D = (_dec$1y = ccclass$h('cc.Joint2D'), _dec2$1d = type$2(RigidBody2D), _dec$1y(_class$1y = (_class2$1h = class Joint2D extends Component {
+let Joint2D = (_dec$1z = ccclass$h('cc.Joint2D'), _dec2$1e = type$2(RigidBody2D), _dec$1z(_class$1z = (_class2$1h = class Joint2D extends Component {
   constructor(...args) {
     super(...args);
     this.anchor = _initializer$1e && _initializer$1e();
@@ -80012,16 +80180,16 @@ let Joint2D = (_dec$1y = ccclass$h('cc.Joint2D'), _dec2$1d = type$2(RigidBody2D)
   return new Vec2();
 }), _initializer3$K = applyDecoratedInitializer(_class2$1h.prototype, "collideConnected", [serializable$c], function () {
   return false;
-}), _initializer4$A = applyDecoratedInitializer(_class2$1h.prototype, "connectedBody", [_dec2$1d, serializable$c], function () {
+}), _initializer4$A = applyDecoratedInitializer(_class2$1h.prototype, "connectedBody", [_dec2$1e, serializable$c], function () {
   return null;
-})), _class2$1h)) || _class$1y);
+})), _class2$1h)) || _class$1z);
 
-var _dec$1x, _dec2$1c, _dec3$Q, _class$1x, _class2$1g, _initializer$1d, _initializer2$$;
+var _dec$1y, _dec2$1d, _dec3$Q, _class$1y, _class2$1g, _initializer$1d, _initializer2$$;
 const {
   ccclass: ccclass$g,
   menu: menu$8
 } = _decorator;
-let DistanceJoint2D = (_dec$1x = ccclass$g('cc.DistanceJoint2D'), _dec2$1c = type$a(CCFloat), _dec3$Q = type$a(CCBoolean), _dec$1x(_class$1x = (_class2$1g = class DistanceJoint2D extends Joint2D {
+let DistanceJoint2D = (_dec$1y = ccclass$g('cc.DistanceJoint2D'), _dec2$1d = type$a(CCFloat), _dec3$Q = type$a(CCBoolean), _dec$1y(_class$1y = (_class2$1g = class DistanceJoint2D extends Joint2D {
   constructor(...args) {
     super(...args);
     this.TYPE = EJoint2DType.DISTANCE;
@@ -80050,18 +80218,18 @@ let DistanceJoint2D = (_dec$1x = ccclass$g('cc.DistanceJoint2D'), _dec2$1c = typ
   set autoCalcDistance(v) {
     this._autoCalcDistance = v;
   }
-}, (_applyDecoratedDescriptor(_class2$1g.prototype, "maxLength", [_dec2$1c], Object.getOwnPropertyDescriptor(_class2$1g.prototype, "maxLength"), _class2$1g.prototype), _applyDecoratedDescriptor(_class2$1g.prototype, "autoCalcDistance", [_dec3$Q], Object.getOwnPropertyDescriptor(_class2$1g.prototype, "autoCalcDistance"), _class2$1g.prototype), _initializer$1d = applyDecoratedInitializer(_class2$1g.prototype, "_maxLength", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$1g.prototype, "maxLength", [_dec2$1d], Object.getOwnPropertyDescriptor(_class2$1g.prototype, "maxLength"), _class2$1g.prototype), _applyDecoratedDescriptor(_class2$1g.prototype, "autoCalcDistance", [_dec3$Q], Object.getOwnPropertyDescriptor(_class2$1g.prototype, "autoCalcDistance"), _class2$1g.prototype), _initializer$1d = applyDecoratedInitializer(_class2$1g.prototype, "_maxLength", [serializable$c], function () {
   return 5;
 }), _initializer2$$ = applyDecoratedInitializer(_class2$1g.prototype, "_autoCalcDistance", [serializable$c], function () {
   return true;
-})), _class2$1g)) || _class$1x);
+})), _class2$1g)) || _class$1y);
 
-var _dec$1w, _dec2$1b, _dec3$P, _dec4$B, _dec5$x, _class$1w, _class2$1f, _initializer$1c, _initializer2$_, _initializer3$J, _initializer4$z;
+var _dec$1x, _dec2$1c, _dec3$P, _dec4$B, _dec5$x, _class$1x, _class2$1f, _initializer$1c, _initializer2$_, _initializer3$J, _initializer4$z;
 const {
   ccclass: ccclass$f,
   menu: menu$7
 } = _decorator;
-let SpringJoint2D = (_dec$1w = ccclass$f('cc.SpringJoint2D'), _dec2$1b = type$a(CCFloat), _dec3$P = type$a(CCFloat), _dec4$B = type$a(CCFloat), _dec5$x = type$a(CCBoolean), _dec$1w(_class$1w = (_class2$1f = class SpringJoint2D extends Joint2D {
+let SpringJoint2D = (_dec$1x = ccclass$f('cc.SpringJoint2D'), _dec2$1c = type$a(CCFloat), _dec3$P = type$a(CCFloat), _dec4$B = type$a(CCFloat), _dec5$x = type$a(CCBoolean), _dec$1x(_class$1x = (_class2$1f = class SpringJoint2D extends Joint2D {
   constructor(...args) {
     super(...args);
     this.TYPE = EJoint2DType.SPRING;
@@ -80110,7 +80278,7 @@ let SpringJoint2D = (_dec$1w = ccclass$f('cc.SpringJoint2D'), _dec2$1b = type$a(
   set autoCalcDistance(v) {
     this._autoCalcDistance = v;
   }
-}, (_applyDecoratedDescriptor(_class2$1f.prototype, "frequency", [_dec2$1b], Object.getOwnPropertyDescriptor(_class2$1f.prototype, "frequency"), _class2$1f.prototype), _applyDecoratedDescriptor(_class2$1f.prototype, "dampingRatio", [_dec3$P], Object.getOwnPropertyDescriptor(_class2$1f.prototype, "dampingRatio"), _class2$1f.prototype), _applyDecoratedDescriptor(_class2$1f.prototype, "distance", [_dec4$B], Object.getOwnPropertyDescriptor(_class2$1f.prototype, "distance"), _class2$1f.prototype), _applyDecoratedDescriptor(_class2$1f.prototype, "autoCalcDistance", [_dec5$x], Object.getOwnPropertyDescriptor(_class2$1f.prototype, "autoCalcDistance"), _class2$1f.prototype), _initializer$1c = applyDecoratedInitializer(_class2$1f.prototype, "_frequency", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$1f.prototype, "frequency", [_dec2$1c], Object.getOwnPropertyDescriptor(_class2$1f.prototype, "frequency"), _class2$1f.prototype), _applyDecoratedDescriptor(_class2$1f.prototype, "dampingRatio", [_dec3$P], Object.getOwnPropertyDescriptor(_class2$1f.prototype, "dampingRatio"), _class2$1f.prototype), _applyDecoratedDescriptor(_class2$1f.prototype, "distance", [_dec4$B], Object.getOwnPropertyDescriptor(_class2$1f.prototype, "distance"), _class2$1f.prototype), _applyDecoratedDescriptor(_class2$1f.prototype, "autoCalcDistance", [_dec5$x], Object.getOwnPropertyDescriptor(_class2$1f.prototype, "autoCalcDistance"), _class2$1f.prototype), _initializer$1c = applyDecoratedInitializer(_class2$1f.prototype, "_frequency", [serializable$c], function () {
   return 5;
 }), _initializer2$_ = applyDecoratedInitializer(_class2$1f.prototype, "_dampingRatio", [serializable$c], function () {
   return 0.7;
@@ -80118,14 +80286,14 @@ let SpringJoint2D = (_dec$1w = ccclass$f('cc.SpringJoint2D'), _dec2$1b = type$a(
   return 10;
 }), _initializer4$z = applyDecoratedInitializer(_class2$1f.prototype, "_autoCalcDistance", [serializable$c], function () {
   return true;
-})), _class2$1f)) || _class$1w);
+})), _class2$1f)) || _class$1x);
 
-var _dec$1v, _dec2$1a, _dec3$O, _dec4$A, _class$1v, _class2$1e, _initializer$1b, _initializer2$Z, _initializer3$I;
+var _dec$1w, _dec2$1b, _dec3$O, _dec4$A, _class$1w, _class2$1e, _initializer$1b, _initializer2$Z, _initializer3$I;
 const {
   ccclass: ccclass$e,
   menu: menu$6
 } = _decorator;
-let MouseJoint2D = (_dec$1v = ccclass$e('cc.MouseJoint2D'), _dec2$1a = type$a(CCFloat), _dec3$O = type$a(CCFloat), _dec4$A = type$a(CCFloat), _dec$1v(_class$1v = (_class2$1e = class MouseJoint2D extends Joint2D {
+let MouseJoint2D = (_dec$1w = ccclass$e('cc.MouseJoint2D'), _dec2$1b = type$a(CCFloat), _dec3$O = type$a(CCFloat), _dec4$A = type$a(CCFloat), _dec$1w(_class$1w = (_class2$1e = class MouseJoint2D extends Joint2D {
   constructor(...args) {
     super(...args);
     this.TYPE = EJoint2DType.MOUSE;
@@ -80173,22 +80341,22 @@ let MouseJoint2D = (_dec$1v = ccclass$e('cc.MouseJoint2D'), _dec2$1a = type$a(CC
   update(dt) {
     this._joint.update(dt);
   }
-}, (_applyDecoratedDescriptor(_class2$1e.prototype, "frequency", [_dec2$1a], Object.getOwnPropertyDescriptor(_class2$1e.prototype, "frequency"), _class2$1e.prototype), _applyDecoratedDescriptor(_class2$1e.prototype, "dampingRatio", [_dec3$O], Object.getOwnPropertyDescriptor(_class2$1e.prototype, "dampingRatio"), _class2$1e.prototype), _applyDecoratedDescriptor(_class2$1e.prototype, "maxForce", [_dec4$A], Object.getOwnPropertyDescriptor(_class2$1e.prototype, "maxForce"), _class2$1e.prototype), _initializer$1b = applyDecoratedInitializer(_class2$1e.prototype, "_maxForce", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$1e.prototype, "frequency", [_dec2$1b], Object.getOwnPropertyDescriptor(_class2$1e.prototype, "frequency"), _class2$1e.prototype), _applyDecoratedDescriptor(_class2$1e.prototype, "dampingRatio", [_dec3$O], Object.getOwnPropertyDescriptor(_class2$1e.prototype, "dampingRatio"), _class2$1e.prototype), _applyDecoratedDescriptor(_class2$1e.prototype, "maxForce", [_dec4$A], Object.getOwnPropertyDescriptor(_class2$1e.prototype, "maxForce"), _class2$1e.prototype), _initializer$1b = applyDecoratedInitializer(_class2$1e.prototype, "_maxForce", [serializable$c], function () {
   return 1000;
 }), _initializer2$Z = applyDecoratedInitializer(_class2$1e.prototype, "_dampingRatio", [serializable$c], function () {
   return 0.7;
 }), _initializer3$I = applyDecoratedInitializer(_class2$1e.prototype, "_frequency", [serializable$c], function () {
   return 5;
-})), _class2$1e)) || _class$1v);
+})), _class2$1e)) || _class$1w);
 
-var _dec$1u, _dec2$19, _dec3$N, _dec4$z, _dec5$w, _dec6$l, _dec7$h, _class$1u, _class2$1d, _initializer$1a, _initializer2$Y, _initializer3$H, _initializer4$y, _initializer5$q, _initializer6$k;
+var _dec$1v, _dec2$1a, _dec3$N, _dec4$z, _dec5$w, _dec6$l, _dec7$h, _class$1v, _class2$1d, _initializer$1a, _initializer2$Y, _initializer3$H, _initializer4$y, _initializer5$q, _initializer6$k;
 const tempVec3_1 = new Vec3();
 const tempVec3_2 = new Vec3();
 const {
   ccclass: ccclass$d,
   menu: menu$5
 } = _decorator;
-let RelativeJoint2D = (_dec$1u = ccclass$d('cc.RelativeJoint2D'), _dec2$19 = type$a(CCFloat), _dec3$N = type$a(CCFloat), _dec4$z = type$a(CCFloat), _dec5$w = type$a(Vec2), _dec6$l = type$a(CCFloat), _dec7$h = type$a(CCBoolean), _dec$1u(_class$1u = (_class2$1d = class RelativeJoint2D extends Joint2D {
+let RelativeJoint2D = (_dec$1v = ccclass$d('cc.RelativeJoint2D'), _dec2$1a = type$a(CCFloat), _dec3$N = type$a(CCFloat), _dec4$z = type$a(CCFloat), _dec5$w = type$a(Vec2), _dec6$l = type$a(CCFloat), _dec7$h = type$a(CCBoolean), _dec$1v(_class$1v = (_class2$1d = class RelativeJoint2D extends Joint2D {
   constructor(...args) {
     super(...args);
     this.TYPE = EJoint2DType.RELATIVE;
@@ -80267,7 +80435,7 @@ let RelativeJoint2D = (_dec$1u = ccclass$d('cc.RelativeJoint2D'), _dec2$19 = typ
   set autoCalcOffset(v) {
     this._autoCalcOffset = v;
   }
-}, (_applyDecoratedDescriptor(_class2$1d.prototype, "maxForce", [_dec2$19], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "maxForce"), _class2$1d.prototype), _applyDecoratedDescriptor(_class2$1d.prototype, "maxTorque", [_dec3$N], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "maxTorque"), _class2$1d.prototype), _applyDecoratedDescriptor(_class2$1d.prototype, "correctionFactor", [_dec4$z], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "correctionFactor"), _class2$1d.prototype), _applyDecoratedDescriptor(_class2$1d.prototype, "linearOffset", [_dec5$w], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "linearOffset"), _class2$1d.prototype), _applyDecoratedDescriptor(_class2$1d.prototype, "angularOffset", [_dec6$l], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "angularOffset"), _class2$1d.prototype), _applyDecoratedDescriptor(_class2$1d.prototype, "autoCalcOffset", [_dec7$h], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "autoCalcOffset"), _class2$1d.prototype), _initializer$1a = applyDecoratedInitializer(_class2$1d.prototype, "_maxForce", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$1d.prototype, "maxForce", [_dec2$1a], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "maxForce"), _class2$1d.prototype), _applyDecoratedDescriptor(_class2$1d.prototype, "maxTorque", [_dec3$N], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "maxTorque"), _class2$1d.prototype), _applyDecoratedDescriptor(_class2$1d.prototype, "correctionFactor", [_dec4$z], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "correctionFactor"), _class2$1d.prototype), _applyDecoratedDescriptor(_class2$1d.prototype, "linearOffset", [_dec5$w], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "linearOffset"), _class2$1d.prototype), _applyDecoratedDescriptor(_class2$1d.prototype, "angularOffset", [_dec6$l], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "angularOffset"), _class2$1d.prototype), _applyDecoratedDescriptor(_class2$1d.prototype, "autoCalcOffset", [_dec7$h], Object.getOwnPropertyDescriptor(_class2$1d.prototype, "autoCalcOffset"), _class2$1d.prototype), _initializer$1a = applyDecoratedInitializer(_class2$1d.prototype, "_maxForce", [serializable$c], function () {
   return 5;
 }), _initializer2$Y = applyDecoratedInitializer(_class2$1d.prototype, "_maxTorque", [serializable$c], function () {
   return 0.7;
@@ -80279,15 +80447,15 @@ let RelativeJoint2D = (_dec$1u = ccclass$d('cc.RelativeJoint2D'), _dec2$19 = typ
   return new Vec2();
 }), _initializer6$k = applyDecoratedInitializer(_class2$1d.prototype, "_autoCalcOffset", [serializable$c], function () {
   return true;
-})), _class2$1d)) || _class$1u);
+})), _class2$1d)) || _class$1v);
 
-var _dec$1t, _dec2$18, _dec3$M, _dec4$y, _dec5$v, _dec6$k, _dec7$g, _dec8$b, _dec9$a, _class$1t, _class2$1c, _initializer$19, _initializer2$X, _initializer3$G, _initializer4$x, _initializer5$p, _initializer6$j, _initializer7$f, _initializer8$e;
+var _dec$1u, _dec2$19, _dec3$M, _dec4$y, _dec5$v, _dec6$k, _dec7$g, _dec8$b, _dec9$a, _class$1u, _class2$1c, _initializer$19, _initializer2$X, _initializer3$G, _initializer4$x, _initializer5$p, _initializer6$j, _initializer7$f, _initializer8$e;
 const tempVec2 = new Vec2();
 const {
   ccclass: ccclass$c,
   menu: menu$4
 } = _decorator;
-let SliderJoint2D = (_dec$1t = ccclass$c('cc.SliderJoint2D'), _dec2$18 = type$a(CCFloat), _dec3$M = type$a(CCBoolean), _dec4$y = type$a(CCBoolean), _dec5$v = type$a(CCFloat), _dec6$k = type$a(CCFloat), _dec7$g = type$a(CCBoolean), _dec8$b = type$a(CCFloat), _dec9$a = type$a(CCFloat), _dec$1t(_class$1t = (_class2$1c = class SliderJoint2D extends Joint2D {
+let SliderJoint2D = (_dec$1u = ccclass$c('cc.SliderJoint2D'), _dec2$19 = type$a(CCFloat), _dec3$M = type$a(CCBoolean), _dec4$y = type$a(CCBoolean), _dec5$v = type$a(CCFloat), _dec6$k = type$a(CCFloat), _dec7$g = type$a(CCBoolean), _dec8$b = type$a(CCFloat), _dec9$a = type$a(CCFloat), _dec$1u(_class$1u = (_class2$1c = class SliderJoint2D extends Joint2D {
   constructor(...args) {
     super(...args);
     this.TYPE = EJoint2DType.SLIDER;
@@ -80368,7 +80536,7 @@ let SliderJoint2D = (_dec$1t = ccclass$c('cc.SliderJoint2D'), _dec2$18 = type$a(
       this._joint.setUpperLimit(v);
     }
   }
-}, (_applyDecoratedDescriptor(_class2$1c.prototype, "angle", [_dec2$18], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "angle"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "autoCalcAngle", [_dec3$M], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "autoCalcAngle"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "enableMotor", [_dec4$y], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "enableMotor"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "maxMotorForce", [_dec5$v], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "maxMotorForce"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "motorSpeed", [_dec6$k], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "motorSpeed"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "enableLimit", [_dec7$g], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "enableLimit"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "lowerLimit", [_dec8$b], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "lowerLimit"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "upperLimit", [_dec9$a], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "upperLimit"), _class2$1c.prototype), _initializer$19 = applyDecoratedInitializer(_class2$1c.prototype, "_angle", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$1c.prototype, "angle", [_dec2$19], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "angle"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "autoCalcAngle", [_dec3$M], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "autoCalcAngle"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "enableMotor", [_dec4$y], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "enableMotor"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "maxMotorForce", [_dec5$v], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "maxMotorForce"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "motorSpeed", [_dec6$k], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "motorSpeed"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "enableLimit", [_dec7$g], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "enableLimit"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "lowerLimit", [_dec8$b], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "lowerLimit"), _class2$1c.prototype), _applyDecoratedDescriptor(_class2$1c.prototype, "upperLimit", [_dec9$a], Object.getOwnPropertyDescriptor(_class2$1c.prototype, "upperLimit"), _class2$1c.prototype), _initializer$19 = applyDecoratedInitializer(_class2$1c.prototype, "_angle", [serializable$c], function () {
   return 0;
 }), _initializer2$X = applyDecoratedInitializer(_class2$1c.prototype, "_autoCalcAngle", [serializable$c], function () {
   return true;
@@ -80384,14 +80552,14 @@ let SliderJoint2D = (_dec$1t = ccclass$c('cc.SliderJoint2D'), _dec2$18 = type$a(
   return 0;
 }), _initializer8$e = applyDecoratedInitializer(_class2$1c.prototype, "_upperLimit", [serializable$c], function () {
   return 0;
-})), _class2$1c)) || _class$1t);
+})), _class2$1c)) || _class$1u);
 
-var _dec$1s, _dec2$17, _dec3$L, _class$1s, _class2$1b, _initializer$18, _initializer2$W;
+var _dec$1t, _dec2$18, _dec3$L, _class$1t, _class2$1b, _initializer$18, _initializer2$W;
 const {
   ccclass: ccclass$b,
   menu: menu$3
 } = _decorator;
-let FixedJoint2D = (_dec$1s = ccclass$b('cc.FixedJoint2D'), _dec2$17 = type$a(CCFloat), _dec3$L = type$a(CCFloat), _dec$1s(_class$1s = (_class2$1b = class FixedJoint2D extends Joint2D {
+let FixedJoint2D = (_dec$1t = ccclass$b('cc.FixedJoint2D'), _dec2$18 = type$a(CCFloat), _dec3$L = type$a(CCFloat), _dec$1t(_class$1t = (_class2$1b = class FixedJoint2D extends Joint2D {
   constructor(...args) {
     super(...args);
     this.TYPE = EJoint2DType.FIXED;
@@ -80416,18 +80584,18 @@ let FixedJoint2D = (_dec$1s = ccclass$b('cc.FixedJoint2D'), _dec2$17 = type$a(CC
       this._joint.setDampingRatio(v);
     }
   }
-}, (_applyDecoratedDescriptor(_class2$1b.prototype, "frequency", [_dec2$17], Object.getOwnPropertyDescriptor(_class2$1b.prototype, "frequency"), _class2$1b.prototype), _applyDecoratedDescriptor(_class2$1b.prototype, "dampingRatio", [_dec3$L], Object.getOwnPropertyDescriptor(_class2$1b.prototype, "dampingRatio"), _class2$1b.prototype), _initializer$18 = applyDecoratedInitializer(_class2$1b.prototype, "_frequency", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$1b.prototype, "frequency", [_dec2$18], Object.getOwnPropertyDescriptor(_class2$1b.prototype, "frequency"), _class2$1b.prototype), _applyDecoratedDescriptor(_class2$1b.prototype, "dampingRatio", [_dec3$L], Object.getOwnPropertyDescriptor(_class2$1b.prototype, "dampingRatio"), _class2$1b.prototype), _initializer$18 = applyDecoratedInitializer(_class2$1b.prototype, "_frequency", [serializable$c], function () {
   return 0.7;
 }), _initializer2$W = applyDecoratedInitializer(_class2$1b.prototype, "_dampingRatio", [serializable$c], function () {
   return 0.5;
-})), _class2$1b)) || _class$1s);
+})), _class2$1b)) || _class$1t);
 
-var _dec$1r, _dec2$16, _dec3$K, _dec4$x, _dec5$u, _dec6$j, _dec7$f, _class$1r, _class2$1a, _initializer$17, _initializer2$V, _initializer3$F, _initializer4$w, _initializer5$o, _initializer6$i;
+var _dec$1s, _dec2$17, _dec3$K, _dec4$x, _dec5$u, _dec6$j, _dec7$f, _class$1s, _class2$1a, _initializer$17, _initializer2$V, _initializer3$F, _initializer4$w, _initializer5$o, _initializer6$i;
 const {
   ccclass: ccclass$a,
   menu: menu$2
 } = _decorator;
-let WheelJoint2D = (_dec$1r = ccclass$a('cc.WheelJoint2D'), _dec2$16 = type$a(CCFloat), _dec3$K = type$a(CCBoolean), _dec4$x = type$a(CCFloat), _dec5$u = type$a(CCFloat), _dec6$j = type$a(CCFloat), _dec7$f = type$a(CCFloat), _dec$1r(_class$1r = (_class2$1a = class WheelJoint2D extends Joint2D {
+let WheelJoint2D = (_dec$1s = ccclass$a('cc.WheelJoint2D'), _dec2$17 = type$a(CCFloat), _dec3$K = type$a(CCBoolean), _dec4$x = type$a(CCFloat), _dec5$u = type$a(CCFloat), _dec6$j = type$a(CCFloat), _dec7$f = type$a(CCFloat), _dec$1s(_class$1s = (_class2$1a = class WheelJoint2D extends Joint2D {
   constructor(...args) {
     super(...args);
     this.TYPE = EJoint2DType.WHEEL;
@@ -80489,7 +80657,7 @@ let WheelJoint2D = (_dec$1r = ccclass$a('cc.WheelJoint2D'), _dec2$16 = type$a(CC
       this._joint.setDampingRatio(v);
     }
   }
-}, (_applyDecoratedDescriptor(_class2$1a.prototype, "angle", [_dec2$16], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "angle"), _class2$1a.prototype), _applyDecoratedDescriptor(_class2$1a.prototype, "enableMotor", [_dec3$K], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "enableMotor"), _class2$1a.prototype), _applyDecoratedDescriptor(_class2$1a.prototype, "maxMotorTorque", [_dec4$x], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "maxMotorTorque"), _class2$1a.prototype), _applyDecoratedDescriptor(_class2$1a.prototype, "motorSpeed", [_dec5$u], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "motorSpeed"), _class2$1a.prototype), _applyDecoratedDescriptor(_class2$1a.prototype, "frequency", [_dec6$j], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "frequency"), _class2$1a.prototype), _applyDecoratedDescriptor(_class2$1a.prototype, "dampingRatio", [_dec7$f], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "dampingRatio"), _class2$1a.prototype), _initializer$17 = applyDecoratedInitializer(_class2$1a.prototype, "_angle", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$1a.prototype, "angle", [_dec2$17], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "angle"), _class2$1a.prototype), _applyDecoratedDescriptor(_class2$1a.prototype, "enableMotor", [_dec3$K], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "enableMotor"), _class2$1a.prototype), _applyDecoratedDescriptor(_class2$1a.prototype, "maxMotorTorque", [_dec4$x], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "maxMotorTorque"), _class2$1a.prototype), _applyDecoratedDescriptor(_class2$1a.prototype, "motorSpeed", [_dec5$u], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "motorSpeed"), _class2$1a.prototype), _applyDecoratedDescriptor(_class2$1a.prototype, "frequency", [_dec6$j], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "frequency"), _class2$1a.prototype), _applyDecoratedDescriptor(_class2$1a.prototype, "dampingRatio", [_dec7$f], Object.getOwnPropertyDescriptor(_class2$1a.prototype, "dampingRatio"), _class2$1a.prototype), _initializer$17 = applyDecoratedInitializer(_class2$1a.prototype, "_angle", [serializable$c], function () {
   return 90;
 }), _initializer2$V = applyDecoratedInitializer(_class2$1a.prototype, "_enableMotor", [serializable$c], function () {
   return false;
@@ -80501,14 +80669,14 @@ let WheelJoint2D = (_dec$1r = ccclass$a('cc.WheelJoint2D'), _dec2$16 = type$a(CC
   return 5;
 }), _initializer6$i = applyDecoratedInitializer(_class2$1a.prototype, "_dampingRatio", [serializable$c], function () {
   return 0.7;
-})), _class2$1a)) || _class$1r);
+})), _class2$1a)) || _class$1s);
 
-var _dec$1q, _dec2$15, _dec3$J, _dec4$w, _dec5$t, _dec6$i, _dec7$e, _class$1q, _class2$19, _initializer$16, _initializer2$U, _initializer3$E, _initializer4$v, _initializer5$n, _initializer6$h;
+var _dec$1r, _dec2$16, _dec3$J, _dec4$w, _dec5$t, _dec6$i, _dec7$e, _class$1r, _class2$19, _initializer$16, _initializer2$U, _initializer3$E, _initializer4$v, _initializer5$n, _initializer6$h;
 const {
   ccclass: ccclass$9,
   menu: menu$1
 } = _decorator;
-let HingeJoint2D = (_dec$1q = ccclass$9('cc.HingeJoint2D'), _dec2$15 = type$a(CCBoolean), _dec3$J = type$a(CCFloat), _dec4$w = type$a(CCFloat), _dec5$t = type$a(CCBoolean), _dec6$i = type$a(CCFloat), _dec7$e = type$a(CCFloat), _dec$1q(_class$1q = (_class2$19 = class HingeJoint2D extends Joint2D {
+let HingeJoint2D = (_dec$1r = ccclass$9('cc.HingeJoint2D'), _dec2$16 = type$a(CCBoolean), _dec3$J = type$a(CCFloat), _dec4$w = type$a(CCFloat), _dec5$t = type$a(CCBoolean), _dec6$i = type$a(CCFloat), _dec7$e = type$a(CCFloat), _dec$1r(_class$1r = (_class2$19 = class HingeJoint2D extends Joint2D {
   constructor(...args) {
     super(...args);
     this.TYPE = EJoint2DType.HINGE;
@@ -80570,7 +80738,7 @@ let HingeJoint2D = (_dec$1q = ccclass$9('cc.HingeJoint2D'), _dec2$15 = type$a(CC
       this._joint.setMotorSpeed(v);
     }
   }
-}, (_applyDecoratedDescriptor(_class2$19.prototype, "enableLimit", [_dec2$15], Object.getOwnPropertyDescriptor(_class2$19.prototype, "enableLimit"), _class2$19.prototype), _applyDecoratedDescriptor(_class2$19.prototype, "lowerAngle", [_dec3$J], Object.getOwnPropertyDescriptor(_class2$19.prototype, "lowerAngle"), _class2$19.prototype), _applyDecoratedDescriptor(_class2$19.prototype, "upperAngle", [_dec4$w], Object.getOwnPropertyDescriptor(_class2$19.prototype, "upperAngle"), _class2$19.prototype), _applyDecoratedDescriptor(_class2$19.prototype, "enableMotor", [_dec5$t], Object.getOwnPropertyDescriptor(_class2$19.prototype, "enableMotor"), _class2$19.prototype), _applyDecoratedDescriptor(_class2$19.prototype, "maxMotorTorque", [_dec6$i], Object.getOwnPropertyDescriptor(_class2$19.prototype, "maxMotorTorque"), _class2$19.prototype), _applyDecoratedDescriptor(_class2$19.prototype, "motorSpeed", [_dec7$e], Object.getOwnPropertyDescriptor(_class2$19.prototype, "motorSpeed"), _class2$19.prototype), _initializer$16 = applyDecoratedInitializer(_class2$19.prototype, "_enableLimit", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$19.prototype, "enableLimit", [_dec2$16], Object.getOwnPropertyDescriptor(_class2$19.prototype, "enableLimit"), _class2$19.prototype), _applyDecoratedDescriptor(_class2$19.prototype, "lowerAngle", [_dec3$J], Object.getOwnPropertyDescriptor(_class2$19.prototype, "lowerAngle"), _class2$19.prototype), _applyDecoratedDescriptor(_class2$19.prototype, "upperAngle", [_dec4$w], Object.getOwnPropertyDescriptor(_class2$19.prototype, "upperAngle"), _class2$19.prototype), _applyDecoratedDescriptor(_class2$19.prototype, "enableMotor", [_dec5$t], Object.getOwnPropertyDescriptor(_class2$19.prototype, "enableMotor"), _class2$19.prototype), _applyDecoratedDescriptor(_class2$19.prototype, "maxMotorTorque", [_dec6$i], Object.getOwnPropertyDescriptor(_class2$19.prototype, "maxMotorTorque"), _class2$19.prototype), _applyDecoratedDescriptor(_class2$19.prototype, "motorSpeed", [_dec7$e], Object.getOwnPropertyDescriptor(_class2$19.prototype, "motorSpeed"), _class2$19.prototype), _initializer$16 = applyDecoratedInitializer(_class2$19.prototype, "_enableLimit", [serializable$c], function () {
   return false;
 }), _initializer2$U = applyDecoratedInitializer(_class2$19.prototype, "_lowerAngle", [serializable$c], function () {
   return 0;
@@ -80582,7 +80750,7 @@ let HingeJoint2D = (_dec$1q = ccclass$9('cc.HingeJoint2D'), _dec2$15 = type$a(CC
   return 1000;
 }), _initializer6$h = applyDecoratedInitializer(_class2$19.prototype, "_motorSpeed", [serializable$c], function () {
   return 0;
-})), _class2$19)) || _class$1q);
+})), _class2$19)) || _class$1r);
 
 const Physics2DUtils = {
   PolygonSeparator,
@@ -81002,20 +81170,20 @@ class Simulator {
   }
 }
 
-var _dec$1p, _class$1p, _class2$18, _initializer$15;
+var _dec$1q, _class$1q, _class2$18, _initializer$15;
 const {
   ccclass: ccclass$8,
   serializable: serializable$3,
   editable: editable$1
 } = _decorator;
-let ParticleAsset = (_dec$1p = ccclass$8('cc.ParticleAsset'), _dec$1p(_class$1p = (_class2$18 = class ParticleAsset extends Asset {
+let ParticleAsset = (_dec$1q = ccclass$8('cc.ParticleAsset'), _dec$1q(_class$1q = (_class2$18 = class ParticleAsset extends Asset {
   constructor(...args) {
     super(...args);
     this.spriteFrame = _initializer$15 && _initializer$15();
   }
 }, (_initializer$15 = applyDecoratedInitializer(_class2$18.prototype, "spriteFrame", [serializable$3], function () {
   return null;
-})), _class2$18)) || _class$1p);
+})), _class2$18)) || _class$1q);
 cclegacy.ParticleAsset = ParticleAsset;
 
 class PNGReader {
@@ -82469,7 +82637,7 @@ codec.unzipAsArray = function (input, bytes) {
   return ar;
 };
 
-var _dec$1o, _dec2$14, _dec3$I, _dec4$v, _dec5$s, _dec6$h, _class$1o, _class2$17, _initializer$14, _initializer2$T, _initializer3$D, _initializer4$u, _initializer5$m, _initializer6$g, _initializer7$e, _initializer8$d, _initializer9$c, _initializer10$b, _initializer11$b, _initializer12$9, _initializer13$8, _initializer14$7, _initializer15$6, _initializer16$6, _initializer17$3, _initializer18$3, _initializer19$2, _initializer20$2, _initializer21$2, _initializer22$2, _initializer23$2, _initializer24$2, _initializer25$2, _initializer26$2, _initializer27$2, _initializer28$2, _initializer29$2, _initializer30$2, _initializer31$2, _initializer32$2, _initializer33$2, _initializer34$2, _initializer35$2, _initializer36$1, _initializer37$1, _initializer38$1, _initializer39$1, _initializer40$1, _initializer41$1, _initializer42$1, _initializer43$1, _ParticleSystem2D;
+var _dec$1p, _dec2$15, _dec3$I, _dec4$v, _dec5$s, _dec6$h, _class$1p, _class2$17, _initializer$14, _initializer2$T, _initializer3$D, _initializer4$u, _initializer5$m, _initializer6$g, _initializer7$e, _initializer8$d, _initializer9$c, _initializer10$b, _initializer11$b, _initializer12$9, _initializer13$8, _initializer14$7, _initializer15$6, _initializer16$6, _initializer17$3, _initializer18$3, _initializer19$2, _initializer20$2, _initializer21$2, _initializer22$2, _initializer23$2, _initializer24$2, _initializer25$2, _initializer26$2, _initializer27$2, _initializer28$2, _initializer29$2, _initializer30$2, _initializer31$2, _initializer32$2, _initializer33$2, _initializer34$2, _initializer35$2, _initializer36$1, _initializer37$1, _initializer38$1, _initializer39$1, _initializer40$1, _initializer41$1, _initializer42$1, _initializer43$1, _ParticleSystem2D;
 let ImageFormat;
 (function (ImageFormat) {
   ImageFormat[ImageFormat["JPG"] = 0] = "JPG";
@@ -82503,7 +82671,7 @@ function getParticleComponents(node) {
 }
 const wrapParseInt = parseInt;
 const wrapParseFloat = parseFloat;
-let ParticleSystem2D = (_dec$1o = ccclass$w('cc.ParticleSystem2D'), _dec2$14 = type$a(ParticleAsset), _dec3$I = type$a(SpriteFrame), _dec4$v = type$a(PositionType), _dec5$s = type$a(EmitterMode), _dec6$h = formerlySerializedAs$3('preview'), _dec$1o(_class$1o = (_class2$17 = (_ParticleSystem2D = class ParticleSystem2D extends UIRenderer {
+let ParticleSystem2D = (_dec$1p = ccclass$w('cc.ParticleSystem2D'), _dec2$15 = type$a(ParticleAsset), _dec3$I = type$a(SpriteFrame), _dec4$v = type$a(PositionType), _dec5$s = type$a(EmitterMode), _dec6$h = formerlySerializedAs$3('preview'), _dec$1p(_class$1p = (_class2$17 = (_ParticleSystem2D = class ParticleSystem2D extends UIRenderer {
   get custom() {
     return this._custom;
   }
@@ -83037,7 +83205,7 @@ let ParticleSystem2D = (_dec$1o = ccclass$w('cc.ParticleSystem2D'), _dec2$14 = t
       this._renderEntity.setUseLocal(false);
     }
   }
-}, _ParticleSystem2D.EmitterMode = EmitterMode, _ParticleSystem2D.PositionType = PositionType, _ParticleSystem2D.DURATION_INFINITY = DURATION_INFINITY, _ParticleSystem2D.START_SIZE_EQUAL_TO_END_SIZE = START_SIZE_EQUAL_TO_END_SIZE, _ParticleSystem2D.START_RADIUS_EQUAL_TO_END_RADIUS = START_RADIUS_EQUAL_TO_END_RADIUS, _ParticleSystem2D), (_applyDecoratedDescriptor(_class2$17.prototype, "file", [_dec2$14], Object.getOwnPropertyDescriptor(_class2$17.prototype, "file"), _class2$17.prototype), _applyDecoratedDescriptor(_class2$17.prototype, "spriteFrame", [_dec3$I], Object.getOwnPropertyDescriptor(_class2$17.prototype, "spriteFrame"), _class2$17.prototype), _initializer$14 = applyDecoratedInitializer(_class2$17.prototype, "duration", [serializable$c], function () {
+}, _ParticleSystem2D.EmitterMode = EmitterMode, _ParticleSystem2D.PositionType = PositionType, _ParticleSystem2D.DURATION_INFINITY = DURATION_INFINITY, _ParticleSystem2D.START_SIZE_EQUAL_TO_END_SIZE = START_SIZE_EQUAL_TO_END_SIZE, _ParticleSystem2D.START_RADIUS_EQUAL_TO_END_RADIUS = START_RADIUS_EQUAL_TO_END_RADIUS, _ParticleSystem2D), (_applyDecoratedDescriptor(_class2$17.prototype, "file", [_dec2$15], Object.getOwnPropertyDescriptor(_class2$17.prototype, "file"), _class2$17.prototype), _applyDecoratedDescriptor(_class2$17.prototype, "spriteFrame", [_dec3$I], Object.getOwnPropertyDescriptor(_class2$17.prototype, "spriteFrame"), _class2$17.prototype), _initializer$14 = applyDecoratedInitializer(_class2$17.prototype, "duration", [serializable$c], function () {
   return -1;
 }), _initializer2$T = applyDecoratedInitializer(_class2$17.prototype, "emissionRate", [serializable$c], function () {
   return 10;
@@ -83123,9 +83291,9 @@ let ParticleSystem2D = (_dec$1o = ccclass$w('cc.ParticleSystem2D'), _dec2$14 = t
   return new Color(0, 0, 0, 0);
 }), _initializer43$1 = applyDecoratedInitializer(_class2$17.prototype, "_positionType", [serializable$c], function () {
   return PositionType.FREE;
-})), _class2$17)) || _class$1o);
+})), _class2$17)) || _class$1p);
 
-var _dec$1n, _dec2$13, _class$1n, _class2$16, _initializer$13, _initializer2$S, _initializer3$C, _initializer4$t, _initializer5$l, _initializer6$f, _MotionStreak;
+var _dec$1o, _dec2$14, _class$1o, _class2$16, _initializer$13, _initializer2$S, _initializer3$C, _initializer4$t, _initializer5$l, _initializer6$f, _MotionStreak;
 let Point$1 = class Point {
   constructor(point, dir) {
     this.point = new Vec2();
@@ -83144,7 +83312,7 @@ let Point$1 = class Point {
     this.dir.y = y;
   }
 };
-let MotionStreak = (_dec$1n = ccclass$w('cc.MotionStreak'), _dec2$13 = type$a(Texture2D), _dec$1n(_class$1n = (_class2$16 = (_MotionStreak = class MotionStreak extends UIRenderer {
+let MotionStreak = (_dec$1o = ccclass$w('cc.MotionStreak'), _dec2$14 = type$a(Texture2D), _dec$1o(_class$1o = (_class2$16 = (_MotionStreak = class MotionStreak extends UIRenderer {
   constructor() {
     super();
     this._preview = _initializer$13 && _initializer$13();
@@ -83237,7 +83405,7 @@ let MotionStreak = (_dec$1n = ccclass$w('cc.MotionStreak'), _dec2$13 = type$a(Te
   _render(render) {
     render.commitComp(this, this._renderData, this._texture, this._assembler, null);
   }
-}, _MotionStreak.Point = Point$1, _MotionStreak), (_applyDecoratedDescriptor(_class2$16.prototype, "texture", [_dec2$13], Object.getOwnPropertyDescriptor(_class2$16.prototype, "texture"), _class2$16.prototype), _initializer$13 = applyDecoratedInitializer(_class2$16.prototype, "_preview", [serializable$c], function () {
+}, _MotionStreak.Point = Point$1, _MotionStreak), (_applyDecoratedDescriptor(_class2$16.prototype, "texture", [_dec2$14], Object.getOwnPropertyDescriptor(_class2$16.prototype, "texture"), _class2$16.prototype), _initializer$13 = applyDecoratedInitializer(_class2$16.prototype, "_preview", [serializable$c], function () {
   return false;
 }), _initializer2$S = applyDecoratedInitializer(_class2$16.prototype, "_fadeTime", [serializable$c], function () {
   return 1;
@@ -83249,7 +83417,7 @@ let MotionStreak = (_dec$1n = ccclass$w('cc.MotionStreak'), _dec2$13 = type$a(Te
   return null;
 }), _initializer6$f = applyDecoratedInitializer(_class2$16.prototype, "_fastMode", [serializable$c], function () {
   return false;
-})), _class2$16)) || _class$1n);
+})), _class2$16)) || _class$1o);
 
 const _normal = new Vec2();
 const _vec2 = new Vec2();
@@ -84268,8 +84436,8 @@ class TMXMapInfo {
   }
 }
 
-var _dec$1m, _dec2$12, _dec3$H, _dec4$u, _dec5$r, _dec6$g, _dec7$d, _class$1m, _class2$15, _initializer$12, _initializer2$R;
-let TiledTile = (_dec$1m = ccclass$w('cc.TiledTile'), _dec2$12 = requireComponent(UITransform), _dec3$H = type$a(CCInteger), _dec4$u = type$a(CCInteger), _dec5$r = type$a(CCInteger), _dec6$g = type$a(CCInteger), _dec7$d = type$a(CCInteger), _dec$1m(_class$1m = _dec2$12(_class$1m = (_class2$15 = class TiledTile extends Component {
+var _dec$1n, _dec2$13, _dec3$H, _dec4$u, _dec5$r, _dec6$g, _dec7$d, _class$1n, _class2$15, _initializer$12, _initializer2$R;
+let TiledTile = (_dec$1n = ccclass$w('cc.TiledTile'), _dec2$13 = requireComponent(UITransform), _dec3$H = type$a(CCInteger), _dec4$u = type$a(CCInteger), _dec5$r = type$a(CCInteger), _dec6$g = type$a(CCInteger), _dec7$d = type$a(CCInteger), _dec$1n(_class$1n = _dec2$13(_class$1n = (_class2$15 = class TiledTile extends Component {
   constructor() {
     super();
     this._layer = null;
@@ -84351,7 +84519,7 @@ let TiledTile = (_dec$1m = ccclass$w('cc.TiledTile'), _dec2$12 = requireComponen
   return 0;
 }), _initializer2$R = applyDecoratedInitializer(_class2$15.prototype, "_y", [_dec4$u], function () {
   return 0;
-}), _applyDecoratedDescriptor(_class2$15.prototype, "x", [_dec5$r], Object.getOwnPropertyDescriptor(_class2$15.prototype, "x"), _class2$15.prototype), _applyDecoratedDescriptor(_class2$15.prototype, "y", [_dec6$g], Object.getOwnPropertyDescriptor(_class2$15.prototype, "y"), _class2$15.prototype), _applyDecoratedDescriptor(_class2$15.prototype, "grid", [_dec7$d], Object.getOwnPropertyDescriptor(_class2$15.prototype, "grid"), _class2$15.prototype)), _class2$15)) || _class$1m) || _class$1m);
+}), _applyDecoratedDescriptor(_class2$15.prototype, "x", [_dec5$r], Object.getOwnPropertyDescriptor(_class2$15.prototype, "x"), _class2$15.prototype), _applyDecoratedDescriptor(_class2$15.prototype, "y", [_dec6$g], Object.getOwnPropertyDescriptor(_class2$15.prototype, "y"), _class2$15.prototype), _applyDecoratedDescriptor(_class2$15.prototype, "grid", [_dec7$d], Object.getOwnPropertyDescriptor(_class2$15.prototype, "grid"), _class2$15.prototype)), _class2$15)) || _class$1n) || _class$1n);
 
 let _enableTexelOffset = false;
 function enableTexelOffsetUtils(enable) {
@@ -84458,7 +84626,7 @@ function fillTextureGrids(tileset, texGrids, spFrame) {
   }
 }
 
-var _dec$1l, _class$1l, _dec2$11, _class2$14;
+var _dec$1m, _class$1m, _dec2$12, _class2$14;
 const _mat4_temp$1 = new Mat4();
 const _vec2_temp = new Vec2();
 const _vec3_temp = new Vec3();
@@ -84470,7 +84638,7 @@ const _tempRowCol = {
 function isTiledSubNodeData(data) {
   return 'subNodes' in data;
 }
-let TiledUserNodeData = (_dec$1l = ccclass$w('cc.TiledUserNodeData'), _dec$1l(_class$1l = class TiledUserNodeData extends Component {
+let TiledUserNodeData = (_dec$1m = ccclass$w('cc.TiledUserNodeData'), _dec$1m(_class$1m = class TiledUserNodeData extends Component {
   constructor() {
     super();
     this._index = -1;
@@ -84478,8 +84646,8 @@ let TiledUserNodeData = (_dec$1l = ccclass$w('cc.TiledUserNodeData'), _dec$1l(_c
     this._col = -1;
     this._tiledLayer = null;
   }
-}) || _class$1l);
-let TiledLayer = (_dec2$11 = ccclass$w('cc.TiledLayer'), _dec2$11(_class2$14 = class TiledLayer extends UIRenderer {
+}) || _class$1m);
+let TiledLayer = (_dec2$12 = ccclass$w('cc.TiledLayer'), _dec2$12(_class2$14 = class TiledLayer extends UIRenderer {
   get cullingRect() {
     return this._cullingRect;
   }
@@ -85520,8 +85688,8 @@ let TiledLayer = (_dec2$11 = ccclass$w('cc.TiledLayer'), _dec2$11(_class2$14 = c
   }
 }) || _class2$14);
 
-var _dec$1k, _dec2$10, _dec3$G, _class$1k, _class2$13;
-let TiledObjectGroup = (_dec$1k = ccclass$w('cc.TiledObjectGroup'), _dec2$10 = requireComponent(UITransform), _dec3$G = type$a(CCBoolean), _dec$1k(_class$1k = _dec2$10(_class$1k = (_class2$13 = class TiledObjectGroup extends Component {
+var _dec$1l, _dec2$11, _dec3$G, _class$1l, _class2$13;
+let TiledObjectGroup = (_dec$1l = ccclass$w('cc.TiledObjectGroup'), _dec2$11 = requireComponent(UITransform), _dec3$G = type$a(CCBoolean), _dec$1l(_class$1l = _dec2$11(_class$1l = (_class2$13 = class TiledObjectGroup extends Component {
   constructor() {
     super();
     this._premultiplyAlpha = false;
@@ -85799,10 +85967,10 @@ let TiledObjectGroup = (_dec$1k = ccclass$w('cc.TiledObjectGroup'), _dec2$10 = r
       sp._markForUpdateRenderData();
     }
   }
-}, (_applyDecoratedDescriptor(_class2$13.prototype, "premultiplyAlpha", [_dec3$G], Object.getOwnPropertyDescriptor(_class2$13.prototype, "premultiplyAlpha"), _class2$13.prototype)), _class2$13)) || _class$1k) || _class$1k);
+}, (_applyDecoratedDescriptor(_class2$13.prototype, "premultiplyAlpha", [_dec3$G], Object.getOwnPropertyDescriptor(_class2$13.prototype, "premultiplyAlpha"), _class2$13.prototype)), _class2$13)) || _class$1l) || _class$1l);
 
-var _dec$1j, _dec2$$, _dec3$F, _dec4$t, _dec5$q, _dec6$f, _dec7$c, _dec8$a, _class$1j, _class2$12, _initializer$11, _initializer2$Q, _initializer3$B, _initializer4$s, _initializer5$k, _initializer6$e, _initializer7$d, _initializer8$c;
-let TiledMapAsset = (_dec$1j = ccclass$w('cc.TiledMapAsset'), _dec2$$ = type$a([TextAsset]), _dec3$F = type$a([CCString]), _dec4$t = type$a([SpriteFrame]), _dec5$q = type$a([SpriteFrame]), _dec6$f = type$a([CCString]), _dec7$c = type$a([CCString]), _dec8$a = type$a([Size]), _dec$1j(_class$1j = (_class2$12 = class TiledMapAsset extends Asset {
+var _dec$1k, _dec2$10, _dec3$F, _dec4$t, _dec5$q, _dec6$f, _dec7$c, _dec8$a, _class$1k, _class2$12, _initializer$11, _initializer2$Q, _initializer3$B, _initializer4$s, _initializer5$k, _initializer6$e, _initializer7$d, _initializer8$c;
+let TiledMapAsset = (_dec$1k = ccclass$w('cc.TiledMapAsset'), _dec2$10 = type$a([TextAsset]), _dec3$F = type$a([CCString]), _dec4$t = type$a([SpriteFrame]), _dec5$q = type$a([SpriteFrame]), _dec6$f = type$a([CCString]), _dec7$c = type$a([CCString]), _dec8$a = type$a([Size]), _dec$1k(_class$1k = (_class2$12 = class TiledMapAsset extends Asset {
   constructor() {
     super();
     this.tmxXmlStr = _initializer$11 && _initializer$11();
@@ -85816,7 +85984,7 @@ let TiledMapAsset = (_dec$1j = ccclass$w('cc.TiledMapAsset'), _dec2$$ = type$a([
   }
 }, (_initializer$11 = applyDecoratedInitializer(_class2$12.prototype, "tmxXmlStr", [serializable$c], function () {
   return '';
-}), _initializer2$Q = applyDecoratedInitializer(_class2$12.prototype, "tsxFiles", [serializable$c, _dec2$$], function () {
+}), _initializer2$Q = applyDecoratedInitializer(_class2$12.prototype, "tsxFiles", [serializable$c, _dec2$10], function () {
   return [];
 }), _initializer3$B = applyDecoratedInitializer(_class2$12.prototype, "tsxFileNames", [serializable$c, _dec3$F], function () {
   return [];
@@ -85830,10 +85998,10 @@ let TiledMapAsset = (_dec$1j = ccclass$w('cc.TiledMapAsset'), _dec2$$ = type$a([
   return [];
 }), _initializer8$c = applyDecoratedInitializer(_class2$12.prototype, "spriteFrameSizes", [serializable$c, _dec8$a], function () {
   return [];
-})), _class2$12)) || _class$1j);
+})), _class2$12)) || _class$1k);
 
-var _dec$1i, _dec2$_, _dec3$E, _class$1i, _class2$11, _initializer$10, _initializer2$P, _initializer3$A, _TiledMap;
-let TiledMap = (_dec$1i = ccclass$w('cc.TiledMap'), _dec2$_ = requireComponent(UITransform), _dec3$E = type$a(TiledMapAsset), _dec$1i(_class$1i = _dec2$_(_class$1i = (_class2$11 = (_TiledMap = class TiledMap extends Component {
+var _dec$1j, _dec2$$, _dec3$E, _class$1j, _class2$11, _initializer$10, _initializer2$P, _initializer3$A, _TiledMap;
+let TiledMap = (_dec$1j = ccclass$w('cc.TiledMap'), _dec2$$ = requireComponent(UITransform), _dec3$E = type$a(TiledMapAsset), _dec$1j(_class$1j = _dec2$$(_class$1j = (_class2$11 = (_TiledMap = class TiledMap extends Component {
   get tmxAsset() {
     return this._tmxFile;
   }
@@ -86227,7 +86395,7 @@ let TiledMap = (_dec$1i = ccclass$w('cc.TiledMap'), _dec2$_ = requireComponent(U
   return true;
 }), _initializer3$A = applyDecoratedInitializer(_class2$11.prototype, "cleanupImageCache", [serializable$c], function () {
   return true;
-})), _class2$11)) || _class$1i) || _class$1i);
+})), _class2$11)) || _class$1j) || _class$1j);
 
 const MaxGridsLimit = Math.ceil(65535 / 6);
 const vec3_temps = [];
@@ -86598,7 +86766,7 @@ const tiledLayerAssembler = {
 };
 TiledLayer.Assembler = tiledLayerAssembler;
 
-var _dec$1h, _dec2$Z, _dec3$D, _dec4$s, _dec5$p, _dec6$e, _dec7$b, _dec8$9, _dec9$9, _dec10$4, _class$1h, _class2$10, _initializer$$, _initializer2$O, _initializer3$z, _initializer4$r, _initializer5$j, _initializer6$d, _initializer7$c, _initializer8$b, _initializer9$b, _initializer10$a, _initializer11$a, _initializer12$8, _initializer13$7, _initializer14$6, _Button;
+var _dec$1i, _dec2$_, _dec3$D, _dec4$s, _dec5$p, _dec6$e, _dec7$b, _dec8$9, _dec9$9, _dec10$4, _class$1i, _class2$10, _initializer$$, _initializer2$O, _initializer3$z, _initializer4$r, _initializer5$j, _initializer6$d, _initializer7$c, _initializer8$b, _initializer9$b, _initializer10$a, _initializer11$a, _initializer12$8, _initializer13$7, _initializer14$6, _Button;
 const _tempColor$1 = new Color();
 var Transition;
 (function (Transition) {
@@ -86619,7 +86787,7 @@ let ButtonEventType;
 (function (ButtonEventType) {
   ButtonEventType["CLICK"] = "click";
 })(ButtonEventType || (ButtonEventType = {}));
-let Button = (_dec$1h = ccclass$w('cc.Button'), _dec2$Z = executionOrder$2(110), _dec3$D = requireComponent(UITransform), _dec4$s = type$a(Node$1), _dec5$p = type$a(Transition), _dec6$e = type$a(SpriteFrame), _dec7$b = type$a(SpriteFrame), _dec8$9 = type$a(SpriteFrame), _dec9$9 = type$a(SpriteFrame), _dec10$4 = type$a([EventHandler]), _dec$1h(_class$1h = _dec2$Z(_class$1h = _dec3$D(_class$1h = (_class2$10 = (_Button = class Button extends Component {
+let Button = (_dec$1i = ccclass$w('cc.Button'), _dec2$_ = executionOrder$2(110), _dec3$D = requireComponent(UITransform), _dec4$s = type$a(Node$1), _dec5$p = type$a(Transition), _dec6$e = type$a(SpriteFrame), _dec7$b = type$a(SpriteFrame), _dec8$9 = type$a(SpriteFrame), _dec9$9 = type$a(SpriteFrame), _dec10$4 = type$a([EventHandler]), _dec$1i(_class$1i = _dec2$_(_class$1i = _dec3$D(_class$1i = (_class2$10 = (_Button = class Button extends Component {
   get target() {
     return this._target || this.node;
   }
@@ -87201,7 +87369,7 @@ let Button = (_dec$1h = ccclass$w('cc.Button'), _dec2$Z = executionOrder$2(110),
   return 1.2;
 }), _initializer14$6 = applyDecoratedInitializer(_class2$10.prototype, "_target", [serializable$c], function () {
   return null;
-})), _class2$10)) || _class$1h) || _class$1h) || _class$1h);
+})), _class2$10)) || _class$1i) || _class$1i) || _class$1i);
 legacyCC.Button = Button;
 
 class tabIndexUtil {
@@ -87804,7 +87972,7 @@ class EditBoxImpl extends EditBoxImplBase {
   }
 }
 
-var _dec$1g, _dec2$Y, _dec3$C, _dec4$r, _dec5$o, _dec6$d, _dec7$a, _dec8$8, _dec9$8, _dec10$3, _dec11$3, _dec12$3, _dec13$3, _class$1g, _class2$$, _initializer$_, _initializer2$N, _initializer3$y, _initializer4$q, _initializer5$i, _initializer6$c, _initializer7$b, _initializer8$a, _initializer9$a, _initializer10$9, _initializer11$9, _initializer12$7, _initializer13$6, _EditBox;
+var _dec$1h, _dec2$Z, _dec3$C, _dec4$r, _dec5$o, _dec6$d, _dec7$a, _dec8$8, _dec9$8, _dec10$3, _dec11$3, _dec12$3, _dec13$3, _class$1h, _class2$$, _initializer$_, _initializer2$N, _initializer3$y, _initializer4$q, _initializer5$i, _initializer6$c, _initializer7$b, _initializer8$a, _initializer9$a, _initializer10$9, _initializer11$9, _initializer12$7, _initializer13$6, _EditBox;
 const LEFT_PADDING = 2;
 function capitalize(str) {
   return str.replace(/(?:^|\s)\S/g, a => a.toUpperCase());
@@ -87821,7 +87989,7 @@ var EditBoxEventType;
   EditBoxEventType["XR_EDITING_DID_BEGAN"] = "xr-editing-did-began";
   EditBoxEventType["XR_EDITING_DID_ENDED"] = "xr-editing-did-ended";
 })(EditBoxEventType || (EditBoxEventType = {}));
-let EditBox = (_dec$1g = ccclass$w('cc.EditBox'), _dec2$Y = executionOrder$2(110), _dec3$C = requireComponent(UITransform), _dec4$r = type$a(Label), _dec5$o = type$a(Label), _dec6$d = type$a(SpriteFrame), _dec7$a = type$a(InputFlag), _dec8$8 = type$a(InputMode), _dec9$8 = type$a(KeyboardReturnType), _dec10$3 = type$a([EventHandler]), _dec11$3 = type$a([EventHandler]), _dec12$3 = type$a([EventHandler]), _dec13$3 = type$a([EventHandler]), _dec$1g(_class$1g = _dec2$Y(_class$1g = _dec3$C(_class$1g = (_class2$$ = (_EditBox = class EditBox extends Component {
+let EditBox = (_dec$1h = ccclass$w('cc.EditBox'), _dec2$Z = executionOrder$2(110), _dec3$C = requireComponent(UITransform), _dec4$r = type$a(Label), _dec5$o = type$a(Label), _dec6$d = type$a(SpriteFrame), _dec7$a = type$a(InputFlag), _dec8$8 = type$a(InputMode), _dec9$8 = type$a(KeyboardReturnType), _dec10$3 = type$a([EventHandler]), _dec11$3 = type$a([EventHandler]), _dec12$3 = type$a([EventHandler]), _dec13$3 = type$a([EventHandler]), _dec$1h(_class$1h = _dec2$Z(_class$1h = _dec3$C(_class$1h = (_class2$$ = (_EditBox = class EditBox extends Component {
   get string() {
     return this._string;
   }
@@ -88260,13 +88428,13 @@ let EditBox = (_dec$1g = ccclass$w('cc.EditBox'), _dec2$Y = executionOrder$2(110
   return InputMode.ANY;
 }), _initializer13$6 = applyDecoratedInitializer(_class2$$.prototype, "_maxLength", [serializable$c], function () {
   return 20;
-})), _class2$$)) || _class$1g) || _class$1g) || _class$1g);
+})), _class2$$)) || _class$1h) || _class$1h) || _class$1h);
 if (typeof window === 'object' && typeof document === 'object' && !MINIGAME && !JSB && !RUNTIME_BASED) {
   EditBox._EditBoxImpl = EditBoxImpl;
 }
 legacyCC.internal.EditBox = EditBox;
 
-var _dec$1f, _dec2$X, _dec3$B, _dec4$q, _dec5$n, _dec6$c, _dec7$9, _dec8$7, _dec9$7, _class$1f, _class2$_, _initializer$Z, _initializer2$M, _initializer3$x, _initializer4$p, _initializer5$h, _initializer6$b, _initializer7$a, _initializer8$9, _initializer9$9, _initializer10$8, _initializer11$8, _initializer12$6, _initializer13$5, _initializer14$5, _initializer15$5, _initializer16$5, _Layout;
+var _dec$1g, _dec2$Y, _dec3$B, _dec4$q, _dec5$n, _dec6$c, _dec7$9, _dec8$7, _dec9$7, _class$1g, _class2$_, _initializer$Z, _initializer2$M, _initializer3$x, _initializer4$p, _initializer5$h, _initializer6$b, _initializer7$a, _initializer8$9, _initializer9$9, _initializer10$8, _initializer11$8, _initializer12$6, _initializer13$5, _initializer14$5, _initializer15$5, _initializer16$5, _Layout;
 let LayoutType$1;
 (function (LayoutType) {
   LayoutType[LayoutType["NONE"] = 0] = "NONE";
@@ -88308,7 +88476,7 @@ let LayoutConstraint;
 })(LayoutConstraint || (LayoutConstraint = {}));
 ccenum(LayoutConstraint);
 const _tempVec3$5 = new Vec3();
-let Layout$1 = (_dec$1f = ccclass$w('cc.Layout'), _dec2$X = executionOrder$2(110), _dec3$B = requireComponent(UITransform), _dec4$q = type$a(LayoutType$1), _dec5$n = type$a(LayoutResizeMode), _dec6$c = type$a(LayoutAxisDirection), _dec7$9 = type$a(LayoutVerticalDirection), _dec8$7 = type$a(LayoutHorizontalDirection), _dec9$7 = type$a(LayoutConstraint), _dec$1f(_class$1f = _dec2$X(_class$1f = _dec3$B(_class$1f = (_class2$_ = (_Layout = class Layout extends Component {
+let Layout$1 = (_dec$1g = ccclass$w('cc.Layout'), _dec2$Y = executionOrder$2(110), _dec3$B = requireComponent(UITransform), _dec4$q = type$a(LayoutType$1), _dec5$n = type$a(LayoutResizeMode), _dec6$c = type$a(LayoutAxisDirection), _dec7$9 = type$a(LayoutVerticalDirection), _dec8$7 = type$a(LayoutHorizontalDirection), _dec9$7 = type$a(LayoutConstraint), _dec$1g(_class$1g = _dec2$Y(_class$1g = _dec3$B(_class$1g = (_class2$_ = (_Layout = class Layout extends Component {
   constructor() {
     super();
     this._resizeMode = _initializer$Z && _initializer$Z();
@@ -88941,10 +89109,10 @@ let Layout$1 = (_dec$1f = ccclass$w('cc.Layout'), _dec2$X = executionOrder$2(110
   return false;
 }), _initializer16$5 = applyDecoratedInitializer(_class2$_.prototype, "_isAlign", [serializable$c], function () {
   return false;
-})), _class2$_)) || _class$1f) || _class$1f) || _class$1f);
+})), _class2$_)) || _class$1g) || _class$1g) || _class$1g);
 legacyCC.Layout = Layout$1;
 
-var _dec$1e, _dec2$W, _dec3$A, _dec4$p, _dec5$m, _class$1e, _class2$Z, _initializer$Y, _initializer2$L, _initializer3$w, _initializer4$o, _initializer5$g, _ProgressBar;
+var _dec$1f, _dec2$X, _dec3$A, _dec4$p, _dec5$m, _class$1f, _class2$Z, _initializer$Y, _initializer2$L, _initializer3$w, _initializer4$o, _initializer5$g, _ProgressBar;
 var Mode;
 (function (Mode) {
   Mode[Mode["HORIZONTAL"] = 0] = "HORIZONTAL";
@@ -88952,7 +89120,7 @@ var Mode;
   Mode[Mode["FILLED"] = 2] = "FILLED";
 })(Mode || (Mode = {}));
 Enum(Mode);
-let ProgressBar = (_dec$1e = ccclass$w('cc.ProgressBar'), _dec2$W = executionOrder$2(110), _dec3$A = requireComponent(UITransform), _dec4$p = type$a(Sprite), _dec5$m = type$a(Mode), _dec$1e(_class$1e = _dec2$W(_class$1e = _dec3$A(_class$1e = (_class2$Z = (_ProgressBar = class ProgressBar extends Component {
+let ProgressBar = (_dec$1f = ccclass$w('cc.ProgressBar'), _dec2$X = executionOrder$2(110), _dec3$A = requireComponent(UITransform), _dec4$p = type$a(Sprite), _dec5$m = type$a(Mode), _dec$1f(_class$1f = _dec2$X(_class$1f = _dec3$A(_class$1f = (_class2$Z = (_ProgressBar = class ProgressBar extends Component {
   constructor() {
     super();
     this._barSprite = _initializer$Y && _initializer$Y();
@@ -89126,10 +89294,10 @@ let ProgressBar = (_dec$1e = ccclass$w('cc.ProgressBar'), _dec2$W = executionOrd
   return 0.1;
 }), _initializer5$g = applyDecoratedInitializer(_class2$Z.prototype, "_reverse", [serializable$c], function () {
   return false;
-})), _class2$Z)) || _class$1e) || _class$1e) || _class$1e);
+})), _class2$Z)) || _class$1f) || _class$1f) || _class$1f);
 legacyCC.ProgressBar = ProgressBar;
 
-var _dec$1d, _dec2$V, _dec3$z, _dec4$o, _dec5$l, _class$1d, _class2$Y, _initializer$X, _initializer2$K, _initializer3$v, _initializer4$n, _initializer5$f, _ScrollBar;
+var _dec$1e, _dec2$W, _dec3$z, _dec4$o, _dec5$l, _class$1e, _class2$Y, _initializer$X, _initializer2$K, _initializer3$v, _initializer4$n, _initializer5$f, _ScrollBar;
 const GETTING_SHORTER_FACTOR = 20;
 const _tempPos_1 = new Vec3();
 const _tempPos_2 = new Vec3();
@@ -89143,7 +89311,7 @@ var ScrollBarDirection;
   ScrollBarDirection[ScrollBarDirection["VERTICAL"] = 1] = "VERTICAL";
 })(ScrollBarDirection || (ScrollBarDirection = {}));
 ccenum(ScrollBarDirection);
-let ScrollBar = (_dec$1d = ccclass$w('cc.ScrollBar'), _dec2$V = executionOrder$2(110), _dec3$z = requireComponent(UITransform), _dec4$o = type$a(Sprite), _dec5$l = type$a(ScrollBarDirection), _dec$1d(_class$1d = _dec2$V(_class$1d = _dec3$z(_class$1d = (_class2$Y = (_ScrollBar = class ScrollBar extends Component {
+let ScrollBar = (_dec$1e = ccclass$w('cc.ScrollBar'), _dec2$W = executionOrder$2(110), _dec3$z = requireComponent(UITransform), _dec4$o = type$a(Sprite), _dec5$l = type$a(ScrollBarDirection), _dec$1e(_class$1e = _dec2$W(_class$1e = _dec3$z(_class$1e = (_class2$Y = (_ScrollBar = class ScrollBar extends Component {
   constructor() {
     super();
     this._scrollView = _initializer$X && _initializer$X();
@@ -89422,14 +89590,14 @@ let ScrollBar = (_dec$1d = ccclass$w('cc.ScrollBar'), _dec2$V = executionOrder$2
   return false;
 }), _initializer5$f = applyDecoratedInitializer(_class2$Y.prototype, "_autoHideTime", [serializable$c], function () {
   return 1.0;
-})), _class2$Y)) || _class$1d) || _class$1d) || _class$1d);
+})), _class2$Y)) || _class$1e) || _class$1e) || _class$1e);
 legacyCC.ScrollBar = ScrollBar;
 
-var _dec$1c, _dec2$U, _class$1c;
-let ViewGroup = (_dec$1c = ccclass$w('cc.ViewGroup'), _dec2$U = executionOrder$2(110), _dec$1c(_class$1c = _dec2$U(_class$1c = class ViewGroup extends Component {}) || _class$1c) || _class$1c);
+var _dec$1d, _dec2$V, _class$1d;
+let ViewGroup = (_dec$1d = ccclass$w('cc.ViewGroup'), _dec2$V = executionOrder$2(110), _dec$1d(_class$1d = _dec2$V(_class$1d = class ViewGroup extends Component {}) || _class$1d) || _class$1d);
 legacyCC.ViewGroup = ViewGroup;
 
-var _dec$1b, _dec2$T, _dec3$y, _dec4$n, _dec5$k, _dec6$b, _dec7$8, _class$1b, _class2$X, _initializer$W, _initializer2$J, _initializer3$u, _initializer4$m, _initializer5$e, _initializer6$a, _initializer7$9, _initializer8$8, _initializer9$8, _initializer10$7, _initializer11$7, _ScrollView;
+var _dec$1c, _dec2$U, _dec3$y, _dec4$n, _dec5$k, _dec6$b, _dec7$8, _class$1c, _class2$X, _initializer$W, _initializer2$J, _initializer3$u, _initializer4$m, _initializer5$e, _initializer6$a, _initializer7$9, _initializer8$8, _initializer9$8, _initializer10$7, _initializer11$7, _ScrollView;
 const NUMBER_OF_GATHERED_TOUCHES_FOR_MOVE_SPEED = 5;
 const OUT_OF_BOUNDARY_BREAKING_FACTOR = 0.05;
 const EPSILON = 1e-4;
@@ -89495,7 +89663,7 @@ var XrhoverType;
   XrhoverType[XrhoverType["LEFT"] = 1] = "LEFT";
   XrhoverType[XrhoverType["RIGHT"] = 2] = "RIGHT";
 })(XrhoverType || (XrhoverType = {}));
-let ScrollView = (_dec$1b = ccclass$w('cc.ScrollView'), _dec2$T = executionOrder$2(110), _dec3$y = requireComponent(UITransform), _dec4$n = type$a(Node$1), _dec5$k = type$a(ScrollBar), _dec6$b = type$a(ScrollBar), _dec7$8 = type$a([EventHandler]), _dec$1b(_class$1b = _dec2$T(_class$1b = _dec3$y(_class$1b = (_class2$X = (_ScrollView = class ScrollView extends ViewGroup {
+let ScrollView = (_dec$1c = ccclass$w('cc.ScrollView'), _dec2$U = executionOrder$2(110), _dec3$y = requireComponent(UITransform), _dec4$n = type$a(Node$1), _dec5$k = type$a(ScrollBar), _dec6$b = type$a(ScrollBar), _dec7$8 = type$a([EventHandler]), _dec$1c(_class$1c = _dec2$U(_class$1c = _dec3$y(_class$1c = (_class2$X = (_ScrollView = class ScrollView extends ViewGroup {
   get content() {
     return this._content;
   }
@@ -90552,10 +90720,10 @@ let ScrollView = (_dec$1b = ccclass$w('cc.ScrollView'), _dec2$T = executionOrder
   return null;
 }), _initializer11$7 = applyDecoratedInitializer(_class2$X.prototype, "_verticalScrollBar", [serializable$c], function () {
   return null;
-})), _class2$X)) || _class$1b) || _class$1b) || _class$1b);
+})), _class2$X)) || _class$1c) || _class$1c) || _class$1c);
 legacyCC.ScrollView = ScrollView;
 
-var _dec$1a, _dec2$S, _dec3$x, _dec4$m, _dec5$j, _dec6$a, _class$1a, _class2$W, _initializer$V, _initializer2$I, _initializer3$t, _initializer4$l, _Slider;
+var _dec$1b, _dec2$T, _dec3$x, _dec4$m, _dec5$j, _dec6$a, _class$1b, _class2$W, _initializer$V, _initializer2$I, _initializer3$t, _initializer4$l, _Slider;
 const _tempPos$1 = new Vec3();
 var Direction$1;
 (function (Direction) {
@@ -90563,7 +90731,7 @@ var Direction$1;
   Direction[Direction["Vertical"] = 1] = "Vertical";
 })(Direction$1 || (Direction$1 = {}));
 ccenum(Direction$1);
-let Slider = (_dec$1a = ccclass$w('cc.Slider'), _dec2$S = executionOrder$2(110), _dec3$x = requireComponent(UITransform), _dec4$m = type$a(Sprite), _dec5$j = type$a(Direction$1), _dec6$a = type$a([EventHandler]), _dec$1a(_class$1a = _dec2$S(_class$1a = _dec3$x(_class$1a = (_class2$W = (_Slider = class Slider extends Component {
+let Slider = (_dec$1b = ccclass$w('cc.Slider'), _dec2$T = executionOrder$2(110), _dec3$x = requireComponent(UITransform), _dec4$m = type$a(Sprite), _dec5$j = type$a(Direction$1), _dec6$a = type$a([EventHandler]), _dec$1b(_class$1b = _dec2$T(_class$1b = _dec3$x(_class$1b = (_class2$W = (_Slider = class Slider extends Component {
   get handle() {
     return this._handle;
   }
@@ -90752,19 +90920,19 @@ let Slider = (_dec$1a = ccclass$w('cc.Slider'), _dec2$S = executionOrder$2(110),
   return Direction$1.Horizontal;
 }), _initializer4$l = applyDecoratedInitializer(_class2$W.prototype, "_progress", [serializable$c], function () {
   return 0.1;
-})), _class2$W)) || _class$1a) || _class$1a) || _class$1a);
+})), _class2$W)) || _class$1b) || _class$1b) || _class$1b);
 legacyCC.Slider = Slider;
 
 function extendsEnum(...enums) {
   return Object.assign({}, ...enums);
 }
 
-var _dec$19, _dec2$R, _dec3$w, _dec4$l, _dec5$i, _class$19, _class2$V, _initializer$U, _initializer2$H, _initializer3$s, _Toggle;
+var _dec$1a, _dec2$S, _dec3$w, _dec4$l, _dec5$i, _class$1a, _class2$V, _initializer$U, _initializer2$H, _initializer3$s, _Toggle;
 var ToggleEventType;
 (function (ToggleEventType) {
   ToggleEventType["TOGGLE"] = "toggle";
 })(ToggleEventType || (ToggleEventType = {}));
-let Toggle = (_dec$19 = ccclass$w('cc.Toggle'), _dec2$R = executionOrder$2(110), _dec3$w = requireComponent(UITransform), _dec4$l = type$a(Sprite), _dec5$i = type$a([EventHandler]), _dec$19(_class$19 = _dec2$R(_class$19 = _dec3$w(_class$19 = (_class2$V = (_Toggle = class Toggle extends Button {
+let Toggle = (_dec$1a = ccclass$w('cc.Toggle'), _dec2$S = executionOrder$2(110), _dec3$w = requireComponent(UITransform), _dec4$l = type$a(Sprite), _dec5$i = type$a([EventHandler]), _dec$1a(_class$1a = _dec2$S(_class$1a = _dec3$w(_class$1a = (_class2$V = (_Toggle = class Toggle extends Button {
   get isChecked() {
     return this._isChecked;
   }
@@ -90850,11 +91018,11 @@ let Toggle = (_dec$19 = ccclass$w('cc.Toggle'), _dec2$R = executionOrder$2(110),
   return true;
 }), _initializer3$s = applyDecoratedInitializer(_class2$V.prototype, "_checkMark", [serializable$c], function () {
   return null;
-})), _class2$V)) || _class$19) || _class$19) || _class$19);
+})), _class2$V)) || _class$1a) || _class$1a) || _class$1a);
 legacyCC.Toggle = Toggle;
 
-var _dec$18, _dec2$Q, _dec3$v, _class$18, _class2$U, _initializer$T, _initializer2$G;
-let ToggleContainer = (_dec$18 = ccclass$w('cc.ToggleContainer'), _dec2$Q = executionOrder$2(110), _dec3$v = type$a([EventHandler]), _dec$18(_class$18 = _dec2$Q(_class$18 = (_class2$U = class ToggleContainer extends Component {
+var _dec$19, _dec2$R, _dec3$v, _class$19, _class2$U, _initializer$T, _initializer2$G;
+let ToggleContainer = (_dec$19 = ccclass$w('cc.ToggleContainer'), _dec2$R = executionOrder$2(110), _dec3$v = type$a([EventHandler]), _dec$19(_class$19 = _dec2$R(_class$19 = (_class2$U = class ToggleContainer extends Component {
   get allowSwitchOff() {
     return this._allowSwitchOff;
   }
@@ -90933,10 +91101,10 @@ let ToggleContainer = (_dec$18 = ccclass$w('cc.ToggleContainer'), _dec2$Q = exec
   return false;
 }), _initializer2$G = applyDecoratedInitializer(_class2$U.prototype, "checkEvents", [_dec3$v, serializable$c], function () {
   return [];
-})), _class2$U)) || _class$18) || _class$18);
+})), _class2$U)) || _class$19) || _class$19);
 legacyCC.ToggleContainer = ToggleContainer;
 
-var _dec$17, _dec2$P, _dec3$u, _dec4$k, _dec5$h, _class$17, _class2$T, _initializer$S, _initializer2$F, _initializer3$r, _initializer4$k, _initializer5$d, _initializer6$9, _initializer7$8, _initializer8$7, _initializer9$7, _initializer10$6, _initializer11$6, _initializer12$5, _initializer13$4, _initializer14$4, _initializer15$4, _initializer16$4, _initializer17$2, _initializer18$2, _Widget;
+var _dec$18, _dec2$Q, _dec3$u, _dec4$k, _dec5$h, _class$18, _class2$T, _initializer$S, _initializer2$F, _initializer3$r, _initializer4$k, _initializer5$d, _initializer6$9, _initializer7$8, _initializer8$7, _initializer9$7, _initializer10$6, _initializer11$6, _initializer12$5, _initializer13$4, _initializer14$4, _initializer15$4, _initializer16$4, _initializer17$2, _initializer18$2, _Widget;
 const _tempScale = new Vec2();
 function getReadonlyNodeSize(parent) {
   const parentUITransform = parent._getUITransformComp();
@@ -91009,7 +91177,7 @@ let AlignFlags;
 })(AlignFlags || (AlignFlags = {}));
 const TOP_BOT = AlignFlags.TOP | AlignFlags.BOT;
 const LEFT_RIGHT = AlignFlags.LEFT | AlignFlags.RIGHT;
-let Widget = (_dec$17 = ccclass$w('cc.Widget'), _dec2$P = executionOrder$2(110), _dec3$u = requireComponent(UITransform), _dec4$k = type$a(Node$1), _dec5$h = type$a(AlignMode), _dec$17(_class$17 = _dec2$P(_class$17 = _dec3$u(_class$17 = (_class2$T = (_Widget = class Widget extends Component {
+let Widget = (_dec$18 = ccclass$w('cc.Widget'), _dec2$Q = executionOrder$2(110), _dec3$u = requireComponent(UITransform), _dec4$k = type$a(Node$1), _dec5$h = type$a(AlignMode), _dec$18(_class$18 = _dec2$Q(_class$18 = _dec3$u(_class$18 = (_class2$T = (_Widget = class Widget extends Component {
   constructor() {
     super();
     this._lastPos = new Vec3();
@@ -91457,13 +91625,13 @@ let Widget = (_dec$17 = ccclass$w('cc.Widget'), _dec2$P = executionOrder$2(110),
   return AlignMode.ON_WINDOW_RESIZE;
 }), _initializer18$2 = applyDecoratedInitializer(_class2$T.prototype, "_lockFlags", [serializable$c, editorOnly], function () {
   return 0;
-})), _class2$T)) || _class$17) || _class$17) || _class$17);
+})), _class2$T)) || _class$18) || _class$18) || _class$18);
 
 cclegacy.internal.computeInverseTransForTarget = computeInverseTransForTarget;
 cclegacy.internal.getReadonlyNodeSize = getReadonlyNodeSize;
 cclegacy.Widget = Widget;
 
-var _dec$16, _dec2$O, _dec3$t, _dec4$j, _dec5$g, _class$16, _class2$S, _initializer$R, _initializer2$E, _initializer3$q, _initializer4$j, _PageViewIndicator;
+var _dec$17, _dec2$P, _dec3$t, _dec4$j, _dec5$g, _class$17, _class2$S, _initializer$R, _initializer2$E, _initializer3$q, _initializer4$j, _PageViewIndicator;
 const _color = new Color();
 var Direction;
 (function (Direction) {
@@ -91471,7 +91639,7 @@ var Direction;
   Direction[Direction["VERTICAL"] = 1] = "VERTICAL";
 })(Direction || (Direction = {}));
 ccenum(Direction);
-let PageViewIndicator = (_dec$16 = ccclass$w('cc.PageViewIndicator'), _dec2$O = executionOrder$2(110), _dec3$t = type$a(SpriteFrame), _dec4$j = type$a(Direction), _dec5$g = type$a(Size), _dec$16(_class$16 = _dec2$O(_class$16 = (_class2$S = (_PageViewIndicator = class PageViewIndicator extends Component {
+let PageViewIndicator = (_dec$17 = ccclass$w('cc.PageViewIndicator'), _dec2$P = executionOrder$2(110), _dec3$t = type$a(SpriteFrame), _dec4$j = type$a(Direction), _dec5$g = type$a(Size), _dec$17(_class$17 = _dec2$P(_class$17 = (_class2$S = (_PageViewIndicator = class PageViewIndicator extends Component {
   get spriteFrame() {
     return this._spriteFrame;
   }
@@ -91605,10 +91773,10 @@ let PageViewIndicator = (_dec$16 = ccclass$w('cc.PageViewIndicator'), _dec2$O = 
   return Direction.HORIZONTAL;
 }), _initializer4$j = applyDecoratedInitializer(_class2$S.prototype, "_cellSize", [serializable$c], function () {
   return new Size(20, 20);
-})), _class2$S)) || _class$16) || _class$16);
+})), _class2$S)) || _class$17) || _class$17);
 legacyCC.PageViewIndicator = PageViewIndicator;
 
-var _dec$15, _dec2$N, _dec3$s, _dec4$i, _dec5$f, _dec6$9, _dec7$7, _dec8$6, _dec9$6, _class$15, _class2$R, _initializer$Q, _initializer2$D, _initializer3$p, _initializer4$i, _initializer5$c, _initializer6$8, _initializer7$7, _initializer8$6, _initializer9$6, _initializer10$5, _initializer11$5, _initializer12$4, _PageView;
+var _dec$16, _dec2$O, _dec3$s, _dec4$i, _dec5$f, _dec6$9, _dec7$7, _dec8$6, _dec9$6, _class$16, _class2$R, _initializer$Q, _initializer2$D, _initializer3$p, _initializer4$i, _initializer5$c, _initializer6$8, _initializer7$7, _initializer8$6, _initializer9$6, _initializer10$5, _initializer11$5, _initializer12$4, _PageView;
 const _tempVec2 = new Vec2();
 var SizeMode;
 (function (SizeMode) {
@@ -91626,7 +91794,7 @@ var PageViewEventType;
 (function (PageViewEventType) {
   PageViewEventType["PAGE_TURNING"] = "page-turning";
 })(PageViewEventType || (PageViewEventType = {}));
-let PageView = (_dec$15 = ccclass$w('cc.PageView'), _dec2$N = executionOrder$2(110), _dec3$s = type$a(SizeMode), _dec4$i = type$a(PageViewDirection), _dec5$f = type$a(PageViewIndicator), _dec6$9 = type$a(ScrollBar), _dec7$7 = type$a(ScrollBar), _dec8$6 = type$a([EventHandler]), _dec9$6 = type$a([EventHandler]), _dec$15(_class$15 = _dec2$N(_class$15 = (_class2$R = (_PageView = class PageView extends ScrollView {
+let PageView = (_dec$16 = ccclass$w('cc.PageView'), _dec2$O = executionOrder$2(110), _dec3$s = type$a(SizeMode), _dec4$i = type$a(PageViewDirection), _dec5$f = type$a(PageViewIndicator), _dec6$9 = type$a(ScrollBar), _dec7$7 = type$a(ScrollBar), _dec8$6 = type$a([EventHandler]), _dec9$6 = type$a([EventHandler]), _dec$16(_class$16 = _dec2$O(_class$16 = (_class2$R = (_PageView = class PageView extends ScrollView {
   get sizeMode() {
     return this._sizeMode;
   }
@@ -92073,7 +92241,7 @@ let PageView = (_dec$15 = ccclass$w('cc.PageView'), _dec2$N = executionOrder$2(1
   return 0.1;
 }), _initializer12$4 = applyDecoratedInitializer(_class2$R.prototype, "_indicator", [serializable$c], function () {
   return null;
-})), _class2$R)) || _class$15) || _class$15);
+})), _class2$R)) || _class$16) || _class$16);
 legacyCC.PageView = PageView;
 
 const _tempPos = new Vec3();
@@ -92385,8 +92553,8 @@ director.on(DirectorEvent.INIT, () => {
   widgetManager.init();
 });
 
-var _dec$14, _dec2$M, _dec3$r, _class$14, _class2$Q, _initializer$P;
-let SafeArea = (_dec$14 = ccclass$w('cc.SafeArea'), _dec2$M = executionOrder$2(110), _dec3$r = requireComponent(Widget), _dec$14(_class$14 = _dec2$M(_class$14 = _dec3$r(_class$14 = (_class2$Q = class SafeArea extends Component {
+var _dec$15, _dec2$N, _dec3$r, _class$15, _class2$Q, _initializer$P;
+let SafeArea = (_dec$15 = ccclass$w('cc.SafeArea'), _dec2$N = executionOrder$2(110), _dec3$r = requireComponent(Widget), _dec$15(_class$15 = _dec2$N(_class$15 = _dec3$r(_class$15 = (_class2$Q = class SafeArea extends Component {
   get symmetric() {
     return this._symmetric;
   }
@@ -92433,11 +92601,11 @@ let SafeArea = (_dec$14 = ccclass$w('cc.SafeArea'), _dec2$M = executionOrder$2(1
   }
 }, (_initializer$P = applyDecoratedInitializer(_class2$Q.prototype, "_symmetric", [serializable$c], function () {
   return true;
-})), _class2$Q)) || _class$14) || _class$14) || _class$14);
+})), _class2$Q)) || _class$15) || _class$15) || _class$15);
 legacyCC.SafeArea = SafeArea;
 
-var _dec$13, _dec2$L, _dec3$q, _dec4$h, _dec5$e, _class$13, _class2$P, _initializer$O, _initializer2$C, _initializer3$o, _initializer4$h, _initializer5$b;
-let UICoordinateTracker = (_dec$13 = ccclass$w('cc.UICoordinateTracker'), _dec2$L = executionOrder$2(110), _dec3$q = type$a(Node$1), _dec4$h = type$a(Camera), _dec5$e = type$a([EventHandler]), _dec$13(_class$13 = _dec2$L(_class$13 = (_class2$P = class UICoordinateTracker extends Component {
+var _dec$14, _dec2$M, _dec3$q, _dec4$h, _dec5$e, _class$14, _class2$P, _initializer$O, _initializer2$C, _initializer3$o, _initializer4$h, _initializer5$b;
+let UICoordinateTracker = (_dec$14 = ccclass$w('cc.UICoordinateTracker'), _dec2$M = executionOrder$2(110), _dec3$q = type$a(Node$1), _dec4$h = type$a(Camera), _dec5$e = type$a([EventHandler]), _dec$14(_class$14 = _dec2$M(_class$14 = (_class2$P = class UICoordinateTracker extends Component {
   get target() {
     return this._target;
   }
@@ -92524,14 +92692,14 @@ let UICoordinateTracker = (_dec$13 = ccclass$w('cc.UICoordinateTracker'), _dec2$
   return true;
 }), _initializer5$b = applyDecoratedInitializer(_class2$P.prototype, "_distance", [serializable$c], function () {
   return 1;
-})), _class2$P)) || _class$13) || _class$13);
+})), _class2$P)) || _class$14) || _class$14);
 
-var _dec$12, _class$12;
+var _dec$13, _class$13;
 const BlockEvents = [NodeEventType.TOUCH_START, NodeEventType.TOUCH_END, NodeEventType.TOUCH_MOVE, NodeEventType.MOUSE_DOWN, NodeEventType.MOUSE_MOVE, NodeEventType.MOUSE_UP, NodeEventType.MOUSE_ENTER, NodeEventType.MOUSE_LEAVE, NodeEventType.MOUSE_WHEEL];
 function stopPropagation(event) {
   event.propagationStopped = true;
 }
-let BlockInputEvents = (_dec$12 = ccclass$w('cc.BlockInputEvents'), _dec$12(_class$12 = class BlockInputEvents extends Component {
+let BlockInputEvents = (_dec$13 = ccclass$w('cc.BlockInputEvents'), _dec$13(_class$13 = class BlockInputEvents extends Component {
   onEnable() {
     for (let i = 0; i < BlockEvents.length; i++) {
       this.node.on(BlockEvents[i], stopPropagation, this);
@@ -92542,10 +92710,10 @@ let BlockInputEvents = (_dec$12 = ccclass$w('cc.BlockInputEvents'), _dec$12(_cla
       this.node.off(BlockEvents[i], stopPropagation, this);
     }
   }
-}) || _class$12);
+}) || _class$13);
 
-var _dec$11, _dec2$K, _dec3$p, _class$11, _class2$O, _initializer$N, _initializer2$B;
-let SubContextView = (_dec$11 = ccclass$w('cc.SubContextView'), _dec2$K = executionOrder$2(110), _dec3$p = requireComponent(UITransform), _dec$11(_class$11 = _dec2$K(_class$11 = _dec3$p(_class$11 = (_class2$O = class SubContextView extends Component {
+var _dec$12, _dec2$L, _dec3$p, _class$12, _class2$O, _initializer$N, _initializer2$B;
+let SubContextView = (_dec$12 = ccclass$w('cc.SubContextView'), _dec2$L = executionOrder$2(110), _dec3$p = requireComponent(UITransform), _dec$12(_class$12 = _dec2$L(_class$12 = _dec3$p(_class$12 = (_class2$O = class SubContextView extends Component {
   get designResolutionSize() {
     return this._designResolutionSize;
   }
@@ -92709,7 +92877,7 @@ let SubContextView = (_dec$11 = ccclass$w('cc.SubContextView'), _dec2$K = execut
   return 60;
 }), _initializer2$B = applyDecoratedInitializer(_class2$O.prototype, "_designResolutionSize", [serializable$c], function () {
   return new Size(640, 960);
-})), _class2$O)) || _class$11) || _class$11) || _class$11);
+})), _class2$O)) || _class$12) || _class$12) || _class$12);
 legacyCC.SubContextView = SubContextView;
 
 deprecateModuleExportedName({
@@ -92790,12 +92958,12 @@ deprecateModuleExportedName({
   }
 });
 
-var _dec$10, _class$10;
-let UIReorderComponent = (_dec$10 = ccclass$w('cc.UIReorderComponent'), _dec$10(_class$10 = class UIReorderComponent {
+var _dec$11, _class$11;
+let UIReorderComponent = (_dec$11 = ccclass$w('cc.UIReorderComponent'), _dec$11(_class$11 = class UIReorderComponent {
   constructor() {
     warnID(1408, 'UIReorderComponent');
   }
-}) || _class$10);
+}) || _class$11);
 legacyCC.UIReorderComponent = UIReorderComponent;
 legacyCC.ButtonComponent = Button;
 setClassAlias(Button, 'cc.ButtonComponent');
@@ -93566,8 +93734,8 @@ _SkeletonCache = SkeletonCache;
 SkeletonCache.FrameTime = FrameTime$1;
 SkeletonCache.sharedCache = new _SkeletonCache();
 
-var _dec$$, _dec2$J, _dec3$o, _class$$, _class2$N, _initializer$M, _initializer2$A, _initializer3$n, _initializer4$g, _initializer5$a;
-let SkeletonData = (_dec$$ = ccclass$w('sp.SkeletonData'), _dec2$J = type$a([Texture2D]), _dec3$o = type$a([CCString]), _dec$$(_class$$ = (_class2$N = class SkeletonData extends Asset {
+var _dec$10, _dec2$K, _dec3$o, _class$10, _class2$N, _initializer$M, _initializer2$A, _initializer3$n, _initializer4$g, _initializer5$a;
+let SkeletonData = (_dec$10 = ccclass$w('sp.SkeletonData'), _dec2$K = type$a([Texture2D]), _dec3$o = type$a([CCString]), _dec$10(_class$10 = (_class2$N = class SkeletonData extends Asset {
   get skeletonJsonStr() {
     if (this._skeletonJson) {
       return JSON.stringify(this._skeletonJson);
@@ -93713,7 +93881,7 @@ let SkeletonData = (_dec$$ = ccclass$w('sp.SkeletonData'), _dec2$J = type$a([Tex
   }
 }, (_initializer$M = applyDecoratedInitializer(_class2$N.prototype, "_skeletonJson", [serializable$c], function () {
   return null;
-}), _initializer2$A = applyDecoratedInitializer(_class2$N.prototype, "textures", [serializable$c, _dec2$J], function () {
+}), _initializer2$A = applyDecoratedInitializer(_class2$N.prototype, "textures", [serializable$c, _dec2$K], function () {
   return [];
 }), _initializer3$n = applyDecoratedInitializer(_class2$N.prototype, "textureNames", [serializable$c, _dec3$o], function () {
   return [];
@@ -93721,7 +93889,7 @@ let SkeletonData = (_dec$$ = ccclass$w('sp.SkeletonData'), _dec2$J = type$a([Tex
   return 1;
 }), _initializer5$a = applyDecoratedInitializer(_class2$N.prototype, "_atlasText", [serializable$c], function () {
   return '';
-})), _class2$N)) || _class$$);
+})), _class2$N)) || _class$10);
 legacyCC.internal.SpineSkeletonData = SkeletonData;
 
 class SkeletonSystem extends System {
@@ -93827,7 +93995,7 @@ let AttachUtil$1 = class AttachUtil {
   }
 };
 
-var _dec$_, _dec2$I, _class$_, _class2$M, _initializer$L, _initializer2$z, _dec3$n, _dec4$g, _dec5$d, _dec6$8, _dec7$6, _dec8$5, _dec9$5, _class3$6, _class4$6, _initializer3$m, _initializer4$f, _initializer5$9, _initializer6$7, _initializer7$6, _initializer8$5, _initializer9$5, _initializer10$4, _initializer11$4, _initializer12$3, _initializer13$3, _initializer14$3, _initializer15$3, _initializer16$3, _Skeleton;
+var _dec$$, _dec2$J, _class$$, _class2$M, _initializer$L, _initializer2$z, _dec3$n, _dec4$g, _dec5$d, _dec6$8, _dec7$6, _dec8$5, _dec9$5, _class3$6, _class4$6, _initializer3$m, _initializer4$f, _initializer5$9, _initializer6$7, _initializer7$6, _initializer8$5, _initializer9$5, _initializer10$4, _initializer11$4, _initializer12$3, _initializer13$3, _initializer14$3, _initializer15$3, _initializer16$3, _Skeleton;
 function isSkeletonDataValid(skeletonData) {
   return !!skeletonData && !skeletonData.isEmpty();
 }
@@ -93857,7 +94025,7 @@ let SpineMaterialType;
   SpineMaterialType[SpineMaterialType["COLORED_TEXTURED"] = 0] = "COLORED_TEXTURED";
   SpineMaterialType[SpineMaterialType["TWO_COLORED"] = 1] = "TWO_COLORED";
 })(SpineMaterialType || (SpineMaterialType = {}));
-let SpineSocket = (_dec$_ = ccclass$w('sp.Skeleton.SpineSocket'), _dec2$I = type$a(Node$1), _dec$_(_class$_ = (_class2$M = class SpineSocket {
+let SpineSocket = (_dec$$ = ccclass$w('sp.Skeleton.SpineSocket'), _dec2$J = type$a(Node$1), _dec$$(_class$$ = (_class2$M = class SpineSocket {
   constructor(path = '', target = null) {
     this.path = _initializer$L && _initializer$L();
     this.target = _initializer2$z && _initializer2$z();
@@ -93866,9 +94034,9 @@ let SpineSocket = (_dec$_ = ccclass$w('sp.Skeleton.SpineSocket'), _dec2$I = type
   }
 }, (_initializer$L = applyDecoratedInitializer(_class2$M.prototype, "path", [serializable$c], function () {
   return '';
-}), _initializer2$z = applyDecoratedInitializer(_class2$M.prototype, "target", [_dec2$I, serializable$c], function () {
+}), _initializer2$z = applyDecoratedInitializer(_class2$M.prototype, "target", [_dec2$J, serializable$c], function () {
   return null;
-})), _class2$M)) || _class$_);
+})), _class2$M)) || _class$$);
 setClassAlias(SpineSocket, 'sp.Skeleton.SpineSocket');
 let Skeleton = (_dec3$n = ccclass$w('sp.Skeleton'), _dec4$g = type$a(SkeletonData), _dec5$d = type$a(DefaultSkinsEnum), _dec6$8 = type$a(SpineDefaultAnimsEnum), _dec7$6 = type$a(SpineAnimationCacheMode), _dec8$5 = type$a([SpineSocket]), _dec9$5 = type$a(Material), _dec3$n(_class3$6 = (_class4$6 = (_Skeleton = class Skeleton extends UIRenderer {
   constructor() {
@@ -95439,11 +95607,11 @@ var index$2 = /*#__PURE__*/Object.freeze({
 
 var __extends=undefined&&undefined.__extends||function(){var extendStatics=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(d,b){d.__proto__=b;}||function(d,b){for(var p in b)if(b.hasOwnProperty(p))d[p]=b[p];};return function(d,b){extendStatics(d,b);function __(){this.constructor=d;}d.prototype=b===null?Object.create(b):(__.prototype=b.prototype,new __());};}();let dragonBones={};(function(dragonBones){var DragonBones=function(){function DragonBones(eventManager){this._clock=new dragonBones.WorldClock();this._events=[];this._objects=[];this._eventManager=null;this._eventManager=eventManager;console.info("DragonBones: "+DragonBones.VERSION+"\nWebsite: http://dragonbones.com/\nSource and Demo: https://github.com/DragonBones/");}DragonBones.prototype.advanceTime=function(passedTime){if(this._objects.length>0){for(var _i=0,_a=this._objects;_i<_a.length;_i++){var object=_a[_i];object.returnToPool();}this._objects.length=0;}this._clock.advanceTime(passedTime);if(this._events.length>0){for(var i=0;i<this._events.length;++i){var eventObject=this._events[i];var armature=eventObject.armature;if(armature._armatureData!==null){armature.eventDispatcher.dispatchDBEvent(eventObject.type,eventObject);if(eventObject.type===dragonBones.EventObject.SOUND_EVENT){this._eventManager.dispatchDBEvent(eventObject.type,eventObject);}}this.bufferObject(eventObject);}this._events.length=0;}};DragonBones.prototype.bufferEvent=function(value){if(this._events.indexOf(value)<0){this._events.push(value);}};DragonBones.prototype.bufferObject=function(object){if(this._objects.indexOf(object)<0){this._objects.push(object);}};Object.defineProperty(DragonBones.prototype,"clock",{get:function(){return this._clock;},enumerable:true,configurable:true});Object.defineProperty(DragonBones.prototype,"eventManager",{get:function(){return this._eventManager;},enumerable:true,configurable:true});DragonBones.VERSION="5.6.300";DragonBones.yDown=false;DragonBones.debug=false;DragonBones.debugDraw=false;DragonBones.webAssembly=false;return DragonBones;}();dragonBones.DragonBones=DragonBones;})(dragonBones);if(!console.warn){console.warn=function(){};}if(!console.assert){console.assert=function(){};}if(!Date.now){Date.now=function now(){return new Date().getTime();};}var __extends=function(t,e){function r(){this.constructor=t;}for(var i in e){if(e.hasOwnProperty(i)){t[i]=e[i];}}r.prototype=e.prototype,t.prototype=new r();};(function(dragonBones){var BaseObject=function(){function BaseObject(){this.hashCode=BaseObject._hashCode++;this._isInPool=false;}BaseObject._returnObject=function(object){var classType=String(object.constructor);var maxCount=classType in BaseObject._maxCountMap?BaseObject._maxCountMap[classType]:BaseObject._defaultMaxCount;var pool=BaseObject._poolsMap[classType]=BaseObject._poolsMap[classType]||[];if(pool.length<maxCount){if(!object._isInPool){object._isInPool=true;pool.push(object);}else {console.warn("The object is already in the pool.");}}};BaseObject.toString=function(){throw new Error();};BaseObject.setMaxCount=function(objectConstructor,maxCount){if(maxCount<0||maxCount!==maxCount){maxCount=0;}if(objectConstructor!==null){var classType=String(objectConstructor);var pool=classType in BaseObject._poolsMap?BaseObject._poolsMap[classType]:null;if(pool!==null&&pool.length>maxCount){pool.length=maxCount;}BaseObject._maxCountMap[classType]=maxCount;}else {BaseObject._defaultMaxCount=maxCount;for(var classType in BaseObject._poolsMap){var pool=BaseObject._poolsMap[classType];if(pool.length>maxCount){pool.length=maxCount;}if(classType in BaseObject._maxCountMap){BaseObject._maxCountMap[classType]=maxCount;}}}};BaseObject.clearPool=function(objectConstructor){if(objectConstructor===void 0){objectConstructor=null;}if(objectConstructor!==null){var classType=String(objectConstructor);var pool=classType in BaseObject._poolsMap?BaseObject._poolsMap[classType]:null;if(pool!==null&&pool.length>0){pool.length=0;}}else {for(var k in BaseObject._poolsMap){var pool=BaseObject._poolsMap[k];pool.length=0;}}};BaseObject.borrowObject=function(objectConstructor){var classType=String(objectConstructor);var pool=classType in BaseObject._poolsMap?BaseObject._poolsMap[classType]:null;if(pool!==null&&pool.length>0){var object_1=pool.pop();object_1._isInPool=false;return object_1;}var object=new objectConstructor();object._onClear();return object;};BaseObject.prototype.returnToPool=function(){this._onClear();BaseObject._returnObject(this);};BaseObject._hashCode=0;BaseObject._defaultMaxCount=3000;BaseObject._maxCountMap={};BaseObject._poolsMap={};return BaseObject;}();dragonBones.BaseObject=BaseObject;})(dragonBones);(function(dragonBones){var Matrix=function(){function Matrix(a,b,c,d,tx,ty){if(a===void 0){a=1.0;}if(b===void 0){b=0.0;}if(c===void 0){c=0.0;}if(d===void 0){d=1.0;}if(tx===void 0){tx=0.0;}if(ty===void 0){ty=0.0;}this.a=a;this.b=b;this.c=c;this.d=d;this.tx=tx;this.ty=ty;}Matrix.prototype.toString=function(){return "[object dragonBones.Matrix] a:"+this.a+" b:"+this.b+" c:"+this.c+" d:"+this.d+" tx:"+this.tx+" ty:"+this.ty;};Matrix.prototype.copyFrom=function(value){this.a=value.a;this.b=value.b;this.c=value.c;this.d=value.d;this.tx=value.tx;this.ty=value.ty;return this;};Matrix.prototype.copyFromArray=function(value,offset){if(offset===void 0){offset=0;}this.a=value[offset];this.b=value[offset+1];this.c=value[offset+2];this.d=value[offset+3];this.tx=value[offset+4];this.ty=value[offset+5];return this;};Matrix.prototype.identity=function(){this.a=this.d=1.0;this.b=this.c=0.0;this.tx=this.ty=0.0;return this;};Matrix.prototype.concat=function(value){var aA=this.a*value.a;var bA=0.0;var cA=0.0;var dA=this.d*value.d;var txA=this.tx*value.a+value.tx;var tyA=this.ty*value.d+value.ty;if(this.b!==0.0||this.c!==0.0){aA+=this.b*value.c;bA+=this.b*value.d;cA+=this.c*value.a;dA+=this.c*value.b;}if(value.b!==0.0||value.c!==0.0){bA+=this.a*value.b;cA+=this.d*value.c;txA+=this.ty*value.c;tyA+=this.tx*value.b;}this.a=aA;this.b=bA;this.c=cA;this.d=dA;this.tx=txA;this.ty=tyA;return this;};Matrix.prototype.invert=function(){var aA=this.a;var bA=this.b;var cA=this.c;var dA=this.d;var txA=this.tx;var tyA=this.ty;if(bA===0.0&&cA===0.0){this.b=this.c=0.0;if(aA===0.0||dA===0.0){this.a=this.b=this.tx=this.ty=0.0;}else {aA=this.a=1.0/aA;dA=this.d=1.0/dA;this.tx=-aA*txA;this.ty=-dA*tyA;}return this;}var determinant=aA*dA-bA*cA;if(determinant===0.0){this.a=this.d=1.0;this.b=this.c=0.0;this.tx=this.ty=0.0;return this;}determinant=1.0/determinant;var k=this.a=dA*determinant;bA=this.b=-bA*determinant;cA=this.c=-cA*determinant;dA=this.d=aA*determinant;this.tx=-(k*txA+cA*tyA);this.ty=-(bA*txA+dA*tyA);return this;};Matrix.prototype.transformPoint=function(x,y,result,delta){if(delta===void 0){delta=false;}result.x=this.a*x+this.c*y;result.y=this.b*x+this.d*y;if(!delta){result.x+=this.tx;result.y+=this.ty;}};Matrix.prototype.transformRectangle=function(rectangle,delta){if(delta===void 0){delta=false;}var a=this.a;var b=this.b;var c=this.c;var d=this.d;var tx=delta?0.0:this.tx;var ty=delta?0.0:this.ty;var x=rectangle.x;var y=rectangle.y;var xMax=x+rectangle.width;var yMax=y+rectangle.height;var x0=a*x+c*y+tx;var y0=b*x+d*y+ty;var x1=a*xMax+c*y+tx;var y1=b*xMax+d*y+ty;var x2=a*xMax+c*yMax+tx;var y2=b*xMax+d*yMax+ty;var x3=a*x+c*yMax+tx;var y3=b*x+d*yMax+ty;var tmp=0.0;if(x0>x1){tmp=x0;x0=x1;x1=tmp;}if(x2>x3){tmp=x2;x2=x3;x3=tmp;}rectangle.x=Math.floor(x0<x2?x0:x2);rectangle.width=Math.ceil((x1>x3?x1:x3)-rectangle.x);if(y0>y1){tmp=y0;y0=y1;y1=tmp;}if(y2>y3){tmp=y2;y2=y3;y3=tmp;}rectangle.y=Math.floor(y0<y2?y0:y2);rectangle.height=Math.ceil((y1>y3?y1:y3)-rectangle.y);};return Matrix;}();dragonBones.Matrix=Matrix;})(dragonBones);(function(dragonBones){var Transform=function(){function Transform(x,y,skew,rotation,scaleX,scaleY){if(x===void 0){x=0.0;}if(y===void 0){y=0.0;}if(skew===void 0){skew=0.0;}if(rotation===void 0){rotation=0.0;}if(scaleX===void 0){scaleX=1.0;}if(scaleY===void 0){scaleY=1.0;}this.x=x;this.y=y;this.skew=skew;this.rotation=rotation;this.scaleX=scaleX;this.scaleY=scaleY;}Transform.normalizeRadian=function(value){value=(value+Math.PI)%(Math.PI*2.0);value+=value>0.0?-Math.PI:Math.PI;return value;};Transform.prototype.toString=function(){return "[object dragonBones.Transform] x:"+this.x+" y:"+this.y+" skewX:"+this.skew*180.0/Math.PI+" skewY:"+this.rotation*180.0/Math.PI+" scaleX:"+this.scaleX+" scaleY:"+this.scaleY;};Transform.prototype.copyFrom=function(value){this.x=value.x;this.y=value.y;this.skew=value.skew;this.rotation=value.rotation;this.scaleX=value.scaleX;this.scaleY=value.scaleY;return this;};Transform.prototype.identity=function(){this.x=this.y=0.0;this.skew=this.rotation=0.0;this.scaleX=this.scaleY=1.0;return this;};Transform.prototype.add=function(value){this.x+=value.x;this.y+=value.y;this.skew+=value.skew;this.rotation+=value.rotation;this.scaleX*=value.scaleX;this.scaleY*=value.scaleY;return this;};Transform.prototype.minus=function(value){this.x-=value.x;this.y-=value.y;this.skew-=value.skew;this.rotation-=value.rotation;this.scaleX/=value.scaleX;this.scaleY/=value.scaleY;return this;};Transform.prototype.fromMatrix=function(matrix){var backupScaleX=this.scaleX,backupScaleY=this.scaleY;var PI_Q=Transform.PI_Q;this.x=matrix.tx;this.y=matrix.ty;this.rotation=Math.atan(matrix.b/matrix.a);var skewX=Math.atan(-matrix.c/matrix.d);this.scaleX=this.rotation>-PI_Q&&this.rotation<PI_Q?matrix.a/Math.cos(this.rotation):matrix.b/Math.sin(this.rotation);this.scaleY=skewX>-PI_Q&&skewX<PI_Q?matrix.d/Math.cos(skewX):-matrix.c/Math.sin(skewX);if(backupScaleX>=0.0&&this.scaleX<0.0){this.scaleX=-this.scaleX;this.rotation=this.rotation-Math.PI;}if(backupScaleY>=0.0&&this.scaleY<0.0){this.scaleY=-this.scaleY;skewX=skewX-Math.PI;}this.skew=skewX-this.rotation;return this;};Transform.prototype.toMatrix=function(matrix){if(this.rotation===0.0){matrix.a=1.0;matrix.b=0.0;}else {matrix.a=Math.cos(this.rotation);matrix.b=Math.sin(this.rotation);}if(this.skew===0.0){matrix.c=-matrix.b;matrix.d=matrix.a;}else {matrix.c=-Math.sin(this.skew+this.rotation);matrix.d=Math.cos(this.skew+this.rotation);}if(this.scaleX!==1.0){matrix.a*=this.scaleX;matrix.b*=this.scaleX;}if(this.scaleY!==1.0){matrix.c*=this.scaleY;matrix.d*=this.scaleY;}matrix.tx=this.x;matrix.ty=this.y;return this;};Transform.PI=Math.PI;Transform.PI_D=Math.PI*2.0;Transform.PI_H=Math.PI/2.0;Transform.PI_Q=Math.PI/4.0;Transform.RAD_DEG=180.0/Math.PI;Transform.DEG_RAD=Math.PI/180.0;return Transform;}();dragonBones.Transform=Transform;})(dragonBones);(function(dragonBones){var ColorTransform=function(){function ColorTransform(alphaMultiplier,redMultiplier,greenMultiplier,blueMultiplier,alphaOffset,redOffset,greenOffset,blueOffset){if(alphaMultiplier===void 0){alphaMultiplier=1.0;}if(redMultiplier===void 0){redMultiplier=1.0;}if(greenMultiplier===void 0){greenMultiplier=1.0;}if(blueMultiplier===void 0){blueMultiplier=1.0;}if(alphaOffset===void 0){alphaOffset=0;}if(redOffset===void 0){redOffset=0;}if(greenOffset===void 0){greenOffset=0;}if(blueOffset===void 0){blueOffset=0;}this.alphaMultiplier=alphaMultiplier;this.redMultiplier=redMultiplier;this.greenMultiplier=greenMultiplier;this.blueMultiplier=blueMultiplier;this.alphaOffset=alphaOffset;this.redOffset=redOffset;this.greenOffset=greenOffset;this.blueOffset=blueOffset;}ColorTransform.prototype.copyFrom=function(value){this.alphaMultiplier=value.alphaMultiplier;this.redMultiplier=value.redMultiplier;this.greenMultiplier=value.greenMultiplier;this.blueMultiplier=value.blueMultiplier;this.alphaOffset=value.alphaOffset;this.redOffset=value.redOffset;this.greenOffset=value.greenOffset;this.blueOffset=value.blueOffset;};ColorTransform.prototype.identity=function(){this.alphaMultiplier=this.redMultiplier=this.greenMultiplier=this.blueMultiplier=1.0;this.alphaOffset=this.redOffset=this.greenOffset=this.blueOffset=0;};return ColorTransform;}();dragonBones.ColorTransform=ColorTransform;})(dragonBones);(function(dragonBones){var Point=function(){function Point(x,y){if(x===void 0){x=0.0;}if(y===void 0){y=0.0;}this.x=x;this.y=y;}Point.prototype.copyFrom=function(value){this.x=value.x;this.y=value.y;};Point.prototype.clear=function(){this.x=this.y=0.0;};return Point;}();dragonBones.Point=Point;})(dragonBones);(function(dragonBones){var Rectangle=function(){function Rectangle(x,y,width,height){if(x===void 0){x=0.0;}if(y===void 0){y=0.0;}if(width===void 0){width=0.0;}if(height===void 0){height=0.0;}this.x=x;this.y=y;this.width=width;this.height=height;}Rectangle.prototype.copyFrom=function(value){this.x=value.x;this.y=value.y;this.width=value.width;this.height=value.height;};Rectangle.prototype.clear=function(){this.x=this.y=0.0;this.width=this.height=0.0;};return Rectangle;}();dragonBones.Rectangle=Rectangle;})(dragonBones);(function(dragonBones){var UserData=function(_super){__extends(UserData,_super);function UserData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.ints=[];_this.floats=[];_this.strings=[];return _this;}UserData.toString=function(){return "[class dragonBones.UserData]";};UserData.prototype._onClear=function(){this.ints.length=0;this.floats.length=0;this.strings.length=0;};UserData.prototype.addInt=function(value){this.ints.push(value);};UserData.prototype.addFloat=function(value){this.floats.push(value);};UserData.prototype.addString=function(value){this.strings.push(value);};UserData.prototype.getInt=function(index){if(index===void 0){index=0;}return index>=0&&index<this.ints.length?this.ints[index]:0;};UserData.prototype.getFloat=function(index){if(index===void 0){index=0;}return index>=0&&index<this.floats.length?this.floats[index]:0.0;};UserData.prototype.getString=function(index){if(index===void 0){index=0;}return index>=0&&index<this.strings.length?this.strings[index]:"";};return UserData;}(dragonBones.BaseObject);dragonBones.UserData=UserData;var ActionData=function(_super){__extends(ActionData,_super);function ActionData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.data=null;return _this;}ActionData.toString=function(){return "[class dragonBones.ActionData]";};ActionData.prototype._onClear=function(){if(this.data!==null){this.data.returnToPool();}this.type=0;this.name="";this.bone=null;this.slot=null;this.data=null;};return ActionData;}(dragonBones.BaseObject);dragonBones.ActionData=ActionData;})(dragonBones);(function(dragonBones){var DragonBonesData=function(_super){__extends(DragonBonesData,_super);function DragonBonesData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.frameIndices=[];_this.cachedFrames=[];_this.armatureNames=[];_this.armatures={};_this.userData=null;return _this;}DragonBonesData.toString=function(){return "[class dragonBones.DragonBonesData]";};DragonBonesData.prototype._onClear=function(){for(var k in this.armatures){this.armatures[k].returnToPool();delete this.armatures[k];}if(this.userData!==null){this.userData.returnToPool();}this.autoSearch=false;this.frameRate=0;this.version="";this.name="";this.stage=null;this.frameIndices.length=0;this.cachedFrames.length=0;this.armatureNames.length=0;this.binary=null;this.intArray=null;this.floatArray=null;this.frameIntArray=null;this.frameFloatArray=null;this.frameArray=null;this.timelineArray=null;this.userData=null;};DragonBonesData.prototype.addArmature=function(value){if(value.name in this.armatures){console.warn("Same armature: "+value.name);return;}value.parent=this;this.armatures[value.name]=value;this.armatureNames.push(value.name);};DragonBonesData.prototype.getArmature=function(armatureName){return armatureName in this.armatures?this.armatures[armatureName]:null;};DragonBonesData.prototype.dispose=function(){console.warn("已废弃");this.returnToPool();};return DragonBonesData;}(dragonBones.BaseObject);dragonBones.DragonBonesData=DragonBonesData;})(dragonBones);(function(dragonBones){var ArmatureData=function(_super){__extends(ArmatureData,_super);function ArmatureData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.aabb=new dragonBones.Rectangle();_this.animationNames=[];_this.sortedBones=[];_this.sortedSlots=[];_this.defaultActions=[];_this.actions=[];_this.bones={};_this.slots={};_this.constraints={};_this.skins={};_this.animations={};_this.canvas=null;_this.userData=null;return _this;}ArmatureData.toString=function(){return "[class dragonBones.ArmatureData]";};ArmatureData.prototype._onClear=function(){for(var _i=0,_a=this.defaultActions;_i<_a.length;_i++){var action=_a[_i];action.returnToPool();}for(var _b=0,_c=this.actions;_b<_c.length;_b++){var action=_c[_b];action.returnToPool();}for(var k in this.bones){this.bones[k].returnToPool();delete this.bones[k];}for(var k in this.slots){this.slots[k].returnToPool();delete this.slots[k];}for(var k in this.constraints){this.constraints[k].returnToPool();delete this.constraints[k];}for(var k in this.skins){this.skins[k].returnToPool();delete this.skins[k];}for(var k in this.animations){this.animations[k].returnToPool();delete this.animations[k];}if(this.canvas!==null){this.canvas.returnToPool();}if(this.userData!==null){this.userData.returnToPool();}this.type=0;this.frameRate=0;this.cacheFrameRate=0;this.scale=1.0;this.name="";this.aabb.clear();this.animationNames.length=0;this.sortedBones.length=0;this.sortedSlots.length=0;this.defaultActions.length=0;this.actions.length=0;this.defaultSkin=null;this.defaultAnimation=null;this.canvas=null;this.userData=null;this.parent=null;};ArmatureData.prototype.sortBones=function(){var total=this.sortedBones.length;if(total<=0){return;}var sortHelper=this.sortedBones.concat();var index=0;var count=0;this.sortedBones.length=0;while(count<total){var bone=sortHelper[index++];if(index>=total){index=0;}if(this.sortedBones.indexOf(bone)>=0){continue;}var flag=false;for(var k in this.constraints){var constraint=this.constraints[k];if(constraint.root===bone&&this.sortedBones.indexOf(constraint.target)<0){flag=true;break;}}if(flag){continue;}if(bone.parent!==null&&this.sortedBones.indexOf(bone.parent)<0){continue;}this.sortedBones.push(bone);count++;}};ArmatureData.prototype.cacheFrames=function(frameRate){if(this.cacheFrameRate>0){return;}this.cacheFrameRate=frameRate;for(var k in this.animations){this.animations[k].cacheFrames(this.cacheFrameRate);}};ArmatureData.prototype.setCacheFrame=function(globalTransformMatrix,transform){var dataArray=this.parent.cachedFrames;var arrayOffset=dataArray.length;dataArray.length+=10;dataArray[arrayOffset]=globalTransformMatrix.a;dataArray[arrayOffset+1]=globalTransformMatrix.b;dataArray[arrayOffset+2]=globalTransformMatrix.c;dataArray[arrayOffset+3]=globalTransformMatrix.d;dataArray[arrayOffset+4]=globalTransformMatrix.tx;dataArray[arrayOffset+5]=globalTransformMatrix.ty;dataArray[arrayOffset+6]=transform.rotation;dataArray[arrayOffset+7]=transform.skew;dataArray[arrayOffset+8]=transform.scaleX;dataArray[arrayOffset+9]=transform.scaleY;return arrayOffset;};ArmatureData.prototype.getCacheFrame=function(globalTransformMatrix,transform,arrayOffset){var dataArray=this.parent.cachedFrames;globalTransformMatrix.a=dataArray[arrayOffset];globalTransformMatrix.b=dataArray[arrayOffset+1];globalTransformMatrix.c=dataArray[arrayOffset+2];globalTransformMatrix.d=dataArray[arrayOffset+3];globalTransformMatrix.tx=dataArray[arrayOffset+4];globalTransformMatrix.ty=dataArray[arrayOffset+5];transform.rotation=dataArray[arrayOffset+6];transform.skew=dataArray[arrayOffset+7];transform.scaleX=dataArray[arrayOffset+8];transform.scaleY=dataArray[arrayOffset+9];transform.x=globalTransformMatrix.tx;transform.y=globalTransformMatrix.ty;};ArmatureData.prototype.addBone=function(value){if(value.name in this.bones){console.warn("Same bone: "+value.name);return;}this.bones[value.name]=value;this.sortedBones.push(value);};ArmatureData.prototype.addSlot=function(value){if(value.name in this.slots){console.warn("Same slot: "+value.name);return;}this.slots[value.name]=value;this.sortedSlots.push(value);};ArmatureData.prototype.addConstraint=function(value){if(value.name in this.constraints){console.warn("Same constraint: "+value.name);return;}this.constraints[value.name]=value;};ArmatureData.prototype.addSkin=function(value){if(value.name in this.skins){console.warn("Same skin: "+value.name);return;}value.parent=this;this.skins[value.name]=value;if(this.defaultSkin===null){this.defaultSkin=value;}if(value.name==="default"){this.defaultSkin=value;}};ArmatureData.prototype.addAnimation=function(value){if(value.name in this.animations){console.warn("Same animation: "+value.name);return;}value.parent=this;this.animations[value.name]=value;this.animationNames.push(value.name);if(this.defaultAnimation===null){this.defaultAnimation=value;}};ArmatureData.prototype.addAction=function(value,isDefault){if(isDefault){this.defaultActions.push(value);}else {this.actions.push(value);}};ArmatureData.prototype.getBone=function(boneName){return boneName in this.bones?this.bones[boneName]:null;};ArmatureData.prototype.getSlot=function(slotName){return slotName in this.slots?this.slots[slotName]:null;};ArmatureData.prototype.getConstraint=function(constraintName){return constraintName in this.constraints?this.constraints[constraintName]:null;};ArmatureData.prototype.getSkin=function(skinName){return skinName in this.skins?this.skins[skinName]:null;};ArmatureData.prototype.getMesh=function(skinName,slotName,meshName){var skin=this.getSkin(skinName);if(skin===null){return null;}return skin.getDisplay(slotName,meshName);};ArmatureData.prototype.getAnimation=function(animationName){return animationName in this.animations?this.animations[animationName]:null;};return ArmatureData;}(dragonBones.BaseObject);dragonBones.ArmatureData=ArmatureData;var BoneData=function(_super){__extends(BoneData,_super);function BoneData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.transform=new dragonBones.Transform();_this.userData=null;return _this;}BoneData.toString=function(){return "[class dragonBones.BoneData]";};BoneData.prototype._onClear=function(){if(this.userData!==null){this.userData.returnToPool();}this.inheritTranslation=false;this.inheritRotation=false;this.inheritScale=false;this.inheritReflection=false;this.type=0;this.length=0.0;this.name="";this.transform.identity();this.userData=null;this.parent=null;};return BoneData;}(dragonBones.BaseObject);dragonBones.BoneData=BoneData;var SurfaceData=function(_super){__extends(SurfaceData,_super);function SurfaceData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.vertices=[];return _this;}SurfaceData.toString=function(){return "[class dragonBones.SurfaceData]";};SurfaceData.prototype._onClear=function(){_super.prototype._onClear.call(this);this.type=1;this.segmentX=0;this.segmentY=0;this.vertices.length=0;};return SurfaceData;}(BoneData);dragonBones.SurfaceData=SurfaceData;var SlotData=function(_super){__extends(SlotData,_super);function SlotData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.color=null;_this.userData=null;return _this;}SlotData.createColor=function(){return new dragonBones.ColorTransform();};SlotData.toString=function(){return "[class dragonBones.SlotData]";};SlotData.prototype._onClear=function(){if(this.userData!==null){this.userData.returnToPool();}this.blendMode=0;this.displayIndex=0;this.zOrder=0;this.name="";this.color=null;this.userData=null;this.parent=null;};SlotData.DEFAULT_COLOR=new dragonBones.ColorTransform();return SlotData;}(dragonBones.BaseObject);dragonBones.SlotData=SlotData;})(dragonBones);(function(dragonBones){var ConstraintData=function(_super){__extends(ConstraintData,_super);function ConstraintData(){return _super!==null&&_super.apply(this,arguments)||this;}ConstraintData.prototype._onClear=function(){this.order=0;this.name="";this.type=0;this.target=null;this.root=null;this.bone=null;};return ConstraintData;}(dragonBones.BaseObject);dragonBones.ConstraintData=ConstraintData;var IKConstraintData=function(_super){__extends(IKConstraintData,_super);function IKConstraintData(){return _super!==null&&_super.apply(this,arguments)||this;}IKConstraintData.toString=function(){return "[class dragonBones.IKConstraintData]";};IKConstraintData.prototype._onClear=function(){_super.prototype._onClear.call(this);this.scaleEnabled=false;this.bendPositive=false;this.weight=1.0;};return IKConstraintData;}(ConstraintData);dragonBones.IKConstraintData=IKConstraintData;var PathConstraintData=function(_super){__extends(PathConstraintData,_super);function PathConstraintData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.bones=[];return _this;}PathConstraintData.toString=function(){return "[class dragonBones.PathConstraintData]";};PathConstraintData.prototype._onClear=function(){_super.prototype._onClear.call(this);this.pathSlot=null;this.pathDisplayData=null;this.bones.length=0;this.positionMode=0;this.spacingMode=1;this.rotateMode=1;this.position=0.0;this.spacing=0.0;this.rotateOffset=0.0;this.rotateMix=0.0;this.translateMix=0.0;};PathConstraintData.prototype.AddBone=function(value){this.bones.push(value);};return PathConstraintData;}(ConstraintData);dragonBones.PathConstraintData=PathConstraintData;})(dragonBones);(function(dragonBones){var CanvasData=function(_super){__extends(CanvasData,_super);function CanvasData(){return _super!==null&&_super.apply(this,arguments)||this;}CanvasData.toString=function(){return "[class dragonBones.CanvasData]";};CanvasData.prototype._onClear=function(){this.hasBackground=false;this.color=0x000000;this.x=0;this.y=0;this.width=0;this.height=0;};return CanvasData;}(dragonBones.BaseObject);dragonBones.CanvasData=CanvasData;})(dragonBones);(function(dragonBones){var SkinData=function(_super){__extends(SkinData,_super);function SkinData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.displays={};return _this;}SkinData.toString=function(){return "[class dragonBones.SkinData]";};SkinData.prototype._onClear=function(){for(var k in this.displays){var slotDisplays=this.displays[k];for(var _i=0,slotDisplays_1=slotDisplays;_i<slotDisplays_1.length;_i++){var display=slotDisplays_1[_i];if(display!==null){display.returnToPool();}}delete this.displays[k];}this.name="";this.parent=null;};SkinData.prototype.addDisplay=function(slotName,value){if(!(slotName in this.displays)){this.displays[slotName]=[];}if(value!==null){value.parent=this;}var slotDisplays=this.displays[slotName];slotDisplays.push(value);};SkinData.prototype.getDisplay=function(slotName,displayName){var slotDisplays=this.getDisplays(slotName);if(slotDisplays!==null){for(var _i=0,slotDisplays_2=slotDisplays;_i<slotDisplays_2.length;_i++){var display=slotDisplays_2[_i];if(display!==null&&display.name===displayName){return display;}}}return null;};SkinData.prototype.getDisplays=function(slotName){if(!(slotName in this.displays)){return null;}return this.displays[slotName];};return SkinData;}(dragonBones.BaseObject);dragonBones.SkinData=SkinData;})(dragonBones);(function(dragonBones){var VerticesData=function(){function VerticesData(){this.weight=null;}VerticesData.prototype.clear=function(){if(!this.isShared&&this.weight!==null){this.weight.returnToPool();}this.isShared=false;this.inheritDeform=false;this.offset=0;this.data=null;this.weight=null;};VerticesData.prototype.shareFrom=function(value){this.isShared=true;this.offset=value.offset;this.weight=value.weight;};return VerticesData;}();dragonBones.VerticesData=VerticesData;var DisplayData=function(_super){__extends(DisplayData,_super);function DisplayData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.transform=new dragonBones.Transform();return _this;}DisplayData.prototype._onClear=function(){this.name="";this.path="";this.transform.identity();this.parent=null;};return DisplayData;}(dragonBones.BaseObject);dragonBones.DisplayData=DisplayData;var ImageDisplayData=function(_super){__extends(ImageDisplayData,_super);function ImageDisplayData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.pivot=new dragonBones.Point();return _this;}ImageDisplayData.toString=function(){return "[class dragonBones.ImageDisplayData]";};ImageDisplayData.prototype._onClear=function(){_super.prototype._onClear.call(this);this.type=0;this.pivot.clear();this.texture=null;};return ImageDisplayData;}(DisplayData);dragonBones.ImageDisplayData=ImageDisplayData;var ArmatureDisplayData=function(_super){__extends(ArmatureDisplayData,_super);function ArmatureDisplayData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.actions=[];return _this;}ArmatureDisplayData.toString=function(){return "[class dragonBones.ArmatureDisplayData]";};ArmatureDisplayData.prototype._onClear=function(){_super.prototype._onClear.call(this);for(var _i=0,_a=this.actions;_i<_a.length;_i++){var action=_a[_i];action.returnToPool();}this.type=1;this.inheritAnimation=false;this.actions.length=0;this.armature=null;};ArmatureDisplayData.prototype.addAction=function(value){this.actions.push(value);};return ArmatureDisplayData;}(DisplayData);dragonBones.ArmatureDisplayData=ArmatureDisplayData;var MeshDisplayData=function(_super){__extends(MeshDisplayData,_super);function MeshDisplayData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.vertices=new VerticesData();return _this;}MeshDisplayData.toString=function(){return "[class dragonBones.MeshDisplayData]";};MeshDisplayData.prototype._onClear=function(){_super.prototype._onClear.call(this);this.type=2;this.vertices.clear();this.texture=null;};return MeshDisplayData;}(DisplayData);dragonBones.MeshDisplayData=MeshDisplayData;var BoundingBoxDisplayData=function(_super){__extends(BoundingBoxDisplayData,_super);function BoundingBoxDisplayData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.boundingBox=null;return _this;}BoundingBoxDisplayData.toString=function(){return "[class dragonBones.BoundingBoxDisplayData]";};BoundingBoxDisplayData.prototype._onClear=function(){_super.prototype._onClear.call(this);if(this.boundingBox!==null){this.boundingBox.returnToPool();}this.type=3;this.boundingBox=null;};return BoundingBoxDisplayData;}(DisplayData);dragonBones.BoundingBoxDisplayData=BoundingBoxDisplayData;var PathDisplayData=function(_super){__extends(PathDisplayData,_super);function PathDisplayData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.vertices=new VerticesData();_this.curveLengths=[];return _this;}PathDisplayData.toString=function(){return "[class dragonBones.PathDisplayData]";};PathDisplayData.prototype._onClear=function(){_super.prototype._onClear.call(this);this.type=4;this.closed=false;this.constantSpeed=false;this.vertices.clear();this.curveLengths.length=0;};return PathDisplayData;}(DisplayData);dragonBones.PathDisplayData=PathDisplayData;var WeightData=function(_super){__extends(WeightData,_super);function WeightData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.bones=[];return _this;}WeightData.toString=function(){return "[class dragonBones.WeightData]";};WeightData.prototype._onClear=function(){this.count=0;this.offset=0;this.bones.length=0;};WeightData.prototype.addBone=function(value){this.bones.push(value);};return WeightData;}(dragonBones.BaseObject);dragonBones.WeightData=WeightData;})(dragonBones);(function(dragonBones){var BoundingBoxData=function(_super){__extends(BoundingBoxData,_super);function BoundingBoxData(){return _super!==null&&_super.apply(this,arguments)||this;}BoundingBoxData.prototype._onClear=function(){this.color=0x000000;this.width=0.0;this.height=0.0;};return BoundingBoxData;}(dragonBones.BaseObject);dragonBones.BoundingBoxData=BoundingBoxData;var RectangleBoundingBoxData=function(_super){__extends(RectangleBoundingBoxData,_super);function RectangleBoundingBoxData(){return _super!==null&&_super.apply(this,arguments)||this;}RectangleBoundingBoxData.toString=function(){return "[class dragonBones.RectangleBoundingBoxData]";};RectangleBoundingBoxData._computeOutCode=function(x,y,xMin,yMin,xMax,yMax){var code=0;if(x<xMin){code|=1;}else if(x>xMax){code|=2;}if(y<yMin){code|=4;}else if(y>yMax){code|=8;}return code;};RectangleBoundingBoxData.rectangleIntersectsSegment=function(xA,yA,xB,yB,xMin,yMin,xMax,yMax,intersectionPointA,intersectionPointB,normalRadians){if(intersectionPointA===void 0){intersectionPointA=null;}if(intersectionPointB===void 0){intersectionPointB=null;}if(normalRadians===void 0){normalRadians=null;}var inSideA=xA>xMin&&xA<xMax&&yA>yMin&&yA<yMax;var inSideB=xB>xMin&&xB<xMax&&yB>yMin&&yB<yMax;if(inSideA&&inSideB){return -1;}var intersectionCount=0;var outcode0=RectangleBoundingBoxData._computeOutCode(xA,yA,xMin,yMin,xMax,yMax);var outcode1=RectangleBoundingBoxData._computeOutCode(xB,yB,xMin,yMin,xMax,yMax);while(true){if((outcode0|outcode1)===0){intersectionCount=2;break;}else if((outcode0&outcode1)!==0){break;}var x=0.0;var y=0.0;var normalRadian=0.0;var outcodeOut=outcode0!==0?outcode0:outcode1;if((outcodeOut&4)!==0){x=xA+(xB-xA)*(yMin-yA)/(yB-yA);y=yMin;if(normalRadians!==null){normalRadian=-Math.PI*0.5;}}else if((outcodeOut&8)!==0){x=xA+(xB-xA)*(yMax-yA)/(yB-yA);y=yMax;if(normalRadians!==null){normalRadian=Math.PI*0.5;}}else if((outcodeOut&2)!==0){y=yA+(yB-yA)*(xMax-xA)/(xB-xA);x=xMax;if(normalRadians!==null){normalRadian=0;}}else if((outcodeOut&1)!==0){y=yA+(yB-yA)*(xMin-xA)/(xB-xA);x=xMin;if(normalRadians!==null){normalRadian=Math.PI;}}if(outcodeOut===outcode0){xA=x;yA=y;outcode0=RectangleBoundingBoxData._computeOutCode(xA,yA,xMin,yMin,xMax,yMax);if(normalRadians!==null){normalRadians.x=normalRadian;}}else {xB=x;yB=y;outcode1=RectangleBoundingBoxData._computeOutCode(xB,yB,xMin,yMin,xMax,yMax);if(normalRadians!==null){normalRadians.y=normalRadian;}}}if(intersectionCount){if(inSideA){intersectionCount=2;if(intersectionPointA!==null){intersectionPointA.x=xB;intersectionPointA.y=yB;}if(intersectionPointB!==null){intersectionPointB.x=xB;intersectionPointB.y=xB;}if(normalRadians!==null){normalRadians.x=normalRadians.y+Math.PI;}}else if(inSideB){intersectionCount=1;if(intersectionPointA!==null){intersectionPointA.x=xA;intersectionPointA.y=yA;}if(intersectionPointB!==null){intersectionPointB.x=xA;intersectionPointB.y=yA;}if(normalRadians!==null){normalRadians.y=normalRadians.x+Math.PI;}}else {intersectionCount=3;if(intersectionPointA!==null){intersectionPointA.x=xA;intersectionPointA.y=yA;}if(intersectionPointB!==null){intersectionPointB.x=xB;intersectionPointB.y=yB;}}}return intersectionCount;};RectangleBoundingBoxData.prototype._onClear=function(){_super.prototype._onClear.call(this);this.type=0;};RectangleBoundingBoxData.prototype.containsPoint=function(pX,pY){var widthH=this.width*0.5;if(pX>=-widthH&&pX<=widthH){var heightH=this.height*0.5;if(pY>=-heightH&&pY<=heightH){return true;}}return false;};RectangleBoundingBoxData.prototype.intersectsSegment=function(xA,yA,xB,yB,intersectionPointA,intersectionPointB,normalRadians){if(intersectionPointA===void 0){intersectionPointA=null;}if(intersectionPointB===void 0){intersectionPointB=null;}if(normalRadians===void 0){normalRadians=null;}var widthH=this.width*0.5;var heightH=this.height*0.5;var intersectionCount=RectangleBoundingBoxData.rectangleIntersectsSegment(xA,yA,xB,yB,-widthH,-heightH,widthH,heightH,intersectionPointA,intersectionPointB,normalRadians);return intersectionCount;};return RectangleBoundingBoxData;}(BoundingBoxData);dragonBones.RectangleBoundingBoxData=RectangleBoundingBoxData;var EllipseBoundingBoxData=function(_super){__extends(EllipseBoundingBoxData,_super);function EllipseBoundingBoxData(){return _super!==null&&_super.apply(this,arguments)||this;}EllipseBoundingBoxData.toString=function(){return "[class dragonBones.EllipseData]";};EllipseBoundingBoxData.ellipseIntersectsSegment=function(xA,yA,xB,yB,xC,yC,widthH,heightH,intersectionPointA,intersectionPointB,normalRadians){if(intersectionPointA===void 0){intersectionPointA=null;}if(intersectionPointB===void 0){intersectionPointB=null;}if(normalRadians===void 0){normalRadians=null;}var d=widthH/heightH;var dd=d*d;yA*=d;yB*=d;var dX=xB-xA;var dY=yB-yA;var lAB=Math.sqrt(dX*dX+dY*dY);var xD=dX/lAB;var yD=dY/lAB;var a=(xC-xA)*xD+(yC-yA)*yD;var aa=a*a;var ee=xA*xA+yA*yA;var rr=widthH*widthH;var dR=rr-ee+aa;var intersectionCount=0;if(dR>=0.0){var dT=Math.sqrt(dR);var sA=a-dT;var sB=a+dT;var inSideA=sA<0.0?-1:sA<=lAB?0:1;var inSideB=sB<0.0?-1:sB<=lAB?0:1;var sideAB=inSideA*inSideB;if(sideAB<0){return -1;}else if(sideAB===0){if(inSideA===-1){intersectionCount=2;xB=xA+sB*xD;yB=(yA+sB*yD)/d;if(intersectionPointA!==null){intersectionPointA.x=xB;intersectionPointA.y=yB;}if(intersectionPointB!==null){intersectionPointB.x=xB;intersectionPointB.y=yB;}if(normalRadians!==null){normalRadians.x=Math.atan2(yB/rr*dd,xB/rr);normalRadians.y=normalRadians.x+Math.PI;}}else if(inSideB===1){intersectionCount=1;xA=xA+sA*xD;yA=(yA+sA*yD)/d;if(intersectionPointA!==null){intersectionPointA.x=xA;intersectionPointA.y=yA;}if(intersectionPointB!==null){intersectionPointB.x=xA;intersectionPointB.y=yA;}if(normalRadians!==null){normalRadians.x=Math.atan2(yA/rr*dd,xA/rr);normalRadians.y=normalRadians.x+Math.PI;}}else {intersectionCount=3;if(intersectionPointA!==null){intersectionPointA.x=xA+sA*xD;intersectionPointA.y=(yA+sA*yD)/d;if(normalRadians!==null){normalRadians.x=Math.atan2(intersectionPointA.y/rr*dd,intersectionPointA.x/rr);}}if(intersectionPointB!==null){intersectionPointB.x=xA+sB*xD;intersectionPointB.y=(yA+sB*yD)/d;if(normalRadians!==null){normalRadians.y=Math.atan2(intersectionPointB.y/rr*dd,intersectionPointB.x/rr);}}}}}return intersectionCount;};EllipseBoundingBoxData.prototype._onClear=function(){_super.prototype._onClear.call(this);this.type=1;};EllipseBoundingBoxData.prototype.containsPoint=function(pX,pY){var widthH=this.width*0.5;if(pX>=-widthH&&pX<=widthH){var heightH=this.height*0.5;if(pY>=-heightH&&pY<=heightH){pY*=widthH/heightH;return Math.sqrt(pX*pX+pY*pY)<=widthH;}}return false;};EllipseBoundingBoxData.prototype.intersectsSegment=function(xA,yA,xB,yB,intersectionPointA,intersectionPointB,normalRadians){if(intersectionPointA===void 0){intersectionPointA=null;}if(intersectionPointB===void 0){intersectionPointB=null;}if(normalRadians===void 0){normalRadians=null;}var intersectionCount=EllipseBoundingBoxData.ellipseIntersectsSegment(xA,yA,xB,yB,0.0,0.0,this.width*0.5,this.height*0.5,intersectionPointA,intersectionPointB,normalRadians);return intersectionCount;};return EllipseBoundingBoxData;}(BoundingBoxData);dragonBones.EllipseBoundingBoxData=EllipseBoundingBoxData;var PolygonBoundingBoxData=function(_super){__extends(PolygonBoundingBoxData,_super);function PolygonBoundingBoxData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.vertices=[];return _this;}PolygonBoundingBoxData.toString=function(){return "[class dragonBones.PolygonBoundingBoxData]";};PolygonBoundingBoxData.polygonIntersectsSegment=function(xA,yA,xB,yB,vertices,intersectionPointA,intersectionPointB,normalRadians){if(intersectionPointA===void 0){intersectionPointA=null;}if(intersectionPointB===void 0){intersectionPointB=null;}if(normalRadians===void 0){normalRadians=null;}if(xA===xB){xA=xB+0.000001;}if(yA===yB){yA=yB+0.000001;}var count=vertices.length;var dXAB=xA-xB;var dYAB=yA-yB;var llAB=xA*yB-yA*xB;var intersectionCount=0;var xC=vertices[count-2];var yC=vertices[count-1];var dMin=0.0;var dMax=0.0;var xMin=0.0;var yMin=0.0;var xMax=0.0;var yMax=0.0;for(var i=0;i<count;i+=2){var xD=vertices[i];var yD=vertices[i+1];if(xC===xD){xC=xD+0.0001;}if(yC===yD){yC=yD+0.0001;}var dXCD=xC-xD;var dYCD=yC-yD;var llCD=xC*yD-yC*xD;var ll=dXAB*dYCD-dYAB*dXCD;var x=(llAB*dXCD-dXAB*llCD)/ll;if((x>=xC&&x<=xD||x>=xD&&x<=xC)&&(dXAB===0.0||x>=xA&&x<=xB||x>=xB&&x<=xA)){var y=(llAB*dYCD-dYAB*llCD)/ll;if((y>=yC&&y<=yD||y>=yD&&y<=yC)&&(dYAB===0.0||y>=yA&&y<=yB||y>=yB&&y<=yA)){if(intersectionPointB!==null){var d=x-xA;if(d<0.0){d=-d;}if(intersectionCount===0){dMin=d;dMax=d;xMin=x;yMin=y;xMax=x;yMax=y;if(normalRadians!==null){normalRadians.x=Math.atan2(yD-yC,xD-xC)-Math.PI*0.5;normalRadians.y=normalRadians.x;}}else {if(d<dMin){dMin=d;xMin=x;yMin=y;if(normalRadians!==null){normalRadians.x=Math.atan2(yD-yC,xD-xC)-Math.PI*0.5;}}if(d>dMax){dMax=d;xMax=x;yMax=y;if(normalRadians!==null){normalRadians.y=Math.atan2(yD-yC,xD-xC)-Math.PI*0.5;}}}intersectionCount++;}else {xMin=x;yMin=y;xMax=x;yMax=y;intersectionCount++;if(normalRadians!==null){normalRadians.x=Math.atan2(yD-yC,xD-xC)-Math.PI*0.5;normalRadians.y=normalRadians.x;}break;}}}xC=xD;yC=yD;}if(intersectionCount===1){if(intersectionPointA!==null){intersectionPointA.x=xMin;intersectionPointA.y=yMin;}if(intersectionPointB!==null){intersectionPointB.x=xMin;intersectionPointB.y=yMin;}if(normalRadians!==null){normalRadians.y=normalRadians.x+Math.PI;}}else if(intersectionCount>1){intersectionCount++;if(intersectionPointA!==null){intersectionPointA.x=xMin;intersectionPointA.y=yMin;}if(intersectionPointB!==null){intersectionPointB.x=xMax;intersectionPointB.y=yMax;}}return intersectionCount;};PolygonBoundingBoxData.prototype._onClear=function(){_super.prototype._onClear.call(this);this.type=2;this.x=0.0;this.y=0.0;this.vertices.length=0;};PolygonBoundingBoxData.prototype.containsPoint=function(pX,pY){var isInSide=false;if(pX>=this.x&&pX<=this.width&&pY>=this.y&&pY<=this.height){for(var i=0,l=this.vertices.length,iP=l-2;i<l;i+=2){var yA=this.vertices[iP+1];var yB=this.vertices[i+1];if(yB<pY&&yA>=pY||yA<pY&&yB>=pY){var xA=this.vertices[iP];var xB=this.vertices[i];if((pY-yB)*(xA-xB)/(yA-yB)+xB<pX){isInSide=!isInSide;}}iP=i;}}return isInSide;};PolygonBoundingBoxData.prototype.intersectsSegment=function(xA,yA,xB,yB,intersectionPointA,intersectionPointB,normalRadians){if(intersectionPointA===void 0){intersectionPointA=null;}if(intersectionPointB===void 0){intersectionPointB=null;}if(normalRadians===void 0){normalRadians=null;}var intersectionCount=0;if(RectangleBoundingBoxData.rectangleIntersectsSegment(xA,yA,xB,yB,this.x,this.y,this.x+this.width,this.y+this.height,null,null,null)!==0){intersectionCount=PolygonBoundingBoxData.polygonIntersectsSegment(xA,yA,xB,yB,this.vertices,intersectionPointA,intersectionPointB,normalRadians);}return intersectionCount;};return PolygonBoundingBoxData;}(BoundingBoxData);dragonBones.PolygonBoundingBoxData=PolygonBoundingBoxData;})(dragonBones);(function(dragonBones){var AnimationData=function(_super){__extends(AnimationData,_super);function AnimationData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.cachedFrames=[];_this.boneTimelines={};_this.surfaceTimelines={};_this.slotTimelines={};_this.constraintTimelines={};_this.animationTimelines={};_this.boneCachedFrameIndices={};_this.slotCachedFrameIndices={};_this.actionTimeline=null;_this.zOrderTimeline=null;return _this;}AnimationData.toString=function(){return "[class dragonBones.AnimationData]";};AnimationData.prototype._onClear=function(){for(var k in this.boneTimelines){for(var _i=0,_a=this.boneTimelines[k];_i<_a.length;_i++){var timeline=_a[_i];timeline.returnToPool();}delete this.boneTimelines[k];}for(var k in this.surfaceTimelines){for(var _b=0,_c=this.surfaceTimelines[k];_b<_c.length;_b++){var timeline=_c[_b];timeline.returnToPool();}delete this.surfaceTimelines[k];}for(var k in this.slotTimelines){for(var _d=0,_e=this.slotTimelines[k];_d<_e.length;_d++){var timeline=_e[_d];timeline.returnToPool();}delete this.slotTimelines[k];}for(var k in this.constraintTimelines){for(var _f=0,_g=this.constraintTimelines[k];_f<_g.length;_f++){var timeline=_g[_f];timeline.returnToPool();}delete this.constraintTimelines[k];}for(var k in this.animationTimelines){for(var _h=0,_j=this.animationTimelines[k];_h<_j.length;_h++){var timeline=_j[_h];timeline.returnToPool();}delete this.animationTimelines[k];}for(var k in this.boneCachedFrameIndices){delete this.boneCachedFrameIndices[k];}for(var k in this.slotCachedFrameIndices){delete this.slotCachedFrameIndices[k];}if(this.actionTimeline!==null){this.actionTimeline.returnToPool();}if(this.zOrderTimeline!==null){this.zOrderTimeline.returnToPool();}this.frameIntOffset=0;this.frameFloatOffset=0;this.frameOffset=0;this.frameCount=0;this.playTimes=0;this.duration=0.0;this.scale=1.0;this.fadeInTime=0.0;this.cacheFrameRate=0.0;this.name="";this.cachedFrames.length=0;this.actionTimeline=null;this.zOrderTimeline=null;this.parent=null;};AnimationData.prototype.cacheFrames=function(frameRate){if(this.cacheFrameRate>0.0){return;}this.cacheFrameRate=Math.max(Math.ceil(frameRate*this.scale),1.0);var cacheFrameCount=Math.ceil(this.cacheFrameRate*this.duration)+1;this.cachedFrames.length=cacheFrameCount;for(var i=0,l=this.cacheFrames.length;i<l;++i){this.cachedFrames[i]=false;}for(var _i=0,_a=this.parent.sortedBones;_i<_a.length;_i++){var bone=_a[_i];var indices=new Array(cacheFrameCount);for(var i=0,l=indices.length;i<l;++i){indices[i]=-1;}this.boneCachedFrameIndices[bone.name]=indices;}for(var _b=0,_c=this.parent.sortedSlots;_b<_c.length;_b++){var slot=_c[_b];var indices=new Array(cacheFrameCount);for(var i=0,l=indices.length;i<l;++i){indices[i]=-1;}this.slotCachedFrameIndices[slot.name]=indices;}};AnimationData.prototype.addBoneTimeline=function(bone,timeline){var timelines=bone.name in this.boneTimelines?this.boneTimelines[bone.name]:this.boneTimelines[bone.name]=[];if(timelines.indexOf(timeline)<0){timelines.push(timeline);}};AnimationData.prototype.addSurfaceTimeline=function(surface,timeline){var timelines=surface.name in this.surfaceTimelines?this.surfaceTimelines[surface.name]:this.surfaceTimelines[surface.name]=[];if(timelines.indexOf(timeline)<0){timelines.push(timeline);}};AnimationData.prototype.addSlotTimeline=function(slot,timeline){var timelines=slot.name in this.slotTimelines?this.slotTimelines[slot.name]:this.slotTimelines[slot.name]=[];if(timelines.indexOf(timeline)<0){timelines.push(timeline);}};AnimationData.prototype.addConstraintTimeline=function(constraint,timeline){var timelines=constraint.name in this.constraintTimelines?this.constraintTimelines[constraint.name]:this.constraintTimelines[constraint.name]=[];if(timelines.indexOf(timeline)<0){timelines.push(timeline);}};AnimationData.prototype.addAnimationTimeline=function(timelineName,timeline){var timelines=timelineName in this.animationTimelines?this.animationTimelines[timelineName]:this.animationTimelines[timelineName]=[];if(timelines.indexOf(timeline)<0){timelines.push(timeline);}};AnimationData.prototype.getBoneTimelines=function(timelineName){return timelineName in this.boneTimelines?this.boneTimelines[timelineName]:null;};AnimationData.prototype.getSurfaceTimelines=function(timelineName){return timelineName in this.surfaceTimelines?this.surfaceTimelines[timelineName]:null;};AnimationData.prototype.getSlotTimelines=function(timelineName){return timelineName in this.slotTimelines?this.slotTimelines[timelineName]:null;};AnimationData.prototype.getConstraintTimelines=function(timelineName){return timelineName in this.constraintTimelines?this.constraintTimelines[timelineName]:null;};AnimationData.prototype.getAnimationTimelines=function(timelineName){return timelineName in this.animationTimelines?this.animationTimelines[timelineName]:null;};AnimationData.prototype.getBoneCachedFrameIndices=function(boneName){return boneName in this.boneCachedFrameIndices?this.boneCachedFrameIndices[boneName]:null;};AnimationData.prototype.getSlotCachedFrameIndices=function(slotName){return slotName in this.slotCachedFrameIndices?this.slotCachedFrameIndices[slotName]:null;};return AnimationData;}(dragonBones.BaseObject);dragonBones.AnimationData=AnimationData;var TimelineData=function(_super){__extends(TimelineData,_super);function TimelineData(){return _super!==null&&_super.apply(this,arguments)||this;}TimelineData.toString=function(){return "[class dragonBones.TimelineData]";};TimelineData.prototype._onClear=function(){this.type=10;this.offset=0;this.frameIndicesOffset=-1;};return TimelineData;}(dragonBones.BaseObject);dragonBones.TimelineData=TimelineData;})(dragonBones);(function(dragonBones){var AnimationConfig=function(_super){__extends(AnimationConfig,_super);function AnimationConfig(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.boneMask=[];return _this;}AnimationConfig.toString=function(){return "[class dragonBones.AnimationConfig]";};AnimationConfig.prototype._onClear=function(){this.pauseFadeOut=true;this.fadeOutMode=4;this.fadeOutTweenType=1;this.fadeOutTime=-1.0;this.actionEnabled=true;this.additiveBlending=false;this.displayControl=true;this.pauseFadeIn=true;this.resetToPose=true;this.fadeInTweenType=1;this.playTimes=-1;this.layer=0;this.position=0.0;this.duration=-1.0;this.timeScale=-100.0;this.weight=1.0;this.fadeInTime=-1.0;this.autoFadeOutTime=-1.0;this.name="";this.animation="";this.group="";this.boneMask.length=0;};AnimationConfig.prototype.clear=function(){this._onClear();};AnimationConfig.prototype.copyFrom=function(value){this.pauseFadeOut=value.pauseFadeOut;this.fadeOutMode=value.fadeOutMode;this.autoFadeOutTime=value.autoFadeOutTime;this.fadeOutTweenType=value.fadeOutTweenType;this.actionEnabled=value.actionEnabled;this.additiveBlending=value.additiveBlending;this.displayControl=value.displayControl;this.pauseFadeIn=value.pauseFadeIn;this.resetToPose=value.resetToPose;this.playTimes=value.playTimes;this.layer=value.layer;this.position=value.position;this.duration=value.duration;this.timeScale=value.timeScale;this.fadeInTime=value.fadeInTime;this.fadeOutTime=value.fadeOutTime;this.fadeInTweenType=value.fadeInTweenType;this.weight=value.weight;this.name=value.name;this.animation=value.animation;this.group=value.group;this.boneMask.length=value.boneMask.length;for(var i=0,l=this.boneMask.length;i<l;++i){this.boneMask[i]=value.boneMask[i];}};AnimationConfig.prototype.containsBoneMask=function(boneName){return this.boneMask.length===0||this.boneMask.indexOf(boneName)>=0;};AnimationConfig.prototype.addBoneMask=function(armature,boneName,recursive){if(recursive===void 0){recursive=true;}var currentBone=armature.getBone(boneName);if(currentBone===null){return;}if(this.boneMask.indexOf(boneName)<0){this.boneMask.push(boneName);}if(recursive){for(var _i=0,_a=armature.getBones();_i<_a.length;_i++){var bone=_a[_i];if(this.boneMask.indexOf(bone.name)<0&&currentBone.contains(bone)){this.boneMask.push(bone.name);}}}};AnimationConfig.prototype.removeBoneMask=function(armature,boneName,recursive){if(recursive===void 0){recursive=true;}var index=this.boneMask.indexOf(boneName);if(index>=0){this.boneMask.splice(index,1);}if(recursive){var currentBone=armature.getBone(boneName);if(currentBone!==null){if(this.boneMask.length>0){for(var _i=0,_a=armature.getBones();_i<_a.length;_i++){var bone=_a[_i];var index_1=this.boneMask.indexOf(bone.name);if(index_1>=0&&currentBone.contains(bone)){this.boneMask.splice(index_1,1);}}}else {for(var _b=0,_c=armature.getBones();_b<_c.length;_b++){var bone=_c[_b];if(bone===currentBone){continue;}if(!currentBone.contains(bone)){this.boneMask.push(bone.name);}}}}}};return AnimationConfig;}(dragonBones.BaseObject);dragonBones.AnimationConfig=AnimationConfig;})(dragonBones);(function(dragonBones){var TextureAtlasData=function(_super){__extends(TextureAtlasData,_super);function TextureAtlasData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.textures={};return _this;}TextureAtlasData.prototype._onClear=function(){for(var k in this.textures){this.textures[k].returnToPool();delete this.textures[k];}this.autoSearch=false;this.width=0;this.height=0;this.scale=1.0;this.name="";this.imagePath="";};TextureAtlasData.prototype.copyFrom=function(value){this.autoSearch=value.autoSearch;this.scale=value.scale;this.width=value.width;this.height=value.height;this.name=value.name;this.imagePath=value.imagePath;for(var k in this.textures){this.textures[k].returnToPool();delete this.textures[k];}for(var k in value.textures){var texture=this.createTexture();texture.copyFrom(value.textures[k]);this.textures[k]=texture;}};TextureAtlasData.prototype.addTexture=function(value){if(value.name in this.textures){console.warn("Same texture: "+value.name);return;}value.parent=this;this.textures[value.name]=value;};TextureAtlasData.prototype.getTexture=function(textureName){return textureName in this.textures?this.textures[textureName]:null;};return TextureAtlasData;}(dragonBones.BaseObject);dragonBones.TextureAtlasData=TextureAtlasData;var TextureData=function(_super){__extends(TextureData,_super);function TextureData(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.region=new dragonBones.Rectangle();_this.frame=null;return _this;}TextureData.createRectangle=function(){return new dragonBones.Rectangle();};TextureData.prototype._onClear=function(){this.rotated=false;this.name="";this.region.clear();this.parent=null;this.frame=null;};TextureData.prototype.copyFrom=function(value){this.rotated=value.rotated;this.name=value.name;this.region.copyFrom(value.region);this.parent=value.parent;if(this.frame===null&&value.frame!==null){this.frame=TextureData.createRectangle();}else if(this.frame!==null&&value.frame===null){this.frame=null;}if(this.frame!==null&&value.frame!==null){this.frame.copyFrom(value.frame);}};return TextureData;}(dragonBones.BaseObject);dragonBones.TextureData=TextureData;})(dragonBones);(function(dragonBones){var DeformVertices=function(_super){__extends(DeformVertices,_super);function DeformVertices(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.vertices=[];_this.bones=[];return _this;}DeformVertices.toString=function(){return "[class dragonBones.DeformVertices]";};DeformVertices.prototype._onClear=function(){this.verticesDirty=false;this.vertices.length=0;this.bones.length=0;this.verticesData=null;};DeformVertices.prototype.init=function(verticesDataValue,armature){this.verticesData=verticesDataValue;if(this.verticesData!==null){var vertexCount=0;if(this.verticesData.weight!==null){vertexCount=this.verticesData.weight.count*2;}else {vertexCount=this.verticesData.data.intArray[this.verticesData.offset+0]*2;}this.verticesDirty=true;this.vertices.length=vertexCount;this.bones.length=0;for(var i=0,l=this.vertices.length;i<l;++i){this.vertices[i]=0.0;}if(this.verticesData.weight!==null){for(var i=0,l=this.verticesData.weight.bones.length;i<l;++i){var bone=armature.getBone(this.verticesData.weight.bones[i].name);this.bones.push(bone);}}}else {this.verticesDirty=false;this.vertices.length=0;this.bones.length=0;this.verticesData=null;}};DeformVertices.prototype.isBonesUpdate=function(){for(var _i=0,_a=this.bones;_i<_a.length;_i++){var bone=_a[_i];if(bone!==null&&bone._childrenTransformDirty){return true;}}return false;};return DeformVertices;}(dragonBones.BaseObject);dragonBones.DeformVertices=DeformVertices;})(dragonBones);(function(dragonBones_1){var Armature=function(_super){__extends(Armature,_super);function Armature(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._bones=[];_this._slots=[];_this._constraints=[];_this._actions=[];_this._animation=null;_this._proxy=null;_this._replaceTextureAtlasData=null;_this._clock=null;return _this;}Armature.toString=function(){return "[class dragonBones.Armature]";};Armature._onSortSlots=function(a,b){return a._zOrder>b._zOrder?1:-1;};Armature.prototype._onClear=function(){if(this._clock!==null){this._clock.remove(this);}for(var _i=0,_a=this._bones;_i<_a.length;_i++){var bone=_a[_i];bone.returnToPool();}for(var _b=0,_c=this._slots;_b<_c.length;_b++){var slot=_c[_b];slot.returnToPool();}for(var _d=0,_e=this._constraints;_d<_e.length;_d++){var constraint=_e[_d];constraint.returnToPool();}for(var _f=0,_g=this._actions;_f<_g.length;_f++){var action=_g[_f];action.returnToPool();}if(this._animation!==null){this._animation.returnToPool();}if(this._proxy!==null){this._proxy.dbClear();}if(this._replaceTextureAtlasData!==null){this._replaceTextureAtlasData.returnToPool();}this.inheritAnimation=true;this.userData=null;this._lockUpdate=false;this._slotsDirty=true;this._zOrderDirty=false;this._flipX=false;this._flipY=false;this._cacheFrameIndex=-1;this._bones.length=0;this._slots.length=0;this._constraints.length=0;this._actions.length=0;this._armatureData=null;this._animation=null;this._proxy=null;this._display=null;this._replaceTextureAtlasData=null;this._replacedTexture=null;this._dragonBones=null;this._clock=null;this._parent=null;};Armature.prototype._sortZOrder=function(slotIndices,offset){var slotDatas=this._armatureData.sortedSlots;var isOriginal=slotIndices===null;if(this._zOrderDirty||!isOriginal){for(var i=0,l=slotDatas.length;i<l;++i){var slotIndex=isOriginal?i:slotIndices[offset+i];if(slotIndex<0||slotIndex>=l){continue;}var slotData=slotDatas[slotIndex];var slot=this.getSlot(slotData.name);if(slot!==null){slot._setZorder(i);}}this._slotsDirty=true;this._zOrderDirty=!isOriginal;}};Armature.prototype._addBone=function(value){if(this._bones.indexOf(value)<0){this._bones.push(value);}};Armature.prototype._addSlot=function(value){if(this._slots.indexOf(value)<0){this._slots.push(value);}};Armature.prototype._addConstraint=function(value){if(this._constraints.indexOf(value)<0){this._constraints.push(value);}};Armature.prototype._bufferAction=function(action,append){if(this._actions.indexOf(action)<0){if(append){this._actions.push(action);}else {this._actions.unshift(action);}}};Armature.prototype.dispose=function(){if(this._armatureData!==null){this._lockUpdate=true;this._dragonBones.bufferObject(this);}};Armature.prototype.init=function(armatureData,proxy,display,dragonBones){if(this._armatureData!==null){return;}this._armatureData=armatureData;this._animation=dragonBones_1.BaseObject.borrowObject(dragonBones_1.Animation);this._proxy=proxy;this._display=display;this._dragonBones=dragonBones;this._proxy.dbInit(this);this._animation.init(this);this._animation.animations=this._armatureData.animations;};Armature.prototype.advanceTime=function(passedTime){if(this._lockUpdate){return;}if(this._armatureData===null){console.warn("The armature has been disposed.");return;}else if(this._armatureData.parent===null){console.warn("The armature data has been disposed.\nPlease make sure dispose armature before call factory.clear().");return;}var prevCacheFrameIndex=this._cacheFrameIndex;this._animation.advanceTime(passedTime);if(this._slotsDirty){this._slotsDirty=false;this._slots.sort(Armature._onSortSlots);}if(this._cacheFrameIndex<0||this._cacheFrameIndex!==prevCacheFrameIndex){var i=0,l=0;for(i=0,l=this._bones.length;i<l;++i){this._bones[i].update(this._cacheFrameIndex);}for(i=0,l=this._slots.length;i<l;++i){this._slots[i].update(this._cacheFrameIndex);}}if(this._actions.length>0){this._lockUpdate=true;for(var _i=0,_a=this._actions;_i<_a.length;_i++){var action=_a[_i];var actionData=action.actionData;if(actionData!==null){if(actionData.type===0){if(action.slot!==null){var childArmature=action.slot.childArmature;if(childArmature!==null){childArmature.animation.fadeIn(actionData.name);}}else if(action.bone!==null){for(var _b=0,_c=this.getSlots();_b<_c.length;_b++){var slot=_c[_b];if(slot.parent===action.bone){var childArmature=slot.childArmature;if(childArmature!==null){childArmature.animation.fadeIn(actionData.name);}}}}else {this._animation.fadeIn(actionData.name);}}}action.returnToPool();}this._actions.length=0;this._lockUpdate=false;}this._proxy.dbUpdate();};Armature.prototype.invalidUpdate=function(boneName,updateSlot){if(boneName===void 0){boneName=null;}if(updateSlot===void 0){updateSlot=false;}if(boneName!==null&&boneName.length>0){var bone=this.getBone(boneName);if(bone!==null){bone.invalidUpdate();if(updateSlot){for(var _i=0,_a=this._slots;_i<_a.length;_i++){var slot=_a[_i];if(slot.parent===bone){slot.invalidUpdate();}}}}}else {for(var _b=0,_c=this._bones;_b<_c.length;_b++){var bone=_c[_b];bone.invalidUpdate();}if(updateSlot){for(var _d=0,_e=this._slots;_d<_e.length;_d++){var slot=_e[_d];slot.invalidUpdate();}}}};Armature.prototype.containsPoint=function(x,y){for(var _i=0,_a=this._slots;_i<_a.length;_i++){var slot=_a[_i];if(slot.containsPoint(x,y)){return slot;}}return null;};Armature.prototype.intersectsSegment=function(xA,yA,xB,yB,intersectionPointA,intersectionPointB,normalRadians){if(intersectionPointA===void 0){intersectionPointA=null;}if(intersectionPointB===void 0){intersectionPointB=null;}if(normalRadians===void 0){normalRadians=null;}var isV=xA===xB;var dMin=0.0;var dMax=0.0;var intXA=0.0;var intYA=0.0;var intXB=0.0;var intYB=0.0;var intAN=0.0;var intBN=0.0;var intSlotA=null;var intSlotB=null;for(var _i=0,_a=this._slots;_i<_a.length;_i++){var slot=_a[_i];var intersectionCount=slot.intersectsSegment(xA,yA,xB,yB,intersectionPointA,intersectionPointB,normalRadians);if(intersectionCount>0){if(intersectionPointA!==null||intersectionPointB!==null){if(intersectionPointA!==null){var d=isV?intersectionPointA.y-yA:intersectionPointA.x-xA;if(d<0.0){d=-d;}if(intSlotA===null||d<dMin){dMin=d;intXA=intersectionPointA.x;intYA=intersectionPointA.y;intSlotA=slot;if(normalRadians){intAN=normalRadians.x;}}}if(intersectionPointB!==null){var d=intersectionPointB.x-xA;if(d<0.0){d=-d;}if(intSlotB===null||d>dMax){dMax=d;intXB=intersectionPointB.x;intYB=intersectionPointB.y;intSlotB=slot;if(normalRadians!==null){intBN=normalRadians.y;}}}}else {intSlotA=slot;break;}}}if(intSlotA!==null&&intersectionPointA!==null){intersectionPointA.x=intXA;intersectionPointA.y=intYA;if(normalRadians!==null){normalRadians.x=intAN;}}if(intSlotB!==null&&intersectionPointB!==null){intersectionPointB.x=intXB;intersectionPointB.y=intYB;if(normalRadians!==null){normalRadians.y=intBN;}}return intSlotA;};Armature.prototype.getBone=function(name){for(var _i=0,_a=this._bones;_i<_a.length;_i++){var bone=_a[_i];if(bone.name===name){return bone;}}return null;};Armature.prototype.getBoneByDisplay=function(display){var slot=this.getSlotByDisplay(display);return slot!==null?slot.parent:null;};Armature.prototype.getSlot=function(name){for(var _i=0,_a=this._slots;_i<_a.length;_i++){var slot=_a[_i];if(slot.name===name){return slot;}}return null;};Armature.prototype.getSlotByDisplay=function(display){if(display!==null){for(var _i=0,_a=this._slots;_i<_a.length;_i++){var slot=_a[_i];if(slot.display===display){return slot;}}}return null;};Armature.prototype.getBones=function(){return this._bones;};Armature.prototype.getSlots=function(){return this._slots;};Object.defineProperty(Armature.prototype,"flipX",{get:function(){return this._flipX;},set:function(value){if(this._flipX===value){return;}this._flipX=value;this.invalidUpdate();},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"flipY",{get:function(){return this._flipY;},set:function(value){if(this._flipY===value){return;}this._flipY=value;this.invalidUpdate();},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"cacheFrameRate",{get:function(){return this._armatureData.cacheFrameRate;},set:function(value){if(this._armatureData.cacheFrameRate!==value){this._armatureData.cacheFrames(value);for(var _i=0,_a=this._slots;_i<_a.length;_i++){var slot=_a[_i];var childArmature=slot.childArmature;if(childArmature!==null){childArmature.cacheFrameRate=value;}}}},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"name",{get:function(){return this._armatureData.name;},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"armatureData",{get:function(){return this._armatureData;},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"animation",{get:function(){return this._animation;},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"proxy",{get:function(){return this._proxy;},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"eventDispatcher",{get:function(){return this._proxy;},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"display",{get:function(){return this._display;},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"replacedTexture",{get:function(){return this._replacedTexture;},set:function(value){if(this._replacedTexture===value){return;}if(this._replaceTextureAtlasData!==null){this._replaceTextureAtlasData.returnToPool();this._replaceTextureAtlasData=null;}this._replacedTexture=value;for(var _i=0,_a=this._slots;_i<_a.length;_i++){var slot=_a[_i];slot.invalidUpdate();slot.update(-1);}},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"clock",{get:function(){return this._clock;},set:function(value){if(this._clock===value){return;}if(this._clock!==null){this._clock.remove(this);}this._clock=value;if(this._clock){this._clock.add(this);}for(var _i=0,_a=this._slots;_i<_a.length;_i++){var slot=_a[_i];var childArmature=slot.childArmature;if(childArmature!==null){childArmature.clock=this._clock;}}},enumerable:true,configurable:true});Object.defineProperty(Armature.prototype,"parent",{get:function(){return this._parent;},enumerable:true,configurable:true});Armature.prototype.replaceTexture=function(texture){this.replacedTexture=texture;};Armature.prototype.hasEventListener=function(type){return this._proxy.hasDBEventListener(type);};Armature.prototype.addEventListener=function(type,listener,target){this._proxy.addDBEventListener(type,listener,target);};Armature.prototype.removeEventListener=function(type,listener,target){this._proxy.removeDBEventListener(type,listener,target);};Armature.prototype.enableAnimationCache=function(frameRate){console.warn("Deprecated.");this.cacheFrameRate=frameRate;};Armature.prototype.getDisplay=function(){return this._display;};return Armature;}(dragonBones_1.BaseObject);dragonBones_1.Armature=Armature;})(dragonBones);(function(dragonBones){var TransformObject=function(_super){__extends(TransformObject,_super);function TransformObject(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.globalTransformMatrix=new dragonBones.Matrix();_this.global=new dragonBones.Transform();_this.offset=new dragonBones.Transform();return _this;}TransformObject.prototype._onClear=function(){this.globalTransformMatrix.identity();this.global.identity();this.offset.identity();this.origin=null;this.userData=null;this._globalDirty=false;this._armature=null;};TransformObject.prototype.updateGlobalTransform=function(){if(this._globalDirty){this._globalDirty=false;this.global.fromMatrix(this.globalTransformMatrix);}};Object.defineProperty(TransformObject.prototype,"armature",{get:function(){return this._armature;},enumerable:true,configurable:true});TransformObject._helpMatrix=new dragonBones.Matrix();TransformObject._helpTransform=new dragonBones.Transform();TransformObject._helpPoint=new dragonBones.Point();return TransformObject;}(dragonBones.BaseObject);dragonBones.TransformObject=TransformObject;})(dragonBones);(function(dragonBones){var Bone=function(_super){__extends(Bone,_super);function Bone(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.animationPose=new dragonBones.Transform();_this._blendState=new dragonBones.BlendState();return _this;}Bone.toString=function(){return "[class dragonBones.Bone]";};Bone.prototype._onClear=function(){_super.prototype._onClear.call(this);this.offsetMode=1;this.animationPose.identity();this._transformDirty=false;this._childrenTransformDirty=false;this._localDirty=true;this._hasConstraint=false;this._visible=true;this._cachedFrameIndex=-1;this._blendState.clear();this._boneData=null;this._parent=null;this._cachedFrameIndices=null;};Bone.prototype._updateGlobalTransformMatrix=function(isCache){var boneData=this._boneData;var global=this.global;var globalTransformMatrix=this.globalTransformMatrix;var origin=this.origin;var offset=this.offset;var animationPose=this.animationPose;var parent=this._parent;var flipX=this._armature.flipX;var flipY=this._armature.flipY===dragonBones.DragonBones.yDown;var inherit=parent!==null;var rotation=0.0;if(this.offsetMode===1){if(origin!==null){global.x=origin.x+offset.x+animationPose.x;global.scaleX=origin.scaleX*offset.scaleX*animationPose.scaleX;global.scaleY=origin.scaleY*offset.scaleY*animationPose.scaleY;if(dragonBones.DragonBones.yDown){global.y=origin.y+offset.y+animationPose.y;global.skew=origin.skew+offset.skew+animationPose.skew;global.rotation=origin.rotation+offset.rotation+animationPose.rotation;}else {global.y=origin.y-offset.y+animationPose.y;global.skew=origin.skew-offset.skew+animationPose.skew;global.rotation=origin.rotation-offset.rotation+animationPose.rotation;}}else {global.copyFrom(offset);if(!dragonBones.DragonBones.yDown){global.y=-global.y;global.skew=-global.skew;global.rotation=-global.rotation;}global.add(animationPose);}}else if(this.offsetMode===0){if(origin!==null){global.copyFrom(origin).add(animationPose);}else {global.copyFrom(animationPose);}}else {inherit=false;global.copyFrom(offset);if(!dragonBones.DragonBones.yDown){global.y=-global.y;global.skew=-global.skew;global.rotation=-global.rotation;}}if(inherit){var parentMatrix=parent._boneData.type===0?parent.globalTransformMatrix:parent._getGlobalTransformMatrix(global.x,global.y);if(boneData.inheritScale){if(!boneData.inheritRotation){parent.updateGlobalTransform();if(flipX&&flipY){rotation=global.rotation-(parent.global.rotation+Math.PI);}else if(flipX){rotation=global.rotation+parent.global.rotation+Math.PI;}else if(flipY){rotation=global.rotation+parent.global.rotation;}else {rotation=global.rotation-parent.global.rotation;}global.rotation=rotation;}global.toMatrix(globalTransformMatrix);globalTransformMatrix.concat(parentMatrix);if(boneData.inheritTranslation){global.x=globalTransformMatrix.tx;global.y=globalTransformMatrix.ty;}else {globalTransformMatrix.tx=global.x;globalTransformMatrix.ty=global.y;}if(isCache){global.fromMatrix(globalTransformMatrix);}else {this._globalDirty=true;}}else {if(boneData.inheritTranslation){var x=global.x;var y=global.y;global.x=parentMatrix.a*x+parentMatrix.c*y+parentMatrix.tx;global.y=parentMatrix.b*x+parentMatrix.d*y+parentMatrix.ty;}else {if(flipX){global.x=-global.x;}if(flipY){global.y=-global.y;}}if(boneData.inheritRotation){parent.updateGlobalTransform();if(parent.global.scaleX<0.0){rotation=global.rotation+parent.global.rotation+Math.PI;}else {rotation=global.rotation+parent.global.rotation;}if(parentMatrix.a*parentMatrix.d-parentMatrix.b*parentMatrix.c<0.0){rotation-=global.rotation*2.0;if(flipX!==flipY||boneData.inheritReflection){global.skew+=Math.PI;}if(!dragonBones.DragonBones.yDown){global.skew=-global.skew;}}global.rotation=rotation;}else if(flipX||flipY){if(flipX&&flipY){rotation=global.rotation+Math.PI;}else {if(flipX){rotation=Math.PI-global.rotation;}else {rotation=-global.rotation;}global.skew+=Math.PI;}global.rotation=rotation;}global.toMatrix(globalTransformMatrix);}}else {if(flipX||flipY){if(flipX){global.x=-global.x;}if(flipY){global.y=-global.y;}if(flipX&&flipY){rotation=global.rotation+Math.PI;}else {if(flipX){rotation=Math.PI-global.rotation;}else {rotation=-global.rotation;}global.skew+=Math.PI;}global.rotation=rotation;}global.toMatrix(globalTransformMatrix);}};Bone.prototype.init=function(boneData,armatureValue){if(this._boneData!==null){return;}this._boneData=boneData;this._armature=armatureValue;if(this._boneData.parent!==null){this._parent=this._armature.getBone(this._boneData.parent.name);}this._armature._addBone(this);this.origin=this._boneData.transform;};Bone.prototype.update=function(cacheFrameIndex){this._blendState.dirty=false;if(cacheFrameIndex>=0&&this._cachedFrameIndices!==null){var cachedFrameIndex=this._cachedFrameIndices[cacheFrameIndex];if(cachedFrameIndex>=0&&this._cachedFrameIndex===cachedFrameIndex){this._transformDirty=false;}else if(cachedFrameIndex>=0){this._transformDirty=true;this._cachedFrameIndex=cachedFrameIndex;}else {if(this._hasConstraint){for(var _i=0,_a=this._armature._constraints;_i<_a.length;_i++){var constraint=_a[_i];if(constraint._root===this){constraint.update();}}}if(this._transformDirty||this._parent!==null&&this._parent._childrenTransformDirty){this._transformDirty=true;this._cachedFrameIndex=-1;}else if(this._cachedFrameIndex>=0){this._transformDirty=false;this._cachedFrameIndices[cacheFrameIndex]=this._cachedFrameIndex;}else {this._transformDirty=true;this._cachedFrameIndex=-1;}}}else {if(this._hasConstraint){for(var _b=0,_c=this._armature._constraints;_b<_c.length;_b++){var constraint=_c[_b];if(constraint._root===this){constraint.update();}}}if(this._transformDirty||this._parent!==null&&this._parent._childrenTransformDirty){cacheFrameIndex=-1;this._transformDirty=true;this._cachedFrameIndex=-1;}}if(this._transformDirty){this._transformDirty=false;this._childrenTransformDirty=true;if(this._cachedFrameIndex<0){var isCache=cacheFrameIndex>=0;if(this._localDirty){this._updateGlobalTransformMatrix(isCache);}if(isCache&&this._cachedFrameIndices!==null){this._cachedFrameIndex=this._cachedFrameIndices[cacheFrameIndex]=this._armature._armatureData.setCacheFrame(this.globalTransformMatrix,this.global);}}else {this._armature._armatureData.getCacheFrame(this.globalTransformMatrix,this.global,this._cachedFrameIndex);}}else if(this._childrenTransformDirty){this._childrenTransformDirty=false;}this._localDirty=true;};Bone.prototype.updateByConstraint=function(){if(this._localDirty){this._localDirty=false;if(this._transformDirty||this._parent!==null&&this._parent._childrenTransformDirty){this._updateGlobalTransformMatrix(true);}this._transformDirty=true;}};Bone.prototype.invalidUpdate=function(){this._transformDirty=true;};Bone.prototype.contains=function(value){if(value===this){return false;}var ancestor=value;while(ancestor!==this&&ancestor!==null){ancestor=ancestor.parent;}return ancestor===this;};Object.defineProperty(Bone.prototype,"boneData",{get:function(){return this._boneData;},enumerable:true,configurable:true});Object.defineProperty(Bone.prototype,"visible",{get:function(){return this._visible;},set:function(value){if(this._visible===value){return;}this._visible=value;for(var _i=0,_a=this._armature.getSlots();_i<_a.length;_i++){var slot=_a[_i];if(slot.parent===this){slot._updateVisible();}}},enumerable:true,configurable:true});Object.defineProperty(Bone.prototype,"name",{get:function(){return this._boneData.name;},enumerable:true,configurable:true});Object.defineProperty(Bone.prototype,"parent",{get:function(){return this._parent;},enumerable:true,configurable:true});Bone.prototype.getBones=function(){console.warn("Deprecated.");var bones=new Array();for(var _i=0,_a=this._armature.getBones();_i<_a.length;_i++){var bone=_a[_i];if(bone.parent===this){bones.push(bone);}}return bones;};Bone.prototype.getSlots=function(){console.warn("Deprecated.");var slots=new Array();for(var _i=0,_a=this._armature.getSlots();_i<_a.length;_i++){var slot=_a[_i];if(slot.parent===this){slots.push(slot);}}return slots;};Object.defineProperty(Bone.prototype,"slot",{get:function(){console.warn("Deprecated.");for(var _i=0,_a=this._armature.getSlots();_i<_a.length;_i++){var slot=_a[_i];if(slot.parent===this){return slot;}}return null;},enumerable:true,configurable:true});return Bone;}(dragonBones.TransformObject);dragonBones.Bone=Bone;})(dragonBones);(function(dragonBones){var Surface=function(_super){__extends(Surface,_super);function Surface(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._vertices=[];_this._deformVertices=[];_this._hullCache=[];_this._matrixCahce=[];return _this;}Surface.toString=function(){return "[class dragonBones.Surface]";};Surface.prototype._onClear=function(){_super.prototype._onClear.call(this);this._dX=0.0;this._dY=0.0;this._k=0.0;this._kX=0.0;this._kY=0.0;this._vertices.length=0;this._deformVertices.length=0;this._matrixCahce.length=0;this._hullCache.length=0;};Surface.prototype._getAffineTransform=function(x,y,lX,lY,aX,aY,bX,bY,cX,cY,transform,matrix,isDown){var dabX=bX-aX;var dabY=bY-aY;var dacX=cX-aX;var dacY=cY-aY;transform.rotation=Math.atan2(dabY,dabX);transform.skew=Math.atan2(dacY,dacX)-Math.PI*0.5-transform.rotation;if(isDown){transform.rotation+=Math.PI;}transform.scaleX=Math.sqrt(dabX*dabX+dabY*dabY)/lX;transform.scaleY=Math.sqrt(dacX*dacX+dacY*dacY)/lY;transform.toMatrix(matrix);transform.x=matrix.tx=aX-(matrix.a*x+matrix.c*y);transform.y=matrix.ty=aY-(matrix.b*x+matrix.d*y);};Surface.prototype._updateVertices=function(){var originalVertices=this._boneData.vertices;var vertices=this._vertices;var animationVertices=this._deformVertices;if(this._parent!==null){if(this._parent._boneData.type===1){for(var i=0,l=originalVertices.length;i<l;i+=2){var x=originalVertices[i]+animationVertices[i];var y=originalVertices[i+1]+animationVertices[i];var matrix=this._parent._getGlobalTransformMatrix(x,y);vertices[i]=matrix.a*x+matrix.c*y+matrix.tx;vertices[i+1]=matrix.b*x+matrix.d*y+matrix.ty;}}else {var parentMatrix=this._parent.globalTransformMatrix;for(var i=0,l=originalVertices.length;i<l;i+=2){var x=originalVertices[i]+animationVertices[i];var y=originalVertices[i+1]+animationVertices[i+1];vertices[i]=parentMatrix.a*x+parentMatrix.c*y+parentMatrix.tx;vertices[i+1]=parentMatrix.b*x+parentMatrix.d*y+parentMatrix.ty;}}}else {for(var i=0,l=originalVertices.length;i<l;i+=2){vertices[i]=originalVertices[i]+animationVertices[i];vertices[i+1]=originalVertices[i+1]+animationVertices[i+1];}}};Surface.prototype._updateGlobalTransformMatrix=function(isCache){var segmentXD=this._boneData.segmentX*2;var lastIndex=this._vertices.length-2;var lA=200.0;var raX=this._vertices[0];var raY=this._vertices[1];var rbX=this._vertices[segmentXD];var rbY=this._vertices[segmentXD+1];var rcX=this._vertices[lastIndex];var rcY=this._vertices[lastIndex+1];var rdX=this._vertices[lastIndex-segmentXD];var rdY=this._vertices[lastIndex-segmentXD+1];var dacX=raX+(rcX-raX)*0.5;var dacY=raY+(rcY-raY)*0.5;var dbdX=rbX+(rdX-rbX)*0.5;var dbdY=rbY+(rdY-rbY)*0.5;var aX=dacX+(dbdX-dacX)*0.5;var aY=dacY+(dbdY-dacY)*0.5;var bX=rbX+(rcX-rbX)*0.5;var bY=rbY+(rcY-rbY)*0.5;var cX=rdX+(rcX-rdX)*0.5;var cY=rdY+(rcY-rdY)*0.5;this._globalDirty=false;this._getAffineTransform(0.0,0.0,lA,lA,aX,aY,bX,bY,cX,cY,this.global,this.globalTransformMatrix,false);};Surface.prototype._getGlobalTransformMatrix=function(x,y){var lB=1000.0;if(x<-lB||lB<x||y<-lB||lB<y){return this.globalTransformMatrix;}var isDown=false;var lA=200.0;var surfaceData=this._boneData;var segmentX=surfaceData.segmentX;var segmentY=surfaceData.segmentY;var segmentXD=surfaceData.segmentX*2;var dX=this._dX;var dY=this._dY;var indexX=Math.floor((x+lA)/dX);var indexY=Math.floor((y+lA)/dY);var matrixIndex=0;var pX=indexX*dX-lA;var pY=indexY*dY-lA;var matrices=this._matrixCahce;var helpMatrix=Surface._helpMatrix;if(x<-lA){if(y<-lA||y>=lA){return this.globalTransformMatrix;}isDown=y>this._kX*(x+lA)+pY;matrixIndex=((segmentX*(segmentY+1)+segmentX*2+segmentY+indexY)*2+(isDown?1:0))*7;if(this._matrixCahce[matrixIndex]>0.0){helpMatrix.copyFromArray(matrices,matrixIndex+1);}else {var vertexIndex=indexY*(segmentXD+2);var ddX=this._hullCache[4];var ddY=this._hullCache[5];var sX=this._hullCache[2]-(segmentY-indexY)*ddX;var sY=this._hullCache[3]-(segmentY-indexY)*ddY;var vertices=this._vertices;if(isDown){this._getAffineTransform(-lA,pY+dY,lB-lA,dY,vertices[vertexIndex+segmentXD+2],vertices[vertexIndex+segmentXD+3],sX+ddX,sY+ddY,vertices[vertexIndex],vertices[vertexIndex+1],Surface._helpTransform,helpMatrix,true);}else {this._getAffineTransform(-lB,pY,lB-lA,dY,sX,sY,vertices[vertexIndex],vertices[vertexIndex+1],sX+ddX,sY+ddY,Surface._helpTransform,helpMatrix,false);}matrices[matrixIndex]=1.0;matrices[matrixIndex+1]=helpMatrix.a;matrices[matrixIndex+2]=helpMatrix.b;matrices[matrixIndex+3]=helpMatrix.c;matrices[matrixIndex+4]=helpMatrix.d;matrices[matrixIndex+5]=helpMatrix.tx;matrices[matrixIndex+6]=helpMatrix.ty;}}else if(x>=lA){if(y<-lA||y>=lA){return this.globalTransformMatrix;}isDown=y>this._kX*(x-lB)+pY;matrixIndex=((segmentX*(segmentY+1)+segmentX+indexY)*2+(isDown?1:0))*7;if(this._matrixCahce[matrixIndex]>0.0){helpMatrix.copyFromArray(matrices,matrixIndex+1);}else {var vertexIndex=(indexY+1)*(segmentXD+2)-2;var ddX=this._hullCache[4];var ddY=this._hullCache[5];var sX=this._hullCache[0]+indexY*ddX;var sY=this._hullCache[1]+indexY*ddY;var vertices=this._vertices;if(isDown){this._getAffineTransform(lB,pY+dY,lB-lA,dY,sX+ddX,sY+ddY,vertices[vertexIndex+segmentXD+2],vertices[vertexIndex+segmentXD+3],sX,sY,Surface._helpTransform,helpMatrix,true);}else {this._getAffineTransform(lA,pY,lB-lA,dY,vertices[vertexIndex],vertices[vertexIndex+1],sX,sY,vertices[vertexIndex+segmentXD+2],vertices[vertexIndex+segmentXD+3],Surface._helpTransform,helpMatrix,false);}matrices[matrixIndex]=1.0;matrices[matrixIndex+1]=helpMatrix.a;matrices[matrixIndex+2]=helpMatrix.b;matrices[matrixIndex+3]=helpMatrix.c;matrices[matrixIndex+4]=helpMatrix.d;matrices[matrixIndex+5]=helpMatrix.tx;matrices[matrixIndex+6]=helpMatrix.ty;}}else if(y<-lA){if(x<-lA||x>=lA){return this.globalTransformMatrix;}isDown=y>this._kY*(x-pX-dX)-lB;matrixIndex=(segmentX*(segmentY+1)+indexX*2+(isDown?1:0))*7;if(this._matrixCahce[matrixIndex]>0.0){helpMatrix.copyFromArray(matrices,matrixIndex+1);}else {var vertexIndex=indexX*2;var ddX=this._hullCache[10];var ddY=this._hullCache[11];var sX=this._hullCache[8]+indexX*ddX;var sY=this._hullCache[9]+indexX*ddY;var vertices=this._vertices;if(isDown){this._getAffineTransform(pX+dX,-lA,dX,lB-lA,vertices[vertexIndex+2],vertices[vertexIndex+3],vertices[vertexIndex],vertices[vertexIndex+1],sX+ddX,sY+ddY,Surface._helpTransform,helpMatrix,true);}else {this._getAffineTransform(pX,-lB,dX,lB-lA,sX,sY,sX+ddX,sY+ddY,vertices[vertexIndex],vertices[vertexIndex+1],Surface._helpTransform,helpMatrix,false);}matrices[matrixIndex]=1.0;matrices[matrixIndex+1]=helpMatrix.a;matrices[matrixIndex+2]=helpMatrix.b;matrices[matrixIndex+3]=helpMatrix.c;matrices[matrixIndex+4]=helpMatrix.d;matrices[matrixIndex+5]=helpMatrix.tx;matrices[matrixIndex+6]=helpMatrix.ty;}}else if(y>=lA){if(x<-lA||x>=lA){return this.globalTransformMatrix;}isDown=y>this._kY*(x-pX-dX)+lA;matrixIndex=((segmentX*(segmentY+1)+segmentX+segmentY+indexY)*2+(isDown?1:0))*7;if(this._matrixCahce[matrixIndex]>0.0){helpMatrix.copyFromArray(matrices,matrixIndex+1);}else {var vertexIndex=segmentY*(segmentXD+2)+indexX*2;var ddX=this._hullCache[10];var ddY=this._hullCache[11];var sX=this._hullCache[6]-(segmentX-indexX)*ddX;var sY=this._hullCache[7]-(segmentX-indexX)*ddY;var vertices=this._vertices;if(isDown){this._getAffineTransform(pX+dX,lB,dX,lB-lA,sX+ddX,sY+ddY,sX,sY,vertices[vertexIndex+2],vertices[vertexIndex+3],Surface._helpTransform,helpMatrix,true);}else {this._getAffineTransform(pX,lA,dX,lB-lA,vertices[vertexIndex],vertices[vertexIndex+1],vertices[vertexIndex+2],vertices[vertexIndex+3],sX,sY,Surface._helpTransform,helpMatrix,false);}matrices[matrixIndex]=1.0;matrices[matrixIndex+1]=helpMatrix.a;matrices[matrixIndex+2]=helpMatrix.b;matrices[matrixIndex+3]=helpMatrix.c;matrices[matrixIndex+4]=helpMatrix.d;matrices[matrixIndex+5]=helpMatrix.tx;matrices[matrixIndex+6]=helpMatrix.ty;}}else {isDown=y>this._k*(x-pX-dX)+pY;matrixIndex=((segmentX*indexY+indexX)*2+(isDown?1:0))*7;if(this._matrixCahce[matrixIndex]>0.0){helpMatrix.copyFromArray(matrices,matrixIndex+1);}else {var vertexIndex=indexX*2+indexY*(segmentXD+2);var vertices=this._vertices;if(isDown){this._getAffineTransform(pX+dX,pY+dY,dX,dY,vertices[vertexIndex+segmentXD+4],vertices[vertexIndex+segmentXD+5],vertices[vertexIndex+segmentXD+2],vertices[vertexIndex+segmentXD+3],vertices[vertexIndex+2],vertices[vertexIndex+3],Surface._helpTransform,helpMatrix,true);}else {this._getAffineTransform(pX,pY,dX,dY,vertices[vertexIndex],vertices[vertexIndex+1],vertices[vertexIndex+2],vertices[vertexIndex+3],vertices[vertexIndex+segmentXD+2],vertices[vertexIndex+segmentXD+3],Surface._helpTransform,helpMatrix,false);}matrices[matrixIndex]=1.0;matrices[matrixIndex+1]=helpMatrix.a;matrices[matrixIndex+2]=helpMatrix.b;matrices[matrixIndex+3]=helpMatrix.c;matrices[matrixIndex+4]=helpMatrix.d;matrices[matrixIndex+5]=helpMatrix.tx;matrices[matrixIndex+6]=helpMatrix.ty;}}return helpMatrix;};Surface.prototype.init=function(surfaceData,armatureValue){if(this._boneData!==null){return;}_super.prototype.init.call(this,surfaceData,armatureValue);var segmentX=surfaceData.segmentX;var segmentY=surfaceData.segmentY;var vertexCount=surfaceData.vertices.length;var lB=1000.0;var lA=200.0;this._dX=lA*2.0/segmentX;this._dY=lA*2.0/segmentY;this._k=-this._dY/this._dX;this._kX=-this._dY/(lB-lA);this._kY=-(lB-lA)/this._dX;this._vertices.length=vertexCount;this._deformVertices.length=vertexCount;this._matrixCahce.length=(segmentX*segmentY+segmentX*2+segmentY*2)*2*7;this._hullCache.length=10;for(var i=0;i<vertexCount;++i){this._deformVertices[i]=0.0;}};Surface.prototype.update=function(cacheFrameIndex){this._blendState.dirty=false;if(cacheFrameIndex>=0&&this._cachedFrameIndices!==null){var cachedFrameIndex=this._cachedFrameIndices[cacheFrameIndex];if(cachedFrameIndex>=0&&this._cachedFrameIndex===cachedFrameIndex){this._transformDirty=false;}else if(cachedFrameIndex>=0){this._transformDirty=true;this._cachedFrameIndex=cachedFrameIndex;}else {if(this._hasConstraint){for(var _i=0,_a=this._armature._constraints;_i<_a.length;_i++){var constraint=_a[_i];if(constraint._root===this){constraint.update();}}}if(this._transformDirty||this._parent!==null&&this._parent._childrenTransformDirty){this._transformDirty=true;this._cachedFrameIndex=-1;}else if(this._cachedFrameIndex>=0){this._transformDirty=false;this._cachedFrameIndices[cacheFrameIndex]=this._cachedFrameIndex;}else {this._transformDirty=true;this._cachedFrameIndex=-1;}}}else {if(this._hasConstraint){for(var _b=0,_c=this._armature._constraints;_b<_c.length;_b++){var constraint=_c[_b];if(constraint._root===this){constraint.update();}}}if(this._transformDirty||this._parent!==null&&this._parent._childrenTransformDirty){cacheFrameIndex=-1;this._transformDirty=true;this._cachedFrameIndex=-1;}}if(this._transformDirty){this._transformDirty=false;this._childrenTransformDirty=true;for(var i=0,l=this._matrixCahce.length;i<l;i+=7){this._matrixCahce[i]=-1.0;}this._updateVertices();if(this._cachedFrameIndex<0){var isCache=cacheFrameIndex>=0;if(this._localDirty){this._updateGlobalTransformMatrix(isCache);}if(isCache&&this._cachedFrameIndices!==null){this._cachedFrameIndex=this._cachedFrameIndices[cacheFrameIndex]=this._armature._armatureData.setCacheFrame(this.globalTransformMatrix,this.global);}}else {this._armature._armatureData.getCacheFrame(this.globalTransformMatrix,this.global,this._cachedFrameIndex);}var lB=1000.0;var lA=200.0;var ddX=2*this.global.x;var ddY=2*this.global.y;var helpPoint=Surface._helpPoint;this.globalTransformMatrix.transformPoint(lB,-lA,helpPoint);this._hullCache[0]=helpPoint.x;this._hullCache[1]=helpPoint.y;this._hullCache[2]=ddX-helpPoint.x;this._hullCache[3]=ddY-helpPoint.y;this.globalTransformMatrix.transformPoint(0.0,this._dY,helpPoint,true);this._hullCache[4]=helpPoint.x;this._hullCache[5]=helpPoint.y;this.globalTransformMatrix.transformPoint(lA,lB,helpPoint);this._hullCache[6]=helpPoint.x;this._hullCache[7]=helpPoint.y;this._hullCache[8]=ddX-helpPoint.x;this._hullCache[9]=ddY-helpPoint.y;this.globalTransformMatrix.transformPoint(this._dX,0.0,helpPoint,true);this._hullCache[10]=helpPoint.x;this._hullCache[11]=helpPoint.y;}else if(this._childrenTransformDirty){this._childrenTransformDirty=false;}this._localDirty=true;};return Surface;}(dragonBones.Bone);dragonBones.Surface=Surface;})(dragonBones);(function(dragonBones){var Slot=function(_super){__extends(Slot,_super);function Slot(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._localMatrix=new dragonBones.Matrix();_this._colorTransform=new dragonBones.ColorTransform();_this._displayDatas=[];_this._displayList=[];_this._deformVertices=null;_this._rawDisplay=null;_this._meshDisplay=null;return _this;}Slot.prototype._onClear=function(){_super.prototype._onClear.call(this);var disposeDisplayList=[];for(var _i=0,_a=this._displayList;_i<_a.length;_i++){var eachDisplay=_a[_i];if(eachDisplay!==null&&eachDisplay!==this._rawDisplay&&eachDisplay!==this._meshDisplay&&disposeDisplayList.indexOf(eachDisplay)<0){disposeDisplayList.push(eachDisplay);}}for(var _b=0,disposeDisplayList_1=disposeDisplayList;_b<disposeDisplayList_1.length;_b++){var eachDisplay=disposeDisplayList_1[_b];if(eachDisplay instanceof dragonBones.Armature){eachDisplay.dispose();}else {this._disposeDisplay(eachDisplay,true);}}if(this._deformVertices!==null){this._deformVertices.returnToPool();}if(this._meshDisplay!==null&&this._meshDisplay!==this._rawDisplay){this._disposeDisplay(this._meshDisplay,false);}if(this._rawDisplay!==null){this._disposeDisplay(this._rawDisplay,false);}this.displayController=null;this._displayDirty=false;this._zOrderDirty=false;this._blendModeDirty=false;this._colorDirty=false;this._transformDirty=false;this._visible=true;this._blendMode=0;this._displayIndex=-1;this._animationDisplayIndex=-1;this._zOrder=0;this._cachedFrameIndex=-1;this._pivotX=0.0;this._pivotY=0.0;this._localMatrix.identity();this._colorTransform.identity();this._displayList.length=0;this._displayDatas.length=0;this._slotData=null;this._rawDisplayDatas=null;this._displayData=null;this._boundingBoxData=null;this._textureData=null;this._deformVertices=null;this._rawDisplay=null;this._meshDisplay=null;this._display=null;this._childArmature=null;this._parent=null;this._cachedFrameIndices=null;};Slot.prototype._getDefaultRawDisplayData=function(displayIndex){var defaultSkin=this._armature._armatureData.defaultSkin;if(defaultSkin!==null){var defaultRawDisplayDatas=defaultSkin.getDisplays(this._slotData.name);if(defaultRawDisplayDatas!==null){return displayIndex<defaultRawDisplayDatas.length?defaultRawDisplayDatas[displayIndex]:null;}}return null;};Slot.prototype._updateDisplayData=function(){var prevDisplayData=this._displayData;var prevVerticesData=this._deformVertices!==null?this._deformVertices.verticesData:null;var prevTextureData=this._textureData;var rawDisplayData=null;var currentVerticesData=null;this._displayData=null;this._boundingBoxData=null;this._textureData=null;if(this._displayIndex>=0){if(this._rawDisplayDatas!==null){rawDisplayData=this._displayIndex<this._rawDisplayDatas.length?this._rawDisplayDatas[this._displayIndex]:null;}if(rawDisplayData===null){rawDisplayData=this._getDefaultRawDisplayData(this._displayIndex);}if(this._displayIndex<this._displayDatas.length){this._displayData=this._displayDatas[this._displayIndex];}}if(this._displayData!==null){if(this._displayData.type===2){currentVerticesData=this._displayData.vertices;}else if(this._displayData.type===4){currentVerticesData=this._displayData.vertices;}else if(rawDisplayData!==null){if(rawDisplayData.type===2){currentVerticesData=rawDisplayData.vertices;}else if(rawDisplayData.type===4){currentVerticesData=rawDisplayData.vertices;}}if(this._displayData.type===3){this._boundingBoxData=this._displayData.boundingBox;}else if(rawDisplayData!==null){if(rawDisplayData.type===3){this._boundingBoxData=rawDisplayData.boundingBox;}}if(this._displayData.type===0){this._textureData=this._displayData.texture;}else if(this._displayData.type===2){this._textureData=this._displayData.texture;}}if(this._displayData!==prevDisplayData||currentVerticesData!==prevVerticesData||this._textureData!==prevTextureData){if(currentVerticesData===null&&this._textureData!==null){var imageDisplayData=this._displayData;var scale=this._textureData.parent.scale*this._armature._armatureData.scale;var frame=this._textureData.frame;this._pivotX=imageDisplayData.pivot.x;this._pivotY=imageDisplayData.pivot.y;var rect=frame!==null?frame:this._textureData.region;var width=rect.width;var height=rect.height;if(this._textureData.rotated&&frame===null){width=rect.height;height=rect.width;}this._pivotX*=width*scale;this._pivotY*=height*scale;if(frame!==null){this._pivotX+=frame.x*scale;this._pivotY+=frame.y*scale;}if(this._displayData!==null&&rawDisplayData!==null&&this._displayData!==rawDisplayData){rawDisplayData.transform.toMatrix(Slot._helpMatrix);Slot._helpMatrix.invert();Slot._helpMatrix.transformPoint(0.0,0.0,Slot._helpPoint);this._pivotX-=Slot._helpPoint.x;this._pivotY-=Slot._helpPoint.y;this._displayData.transform.toMatrix(Slot._helpMatrix);Slot._helpMatrix.invert();Slot._helpMatrix.transformPoint(0.0,0.0,Slot._helpPoint);this._pivotX+=Slot._helpPoint.x;this._pivotY+=Slot._helpPoint.y;}if(!dragonBones.DragonBones.yDown){this._pivotY=(this._textureData.rotated?this._textureData.region.width:this._textureData.region.height)*scale-this._pivotY;}}else {this._pivotX=0.0;this._pivotY=0.0;}if(rawDisplayData!==null){this.origin=rawDisplayData.transform;}else if(this._displayData!==null){this.origin=this._displayData.transform;}else {this.origin=null;}if(currentVerticesData!==prevVerticesData){if(this._deformVertices===null){this._deformVertices=dragonBones.BaseObject.borrowObject(dragonBones.DeformVertices);}this._deformVertices.init(currentVerticesData,this._armature);}else if(this._deformVertices!==null&&this._textureData!==prevTextureData){this._deformVertices.verticesDirty=true;}this._displayDirty=true;this._transformDirty=true;}};Slot.prototype._updateDisplay=function(){var prevDisplay=this._display!==null?this._display:this._rawDisplay;var prevChildArmature=this._childArmature;if(this._displayIndex>=0&&this._displayIndex<this._displayList.length){this._display=this._displayList[this._displayIndex];if(this._display!==null&&this._display instanceof dragonBones.Armature){this._childArmature=this._display;this._display=this._childArmature.display;}else {this._childArmature=null;}}else {this._display=null;this._childArmature=null;}var currentDisplay=this._display!==null?this._display:this._rawDisplay;if(currentDisplay!==prevDisplay){this._onUpdateDisplay();this._replaceDisplay(prevDisplay);this._transformDirty=true;this._visibleDirty=true;this._blendModeDirty=true;this._colorDirty=true;}if(currentDisplay===this._rawDisplay||currentDisplay===this._meshDisplay){this._updateFrame();}if(this._childArmature!==prevChildArmature){if(prevChildArmature!==null){prevChildArmature._parent=null;prevChildArmature.clock=null;if(prevChildArmature.inheritAnimation){prevChildArmature.animation.reset();}}if(this._childArmature!==null){this._childArmature._parent=this;this._childArmature.clock=this._armature.clock;if(this._childArmature.inheritAnimation){if(this._childArmature.cacheFrameRate===0){var cacheFrameRate=this._armature.cacheFrameRate;if(cacheFrameRate!==0){this._childArmature.cacheFrameRate=cacheFrameRate;}}var actions=null;if(this._displayData!==null&&this._displayData.type===1){actions=this._displayData.actions;}else if(this._displayIndex>=0&&this._rawDisplayDatas!==null){var rawDisplayData=this._displayIndex<this._rawDisplayDatas.length?this._rawDisplayDatas[this._displayIndex]:null;if(rawDisplayData===null){rawDisplayData=this._getDefaultRawDisplayData(this._displayIndex);}if(rawDisplayData!==null&&rawDisplayData.type===1){actions=rawDisplayData.actions;}}if(actions!==null&&actions.length>0){for(var _i=0,actions_1=actions;_i<actions_1.length;_i++){var action=actions_1[_i];var eventObject=dragonBones.BaseObject.borrowObject(dragonBones.EventObject);dragonBones.EventObject.actionDataToInstance(action,eventObject,this._armature);eventObject.slot=this;this._armature._bufferAction(eventObject,false);}}else {this._childArmature.animation.play();}}}}};Slot.prototype._updateGlobalTransformMatrix=function(isCache){var parentMatrix=this._parent._boneData.type===0?this._parent.globalTransformMatrix:this._parent._getGlobalTransformMatrix(this.global.x,this.global.y);this.globalTransformMatrix.copyFrom(this._localMatrix);this.globalTransformMatrix.concat(parentMatrix);if(isCache){this.global.fromMatrix(this.globalTransformMatrix);}else {this._globalDirty=true;}};Slot.prototype._setDisplayIndex=function(value,isAnimation){if(isAnimation===void 0){isAnimation=false;}if(isAnimation){if(this._animationDisplayIndex===value){return false;}this._animationDisplayIndex=value;}if(this._displayIndex===value){return false;}this._displayIndex=value;this._displayDirty=true;this._updateDisplayData();return this._displayDirty;};Slot.prototype._setZorder=function(value){if(this._zOrder===value);this._zOrder=value;this._zOrderDirty=true;return this._zOrderDirty;};Slot.prototype._setColor=function(value){this._colorTransform.copyFrom(value);this._colorDirty=true;return this._colorDirty;};Slot.prototype._setDisplayList=function(value){if(value!==null&&value.length>0){if(this._displayList.length!==value.length){this._displayList.length=value.length;}for(var i=0,l=value.length;i<l;++i){var eachDisplay=value[i];if(eachDisplay!==null&&eachDisplay!==this._rawDisplay&&eachDisplay!==this._meshDisplay&&!(eachDisplay instanceof dragonBones.Armature)&&this._displayList.indexOf(eachDisplay)<0){this._initDisplay(eachDisplay,true);}this._displayList[i]=eachDisplay;}}else if(this._displayList.length>0){this._displayList.length=0;}if(this._displayIndex>=0&&this._displayIndex<this._displayList.length){this._displayDirty=this._display!==this._displayList[this._displayIndex];}else {this._displayDirty=this._display!==null;}this._updateDisplayData();return this._displayDirty;};Slot.prototype.init=function(slotData,armatureValue,rawDisplay,meshDisplay){if(this._slotData!==null){return;}this._slotData=slotData;this._isFromCache=false;this._visibleDirty=true;this._blendModeDirty=true;this._colorDirty=true;this._blendMode=this._slotData.blendMode;this._zOrder=this._slotData.zOrder;this._colorTransform.copyFrom(this._slotData.color);this._rawDisplay=rawDisplay;this._meshDisplay=meshDisplay;this._armature=armatureValue;var slotParent=this._armature.getBone(this._slotData.parent.name);if(slotParent!==null){this._parent=slotParent;}this._armature._addSlot(this);this._initDisplay(this._rawDisplay,false);if(this._rawDisplay!==this._meshDisplay){this._initDisplay(this._meshDisplay,false);}this._onUpdateDisplay();this._addDisplay();};Slot.prototype.update=function(cacheFrameIndex){this._isFromCache=false;if(this._displayDirty){this._displayDirty=false;this._updateDisplay();if(this._transformDirty){if(this.origin!==null){this.global.copyFrom(this.origin).add(this.offset).toMatrix(this._localMatrix);}else {this.global.copyFrom(this.offset).toMatrix(this._localMatrix);}}}if(this._zOrderDirty){this._zOrderDirty=false;this._updateZOrder();}if(cacheFrameIndex>=0&&this._cachedFrameIndices!==null){var cachedFrameIndex=this._cachedFrameIndices[cacheFrameIndex];if(cachedFrameIndex>=0&&this._cachedFrameIndex===cachedFrameIndex){this._transformDirty=false;}else if(cachedFrameIndex>=0){this._transformDirty=true;this._cachedFrameIndex=cachedFrameIndex;}else if(this._transformDirty||this._parent._childrenTransformDirty){this._transformDirty=true;this._cachedFrameIndex=-1;}else if(this._cachedFrameIndex>=0){this._transformDirty=false;this._cachedFrameIndices[cacheFrameIndex]=this._cachedFrameIndex;}else {this._transformDirty=true;this._cachedFrameIndex=-1;}}else if(this._transformDirty||this._parent._childrenTransformDirty){cacheFrameIndex=-1;this._transformDirty=true;this._cachedFrameIndex=-1;}if(this._display===null){return;}if(this._visibleDirty){this._visibleDirty=false;this._updateVisible();}if(this._blendModeDirty){this._blendModeDirty=false;this._updateBlendMode();}if(this._colorDirty){this._colorDirty=false;this._updateColor();}if(this._deformVertices!==null&&this._deformVertices.verticesData!==null&&this._display===this._meshDisplay){var isSkinned=this._deformVertices.verticesData.weight!==null;var isSurface=this._parent._boneData.type!==0;if(this._deformVertices.verticesDirty||isSkinned&&this._deformVertices.isBonesUpdate()||isSurface&&this._parent._childrenTransformDirty){this._deformVertices.verticesDirty=false;this._updateMesh();}if(isSkinned||isSurface){return;}}if(this._transformDirty){this._transformDirty=false;if(this._cachedFrameIndex<0){var isCache=cacheFrameIndex>=0;this._updateGlobalTransformMatrix(isCache);if(isCache&&this._cachedFrameIndices!==null){this._cachedFrameIndex=this._cachedFrameIndices[cacheFrameIndex]=this._armature._armatureData.setCacheFrame(this.globalTransformMatrix,this.global);}}else {this._isFromCache=true;this._armature._armatureData.getCacheFrame(this.globalTransformMatrix,this.global,this._cachedFrameIndex);}this._updateTransform();}};Slot.prototype.updateTransformAndMatrix=function(){if(this._transformDirty){this._transformDirty=false;this._updateGlobalTransformMatrix(false);}};Slot.prototype.replaceDisplayData=function(value,displayIndex){if(displayIndex===void 0){displayIndex=-1;}if(displayIndex<0){if(this._displayIndex<0){displayIndex=0;}else {displayIndex=this._displayIndex;}}if(this._displayDatas.length<=displayIndex){this._displayDatas.length=displayIndex+1;for(var i=0,l=this._displayDatas.length;i<l;++i){if(!this._displayDatas[i]){this._displayDatas[i]=null;}}}this._displayDatas[displayIndex]=value;};Slot.prototype.containsPoint=function(x,y){if(this._boundingBoxData===null){return false;}this.updateTransformAndMatrix();Slot._helpMatrix.copyFrom(this.globalTransformMatrix);Slot._helpMatrix.invert();Slot._helpMatrix.transformPoint(x,y,Slot._helpPoint);return this._boundingBoxData.containsPoint(Slot._helpPoint.x,Slot._helpPoint.y);};Slot.prototype.intersectsSegment=function(xA,yA,xB,yB,intersectionPointA,intersectionPointB,normalRadians){if(intersectionPointA===void 0){intersectionPointA=null;}if(intersectionPointB===void 0){intersectionPointB=null;}if(normalRadians===void 0){normalRadians=null;}if(this._boundingBoxData===null){return 0;}this.updateTransformAndMatrix();Slot._helpMatrix.copyFrom(this.globalTransformMatrix);Slot._helpMatrix.invert();Slot._helpMatrix.transformPoint(xA,yA,Slot._helpPoint);xA=Slot._helpPoint.x;yA=Slot._helpPoint.y;Slot._helpMatrix.transformPoint(xB,yB,Slot._helpPoint);xB=Slot._helpPoint.x;yB=Slot._helpPoint.y;var intersectionCount=this._boundingBoxData.intersectsSegment(xA,yA,xB,yB,intersectionPointA,intersectionPointB,normalRadians);if(intersectionCount>0){if(intersectionCount===1||intersectionCount===2){if(intersectionPointA!==null){this.globalTransformMatrix.transformPoint(intersectionPointA.x,intersectionPointA.y,intersectionPointA);if(intersectionPointB!==null){intersectionPointB.x=intersectionPointA.x;intersectionPointB.y=intersectionPointA.y;}}else if(intersectionPointB!==null){this.globalTransformMatrix.transformPoint(intersectionPointB.x,intersectionPointB.y,intersectionPointB);}}else {if(intersectionPointA!==null){this.globalTransformMatrix.transformPoint(intersectionPointA.x,intersectionPointA.y,intersectionPointA);}if(intersectionPointB!==null){this.globalTransformMatrix.transformPoint(intersectionPointB.x,intersectionPointB.y,intersectionPointB);}}if(normalRadians!==null){this.globalTransformMatrix.transformPoint(Math.cos(normalRadians.x),Math.sin(normalRadians.x),Slot._helpPoint,true);normalRadians.x=Math.atan2(Slot._helpPoint.y,Slot._helpPoint.x);this.globalTransformMatrix.transformPoint(Math.cos(normalRadians.y),Math.sin(normalRadians.y),Slot._helpPoint,true);normalRadians.y=Math.atan2(Slot._helpPoint.y,Slot._helpPoint.x);}}return intersectionCount;};Slot.prototype.invalidUpdate=function(){this._displayDirty=true;this._transformDirty=true;};Object.defineProperty(Slot.prototype,"visible",{get:function(){return this._visible;},set:function(value){if(this._visible===value){return;}this._visible=value;this._updateVisible();},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"displayIndex",{get:function(){return this._displayIndex;},set:function(value){if(this._setDisplayIndex(value)){this.update(-1);}},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"name",{get:function(){return this._slotData.name;},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"displayList",{get:function(){return this._displayList.concat();},set:function(value){var backupDisplayList=this._displayList.concat();var disposeDisplayList=new Array();if(this._setDisplayList(value)){this.update(-1);}for(var _i=0,backupDisplayList_1=backupDisplayList;_i<backupDisplayList_1.length;_i++){var eachDisplay=backupDisplayList_1[_i];if(eachDisplay!==null&&eachDisplay!==this._rawDisplay&&eachDisplay!==this._meshDisplay&&this._displayList.indexOf(eachDisplay)<0&&disposeDisplayList.indexOf(eachDisplay)<0){disposeDisplayList.push(eachDisplay);}}for(var _a=0,disposeDisplayList_2=disposeDisplayList;_a<disposeDisplayList_2.length;_a++){var eachDisplay=disposeDisplayList_2[_a];if(eachDisplay instanceof dragonBones.Armature);else {this._disposeDisplay(eachDisplay,true);}}},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"slotData",{get:function(){return this._slotData;},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"rawDisplayDatas",{get:function(){return this._rawDisplayDatas;},set:function(value){if(this._rawDisplayDatas===value){return;}this._displayDirty=true;this._rawDisplayDatas=value;if(this._rawDisplayDatas!==null){this._displayDatas.length=this._rawDisplayDatas.length;for(var i=0,l=this._displayDatas.length;i<l;++i){var rawDisplayData=this._rawDisplayDatas[i];if(rawDisplayData===null){rawDisplayData=this._getDefaultRawDisplayData(i);}this._displayDatas[i]=rawDisplayData;}}else {this._displayDatas.length=0;}},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"displayData",{get:function(){return this._displayData;},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"boundingBoxData",{get:function(){return this._boundingBoxData;},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"rawDisplay",{get:function(){return this._rawDisplay;},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"meshDisplay",{get:function(){return this._meshDisplay;},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"display",{get:function(){return this._display;},set:function(value){if(this._display===value){return;}var displayListLength=this._displayList.length;if(this._displayIndex<0&&displayListLength===0){this._displayIndex=0;}if(this._displayIndex<0){return;}else {var replaceDisplayList=this.displayList;if(displayListLength<=this._displayIndex){replaceDisplayList.length=this._displayIndex+1;}replaceDisplayList[this._displayIndex]=value;this.displayList=replaceDisplayList;}},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"childArmature",{get:function(){return this._childArmature;},set:function(value){if(this._childArmature===value){return;}this.display=value;},enumerable:true,configurable:true});Object.defineProperty(Slot.prototype,"parent",{get:function(){return this._parent;},enumerable:true,configurable:true});Slot.prototype.getDisplay=function(){return this._display;};Slot.prototype.setDisplay=function(value){this.display=value;};return Slot;}(dragonBones.TransformObject);dragonBones.Slot=Slot;})(dragonBones);(function(dragonBones){var Constraint=function(_super){__extends(Constraint,_super);function Constraint(){return _super!==null&&_super.apply(this,arguments)||this;}Constraint.prototype._onClear=function(){this._armature=null;this._target=null;this._root=null;this._bone=null;};Object.defineProperty(Constraint.prototype,"name",{get:function(){return this._constraintData.name;},enumerable:true,configurable:true});Constraint._helpMatrix=new dragonBones.Matrix();Constraint._helpTransform=new dragonBones.Transform();Constraint._helpPoint=new dragonBones.Point();return Constraint;}(dragonBones.BaseObject);dragonBones.Constraint=Constraint;var IKConstraint=function(_super){__extends(IKConstraint,_super);function IKConstraint(){return _super!==null&&_super.apply(this,arguments)||this;}IKConstraint.toString=function(){return "[class dragonBones.IKConstraint]";};IKConstraint.prototype._onClear=function(){_super.prototype._onClear.call(this);this._scaleEnabled=false;this._bendPositive=false;this._weight=1.0;this._constraintData=null;};IKConstraint.prototype._computeA=function(){var ikGlobal=this._target.global;var global=this._root.global;var globalTransformMatrix=this._root.globalTransformMatrix;var radian=Math.atan2(ikGlobal.y-global.y,ikGlobal.x-global.x);if(global.scaleX<0.0){radian+=Math.PI;}global.rotation+=dragonBones.Transform.normalizeRadian(radian-global.rotation)*this._weight;global.toMatrix(globalTransformMatrix);};IKConstraint.prototype._computeB=function(){var boneLength=this._bone._boneData.length;var parent=this._root;var ikGlobal=this._target.global;var parentGlobal=parent.global;var global=this._bone.global;var globalTransformMatrix=this._bone.globalTransformMatrix;var x=globalTransformMatrix.a*boneLength;var y=globalTransformMatrix.b*boneLength;var lLL=x*x+y*y;var lL=Math.sqrt(lLL);var dX=global.x-parentGlobal.x;var dY=global.y-parentGlobal.y;var lPP=dX*dX+dY*dY;var lP=Math.sqrt(lPP);var rawRadian=global.rotation;var rawParentRadian=parentGlobal.rotation;var rawRadianA=Math.atan2(dY,dX);dX=ikGlobal.x-parentGlobal.x;dY=ikGlobal.y-parentGlobal.y;var lTT=dX*dX+dY*dY;var lT=Math.sqrt(lTT);var radianA=0.0;if(lL+lP<=lT||lT+lL<=lP||lT+lP<=lL){radianA=Math.atan2(ikGlobal.y-parentGlobal.y,ikGlobal.x-parentGlobal.x);if(lL+lP<=lT);else if(lP<lL){radianA+=Math.PI;}}else {var h=(lPP-lLL+lTT)/(2.0*lTT);var r=Math.sqrt(lPP-h*h*lTT)/lT;var hX=parentGlobal.x+dX*h;var hY=parentGlobal.y+dY*h;var rX=-dY*r;var rY=dX*r;var isPPR=false;var parentParent=parent.parent;if(parentParent!==null){var parentParentMatrix=parentParent.globalTransformMatrix;isPPR=parentParentMatrix.a*parentParentMatrix.d-parentParentMatrix.b*parentParentMatrix.c<0.0;}if(isPPR!==this._bendPositive){global.x=hX-rX;global.y=hY-rY;}else {global.x=hX+rX;global.y=hY+rY;}radianA=Math.atan2(global.y-parentGlobal.y,global.x-parentGlobal.x);}var dR=dragonBones.Transform.normalizeRadian(radianA-rawRadianA);parentGlobal.rotation=rawParentRadian+dR*this._weight;parentGlobal.toMatrix(parent.globalTransformMatrix);var currentRadianA=rawRadianA+dR*this._weight;global.x=parentGlobal.x+Math.cos(currentRadianA)*lP;global.y=parentGlobal.y+Math.sin(currentRadianA)*lP;var radianB=Math.atan2(ikGlobal.y-global.y,ikGlobal.x-global.x);if(global.scaleX<0.0){radianB+=Math.PI;}global.rotation=parentGlobal.rotation+rawRadian-rawParentRadian+dragonBones.Transform.normalizeRadian(radianB-dR-rawRadian)*this._weight;global.toMatrix(globalTransformMatrix);};IKConstraint.prototype.init=function(constraintData,armature){if(this._constraintData!==null){return;}this._constraintData=constraintData;this._armature=armature;this._target=this._armature.getBone(this._constraintData.target.name);this._root=this._armature.getBone(this._constraintData.root.name);this._bone=this._constraintData.bone!==null?this._armature.getBone(this._constraintData.bone.name):null;{var ikConstraintData=this._constraintData;this._scaleEnabled=ikConstraintData.scaleEnabled;this._bendPositive=ikConstraintData.bendPositive;this._weight=ikConstraintData.weight;}this._root._hasConstraint=true;};IKConstraint.prototype.update=function(){this._root.updateByConstraint();if(this._bone!==null){this._bone.updateByConstraint();this._computeB();}else {this._computeA();}};IKConstraint.prototype.invalidUpdate=function(){this._root.invalidUpdate();if(this._bone!==null){this._bone.invalidUpdate();}};return IKConstraint;}(Constraint);dragonBones.IKConstraint=IKConstraint;var PathConstraint=function(_super){__extends(PathConstraint,_super);function PathConstraint(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._bones=[];_this._spaces=[];_this._positions=[];_this._curves=[];_this._boneLengths=[];_this._pathGlobalVertices=[];_this._segments=[10];return _this;}PathConstraint.toString=function(){return "[class dragonBones.PathConstraint]";};PathConstraint.prototype._onClear=function(){_super.prototype._onClear.call(this);this.dirty=false;this.pathOffset=0;this.position=0.0;this.spacing=0.0;this.rotateOffset=0.0;this.rotateMix=1.0;this.translateMix=1.0;this._pathSlot=null;this._bones.length=0;this._spaces.length=0;this._positions.length=0;this._curves.length=0;this._boneLengths.length=0;this._pathGlobalVertices.length=0;};PathConstraint.prototype._updatePathVertices=function(verticesData){var armature=this._armature;var dragonBonesData=armature.armatureData.parent;var scale=armature.armatureData.scale;var intArray=dragonBonesData.intArray;var floatArray=dragonBonesData.floatArray;var pathOffset=verticesData.offset;var pathVertexCount=intArray[pathOffset+0];var pathVertexOffset=intArray[pathOffset+2];this._pathGlobalVertices.length=pathVertexCount*2;var weightData=verticesData.weight;if(weightData===null){var parentBone=this._pathSlot.parent;parentBone.updateByConstraint();var matrix=parentBone.globalTransformMatrix;for(var i=0,iV_1=pathVertexOffset;i<pathVertexCount;i+=2){var vx=floatArray[iV_1++]*scale;var vy=floatArray[iV_1++]*scale;var x=matrix.a*vx+matrix.c*vy+matrix.tx;var y=matrix.b*vx+matrix.d*vy+matrix.ty;this._pathGlobalVertices[i]=x;this._pathGlobalVertices[i+1]=y;}return;}var bones=this._pathSlot._deformVertices.bones;var weightBoneCount=weightData.bones.length;var weightOffset=weightData.offset;var floatOffset=intArray[weightOffset+1];var iV=floatOffset;var iB=weightOffset+2+weightBoneCount;for(var i=0,iW=0;i<pathVertexCount;i++){var vertexBoneCount=intArray[iB++];var xG=0.0,yG=0.0;for(var ii=0,ll=vertexBoneCount;ii<ll;ii++){var boneIndex=intArray[iB++];var bone=bones[boneIndex];if(bone===null){continue;}bone.updateByConstraint();var matrix=bone.globalTransformMatrix;var weight=floatArray[iV++];var vx=floatArray[iV++]*scale;var vy=floatArray[iV++]*scale;xG+=(matrix.a*vx+matrix.c*vy+matrix.tx)*weight;yG+=(matrix.b*vx+matrix.d*vy+matrix.ty)*weight;}this._pathGlobalVertices[iW++]=xG;this._pathGlobalVertices[iW++]=yG;}};PathConstraint.prototype._computeVertices=function(start,count,offset,out){for(var i=offset,iW=start;i<count;i+=2){out[i]=this._pathGlobalVertices[iW++];out[i+1]=this._pathGlobalVertices[iW++];}};PathConstraint.prototype._computeBezierCurve=function(pathDisplayDta,spaceCount,tangents,percentPosition,percentSpacing){var armature=this._armature;var intArray=armature.armatureData.parent.intArray;var vertexCount=intArray[pathDisplayDta.vertices.offset+0];var positions=this._positions;var spaces=this._spaces;var isClosed=pathDisplayDta.closed;var curveVertices=Array();var verticesLength=vertexCount*2;var curveCount=verticesLength/6;var preCurve=-1;var position=this.position;positions.length=spaceCount*3+2;var pathLength=0.0;if(!pathDisplayDta.constantSpeed){var lenghts=pathDisplayDta.curveLengths;curveCount-=isClosed?1:2;pathLength=lenghts[curveCount];if(percentPosition){position*=pathLength;}if(percentSpacing){for(var i=0;i<spaceCount;i++){spaces[i]*=pathLength;}}curveVertices.length=8;for(var i=0,o=0,curve=0;i<spaceCount;i++,o+=3){var space=spaces[i];position+=space;if(isClosed){position%=pathLength;if(position<0){position+=pathLength;}curve=0;}else if(position<0){continue;}else if(position>pathLength){continue;}var percent=0.0;for(;;curve++){var len=lenghts[curve];if(position>len){continue;}if(curve===0){percent=position/len;}else {var preLen=lenghts[curve-1];percent=(position-preLen)/(len-preLen);}break;}if(curve!==preCurve){preCurve=curve;if(isClosed&&curve===curveCount){this._computeVertices(verticesLength-4,4,0,curveVertices);this._computeVertices(0,4,4,curveVertices);}else {this._computeVertices(curve*6+2,8,0,curveVertices);}}this.addCurvePosition(percent,curveVertices[0],curveVertices[1],curveVertices[2],curveVertices[3],curveVertices[4],curveVertices[5],curveVertices[6],curveVertices[7],positions,o,tangents);}return;}if(isClosed){verticesLength+=2;curveVertices.length=vertexCount;this._computeVertices(2,verticesLength-4,0,curveVertices);this._computeVertices(0,2,verticesLength-4,curveVertices);curveVertices[verticesLength-2]=curveVertices[0];curveVertices[verticesLength-1]=curveVertices[1];}else {curveCount--;verticesLength-=4;curveVertices.length=verticesLength;this._computeVertices(2,verticesLength,0,curveVertices);}var curves=new Array(curveCount);pathLength=0;var x1=curveVertices[0],y1=curveVertices[1],cx1=0,cy1=0,cx2=0,cy2=0,x2=0,y2=0;var tmpx,tmpy,dddfx,dddfy,ddfx,ddfy,dfx,dfy;for(var i=0,w=2;i<curveCount;i++,w+=6){cx1=curveVertices[w];cy1=curveVertices[w+1];cx2=curveVertices[w+2];cy2=curveVertices[w+3];x2=curveVertices[w+4];y2=curveVertices[w+5];tmpx=(x1-cx1*2+cx2)*0.1875;tmpy=(y1-cy1*2+cy2)*0.1875;dddfx=((cx1-cx2)*3-x1+x2)*0.09375;dddfy=((cy1-cy2)*3-y1+y2)*0.09375;ddfx=tmpx*2+dddfx;ddfy=tmpy*2+dddfy;dfx=(cx1-x1)*0.75+tmpx+dddfx*0.16666667;dfy=(cy1-y1)*0.75+tmpy+dddfy*0.16666667;pathLength+=Math.sqrt(dfx*dfx+dfy*dfy);dfx+=ddfx;dfy+=ddfy;ddfx+=dddfx;ddfy+=dddfy;pathLength+=Math.sqrt(dfx*dfx+dfy*dfy);dfx+=ddfx;dfy+=ddfy;pathLength+=Math.sqrt(dfx*dfx+dfy*dfy);dfx+=ddfx+dddfx;dfy+=ddfy+dddfy;pathLength+=Math.sqrt(dfx*dfx+dfy*dfy);curves[i]=pathLength;x1=x2;y1=y2;}if(percentPosition){position*=pathLength;}if(percentSpacing){for(var i=0;i<spaceCount;i++){spaces[i]*=pathLength;}}var segments=this._segments;var curveLength=0;for(var i=0,o=0,curve=0,segment=0;i<spaceCount;i++,o+=3){var space=spaces[i];position+=space;var p=position;if(isClosed){p%=pathLength;if(p<0)p+=pathLength;curve=0;}else if(p<0){continue;}else if(p>pathLength){continue;}for(;;curve++){var length_1=curves[curve];if(p>length_1)continue;if(curve===0)p/=length_1;else {var prev=curves[curve-1];p=(p-prev)/(length_1-prev);}break;}if(curve!==preCurve){preCurve=curve;var ii=curve*6;x1=curveVertices[ii];y1=curveVertices[ii+1];cx1=curveVertices[ii+2];cy1=curveVertices[ii+3];cx2=curveVertices[ii+4];cy2=curveVertices[ii+5];x2=curveVertices[ii+6];y2=curveVertices[ii+7];tmpx=(x1-cx1*2+cx2)*0.03;tmpy=(y1-cy1*2+cy2)*0.03;dddfx=((cx1-cx2)*3-x1+x2)*0.006;dddfy=((cy1-cy2)*3-y1+y2)*0.006;ddfx=tmpx*2+dddfx;ddfy=tmpy*2+dddfy;dfx=(cx1-x1)*0.3+tmpx+dddfx*0.16666667;dfy=(cy1-y1)*0.3+tmpy+dddfy*0.16666667;curveLength=Math.sqrt(dfx*dfx+dfy*dfy);segments[0]=curveLength;for(ii=1;ii<8;ii++){dfx+=ddfx;dfy+=ddfy;ddfx+=dddfx;ddfy+=dddfy;curveLength+=Math.sqrt(dfx*dfx+dfy*dfy);segments[ii]=curveLength;}dfx+=ddfx;dfy+=ddfy;curveLength+=Math.sqrt(dfx*dfx+dfy*dfy);segments[8]=curveLength;dfx+=ddfx+dddfx;dfy+=ddfy+dddfy;curveLength+=Math.sqrt(dfx*dfx+dfy*dfy);segments[9]=curveLength;segment=0;}p*=curveLength;for(;;segment++){var length_2=segments[segment];if(p>length_2)continue;if(segment===0)p/=length_2;else {var prev=segments[segment-1];p=segment+(p-prev)/(length_2-prev);}break;}this.addCurvePosition(p*0.1,x1,y1,cx1,cy1,cx2,cy2,x2,y2,positions,o,tangents);}};PathConstraint.prototype.addCurvePosition=function(t,x1,y1,cx1,cy1,cx2,cy2,x2,y2,out,offset,tangents){if(t===0){out[offset]=x1;out[offset+1]=y1;out[offset+2]=0;return;}if(t===1){out[offset]=x2;out[offset+1]=y2;out[offset+2]=0;return;}var mt=1-t;var mt2=mt*mt;var t2=t*t;var a=mt2*mt;var b=mt2*t*3;var c=mt*t2*3;var d=t*t2;var x=a*x1+b*cx1+c*cx2+d*x2;var y=a*y1+b*cy1+c*cy2+d*y2;out[offset]=x;out[offset+1]=y;if(tangents){out[offset+2]=Math.atan2(y-(a*y1+b*cy1+c*cy2),x-(a*x1+b*cx1+c*cx2));}else {out[offset+2]=0;}};PathConstraint.prototype.init=function(constraintData,armature){this._constraintData=constraintData;this._armature=armature;var data=constraintData;this.pathOffset=data.pathDisplayData.vertices.offset;this.position=data.position;this.spacing=data.spacing;this.rotateOffset=data.rotateOffset;this.rotateMix=data.rotateMix;this.translateMix=data.translateMix;this._root=this._armature.getBone(data.root.name);this._target=this._armature.getBone(data.target.name);this._pathSlot=this._armature.getSlot(data.pathSlot.name);for(var i=0,l=data.bones.length;i<l;i++){var bone=this._armature.getBone(data.bones[i].name);if(bone!==null){this._bones.push(bone);}}if(data.rotateMode===2){this._boneLengths.length=this._bones.length;}this._root._hasConstraint=true;};PathConstraint.prototype.update=function(){var pathSlot=this._pathSlot;if(pathSlot._deformVertices===null||pathSlot._deformVertices.verticesData===null||pathSlot._deformVertices.verticesData.offset!==this.pathOffset){return;}var constraintData=this._constraintData;var pathDisplayData=pathSlot._displayData;var isPathVerticeDirty=false;var deformVertices=pathSlot._deformVertices;if(this._root._childrenTransformDirty){this._updatePathVertices(pathDisplayData.vertices);isPathVerticeDirty=true;}else if(deformVertices!==null&&(deformVertices.verticesDirty||deformVertices.isBonesUpdate())){this._updatePathVertices(pathDisplayData.vertices);deformVertices.verticesDirty=false;isPathVerticeDirty=true;}if(!isPathVerticeDirty&&!this.dirty){return;}var positionMode=constraintData.positionMode;var spacingMode=constraintData.spacingMode;var rotateMode=constraintData.rotateMode;var bones=this._bones;var isLengthMode=spacingMode===0;var isChainScaleMode=rotateMode===2;var isTangentMode=rotateMode===0;var boneCount=bones.length;var spacesCount=isTangentMode?boneCount:boneCount+1;var spacing=this.spacing;var spaces=this._spaces;spaces.length=spacesCount;if(isChainScaleMode||isLengthMode){spaces[0]=0;for(var i=0,l=spacesCount-1;i<l;i++){var bone=bones[i];bone.updateByConstraint();var boneLength=bone._boneData.length;var matrix=bone.globalTransformMatrix;var x=boneLength*matrix.a;var y=boneLength*matrix.b;var len=Math.sqrt(x*x+y*y);if(isChainScaleMode){this._boneLengths[i]=len;}spaces[i+1]=(boneLength+spacing)*len/boneLength;}}else {for(var i=0;i<spacesCount;i++){spaces[i]=spacing;}}this._computeBezierCurve(pathDisplayData,spacesCount,isTangentMode,positionMode===1,spacingMode===2);var positions=this._positions;var rotateOffset=this.rotateOffset;var boneX=positions[0],boneY=positions[1];var tip;if(rotateOffset===0){tip=rotateMode===1;}else {tip=false;var bone=pathSlot.parent;if(bone!==null){var matrix=bone.globalTransformMatrix;rotateOffset*=matrix.a*matrix.d-matrix.b*matrix.c>0?dragonBones.Transform.DEG_RAD:-dragonBones.Transform.DEG_RAD;}}var rotateMix=this.rotateMix;var translateMix=this.translateMix;for(var i=0,p=3;i<boneCount;i++,p+=3){var bone=bones[i];bone.updateByConstraint();var matrix=bone.globalTransformMatrix;matrix.tx+=(boneX-matrix.tx)*translateMix;matrix.ty+=(boneY-matrix.ty)*translateMix;var x=positions[p],y=positions[p+1];var dx=x-boneX,dy=y-boneY;if(isChainScaleMode){var lenght=this._boneLengths[i];var s=(Math.sqrt(dx*dx+dy*dy)/lenght-1)*rotateMix+1;matrix.a*=s;matrix.b*=s;}boneX=x;boneY=y;if(rotateMix>0){var a=matrix.a,b=matrix.b,c=matrix.c,d=matrix.d,r=void 0,cos=void 0,sin=void 0;if(isTangentMode){r=positions[p-1];}else {r=Math.atan2(dy,dx);}r-=Math.atan2(b,a);if(tip){cos=Math.cos(r);sin=Math.sin(r);var length_3=bone._boneData.length;boneX+=(length_3*(cos*a-sin*b)-dx)*rotateMix;boneY+=(length_3*(sin*a+cos*b)-dy)*rotateMix;}else {r+=rotateOffset;}if(r>dragonBones.Transform.PI){r-=dragonBones.Transform.PI_D;}else if(r<-dragonBones.Transform.PI){r+=dragonBones.Transform.PI_D;}r*=rotateMix;cos=Math.cos(r);sin=Math.sin(r);matrix.a=cos*a-sin*b;matrix.b=sin*a+cos*b;matrix.c=cos*c-sin*d;matrix.d=sin*c+cos*d;}bone.global.fromMatrix(matrix);}this.dirty=false;};PathConstraint.prototype.invalidUpdate=function(){};return PathConstraint;}(Constraint);dragonBones.PathConstraint=PathConstraint;})(dragonBones);(function(dragonBones){var WorldClock=function(){function WorldClock(time){if(time===void 0){time=0.0;}this.time=0.0;this.timeScale=1.0;this._systemTime=0.0;this._animatebles=[];this._clock=null;this.time=time;this._systemTime=new Date().getTime()*0.001;}WorldClock.prototype.advanceTime=function(passedTime){if(passedTime!==passedTime){passedTime=0.0;}var currentTime=Date.now()*0.001;if(passedTime<0.0){passedTime=currentTime-this._systemTime;}this._systemTime=currentTime;if(this.timeScale!==1.0){passedTime*=this.timeScale;}if(passedTime===0.0){return;}if(passedTime<0.0){this.time-=passedTime;}else {this.time+=passedTime;}var i=0,r=0,l=this._animatebles.length;for(;i<l;++i){var animatable=this._animatebles[i];if(animatable!==null){if(r>0){this._animatebles[i-r]=animatable;this._animatebles[i]=null;}animatable.advanceTime(passedTime);}else {r++;}}if(r>0){l=this._animatebles.length;for(;i<l;++i){var animateble=this._animatebles[i];if(animateble!==null){this._animatebles[i-r]=animateble;}else {r++;}}this._animatebles.length-=r;}};WorldClock.prototype.contains=function(value){if(value===this){return false;}var ancestor=value;while(ancestor!==this&&ancestor!==null){ancestor=ancestor.clock;}return ancestor===this;};WorldClock.prototype.add=function(value){if(this._animatebles.indexOf(value)<0){this._animatebles.push(value);value.clock=this;}};WorldClock.prototype.remove=function(value){var index=this._animatebles.indexOf(value);if(index>=0){this._animatebles[index]=null;value.clock=null;}};WorldClock.prototype.clear=function(){for(var _i=0,_a=this._animatebles;_i<_a.length;_i++){var animatable=_a[_i];if(animatable!==null){animatable.clock=null;}}};Object.defineProperty(WorldClock.prototype,"clock",{get:function(){return this._clock;},set:function(value){if(this._clock===value){return;}if(this._clock!==null){this._clock.remove(this);}this._clock=value;if(this._clock!==null){this._clock.add(this);}},enumerable:true,configurable:true});WorldClock.clock=new WorldClock();return WorldClock;}();dragonBones.WorldClock=WorldClock;})(dragonBones);(function(dragonBones){var Animation=function(_super){__extends(Animation,_super);function Animation(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._animationNames=[];_this._animationStates=[];_this._animations={};_this._animationConfig=null;return _this;}Animation.toString=function(){return "[class dragonBones.Animation]";};Animation.prototype._onClear=function(){for(var _i=0,_a=this._animationStates;_i<_a.length;_i++){var animationState=_a[_i];animationState.returnToPool();}for(var k in this._animations){delete this._animations[k];}if(this._animationConfig!==null){this._animationConfig.returnToPool();}this.timeScale=1.0;this._lockUpdate=false;this._animationDirty=false;this._inheritTimeScale=1.0;this._animationNames.length=0;this._animationStates.length=0;this._armature=null;this._animationConfig=null;this._lastAnimationState=null;};Animation.prototype._fadeOut=function(animationConfig){switch(animationConfig.fadeOutMode){case 1:for(var _i=0,_a=this._animationStates;_i<_a.length;_i++){var animationState=_a[_i];if(animationState._parent!==null){continue;}if(animationState.layer===animationConfig.layer){animationState.fadeOut(animationConfig.fadeOutTime,animationConfig.pauseFadeOut);}}break;case 2:for(var _b=0,_c=this._animationStates;_b<_c.length;_b++){var animationState=_c[_b];if(animationState._parent!==null){continue;}if(animationState.group===animationConfig.group){animationState.fadeOut(animationConfig.fadeOutTime,animationConfig.pauseFadeOut);}}break;case 3:for(var _d=0,_e=this._animationStates;_d<_e.length;_d++){var animationState=_e[_d];if(animationState._parent!==null){continue;}if(animationState.layer===animationConfig.layer&&animationState.group===animationConfig.group){animationState.fadeOut(animationConfig.fadeOutTime,animationConfig.pauseFadeOut);}}break;case 4:for(var _f=0,_g=this._animationStates;_f<_g.length;_f++){var animationState=_g[_f];if(animationState._parent!==null){continue;}animationState.fadeOut(animationConfig.fadeOutTime,animationConfig.pauseFadeOut);}break;}};Animation.prototype.init=function(armature){if(this._armature!==null){return;}this._armature=armature;this._animationConfig=dragonBones.BaseObject.borrowObject(dragonBones.AnimationConfig);};Animation.prototype.advanceTime=function(passedTime){if(passedTime<0.0){passedTime=-passedTime;}if(this._armature.inheritAnimation&&this._armature._parent!==null){this._inheritTimeScale=this._armature._parent._armature.animation._inheritTimeScale*this.timeScale;}else {this._inheritTimeScale=this.timeScale;}if(this._inheritTimeScale!==1.0){passedTime*=this._inheritTimeScale;}var animationStateCount=this._animationStates.length;if(animationStateCount===1){var animationState=this._animationStates[0];if(animationState._fadeState>0&&animationState._subFadeState>0){this._armature._dragonBones.bufferObject(animationState);this._animationStates.length=0;this._lastAnimationState=null;}else {var animationData=animationState._animationData;var cacheFrameRate=animationData.cacheFrameRate;if(this._animationDirty&&cacheFrameRate>0.0){this._animationDirty=false;for(var _i=0,_a=this._armature.getBones();_i<_a.length;_i++){var bone=_a[_i];bone._cachedFrameIndices=animationData.getBoneCachedFrameIndices(bone.name);}for(var _b=0,_c=this._armature.getSlots();_b<_c.length;_b++){var slot=_c[_b];var rawDisplayDatas=slot.rawDisplayDatas;if(rawDisplayDatas!==null&&rawDisplayDatas.length>0){var rawDsplayData=rawDisplayDatas[0];if(rawDsplayData!==null){if(rawDsplayData.parent===this._armature.armatureData.defaultSkin){slot._cachedFrameIndices=animationData.getSlotCachedFrameIndices(slot.name);continue;}}}slot._cachedFrameIndices=null;}}animationState.advanceTime(passedTime,cacheFrameRate);}}else if(animationStateCount>1){for(var i=0,r=0;i<animationStateCount;++i){var animationState=this._animationStates[i];if(animationState._fadeState>0&&animationState._subFadeState>0){r++;this._armature._dragonBones.bufferObject(animationState);this._animationDirty=true;if(this._lastAnimationState===animationState){this._lastAnimationState=null;}}else {if(r>0){this._animationStates[i-r]=animationState;}animationState.advanceTime(passedTime,0.0);}if(i===animationStateCount-1&&r>0){this._animationStates.length-=r;if(this._lastAnimationState===null&&this._animationStates.length>0){this._lastAnimationState=this._animationStates[this._animationStates.length-1];}}}this._armature._cacheFrameIndex=-1;}else {this._armature._cacheFrameIndex=-1;}};Animation.prototype.reset=function(){for(var _i=0,_a=this._animationStates;_i<_a.length;_i++){var animationState=_a[_i];animationState.returnToPool();}this._animationDirty=false;this._animationConfig.clear();this._animationStates.length=0;this._lastAnimationState=null;};Animation.prototype.stop=function(animationName){if(animationName===void 0){animationName=null;}if(animationName!==null){var animationState=this.getState(animationName);if(animationState!==null){animationState.stop();}}else {for(var _i=0,_a=this._animationStates;_i<_a.length;_i++){var animationState=_a[_i];animationState.stop();}}};Animation.prototype.playConfig=function(animationConfig){var animationName=animationConfig.animation;if(!(animationName in this._animations)){console.warn("Non-existent animation.\n","DragonBones name: "+this._armature.armatureData.parent.name,"Armature name: "+this._armature.name,"Animation name: "+animationName);return null;}var animationData=this._animations[animationName];if(animationConfig.fadeOutMode===5){for(var _i=0,_a=this._animationStates;_i<_a.length;_i++){var animationState_1=_a[_i];if(animationState_1._animationData===animationData){return animationState_1;}}}if(this._animationStates.length===0){animationConfig.fadeInTime=0.0;}else if(animationConfig.fadeInTime<0.0){animationConfig.fadeInTime=animationData.fadeInTime;}if(animationConfig.fadeOutTime<0.0){animationConfig.fadeOutTime=animationConfig.fadeInTime;}if(animationConfig.timeScale<=-100.0){animationConfig.timeScale=1.0/animationData.scale;}if(animationData.frameCount>1){if(animationConfig.position<0.0){animationConfig.position%=animationData.duration;animationConfig.position=animationData.duration-animationConfig.position;}else if(animationConfig.position===animationData.duration){animationConfig.position-=0.000001;}else if(animationConfig.position>animationData.duration){animationConfig.position%=animationData.duration;}if(animationConfig.duration>0.0&&animationConfig.position+animationConfig.duration>animationData.duration){animationConfig.duration=animationData.duration-animationConfig.position;}if(animationConfig.playTimes<0){animationConfig.playTimes=animationData.playTimes;}}else {animationConfig.playTimes=1;animationConfig.position=0.0;if(animationConfig.duration>0.0){animationConfig.duration=0.0;}}if(animationConfig.duration===0.0){animationConfig.duration=-1.0;}this._fadeOut(animationConfig);var animationState=dragonBones.BaseObject.borrowObject(dragonBones.AnimationState);animationState.init(this._armature,animationData,animationConfig);this._animationDirty=true;this._armature._cacheFrameIndex=-1;if(this._animationStates.length>0){var added=false;for(var i=0,l=this._animationStates.length;i<l;++i){if(animationState.layer>this._animationStates[i].layer){added=true;this._animationStates.splice(i,0,animationState);break;}else if(i!==l-1&&animationState.layer>this._animationStates[i+1].layer){added=true;this._animationStates.splice(i+1,0,animationState);break;}}if(!added){this._animationStates.push(animationState);}}else {this._animationStates.push(animationState);}for(var _b=0,_c=this._armature.getSlots();_b<_c.length;_b++){var slot=_c[_b];var childArmature=slot.childArmature;if(childArmature!==null&&childArmature.inheritAnimation&&childArmature.animation.hasAnimation(animationName)&&childArmature.animation.getState(animationName)===null){childArmature.animation.fadeIn(animationName);}}var isLocked=false;for(var k in animationData.animationTimelines){if(!this._lockUpdate){isLocked=true;this._lockUpdate=true;}var childAnimatiionState=this.fadeIn(k,animationConfig.fadeInTime,1,animationState.layer,null,0);if(childAnimatiionState!==null){childAnimatiionState.resetToPose=false;childAnimatiionState._parent=animationState;childAnimatiionState.stop();}}if(isLocked){this._lockUpdate=false;}if(!this._lockUpdate){if(animationConfig.fadeInTime<=0.0){this._armature.advanceTime(0.0);}this._lastAnimationState=animationState;}return animationState;};Animation.prototype.play=function(animationName,playTimes){if(animationName===void 0){animationName=null;}if(playTimes===void 0){playTimes=-1;}this._animationConfig.clear();this._animationConfig.resetToPose=true;this._animationConfig.playTimes=playTimes;this._animationConfig.fadeInTime=0.0;this._animationConfig.animation=animationName!==null?animationName:"";if(animationName!==null&&animationName.length>0){this.playConfig(this._animationConfig);}else if(this._lastAnimationState===null){var defaultAnimation=this._armature.armatureData.defaultAnimation;if(defaultAnimation!==null){this._animationConfig.animation=defaultAnimation.name;this.playConfig(this._animationConfig);}}else if(!this._lastAnimationState.isPlaying&&!this._lastAnimationState.isCompleted){this._lastAnimationState.play();}else {this._animationConfig.animation=this._lastAnimationState.name;this.playConfig(this._animationConfig);}return this._lastAnimationState;};Animation.prototype.fadeIn=function(animationName,fadeInTime,playTimes,layer,group,fadeOutMode){if(fadeInTime===void 0){fadeInTime=-1.0;}if(playTimes===void 0){playTimes=-1;}if(layer===void 0){layer=0;}if(group===void 0){group=null;}if(fadeOutMode===void 0){fadeOutMode=3;}this._animationConfig.clear();this._animationConfig.fadeOutMode=fadeOutMode;this._animationConfig.playTimes=playTimes;this._animationConfig.layer=layer;this._animationConfig.fadeInTime=fadeInTime;this._animationConfig.animation=animationName;this._animationConfig.group=group!==null?group:"";return this.playConfig(this._animationConfig);};Animation.prototype.gotoAndPlayByTime=function(animationName,time,playTimes){if(time===void 0){time=0.0;}if(playTimes===void 0){playTimes=-1;}this._animationConfig.clear();this._animationConfig.resetToPose=true;this._animationConfig.playTimes=playTimes;this._animationConfig.position=time;this._animationConfig.fadeInTime=0.0;this._animationConfig.animation=animationName;return this.playConfig(this._animationConfig);};Animation.prototype.gotoAndPlayByFrame=function(animationName,frame,playTimes){if(frame===void 0){frame=0;}if(playTimes===void 0){playTimes=-1;}this._animationConfig.clear();this._animationConfig.resetToPose=true;this._animationConfig.playTimes=playTimes;this._animationConfig.fadeInTime=0.0;this._animationConfig.animation=animationName;var animationData=animationName in this._animations?this._animations[animationName]:null;if(animationData!==null){this._animationConfig.position=animationData.duration*frame/animationData.frameCount;}return this.playConfig(this._animationConfig);};Animation.prototype.gotoAndPlayByProgress=function(animationName,progress,playTimes){if(progress===void 0){progress=0.0;}if(playTimes===void 0){playTimes=-1;}this._animationConfig.clear();this._animationConfig.resetToPose=true;this._animationConfig.playTimes=playTimes;this._animationConfig.fadeInTime=0.0;this._animationConfig.animation=animationName;var animationData=animationName in this._animations?this._animations[animationName]:null;if(animationData!==null){this._animationConfig.position=animationData.duration*(progress>0.0?progress:0.0);}return this.playConfig(this._animationConfig);};Animation.prototype.gotoAndStopByTime=function(animationName,time){if(time===void 0){time=0.0;}var animationState=this.gotoAndPlayByTime(animationName,time,1);if(animationState!==null){animationState.stop();}return animationState;};Animation.prototype.gotoAndStopByFrame=function(animationName,frame){if(frame===void 0){frame=0;}var animationState=this.gotoAndPlayByFrame(animationName,frame,1);if(animationState!==null){animationState.stop();}return animationState;};Animation.prototype.gotoAndStopByProgress=function(animationName,progress){if(progress===void 0){progress=0.0;}var animationState=this.gotoAndPlayByProgress(animationName,progress,1);if(animationState!==null){animationState.stop();}return animationState;};Animation.prototype.getState=function(animationName){var i=this._animationStates.length;while(i--){var animationState=this._animationStates[i];if(animationState.name===animationName){return animationState;}}return null;};Animation.prototype.hasAnimation=function(animationName){return animationName in this._animations;};Animation.prototype.getStates=function(){return this._animationStates;};Object.defineProperty(Animation.prototype,"isPlaying",{get:function(){for(var _i=0,_a=this._animationStates;_i<_a.length;_i++){var animationState=_a[_i];if(animationState.isPlaying){return true;}}return false;},enumerable:true,configurable:true});Object.defineProperty(Animation.prototype,"isCompleted",{get:function(){for(var _i=0,_a=this._animationStates;_i<_a.length;_i++){var animationState=_a[_i];if(!animationState.isCompleted){return false;}}return this._animationStates.length>0;},enumerable:true,configurable:true});Object.defineProperty(Animation.prototype,"lastAnimationName",{get:function(){return this._lastAnimationState!==null?this._lastAnimationState.name:"";},enumerable:true,configurable:true});Object.defineProperty(Animation.prototype,"animationNames",{get:function(){return this._animationNames;},enumerable:true,configurable:true});Object.defineProperty(Animation.prototype,"animations",{get:function(){return this._animations;},set:function(value){if(this._animations===value){return;}this._animationNames.length=0;for(var k in this._animations){delete this._animations[k];}for(var k in value){this._animationNames.push(k);this._animations[k]=value[k];}},enumerable:true,configurable:true});Object.defineProperty(Animation.prototype,"animationConfig",{get:function(){this._animationConfig.clear();return this._animationConfig;},enumerable:true,configurable:true});Object.defineProperty(Animation.prototype,"lastAnimationState",{get:function(){return this._lastAnimationState;},enumerable:true,configurable:true});Animation.prototype.gotoAndPlay=function(animationName,fadeInTime,duration,playTimes,layer,group,fadeOutMode,pauseFadeOut,pauseFadeIn){if(fadeInTime===void 0){fadeInTime=-1;}if(duration===void 0){duration=-1;}if(playTimes===void 0){playTimes=-1;}if(layer===void 0){layer=0;}if(group===void 0){group=null;}if(fadeOutMode===void 0){fadeOutMode=3;}console.warn("Deprecated.");this._animationConfig.clear();this._animationConfig.resetToPose=true;this._animationConfig.fadeOutMode=fadeOutMode;this._animationConfig.playTimes=playTimes;this._animationConfig.layer=layer;this._animationConfig.fadeInTime=fadeInTime;this._animationConfig.animation=animationName;this._animationConfig.group=group!==null?group:"";var animationData=this._animations[animationName];if(animationData&&duration>0.0){this._animationConfig.timeScale=animationData.duration/duration;}return this.playConfig(this._animationConfig);};Animation.prototype.gotoAndStop=function(animationName,time){if(time===void 0){time=0;}console.warn("Deprecated.");return this.gotoAndStopByTime(animationName,time);};Object.defineProperty(Animation.prototype,"animationList",{get:function(){console.warn("Deprecated.");return this._animationNames;},enumerable:true,configurable:true});Object.defineProperty(Animation.prototype,"animationDataList",{get:function(){console.warn("Deprecated.");var list=[];for(var i=0,l=this._animationNames.length;i<l;++i){list.push(this._animations[this._animationNames[i]]);}return list;},enumerable:true,configurable:true});return Animation;}(dragonBones.BaseObject);dragonBones.Animation=Animation;})(dragonBones);(function(dragonBones){var AnimationState=function(_super){__extends(AnimationState,_super);function AnimationState(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._blendState=new BlendState();_this._boneMask=[];_this._boneTimelines=[];_this._surfaceTimelines=[];_this._slotTimelines=[];_this._constraintTimelines=[];_this._animationTimelines=[];_this._poseTimelines=[];_this._bonePoses={};_this._actionTimeline=null;_this._zOrderTimeline=null;_this._parent=null;return _this;}AnimationState.toString=function(){return "[class dragonBones.AnimationState]";};AnimationState.prototype._onClear=function(){for(var _i=0,_a=this._boneTimelines;_i<_a.length;_i++){var timeline=_a[_i];timeline.returnToPool();}for(var _b=0,_c=this._surfaceTimelines;_b<_c.length;_b++){var timeline=_c[_b];timeline.returnToPool();}for(var _d=0,_e=this._slotTimelines;_d<_e.length;_d++){var timeline=_e[_d];timeline.returnToPool();}for(var _f=0,_g=this._constraintTimelines;_f<_g.length;_f++){var timeline=_g[_f];timeline.returnToPool();}for(var _h=0,_j=this._animationTimelines;_h<_j.length;_h++){var timeline=_j[_h];timeline.returnToPool();}for(var k in this._bonePoses){this._bonePoses[k].returnToPool();delete this._bonePoses[k];}if(this._actionTimeline!==null){this._actionTimeline.returnToPool();}if(this._zOrderTimeline!==null){this._zOrderTimeline.returnToPool();}this.actionEnabled=false;this.additiveBlending=false;this.displayControl=false;this.resetToPose=false;this.playTimes=1;this.layer=0;this.timeScale=1.0;this.weight=1.0;this.autoFadeOutTime=0.0;this.fadeTotalTime=0.0;this.name="";this.group="";this._timelineDirty=2;this._playheadState=0;this._fadeState=-1;this._subFadeState=-1;this._position=0.0;this._duration=0.0;this._fadeTime=0.0;this._time=0.0;this._fadeProgress=0.0;this._weightResult=0.0;this._blendState.clear();this._boneMask.length=0;this._boneTimelines.length=0;this._surfaceTimelines.length=0;this._slotTimelines.length=0;this._constraintTimelines.length=0;this._animationTimelines.length=0;this._poseTimelines.length=0;this._animationData=null;this._armature=null;this._actionTimeline=null;this._zOrderTimeline=null;this._parent=null;};AnimationState.prototype._updateTimelines=function(){{for(var _i=0,_a=this._armature._constraints;_i<_a.length;_i++){var constraint=_a[_i];var timelineDatas=this._animationData.getConstraintTimelines(constraint.name);if(timelineDatas!==null){for(var _b=0,timelineDatas_1=timelineDatas;_b<timelineDatas_1.length;_b++){var timelineData=timelineDatas_1[_b];switch(timelineData.type){case 30:{var timeline=dragonBones.BaseObject.borrowObject(dragonBones.IKConstraintTimelineState);timeline.constraint=constraint;timeline.init(this._armature,this,timelineData);this._constraintTimelines.push(timeline);break;}}}}else if(this.resetToPose){var timeline=dragonBones.BaseObject.borrowObject(dragonBones.IKConstraintTimelineState);timeline.constraint=constraint;timeline.init(this._armature,this,null);this._constraintTimelines.push(timeline);this._poseTimelines.push(timeline);}}}{for(var _c=0,_d=this._armature.animation.getStates();_c<_d.length;_c++){var animationState=_d[_c];if(animationState._parent!==this){continue;}var timelineDatas=this._animationData.getAnimationTimelines(animationState.name);if(timelineDatas===null){continue;}for(var _e=0,timelineDatas_2=timelineDatas;_e<timelineDatas_2.length;_e++){var timelineData=timelineDatas_2[_e];switch(timelineData.type){case 40:{var timeline=dragonBones.BaseObject.borrowObject(dragonBones.AnimationTimelineState);timeline.animationState=animationState;timeline.init(this._armature,this,timelineData);this._animationTimelines.push(timeline);break;}}}}}};AnimationState.prototype._updateBoneAndSlotTimelines=function(){{var boneTimelines={};for(var _i=0,_a=this._boneTimelines;_i<_a.length;_i++){var timeline=_a[_i];var timelineName=timeline.bone.name;if(!(timelineName in boneTimelines)){boneTimelines[timelineName]=[];}boneTimelines[timelineName].push(timeline);}for(var _b=0,_c=this._armature.getBones();_b<_c.length;_b++){var bone=_c[_b];var timelineName=bone.name;if(!this.containsBoneMask(timelineName)){continue;}if(timelineName in boneTimelines){delete boneTimelines[timelineName];}else if(bone._boneData.type===0){var timelineDatas=this._animationData.getBoneTimelines(timelineName);var bonePose=timelineName in this._bonePoses?this._bonePoses[timelineName]:this._bonePoses[timelineName]=dragonBones.BaseObject.borrowObject(BonePose);if(timelineDatas!==null){for(var _d=0,timelineDatas_3=timelineDatas;_d<timelineDatas_3.length;_d++){var timelineData=timelineDatas_3[_d];switch(timelineData.type){case 10:{var timeline=dragonBones.BaseObject.borrowObject(dragonBones.BoneAllTimelineState);timeline.bone=bone;timeline.bonePose=bonePose;timeline.init(this._armature,this,timelineData);this._boneTimelines.push(timeline);break;}case 11:{var timeline=dragonBones.BaseObject.borrowObject(dragonBones.BoneTranslateTimelineState);timeline.bone=bone;timeline.bonePose=bonePose;timeline.init(this._armature,this,timelineData);this._boneTimelines.push(timeline);break;}case 12:{var timeline=dragonBones.BaseObject.borrowObject(dragonBones.BoneRotateTimelineState);timeline.bone=bone;timeline.bonePose=bonePose;timeline.init(this._armature,this,timelineData);this._boneTimelines.push(timeline);break;}case 13:{var timeline=dragonBones.BaseObject.borrowObject(dragonBones.BoneScaleTimelineState);timeline.bone=bone;timeline.bonePose=bonePose;timeline.init(this._armature,this,timelineData);this._boneTimelines.push(timeline);break;}}}}else if(this.resetToPose){var timeline=dragonBones.BaseObject.borrowObject(dragonBones.BoneAllTimelineState);timeline.bone=bone;timeline.bonePose=bonePose;timeline.init(this._armature,this,null);this._boneTimelines.push(timeline);this._poseTimelines.push(timeline);}}else if(bone._boneData.type===1){var timelineDatas=this._animationData.getSurfaceTimelines(timelineName);if(timelineDatas!==null){for(var _e=0,timelineDatas_4=timelineDatas;_e<timelineDatas_4.length;_e++){var timelineData=timelineDatas_4[_e];switch(timelineData.type){case 50:{var timeline=dragonBones.BaseObject.borrowObject(dragonBones.SurfaceTimelineState);timeline.surface=bone;timeline.init(this._armature,this,timelineData);this._surfaceTimelines.push(timeline);break;}}}}else if(this.resetToPose){var timeline=dragonBones.BaseObject.borrowObject(dragonBones.SurfaceTimelineState);timeline.surface=bone;timeline.init(this._armature,this,null);this._surfaceTimelines.push(timeline);this._poseTimelines.push(timeline);}}}for(var k in boneTimelines){for(var _f=0,_g=boneTimelines[k];_f<_g.length;_f++){var timeline=_g[_f];this._boneTimelines.splice(this._boneTimelines.indexOf(timeline),1);timeline.returnToPool();}}}{var slotTimelines={};var ffdFlags=[];for(var _h=0,_j=this._slotTimelines;_h<_j.length;_h++){var timeline=_j[_h];var timelineName=timeline.slot.name;if(!(timelineName in slotTimelines)){slotTimelines[timelineName]=[];}slotTimelines[timelineName].push(timeline);}for(var _k=0,_l=this._armature.getSlots();_k<_l.length;_k++){var slot=_l[_k];var boneName=slot.parent.name;if(!this.containsBoneMask(boneName)){continue;}var timelineName=slot.name;var timelineDatas=this._animationData.getSlotTimelines(timelineName);if(timelineName in slotTimelines){delete slotTimelines[timelineName];}else {var displayIndexFlag=false;var colorFlag=false;ffdFlags.length=0;if(timelineDatas!==null){for(var _m=0,timelineDatas_5=timelineDatas;_m<timelineDatas_5.length;_m++){var timelineData=timelineDatas_5[_m];switch(timelineData.type){case 20:{var timeline=dragonBones.BaseObject.borrowObject(dragonBones.SlotDislayTimelineState);timeline.slot=slot;timeline.init(this._armature,this,timelineData);this._slotTimelines.push(timeline);displayIndexFlag=true;break;}case 21:{var timeline=dragonBones.BaseObject.borrowObject(dragonBones.SlotColorTimelineState);timeline.slot=slot;timeline.init(this._armature,this,timelineData);this._slotTimelines.push(timeline);colorFlag=true;break;}case 22:{var timeline=dragonBones.BaseObject.borrowObject(dragonBones.DeformTimelineState);timeline.slot=slot;timeline.init(this._armature,this,timelineData);this._slotTimelines.push(timeline);ffdFlags.push(timeline.vertexOffset);break;}}}}if(this.resetToPose){if(!displayIndexFlag){var timeline=dragonBones.BaseObject.borrowObject(dragonBones.SlotDislayTimelineState);timeline.slot=slot;timeline.init(this._armature,this,null);this._slotTimelines.push(timeline);this._poseTimelines.push(timeline);}if(!colorFlag){var timeline=dragonBones.BaseObject.borrowObject(dragonBones.SlotColorTimelineState);timeline.slot=slot;timeline.init(this._armature,this,null);this._slotTimelines.push(timeline);this._poseTimelines.push(timeline);}if(slot.rawDisplayDatas!==null){for(var _o=0,_p=slot.rawDisplayDatas;_o<_p.length;_o++){var displayData=_p[_o];if(displayData!==null&&displayData.type===2){var meshOffset=displayData.vertices.offset;if(ffdFlags.indexOf(meshOffset)<0){var timeline=dragonBones.BaseObject.borrowObject(dragonBones.DeformTimelineState);timeline.vertexOffset=meshOffset;timeline.slot=slot;timeline.init(this._armature,this,null);this._slotTimelines.push(timeline);this._poseTimelines.push(timeline);}}}}}}}for(var k in slotTimelines){for(var _q=0,_r=slotTimelines[k];_q<_r.length;_q++){var timeline=_r[_q];this._slotTimelines.splice(this._slotTimelines.indexOf(timeline),1);timeline.returnToPool();}}}};AnimationState.prototype._advanceFadeTime=function(passedTime){var isFadeOut=this._fadeState>0;if(this._subFadeState<0){this._subFadeState=0;var eventType=isFadeOut?dragonBones.EventObject.FADE_OUT:dragonBones.EventObject.FADE_IN;if(this._armature.eventDispatcher.hasDBEventListener(eventType)){var eventObject=dragonBones.BaseObject.borrowObject(dragonBones.EventObject);eventObject.type=eventType;eventObject.armature=this._armature;eventObject.animationState=this;this._armature._dragonBones.bufferEvent(eventObject);}}if(passedTime<0.0){passedTime=-passedTime;}this._fadeTime+=passedTime;if(this._fadeTime>=this.fadeTotalTime){this._subFadeState=1;this._fadeProgress=isFadeOut?0.0:1.0;}else if(this._fadeTime>0.0){this._fadeProgress=isFadeOut?1.0-this._fadeTime/this.fadeTotalTime:this._fadeTime/this.fadeTotalTime;}else {this._fadeProgress=isFadeOut?1.0:0.0;}if(this._subFadeState>0){if(!isFadeOut){this._playheadState|=1;this._fadeState=0;}var eventType=isFadeOut?dragonBones.EventObject.FADE_OUT_COMPLETE:dragonBones.EventObject.FADE_IN_COMPLETE;if(this._armature.eventDispatcher.hasDBEventListener(eventType)){var eventObject=dragonBones.BaseObject.borrowObject(dragonBones.EventObject);eventObject.type=eventType;eventObject.armature=this._armature;eventObject.animationState=this;this._armature._dragonBones.bufferEvent(eventObject);}}};AnimationState.prototype.init=function(armature,animationData,animationConfig){if(this._armature!==null){return;}this._armature=armature;this._animationData=animationData;this.resetToPose=animationConfig.resetToPose;this.additiveBlending=animationConfig.additiveBlending;this.displayControl=animationConfig.displayControl;this.actionEnabled=animationConfig.actionEnabled;this.layer=animationConfig.layer;this.playTimes=animationConfig.playTimes;this.timeScale=animationConfig.timeScale;this.fadeTotalTime=animationConfig.fadeInTime;this.autoFadeOutTime=animationConfig.autoFadeOutTime;this.weight=animationConfig.weight;this.name=animationConfig.name.length>0?animationConfig.name:animationConfig.animation;this.group=animationConfig.group;if(animationConfig.pauseFadeIn){this._playheadState=2;}else {this._playheadState=3;}if(animationConfig.duration<0.0){this._position=0.0;this._duration=this._animationData.duration;if(animationConfig.position!==0.0){if(this.timeScale>=0.0){this._time=animationConfig.position;}else {this._time=animationConfig.position-this._duration;}}else {this._time=0.0;}}else {this._position=animationConfig.position;this._duration=animationConfig.duration;this._time=0.0;}if(this.timeScale<0.0&&this._time===0.0){this._time=-0.000001;}if(this.fadeTotalTime<=0.0){this._fadeProgress=0.999999;}if(animationConfig.boneMask.length>0){this._boneMask.length=animationConfig.boneMask.length;for(var i=0,l=this._boneMask.length;i<l;++i){this._boneMask[i]=animationConfig.boneMask[i];}}this._actionTimeline=dragonBones.BaseObject.borrowObject(dragonBones.ActionTimelineState);this._actionTimeline.init(this._armature,this,this._animationData.actionTimeline);this._actionTimeline.currentTime=this._time;if(this._actionTimeline.currentTime<0.0){this._actionTimeline.currentTime=this._duration-this._actionTimeline.currentTime;}if(this._animationData.zOrderTimeline!==null){this._zOrderTimeline=dragonBones.BaseObject.borrowObject(dragonBones.ZOrderTimelineState);this._zOrderTimeline.init(this._armature,this,this._animationData.zOrderTimeline);}};AnimationState.prototype.advanceTime=function(passedTime,cacheFrameRate){this._blendState.dirty=false;if(this._fadeState!==0||this._subFadeState!==0){this._advanceFadeTime(passedTime);}if(this._playheadState===3){if(this.timeScale!==1.0){passedTime*=this.timeScale;}this._time+=passedTime;}if(this._timelineDirty!==0){if(this._timelineDirty===2){this._updateTimelines();}this._timelineDirty=0;this._updateBoneAndSlotTimelines();}if(this.weight===0.0){return;}var isCacheEnabled=this._fadeState===0&&cacheFrameRate>0.0;var isUpdateTimeline=true;var isUpdateBoneTimeline=true;var time=this._time;this._weightResult=this.weight*this._fadeProgress;if(this._parent!==null){this._weightResult*=this._parent._weightResult/this._parent._fadeProgress;}if(this._actionTimeline.playState<=0){this._actionTimeline.update(time);}if(isCacheEnabled){var internval=cacheFrameRate*2.0;this._actionTimeline.currentTime=Math.floor(this._actionTimeline.currentTime*internval)/internval;}if(this._zOrderTimeline!==null&&this._zOrderTimeline.playState<=0){this._zOrderTimeline.update(time);}if(isCacheEnabled){var cacheFrameIndex=Math.floor(this._actionTimeline.currentTime*cacheFrameRate);if(this._armature._cacheFrameIndex===cacheFrameIndex){isUpdateTimeline=false;isUpdateBoneTimeline=false;}else {this._armature._cacheFrameIndex=cacheFrameIndex;if(this._animationData.cachedFrames[cacheFrameIndex]){isUpdateBoneTimeline=false;}else {this._animationData.cachedFrames[cacheFrameIndex]=true;}}}if(isUpdateTimeline){if(isUpdateBoneTimeline){for(var i=0,l=this._boneTimelines.length;i<l;++i){var timeline=this._boneTimelines[i];if(timeline.playState<=0){timeline.update(time);}if(i===l-1||timeline.bone!==this._boneTimelines[i+1].bone){var state=timeline.bone._blendState.update(this._weightResult,this.layer);if(state!==0){timeline.blend(state);}}}}for(var i=0,l=this._surfaceTimelines.length;i<l;++i){var timeline=this._surfaceTimelines[i];var state=timeline.surface._blendState.update(this._weightResult,this.layer);if(timeline.playState<=0){timeline.update(time);}if(state!==0){timeline.blend(state);}}if(this.displayControl){for(var i=0,l=this._slotTimelines.length;i<l;++i){var timeline=this._slotTimelines[i];var displayController=timeline.slot.displayController;if(displayController===null||displayController===this.name||displayController===this.group){if(timeline.playState<=0){timeline.update(time);}}}}for(var i=0,l=this._constraintTimelines.length;i<l;++i){var timeline=this._constraintTimelines[i];if(timeline.playState<=0){timeline.update(time);}}for(var i=0,l=this._animationTimelines.length;i<l;++i){var timeline=this._animationTimelines[i];var state=timeline.animationState._blendState.update(this._weightResult,this.layer);if(timeline.playState<=0){timeline.update(time);}if(state!==0){timeline.blend(state);}}}if(this._fadeState===0){if(this._subFadeState>0){this._subFadeState=0;if(this._poseTimelines.length>0){for(var _i=0,_a=this._poseTimelines;_i<_a.length;_i++){var timeline=_a[_i];if(timeline instanceof dragonBones.BoneTimelineState){this._boneTimelines.splice(this._boneTimelines.indexOf(timeline),1);}else if(timeline instanceof dragonBones.SurfaceTimelineState){this._surfaceTimelines.splice(this._surfaceTimelines.indexOf(timeline),1);}else if(timeline instanceof dragonBones.SlotTimelineState){this._slotTimelines.splice(this._slotTimelines.indexOf(timeline),1);}else if(timeline instanceof dragonBones.ConstraintTimelineState){this._constraintTimelines.splice(this._constraintTimelines.indexOf(timeline),1);}timeline.returnToPool();}this._poseTimelines.length=0;}}if(this._actionTimeline.playState>0){if(this.autoFadeOutTime>=0.0){this.fadeOut(this.autoFadeOutTime);}}}};AnimationState.prototype.play=function(){this._playheadState=3;};AnimationState.prototype.stop=function(){this._playheadState&=1;};AnimationState.prototype.fadeOut=function(fadeOutTime,pausePlayhead){if(pausePlayhead===void 0){pausePlayhead=true;}if(fadeOutTime<0.0){fadeOutTime=0.0;}if(pausePlayhead){this._playheadState&=2;}if(this._fadeState>0){if(fadeOutTime>this.fadeTotalTime-this._fadeTime){return;}}else {this._fadeState=1;this._subFadeState=-1;if(fadeOutTime<=0.0||this._fadeProgress<=0.0){this._fadeProgress=0.000001;}for(var _i=0,_a=this._boneTimelines;_i<_a.length;_i++){var timeline=_a[_i];timeline.fadeOut();}for(var _b=0,_c=this._surfaceTimelines;_b<_c.length;_b++){var timeline=_c[_b];timeline.fadeOut();}for(var _d=0,_e=this._slotTimelines;_d<_e.length;_d++){var timeline=_e[_d];timeline.fadeOut();}for(var _f=0,_g=this._constraintTimelines;_f<_g.length;_f++){var timeline=_g[_f];timeline.fadeOut();}for(var _h=0,_j=this._animationTimelines;_h<_j.length;_h++){var timeline=_j[_h];timeline.animationState.fadeOut(fadeOutTime,pausePlayhead);timeline.fadeOut();}}this.displayControl=false;this.fadeTotalTime=this._fadeProgress>0.000001?fadeOutTime/this._fadeProgress:0.0;this._fadeTime=this.fadeTotalTime*(1.0-this._fadeProgress);};AnimationState.prototype.containsBoneMask=function(boneName){return this._boneMask.length===0||this._boneMask.indexOf(boneName)>=0;};AnimationState.prototype.addBoneMask=function(boneName,recursive){if(recursive===void 0){recursive=true;}var currentBone=this._armature.getBone(boneName);if(currentBone===null){return;}if(this._boneMask.indexOf(boneName)<0){this._boneMask.push(boneName);}if(recursive){for(var _i=0,_a=this._armature.getBones();_i<_a.length;_i++){var bone=_a[_i];if(this._boneMask.indexOf(bone.name)<0&&currentBone.contains(bone)){this._boneMask.push(bone.name);}}}this._timelineDirty=1;};AnimationState.prototype.removeBoneMask=function(boneName,recursive){if(recursive===void 0){recursive=true;}var index=this._boneMask.indexOf(boneName);if(index>=0){this._boneMask.splice(index,1);}if(recursive){var currentBone=this._armature.getBone(boneName);if(currentBone!==null){var bones=this._armature.getBones();if(this._boneMask.length>0){for(var _i=0,bones_1=bones;_i<bones_1.length;_i++){var bone=bones_1[_i];var index_2=this._boneMask.indexOf(bone.name);if(index_2>=0&&currentBone.contains(bone)){this._boneMask.splice(index_2,1);}}}else {for(var _a=0,bones_2=bones;_a<bones_2.length;_a++){var bone=bones_2[_a];if(bone===currentBone){continue;}if(!currentBone.contains(bone)){this._boneMask.push(bone.name);}}}}}this._timelineDirty=1;};AnimationState.prototype.removeAllBoneMask=function(){this._boneMask.length=0;this._timelineDirty=1;};Object.defineProperty(AnimationState.prototype,"isFadeIn",{get:function(){return this._fadeState<0;},enumerable:true,configurable:true});Object.defineProperty(AnimationState.prototype,"isFadeOut",{get:function(){return this._fadeState>0;},enumerable:true,configurable:true});Object.defineProperty(AnimationState.prototype,"isFadeComplete",{get:function(){return this._fadeState===0;},enumerable:true,configurable:true});Object.defineProperty(AnimationState.prototype,"isPlaying",{get:function(){return (this._playheadState&2)!==0&&this._actionTimeline.playState<=0;},enumerable:true,configurable:true});Object.defineProperty(AnimationState.prototype,"isCompleted",{get:function(){return this._actionTimeline.playState>0;},enumerable:true,configurable:true});Object.defineProperty(AnimationState.prototype,"currentPlayTimes",{get:function(){return this._actionTimeline.currentPlayTimes;},enumerable:true,configurable:true});Object.defineProperty(AnimationState.prototype,"totalTime",{get:function(){return this._duration;},enumerable:true,configurable:true});Object.defineProperty(AnimationState.prototype,"currentTime",{get:function(){return this._actionTimeline.currentTime;},set:function(value){var currentPlayTimes=this._actionTimeline.currentPlayTimes-(this._actionTimeline.playState>0?1:0);if(value<0||this._duration<value){value=value%this._duration+currentPlayTimes*this._duration;if(value<0){value+=this._duration;}}if(this.playTimes>0&&currentPlayTimes===this.playTimes-1&&value===this._duration){value=this._duration-0.000001;}if(this._time===value){return;}this._time=value;this._actionTimeline.setCurrentTime(this._time);if(this._zOrderTimeline!==null){this._zOrderTimeline.playState=-1;}for(var _i=0,_a=this._boneTimelines;_i<_a.length;_i++){var timeline=_a[_i];timeline.playState=-1;}for(var _b=0,_c=this._slotTimelines;_b<_c.length;_b++){var timeline=_c[_b];timeline.playState=-1;}},enumerable:true,configurable:true});Object.defineProperty(AnimationState.prototype,"animationData",{get:function(){return this._animationData;},enumerable:true,configurable:true});return AnimationState;}(dragonBones.BaseObject);dragonBones.AnimationState=AnimationState;var BonePose=function(_super){__extends(BonePose,_super);function BonePose(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this.current=new dragonBones.Transform();_this.delta=new dragonBones.Transform();_this.result=new dragonBones.Transform();return _this;}BonePose.toString=function(){return "[class dragonBones.BonePose]";};BonePose.prototype._onClear=function(){this.current.identity();this.delta.identity();this.result.identity();};return BonePose;}(dragonBones.BaseObject);dragonBones.BonePose=BonePose;var BlendState=function(){function BlendState(){}BlendState.prototype.update=function(weight,p_layer){if(this.dirty){if(this.leftWeight>0.0){if(this.layer!==p_layer){if(this.layerWeight>=this.leftWeight){this.leftWeight=0.0;return 0;}else {this.layer=p_layer;this.leftWeight-=this.layerWeight;this.layerWeight=0.0;}}}else {return 0;}weight*=this.leftWeight;this.layerWeight+=weight;this.blendWeight=weight;return 2;}this.dirty=true;this.layer=p_layer;this.layerWeight=weight;this.leftWeight=1.0;this.blendWeight=weight;return 1;};BlendState.prototype.clear=function(){this.dirty=false;this.layer=0;this.leftWeight=0.0;this.layerWeight=0.0;this.blendWeight=0.0;};return BlendState;}();dragonBones.BlendState=BlendState;})(dragonBones);(function(dragonBones){var TimelineState=function(_super){__extends(TimelineState,_super);function TimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}TimelineState.prototype._onClear=function(){this.playState=-1;this.currentPlayTimes=-1;this.currentTime=-1.0;this._tweenState=0;this._frameRate=0;this._frameValueOffset=0;this._frameCount=0;this._frameOffset=0;this._frameIndex=-1;this._frameRateR=0.0;this._position=0.0;this._duration=0.0;this._timeScale=1.0;this._timeOffset=0.0;this._dragonBonesData=null;this._animationData=null;this._timelineData=null;this._armature=null;this._animationState=null;this._actionTimeline=null;this._frameArray=null;this._frameIntArray=null;this._frameFloatArray=null;this._timelineArray=null;this._frameIndices=null;};TimelineState.prototype._setCurrentTime=function(passedTime){var prevState=this.playState;var prevPlayTimes=this.currentPlayTimes;var prevTime=this.currentTime;if(this._actionTimeline!==null&&this._frameCount<=1){this.playState=this._actionTimeline.playState>=0?1:-1;this.currentPlayTimes=1;this.currentTime=this._actionTimeline.currentTime;}else if(this._actionTimeline===null||this._timeScale!==1.0||this._timeOffset!==0.0){var playTimes=this._animationState.playTimes;var totalTime=playTimes*this._duration;passedTime*=this._timeScale;if(this._timeOffset!==0.0){passedTime+=this._timeOffset*this._animationData.duration;}if(playTimes>0&&(passedTime>=totalTime||passedTime<=-totalTime)){if(this.playState<=0&&this._animationState._playheadState===3){this.playState=1;}this.currentPlayTimes=playTimes;if(passedTime<0.0){this.currentTime=0.0;}else {this.currentTime=this._duration+0.000001;}}else {if(this.playState!==0&&this._animationState._playheadState===3){this.playState=0;}if(passedTime<0.0){passedTime=-passedTime;this.currentPlayTimes=Math.floor(passedTime/this._duration);this.currentTime=this._duration-passedTime%this._duration;}else {this.currentPlayTimes=Math.floor(passedTime/this._duration);this.currentTime=passedTime%this._duration;}}this.currentTime+=this._position;}else {this.playState=this._actionTimeline.playState;this.currentPlayTimes=this._actionTimeline.currentPlayTimes;this.currentTime=this._actionTimeline.currentTime;}if(this.currentPlayTimes===prevPlayTimes&&this.currentTime===prevTime){return false;}if(prevState<0&&this.playState!==prevState||this.playState<=0&&this.currentPlayTimes!==prevPlayTimes){this._frameIndex=-1;}return true;};TimelineState.prototype.init=function(armature,animationState,timelineData){this._armature=armature;this._animationState=animationState;this._timelineData=timelineData;this._actionTimeline=this._animationState._actionTimeline;if(this===this._actionTimeline){this._actionTimeline=null;}this._animationData=this._animationState._animationData;this._frameRate=this._animationData.parent.frameRate;this._frameRateR=1.0/this._frameRate;this._position=this._animationState._position;this._duration=this._animationState._duration;this._dragonBonesData=this._animationData.parent.parent;if(this._timelineData!==null){this._frameIntArray=this._dragonBonesData.frameIntArray;this._frameFloatArray=this._dragonBonesData.frameFloatArray;this._frameArray=this._dragonBonesData.frameArray;this._timelineArray=this._dragonBonesData.timelineArray;this._frameIndices=this._dragonBonesData.frameIndices;this._frameCount=this._timelineArray[this._timelineData.offset+2];this._frameValueOffset=this._timelineArray[this._timelineData.offset+4];this._timeScale=100.0/this._timelineArray[this._timelineData.offset+0];this._timeOffset=this._timelineArray[this._timelineData.offset+1]*0.01;}};TimelineState.prototype.fadeOut=function(){};TimelineState.prototype.update=function(passedTime){if(this._setCurrentTime(passedTime)){if(this._frameCount>1){var timelineFrameIndex=Math.floor(this.currentTime*this._frameRate);var frameIndex=this._frameIndices[this._timelineData.frameIndicesOffset+timelineFrameIndex];if(this._frameIndex!==frameIndex){this._frameIndex=frameIndex;this._frameOffset=this._animationData.frameOffset+this._timelineArray[this._timelineData.offset+5+this._frameIndex];this._onArriveAtFrame();}}else if(this._frameIndex<0){this._frameIndex=0;if(this._timelineData!==null){this._frameOffset=this._animationData.frameOffset+this._timelineArray[this._timelineData.offset+5];}this._onArriveAtFrame();}if(this._tweenState!==0){this._onUpdateFrame();}}};return TimelineState;}(dragonBones.BaseObject);dragonBones.TimelineState=TimelineState;var TweenTimelineState=function(_super){__extends(TweenTimelineState,_super);function TweenTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}TweenTimelineState._getEasingValue=function(tweenType,progress,easing){var value=progress;switch(tweenType){case 3:value=Math.pow(progress,2.0);break;case 4:value=1.0-Math.pow(1.0-progress,2.0);break;case 5:value=0.5*(1.0-Math.cos(progress*Math.PI));break;}return (value-progress)*easing+progress;};TweenTimelineState._getEasingCurveValue=function(progress,samples,count,offset){if(progress<=0.0){return 0.0;}else if(progress>=1.0){return 1.0;}var segmentCount=count+1;var valueIndex=Math.floor(progress*segmentCount);var fromValue=valueIndex===0?0.0:samples[offset+valueIndex-1];var toValue=valueIndex===segmentCount-1?10000.0:samples[offset+valueIndex];return (fromValue+(toValue-fromValue)*(progress*segmentCount-valueIndex))*0.0001;};TweenTimelineState.prototype._onClear=function(){_super.prototype._onClear.call(this);this._tweenType=0;this._curveCount=0;this._framePosition=0.0;this._frameDurationR=0.0;this._tweenProgress=0.0;this._tweenEasing=0.0;};TweenTimelineState.prototype._onArriveAtFrame=function(){if(this._frameCount>1&&(this._frameIndex!==this._frameCount-1||this._animationState.playTimes===0||this._animationState.currentPlayTimes<this._animationState.playTimes-1)){this._tweenType=this._frameArray[this._frameOffset+1];this._tweenState=this._tweenType===0?1:2;if(this._tweenType===2){this._curveCount=this._frameArray[this._frameOffset+2];}else if(this._tweenType!==0&&this._tweenType!==1){this._tweenEasing=this._frameArray[this._frameOffset+2]*0.01;}this._framePosition=this._frameArray[this._frameOffset]*this._frameRateR;if(this._frameIndex===this._frameCount-1){this._frameDurationR=1.0/(this._animationData.duration-this._framePosition);}else {var nextFrameOffset=this._animationData.frameOffset+this._timelineArray[this._timelineData.offset+5+this._frameIndex+1];var frameDuration=this._frameArray[nextFrameOffset]*this._frameRateR-this._framePosition;if(frameDuration>0){this._frameDurationR=1.0/frameDuration;}else {this._frameDurationR=0.0;}}}else {this._tweenState=1;}};TweenTimelineState.prototype._onUpdateFrame=function(){if(this._tweenState===2){this._tweenProgress=(this.currentTime-this._framePosition)*this._frameDurationR;if(this._tweenType===2){this._tweenProgress=TweenTimelineState._getEasingCurveValue(this._tweenProgress,this._frameArray,this._curveCount,this._frameOffset+3);}else if(this._tweenType!==1){this._tweenProgress=TweenTimelineState._getEasingValue(this._tweenType,this._tweenProgress,this._tweenEasing);}}else {this._tweenProgress=0.0;}};return TweenTimelineState;}(TimelineState);dragonBones.TweenTimelineState=TweenTimelineState;var BoneTimelineState=function(_super){__extends(BoneTimelineState,_super);function BoneTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}BoneTimelineState.prototype._onClear=function(){_super.prototype._onClear.call(this);this.bone=null;this.bonePose=null;};BoneTimelineState.prototype.blend=function(state){var blendWeight=this.bone._blendState.blendWeight;var animationPose=this.bone.animationPose;var result=this.bonePose.result;if(state===2){animationPose.x+=result.x*blendWeight;animationPose.y+=result.y*blendWeight;animationPose.rotation+=result.rotation*blendWeight;animationPose.skew+=result.skew*blendWeight;animationPose.scaleX+=(result.scaleX-1.0)*blendWeight;animationPose.scaleY+=(result.scaleY-1.0)*blendWeight;}else if(blendWeight!==1.0){animationPose.x=result.x*blendWeight;animationPose.y=result.y*blendWeight;animationPose.rotation=result.rotation*blendWeight;animationPose.skew=result.skew*blendWeight;animationPose.scaleX=(result.scaleX-1.0)*blendWeight+1.0;animationPose.scaleY=(result.scaleY-1.0)*blendWeight+1.0;}else {animationPose.x=result.x;animationPose.y=result.y;animationPose.rotation=result.rotation;animationPose.skew=result.skew;animationPose.scaleX=result.scaleX;animationPose.scaleY=result.scaleY;}if(this._animationState._fadeState!==0||this._animationState._subFadeState!==0){this.bone._transformDirty=true;}};return BoneTimelineState;}(TweenTimelineState);dragonBones.BoneTimelineState=BoneTimelineState;var SlotTimelineState=function(_super){__extends(SlotTimelineState,_super);function SlotTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}SlotTimelineState.prototype._onClear=function(){_super.prototype._onClear.call(this);this.slot=null;};return SlotTimelineState;}(TweenTimelineState);dragonBones.SlotTimelineState=SlotTimelineState;var ConstraintTimelineState=function(_super){__extends(ConstraintTimelineState,_super);function ConstraintTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}ConstraintTimelineState.prototype._onClear=function(){_super.prototype._onClear.call(this);this.constraint=null;};return ConstraintTimelineState;}(TweenTimelineState);dragonBones.ConstraintTimelineState=ConstraintTimelineState;})(dragonBones);(function(dragonBones){var ActionTimelineState=function(_super){__extends(ActionTimelineState,_super);function ActionTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}ActionTimelineState.toString=function(){return "[class dragonBones.ActionTimelineState]";};ActionTimelineState.prototype._onCrossFrame=function(frameIndex){var eventDispatcher=this._armature.eventDispatcher;if(this._animationState.actionEnabled){var frameOffset=this._animationData.frameOffset+this._timelineArray[this._timelineData.offset+5+frameIndex];var actionCount=this._frameArray[frameOffset+1];var actions=this._animationData.parent.actions;for(var i=0;i<actionCount;++i){var actionIndex=this._frameArray[frameOffset+2+i];var action=actions[actionIndex];if(action.type===0){var eventObject=dragonBones.BaseObject.borrowObject(dragonBones.EventObject);eventObject.time=this._frameArray[frameOffset]/this._frameRate;eventObject.animationState=this._animationState;dragonBones.EventObject.actionDataToInstance(action,eventObject,this._armature);this._armature._bufferAction(eventObject,true);}else {var eventType=action.type===10?dragonBones.EventObject.FRAME_EVENT:dragonBones.EventObject.SOUND_EVENT;if(action.type===11||eventDispatcher.hasDBEventListener(eventType)){var eventObject=dragonBones.BaseObject.borrowObject(dragonBones.EventObject);eventObject.time=this._frameArray[frameOffset]/this._frameRate;eventObject.animationState=this._animationState;dragonBones.EventObject.actionDataToInstance(action,eventObject,this._armature);this._armature._dragonBones.bufferEvent(eventObject);}}}}};ActionTimelineState.prototype._onArriveAtFrame=function(){};ActionTimelineState.prototype._onUpdateFrame=function(){};ActionTimelineState.prototype.update=function(passedTime){var prevState=this.playState;var prevPlayTimes=this.currentPlayTimes;var prevTime=this.currentTime;if(this._setCurrentTime(passedTime)){var eventDispatcher=this._armature.eventDispatcher;if(prevState<0){if(this.playState!==prevState){if(this._animationState.displayControl&&this._animationState.resetToPose){this._armature._sortZOrder(null,0);}prevPlayTimes=this.currentPlayTimes;if(eventDispatcher.hasDBEventListener(dragonBones.EventObject.START)){var eventObject=dragonBones.BaseObject.borrowObject(dragonBones.EventObject);eventObject.type=dragonBones.EventObject.START;eventObject.armature=this._armature;eventObject.animationState=this._animationState;this._armature._dragonBones.bufferEvent(eventObject);}}else {return;}}var isReverse=this._animationState.timeScale<0.0;var loopCompleteEvent=null;var completeEvent=null;if(this.currentPlayTimes!==prevPlayTimes){if(eventDispatcher.hasDBEventListener(dragonBones.EventObject.LOOP_COMPLETE)){loopCompleteEvent=dragonBones.BaseObject.borrowObject(dragonBones.EventObject);loopCompleteEvent.type=dragonBones.EventObject.LOOP_COMPLETE;loopCompleteEvent.armature=this._armature;loopCompleteEvent.animationState=this._animationState;}if(this.playState>0){if(eventDispatcher.hasDBEventListener(dragonBones.EventObject.COMPLETE)){completeEvent=dragonBones.BaseObject.borrowObject(dragonBones.EventObject);completeEvent.type=dragonBones.EventObject.COMPLETE;completeEvent.armature=this._armature;completeEvent.animationState=this._animationState;}}}if(this._frameCount>1){var timelineData=this._timelineData;var timelineFrameIndex=Math.floor(this.currentTime*this._frameRate);var frameIndex=this._frameIndices[timelineData.frameIndicesOffset+timelineFrameIndex];if(this._frameIndex!==frameIndex){var crossedFrameIndex=this._frameIndex;this._frameIndex=frameIndex;if(this._timelineArray!==null){this._frameOffset=this._animationData.frameOffset+this._timelineArray[timelineData.offset+5+this._frameIndex];if(isReverse){if(crossedFrameIndex<0){var prevFrameIndex=Math.floor(prevTime*this._frameRate);crossedFrameIndex=this._frameIndices[timelineData.frameIndicesOffset+prevFrameIndex];if(this.currentPlayTimes===prevPlayTimes){if(crossedFrameIndex===frameIndex){crossedFrameIndex=-1;}}}while(crossedFrameIndex>=0){var frameOffset=this._animationData.frameOffset+this._timelineArray[timelineData.offset+5+crossedFrameIndex];var framePosition=this._frameArray[frameOffset]/this._frameRate;if(this._position<=framePosition&&framePosition<=this._position+this._duration){this._onCrossFrame(crossedFrameIndex);}if(loopCompleteEvent!==null&&crossedFrameIndex===0){this._armature._dragonBones.bufferEvent(loopCompleteEvent);loopCompleteEvent=null;}if(crossedFrameIndex>0){crossedFrameIndex--;}else {crossedFrameIndex=this._frameCount-1;}if(crossedFrameIndex===frameIndex){break;}}}else {if(crossedFrameIndex<0){var prevFrameIndex=Math.floor(prevTime*this._frameRate);crossedFrameIndex=this._frameIndices[timelineData.frameIndicesOffset+prevFrameIndex];var frameOffset=this._animationData.frameOffset+this._timelineArray[timelineData.offset+5+crossedFrameIndex];var framePosition=this._frameArray[frameOffset]/this._frameRate;if(this.currentPlayTimes===prevPlayTimes){if(prevTime<=framePosition){if(crossedFrameIndex>0){crossedFrameIndex--;}else {crossedFrameIndex=this._frameCount-1;}}else if(crossedFrameIndex===frameIndex){crossedFrameIndex=-1;}}}while(crossedFrameIndex>=0){if(crossedFrameIndex<this._frameCount-1){crossedFrameIndex++;}else {crossedFrameIndex=0;}var frameOffset=this._animationData.frameOffset+this._timelineArray[timelineData.offset+5+crossedFrameIndex];var framePosition=this._frameArray[frameOffset]/this._frameRate;if(this._position<=framePosition&&framePosition<=this._position+this._duration){this._onCrossFrame(crossedFrameIndex);}if(loopCompleteEvent!==null&&crossedFrameIndex===0){this._armature._dragonBones.bufferEvent(loopCompleteEvent);loopCompleteEvent=null;}if(crossedFrameIndex===frameIndex){break;}}}}}}else if(this._frameIndex<0){this._frameIndex=0;if(this._timelineData!==null){this._frameOffset=this._animationData.frameOffset+this._timelineArray[this._timelineData.offset+5];var framePosition=this._frameArray[this._frameOffset]/this._frameRate;if(this.currentPlayTimes===prevPlayTimes){if(prevTime<=framePosition){this._onCrossFrame(this._frameIndex);}}else if(this._position<=framePosition){if(!isReverse&&loopCompleteEvent!==null){this._armature._dragonBones.bufferEvent(loopCompleteEvent);loopCompleteEvent=null;}this._onCrossFrame(this._frameIndex);}}}if(loopCompleteEvent!==null){this._armature._dragonBones.bufferEvent(loopCompleteEvent);}if(completeEvent!==null){this._armature._dragonBones.bufferEvent(completeEvent);}}};ActionTimelineState.prototype.setCurrentTime=function(value){this._setCurrentTime(value);this._frameIndex=-1;};return ActionTimelineState;}(dragonBones.TimelineState);dragonBones.ActionTimelineState=ActionTimelineState;var ZOrderTimelineState=function(_super){__extends(ZOrderTimelineState,_super);function ZOrderTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}ZOrderTimelineState.toString=function(){return "[class dragonBones.ZOrderTimelineState]";};ZOrderTimelineState.prototype._onArriveAtFrame=function(){if(this.playState>=0){var count=this._frameArray[this._frameOffset+1];if(count>0){this._armature._sortZOrder(this._frameArray,this._frameOffset+2);}else {this._armature._sortZOrder(null,0);}}};ZOrderTimelineState.prototype._onUpdateFrame=function(){};return ZOrderTimelineState;}(dragonBones.TimelineState);dragonBones.ZOrderTimelineState=ZOrderTimelineState;var BoneAllTimelineState=function(_super){__extends(BoneAllTimelineState,_super);function BoneAllTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}BoneAllTimelineState.toString=function(){return "[class dragonBones.BoneAllTimelineState]";};BoneAllTimelineState.prototype._onArriveAtFrame=function(){_super.prototype._onArriveAtFrame.call(this);if(this._timelineData!==null){var valueOffset=this._animationData.frameFloatOffset+this._frameValueOffset+this._frameIndex*6;var scale=this._armature._armatureData.scale;var frameFloatArray=this._frameFloatArray;var current=this.bonePose.current;var delta=this.bonePose.delta;current.x=frameFloatArray[valueOffset++]*scale;current.y=frameFloatArray[valueOffset++]*scale;current.rotation=frameFloatArray[valueOffset++];current.skew=frameFloatArray[valueOffset++];current.scaleX=frameFloatArray[valueOffset++];current.scaleY=frameFloatArray[valueOffset++];if(this._tweenState===2){if(this._frameIndex===this._frameCount-1){valueOffset=this._animationData.frameFloatOffset+this._frameValueOffset;}delta.x=frameFloatArray[valueOffset++]*scale-current.x;delta.y=frameFloatArray[valueOffset++]*scale-current.y;delta.rotation=frameFloatArray[valueOffset++]-current.rotation;delta.skew=frameFloatArray[valueOffset++]-current.skew;delta.scaleX=frameFloatArray[valueOffset++]-current.scaleX;delta.scaleY=frameFloatArray[valueOffset++]-current.scaleY;}else {delta.x=0.0;delta.y=0.0;delta.rotation=0.0;delta.skew=0.0;delta.scaleX=0.0;delta.scaleY=0.0;}}else {var current=this.bonePose.current;var delta=this.bonePose.delta;current.x=0.0;current.y=0.0;current.rotation=0.0;current.skew=0.0;current.scaleX=1.0;current.scaleY=1.0;delta.x=0.0;delta.y=0.0;delta.rotation=0.0;delta.skew=0.0;delta.scaleX=0.0;delta.scaleY=0.0;}};BoneAllTimelineState.prototype._onUpdateFrame=function(){_super.prototype._onUpdateFrame.call(this);var current=this.bonePose.current;var delta=this.bonePose.delta;var result=this.bonePose.result;this.bone._transformDirty=true;if(this._tweenState!==2){this._tweenState=0;}result.x=current.x+delta.x*this._tweenProgress;result.y=current.y+delta.y*this._tweenProgress;result.rotation=current.rotation+delta.rotation*this._tweenProgress;result.skew=current.skew+delta.skew*this._tweenProgress;result.scaleX=current.scaleX+delta.scaleX*this._tweenProgress;result.scaleY=current.scaleY+delta.scaleY*this._tweenProgress;};BoneAllTimelineState.prototype.fadeOut=function(){var result=this.bonePose.result;result.rotation=dragonBones.Transform.normalizeRadian(result.rotation);result.skew=dragonBones.Transform.normalizeRadian(result.skew);};return BoneAllTimelineState;}(dragonBones.BoneTimelineState);dragonBones.BoneAllTimelineState=BoneAllTimelineState;var BoneTranslateTimelineState=function(_super){__extends(BoneTranslateTimelineState,_super);function BoneTranslateTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}BoneTranslateTimelineState.toString=function(){return "[class dragonBones.BoneTranslateTimelineState]";};BoneTranslateTimelineState.prototype._onArriveAtFrame=function(){_super.prototype._onArriveAtFrame.call(this);if(this._timelineData!==null){var valueOffset=this._animationData.frameFloatOffset+this._frameValueOffset+this._frameIndex*2;var scale=this._armature._armatureData.scale;var frameFloatArray=this._frameFloatArray;var current=this.bonePose.current;var delta=this.bonePose.delta;current.x=frameFloatArray[valueOffset++]*scale;current.y=frameFloatArray[valueOffset++]*scale;if(this._tweenState===2){if(this._frameIndex===this._frameCount-1){valueOffset=this._animationData.frameFloatOffset+this._frameValueOffset;}delta.x=frameFloatArray[valueOffset++]*scale-current.x;delta.y=frameFloatArray[valueOffset++]*scale-current.y;}else {delta.x=0.0;delta.y=0.0;}}else {var current=this.bonePose.current;var delta=this.bonePose.delta;current.x=0.0;current.y=0.0;delta.x=0.0;delta.y=0.0;}};BoneTranslateTimelineState.prototype._onUpdateFrame=function(){_super.prototype._onUpdateFrame.call(this);var current=this.bonePose.current;var delta=this.bonePose.delta;var result=this.bonePose.result;this.bone._transformDirty=true;if(this._tweenState!==2){this._tweenState=0;}result.x=current.x+delta.x*this._tweenProgress;result.y=current.y+delta.y*this._tweenProgress;};return BoneTranslateTimelineState;}(dragonBones.BoneTimelineState);dragonBones.BoneTranslateTimelineState=BoneTranslateTimelineState;var BoneRotateTimelineState=function(_super){__extends(BoneRotateTimelineState,_super);function BoneRotateTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}BoneRotateTimelineState.toString=function(){return "[class dragonBones.BoneRotateTimelineState]";};BoneRotateTimelineState.prototype._onArriveAtFrame=function(){_super.prototype._onArriveAtFrame.call(this);if(this._timelineData!==null){var valueOffset=this._animationData.frameFloatOffset+this._frameValueOffset+this._frameIndex*2;var frameFloatArray=this._frameFloatArray;var current=this.bonePose.current;var delta=this.bonePose.delta;current.rotation=frameFloatArray[valueOffset++];current.skew=frameFloatArray[valueOffset++];if(this._tweenState===2){if(this._frameIndex===this._frameCount-1){valueOffset=this._animationData.frameFloatOffset+this._frameValueOffset;delta.rotation=dragonBones.Transform.normalizeRadian(frameFloatArray[valueOffset++]-current.rotation);}else {delta.rotation=frameFloatArray[valueOffset++]-current.rotation;}delta.skew=frameFloatArray[valueOffset++]-current.skew;}else {delta.rotation=0.0;delta.skew=0.0;}}else {var current=this.bonePose.current;var delta=this.bonePose.delta;current.rotation=0.0;current.skew=0.0;delta.rotation=0.0;delta.skew=0.0;}};BoneRotateTimelineState.prototype._onUpdateFrame=function(){_super.prototype._onUpdateFrame.call(this);var current=this.bonePose.current;var delta=this.bonePose.delta;var result=this.bonePose.result;this.bone._transformDirty=true;if(this._tweenState!==2){this._tweenState=0;}result.rotation=current.rotation+delta.rotation*this._tweenProgress;result.skew=current.skew+delta.skew*this._tweenProgress;};BoneRotateTimelineState.prototype.fadeOut=function(){var result=this.bonePose.result;result.rotation=dragonBones.Transform.normalizeRadian(result.rotation);result.skew=dragonBones.Transform.normalizeRadian(result.skew);};return BoneRotateTimelineState;}(dragonBones.BoneTimelineState);dragonBones.BoneRotateTimelineState=BoneRotateTimelineState;var BoneScaleTimelineState=function(_super){__extends(BoneScaleTimelineState,_super);function BoneScaleTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}BoneScaleTimelineState.toString=function(){return "[class dragonBones.BoneScaleTimelineState]";};BoneScaleTimelineState.prototype._onArriveAtFrame=function(){_super.prototype._onArriveAtFrame.call(this);if(this._timelineData!==null){var valueOffset=this._animationData.frameFloatOffset+this._frameValueOffset+this._frameIndex*2;var frameFloatArray=this._frameFloatArray;var current=this.bonePose.current;var delta=this.bonePose.delta;current.scaleX=frameFloatArray[valueOffset++];current.scaleY=frameFloatArray[valueOffset++];if(this._tweenState===2){if(this._frameIndex===this._frameCount-1){valueOffset=this._animationData.frameFloatOffset+this._frameValueOffset;}delta.scaleX=frameFloatArray[valueOffset++]-current.scaleX;delta.scaleY=frameFloatArray[valueOffset++]-current.scaleY;}else {delta.scaleX=0.0;delta.scaleY=0.0;}}else {var current=this.bonePose.current;var delta=this.bonePose.delta;current.scaleX=1.0;current.scaleY=1.0;delta.scaleX=0.0;delta.scaleY=0.0;}};BoneScaleTimelineState.prototype._onUpdateFrame=function(){_super.prototype._onUpdateFrame.call(this);var current=this.bonePose.current;var delta=this.bonePose.delta;var result=this.bonePose.result;this.bone._transformDirty=true;if(this._tweenState!==2){this._tweenState=0;}result.scaleX=current.scaleX+delta.scaleX*this._tweenProgress;result.scaleY=current.scaleY+delta.scaleY*this._tweenProgress;};return BoneScaleTimelineState;}(dragonBones.BoneTimelineState);dragonBones.BoneScaleTimelineState=BoneScaleTimelineState;var SurfaceTimelineState=function(_super){__extends(SurfaceTimelineState,_super);function SurfaceTimelineState(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._current=[];_this._delta=[];_this._result=[];return _this;}SurfaceTimelineState.toString=function(){return "[class dragonBones.SurfaceTimelineState]";};SurfaceTimelineState.prototype._onClear=function(){_super.prototype._onClear.call(this);this.surface=null;this._frameFloatOffset=0;this._valueCount=0;this._deformCount=0;this._valueOffset=0;this._current.length=0;this._delta.length=0;this._result.length=0;};SurfaceTimelineState.prototype._onArriveAtFrame=function(){_super.prototype._onArriveAtFrame.call(this);if(this._timelineData!==null){var valueOffset=this._animationData.frameFloatOffset+this._frameValueOffset+this._frameIndex*this._valueCount;var scale=this._armature._armatureData.scale;var frameFloatArray=this._frameFloatArray;if(this._tweenState===2){var nextValueOffset=valueOffset+this._valueCount;if(this._frameIndex===this._frameCount-1){nextValueOffset=this._animationData.frameFloatOffset+this._frameValueOffset;}for(var i=0;i<this._valueCount;++i){this._delta[i]=frameFloatArray[nextValueOffset+i]*scale-(this._current[i]=frameFloatArray[valueOffset+i]*scale);}}else {for(var i=0;i<this._valueCount;++i){this._current[i]=frameFloatArray[valueOffset+i]*scale;}}}else {for(var i=0;i<this._valueCount;++i){this._current[i]=0.0;}}};SurfaceTimelineState.prototype._onUpdateFrame=function(){_super.prototype._onUpdateFrame.call(this);this.surface._transformDirty=true;if(this._tweenState!==2){this._tweenState=0;}for(var i=0;i<this._valueCount;++i){this._result[i]=this._current[i]+this._delta[i]*this._tweenProgress;}};SurfaceTimelineState.prototype.init=function(armature,animationState,timelineData){_super.prototype.init.call(this,armature,animationState,timelineData);if(this._timelineData!==null){var frameIntOffset=this._animationData.frameIntOffset+this._timelineArray[this._timelineData.offset+3];this._deformCount=this._frameIntArray[frameIntOffset+1];this._valueCount=this._frameIntArray[frameIntOffset+2];this._valueOffset=this._frameIntArray[frameIntOffset+3];this._frameFloatOffset=this._frameIntArray[frameIntOffset+4]+this._animationData.frameFloatOffset;}else {this._deformCount=this.surface._deformVertices.length;this._valueCount=this._deformCount;this._valueOffset=0;this._frameFloatOffset=0;}this._current.length=this._valueCount;this._delta.length=this._valueCount;this._result.length=this._valueCount;for(var i=0;i<this._valueCount;++i){this._delta[i]=0.0;}};SurfaceTimelineState.prototype.blend=function(state){var blendWeight=this.surface._blendState.blendWeight;var result=this.surface._deformVertices;for(var i=0;i<this._deformCount;++i){var value=0.0;if(i<this._valueOffset){value=this._frameFloatArray[this._frameFloatOffset+i];}else if(i<this._valueOffset+this._valueCount){value=this._result[i-this._valueOffset];}else {value=this._frameFloatArray[this._frameFloatOffset+i-this._valueCount];}if(state===2){result[i]+=value*blendWeight;}else if(blendWeight!==1.0){result[i]=value*blendWeight;}else {result[i]=value;}}if(this._animationState._fadeState!==0||this._animationState._subFadeState!==0){this.surface._transformDirty=true;}};return SurfaceTimelineState;}(dragonBones.TweenTimelineState);dragonBones.SurfaceTimelineState=SurfaceTimelineState;var SlotDislayTimelineState=function(_super){__extends(SlotDislayTimelineState,_super);function SlotDislayTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}SlotDislayTimelineState.toString=function(){return "[class dragonBones.SlotDislayTimelineState]";};SlotDislayTimelineState.prototype._onArriveAtFrame=function(){if(this.playState>=0){var displayIndex=this._timelineData!==null?this._frameArray[this._frameOffset+1]:this.slot._slotData.displayIndex;if(this.slot.displayIndex!==displayIndex){this.slot._setDisplayIndex(displayIndex,true);}}};return SlotDislayTimelineState;}(dragonBones.SlotTimelineState);dragonBones.SlotDislayTimelineState=SlotDislayTimelineState;var SlotColorTimelineState=function(_super){__extends(SlotColorTimelineState,_super);function SlotColorTimelineState(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._current=[0,0,0,0,0,0,0,0];_this._delta=[0,0,0,0,0,0,0,0];_this._result=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];return _this;}SlotColorTimelineState.toString=function(){return "[class dragonBones.SlotColorTimelineState]";};SlotColorTimelineState.prototype._onClear=function(){_super.prototype._onClear.call(this);this._dirty=false;};SlotColorTimelineState.prototype._onArriveAtFrame=function(){_super.prototype._onArriveAtFrame.call(this);if(this._timelineData!==null){var intArray=this._dragonBonesData.intArray;var frameIntArray=this._frameIntArray;var valueOffset=this._animationData.frameIntOffset+this._frameValueOffset+this._frameIndex*1;var colorOffset=frameIntArray[valueOffset];if(colorOffset<0){colorOffset+=65536;}this._current[0]=intArray[colorOffset++];this._current[1]=intArray[colorOffset++];this._current[2]=intArray[colorOffset++];this._current[3]=intArray[colorOffset++];this._current[4]=intArray[colorOffset++];this._current[5]=intArray[colorOffset++];this._current[6]=intArray[colorOffset++];this._current[7]=intArray[colorOffset++];if(this._tweenState===2){if(this._frameIndex===this._frameCount-1){colorOffset=frameIntArray[this._animationData.frameIntOffset+this._frameValueOffset];}else {colorOffset=frameIntArray[valueOffset+1*1];}if(colorOffset<0){colorOffset+=65536;}this._delta[0]=intArray[colorOffset++]-this._current[0];this._delta[1]=intArray[colorOffset++]-this._current[1];this._delta[2]=intArray[colorOffset++]-this._current[2];this._delta[3]=intArray[colorOffset++]-this._current[3];this._delta[4]=intArray[colorOffset++]-this._current[4];this._delta[5]=intArray[colorOffset++]-this._current[5];this._delta[6]=intArray[colorOffset++]-this._current[6];this._delta[7]=intArray[colorOffset++]-this._current[7];}}else {var color=this.slot._slotData.color;this._current[0]=color.alphaMultiplier*100.0;this._current[1]=color.redMultiplier*100.0;this._current[2]=color.greenMultiplier*100.0;this._current[3]=color.blueMultiplier*100.0;this._current[4]=color.alphaOffset;this._current[5]=color.redOffset;this._current[6]=color.greenOffset;this._current[7]=color.blueOffset;}};SlotColorTimelineState.prototype._onUpdateFrame=function(){_super.prototype._onUpdateFrame.call(this);this._dirty=true;if(this._tweenState!==2){this._tweenState=0;}this._result[0]=(this._current[0]+this._delta[0]*this._tweenProgress)*0.01;this._result[1]=(this._current[1]+this._delta[1]*this._tweenProgress)*0.01;this._result[2]=(this._current[2]+this._delta[2]*this._tweenProgress)*0.01;this._result[3]=(this._current[3]+this._delta[3]*this._tweenProgress)*0.01;this._result[4]=this._current[4]+this._delta[4]*this._tweenProgress;this._result[5]=this._current[5]+this._delta[5]*this._tweenProgress;this._result[6]=this._current[6]+this._delta[6]*this._tweenProgress;this._result[7]=this._current[7]+this._delta[7]*this._tweenProgress;};SlotColorTimelineState.prototype.fadeOut=function(){this._tweenState=0;this._dirty=false;};SlotColorTimelineState.prototype.update=function(passedTime){_super.prototype.update.call(this,passedTime);if(this._tweenState!==0||this._dirty){var result=this.slot._colorTransform;if(this._animationState._fadeState!==0||this._animationState._subFadeState!==0){if(result.alphaMultiplier!==this._result[0]||result.redMultiplier!==this._result[1]||result.greenMultiplier!==this._result[2]||result.blueMultiplier!==this._result[3]||result.alphaOffset!==this._result[4]||result.redOffset!==this._result[5]||result.greenOffset!==this._result[6]||result.blueOffset!==this._result[7]){var fadeProgress=Math.pow(this._animationState._fadeProgress,4);result.alphaMultiplier+=(this._result[0]-result.alphaMultiplier)*fadeProgress;result.redMultiplier+=(this._result[1]-result.redMultiplier)*fadeProgress;result.greenMultiplier+=(this._result[2]-result.greenMultiplier)*fadeProgress;result.blueMultiplier+=(this._result[3]-result.blueMultiplier)*fadeProgress;result.alphaOffset+=(this._result[4]-result.alphaOffset)*fadeProgress;result.redOffset+=(this._result[5]-result.redOffset)*fadeProgress;result.greenOffset+=(this._result[6]-result.greenOffset)*fadeProgress;result.blueOffset+=(this._result[7]-result.blueOffset)*fadeProgress;this.slot._colorDirty=true;}}else if(this._dirty){this._dirty=false;if(result.alphaMultiplier!==this._result[0]||result.redMultiplier!==this._result[1]||result.greenMultiplier!==this._result[2]||result.blueMultiplier!==this._result[3]||result.alphaOffset!==this._result[4]||result.redOffset!==this._result[5]||result.greenOffset!==this._result[6]||result.blueOffset!==this._result[7]){result.alphaMultiplier=this._result[0];result.redMultiplier=this._result[1];result.greenMultiplier=this._result[2];result.blueMultiplier=this._result[3];result.alphaOffset=this._result[4];result.redOffset=this._result[5];result.greenOffset=this._result[6];result.blueOffset=this._result[7];this.slot._colorDirty=true;}}}};return SlotColorTimelineState;}(dragonBones.SlotTimelineState);dragonBones.SlotColorTimelineState=SlotColorTimelineState;var DeformTimelineState=function(_super){__extends(DeformTimelineState,_super);function DeformTimelineState(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._current=[];_this._delta=[];_this._result=[];return _this;}DeformTimelineState.toString=function(){return "[class dragonBones.DeformTimelineState]";};DeformTimelineState.prototype._onClear=function(){_super.prototype._onClear.call(this);this.vertexOffset=0;this._dirty=false;this._frameFloatOffset=0;this._valueCount=0;this._deformCount=0;this._valueOffset=0;this._current.length=0;this._delta.length=0;this._result.length=0;};DeformTimelineState.prototype._onArriveAtFrame=function(){_super.prototype._onArriveAtFrame.call(this);if(this._timelineData!==null){var valueOffset=this._animationData.frameFloatOffset+this._frameValueOffset+this._frameIndex*this._valueCount;var scale=this._armature._armatureData.scale;var frameFloatArray=this._frameFloatArray;if(this._tweenState===2){var nextValueOffset=valueOffset+this._valueCount;if(this._frameIndex===this._frameCount-1){nextValueOffset=this._animationData.frameFloatOffset+this._frameValueOffset;}for(var i=0;i<this._valueCount;++i){this._delta[i]=frameFloatArray[nextValueOffset+i]*scale-(this._current[i]=frameFloatArray[valueOffset+i]*scale);}}else {for(var i=0;i<this._valueCount;++i){this._current[i]=frameFloatArray[valueOffset+i]*scale;}}}else {for(var i=0;i<this._valueCount;++i){this._current[i]=0.0;}}};DeformTimelineState.prototype._onUpdateFrame=function(){_super.prototype._onUpdateFrame.call(this);this._dirty=true;if(this._tweenState!==2){this._tweenState=0;}for(var i=0;i<this._valueCount;++i){this._result[i]=this._current[i]+this._delta[i]*this._tweenProgress;}};DeformTimelineState.prototype.init=function(armature,animationState,timelineData){_super.prototype.init.call(this,armature,animationState,timelineData);if(this._timelineData!==null){var frameIntOffset=this._animationData.frameIntOffset+this._timelineArray[this._timelineData.offset+3];this.vertexOffset=this._frameIntArray[frameIntOffset+0];if(this.vertexOffset<0){this.vertexOffset+=65536;}this._deformCount=this._frameIntArray[frameIntOffset+1];this._valueCount=this._frameIntArray[frameIntOffset+2];this._valueOffset=this._frameIntArray[frameIntOffset+3];this._frameFloatOffset=this._frameIntArray[frameIntOffset+4]+this._animationData.frameFloatOffset;}else {var deformVertices=this.slot._deformVertices;this._deformCount=deformVertices!==null?deformVertices.vertices.length:0;this._valueCount=this._deformCount;this._valueOffset=0;this._frameFloatOffset=0;}this._current.length=this._valueCount;this._delta.length=this._valueCount;this._result.length=this._valueCount;for(var i=0;i<this._valueCount;++i){this._delta[i]=0.0;}};DeformTimelineState.prototype.fadeOut=function(){this._tweenState=0;this._dirty=false;};DeformTimelineState.prototype.update=function(passedTime){var deformVertices=this.slot._deformVertices;if(deformVertices===null||deformVertices.verticesData===null||deformVertices.verticesData.offset!==this.vertexOffset){return;}_super.prototype.update.call(this,passedTime);if(this._tweenState!==0||this._dirty){var result=deformVertices.vertices;if(this._animationState._fadeState!==0||this._animationState._subFadeState!==0){var fadeProgress=Math.pow(this._animationState._fadeProgress,2);for(var i=0;i<this._deformCount;++i){if(i<this._valueOffset){result[i]+=(this._frameFloatArray[this._frameFloatOffset+i]-result[i])*fadeProgress;}else if(i<this._valueOffset+this._valueCount){result[i]+=(this._result[i-this._valueOffset]-result[i])*fadeProgress;}else {result[i]+=(this._frameFloatArray[this._frameFloatOffset+i-this._valueCount]-result[i])*fadeProgress;}}deformVertices.verticesDirty=true;}else if(this._dirty){this._dirty=false;for(var i=0;i<this._deformCount;++i){if(i<this._valueOffset){result[i]=this._frameFloatArray[this._frameFloatOffset+i];}else if(i<this._valueOffset+this._valueCount){result[i]=this._result[i-this._valueOffset];}else {result[i]=this._frameFloatArray[this._frameFloatOffset+i-this._valueCount];}}deformVertices.verticesDirty=true;}}};return DeformTimelineState;}(dragonBones.SlotTimelineState);dragonBones.DeformTimelineState=DeformTimelineState;var IKConstraintTimelineState=function(_super){__extends(IKConstraintTimelineState,_super);function IKConstraintTimelineState(){return _super!==null&&_super.apply(this,arguments)||this;}IKConstraintTimelineState.toString=function(){return "[class dragonBones.IKConstraintTimelineState]";};IKConstraintTimelineState.prototype._onClear=function(){_super.prototype._onClear.call(this);this._current=0.0;this._delta=0.0;};IKConstraintTimelineState.prototype._onArriveAtFrame=function(){_super.prototype._onArriveAtFrame.call(this);var ikConstraint=this.constraint;if(this._timelineData!==null){var valueOffset=this._animationData.frameIntOffset+this._frameValueOffset+this._frameIndex*2;var frameIntArray=this._frameIntArray;var bendPositive=frameIntArray[valueOffset++]!==0;this._current=frameIntArray[valueOffset++]*0.01;if(this._tweenState===2){if(this._frameIndex===this._frameCount-1){valueOffset=this._animationData.frameIntOffset+this._frameValueOffset;}this._delta=frameIntArray[valueOffset+1]*0.01-this._current;}else {this._delta=0.0;}ikConstraint._bendPositive=bendPositive;}else {var ikConstraintData=ikConstraint._constraintData;this._current=ikConstraintData.weight;this._delta=0.0;ikConstraint._bendPositive=ikConstraintData.bendPositive;}ikConstraint.invalidUpdate();};IKConstraintTimelineState.prototype._onUpdateFrame=function(){_super.prototype._onUpdateFrame.call(this);if(this._tweenState!==2){this._tweenState=0;}var ikConstraint=this.constraint;ikConstraint._weight=this._current+this._delta*this._tweenProgress;ikConstraint.invalidUpdate();};return IKConstraintTimelineState;}(dragonBones.ConstraintTimelineState);dragonBones.IKConstraintTimelineState=IKConstraintTimelineState;var AnimationTimelineState=function(_super){__extends(AnimationTimelineState,_super);function AnimationTimelineState(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._floats=[0.0,0.0,0.0,0.0,0.0,0.0];return _this;}AnimationTimelineState.toString=function(){return "[class dragonBones.AnimationTimelineState]";};AnimationTimelineState.prototype._onClear=function(){_super.prototype._onClear.call(this);this.animationState=null;};AnimationTimelineState.prototype._onArriveAtFrame=function(){_super.prototype._onArriveAtFrame.call(this);if(this._timelineData===null){return;}var valueOffset=this._animationData.frameIntOffset+this._frameValueOffset+this._frameIndex*2;var frameRateR=1.0/this.animationState._animationData.parent.frameRate;var frameIntArray=this._frameIntArray;this._floats[0]=frameIntArray[valueOffset++]*frameRateR;this._floats[3]=frameIntArray[valueOffset++]*0.01;if(this._tweenState===2){if(this._frameIndex===this._frameCount-1){valueOffset=this._animationData.frameIntOffset+this._frameValueOffset;}this._floats[1]=frameIntArray[valueOffset++]*frameRateR-this._floats[0];this._floats[4]=frameIntArray[valueOffset++]*0.01-this._floats[3];}else {this._floats[1]=0.0;this._floats[4]=0.0;}};AnimationTimelineState.prototype._onUpdateFrame=function(){_super.prototype._onUpdateFrame.call(this);if(this._tweenState!==2){this._tweenState=0;}if(this._floats[0]>=0.0){this._floats[2]=this._floats[0]+this._floats[1]*this._tweenProgress;}this._floats[5]=this._floats[3]+this._floats[4]*this._tweenProgress;};AnimationTimelineState.prototype.blend=function(state){var animationState=this.animationState;var blendWeight=animationState._blendState.blendWeight;if(state===2){animationState.weight+=this._floats[5]*blendWeight;animationState.currentTime+=this._floats[2]*blendWeight;}else {animationState.weight=this._floats[5]*blendWeight;animationState.currentTime=this._floats[2]*blendWeight;}};return AnimationTimelineState;}(dragonBones.TweenTimelineState);dragonBones.AnimationTimelineState=AnimationTimelineState;})(dragonBones);(function(dragonBones){var EventObject=function(_super){__extends(EventObject,_super);function EventObject(){return _super!==null&&_super.apply(this,arguments)||this;}EventObject.actionDataToInstance=function(data,instance,armature){if(data.type===0){instance.type=EventObject.FRAME_EVENT;}else {instance.type=data.type===10?EventObject.FRAME_EVENT:EventObject.SOUND_EVENT;}instance.name=data.name;instance.armature=armature;instance.actionData=data;instance.data=data.data;if(data.bone!==null){instance.bone=armature.getBone(data.bone.name);}if(data.slot!==null){instance.slot=armature.getSlot(data.slot.name);}};EventObject.toString=function(){return "[class dragonBones.EventObject]";};EventObject.prototype._onClear=function(){this.time=0.0;this.type="";this.name="";this.armature=null;this.bone=null;this.slot=null;this.animationState=null;this.actionData=null;this.data=null;};EventObject.START="start";EventObject.LOOP_COMPLETE="loopComplete";EventObject.COMPLETE="complete";EventObject.FADE_IN="fadeIn";EventObject.FADE_IN_COMPLETE="fadeInComplete";EventObject.FADE_OUT="fadeOut";EventObject.FADE_OUT_COMPLETE="fadeOutComplete";EventObject.FRAME_EVENT="frameEvent";EventObject.SOUND_EVENT="soundEvent";return EventObject;}(dragonBones.BaseObject);dragonBones.EventObject=EventObject;})(dragonBones);(function(dragonBones){var DataParser=function(){function DataParser(){}DataParser._getArmatureType=function(value){switch(value.toLowerCase()){case"stage":return 2;case"armature":return 0;case"movieclip":return 1;default:return 0;}};DataParser._getBoneType=function(value){switch(value.toLowerCase()){case"bone":return 0;case"surface":return 1;default:return 0;}};DataParser._getDisplayType=function(value){switch(value.toLowerCase()){case"image":return 0;case"mesh":return 2;case"armature":return 1;case"boundingbox":return 3;case"path":return 4;default:return 0;}};DataParser._getBoundingBoxType=function(value){switch(value.toLowerCase()){case"rectangle":return 0;case"ellipse":return 1;case"polygon":return 2;default:return 0;}};DataParser._getActionType=function(value){switch(value.toLowerCase()){case"play":return 0;case"frame":return 10;case"sound":return 11;default:return 0;}};DataParser._getBlendMode=function(value){switch(value.toLowerCase()){case"normal":return 0;case"add":return 1;case"alpha":return 2;case"darken":return 3;case"difference":return 4;case"erase":return 5;case"hardlight":return 6;case"invert":return 7;case"layer":return 8;case"lighten":return 9;case"multiply":return 10;case"overlay":return 11;case"screen":return 12;case"subtract":return 13;default:return 0;}};DataParser._getPositionMode=function(value){switch(value.toLocaleLowerCase()){case"percent":return 1;case"fixed":return 0;default:return 1;}};DataParser._getSpacingMode=function(value){switch(value.toLocaleLowerCase()){case"length":return 0;case"percent":return 2;case"fixed":return 1;default:return 0;}};DataParser._getRotateMode=function(value){switch(value.toLocaleLowerCase()){case"tangent":return 0;case"chain":return 1;case"chainscale":return 2;default:return 0;}};DataParser.parseDragonBonesData=function(rawData){console.warn("Deprecated.");if(rawData instanceof ArrayBuffer){return dragonBones.BinaryDataParser.getInstance().parseDragonBonesData(rawData);}else {return dragonBones.ObjectDataParser.getInstance().parseDragonBonesData(rawData);}};DataParser.parseTextureAtlasData=function(rawData,scale){if(scale===void 0){scale=1;}console.warn("已废弃");var textureAtlasData={};var subTextureList=rawData[DataParser.SUB_TEXTURE];for(var i=0,len=subTextureList.length;i<len;i++){var subTextureObject=subTextureList[i];var subTextureName=subTextureObject[DataParser.NAME];var subTextureRegion=new dragonBones.Rectangle();var subTextureFrame=null;subTextureRegion.x=subTextureObject[DataParser.X]/scale;subTextureRegion.y=subTextureObject[DataParser.Y]/scale;subTextureRegion.width=subTextureObject[DataParser.WIDTH]/scale;subTextureRegion.height=subTextureObject[DataParser.HEIGHT]/scale;if(DataParser.FRAME_WIDTH in subTextureObject){subTextureFrame=new dragonBones.Rectangle();subTextureFrame.x=subTextureObject[DataParser.FRAME_X]/scale;subTextureFrame.y=subTextureObject[DataParser.FRAME_Y]/scale;subTextureFrame.width=subTextureObject[DataParser.FRAME_WIDTH]/scale;subTextureFrame.height=subTextureObject[DataParser.FRAME_HEIGHT]/scale;}textureAtlasData[subTextureName]={region:subTextureRegion,frame:subTextureFrame,rotated:false};}return textureAtlasData;};DataParser.DATA_VERSION_2_3="2.3";DataParser.DATA_VERSION_3_0="3.0";DataParser.DATA_VERSION_4_0="4.0";DataParser.DATA_VERSION_4_5="4.5";DataParser.DATA_VERSION_5_0="5.0";DataParser.DATA_VERSION_5_5="5.5";DataParser.DATA_VERSION=DataParser.DATA_VERSION_5_5;DataParser.DATA_VERSIONS=[DataParser.DATA_VERSION_4_0,DataParser.DATA_VERSION_4_5,DataParser.DATA_VERSION_5_0,DataParser.DATA_VERSION_5_5];DataParser.TEXTURE_ATLAS="textureAtlas";DataParser.SUB_TEXTURE="SubTexture";DataParser.FORMAT="format";DataParser.IMAGE_PATH="imagePath";DataParser.WIDTH="width";DataParser.HEIGHT="height";DataParser.ROTATED="rotated";DataParser.FRAME_X="frameX";DataParser.FRAME_Y="frameY";DataParser.FRAME_WIDTH="frameWidth";DataParser.FRAME_HEIGHT="frameHeight";DataParser.DRADON_BONES="dragonBones";DataParser.USER_DATA="userData";DataParser.ARMATURE="armature";DataParser.BONE="bone";DataParser.SURFACE="surface";DataParser.SLOT="slot";DataParser.CONSTRAINT="constraint";DataParser.IK="ik";DataParser.PATH_CONSTRAINT="path";DataParser.SKIN="skin";DataParser.DISPLAY="display";DataParser.ANIMATION="animation";DataParser.Z_ORDER="zOrder";DataParser.FFD="ffd";DataParser.FRAME="frame";DataParser.TRANSLATE_FRAME="translateFrame";DataParser.ROTATE_FRAME="rotateFrame";DataParser.SCALE_FRAME="scaleFrame";DataParser.DISPLAY_FRAME="displayFrame";DataParser.COLOR_FRAME="colorFrame";DataParser.DEFAULT_ACTIONS="defaultActions";DataParser.ACTIONS="actions";DataParser.EVENTS="events";DataParser.INTS="ints";DataParser.FLOATS="floats";DataParser.STRINGS="strings";DataParser.CANVAS="canvas";DataParser.TRANSFORM="transform";DataParser.PIVOT="pivot";DataParser.AABB="aabb";DataParser.COLOR="color";DataParser.VERSION="version";DataParser.COMPATIBLE_VERSION="compatibleVersion";DataParser.FRAME_RATE="frameRate";DataParser.TYPE="type";DataParser.SUB_TYPE="subType";DataParser.NAME="name";DataParser.PARENT="parent";DataParser.TARGET="target";DataParser.STAGE="stage";DataParser.SHARE="share";DataParser.PATH="path";DataParser.LENGTH="length";DataParser.DISPLAY_INDEX="displayIndex";DataParser.BLEND_MODE="blendMode";DataParser.INHERIT_TRANSLATION="inheritTranslation";DataParser.INHERIT_ROTATION="inheritRotation";DataParser.INHERIT_SCALE="inheritScale";DataParser.INHERIT_REFLECTION="inheritReflection";DataParser.INHERIT_ANIMATION="inheritAnimation";DataParser.INHERIT_DEFORM="inheritDeform";DataParser.SEGMENT_X="segmentX";DataParser.SEGMENT_Y="segmentY";DataParser.BEND_POSITIVE="bendPositive";DataParser.CHAIN="chain";DataParser.WEIGHT="weight";DataParser.FADE_IN_TIME="fadeInTime";DataParser.PLAY_TIMES="playTimes";DataParser.SCALE="scale";DataParser.OFFSET="offset";DataParser.POSITION="position";DataParser.DURATION="duration";DataParser.TWEEN_EASING="tweenEasing";DataParser.TWEEN_ROTATE="tweenRotate";DataParser.TWEEN_SCALE="tweenScale";DataParser.CLOCK_WISE="clockwise";DataParser.CURVE="curve";DataParser.SOUND="sound";DataParser.EVENT="event";DataParser.ACTION="action";DataParser.X="x";DataParser.Y="y";DataParser.SKEW_X="skX";DataParser.SKEW_Y="skY";DataParser.SCALE_X="scX";DataParser.SCALE_Y="scY";DataParser.VALUE="value";DataParser.ROTATE="rotate";DataParser.SKEW="skew";DataParser.ALPHA_OFFSET="aO";DataParser.RED_OFFSET="rO";DataParser.GREEN_OFFSET="gO";DataParser.BLUE_OFFSET="bO";DataParser.ALPHA_MULTIPLIER="aM";DataParser.RED_MULTIPLIER="rM";DataParser.GREEN_MULTIPLIER="gM";DataParser.BLUE_MULTIPLIER="bM";DataParser.UVS="uvs";DataParser.VERTICES="vertices";DataParser.TRIANGLES="triangles";DataParser.WEIGHTS="weights";DataParser.SLOT_POSE="slotPose";DataParser.BONE_POSE="bonePose";DataParser.GLUE_WEIGHTS="glueWeights";DataParser.GLUE_MESHES="glueMeshes";DataParser.BONES="bones";DataParser.POSITION_MODE="positionMode";DataParser.SPACING_MODE="spacingMode";DataParser.ROTATE_MODE="rotateMode";DataParser.SPACING="spacing";DataParser.ROTATE_OFFSET="rotateOffset";DataParser.ROTATE_MIX="rotateMix";DataParser.TRANSLATE_MIX="translateMix";DataParser.TARGET_DISPLAY="targetDisplay";DataParser.CLOSED="closed";DataParser.CONSTANT_SPEED="constantSpeed";DataParser.VERTEX_COUNT="vertexCount";DataParser.LENGTHS="lengths";DataParser.GOTO_AND_PLAY="gotoAndPlay";DataParser.DEFAULT_NAME="default";return DataParser;}();dragonBones.DataParser=DataParser;})(dragonBones);(function(dragonBones){var ObjectDataParser=function(_super){__extends(ObjectDataParser,_super);function ObjectDataParser(){var _this=_super!==null&&_super.apply(this,arguments)||this;_this._rawTextureAtlasIndex=0;_this._rawBones=[];_this._data=null;_this._armature=null;_this._bone=null;_this._surface=null;_this._slot=null;_this._skin=null;_this._mesh=null;_this._animation=null;_this._timeline=null;_this._rawTextureAtlases=null;_this._defaultColorOffset=-1;_this._prevClockwise=0;_this._prevRotation=0.0;_this._helpMatrixA=new dragonBones.Matrix();_this._helpMatrixB=new dragonBones.Matrix();_this._helpTransform=new dragonBones.Transform();_this._helpColorTransform=new dragonBones.ColorTransform();_this._helpPoint=new dragonBones.Point();_this._helpArray=[];_this._intArray=[];_this._floatArray=[];_this._frameIntArray=[];_this._frameFloatArray=[];_this._frameArray=[];_this._timelineArray=[];_this._cacheRawMeshes=[];_this._cacheMeshes=[];_this._actionFrames=[];_this._weightSlotPose={};_this._weightBonePoses={};_this._cacheBones={};_this._slotChildActions={};return _this;}ObjectDataParser._getBoolean=function(rawData,key,defaultValue){if(key in rawData){var value=rawData[key];var type=typeof value;if(type==="boolean"){return value;}else if(type==="string"){switch(value){case"0":case"NaN":case"":case"false":case"null":case"undefined":return false;default:return true;}}else {return !!value;}}return defaultValue;};ObjectDataParser._getNumber=function(rawData,key,defaultValue){if(key in rawData){var value=rawData[key];if(value===null||value==="NaN"){return defaultValue;}return +value||0;}return defaultValue;};ObjectDataParser._getString=function(rawData,key,defaultValue){if(key in rawData){var value=rawData[key];var type=typeof value;if(type==="string"){if(dragonBones.DragonBones.webAssembly){for(var i=0,l=value.length;i<l;++i){if(value.charCodeAt(i)>255){return encodeURI(value);}}}return value;}return String(value);}return defaultValue;};ObjectDataParser.prototype._getCurvePoint=function(x1,y1,x2,y2,x3,y3,x4,y4,t,result){var l_t=1.0-t;var powA=l_t*l_t;var powB=t*t;var kA=l_t*powA;var kB=3.0*t*powA;var kC=3.0*l_t*powB;var kD=t*powB;result.x=kA*x1+kB*x2+kC*x3+kD*x4;result.y=kA*y1+kB*y2+kC*y3+kD*y4;};ObjectDataParser.prototype._samplingEasingCurve=function(curve,samples){var curveCount=curve.length;var stepIndex=-2;for(var i=0,l=samples.length;i<l;++i){var t=(i+1)/(l+1);while((stepIndex+6<curveCount?curve[stepIndex+6]:1)<t){stepIndex+=6;}var isInCurve=stepIndex>=0&&stepIndex+6<curveCount;var x1=isInCurve?curve[stepIndex]:0.0;var y1=isInCurve?curve[stepIndex+1]:0.0;var x2=curve[stepIndex+2];var y2=curve[stepIndex+3];var x3=curve[stepIndex+4];var y3=curve[stepIndex+5];var x4=isInCurve?curve[stepIndex+6]:1.0;var y4=isInCurve?curve[stepIndex+7]:1.0;var lower=0.0;var higher=1.0;while(higher-lower>0.0001){var percentage=(higher+lower)*0.5;this._getCurvePoint(x1,y1,x2,y2,x3,y3,x4,y4,percentage,this._helpPoint);if(t-this._helpPoint.x>0.0){lower=percentage;}else {higher=percentage;}}samples[i]=this._helpPoint.y;}};ObjectDataParser.prototype._parseActionDataInFrame=function(rawData,frameStart,bone,slot){if(dragonBones.DataParser.EVENT in rawData){this._mergeActionFrame(rawData[dragonBones.DataParser.EVENT],frameStart,10,bone,slot);}if(dragonBones.DataParser.SOUND in rawData){this._mergeActionFrame(rawData[dragonBones.DataParser.SOUND],frameStart,11,bone,slot);}if(dragonBones.DataParser.ACTION in rawData){this._mergeActionFrame(rawData[dragonBones.DataParser.ACTION],frameStart,0,bone,slot);}if(dragonBones.DataParser.EVENTS in rawData){this._mergeActionFrame(rawData[dragonBones.DataParser.EVENTS],frameStart,10,bone,slot);}if(dragonBones.DataParser.ACTIONS in rawData){this._mergeActionFrame(rawData[dragonBones.DataParser.ACTIONS],frameStart,0,bone,slot);}};ObjectDataParser.prototype._mergeActionFrame=function(rawData,frameStart,type,bone,slot){var actionOffset=dragonBones.DragonBones.webAssembly?this._armature.actions.size():this._armature.actions.length;var actions=this._parseActionData(rawData,type,bone,slot);var frameIndex=0;var frame=null;for(var _i=0,actions_2=actions;_i<actions_2.length;_i++){var action=actions_2[_i];this._armature.addAction(action,false);}if(this._actionFrames.length===0){frame=new ActionFrame();frame.frameStart=0;this._actionFrames.push(frame);frame=null;}for(var _a=0,_b=this._actionFrames;_a<_b.length;_a++){var eachFrame=_b[_a];if(eachFrame.frameStart===frameStart){frame=eachFrame;break;}else if(eachFrame.frameStart>frameStart){break;}frameIndex++;}if(frame===null){frame=new ActionFrame();frame.frameStart=frameStart;this._actionFrames.splice(frameIndex+1,0,frame);}for(var i=0;i<actions.length;++i){frame.actions.push(actionOffset+i);}};ObjectDataParser.prototype._parseArmature=function(rawData,scale){var armature=dragonBones.BaseObject.borrowObject(dragonBones.ArmatureData);armature.name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,"");armature.frameRate=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.FRAME_RATE,this._data.frameRate);armature.scale=scale;if(dragonBones.DataParser.TYPE in rawData&&typeof rawData[dragonBones.DataParser.TYPE]==="string"){armature.type=dragonBones.DataParser._getArmatureType(rawData[dragonBones.DataParser.TYPE]);}else {armature.type=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.TYPE,0);}if(armature.frameRate===0){armature.frameRate=24;}this._armature=armature;if(dragonBones.DataParser.CANVAS in rawData){var rawCanvas=rawData[dragonBones.DataParser.CANVAS];var canvas=dragonBones.BaseObject.borrowObject(dragonBones.CanvasData);if(dragonBones.DataParser.COLOR in rawCanvas){canvas.hasBackground=true;}else {canvas.hasBackground=false;}canvas.color=ObjectDataParser._getNumber(rawCanvas,dragonBones.DataParser.COLOR,0);canvas.x=ObjectDataParser._getNumber(rawCanvas,dragonBones.DataParser.X,0)*armature.scale;canvas.y=ObjectDataParser._getNumber(rawCanvas,dragonBones.DataParser.Y,0)*armature.scale;canvas.width=ObjectDataParser._getNumber(rawCanvas,dragonBones.DataParser.WIDTH,0)*armature.scale;canvas.height=ObjectDataParser._getNumber(rawCanvas,dragonBones.DataParser.HEIGHT,0)*armature.scale;armature.canvas=canvas;}if(dragonBones.DataParser.AABB in rawData){var rawAABB=rawData[dragonBones.DataParser.AABB];armature.aabb.x=ObjectDataParser._getNumber(rawAABB,dragonBones.DataParser.X,0.0)*armature.scale;armature.aabb.y=ObjectDataParser._getNumber(rawAABB,dragonBones.DataParser.Y,0.0)*armature.scale;armature.aabb.width=ObjectDataParser._getNumber(rawAABB,dragonBones.DataParser.WIDTH,0.0)*armature.scale;armature.aabb.height=ObjectDataParser._getNumber(rawAABB,dragonBones.DataParser.HEIGHT,0.0)*armature.scale;}if(dragonBones.DataParser.BONE in rawData){var rawBones=rawData[dragonBones.DataParser.BONE];for(var _i=0,rawBones_1=rawBones;_i<rawBones_1.length;_i++){var rawBone=rawBones_1[_i];var parentName=ObjectDataParser._getString(rawBone,dragonBones.DataParser.PARENT,"");var bone=this._parseBone(rawBone);if(parentName.length>0){var parent_1=armature.getBone(parentName);if(parent_1!==null){bone.parent=parent_1;}else {if(!(parentName in this._cacheBones)){this._cacheBones[parentName]=[];}this._cacheBones[parentName].push(bone);}}if(bone.name in this._cacheBones){for(var _a=0,_b=this._cacheBones[bone.name];_a<_b.length;_a++){var child=_b[_a];child.parent=bone;}delete this._cacheBones[bone.name];}armature.addBone(bone);this._rawBones.push(bone);}}if(dragonBones.DataParser.IK in rawData){var rawIKS=rawData[dragonBones.DataParser.IK];for(var _c=0,rawIKS_1=rawIKS;_c<rawIKS_1.length;_c++){var rawIK=rawIKS_1[_c];var constraint=this._parseIKConstraint(rawIK);if(constraint){armature.addConstraint(constraint);}}}armature.sortBones();if(dragonBones.DataParser.SLOT in rawData){var zOrder=0;var rawSlots=rawData[dragonBones.DataParser.SLOT];for(var _d=0,rawSlots_1=rawSlots;_d<rawSlots_1.length;_d++){var rawSlot=rawSlots_1[_d];armature.addSlot(this._parseSlot(rawSlot,zOrder++));}}if(dragonBones.DataParser.SKIN in rawData){var rawSkins=rawData[dragonBones.DataParser.SKIN];for(var _e=0,rawSkins_1=rawSkins;_e<rawSkins_1.length;_e++){var rawSkin=rawSkins_1[_e];armature.addSkin(this._parseSkin(rawSkin));}}if(dragonBones.DataParser.PATH_CONSTRAINT in rawData){var rawPaths=rawData[dragonBones.DataParser.PATH_CONSTRAINT];for(var _f=0,rawPaths_1=rawPaths;_f<rawPaths_1.length;_f++){var rawPath=rawPaths_1[_f];var constraint=this._parsePathConstraint(rawPath);if(constraint){armature.addConstraint(constraint);}}}for(var i=0,l=this._cacheRawMeshes.length;i<l;++i){var rawMeshData=this._cacheRawMeshes[i];if(!(dragonBones.DataParser.GLUE_WEIGHTS in rawMeshData)||!(dragonBones.DataParser.GLUE_MESHES in rawMeshData)){continue;}this._parseMeshGlue(rawMeshData,this._cacheMeshes[i]);}for(var i=0,l=this._cacheRawMeshes.length;i<l;++i){var rawData_1=this._cacheRawMeshes[i];var shareName=ObjectDataParser._getString(rawData_1,dragonBones.DataParser.SHARE,"");if(shareName.length===0){continue;}var skinName=ObjectDataParser._getString(rawData_1,dragonBones.DataParser.SKIN,dragonBones.DataParser.DEFAULT_NAME);if(skinName.length===0){skinName=dragonBones.DataParser.DEFAULT_NAME;}var shareMesh=armature.getMesh(skinName,"",shareName);if(shareMesh===null){continue;}var mesh=this._cacheMeshes[i];mesh.vertices.shareFrom(shareMesh.vertices);}if(dragonBones.DataParser.ANIMATION in rawData){var rawAnimations=rawData[dragonBones.DataParser.ANIMATION];for(var _g=0,rawAnimations_1=rawAnimations;_g<rawAnimations_1.length;_g++){var rawAnimation=rawAnimations_1[_g];var animation=this._parseAnimation(rawAnimation);armature.addAnimation(animation);}}if(dragonBones.DataParser.DEFAULT_ACTIONS in rawData){var actions=this._parseActionData(rawData[dragonBones.DataParser.DEFAULT_ACTIONS],0,null,null);for(var _h=0,actions_3=actions;_h<actions_3.length;_h++){var action=actions_3[_h];armature.addAction(action,true);if(action.type===0){var animation=armature.getAnimation(action.name);if(animation!==null){armature.defaultAnimation=animation;}}}}if(dragonBones.DataParser.ACTIONS in rawData){var actions=this._parseActionData(rawData[dragonBones.DataParser.ACTIONS],0,null,null);for(var _j=0,actions_4=actions;_j<actions_4.length;_j++){var action=actions_4[_j];armature.addAction(action,false);}}this._rawBones.length=0;this._cacheRawMeshes.length=0;this._cacheMeshes.length=0;this._armature=null;for(var k in this._weightSlotPose){delete this._weightSlotPose[k];}for(var k in this._weightBonePoses){delete this._weightBonePoses[k];}for(var k in this._cacheBones){delete this._cacheBones[k];}for(var k in this._slotChildActions){delete this._slotChildActions[k];}return armature;};ObjectDataParser.prototype._parseBone=function(rawData){var type=0;var scale=this._armature.scale;if(dragonBones.DataParser.TYPE in rawData&&typeof rawData[dragonBones.DataParser.TYPE]==="string"){type=dragonBones.DataParser._getBoneType(rawData[dragonBones.DataParser.TYPE]);}else {type=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.TYPE,0);}if(type===0){var bone=dragonBones.BaseObject.borrowObject(dragonBones.BoneData);bone.inheritTranslation=ObjectDataParser._getBoolean(rawData,dragonBones.DataParser.INHERIT_TRANSLATION,true);bone.inheritRotation=ObjectDataParser._getBoolean(rawData,dragonBones.DataParser.INHERIT_ROTATION,true);bone.inheritScale=ObjectDataParser._getBoolean(rawData,dragonBones.DataParser.INHERIT_SCALE,true);bone.inheritReflection=ObjectDataParser._getBoolean(rawData,dragonBones.DataParser.INHERIT_REFLECTION,true);bone.length=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.LENGTH,0)*scale;bone.name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,"");if(dragonBones.DataParser.TRANSFORM in rawData){this._parseTransform(rawData[dragonBones.DataParser.TRANSFORM],bone.transform,scale);}return bone;}var surface=dragonBones.BaseObject.borrowObject(dragonBones.SurfaceData);surface.name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,"");surface.segmentX=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SEGMENT_X,0);surface.segmentY=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SEGMENT_Y,0);surface.vertices.length=(surface.segmentX+1)*(surface.segmentY+1)*2;if(dragonBones.DataParser.VERTICES in rawData){var rawVertices=rawData[dragonBones.DataParser.VERTICES];for(var i=0,l=surface.vertices.length;i<l;++i){if(i<rawVertices.length){surface.vertices[i]=rawVertices[i]*scale;}else {surface.vertices[i]=0.0;}}}return surface;};ObjectDataParser.prototype._parseIKConstraint=function(rawData){var bone=this._armature.getBone(ObjectDataParser._getString(rawData,dragonBones.DataParser.BONE,""));if(bone===null){return null;}var target=this._armature.getBone(ObjectDataParser._getString(rawData,dragonBones.DataParser.TARGET,""));if(target===null){return null;}var constraint=dragonBones.BaseObject.borrowObject(dragonBones.IKConstraintData);constraint.scaleEnabled=ObjectDataParser._getBoolean(rawData,dragonBones.DataParser.SCALE,false);constraint.bendPositive=ObjectDataParser._getBoolean(rawData,dragonBones.DataParser.BEND_POSITIVE,true);constraint.weight=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.WEIGHT,1.0);constraint.name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,"");constraint.type=0;constraint.target=target;var chain=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.CHAIN,0);if(chain>0&&bone.parent!==null){constraint.root=bone.parent;constraint.bone=bone;}else {constraint.root=bone;constraint.bone=null;}return constraint;};ObjectDataParser.prototype._parsePathConstraint=function(rawData){var target=this._armature.getSlot(ObjectDataParser._getString(rawData,dragonBones.DataParser.TARGET,""));if(target===null){return null;}var defaultSkin=this._armature.defaultSkin;if(defaultSkin===null){return null;}var targetDisplay=defaultSkin.getDisplay(target.name,ObjectDataParser._getString(rawData,dragonBones.DataParser.TARGET_DISPLAY,target.name));if(targetDisplay===null||!(targetDisplay instanceof dragonBones.PathDisplayData)){return null;}var bones=rawData[dragonBones.DataParser.BONES];if(bones===null||bones.length===0){return null;}var constraint=dragonBones.BaseObject.borrowObject(dragonBones.PathConstraintData);constraint.name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,"");constraint.type=1;constraint.pathSlot=target;constraint.pathDisplayData=targetDisplay;constraint.target=target.parent;constraint.positionMode=dragonBones.DataParser._getPositionMode(ObjectDataParser._getString(rawData,dragonBones.DataParser.POSITION_MODE,""));constraint.spacingMode=dragonBones.DataParser._getSpacingMode(ObjectDataParser._getString(rawData,dragonBones.DataParser.SPACING_MODE,""));constraint.rotateMode=dragonBones.DataParser._getRotateMode(ObjectDataParser._getString(rawData,dragonBones.DataParser.ROTATE_MODE,""));constraint.position=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.POSITION,0);constraint.spacing=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SPACING,0);constraint.rotateOffset=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.ROTATE_OFFSET,0);constraint.rotateMix=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.ROTATE_MIX,1);constraint.translateMix=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.TRANSLATE_MIX,1);for(var _i=0,bones_3=bones;_i<bones_3.length;_i++){var boneName=bones_3[_i];var bone=this._armature.getBone(boneName);if(bone!==null){constraint.AddBone(bone);if(constraint.root===null){constraint.root=bone;}}}return constraint;};ObjectDataParser.prototype._parseSlot=function(rawData,zOrder){var slot=dragonBones.BaseObject.borrowObject(dragonBones.SlotData);slot.displayIndex=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.DISPLAY_INDEX,0);slot.zOrder=zOrder;slot.name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,"");slot.parent=this._armature.getBone(ObjectDataParser._getString(rawData,dragonBones.DataParser.PARENT,""));if(dragonBones.DataParser.BLEND_MODE in rawData&&typeof rawData[dragonBones.DataParser.BLEND_MODE]==="string"){slot.blendMode=dragonBones.DataParser._getBlendMode(rawData[dragonBones.DataParser.BLEND_MODE]);}else {slot.blendMode=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.BLEND_MODE,0);}if(dragonBones.DataParser.COLOR in rawData){slot.color=dragonBones.SlotData.createColor();this._parseColorTransform(rawData[dragonBones.DataParser.COLOR],slot.color);}else {slot.color=dragonBones.SlotData.DEFAULT_COLOR;}if(dragonBones.DataParser.ACTIONS in rawData){this._slotChildActions[slot.name]=this._parseActionData(rawData[dragonBones.DataParser.ACTIONS],0,null,null);}return slot;};ObjectDataParser.prototype._parseSkin=function(rawData){var skin=dragonBones.BaseObject.borrowObject(dragonBones.SkinData);skin.name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,dragonBones.DataParser.DEFAULT_NAME);if(skin.name.length===0){skin.name=dragonBones.DataParser.DEFAULT_NAME;}if(dragonBones.DataParser.SLOT in rawData){var rawSlots=rawData[dragonBones.DataParser.SLOT];this._skin=skin;for(var _i=0,rawSlots_2=rawSlots;_i<rawSlots_2.length;_i++){var rawSlot=rawSlots_2[_i];var slotName=ObjectDataParser._getString(rawSlot,dragonBones.DataParser.NAME,"");var slot=this._armature.getSlot(slotName);if(slot!==null){this._slot=slot;if(dragonBones.DataParser.DISPLAY in rawSlot){var rawDisplays=rawSlot[dragonBones.DataParser.DISPLAY];for(var _a=0,rawDisplays_1=rawDisplays;_a<rawDisplays_1.length;_a++){var rawDisplay=rawDisplays_1[_a];if(rawDisplay){skin.addDisplay(slotName,this._parseDisplay(rawDisplay));}else {skin.addDisplay(slotName,null);}}}this._slot=null;}}this._skin=null;}return skin;};ObjectDataParser.prototype._parseDisplay=function(rawData){var name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,"");var path=ObjectDataParser._getString(rawData,dragonBones.DataParser.PATH,"");var type=0;var display=null;if(dragonBones.DataParser.TYPE in rawData&&typeof rawData[dragonBones.DataParser.TYPE]==="string"){type=dragonBones.DataParser._getDisplayType(rawData[dragonBones.DataParser.TYPE]);}else {type=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.TYPE,type);}switch(type){case 0:var imageDisplay=display=dragonBones.BaseObject.borrowObject(dragonBones.ImageDisplayData);imageDisplay.name=name;imageDisplay.path=path.length>0?path:name;this._parsePivot(rawData,imageDisplay);break;case 1:var armatureDisplay=display=dragonBones.BaseObject.borrowObject(dragonBones.ArmatureDisplayData);armatureDisplay.name=name;armatureDisplay.path=path.length>0?path:name;armatureDisplay.inheritAnimation=true;if(dragonBones.DataParser.ACTIONS in rawData){var actions=this._parseActionData(rawData[dragonBones.DataParser.ACTIONS],0,null,null);for(var _i=0,actions_5=actions;_i<actions_5.length;_i++){var action=actions_5[_i];armatureDisplay.addAction(action);}}else if(this._slot.name in this._slotChildActions){var displays=this._skin.getDisplays(this._slot.name);if(displays===null?this._slot.displayIndex===0:this._slot.displayIndex===displays.length){for(var _a=0,_b=this._slotChildActions[this._slot.name];_a<_b.length;_a++){var action=_b[_a];armatureDisplay.addAction(action);}delete this._slotChildActions[this._slot.name];}}break;case 2:var meshDisplay=display=dragonBones.BaseObject.borrowObject(dragonBones.MeshDisplayData);meshDisplay.vertices.inheritDeform=ObjectDataParser._getBoolean(rawData,dragonBones.DataParser.INHERIT_DEFORM,true);meshDisplay.name=name;meshDisplay.path=path.length>0?path:name;meshDisplay.vertices.data=this._data;if(dragonBones.DataParser.SHARE in rawData){this._cacheRawMeshes.push(rawData);this._cacheMeshes.push(meshDisplay);}else {this._parseMesh(rawData,meshDisplay);}if(dragonBones.DataParser.GLUE_WEIGHTS in rawData&&dragonBones.DataParser.GLUE_MESHES in rawData){this._cacheRawMeshes.push(rawData);this._cacheMeshes.push(meshDisplay);}break;case 3:var boundingBox=this._parseBoundingBox(rawData);if(boundingBox!==null){var boundingBoxDisplay=display=dragonBones.BaseObject.borrowObject(dragonBones.BoundingBoxDisplayData);boundingBoxDisplay.name=name;boundingBoxDisplay.path=path.length>0?path:name;boundingBoxDisplay.boundingBox=boundingBox;}break;case 4:var rawCurveLengths=rawData[dragonBones.DataParser.LENGTHS];var pathDisplay=display=dragonBones.BaseObject.borrowObject(dragonBones.PathDisplayData);pathDisplay.closed=ObjectDataParser._getBoolean(rawData,dragonBones.DataParser.CLOSED,false);pathDisplay.constantSpeed=ObjectDataParser._getBoolean(rawData,dragonBones.DataParser.CONSTANT_SPEED,false);pathDisplay.name=name;pathDisplay.path=path.length>0?path:name;pathDisplay.vertices.data=this._data;pathDisplay.curveLengths.length=rawCurveLengths.length;for(var i=0,l=rawCurveLengths.length;i<l;++i){pathDisplay.curveLengths[i]=rawCurveLengths[i];}this._parsePath(rawData,pathDisplay);break;}if(display!==null&&dragonBones.DataParser.TRANSFORM in rawData){this._parseTransform(rawData[dragonBones.DataParser.TRANSFORM],display.transform,this._armature.scale);}return display;};ObjectDataParser.prototype._parsePath=function(rawData,display){var rawVertices=rawData[dragonBones.DataParser.VERTICES];var vertexCount=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.VERTEX_COUNT,0);var vertexOffset=this._floatArray.length;var pathOffset=this._intArray.length;display.vertices.offset=pathOffset;this._intArray.length+=1+1;this._intArray[pathOffset+0]=vertexCount;this._intArray[pathOffset+2]=vertexOffset;if(!(dragonBones.DataParser.WEIGHTS in rawData)){this._floatArray.length+=rawVertices.length;for(var i=0,l=rawVertices.length;i<l;++i){this._floatArray[vertexOffset+i]=rawVertices[i];}}else {var rawWeights=rawData[dragonBones.DataParser.WEIGHTS];var rawBones=rawData[dragonBones.DataParser.BONES];var weightBoneCount=rawBones.length;var weightCount=Math.floor(rawWeights.length-vertexCount)/2;var weightOffset=this._intArray.length;var floatOffset=this._floatArray.length;var sortedBones=this._armature.sortedBones;var weight=dragonBones.BaseObject.borrowObject(dragonBones.WeightData);weight.count=weightCount;weight.offset=weightOffset;this._intArray.length+=1+1+weightBoneCount+vertexCount+weightCount;this._intArray[weightOffset+0]=weightBoneCount;this._intArray[weightOffset+1]=floatOffset;for(var i=0;i<weightBoneCount;i++){var rawBoneIndex=rawBones[i];var bone=this._rawBones[rawBoneIndex];weight.addBone(bone);this._intArray[weightOffset+2+i]=sortedBones.indexOf(bone);}this._floatArray.length+=weightCount*3;for(var i=0,iW=0,iV=0,iB=weightOffset+2+weightBoneCount,iF=floatOffset;i<weightCount;i++){var boneCount=rawWeights[iW++];this._intArray[iB++]=boneCount;for(var j=0;j<boneCount;j++){var boneIndex=rawWeights[iW++];var boneWeight=rawWeights[iW++];var x=rawVertices[iV++];var y=rawVertices[iV++];this._intArray[iB++]=rawBones.indexOf(boneIndex);this._floatArray[iF++]=boneWeight;this._floatArray[iF++]=x;this._floatArray[iF++]=y;}}display.vertices.weight=weight;}};ObjectDataParser.prototype._parsePivot=function(rawData,display){if(dragonBones.DataParser.PIVOT in rawData){var rawPivot=rawData[dragonBones.DataParser.PIVOT];display.pivot.x=ObjectDataParser._getNumber(rawPivot,dragonBones.DataParser.X,0.0);display.pivot.y=ObjectDataParser._getNumber(rawPivot,dragonBones.DataParser.Y,0.0);}else {display.pivot.x=0.5;display.pivot.y=0.5;}};ObjectDataParser.prototype._parseMesh=function(rawData,mesh){var rawVertices=rawData[dragonBones.DataParser.VERTICES];var rawUVs=rawData[dragonBones.DataParser.UVS];var rawTriangles=rawData[dragonBones.DataParser.TRIANGLES];var vertexCount=Math.floor(rawVertices.length/2);var triangleCount=Math.floor(rawTriangles.length/3);var vertexOffset=this._floatArray.length;var uvOffset=vertexOffset+vertexCount*2;var meshOffset=this._intArray.length;var meshName=this._skin.name+"_"+this._slot.name+"_"+mesh.name;mesh.vertices.offset=meshOffset;this._intArray.length+=1+1+1+1+triangleCount*3;this._intArray[meshOffset+0]=vertexCount;this._intArray[meshOffset+1]=triangleCount;this._intArray[meshOffset+2]=vertexOffset;for(var i=0,l=triangleCount*3;i<l;++i){this._intArray[meshOffset+4+i]=rawTriangles[i];}this._floatArray.length+=vertexCount*2+vertexCount*2;for(var i=0,l=vertexCount*2;i<l;++i){this._floatArray[vertexOffset+i]=rawVertices[i];this._floatArray[uvOffset+i]=rawUVs[i];}if(dragonBones.DataParser.WEIGHTS in rawData){var rawWeights=rawData[dragonBones.DataParser.WEIGHTS];var rawSlotPose=rawData[dragonBones.DataParser.SLOT_POSE];var rawBonePoses=rawData[dragonBones.DataParser.BONE_POSE];var sortedBones=this._armature.sortedBones;var weightBoneIndices=new Array();var weightBoneCount=Math.floor(rawBonePoses.length/7);var floatOffset=this._floatArray.length;var weightCount=Math.floor(rawWeights.length-vertexCount)/2;var weightOffset=this._intArray.length;var weight=dragonBones.BaseObject.borrowObject(dragonBones.WeightData);weight.count=weightCount;weight.offset=weightOffset;weightBoneIndices.length=weightBoneCount;this._intArray.length+=1+1+weightBoneCount+vertexCount+weightCount;this._intArray[weightOffset+1]=floatOffset;for(var i=0;i<weightBoneCount;++i){var rawBoneIndex=rawBonePoses[i*7];var bone=this._rawBones[rawBoneIndex];weight.addBone(bone);weightBoneIndices[i]=rawBoneIndex;this._intArray[weightOffset+2+i]=sortedBones.indexOf(bone);}this._floatArray.length+=weightCount*3;this._helpMatrixA.copyFromArray(rawSlotPose,0);for(var i=0,iW=0,iB=weightOffset+2+weightBoneCount,iV=floatOffset;i<vertexCount;++i){var iD=i*2;var vertexBoneCount=this._intArray[iB++]=rawWeights[iW++];var x=this._floatArray[vertexOffset+iD];var y=this._floatArray[vertexOffset+iD+1];this._helpMatrixA.transformPoint(x,y,this._helpPoint);x=this._helpPoint.x;y=this._helpPoint.y;for(var j=0;j<vertexBoneCount;++j){var rawBoneIndex=rawWeights[iW++];var boneIndex=weightBoneIndices.indexOf(rawBoneIndex);this._helpMatrixB.copyFromArray(rawBonePoses,boneIndex*7+1);this._helpMatrixB.invert();this._helpMatrixB.transformPoint(x,y,this._helpPoint);this._intArray[iB++]=boneIndex;this._floatArray[iV++]=rawWeights[iW++];this._floatArray[iV++]=this._helpPoint.x;this._floatArray[iV++]=this._helpPoint.y;}}mesh.vertices.weight=weight;this._weightSlotPose[meshName]=rawSlotPose;this._weightBonePoses[meshName]=rawBonePoses;}};ObjectDataParser.prototype._parseMeshGlue=function(rawData,mesh){};ObjectDataParser.prototype._parseBoundingBox=function(rawData){var boundingBox=null;var type=0;if(dragonBones.DataParser.SUB_TYPE in rawData&&typeof rawData[dragonBones.DataParser.SUB_TYPE]==="string"){type=dragonBones.DataParser._getBoundingBoxType(rawData[dragonBones.DataParser.SUB_TYPE]);}else {type=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SUB_TYPE,type);}switch(type){case 0:boundingBox=dragonBones.BaseObject.borrowObject(dragonBones.RectangleBoundingBoxData);break;case 1:boundingBox=dragonBones.BaseObject.borrowObject(dragonBones.EllipseBoundingBoxData);break;case 2:boundingBox=this._parsePolygonBoundingBox(rawData);break;}if(boundingBox!==null){boundingBox.color=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.COLOR,0x000000);if(boundingBox.type===0||boundingBox.type===1){boundingBox.width=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.WIDTH,0.0);boundingBox.height=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.HEIGHT,0.0);}}return boundingBox;};ObjectDataParser.prototype._parsePolygonBoundingBox=function(rawData){var polygonBoundingBox=dragonBones.BaseObject.borrowObject(dragonBones.PolygonBoundingBoxData);if(dragonBones.DataParser.VERTICES in rawData){var scale=this._armature.scale;var rawVertices=rawData[dragonBones.DataParser.VERTICES];var vertices=polygonBoundingBox.vertices;if(dragonBones.DragonBones.webAssembly){vertices.resize(rawVertices.length,0.0);}else {vertices.length=rawVertices.length;}for(var i=0,l=rawVertices.length;i<l;i+=2){var x=rawVertices[i]*scale;var y=rawVertices[i+1]*scale;if(dragonBones.DragonBones.webAssembly){vertices.set(i,x);vertices.set(i+1,y);}else {vertices[i]=x;vertices[i+1]=y;}if(i===0){polygonBoundingBox.x=x;polygonBoundingBox.y=y;polygonBoundingBox.width=x;polygonBoundingBox.height=y;}else {if(x<polygonBoundingBox.x){polygonBoundingBox.x=x;}else if(x>polygonBoundingBox.width){polygonBoundingBox.width=x;}if(y<polygonBoundingBox.y){polygonBoundingBox.y=y;}else if(y>polygonBoundingBox.height){polygonBoundingBox.height=y;}}}polygonBoundingBox.width-=polygonBoundingBox.x;polygonBoundingBox.height-=polygonBoundingBox.y;}else {console.warn("Data error.\n Please reexport DragonBones Data to fixed the bug.");}return polygonBoundingBox;};ObjectDataParser.prototype._parseAnimation=function(rawData){var animation=dragonBones.BaseObject.borrowObject(dragonBones.AnimationData);animation.frameCount=Math.max(ObjectDataParser._getNumber(rawData,dragonBones.DataParser.DURATION,1),1);animation.playTimes=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.PLAY_TIMES,1);animation.duration=animation.frameCount/this._armature.frameRate;animation.fadeInTime=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.FADE_IN_TIME,0.0);animation.scale=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SCALE,1.0);animation.name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,dragonBones.DataParser.DEFAULT_NAME);if(animation.name.length===0){animation.name=dragonBones.DataParser.DEFAULT_NAME;}animation.frameIntOffset=this._frameIntArray.length;animation.frameFloatOffset=this._frameFloatArray.length;animation.frameOffset=this._frameArray.length;this._animation=animation;if(dragonBones.DataParser.FRAME in rawData){var rawFrames=rawData[dragonBones.DataParser.FRAME];var keyFrameCount=rawFrames.length;if(keyFrameCount>0){for(var i=0,frameStart=0;i<keyFrameCount;++i){var rawFrame=rawFrames[i];this._parseActionDataInFrame(rawFrame,frameStart,null,null);frameStart+=ObjectDataParser._getNumber(rawFrame,dragonBones.DataParser.DURATION,1);}}}if(dragonBones.DataParser.Z_ORDER in rawData){this._animation.zOrderTimeline=this._parseTimeline(rawData[dragonBones.DataParser.Z_ORDER],null,dragonBones.DataParser.FRAME,1,false,false,0,this._parseZOrderFrame);}if(dragonBones.DataParser.BONE in rawData){var rawTimelines=rawData[dragonBones.DataParser.BONE];for(var _i=0,rawTimelines_1=rawTimelines;_i<rawTimelines_1.length;_i++){var rawTimeline=rawTimelines_1[_i];this._parseBoneTimeline(rawTimeline);}}if(dragonBones.DataParser.SURFACE in rawData){var rawTimelines=rawData[dragonBones.DataParser.SURFACE];for(var _a=0,rawTimelines_2=rawTimelines;_a<rawTimelines_2.length;_a++){var rawTimeline=rawTimelines_2[_a];var surfaceName=ObjectDataParser._getString(rawTimeline,dragonBones.DataParser.NAME,"");this._surface=this._armature.getBone(surfaceName);if(this._surface===null){continue;}var timeline=this._parseTimeline(rawTimeline,null,dragonBones.DataParser.FRAME,50,false,true,0,this._parseSurfaceFrame);if(timeline!==null){this._animation.addSurfaceTimeline(this._surface,timeline);}this._surface=null;}}if(dragonBones.DataParser.SLOT in rawData){var rawTimelines=rawData[dragonBones.DataParser.SLOT];for(var _b=0,rawTimelines_3=rawTimelines;_b<rawTimelines_3.length;_b++){var rawTimeline=rawTimelines_3[_b];this._parseSlotTimeline(rawTimeline);}}if(dragonBones.DataParser.FFD in rawData){var rawTimelines=rawData[dragonBones.DataParser.FFD];for(var _c=0,rawTimelines_4=rawTimelines;_c<rawTimelines_4.length;_c++){var rawTimeline=rawTimelines_4[_c];var skinName=ObjectDataParser._getString(rawTimeline,dragonBones.DataParser.SKIN,dragonBones.DataParser.DEFAULT_NAME);var slotName=ObjectDataParser._getString(rawTimeline,dragonBones.DataParser.SLOT,"");var displayName=ObjectDataParser._getString(rawTimeline,dragonBones.DataParser.NAME,"");if(skinName.length===0){skinName=dragonBones.DataParser.DEFAULT_NAME;}this._slot=this._armature.getSlot(slotName);this._mesh=this._armature.getMesh(skinName,slotName,displayName);if(this._slot===null||this._mesh===null){continue;}var timeline=this._parseTimeline(rawTimeline,null,dragonBones.DataParser.FRAME,22,false,true,0,this._parseSlotFFDFrame);if(timeline!==null){this._animation.addSlotTimeline(this._slot,timeline);}this._slot=null;this._mesh=null;}}if(dragonBones.DataParser.IK in rawData){var rawTimelines=rawData[dragonBones.DataParser.IK];for(var _d=0,rawTimelines_5=rawTimelines;_d<rawTimelines_5.length;_d++){var rawTimeline=rawTimelines_5[_d];var constraintName=ObjectDataParser._getString(rawTimeline,dragonBones.DataParser.NAME,"");var constraint=this._armature.getConstraint(constraintName);if(constraint===null){continue;}var timeline=this._parseTimeline(rawTimeline,null,dragonBones.DataParser.FRAME,30,true,false,2,this._parseIKConstraintFrame);if(timeline!==null){this._animation.addConstraintTimeline(constraint,timeline);}}}if(dragonBones.DataParser.ANIMATION in rawData){var rawTimelines=rawData[dragonBones.DataParser.ANIMATION];for(var _e=0,rawTimelines_6=rawTimelines;_e<rawTimelines_6.length;_e++){var rawTimeline=rawTimelines_6[_e];var animationName=ObjectDataParser._getString(rawTimeline,dragonBones.DataParser.NAME,"");var timeline=this._parseTimeline(rawTimeline,null,dragonBones.DataParser.FRAME,40,true,false,2,this._parseAnimationFrame);if(timeline!==null){this._animation.addAnimationTimeline(animationName,timeline);}}}if(this._actionFrames.length>0){this._animation.actionTimeline=this._parseTimeline(null,this._actionFrames,"",0,false,false,0,this._parseActionFrame);this._actionFrames.length=0;}this._animation=null;return animation;};ObjectDataParser.prototype._parseTimeline=function(rawData,rawFrames,framesKey,type,addIntOffset,addFloatOffset,frameValueCount,frameParser){if(rawData!==null&&framesKey.length>0&&framesKey in rawData){rawFrames=rawData[framesKey];}if(rawFrames===null){return null;}var keyFrameCount=rawFrames.length;if(keyFrameCount===0){return null;}var frameIntArrayLength=this._frameIntArray.length;var frameFloatArrayLength=this._frameFloatArray.length;var timeline=dragonBones.BaseObject.borrowObject(dragonBones.TimelineData);var timelineOffset=this._timelineArray.length;this._timelineArray.length+=1+1+1+1+1+keyFrameCount;if(rawData!==null){this._timelineArray[timelineOffset+0]=Math.round(ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SCALE,1.0)*100);this._timelineArray[timelineOffset+1]=Math.round(ObjectDataParser._getNumber(rawData,dragonBones.DataParser.OFFSET,0.0)*100);}else {this._timelineArray[timelineOffset+0]=100;this._timelineArray[timelineOffset+1]=0;}this._timelineArray[timelineOffset+2]=keyFrameCount;this._timelineArray[timelineOffset+3]=frameValueCount;if(addIntOffset){this._timelineArray[timelineOffset+4]=frameIntArrayLength-this._animation.frameIntOffset;}else if(addFloatOffset){this._timelineArray[timelineOffset+4]=frameFloatArrayLength-this._animation.frameFloatOffset;}else {this._timelineArray[timelineOffset+4]=0;}this._timeline=timeline;timeline.type=type;timeline.offset=timelineOffset;if(keyFrameCount===1){timeline.frameIndicesOffset=-1;this._timelineArray[timelineOffset+5+0]=frameParser.call(this,rawFrames[0],0,0)-this._animation.frameOffset;}else {var totalFrameCount=this._animation.frameCount+1;var frameIndices=this._data.frameIndices;var frameIndicesOffset=0;if(dragonBones.DragonBones.webAssembly){frameIndicesOffset=frameIndices.size();frameIndices.resize(frameIndicesOffset+totalFrameCount,0);}else {frameIndicesOffset=frameIndices.length;frameIndices.length+=totalFrameCount;}timeline.frameIndicesOffset=frameIndicesOffset;for(var i=0,iK=0,frameStart=0,frameCount=0;i<totalFrameCount;++i){if(frameStart+frameCount<=i&&iK<keyFrameCount){var rawFrame=rawFrames[iK];frameStart=i;if(iK===keyFrameCount-1){frameCount=this._animation.frameCount-frameStart;}else {if(rawFrame instanceof ActionFrame){frameCount=this._actionFrames[iK+1].frameStart-frameStart;}else {frameCount=ObjectDataParser._getNumber(rawFrame,dragonBones.DataParser.DURATION,1);}}this._timelineArray[timelineOffset+5+iK]=frameParser.call(this,rawFrame,frameStart,frameCount)-this._animation.frameOffset;iK++;}if(dragonBones.DragonBones.webAssembly){frameIndices.set(frameIndicesOffset+i,iK-1);}else {frameIndices[frameIndicesOffset+i]=iK-1;}}}this._timeline=null;return timeline;};ObjectDataParser.prototype._parseBoneTimeline=function(rawData){var bone=this._armature.getBone(ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,""));if(bone===null){return;}this._bone=bone;this._slot=this._armature.getSlot(this._bone.name);if(dragonBones.DataParser.TRANSLATE_FRAME in rawData){var timeline=this._parseTimeline(rawData,null,dragonBones.DataParser.TRANSLATE_FRAME,11,false,true,2,this._parseBoneTranslateFrame);if(timeline!==null){this._animation.addBoneTimeline(bone,timeline);}}if(dragonBones.DataParser.ROTATE_FRAME in rawData){var timeline=this._parseTimeline(rawData,null,dragonBones.DataParser.ROTATE_FRAME,12,false,true,2,this._parseBoneRotateFrame);if(timeline!==null){this._animation.addBoneTimeline(bone,timeline);}}if(dragonBones.DataParser.SCALE_FRAME in rawData){var timeline=this._parseTimeline(rawData,null,dragonBones.DataParser.SCALE_FRAME,13,false,true,2,this._parseBoneScaleFrame);if(timeline!==null){this._animation.addBoneTimeline(bone,timeline);}}if(dragonBones.DataParser.FRAME in rawData){var timeline=this._parseTimeline(rawData,null,dragonBones.DataParser.FRAME,10,false,true,6,this._parseBoneAllFrame);if(timeline!==null){this._animation.addBoneTimeline(bone,timeline);}}this._bone=null;this._slot=null;};ObjectDataParser.prototype._parseSlotTimeline=function(rawData){var slot=this._armature.getSlot(ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,""));if(slot===null){return;}this._slot=slot;var displayTimeline=null;if(dragonBones.DataParser.DISPLAY_FRAME in rawData){displayTimeline=this._parseTimeline(rawData,null,dragonBones.DataParser.DISPLAY_FRAME,20,false,false,0,this._parseSlotDisplayFrame);}else {displayTimeline=this._parseTimeline(rawData,null,dragonBones.DataParser.FRAME,20,false,false,0,this._parseSlotDisplayFrame);}if(displayTimeline!==null){this._animation.addSlotTimeline(slot,displayTimeline);}var colorTimeline=null;if(dragonBones.DataParser.COLOR_FRAME in rawData){colorTimeline=this._parseTimeline(rawData,null,dragonBones.DataParser.COLOR_FRAME,21,true,false,1,this._parseSlotColorFrame);}else {colorTimeline=this._parseTimeline(rawData,null,dragonBones.DataParser.FRAME,21,true,false,1,this._parseSlotColorFrame);}if(colorTimeline!==null){this._animation.addSlotTimeline(slot,colorTimeline);}this._slot=null;};ObjectDataParser.prototype._parseFrame=function(rawData,frameStart,frameCount){var frameOffset=this._frameArray.length;this._frameArray.length+=1;this._frameArray[frameOffset+0]=frameStart;return frameOffset;};ObjectDataParser.prototype._parseTweenFrame=function(rawData,frameStart,frameCount){var frameOffset=this._parseFrame(rawData,frameStart,frameCount);if(frameCount>0){if(dragonBones.DataParser.CURVE in rawData){var sampleCount=frameCount+1;this._helpArray.length=sampleCount;this._samplingEasingCurve(rawData[dragonBones.DataParser.CURVE],this._helpArray);this._frameArray.length+=1+1+this._helpArray.length;this._frameArray[frameOffset+1]=2;this._frameArray[frameOffset+2]=sampleCount;for(var i=0;i<sampleCount;++i){this._frameArray[frameOffset+3+i]=Math.round(this._helpArray[i]*10000.0);}}else {var noTween=-2.0;var tweenEasing=noTween;if(dragonBones.DataParser.TWEEN_EASING in rawData){tweenEasing=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.TWEEN_EASING,noTween);}if(tweenEasing===noTween){this._frameArray.length+=1;this._frameArray[frameOffset+1]=0;}else if(tweenEasing===0.0){this._frameArray.length+=1;this._frameArray[frameOffset+1]=1;}else if(tweenEasing<0.0){this._frameArray.length+=1+1;this._frameArray[frameOffset+1]=3;this._frameArray[frameOffset+2]=Math.round(-tweenEasing*100.0);}else if(tweenEasing<=1.0){this._frameArray.length+=1+1;this._frameArray[frameOffset+1]=4;this._frameArray[frameOffset+2]=Math.round(tweenEasing*100.0);}else {this._frameArray.length+=1+1;this._frameArray[frameOffset+1]=5;this._frameArray[frameOffset+2]=Math.round(tweenEasing*100.0-100.0);}}}else {this._frameArray.length+=1;this._frameArray[frameOffset+1]=0;}return frameOffset;};ObjectDataParser.prototype._parseActionFrame=function(frame,frameStart,frameCount){var frameOffset=this._frameArray.length;var actionCount=frame.actions.length;this._frameArray.length+=1+1+actionCount;this._frameArray[frameOffset+0]=frameStart;this._frameArray[frameOffset+0+1]=actionCount;for(var i=0;i<actionCount;++i){this._frameArray[frameOffset+0+2+i]=frame.actions[i];}return frameOffset;};ObjectDataParser.prototype._parseZOrderFrame=function(rawData,frameStart,frameCount){var frameOffset=this._parseFrame(rawData,frameStart,frameCount);if(dragonBones.DataParser.Z_ORDER in rawData){var rawZOrder=rawData[dragonBones.DataParser.Z_ORDER];if(rawZOrder.length>0){var slotCount=this._armature.sortedSlots.length;var unchanged=new Array(slotCount-rawZOrder.length/2);var zOrders=new Array(slotCount);for(var i_1=0;i_1<unchanged.length;++i_1){unchanged[i_1]=0;}for(var i_2=0;i_2<slotCount;++i_2){zOrders[i_2]=-1;}var originalIndex=0;var unchangedIndex=0;for(var i_3=0,l=rawZOrder.length;i_3<l;i_3+=2){var slotIndex=rawZOrder[i_3];var zOrderOffset=rawZOrder[i_3+1];while(originalIndex!==slotIndex){unchanged[unchangedIndex++]=originalIndex++;}var index=originalIndex+zOrderOffset;zOrders[index]=originalIndex++;}while(originalIndex<slotCount){unchanged[unchangedIndex++]=originalIndex++;}this._frameArray.length+=1+slotCount;this._frameArray[frameOffset+1]=slotCount;var i=slotCount;while(i--){if(zOrders[i]===-1){this._frameArray[frameOffset+2+i]=unchanged[--unchangedIndex]||0;}else {this._frameArray[frameOffset+2+i]=zOrders[i]||0;}}return frameOffset;}}this._frameArray.length+=1;this._frameArray[frameOffset+1]=0;return frameOffset;};ObjectDataParser.prototype._parseBoneAllFrame=function(rawData,frameStart,frameCount){this._helpTransform.identity();if(dragonBones.DataParser.TRANSFORM in rawData){this._parseTransform(rawData[dragonBones.DataParser.TRANSFORM],this._helpTransform,1.0);}var rotation=this._helpTransform.rotation;if(frameStart!==0){if(this._prevClockwise===0){rotation=this._prevRotation+dragonBones.Transform.normalizeRadian(rotation-this._prevRotation);}else {if(this._prevClockwise>0?rotation>=this._prevRotation:rotation<=this._prevRotation){this._prevClockwise=this._prevClockwise>0?this._prevClockwise-1:this._prevClockwise+1;}rotation=this._prevRotation+rotation-this._prevRotation+dragonBones.Transform.PI_D*this._prevClockwise;}}this._prevClockwise=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.TWEEN_ROTATE,0.0);this._prevRotation=rotation;var frameOffset=this._parseTweenFrame(rawData,frameStart,frameCount);var frameFloatOffset=this._frameFloatArray.length;this._frameFloatArray.length+=6;this._frameFloatArray[frameFloatOffset++]=this._helpTransform.x;this._frameFloatArray[frameFloatOffset++]=this._helpTransform.y;this._frameFloatArray[frameFloatOffset++]=rotation;this._frameFloatArray[frameFloatOffset++]=this._helpTransform.skew;this._frameFloatArray[frameFloatOffset++]=this._helpTransform.scaleX;this._frameFloatArray[frameFloatOffset++]=this._helpTransform.scaleY;this._parseActionDataInFrame(rawData,frameStart,this._bone,this._slot);return frameOffset;};ObjectDataParser.prototype._parseBoneTranslateFrame=function(rawData,frameStart,frameCount){var frameOffset=this._parseTweenFrame(rawData,frameStart,frameCount);var frameFloatOffset=this._frameFloatArray.length;this._frameFloatArray.length+=2;this._frameFloatArray[frameFloatOffset++]=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.X,0.0);this._frameFloatArray[frameFloatOffset++]=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.Y,0.0);return frameOffset;};ObjectDataParser.prototype._parseBoneRotateFrame=function(rawData,frameStart,frameCount){var rotation=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.ROTATE,0.0)*dragonBones.Transform.DEG_RAD;if(frameStart!==0){if(this._prevClockwise===0){rotation=this._prevRotation+dragonBones.Transform.normalizeRadian(rotation-this._prevRotation);}else {if(this._prevClockwise>0?rotation>=this._prevRotation:rotation<=this._prevRotation){this._prevClockwise=this._prevClockwise>0?this._prevClockwise-1:this._prevClockwise+1;}rotation=this._prevRotation+rotation-this._prevRotation+dragonBones.Transform.PI_D*this._prevClockwise;}}this._prevClockwise=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.CLOCK_WISE,0);this._prevRotation=rotation;var frameOffset=this._parseTweenFrame(rawData,frameStart,frameCount);var frameFloatOffset=this._frameFloatArray.length;this._frameFloatArray.length+=2;this._frameFloatArray[frameFloatOffset++]=rotation;this._frameFloatArray[frameFloatOffset++]=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SKEW,0.0)*dragonBones.Transform.DEG_RAD;return frameOffset;};ObjectDataParser.prototype._parseBoneScaleFrame=function(rawData,frameStart,frameCount){var frameOffset=this._parseTweenFrame(rawData,frameStart,frameCount);var frameFloatOffset=this._frameFloatArray.length;this._frameFloatArray.length+=2;this._frameFloatArray[frameFloatOffset++]=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.X,1.0);this._frameFloatArray[frameFloatOffset++]=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.Y,1.0);return frameOffset;};ObjectDataParser.prototype._parseSurfaceFrame=function(rawData,frameStart,frameCount){var frameFloatOffset=this._frameFloatArray.length;var frameOffset=this._parseTweenFrame(rawData,frameStart,frameCount);var rawVertices=rawData[dragonBones.DataParser.VERTICES];var offset=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.OFFSET,0);var vertexCount=this._surface.vertices.length/2;var x=0.0;var y=0.0;this._frameFloatArray.length+=vertexCount*2;for(var i=0;i<vertexCount*2;i+=2){if(i<offset||i-offset>=rawVertices.length){x=0.0;}else {x=rawVertices[i-offset];}if(i+1<offset||i+1-offset>=rawVertices.length){y=0.0;}else {y=rawVertices[i+1-offset];}this._frameFloatArray[frameFloatOffset+i]=x;this._frameFloatArray[frameFloatOffset+i+1]=y;}if(frameStart===0){var frameIntOffset=this._frameIntArray.length;this._frameIntArray.length+=1+1+1+1+1;this._frameIntArray[frameIntOffset+0]=0;this._frameIntArray[frameIntOffset+1]=this._frameFloatArray.length-frameFloatOffset;this._frameIntArray[frameIntOffset+2]=this._frameFloatArray.length-frameFloatOffset;this._frameIntArray[frameIntOffset+3]=0;this._frameIntArray[frameIntOffset+4]=frameFloatOffset-this._animation.frameFloatOffset;this._timelineArray[this._timeline.offset+3]=frameIntOffset-this._animation.frameIntOffset;}return frameOffset;};ObjectDataParser.prototype._parseSlotDisplayFrame=function(rawData,frameStart,frameCount){var frameOffset=this._parseFrame(rawData,frameStart,frameCount);this._frameArray.length+=1;if(dragonBones.DataParser.VALUE in rawData){this._frameArray[frameOffset+1]=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.VALUE,0);}else {this._frameArray[frameOffset+1]=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.DISPLAY_INDEX,0);}this._parseActionDataInFrame(rawData,frameStart,this._slot.parent,this._slot);return frameOffset;};ObjectDataParser.prototype._parseSlotColorFrame=function(rawData,frameStart,frameCount){var frameOffset=this._parseTweenFrame(rawData,frameStart,frameCount);var colorOffset=-1;if(dragonBones.DataParser.VALUE in rawData||dragonBones.DataParser.COLOR in rawData){var rawColor=dragonBones.DataParser.VALUE in rawData?rawData[dragonBones.DataParser.VALUE]:rawData[dragonBones.DataParser.COLOR];for(var k in rawColor){this._parseColorTransform(rawColor,this._helpColorTransform);colorOffset=this._intArray.length;this._intArray.length+=8;this._intArray[colorOffset++]=Math.round(this._helpColorTransform.alphaMultiplier*100);this._intArray[colorOffset++]=Math.round(this._helpColorTransform.redMultiplier*100);this._intArray[colorOffset++]=Math.round(this._helpColorTransform.greenMultiplier*100);this._intArray[colorOffset++]=Math.round(this._helpColorTransform.blueMultiplier*100);this._intArray[colorOffset++]=Math.round(this._helpColorTransform.alphaOffset);this._intArray[colorOffset++]=Math.round(this._helpColorTransform.redOffset);this._intArray[colorOffset++]=Math.round(this._helpColorTransform.greenOffset);this._intArray[colorOffset++]=Math.round(this._helpColorTransform.blueOffset);colorOffset-=8;break;}}if(colorOffset<0){if(this._defaultColorOffset<0){this._defaultColorOffset=colorOffset=this._intArray.length;this._intArray.length+=8;this._intArray[colorOffset++]=100;this._intArray[colorOffset++]=100;this._intArray[colorOffset++]=100;this._intArray[colorOffset++]=100;this._intArray[colorOffset++]=0;this._intArray[colorOffset++]=0;this._intArray[colorOffset++]=0;this._intArray[colorOffset++]=0;}colorOffset=this._defaultColorOffset;}var frameIntOffset=this._frameIntArray.length;this._frameIntArray.length+=1;this._frameIntArray[frameIntOffset]=colorOffset;return frameOffset;};ObjectDataParser.prototype._parseSlotFFDFrame=function(rawData,frameStart,frameCount){var frameFloatOffset=this._frameFloatArray.length;var frameOffset=this._parseTweenFrame(rawData,frameStart,frameCount);var rawVertices=dragonBones.DataParser.VERTICES in rawData?rawData[dragonBones.DataParser.VERTICES]:null;var offset=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.OFFSET,0);var vertexCount=this._intArray[this._mesh.vertices.offset+0];var meshName=this._mesh.parent.name+"_"+this._slot.name+"_"+this._mesh.name;var weight=this._mesh.vertices.weight;var x=0.0;var y=0.0;var iB=0;var iV=0;if(weight!==null){var rawSlotPose=this._weightSlotPose[meshName];this._helpMatrixA.copyFromArray(rawSlotPose,0);this._frameFloatArray.length+=weight.count*2;iB=weight.offset+2+weight.bones.length;}else {this._frameFloatArray.length+=vertexCount*2;}for(var i=0;i<vertexCount*2;i+=2){if(rawVertices===null){x=0.0;y=0.0;}else {if(i<offset||i-offset>=rawVertices.length){x=0.0;}else {x=rawVertices[i-offset];}if(i+1<offset||i+1-offset>=rawVertices.length){y=0.0;}else {y=rawVertices[i+1-offset];}}if(weight!==null){var rawBonePoses=this._weightBonePoses[meshName];var vertexBoneCount=this._intArray[iB++];this._helpMatrixA.transformPoint(x,y,this._helpPoint,true);x=this._helpPoint.x;y=this._helpPoint.y;for(var j=0;j<vertexBoneCount;++j){var boneIndex=this._intArray[iB++];this._helpMatrixB.copyFromArray(rawBonePoses,boneIndex*7+1);this._helpMatrixB.invert();this._helpMatrixB.transformPoint(x,y,this._helpPoint,true);this._frameFloatArray[frameFloatOffset+iV++]=this._helpPoint.x;this._frameFloatArray[frameFloatOffset+iV++]=this._helpPoint.y;}}else {this._frameFloatArray[frameFloatOffset+i]=x;this._frameFloatArray[frameFloatOffset+i+1]=y;}}if(frameStart===0){var frameIntOffset=this._frameIntArray.length;this._frameIntArray.length+=1+1+1+1+1;this._frameIntArray[frameIntOffset+0]=this._mesh.vertices.offset;this._frameIntArray[frameIntOffset+1]=this._frameFloatArray.length-frameFloatOffset;this._frameIntArray[frameIntOffset+2]=this._frameFloatArray.length-frameFloatOffset;this._frameIntArray[frameIntOffset+3]=0;this._frameIntArray[frameIntOffset+4]=frameFloatOffset-this._animation.frameFloatOffset;this._timelineArray[this._timeline.offset+3]=frameIntOffset-this._animation.frameIntOffset;}return frameOffset;};ObjectDataParser.prototype._parseIKConstraintFrame=function(rawData,frameStart,frameCount){var frameOffset=this._parseTweenFrame(rawData,frameStart,frameCount);var frameIntOffset=this._frameIntArray.length;this._frameIntArray.length+=2;this._frameIntArray[frameIntOffset++]=ObjectDataParser._getBoolean(rawData,dragonBones.DataParser.BEND_POSITIVE,true)?1:0;this._frameIntArray[frameIntOffset++]=Math.round(ObjectDataParser._getNumber(rawData,dragonBones.DataParser.WEIGHT,1.0)*100.0);return frameOffset;};ObjectDataParser.prototype._parseAnimationFrame=function(rawData,frameStart,frameCount){var frameOffset=this._parseTweenFrame(rawData,frameStart,frameCount);var frameIntOffset=this._frameIntArray.length;this._frameIntArray.length+=2;this._frameIntArray[frameIntOffset++]=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.VALUE,0);this._frameIntArray[frameIntOffset++]=Math.round(ObjectDataParser._getNumber(rawData,dragonBones.DataParser.WEIGHT,1.0)*100.0);return frameOffset;};ObjectDataParser.prototype._parseActionData=function(rawData,type,bone,slot){var actions=new Array();if(typeof rawData==="string"){var action=dragonBones.BaseObject.borrowObject(dragonBones.ActionData);action.type=type;action.name=rawData;action.bone=bone;action.slot=slot;actions.push(action);}else if(rawData instanceof Array){for(var _i=0,rawData_2=rawData;_i<rawData_2.length;_i++){var rawAction=rawData_2[_i];var action=dragonBones.BaseObject.borrowObject(dragonBones.ActionData);if(dragonBones.DataParser.GOTO_AND_PLAY in rawAction){action.type=0;action.name=ObjectDataParser._getString(rawAction,dragonBones.DataParser.GOTO_AND_PLAY,"");}else {if(dragonBones.DataParser.TYPE in rawAction&&typeof rawAction[dragonBones.DataParser.TYPE]==="string"){action.type=dragonBones.DataParser._getActionType(rawAction[dragonBones.DataParser.TYPE]);}else {action.type=ObjectDataParser._getNumber(rawAction,dragonBones.DataParser.TYPE,type);}action.name=ObjectDataParser._getString(rawAction,dragonBones.DataParser.NAME,"");}if(dragonBones.DataParser.BONE in rawAction){var boneName=ObjectDataParser._getString(rawAction,dragonBones.DataParser.BONE,"");action.bone=this._armature.getBone(boneName);}else {action.bone=bone;}if(dragonBones.DataParser.SLOT in rawAction){var slotName=ObjectDataParser._getString(rawAction,dragonBones.DataParser.SLOT,"");action.slot=this._armature.getSlot(slotName);}else {action.slot=slot;}var userData=null;if(dragonBones.DataParser.INTS in rawAction){if(userData===null){userData=dragonBones.BaseObject.borrowObject(dragonBones.UserData);}var rawInts=rawAction[dragonBones.DataParser.INTS];for(var _a=0,rawInts_1=rawInts;_a<rawInts_1.length;_a++){var rawValue=rawInts_1[_a];userData.addInt(rawValue);}}if(dragonBones.DataParser.FLOATS in rawAction){if(userData===null){userData=dragonBones.BaseObject.borrowObject(dragonBones.UserData);}var rawFloats=rawAction[dragonBones.DataParser.FLOATS];for(var _b=0,rawFloats_1=rawFloats;_b<rawFloats_1.length;_b++){var rawValue=rawFloats_1[_b];userData.addFloat(rawValue);}}if(dragonBones.DataParser.STRINGS in rawAction){if(userData===null){userData=dragonBones.BaseObject.borrowObject(dragonBones.UserData);}var rawStrings=rawAction[dragonBones.DataParser.STRINGS];for(var _c=0,rawStrings_1=rawStrings;_c<rawStrings_1.length;_c++){var rawValue=rawStrings_1[_c];userData.addString(rawValue);}}action.data=userData;actions.push(action);}}return actions;};ObjectDataParser.prototype._parseTransform=function(rawData,transform,scale){transform.x=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.X,0.0)*scale;transform.y=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.Y,0.0)*scale;if(dragonBones.DataParser.ROTATE in rawData||dragonBones.DataParser.SKEW in rawData){transform.rotation=dragonBones.Transform.normalizeRadian(ObjectDataParser._getNumber(rawData,dragonBones.DataParser.ROTATE,0.0)*dragonBones.Transform.DEG_RAD);transform.skew=dragonBones.Transform.normalizeRadian(ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SKEW,0.0)*dragonBones.Transform.DEG_RAD);}else if(dragonBones.DataParser.SKEW_X in rawData||dragonBones.DataParser.SKEW_Y in rawData){transform.rotation=dragonBones.Transform.normalizeRadian(ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SKEW_Y,0.0)*dragonBones.Transform.DEG_RAD);transform.skew=dragonBones.Transform.normalizeRadian(ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SKEW_X,0.0)*dragonBones.Transform.DEG_RAD)-transform.rotation;}transform.scaleX=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SCALE_X,1.0);transform.scaleY=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SCALE_Y,1.0);};ObjectDataParser.prototype._parseColorTransform=function(rawData,color){color.alphaMultiplier=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.ALPHA_MULTIPLIER,100)*0.01;color.redMultiplier=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.RED_MULTIPLIER,100)*0.01;color.greenMultiplier=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.GREEN_MULTIPLIER,100)*0.01;color.blueMultiplier=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.BLUE_MULTIPLIER,100)*0.01;color.alphaOffset=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.ALPHA_OFFSET,0);color.redOffset=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.RED_OFFSET,0);color.greenOffset=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.GREEN_OFFSET,0);color.blueOffset=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.BLUE_OFFSET,0);};ObjectDataParser.prototype._parseArray=function(rawData){this._intArray.length=0;this._floatArray.length=0;this._frameIntArray.length=0;this._frameFloatArray.length=0;this._frameArray.length=0;this._timelineArray.length=0;};ObjectDataParser.prototype._modifyArray=function(){if(this._intArray.length%Int16Array.BYTES_PER_ELEMENT!==0){this._intArray.push(0);}if(this._frameIntArray.length%Int16Array.BYTES_PER_ELEMENT!==0){this._frameIntArray.push(0);}if(this._frameArray.length%Int16Array.BYTES_PER_ELEMENT!==0){this._frameArray.push(0);}if(this._timelineArray.length%Uint16Array.BYTES_PER_ELEMENT!==0){this._timelineArray.push(0);}var l1=this._intArray.length*Int16Array.BYTES_PER_ELEMENT;var l2=this._floatArray.length*Float32Array.BYTES_PER_ELEMENT;var l3=this._frameIntArray.length*Int16Array.BYTES_PER_ELEMENT;var l4=this._frameFloatArray.length*Float32Array.BYTES_PER_ELEMENT;var l5=this._frameArray.length*Int16Array.BYTES_PER_ELEMENT;var l6=this._timelineArray.length*Uint16Array.BYTES_PER_ELEMENT;var lTotal=l1+l2+l3+l4+l5+l6;if(dragonBones.DragonBones.webAssembly){var shareBuffer=dragonBones.webAssemblyModule.HEAP16.buffer;var bufferPointer=dragonBones.webAssemblyModule._malloc(lTotal);var intArray=new Int16Array(shareBuffer,bufferPointer,this._intArray.length);var floatArray=new Float32Array(shareBuffer,bufferPointer+l1,this._floatArray.length);var frameIntArray=new Int16Array(shareBuffer,bufferPointer+l1+l2,this._frameIntArray.length);var frameFloatArray=new Float32Array(shareBuffer,bufferPointer+l1+l2+l3,this._frameFloatArray.length);var frameArray=new Int16Array(shareBuffer,bufferPointer+l1+l2+l3+l4,this._frameArray.length);var timelineArray=new Uint16Array(shareBuffer,bufferPointer+l1+l2+l3+l4+l5,this._timelineArray.length);for(var i=0,l=this._intArray.length;i<l;++i){intArray[i]=this._intArray[i];}for(var i=0,l=this._floatArray.length;i<l;++i){floatArray[i]=this._floatArray[i];}for(var i=0,l=this._frameIntArray.length;i<l;++i){frameIntArray[i]=this._frameIntArray[i];}for(var i=0,l=this._frameFloatArray.length;i<l;++i){frameFloatArray[i]=this._frameFloatArray[i];}for(var i=0,l=this._frameArray.length;i<l;++i){frameArray[i]=this._frameArray[i];}for(var i=0,l=this._timelineArray.length;i<l;++i){timelineArray[i]=this._timelineArray[i];}dragonBones.webAssemblyModule.setDataBinary(this._data,bufferPointer,l1,l2,l3,l4,l5,l6);}else {var binary=new ArrayBuffer(lTotal);var intArray=new Int16Array(binary,0,this._intArray.length);var floatArray=new Float32Array(binary,l1,this._floatArray.length);var frameIntArray=new Int16Array(binary,l1+l2,this._frameIntArray.length);var frameFloatArray=new Float32Array(binary,l1+l2+l3,this._frameFloatArray.length);var frameArray=new Int16Array(binary,l1+l2+l3+l4,this._frameArray.length);var timelineArray=new Uint16Array(binary,l1+l2+l3+l4+l5,this._timelineArray.length);for(var i=0,l=this._intArray.length;i<l;++i){intArray[i]=this._intArray[i];}for(var i=0,l=this._floatArray.length;i<l;++i){floatArray[i]=this._floatArray[i];}for(var i=0,l=this._frameIntArray.length;i<l;++i){frameIntArray[i]=this._frameIntArray[i];}for(var i=0,l=this._frameFloatArray.length;i<l;++i){frameFloatArray[i]=this._frameFloatArray[i];}for(var i=0,l=this._frameArray.length;i<l;++i){frameArray[i]=this._frameArray[i];}for(var i=0,l=this._timelineArray.length;i<l;++i){timelineArray[i]=this._timelineArray[i];}this._data.binary=binary;this._data.intArray=intArray;this._data.floatArray=floatArray;this._data.frameIntArray=frameIntArray;this._data.frameFloatArray=frameFloatArray;this._data.frameArray=frameArray;this._data.timelineArray=timelineArray;}this._defaultColorOffset=-1;};ObjectDataParser.prototype.parseDragonBonesData=function(rawData,scale){if(scale===void 0){scale=1;}console.assert(rawData!==null&&rawData!==undefined,"Data error.");var version=ObjectDataParser._getString(rawData,dragonBones.DataParser.VERSION,"");var compatibleVersion=ObjectDataParser._getString(rawData,dragonBones.DataParser.COMPATIBLE_VERSION,"");if(dragonBones.DataParser.DATA_VERSIONS.indexOf(version)>=0||dragonBones.DataParser.DATA_VERSIONS.indexOf(compatibleVersion)>=0){var data=dragonBones.BaseObject.borrowObject(dragonBones.DragonBonesData);data.version=version;data.name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,"");data.frameRate=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.FRAME_RATE,24);if(data.frameRate===0){data.frameRate=24;}if(dragonBones.DataParser.ARMATURE in rawData){this._data=data;this._parseArray(rawData);var rawArmatures=rawData[dragonBones.DataParser.ARMATURE];for(var _i=0,rawArmatures_1=rawArmatures;_i<rawArmatures_1.length;_i++){var rawArmature=rawArmatures_1[_i];data.addArmature(this._parseArmature(rawArmature,scale));}if(!this._data.binary){this._modifyArray();}if(dragonBones.DataParser.STAGE in rawData){data.stage=data.getArmature(ObjectDataParser._getString(rawData,dragonBones.DataParser.STAGE,""));}else if(data.armatureNames.length>0){data.stage=data.getArmature(data.armatureNames[0]);}this._data=null;}if(dragonBones.DataParser.TEXTURE_ATLAS in rawData){this._rawTextureAtlases=rawData[dragonBones.DataParser.TEXTURE_ATLAS];}return data;}else {console.assert(false,"Nonsupport data version: "+version+"\n"+"Please convert DragonBones data to support version.\n"+"Read more: https://github.com/DragonBones/Tools/");}return null;};ObjectDataParser.prototype.parseTextureAtlasData=function(rawData,textureAtlasData,scale){if(scale===void 0){scale=1.0;}console.assert(rawData!==undefined);if(rawData===null){if(this._rawTextureAtlases===null||this._rawTextureAtlases.length===0){return false;}var rawTextureAtlas=this._rawTextureAtlases[this._rawTextureAtlasIndex++];this.parseTextureAtlasData(rawTextureAtlas,textureAtlasData,scale);if(this._rawTextureAtlasIndex>=this._rawTextureAtlases.length){this._rawTextureAtlasIndex=0;this._rawTextureAtlases=null;}return true;}textureAtlasData.width=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.WIDTH,0);textureAtlasData.height=ObjectDataParser._getNumber(rawData,dragonBones.DataParser.HEIGHT,0);textureAtlasData.scale=scale===1.0?1.0/ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SCALE,1.0):scale;textureAtlasData.name=ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,"");textureAtlasData.imagePath=ObjectDataParser._getString(rawData,dragonBones.DataParser.IMAGE_PATH,"");if(dragonBones.DataParser.SUB_TEXTURE in rawData){var rawTextures=rawData[dragonBones.DataParser.SUB_TEXTURE];for(var i=0,l=rawTextures.length;i<l;++i){var rawTexture=rawTextures[i];var textureData=textureAtlasData.createTexture();textureData.rotated=ObjectDataParser._getBoolean(rawTexture,dragonBones.DataParser.ROTATED,false);textureData.name=ObjectDataParser._getString(rawTexture,dragonBones.DataParser.NAME,"");textureData.region.x=ObjectDataParser._getNumber(rawTexture,dragonBones.DataParser.X,0.0);textureData.region.y=ObjectDataParser._getNumber(rawTexture,dragonBones.DataParser.Y,0.0);textureData.region.width=ObjectDataParser._getNumber(rawTexture,dragonBones.DataParser.WIDTH,0.0);textureData.region.height=ObjectDataParser._getNumber(rawTexture,dragonBones.DataParser.HEIGHT,0.0);var frameWidth=ObjectDataParser._getNumber(rawTexture,dragonBones.DataParser.FRAME_WIDTH,-1.0);var frameHeight=ObjectDataParser._getNumber(rawTexture,dragonBones.DataParser.FRAME_HEIGHT,-1.0);if(frameWidth>0.0&&frameHeight>0.0){textureData.frame=dragonBones.TextureData.createRectangle();textureData.frame.x=ObjectDataParser._getNumber(rawTexture,dragonBones.DataParser.FRAME_X,0.0);textureData.frame.y=ObjectDataParser._getNumber(rawTexture,dragonBones.DataParser.FRAME_Y,0.0);textureData.frame.width=frameWidth;textureData.frame.height=frameHeight;}textureAtlasData.addTexture(textureData);}}return true;};ObjectDataParser.getInstance=function(){if(ObjectDataParser._objectDataParserInstance===null){ObjectDataParser._objectDataParserInstance=new ObjectDataParser();}return ObjectDataParser._objectDataParserInstance;};ObjectDataParser._objectDataParserInstance=null;return ObjectDataParser;}(dragonBones.DataParser);dragonBones.ObjectDataParser=ObjectDataParser;var ActionFrame=function(){function ActionFrame(){this.frameStart=0;this.actions=[];}return ActionFrame;}();dragonBones.ActionFrame=ActionFrame;})(dragonBones);(function(dragonBones){var BinaryDataParser=function(_super){__extends(BinaryDataParser,_super);function BinaryDataParser(){return _super!==null&&_super.apply(this,arguments)||this;}BinaryDataParser.prototype._inRange=function(a,min,max){return min<=a&&a<=max;};BinaryDataParser.prototype._decodeUTF8=function(data){var EOF_byte=-1;var EOF_code_point=-1;var FATAL_POINT=0xFFFD;var pos=0;var result="";var code_point;var utf8_code_point=0;var utf8_bytes_needed=0;var utf8_bytes_seen=0;var utf8_lower_boundary=0;while(data.length>pos){var _byte=data[pos++];if(_byte===EOF_byte){if(utf8_bytes_needed!==0){code_point=FATAL_POINT;}else {code_point=EOF_code_point;}}else {if(utf8_bytes_needed===0){if(this._inRange(_byte,0x00,0x7F)){code_point=_byte;}else {if(this._inRange(_byte,0xC2,0xDF)){utf8_bytes_needed=1;utf8_lower_boundary=0x80;utf8_code_point=_byte-0xC0;}else if(this._inRange(_byte,0xE0,0xEF)){utf8_bytes_needed=2;utf8_lower_boundary=0x800;utf8_code_point=_byte-0xE0;}else if(this._inRange(_byte,0xF0,0xF4)){utf8_bytes_needed=3;utf8_lower_boundary=0x10000;utf8_code_point=_byte-0xF0;}else;utf8_code_point=utf8_code_point*Math.pow(64,utf8_bytes_needed);code_point=null;}}else if(!this._inRange(_byte,0x80,0xBF)){utf8_code_point=0;utf8_bytes_needed=0;utf8_bytes_seen=0;utf8_lower_boundary=0;pos--;code_point=_byte;}else {utf8_bytes_seen+=1;utf8_code_point=utf8_code_point+(_byte-0x80)*Math.pow(64,utf8_bytes_needed-utf8_bytes_seen);if(utf8_bytes_seen!==utf8_bytes_needed){code_point=null;}else {var cp=utf8_code_point;var lower_boundary=utf8_lower_boundary;utf8_code_point=0;utf8_bytes_needed=0;utf8_bytes_seen=0;utf8_lower_boundary=0;if(this._inRange(cp,lower_boundary,0x10FFFF)&&!this._inRange(cp,0xD800,0xDFFF)){code_point=cp;}else {code_point=_byte;}}}}if(code_point!==null&&code_point!==EOF_code_point){if(code_point<=0xFFFF){if(code_point>0)result+=String.fromCharCode(code_point);}else {code_point-=0x10000;result+=String.fromCharCode(0xD800+(code_point>>10&0x3ff));result+=String.fromCharCode(0xDC00+(code_point&0x3ff));}}}return result;};BinaryDataParser.prototype._getUTF16Key=function(value){for(var i=0,l=value.length;i<l;++i){if(value.charCodeAt(i)>255){return encodeURI(value);}}return value;};BinaryDataParser.prototype._parseBinaryTimeline=function(type,offset,timelineData){if(timelineData===void 0){timelineData=null;}var timeline=timelineData!==null?timelineData:dragonBones.BaseObject.borrowObject(dragonBones.TimelineData);timeline.type=type;timeline.offset=offset;this._timeline=timeline;var keyFrameCount=this._timelineArrayBuffer[timeline.offset+2];if(keyFrameCount===1){timeline.frameIndicesOffset=-1;}else {var frameIndicesOffset=0;var totalFrameCount=this._animation.frameCount+1;var frameIndices=this._data.frameIndices;if(dragonBones.DragonBones.webAssembly){frameIndicesOffset=frameIndices.size();frameIndices.resize(frameIndicesOffset+totalFrameCount,0);}else {frameIndicesOffset=frameIndices.length;frameIndices.length+=totalFrameCount;}timeline.frameIndicesOffset=frameIndicesOffset;for(var i=0,iK=0,frameStart=0,frameCount=0;i<totalFrameCount;++i){if(frameStart+frameCount<=i&&iK<keyFrameCount){frameStart=this._frameArrayBuffer[this._animation.frameOffset+this._timelineArrayBuffer[timeline.offset+5+iK]];if(iK===keyFrameCount-1){frameCount=this._animation.frameCount-frameStart;}else {frameCount=this._frameArrayBuffer[this._animation.frameOffset+this._timelineArrayBuffer[timeline.offset+5+iK+1]]-frameStart;}iK++;}if(dragonBones.DragonBones.webAssembly){frameIndices.set(frameIndicesOffset+i,iK-1);}else {frameIndices[frameIndicesOffset+i]=iK-1;}}}this._timeline=null;return timeline;};BinaryDataParser.prototype._parseVertices=function(rawData,vertices){vertices.offset=rawData[dragonBones.DataParser.OFFSET];var weightOffset=this._intArrayBuffer[vertices.offset+3];if(weightOffset>=0){var weight=dragonBones.BaseObject.borrowObject(dragonBones.WeightData);var vertexCount=this._intArrayBuffer[vertices.offset+0];var boneCount=this._intArrayBuffer[weightOffset+0];weight.offset=weightOffset;for(var i=0;i<boneCount;++i){var boneIndex=this._intArrayBuffer[weightOffset+2+i];weight.addBone(this._rawBones[boneIndex]);}var boneIndicesOffset=weightOffset+2+boneCount;var weightCount=0;for(var i=0,l=vertexCount;i<l;++i){var vertexBoneCount=this._intArrayBuffer[boneIndicesOffset++];weightCount+=vertexBoneCount;boneIndicesOffset+=vertexBoneCount;}weight.count=weightCount;vertices.weight=weight;}};BinaryDataParser.prototype._parseMesh=function(rawData,mesh){this._parseVertices(rawData,mesh.vertices);};BinaryDataParser.prototype._parsePath=function(rawData,path){this._parseVertices(rawData,path.vertices);};BinaryDataParser.prototype._parseAnimation=function(rawData){var animation=dragonBones.BaseObject.borrowObject(dragonBones.AnimationData);animation.frameCount=Math.max(dragonBones.ObjectDataParser._getNumber(rawData,dragonBones.DataParser.DURATION,1),1);animation.playTimes=dragonBones.ObjectDataParser._getNumber(rawData,dragonBones.DataParser.PLAY_TIMES,1);animation.duration=animation.frameCount/this._armature.frameRate;animation.fadeInTime=dragonBones.ObjectDataParser._getNumber(rawData,dragonBones.DataParser.FADE_IN_TIME,0.0);animation.scale=dragonBones.ObjectDataParser._getNumber(rawData,dragonBones.DataParser.SCALE,1.0);animation.name=dragonBones.ObjectDataParser._getString(rawData,dragonBones.DataParser.NAME,dragonBones.DataParser.DEFAULT_NAME);if(animation.name.length===0){animation.name=dragonBones.DataParser.DEFAULT_NAME;}var offsets=rawData[dragonBones.DataParser.OFFSET];animation.frameIntOffset=offsets[0];animation.frameFloatOffset=offsets[1];animation.frameOffset=offsets[2];this._animation=animation;if(dragonBones.DataParser.ACTION in rawData){animation.actionTimeline=this._parseBinaryTimeline(0,rawData[dragonBones.DataParser.ACTION]);}if(dragonBones.DataParser.Z_ORDER in rawData){animation.zOrderTimeline=this._parseBinaryTimeline(1,rawData[dragonBones.DataParser.Z_ORDER]);}if(dragonBones.DataParser.BONE in rawData){var rawTimeliness=rawData[dragonBones.DataParser.BONE];for(var k in rawTimeliness){var rawTimelines=rawTimeliness[k];if(dragonBones.DragonBones.webAssembly){k=this._getUTF16Key(k);}var bone=this._armature.getBone(k);if(bone===null){continue;}for(var i=0,l=rawTimelines.length;i<l;i+=2){var timelineType=rawTimelines[i];var timelineOffset=rawTimelines[i+1];var timeline=this._parseBinaryTimeline(timelineType,timelineOffset);this._animation.addBoneTimeline(bone,timeline);}}}if(dragonBones.DataParser.SURFACE in rawData){var rawTimeliness=rawData[dragonBones.DataParser.SURFACE];for(var k in rawTimeliness){var rawTimelines=rawTimeliness[k];if(dragonBones.DragonBones.webAssembly){k=this._getUTF16Key(k);}var surface=this._armature.getBone(k);if(surface===null){continue;}for(var i=0,l=rawTimelines.length;i<l;i+=2){var timelineType=rawTimelines[i];var timelineOffset=rawTimelines[i+1];var timeline=this._parseBinaryTimeline(timelineType,timelineOffset);this._animation.addSurfaceTimeline(surface,timeline);}}}if(dragonBones.DataParser.SLOT in rawData){var rawTimeliness=rawData[dragonBones.DataParser.SLOT];for(var k in rawTimeliness){var rawTimelines=rawTimeliness[k];if(dragonBones.DragonBones.webAssembly){k=this._getUTF16Key(k);}var slot=this._armature.getSlot(k);if(slot===null){continue;}for(var i=0,l=rawTimelines.length;i<l;i+=2){var timelineType=rawTimelines[i];var timelineOffset=rawTimelines[i+1];var timeline=this._parseBinaryTimeline(timelineType,timelineOffset);this._animation.addSlotTimeline(slot,timeline);}}}if(dragonBones.DataParser.CONSTRAINT in rawData){var rawTimeliness=rawData[dragonBones.DataParser.CONSTRAINT];for(var k in rawTimeliness){var rawTimelines=rawTimeliness[k];if(dragonBones.DragonBones.webAssembly){k=this._getUTF16Key(k);}var constraint=this._armature.getConstraint(k);if(constraint===null){continue;}for(var i=0,l=rawTimelines.length;i<l;i+=2){var timelineType=rawTimelines[i];var timelineOffset=rawTimelines[i+1];var timeline=this._parseBinaryTimeline(timelineType,timelineOffset);this._animation.addConstraintTimeline(constraint,timeline);}}}if(dragonBones.DataParser.ANIMATION in rawData){var rawTimeliness=rawData[dragonBones.DataParser.ANIMATION];for(var k in rawTimeliness){var rawTimelines=rawTimeliness[k];if(dragonBones.DragonBones.webAssembly){k=this._getUTF16Key(k);}for(var i=0,l=rawTimelines.length;i<l;i+=2){var timelineType=rawTimelines[i];var timelineOffset=rawTimelines[i+1];var timeline=this._parseBinaryTimeline(timelineType,timelineOffset);this._animation.addAnimationTimeline(k,timeline);}}}this._animation=null;return animation;};BinaryDataParser.prototype._parseArray=function(rawData){var offsets=rawData[dragonBones.DataParser.OFFSET];var l1=offsets[1];var l2=offsets[3];var l3=offsets[5];var l4=offsets[7];var l5=offsets[9];var l6=offsets[11];var intArray=new Int16Array(this._binary,this._binaryOffset+offsets[0],l1/Int16Array.BYTES_PER_ELEMENT);var floatArray=new Float32Array(this._binary,this._binaryOffset+offsets[2],l2/Float32Array.BYTES_PER_ELEMENT);var frameIntArray=new Int16Array(this._binary,this._binaryOffset+offsets[4],l3/Int16Array.BYTES_PER_ELEMENT);var frameFloatArray=new Float32Array(this._binary,this._binaryOffset+offsets[6],l4/Float32Array.BYTES_PER_ELEMENT);var frameArray=new Int16Array(this._binary,this._binaryOffset+offsets[8],l5/Int16Array.BYTES_PER_ELEMENT);var timelineArray=new Uint16Array(this._binary,this._binaryOffset+offsets[10],l6/Uint16Array.BYTES_PER_ELEMENT);if(dragonBones.DragonBones.webAssembly){var lTotal=l1+l2+l3+l4+l5+l6;var bufferPointer=dragonBones.webAssemblyModule._malloc(lTotal);var rawArray=new Uint8Array(this._binary,this._binaryOffset,lTotal/Uint8Array.BYTES_PER_ELEMENT);var copyArray=new Uint8Array(dragonBones.webAssemblyModule.HEAP16.buffer,bufferPointer,rawArray.length);for(var i=0,l=rawArray.length;i<l;++i){copyArray[i]=rawArray[i];}dragonBones.webAssemblyModule.setDataBinary(this._data,bufferPointer,l1,l2,l3,l4,l5,l6);this._intArrayBuffer=intArray;this._floatArrayBuffer=floatArray;this._frameIntArrayBuffer=frameIntArray;this._frameFloatArrayBuffer=frameFloatArray;this._frameArrayBuffer=frameArray;this._timelineArrayBuffer=timelineArray;}else {this._data.binary=this._binary;this._data.intArray=this._intArrayBuffer=intArray;this._data.floatArray=this._floatArrayBuffer=floatArray;this._data.frameIntArray=this._frameIntArrayBuffer=frameIntArray;this._data.frameFloatArray=this._frameFloatArrayBuffer=frameFloatArray;this._data.frameArray=this._frameArrayBuffer=frameArray;this._data.timelineArray=this._timelineArrayBuffer=timelineArray;}};BinaryDataParser.prototype.parseDragonBonesData=function(rawData,scale){if(scale===void 0){scale=1;}console.assert(rawData!==null&&rawData!==undefined&&rawData instanceof ArrayBuffer,"Data error.");var tag=new Uint8Array(rawData,0,8);if(tag[0]!=="D".charCodeAt(0)||tag[1]!=="B".charCodeAt(0)||tag[2]!=="D".charCodeAt(0)||tag[3]!=="T".charCodeAt(0)){console.assert(false,"Nonsupport data.");return null;}var headerLength=new Uint32Array(rawData,8,1)[0];var headerBytes=new Uint8Array(rawData,8+4,headerLength);var headerString=this._decodeUTF8(headerBytes);var header=JSON.parse(headerString);this._binaryOffset=8+4+headerLength;this._binary=rawData;return _super.prototype.parseDragonBonesData.call(this,header,scale);};BinaryDataParser.getInstance=function(){if(BinaryDataParser._binaryDataParserInstance===null){BinaryDataParser._binaryDataParserInstance=new BinaryDataParser();}return BinaryDataParser._binaryDataParserInstance;};BinaryDataParser._binaryDataParserInstance=null;return BinaryDataParser;}(dragonBones.ObjectDataParser);dragonBones.BinaryDataParser=BinaryDataParser;})(dragonBones);(function(dragonBones){var BaseFactory=function(){function BaseFactory(dataParser){if(dataParser===void 0){dataParser=null;}this.autoSearch=false;this._dragonBonesDataMap={};this._textureAtlasDataMap={};this._dragonBones=null;this._dataParser=null;if(BaseFactory._objectParser===null){BaseFactory._objectParser=new dragonBones.ObjectDataParser();}if(BaseFactory._binaryParser===null){BaseFactory._binaryParser=new dragonBones.BinaryDataParser();}this._dataParser=dataParser!==null?dataParser:BaseFactory._objectParser;}BaseFactory.prototype._isSupportMesh=function(){return true;};BaseFactory.prototype._getTextureData=function(textureAtlasName,textureName){if(textureAtlasName in this._textureAtlasDataMap){for(var _i=0,_a=this._textureAtlasDataMap[textureAtlasName];_i<_a.length;_i++){var textureAtlasData=_a[_i];var textureData=textureAtlasData.getTexture(textureName);if(textureData!==null){return textureData;}}}if(this.autoSearch){for(var k in this._textureAtlasDataMap){for(var _b=0,_c=this._textureAtlasDataMap[k];_b<_c.length;_b++){var textureAtlasData=_c[_b];if(textureAtlasData.autoSearch){var textureData=textureAtlasData.getTexture(textureName);if(textureData!==null){return textureData;}}}}}return null;};BaseFactory.prototype._fillBuildArmaturePackage=function(dataPackage,dragonBonesName,armatureName,skinName,textureAtlasName){var dragonBonesData=null;var armatureData=null;if(dragonBonesName.length>0){if(dragonBonesName in this._dragonBonesDataMap){dragonBonesData=this._dragonBonesDataMap[dragonBonesName];armatureData=dragonBonesData.getArmature(armatureName);}}if(armatureData===null&&(dragonBonesName.length===0||this.autoSearch)){for(var k in this._dragonBonesDataMap){dragonBonesData=this._dragonBonesDataMap[k];if(dragonBonesName.length===0||dragonBonesData.autoSearch){armatureData=dragonBonesData.getArmature(armatureName);if(armatureData!==null){dragonBonesName=k;break;}}}}if(armatureData!==null){dataPackage.dataName=dragonBonesName;dataPackage.textureAtlasName=textureAtlasName;dataPackage.data=dragonBonesData;dataPackage.armature=armatureData;dataPackage.skin=null;if(skinName.length>0){dataPackage.skin=armatureData.getSkin(skinName);if(dataPackage.skin===null&&this.autoSearch){for(var k in this._dragonBonesDataMap){var skinDragonBonesData=this._dragonBonesDataMap[k];var skinArmatureData=skinDragonBonesData.getArmature(skinName);if(skinArmatureData!==null){dataPackage.skin=skinArmatureData.defaultSkin;break;}}}}if(dataPackage.skin===null){dataPackage.skin=armatureData.defaultSkin;}return true;}return false;};BaseFactory.prototype._buildBones=function(dataPackage,armature){for(var _i=0,_a=dataPackage.armature.sortedBones;_i<_a.length;_i++){var boneData=_a[_i];var bone=dragonBones.BaseObject.borrowObject(boneData.type===0?dragonBones.Bone:dragonBones.Surface);bone.init(boneData,armature);}};BaseFactory.prototype._buildSlots=function(dataPackage,armature){var currentSkin=dataPackage.skin;var defaultSkin=dataPackage.armature.defaultSkin;if(currentSkin===null||defaultSkin===null){return;}var skinSlots={};for(var k in defaultSkin.displays){var displays=defaultSkin.getDisplays(k);skinSlots[k]=displays;}if(currentSkin!==defaultSkin){for(var k in currentSkin.displays){var displays=currentSkin.getDisplays(k);skinSlots[k]=displays;}}for(var _i=0,_a=dataPackage.armature.sortedSlots;_i<_a.length;_i++){var slotData=_a[_i];var displayDatas=slotData.name in skinSlots?skinSlots[slotData.name]:null;var slot=this._buildSlot(dataPackage,slotData,armature);slot.rawDisplayDatas=displayDatas;if(displayDatas!==null){var displayList=new Array();for(var i=0,l=dragonBones.DragonBones.webAssembly?displayDatas.size():displayDatas.length;i<l;++i){var displayData=dragonBones.DragonBones.webAssembly?displayDatas.get(i):displayDatas[i];if(displayData!==null){displayList.push(this._getSlotDisplay(dataPackage,displayData,null,slot));}else {displayList.push(null);}}slot._setDisplayList(displayList);}slot._setDisplayIndex(slotData.displayIndex,true);}};BaseFactory.prototype._buildConstraints=function(dataPackage,armature){var constraints=dataPackage.armature.constraints;for(var k in constraints){var constraintData=constraints[k];switch(constraintData.type){case 0:var ikConstraint=dragonBones.BaseObject.borrowObject(dragonBones.IKConstraint);ikConstraint.init(constraintData,armature);armature._addConstraint(ikConstraint);break;case 1:var pathConstraint=dragonBones.BaseObject.borrowObject(dragonBones.PathConstraint);pathConstraint.init(constraintData,armature);armature._addConstraint(pathConstraint);break;default:var constraint=dragonBones.BaseObject.borrowObject(dragonBones.IKConstraint);constraint.init(constraintData,armature);armature._addConstraint(constraint);break;}}};BaseFactory.prototype._buildChildArmature=function(dataPackage,slot,displayData){return this.buildArmature(displayData.path,dataPackage!==null?dataPackage.dataName:"","",dataPackage!==null?dataPackage.textureAtlasName:"");};BaseFactory.prototype._getSlotDisplay=function(dataPackage,displayData,rawDisplayData,slot){var dataName=dataPackage!==null?dataPackage.dataName:displayData.parent.parent.parent.name;var display=null;switch(displayData.type){case 0:{var imageDisplayData=displayData;if(dataPackage!==null&&dataPackage.textureAtlasName.length>0){imageDisplayData.texture=this._getTextureData(dataPackage.textureAtlasName,displayData.path);}if(imageDisplayData.texture===null){imageDisplayData.texture=this._getTextureData(dataName,displayData.path);}if(rawDisplayData!==null&&rawDisplayData.type===2&&this._isSupportMesh()){display=slot.meshDisplay;}else {display=slot.rawDisplay;}break;}case 2:{var meshDisplayData=displayData;if(dataPackage!==null&&dataPackage.textureAtlasName.length>0){meshDisplayData.texture=this._getTextureData(dataPackage.textureAtlasName,meshDisplayData.path);}if(meshDisplayData.texture===null){meshDisplayData.texture=this._getTextureData(dataName,meshDisplayData.path);}if(this._isSupportMesh()){display=slot.meshDisplay;}else {display=slot.rawDisplay;}break;}case 1:{var armatureDisplayData=displayData;var childArmature=this._buildChildArmature(dataPackage,slot,displayData);if(childArmature!==null){childArmature.inheritAnimation=armatureDisplayData.inheritAnimation;if(!childArmature.inheritAnimation){var actions=armatureDisplayData.actions.length>0?armatureDisplayData.actions:childArmature.armatureData.defaultActions;if(actions.length>0){for(var _i=0,actions_6=actions;_i<actions_6.length;_i++){var action=actions_6[_i];var eventObject=dragonBones.BaseObject.borrowObject(dragonBones.EventObject);dragonBones.EventObject.actionDataToInstance(action,eventObject,slot.armature);eventObject.slot=slot;slot.armature._bufferAction(eventObject,false);}}else {childArmature.animation.play();}}armatureDisplayData.armature=childArmature.armatureData;}display=childArmature;break;}}return display;};BaseFactory.prototype.parseDragonBonesData=function(rawData,name,scale){if(name===void 0){name=null;}if(scale===void 0){scale=1.0;}var dataParser=rawData instanceof ArrayBuffer?BaseFactory._binaryParser:this._dataParser;var dragonBonesData=dataParser.parseDragonBonesData(rawData,scale);while(true){var textureAtlasData=this._buildTextureAtlasData(null,null);if(dataParser.parseTextureAtlasData(null,textureAtlasData,scale)){this.addTextureAtlasData(textureAtlasData,name);}else {textureAtlasData.returnToPool();break;}}if(dragonBonesData!==null){this.addDragonBonesData(dragonBonesData,name);}return dragonBonesData;};BaseFactory.prototype.parseTextureAtlasData=function(rawData,textureAtlas,name,scale){if(name===void 0){name=null;}if(scale===void 0){scale=1.0;}var textureAtlasData=this._buildTextureAtlasData(null,null);this._dataParser.parseTextureAtlasData(rawData,textureAtlasData,scale);this._buildTextureAtlasData(textureAtlasData,textureAtlas||null);this.addTextureAtlasData(textureAtlasData,name);return textureAtlasData;};BaseFactory.prototype.updateTextureAtlasData=function(name,textureAtlases){var textureAtlasDatas=this.getTextureAtlasData(name);if(textureAtlasDatas!==null){for(var i=0,l=textureAtlasDatas.length;i<l;++i){if(i<textureAtlases.length){this._buildTextureAtlasData(textureAtlasDatas[i],textureAtlases[i]);}}}};BaseFactory.prototype.getDragonBonesData=function(name){return name in this._dragonBonesDataMap?this._dragonBonesDataMap[name]:null;};BaseFactory.prototype.addDragonBonesData=function(data,name){if(name===void 0){name=null;}name=name!==null?name:data.name;if(name in this._dragonBonesDataMap){if(this._dragonBonesDataMap[name]===data){return;}console.warn("Can not add same name data: "+name);return;}this._dragonBonesDataMap[name]=data;};BaseFactory.prototype.removeDragonBonesData=function(name,disposeData){if(disposeData===void 0){disposeData=true;}if(name in this._dragonBonesDataMap){if(disposeData){this._dragonBones.bufferObject(this._dragonBonesDataMap[name]);}delete this._dragonBonesDataMap[name];}};BaseFactory.prototype.getTextureAtlasData=function(name){return name in this._textureAtlasDataMap?this._textureAtlasDataMap[name]:null;};BaseFactory.prototype.addTextureAtlasData=function(data,name){if(name===void 0){name=null;}name=name!==null?name:data.name;var textureAtlasList=name in this._textureAtlasDataMap?this._textureAtlasDataMap[name]:this._textureAtlasDataMap[name]=[];if(textureAtlasList.indexOf(data)<0){textureAtlasList.push(data);}};BaseFactory.prototype.removeTextureAtlasData=function(name,disposeData){if(disposeData===void 0){disposeData=true;}if(name in this._textureAtlasDataMap){var textureAtlasDataList=this._textureAtlasDataMap[name];if(disposeData){for(var _i=0,textureAtlasDataList_1=textureAtlasDataList;_i<textureAtlasDataList_1.length;_i++){var textureAtlasData=textureAtlasDataList_1[_i];this._dragonBones.bufferObject(textureAtlasData);}}delete this._textureAtlasDataMap[name];}};BaseFactory.prototype.getArmatureData=function(name,dragonBonesName){if(dragonBonesName===void 0){dragonBonesName="";}var dataPackage=new BuildArmaturePackage();if(!this._fillBuildArmaturePackage(dataPackage,dragonBonesName,name,"","")){return null;}return dataPackage.armature;};BaseFactory.prototype.clear=function(disposeData){if(disposeData===void 0){disposeData=true;}for(var k in this._dragonBonesDataMap){if(disposeData){this._dragonBones.bufferObject(this._dragonBonesDataMap[k]);}delete this._dragonBonesDataMap[k];}for(var k in this._textureAtlasDataMap){if(disposeData){var textureAtlasDataList=this._textureAtlasDataMap[k];for(var _i=0,textureAtlasDataList_2=textureAtlasDataList;_i<textureAtlasDataList_2.length;_i++){var textureAtlasData=textureAtlasDataList_2[_i];this._dragonBones.bufferObject(textureAtlasData);}}delete this._textureAtlasDataMap[k];}};BaseFactory.prototype.buildArmature=function(armatureName,dragonBonesName,skinName,textureAtlasName){if(dragonBonesName===void 0){dragonBonesName="";}if(skinName===void 0){skinName="";}if(textureAtlasName===void 0){textureAtlasName="";}var dataPackage=new BuildArmaturePackage();if(!this._fillBuildArmaturePackage(dataPackage,dragonBonesName||"",armatureName,skinName||"",textureAtlasName||"")){console.warn("No armature data: "+armatureName+", "+(dragonBonesName!==null?dragonBonesName:""));return null;}var armature=this._buildArmature(dataPackage);this._buildBones(dataPackage,armature);this._buildSlots(dataPackage,armature);this._buildConstraints(dataPackage,armature);armature.invalidUpdate(null,true);armature.advanceTime(0.0);return armature;};BaseFactory.prototype.replaceDisplay=function(slot,displayData,displayIndex){if(displayIndex===void 0){displayIndex=-1;}if(displayIndex<0){displayIndex=slot.displayIndex;}if(displayIndex<0){displayIndex=0;}slot.replaceDisplayData(displayData,displayIndex);var displayList=slot.displayList;if(displayList.length<=displayIndex){displayList.length=displayIndex+1;for(var i=0,l=displayList.length;i<l;++i){if(!displayList[i]){displayList[i]=null;}}}if(displayData!==null){var rawDisplayDatas=slot.rawDisplayDatas;var rawDisplayData=null;if(rawDisplayDatas){if(dragonBones.DragonBones.webAssembly){if(displayIndex<rawDisplayDatas.size()){rawDisplayData=rawDisplayDatas.get(displayIndex);}}else {if(displayIndex<rawDisplayDatas.length){rawDisplayData=rawDisplayDatas[displayIndex];}}}displayList[displayIndex]=this._getSlotDisplay(null,displayData,rawDisplayData,slot);}else {displayList[displayIndex]=null;}slot.displayList=displayList;};BaseFactory.prototype.replaceSlotDisplay=function(dragonBonesName,armatureName,slotName,displayName,slot,displayIndex){if(displayIndex===void 0){displayIndex=-1;}var armatureData=this.getArmatureData(armatureName,dragonBonesName||"");if(!armatureData||!armatureData.defaultSkin){return false;}var displayData=armatureData.defaultSkin.getDisplay(slotName,displayName);if(!displayData){return false;}this.replaceDisplay(slot,displayData,displayIndex);return true;};BaseFactory.prototype.replaceSlotDisplayList=function(dragonBonesName,armatureName,slotName,slot){var armatureData=this.getArmatureData(armatureName,dragonBonesName||"");if(!armatureData||!armatureData.defaultSkin){return false;}var displays=armatureData.defaultSkin.getDisplays(slotName);if(!displays){return false;}var displayIndex=0;for(var i=0,l=dragonBones.DragonBones.webAssembly?displays.size():displays.length;i<l;++i){var displayData=dragonBones.DragonBones.webAssembly?displays.get(i):displays[i];this.replaceDisplay(slot,displayData,displayIndex++);}return true;};BaseFactory.prototype.replaceSkin=function(armature,skin,isOverride,exclude){if(isOverride===void 0){isOverride=false;}if(exclude===void 0){exclude=null;}var success=false;var defaultSkin=skin.parent.defaultSkin;for(var _i=0,_a=armature.getSlots();_i<_a.length;_i++){var slot=_a[_i];if(exclude!==null&&exclude.indexOf(slot.name)>=0){continue;}var displays=skin.getDisplays(slot.name);if(!displays){if(defaultSkin!==null&&skin!==defaultSkin){displays=defaultSkin.getDisplays(slot.name);}if(!displays){if(isOverride){slot.rawDisplayDatas=null;slot.displayList=[];}continue;}}var displayCount=dragonBones.DragonBones.webAssembly?displays.size():displays.length;var displayList=slot.displayList;displayList.length=displayCount;for(var i=0,l=displayCount;i<l;++i){var displayData=dragonBones.DragonBones.webAssembly?displays.get(i):displays[i];if(displayData!==null){displayList[i]=this._getSlotDisplay(null,displayData,null,slot);}else {displayList[i]=null;}}success=true;slot.rawDisplayDatas=displays;slot.displayList=displayList;}return success;};BaseFactory.prototype.replaceAnimation=function(armature,armatureData,isOverride){if(isOverride===void 0){isOverride=true;}var skinData=armatureData.defaultSkin;if(skinData===null){return false;}if(isOverride){armature.animation.animations=armatureData.animations;}else {var rawAnimations=armature.animation.animations;var animations={};for(var k in rawAnimations){animations[k]=rawAnimations[k];}for(var k in armatureData.animations){animations[k]=armatureData.animations[k];}armature.animation.animations=animations;}for(var _i=0,_a=armature.getSlots();_i<_a.length;_i++){var slot=_a[_i];var index=0;for(var _b=0,_c=slot.displayList;_b<_c.length;_b++){var display=_c[_b];if(display instanceof dragonBones.Armature){var displayDatas=skinData.getDisplays(slot.name);if(displayDatas!==null&&index<(dragonBones.DragonBones.webAssembly?displayDatas.size():displayDatas.length)){var displayData=dragonBones.DragonBones.webAssembly?displayDatas.get(index):displayDatas[index];if(displayData!==null&&displayData.type===1){var childArmatureData=this.getArmatureData(displayData.path,displayData.parent.parent.parent.name);if(childArmatureData){this.replaceAnimation(display,childArmatureData,isOverride);}}}}index++;}}return true;};BaseFactory.prototype.getAllDragonBonesData=function(){return this._dragonBonesDataMap;};BaseFactory.prototype.getAllTextureAtlasData=function(){return this._textureAtlasDataMap;};Object.defineProperty(BaseFactory.prototype,"clock",{get:function(){return this._dragonBones.clock;},enumerable:true,configurable:true});Object.defineProperty(BaseFactory.prototype,"dragonBones",{get:function(){return this._dragonBones;},enumerable:true,configurable:true});BaseFactory.prototype.changeSkin=function(armature,skin,exclude){if(exclude===void 0){exclude=null;}return this.replaceSkin(armature,skin,false,exclude);};BaseFactory.prototype.copyAnimationsToArmature=function(toArmature,fromArmatreName,fromSkinName,fromDragonBonesDataName,replaceOriginalAnimation){if(fromDragonBonesDataName===void 0){fromDragonBonesDataName="";}if(replaceOriginalAnimation===void 0){replaceOriginalAnimation=true;}var armatureData=this.getArmatureData(fromArmatreName,fromDragonBonesDataName);if(!armatureData){return false;}return this.replaceAnimation(toArmature,armatureData,replaceOriginalAnimation);};BaseFactory._objectParser=null;BaseFactory._binaryParser=null;return BaseFactory;}();dragonBones.BaseFactory=BaseFactory;var BuildArmaturePackage=function(){function BuildArmaturePackage(){this.dataName="";this.textureAtlasName="";this.skin=null;}return BuildArmaturePackage;}();dragonBones.BuildArmaturePackage=BuildArmaturePackage;})(dragonBones);(function(dragonBones){dragonBones.BinaryOffset={WeigthBoneCount:0,WeigthFloatOffset:1,WeigthBoneIndices:2,MeshVertexCount:0,MeshTriangleCount:1,MeshFloatOffset:2,MeshWeightOffset:3,MeshVertexIndices:4,TimelineScale:0,TimelineOffset:1,TimelineKeyFrameCount:2,TimelineFrameValueCount:3,TimelineFrameValueOffset:4,TimelineFrameOffset:5,FramePosition:0,FrameTweenType:1,FrameTweenEasingOrCurveSampleCount:2,FrameCurveSamples:3,DeformMeshOffset:0,DeformCount:1,DeformValueCount:2,DeformValueOffset:3,DeformFloatOffset:4};dragonBones.ArmatureType={Armature:0,MovieClip:1,Stage:2};dragonBones.BoneType={Bone:0,Surface:1};dragonBones.DisplayType={Image:0,Armature:1,Mesh:2,BoundingBox:3};dragonBones.BoundingBoxType={Rectangle:0,Ellipse:1,Polygon:2};dragonBones.ActionType={Play:0,Stop:1,GotoAndPlay:2,GotoAndStop:3,FadeIn:4,FadeOut:5,Frame:10,Sound:11};dragonBones.BlendMode={Normal:0,Add:1,Alpha:2,Darken:3,Difference:4,Erase:5,HardLight:6,Invert:7,Layer:8,Lighten:9,Multiply:10,Overlay:11,Screen:12,Subtract:13};dragonBones.TweenType={None:0,Line:1,Curve:2,QuadIn:3,QuadOut:4,QuadInOut:5};dragonBones.TimelineType={Action:0,ZOrder:1,BoneAll:10,BoneTranslate:11,BoneRotate:12,BoneScale:13,Surface:50,SlotDisplay:20,SlotColor:21,SlotFFD:22,IKConstraint:30,AnimationTime:40,AnimationWeight:41};})(dragonBones);const DragonBones=dragonBones.DragonBones;const BaseObject=dragonBones.BaseObject;const Matrix=dragonBones.Matrix;const Transform=dragonBones.Transform;const ColorTransform=dragonBones.ColorTransform;const Point=dragonBones.Point;const Rectangle=dragonBones.Rectangle;const UserData=dragonBones.UserData;const ActionData=dragonBones.ActionData;const DragonBonesData=dragonBones.DragonBonesData;const ArmatureData=dragonBones.ArmatureData;const BoneData=dragonBones.BoneData;const SurfaceData=dragonBones.SurfaceData;const SlotData=dragonBones.SlotData;const ConstraintData=dragonBones.ConstraintData;const IKConstraintData=dragonBones.IKConstraintData;const PathConstraintData=dragonBones.PathConstraintData;const CanvasData=dragonBones.CanvasData;const SkinData=dragonBones.SkinData;const VerticesData=dragonBones.VerticesData;const DisplayData=dragonBones.DisplayData;const ImageDisplayData=dragonBones.ImageDisplayData;const ArmatureDisplayData=dragonBones.ArmatureDisplayData;const MeshDisplayData=dragonBones.MeshDisplayData;const BoundingBoxDisplayData=dragonBones.BoundingBoxDisplayData;const PathDisplayData=dragonBones.PathDisplayData;const WeightData=dragonBones.WeightData;const BoundingBoxData=dragonBones.BoundingBoxData;const RectangleBoundingBoxData=dragonBones.RectangleBoundingBoxData;const EllipseBoundingBoxData=dragonBones.EllipseBoundingBoxData;const PolygonBoundingBoxData=dragonBones.PolygonBoundingBoxData;const AnimationData=dragonBones.AnimationData;const TimelineData=dragonBones.TimelineData;const AnimationConfig=dragonBones.AnimationConfig;const TextureAtlasData=dragonBones.TextureAtlasData;const TextureData=dragonBones.TextureData;const DeformVertices=dragonBones.DeformVertices;const Armature=dragonBones.Armature;const TransformObject=dragonBones.TransformObject;const Bone=dragonBones.Bone;const Surface=dragonBones.Surface;const Slot=dragonBones.Slot;const Constraint$1=dragonBones.Constraint;const IKConstraint=dragonBones.IKConstraint;const PathConstraint=dragonBones.PathConstraint;const WorldClock=dragonBones.WorldClock;const Animation=dragonBones.Animation;const AnimationState=dragonBones.AnimationState;const BonePose=dragonBones.BonePose;const BlendState=dragonBones.BlendState;const TimelineState=dragonBones.TimelineState;const TweenTimelineState=dragonBones.TweenTimelineState;const BoneTimelineState=dragonBones.BoneTimelineState;const SlotTimelineState=dragonBones.SlotTimelineState;const ConstraintTimelineState=dragonBones.ConstraintTimelineState;const ActionTimelineState=dragonBones.ActionTimelineState;const ZOrderTimelineState=dragonBones.ZOrderTimelineState;const BoneAllTimelineState=dragonBones.BoneAllTimelineState;const BoneTranslateTimelineState=dragonBones.BoneTranslateTimelineState;const BoneRotateTimelineState=dragonBones.BoneRotateTimelineState;const BoneScaleTimelineState=dragonBones.BoneScaleTimelineState;const SurfaceTimelineState=dragonBones.SurfaceTimelineState;const SlotDislayTimelineState=dragonBones.SlotDislayTimelineState;const SlotColorTimelineState=dragonBones.SlotColorTimelineState;const DeformTimelineState=dragonBones.DeformTimelineState;const IKConstraintTimelineState=dragonBones.IKConstraintTimelineState;const AnimationTimelineState=dragonBones.AnimationTimelineState;const EventObject=dragonBones.EventObject;const DataParser=dragonBones.DataParser;const ObjectDataParser=dragonBones.ObjectDataParser;const ActionFrame=dragonBones.ActionFrame;const BinaryDataParser=dragonBones.BinaryDataParser;const BaseFactory=dragonBones.BaseFactory;const BuildArmaturePackage=dragonBones.BuildArmaturePackage;const BinaryOffset=dragonBones.BinaryOffset;const ArmatureType=dragonBones.ArmatureType;const BoneType=dragonBones.BoneType;const DisplayType=dragonBones.DisplayType;const BoundingBoxType=dragonBones.BoundingBoxType;const ActionType=dragonBones.ActionType;const BlendMode=dragonBones.BlendMode;const TweenType=dragonBones.TweenType;const TimelineType=dragonBones.TimelineType;
 
-var _dec$Z, _class$Z, _dec2$H, _class2$L;
+var _dec$_, _class$_, _dec2$I, _class2$L;
 const {
   ccclass: ccclass$7
 } = _decorator;
-let CCTextureAtlasData = (_dec$Z = ccclass$7('dragonBones.CCTextureAtlasData'), _dec$Z(_class$Z = class CCTextureAtlasData extends TextureAtlasData {
+let CCTextureAtlasData = (_dec$_ = ccclass$7('dragonBones.CCTextureAtlasData'), _dec$_(_class$_ = class CCTextureAtlasData extends TextureAtlasData {
   constructor(...args) {
     super(...args);
     this._renderTexture = null;
@@ -95485,8 +95653,8 @@ let CCTextureAtlasData = (_dec$Z = ccclass$7('dragonBones.CCTextureAtlasData'), 
     super._onClear();
     this.renderTexture = null;
   }
-}) || _class$Z);
-let CCTextureData = (_dec2$H = ccclass$7('dragonBones.CCTextureData'), _dec2$H(_class2$L = class CCTextureData extends TextureData {
+}) || _class$_);
+let CCTextureData = (_dec2$I = ccclass$7('dragonBones.CCTextureData'), _dec2$I(_class2$L = class CCTextureData extends TextureData {
   constructor(...args) {
     super(...args);
     this.spriteFrame = null;
@@ -95500,11 +95668,11 @@ let CCTextureData = (_dec2$H = ccclass$7('dragonBones.CCTextureData'), _dec2$H(_
   }
 }) || _class2$L);
 
-var _dec$Y, _class$Y;
+var _dec$Z, _class$Z;
 const {
   ccclass: ccclass$6
 } = _decorator;
-let CCSlot = (_dec$Y = ccclass$6('dragonBones.CCSlot'), _dec$Y(_class$Y = class CCSlot extends Slot {
+let CCSlot = (_dec$Z = ccclass$6('dragonBones.CCSlot'), _dec$Z(_class$Z = class CCSlot extends Slot {
   static toString() {
     return '[class dragonBones.CCSlot]';
   }
@@ -95810,14 +95978,14 @@ let CCSlot = (_dec$Y = ccclass$6('dragonBones.CCSlot'), _dec$Y(_class$Y = class 
       out.m13 = ad * bty + aty;
     }
   }
-}) || _class$Y);
+}) || _class$Z);
 
-var _dec$X, _class$X;
+var _dec$Y, _class$Y;
 
 const {
   ccclass: ccclass$5
 } = _decorator;
-let CCArmatureDisplay = (_dec$X = ccclass$5('dragonBones.CCArmatureDisplay'), _dec$X(_class$X = class CCArmatureDisplay extends DisplayData {
+let CCArmatureDisplay = (_dec$Y = ccclass$5('dragonBones.CCArmatureDisplay'), _dec$Y(_class$Y = class CCArmatureDisplay extends DisplayData {
   get node() {
     return this;
   }
@@ -95904,13 +96072,13 @@ let CCArmatureDisplay = (_dec$X = ccclass$5('dragonBones.CCArmatureDisplay'), _d
   dispatchDBEvent(type, eventObject) {
     this._eventTarget.emit(type, eventObject);
   }
-}) || _class$X);
+}) || _class$Y);
 
-var _dec$W, _class$W, _CCFactory;
+var _dec$X, _class$X, _CCFactory;
 const {
   ccclass: ccclass$4
 } = _decorator;
-let CCFactory = (_dec$W = ccclass$4('CCFactory'), _dec$W(_class$W = (_CCFactory = class CCFactory extends BaseFactory {
+let CCFactory = (_dec$X = ccclass$4('CCFactory'), _dec$X(_class$X = (_CCFactory = class CCFactory extends BaseFactory {
   static getInstance() {
     if (!CCFactory._factory) {
       CCFactory._factory = new CCFactory();
@@ -96027,7 +96195,7 @@ let CCFactory = (_dec$W = ccclass$4('CCFactory'), _dec$W(_class$W = (_CCFactory 
       delete this._dragonBonesDataMap[name];
     }
   }
-}, _CCFactory._factory = null, _CCFactory)) || _class$W);
+}, _CCFactory._factory = null, _CCFactory)) || _class$X);
 
 var _ArmatureCache;
 const MaxCacheTime = 30;
@@ -96451,12 +96619,12 @@ _ArmatureCache = ArmatureCache;
 ArmatureCache.FrameTime = FrameTime;
 ArmatureCache.sharedCache = new _ArmatureCache();
 
-var _dec$V, _class$V, _class2$K, _initializer$K;
+var _dec$W, _class$W, _class2$K, _initializer$K;
 const {
   ccclass: ccclass$3,
   serializable: serializable$2
 } = _decorator;
-let DragonBonesAsset = (_dec$V = ccclass$3('dragonBones.DragonBonesAsset'), _dec$V(_class$V = (_class2$K = class DragonBonesAsset extends Asset {
+let DragonBonesAsset = (_dec$W = ccclass$3('dragonBones.DragonBonesAsset'), _dec$W(_class$W = (_class2$K = class DragonBonesAsset extends Asset {
   get dragonBonesJson() {
     return this._dragonBonesJson;
   }
@@ -96559,16 +96727,16 @@ let DragonBonesAsset = (_dec$V = ccclass$3('dragonBones.DragonBonesAsset'), _dec
   }
 }, (_initializer$K = applyDecoratedInitializer(_class2$K.prototype, "_dragonBonesJson", [serializable$2], function () {
   return '';
-})), _class2$K)) || _class$V);
+})), _class2$K)) || _class$W);
 cclegacy.internal.DragonBonesAsset = DragonBonesAsset;
 
-var _dec$U, _dec2$G, _class$U, _class2$J, _initializer$J, _initializer2$y, _initializer3$l, _initializer4$e;
+var _dec$V, _dec2$H, _class$V, _class2$J, _initializer$J, _initializer2$y, _initializer3$l, _initializer4$e;
 const {
   ccclass: ccclass$2,
   serializable: serializable$1,
   type: type$1
 } = _decorator;
-let DragonBonesAtlasAsset = (_dec$U = ccclass$2('dragonBones.DragonBonesAtlasAsset'), _dec2$G = type$1(Texture2D), _dec$U(_class$U = (_class2$J = class DragonBonesAtlasAsset extends Asset {
+let DragonBonesAtlasAsset = (_dec$V = ccclass$2('dragonBones.DragonBonesAtlasAsset'), _dec2$H = type$1(Texture2D), _dec$V(_class$V = (_class2$J = class DragonBonesAtlasAsset extends Asset {
   constructor() {
     super();
     this._atlasJson = _initializer$J && _initializer$J();
@@ -96629,21 +96797,21 @@ let DragonBonesAtlasAsset = (_dec$U = ccclass$2('dragonBones.DragonBonesAtlasAss
   }
 }, (_initializer$J = applyDecoratedInitializer(_class2$J.prototype, "_atlasJson", [serializable$1], function () {
   return '';
-}), _initializer2$y = applyDecoratedInitializer(_class2$J.prototype, "_texture", [serializable$1, _dec2$G], function () {
+}), _initializer2$y = applyDecoratedInitializer(_class2$J.prototype, "_texture", [serializable$1, _dec2$H], function () {
   return null;
 }), _initializer3$l = applyDecoratedInitializer(_class2$J.prototype, "_atlasJsonData", [serializable$1], function () {
   return {};
 }), _initializer4$e = applyDecoratedInitializer(_class2$J.prototype, "_textureAtlasData", [serializable$1], function () {
   return null;
-})), _class2$J)) || _class$U);
+})), _class2$J)) || _class$V);
 cclegacy.internal.DragonBonesAtlasAsset = DragonBonesAtlasAsset;
 
-var _dec$T, _class$T;
+var _dec$U, _class$U;
 const _tempMat4 = new Mat4();
 const {
   ccclass: ccclass$1
 } = _decorator;
-let AttachUtil = (_dec$T = ccclass$1('dragonBones.AttachUtil'), _dec$T(_class$T = class AttachUtil {
+let AttachUtil = (_dec$U = ccclass$1('dragonBones.AttachUtil'), _dec$U(_class$U = class AttachUtil {
   constructor() {
     this._inited = false;
     this._armature = null;
@@ -96698,7 +96866,7 @@ let AttachUtil = (_dec$T = ccclass$1('dragonBones.AttachUtil'), _dec$T(_class$T 
       matrixHandle(boneNode, bone.globalTransformMatrix);
     }
   }
-}) || _class$T);
+}) || _class$U);
 
 class ArmatureSystem extends System {
   constructor() {
@@ -96746,7 +96914,7 @@ ArmatureSystem.ID = 'ARMATURE';
 ArmatureSystem._instance = void 0;
 cclegacy.internal.ArmatureSystem = ArmatureSystem;
 
-var _dec$S, _dec2$F, _class$S, _class2$I, _initializer$I, _initializer2$x, _dec3$m, _dec4$f, _dec5$c, _dec6$7, _dec7$5, _dec8$4, _dec9$4, _class3$5, _class4$5, _initializer3$k, _initializer4$d, _initializer5$8, _initializer6$6, _initializer7$5, _initializer8$4, _initializer9$4, _initializer10$3, _initializer11$3, _initializer12$2, _initializer13$2, _initializer14$2, _initializer15$2, _initializer16$2, _ArmatureDisplay;
+var _dec$T, _dec2$G, _class$T, _class2$I, _initializer$I, _initializer2$x, _dec3$m, _dec4$f, _dec5$c, _dec6$7, _dec7$5, _dec8$4, _dec9$4, _class3$5, _class4$5, _initializer3$k, _initializer4$d, _initializer5$8, _initializer6$6, _initializer7$5, _initializer8$4, _initializer9$4, _initializer10$3, _initializer11$3, _initializer12$2, _initializer13$2, _initializer14$2, _initializer15$2, _initializer16$2, _ArmatureDisplay;
 var DefaultArmaturesEnum;
 (function (DefaultArmaturesEnum) {
   DefaultArmaturesEnum[DefaultArmaturesEnum["default"] = -1] = "default";
@@ -96785,7 +96953,7 @@ const {
   executeInEditMode
 } = _decorator;
 
-let DragonBoneSocket = (_dec$S = ccclass('dragonBones.ArmatureDisplay.DragonBoneSocket'), _dec2$F = type(Node$1), _dec$S(_class$S = (_class2$I = class DragonBoneSocket {
+let DragonBoneSocket = (_dec$T = ccclass('dragonBones.ArmatureDisplay.DragonBoneSocket'), _dec2$G = type(Node$1), _dec$T(_class$T = (_class2$I = class DragonBoneSocket {
   constructor(path = '', target = null) {
     this.path = _initializer$I && _initializer$I();
     this.target = _initializer2$x && _initializer2$x();
@@ -96795,9 +96963,9 @@ let DragonBoneSocket = (_dec$S = ccclass('dragonBones.ArmatureDisplay.DragonBone
   }
 }, (_initializer$I = applyDecoratedInitializer(_class2$I.prototype, "path", [serializable], function () {
   return '';
-}), _initializer2$x = applyDecoratedInitializer(_class2$I.prototype, "target", [_dec2$F, serializable], function () {
+}), _initializer2$x = applyDecoratedInitializer(_class2$I.prototype, "target", [_dec2$G, serializable], function () {
   return null;
-})), _class2$I)) || _class$S);
+})), _class2$I)) || _class$T);
 setClassAlias(DragonBoneSocket, 'dragonBones.ArmatureDisplay.DragonBoneSocket');
 
 let ArmatureDisplay = (_dec3$m = ccclass('dragonBones.ArmatureDisplay'), _dec4$f = type(DragonBonesAsset), _dec5$c = type(DragonBonesAtlasAsset), _dec6$7 = type(DefaultArmaturesEnum), _dec7$5 = type(DefaultAnimsEnum), _dec8$4 = type([DragonBoneSocket]), _dec9$4 = type(Material), _dec3$m(_class3$5 = (_class4$5 = (_ArmatureDisplay = class ArmatureDisplay extends UIRenderer {
@@ -98263,10 +98431,10 @@ Intersection2D.polygonCircle = polygonCircle;
 Intersection2D.pointInPolygon = pointInPolygon;
 Intersection2D.pointLineDistance = pointLineDistance;
 
-var _dec$R, _dec2$E, _dec3$l, _class$R, _class2$H, _initializer$H, _initializer2$w;
+var _dec$S, _dec2$F, _dec3$l, _class$S, _class2$H, _initializer$H, _initializer2$w;
 const MAX_INT16 = (1 << 15) - 1;
 const MIN_INT16 = -1 << 15;
-let Sorting2D = (_dec$R = ccclass$w('cc.Sorting2D'), _dec2$E = requireComponent(UIRenderer), _dec3$l = type$a(SortingLayers.Enum), _dec$R(_class$R = disallowMultiple$1(_class$R = _dec2$E(_class$R = (_class2$H = class Sorting2D extends Component {
+let Sorting2D = (_dec$S = ccclass$w('cc.Sorting2D'), _dec2$F = requireComponent(UIRenderer), _dec3$l = type$a(SortingLayers.Enum), _dec$S(_class$S = disallowMultiple$1(_class$S = _dec2$F(_class$S = (_class2$H = class Sorting2D extends Component {
   constructor() {
     super();
     this._isSorting2DEnabled = false;
@@ -98320,7 +98488,7 @@ let Sorting2D = (_dec$R = ccclass$w('cc.Sorting2D'), _dec2$E = requireComponent(
   return SortingLayers.Enum.default;
 }), _initializer2$w = applyDecoratedInitializer(_class2$H.prototype, "_sortingOrder", [serializable$c], function () {
   return 0;
-})), _class2$H)) || _class$R) || _class$R) || _class$R);
+})), _class2$H)) || _class$S) || _class$S) || _class$S);
 
 const _min = new Vec3();
 const _max = new Vec3();
@@ -100808,8 +100976,8 @@ game.once(Game.EVENT_PRE_SUBSYSTEM_INIT, () => {
   });
 });
 
-var _dec$Q, _dec2$D, _dec3$k, _dec4$e, _dec5$b, _class$Q, _class2$G, _initializer$G, _initializer2$v, _initializer3$j, _initializer4$c, _PhysicsMaterial;
-let PhysicsMaterial = (_dec$Q = ccclass$w('cc.PhysicsMaterial'), _dec2$D = type$a(CCFloat), _dec3$k = type$a(CCFloat), _dec4$e = type$a(CCFloat), _dec5$b = type$a(CCFloat), _dec$Q(_class$Q = (_class2$G = (_PhysicsMaterial = class PhysicsMaterial extends Asset {
+var _dec$R, _dec2$E, _dec3$k, _dec4$e, _dec5$b, _class$R, _class2$G, _initializer$G, _initializer2$v, _initializer3$j, _initializer4$c, _PhysicsMaterial;
+let PhysicsMaterial = (_dec$R = ccclass$w('cc.PhysicsMaterial'), _dec2$E = type$a(CCFloat), _dec3$k = type$a(CCFloat), _dec4$e = type$a(CCFloat), _dec5$b = type$a(CCFloat), _dec$R(_class$R = (_class2$G = (_PhysicsMaterial = class PhysicsMaterial extends Asset {
   get friction() {
     return this._friction;
   }
@@ -100883,7 +101051,7 @@ let PhysicsMaterial = (_dec$Q = ccclass$w('cc.PhysicsMaterial'), _dec2$D = type$
     this._restitution = restitution;
     if (emitUpdate) this.emit(PhysicsMaterial.EVENT_UPDATE);
   }
-}, _PhysicsMaterial.allMaterials = [], _PhysicsMaterial.EVENT_UPDATE = 'event_update', _PhysicsMaterial._idCounter = 0, _PhysicsMaterial), (_applyDecoratedDescriptor(_class2$G.prototype, "friction", [_dec2$D], Object.getOwnPropertyDescriptor(_class2$G.prototype, "friction"), _class2$G.prototype), _applyDecoratedDescriptor(_class2$G.prototype, "rollingFriction", [_dec3$k], Object.getOwnPropertyDescriptor(_class2$G.prototype, "rollingFriction"), _class2$G.prototype), _applyDecoratedDescriptor(_class2$G.prototype, "spinningFriction", [_dec4$e], Object.getOwnPropertyDescriptor(_class2$G.prototype, "spinningFriction"), _class2$G.prototype), _applyDecoratedDescriptor(_class2$G.prototype, "restitution", [_dec5$b], Object.getOwnPropertyDescriptor(_class2$G.prototype, "restitution"), _class2$G.prototype), _initializer$G = applyDecoratedInitializer(_class2$G.prototype, "_friction", [serializable$c], function () {
+}, _PhysicsMaterial.allMaterials = [], _PhysicsMaterial.EVENT_UPDATE = 'event_update', _PhysicsMaterial._idCounter = 0, _PhysicsMaterial), (_applyDecoratedDescriptor(_class2$G.prototype, "friction", [_dec2$E], Object.getOwnPropertyDescriptor(_class2$G.prototype, "friction"), _class2$G.prototype), _applyDecoratedDescriptor(_class2$G.prototype, "rollingFriction", [_dec3$k], Object.getOwnPropertyDescriptor(_class2$G.prototype, "rollingFriction"), _class2$G.prototype), _applyDecoratedDescriptor(_class2$G.prototype, "spinningFriction", [_dec4$e], Object.getOwnPropertyDescriptor(_class2$G.prototype, "spinningFriction"), _class2$G.prototype), _applyDecoratedDescriptor(_class2$G.prototype, "restitution", [_dec5$b], Object.getOwnPropertyDescriptor(_class2$G.prototype, "restitution"), _class2$G.prototype), _initializer$G = applyDecoratedInitializer(_class2$G.prototype, "_friction", [serializable$c], function () {
   return 0.6;
 }), _initializer2$v = applyDecoratedInitializer(_class2$G.prototype, "_rollingFriction", [serializable$c], function () {
   return 0.0;
@@ -100891,7 +101059,7 @@ let PhysicsMaterial = (_dec$Q = ccclass$w('cc.PhysicsMaterial'), _dec2$D = type$
   return 0.0;
 }), _initializer4$c = applyDecoratedInitializer(_class2$G.prototype, "_restitution", [serializable$c], function () {
   return 0.0;
-})), _class2$G)) || _class$Q);
+})), _class2$G)) || _class$R);
 
 class PhysicsRayResult {
   constructor() {
@@ -101743,8 +101911,8 @@ director.once(DirectorEvent.INIT, () => {
   PhysicsSystem.constructAndRegister();
 });
 
-var _dec$P, _dec2$C, _dec3$j, _dec4$d, _class$P, _class2$F, _initializer$F, _initializer2$u, _initializer3$i, _initializer4$b, _initializer5$7, _initializer6$5, _initializer7$4, _initializer8$3, _initializer9$3, _RigidBody;
-let RigidBody = (_dec$P = ccclass$w('cc.RigidBody'), _dec2$C = executionOrder$2(-1), _dec3$j = type$a(PhysicsSystem.PhysicsGroup), _dec4$d = type$a(ERigidBodyType), _dec$P(_class$P = disallowMultiple$1(_class$P = _dec2$C(_class$P = (_class2$F = (_RigidBody = class RigidBody extends Component {
+var _dec$Q, _dec2$D, _dec3$j, _dec4$d, _class$Q, _class2$F, _initializer$F, _initializer2$u, _initializer3$i, _initializer4$b, _initializer5$7, _initializer6$5, _initializer7$4, _initializer8$3, _initializer9$3, _RigidBody;
+let RigidBody = (_dec$Q = ccclass$w('cc.RigidBody'), _dec2$D = executionOrder$2(-1), _dec3$j = type$a(PhysicsSystem.PhysicsGroup), _dec4$d = type$a(ERigidBodyType), _dec$Q(_class$Q = disallowMultiple$1(_class$Q = _dec2$D(_class$Q = (_class2$F = (_RigidBody = class RigidBody extends Component {
   constructor(...args) {
     super(...args);
     this._body = null;
@@ -102002,11 +102170,11 @@ let RigidBody = (_dec$P = ccclass$w('cc.RigidBody'), _dec2$C = executionOrder$2(
   return new Vec3(1, 1, 1);
 }), _initializer9$3 = applyDecoratedInitializer(_class2$F.prototype, "_angularFactor", [serializable$c], function () {
   return new Vec3(1, 1, 1);
-})), _class2$F)) || _class$P) || _class$P) || _class$P);
+})), _class2$F)) || _class$Q) || _class$Q) || _class$Q);
 (function (_RigidBody3) {})(RigidBody || (RigidBody = {}));
 
-var _dec$O, _dec2$B, _dec3$i, _dec4$c, _dec5$a, _class$O, _class2$E, _initializer$E, _initializer2$t, _initializer3$h, _Collider;
-let Collider = (_dec$O = ccclass$w('cc.Collider'), _dec2$B = type$a(RigidBody), _dec3$i = type$a(PhysicsMaterial), _dec4$c = type$a(Vec3), _dec5$a = type$a(PhysicsMaterial), _dec$O(_class$O = (_class2$E = (_Collider = class Collider extends Eventify(Component) {
+var _dec$P, _dec2$C, _dec3$i, _dec4$c, _dec5$a, _class$P, _class2$E, _initializer$E, _initializer2$t, _initializer3$h, _Collider;
+let Collider = (_dec$P = ccclass$w('cc.Collider'), _dec2$C = type$a(RigidBody), _dec3$i = type$a(PhysicsMaterial), _dec4$c = type$a(Vec3), _dec5$a = type$a(PhysicsMaterial), _dec$P(_class$P = (_class2$E = (_Collider = class Collider extends Eventify(Component) {
   get attachedRigidBody() {
     return findAttachedBody(this.node);
   }
@@ -102216,13 +102384,13 @@ let Collider = (_dec$O = ccclass$w('cc.Collider'), _dec2$B = type$a(RigidBody), 
       if (this._shape) this._shape.updateEventListener();
     }
   }
-}, _Collider.Type = EColliderType, _Collider.Axis = EAxisDirection, _Collider), (_applyDecoratedDescriptor(_class2$E.prototype, "attachedRigidBody", [_dec2$B], Object.getOwnPropertyDescriptor(_class2$E.prototype, "attachedRigidBody"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "sharedMaterial", [_dec3$i], Object.getOwnPropertyDescriptor(_class2$E.prototype, "sharedMaterial"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "center", [_dec4$c], Object.getOwnPropertyDescriptor(_class2$E.prototype, "center"), _class2$E.prototype), _initializer$E = applyDecoratedInitializer(_class2$E.prototype, "_material", [_dec5$a], function () {
+}, _Collider.Type = EColliderType, _Collider.Axis = EAxisDirection, _Collider), (_applyDecoratedDescriptor(_class2$E.prototype, "attachedRigidBody", [_dec2$C], Object.getOwnPropertyDescriptor(_class2$E.prototype, "attachedRigidBody"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "sharedMaterial", [_dec3$i], Object.getOwnPropertyDescriptor(_class2$E.prototype, "sharedMaterial"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "center", [_dec4$c], Object.getOwnPropertyDescriptor(_class2$E.prototype, "center"), _class2$E.prototype), _initializer$E = applyDecoratedInitializer(_class2$E.prototype, "_material", [_dec5$a], function () {
   return null;
 }), _initializer2$t = applyDecoratedInitializer(_class2$E.prototype, "_isTrigger", [serializable$c], function () {
   return false;
 }), _initializer3$h = applyDecoratedInitializer(_class2$E.prototype, "_center", [serializable$c], function () {
   return new Vec3();
-})), _class2$E)) || _class$O);
+})), _class2$E)) || _class$P);
 (function (_Collider3) {})(Collider || (Collider = {}));
 function findAttachedBody(node) {
   const rb = node.getComponent(RigidBody);
@@ -102232,8 +102400,8 @@ function findAttachedBody(node) {
   return null;
 }
 
-var _dec$N, _dec2$A, _class$N, _class2$D, _initializer$D;
-let BoxCollider = (_dec$N = ccclass$w('cc.BoxCollider'), _dec2$A = type$a(Vec3), _dec$N(_class$N = (_class2$D = class BoxCollider extends Collider {
+var _dec$O, _dec2$B, _class$O, _class2$D, _initializer$D;
+let BoxCollider = (_dec$O = ccclass$w('cc.BoxCollider'), _dec2$B = type$a(Vec3), _dec$O(_class$O = (_class2$D = class BoxCollider extends Collider {
   get size() {
     return this._size;
   }
@@ -102253,12 +102421,12 @@ let BoxCollider = (_dec$N = ccclass$w('cc.BoxCollider'), _dec2$A = type$a(Vec3),
     super(EColliderType.BOX);
     this._size = _initializer$D && _initializer$D();
   }
-}, (_applyDecoratedDescriptor(_class2$D.prototype, "size", [_dec2$A], Object.getOwnPropertyDescriptor(_class2$D.prototype, "size"), _class2$D.prototype), _initializer$D = applyDecoratedInitializer(_class2$D.prototype, "_size", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$D.prototype, "size", [_dec2$B], Object.getOwnPropertyDescriptor(_class2$D.prototype, "size"), _class2$D.prototype), _initializer$D = applyDecoratedInitializer(_class2$D.prototype, "_size", [serializable$c], function () {
   return new Vec3(1, 1, 1);
-})), _class2$D)) || _class$N);
+})), _class2$D)) || _class$O);
 
-var _dec$M, _class$M, _class2$C, _initializer$C;
-let SphereCollider = (_dec$M = ccclass$w('cc.SphereCollider'), _dec$M(_class$M = (_class2$C = class SphereCollider extends Collider {
+var _dec$N, _class$N, _class2$C, _initializer$C;
+let SphereCollider = (_dec$N = ccclass$w('cc.SphereCollider'), _dec$N(_class$N = (_class2$C = class SphereCollider extends Collider {
   get radius() {
     return this._radius;
   }
@@ -102279,10 +102447,10 @@ let SphereCollider = (_dec$M = ccclass$w('cc.SphereCollider'), _dec$M(_class$M =
   }
 }, (_initializer$C = applyDecoratedInitializer(_class2$C.prototype, "_radius", [serializable$c], function () {
   return 0.5;
-})), _class2$C)) || _class$M);
+})), _class2$C)) || _class$N);
 
-var _dec$L, _dec2$z, _class$L, _class2$B, _initializer$B, _initializer2$s, _initializer3$g;
-let CapsuleCollider = (_dec$L = ccclass$w('cc.CapsuleCollider'), _dec2$z = type$a(EAxisDirection), _dec$L(_class$L = (_class2$B = class CapsuleCollider extends Collider {
+var _dec$M, _dec2$A, _class$M, _class2$B, _initializer$B, _initializer2$s, _initializer3$g;
+let CapsuleCollider = (_dec$M = ccclass$w('cc.CapsuleCollider'), _dec2$A = type$a(EAxisDirection), _dec$M(_class$M = (_class2$B = class CapsuleCollider extends Collider {
   get radius() {
     return this._radius;
   }
@@ -102350,16 +102518,16 @@ let CapsuleCollider = (_dec$L = ccclass$w('cc.CapsuleCollider'), _dec2$z = type$
     if (this._direction === EAxisDirection.X_AXIS) return Math.abs(ws.x);
     return Math.abs(ws.z);
   }
-}, (_applyDecoratedDescriptor(_class2$B.prototype, "direction", [_dec2$z], Object.getOwnPropertyDescriptor(_class2$B.prototype, "direction"), _class2$B.prototype), _initializer$B = applyDecoratedInitializer(_class2$B.prototype, "_radius", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$B.prototype, "direction", [_dec2$A], Object.getOwnPropertyDescriptor(_class2$B.prototype, "direction"), _class2$B.prototype), _initializer$B = applyDecoratedInitializer(_class2$B.prototype, "_radius", [serializable$c], function () {
   return 0.5;
 }), _initializer2$s = applyDecoratedInitializer(_class2$B.prototype, "_cylinderHeight", [serializable$c], function () {
   return 1;
 }), _initializer3$g = applyDecoratedInitializer(_class2$B.prototype, "_direction", [serializable$c], function () {
   return EAxisDirection.Y_AXIS;
-})), _class2$B)) || _class$L);
+})), _class2$B)) || _class$M);
 
-var _dec$K, _dec2$y, _class$K, _class2$A, _initializer$A, _initializer2$r, _initializer3$f;
-let CylinderCollider = (_dec$K = ccclass$w('cc.CylinderCollider'), _dec2$y = type$a(EAxisDirection), _dec$K(_class$K = (_class2$A = class CylinderCollider extends Collider {
+var _dec$L, _dec2$z, _class$L, _class2$A, _initializer$A, _initializer2$r, _initializer3$f;
+let CylinderCollider = (_dec$L = ccclass$w('cc.CylinderCollider'), _dec2$z = type$a(EAxisDirection), _dec$L(_class$L = (_class2$A = class CylinderCollider extends Collider {
   get radius() {
     return this._radius;
   }
@@ -102401,16 +102569,16 @@ let CylinderCollider = (_dec$K = ccclass$w('cc.CylinderCollider'), _dec2$y = typ
     this._height = _initializer2$r && _initializer2$r();
     this._direction = _initializer3$f && _initializer3$f();
   }
-}, (_applyDecoratedDescriptor(_class2$A.prototype, "direction", [_dec2$y], Object.getOwnPropertyDescriptor(_class2$A.prototype, "direction"), _class2$A.prototype), _initializer$A = applyDecoratedInitializer(_class2$A.prototype, "_radius", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$A.prototype, "direction", [_dec2$z], Object.getOwnPropertyDescriptor(_class2$A.prototype, "direction"), _class2$A.prototype), _initializer$A = applyDecoratedInitializer(_class2$A.prototype, "_radius", [serializable$c], function () {
   return 0.5;
 }), _initializer2$r = applyDecoratedInitializer(_class2$A.prototype, "_height", [serializable$c], function () {
   return 2;
 }), _initializer3$f = applyDecoratedInitializer(_class2$A.prototype, "_direction", [serializable$c], function () {
   return EAxisDirection.Y_AXIS;
-})), _class2$A)) || _class$K);
+})), _class2$A)) || _class$L);
 
-var _dec$J, _dec2$x, _class$J, _class2$z, _initializer$z, _initializer2$q, _initializer3$e;
-let ConeCollider = (_dec$J = ccclass$w('cc.ConeCollider'), _dec2$x = type$a(EAxisDirection), _dec$J(_class$J = (_class2$z = class ConeCollider extends Collider {
+var _dec$K, _dec2$y, _class$K, _class2$z, _initializer$z, _initializer2$q, _initializer3$e;
+let ConeCollider = (_dec$K = ccclass$w('cc.ConeCollider'), _dec2$y = type$a(EAxisDirection), _dec$K(_class$K = (_class2$z = class ConeCollider extends Collider {
   get radius() {
     return this._radius;
   }
@@ -102453,16 +102621,16 @@ let ConeCollider = (_dec$J = ccclass$w('cc.ConeCollider'), _dec2$x = type$a(EAxi
     this._height = _initializer2$q && _initializer2$q();
     this._direction = _initializer3$e && _initializer3$e();
   }
-}, (_applyDecoratedDescriptor(_class2$z.prototype, "direction", [_dec2$x], Object.getOwnPropertyDescriptor(_class2$z.prototype, "direction"), _class2$z.prototype), _initializer$z = applyDecoratedInitializer(_class2$z.prototype, "_radius", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$z.prototype, "direction", [_dec2$y], Object.getOwnPropertyDescriptor(_class2$z.prototype, "direction"), _class2$z.prototype), _initializer$z = applyDecoratedInitializer(_class2$z.prototype, "_radius", [serializable$c], function () {
   return 0.5;
 }), _initializer2$q = applyDecoratedInitializer(_class2$z.prototype, "_height", [serializable$c], function () {
   return 1;
 }), _initializer3$e = applyDecoratedInitializer(_class2$z.prototype, "_direction", [serializable$c], function () {
   return EAxisDirection.Y_AXIS;
-})), _class2$z)) || _class$J);
+})), _class2$z)) || _class$K);
 
-var _dec$I, _dec2$w, _class$I, _class2$y, _initializer$y, _initializer2$p;
-let MeshCollider = (_dec$I = ccclass$w('cc.MeshCollider'), _dec2$w = type$a(Mesh), _dec$I(_class$I = (_class2$y = class MeshCollider extends Collider {
+var _dec$J, _dec2$x, _class$J, _class2$y, _initializer$y, _initializer2$p;
+let MeshCollider = (_dec$J = ccclass$w('cc.MeshCollider'), _dec2$x = type$a(Mesh), _dec$J(_class$J = (_class2$y = class MeshCollider extends Collider {
   get mesh() {
     return this._mesh;
   }
@@ -102496,14 +102664,14 @@ let MeshCollider = (_dec$I = ccclass$w('cc.MeshCollider'), _dec2$w = type$a(Mesh
     this._mesh = _initializer$y && _initializer$y();
     this._convex = _initializer2$p && _initializer2$p();
   }
-}, (_applyDecoratedDescriptor(_class2$y.prototype, "mesh", [_dec2$w], Object.getOwnPropertyDescriptor(_class2$y.prototype, "mesh"), _class2$y.prototype), _initializer$y = applyDecoratedInitializer(_class2$y.prototype, "_mesh", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$y.prototype, "mesh", [_dec2$x], Object.getOwnPropertyDescriptor(_class2$y.prototype, "mesh"), _class2$y.prototype), _initializer$y = applyDecoratedInitializer(_class2$y.prototype, "_mesh", [serializable$c], function () {
   return null;
 }), _initializer2$p = applyDecoratedInitializer(_class2$y.prototype, "_convex", [serializable$c], function () {
   return false;
-})), _class2$y)) || _class$I);
+})), _class2$y)) || _class$J);
 
-var _dec$H, _dec2$v, _class$H, _class2$x, _initializer$x, _initializer2$o, _initializer3$d, _initializer4$a;
-let ConstantForce = (_dec$H = ccclass$w('cc.ConstantForce'), _dec2$v = requireComponent(RigidBody), _dec$H(_class$H = _dec2$v(_class$H = disallowMultiple$1(_class$H = (_class2$x = class ConstantForce extends Component {
+var _dec$I, _dec2$w, _class$I, _class2$x, _initializer$x, _initializer2$o, _initializer3$d, _initializer4$a;
+let ConstantForce = (_dec$I = ccclass$w('cc.ConstantForce'), _dec2$w = requireComponent(RigidBody), _dec$I(_class$I = _dec2$w(_class$I = disallowMultiple$1(_class$I = (_class2$x = class ConstantForce extends Component {
   constructor(...args) {
     super(...args);
     this._rigidBody = null;
@@ -102573,9 +102741,9 @@ let ConstantForce = (_dec$H = ccclass$w('cc.ConstantForce'), _dec2$v = requireCo
   return new Vec3();
 }), _initializer4$a = applyDecoratedInitializer(_class2$x.prototype, "_localTorque", [serializable$c], function () {
   return new Vec3();
-})), _class2$x)) || _class$H) || _class$H) || _class$H);
+})), _class2$x)) || _class$I) || _class$I) || _class$I);
 
-var _dec$G, _class$G, _class2$w, _initializer$w, _initializer2$n, _initializer3$c, _initializer4$9, _initializer5$6, _initializer6$4, _dec2$u, _class3$4, _dec3$h, _class4$4, _class5$3, _initializer7$3;
+var _dec$H, _class$H, _class2$w, _initializer$w, _initializer2$n, _initializer3$c, _initializer4$9, _initializer5$6, _initializer6$4, _dec2$v, _class3$4, _dec3$h, _class4$4, _class5$3, _initializer7$3;
 const TERRAIN_BLOCK_TILE_COMPLEXITY = 32;
 const TERRAIN_HEIGHT_BASE = 32768;
 const TERRAIN_HEIGHT_FACTORY = 1.0 / 128.0;
@@ -102726,7 +102894,7 @@ class TerrainBuffer {
     return value;
   }
 }
-(_dec$G = ccclass$w('cc.TerrainLayerInfo'), _dec$G(_class$G = (_class2$w = class TerrainLayerInfo {
+(_dec$H = ccclass$w('cc.TerrainLayerInfo'), _dec$H(_class$H = (_class2$w = class TerrainLayerInfo {
   constructor() {
     this.slot = _initializer$w && _initializer$w();
     this.tileSize = _initializer2$n && _initializer2$n();
@@ -102747,8 +102915,8 @@ class TerrainBuffer {
   return 1;
 }), _initializer6$4 = applyDecoratedInitializer(_class2$w.prototype, "metallic", [serializable$c], function () {
   return 0;
-})), _class2$w)) || _class$G);
-let TerrainLayerBinaryInfo = (_dec2$u = ccclass$w('cc.TerrainLayerBinaryInfo'), _dec2$u(_class3$4 = class TerrainLayerBinaryInfo {
+})), _class2$w)) || _class$H);
+let TerrainLayerBinaryInfo = (_dec2$v = ccclass$w('cc.TerrainLayerBinaryInfo'), _dec2$v(_class3$4 = class TerrainLayerBinaryInfo {
   constructor() {
     this.slot = 0;
     this.tileSize = 1;
@@ -103003,8 +103171,8 @@ let TerrainAsset = (_dec3$h = ccclass$w('cc.TerrainAsset'), _dec3$h(_class4$4 = 
   return [];
 })), _class5$3)) || _class4$4);
 
-var _dec$F, _dec2$t, _class$F, _class2$v, _initializer$v;
-let TerrainCollider = (_dec$F = ccclass$w('cc.TerrainCollider'), _dec2$t = type$a(TerrainAsset), _dec$F(_class$F = (_class2$v = class TerrainCollider extends Collider {
+var _dec$G, _dec2$u, _class$G, _class2$v, _initializer$v;
+let TerrainCollider = (_dec$G = ccclass$w('cc.TerrainCollider'), _dec2$u = type$a(TerrainAsset), _dec$G(_class$G = (_class2$v = class TerrainCollider extends Collider {
   get terrain() {
     return this._terrain;
   }
@@ -103029,12 +103197,12 @@ let TerrainCollider = (_dec$F = ccclass$w('cc.TerrainCollider'), _dec2$t = type$
     super(EColliderType.TERRAIN);
     this._terrain = _initializer$v && _initializer$v();
   }
-}, (_applyDecoratedDescriptor(_class2$v.prototype, "terrain", [_dec2$t], Object.getOwnPropertyDescriptor(_class2$v.prototype, "terrain"), _class2$v.prototype), _initializer$v = applyDecoratedInitializer(_class2$v.prototype, "_terrain", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$v.prototype, "terrain", [_dec2$u], Object.getOwnPropertyDescriptor(_class2$v.prototype, "terrain"), _class2$v.prototype), _initializer$v = applyDecoratedInitializer(_class2$v.prototype, "_terrain", [serializable$c], function () {
   return null;
-})), _class2$v)) || _class$F);
+})), _class2$v)) || _class$G);
 
-var _dec$E, _dec2$s, _class$E, _class2$u, _initializer$u, _initializer2$m, _SimplexCollider;
-let SimplexCollider = (_dec$E = ccclass$w('cc.SimplexCollider'), _dec2$s = type$a(ESimplexType), _dec$E(_class$E = (_class2$u = (_SimplexCollider = class SimplexCollider extends Collider {
+var _dec$F, _dec2$t, _class$F, _class2$u, _initializer$u, _initializer2$m, _SimplexCollider;
+let SimplexCollider = (_dec$F = ccclass$w('cc.SimplexCollider'), _dec2$t = type$a(ESimplexType), _dec$F(_class$F = (_class2$u = (_SimplexCollider = class SimplexCollider extends Collider {
   get shapeType() {
     return this._shapeType;
   }
@@ -103089,15 +103257,15 @@ let SimplexCollider = (_dec$E = ccclass$w('cc.SimplexCollider'), _dec2$s = type$
       this.shape.setVertices(this._vertices);
     }
   }
-}, _SimplexCollider.ESimplexType = ESimplexType, _SimplexCollider), (_applyDecoratedDescriptor(_class2$u.prototype, "shapeType", [_dec2$s], Object.getOwnPropertyDescriptor(_class2$u.prototype, "shapeType"), _class2$u.prototype), _initializer$u = applyDecoratedInitializer(_class2$u.prototype, "_shapeType", [serializable$c], function () {
+}, _SimplexCollider.ESimplexType = ESimplexType, _SimplexCollider), (_applyDecoratedDescriptor(_class2$u.prototype, "shapeType", [_dec2$t], Object.getOwnPropertyDescriptor(_class2$u.prototype, "shapeType"), _class2$u.prototype), _initializer$u = applyDecoratedInitializer(_class2$u.prototype, "_shapeType", [serializable$c], function () {
   return ESimplexType.TETRAHEDRON;
 }), _initializer2$m = applyDecoratedInitializer(_class2$u.prototype, "_vertices", [serializable$c], function () {
   return [new Vec3(0, 0, 0), new Vec3(0, 0, 1), new Vec3(1, 0, 0), new Vec3(0, 1, 0)];
-})), _class2$u)) || _class$E);
+})), _class2$u)) || _class$F);
 (function (_SimplexCollider3) {})(SimplexCollider || (SimplexCollider = {}));
 
-var _dec$D, _dec2$r, _class$D, _class2$t, _initializer$t, _initializer2$l;
-let PlaneCollider = (_dec$D = ccclass$w('cc.PlaneCollider'), _dec2$r = type$a(Vec3), _dec$D(_class$D = (_class2$t = class PlaneCollider extends Collider {
+var _dec$E, _dec2$s, _class$E, _class2$t, _initializer$t, _initializer2$l;
+let PlaneCollider = (_dec$E = ccclass$w('cc.PlaneCollider'), _dec2$s = type$a(Vec3), _dec$E(_class$E = (_class2$t = class PlaneCollider extends Collider {
   get normal() {
     return this._normal;
   }
@@ -103136,14 +103304,14 @@ let PlaneCollider = (_dec$D = ccclass$w('cc.PlaneCollider'), _dec2$r = type$a(Ve
     this._normal = _initializer$t && _initializer$t();
     this._constant = _initializer2$l && _initializer2$l();
   }
-}, (_applyDecoratedDescriptor(_class2$t.prototype, "normal", [_dec2$r], Object.getOwnPropertyDescriptor(_class2$t.prototype, "normal"), _class2$t.prototype), _initializer$t = applyDecoratedInitializer(_class2$t.prototype, "_normal", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$t.prototype, "normal", [_dec2$s], Object.getOwnPropertyDescriptor(_class2$t.prototype, "normal"), _class2$t.prototype), _initializer$t = applyDecoratedInitializer(_class2$t.prototype, "_normal", [serializable$c], function () {
   return new Vec3(0, 1, 0);
 }), _initializer2$l = applyDecoratedInitializer(_class2$t.prototype, "_constant", [serializable$c], function () {
   return 0;
-})), _class2$t)) || _class$D);
+})), _class2$t)) || _class$E);
 
-var _dec$C, _dec2$q, _dec3$g, _dec4$b, _dec5$9, _class$C, _class2$s, _initializer$s, _initializer2$k, _Constraint;
-let Constraint = (_dec$C = ccclass$w('cc.Constraint'), _dec2$q = requireComponent(RigidBody), _dec3$g = type$a(RigidBody), _dec4$b = type$a(RigidBody), _dec5$9 = type$a(RigidBody), _dec$C(_class$C = _dec2$q(_class$C = (_class2$s = (_Constraint = class Constraint extends Eventify(Component) {
+var _dec$D, _dec2$r, _dec3$g, _dec4$b, _dec5$9, _class$D, _class2$s, _initializer$s, _initializer2$k, _Constraint;
+let Constraint = (_dec$D = ccclass$w('cc.Constraint'), _dec2$r = requireComponent(RigidBody), _dec3$g = type$a(RigidBody), _dec4$b = type$a(RigidBody), _dec5$9 = type$a(RigidBody), _dec$D(_class$D = _dec2$r(_class$D = (_class2$s = (_Constraint = class Constraint extends Eventify(Component) {
   get attachedBody() {
     return this.getComponent(RigidBody);
   }
@@ -103198,11 +103366,11 @@ let Constraint = (_dec$C = ccclass$w('cc.Constraint'), _dec2$q = requireComponen
   return true;
 }), _initializer2$k = applyDecoratedInitializer(_class2$s.prototype, "_connectedBody", [_dec5$9], function () {
   return null;
-})), _class2$s)) || _class$C) || _class$C);
+})), _class2$s)) || _class$D) || _class$D);
 (function (_Constraint3) {})(Constraint || (Constraint = {}));
 
-var _dec$B, _dec2$p, _dec3$f, _dec4$a, _dec5$8, _dec6$6, _dec7$4, _class$B, _class2$r, _initializer$r, _initializer2$j, _initializer3$b, _dec8$3, _dec9$3, _dec10$2, _dec11$2, _dec12$2, _dec13$2, _dec14$2, _class3$3, _class4$3, _initializer4$8, _initializer5$5, _initializer6$3, _dec15$2, _dec16$2, _dec17$2, _dec18$2, _dec19$2, _dec20$2, _dec21$2, _dec22$2, _dec23$2, _dec24$2, _dec25$2, _dec26$2, _dec27$2, _dec28$2, _dec29$2, _class5$2, _class6$2, _initializer7$2, _initializer8$2, _initializer9$2, _initializer10$2, _initializer11$2;
-let HingeLimitData = (_dec$B = ccclass$w('cc.HingeLimitData'), _dec2$p = formerlySerializedAs$3('enabled'), _dec3$f = formerlySerializedAs$3('upperLimit'), _dec4$a = formerlySerializedAs$3('lowerLimit'), _dec5$8 = type$a(CCBoolean), _dec6$6 = type$a(CCFloat), _dec7$4 = type$a(CCFloat), _dec$B(_class$B = (_class2$r = class HingeLimitData {
+var _dec$C, _dec2$q, _dec3$f, _dec4$a, _dec5$8, _dec6$6, _dec7$4, _class$C, _class2$r, _initializer$r, _initializer2$j, _initializer3$b, _dec8$3, _dec9$3, _dec10$2, _dec11$2, _dec12$2, _dec13$2, _dec14$2, _class3$3, _class4$3, _initializer4$8, _initializer5$5, _initializer6$3, _dec15$2, _dec16$2, _dec17$2, _dec18$2, _dec19$2, _dec20$2, _dec21$2, _dec22$2, _dec23$2, _dec24$2, _dec25$2, _dec26$2, _dec27$2, _dec28$2, _dec29$2, _class5$2, _class6$2, _initializer7$2, _initializer8$2, _initializer9$2, _initializer10$2, _initializer11$2;
+let HingeLimitData = (_dec$C = ccclass$w('cc.HingeLimitData'), _dec2$q = formerlySerializedAs$3('enabled'), _dec3$f = formerlySerializedAs$3('upperLimit'), _dec4$a = formerlySerializedAs$3('lowerLimit'), _dec5$8 = type$a(CCBoolean), _dec6$6 = type$a(CCFloat), _dec7$4 = type$a(CCFloat), _dec$C(_class$C = (_class2$r = class HingeLimitData {
   constructor() {
     this._enabled = _initializer$r && _initializer$r();
     this._upperLimit = _initializer2$j && _initializer2$j();
@@ -103226,13 +103394,13 @@ let HingeLimitData = (_dec$B = ccclass$w('cc.HingeLimitData'), _dec2$p = formerl
   set lowerLimit(v) {
     this._lowerLimit = v;
   }
-}, (_initializer$r = applyDecoratedInitializer(_class2$r.prototype, "_enabled", [serializable$c, _dec2$p], function () {
+}, (_initializer$r = applyDecoratedInitializer(_class2$r.prototype, "_enabled", [serializable$c, _dec2$q], function () {
   return false;
 }), _initializer2$j = applyDecoratedInitializer(_class2$r.prototype, "_upperLimit", [serializable$c, _dec3$f], function () {
   return Number.MAX_VALUE;
 }), _initializer3$b = applyDecoratedInitializer(_class2$r.prototype, "_lowerLimit", [serializable$c, _dec4$a], function () {
   return -Number.MAX_VALUE;
-}), _applyDecoratedDescriptor(_class2$r.prototype, "enabled", [_dec5$8], Object.getOwnPropertyDescriptor(_class2$r.prototype, "enabled"), _class2$r.prototype), _applyDecoratedDescriptor(_class2$r.prototype, "upperLimit", [_dec6$6], Object.getOwnPropertyDescriptor(_class2$r.prototype, "upperLimit"), _class2$r.prototype), _applyDecoratedDescriptor(_class2$r.prototype, "lowerLimit", [_dec7$4], Object.getOwnPropertyDescriptor(_class2$r.prototype, "lowerLimit"), _class2$r.prototype)), _class2$r)) || _class$B);
+}), _applyDecoratedDescriptor(_class2$r.prototype, "enabled", [_dec5$8], Object.getOwnPropertyDescriptor(_class2$r.prototype, "enabled"), _class2$r.prototype), _applyDecoratedDescriptor(_class2$r.prototype, "upperLimit", [_dec6$6], Object.getOwnPropertyDescriptor(_class2$r.prototype, "upperLimit"), _class2$r.prototype), _applyDecoratedDescriptor(_class2$r.prototype, "lowerLimit", [_dec7$4], Object.getOwnPropertyDescriptor(_class2$r.prototype, "lowerLimit"), _class2$r.prototype)), _class2$r)) || _class$C);
 let HingeMotorData = (_dec8$3 = ccclass$w('cc.HingeMotorData'), _dec9$3 = formerlySerializedAs$3('enabled'), _dec10$2 = formerlySerializedAs$3('motorVelocity'), _dec11$2 = formerlySerializedAs$3('motorForceLimit'), _dec12$2 = type$a(CCBoolean), _dec13$2 = type$a(CCFloat), _dec14$2 = type$a(CCFloat), _dec8$3(_class3$3 = (_class4$3 = class HingeMotorData {
   constructor() {
     this._enabled = _initializer4$8 && _initializer4$8();
@@ -103369,8 +103537,8 @@ let HingeConstraint = (_dec15$2 = ccclass$w('cc.HingeConstraint'), _dec16$2 = ty
   return new HingeMotorData();
 })), _class6$2)) || _class5$2);
 
-var _dec$A, _dec2$o, _dec3$e, _dec4$9, _dec5$7, _class$A, _class2$q, _initializer$q, _initializer2$i;
-let FixedConstraint = (_dec$A = ccclass$w('cc.FixedConstraint'), _dec2$o = type$a(CCFloat), _dec3$e = type$a(CCFloat), _dec4$9 = formerlySerializedAs$3('breakForce'), _dec5$7 = formerlySerializedAs$3('breakTorque'), _dec$A(_class$A = (_class2$q = class FixedConstraint extends Constraint {
+var _dec$B, _dec2$p, _dec3$e, _dec4$9, _dec5$7, _class$B, _class2$q, _initializer$q, _initializer2$i;
+let FixedConstraint = (_dec$B = ccclass$w('cc.FixedConstraint'), _dec2$p = type$a(CCFloat), _dec3$e = type$a(CCFloat), _dec4$9 = formerlySerializedAs$3('breakForce'), _dec5$7 = formerlySerializedAs$3('breakTorque'), _dec$B(_class$B = (_class2$q = class FixedConstraint extends Constraint {
   get breakForce() {
     return this._breakForce;
   }
@@ -103397,14 +103565,14 @@ let FixedConstraint = (_dec$A = ccclass$w('cc.FixedConstraint'), _dec2$o = type$
     this._breakForce = _initializer$q && _initializer$q();
     this._breakTorque = _initializer2$i && _initializer2$i();
   }
-}, (_applyDecoratedDescriptor(_class2$q.prototype, "breakForce", [_dec2$o], Object.getOwnPropertyDescriptor(_class2$q.prototype, "breakForce"), _class2$q.prototype), _applyDecoratedDescriptor(_class2$q.prototype, "breakTorque", [_dec3$e], Object.getOwnPropertyDescriptor(_class2$q.prototype, "breakTorque"), _class2$q.prototype), _initializer$q = applyDecoratedInitializer(_class2$q.prototype, "_breakForce", [serializable$c, _dec4$9], function () {
+}, (_applyDecoratedDescriptor(_class2$q.prototype, "breakForce", [_dec2$p], Object.getOwnPropertyDescriptor(_class2$q.prototype, "breakForce"), _class2$q.prototype), _applyDecoratedDescriptor(_class2$q.prototype, "breakTorque", [_dec3$e], Object.getOwnPropertyDescriptor(_class2$q.prototype, "breakTorque"), _class2$q.prototype), _initializer$q = applyDecoratedInitializer(_class2$q.prototype, "_breakForce", [serializable$c, _dec4$9], function () {
   return 1e8;
 }), _initializer2$i = applyDecoratedInitializer(_class2$q.prototype, "_breakTorque", [serializable$c, _dec5$7], function () {
   return 1e8;
-})), _class2$q)) || _class$A);
+})), _class2$q)) || _class$B);
 
-var _dec$z, _dec2$n, _dec3$d, _dec4$8, _dec5$6, _dec6$5, _dec7$3, _dec8$2, _dec9$2, _dec10$1, _class$z, _class2$p, _initializer$p, _initializer2$h, _initializer3$a, _initializer4$7, _initializer5$4, _initializer6$2, _initializer7$1, _initializer8$1, _initializer9$1, _dec11$1, _dec12$1, _dec13$1, _dec14$1, _dec15$1, _dec16$1, _dec17$1, _dec18$1, _dec19$1, _dec20$1, _dec21$1, _dec22$1, _dec23$1, _dec24$1, _dec25$1, _class3$2, _class4$2, _initializer10$1, _initializer11$1, _initializer12$1, _initializer13$1, _initializer14$1, _initializer15$1, _initializer16$1, _initializer17$1, _initializer18$1, _initializer19$1, _initializer20$1, _initializer21$1, _initializer22$1, _initializer23$1, _dec26$1, _dec27$1, _dec28$1, _dec29$1, _dec30$1, _dec31$1, _dec32, _class5$1, _class6$1, _initializer24$1, _initializer25$1, _initializer26$1, _initializer27$1, _initializer28$1, _initializer29$1, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _class7$1, _class8$1, _initializer30$1, _initializer31$1, _initializer32$1, _initializer33$1, _initializer34$1, _initializer35$1, _dec40, _dec41, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _dec48, _dec49, _dec50, _dec51, _dec52, _dec53, _dec54, _dec55, _class9$1, _class10$1, _initializer36, _initializer37, _initializer38, _initializer39, _initializer40, _initializer41, _initializer42, _initializer43, _initializer44, _initializer45, _initializer46;
-let LinearLimitSettings = (_dec$z = ccclass$w('cc.LinearLimitSettings'), _dec2$n = type$a(EConstraintMode), _dec3$d = type$a(EConstraintMode), _dec4$8 = type$a(EConstraintMode), _dec5$6 = type$a(Vec3), _dec6$5 = type$a(Vec3), _dec7$3 = type$a(CCFloat), _dec8$2 = type$a(CCBoolean), _dec9$2 = type$a(CCFloat), _dec10$1 = type$a(CCFloat), _dec$z(_class$z = (_class2$p = class LinearLimitSettings {
+var _dec$A, _dec2$o, _dec3$d, _dec4$8, _dec5$6, _dec6$5, _dec7$3, _dec8$2, _dec9$2, _dec10$1, _class$A, _class2$p, _initializer$p, _initializer2$h, _initializer3$a, _initializer4$7, _initializer5$4, _initializer6$2, _initializer7$1, _initializer8$1, _initializer9$1, _dec11$1, _dec12$1, _dec13$1, _dec14$1, _dec15$1, _dec16$1, _dec17$1, _dec18$1, _dec19$1, _dec20$1, _dec21$1, _dec22$1, _dec23$1, _dec24$1, _dec25$1, _class3$2, _class4$2, _initializer10$1, _initializer11$1, _initializer12$1, _initializer13$1, _initializer14$1, _initializer15$1, _initializer16$1, _initializer17$1, _initializer18$1, _initializer19$1, _initializer20$1, _initializer21$1, _initializer22$1, _initializer23$1, _dec26$1, _dec27$1, _dec28$1, _dec29$1, _dec30$1, _dec31$1, _dec32, _class5$1, _class6$1, _initializer24$1, _initializer25$1, _initializer26$1, _initializer27$1, _initializer28$1, _initializer29$1, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _class7$1, _class8$1, _initializer30$1, _initializer31$1, _initializer32$1, _initializer33$1, _initializer34$1, _initializer35$1, _dec40, _dec41, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _dec48, _dec49, _dec50, _dec51, _dec52, _dec53, _dec54, _dec55, _class9$1, _class10$1, _initializer36, _initializer37, _initializer38, _initializer39, _initializer40, _initializer41, _initializer42, _initializer43, _initializer44, _initializer45, _initializer46;
+let LinearLimitSettings = (_dec$A = ccclass$w('cc.LinearLimitSettings'), _dec2$o = type$a(EConstraintMode), _dec3$d = type$a(EConstraintMode), _dec4$8 = type$a(EConstraintMode), _dec5$6 = type$a(Vec3), _dec6$5 = type$a(Vec3), _dec7$3 = type$a(CCFloat), _dec8$2 = type$a(CCBoolean), _dec9$2 = type$a(CCFloat), _dec10$1 = type$a(CCFloat), _dec$A(_class$A = (_class2$p = class LinearLimitSettings {
   get xMotion() {
     return this._xMotion;
   }
@@ -103508,7 +103676,7 @@ let LinearLimitSettings = (_dec$z = ccclass$w('cc.LinearLimitSettings'), _dec2$n
     this._impl = void 0;
     this._impl = configurableConstraint;
   }
-}, (_applyDecoratedDescriptor(_class2$p.prototype, "xMotion", [_dec2$n], Object.getOwnPropertyDescriptor(_class2$p.prototype, "xMotion"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "yMotion", [_dec3$d], Object.getOwnPropertyDescriptor(_class2$p.prototype, "yMotion"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "zMotion", [_dec4$8], Object.getOwnPropertyDescriptor(_class2$p.prototype, "zMotion"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "upper", [_dec5$6], Object.getOwnPropertyDescriptor(_class2$p.prototype, "upper"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "lower", [_dec6$5], Object.getOwnPropertyDescriptor(_class2$p.prototype, "lower"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "restitution", [_dec7$3], Object.getOwnPropertyDescriptor(_class2$p.prototype, "restitution"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "enableSoftConstraint", [_dec8$2], Object.getOwnPropertyDescriptor(_class2$p.prototype, "enableSoftConstraint"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "stiffness", [_dec9$2], Object.getOwnPropertyDescriptor(_class2$p.prototype, "stiffness"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "damping", [_dec10$1], Object.getOwnPropertyDescriptor(_class2$p.prototype, "damping"), _class2$p.prototype), _initializer$p = applyDecoratedInitializer(_class2$p.prototype, "_xMotion", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$p.prototype, "xMotion", [_dec2$o], Object.getOwnPropertyDescriptor(_class2$p.prototype, "xMotion"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "yMotion", [_dec3$d], Object.getOwnPropertyDescriptor(_class2$p.prototype, "yMotion"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "zMotion", [_dec4$8], Object.getOwnPropertyDescriptor(_class2$p.prototype, "zMotion"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "upper", [_dec5$6], Object.getOwnPropertyDescriptor(_class2$p.prototype, "upper"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "lower", [_dec6$5], Object.getOwnPropertyDescriptor(_class2$p.prototype, "lower"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "restitution", [_dec7$3], Object.getOwnPropertyDescriptor(_class2$p.prototype, "restitution"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "enableSoftConstraint", [_dec8$2], Object.getOwnPropertyDescriptor(_class2$p.prototype, "enableSoftConstraint"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "stiffness", [_dec9$2], Object.getOwnPropertyDescriptor(_class2$p.prototype, "stiffness"), _class2$p.prototype), _applyDecoratedDescriptor(_class2$p.prototype, "damping", [_dec10$1], Object.getOwnPropertyDescriptor(_class2$p.prototype, "damping"), _class2$p.prototype), _initializer$p = applyDecoratedInitializer(_class2$p.prototype, "_xMotion", [serializable$c], function () {
   return EConstraintMode.FREE;
 }), _initializer2$h = applyDecoratedInitializer(_class2$p.prototype, "_yMotion", [serializable$c], function () {
   return EConstraintMode.FREE;
@@ -103526,7 +103694,7 @@ let LinearLimitSettings = (_dec$z = ccclass$w('cc.LinearLimitSettings'), _dec2$n
   return 0;
 }), _initializer9$1 = applyDecoratedInitializer(_class2$p.prototype, "_damping", [serializable$c], function () {
   return 0;
-})), _class2$p)) || _class$z);
+})), _class2$p)) || _class$A);
 let AngularLimitSettings = (_dec11$1 = ccclass$w('cc.AngularLimitSettings'), _dec12$1 = type$a(EConstraintMode), _dec13$1 = type$a(EConstraintMode), _dec14$1 = type$a(EConstraintMode), _dec15$1 = type$a(CCFloat), _dec16$1 = type$a(CCFloat), _dec17$1 = type$a(CCFloat), _dec18$1 = type$a(CCFloat), _dec19$1 = type$a(CCFloat), _dec20$1 = type$a(CCBoolean), _dec21$1 = type$a(CCFloat), _dec22$1 = type$a(CCFloat), _dec23$1 = type$a(CCBoolean), _dec24$1 = type$a(CCFloat), _dec25$1 = type$a(CCFloat), _dec11$1(_class3$2 = (_class4$2 = class AngularLimitSettings {
   get twistMotion() {
     return this._twistMotion;
@@ -104048,8 +104216,8 @@ let ConfigurableConstraint = (_dec40 = ccclass$w('cc.ConfigurableConstraint'), _
   return new Vec3(1, 0, 0);
 })), _class10$1)) || _class9$1);
 
-var _dec$y, _dec2$m, _dec3$c, _class$y, _class2$o, _initializer$o, _initializer2$g;
-let PointToPointConstraint = (_dec$y = ccclass$w('cc.PointToPointConstraint'), _dec2$m = type$a(Vec3), _dec3$c = type$a(Vec3), _dec$y(_class$y = (_class2$o = class PointToPointConstraint extends Constraint {
+var _dec$z, _dec2$n, _dec3$c, _class$z, _class2$o, _initializer$o, _initializer2$g;
+let PointToPointConstraint = (_dec$z = ccclass$w('cc.PointToPointConstraint'), _dec2$n = type$a(Vec3), _dec3$c = type$a(Vec3), _dec$z(_class$z = (_class2$o = class PointToPointConstraint extends Constraint {
   get pivotA() {
     return this._pivotA;
   }
@@ -104076,14 +104244,14 @@ let PointToPointConstraint = (_dec$y = ccclass$w('cc.PointToPointConstraint'), _
     this._pivotA = _initializer$o && _initializer$o();
     this._pivotB = _initializer2$g && _initializer2$g();
   }
-}, (_applyDecoratedDescriptor(_class2$o.prototype, "pivotA", [_dec2$m], Object.getOwnPropertyDescriptor(_class2$o.prototype, "pivotA"), _class2$o.prototype), _applyDecoratedDescriptor(_class2$o.prototype, "pivotB", [_dec3$c], Object.getOwnPropertyDescriptor(_class2$o.prototype, "pivotB"), _class2$o.prototype), _initializer$o = applyDecoratedInitializer(_class2$o.prototype, "_pivotA", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$o.prototype, "pivotA", [_dec2$n], Object.getOwnPropertyDescriptor(_class2$o.prototype, "pivotA"), _class2$o.prototype), _applyDecoratedDescriptor(_class2$o.prototype, "pivotB", [_dec3$c], Object.getOwnPropertyDescriptor(_class2$o.prototype, "pivotB"), _class2$o.prototype), _initializer$o = applyDecoratedInitializer(_class2$o.prototype, "_pivotA", [serializable$c], function () {
   return new Vec3();
 }), _initializer2$g = applyDecoratedInitializer(_class2$o.prototype, "_pivotB", [serializable$c], function () {
   return new Vec3();
-})), _class2$o)) || _class$y);
+})), _class2$o)) || _class$z);
 
-var _dec$x, _dec2$l, _dec3$b, _dec4$7, _dec5$5, _dec6$4, _dec7$2, _class$x, _class2$n, _initializer$n, _initializer2$f, _initializer3$9, _initializer4$6, _initializer5$3, _initializer6$1;
-let CharacterController = (_dec$x = ccclass$w('cc.CharacterController'), _dec2$l = type$a(PhysicsSystem.PhysicsGroup), _dec3$b = type$a(CCFloat), _dec4$7 = type$a(CCFloat), _dec5$5 = type$a(CCFloat), _dec6$4 = type$a(CCFloat), _dec7$2 = type$a(Vec3), _dec$x(_class$x = disallowMultiple$1(_class$x = (_class2$n = class CharacterController extends Eventify(Component) {
+var _dec$y, _dec2$m, _dec3$b, _dec4$7, _dec5$5, _dec6$4, _dec7$2, _class$y, _class2$n, _initializer$n, _initializer2$f, _initializer3$9, _initializer4$6, _initializer5$3, _initializer6$1;
+let CharacterController = (_dec$y = ccclass$w('cc.CharacterController'), _dec2$m = type$a(PhysicsSystem.PhysicsGroup), _dec3$b = type$a(CCFloat), _dec4$7 = type$a(CCFloat), _dec5$5 = type$a(CCFloat), _dec6$4 = type$a(CCFloat), _dec7$2 = type$a(Vec3), _dec$y(_class$y = disallowMultiple$1(_class$y = (_class2$n = class CharacterController extends Eventify(Component) {
   get group() {
     return this._group;
   }
@@ -104282,7 +104450,7 @@ let CharacterController = (_dec$x = ccclass$w('cc.CharacterController'), _dec2$l
       if (this._cct) this._cct.updateEventListener();
     }
   }
-}, (_applyDecoratedDescriptor(_class2$n.prototype, "group", [_dec2$l], Object.getOwnPropertyDescriptor(_class2$n.prototype, "group"), _class2$n.prototype), _applyDecoratedDescriptor(_class2$n.prototype, "minMoveDistance", [_dec3$b], Object.getOwnPropertyDescriptor(_class2$n.prototype, "minMoveDistance"), _class2$n.prototype), _applyDecoratedDescriptor(_class2$n.prototype, "stepOffset", [_dec4$7], Object.getOwnPropertyDescriptor(_class2$n.prototype, "stepOffset"), _class2$n.prototype), _applyDecoratedDescriptor(_class2$n.prototype, "slopeLimit", [_dec5$5], Object.getOwnPropertyDescriptor(_class2$n.prototype, "slopeLimit"), _class2$n.prototype), _applyDecoratedDescriptor(_class2$n.prototype, "skinWidth", [_dec6$4], Object.getOwnPropertyDescriptor(_class2$n.prototype, "skinWidth"), _class2$n.prototype), _applyDecoratedDescriptor(_class2$n.prototype, "center", [_dec7$2], Object.getOwnPropertyDescriptor(_class2$n.prototype, "center"), _class2$n.prototype), _initializer$n = applyDecoratedInitializer(_class2$n.prototype, "_group", [serializable$c], function () {
+}, (_applyDecoratedDescriptor(_class2$n.prototype, "group", [_dec2$m], Object.getOwnPropertyDescriptor(_class2$n.prototype, "group"), _class2$n.prototype), _applyDecoratedDescriptor(_class2$n.prototype, "minMoveDistance", [_dec3$b], Object.getOwnPropertyDescriptor(_class2$n.prototype, "minMoveDistance"), _class2$n.prototype), _applyDecoratedDescriptor(_class2$n.prototype, "stepOffset", [_dec4$7], Object.getOwnPropertyDescriptor(_class2$n.prototype, "stepOffset"), _class2$n.prototype), _applyDecoratedDescriptor(_class2$n.prototype, "slopeLimit", [_dec5$5], Object.getOwnPropertyDescriptor(_class2$n.prototype, "slopeLimit"), _class2$n.prototype), _applyDecoratedDescriptor(_class2$n.prototype, "skinWidth", [_dec6$4], Object.getOwnPropertyDescriptor(_class2$n.prototype, "skinWidth"), _class2$n.prototype), _applyDecoratedDescriptor(_class2$n.prototype, "center", [_dec7$2], Object.getOwnPropertyDescriptor(_class2$n.prototype, "center"), _class2$n.prototype), _initializer$n = applyDecoratedInitializer(_class2$n.prototype, "_group", [serializable$c], function () {
   return PhysicsSystem.PhysicsGroup.DEFAULT;
 }), _initializer2$f = applyDecoratedInitializer(_class2$n.prototype, "_minMoveDistance", [serializable$c], function () {
   return 0.001;
@@ -104294,11 +104462,11 @@ let CharacterController = (_dec$x = ccclass$w('cc.CharacterController'), _dec2$l
   return 0.01;
 }), _initializer6$1 = applyDecoratedInitializer(_class2$n.prototype, "_center", [serializable$c], function () {
   return new Vec3();
-})), _class2$n)) || _class$x) || _class$x);
+})), _class2$n)) || _class$y) || _class$y);
 
-var _dec$w, _dec2$k, _dec3$a, _dec4$6, _dec5$4, _class$w, _class2$m, _initializer$m, _initializer2$e, _initializer3$8;
+var _dec$x, _dec2$l, _dec3$a, _dec4$6, _dec5$4, _class$x, _class2$m, _initializer$m, _initializer2$e, _initializer3$8;
 new Vec3(0, 0, 0);
-let BoxCharacterController = (_dec$w = ccclass$w('cc.BoxCharacterController'), _dec2$k = executionOrder$2(-1), _dec3$a = type$a(CCFloat), _dec4$6 = type$a(CCFloat), _dec5$4 = type$a(CCFloat), _dec$w(_class$w = _dec2$k(_class$w = (_class2$m = class BoxCharacterController extends CharacterController {
+let BoxCharacterController = (_dec$x = ccclass$w('cc.BoxCharacterController'), _dec2$l = executionOrder$2(-1), _dec3$a = type$a(CCFloat), _dec4$6 = type$a(CCFloat), _dec5$4 = type$a(CCFloat), _dec$x(_class$x = _dec2$l(_class$x = (_class2$m = class BoxCharacterController extends CharacterController {
   constructor() {
     super(ECharacterControllerType.BOX);
     this._halfHeight = _initializer$m && _initializer$m();
@@ -104341,11 +104509,11 @@ let BoxCharacterController = (_dec$w = ccclass$w('cc.BoxCharacterController'), _
   return 0.5;
 }), _initializer3$8 = applyDecoratedInitializer(_class2$m.prototype, "_halfForwardExtent", [serializable$c], function () {
   return 0.5;
-})), _class2$m)) || _class$w) || _class$w);
+})), _class2$m)) || _class$x) || _class$x);
 
-var _dec$v, _dec2$j, _dec3$9, _dec4$5, _class$v, _class2$l, _initializer$l, _initializer2$d;
+var _dec$w, _dec2$k, _dec3$9, _dec4$5, _class$w, _class2$l, _initializer$l, _initializer2$d;
 new Vec3(0, 0, 0);
-let CapsuleCharacterController = (_dec$v = ccclass$w('cc.CapsuleCharacterController'), _dec2$j = executionOrder$2(-1), _dec3$9 = type$a(CCFloat), _dec4$5 = type$a(CCFloat), _dec$v(_class$v = _dec2$j(_class$v = (_class2$l = class CapsuleCharacterController extends CharacterController {
+let CapsuleCharacterController = (_dec$w = ccclass$w('cc.CapsuleCharacterController'), _dec2$k = executionOrder$2(-1), _dec3$9 = type$a(CCFloat), _dec4$5 = type$a(CCFloat), _dec$w(_class$w = _dec2$k(_class$w = (_class2$l = class CapsuleCharacterController extends CharacterController {
   constructor() {
     super(ECharacterControllerType.CAPSULE);
     this._radius = _initializer$l && _initializer$l();
@@ -104375,7 +104543,7 @@ let CapsuleCharacterController = (_dec$v = ccclass$w('cc.CapsuleCharacterControl
   return 0.5;
 }), _initializer2$d = applyDecoratedInitializer(_class2$l.prototype, "_height", [serializable$c], function () {
   return 1.0;
-})), _class2$l)) || _class$v) || _class$v);
+})), _class2$l)) || _class$w) || _class$w);
 
 class CharacterControllerContact {
   constructor() {
@@ -132468,8 +132636,8 @@ class ForwardPass extends BasePass {
   }
 }
 
-var _dec$u, _dec2$i, _class$u;
-let PostProcessSetting = (_dec$u = ccclass$w('cc.PostProcessSetting'), _dec2$i = requireComponent(PostProcess), _dec$u(_class$u = _dec2$i(_class$u = class PostProcessSetting extends Component {
+var _dec$v, _dec2$j, _class$v;
+let PostProcessSetting = (_dec$v = ccclass$w('cc.PostProcessSetting'), _dec2$j = requireComponent(PostProcess), _dec$v(_class$v = _dec2$j(_class$v = class PostProcessSetting extends Component {
   onEnable() {
     const pp = this.getComponent(PostProcess);
     pp == null ? void 0 : pp.addSetting(this);
@@ -132478,10 +132646,10 @@ let PostProcessSetting = (_dec$u = ccclass$w('cc.PostProcessSetting'), _dec2$i =
     const pp = this.getComponent(PostProcess);
     pp == null ? void 0 : pp.removeSetting(this);
   }
-}) || _class$u) || _class$u);
+}) || _class$v) || _class$v);
 
-var _dec$t, _class$t, _class2$k, _initializer$k, _initializer2$c;
-let TAA = (_dec$t = ccclass$w('cc.TAA'), _dec$t(_class$t = disallowMultiple$1(_class$t = (_class2$k = class TAA extends PostProcessSetting {
+var _dec$u, _class$u, _class2$k, _initializer$k, _initializer2$c;
+let TAA = (_dec$u = ccclass$w('cc.TAA'), _dec$u(_class$u = disallowMultiple$1(_class$u = (_class2$k = class TAA extends PostProcessSetting {
   constructor(...args) {
     super(...args);
     this._sampleScale = _initializer$k && _initializer$k();
@@ -132503,10 +132671,10 @@ let TAA = (_dec$t = ccclass$w('cc.TAA'), _dec$t(_class$t = disallowMultiple$1(_c
   return 1;
 }), _applyDecoratedDescriptor(_class2$k.prototype, "sampleScale", [property$3], Object.getOwnPropertyDescriptor(_class2$k.prototype, "sampleScale"), _class2$k.prototype), _initializer2$c = applyDecoratedInitializer(_class2$k.prototype, "_feedback", [serializable$c], function () {
   return 0.95;
-}), _applyDecoratedDescriptor(_class2$k.prototype, "feedback", [property$3], Object.getOwnPropertyDescriptor(_class2$k.prototype, "feedback"), _class2$k.prototype)), _class2$k)) || _class$t) || _class$t);
+}), _applyDecoratedDescriptor(_class2$k.prototype, "feedback", [property$3], Object.getOwnPropertyDescriptor(_class2$k.prototype, "feedback"), _class2$k.prototype)), _class2$k)) || _class$u) || _class$u);
 
-var _dec$s, _dec2$h, _class$s, _class2$j, _initializer$j;
-let TAAMask = (_dec$s = ccclass$w('TAAMask'), _dec2$h = property$3(Camera), _dec$s(_class$s = (_class2$j = class TAAMask extends Component {
+var _dec$t, _dec2$i, _class$t, _class2$j, _initializer$j;
+let TAAMask = (_dec$t = ccclass$w('TAAMask'), _dec2$i = property$3(Camera), _dec$t(_class$t = (_class2$j = class TAAMask extends Component {
   constructor(...args) {
     super(...args);
     this.maskCamera = _initializer$j && _initializer$j();
@@ -132534,7 +132702,7 @@ let TAAMask = (_dec$s = ccclass$w('TAAMask'), _dec2$h = property$3(Camera), _dec
     this._mask = tex;
     this.maskCamera.targetTexture = tex;
   }
-}, (_initializer$j = applyDecoratedInitializer(_class2$j.prototype, "maskCamera", [_dec2$h], null)), _class2$j)) || _class$s);
+}, (_initializer$j = applyDecoratedInitializer(_class2$j.prototype, "maskCamera", [_dec2$i], null)), _class2$j)) || _class$t);
 
 function getSetting(settingClass) {
   const cls = settingClass;
@@ -132682,8 +132850,8 @@ class TAAPass extends SettingPass {
   }
 }
 
-var _dec$r, _dec2$g, _class$r, _class2$i, _initializer$i;
-let FSR = (_dec$r = ccclass$w('cc.FSR'), _dec2$g = type$a(CCFloat), _dec$r(_class$r = disallowMultiple$1(_class$r = (_class2$i = class FSR extends PostProcessSetting {
+var _dec$s, _dec2$h, _class$s, _class2$i, _initializer$i;
+let FSR = (_dec$s = ccclass$w('cc.FSR'), _dec2$h = type$a(CCFloat), _dec$s(_class$s = disallowMultiple$1(_class$s = (_class2$i = class FSR extends PostProcessSetting {
   constructor(...args) {
     super(...args);
     this._sharpness = _initializer$i && _initializer$i();
@@ -132696,7 +132864,7 @@ let FSR = (_dec$r = ccclass$w('cc.FSR'), _dec2$g = type$a(CCFloat), _dec$r(_clas
   }
 }, (_initializer$i = applyDecoratedInitializer(_class2$i.prototype, "_sharpness", [serializable$c], function () {
   return 0.8;
-}), _applyDecoratedDescriptor(_class2$i.prototype, "sharpness", [_dec2$g], Object.getOwnPropertyDescriptor(_class2$i.prototype, "sharpness"), _class2$i.prototype)), _class2$i)) || _class$r) || _class$r);
+}), _applyDecoratedDescriptor(_class2$i.prototype, "sharpness", [_dec2$h], Object.getOwnPropertyDescriptor(_class2$i.prototype, "sharpness"), _class2$i.prototype)), _class2$i)) || _class$s) || _class$s);
 
 const tempVec4 = new Vec4();
 class FSRPass extends SettingPass {
@@ -132733,10 +132901,10 @@ class FSRPass extends SettingPass {
   }
 }
 
-var _dec$q, _dec2$f, _dec3$8, _dec4$4, _class$q, _class2$h, _initializer$h, _initializer2$b, _dec5$3, _dec6$3, _dec7$1, _dec8$1, _dec9$1, _class3$1, _class4$1, _initializer3$7, _initializer4$5;
-let BlitScreenMaterial = (_dec$q = ccclass$w('cc.BlitScreenMaterial'), _dec2$f = property$3(Material), _dec3$8 = property$3(Material), _dec4$4 = property$3({
+var _dec$r, _dec2$g, _dec3$8, _dec4$4, _class$r, _class2$h, _initializer$h, _initializer2$b, _dec5$3, _dec6$3, _dec7$1, _dec8$1, _dec9$1, _class3$1, _class4$1, _initializer3$7, _initializer4$5;
+let BlitScreenMaterial = (_dec$r = ccclass$w('cc.BlitScreenMaterial'), _dec2$g = property$3(Material), _dec3$8 = property$3(Material), _dec4$4 = property$3({
   serializable: true
-}), _dec$q(_class$q = (_class2$h = class BlitScreenMaterial {
+}), _dec$r(_class$r = (_class2$h = class BlitScreenMaterial {
   constructor() {
     this._material = _initializer$h && _initializer$h();
     this.enable = _initializer2$b && _initializer2$b();
@@ -132747,9 +132915,9 @@ let BlitScreenMaterial = (_dec$q = ccclass$w('cc.BlitScreenMaterial'), _dec2$f =
   set material(v) {
     this._material = v;
   }
-}, (_initializer$h = applyDecoratedInitializer(_class2$h.prototype, "_material", [_dec2$f, serializable$c], null), _applyDecoratedDescriptor(_class2$h.prototype, "material", [_dec3$8], Object.getOwnPropertyDescriptor(_class2$h.prototype, "material"), _class2$h.prototype), _initializer2$b = applyDecoratedInitializer(_class2$h.prototype, "enable", [_dec4$4], function () {
+}, (_initializer$h = applyDecoratedInitializer(_class2$h.prototype, "_material", [_dec2$g, serializable$c], null), _applyDecoratedDescriptor(_class2$h.prototype, "material", [_dec3$8], Object.getOwnPropertyDescriptor(_class2$h.prototype, "material"), _class2$h.prototype), _initializer2$b = applyDecoratedInitializer(_class2$h.prototype, "enable", [_dec4$4], function () {
   return true;
-})), _class2$h)) || _class$q);
+})), _class2$h)) || _class$r);
 let BlitScreen = (_dec5$3 = ccclass$w('cc.BlitScreen'), _dec6$3 = property$3(Material), _dec7$1 = property$3({
   type: Material,
   visible: false
@@ -132855,8 +133023,8 @@ class ShadowPass extends BasePass {
   }
 }
 
-var _dec$p, _dec2$e, _dec3$7, _class$p, _class2$g, _initializer$g, _initializer2$a;
-let ColorGrading = (_dec$p = ccclass$w('cc.ColorGrading'), _dec2$e = type$a(CCFloat), _dec3$7 = type$a(Texture2D), _dec$p(_class$p = disallowMultiple$1(_class$p = (_class2$g = class ColorGrading extends PostProcessSetting {
+var _dec$q, _dec2$f, _dec3$7, _class$q, _class2$g, _initializer$g, _initializer2$a;
+let ColorGrading = (_dec$q = ccclass$w('cc.ColorGrading'), _dec2$f = type$a(CCFloat), _dec3$7 = type$a(Texture2D), _dec$q(_class$q = disallowMultiple$1(_class$q = (_class2$g = class ColorGrading extends PostProcessSetting {
   constructor(...args) {
     super(...args);
     this._contribute = _initializer$g && _initializer$g();
@@ -132878,10 +133046,10 @@ let ColorGrading = (_dec$p = ccclass$w('cc.ColorGrading'), _dec2$e = type$a(CCFl
   return 0.0;
 }), _initializer2$a = applyDecoratedInitializer(_class2$g.prototype, "_colorGradingMap", [serializable$c], function () {
   return null;
-}), _applyDecoratedDescriptor(_class2$g.prototype, "contribute", [_dec2$e], Object.getOwnPropertyDescriptor(_class2$g.prototype, "contribute"), _class2$g.prototype), _applyDecoratedDescriptor(_class2$g.prototype, "colorGradingMap", [_dec3$7], Object.getOwnPropertyDescriptor(_class2$g.prototype, "colorGradingMap"), _class2$g.prototype)), _class2$g)) || _class$p) || _class$p);
+}), _applyDecoratedDescriptor(_class2$g.prototype, "contribute", [_dec2$f], Object.getOwnPropertyDescriptor(_class2$g.prototype, "contribute"), _class2$g.prototype), _applyDecoratedDescriptor(_class2$g.prototype, "colorGradingMap", [_dec3$7], Object.getOwnPropertyDescriptor(_class2$g.prototype, "colorGradingMap"), _class2$g.prototype)), _class2$g)) || _class$q) || _class$q);
 
-var _dec$o, _dec2$d, _dec3$6, _dec4$3, _dec5$2, _dec6$2, _class$o, _class2$f, _initializer$f, _initializer2$9, _initializer3$6, _initializer4$4, _initializer5$2;
-let Bloom = (_dec$o = ccclass$w('cc.Bloom'), _dec2$d = type$a(CCBoolean), _dec3$6 = type$a(CCBoolean), _dec4$3 = type$a(CCFloat), _dec5$2 = type$a(CCInteger), _dec6$2 = type$a(CCFloat), _dec$o(_class$o = disallowMultiple$1(_class$o = (_class2$f = class Bloom extends PostProcessSetting {
+var _dec$p, _dec2$e, _dec3$6, _dec4$3, _dec5$2, _dec6$2, _class$p, _class2$f, _initializer$f, _initializer2$9, _initializer3$6, _initializer4$4, _initializer5$2;
+let Bloom = (_dec$p = ccclass$w('cc.Bloom'), _dec2$e = type$a(CCBoolean), _dec3$6 = type$a(CCBoolean), _dec4$3 = type$a(CCFloat), _dec5$2 = type$a(CCInteger), _dec6$2 = type$a(CCFloat), _dec$p(_class$p = disallowMultiple$1(_class$p = (_class2$f = class Bloom extends PostProcessSetting {
   constructor(...args) {
     super(...args);
     this._enableAlphaMask = _initializer$f && _initializer$f();
@@ -132930,10 +133098,10 @@ let Bloom = (_dec$o = ccclass$w('cc.Bloom'), _dec2$d = type$a(CCBoolean), _dec3$
   return 3;
 }), _initializer5$2 = applyDecoratedInitializer(_class2$f.prototype, "_intensity", [serializable$c], function () {
   return 2.3;
-}), _applyDecoratedDescriptor(_class2$f.prototype, "enableAlphaMask", [_dec2$d], Object.getOwnPropertyDescriptor(_class2$f.prototype, "enableAlphaMask"), _class2$f.prototype), _applyDecoratedDescriptor(_class2$f.prototype, "useHdrIlluminance", [_dec3$6], Object.getOwnPropertyDescriptor(_class2$f.prototype, "useHdrIlluminance"), _class2$f.prototype), _applyDecoratedDescriptor(_class2$f.prototype, "threshold", [_dec4$3], Object.getOwnPropertyDescriptor(_class2$f.prototype, "threshold"), _class2$f.prototype), _applyDecoratedDescriptor(_class2$f.prototype, "iterations", [_dec5$2], Object.getOwnPropertyDescriptor(_class2$f.prototype, "iterations"), _class2$f.prototype), _applyDecoratedDescriptor(_class2$f.prototype, "intensity", [_dec6$2], Object.getOwnPropertyDescriptor(_class2$f.prototype, "intensity"), _class2$f.prototype)), _class2$f)) || _class$o) || _class$o);
+}), _applyDecoratedDescriptor(_class2$f.prototype, "enableAlphaMask", [_dec2$e], Object.getOwnPropertyDescriptor(_class2$f.prototype, "enableAlphaMask"), _class2$f.prototype), _applyDecoratedDescriptor(_class2$f.prototype, "useHdrIlluminance", [_dec3$6], Object.getOwnPropertyDescriptor(_class2$f.prototype, "useHdrIlluminance"), _class2$f.prototype), _applyDecoratedDescriptor(_class2$f.prototype, "threshold", [_dec4$3], Object.getOwnPropertyDescriptor(_class2$f.prototype, "threshold"), _class2$f.prototype), _applyDecoratedDescriptor(_class2$f.prototype, "iterations", [_dec5$2], Object.getOwnPropertyDescriptor(_class2$f.prototype, "iterations"), _class2$f.prototype), _applyDecoratedDescriptor(_class2$f.prototype, "intensity", [_dec6$2], Object.getOwnPropertyDescriptor(_class2$f.prototype, "intensity"), _class2$f.prototype)), _class2$f)) || _class$p) || _class$p);
 
-var _dec$n, _dec2$c, _dec3$5, _dec4$2, _dec5$1, _dec6$1, _class$n, _class2$e, _initializer$e, _initializer2$8, _initializer3$5, _initializer4$3, _initializer5$1;
-let HBAO = (_dec$n = ccclass$w('cc.HBAO'), _dec2$c = type$a(CCFloat), _dec3$5 = type$a(CCFloat), _dec4$2 = type$a(CCInteger), _dec5$1 = type$a(CCFloat), _dec6$1 = type$a(CCBoolean), _dec$n(_class$n = disallowMultiple$1(_class$n = (_class2$e = class HBAO extends PostProcessSetting {
+var _dec$o, _dec2$d, _dec3$5, _dec4$2, _dec5$1, _dec6$1, _class$o, _class2$e, _initializer$e, _initializer2$8, _initializer3$5, _initializer4$3, _initializer5$1;
+let HBAO = (_dec$o = ccclass$w('cc.HBAO'), _dec2$d = type$a(CCFloat), _dec3$5 = type$a(CCFloat), _dec4$2 = type$a(CCInteger), _dec5$1 = type$a(CCFloat), _dec6$1 = type$a(CCBoolean), _dec$o(_class$o = disallowMultiple$1(_class$o = (_class2$e = class HBAO extends PostProcessSetting {
   constructor(...args) {
     super(...args);
     this._radiusScale = _initializer$e && _initializer$e();
@@ -132982,10 +133150,10 @@ let HBAO = (_dec$n = ccclass$w('cc.HBAO'), _dec2$c = type$a(CCFloat), _dec3$5 = 
   return 1.0;
 }), _initializer5$1 = applyDecoratedInitializer(_class2$e.prototype, "_needBlur", [serializable$c], function () {
   return true;
-}), _applyDecoratedDescriptor(_class2$e.prototype, "radiusScale", [_dec2$c], Object.getOwnPropertyDescriptor(_class2$e.prototype, "radiusScale"), _class2$e.prototype), _applyDecoratedDescriptor(_class2$e.prototype, "angleBiasDegree", [_dec3$5], Object.getOwnPropertyDescriptor(_class2$e.prototype, "angleBiasDegree"), _class2$e.prototype), _applyDecoratedDescriptor(_class2$e.prototype, "blurSharpness", [_dec4$2], Object.getOwnPropertyDescriptor(_class2$e.prototype, "blurSharpness"), _class2$e.prototype), _applyDecoratedDescriptor(_class2$e.prototype, "aoSaturation", [_dec5$1], Object.getOwnPropertyDescriptor(_class2$e.prototype, "aoSaturation"), _class2$e.prototype), _applyDecoratedDescriptor(_class2$e.prototype, "needBlur", [_dec6$1], Object.getOwnPropertyDescriptor(_class2$e.prototype, "needBlur"), _class2$e.prototype)), _class2$e)) || _class$n) || _class$n);
+}), _applyDecoratedDescriptor(_class2$e.prototype, "radiusScale", [_dec2$d], Object.getOwnPropertyDescriptor(_class2$e.prototype, "radiusScale"), _class2$e.prototype), _applyDecoratedDescriptor(_class2$e.prototype, "angleBiasDegree", [_dec3$5], Object.getOwnPropertyDescriptor(_class2$e.prototype, "angleBiasDegree"), _class2$e.prototype), _applyDecoratedDescriptor(_class2$e.prototype, "blurSharpness", [_dec4$2], Object.getOwnPropertyDescriptor(_class2$e.prototype, "blurSharpness"), _class2$e.prototype), _applyDecoratedDescriptor(_class2$e.prototype, "aoSaturation", [_dec5$1], Object.getOwnPropertyDescriptor(_class2$e.prototype, "aoSaturation"), _class2$e.prototype), _applyDecoratedDescriptor(_class2$e.prototype, "needBlur", [_dec6$1], Object.getOwnPropertyDescriptor(_class2$e.prototype, "needBlur"), _class2$e.prototype)), _class2$e)) || _class$o) || _class$o);
 
-var _dec$m, _dec2$b, _dec3$4, _dec4$1, _class$m, _class2$d, _initializer$d, _initializer2$7, _initializer3$4;
-let DOF = (_dec$m = ccclass$w('cc.DOF'), _dec2$b = type$a(CCFloat), _dec3$4 = type$a(CCFloat), _dec4$1 = type$a(CCFloat), _dec$m(_class$m = disallowMultiple$1(_class$m = (_class2$d = class DOF extends PostProcessSetting {
+var _dec$n, _dec2$c, _dec3$4, _dec4$1, _class$n, _class2$d, _initializer$d, _initializer2$7, _initializer3$4;
+let DOF = (_dec$n = ccclass$w('cc.DOF'), _dec2$c = type$a(CCFloat), _dec3$4 = type$a(CCFloat), _dec4$1 = type$a(CCFloat), _dec$n(_class$n = disallowMultiple$1(_class$n = (_class2$d = class DOF extends PostProcessSetting {
   constructor(...args) {
     super(...args);
     this._focusDistance = _initializer$d && _initializer$d();
@@ -133016,7 +133184,7 @@ let DOF = (_dec$m = ccclass$w('cc.DOF'), _dec2$b = type$a(CCFloat), _dec3$4 = ty
   return 0.0;
 }), _initializer3$4 = applyDecoratedInitializer(_class2$d.prototype, "_bokehRadius", [serializable$c], function () {
   return 1.0;
-}), _applyDecoratedDescriptor(_class2$d.prototype, "focusDistance", [_dec2$b], Object.getOwnPropertyDescriptor(_class2$d.prototype, "focusDistance"), _class2$d.prototype), _applyDecoratedDescriptor(_class2$d.prototype, "focusRange", [_dec3$4], Object.getOwnPropertyDescriptor(_class2$d.prototype, "focusRange"), _class2$d.prototype), _applyDecoratedDescriptor(_class2$d.prototype, "bokehRadius", [_dec4$1], Object.getOwnPropertyDescriptor(_class2$d.prototype, "bokehRadius"), _class2$d.prototype)), _class2$d)) || _class$m) || _class$m);
+}), _applyDecoratedDescriptor(_class2$d.prototype, "focusDistance", [_dec2$c], Object.getOwnPropertyDescriptor(_class2$d.prototype, "focusDistance"), _class2$d.prototype), _applyDecoratedDescriptor(_class2$d.prototype, "focusRange", [_dec3$4], Object.getOwnPropertyDescriptor(_class2$d.prototype, "focusRange"), _class2$d.prototype), _applyDecoratedDescriptor(_class2$d.prototype, "bokehRadius", [_dec4$1], Object.getOwnPropertyDescriptor(_class2$d.prototype, "bokehRadius"), _class2$d.prototype)), _class2$d)) || _class$n) || _class$n);
 
 const vec2 = new Vec2();
 class HBAOParams {
@@ -133383,8 +133551,8 @@ class BloomPass extends SettingPass {
   }
 }
 
-var _dec$l, _class$l;
-let FXAA = (_dec$l = ccclass$w('cc.FXAA'), _dec$l(_class$l = disallowMultiple$1(_class$l = class FXAA extends PostProcessSetting {}) || _class$l) || _class$l);
+var _dec$m, _class$m;
+let FXAA = (_dec$m = ccclass$w('cc.FXAA'), _dec$m(_class$m = disallowMultiple$1(_class$m = class FXAA extends PostProcessSetting {}) || _class$m) || _class$m);
 
 class FxaaPass extends SettingPass {
   constructor(...args) {
@@ -135007,8 +135175,8 @@ class AudioPlayer {
 }
 AudioPlayer.maxAudioChannel = 24;
 
-var _dec$k, _class$k, _class2$c, _initializer$c, _AudioClip;
-let AudioClip = (_dec$k = ccclass$w('cc.AudioClip'), _dec$k(_class$k = (_class2$c = (_AudioClip = class AudioClip extends Asset {
+var _dec$l, _class$l, _class2$c, _initializer$c, _AudioClip;
+let AudioClip = (_dec$l = ccclass$w('cc.AudioClip'), _dec$l(_class$l = (_class2$c = (_AudioClip = class AudioClip extends Asset {
   set duration(v) {
     this._duration = v;
   }
@@ -135110,7 +135278,7 @@ let AudioClip = (_dec$k = ccclass$w('cc.AudioClip'), _dec$k(_class$k = (_class2$
   }
 }, _AudioClip.AudioType = AudioType, _AudioClip), (_initializer$c = applyDecoratedInitializer(_class2$c.prototype, "_duration", [serializable$c], function () {
   return 0;
-}), _applyDecoratedDescriptor(_class2$c.prototype, "_nativeDep", [override$1], Object.getOwnPropertyDescriptor(_class2$c.prototype, "_nativeDep"), _class2$c.prototype)), _class2$c)) || _class$k);
+}), _applyDecoratedDescriptor(_class2$c.prototype, "_nativeDep", [override$1], Object.getOwnPropertyDescriptor(_class2$c.prototype, "_nativeDep"), _class2$c.prototype)), _class2$c)) || _class$l);
 cclegacy.AudioClip = AudioClip;
 
 function loadAudioPlayer(url, options, onComplete) {
@@ -135230,7 +135398,7 @@ class AudioManager {
 }
 const audioManager = new AudioManager();
 
-var _dec$j, _dec2$a, _dec3$3, _class$j, _class2$b, _initializer$b, _initializer2$6, _initializer3$3, _initializer4$2, _AudioSource;
+var _dec$k, _dec2$b, _dec3$3, _class$k, _class2$b, _initializer$b, _initializer2$6, _initializer3$3, _initializer4$2, _AudioSource;
 const _LOADED_EVENT = 'audiosource-loaded';
 var AudioSourceEventType;
 (function (AudioSourceEventType) {
@@ -135244,7 +135412,7 @@ var AudioOperationType;
   AudioOperationType["PAUSE"] = "pause";
   AudioOperationType["SEEK"] = "seek";
 })(AudioOperationType || (AudioOperationType = {}));
-let AudioSource = (_dec$j = ccclass$w('cc.AudioSource'), _dec2$a = type$a(AudioClip), _dec3$3 = type$a(AudioClip), _dec$j(_class$j = (_class2$b = (_AudioSource = class AudioSource extends Component {
+let AudioSource = (_dec$k = ccclass$w('cc.AudioSource'), _dec2$b = type$a(AudioClip), _dec3$3 = type$a(AudioClip), _dec$k(_class$k = (_class2$b = (_AudioSource = class AudioSource extends Component {
   static get maxAudioChannel() {
     return AudioPlayer.maxAudioChannel;
   }
@@ -135548,7 +135716,7 @@ let AudioSource = (_dec$j = ccclass$w('cc.AudioSource'), _dec2$a = type$a(AudioC
   get playing() {
     return this.state === AudioSource.AudioState.PLAYING;
   }
-}, _AudioSource.AudioState = AudioState, _AudioSource.EventType = AudioSourceEventType, _AudioSource), (_initializer$b = applyDecoratedInitializer(_class2$b.prototype, "_clip", [_dec2$a], function () {
+}, _AudioSource.AudioState = AudioState, _AudioSource.EventType = AudioSourceEventType, _AudioSource), (_initializer$b = applyDecoratedInitializer(_class2$b.prototype, "_clip", [_dec2$b], function () {
   return null;
 }), _initializer2$6 = applyDecoratedInitializer(_class2$b.prototype, "_loop", [serializable$c], function () {
   return false;
@@ -135556,7 +135724,7 @@ let AudioSource = (_dec$j = ccclass$w('cc.AudioSource'), _dec2$a = type$a(AudioC
   return true;
 }), _initializer4$2 = applyDecoratedInitializer(_class2$b.prototype, "_volume", [serializable$c], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$b.prototype, "clip", [_dec3$3], Object.getOwnPropertyDescriptor(_class2$b.prototype, "clip"), _class2$b.prototype)), _class2$b)) || _class$j);
+}), _applyDecoratedDescriptor(_class2$b.prototype, "clip", [_dec3$3], Object.getOwnPropertyDescriptor(_class2$b.prototype, "clip"), _class2$b.prototype)), _class2$b)) || _class$k);
 
 replaceProperty(AudioClip, 'AudioClip', [{
   name: 'PlayingState',
@@ -142203,8 +142371,8 @@ function createSkeletons(context, layout, skeletons) {
   }
 }
 
-var _dec$i, _class$i;
-let GLTFWinding = (_dec$i = ccclass$w('air.GLTFWinding'), _dec$i(_class$i = class GLTFWinding extends Component {
+var _dec$j, _class$j;
+let GLTFWinding = (_dec$j = ccclass$w('air.GLTFWinding'), _dec$j(_class$j = class GLTFWinding extends Component {
   constructor(...args) {
     super(...args);
     this.renderers = [];
@@ -142229,9 +142397,24 @@ let GLTFWinding = (_dec$i = ccclass$w('air.GLTFWinding'), _dec$i(_class$i = clas
       }
     }
   }
-}) || _class$i);
+}) || _class$j);
 
+var _dec$i, _dec2$a, _class$i;
 let parsedAssetId = 0;
+let GLTFAnimationPolicy = (_dec$i = ccclass$w('air.GLTFAnimationPolicy'), _dec2$a = executionOrder$2(100), _dec$i(_class$i = _dec2$a(_class$i = class GLTFAnimationPolicy extends Component {
+  constructor(...args) {
+    super(...args);
+    this.loops = new Map();
+  }
+  onLoad() {
+    this.loops.forEach((loop, name) => {
+      const state = this.animation.getState(name);
+      if (state) {
+        state.wrapMode = loop ? AnimationClip.WrapMode.Loop : AnimationClip.WrapMode.Normal;
+      }
+    });
+  }
+}) || _class$i) || _class$i);
 class GLTFAsset extends Asset {
   get meshes() {
     return this.owned.meshes;
@@ -142398,12 +142581,15 @@ class GLTFAsset extends Asset {
         }
       }
       const animation = root.addComponent(Animation$1);
+      const animationPolicy = root.addComponent(GLTFAnimationPolicy);
+      animationPolicy.animation = animation;
       winding.lateUpdate();
       animation.clips = clips.slice();
       animation.playOnLoad = false;
       ++this.instances;
       this.addRef();
       let disposed = false;
+      const instanceClips = clips;
       root.once(Node$1.EventType.NODE_DESTROYED, () => {
         void Promise.resolve().then(() => {
           --this.instances;
@@ -142415,7 +142601,33 @@ class GLTFAsset extends Asset {
       });
       return {
         root,
-        animations: clips,
+        animations: instanceClips,
+        setAnimationLoop: (loop, clipName) => {
+          const invalid = message => Object.assign(new TypeError(`[AIR_E_GLTF_ANIMATION_OPTIONS] ${message}`), {
+            code: 'AIR_E_GLTF_ANIMATION_OPTIONS',
+            clipName
+          });
+          if (disposed || !root.isValid) {
+            throw invalid('The glTF instance has been disposed.');
+          }
+          if (typeof loop !== 'boolean' || clipName !== undefined && typeof clipName !== 'string') {
+            throw invalid('setAnimationLoop expects a boolean and an optional clip name.');
+          }
+          const selected = clipName === undefined ? instanceClips : instanceClips.filter(clip => clip.name === clipName);
+          if (clipName !== undefined && !selected.length) {
+            throw invalid(`Unknown animation clip "${clipName}"; available clips: ${instanceClips.map(clip => clip.name).join(', ')}.`);
+          }
+          const states = selected.map(clip => animation.getState(clip.name));
+          if (states.some(state => !state)) {
+            throw invalid('A selected native animation state was removed; restore the clip before configuring it.');
+          }
+          selected.forEach(clip => {
+            animationPolicy.loops.set(clip.name, loop);
+          });
+          states.forEach(state => {
+            state.wrapMode = loop ? AnimationClip.WrapMode.Loop : AnimationClip.WrapMode.Normal;
+          });
+        },
         dispose: () => {
           if (disposed) {
             return;
@@ -143022,6 +143234,9 @@ function coreTextureCoordinates(info) {
     row0: new Vec4(1, 0, 0, 0),
     row1: new Vec4(0, 1, 0, 0)
   };
+}
+function textureUVExpression(uv, prefix) {
+  return `vec2(dot(${prefix}UV0.xyz, vec3(${uv}, 1.0)), dot(${prefix}UV1.xyz, vec3(${uv}, 1.0)))`;
 }
 function textureCoordinates(info) {
   var _info$extensions;
@@ -143843,16 +144058,16 @@ function gltfPhysicalEffect() {
         throw new Error(`physical effect: return missing in ${shader.name} [${language}]`);
       }
       frag = frag.replace(returnAnchor, transmission);
-      const modulate = ['#if USE_AIR_SPECULAR_MAP', `airSpecScale = ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.a;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', `airSpecColor = ${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb;`, '#endif', '#if USE_AIR_CLEARCOAT', `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`, `airCCRoughTex = ${CLEARCOAT_CONSTANT}.y;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_MAP', `airCCFactorTex *= ${tex('clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat')}.r;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_ROUGHNESS_MAP', `airCCRoughTex *= ${tex('clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness')}.g;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_NORMAL_MAP', '{', `vec3 ccT = ${tex('clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal')}.xyz * 2.0 - 1.0;`, `ccT.xy *= ${CLEARCOAT_CONSTANT}.z;`, '#if USE_NORMAL_MAP', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccB0 = normalize(cross(v_tangent.xyz, ccN0)) * v_tangent.w;', 'airCCNormal = normalize(ccT.x * normalize(v_tangent.xyz) + ccT.y * ccB0 + ccT.z * ccN0);', '#else', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccUp = abs(ccN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 ccTg = normalize(cross(ccUp, ccN0));', 'airCCNormal = normalize(ccT.x * ccTg + ccT.y * cross(ccN0, ccTg) + ccT.z * ccN0);', '#endif', '}', '#endif', '#if USE_AIR_ANISOTROPY', '{', `airAnisoStrength = ${ANISO_CONSTANT}.x;`, 'vec3 aN0 = normalize(v_normal);', '#if USE_NORMAL_MAP', 'vec3 aT = normalize(v_tangent.xyz);', 'vec3 aB = normalize(cross(aT, aN0)) * v_tangent.w;', '#else', 'vec3 aUp = abs(aN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 aT = normalize(cross(aUp, aN0));', 'vec3 aB = cross(aN0, aT);', '#endif', `#if USE_AIR_ANISOTROPY_MAP`,
+      const modulate = ['#if USE_AIR_TRANSMISSION', `airTrFactorTex = ${TRANSMISSION_CONSTANT}.x;`, `airThickTex = ${TRANSMISSION_CONSTANT}.z;`, '#if USE_AIR_TRANSMISSION_MAP', `airTrFactorTex *= ${tex('transmissionMap', 'TRANSMISSION_UV', 'airTransmission')}.r;`, '#endif', '#if USE_AIR_VOLUME_THICKNESS_MAP', `airThickTex *= ${tex('volumeThicknessMap', 'VOLUMETHICKNESS_UV', 'airVolumeThickness')}.g;`, '#endif', '#endif', '#if USE_AIR_SPECULAR_MAP', `airSpecScale = ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.a;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', `airSpecColor = SRGBToLinear(${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb);`, '#endif', '#if USE_AIR_CLEARCOAT', `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`, `airCCRoughTex = ${CLEARCOAT_CONSTANT}.y;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_MAP', `airCCFactorTex *= ${tex('clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat')}.r;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_ROUGHNESS_MAP', `airCCRoughTex *= ${tex('clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness')}.g;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_NORMAL_MAP', '{', `vec3 ccT = ${tex('clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal')}.xyz * 2.0 - 1.0;`, `ccT.xy *= ${CLEARCOAT_CONSTANT}.z;`, '#if USE_NORMAL_MAP', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccB0 = normalize(cross(v_tangent.xyz, ccN0)) * v_tangent.w;', 'airCCNormal = normalize(ccT.x * normalize(v_tangent.xyz) + ccT.y * ccB0 + ccT.z * ccN0);', '#else', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccUp = abs(ccN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 ccTg = normalize(cross(ccUp, ccN0));', 'airCCNormal = normalize(ccT.x * ccTg + ccT.y * cross(ccN0, ccTg) + ccT.z * ccN0);', '#endif', '}', '#endif', '#if USE_AIR_ANISOTROPY', '{', `airAnisoStrength = ${ANISO_CONSTANT}.x;`, 'vec3 aN0 = normalize(v_normal);', '#if USE_NORMAL_MAP', 'vec3 aT = normalize(v_tangent.xyz);', 'vec3 aB = normalize(cross(aT, aN0)) * v_tangent.w;', '#else', 'vec3 aUp = abs(aN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 aT = normalize(cross(aUp, aN0));', 'vec3 aB = cross(aN0, aT);', '#endif', `#if USE_AIR_ANISOTROPY_MAP`,
       `vec3 aTex = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz;`, 'vec2 aDir = vec2(aTex.x, aTex.y) * 2.0 - 1.0;', 'vec3 aNewT = aDir.x * aT + aDir.y * aB;', 'if (dot(aNewT, aNewT) > 1e-8) { aT = normalize(aNewT); aB = cross(aN0, aT); }', 'airAnisoStrength *= aTex.z;', '#endif', `float aRotC = ${ANISO_CONSTANT}.y; float aRotS = ${ANISO_CONSTANT}.z;`, 'airAnisoT = aT * aRotC + aB * aRotS;', 'airAnisoB = aB * aRotC - aT * aRotS;', '}', '#endif', '#if USE_AIR_IRIDESCENCE', `airIriFactorTex = ${IRIDESCENCE_CONSTANT}.x;`, `airIriIorTex = ${IRIDESCENCE_CONSTANT}.y;`,
       `airIriThickTex = ${IRIDESCENCE_CONSTANT}.w;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_MAP', `airIriFactorTex *= ${tex('iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence')}.r;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_IOR_MAP', `airIriIorTex = mix(${IRIDESCENCE_CONSTANT}.y, 2.33334, ${tex('iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor')}.g);`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_THICKNESS_MAP',
       `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`, '#endif', '#if USE_AIR_BUMP', '{',
-      "float bh = ${tex('bumpMap', 'BUMP_UV', 'airBump')}.r * ${BUMP_CONSTANT}.x;", "vec2 buv = " + "${textureUVExpression('BUMP_UV', 'airBump')};", 'vec2 dbh = vec2(dFdx(bh), dFdy(bh));', 'vec2 duvdx = vec2(dFdx(buv.x), dFdy(buv.x));', 'vec2 duvdy = vec2(dFdx(buv.y), dFdy(buv.y));', 'vec3 dPdx = dFdx(s.position);', 'vec3 dPdy = dFdy(s.position);', 'float bdet = duvdx.x * duvdy.y - duvdx.y * duvdy.x;', 'if (abs(bdet) > 1e-8) {', 'float ga = ( dbh.x * duvdy.y - dbh.y * duvdy.x) / bdet;', 'float gb = (-dbh.x * duvdx.y + dbh.y * duvdx.x) / bdet;', 's.normal = normalize(s.normal - (ga * dPdx + gb * dPdy));', '}', '}', '#endif'].join(nl);
+      `float bh = ${tex('bumpMap', 'BUMP_UV', 'airBump')}.r * ${BUMP_CONSTANT}.x;`, `vec2 buv = ${textureUVExpression('BUMP_UV', 'airBump')};`, 'vec2 dbh = vec2(dFdx(bh), dFdy(bh));', 'vec2 duvdx = vec2(dFdx(buv.x), dFdy(buv.x));', 'vec2 duvdy = vec2(dFdx(buv.y), dFdy(buv.y));', 'vec3 dPdx = dFdx(s.position);', 'vec3 dPdy = dFdy(s.position);', 'float bdet = duvdx.x * duvdy.y - duvdx.y * duvdy.x;', 'if (abs(bdet) > 1e-8) {', 'float ga = ( dbh.x * duvdy.y - dbh.y * duvdy.x) / bdet;', 'float gb = (-dbh.x * duvdx.y + dbh.y * duvdx.x) / bdet;', 's.normal = normalize(s.normal - (ga * dPdx + gb * dPdy));', '}', '}', '#endif'].join(nl);
       const mainAnchor = 'StandardSurface s; surf(s);';
       if (!frag.includes(mainAnchor)) {
         throw new Error(`physical effect: '${mainAnchor}' missing in ${shader.name} [${language}]`);
       }
-      frag = frag.replace(mainAnchor, `${mainAnchor}\n${modulate}`);
+      frag = frag.split(mainAnchor).join(`${mainAnchor}\n${modulate}`);
       stage.frag = frag;
     }
     for (const technique of effect.techniques) {
@@ -144422,19 +144637,21 @@ function createGLTFMaterial(features, textures, vertexColor) {
         rasterizerState: {
           cullMode: source.doubleSided ? CullMode.NONE : CullMode.BACK
         },
-        depthStencilState: {
-          depthTest: true,
-          depthWrite: alpha !== 'BLEND'
-        },
-        blendState: {
-          targets: [{
-            blend: alpha === 'BLEND',
-            blendSrc: BlendFactor.SRC_ALPHA,
-            blendDst: BlendFactor.ONE_MINUS_SRC_ALPHA,
-            blendSrcAlpha: BlendFactor.ONE,
-            blendDstAlpha: BlendFactor.ONE_MINUS_SRC_ALPHA
-          }]
-        }
+        ...(alpha === 'BLEND' ? {
+          depthStencilState: {
+            depthTest: true,
+            depthWrite: false
+          },
+          blendState: {
+            targets: [{
+              blend: true,
+              blendSrc: BlendFactor.SRC_ALPHA,
+              blendDst: BlendFactor.ONE_MINUS_SRC_ALPHA,
+              blendSrcAlpha: BlendFactor.ONE,
+              blendDstAlpha: BlendFactor.ONE_MINUS_SRC_ALPHA
+            }]
+          }
+        } : {})
       }
     });
     material.name = source.name || 'glTF material';
@@ -146615,6 +146832,49 @@ let AirTransmissionCapture = (_dec$h = ccclass$w('air.AirTransmissionCapture'), 
   }
 }) || _class$h);
 const defaultTransmissionVisibility = Layers.Enum.ALL;
+
+let effectSerial = 0;
+function hashSource(text) {
+  let hash = 2166136261;
+  for (let i = 0; i < text.length; ++i) hash = Math.imul(hash ^ text.charCodeAt(i), 16777619);
+  return hash >>> 0;
+}
+function createAirUnlitFogEffect() {
+  const source = EffectAsset.get('builtin-unlit');
+  if (!source) throw new Error('[AIR_UNLIT_FOG] initialize AIR builtin assets before creating the effect');
+  const effect = new EffectAsset();
+  effect.name = `air-unlit-fog-${++effectSerial}`;
+  effect.techniques = JSON.parse(JSON.stringify(source.techniques));
+  effect.shaders = JSON.parse(JSON.stringify(source.shaders));
+  effect.combinations = [];
+  for (const shader of effect.shaders) {
+    const previousName = shader.name;
+    for (const variant of ['glsl3', 'glsl4']) {
+      const code = shader[variant];
+      const vertexCall = 'CC_TRANSFER_FOG(matWorld * position);';
+      const fragmentCall = 'CC_APPLY_FOG(o);';
+      if (!code || !code.vert.includes(vertexCall) || !code.frag.includes(fragmentCall)) {
+        throw new Error(`[AIR_UNLIT_FOG] incompatible builtin-unlit ${variant} source; no effect was registered`);
+      }
+      const qualifier = variant === 'glsl4' ? 'layout(location = 3) ' : '';
+      const precision = 'precision highp float;';
+      if (!code.vert.includes(precision) || !code.frag.includes(precision)) {
+        throw new Error(`[AIR_UNLIT_FOG] incompatible builtin-unlit ${variant} precision preamble`);
+      }
+      code.vert = code.vert.replace(precision, `${precision}\n${qualifier}out highp vec3 air_fogWorldPos;`).split(vertexCall).join(`air_fogWorldPos = (matWorld * position).xyz;\n${vertexCall}`);
+      code.frag = code.frag.replace(precision, `${precision}\n${qualifier}in highp vec3 air_fogWorldPos;`).split(fragmentCall).join('CC_APPLY_FOG(o, air_fogWorldPos);');
+    }
+    shader.hash = hashSource(JSON.stringify([shader.hash, shader.glsl3, shader.glsl4]));
+    shader.name = `${previousName}|air-fog:${shader.hash}`;
+    for (const technique of effect.techniques) {
+      for (const pass of technique.passes) if (pass.program === previousName) pass.program = shader.name;
+    }
+  }
+  effect.onLoaded();
+  const precompile = effect._precompile;
+  cclegacy.game.off(cclegacy.Game.EVENT_RENDERER_INITED, precompile, effect);
+  return effect;
+}
 
 class WebGL2DescriptorSet extends DescriptorSet {
   constructor() {
@@ -156654,5 +156914,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { AIR_REVISION, AIR_VERSION, Acceleration, AirAppImpl, AirTransmissionCapture, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
+export { AIR_REVISION, AIR_VERSION, Acceleration, AirAppImpl, AirTransmissionCapture, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createAirUnlitFogEffect, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
 //# sourceMappingURL=cocosair.module.js.map

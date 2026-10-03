@@ -25,6 +25,7 @@
 
 import { Vec2, cclegacy } from '../../core';
 import type { View } from '../../ui/view';
+import { locationOutput } from './location-output';
 
 const _vec2 = new Vec2();
 /**
@@ -58,10 +59,7 @@ export class Touch {
      * @param out - Pass the out object to avoid object creation, very good practice
      */
     public getLocation (out?: Vec2): Vec2 {
-        if (!out) {
-            out = new Vec2();
-        }
-
+        out = locationOutput(out, 'Touch.getLocation');
         out.set(this._point.x, this._point.y);
         return out;
     }

@@ -337,6 +337,22 @@ export class EffectAsset extends Asset {
      * @zh 通过 [[AssetManager]] 加载完成时的回调，将自动注册 effect 资源。
      */
     public onLoaded (): void {
+        EffectAsset.register(this);
+        // Full Web bundles can expose the effect-import module before game.init
+        // chooses the actual pipeline. Its init() needs a device, and game.init
+        // may subsequently disable that module for the default legacy pipeline.
+        // Keep metadata immediately discoverable; register GPU programs against
+        // the selected library once the renderer has initialized.
+        if (!EDITOR_NOT_IN_PREVIEW && !deviceManager.gfxDevice) {
+            cclegacy.game.off(cclegacy.Game.EVENT_RENDERER_INITED, this._onRendererReady, this);
+            cclegacy.game.once(cclegacy.Game.EVENT_RENDERER_INITED, this._onRendererReady, this);
+            return;
+        }
+        this._registerPrograms();
+        if (!EDITOR_NOT_IN_PREVIEW) { cclegacy.game.once(cclegacy.Game.EVENT_RENDERER_INITED, this._precompile, this); }
+    }
+
+    private _registerPrograms (): void {
         if (cclegacy.rendering && cclegacy.rendering.enableEffectImport) {
             addEffectDefaultProperties(this);
             const programLib = cclegacy.rendering.programLib;
@@ -345,8 +361,12 @@ export class EffectAsset extends Asset {
         } else {
             programLib.register(this);
         }
-        EffectAsset.register(this);
-        if (!EDITOR_NOT_IN_PREVIEW) { cclegacy.game.once(cclegacy.Game.EVENT_RENDERER_INITED, this._precompile, this); }
+    }
+
+    private _onRendererReady (): void {
+        if (!this.isValid) { return; }
+        this._registerPrograms();
+        this._precompile();
     }
 
     /**
@@ -373,6 +393,10 @@ export class EffectAsset extends Asset {
     }
 
     public destroy (): boolean {
+        if (!EDITOR_NOT_IN_PREVIEW) {
+            cclegacy.game.off(cclegacy.Game.EVENT_RENDERER_INITED, this._onRendererReady, this);
+            cclegacy.game.off(cclegacy.Game.EVENT_RENDERER_INITED, this._precompile, this);
+        }
         EffectAsset.remove(this);
         return super.destroy();
     }

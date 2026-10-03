@@ -104,6 +104,7 @@ try {
     for (const name of expected) {
         if (typeof mod[name] === 'undefined') { failures.push(`cocosair.${name} is missing from the installed module`); }
     }
+    if (typeof mod.utils?.MeshUtils?.createDynamicMesh !== 'function') { failures.push('official dynamic mesh entry utils.MeshUtils.createDynamicMesh is missing from the installed module'); }
     if (exportCount < 100) { failures.push(`implausibly low export count: ${exportCount}`); }
 } catch (error) {
     failures.push(`dynamic import of installed module failed: ${String(error && error.stack ? error.stack.split('\n').slice(0, 3).join(' | ') : error).slice(0, 400)}`);
@@ -114,7 +115,7 @@ const tsOut = path.join(consumerDir, 'type-test.ts');
 fs.writeFileSync(tsOut, [
     "import { createAirApp, GLTFLoader, GLTFAsset, Node, Scene, Vec3, MeshRenderer,",
     "  Camera, DirectionalLight, Animation, AnimationClip, Layers,",
-    "  configureGLTFLoaderDefaults,",
+    "  configureGLTFLoaderDefaults, utils,",
     "} from 'cocosair';",
     "import type { GLTFLoaderOptions } from 'cocosair';",
     "const loader = new GLTFLoader();",
@@ -128,6 +129,8 @@ fs.writeFileSync(tsOut, [
     "const node = new Node('n');",
     "scene.addChild(node);",
     "const v = new Vec3(1, 2, 3);",
+    "const createDynamic = utils.MeshUtils.createDynamicMesh;",
+    "void createDynamic;",
     "void v; void opts; void scene; void node; void loader;",
     "void createAirApp; void GLTFAsset; void MeshRenderer; void Camera; void DirectionalLight;",
     "void Animation; void AnimationClip; void Layers;",

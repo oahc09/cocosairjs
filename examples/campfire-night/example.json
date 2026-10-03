@@ -1,0 +1,95 @@
+{
+  "id": "campfire-night",
+  "version": "1.0.0",
+  "title": "Campfire Night: HDR Lighting",
+  "category": "rendering",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "使用HDR曝光与物理光照单位构建程序化篝火夜景，验证真实环境照明、日夜渐变与资源释放",
+    "points": ["固定相机和光照参数", "实际像素而非仅字段读回", "GPU/present耗时与CPU观测分开"]
+  },
+  "effect": {
+    "functional": "原创实现公开E06规格：14trees、20fireflies、32flames、48sparks；PointLight真实照地面，混合频率闪烁；日夜3秒线性渐变，orbit可暂停，reset归零。冻结相机和粒子后可对照火光强度与阴影设置。",
+    "visual": "深蓝夜空下，14棵低多边形树环围绕中心篝火；火苗与火星为原生网格，橙色火光照亮附近地面，20只萤火虫在树间明灭。日间天空和地面渐亮，环绕相机可暂停。"
+  },
+  "api": {
+    "primary": ["createAirApp", "utils.createMesh", "PointLight.luminousFlux"],
+    "supporting": [],
+    "claims": ["createAirApp", "utils.createMesh", "PointLight.luminousFlux"],
+    "forbiddenShortcut": ["用DOM图像冒充WebGL效果", "只检查宏或属性而不检查画面", "用rAF计数冒充GPU或显示present性能"],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L23",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L63",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "PointLight.luminousFlux",
+        "source": "src/main.ts",
+        "sourceLocation": "L133",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": ["rendering"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Moon", "Fire Light", "Camp"]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击Day / night并等待3.2秒",
+        "expected": "timeOfDay到达另一端点，天空和地面连续渐变",
+        "buttonText": "Day / night"
+      },
+      {
+        "action": "点击Pause / resume orbit",
+        "expected": "cameraOrbitAngle停止或恢复变化",
+        "buttonText": "Pause / resume orbit"
+      },
+      {
+        "action": "点击Reset",
+        "expected": "timeOfDay回到0，orbit恢复",
+        "buttonText": "Reset"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创程序化场景，无第三方资产；E06仅参考公开Scene Spec"
+  },
+  "promotion": {
+    "spec": "2a7c20e0f736",
+    "source": "03c8ddb152ddb068",
+    "candidate": "ba485e1b91643c46",
+    "verified": 3,
+    "attested": 0,
+    "units": 3
+  }
+}

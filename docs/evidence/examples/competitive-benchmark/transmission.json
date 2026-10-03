@@ -1,0 +1,134 @@
+{
+  "measuredAt": "2026-10-03T08:09:47.817Z",
+  "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+  "scope": "CB-01 rendered transmission, volume and dispersion parameter A/B with manual engine frames",
+  "sourceSha256": "95d4a404ece34aaa913af026bfb847cf5517679cabf0d6cf8806976a1bdf9b3c",
+  "runnerSha256": "e81895dec82b877cfc247b4d2ef93336ce6314e2d1c577dcd5c9cba53f0275e4",
+  "fixture": {
+    "path": "examples/gltf-viewer/assets/physical.glb",
+    "sha256": "ddda86a141e9e2db43ed8845cadb4867913fb73878804cce6dfebb26a31ee881"
+  },
+  "records": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "ok": true,
+      "result": {
+        "fixed": true,
+        "effect": "air-gltf-physical-single-pass",
+        "changedPixels": 8805,
+        "absoluteDifference": 687292,
+        "volumeDifference": {
+          "changedPixels": 8833,
+          "absoluteDifference": 622417
+        },
+        "dispersionDifference": {
+          "changedPixels": 92,
+          "absoluteDifference": 4626
+        },
+        "dispersionInputs": {
+          "ior": 2.4,
+          "thickness": 3,
+          "factors": [
+            0,
+            5
+          ]
+        },
+        "uniforms": [
+          0,
+          1
+        ],
+        "transmissionEnabled": true,
+        "pixelSum": 391800031,
+        "glError": 0,
+        "size": [
+          1280,
+          800
+        ],
+        "sceneColorBound": true
+      },
+      "failures": []
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "ok": true,
+      "result": {
+        "fixed": true,
+        "effect": "air-gltf-physical-single-pass",
+        "changedPixels": 8805,
+        "absoluteDifference": 687292,
+        "volumeDifference": {
+          "changedPixels": 8833,
+          "absoluteDifference": 622417
+        },
+        "dispersionDifference": {
+          "changedPixels": 92,
+          "absoluteDifference": 4626
+        },
+        "dispersionInputs": {
+          "ior": 2.4,
+          "thickness": 3,
+          "factors": [
+            0,
+            5
+          ]
+        },
+        "uniforms": [
+          0,
+          1
+        ],
+        "transmissionEnabled": true,
+        "pixelSum": 391800031,
+        "glError": 0,
+        "size": [
+          1280,
+          800
+        ],
+        "sceneColorBound": true
+      },
+      "failures": []
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "ok": true,
+      "result": {
+        "fixed": true,
+        "effect": "air-gltf-physical-single-pass",
+        "changedPixels": 8805,
+        "absoluteDifference": 687292,
+        "volumeDifference": {
+          "changedPixels": 8833,
+          "absoluteDifference": 622417
+        },
+        "dispersionDifference": {
+          "changedPixels": 92,
+          "absoluteDifference": 4626
+        },
+        "dispersionInputs": {
+          "ior": 2.4,
+          "thickness": 3,
+          "factors": [
+            0,
+            5
+          ]
+        },
+        "uniforms": [
+          0,
+          1
+        ],
+        "transmissionEnabled": true,
+        "pixelSum": 391800031,
+        "glError": 0,
+        "size": [
+          1280,
+          800
+        ],
+        "sceneColorBound": true
+      },
+      "failures": []
+    }
+  ],
+  "ok": true
+}

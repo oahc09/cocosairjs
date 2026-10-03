@@ -5,6 +5,18 @@
 
 > 前置阅读：[Fundamentals 基本概念](./fundamentals.md)、[Uniform Types 统一类型](./uniform-types.md)
 
+## 初始化时序与黑屏鉴别
+
+先 `await createAirApp({ canvas })`，再创建实际材质/渲染资源。`EffectAsset.onLoaded()` 可以在此前调用：它立即登记可查询的 effect 元数据，GPU 依赖的注册与预编译延迟到渲染器初始化后，并重新选择当时生效的程序库。旧 FULL Web SDK 的 `enableEffectImport` 分支确实曾在此调用 `WebProgramLibrary.init(undefined)`，抛出读取 `capabilities` 的 TypeError；当前已修复。HEADLESS/legacy 分支的早注册测试不能单独证明这条 Web 路径。需要实际 Pass 的 `Material.initialize()` 在设备未就绪时抛 `AIR_E_MATERIAL_NOT_READY`，错误指明先等待 app 初始化。没有实际 Pass 的 effect 不被这条检查拒绝，pipeline 尚未装配也不等同于设备未就绪。
+
+| 现象                      | 首先核对                                                          | 当前合同                                                                                |
+| ------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| 相机看不到 DEFAULT 层对象 | 是否显式覆盖了 `camera.visibility`、对象 layer、相机位置/裁剪范围 | 当前原生 Camera 默认包含 DEFAULT；旧报告“默认 undefined”不代表当前默认行为              |
+| 材质创建早于 app 完成     | 是否等待 `createAirApp()`，是否真正创建了 Pass                    | `AIR_E_MATERIAL_NOT_READY`；早 `EffectAsset.onLoaded()` 注册仍合法                      |
+| 动画播完停在末帧          | 原生 state 的 wrap mode、播放状态及完成事件                       | Normal 是正常单次播放；需要循环时显式配置，见 [Animation System](./animation-system.md) |
+
+这些检查用于区分启动合同、业务配置与渲染缺陷。没有光照、离开视锥等合法状态不会被统一报成“黑屏错误”。
+
 ## 1. builtin 清单
 
 用户场景里用得上的就两个（`src/air/builtin/builtin-effects.ts`）：

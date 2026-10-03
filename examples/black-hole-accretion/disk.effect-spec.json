@@ -1,0 +1,9 @@
+{
+  "name": "air-black-hole-disk",
+  "primitive": "TRIANGLE_LIST",
+  "attributes": [{ "name": "a_position", "type": "vec3", "location": 0 }],
+  "varyings": [{ "name": "diskPosition", "type": "vec2" }],
+  "uniforms": [{ "name": "motion", "type": "vec4", "value": [0, 0, 1, 0] }],
+  "vertex": { "file": "shaders/disk.vert.glsl" },
+  "fragment": { "file": "shaders/disk.frag.glsl" }
+}

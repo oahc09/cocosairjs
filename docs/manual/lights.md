@@ -3,6 +3,9 @@
 > 讲清"有哪些光、强度怎么设、为什么我的光不亮"。
 > 配套可运行示例：[`examples/manual-lights/`](examples/manual-lights/)（四种光源轮流点亮同一颗球）。
 
+固定HDR/LDR、曝光、局部光meter scale与夜景标定见 [光照单位](lighting-units.md)；
+灯型与阴影应分开判断，见 [阴影支持矩阵](shadow-support-matrix.md)。
+
 Cocos AIR 暴露四种光源组件：`DirectionalLight`、`PointLight`、`SpotLight`、`SphereLight`。
 它们都是普通 `Component`，挂到 `Node` 上、把节点加进场景即生效——不需要任何额外的注册步骤，但**强度单位与朝向/开关方式**有几个必须知道的坑。
 

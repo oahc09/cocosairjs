@@ -1,8 +1,8 @@
 {
-  "measuredAt": "2026-10-02T02:22:12.019Z",
+  "measuredAt": "2026-10-03T10:42:51.958Z",
   "tool": "tools/examples/spec-compliance-audit.cjs",
   "spec": "ai/example-spec-execution.md",
-  "total": 146,
+  "total": 159,
   "examples": [
     {
       "id": "gltf-draco",
@@ -15,16 +15,29 @@
           "detail": "§25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract"
         }
       ]
+    },
+    {
+      "id": "starfield-galaxy",
+      "status": "stable",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S6-EFFECT",
+          "severity": "warn",
+          "detail": "§6：effect.visual 过短，无法据此判定\"应该做成什么样\"（\"暖白核球、蓝色旋臂与深黑宇宙\"）"
+        }
+      ]
     }
   ],
   "globalFindings": [],
   "summary": {
-    "examples": 146,
-    "withFindings": 1,
+    "examples": 159,
+    "withFindings": 2,
     "fail": 0,
-    "warn": 1,
+    "warn": 2,
     "byRule": {
-      "S25-LIFECYCLE": 1
+      "S25-LIFECYCLE": 1,
+      "S6-EFFECT": 1
     },
     "findings": [
       {
@@ -32,6 +45,12 @@
         "rule": "S25-LIFECYCLE",
         "severity": "warn",
         "detail": "§25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract"
+      },
+      {
+        "example": "starfield-galaxy",
+        "rule": "S6-EFFECT",
+        "severity": "warn",
+        "detail": "§6：effect.visual 过短，无法据此判定\"应该做成什么样\"（\"暖白核球、蓝色旋臂与深黑宇宙\"）"
       }
     ]
   }

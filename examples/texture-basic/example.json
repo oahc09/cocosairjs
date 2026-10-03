@@ -231,7 +231,7 @@
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L27"
+        "sourceLocation": "L30"
       },
       {
         "api": "TextureCube",
@@ -427,9 +427,9 @@
     }
   },
   "promotion": {
-    "spec": "95ed047131ee",
-    "source": "f3342765dca75676",
-    "candidate": "0b9588dc80fd7afd",
+    "spec": "5ef4ad7124a9",
+    "source": "fa9820ec157d7c34",
+    "candidate": "ba485e1b91643c46",
     "verified": 40,
     "attested": 0,
     "units": 40

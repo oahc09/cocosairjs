@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-10-02T02:21:49.578Z",
-  "total": 146,
-  "frozen": 146,
+  "measuredAt": "2026-10-03T10:42:48.773Z",
+  "total": 159,
+  "frozen": 159,
   "draft": 0,
   "blocked": 0,
   "examples": [
@@ -16,6 +16,11 @@
       "issues": []
     },
     {
+      "id": "animated-character-showcase",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "audio-basic",
       "specStatus": "frozen",
       "issues": []
@@ -26,7 +31,27 @@
       "issues": []
     },
     {
+      "id": "batching-dynamic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "batching-merged",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "batching-shared",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "batching-utility",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "black-hole-accretion",
       "specStatus": "frozen",
       "issues": []
     },
@@ -71,6 +96,11 @@
       "issues": []
     },
     {
+      "id": "campfire-night",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "collector-dodge",
       "specStatus": "frozen",
       "issues": []
@@ -97,6 +127,21 @@
     },
     {
       "id": "dragonbones-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "fog-accuracy",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "glass-refraction",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-animation-contract",
       "specStatus": "frozen",
       "issues": []
     },
@@ -491,6 +536,11 @@
       "issues": []
     },
     {
+      "id": "neon-night-city",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "node-active",
       "specStatus": "frozen",
       "issues": []
@@ -531,6 +581,11 @@
       "issues": []
     },
     {
+      "id": "orbit-controls",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "particle-2d-basic",
       "specStatus": "frozen",
       "issues": []
@@ -557,6 +612,11 @@
     },
     {
       "id": "physics-interaction",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "point-cloud-basics",
       "specStatus": "frozen",
       "issues": []
     },
@@ -647,6 +707,11 @@
     },
     {
       "id": "skinned-animation",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "starfield-galaxy",
       "specStatus": "frozen",
       "issues": []
     },

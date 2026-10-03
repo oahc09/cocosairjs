@@ -1,0 +1,355 @@
+{
+  "schema": "cb21-current-pilot-v1",
+  "measuredAt": "2026-10-03T09:20:47.281Z",
+  "candidate": {
+    "path": "E:\\AIProMax\\github\\cocosair.js\\output\\competitive-benchmark\\candidate\\cocosair.js-1.0.0.tgz",
+    "sha256": "d6ed10fef2748fa2f4a3f10a938fc4b2e8f37b7f0f2a001b9dce8cdfa989a5ba",
+    "packageVersion": "1.0.0"
+  },
+  "configuredIdentity": {
+    "modelId": "gpt-6-luna",
+    "reasoningEffort": "high",
+    "selectionSource": "trusted-user-request",
+    "runtimeId": "codex-app-subagent",
+    "providerId": null,
+    "providerUnavailableReason": "Record the actual host/provider route if exposed; do not infer it from a model alias.",
+    "modelRevision": null,
+    "modelRevisionUnavailableReason": "The desktop host does not expose an immutable provider model revision.",
+    "observability": {
+      "observedExecutionEvents": "official read_thread event IDs for new agentThreadId",
+      "agentToolCalls": null,
+      "tokens": null
+    }
+  },
+  "plannedPairs": 24,
+  "completedPairs": 1,
+  "validComparablePairs": 0,
+  "unstartedPairs": 22,
+  "incompleteDispatchPairs": 1,
+  "pairId": "PAIR-E01-K0-R01",
+  "startDeltaSeconds": 23,
+  "rows": [
+    {
+      "arm": "arm-a",
+      "engine": "three",
+      "agentThreadId": "01a100f0-b935-7763-97b6-f8df7306124f",
+      "scopeCompliance": false,
+      "protocolIncidents": [
+        {
+          "kind": "OUTSIDE_ARM_CWD_WITH_RELATIVE_READ_ATTEMPTS",
+          "source": "official read_thread commandExecution exec-763fabb7-cb18-4b20-80b9-8f318e504b8c",
+          "cwd": "E:/AIProMax/Y2026M10/cocosairjs-cb21-current-20261003/PAIR-E01-K0-R01",
+          "impact": "Relative script/dependency reads/list attempted from Pair directory; later corrected. No successful other-arm data access established. Strict scope compliance not demonstrated."
+        }
+      ],
+      "metrics": {
+        "observedExecutionEvents": {
+          "total": 27,
+          "byType": {
+            "commandExecution": 17,
+            "fileChange": 10
+          }
+        },
+        "agentToolCalls": null,
+        "inputTokens": null,
+        "outputTokens": null,
+        "wallTimeMs": 774893,
+        "buildAttempts": 3,
+        "browserAttempts": 6,
+        "wallTimeDefinition": "Official turn startedAt/completedAt; includes model execution and coordinator GPU waiting",
+        "gpuQueueWaitMs": null,
+        "gpuQueueWaitUnavailableReason": "Initial request timestamp was not recorded; do not estimate/subtract waiting."
+      },
+      "behavior": {
+        "verdict": "FAIL",
+        "fpsRaf": 60.1,
+        "probes": [
+          {
+            "probeId": "P1",
+            "status": "PASS",
+            "weight": 1,
+            "visualType": "nonBlank",
+            "failedAssertions": []
+          },
+          {
+            "probeId": "P2",
+            "status": "PASS",
+            "weight": 1,
+            "visualType": "motion",
+            "failedAssertions": []
+          },
+          {
+            "probeId": "P3",
+            "status": "PASS",
+            "weight": 1,
+            "visualType": "pixelDelta",
+            "failedAssertions": []
+          },
+          {
+            "probeId": "P4",
+            "status": "FAIL",
+            "weight": 1,
+            "visualType": "pixelDelta",
+            "failedAssertions": [
+              "state"
+            ]
+          },
+          {
+            "probeId": "P5",
+            "status": "PASS",
+            "weight": 1,
+            "visualType": "nonBlank",
+            "failedAssertions": []
+          },
+          {
+            "probeId": "P6",
+            "status": "PASS",
+            "weight": 1,
+            "visualType": "nonBlank",
+            "failedAssertions": []
+          },
+          {
+            "probeId": "P7",
+            "status": "SKIPPED_BY_DEPENDENCY",
+            "weight": 1,
+            "visualType": null,
+            "failedAssertions": []
+          }
+        ],
+        "consoleErrors": 0,
+        "uncaught": []
+      },
+      "evidence": {
+        "path": "E:/AIProMax/Y2026M10/cocosairjs-cb21-current-20261003/PAIR-E01-K0-R01/arm-a/independent-validation/report.json",
+        "sha256": "fe04daae3be609aec7aa3e406bf3cee949db1feca8784720ec1c45f4f7a7ec7a",
+        "guard": {
+          "schema": "cb21-independent-guard-v1",
+          "startedAt": "2026-10-03T09:03:03.630Z",
+          "endedAt": "2026-10-03T09:03:26.338Z",
+          "checks": {
+            "candidate": true,
+            "installedPackage": true,
+            "knowledge": true,
+            "prompt": true,
+            "policy": true,
+            "spec": true,
+            "instrument": true,
+            "browser": true,
+            "wrapper": true,
+            "machineCounterScripts": true
+          },
+          "candidateSha256": "d6ed10fef2748fa2f4a3f10a938fc4b2e8f37b7f0f2a001b9dce8cdfa989a5ba",
+          "instrumentHash": "886c62e2b1b4e6a7f8a2911fdda9c42e27b0cb102484550b6f04359a064f62b8",
+          "machineCountersBeforeValidator": {
+            "build": {
+              "count": 3,
+              "timestamps": [
+                "2026-10-03T08:48:08.717Z",
+                "2026-10-03T08:48:44.078Z",
+                "2026-10-03T08:49:34.168Z"
+              ]
+            },
+            "browser": {
+              "count": 6,
+              "timestamps": [
+                "2026-10-03T08:53:55.066Z",
+                "2026-10-03T08:54:22.201Z",
+                "2026-10-03T08:55:01.678Z",
+                "2026-10-03T08:56:07.094Z",
+                "2026-10-03T08:56:46.642Z",
+                "2026-10-03T08:57:21.169Z"
+              ]
+            }
+          },
+          "machineCountersAfterValidator": {
+            "build": {
+              "count": 4,
+              "timestamps": [
+                "2026-10-03T08:48:08.717Z",
+                "2026-10-03T08:48:44.078Z",
+                "2026-10-03T08:49:34.168Z",
+                "2026-10-03T09:03:04.564Z"
+              ]
+            },
+            "browser": {
+              "count": 6,
+              "timestamps": [
+                "2026-10-03T08:53:55.066Z",
+                "2026-10-03T08:54:22.201Z",
+                "2026-10-03T08:55:01.678Z",
+                "2026-10-03T08:56:07.094Z",
+                "2026-10-03T08:56:46.642Z",
+                "2026-10-03T08:57:21.169Z"
+              ]
+            }
+          },
+          "validatorExitCode": 1,
+          "validatorError": null,
+          "note": "Validator build attempts are separate from cold-start agent attempts. No legacy root dependency guard used."
+        },
+        "officialEventsSha256": "9f9ad71f0c2f4a4b4a5c9a81544e1f8e91aaf29218ea89f7451fd9fde43f9f84",
+        "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-cb21-current-20261003\\PAIR-E01-K0-R01\\arm-a\\workspace"
+      }
+    },
+    {
+      "arm": "arm-b",
+      "engine": "cocosair",
+      "agentThreadId": "01a100f1-1245-7233-879e-cd7934aeb9c5",
+      "scopeCompliance": false,
+      "protocolIncidents": [
+        {
+          "kind": "OUTSIDE_ARM_WRITE_AND_READ",
+          "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-cb21-current-20261003\\PAIR-E01-K0-R01\\WORKLOG.md",
+          "source": "agent explicit collaboration report",
+          "impact": "Own one-line build log in parent Pair; no claimed other-arm or historical content access. Preserve artifact; exclude from clean compliant cost sample."
+        }
+      ],
+      "metrics": {
+        "observedExecutionEvents": {
+          "total": 22,
+          "byType": {
+            "commandExecution": 20,
+            "fileChange": 2
+          }
+        },
+        "agentToolCalls": null,
+        "inputTokens": null,
+        "outputTokens": null,
+        "wallTimeMs": 891300,
+        "buildAttempts": 3,
+        "browserAttempts": 2,
+        "wallTimeDefinition": "Official turn startedAt/completedAt; includes model execution and coordinator GPU waiting",
+        "gpuQueueWaitMs": null,
+        "gpuQueueWaitUnavailableReason": "Initial request timestamp was not recorded; do not estimate/subtract waiting."
+      },
+      "behavior": {
+        "verdict": "FAIL",
+        "fpsRaf": 60.1,
+        "probes": [
+          {
+            "probeId": "P1",
+            "status": "PASS",
+            "weight": 1,
+            "visualType": "nonBlank",
+            "failedAssertions": []
+          },
+          {
+            "probeId": "P2",
+            "status": "PASS",
+            "weight": 1,
+            "visualType": "motion",
+            "failedAssertions": []
+          },
+          {
+            "probeId": "P3",
+            "status": "PASS",
+            "weight": 1,
+            "visualType": "pixelDelta",
+            "failedAssertions": []
+          },
+          {
+            "probeId": "P4",
+            "status": "FAIL",
+            "weight": 1,
+            "visualType": "pixelDelta",
+            "failedAssertions": [
+              "state"
+            ]
+          },
+          {
+            "probeId": "P5",
+            "status": "PASS",
+            "weight": 1,
+            "visualType": "nonBlank",
+            "failedAssertions": []
+          },
+          {
+            "probeId": "P6",
+            "status": "PASS",
+            "weight": 1,
+            "visualType": "nonBlank",
+            "failedAssertions": []
+          },
+          {
+            "probeId": "P7",
+            "status": "SKIPPED_BY_DEPENDENCY",
+            "weight": 1,
+            "visualType": null,
+            "failedAssertions": []
+          }
+        ],
+        "consoleErrors": 0,
+        "uncaught": []
+      },
+      "evidence": {
+        "path": "E:/AIProMax/Y2026M10/cocosairjs-cb21-current-20261003/PAIR-E01-K0-R01/arm-b/independent-validation/report.json",
+        "sha256": "0f57ab1d9e66e6629c3091fcff4738262bac191ec8891498734e47e993ad9c91",
+        "guard": {
+          "schema": "cb21-independent-guard-v1",
+          "startedAt": "2026-10-03T09:05:22.497Z",
+          "endedAt": "2026-10-03T09:05:44.252Z",
+          "checks": {
+            "candidate": true,
+            "installedPackage": true,
+            "knowledge": true,
+            "prompt": true,
+            "policy": true,
+            "spec": true,
+            "instrument": true,
+            "browser": true,
+            "wrapper": true,
+            "machineCounterScripts": true
+          },
+          "candidateSha256": "d6ed10fef2748fa2f4a3f10a938fc4b2e8f37b7f0f2a001b9dce8cdfa989a5ba",
+          "instrumentHash": "886c62e2b1b4e6a7f8a2911fdda9c42e27b0cb102484550b6f04359a064f62b8",
+          "machineCountersBeforeValidator": {
+            "build": {
+              "count": 3,
+              "timestamps": [
+                "2026-10-03T08:48:41.049Z",
+                "2026-10-03T08:50:09.510Z",
+                "2026-10-03T08:50:32.191Z"
+              ]
+            },
+            "browser": {
+              "count": 2,
+              "timestamps": [
+                "2026-10-03T08:58:48.295Z",
+                "2026-10-03T08:59:45.323Z"
+              ]
+            }
+          },
+          "machineCountersAfterValidator": {
+            "build": {
+              "count": 4,
+              "timestamps": [
+                "2026-10-03T08:48:41.049Z",
+                "2026-10-03T08:50:09.510Z",
+                "2026-10-03T08:50:32.191Z",
+                "2026-10-03T09:05:23.360Z"
+              ]
+            },
+            "browser": {
+              "count": 2,
+              "timestamps": [
+                "2026-10-03T08:58:48.295Z",
+                "2026-10-03T08:59:45.323Z"
+              ]
+            }
+          },
+          "validatorExitCode": 1,
+          "validatorError": null,
+          "note": "Validator build attempts are separate from cold-start agent attempts. No legacy root dependency guard used."
+        },
+        "officialEventsSha256": "1fa008e024917aa19aabc4dea2003effb897770d8996bb415b791e51fcc3d0b5",
+        "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-cb21-current-20261003\\PAIR-E01-K0-R01\\arm-b\\workspace"
+      }
+    }
+  ],
+  "toolCallRatio": null,
+  "tokenRatio": null,
+  "costImprovementClaim": false,
+  "instrumentationCaveat": "Public validator evidence.stateBefore is pre-action, while double-sample assertions use a separate post-wait before which is not persisted. Preserve FAIL; do not recompute from displayed pre-action evidence.",
+  "continuation": "Awaiting user authorization for separate tasks; no close-agent tool available",
+  "scopeAudit": "Both arms have recorded path scope deviations; no clean comparable Pair. Do not infer successful information leakage from a failed read attempt."
+}

@@ -37,7 +37,34 @@ PAL 的运行时来源固定在 `vendor/pal-source/` 的公开 MIT 快照；
 | 手册源码一致性          | `node tools/verify/manual-doc-consistency.cjs --strict`                                     | 只读核对手册代码块与示例源码。                                                                                     |
 | 文档路径引用            | `npm run verify:doc-refs`                                                                   | 默认只读；使用显式输出参数才写报告。                                                                               |
 
+## 程序化场景与独立验收工具
+
+以下入口不新增引擎依赖。浏览器工具需要现有 bundle、可解析的 Playwright 及匹配浏览器；
+`neon-night-city.cjs` 另需能转译示例TS的HTTP服务。它们不会代为build、pack或安装浏览器。
+
+| 任务                     | 入口                                                                                                                                                                                                            | 产物与写入行为                                                                                                                                                                                                          |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 从GLSL与声明表生成effect | [build/effect-json.mjs](build/effect-json.mjs)：`node tools/build/effect-json.mjs examples/point-cloud-basics/point.effect-spec.json output/playwright/point.generated.effect.json`                             | 校验通过后写显式指定JSON，不改默认bundle。支持子集与UBO限制见 [自定义Shader手册](../docs/manual/custom-shaders.md#7-从声明表生成-effect-json)。生成JSON不等于GPU编译通过。                                              |
+| 夜城满规模独立验收       | [verify/neon-night-city.cjs](verify/neon-night-city.cjs)：`node tools/verify/neon-night-city.cjs --url=http://127.0.0.1:7473/examples/neon-night-city/ --out=output/playwright/neon-night-city-acceptance.json` | 读取现有页面，验证真实计数、像素、车/雨归因、雾、reset和释放；写指定JSON及同名PNG。可用NODE_PATH或`--playwright-module`提供现有模块。                                                                                   |
+| 本地服务器代理负控       | [verify/loopback-browser-regression.cjs](verify/loopback-browser-regression.cjs)：`node tools/verify/loopback-browser-regression.cjs`                                                                           | 临时启动本地HTML服务器，在浏览器子进程中模拟失效代理并检查回环绕过；写 `output/playwright/loopback-browser-regression.json`。不改变系统代理，不打印凭据，不忽略网络错误。                                               |
+| 矩阵数值区间断言         | [verify/probe-ranges.cjs](verify/probe-ranges.cjs)                                                                                                                                                              | 无独立CLI；验证器组件。只接受有限number及inclusive min/max，缺值和非有限值失败，不写文件。                                                                                                                              |
+| 本地回环浏览器环境       | [verify/loopback-browser-env.cjs](verify/loopback-browser-env.cjs)                                                                                                                                              | 无独立CLI；保留现有代理和绕过目标，给浏览器进程补NO_PROXY/no_proxy的回环地址，不改变主进程或系统设置。                                                                                                                  |
+| 示例本地模块闭包         | [examples/local-source-closure.cjs](examples/local-source-closure.cjs)                                                                                                                                          | 无独立CLI；规格审计组件。AST读取examples范围内的真实本地导入并解析JS→TS回退，循环去重；生命周期安装检查不把注释、字符串或空声明当调用。                                                                                 |
+| 三路线Recipe当前候选重采 | [benchmark/recipes/run-competitive-batching.cjs](benchmark/recipes/run-competitive-batching.cjs)：`node tools/benchmark/recipes/run-competitive-batching.cjs`                                                   | 读取当前bundle/声明与3例，自带只读TS HTTP服务；实际运行8个规模/instancing条件、每组120帧原始采样、像素和释放重建。写 `docs/evidence/recipes/competitive-batching/browser.json` 与8张PNG，不重建SDK。                    |
+| 三路线Recipe显式门禁     | `node tools/verify/recipe-review-gate.cjs --scope=competitive-batching`                                                                                                                                         | 校验完整输入/截图SHA、scope、3定义8用例、material/pass/geometry条件、像素、draw、样本与lifecycle；写本scope的 `review-gate.json`。默认`legacy30`仍保留原历史Golden/Catalog/30Recipe门禁，不把本scope PASS当旧全集PASS。 |
+
+独立报告的作用域应按实际运行的示例、视口和候选指纹解释。
+CPU提交与rAF观测不能替代GPU耗时或显示present；发布验证仍使用正式规格、矩阵与包消费门禁。
+
 ## 命名与历史合同
+
+CB21 成本复测使用 [benchmark/prepare-cost-retest.mjs](benchmark/prepare-cost-retest.mjs) 创建新的隔离批次；默认 dry-run，`--execute` 才写入不存在的新目录。候选包、知识、规范、模型配置和预算计数脚本均有独立指纹，不覆盖旧 benchmark。
+
+浏览器矩阵合同可用`probePath`指定示例已有的只读探针,如`__bench.getState`或`__characterProbe`;默认仍为`__probe`。显式路径不存在或不是函数即失败,不会换用别的探针。报告记录合同、运行器和读取函数指纹。该矩阵不替代各例完整交互/插值/生命周期探针。
+
+`node tools/verify/competitive-package-fox.cjs --package-root=<实际安装包目录> --tarball=<冻结tgz> --out=<新报告路径>`启动自己的只读示例服务,串行检查三浏览器中的Fox、原生材质控制与方向ShadowMap,并对照工作区/包/min像素。它不会build或安装包;显式输出报告、截图与来源SHA。当前材质纹理属性为`mainTexture`,shader sampler为`albedoMap`,启用宏为`USE_ALBEDO_MAP`,不要混用。
+
+[benchmark/validate-cost-arm.mjs](benchmark/validate-cost-arm.mjs) 的 `--prepare-instrument` 冻结公开验证器与真实 GPU 浏览器配置；`--check-inputs` 只读检查，正式执行才写该臂的 `independent-validation/`，含规范要求的视频证据。验证器构建与 Agent 构建分别计数，已有结果不覆盖。前置条件与范围见 [成本复测合同](../docs/reference/cost-retest-contract.md)。
 
 工具文件按用途命名，不再用实施阶段作为活跃入口名。例如 `example-spec-browser.cjs`、`dev-tooling.cjs`、`context-loss.cjs`。npm script 名称保持稳定。
 

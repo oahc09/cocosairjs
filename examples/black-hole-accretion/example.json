@@ -1,0 +1,101 @@
+{
+  "id": "black-hole-accretion",
+  "version": "1.0.0",
+  "title": "Black Hole Accretion",
+  "category": "shader",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "benchmarkRefs": ["CB-18", "E05"],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "Native procedural shader disk, point streams and explicit bloom-impostor scope",
+    "points": [
+      "Polar shader fields driven by one native clock",
+      "POINT_LIST mesh/pass agreement",
+      "Analytic additive glow differs from screen-space bloom"
+    ]
+  },
+  "effect": {
+    "functional": "Black event horizon, inner-white/outer-orange-red rotating disk, 256 spiral point streams, 2200 background points, smooth native wheel zoom and reset.",
+    "visual": "Centered tilted luminous disk and dark core over a procedurally generated star field, with analytic additive halo."
+  },
+  "api": {
+    "primary": ["EffectAsset.onLoaded", "Material.setProperty", "utils.createMesh"],
+    "supporting": [],
+    "claims": ["EffectAsset.onLoaded", "Material.setProperty", "utils.createMesh"],
+    "forbiddenShortcut": [
+      "External images or video must not impersonate procedural motion",
+      "State counts and rotation must reflect native geometry and shader inputs",
+      "Analytic glow must not be claimed as screen-space bloom or FXAA"
+    ],
+    "evidence": [
+      {
+        "api": "EffectAsset.onLoaded",
+        "source": "src/main.ts",
+        "sourceLocation": "L50",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L87",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L91",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": ["shader", "rendering"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Event Horizon",
+        "Accretion Disk",
+        "Analytic Additive Glow",
+        "Spiral Star Stream",
+        "Background Stars"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "Wheel toward the disk, then click Reset",
+        "expected": "Camera distance eases closer, then returns to 14 with rotation reset"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "Original MIT procedural geometry, polar GLSL and motion math; no external image/video/model assets."
+  },
+  "promotion": {
+    "spec": "c4a1c45f2260",
+    "source": "a6e9df1cec851de8",
+    "candidate": "ba485e1b91643c46",
+    "verified": 3,
+    "attested": 0,
+    "units": 3
+  }
+}

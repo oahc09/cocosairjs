@@ -51,6 +51,29 @@ export interface IEventDispatcher {
     onThrowException(): void;
 }
 
+function reportInputException (eventType: string | number, cause: unknown): void {
+    const diagnostic = Object.assign(new Error(`[AIR_E_INPUT_LISTENER] Input listener failed for ${String(eventType)}; subsequent input will continue.`), {
+        code: 'AIR_E_INPUT_LISTENER', eventType, cause,
+    });
+    error(diagnostic);
+}
+
+// Only global input callbacks are isolated. EventTarget/Node event semantics stay synchronous.
+class InputEventTarget extends EventTarget {
+    protected _invokeCallback (key: string | number, callback: AnyFunction, target: unknown,
+        arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void {
+        try {
+            if (target) {
+                callback.call(target, arg0, arg1, arg2, arg3, arg4);
+            } else {
+                callback(arg0, arg1, arg2, arg3, arg4);
+            }
+        } catch (cause) {
+            reportInputException(key, cause);
+        }
+    }
+}
+
 class InputEventDispatcher implements IEventDispatcher {
     public priority: EventDispatcherPriority = EventDispatcherPriority.GLOBAL;
     private declare _inputEventTarget: EventTarget;
@@ -134,7 +157,7 @@ export class Input {
      */
     public static EventType = InputEventType;
 
-    private _eventTarget: EventTarget = new EventTarget();
+    private _eventTarget: EventTarget = new InputEventTarget();
     private _touchInput = new TouchInputSource();
     private _mouseInput = new MouseInputSource();
     private _keyboardInput = new KeyboardInputSource();
@@ -350,10 +373,9 @@ export class Input {
                 if (!dispatcher.dispatchEvent(event)) {
                     break;
                 }
-            } catch (e: any) {
-                this._clearEvents();
+            } catch (e: unknown) {
                 dispatcher.onThrowException();
-                throw e;
+                reportInputException(event.type, e);
             }
         }
     }

@@ -1,0 +1,12 @@
+{
+  "name": "air-black-hole-stream",
+  "primitive": "POINT_LIST",
+  "attributes": [{ "name": "a_position", "type": "vec3", "location": 0 }],
+  "varyings": [
+    { "name": "particleColor", "type": "vec4" },
+    { "name": "particleDirection", "type": "vec2" }
+  ],
+  "uniforms": [{ "name": "motion", "type": "vec4", "value": [0, 0, 1, 0] }],
+  "vertex": { "file": "shaders/stream.vert.glsl" },
+  "fragment": { "file": "shaders/stream.frag.glsl" }
+}

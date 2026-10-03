@@ -1,0 +1,977 @@
+{
+  "measuredAt": "2026-10-03T08:50:54.467Z",
+  "scope": "Native material 1x1 texture RG orthogonal pairs; transmission R and volume thickness G; wrong-channel/R*G counterexamples; frozen native renderer pixels",
+  "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+  "sourceSha256": {
+    "src/air/assets/gltf/material/physical-effect.ts": "88a4f88edc4fa6ce4d2e5335c4bf0fe7be9ab63551d64430ae9376ff2c8ce3b5",
+    "src/air/assets/gltf/material.ts": "7f210daaefb0aa1222a62694b99416c5cd2d3565aecc1b98ba9abd0324a3962e",
+    "src/air/assets/gltf/material/texture-slots.ts": "652ca48f46a351898a30fcf31f1b0367086cb2c06227aa133c2b0daa0b040dd8",
+    "tools/debug/probes/transmission-texture-channels/index.html": "9cd46a7fc98536995f5f1e8ea7e06544712025ea404e5a300dba7f2a68fd83b0",
+    "tools/debug/probes/transmission-texture-channels/main.js": "67aae0d10b5dd89b66161bc2739ff52a74843887b60a09bf7e92222afe64db8a",
+    "tools/verify/competitive-texture-channels-browser.cjs": "ec5ffa2761028cf145fdae2a661ec2ff7ddc4f78bed78c7de59978584c32ee1e"
+  },
+  "candidateDrift": false,
+  "records": [
+    {
+      "engine": "chromium",
+      "browserVersion": "154.0.8037.58",
+      "fixtureSha256": "7140145b99ae037162b7f4d56c663fa4b312180e967064bc919a7d040e564ff6",
+      "screenshot": "docs/evidence/examples/competitive-benchmark/texture-channels/texture-channel-chromium.png",
+      "errors": [],
+      "result": {
+        "done": true,
+        "checks": [
+          {
+            "name": "native captured background is bound",
+            "ok": true,
+            "detail": 960
+          },
+          {
+            "name": "transmission ignores G with R=0",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "transmission ignores G with R=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "transmission responds to R with G=0 (reject G-only and R*G)",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "transmission responds to R with G=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "thickness ignores R with G=0",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "thickness ignores R with G=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "thickness responds to G with R=0 (reject R-only and R*G)",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          },
+          {
+            "name": "thickness responds to G with R=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          },
+          {
+            "name": "both samplers are active in actual shader",
+            "ok": true
+          },
+          {
+            "name": "no WebGL error",
+            "ok": true
+          },
+          {
+            "name": "rendered transmission-G-only negative control is rejected",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "rendered thickness-R-only negative control is rejected",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          }
+        ],
+        "frames": [
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 458965878
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 458965878
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 456525282
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 456525282
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 458965878
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 456525282
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          }
+        ],
+        "errors": [],
+        "transmission": {
+          "unusedGWhenR0": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "unusedGWhenR1": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "requiredRWhenG0": {
+            "changedPixels": 160488,
+            "absoluteDifference": 46476326,
+            "maximumChannelDifference": 212
+          },
+          "requiredRWhenG1": {
+            "changedPixels": 160488,
+            "absoluteDifference": 46476326,
+            "maximumChannelDifference": 212
+          }
+        },
+        "thickness": {
+          "unusedRWhenG0": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "unusedRWhenG1": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "requiredGWhenR0": {
+            "changedPixels": 160488,
+            "absoluteDifference": 47052528,
+            "maximumChannelDifference": 219
+          },
+          "requiredGWhenR1": {
+            "changedPixels": 160488,
+            "absoluteDifference": 47052528,
+            "maximumChannelDifference": 219
+          }
+        },
+        "fixtureBytes": 37150,
+        "counterexamples": {
+          "GOnlyTransmissionRejected": true,
+          "ROnlyThicknessRejected": true
+        },
+        "negativeControls": [
+          {
+            "name": "transmission-G-only",
+            "replacements": 2,
+            "originalInvarianceWouldPass": false,
+            "rejected": true,
+            "invalidDifference": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "thickness-R-only",
+            "replacements": 2,
+            "originalInvarianceWouldPass": false,
+            "rejected": true,
+            "invalidDifference": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          }
+        ],
+        "ok": true
+      },
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "fixtureSha256": "7140145b99ae037162b7f4d56c663fa4b312180e967064bc919a7d040e564ff6",
+      "screenshot": "docs/evidence/examples/competitive-benchmark/texture-channels/texture-channel-firefox.png",
+      "errors": [],
+      "result": {
+        "done": true,
+        "checks": [
+          {
+            "name": "native captured background is bound",
+            "ok": true,
+            "detail": 960
+          },
+          {
+            "name": "transmission ignores G with R=0",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "transmission ignores G with R=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "transmission responds to R with G=0 (reject G-only and R*G)",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "transmission responds to R with G=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "thickness ignores R with G=0",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "thickness ignores R with G=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "thickness responds to G with R=0 (reject R-only and R*G)",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          },
+          {
+            "name": "thickness responds to G with R=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          },
+          {
+            "name": "both samplers are active in actual shader",
+            "ok": true
+          },
+          {
+            "name": "no WebGL error",
+            "ok": true
+          },
+          {
+            "name": "rendered transmission-G-only negative control is rejected",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "rendered thickness-R-only negative control is rejected",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          }
+        ],
+        "frames": [
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 458965878
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 458965878
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 456525282
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 456525282
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 458965878
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 456525282
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          }
+        ],
+        "errors": [],
+        "transmission": {
+          "unusedGWhenR0": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "unusedGWhenR1": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "requiredRWhenG0": {
+            "changedPixels": 160488,
+            "absoluteDifference": 46476326,
+            "maximumChannelDifference": 212
+          },
+          "requiredRWhenG1": {
+            "changedPixels": 160488,
+            "absoluteDifference": 46476326,
+            "maximumChannelDifference": 212
+          }
+        },
+        "thickness": {
+          "unusedRWhenG0": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "unusedRWhenG1": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "requiredGWhenR0": {
+            "changedPixels": 160488,
+            "absoluteDifference": 47052528,
+            "maximumChannelDifference": 219
+          },
+          "requiredGWhenR1": {
+            "changedPixels": 160488,
+            "absoluteDifference": 47052528,
+            "maximumChannelDifference": 219
+          }
+        },
+        "fixtureBytes": 37150,
+        "counterexamples": {
+          "GOnlyTransmissionRejected": true,
+          "ROnlyThicknessRejected": true
+        },
+        "negativeControls": [
+          {
+            "name": "transmission-G-only",
+            "replacements": 2,
+            "originalInvarianceWouldPass": false,
+            "rejected": true,
+            "invalidDifference": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "thickness-R-only",
+            "replacements": 2,
+            "originalInvarianceWouldPass": false,
+            "rejected": true,
+            "invalidDifference": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          }
+        ],
+        "ok": true
+      },
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "fixtureSha256": "7140145b99ae037162b7f4d56c663fa4b312180e967064bc919a7d040e564ff6",
+      "screenshot": "docs/evidence/examples/competitive-benchmark/texture-channels/texture-channel-webkit.png",
+      "errors": [],
+      "result": {
+        "done": true,
+        "checks": [
+          {
+            "name": "native captured background is bound",
+            "ok": true,
+            "detail": 960
+          },
+          {
+            "name": "transmission ignores G with R=0",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "transmission ignores G with R=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "transmission responds to R with G=0 (reject G-only and R*G)",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "transmission responds to R with G=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "thickness ignores R with G=0",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "thickness ignores R with G=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 0,
+              "absoluteDifference": 0,
+              "maximumChannelDifference": 0
+            }
+          },
+          {
+            "name": "thickness responds to G with R=0 (reject R-only and R*G)",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          },
+          {
+            "name": "thickness responds to G with R=1",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          },
+          {
+            "name": "both samplers are active in actual shader",
+            "ok": true
+          },
+          {
+            "name": "no WebGL error",
+            "ok": true
+          },
+          {
+            "name": "rendered transmission-G-only negative control is rejected",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "rendered thickness-R-only negative control is rejected",
+            "ok": true,
+            "detail": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          }
+        ],
+        "frames": [
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 458965878
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 458965878
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 456525282
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 456525282
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 458965878
+          },
+          {
+            "slot": "transmission",
+            "rgba": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 456525282
+          },
+          {
+            "slot": "thickness",
+            "rgba": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pixelSum": 419198204
+          }
+        ],
+        "errors": [],
+        "transmission": {
+          "unusedGWhenR0": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "unusedGWhenR1": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "requiredRWhenG0": {
+            "changedPixels": 160488,
+            "absoluteDifference": 46476326,
+            "maximumChannelDifference": 212
+          },
+          "requiredRWhenG1": {
+            "changedPixels": 160488,
+            "absoluteDifference": 46476326,
+            "maximumChannelDifference": 212
+          }
+        },
+        "thickness": {
+          "unusedRWhenG0": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "unusedRWhenG1": {
+            "changedPixels": 0,
+            "absoluteDifference": 0,
+            "maximumChannelDifference": 0
+          },
+          "requiredGWhenR0": {
+            "changedPixels": 160488,
+            "absoluteDifference": 47052528,
+            "maximumChannelDifference": 219
+          },
+          "requiredGWhenR1": {
+            "changedPixels": 160488,
+            "absoluteDifference": 47052528,
+            "maximumChannelDifference": 219
+          }
+        },
+        "fixtureBytes": 37150,
+        "counterexamples": {
+          "GOnlyTransmissionRejected": true,
+          "ROnlyThicknessRejected": true
+        },
+        "negativeControls": [
+          {
+            "name": "transmission-G-only",
+            "replacements": 2,
+            "originalInvarianceWouldPass": false,
+            "rejected": true,
+            "invalidDifference": {
+              "changedPixels": 160488,
+              "absoluteDifference": 46476326,
+              "maximumChannelDifference": 212
+            }
+          },
+          {
+            "name": "thickness-R-only",
+            "replacements": 2,
+            "originalInvarianceWouldPass": false,
+            "rejected": true,
+            "invalidDifference": {
+              "changedPixels": 160488,
+              "absoluteDifference": 47052528,
+              "maximumChannelDifference": 219
+            }
+          }
+        ],
+        "ok": true
+      },
+      "ok": true
+    }
+  ],
+  "ok": true,
+  "originalReport": {
+    "path": "output/competitive-benchmark/final-review/texture-channel-pixels.json",
+    "sha256": "c90193cf7e4449ae7e85897c0cc7f3832a8783e5e3740fbafa1de92962505e17"
+  },
+  "artifactMigration": [
+    {
+      "from": "output/competitive-benchmark/final-review/texture-channel-chromium.png",
+      "to": "docs/evidence/examples/competitive-benchmark/texture-channels/texture-channel-chromium.png",
+      "sha256": "b154b599c10553bc74eb3f006853a14e2288e94fa69b3404dbc2f18b409e27a1"
+    },
+    {
+      "from": "output/competitive-benchmark/final-review/texture-channel-firefox.png",
+      "to": "docs/evidence/examples/competitive-benchmark/texture-channels/texture-channel-firefox.png",
+      "sha256": "10b35d566ef59b37e1fb290ca5bb0b597eddb9726bc22dcc661bb6e8187063e8"
+    },
+    {
+      "from": "output/competitive-benchmark/final-review/texture-channel-webkit.png",
+      "to": "docs/evidence/examples/competitive-benchmark/texture-channels/texture-channel-webkit.png",
+      "sha256": "0d13287cf5490495a16e3d17a1b20564adfbaa3fca88ebee925de2beea4afb96"
+    }
+  ]
+}

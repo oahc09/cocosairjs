@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Glass Refraction · Cocos AIR</title>
+        <style>
+            html,
+            body,
+            #GameDiv,
+            #Cocos3dGameContainer {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #0b0d12;
+            }
+            #GameCanvas {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            header {
+                position: fixed;
+                left: 32px;
+                top: 26px;
+                color: #d4cfbf;
+                pointer-events: none;
+            }
+            header p {
+                font:
+                    11px Consolas,
+                    monospace;
+                letter-spacing: 0.16em;
+            }
+            h1 {
+                font:
+                    italic normal 38px Georgia,
+                    serif;
+                margin: 10px 0;
+            }
+            #controls {
+                position: fixed;
+                left: 32px;
+                bottom: 30px;
+                color: #d4cfbf;
+                font:
+                    12px/1.6 Consolas,
+                    monospace;
+            }
+            #swatches {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 14px;
+            }
+            #swatches button {
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+                border: 2px solid transparent;
+                outline: 1px solid #595b60;
+                background: var(--color);
+                cursor: pointer;
+            }
+            #swatches button[aria-pressed='true'] {
+                border-color: #fff;
+                outline: 1px solid #fff;
+            }
+            #controls > button {
+                background: transparent;
+                color: #d4cfbf;
+                border: 1px solid #55575d;
+                padding: 9px 13px;
+                cursor: pointer;
+                font:
+                    12px Consolas,
+                    monospace;
+            }
+            #controls > button:hover {
+                background: #24262d;
+            }
+            #optics {
+                position: fixed;
+                right: 30px;
+                bottom: 30px;
+                width: 190px;
+                color: #a6a8b0;
+                font:
+                    11px/1.6 Consolas,
+                    monospace;
+            }
+            #optics label {
+                display: block;
+                margin-top: 10px;
+            }
+            #optics input {
+                width: 100%;
+                accent-color: #d4cfbf;
+            }
+            #state {
+                padding-top: 12px;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <canvas id="GameCanvas" aria-label="Rotating refractive gemstone"></canvas>
+            </div>
+        </div>
+        <header>
+            <p>OPTICAL STUDY / E09</p>
+            <h1>A study in facets &amp; light.</h1>
+        </header>
+        <section id="controls" aria-label="Gemstone controls">
+            <div id="swatches"></div>
+            <button data-bench="export-png">Export PNG</button>
+            <button data-bench="reset" aria-label="reset">Reset</button>
+            <div id="state">Preparing the studio…</div>
+        </section>
+        <aside id="optics">
+            <span>DOUBLE CLICK · INSPECT / RETURN</span
+            ><label
+                >Index of refraction
+                <input aria-label="ior" type="range" min="1.1" max="2.5" step="0.05" value="2.1" /></label
+            ><label
+                >Transmission
+                <input aria-label="transmission" type="range" min="0" max="1" step="0.05" value="0.95" /></label
+            ><label
+                >Dispersion <input aria-label="dispersion" type="range" min="0" max="12" step="0.25" value="7"
+            /></label>
+        </aside>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

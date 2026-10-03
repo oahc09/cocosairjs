@@ -4,7 +4,9 @@
 > 配套可运行示例：[`examples/manual-fog/`](examples/manual-fog/)（六个纵深立方体 + 品红线性雾，每 3s 开关做 A/B 对照）。
 
 AIR 的雾是**场景级**配置，入口 `scene.globals.fog`（`FogInfo`，d.ts 20764），不需要逐材质开关——
-所有走前向管线的材质（含 `builtin-unlit`，实测吃雾）统一按片元深度混色。
+材质的雾实现取决于shader与accurate设置，不能普遍说成逐片元雾。
+`builtin-unlit` 默认使用顶点雾；当前accurate=true的单参调用存在断点。
+大三角复现、Air专用片元雾变体与参数bypass见 [运行时雾合同](fog-runtime-contract.md)。
 
 ## 1. 三种雾型与参数
 

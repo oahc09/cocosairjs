@@ -3,7 +3,8 @@
  * JSON consumed by tools/verify/update-capabilities.cjs. Also asserts every planned
  * coverage entry is present so a missing handler registration fails here, not downstream. */
 async (page) => {
-    await page.goto('http://127.0.0.1:7462/gltf-viewer/');
+    const origin = /^https?:/.test(page.url()) ? new URL(page.url()).origin : 'http://127.0.0.1:7462';
+    await page.goto(`${origin}/gltf-viewer/`);
     const matrix = await page.evaluate(async () => {
         const { GLTFLoader } = await import('/build/cocosair.module.js');
         return new GLTFLoader().getExtensionSupport().map((entry) => ({

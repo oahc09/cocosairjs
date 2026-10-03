@@ -1,7 +1,11 @@
 {
   "profiler-overlay": {
     "group": "LV12-02",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 3500,
     "checks": {
       "minPngBytes": 5000,
@@ -23,12 +27,20 @@
         "counters.textureMemory",
         "counters.bufferMemory"
       ],
-      "probeNonEmpty": ["counters.fps.value", "counters.draws.value", "counters.tricount.value"]
+      "probeNonEmpty": [
+        "counters.fps.value",
+        "counters.draws.value",
+        "counters.tricount.value"
+      ]
     }
   },
   "ui-components": {
     "group": "LV12-09",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 3500,
     "click": "110,68",
     "afterClickMs": 1500,
@@ -72,13 +84,25 @@
         "editBox.focused": true,
         "editBox.string": "air"
       },
-      "probeNonEmpty": ["layout.stackChildPositions", "layout.gridChildPositions", "clickTargets.button"],
-      "probePresent": ["sprite.frameSource", "editBox.placeholder", "editBox.events"]
+      "probeNonEmpty": [
+        "layout.stackChildPositions",
+        "layout.gridChildPositions",
+        "clickTargets.button"
+      ],
+      "probePresent": [
+        "sprite.frameSource",
+        "editBox.placeholder",
+        "editBox.events"
+      ]
     }
   },
   "ui-layout": {
     "group": "LV12-09",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 3500,
     "resize": "320x240",
     "afterResizeMs": 1500,
@@ -129,13 +153,23 @@
         "before.rowCells.1.x": 305,
         "before.rowCells.2.x": 205
       },
-      "probeNonEmpty": ["rowCells", "before.rowCells"],
-      "probePresent": ["before.canvas", "before.topBar"]
+      "probeNonEmpty": [
+        "rowCells",
+        "before.rowCells"
+      ],
+      "probePresent": [
+        "before.canvas",
+        "before.topBar"
+      ]
     }
   },
   "physics-2d-basic": {
     "group": "LV12-13",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 3500,
     "click": "240,180",
     "afterClickMs": 1500,
@@ -208,13 +242,24 @@
         "applyOnly.crateWorldMin.0": -24,
         "applyOnly.crateWorldMin.1": -110
       },
-      "probeNonEmpty": ["before", "applyOnly", "crateWorldMin"],
-      "probePresent": ["fixedTimeStep", "applyOnly.crateAABBY"]
+      "probeNonEmpty": [
+        "before",
+        "applyOnly",
+        "crateWorldMin"
+      ],
+      "probePresent": [
+        "fixedTimeStep",
+        "applyOnly.crateAABBY"
+      ]
     }
   },
   "physics-2d-collision": {
     "group": "LV12-13",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 3500,
     "click": "240,180",
     "afterClickMs": 1500,
@@ -292,13 +337,26 @@
         "before.Q.0": 95,
         "before.Ground.1": -130
       },
-      "probeNonEmpty": ["tally", "phases", "before", "summary.positions"],
-      "probePresent": ["summary.pNoApplyRestY", "phases.8.positions.P", "tally.begin-contact|Mute<->Ground"]
+      "probeNonEmpty": [
+        "tally",
+        "phases",
+        "before",
+        "summary.positions"
+      ],
+      "probePresent": [
+        "summary.pNoApplyRestY",
+        "phases.8.positions.P",
+        "tally.begin-contact|Mute<->Ground"
+      ]
     }
   },
   "particle-2d-basic": {
     "group": "LV12-07",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 3500,
     "click": "240,180",
     "afterClickMs": 1500,
@@ -368,12 +426,21 @@
         "results.p11NoLifespan.count": 0,
         "results.p11NoLifespan.vertexCount": 0
       },
-      "probeNonEmpty": ["results", "live.flame", "live.ring", "results.p1.p0.color"]
+      "probeNonEmpty": [
+        "results",
+        "live.flame",
+        "live.ring",
+        "results.p1.p0.color"
+      ]
     }
   },
   "tiledmap-basic": {
     "group": "LV12-08",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 3500,
     "click": "240,200",
     "afterClickMs": 1500,
@@ -556,7 +623,11 @@
   },
   "audio-basic": {
     "group": "LV12-03",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 12000,
     "click": "240,200",
     "afterClickMs": 9000,
@@ -646,12 +717,19 @@
         "live.players",
         "live.players.srcB.facadeState"
       ],
-      "probePresent": ["results.p2PreGesture", "phaseKeys"]
+      "probePresent": [
+        "results.p2PreGesture",
+        "phaseKeys"
+      ]
     }
   },
   "video-basic": {
     "group": "LV12-04",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 26000,
     "click": "240,190",
     "afterClickMs": 9000,
@@ -803,7 +881,11 @@
   },
   "webview-basic": {
     "group": "LV12-05",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 12000,
     "click": "240,166",
     "afterClickMs": 3000,
@@ -950,7 +1032,11 @@
   },
   "physics-3d-basic": {
     "group": "LV12-15",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 3500,
     "click": "240,180",
     "afterClickMs": 1500,
@@ -1263,12 +1349,19 @@
         "rayResFreshSameClassAsPooled": true,
         "rayResPooledIsInstanceField": true
       },
-      "probeNonEmpty": ["before", "unsynced"]
+      "probeNonEmpty": [
+        "before",
+        "unsynced"
+      ]
     }
   },
   "dragonbones-basic": {
     "group": "LV12-11",
-    "engines": ["chromium", "firefox", "webkit"],
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
     "waitMs": 9000,
     "click": "240,180",
     "afterClickMs": 2000,
@@ -1581,8 +1674,434 @@
         "rayClosestName": "Ground",
         "rayClosestDist": 10
       },
-      "probeNonEmpty": ["frames"]
+      "probeNonEmpty": [
+        "frames"
+      ]
     },
-    "engines": ["chromium", "firefox", "webkit"]
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ]
+  },
+  "point-cloud-basics": {
+    "group": "CB-04",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 4000,
+    "checks": {
+      "minPngBytes": 3000,
+      "frameChanged": false,
+      "probeEquals": {
+        "meshPrimitive.0": 0,
+        "meshPrimitive.1": 1,
+        "passPrimitive.0": 0,
+        "passPrimitive.1": 1,
+        "canvas.width": 480,
+        "canvas.height": 360
+      },
+      "probeRanges": {
+        "livePixels.cyan": {
+          "min": 2500,
+          "max": 4000
+        },
+        "livePixels.orange": {
+          "min": 1000,
+          "max": 3500
+        },
+        "initialPixels.cyan": {
+          "min": 2500,
+          "max": 4000
+        },
+        "largerPixels.cyan": {
+          "min": 10000,
+          "max": 14000
+        }
+      }
+    }
+  },
+  "batching-shared": {
+    "group": "CB-11",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 4000,
+    "checks": {
+      "minPngBytes": 2500,
+      "frameChanged": false,
+      "probeEquals": {
+        "route": "shared",
+        "count": 256,
+        "instancing": false,
+        "draws": 256,
+        "vertexCount": 4,
+        "canvas.width": 480,
+        "canvas.height": 360
+      },
+      "probeRanges": {
+        "litPixels": {
+          "min": 20000,
+          "max": 35000
+        }
+      }
+    }
+  },
+  "batching-merged": {
+    "group": "CB-11",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 4000,
+    "checks": {
+      "minPngBytes": 2500,
+      "frameChanged": false,
+      "probeEquals": {
+        "route": "merged",
+        "count": 256,
+        "instancing": false,
+        "draws": 1,
+        "vertexCount": 1024,
+        "canvas.width": 480,
+        "canvas.height": 360
+      },
+      "probeRanges": {
+        "litPixels": {
+          "min": 20000,
+          "max": 35000
+        }
+      }
+    }
+  },
+  "batching-dynamic": {
+    "group": "CB-11",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 4000,
+    "checks": {
+      "minPngBytes": 2500,
+      "frameChanged": true,
+      "probeEquals": {
+        "route": "dynamic",
+        "count": 256,
+        "instancing": false,
+        "draws": 1,
+        "vertexCount": 1024,
+        "canvas.width": 480,
+        "canvas.height": 360
+      },
+      "probeRanges": {
+        "litPixels": {
+          "min": 20000,
+          "max": 35000
+        }
+      }
+    }
+  },
+  "campfire-night": {
+    "group": "CB-12/18",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 4000,
+    "checks": {
+      "minPngBytes": 20000,
+      "frameChanged": true,
+      "probeEquals": {
+        "state.timeOfDay": 0,
+        "state.treeCount": 14,
+        "state.fireflyCount": 20,
+        "state.orbitEnabled": true,
+        "flameCount": 32,
+        "sparkCount": 48,
+        "units.isHDR": true,
+        "units.directionalIlluminance": 2500,
+        "units.ambientSkyIllum": 1800,
+        "units.localMeterScale": 10000
+      },
+      "probeRanges": {
+        "state.fireLightIntensity": {
+          "min": 0.3,
+          "max": 0.8
+        },
+        "units.exposure": {
+          "min": 0.000025,
+          "max": 0.000028
+        },
+        "pixels.environment.warm": {
+          "min": 250
+        },
+        "pixels.center.warm": {
+          "min": 500
+        },
+        "pixels.sky.rgb.2": {
+          "min": 25,
+          "max": 45
+        }
+      }
+    }
+  },
+  "fog-accuracy": {
+    "group": "CB-14",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 4000,
+    "checks": {
+      "minPngBytes": 4000,
+      "frameChanged": false,
+      "probeEquals": {
+        "draws": 1,
+        "fogType": 0,
+        "accurate": true
+      },
+      "probeRanges": {
+        "vertexFog.0": {
+          "min": 0,
+          "max": 5
+        },
+        "nativeAccurate.0": {
+          "min": 250,
+          "max": 255
+        },
+        "airAccurate.0": {
+          "min": 150,
+          "max": 165
+        },
+        "transformed.0": {
+          "min": 170,
+          "max": 190
+        },
+        "instancePixel.0": {
+          "min": 170,
+          "max": 190
+        },
+        "bypass.0": {
+          "min": 250,
+          "max": 255
+        },
+        "liveCenter.0": {
+          "min": 150,
+          "max": 165
+        }
+      }
+    }
+  },
+  "neon-night-city": {
+    "group": "CB-18-E07",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 4000,
+    "checks": {
+      "minPngBytes": 50000,
+      "frameChanged": true,
+      "probeEquals": {
+        "buildingCount": 240,
+        "carCount": 80,
+        "rainParticleCount": 2400,
+        "windowCount": 15372,
+        "fogEnabled": true,
+        "drawCalls": 8,
+        "rainSorted": true,
+        "attributes.rainVertices": 9600,
+        "attributes.rainIndices": 14400,
+        "attributes.windowCount": 15372,
+        "attributes.instancing": true
+      },
+      "probePresent": [
+        "fps",
+        "fpsScope"
+      ]
+    }
+  },
+  "starfield-galaxy": {
+    "group": "CB-18-E01",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 3500,
+    "probePath": "__bench.getState",
+    "checks": {
+      "minPngBytes": 5000,
+      "frameChanged": true,
+      "probeEquals": {
+        "hudVisible": true,
+        "epoch": 0
+      },
+      "probeRanges": {
+        "starCount": {
+          "min": 50000
+        },
+        "cameraDistance": {
+          "min": 119,
+          "max": 121
+        },
+        "rotationPhase": {
+          "min": 0.001
+        }
+      }
+    }
+  },
+  "black-hole-accretion": {
+    "group": "CB-18-E05",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 3500,
+    "probePath": "__bench.getState",
+    "checks": {
+      "minPngBytes": 5000,
+      "frameChanged": true,
+      "probeEquals": {
+        "starStreamCount": 256,
+        "backgroundStarCount": 2200
+      },
+      "probeRanges": {
+        "accretionPhase": {
+          "min": 0.001
+        },
+        "diskRotation": {
+          "min": 0.001
+        }
+      }
+    }
+  },
+  "glass-refraction": {
+    "group": "CB-18-E09",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 3500,
+    "probePath": "__bench.getState",
+    "checks": {
+      "minPngBytes": 5000,
+      "frameChanged": true,
+      "probeEquals": {
+        "faceCount": 96,
+        "captureBound": true,
+        "selectedColor": "diamond"
+      },
+      "probeRanges": {
+        "transmission": {
+          "min": 0.5
+        },
+        "ior": {
+          "min": 1.01
+        },
+        "thickness": {
+          "min": 0.01
+        },
+        "rotationAngle": {
+          "min": 0.001
+        }
+      }
+    }
+  },
+  "animated-character-showcase": {
+    "group": "CB-18-E10",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 3500,
+    "probePath": "__characterProbe",
+    "checks": {
+      "minPngBytes": 5000,
+      "frameChanged": true,
+      "probeEquals": {
+        "sharedMesh": true,
+        "aAttached": true,
+        "bAttached": true,
+        "skeletonJoints.0": 24
+      },
+      "probeRanges": {
+        "assetRefCount": {
+          "min": 3,
+          "max": 3
+        }
+      },
+      "probeNonEmpty": [
+        "aPose",
+        "bPose"
+      ]
+    }
+  },
+  "orbit-controls": {
+    "group": "CB-09",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 3500,
+    "probePath": "__orbitProbe",
+    "checks": {
+      "minPngBytes": 5000,
+      "frameChanged": false,
+      "probeEquals": {
+        "ready": true,
+        "dragging": false
+      },
+      "probeRanges": {
+        "radius": {
+          "min": 1,
+          "max": 40
+        },
+        "updates": {
+          "min": 2
+        }
+      }
+    }
+  },
+  "gltf-animation-contract": {
+    "group": "CB-13",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "waitMs": 3500,
+    "probePath": "__gltfAnimationProbe",
+    "checks": {
+      "minPngBytes": 5000,
+      "frameChanged": true,
+      "probeEquals": {
+        "ready": true,
+        "sharedMesh": true,
+        "sharedClip": true,
+        "privateMaterial": true,
+        "sourceWrap": 1,
+        "a.wrapMode": 2,
+        "b.wrapMode": 1
+      },
+      "probeNonEmpty": [
+        "names",
+        "a.pose",
+        "b.pose"
+      ]
+    }
   }
 }

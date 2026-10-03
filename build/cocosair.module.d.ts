@@ -10999,6 +10999,8 @@
             FORWARD = 2,
             SHADOWCAST = 4
         }
+        /** Validate the entire write before touching a staging block (including partial array updates). */
+        export function validateUniformValue(type: gfx.Type, value: MaterialProperty | MaterialProperty[], count: number, property: string | (() => string), array?: boolean): void;
         /**
          * @en Gets the default values for the given type of uniform
          * @zh 根据指定的 Uniform 类型来获取默认值
@@ -27685,6 +27687,7 @@
          * @param overrides @en The overriding states on top of the original material. @zh 需要在原始材质上覆盖的状态。
          */
         copy(mat: Material, overrides?: IMaterialInfo): void;
+        protected _uploadProperty(pass: renderer.Pass, name: string, val: __private._cocos_asset_assets_material__MaterialPropertyFull | __private._cocos_asset_assets_material__MaterialPropertyFull[], preparedUniform?: renderer.MaterialProperty | renderer.MaterialProperty[]): boolean;
         initDefault(uuid?: string): void;
         validate(): boolean;
     }
@@ -55647,6 +55650,12 @@
         getData(offset: number): number;
     }
     /**
+     * Creates an independently owned WebGL2 unlit effect with per-fragment accurate fog.
+     * Initialize AIR builtin assets first. The builtin-unlit template is left unchanged.
+     * Its native world matrix, instancing, skinning and morph code is retained.
+     */
+    export function createAirUnlitFogEffect(): EffectAsset;
+    /**
      * @en Cocos AIR runtime version. The single source of truth is the `version` field of
      * package.json; this literal must stay identical to it (locked by
      * `test/smoke/smoke-01-bootstrap.test.ts`, which fails on drift).
@@ -56164,6 +56173,8 @@
     export interface GLTFInstance {
         readonly root: Node;
         readonly animations: readonly AnimationClip[];
+        /** Configures native instance states without modifying shared clips. Resets selected state times. */
+        setAnimationLoop(loop: boolean, clipName?: string): void;
         /** Stops and destroys this instance. GPU resources follow Cocos deferred destruction. */
         dispose(): void;
     }
@@ -58751,6 +58762,17 @@
              * 包含 RGBA 四通道的 32 位整形像素格式：RGBA8888。
              */
             RGBA8888 = 35,
+            /**
+             * @en sRGB-encoded RGB. Sampling decodes RGB into linear values in hardware.
+             * Use with an explicit shader color pipeline, not an additional software sRGB decode.
+             * @zh sRGB 编码的 RGB；采样时硬件解码为线性值，不能再叠加软件解码。
+             */
+            SRGB888 = 25,
+            /**
+             * @en sRGB-encoded RGB with linear alpha. RGB is hardware-decoded; alpha is unchanged.
+             * @zh sRGB 编码 RGB 与线性 alpha；硬件只解码 RGB，alpha 保持原值。
+             */
+            SRGBA8888 = 37,
             /**
              * @en
              * 32-bit pixel format containing blue, green, red, and alpha channels: BGRA8888
@@ -62530,6 +62552,8 @@
              * @param arg4 - The fifth argument to be passed to the callback
              */
             emit(key: EventTypeClass, arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void;
+            /** Internal policy hook. Ordinary event targets retain synchronous exception propagation. */
+            protected _invokeCallback(key: EventTypeClass, callback: __types_globals__AnyFunction, target: unknown, arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void;
             /**
              * 移除所有回调。
              */

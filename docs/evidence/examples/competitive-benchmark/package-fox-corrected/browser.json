@@ -1,0 +1,662 @@
+{
+  "schema": "competitive-installed-fox-v1",
+  "measuredAt": "2026-10-03T09:41:30.736Z",
+  "scope": "CB05 pinned Fox, fixed viewer camera/light/time, actual npm installed current package incl min; native builtin effect as diagnostic control, not general equivalence",
+  "tarball": {
+    "path": "output/competitive-benchmark/candidate/cocosair.js-1.0.0.tgz",
+    "sha256": "d6ed10fef2748fa2f4a3f10a938fc4b2e8f37b7f0f2a001b9dce8cdfa989a5ba"
+  },
+  "installedPackage": {
+    "path": "E:\\AIProMax\\github\\cocosair.js\\output\\competitive-benchmark\\final-fox-package-consumer\\node_modules\\cocosair.js",
+    "version": "1.0.0"
+  },
+  "runnerSha256": "970822f9e2baca4f0ff0a1531366f4a1073bb86f0c2cad4de7f03c21b39d93e5",
+  "modelSha256": "d97044e701822bac5a62696459b27d7b375aada5de8574ed4362edbba94771f7",
+  "candidates": [
+    {
+      "name": "workspace",
+      "bundle": "E:\\AIProMax\\github\\cocosair.js\\build\\cocosair.module.js",
+      "sha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e"
+    },
+    {
+      "name": "installed-package",
+      "bundle": "E:\\AIProMax\\github\\cocosair.js\\output\\competitive-benchmark\\final-fox-package-consumer\\node_modules\\cocosair.js\\build\\npm\\cocosair.module.js",
+      "sha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628"
+    },
+    {
+      "name": "installed-package-min",
+      "bundle": "E:\\AIProMax\\github\\cocosair.js\\output\\competitive-benchmark\\final-fox-package-consumer\\node_modules\\cocosair.js\\build\\npm\\cocosair.module.min.js",
+      "sha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a"
+    }
+  ],
+  "records": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-chromium-workspace-air-gltf-standard.png",
+      "screenshotSha256": "f1456f76c3d3e4418d51923ce8d3e916aabdbf7189349f46182ac3f4eec723f1",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 18144,
+        "litRatio": 0.9131353799698038,
+        "meanRGB": [
+          95.16557624559637,
+          83.07991947659788,
+          59.483945646703575
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-chromium-workspace-builtin-standard-control.png",
+      "screenshotSha256": "dcf9144460c898f9540e6344ce6880092adf445164c0dfa5d9e73eb2668b5e4c",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-chromium-installed-package-air-gltf-standard.png",
+      "screenshotSha256": "f1456f76c3d3e4418d51923ce8d3e916aabdbf7189349f46182ac3f4eec723f1",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 18144,
+        "litRatio": 0.9131353799698038,
+        "meanRGB": [
+          95.16557624559637,
+          83.07991947659788,
+          59.483945646703575
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-chromium-installed-package-builtin-standard-control.png",
+      "screenshotSha256": "dcf9144460c898f9540e6344ce6880092adf445164c0dfa5d9e73eb2668b5e4c",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-chromium-installed-package-min-air-gltf-standard.png",
+      "screenshotSha256": "f1456f76c3d3e4418d51923ce8d3e916aabdbf7189349f46182ac3f4eec723f1",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 18144,
+        "litRatio": 0.9131353799698038,
+        "meanRGB": [
+          95.16557624559637,
+          83.07991947659788,
+          59.483945646703575
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-chromium-installed-package-min-builtin-standard-control.png",
+      "screenshotSha256": "dcf9144460c898f9540e6344ce6880092adf445164c0dfa5d9e73eb2668b5e4c",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-firefox-workspace-air-gltf-standard.png",
+      "screenshotSha256": "af182342f1dd646e06c1703df9280020f6bba7af8d9ca76295d5bee1817a1276",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 18144,
+        "litRatio": 0.9131353799698038,
+        "meanRGB": [
+          95.16557624559637,
+          83.07991947659788,
+          59.483945646703575
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-firefox-workspace-builtin-standard-control.png",
+      "screenshotSha256": "3a3680b1f12f1a2a26319cff9fc7871511748c3e528cd9d9f1e8f507b031c0e0",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-firefox-installed-package-air-gltf-standard.png",
+      "screenshotSha256": "af182342f1dd646e06c1703df9280020f6bba7af8d9ca76295d5bee1817a1276",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 18144,
+        "litRatio": 0.9131353799698038,
+        "meanRGB": [
+          95.16557624559637,
+          83.07991947659788,
+          59.483945646703575
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-firefox-installed-package-builtin-standard-control.png",
+      "screenshotSha256": "3a3680b1f12f1a2a26319cff9fc7871511748c3e528cd9d9f1e8f507b031c0e0",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-firefox-installed-package-min-air-gltf-standard.png",
+      "screenshotSha256": "af182342f1dd646e06c1703df9280020f6bba7af8d9ca76295d5bee1817a1276",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 18144,
+        "litRatio": 0.9131353799698038,
+        "meanRGB": [
+          95.16557624559637,
+          83.07991947659788,
+          59.483945646703575
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-firefox-installed-package-min-builtin-standard-control.png",
+      "screenshotSha256": "3a3680b1f12f1a2a26319cff9fc7871511748c3e528cd9d9f1e8f507b031c0e0",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-webkit-workspace-air-gltf-standard.png",
+      "screenshotSha256": "54c7439b1cded2bd43461935e1dd4fa1b4cf4840d7320f98f71c550257f11848",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 18144,
+        "litRatio": 0.9131353799698038,
+        "meanRGB": [
+          95.16557624559637,
+          83.07991947659788,
+          59.483945646703575
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-webkit-workspace-builtin-standard-control.png",
+      "screenshotSha256": "c30cad122f7e2b9fa43fe49b22e7a7355d7a9c2a0b8e527ff6d160af191234db",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-webkit-installed-package-air-gltf-standard.png",
+      "screenshotSha256": "54c7439b1cded2bd43461935e1dd4fa1b4cf4840d7320f98f71c550257f11848",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 18144,
+        "litRatio": 0.9131353799698038,
+        "meanRGB": [
+          95.16557624559637,
+          83.07991947659788,
+          59.483945646703575
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-webkit-installed-package-builtin-standard-control.png",
+      "screenshotSha256": "c30cad122f7e2b9fa43fe49b22e7a7355d7a9c2a0b8e527ff6d160af191234db",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-webkit-installed-package-min-air-gltf-standard.png",
+      "screenshotSha256": "54c7439b1cded2bd43461935e1dd4fa1b4cf4840d7320f98f71c550257f11848",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 18144,
+        "litRatio": 0.9131353799698038,
+        "meanRGB": [
+          95.16557624559637,
+          83.07991947659788,
+          59.483945646703575
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-corrected/fox-webkit-installed-package-min-builtin-standard-control.png",
+      "screenshotSha256": "c30cad122f7e2b9fa43fe49b22e7a7355d7a9c2a0b8e527ff6d160af191234db",
+      "ok": true
+    }
+  ],
+  "comparisons": [
+    {
+      "engine": "chromium",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    }
+  ],
+  "candidateDrift": false,
+  "ok": true
+}

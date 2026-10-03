@@ -19,7 +19,11 @@
   "specStatus": "frozen",
   "learning": {
     "goal": "综合 glTF 查看器：URL 参数驱动加载、动画播放与 transmission 捕获相机",
-    "points": ["GLTFLoader 加载本地/参数化模型", "AnimationClip 播放控制", "AirTransmissionCapture 两相机捕获合同"]
+    "points": [
+      "GLTFLoader 加载本地/参数化模型",
+      "实例级循环与原生 AnimationState 播放控制",
+      "AirTransmissionCapture 两相机捕获合同"
+    ]
   },
   "effect": {
     "functional": "app 启动后按 URL 参数加载模型（默认本地资产），instantiate 挂场景；transmission-capture 节点在启动时武装捕获相机；模型带动画时播放。",
@@ -43,7 +47,7 @@
       "Scene",
       "Node",
       "Animation",
-      "AnimationClip",
+      "Animation.getState",
       "GLTFLoader",
       "AirTransmissionCapture",
       "math.Vec3",
@@ -66,121 +70,121 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L32"
+        "sourceLocation": "L31"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L34"
+        "sourceLocation": "L33"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L39"
+        "sourceLocation": "L38"
       },
       {
         "api": "Animation",
         "source": "main.js",
         "validator": "asset-loaded",
-        "sourceLocation": "L110"
+        "sourceLocation": "L109"
       },
       {
-        "api": "AnimationClip",
+        "api": "Animation.getState",
         "source": "main.js",
         "validator": "asset-loaded",
-        "sourceLocation": "L191"
+        "sourceLocation": "L111"
       },
       {
         "api": "GLTFLoader",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L64"
+        "sourceLocation": "L63"
       },
       {
         "api": "AirTransmissionCapture",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L41"
+        "sourceLocation": "L40"
       },
       {
         "api": "math.Vec3",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L71"
+        "sourceLocation": "L70"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L40"
+        "sourceLocation": "L39"
       },
       {
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L103"
+        "sourceLocation": "L102"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "main.js",
         "validator": "resource-released",
-        "sourceLocation": "L299"
+        "sourceLocation": "L296"
       },
       {
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L27"
+        "sourceLocation": "L30"
       },
       {
         "api": "AirTransmissionCapture.mainCamera",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L42"
+        "sourceLocation": "L41"
       },
       {
         "api": "AirTransmissionCapture.sceneColor",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L51"
+        "sourceLocation": "L50"
       },
       {
         "api": "AirTransmissionCapture.onEnable",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L45"
+        "sourceLocation": "L44"
       },
       {
         "api": "AirTransmissionCapture.onDisable",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L45"
+        "sourceLocation": "L44"
       },
       {
         "api": "AirTransmissionCapture.lateUpdate",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L63"
+        "sourceLocation": "L62"
       },
       {
         "api": "isTransmissionMaterial",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L52"
+        "sourceLocation": "L51"
       },
       {
         "api": "TRANSMISSION_LAYER",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L54"
+        "sourceLocation": "L53"
       },
       {
         "api": "defaultTransmissionVisibility",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L54"
+        "sourceLocation": "L53"
       }
     ]
   },
@@ -196,7 +200,7 @@
         "action": "切换模型下拉到 SimpleSkin.gltf（骨骼动画 · 多文件 glTF）",
         "selectId": "model",
         "optionValue": "SimpleSkin.gltf",
-        "expected": "模型换装成功且画面变化；AnimationClip.WrapMode.Loop 被真实读取（api-executed 以 trace 为证）"
+        "expected": "模型换装成功且画面变化；原生 Animation.getState 被真实执行，循环设置只作用于实例，不改共享剪辑"
       }
     ]
   },
@@ -253,8 +257,8 @@
           "provenance": [
             {
               "source": "main.js",
-              "line": 115,
-              "text": "'BoxTextured.glb': [[2.5, 1.8, 3.5], [0, 0, 0]],"
+              "line": 138,
+              "text": "'BoxTextured.glb': ["
             }
           ]
         }
@@ -262,9 +266,9 @@
     }
   },
   "promotion": {
-    "spec": "12776fd319de",
-    "source": "714d772e43d01663",
-    "candidate": "0b9588dc80fd7afd",
+    "spec": "bd41e69c873e",
+    "source": "333f4b776d1851df",
+    "candidate": "ba485e1b91643c46",
     "verified": 18,
     "attested": 2,
     "units": 20

@@ -4,15 +4,16 @@
 > 配套可运行示例：[`examples/manual-lots-animated/`](examples/manual-lots-animated/)（20×20=400 颗立方体正弦波场，单个管理组件集中写变换，覆盖层实测逻辑耗时）。
 
 大量动态对象的常规解是 instancing（一次 draw 承载数千实例，每帧写实例矩阵再标脏提交），
-AIR **没有**用户面 instancing 入口（d.ts 里 `InstancedBuffer` /
-`SkinnedMeshBatchRenderer` 均为引擎内部件），所以本篇的实测最短路径是：
-**共享资源 + 数据化布局 + 单个管理组件**。能力缺口如实标注，本篇 PARTIAL。
+AIR 已有 `MeshRenderer` + material `USE_INSTANCING` 原生入口，内部 InstancedBuffer 负责分组；
+当前没有Three风格的InstancedMesh对象，不应由此认定GPU instancing不存在。
+本篇的历史实验采用 **共享资源 + 数据化布局 + 单个管理组件**；
+动态网格和实例化的独立像素/draw对照见 [批处理Recipe](batching-recipes.md)。
 
 | 需求                  | AIR 实测                                                                           |
 | --------------------- | ---------------------------------------------------------------------------------- |
-| N 个动态对象一次 draw | 无用户面入口（N/A）                                                                |
+| N 个动态对象一次 draw | 原生instancing可用；须匹配mesh/material/pass及实例属性，容量等条件会拆批           |
 | 每帧逻辑成本收敛      | 单 Component + `Float32Array`，实测 **0.04 ms/frame @400**（§3）                   |
-| 提交侧优化            | 仅共享 mesh/material；draw 数不可测（无统计入口）                                  |
+| 提交侧优化            | 本篇只共享mesh/material；可另读device.numDrawCalls，旧实验未采该指标               |
 | 其中静态子集          | `BatchingUtility`（[上一篇](optimize-lots-of-objects.md)）；在动的对象不能静态合批 |
 
 ## 1. 数据化布局：一个组件管 400 个变换
@@ -64,8 +65,8 @@ for (let ix = 0; ix < GRID; ix++) {
 `performance.now()` 差值做指数移动平均打进覆盖层——**逻辑侧成本自己测自己**，不靠引擎统计。
 
 **如实标注**：0.04 ms/frame 只证明"每帧逻辑"收敛到可忽略；400 个渲染组件的**提交侧**成本
-在本环境无法量化（AIR 无 draw call / GPU 统计的用户面入口，全仓 grep 无 `renderer.info` 类读数），
-本篇不承诺提交侧数字。也没做"每立方体组件 vs 单管理器"对照实验（那需要第二个示例页），
+旧实验未量化，本篇不承诺该实验的提交侧数字。当前device有draw/instance/triangle统计，
+该统计不等于GPU耗时。也没做"每立方体组件 vs 单管理器"对照实验（那需要第二个示例页），
 只给单管理器方案的实测绝对值。
 
 ## 2. 与静态合批的分工

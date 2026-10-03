@@ -26,6 +26,7 @@
 import { ccclass, tooltip, range, slide, type, displayOrder, serializable, editable } from 'cc.decorator';
 import { Component } from '../../scene-graph/component';
 import { Color, Vec3, Enum, cclegacy } from '../../core';
+import { propertyTypeError, validateLightNumber } from '../../core/platform/property-validation';
 import { scene } from '../../render-scene';
 import { Root } from '../../root';
 import { CAMERA_DEFAULT_MASK } from '../../rendering/define';
@@ -140,6 +141,9 @@ export class Light extends Component {
         return this._color;
     }
     set color (val: Readonly<Color>) {
+        if (!(val instanceof Color)) {
+            throw propertyTypeError('AIR_E_LIGHT_TYPE', 'Light.color', 'Color (component RGB channels use 0..255)', 'light.color = new Color(255, 255, 255)');
+        }
         this._color = val.clone();
         if (this._light) {
             _color_tmp.x = val.r / 255.0;
@@ -178,6 +182,7 @@ export class Light extends Component {
     }
 
     set colorTemperature (val) {
+        validateLightNumber('Light.colorTemperature', val);
         this._colorTemperature = val;
         if (this._light) { this._light.colorTemperature = val; }
     }

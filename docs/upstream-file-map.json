@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 75,
+    "modifiedCount": 91,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -406,8 +406,8 @@
       "airPath": "src/cocos/2d/event/pointer-event-dispatcher.ts",
       "upstreamPath": "cocos/2d/event/pointer-event-dispatcher.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-03 pair nested UI dispatch depth and terminal touch claim cleanup using finally after exceptions."
     },
     {
       "airPath": "src/cocos/2d/framework/canvas.ts",
@@ -770,8 +770,8 @@
       "airPath": "src/cocos/3d/lights/light-component.ts",
       "upstreamPath": "cocos/3d/lights/light-component.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-02 guard component Color and color-temperature inputs before state mutation."
     },
     {
       "airPath": "src/cocos/3d/lights/point-light-component.ts",
@@ -840,8 +840,8 @@
       "airPath": "src/cocos/3d/misc/create-mesh.ts",
       "upstreamPath": "cocos/3d/misc/create-mesh.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 G0 上游漂移修复：对齐 alpha.34 #336 (60f9352c56) createMesh 按最大索引值自适应 R16UI/R32UI；Air 副本逐字节等于官方原文"
+      "modified": true,
+      "reason": "V1.2 G0 上游漂移修复：对齐 alpha.34 #336 (60f9352c56) createMesh 按最大索引值自适应 R16UI/R32UI；Air 副本逐字节等于官方原文; CB-04 retain zero-valued POINT_LIST via nullish defaults for static/dynamic meshes; pass topology remains explicit."
     },
     {
       "airPath": "src/cocos/3d/misc/index.ts",
@@ -2317,8 +2317,8 @@
       "airPath": "src/cocos/asset/assets/asset-enum.ts",
       "upstreamPath": "cocos/asset/assets/asset-enum.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-16 additive SRGB888/SRGBA8888 PixelFormat aliases for existing WebGL2 formats; existing enum values and standard material decoding unchanged."
     },
     {
       "airPath": "src/cocos/asset/assets/asset.ts",
@@ -2352,8 +2352,8 @@
       "airPath": "src/cocos/asset/assets/effect-asset.ts",
       "upstreamPath": "cocos/asset/assets/effect-asset.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-07 preserve immediate effect metadata registration, defer device-dependent program registration before renderer init, select the actual legacy/custom library after game.init, and remove pending listeners on destroy."
     },
     {
       "airPath": "src/cocos/asset/assets/image-asset.ts",
@@ -2380,8 +2380,8 @@
       "airPath": "src/cocos/asset/assets/material.ts",
       "upstreamPath": "cocos/asset/assets/material.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-02 validate all uniform target passes before writes to prevent partial NaN state pollution. CB-07 guard first Pass creation when renderer device is not ready; preserve delayed empty initialization. Validate prepared per-pass uniform snapshots including native scalar sRGB conversion before any mutation; preserve raw retained props and native array semantics; avoid shared conversion scratch alias."
     },
     {
       "airPath": "src/cocos/asset/assets/render-texture.ts",
@@ -2814,8 +2814,8 @@
       "airPath": "src/cocos/core/event/callbacks-invoker.ts",
       "upstreamPath": "cocos/core/event/callbacks-invoker.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-03 restore callback-list state in finally while preserving ordinary EventTarget rethrow; protected callback hook enables input-only isolation."
     },
     {
       "airPath": "src/cocos/core/event/defines.ts",
@@ -4137,8 +4137,8 @@
       "airPath": "src/cocos/input/input.ts",
       "upstreamPath": "cocos/input/input.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-03 isolate input listeners with structured diagnostics and preserve queued input after dispatcher errors."
     },
     {
       "airPath": "src/cocos/input/system-event.ts",
@@ -4207,15 +4207,15 @@
       "airPath": "src/cocos/input/types/event/event-mouse.ts",
       "upstreamPath": "cocos/input/types/event/event-mouse.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-03 validate and consistently reuse declared Vec2 location output."
     },
     {
       "airPath": "src/cocos/input/types/event/event-touch.ts",
       "upstreamPath": "cocos/input/types/event/event-touch.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-03 validate/reuse Vec2 output including no-touch fallback."
     },
     {
       "airPath": "src/cocos/input/types/event/event.ts",
@@ -4249,8 +4249,8 @@
       "airPath": "src/cocos/input/types/touch.ts",
       "upstreamPath": "cocos/input/types/touch.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-03 validate Vec2 output before invoking its methods."
     },
     {
       "airPath": "src/cocos/misc/FeedStatusController.ts",
@@ -5306,15 +5306,15 @@
       "airPath": "src/cocos/render-scene/core/pass-utils.ts",
       "upstreamPath": "cocos/render-scene/core/pass-utils.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-02 validate runtime uniform type, finite float32 components and array capacity; preserve native supported values."
     },
     {
       "airPath": "src/cocos/render-scene/core/pass.ts",
       "upstreamPath": "cocos/render-scene/core/pass.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-02 validate direct uniform and uniform-array writes before staging GPU state."
     },
     {
       "airPath": "src/cocos/render-scene/core/program-lib.ts",
@@ -5404,8 +5404,8 @@
       "airPath": "src/cocos/render-scene/scene/light.ts",
       "upstreamPath": "cocos/render-scene/scene/light.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "CB-02 guard native render Light Vec3 and temperature inputs without changing its Vec3 contract."
     },
     {
       "airPath": "src/cocos/render-scene/scene/lod-group.ts",
@@ -9242,6 +9242,20 @@
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
       "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
+    },
+    {
+      "airPath": "src/cocos/core/platform/property-validation.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR original internal structured property diagnostics, no dependency on AIR bootstrap."
+    },
+    {
+      "airPath": "src/cocos/input/types/location-output.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR original internal location output validator shared by mouse and touch."
     }
   ]
 }

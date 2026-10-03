@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-02T02:19:39.963Z",
-  "revision": "f37579f",
+  "generatedAt": "2026-10-03T10:16:11.490Z",
+  "revision": "ea2b507",
   "examples": [
     {
       "dir": "anim-position",
@@ -194,7 +194,7 @@
       "promotion": {
         "spec": "113419aed33a",
         "source": "9630b2703491c62c",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 68,
         "attested": 0,
         "units": 68
@@ -289,10 +289,90 @@
       "promotion": {
         "spec": "87b16f3be7f8",
         "source": "e354b22cadf41979",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 18,
         "attested": 0,
         "units": 18
+      }
+    },
+    {
+      "dir": "animated-character-showcase",
+      "id": "animated-character-showcase",
+      "version": "1.0.0",
+      "title": "Animated Character Showcase",
+      "category": "animation",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "One GLB request, independent skinned instances and correct disposal/reset",
+        "points": [
+          "Native Idle/Walk state isolation",
+          "Instance disposal preserves shared resources",
+          "Reset from retained assets"
+        ]
+      },
+      "effect": {
+        "functional": "A single licensed GLB request creates independent native Idle/Walk instances; dispose A and reset preserve the cached asset.",
+        "visual": "Two textured skinned characters over a lit ground with three-point lighting and native planar contact shadows."
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "Animation.play"
+        ],
+        "supporting": [],
+        "claims": [
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "Animation.play"
+        ]
+      },
+      "capabilities": [
+        "gltf",
+        "animation"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Camera",
+            "Key",
+            "Fill",
+            "Rim",
+            "Ground"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "1e59c272e2e2",
+        "source": "396a4df04dfb0493",
+        "candidate": "ba485e1b91643c46",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
       }
     },
     {
@@ -427,7 +507,7 @@
       "promotion": {
         "spec": "f5eba590706f",
         "source": "0373eaa5b4d394e0",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -510,10 +590,237 @@
       "promotion": {
         "spec": "735d00cae975",
         "source": "e89d32ce3ed3bbb6",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 9,
         "attested": 2,
         "units": 11
+      }
+    },
+    {
+      "dir": "batching-dynamic",
+      "id": "batching-dynamic",
+      "version": "1.0.0",
+      "title": "Batching: dynamic",
+      "category": "performance",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "同等几何条件下验证dynamic原生批处理路线",
+        "points": [
+          "固定mesh/material/pass条件",
+          "实际提交draw读数",
+          "像素与资源释放",
+          "rAF不等于GPU耗时或显示present"
+        ]
+      },
+      "effect": {
+        "functional": "渲染dynamic路线的绿色quad场；默认256个，query count可改。检查实际像素、draw数量和动态路线帧差。",
+        "visual": "深色背景中央是16×16的绿色方形网格，各quad之间留有规则空隙；shared和merged保持静态，dynamic各列轻微横向摆动，画面位置与色彩可比较。"
+      },
+      "api": {
+        "primary": [
+          "Material.initialize",
+          "utils.MeshUtils.createDynamicMesh",
+          "Mesh.updateSubMesh"
+        ],
+        "supporting": [],
+        "claims": [
+          "Material.initialize",
+          "utils.MeshUtils.createDynamicMesh",
+          "Mesh.updateSubMesh"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "BatchRoot"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "ccb2069859ba",
+        "source": "798ab2ea9f249768",
+        "candidate": "ba485e1b91643c46",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
+      }
+    },
+    {
+      "dir": "batching-merged",
+      "id": "batching-merged",
+      "version": "1.0.0",
+      "title": "Batching: merged",
+      "category": "performance",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "同等几何条件下验证merged原生批处理路线",
+        "points": [
+          "固定mesh/material/pass条件",
+          "实际提交draw读数",
+          "像素与资源释放",
+          "rAF不等于GPU耗时或显示present"
+        ]
+      },
+      "effect": {
+        "functional": "渲染merged路线的绿色quad场；默认256个，query count可改。检查实际像素、draw数量和动态路线帧差。",
+        "visual": "深色背景中央是16×16的绿色方形网格，各quad之间留有规则空隙；shared和merged保持静态，dynamic各列轻微横向摆动，画面位置与色彩可比较。"
+      },
+      "api": {
+        "primary": [
+          "Material.initialize",
+          "utils.createMesh"
+        ],
+        "supporting": [],
+        "claims": [
+          "Material.initialize",
+          "utils.createMesh"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "BatchRoot"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "1b96e087cf7b",
+        "source": "9d8f0b145a6acf6d",
+        "candidate": "ba485e1b91643c46",
+        "verified": 2,
+        "attested": 0,
+        "units": 2
+      }
+    },
+    {
+      "dir": "batching-shared",
+      "id": "batching-shared",
+      "version": "1.0.0",
+      "title": "Batching: shared",
+      "category": "performance",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "同等几何条件下验证shared原生批处理路线",
+        "points": [
+          "固定mesh/material/pass条件",
+          "实际提交draw读数",
+          "像素与资源释放",
+          "rAF不等于GPU耗时或显示present"
+        ]
+      },
+      "effect": {
+        "functional": "渲染shared路线的绿色quad场；默认256个，query count可改。检查实际像素、draw数量和动态路线帧差。",
+        "visual": "深色背景中央是16×16的绿色方形网格，各quad之间留有规则空隙；shared和merged保持静态，dynamic各列轻微横向摆动，画面位置与色彩可比较。"
+      },
+      "api": {
+        "primary": [
+          "Material.initialize",
+          "utils.createMesh"
+        ],
+        "supporting": [],
+        "claims": [
+          "Material.initialize",
+          "utils.createMesh"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "BatchRoot"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "abf29b474d78",
+        "source": "2f06d3d3e87ec648",
+        "candidate": "ba485e1b91643c46",
+        "verified": 2,
+        "attested": 0,
+        "units": 2
       }
     },
     {
@@ -614,10 +921,98 @@
       "promotion": {
         "spec": "247bafa0cca7",
         "source": "cc42645c22e9dab1",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
+      }
+    },
+    {
+      "dir": "black-hole-accretion",
+      "id": "black-hole-accretion",
+      "version": "1.0.0",
+      "title": "Black Hole Accretion",
+      "category": "shader",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "Native procedural shader disk, point streams and explicit bloom-impostor scope",
+        "points": [
+          "Polar shader fields driven by one native clock",
+          "POINT_LIST mesh/pass agreement",
+          "Analytic additive glow differs from screen-space bloom"
+        ]
+      },
+      "effect": {
+        "functional": "Black event horizon, inner-white/outer-orange-red rotating disk, 256 spiral point streams, 2200 background points, smooth native wheel zoom and reset.",
+        "visual": "Centered tilted luminous disk and dark core over a procedurally generated star field, with analytic additive halo."
+      },
+      "api": {
+        "primary": [
+          "EffectAsset.onLoaded",
+          "Material.setProperty",
+          "utils.createMesh"
+        ],
+        "supporting": [],
+        "claims": [
+          "EffectAsset.onLoaded",
+          "Material.setProperty",
+          "utils.createMesh"
+        ]
+      },
+      "capabilities": [
+        "shader",
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Event Horizon",
+            "Accretion Disk",
+            "Analytic Additive Glow",
+            "Spiral Star Stream",
+            "Background Stars"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "Wheel toward the disk, then click Reset",
+            "expected": "Camera distance eases closer, then returns to 14 with rotation reset"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "c4a1c45f2260",
+        "source": "a6e9df1cec851de8",
+        "candidate": "ba485e1b91643c46",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
       }
     },
     {
@@ -721,7 +1116,7 @@
       "promotion": {
         "spec": "d314861ea3a2",
         "source": "0af7f6b33b45bf6e",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 13,
         "attested": 0,
         "units": 13
@@ -923,7 +1318,7 @@
       "promotion": {
         "spec": "b615901b7e17",
         "source": "eff5486133ed2729",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 117,
         "attested": 0,
         "units": 117
@@ -1026,7 +1421,7 @@
       "promotion": {
         "spec": "466cfd2b2403",
         "source": "ef1843dfdc0ab7c7",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1125,7 +1520,7 @@
       "promotion": {
         "spec": "e428c783e31d",
         "source": "7fec7450acdbcb31",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1232,7 +1627,7 @@
       "promotion": {
         "spec": "91aa75cbfdff",
         "source": "376aa633d7649377",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1338,7 +1733,7 @@
       "promotion": {
         "spec": "98df9ed498e9",
         "source": "04ea132be64e31c5",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -1441,7 +1836,7 @@
       "promotion": {
         "spec": "7aed442e9832",
         "source": "1c0678748c512bc0",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -1612,10 +2007,106 @@
       "promotion": {
         "spec": "be7616c97447",
         "source": "a2a681a948975be9",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 54,
         "attested": 0,
         "units": 54
+      }
+    },
+    {
+      "dir": "campfire-night",
+      "id": "campfire-night",
+      "version": "1.0.0",
+      "title": "Campfire Night: HDR Lighting",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "使用HDR曝光与物理光照单位构建程序化篝火夜景，验证真实环境照明、日夜渐变与资源释放",
+        "points": [
+          "固定相机和光照参数",
+          "实际像素而非仅字段读回",
+          "GPU/present耗时与CPU观测分开"
+        ]
+      },
+      "effect": {
+        "functional": "原创实现公开E06规格：14trees、20fireflies、32flames、48sparks；PointLight真实照地面，混合频率闪烁；日夜3秒线性渐变，orbit可暂停，reset归零。冻结相机和粒子后可对照火光强度与阴影设置。",
+        "visual": "深蓝夜空下，14棵低多边形树环围绕中心篝火；火苗与火星为原生网格，橙色火光照亮附近地面，20只萤火虫在树间明灭。日间天空和地面渐亮，环绕相机可暂停。"
+      },
+      "api": {
+        "primary": [
+          "createAirApp",
+          "utils.createMesh",
+          "PointLight.luminousFlux"
+        ],
+        "supporting": [],
+        "claims": [
+          "createAirApp",
+          "utils.createMesh",
+          "PointLight.luminousFlux"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Moon",
+            "Fire Light",
+            "Camp"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击Day / night并等待3.2秒",
+            "expected": "timeOfDay到达另一端点，天空和地面连续渐变",
+            "buttonText": "Day / night"
+          },
+          {
+            "action": "点击Pause / resume orbit",
+            "expected": "cameraOrbitAngle停止或恢复变化",
+            "buttonText": "Pause / resume orbit"
+          },
+          {
+            "action": "点击Reset",
+            "expected": "timeOfDay回到0，orbit恢复",
+            "buttonText": "Reset"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "2a7c20e0f736",
+        "source": "03c8ddb152ddb068",
+        "candidate": "ba485e1b91643c46",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
       }
     },
     {
@@ -1744,7 +2235,7 @@
       "promotion": {
         "spec": "a7f63fc705a1",
         "source": "097992b17ba74405",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -1848,7 +2339,7 @@
       "promotion": {
         "spec": "47b4bae22ade",
         "source": "1103976d73d8af6a",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -1958,7 +2449,7 @@
       "promotion": {
         "spec": "f8dbf91bb42e",
         "source": "441178b88666598b",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 18,
         "attested": 8,
         "units": 26
@@ -2079,7 +2570,7 @@
       "promotion": {
         "spec": "5224b3c3a036",
         "source": "01feed613351fe17",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -2181,7 +2672,7 @@
       "promotion": {
         "spec": "455a02a48175",
         "source": "aa06a11253115b53",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -2457,10 +2948,265 @@
       "promotion": {
         "spec": "8a974b0bce33",
         "source": "13925128ed9b6d46",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 93,
         "attested": 5,
         "units": 98
+      }
+    },
+    {
+      "dir": "fog-accuracy",
+      "id": "fog-accuracy",
+      "version": "1.0.0",
+      "title": "Accurate Fog: Unlit World Position",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "复现unlit大三角顶点雾与accurate开关边界，用Air专用effect验证片元世界坐标、TRS和实例化",
+        "points": [
+          "固定相机和光照参数",
+          "实际像素而非仅字段读回",
+          "GPU/present耗时与CPU观测分开"
+        ]
+      },
+      "effect": {
+        "functional": "固定camera z=5、fogStart0/fogEnd8、大三角顶点超出雾范围，中点仍在范围内。比较native两种模式、Air变体、z+1 TRS与instancing；参数bypass验证宏不变。",
+        "visual": "正交相机观察一块覆盖视口中心的大三角；顶点雾基线为黑，native accurate基线为白，Air accurate结果为灰，中点像素必须落在二者之间。"
+      },
+      "api": {
+        "primary": [
+          "createAirApp",
+          "utils.createMesh",
+          "Material.initialize"
+        ],
+        "supporting": [],
+        "claims": [
+          "createAirApp",
+          "utils.createMesh",
+          "Material.initialize"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Large Triangle"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "3df77202051c",
+        "source": "51df70ec4c85d46b",
+        "candidate": "ba485e1b91643c46",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
+      }
+    },
+    {
+      "dir": "glass-refraction",
+      "id": "glass-refraction",
+      "version": "1.0.0",
+      "title": "A Study in Facets and Light",
+      "category": "materials",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "用GLTFLoader与原生场景色capture呈现真实transmission、volume、IOR与色散，验证相机/材质交互和PNG下载",
+        "points": [
+          "折射必须从背景capture采样",
+          "glTF原生资产有实例与共享生命周期",
+          "下载计数必须配真实download事件"
+        ]
+      },
+      "effect": {
+        "functional": "96面程序化晶体、三点棚拍、原生折射与色散、五色吸收色样、双击真实相机推近/拉回、PNG导出、Reset与资源重建",
+        "visual": "暗色摄影棚里的晶体切面、高光与背景条纹折射"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.parseAsync",
+          "Material.setProperty"
+        ],
+        "supporting": [],
+        "claims": [
+          "GLTFLoader.parseAsync",
+          "Material.setProperty"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material",
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Studio Camera",
+            "Turntable",
+            "Scene color capture",
+            "Gemstone__0"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "色样ruby",
+            "buttonText": "ruby",
+            "expected": "selectedColor与吸收色改变"
+          },
+          {
+            "action": "双击推近与拉回",
+            "expected": "原生相机10→5.5→10的900ms过渡"
+          },
+          {
+            "action": "导出当前PNG",
+            "buttonText": "Export PNG",
+            "expected": "真实download事件且计数递增"
+          },
+          {
+            "action": "reset",
+            "buttonText": "reset",
+            "expected": "颜色/相机/导出计数复位"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "8a2ff6deb160",
+        "source": "b0be88070c417d9b",
+        "candidate": "ba485e1b91643c46",
+        "verified": 2,
+        "attested": 0,
+        "units": 2
+      }
+    },
+    {
+      "dir": "gltf-animation-contract",
+      "id": "gltf-animation-contract",
+      "version": "1.0.0",
+      "title": "glTF Animation Instances",
+      "category": "animation",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "Native glTF playback and instance/resource isolation",
+        "points": [
+          "Explicit instance loop policy",
+          "Native play/pause/resume/clip switch",
+          "Private material variants"
+        ]
+      },
+      "effect": {
+        "functional": "Two native instances compare Loop and Normal, with native pause/resume, clip switching and a private material variant.",
+        "visual": "Two textured Fox characters, or two Morph cubes, under a fixed camera."
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "Animation.play"
+        ],
+        "supporting": [],
+        "claims": [
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "Animation.play"
+        ]
+      },
+      "capabilities": [
+        "gltf",
+        "animation"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Camera",
+            "Light",
+            "Playback"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "be1e9a74c2ca",
+        "source": "3cd5ff4cd6abb130",
+        "candidate": "ba485e1b91643c46",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
       }
     },
     {
@@ -2579,7 +3325,7 @@
       "promotion": {
         "spec": "c3c81d03e1e2",
         "source": "180b2cc46b5dc471",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -2671,9 +3417,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "ee8c608d946f",
-        "source": "59577d7d6b6c60e8",
-        "candidate": "0b9588dc80fd7afd",
+        "spec": "bad5fe27a560",
+        "source": "77c2ebc0212d3f0b",
+        "candidate": "ba485e1b91643c46",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -2836,9 +3582,9 @@
         ]
       },
       "promotion": {
-        "spec": "e12caf84b432",
-        "source": "9b899fb6acdb4dc8",
-        "candidate": "0b9588dc80fd7afd",
+        "spec": "bb6d696ee3ad",
+        "source": "ac4363ed87df4174",
+        "candidate": "ba485e1b91643c46",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -2934,7 +3680,7 @@
       "promotion": {
         "spec": "c40482afd5b5",
         "source": "3a80645a70f5b245",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -3053,7 +3799,7 @@
       "promotion": {
         "spec": "410987ea135f",
         "source": "213a22d7c2c3ca48",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 29,
         "attested": 0,
         "units": 29
@@ -3185,9 +3931,9 @@
         ]
       },
       "promotion": {
-        "spec": "1e6e4a0eac13",
-        "source": "f41fd530b51a57df",
-        "candidate": "0b9588dc80fd7afd",
+        "spec": "0065082f5534",
+        "source": "7e2ac80d6bed00b5",
+        "candidate": "ba485e1b91643c46",
         "verified": 26,
         "attested": 4,
         "units": 30
@@ -3286,9 +4032,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "893b7107261d",
-        "source": "21bd135b88e06777",
-        "candidate": "0b9588dc80fd7afd",
+        "spec": "814bab1c8d9b",
+        "source": "ab283e4fbf2cabc8",
+        "candidate": "ba485e1b91643c46",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -3387,9 +4133,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "010a7e23807e",
-        "source": "dcb70602a02a0180",
-        "candidate": "0b9588dc80fd7afd",
+        "spec": "3880dfabf54b",
+        "source": "e186493d6be45bc6",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -3408,7 +4154,7 @@
         "goal": "综合 glTF 查看器：URL 参数驱动加载、动画播放与 transmission 捕获相机",
         "points": [
           "GLTFLoader 加载本地/参数化模型",
-          "AnimationClip 播放控制",
+          "实例级循环与原生 AnimationState 播放控制",
           "AirTransmissionCapture 两相机捕获合同"
         ]
       },
@@ -3437,7 +4183,7 @@
           "Scene",
           "Node",
           "Animation",
-          "AnimationClip",
+          "Animation.getState",
           "GLTFLoader",
           "AirTransmissionCapture",
           "math.Vec3",
@@ -3474,7 +4220,7 @@
             "action": "切换模型下拉到 SimpleSkin.gltf（骨骼动画 · 多文件 glTF）",
             "selectId": "model",
             "optionValue": "SimpleSkin.gltf",
-            "expected": "模型换装成功且画面变化；AnimationClip.WrapMode.Loop 被真实读取（api-executed 以 trace 为证）"
+            "expected": "模型换装成功且画面变化；原生 Animation.getState 被真实执行，循环设置只作用于实例，不改共享剪辑"
           }
         ]
       },
@@ -3502,9 +4248,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "12776fd319de",
-        "source": "714d772e43d01663",
-        "candidate": "0b9588dc80fd7afd",
+        "spec": "bd41e69c873e",
+        "source": "333f4b776d1851df",
+        "candidate": "ba485e1b91643c46",
         "verified": 18,
         "attested": 2,
         "units": 20
@@ -3598,7 +4344,7 @@
       "promotion": {
         "spec": "1eec40a9fdad",
         "source": "037467dd34348936",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -3700,7 +4446,7 @@
       "promotion": {
         "spec": "aeed6a7d4db8",
         "source": "37642ffb95c12375",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -3817,7 +4563,7 @@
       "promotion": {
         "spec": "1eaac15002c1",
         "source": "31b545ce974e0261",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -3924,7 +4670,7 @@
       "promotion": {
         "spec": "e5337b3cc8f9",
         "source": "286de09ae2f442c2",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -4040,7 +4786,7 @@
       "promotion": {
         "spec": "e22465e2753e",
         "source": "171eaa9512f3bb0e",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 26,
         "attested": 0,
         "units": 26
@@ -4146,7 +4892,7 @@
       "promotion": {
         "spec": "2f25b8264944",
         "source": "0eb2fcf420ce8b42",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -4253,7 +4999,7 @@
       "promotion": {
         "spec": "ea400d8377c2",
         "source": "44280f19ae58d54e",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -4362,7 +5108,7 @@
       "promotion": {
         "spec": "e8dffc14e4ae",
         "source": "b2706d215970847c",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -4511,7 +5257,7 @@
       "promotion": {
         "spec": "c42cdd481052",
         "source": "b03352118c34029e",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 45,
         "attested": 0,
         "units": 45
@@ -4653,7 +5399,7 @@
       "promotion": {
         "spec": "516c502017cf",
         "source": "0de72aa96c0cbf42",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -4763,7 +5509,7 @@
       "promotion": {
         "spec": "691785c7d88e",
         "source": "ccc6fc2c4637ea1e",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -4854,7 +5600,7 @@
       "promotion": {
         "spec": "3dc08a803d09",
         "source": "77978071ea70ce35",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -4948,7 +5694,7 @@
       "promotion": {
         "spec": "d332c2a0874b",
         "source": "1c35d1d3e8c24f0e",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -5054,7 +5800,7 @@
       "promotion": {
         "spec": "03d09d051045",
         "source": "8c2c756a8e99932b",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -5179,7 +5925,7 @@
       "promotion": {
         "spec": "bb797e169f9a",
         "source": "485715f20cfa3290",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -5279,9 +6025,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "0e56120cfac1",
-        "source": "dabc87c41be93d5e",
-        "candidate": "0b9588dc80fd7afd",
+        "spec": "3551d7ace883",
+        "source": "7add401a7a5e9dd7",
+        "candidate": "ba485e1b91643c46",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -5372,7 +6118,7 @@
       "promotion": {
         "spec": "57a35450dc95",
         "source": "7517caefdbe8802f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -5481,7 +6227,7 @@
       "promotion": {
         "spec": "fc9bfe4f1c26",
         "source": "20f11d26e9b06084",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -5620,7 +6366,7 @@
       "promotion": {
         "spec": "0dac7344c814",
         "source": "3185e7f6fe4b2b48",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 36,
         "attested": 0,
         "units": 36
@@ -5727,7 +6473,7 @@
       "promotion": {
         "spec": "a60808cc9b2d",
         "source": "4a090376a6375b36",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -5832,7 +6578,7 @@
       "promotion": {
         "spec": "f2bd11247de3",
         "source": "8d183eb8d031b279",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -5941,7 +6687,7 @@
       "promotion": {
         "spec": "4e2e445e2a98",
         "source": "ce052ed83cc90a95",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -6123,7 +6869,7 @@
       "promotion": {
         "spec": "89ecaa27ffdb",
         "source": "a51f6d658d115a46",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 62,
         "attested": 0,
         "units": 62
@@ -6227,7 +6973,7 @@
       "promotion": {
         "spec": "203f4f311c0b",
         "source": "fd979e704b0fa6c1",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -6328,7 +7074,7 @@
       "promotion": {
         "spec": "abe438ba1222",
         "source": "f83475ba04b23763",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -6434,7 +7180,7 @@
       "promotion": {
         "spec": "f7a11b7992de",
         "source": "8a562381af5876cb",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -6611,7 +7357,7 @@
       "promotion": {
         "spec": "4aa1b0553603",
         "source": "b46ab04ed8c9b2e2",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 61,
         "attested": 0,
         "units": 61
@@ -6724,7 +7470,7 @@
       "promotion": {
         "spec": "c0d42af29914",
         "source": "16bbc63646599b56",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -6840,7 +7586,7 @@
       "promotion": {
         "spec": "11d86aca4ffd",
         "source": "b910e492ab3c99fd",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -6947,7 +7693,7 @@
       "promotion": {
         "spec": "414e57637b2f",
         "source": "23ff32f2b04abb5a",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -7171,7 +7917,7 @@
       "promotion": {
         "spec": "6cf98c815458",
         "source": "c4d2a3f10503ceb9",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 85,
         "attested": 0,
         "units": 85
@@ -7279,7 +8025,7 @@
       "promotion": {
         "spec": "679348ba6ca7",
         "source": "c7aaaf8d7e935e74",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -7395,7 +8141,7 @@
       "promotion": {
         "spec": "3a33e8470406",
         "source": "b0d669079a3e27a3",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -7571,7 +8317,7 @@
       "promotion": {
         "spec": "31ad85d68ae2",
         "source": "0b9d615d0b38693d",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 57,
         "attested": 0,
         "units": 57
@@ -7678,7 +8424,7 @@
       "promotion": {
         "spec": "eb9e9de757e9",
         "source": "a51696c718c2af5c",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -7787,7 +8533,7 @@
       "promotion": {
         "spec": "ba5cfcc9eb5b",
         "source": "a8aa732d8837e6c8",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -7905,7 +8651,7 @@
       "promotion": {
         "spec": "ffa5adffa8a9",
         "source": "4cbb6eb95ec9b214",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -8006,7 +8752,7 @@
       "promotion": {
         "spec": "79c65346c480",
         "source": "cfd361f0e1369cc3",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -8137,7 +8883,7 @@
       "promotion": {
         "spec": "aa2c9c573424",
         "source": "8d1360c7ffb96155",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 35,
         "attested": 0,
         "units": 35
@@ -8259,7 +9005,7 @@
       "promotion": {
         "spec": "027f9c6f22cf",
         "source": "7c55d767a20d0caa",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 35,
         "attested": 0,
         "units": 35
@@ -8414,7 +9160,7 @@
       "promotion": {
         "spec": "55b98a111bc1",
         "source": "860768f3941d7dff",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 47,
         "attested": 0,
         "units": 47
@@ -8536,7 +9282,7 @@
       "promotion": {
         "spec": "1c0010ce0740",
         "source": "cd75dcb9b3c7a69f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 32,
         "attested": 0,
         "units": 32
@@ -8643,7 +9389,7 @@
       "promotion": {
         "spec": "8fb0300091bb",
         "source": "ac2ad052249e06af",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -8837,7 +9583,7 @@
       "promotion": {
         "spec": "2924ef8c463d",
         "source": "2e6dbc83e69176ef",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 69,
         "attested": 0,
         "units": 69
@@ -8942,7 +9688,7 @@
       "promotion": {
         "spec": "df85dd1e8123",
         "source": "1e97ac75f2a9f38f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -9056,7 +9802,7 @@
       "promotion": {
         "spec": "070df733f068",
         "source": "f5ad1388893fcc15",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 29,
         "attested": 0,
         "units": 29
@@ -9168,7 +9914,7 @@
       "promotion": {
         "spec": "5e9a56f9e4d6",
         "source": "7d9357f712fd6afd",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 27,
         "attested": 0,
         "units": 27
@@ -9268,7 +10014,7 @@
       "promotion": {
         "spec": "359302f37ee8",
         "source": "bfb3b149c978500f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -9375,7 +10121,7 @@
       "promotion": {
         "spec": "42ac85f4d283",
         "source": "888e4f69808a0c53",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -9519,7 +10265,7 @@
       "promotion": {
         "spec": "30f3848c9bf2",
         "source": "7391fe4bff75816e",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 44,
         "attested": 0,
         "units": 44
@@ -9625,7 +10371,7 @@
       "promotion": {
         "spec": "09efb0d2382c",
         "source": "ba28a0e1f5ed04ad",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -9740,7 +10486,7 @@
       "promotion": {
         "spec": "103676084a48",
         "source": "1721c45a5d158484",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -9938,7 +10684,7 @@
       "promotion": {
         "spec": "5708a65d0f42",
         "source": "02d565acd823bc68",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 70,
         "attested": 0,
         "units": 70
@@ -10038,7 +10784,7 @@
       "promotion": {
         "spec": "39e4aa1ca1b9",
         "source": "476470486c6d0c4f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -10249,7 +10995,7 @@
       "promotion": {
         "spec": "b143498dced9",
         "source": "8fa976235c18bda7",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 76,
         "attested": 0,
         "units": 76
@@ -10356,7 +11102,7 @@
       "promotion": {
         "spec": "8d3ecabd9775",
         "source": "f63c8c756aa249fa",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -10471,7 +11217,7 @@
       "promotion": {
         "spec": "aba2d336dced",
         "source": "0aba272be450bb84",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -10578,7 +11324,7 @@
       "promotion": {
         "spec": "7331fcb3f758",
         "source": "27a3e28361542221",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -10673,7 +11419,7 @@
       "promotion": {
         "spec": "facc0dffdcae",
         "source": "368e3df77b65f7b7",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -10809,7 +11555,7 @@
       "promotion": {
         "spec": "83e8aa4de17a",
         "source": "22ad5db42f3d1a3a",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -10914,7 +11660,7 @@
       "promotion": {
         "spec": "d84e10888320",
         "source": "e269d7b6ad864d3d",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -11007,9 +11753,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "aaa92922c830",
-        "source": "3248cf0cb2aab8c6",
-        "candidate": "0b9588dc80fd7afd",
+        "spec": "5b954574f669",
+        "source": "e5951aeb106da7e3",
+        "candidate": "ba485e1b91643c46",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -11105,7 +11851,7 @@
       "promotion": {
         "spec": "2a0473dbdd79",
         "source": "c58257e3098e3e82",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -11210,7 +11956,7 @@
       "promotion": {
         "spec": "ea18270871e1",
         "source": "013fd4d57716343e",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -11305,7 +12051,7 @@
       "promotion": {
         "spec": "5e1972835b36",
         "source": "f5b889e8a655bb9c",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -11399,7 +12145,7 @@
       "promotion": {
         "spec": "4ada25082207",
         "source": "10bae6c176697a46",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -11563,7 +12309,7 @@
       "promotion": {
         "spec": "5921a5fa608c",
         "source": "d9b62d4d799956ec",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 50,
         "attested": 0,
         "units": 50
@@ -11701,10 +12447,103 @@
       "promotion": {
         "spec": "1e712e56bb86",
         "source": "a6f36b8c7acce1c3",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 45,
         "attested": 0,
         "units": 45
+      }
+    },
+    {
+      "dir": "neon-night-city",
+      "id": "neon-night-city",
+      "version": "1.0.0",
+      "title": "Neon Night City: Native Batching",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "组合原生实例化、静态合并和动态雨网格，构建满规模夜城并验证真实运动、距离雾和释放",
+        "points": [
+          "240建筑、80车与2400雨粒的实际计数",
+          "窗格矩阵与三种霓虹颜色",
+          "雨网格内部按深度排序",
+          "FPS来自实际渲染回调且不代替GPU或present"
+        ]
+      },
+      "effect": {
+        "functional": "固定满规模城市：实例化楼/车、静态窗格、动态雨；Toggle fog保持同一变体并切换UBO距离参数。reset不刷新页面，保持真实计数，__lifecycle释放重建资产。",
+        "visual": "深蓝夜空下，规则建筑群构成低角度天际线；青、洋红、金色窗格矩阵清晰，雨形成前景细密亮线，街道两色车流持续移动，远处建筑经雾衰减。"
+      },
+      "api": {
+        "primary": [
+          "createAirApp",
+          "utils.MeshUtils.createDynamicMesh",
+          "Mesh.updateSubMesh"
+        ],
+        "supporting": [],
+        "claims": [
+          "createAirApp",
+          "utils.MeshUtils.createDynamicMesh",
+          "Mesh.updateSubMesh"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Moon",
+            "City",
+            "Window Grid",
+            "Rain"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击Toggle fog",
+            "expected": "fogEnabled翻转且远处天际线亮度变化",
+            "buttonText": "Toggle fog"
+          },
+          {
+            "action": "点击Reset",
+            "expected": "计数保持满规模，雾恢复，车/雨继续运动",
+            "buttonText": "Reset"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "f8d0a833da2d",
+        "source": "1804d7a50f05df91",
+        "candidate": "ba485e1b91643c46",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
       }
     },
     {
@@ -11795,7 +12634,7 @@
       "promotion": {
         "spec": "1600f4b3bd82",
         "source": "5a3ed945031356f0",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -11905,7 +12744,7 @@
       "promotion": {
         "spec": "f434218d7b1e",
         "source": "04d21d6a2f961c24",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -12010,7 +12849,7 @@
       "promotion": {
         "spec": "1e951dea23af",
         "source": "143ddfb3b88e6fa4",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -12128,7 +12967,7 @@
       "promotion": {
         "spec": "349a6cfe97c5",
         "source": "e7104fac7b11ed58",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -12329,7 +13168,7 @@
       "promotion": {
         "spec": "9cad82ae2901",
         "source": "6647945ed1133b9b",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 81,
         "attested": 0,
         "units": 81
@@ -12434,7 +13273,7 @@
       "promotion": {
         "spec": "d86a708ca70d",
         "source": "76793cbeacb700ba",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -12530,7 +13369,7 @@
       "promotion": {
         "spec": "adcedee647c1",
         "source": "58438f35cfba2029",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -12631,10 +13470,82 @@
       "promotion": {
         "spec": "4b30e4fbe723",
         "source": "734a03c5b92dfce8",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 18,
         "attested": 1,
         "units": 19
+      }
+    },
+    {
+      "dir": "orbit-controls",
+      "id": "orbit-controls",
+      "version": "1.0.0",
+      "title": "Orbit Controls",
+      "category": "interaction",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "Native input orbit camera with time-based damping",
+        "points": [
+          "TOUCH_* mouse/touch deduplication",
+          "MOUSE_WHEEL input contract",
+          "Exponential angular damping"
+        ]
+      },
+      "effect": {
+        "functional": "Native input drag and wheel update a spherical camera; measured release velocity decays exponentially.",
+        "visual": "Five lit markers with a movable orbit camera."
+      },
+      "api": {
+        "primary": [
+          "Input.on",
+          "Node.lookAt"
+        ],
+        "supporting": [],
+        "claims": [
+          "Input.on",
+          "Node.lookAt"
+        ]
+      },
+      "capabilities": [
+        "input"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Orbit Camera",
+            "Marker 2"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "5f5dce1baf01",
+        "source": "57a546012fee3bed",
+        "candidate": "ba485e1b91643c46",
+        "verified": 2,
+        "attested": 0,
+        "units": 2
       }
     },
     {
@@ -12778,7 +13689,7 @@
       "promotion": {
         "spec": "b0aac0b89ee8",
         "source": "fc10897d37d4d02b",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 11,
         "units": 34
@@ -12909,7 +13820,7 @@
       "promotion": {
         "spec": "2992f3827c45",
         "source": "0c29ffa9f366c5cf",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 33,
         "attested": 3,
         "units": 36
@@ -13048,7 +13959,7 @@
       "promotion": {
         "spec": "1146afbe7bfc",
         "source": "651f615374c33ffe",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 30,
         "attested": 3,
         "units": 33
@@ -13232,7 +14143,7 @@
       "promotion": {
         "spec": "c8e36fab4e52",
         "source": "5a37fd3d3300ace6",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 63,
         "attested": 6,
         "units": 69
@@ -13357,7 +14268,7 @@
       "promotion": {
         "spec": "3ff3f3d53ed9",
         "source": "6f5ec74fcc298655",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 30,
         "attested": 1,
         "units": 31
@@ -13492,10 +14403,88 @@
       "promotion": {
         "spec": "58000f69e95e",
         "source": "4753b596e6ba21cb",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 41,
         "attested": 0,
         "units": 41
+      }
+    },
+    {
+      "dir": "point-cloud-basics",
+      "id": "point-cloud-basics",
+      "version": "1.0.0",
+      "title": "Points and Lines: Topology Contract",
+      "category": "shader",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "渲染真实 POINT_LIST 与 LINE_LIST，理解 mesh/pass 的双入口和 pointSize 的像素单位",
+        "points": [
+          "POINT_LIST=0 必须保留",
+          "mesh 和 effect pass 必须匹配图元",
+          "生成 JSON 不等于 shader 已在 GPU 编译"
+        ]
+      },
+      "effect": {
+        "functional": "上半区48个青色原生点，下半区4条橙色线段；检查mesh/pass枚举相等、实际像素和pointSize从8到16的覆盖面积变化。无纹理依赖。",
+        "visual": "中心青色点阵与橙色横线，深色背景"
+      },
+      "api": {
+        "primary": [
+          "utils.createMesh",
+          "EffectAsset.onLoaded",
+          "Material.initialize"
+        ],
+        "supporting": [],
+        "claims": [
+          "utils.createMesh",
+          "EffectAsset.onLoaded",
+          "Material.initialize"
+        ]
+      },
+      "capabilities": [
+        "shader",
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "PointCloud",
+            "LineGrid"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "937a7a051d1f",
+        "source": "464c7ed802269cad",
+        "candidate": "ba485e1b91643c46",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
       }
     },
     {
@@ -13598,7 +14587,7 @@
       "promotion": {
         "spec": "50bc153ddb1c",
         "source": "0fda4c96ce7a51a5",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -13702,7 +14691,7 @@
       "promotion": {
         "spec": "e76a8b021e50",
         "source": "047accd37ce78909",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -13807,7 +14796,7 @@
       "promotion": {
         "spec": "924c2a4ebd0a",
         "source": "5f322ef65443e136",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -13958,7 +14947,7 @@
       "promotion": {
         "spec": "e568b27b4292",
         "source": "ce8c2f3d46c24e7f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 41,
         "attested": 0,
         "units": 41
@@ -14057,7 +15046,7 @@
       "promotion": {
         "spec": "7452de8c11ca",
         "source": "86784386074fa41c",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -14147,7 +15136,7 @@
       "promotion": {
         "spec": "4daffe289d95",
         "source": "14dcaa1b1f04abd7",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 17,
         "attested": 1,
         "units": 18
@@ -14244,7 +15233,7 @@
       "promotion": {
         "spec": "4533f62e9a73",
         "source": "adc7fb751d03f149",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 17,
         "attested": 3,
         "units": 20
@@ -14336,7 +15325,7 @@
       "promotion": {
         "spec": "01b9b4271da2",
         "source": "8d42f5b915ecd42a",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -14431,7 +15420,7 @@
       "promotion": {
         "spec": "dc7942ac2896",
         "source": "8dbf1e634cee45fa",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -14554,7 +15543,7 @@
       "promotion": {
         "spec": "2722e26e69ef",
         "source": "387281ea52cc532e",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 31,
         "attested": 1,
         "units": 32
@@ -14647,7 +15636,7 @@
       "promotion": {
         "spec": "f628bd4d35b5",
         "source": "4a9f2c0d68b5473f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -14752,7 +15741,7 @@
       "promotion": {
         "spec": "6e068a897412",
         "source": "da38bbe3d694f92f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -14865,7 +15854,7 @@
       "promotion": {
         "spec": "a9702becc446",
         "source": "ea8fcfd16e2050b1",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 19,
         "attested": 10,
         "units": 29
@@ -14990,7 +15979,7 @@
       "promotion": {
         "spec": "72ed9b905b71",
         "source": "99edfa6fc0060f0f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -15110,7 +16099,7 @@
       "promotion": {
         "spec": "df4aafe4741e",
         "source": "fd48cef4ffe8c97f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 32,
         "attested": 0,
         "units": 32
@@ -15239,7 +16228,7 @@
       "promotion": {
         "spec": "b433fdcd5f3f",
         "source": "4cab0849e36df44f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -15359,7 +16348,7 @@
       "promotion": {
         "spec": "7cada7a1d2e8",
         "source": "d5ef856a78549703",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -15532,10 +16521,102 @@
       "promotion": {
         "spec": "01fa4e3a9f64",
         "source": "a454e3685141457c",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 54,
         "attested": 0,
         "units": 54
+      }
+    },
+    {
+      "dir": "starfield-galaxy",
+      "id": "starfield-galaxy",
+      "version": "1.0.0",
+      "title": "Fifty Thousand Suns",
+      "category": "particles",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "用原生POINT_LIST批量提交50k星点，在GPU进行旋转与颜色梯度，交互真实相机并披露fps测量边界",
+        "points": [
+          "mesh和pass拓扑须匹配",
+          "uniform使用Vec4",
+          "render-loop fps不是GPU或present吞吐"
+        ]
+      },
+      "effect": {
+        "functional": "四条程序化对数旋臂和7000颗核球星；GPU旋转/色彩；平滑视差、滚轮穿行、实时HUD、Reset与资源重建",
+        "visual": "暖白核球、蓝色旋臂与深黑宇宙"
+      },
+      "api": {
+        "primary": [
+          "utils.createMesh",
+          "Material.setProperty"
+        ],
+        "supporting": [],
+        "claims": [
+          "utils.createMesh",
+          "Material.setProperty"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "shader"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Observatory Camera",
+            "Galaxy"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "移动指针至右侧产生真实相机视差",
+            "expected": "parallaxOffset与画面变化"
+          },
+          {
+            "action": "滚轮向上600 CSS像素",
+            "expected": "相机距离在40..400范围内平滑缩短"
+          },
+          {
+            "action": "reset",
+            "buttonText": "reset",
+            "expected": "epoch递增、相机/phase/视差复位"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "5a055cbc312f",
+        "source": "71fe39e265d47e5f",
+        "candidate": "ba485e1b91643c46",
+        "verified": 2,
+        "attested": 0,
+        "units": 2
       }
     },
     {
@@ -15620,7 +16701,7 @@
       "promotion": {
         "spec": "caf382e1364f",
         "source": "5c2b55c4103485c7",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 9,
         "attested": 0,
         "units": 9
@@ -15722,9 +16803,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "1c8e43051896",
-        "source": "a7fbfefe053020bf",
-        "candidate": "0b9588dc80fd7afd",
+        "spec": "55ff2f5976e3",
+        "source": "b3419d3d54e6f20e",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -15844,7 +16925,7 @@
       "promotion": {
         "spec": "b73eafe44754",
         "source": "ff2b442ea1080e8f",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 27,
         "attested": 0,
         "units": 27
@@ -15955,7 +17036,7 @@
       "promotion": {
         "spec": "67d84f00e67a",
         "source": "3ec71c4754dfb103",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -16086,9 +17167,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "95ed047131ee",
-        "source": "f3342765dca75676",
-        "candidate": "0b9588dc80fd7afd",
+        "spec": "5ef4ad7124a9",
+        "source": "fa9820ec157d7c34",
+        "candidate": "ba485e1b91643c46",
         "verified": 40,
         "attested": 0,
         "units": 40
@@ -16206,7 +17287,7 @@
       "promotion": {
         "spec": "94f1a97e35bc",
         "source": "5d1037188542fa8c",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -16313,7 +17394,7 @@
       "promotion": {
         "spec": "bfa4c738187b",
         "source": "6512223704e49e45",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -16487,7 +17568,7 @@
       "promotion": {
         "spec": "7cc79446c2a9",
         "source": "d190ac5740586673",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 48,
         "attested": 0,
         "units": 48
@@ -16583,7 +17664,7 @@
       "promotion": {
         "spec": "80b0c3becc83",
         "source": "1a37f130b093f25a",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -16743,7 +17824,7 @@
       "promotion": {
         "spec": "4f2be6f5dca5",
         "source": "ab152be635b54e0b",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 59,
         "attested": 0,
         "units": 59
@@ -16848,7 +17929,7 @@
       "promotion": {
         "spec": "fb73abcb354f",
         "source": "59231c951d6a22fd",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -16970,7 +18051,7 @@
       "promotion": {
         "spec": "ac1d1fe9483f",
         "source": "cbda0eef993792c8",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 29,
         "attested": 1,
         "units": 30
@@ -17224,7 +18305,7 @@
       "promotion": {
         "spec": "9784ade4e206",
         "source": "b6ae4901f3c74129",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 96,
         "attested": 0,
         "units": 96
@@ -17386,7 +18467,7 @@
       "promotion": {
         "spec": "e56f7afefc3a",
         "source": "0044e517969554d1",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 49,
         "attested": 0,
         "units": 49
@@ -17490,7 +18571,7 @@
       "promotion": {
         "spec": "a8faeac6500a",
         "source": "b4fadffb071fd409",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -17642,7 +18723,7 @@
       "promotion": {
         "spec": "131f1ec448fd",
         "source": "6bf9e6f3199f8aa6",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 29,
         "attested": 7,
         "units": 36
@@ -17790,7 +18871,7 @@
       "promotion": {
         "spec": "293bf690ec0f",
         "source": "dba2e31f1d56561a",
-        "candidate": "0b9588dc80fd7afd",
+        "candidate": "ba485e1b91643c46",
         "verified": 31,
         "attested": 5,
         "units": 36
@@ -17824,7 +18905,9 @@
       "anim-rotation",
       "anim-position",
       "color-timeline-key",
-      "colortimeline-ops"
+      "colortimeline-ops",
+      "gltf-animation-contract",
+      "animated-character-showcase"
     ],
     "gltf": [
       "gltf-viewer",
@@ -17849,7 +18932,8 @@
       "camera-second-view"
     ],
     "interaction": [
-      "input"
+      "input",
+      "orbit-controls"
     ],
     "devtools": [
       "automation"
@@ -17877,7 +18961,8 @@
       "material-transparent",
       "material-unlit",
       "texture-basic",
-      "gltf-clearcoat"
+      "gltf-clearcoat",
+      "glass-refraction"
     ],
     "runtime-control": [
       "rc-inspect-scene",
@@ -17994,11 +19079,16 @@
       "light-attach-cycle"
     ],
     "rendering": [
-      "render-composite"
+      "render-composite",
+      "campfire-night",
+      "fog-accuracy",
+      "neon-night-city"
     ],
     "shader": [
       "shader-custom-gradient",
-      "shader-dissolve"
+      "shader-dissolve",
+      "point-cloud-basics",
+      "black-hole-accretion"
     ],
     "game": [
       "tetris-classic",
@@ -18009,6 +19099,14 @@
     ],
     "application": [
       "product-viewer"
+    ],
+    "performance": [
+      "batching-shared",
+      "batching-merged",
+      "batching-dynamic"
+    ],
+    "particles": [
+      "starfield-galaxy"
     ]
   }
 }

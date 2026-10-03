@@ -6,11 +6,11 @@
 AIR 的答案是**静态合批**：`BatchingUtility.batchStaticModel` 把一棵子树下的所有网格合并成一个 mesh、
 禁用原来的每个渲染组件、把合并结果挂到目标节点上。实测对照：
 
-| 路线                 | 入口                                                                            | 实测                               |
-| -------------------- | ------------------------------------------------------------------------------- | ---------------------------------- |
-| 静态合批（整棵子树） | `BatchingUtility.batchStaticModel`（d.ts 91）/ `unbatchStaticModel`（d.ts 101） | 可用，返回 `true`，可逆（§3 探针） |
-| 细粒度合并           | `Mesh.merge`（d.ts 220）                                                        | 入口存在，本篇不展开               |
-| 实例化绘制           | **无**用户面 `InstancedMesh`                                                    | N/A —— 本篇标 PARTIAL 的主因       |
+| 路线                 | 入口                                                                            | 实测                                                   |
+| -------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| 静态合批（整棵子树） | `BatchingUtility.batchStaticModel`（d.ts 91）/ `unbatchStaticModel`（d.ts 101） | 可用，返回 `true`，可逆（§3 探针）                     |
+| 细粒度合并           | `Mesh.merge`（d.ts 220）                                                        | 入口存在，本篇不展开                                   |
+| 实例化绘制           | `MeshRenderer` + material `USE_INSTANCING`                                      | 原生路线已存在，见 [批处理Recipe](batching-recipes.md) |
 
 ## 1. BatchingUtility 的实测契约
 
@@ -31,9 +31,10 @@ unbatch 后 100 个渲染组件全部复活、`batchedRoot` 恢复空节点。**
   一份 GPU 资源被 100 个渲染组件引用，内存与状态切换开销先降一档；`batchStaticModel` 再进一步把 100 个
   渲染组件换成 1 个。两者叠加使用，示例即如此。
 
-**如实标注**：AIR 没有暴露 draw call / GPU 统计的用户面入口（全仓 grep 无 `renderer.info` 类读数），
-所以"合批省了多少 draw"在本篇**无法用实测数字证明**；能实测的是上面的场景图契约与画面不变（合批前后截图同景）。
-引擎内部另有 UBO 自动合批通路（`BatchingSchemes`，d.ts 7326），无用户开关、无统计，本篇不承诺其行为。
+**测量范围**：本篇历史100节点实验只证明场景图合同和画面不变，未记录draw统计。
+当前可在 `EVENT_AFTER_DRAW` 读取 `director.root.device.numDrawCalls/numInstances/numTris`；
+GPU耗时与显示present另行测量。`USE_INSTANCING` 是原生实例化宏入口，
+固定条件下的像素、draw及资源释放对照见 [批处理Recipe](batching-recipes.md)，不能从内部合批存在推导所有材质都会合批。
 
 ## 2. 示例拆解
 

@@ -21,6 +21,8 @@ const entries = [
     ['CompareTransmission', 'glTF-Binary/CompareTransmission.glb'],
     ['CompareVolume', 'glTF-Binary/CompareVolume.glb'],
     ['CompareDispersion', 'glTF-Binary/CompareDispersion.glb'],
+    // Competitive benchmark CB-05: textured animated model, tested offline from the package.
+    ['Fox', 'glTF-Binary/Fox.glb'],
 ];
 async function get(url, attempt = 0) {
     try { return await getOnce(url); }

@@ -188,7 +188,7 @@ export function createMesh (geometry: IGeometry, out?: Mesh, options?: ICreateMe
 
     // Create primitive.
     const primitive: Mesh.ISubMesh = {
-        primitiveMode: geometry.primitiveMode || PrimitiveMode.TRIANGLE_LIST,
+        primitiveMode: geometry.primitiveMode ?? PrimitiveMode.TRIANGLE_LIST,
         vertexBundelIndices: [0],
     };
 
@@ -299,7 +299,7 @@ function createDynamicMesh (primitiveIndex: number, geometry: IDynamicGeometry, 
     for (let i = 0; i < options.maxSubMeshes; i++) {
         const primitive: Mesh.ISubMesh = {
             vertexBundelIndices: [],
-            primitiveMode: geometry.primitiveMode || PrimitiveMode.TRIANGLE_LIST,
+            primitiveMode: geometry.primitiveMode ?? PrimitiveMode.TRIANGLE_LIST,
         };
 
         // add vertex buffers

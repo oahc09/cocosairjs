@@ -63,17 +63,23 @@ class PointerEventDispatcher implements IEventDispatcher {
     }
 
     onThrowException (): void {
-        this._inDispatchCount = 0;
+        // Dispatch depth and deferred processor mutations are restored by dispatchEvent's finally.
     }
 
     public dispatchEvent (event: Event): boolean {
         const eventType = event.type as Input.EventType;
-        if (touchEvents.includes(eventType)) {
-            return this.dispatchEventTouch(event as EventTouch);
-        } else if (mouseEvents.includes(eventType)) {
-            return this.dispatchEventMouse(event as EventMouse);
+        if (!touchEvents.includes(eventType) && !mouseEvents.includes(eventType)) {
+            return true;
         }
-        return true;
+        this._inDispatchCount++;
+        try {
+            return touchEvents.includes(eventType)
+                ? this.dispatchEventTouch(event as EventTouch) : this.dispatchEventMouse(event as EventMouse);
+        } finally {
+            if (--this._inDispatchCount === 0) {
+                this._updatePointerEventProcessorList();
+            }
+        }
     }
 
     private addPointerEventProcessor (pointerEventProcessor: NodeEventProcessor): void {
@@ -99,7 +105,6 @@ class PointerEventDispatcher implements IEventDispatcher {
     }
 
     private dispatchEventMouse (eventMouse: EventMouse): boolean {
-        this._inDispatchCount++;
         this._sortPointerEventProcessorList();
         const pointerEventProcessorList = this._pointerEventProcessorList;
         const length = pointerEventProcessorList.length;
@@ -116,14 +121,10 @@ class PointerEventDispatcher implements IEventDispatcher {
                 }
             }
         }
-        if (--this._inDispatchCount <= 0) {
-            this._updatePointerEventProcessorList();
-        }
         return dispatchToNextEventDispatcher;
     }
 
     private dispatchEventTouch (eventTouch: EventTouch): boolean {
-        this._inDispatchCount++;
         this._sortPointerEventProcessorList();
         const pointerEventProcessorList = this._pointerEventProcessorList;
         const length = pointerEventProcessorList.length;
@@ -154,12 +155,15 @@ class PointerEventDispatcher implements IEventDispatcher {
                 } else if (pointerEventProcessor.claimedTouchIdList.length > 0) {
                     const index = pointerEventProcessor.claimedTouchIdList.indexOf(touch.getID());
                     if (index !== -1) {
-                        pointerEventProcessor._handleEventTouch(eventTouch);
-                        if (eventTouch.type === (InputEventType.TOUCH_END as string) || eventTouch.type === (InputEventType.TOUCH_CANCEL as string)) {
-                            js.array.removeAt(pointerEventProcessor.claimedTouchIdList, index);
-                            // The event is handled, and the event can be swallowed, so should remove other EventProcessor's claimedTouchIdList.
-                            if (!eventTouch.preventSwallow) {
-                                this._removeClaimedTouch(i + 1, touch.getID());
+                        try {
+                            pointerEventProcessor._handleEventTouch(eventTouch);
+                        } finally {
+                            if (eventTouch.type === (InputEventType.TOUCH_END as string) || eventTouch.type === (InputEventType.TOUCH_CANCEL as string)) {
+                                js.array.removeAt(pointerEventProcessor.claimedTouchIdList, index);
+                                // The event is handled, and the event can be swallowed, so should remove other EventProcessor's claimedTouchIdList.
+                                if (!eventTouch.preventSwallow) {
+                                    this._removeClaimedTouch(i + 1, touch.getID());
+                                }
                             }
                         }
                         dispatchToNextEventDispatcher = false;
@@ -171,9 +175,6 @@ class PointerEventDispatcher implements IEventDispatcher {
                     }
                 }
             }
-        }
-        if (--this._inDispatchCount <= 0) {
-            this._updatePointerEventProcessorList();
         }
         return dispatchToNextEventDispatcher;
     }

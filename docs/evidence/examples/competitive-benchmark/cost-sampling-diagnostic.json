@@ -1,0 +1,98 @@
+{
+  "schema": "cb21-sampling-diagnostic-v1",
+  "measuredAt": "2026-10-03T10:29:57.638Z",
+  "scope": "Existing completed arms replayed with only assertion-input persistence; no new cold-start cost sample, no original failure overwritten",
+  "instrument": {
+    "scope": "Persist actual assertion inputs only; no timing/action/threshold/evaluation changes. Not a new cost sample.",
+    "source": "E:/AIProMax/Y2026M10/cocosairjs-cb21-current-20261003/instrument",
+    "originalExecutorSha256": "c4be57666c33f56fb1c114122455e6b6b0712312bb1c76fc9fad16b78335d156",
+    "diagnosticExecutorSha256": "c9a252f0b795297e01ddff3a9da6fd0a566100c953e35138090e521c7bba7556",
+    "patch": "const r = evalJq(probe.stateAssertion.jq, dollarRoot); preceded by result.evidence.stateAssertionInputs = dollarRoot;",
+    "createdAt": "2026-10-03T10:05:00.018Z"
+  },
+  "rows": [
+    {
+      "engine": "three",
+      "status": "FAIL",
+      "preActionDistance": 120,
+      "actualAssertionInputs": {
+        "before": {
+          "starCount": 56000,
+          "rotationPhase": 0.5911100000000005,
+          "cameraDistance": 52.20812053391363,
+          "parallaxOffset": {
+            "x": 0.02874997224989574,
+            "y": 3.030675103033686e-9
+          },
+          "fps": 60.00300015000751,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "after": {
+          "starCount": 56000,
+          "rotationPhase": 0.6067100000000004,
+          "cameraDistance": 48.80816916400324,
+          "parallaxOffset": {
+            "x": 0.028749994670595018,
+            "y": 5.820408765968137e-10
+          },
+          "fps": 60.00300015000751,
+          "hudVisible": true,
+          "epoch": 0
+        }
+      },
+      "requiredDelta": 5,
+      "observedDelta": 3.39995136991039,
+      "recomputed": false,
+      "recorded": false,
+      "visualPassed": true,
+      "pixelDelta": 0.2826,
+      "evidence": {
+        "path": "output/competitive-benchmark/cost-sampling-diagnostic-three/probe-results.json",
+        "sha256": "9b4709f2ee2066dc73bab3ff6089fa56c5321652827a122a551f83f21e7d41c2"
+      }
+    },
+    {
+      "engine": "air",
+      "status": "FAIL",
+      "preActionDistance": 120,
+      "actualAssertionInputs": {
+        "before": {
+          "starCount": 60000,
+          "rotationPhase": 0.516005999999999,
+          "cameraDistance": 60.37439896664521,
+          "parallaxOffset": {
+            "x": 0.028749999616299364,
+            "y": 3.9127270831783316e-11
+          },
+          "fps": 59.99193385763263,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "after": {
+          "starCount": 60000,
+          "rotationPhase": 0.530239499999999,
+          "cameraDistance": 57.33195578316249,
+          "parallaxOffset": {
+            "x": 0.028749999958080016,
+            "y": 4.274724635668425e-12
+          },
+          "fps": 60.00300015000751,
+          "hudVisible": true,
+          "epoch": 0
+        }
+      },
+      "requiredDelta": 5,
+      "observedDelta": 3.0424431834827175,
+      "recomputed": false,
+      "recorded": false,
+      "visualPassed": true,
+      "pixelDelta": 0.1494,
+      "evidence": {
+        "path": "output/competitive-benchmark/cost-sampling-diagnostic-air/probe-results.json",
+        "sha256": "2d26d652e547ff08aba2584eaea5a19a19552ea853793f453b3c66bc03b0f0de"
+      }
+    }
+  ],
+  "conclusion": "Both implementations fail the frozen post-wait distance delta requirement. Visual wheel changes pass. This evidence does not demonstrate an SDK renderer/UBO defect."
+}

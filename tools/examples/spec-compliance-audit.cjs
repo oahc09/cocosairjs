@@ -97,19 +97,7 @@ function runFor (spec, runs) {
 
 /** 收集示例目录内的源码文件（含相对路径与行数组），供实现级静态检查复用。 */
 function collectSources (absDir, rootForRel) {
-  const out = [];
-  const walk = (abs) => {
-    for (const item of fs.readdirSync(abs, { withFileTypes: true })) {
-      if (item.name === 'node_modules') { continue; }
-      const full = path.join(abs, item.name);
-      if (item.isDirectory()) { walk(full); } else if (/\.(ts|js)$/.test(item.name)) {
-        const code = fs.readFileSync(full, 'utf8');
-        out.push({ file: full, rel: path.relative(rootForRel, full), lines: code.split(/\r?\n/) });
-      }
-    }
-  };
-  walk(absDir);
-  return out;
+  return require('./local-source-closure.cjs').collectSources(absDir, rootForRel);
 }
 
 function auditExample (dir, spec, ctx) {
@@ -180,7 +168,8 @@ function auditExample (dir, spec, ctx) {
   if (lifecycle.includes('resource-released')) {
     // 声明必须落到实现：示例自身源码里要安装合同（shared helper 或显式 window.__lifecycle）
     const installed = collectSources(exampleDir, EXAMPLES_DIR)
-      .some((s) => s.lines.some((code) => /installAssetLifecycle\s*\(/.test(code) || /__lifecycle\s*=/.test(code)));
+      .filter((s) => path.resolve(s.file) !== path.join(EXAMPLES_DIR, 'shared', 'asset-lifecycle.js'))
+      .some((s) => require('./local-source-closure.cjs').hasLifecycleInstallation(s));
     if (!installed) {
       add('S25-LIFECYCLE-IMPL', 'fail', '§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点');
     }

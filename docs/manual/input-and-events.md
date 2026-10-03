@@ -21,6 +21,51 @@
 再派发全局 `MOUSE_DOWN`。键盘事件（`KEY_DOWN/KEY_UP`）只走全局，事件携带 `KeyCode`；
 `MOUSE_WHEEL` 携带 `getScrollY()`（与 deltaY 反号）。
 
+## DOM 传播、滚轮与坐标合同
+
+DOM 事件传播与引擎 `input`/节点派发是两条不同的路径。Web PAL 在 canvas 的鼠标、触摸和 wheel 处理器中调用 `stopPropagation()`，阻止原生事件继续向父 DOM/window 冒泡；canvas 事件还会调用 `preventDefault()`，避免浏览器滚动等默认行为。它不阻止已执行的 window 捕获监听器，也不等同于节点的 `propagationStopped`。默认 DOM 传播策略保持不变。
+
+相机缩放优先只订阅一个引擎通道：
+
+```ts
+import { input, Input, EventMouse } from 'cocosair';
+
+function onWheel(event: EventMouse): void {
+    // cameraDistance 是业务保存的相机到观察目标的距离。
+    cameraDistance = Math.max(2, Math.min(20, cameraDistance * Math.exp(-event.getScrollY() * 0.0002)));
+}
+input.on(Input.EventType.MOUSE_WHEEL, onWheel);
+// 组件关闭、场景切换或业务释放时：input.off(Input.EventType.MOUSE_WHEEL, onWheel);
+```
+
+当前 PAL 的 `getScrollY()` 为 `-WheelEvent.deltaY * 5`，`getScrollX()` 为 `deltaX * 5`。数值保留浏览器的 `deltaMode` 单位，没有转成设备像素，也没有乘 DPR；行/页模式与像素模式数值不能直接当作相同距离。引擎事件没有保留 `deltaMode`，需要单位标准化的业务可以**改选** window 捕获通道，按业务行高与 canvas 高度转换，并在释放时移除监听器：
+
+```ts
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+function captureWheel(event: WheelEvent): void {
+    if (event.target !== canvas) return;
+    const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 16
+        : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? canvas.getBoundingClientRect().height : 1;
+    const pixels = event.deltaY * unit;
+    cameraDistance = Math.max(2, Math.min(20, cameraDistance * Math.exp(pixels * 0.001)));
+    event.preventDefault();
+}
+window.addEventListener('wheel', captureWheel, { capture: true, passive: false });
+// 释放时：window.removeEventListener('wheel', captureWheel, true);
+```
+
+这两个缩放实现是替代方案，不要同时启用。鼠标按下/移动/抬起还会生成 `TOUCH_*`；同一旋转操作选择 `MOUSE_*` 或 `TOUCH_*` 一路，后者可以同时接鼠标与触摸。`input` 的触摸事件会受 UI 命中吞噬规则影响，不能假定覆盖按钮的相机控制器仍能收到全局触摸。
+
+`getLocation()` 返回 canvas 左下角原点的设备坐标；`getUILocation()` 再按视口与设计分辨率换算为 UI 坐标。UI 节点局部坐标继续使用 `UITransform.convertToNodeSpaceAR()`。`getLocation(out)` 的合法出参为当前 SDK 的 `Vec2` 实例或省略参数，鼠标、触摸与无触点事件都保持这一合同并复用合法 out。普通对象、数组、`null` 等非法出参会抛 `TypeError`，`code` 为 `AIR_E_INPUT_LOCATION_OUT`，包含调用方法与期望类型。不要用设备坐标直接移动 UI 节点。
+
+## 输入监听器异常与释放
+
+全局 `input.on/once` 的监听器独立执行。一个监听器抛错时，引擎报告带 `code: AIR_E_INPUT_LISTENER`、`eventType` 和原始 `cause` 的错误；本次派发的后续全局监听器及后续输入继续执行。`once` 在调用前注销，`off` 与嵌套派发仍遵守原有规则。错误不会通过默默构造坐标或丢弃后续事件掩盖。
+
+普通 `EventTarget.emit()` 仍同步重抛异常；它的回调列表状态会在 `finally` 中恢复，以免下一次派发被污染。UI 或自定义 dispatcher 抛错时，引擎恢复该 dispatcher 的状态并报告错误，再进入后续 dispatcher；**不会恢复执行已中断的同次 UI 节点回调**。这不改变正常 UI 命中的吞噬规则。
+
+可运行的 [Orbit Controls 示例](../../examples/orbit-controls/) 用原生 `Component.update(dt)` 更新球坐标、精确指数惯性衰减与滚轮距离；没有第二套时钟。`window.__orbitProbe()` 提供拖拽、滚轮、角速度及 DOM 捕获/冒泡计数。采样时固定输入持续时间与释放后的实际时间，比较衰减曲线；200ms 是观测点，不是人为保证运动持续时间的参数。
+
 ## 示例断言清单（manual-input-events）
 
 1. 一次点击：child 命中 + 冒泡到 parent 各恰一次；全局 `input` 不收到（吞掉）。
@@ -49,8 +94,8 @@ state-probe 检查轮询读回。
 - **`addLabel(node).node` 就是 node 本身**：想移动 Label 文字要给文字单开一个子节点，
   直接 `label.node.setPosition` 会把宿主节点（连同命中矩形）一起挪走。
 - **销毁后的节点连 `getComponent` 都不可再调**（内部组件列表已清空），点击坐标等要在销毁前取好。
-- **派发按帧 flush**：合成/真实输入事件在后续帧派发，"点击 + 同帧断言"存在竞态，
-  示例采用"第 N 拍点击、第 N+1 拍断言"的节奏。
+- **区分事件与帧更新**：当前 Web 输入在 DOM 处理时立即派发；Widget 对齐、节点销毁等状态仍受帧更新影响。
+  示例采用"第 N 拍点击、第 N+1 拍断言"，等待的是相关场景状态更新，不能据此认定所有 Web 输入都按帧 flush。
 
 `index.html`（逐字节与 `docs/manual/examples/manual-input-events/index.html` 一致）：
 

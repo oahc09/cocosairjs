@@ -1,0 +1,19 @@
+{
+  "scope": "competitive-batching",
+  "schema": "competitive-batching-review-v1",
+  "measuredAt": "2026-10-03T08:22:17.561Z",
+  "completed": true,
+  "status": "PASS",
+  "evidence": {
+    "path": "docs/evidence/recipes/competitive-batching/browser.json",
+    "runId": "bdaf911e-6362-4414-b0b5-f1c861895d95",
+    "recipes": [
+      "CB-BATCH-SHARED",
+      "CB-BATCH-MERGED",
+      "CB-BATCH-DYNAMIC"
+    ],
+    "records": 8
+  },
+  "errors": [],
+  "legacy30": "NOT_RUN; this scoped result does not validate Golden/Catalog/legacy thirty-recipe evidence"
+}

@@ -1,0 +1,87 @@
+{
+  "id": "gltf-animation-contract",
+  "version": "1.0.0",
+  "status": "stable",
+  "title": "glTF Animation Instances",
+  "category": "animation",
+  "benchmarkRefs": ["CB-07", "CB-13"],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "capabilities": ["gltf", "animation"],
+  "apiClaims": [],
+  "learning": {
+    "goal": "Native glTF playback and instance/resource isolation",
+    "points": ["Explicit instance loop policy", "Native play/pause/resume/clip switch", "Private material variants"]
+  },
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": [],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "effect": {
+    "functional": "Two native instances compare Loop and Normal, with native pause/resume, clip switching and a private material variant.",
+    "visual": "Two textured Fox characters, or two Morph cubes, under a fixed camera."
+  },
+  "api": {
+    "primary": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate", "Animation.play"],
+    "supporting": [],
+    "claims": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate", "Animation.play"],
+    "forbiddenShortcut": ["Synthetic timers or fields must not impersonate native state or rendered behavior."],
+    "evidence": [
+      {
+        "api": "GLTFLoader.parseAsync",
+        "source": "src/main.ts",
+        "sourceLocation": "L46",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "GLTFAsset.instantiate",
+        "source": "src/main.ts",
+        "sourceLocation": "L60",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Animation.play",
+        "source": "src/main.ts",
+        "sourceLocation": "L90",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "assets": [
+    "assets/Fox.glb",
+    "assets/Fox.LICENSE.md",
+    "assets/AnimatedMorphCube.glb",
+    "assets/AnimatedMorphCube.LICENSE.md"
+  ],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Camera", "Light", "Playback"]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "Khronos Fox and AnimatedMorphCube original source/license credits are preserved in local assets/*.LICENSE.md."
+  },
+  "promotion": {
+    "spec": "be1e9a74c2ca",
+    "source": "3cd5ff4cd6abb130",
+    "candidate": "ba485e1b91643c46",
+    "verified": 3,
+    "attested": 0,
+    "units": 3
+  }
+}

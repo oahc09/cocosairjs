@@ -1,6 +1,225 @@
 {
-  "generatedAt": "2026-10-01T05:41:10.779Z",
+  "generatedAt": "2026-10-03T10:43:19.991Z",
   "suites": [
+    {
+      "file": "test/smoke/competitive-api-tail.test.ts",
+      "tests": [
+        "competitive API tail contracts Camera component accepts the native x,y,out screenPointToRay signature",
+        "competitive API tail contracts Quat has its native instance operations and static normalization",
+        "competitive API tail contracts component string lookup uses the registered class name, while addChild returns void",
+        "competitive API tail contracts fog type configured while disabled is discarded; enabling before type preserves it",
+        "competitive API tail contracts official dynamic mesh entry is the same function in the source namespace",
+        "competitive API tail contracts quad is a unit XY shape and plane is an XZ shape",
+        "competitive API tail contracts static geometry can generate bounds explicitly"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-asset-lifecycle-contract.test.ts",
+      "tests": [
+        "native asset lifecycle release predicates a throwing predicate fails the release check and is observable",
+        "native asset lifecycle release predicates default CCObject validity still detects release and fresh reacquisition",
+        "native asset lifecycle release predicates explicit GPU pass destruction can succeed while the object validity flag remains true",
+        "native asset lifecycle release predicates live pass negative control fails even if release was called",
+        "native asset lifecycle release predicates nonboolean predicates and already-released reacquisition fail closed"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-batching-gate.test.ts",
+      "tests": [
+        "competitive batching scoped evidence gate accepts only complete fixed-condition evidence for the three recipes and eight cases",
+        "competitive batching scoped evidence gate does not treat legacy or incomplete scope as current three-recipe verification",
+        "competitive batching scoped evidence gate rejects corrupted capture evidence",
+        "competitive batching scoped evidence gate rejects corrupted draw evidence",
+        "competitive batching scoped evidence gate rejects corrupted life evidence",
+        "competitive batching scoped evidence gate rejects corrupted material evidence",
+        "competitive batching scoped evidence gate rejects corrupted motion evidence",
+        "competitive batching scoped evidence gate rejects corrupted nan evidence",
+        "competitive batching scoped evidence gate rejects corrupted pass evidence",
+        "competitive batching scoped evidence gate rejects corrupted pixel evidence",
+        "competitive batching scoped evidence gate rejects corrupted samples evidence",
+        "competitive batching scoped evidence gate rejects corrupted version evidence",
+        "competitive batching scoped evidence gate rejects corrupted vertices evidence",
+        "competitive batching scoped evidence gate stale candidate and missing screenshot cannot pass"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-black-hole-state.test.ts",
+      "tests": [
+        "black-hole procedural motion contract rotation uses elapsed seconds, phase wraps continuously, and reset restores physical values",
+        "black-hole procedural motion contract seed buffers contain real finite vertices and analytic streams move inward then respawn",
+        "black-hole procedural motion contract wheel has correct engine sign, clamps distance, and smooths independently of frame partition"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-bootstrap-contract.test.ts",
+      "tests": [
+        "competitive bootstrap contract early effect registration remains legal; material creation before renderer gives a diagnostic",
+        "competitive bootstrap contract new native cameras include the DEFAULT render layer without manual visibility assignment"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-capability-evidence.test.ts",
+      "tests": [
+        "physical capability evidence has current rendered controls GL errors, missing captures and non-finite measurements fail",
+        "physical capability evidence has current rendered controls a stale bundle or probe cannot retain browser-evidence",
+        "physical capability evidence has current rendered controls current complete three-browser report passes",
+        "physical capability evidence has current rendered controls missing/duplicate browsers and a claimed success without pixel change fail"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-early-effect.test.ts",
+      "tests": [
+        "competitive full-bundle early effect lifecycle an actual custom renderer registers and precompiles only after its device exists",
+        "competitive full-bundle early effect lifecycle destroying a pending effect removes registration and its renderer listener",
+        "competitive full-bundle early effect lifecycle metadata is immediate and legacy registration follows the selected renderer"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-effect-generator.test.ts",
+      "tests": [
+        "competitive effect generator emits point topology, matching bindings, layouts and content-derived hashes",
+        "competitive effect generator matrix defaults and sampler bindings use actual engine enums",
+        "competitive effect generator rejects duplicate locations, invalid defaults and unsupported declarations without overwriting output",
+        "competitive effect generator rejects missing names and inherited object keys as types",
+        "competitive effect generator rejects unsupported body declarations: #include <chunk>",
+        "competitive effect generator rejects unsupported body declarations: layout(location=0) in vec3 hidden;",
+        "competitive effect generator rejects unsupported body declarations: uniform float unsafe;",
+        "competitive effect generator resolves GLSL file inputs relative to the declaration file"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-gltf-animation-contract.test.ts",
+      "tests": [
+        "competitive glTF animation contract default Normal completes once, loop override is per state and per instance",
+        "competitive glTF animation contract invalid names/options and disposed instances are diagnosed without changing shared clips",
+        "competitive glTF animation contract native pause/resume/clip switching and private material variants preserve the second instance"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-input-contract.test.ts",
+      "tests": [
+        "competitive input contract: exception recovery an external dispatcher exception calls recovery without deleting queued events",
+        "competitive input contract: exception recovery mouse-down isolates a bad listener and subsequent events still reach the following listener",
+        "competitive input contract: exception recovery mouse-wheel isolates a bad listener and subsequent events still reach the following listener",
+        "competitive input contract: exception recovery nested UI dispatcher errors restore dispatch depth before the outer event resumes",
+        "competitive input contract: exception recovery once throwing during nested input dispatch is removed; off skips later listeners",
+        "competitive input contract: exception recovery ordinary EventTarget still throws but restores once/off invocation state",
+        "competitive input contract: exception recovery throwing UI touch-end listeners release their claimed touch ID",
+        "competitive input contract: exception recovery touch-start isolates a bad listener and subsequent events still reach the following listener",
+        "competitive input contract: location output accepts Vec2 or omitted output and rejects invalid output consistently",
+        "competitive input contract: location output accepts Vec2 or omitted output and rejects invalid output consistently",
+        "competitive input contract: location output accepts Vec2 or omitted output and rejects invalid output consistently",
+        "competitive input contract: location output accepts Vec2 or omitted output and rejects invalid output consistently"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-loopback-browser-env.test.ts",
+      "tests": [
+        "local browser verification proxy environment adds loopback bypass in both forms and leaves proxy values and input untouched",
+        "local browser verification proxy environment empty ambient bypass still produces finite explicit local targets",
+        "local browser verification proxy environment preserves distinct existing bypass targets, including wildcard and port syntax"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-matrix-probe.test.ts",
+      "tests": [
+        "browser matrix explicit existing probe contracts calls an existing nested method with its actual receiver",
+        "browser matrix explicit existing probe contracts fails when an explicit probe is a value rather than a method",
+        "browser matrix explicit existing probe contracts preserves the absent default probe but rejects absent explicit probes",
+        "browser matrix explicit existing probe contracts rejects executable or prototype paths: __bench.constructor",
+        "browser matrix explicit existing probe contracts rejects executable or prototype paths: __bench.getState()",
+        "browser matrix explicit existing probe contracts rejects executable or prototype paths: __bench.prototype.x",
+        "browser matrix explicit existing probe contracts rejects executable or prototype paths: __proto__.x"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-orbit-controls.test.ts",
+      "tests": [
+        "competitive orbit controls cancel and polar bounds stop the corresponding velocity",
+        "competitive orbit controls equal elapsed time with different frame partitions gives equal angles and velocity",
+        "competitive orbit controls release has continuous angular inertia and the documented exponential decay",
+        "competitive orbit controls wheel is monotonic, bounded, and nonfinite input does not poison the camera"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-point-topology.test.ts",
+      "tests": [
+        "competitive mesh topology contract PSO honors explicit pass topology and does not infer it from an input assembler",
+        "competitive mesh topology contract dynamic geometry retains the zero-valued point primitive for every submesh",
+        "competitive mesh topology contract omitted topology keeps the triangle default",
+        "competitive mesh topology contract static geometry retains primitive 0",
+        "competitive mesh topology contract static geometry retains primitive 1",
+        "competitive mesh topology contract static geometry retains primitive 7"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-probe-ranges.test.ts",
+      "tests": [
+        "independent probe numeric ranges missing nested fields fail instead of becoming zero",
+        "independent probe numeric ranges optional absent range config has no assertions, explicit invalid config fails",
+        "independent probe numeric ranges rejects a non-finite or non-number actual value: -Infinity",
+        "independent probe numeric ranges rejects a non-finite or non-number actual value: 156",
+        "independent probe numeric ranges rejects a non-finite or non-number actual value: Infinity",
+        "independent probe numeric ranges rejects a non-finite or non-number actual value: NaN",
+        "independent probe numeric ranges rejects a non-finite or non-number actual value: [Number: 156]",
+        "independent probe numeric ranges rejects a non-finite or non-number actual value: []",
+        "independent probe numeric ranges rejects a non-finite or non-number actual value: null",
+        "independent probe numeric ranges rejects a non-finite or non-number actual value: true",
+        "independent probe numeric ranges rejects a non-finite or non-number actual value: undefined",
+        "independent probe numeric ranges rejects a non-finite or non-number actual value: {}",
+        "independent probe numeric ranges rejects malformed bounds: []",
+        "independent probe numeric ranges rejects malformed bounds: null",
+        "independent probe numeric ranges rejects malformed bounds: { max: Infinity }",
+        "independent probe numeric ranges rejects malformed bounds: { min: '0' }",
+        "independent probe numeric ranges rejects malformed bounds: { min: 0, tolerance: 10 }",
+        "independent probe numeric ranges rejects malformed bounds: { min: 2, max: 1 }",
+        "independent probe numeric ranges rejects malformed bounds: { min: NaN }",
+        "independent probe numeric ranges rejects malformed bounds: { minimum: 0 }",
+        "independent probe numeric ranges rejects malformed bounds: {}",
+        "independent probe numeric ranges uses inclusive boundaries including zero and resolves array components"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-source-closure.test.ts",
+      "tests": [
+        "example local import closure follows actual local helper imports, JS to TS resolution and cycles while ignoring comments/outside files",
+        "example local import closure installation requires a call or function assignment, not an unused declaration or string token"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-uniform-contract.test.ts",
+      "tests": [
+        "competitive uniform and light contracts Color retains native scalar conversion and original reference without changing alpha",
+        "competitive uniform and light contracts Color, Quat, matrices and scalar arrays preserve their existing valid representations",
+        "competitive uniform and light contracts FLOAT4 numeric array is rejected before poisoning material or GPU staging",
+        "competitive uniform and light contracts Vec4 xyzw updates reach the entire uploaded block with adjacent values intact",
+        "competitive uniform and light contracts component Light accepts Color, rejects Vec3 and retains its previous color",
+        "competitive uniform and light contracts conversion metadata exceptions leave every pass and property untouched",
+        "competitive uniform and light contracts different linear metadata prepares independent snapshots false",
+        "competitive uniform and light contracts different linear metadata prepares independent snapshots true",
+        "competitive uniform and light contracts direct Pass setter rejects invalid values with uniform identity in the diagnostic",
+        "competitive uniform and light contracts linear arrays preserve native raw values, null skips and partial updates",
+        "competitive uniform and light contracts linear conversion overflow cannot partially mutate another pass or retained properties",
+        "competitive uniform and light contracts multipass preflight prevents a late incompatible pass from partially mutating earlier passes",
+        "competitive uniform and light contracts nonrepresentable FLOAT4 value -Infinity is rejected atomically",
+        "competitive uniform and light contracts nonrepresentable FLOAT4 value 1e+100 is rejected atomically",
+        "competitive uniform and light contracts nonrepresentable FLOAT4 value Infinity is rejected atomically",
+        "competitive uniform and light contracts nonrepresentable FLOAT4 value NaN is rejected atomically",
+        "competitive uniform and light contracts render Light continues accepting Vec3 while rejecting nonfinite components and temperature",
+        "competitive uniform and light contracts scalar and matrix NaN are rejected before buffer mutation",
+        "competitive uniform and light contracts snapshot exceptions happen before any pass writes",
+        "competitive uniform and light contracts sparse uniform arrays reject missing elements instead of writing undefined components",
+        "competitive uniform and light contracts uniform array validates every element and declared capacity before any write"
+      ]
+    },
+    {
+      "file": "test/smoke/competitive-unlit-fog.test.ts",
+      "tests": [
+        "AIR accurate unlit fog specialization rejects incompatible builtin source before registering a partial effect",
+        "AIR accurate unlit fog specialization repeated owned assets share one template and leave no deferred listener or registry growth",
+        "AIR accurate unlit fog specialization transforms every shader variant without changing builtin data and keeps instance ownership independent"
+      ]
+    },
     {
       "file": "test/smoke/smoke-01-bootstrap.test.ts",
       "tests": [
@@ -174,6 +393,7 @@
         "glTF T5.1 physical materials handler validation accepts valid and rejects invalid extension bodies",
         "glTF T5.1 physical materials identity materials keep the base glTF effect, physical scalars select the variant",
         "glTF T5.1 physical materials loader applies physical extensions end to end and stable-codes invalid bodies",
+        "glTF T5.1 physical materials opaque and masked glTF materials preserve additive-light pass depth and blend states",
         "glTF T5.1 physical materials physicalParams converts IOR to the F0 ratio and guards ranges",
         "glTF T5.1 physical materials specular textures bind the physical samplers; unlit ignores BRDF modifiers"
       ]
@@ -225,6 +445,7 @@
         "glTF T6 transmission/volume/dispersion defaults normalize per spec",
         "glTF T6 transmission/volume/dispersion report device-dependent while the pipeline is unarmed, supported when armed",
         "glTF T6 transmission/volume/dispersion required transmission fails cleanly when the pipeline is unavailable; optional warns",
+        "glTF T6 transmission/volume/dispersion transmission and volume shader factors are initialized before shading in each language",
         "glTF T6 transmission/volume/dispersion validate enforces factor/distance/color ranges"
       ]
     },
@@ -438,9 +659,9 @@
     }
   ],
   "totals": {
-    "suites": 33,
-    "tests": 270,
-    "passed": 270,
+    "suites": 51,
+    "tests": 401,
+    "passed": 401,
     "failed": 0
   }
 }

@@ -26,6 +26,7 @@
 import { Event } from './event';
 import { Vec2 } from '../../../core';
 import { Touch } from '../touch';
+import { locationOutput } from '../location-output';
 import { SystemEventTypeUnion } from '../event-enum';
 
 const _vec2 = new Vec2();
@@ -139,7 +140,8 @@ export class EventTouch extends Event {
      * @param out - Pass the out object to avoid object creation, very good practice
      */
     public getLocation (out?: Vec2): Vec2 {
-        return this.touch ? this.touch.getLocation(out) : new Vec2();
+        out = locationOutput(out, 'EventTouch.getLocation');
+        return this.touch ? this.touch.getLocation(out) : out.set(0, 0);
     }
 
     /**

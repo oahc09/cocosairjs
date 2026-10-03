@@ -78,13 +78,25 @@ orbNode.addComponent(OrbStart);
 实测坑位：`play()` 在 `app.run` 之前调用会被组件激活流程重置（画面纹丝不动）——**在组件 `start()` 里播放**。
 停止用 `orbAnim.stop()`，位置冻结在停止时刻；循环用 `WrapMode.Loop`。
 
+### glTF：显式循环与多实例隔离
+
+glTF 载入的原生 `AnimationClip` 默认 `WrapMode.Normal`：播放一次，正常完成后停在末帧并触发完成事件。末帧静止本身不是渲染错误，也不会因此警告。业务需要常驻动作时，在实例上显式调用 `instance.setAnimationLoop(true, clipName)`；省略名称配置该实例的所有剪辑，`false` 恢复单次播放。这个入口只修改原生 `AnimationState.wrapMode`，不修改共享 clip，不启动播放。
+
+必须先 `await createAirApp()`，然后加载、实例化并挂到场景。播放仍由原生 `Animation.play()` 驱动，放在组件 `start()` 等已激活阶段；暂停/恢复/切换使用 `Animation.pause()`、`resume()`、`play(nextName)`，没有另一个播放器。
+
+`setAnimationLoop` 会先初始化选定原生 state，再设置 wrap mode。原生 setter 会重置这些 state 的时间与重复计数，所以应在首次播放或明确需要重新开始时配置，不能在每帧重复调用。非法名称、非布尔选项或已释放实例抛出 `AIR_E_GLTF_ANIMATION_OPTIONS`，并列出可用剪辑名。
+
+两次 `asset.instantiate()` 共享 mesh、texture、material 和剪辑资源，各自的节点、原生 state、骨骼姿态与 Morph 权重独立。修改 `instance.animations[0].wrapMode` 等共享资源会影响其他实例，应使用实例循环入口或原生 `AnimationState` 配置。要只给一份实例换色，取得该实例 renderer 的 `getMaterialInstance(slot)` 后再 `setProperty()`；不要修改 `asset.materials` 或另一份实例仍在使用的 shared material。业务持有的材质变体在释放时显式 `destroy()`，验证其原生 pass 已清空；不能仅由节点消失或 `isValid` 字段推断其 GPU 缓冲已释放。共享资源仍按 glTF 引用计数释放。
+
+行为回归同时验证 Normal 完成事件、单剪辑循环、两实例骨骼/Morph 中途数值、暂停/恢复/切换、mesh/clip 共享与私有材质变体。见 `test/smoke/competitive-gltf-animation-contract.test.ts`；这组数值测试不代替浏览器显示验收。
+
 三条已验证的剪辑来源：
 
-| 来源      | 入口                                                                           | 证据                                                          |
-| --------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------- |
-| 代码构造  | `new AnimationClip()` + `animation.VectorTrack`（上文）                        | `manual-animation-system` state-probe（play/stop/loop）       |
-| glTF 内嵌 | `GLTFLoader` 加载 → `Animation.play(clipName)`（`WrapMode.Loop`）              | `examples/gltf-viewer`（下拉切换剪辑、播放/暂停，浏览器矩阵） |
-| 骨骼动画  | `SkeletalAnimation` 组件；程序化骨骼树 `buildSkeletonTree` + `restoreBindPose` | `examples/skinned-animation`（骨骼链驱动网格逐帧变形）        |
+| 来源      | 入口                                                                                                   | 证据                                                          |
+| --------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| 代码构造  | `new AnimationClip()` + `animation.VectorTrack`（上文）                                                | `manual-animation-system` state-probe（play/stop/loop）       |
+| glTF 内嵌 | `GLTFLoader` 加载 → 显式 `instance.setAnimationLoop(true, clipName)` → 原生 `Animation.play(clipName)` | `examples/gltf-viewer`（下拉切换剪辑、播放/暂停，浏览器矩阵） |
+| 骨骼动画  | `SkeletalAnimation` 组件；程序化骨骼树 `buildSkeletonTree` + `restoreBindPose`                         | `examples/skinned-animation`（骨骼链驱动网格逐帧变形）        |
 
 ## 3. 示例拆解
 

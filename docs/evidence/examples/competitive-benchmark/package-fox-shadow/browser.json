@@ -1,0 +1,1035 @@
+{
+  "schema": "competitive-installed-fox-v1",
+  "measuredAt": "2026-10-03T09:58:27.359Z",
+  "scope": "CB05 pinned Fox, fixed viewer camera/light/time, actual npm installed current package incl min; native builtin effect as diagnostic control, not general equivalence",
+  "tarball": {
+    "path": "output/competitive-benchmark/candidate/cocosair.js-1.0.0.tgz",
+    "sha256": "d6ed10fef2748fa2f4a3f10a938fc4b2e8f37b7f0f2a001b9dce8cdfa989a5ba"
+  },
+  "sourceSha256": {
+    "examples/gltf-viewer/main.js": "91451db1e168dde0e2975c82ce81f6828a5e7584b898a4c16d38add749dd38ac",
+    "examples/gltf-viewer/index.html": "2f5f076b64b333dd88a980c8f4750e34c1329c4e1ee5efd4fb0628dea4ad7e53",
+    "examples/shared/scene-kit.js": "15c0d3b2cf7c639119a7bd4b25633ddde73d85aa28418ddf54ae5d41b6595be3",
+    "examples/shared/asset-lifecycle.js": "c2bc01e8c73ab866f11194fc802bb8ce464b3738bfecf8d30cf5967907e5e346",
+    "tools/verify/competitive-package-fox.cjs": "b6cce4be62aca6bd9889a1300db9d94bdddad655bd381c33225aea98a2659f22"
+  },
+  "installedPackage": {
+    "path": "E:\\AIProMax\\github\\cocosair.js\\output\\competitive-benchmark\\final-fox-package-consumer\\node_modules\\cocosair.js",
+    "version": "1.0.0"
+  },
+  "runnerSha256": "b6cce4be62aca6bd9889a1300db9d94bdddad655bd381c33225aea98a2659f22",
+  "modelSha256": "d97044e701822bac5a62696459b27d7b375aada5de8574ed4362edbba94771f7",
+  "candidates": [
+    {
+      "name": "workspace",
+      "bundle": "E:\\AIProMax\\github\\cocosair.js\\build\\cocosair.module.js",
+      "sha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e"
+    },
+    {
+      "name": "installed-package",
+      "bundle": "E:\\AIProMax\\github\\cocosair.js\\output\\competitive-benchmark\\final-fox-package-consumer\\node_modules\\cocosair.js\\build\\npm\\cocosair.module.js",
+      "sha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628"
+    },
+    {
+      "name": "installed-package-min",
+      "bundle": "E:\\AIProMax\\github\\cocosair.js\\output\\competitive-benchmark\\final-fox-package-consumer\\node_modules\\cocosair.js\\build\\npm\\cocosair.module.min.js",
+      "sha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a"
+    }
+  ],
+  "records": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-chromium-workspace-air-gltf-standard.png",
+      "screenshotSha256": "f1456f76c3d3e4418d51923ce8d3e916aabdbf7189349f46182ac3f4eec723f1",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "air-gltf-shadow-map",
+      "pixels": {
+        "visible": 19868,
+        "lit": 16983,
+        "litRatio": 0.8547916247231729,
+        "meanRGB": [
+          70.32791423394403,
+          65.71517012281055,
+          50.73414535937185
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": true,
+        "activeShadowSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-chromium-workspace-air-gltf-shadow-map.png",
+      "screenshotSha256": "71d7fe44ec74cebfac31cba665e8c8d6de9b53a3825d7119512d2aaea9909447",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 16995,
+        "litRatio": 0.8553095118268746,
+        "meanRGB": [
+          71.99456467035732,
+          68.89934574735783,
+          51.72234524408656
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-chromium-workspace-builtin-standard-control.png",
+      "screenshotSha256": "8831812ecef8bc957705f001865b54a7da4042c572a83d4160c04b93f5624802",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-chromium-installed-package-air-gltf-standard.png",
+      "screenshotSha256": "f1456f76c3d3e4418d51923ce8d3e916aabdbf7189349f46182ac3f4eec723f1",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "air-gltf-shadow-map",
+      "pixels": {
+        "visible": 19868,
+        "lit": 16983,
+        "litRatio": 0.8547916247231729,
+        "meanRGB": [
+          70.32791423394403,
+          65.71517012281055,
+          50.73414535937185
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": true,
+        "activeShadowSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-chromium-installed-package-air-gltf-shadow-map.png",
+      "screenshotSha256": "71d7fe44ec74cebfac31cba665e8c8d6de9b53a3825d7119512d2aaea9909447",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 16995,
+        "litRatio": 0.8553095118268746,
+        "meanRGB": [
+          71.99456467035732,
+          68.89934574735783,
+          51.72234524408656
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-chromium-installed-package-builtin-standard-control.png",
+      "screenshotSha256": "8831812ecef8bc957705f001865b54a7da4042c572a83d4160c04b93f5624802",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-chromium-installed-package-min-air-gltf-standard.png",
+      "screenshotSha256": "f1456f76c3d3e4418d51923ce8d3e916aabdbf7189349f46182ac3f4eec723f1",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "air-gltf-shadow-map",
+      "pixels": {
+        "visible": 19868,
+        "lit": 16983,
+        "litRatio": 0.8547916247231729,
+        "meanRGB": [
+          70.32791423394403,
+          65.71517012281055,
+          50.73414535937185
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": true,
+        "activeShadowSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-chromium-installed-package-min-air-gltf-shadow-map.png",
+      "screenshotSha256": "71d7fe44ec74cebfac31cba665e8c8d6de9b53a3825d7119512d2aaea9909447",
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 16995,
+        "litRatio": 0.8553095118268746,
+        "meanRGB": [
+          71.99456467035732,
+          68.89934574735783,
+          51.72234524408656
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-chromium-installed-package-min-builtin-standard-control.png",
+      "screenshotSha256": "8831812ecef8bc957705f001865b54a7da4042c572a83d4160c04b93f5624802",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-firefox-workspace-air-gltf-standard.png",
+      "screenshotSha256": "af182342f1dd646e06c1703df9280020f6bba7af8d9ca76295d5bee1817a1276",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "air-gltf-shadow-map",
+      "pixels": {
+        "visible": 19868,
+        "lit": 16983,
+        "litRatio": 0.8547916247231729,
+        "meanRGB": [
+          70.32791423394403,
+          65.71517012281055,
+          50.73414535937185
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": true,
+        "activeShadowSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-firefox-workspace-air-gltf-shadow-map.png",
+      "screenshotSha256": "3cff7799d999211afdb8a87ad85221c9513daa0516ba8961d87705004b7c3eec",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 16995,
+        "litRatio": 0.8553095118268746,
+        "meanRGB": [
+          71.99456467035732,
+          68.89934574735783,
+          51.72234524408656
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-firefox-workspace-builtin-standard-control.png",
+      "screenshotSha256": "732ef0bb0d840229efff87bc9ea4ecbb6555e727aebccbea2bbc2c3d22c73a19",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-firefox-installed-package-air-gltf-standard.png",
+      "screenshotSha256": "af182342f1dd646e06c1703df9280020f6bba7af8d9ca76295d5bee1817a1276",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "air-gltf-shadow-map",
+      "pixels": {
+        "visible": 19868,
+        "lit": 16983,
+        "litRatio": 0.8547916247231729,
+        "meanRGB": [
+          70.32791423394403,
+          65.71517012281055,
+          50.73414535937185
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": true,
+        "activeShadowSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-firefox-installed-package-air-gltf-shadow-map.png",
+      "screenshotSha256": "3cff7799d999211afdb8a87ad85221c9513daa0516ba8961d87705004b7c3eec",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 16995,
+        "litRatio": 0.8553095118268746,
+        "meanRGB": [
+          71.99456467035732,
+          68.89934574735783,
+          51.72234524408656
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-firefox-installed-package-builtin-standard-control.png",
+      "screenshotSha256": "732ef0bb0d840229efff87bc9ea4ecbb6555e727aebccbea2bbc2c3d22c73a19",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-firefox-installed-package-min-air-gltf-standard.png",
+      "screenshotSha256": "af182342f1dd646e06c1703df9280020f6bba7af8d9ca76295d5bee1817a1276",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "air-gltf-shadow-map",
+      "pixels": {
+        "visible": 19868,
+        "lit": 16983,
+        "litRatio": 0.8547916247231729,
+        "meanRGB": [
+          70.32791423394403,
+          65.71517012281055,
+          50.73414535937185
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": true,
+        "activeShadowSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-firefox-installed-package-min-air-gltf-shadow-map.png",
+      "screenshotSha256": "3cff7799d999211afdb8a87ad85221c9513daa0516ba8961d87705004b7c3eec",
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 16995,
+        "litRatio": 0.8553095118268746,
+        "meanRGB": [
+          71.99456467035732,
+          68.89934574735783,
+          51.72234524408656
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-firefox-installed-package-min-builtin-standard-control.png",
+      "screenshotSha256": "732ef0bb0d840229efff87bc9ea4ecbb6555e727aebccbea2bbc2c3d22c73a19",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-webkit-workspace-air-gltf-standard.png",
+      "screenshotSha256": "54c7439b1cded2bd43461935e1dd4fa1b4cf4840d7320f98f71c550257f11848",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "air-gltf-shadow-map",
+      "pixels": {
+        "visible": 19868,
+        "lit": 16983,
+        "litRatio": 0.8547916247231729,
+        "meanRGB": [
+          70.32791423394403,
+          65.71517012281055,
+          50.73414535937185
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": true,
+        "activeShadowSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-webkit-workspace-air-gltf-shadow-map.png",
+      "screenshotSha256": "3c38874929218bcbd98c2a3e47dba073f023c19210fbb45e0d329ac2e1c5a393",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "workspace",
+      "bundleSha256": "006ae858d4e75dcb4c716afccd2eedcbefe81300304cb0cfca9d1fffa918c03e",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 16995,
+        "litRatio": 0.8553095118268746,
+        "meanRGB": [
+          71.99456467035732,
+          68.89934574735783,
+          51.72234524408656
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-webkit-workspace-builtin-standard-control.png",
+      "screenshotSha256": "2d78c76d15b69213d06c2c65da01d6ce58584399733f6ab64afca47fb15b453f",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-webkit-installed-package-air-gltf-standard.png",
+      "screenshotSha256": "54c7439b1cded2bd43461935e1dd4fa1b4cf4840d7320f98f71c550257f11848",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "air-gltf-shadow-map",
+      "pixels": {
+        "visible": 19868,
+        "lit": 16983,
+        "litRatio": 0.8547916247231729,
+        "meanRGB": [
+          70.32791423394403,
+          65.71517012281055,
+          50.73414535937185
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": true,
+        "activeShadowSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-webkit-installed-package-air-gltf-shadow-map.png",
+      "screenshotSha256": "3c38874929218bcbd98c2a3e47dba073f023c19210fbb45e0d329ac2e1c5a393",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "installed-package",
+      "bundleSha256": "819cc2af55bf7db9690987b6076500e36d0b6cc06546c8fa6fc374d8e37f5628",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 16995,
+        "litRatio": 0.8553095118268746,
+        "meanRGB": [
+          71.99456467035732,
+          68.89934574735783,
+          51.72234524408656
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-webkit-installed-package-builtin-standard-control.png",
+      "screenshotSha256": "2d78c76d15b69213d06c2c65da01d6ce58584399733f6ab64afca47fb15b453f",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "air-gltf-standard",
+      "pixels": {
+        "visible": 19870,
+        "lit": 17489,
+        "litRatio": 0.8801711122294917,
+        "meanRGB": [
+          93.33019627579266,
+          79.31197785606442,
+          58.46064418721691
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-webkit-installed-package-min-air-gltf-standard.png",
+      "screenshotSha256": "54c7439b1cded2bd43461935e1dd4fa1b4cf4840d7320f98f71c550257f11848",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "air-gltf-shadow-map",
+      "pixels": {
+        "visible": 19868,
+        "lit": 16983,
+        "litRatio": 0.8547916247231729,
+        "meanRGB": [
+          70.32791423394403,
+          65.71517012281055,
+          50.73414535937185
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "air-gltf-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": true,
+        "activeShadowSampler": true,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-webkit-installed-package-min-air-gltf-shadow-map.png",
+      "screenshotSha256": "3c38874929218bcbd98c2a3e47dba073f023c19210fbb45e0d329ac2e1c5a393",
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.5",
+      "candidate": "installed-package-min",
+      "bundleSha256": "76469aa975e782d58ea395af3e8ea3610e6ff44eeeb2d0f5bd1da4d1ada96d9a",
+      "effect": "builtin-standard-control",
+      "pixels": {
+        "visible": 19870,
+        "lit": 16995,
+        "litRatio": 0.8553095118268746,
+        "meanRGB": [
+          71.99456467035732,
+          68.89934574735783,
+          51.72234524408656
+        ],
+        "meshes": 1,
+        "textures": 1,
+        "animations": 3,
+        "effects": [
+          "builtin-standard"
+        ],
+        "albedoTextureBound": true,
+        "activeAlbedoSampler": true,
+        "shadowMapEnabled": false,
+        "activeShadowSampler": false,
+        "glError": 0
+      },
+      "errors": [],
+      "screenshot": "docs/evidence/examples/competitive-benchmark/package-fox-shadow/fox-webkit-installed-package-min-builtin-standard-control.png",
+      "screenshotSha256": "2d78c76d15b69213d06c2c65da01d6ce58584399733f6ab64afca47fb15b453f",
+      "ok": true
+    }
+  ],
+  "comparisons": [
+    {
+      "engine": "chromium",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "effect": "air-gltf-shadow-map",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "effect": "air-gltf-shadow-map",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "chromium",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "effect": "air-gltf-shadow-map",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "effect": "air-gltf-shadow-map",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "firefox",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "effect": "air-gltf-standard",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "effect": "air-gltf-shadow-map",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "effect": "air-gltf-shadow-map",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package",
+      "maxRGBDifference": 0,
+      "ok": true
+    },
+    {
+      "engine": "webkit",
+      "effect": "builtin-standard-control",
+      "candidate": "installed-package-min",
+      "maxRGBDifference": 0,
+      "ok": true
+    }
+  ],
+  "candidateDrift": false,
+  "ok": true
+}

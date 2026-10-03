@@ -8,7 +8,7 @@
  *  - emissive: `s.emissive` scaled by .x
  *  - ior:      specularIntensity scales by .y so the engine base F0 0.04 = 0.08*0.5
  *              becomes iorF0 = ((ior-1)/(ior+1))^2 (ior 1.5 is the identity)
- *  - specular: F0 mix scaled by .z, optionally modulated by specularTexture.G (x2) and
+ *  - specular: F0 mix scaled by .z, optionally modulated by specularTexture.A and
  *              specularColorTexture.RGB, sampled with per-slot UV transforms.
  *
  * When no physical extension is active the parameters stay (1,1,1,1), the maps are absent,
@@ -391,11 +391,21 @@ export function gltfPhysicalEffect (): EffectAsset {
             if (!frag.includes(returnAnchor)) { throw new Error(`physical effect: return missing in ${shader.name} [${language}]`); }
             frag = frag.replace(returnAnchor, transmission);
             const modulate = [
+                '#if USE_AIR_TRANSMISSION',
+                `airTrFactorTex = ${TRANSMISSION_CONSTANT}.x;`,
+                `airThickTex = ${TRANSMISSION_CONSTANT}.z;`,
+                '#if USE_AIR_TRANSMISSION_MAP',
+                `airTrFactorTex *= ${tex('transmissionMap', 'TRANSMISSION_UV', 'airTransmission')}.r;`,
+                '#endif',
+                '#if USE_AIR_VOLUME_THICKNESS_MAP',
+                `airThickTex *= ${tex('volumeThicknessMap', 'VOLUMETHICKNESS_UV', 'airVolumeThickness')}.g;`,
+                '#endif',
+                '#endif',
                 '#if USE_AIR_SPECULAR_MAP',
                 `airSpecScale = ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.a;`, // spec: strength is the ALPHA channel, no 2x
                 '#endif',
                 '#if USE_AIR_SPECULAR_COLOR_MAP',
-                `airSpecColor = ${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb;`,
+                `airSpecColor = SRGBToLinear(${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb);`,
                 '#endif',
                 '#if USE_AIR_CLEARCOAT',
                 `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`,
@@ -470,8 +480,8 @@ export function gltfPhysicalEffect (): EffectAsset {
                 '{',
                 // Height->normal via screen-space derivatives: solve the world position gradient
                 // with the UV Jacobian, then push the surface normal against it (bumpFactor scales h).
-                "float bh = ${tex('bumpMap', 'BUMP_UV', 'airBump')}.r * ${BUMP_CONSTANT}.x;",
-                "vec2 buv = " + "${textureUVExpression('BUMP_UV', 'airBump')};",
+                `float bh = ${tex('bumpMap', 'BUMP_UV', 'airBump')}.r * ${BUMP_CONSTANT}.x;`,
+                `vec2 buv = ${textureUVExpression('BUMP_UV', 'airBump')};`,
                 'vec2 dbh = vec2(dFdx(bh), dFdy(bh));',
                 'vec2 duvdx = vec2(dFdx(buv.x), dFdy(buv.x));',
                 'vec2 duvdy = vec2(dFdx(buv.y), dFdy(buv.y));',
@@ -488,7 +498,10 @@ export function gltfPhysicalEffect (): EffectAsset {
             ].join(nl);
             const mainAnchor = 'StandardSurface s; surf(s);';
             if (!frag.includes(mainAnchor)) { throw new Error(`physical effect: '${mainAnchor}' missing in ${shader.name} [${language}]`); }
-            frag = frag.replace(mainAnchor, `${mainAnchor}\n${modulate}`);
+            // Forward-add, forward-base and deferred paths each have their own main.
+            // Replacing only the first anchor leaves the default forward-base path
+            // with file-global defaults, despite live uniforms and successful draws.
+            frag = frag.split(mainAnchor).join(`${mainAnchor}\n${modulate}`);
             stage.frag = frag;
         }
 

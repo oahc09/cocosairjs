@@ -1,0 +1,15 @@
+{
+  "modelId": "gpt-6-luna",
+  "reasoningEffort": "high",
+  "selectionSource": "trusted-user-request",
+  "runtimeId": "codex-app-subagent",
+  "providerId": null,
+  "providerUnavailableReason": "Record the actual host/provider route if exposed; do not infer it from a model alias.",
+  "modelRevision": null,
+  "modelRevisionUnavailableReason": "The desktop host does not expose an immutable provider model revision.",
+  "observability": {
+    "observedExecutionEvents": "official read_thread event IDs for new agentThreadId",
+    "agentToolCalls": null,
+    "tokens": null
+  }
+}

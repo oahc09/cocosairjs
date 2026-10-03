@@ -16,3 +16,4 @@ export * from './audio-service';
 export * from './utils';
 export * from './assets/gltf';
 export * from './rendering/transmission-capture';
+export { createAirUnlitFogEffect } from './effects/unlit-fog';

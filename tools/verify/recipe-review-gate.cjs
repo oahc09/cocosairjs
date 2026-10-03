@@ -1,3 +1,10 @@
+const scopeArg=process.argv.slice(2).find(arg=>arg.startsWith("--scope="));
+const requestedScope=scopeArg?scopeArg.slice(8):"legacy30";
+if(requestedScope==="competitive-batching"){
+    require("./competitive-batching-gate.cjs").run();
+}else if(requestedScope!=="legacy30"){
+    console.error("Unknown recipe gate scope: "+requestedScope);process.exitCode=2;
+}else{
 const fs=require('fs');const path=require('path');const esbuild=require('esbuild');const Module=require('module');
 const root=path.resolve(__dirname,'../..');
 function load(file){const out=esbuild.buildSync({entryPoints:[path.join(root,file)],bundle:true,write:false,platform:'node',format:'cjs'});const mod=new Module(file,module);mod.paths=module.paths;mod._compile(out.outputFiles[0].text,file);return mod.exports;}
@@ -33,3 +40,5 @@ const report={measuredAt:new Date().toISOString(),status:blockers.length?'BLOCKE
 fs.writeFileSync(path.join(root,'docs/evidence/v06-review-gate.json'),JSON.stringify(report,null,2)+'\n');
 const lines=['# V0.6 Final Gate（自动生成）','',`状态：**${report.status}**。生成时间：${report.measuredAt}。`,'','本文件由 `node tools/verify/recipe-review-gate.cjs` 从本轮证据生成，禁止手工填写全绿结论。','',`- Golden Reference：${refPass?'通过':'未通过'}。`,`- Catalog Runtime：${catalog.pass}/${catalog.total}，分布 ${JSON.stringify(catalog.counts)}。`,`- Agent：${metrics.agentPass}/${metrics.eligibleTrials}；First Compile：${metrics.firstCompileSuccessRate}，Type-B 分母 ${metrics.eligibleTypeBTrials}；成功 repair 中位数 ${metrics.medianRepairSuccessful}。`,`- Recipe：总数 ${recipes.catalogTotal}，validated（含 stable）${recipes.validatedCount}，stable ${recipes.stableCount}；evidence failures ${evidenceFailures.length}。`,`- Jest：${report.tests?`${report.tests.suites} suites / ${report.tests.passed} of ${report.tests.tests} tests；success=${report.tests.success}`:'未记录'}。`,`- 证据 revision：HEAD ${report.revision.head??'（无 git）'}，记录值 ${report.revision.recorded.join(' / ')}，无法归因 ${report.revision.failures.length} 项。`,'','## 待完成门禁','',...blockers.map(value=>'- '+value),'','## 证据与复现','','- `docs/evidence/recipes-browser.json`：30 条 composite browser run。','- `docs/evidence/recipes/`：逐 Recipe 截图与状态快照。','- `node tools/benchmark/recipes/run-recipes-browser.cjs`：重跑 Recipe。','- `node tools/verify/recipe-review-gate.cjs`：严格校验证据并生成本报告。',''];
 const reportDir=path.join(root,'build/reports');fs.mkdirSync(reportDir,{recursive:true});fs.writeFileSync(path.join(reportDir,'v06-final-gate.md'),lines.join('\n'));console.log(JSON.stringify(report,null,2));process.exitCode=blockers.length?1:0;
+
+}

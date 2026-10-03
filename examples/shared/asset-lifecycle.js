@@ -4,6 +4,8 @@
  * 示例把自己真实持有的资源交给本合同；浏览器验证器在取完截图后调用 window.__lifecycle()，
  * 本合同执行一轮「释放 → 等待延迟销毁 → 泄漏核对 → 重新获取并挂回场景」并回报规范化结果。
  * 这样"资源已释放"是机器可验收的合同，而不是源码里一行从未被证明执行过的 destroy()。
+ * MaterialInstance 等即时 GPU 资源可保持 CCObject.isValid=true；显式 released() 应检查真实
+ * pass/buffer 释放与调用事实，不得修改 _objFlags 或仅返回一个虚假的“已释放”常量。
  */
 import { isValid } from 'cocosair';
 
@@ -22,16 +24,30 @@ function ownedList(list) {
     return (list || []).filter((entry) => entry && entry.ref);
 }
 
-function leakedNames(list) {
+function leakedNames(list, errors) {
     return ownedList(list)
-        .filter((entry) => isValid(entry.ref))
+        .filter((entry) => {
+            if (entry.released === undefined) return isValid(entry.ref);
+            if (typeof entry.released !== 'function') {
+                errors.push(`release check ${entry.name || 'unnamed'}: released must be a function`);
+                return true;
+            }
+            try {
+                const released = entry.released();
+                if (typeof released !== 'boolean') throw new Error('released must return a boolean');
+                return !released;
+            } catch (error) {
+                errors.push(`release check ${entry.name || 'unnamed'}: ${messageOf(error)}`);
+                return true;
+            }
+        })
         .map((entry) => entry.name || 'unnamed');
 }
 
 /**
  * @param {object} contract
  * @param {string} contract.label                       报告标识（示例名）
- * @param {() => Array<{name: string, ref: object}>} contract.hold       当前持有的资源
+ * @param {() => Array<{name: string, ref: object, released?: () => boolean}>} contract.hold 当前持有的资源；即时 GPU 资源可选真实释放谓词
  * @param {() => (void | Promise<void>)} contract.release                 真实释放路径
  * @param {() => Promise<Array<{name: string, ref: object}>>} contract.reacquire  重新获取并挂回场景
  */
@@ -62,12 +78,26 @@ export function installAssetLifecycle(contract) {
             report.errors.push('release: ' + messageOf(error));
         }
         await settle();
-        report.leaked = leakedNames(held);
+        report.leaked = leakedNames(held, report.errors);
         report.released = report.leaked.length === 0;
         try {
             const reacquired = ownedList(await contract.reacquire());
             await settle();
-            const invalid = reacquired.filter((entry) => !isValid(entry.ref)).map((entry) => entry.name || 'unnamed');
+            const invalid = reacquired
+                .filter((entry) => {
+                    if (!isValid(entry.ref)) return true;
+                    if (entry.released === undefined) return false;
+                    try {
+                        if (typeof entry.released !== 'function') throw new Error('released must be a function');
+                        const released = entry.released();
+                        if (typeof released !== 'boolean') throw new Error('released must return a boolean');
+                        return released;
+                    } catch (error) {
+                        report.errors.push(`reacquire check ${entry.name || 'unnamed'}: ${messageOf(error)}`);
+                        return true;
+                    }
+                })
+                .map((entry) => entry.name || 'unnamed');
             report.reloaded = reacquired.length > 0 && invalid.length === 0;
             if (!report.reloaded) {
                 report.errors.push(

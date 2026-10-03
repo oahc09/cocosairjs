@@ -104,6 +104,14 @@
     "bytes": 60432
   },
   {
+    "name": "Fox",
+    "file": "Fox.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/Fox/glTF-Binary/Fox.glb",
+    "sha256": "d97044e701822bac5a62696459b27d7b375aada5de8574ed4362edbba94771f7",
+    "bytes": 162852
+  },
+  {
     "name": "Material_AlphaBlend_00",
     "file": "Material_AlphaBlend_00.gltf",
     "revision": "3d99767e9a67fbfe109f0d298c1e8d909bcac9db",

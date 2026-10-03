@@ -16,13 +16,32 @@ import { GLTFParserContext } from './parser-context';
 import { check, item } from './schema';
 import { makeNodes, NodeLayout } from './nodes';
 import { GLTFWinding } from './winding';
+import { Component } from '../../../cocos/scene-graph/component';
+import { ccclass, executionOrder } from 'cc.decorator';
 import type { GLTFInstantiationContext } from './extension-registry';
 
 let parsedAssetId = 0;
 
+/** Reapply instance overrides after native Animation.onLoad rebuilds its state table. */
+@ccclass('air.GLTFAnimationPolicy')
+// Native Animation uses executionOrder(99); policy initialization must follow it.
+@executionOrder(100)
+class GLTFAnimationPolicy extends Component {
+    public declare animation: Animation;
+    public readonly loops = new Map<string, boolean>();
+    public onLoad (): void {
+        this.loops.forEach((loop, name) => {
+            const state = this.animation.getState(name);
+            if (state) { state.wrapMode = loop ? AnimationClip.WrapMode.Loop : AnimationClip.WrapMode.Normal; }
+        });
+    }
+}
+
 export interface GLTFInstance {
     readonly root: Node;
     readonly animations: readonly AnimationClip[];
+    /** Configures native instance states without modifying shared clips. Resets selected state times. */
+    setAnimationLoop(loop: boolean, clipName?: string): void;
     /** Stops and destroys this instance. GPU resources follow Cocos deferred destruction. */
     dispose(): void;
 }
@@ -138,10 +157,13 @@ export class GLTFAsset extends Asset {
                 }
             }
             const animation = root.addComponent(Animation);
+            const animationPolicy = root.addComponent(GLTFAnimationPolicy);
+            animationPolicy.animation = animation;
             winding.lateUpdate();
             animation.clips = clips.slice(); animation.playOnLoad = false;
             ++this.instances; this.addRef();
             let disposed = false;
+            const instanceClips = clips;
             // Also handles scene destruction by the application, not only instance.dispose().
             root.once(Node.EventType.NODE_DESTROYED, () => {
                 // NODE_DESTROYED precedes child/component teardown. Release GPU assets afterwards.
@@ -151,7 +173,22 @@ export class GLTFAsset extends Asset {
                     if (this.destroyRequested && this.instances === 0) { this.releaseResources(); }
                 });
             });
-            return { root, animations: clips, dispose: (): void => {
+            return { root, animations: instanceClips, setAnimationLoop: (loop: boolean, clipName?: string): void => {
+                const invalid = (message: string): TypeError => Object.assign(new TypeError(`[AIR_E_GLTF_ANIMATION_OPTIONS] ${message}`), {
+                    code: 'AIR_E_GLTF_ANIMATION_OPTIONS', clipName,
+                });
+                if (disposed || !root.isValid) { throw invalid('The glTF instance has been disposed.'); }
+                if (typeof loop !== 'boolean' || (clipName !== undefined && typeof clipName !== 'string')) {
+                    throw invalid('setAnimationLoop expects a boolean and an optional clip name.');
+                }
+                const selected = clipName === undefined ? instanceClips : instanceClips.filter((clip) => clip.name === clipName);
+                if (clipName !== undefined && !selected.length) { throw invalid(`Unknown animation clip "${clipName}"; available clips: ${instanceClips.map((clip) => clip.name).join(', ')}.`); }
+                // getState initializes the native evaluator before applying the per-instance override.
+                const states = selected.map((clip) => animation.getState(clip.name));
+                if (states.some((state) => !state)) { throw invalid('A selected native animation state was removed; restore the clip before configuring it.'); }
+                selected.forEach((clip) => { animationPolicy.loops.set(clip.name, loop); });
+                states.forEach((state) => { state.wrapMode = loop ? AnimationClip.WrapMode.Loop : AnimationClip.WrapMode.Normal; });
+            }, dispose: (): void => {
                 if (disposed) { return; } disposed = true;
                 animation.stop(); root.active = false; root.destroy();
             } };

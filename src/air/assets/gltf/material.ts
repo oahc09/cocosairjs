@@ -340,9 +340,16 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
         }
         material.initialize({ effectAsset: selectedEffect, defines: { ...defines, ...definesForPhysical },
             states: { rasterizerState: { cullMode: source.doubleSided ? CullMode.NONE : CullMode.BACK },
-                depthStencilState: { depthTest: true, depthWrite: alpha !== 'BLEND' },
-                blendState: { targets: [{ blend: alpha === 'BLEND', blendSrc: BlendFactor.SRC_ALPHA,
-                    blendDst: BlendFactor.ONE_MINUS_SRC_ALPHA, blendSrcAlpha: BlendFactor.ONE, blendDstAlpha: BlendFactor.ONE_MINUS_SRC_ALPHA }] } } });
+                // Opaque/masked materials retain native per-pass depth and blend states:
+                // forward-add must accumulate ONE/ONE without rewriting depth. Applying
+                // the base pass's blend=false to every pass overwrites the lit base image.
+                // BLEND uses a single main pass, so its alpha state is safe to override.
+                ...(alpha === 'BLEND' ? {
+                    depthStencilState: { depthTest: true, depthWrite: false },
+                    blendState: { targets: [{ blend: true, blendSrc: BlendFactor.SRC_ALPHA,
+                        blendDst: BlendFactor.ONE_MINUS_SRC_ALPHA, blendSrcAlpha: BlendFactor.ONE,
+                        blendDstAlpha: BlendFactor.ONE_MINUS_SRC_ALPHA }] },
+                } : {}) } });
         material.name = source.name || 'glTF material';
         material.setProperty('albedo', new Vec4(...factor as [number, number, number, number]));
         material.setProperty('albedoScaleAndCutoff', new Vec4(1, 1, 1, source.alphaCutoff ?? 0.5));

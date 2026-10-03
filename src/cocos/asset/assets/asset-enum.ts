@@ -83,6 +83,17 @@ export enum PixelFormat {
      */
     RGBA8888 = Format.RGBA8,
     /**
+     * @en sRGB-encoded RGB. Sampling decodes RGB into linear values in hardware.
+     * Use with an explicit shader color pipeline, not an additional software sRGB decode.
+     * @zh sRGB 编码的 RGB；采样时硬件解码为线性值，不能再叠加软件解码。
+     */
+    SRGB888 = Format.SRGB8,
+    /**
+     * @en sRGB-encoded RGB with linear alpha. RGB is hardware-decoded; alpha is unchanged.
+     * @zh sRGB 编码 RGB 与线性 alpha；硬件只解码 RGB，alpha 保持原值。
+     */
+    SRGBA8888 = Format.SRGB8_A8,
+    /**
      * @en
      * 32-bit pixel format containing blue, green, red, and alpha channels: BGRA8888
      * @zh

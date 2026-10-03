@@ -23,6 +23,7 @@
 */
 
 import { v3, Vec3 } from '../../core';
+import { isFiniteShaderNumber, propertyTypeError, validateLightNumber } from '../../core/platform/property-validation';
 import { TransformBit } from '../../scene-graph/node-enum';
 import { RenderScene } from '../core/render-scene';
 import { Node } from '../../scene-graph';
@@ -92,6 +93,9 @@ export class Light {
      * @zh 光源的颜色
      */
     set color (color: Vec3) {
+        if (!(color instanceof Vec3) || ![color.x, color.y, color.z].every(isFiniteShaderNumber)) {
+            throw propertyTypeError('AIR_E_LIGHT_TYPE', 'render-scene Light.color', 'Vec3 with finite RGB components', 'light.color = new Vec3(1, 1, 1)');
+        }
         this._color.set(color);
         if (this._useColorTemperature) { Vec3.multiply(this._finalColor, this._color, this._colorTempRGB); }
     }
@@ -118,6 +122,7 @@ export class Light {
      * @zh 光源的色温
      */
     set colorTemperature (val: number) {
+        validateLightNumber('render-scene Light.colorTemperature', val);
         this._colorTemp = val;
         ColorTemperatureToRGB(this._colorTempRGB, this._colorTemp);
         if (this._useColorTemperature) { Vec3.multiply(this._finalColor, this._color, this._colorTempRGB); }

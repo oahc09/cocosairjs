@@ -1,7 +1,7 @@
 {
   "engine": "cocosair",
-  "engineVersion": "0.1.0",
-  "generatedAt": "2026-09-23T00:17:57.827Z",
+  "engineVersion": "1.0.0",
+  "generatedAt": "2026-10-03T08:31:32.278Z",
   "catalogRevision": "90d7ede14c7e280af263824604b427a1ca02cb66",
   "decoderManifest": "build/gltf-decoders/MANIFEST.md",
   "performanceBaseline": "docs/reference/verification.md",
@@ -214,8 +214,10 @@
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-20",
-        "evidence": "gltf-transmission-browser.js",
-        "decoder": null
+        "evidence": "competitive-physical-browser.cjs",
+        "decoder": null,
+        "report": "docs/evidence/examples/competitive-benchmark/transmission.json",
+        "detail": "current three-browser transmission/volume/dispersion parameter pixels"
       },
       "officialComparison": {
         "model": "TransmissionTest",
@@ -231,8 +233,10 @@
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-20",
-        "evidence": "gltf-transmission-browser.js",
-        "decoder": null
+        "evidence": "competitive-physical-browser.cjs",
+        "decoder": null,
+        "report": "docs/evidence/examples/competitive-benchmark/transmission.json",
+        "detail": "current three-browser transmission/volume/dispersion parameter pixels"
       },
       "officialComparison": {
         "model": "Volka",
@@ -248,8 +252,10 @@
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-20",
-        "evidence": "gltf-transmission-browser.js",
-        "decoder": null
+        "evidence": "competitive-physical-browser.cjs",
+        "decoder": null,
+        "report": "docs/evidence/examples/competitive-benchmark/transmission.json",
+        "detail": "current three-browser transmission/volume/dispersion parameter pixels"
       },
       "officialComparison": {
         "model": "DispersionTest",

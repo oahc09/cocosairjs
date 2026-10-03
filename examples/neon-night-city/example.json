@@ -1,0 +1,106 @@
+{
+  "id": "neon-night-city",
+  "version": "1.0.0",
+  "title": "Neon Night City: Native Batching",
+  "category": "rendering",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "组合原生实例化、静态合并和动态雨网格，构建满规模夜城并验证真实运动、距离雾和释放",
+    "points": [
+      "240建筑、80车与2400雨粒的实际计数",
+      "窗格矩阵与三种霓虹颜色",
+      "雨网格内部按深度排序",
+      "FPS来自实际渲染回调且不代替GPU或present"
+    ]
+  },
+  "effect": {
+    "functional": "固定满规模城市：实例化楼/车、静态窗格、动态雨；Toggle fog保持同一变体并切换UBO距离参数。reset不刷新页面，保持真实计数，__lifecycle释放重建资产。",
+    "visual": "深蓝夜空下，规则建筑群构成低角度天际线；青、洋红、金色窗格矩阵清晰，雨形成前景细密亮线，街道两色车流持续移动，远处建筑经雾衰减。"
+  },
+  "api": {
+    "primary": ["createAirApp", "utils.MeshUtils.createDynamicMesh", "Mesh.updateSubMesh"],
+    "supporting": [],
+    "claims": ["createAirApp", "utils.MeshUtils.createDynamicMesh", "Mesh.updateSubMesh"],
+    "forbiddenShortcut": [
+      "用大块发光面冒充窗阵",
+      "缩规模或虚报计数",
+      "FPS字段返回常数",
+      "用DOM或视频充当场景",
+      "以rAF达到60推导GPU余量"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L26",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.MeshUtils.createDynamicMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L254",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Mesh.updateSubMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L281",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": ["rendering"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Moon", "City", "Window Grid", "Rain"]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击Toggle fog",
+        "expected": "fogEnabled翻转且远处天际线亮度变化",
+        "buttonText": "Toggle fog"
+      },
+      {
+        "action": "点击Reset",
+        "expected": "计数保持满规模，雾恢复，车/雨继续运动",
+        "buttonText": "Reset"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创程序化网格与shader，无第三方图片/模型"
+  },
+  "benchmarkOrigin": {
+    "id": "E07",
+    "version": "1.0.0",
+    "source": "public briefs/E07/spec.json; original implementation"
+  },
+  "promotion": {
+    "spec": "f8d0a833da2d",
+    "source": "1804d7a50f05df91",
+    "candidate": "ba485e1b91643c46",
+    "verified": 3,
+    "attested": 0,
+    "units": 3
+  }
+}

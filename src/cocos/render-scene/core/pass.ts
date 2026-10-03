@@ -37,7 +37,7 @@ import { EffectAsset } from '../../asset/assets/effect-asset';
 import { IProgramInfo, programLib } from './program-lib';
 import {
     MacroRecord, MaterialProperty, customizeType, getBindingFromHandle, getDefaultFromType, getStringFromType,
-    getOffsetFromHandle, getTypeFromHandle, type2reader, type2writer, getCountFromHandle, type2validator,
+    getOffsetFromHandle, getTypeFromHandle, type2reader, type2writer, getCountFromHandle, validateUniformValue,
 } from './pass-utils';
 import { RenderPassStage, RenderPriority, SetIndex } from '../../rendering/define';
 import { InstancedBuffer } from '../../rendering/instanced-buffer';
@@ -291,11 +291,8 @@ export class Pass {
         const binding = getBindingFromHandle(handle);
         const type = getTypeFromHandle(handle);
         const ofs = getOffsetFromHandle(handle);
+        validateUniformValue(type, value, getCountFromHandle(handle), () => this._uniformName(handle));
         const block = this._getBlockView(type, binding);
-        if (DEBUG) {
-            const validator = type2validator[type];
-            assertID(Boolean(validator && validator(value)), 12011, binding, Type[type]);
-        }
         type2writer[type](block, value, ofs);
         this._rootBufferDirty = true;
     }
@@ -323,6 +320,7 @@ export class Pass {
     public setUniformArray (handle: number, value: MaterialProperty[]): void {
         const binding = getBindingFromHandle(handle);
         const type = getTypeFromHandle(handle);
+        validateUniformValue(type, value, getCountFromHandle(handle), () => this._uniformName(handle), true);
         const stride = GetTypeSize(type) >> 2;
         const block = this._getBlockView(type, binding);
         let ofs = getOffsetFromHandle(handle);
@@ -331,6 +329,11 @@ export class Pass {
             type2writer[type](block, value[i], ofs);
         }
         this._rootBufferDirty = true;
+    }
+
+    private _uniformName (handle: number): string {
+        return Object.keys(this._propertyHandleMap).find((name) => this._propertyHandleMap[name] === handle)
+            || `uniform handle ${handle}`;
     }
 
     /**

@@ -21,8 +21,8 @@ AIR 的动态纹理机制：`SimpleTexture.uploadData(source)`（d.ts 43970）
 | ----------------------------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `Texture2D.reset(info)`                   | d.ts 23343；`ITexture2DCreateInfo` 43883 | `{width, height, format?, mipmapLevel?}` 重建 GPU 资源；注释明示 reset 后必须显式 `uploadData`                                                  |
 | `uploadData(source, level?, arrayIndex?)` | d.ts 43970                               | 收 `HTMLCanvasElement / HTMLImageElement / ArrayBufferView / ImageBitmap`；文档承诺"图像小于 mipmap 尺寸时从左上角局部更新"（局部更新本例未用） |
-| `Texture2D.PixelFormat`                   | d.ts 39136 起                            | `RGBA8888 = 35`；枚举**无 sRGB 变体**——canvas 色值按线性域参与光照，画面偏暗属预期（§3）                                                        |
-| `setWrapMode` / `WrapMode`                | d.ts 39461 注                            | 非 2 次幂尺寸只允许 CLAMP_TO_EDGE；本例 256×256 是 POT，CLAMP 照常够用                                                                          |
+| `Texture2D.PixelFormat`                   | 公共枚举                                 | `RGBA8888` 保持默认；`SRGB888` / `SRGBA8888` 提供显式硬件解码路径，须配合自己的颜色处理 effect，不能叠加标准材质现有软件解码                    |
+| `setWrapMode` / `WrapMode`                | 公共 API                                 | 本例使用 CLAMP_TO_EDGE；浏览器目标为 WebGL2，不应把 WebGL1 的 NPOT 限制当作当前全局限制                                                         |
 | `getGFXTexture()`                         | d.ts 43939                               | 底层 gfx 纹理句柄；探针读回非 null=GPU 资源真实存在                                                                                             |
 | `defines: { USE_ALBEDO_MAP: true }`       | [textures](textures.md) 篇同款           | `builtin-standard` 不开此宏则 `mainTexture` 不参与着色                                                                                          |
 
@@ -56,8 +56,9 @@ AIR 的动态纹理机制：`SimpleTexture.uploadData(source)`（d.ts 43970）
 **探针 dump**：500ms 窗口 `uploadsDelta=31`（≈62 次/秒，逐帧重传成立、无报错堆积）；
 `texture.width/height=256/256`、`getGFXTexture()` 非 null；覆盖层 `uploads=93, frame=93` 与帧号 1:1。
 
-**色彩口径提醒**：canvas 画的 `#1c3a66` 深蓝上屏后明显更暗——`PixelFormat` 枚举无 sRGB 变体（§1），
-贴图色进线性光照域乘过光强。要"所见即所得"的亮色文字面板，用 `builtin-unlit` + `mainTexture`
+**色彩口径提醒**：历史示例中 canvas 画的 `#1c3a66` 深蓝上屏后明显更暗，不能仅据此归因为缺少 sRGB 后端格式。
+当前公开枚举提供 `SRGB888` / `SRGBA8888`，但标准材质已有软件解码，不能直接替换格式造成重复解码。
+显式颜色链路与等价输入验收见[纹理颜色空间](../reference/texture-color-space.md)。要"所见即所得"的亮色文字面板，用 `builtin-unlit` + `mainTexture`
 （unlit 不吃光照，[backgrounds](backgrounds.md) 篇实测近原色）比调灯更省事。本例保留 standard
 是为了顺带演示 `USE_ALBEDO_MAP` 在动态纹理下同样成立。
 

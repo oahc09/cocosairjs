@@ -28,13 +28,12 @@ import { EffectAsset } from './effect-asset';
 import { Texture, Type } from '../../gfx';
 import { TextureBase } from './texture-base';
 import { IPassInfoFull, Pass, PassOverrides } from '../../render-scene/core/pass';
-import { getTypeFromHandle, MacroRecord, MaterialProperty } from '../../render-scene/core/pass-utils';
+import { getTypeFromHandle, getCountFromHandle, validateUniformValue, MacroRecord, MaterialProperty } from '../../render-scene/core/pass-utils';
 import { Color, warnID, Vec4, cclegacy } from '../../core';
+import { propertyTypeError } from '../../core/platform/property-validation';
 import { SRGBToLinear } from '../../rendering/pipeline-funcs';
 import { Renderer } from '../../misc/renderer';
 import type { Root } from '../../root';
-
-const v4_1 = new Vec4();
 
 /**
  * @en The basic infos for material initialization.
@@ -301,13 +300,26 @@ export class Material extends Asset {
      * @zh 设置此属性的 pass 索引，如果没有指定，则会设置此属性到所有 pass 上。
      */
     public setProperty (name: string, val: MaterialPropertyFull | MaterialPropertyFull[], passIdx?: number): void {
+        // Validate all matching passes before writing any of them. Failed writes must
+        // not poison earlier passes or overwrite the material's retained property.
+        const targets = passIdx === undefined ? this._passes : [this._passes[passIdx]];
+        const preparedUniforms = new Map<Pass, MaterialProperty | MaterialProperty[]>();
+        for (const pass of targets) {
+            if (!pass) { continue; }
+            const handle = pass.getHandle(name);
+            if (!handle || val === null) { continue; }
+            const type = getTypeFromHandle(handle);
+            if (type < (Type.SAMPLER1D as number)) {
+                preparedUniforms.set(pass, this._prepareUniformProperty(pass, name, val as MaterialProperty | MaterialProperty[]));
+            }
+        }
         let success = false;
         if (passIdx === undefined) { // try set property for all applicable passes
             const passes = this._passes;
             const len = passes.length;
             for (let i = 0; i < len; i++) {
                 const pass = passes[i];
-                if (this._uploadProperty(pass, name, val)) {
+                if (this._uploadProperty(pass, name, val, preparedUniforms.get(pass))) {
                     this._props[pass.propertyIndex][name] = val;
                     success = true;
                 }
@@ -317,7 +329,7 @@ export class Material extends Asset {
                 warnID(16372, passIdx);
             }
             const pass = this._passes[passIdx];
-            if (this._uploadProperty(pass, name, val)) {
+            if (this._uploadProperty(pass, name, val, preparedUniforms.get(pass))) {
                 this._props[pass.propertyIndex][name] = val;
                 success = true;
             }
@@ -437,7 +449,12 @@ export class Material extends Asset {
                 Object.assign(defines, passInfo.embeddedMacros);
             }
             if (passInfo.switch && !defines[passInfo.switch]) { continue; }
-            const pass = new Pass(cclegacy.director.root as Root);
+            const root = cclegacy.director.root as Root | null;
+            if (!root?.device) {
+                throw propertyTypeError('AIR_E_MATERIAL_NOT_READY', this._effectAsset!.name || 'Material.initialize',
+                    'an initialized renderer before creating material passes', 'await createAirApp({ canvas }); then material.initialize({ effectAsset })');
+            }
+            const pass = new Pass(root);
             pass.initialize(passInfo);
             passes.push(pass);
         }
@@ -476,23 +493,44 @@ export class Material extends Asset {
      * @engineInternal
      * @mangle
      */
-    protected _uploadProperty (pass: Pass, name: string, val: MaterialPropertyFull | MaterialPropertyFull[]): boolean {
+    private _prepareUniformProperty (pass: Pass, name: string, value: MaterialProperty | MaterialProperty[]): MaterialProperty | MaterialProperty[] {
+        const handle = pass.getHandle(name);
+        const type = getTypeFromHandle(handle);
+        const count = getCountFromHandle(handle);
+        const array = Array.isArray(value);
+        validateUniformValue(type, value, count, name, array);
+        const snapshot = (v: MaterialProperty): MaterialProperty => typeof v === 'number' ? v : v.clone();
+        // Keep native array semantics: linear metadata applies to scalar values
+        // only. Arrays retain typed elements, null skips and partial updates.
+        let prepared: MaterialProperty | MaterialProperty[] = array
+            ? (value as MaterialProperty[]).map((v) => v === null ? null : snapshot(v)) as MaterialProperty[]
+            : snapshot(value as MaterialProperty);
+        if (!array && pass.properties[name]?.linear) {
+            const original = prepared as Vec4;
+            const converted = new Vec4();
+            SRGBToLinear(converted, original);
+            converted.w = original.w;
+            prepared = converted;
+        }
+        // Conversion can overflow despite a finite input. Validate every actual
+        // upload before any pass is modified; each pass keeps its own snapshot.
+        validateUniformValue(type, prepared, count, name, array);
+        return prepared;
+    }
+
+    protected _uploadProperty (
+        pass: Pass, name: string, val: MaterialPropertyFull | MaterialPropertyFull[], preparedUniform?: MaterialProperty | MaterialProperty[],
+    ): boolean {
         const handle = pass.getHandle(name);
         if (!handle) { return false; }
         const type = getTypeFromHandle(handle);
         if (type < (Type.SAMPLER1D as number)) {
-            if (Array.isArray(val)) {
-                pass.setUniformArray(handle, val as MaterialProperty[]);
-            } else if (val !== null) {
-                if (pass.properties[name]?.linear) {
-                    const v4 = val as Vec4;
-                    SRGBToLinear(v4_1, v4);
-                    v4_1.w = v4.w;
-                    val = v4_1;
-                }
-                pass.setUniform(handle, val as MaterialProperty);
-            } else {
+            if (val === null) {
                 pass.resetUniform(name);
+            } else {
+                const actual = preparedUniform ?? this._prepareUniformProperty(pass, name, val as MaterialProperty | MaterialProperty[]);
+                if (Array.isArray(actual)) { pass.setUniformArray(handle, actual); }
+                else { pass.setUniform(handle, actual); }
             }
         } else if (Array.isArray(val)) {
             val.forEach((v, i) => {

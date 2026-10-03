@@ -212,3 +212,19 @@ Stable 计数 **131 ≥ 120 达标**；Core VerifiedRate **6.9% → 36%**（294/
 ## 11. 目录与命名整理（2026-09-30）
 
 当前探针目录为 `tools/debug/probes/`，常驻光照诊断与 HDR 标定分别使用 `light-contribution-probe/`、`lights-hdr-calibration/`。§8、§10 的 staging 和 ai/probes 落位是历史决定，不是现行操作入口。工具按用途命名，当前命令与写入范围见 [工具索引](../../tools/README.md)；计划、台账和提示词分别位于 `ai/plans/`、`ai/ledgers/`、`ai/prompts/`。原合同、示例 ID 和运行证据文件名继续保留，路径整理不代表重新采证。
+
+## 12. 竞争基准回灌的实现方建议（2026-10-03）
+
+本节记录当前实施范围和建议，**不是owner批复**，不改变上文任何已有决定。
+任务授权覆盖修复、评估、示例和验证；新增长期SDK框架或改变默认图元合同仍需单独裁决。
+
+| 项                              | 当前证据与已交付范围                                                                                                                             | 实现方建议                                                                                                                                                                                                      | owner批复          |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| CB-04B mesh/pass图元协调        | CB-04A已修静态/动态POINT_LIST=0。当前PSO仍以pass.primitive为准；POINT/LINE示例同时匹配mesh与pass，三浏览器验证真实像素。mesh单参数入口尚未实现。 | 本批按计划允许的文档方案收口，不自动改变显式pass优先级。若后续统一图元来源，另覆盖PSO key、所有绘制队列、instancing IA、子网格替换与阴影。详见 [图元合同](../manual/custom-shaders.md#8-原生点和线的图元合同)。 | 未取得新批复       |
+| CB-20 native GPU instancing     | 原生MeshRenderer共享mesh/material和USE_INSTANCING已存在；256实例1draw、2048实例2draw为固定分组条件下的实测。                                     | 使用现有原生接口和 [三路线Recipe](../manual/batching-recipes.md)，不引入平行InstancedMesh框架，不把内部InstancedBuffer直接当业务资源所有者。                                                                    | 未取得新框架批复   |
+| CB-20 Points / DynamicQuadBatch | 原生POINT_LIST和动态Mesh路径已可运行；本批没有新建Points或DynamicQuadBatch SDK类型。                                                             | 可选AIR装配函数/组件另立计划，产物仍为原生Node/Mesh/Material。必须明确点大小、透明排序、容量、索引、bounds和dispose，不从当前示例推导完整GPU粒子系统已交付。                                                    | 待决定是否另立计划 |
+| CB-20 GPU动画/剔除及E04/E08     | 本批证明现有实例化、点图元和CPU动态几何路径；未证明GPU粒子生命周期、逐实例GPU剔除或完整E04/E08外部验收。                                         | 后续范围单独定义，不自动从能力评估扩成新框架实施。完整依据见 [评估报告](../notes/geometry-batching-assessment.md)。                                                                                             | 待后续范围裁决     |
+
+已实施范围的正式运行、API调用和生命周期证据见 `docs/evidence/examples-verified.json`，
+对应三浏览器结果见 `docs/evidence/browser-matrix/browser-matrix.json`。只有完整标记和适用的源码/candidate/contract指纹匹配时才可采信；
+正在重采的partial报告不是完成证明。这些证据也不构成表中未实施入口或新框架的批复。

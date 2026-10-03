@@ -34,18 +34,18 @@
 
 ## Getting Started（入门）
 
-| 篇目                                                                         | 状态    | 示例                        |
-| ---------------------------------------------------------------------------- | ------- | --------------------------- |
-| [Installation 安装与引入](./installation.md)                                 | FULL    | ▶ `manual-installation`     |
-| [Creating a Scene 创建场景](./creating-a-scene.md)                           | FULL    | ▶ `manual-creating-a-scene` |
-| [Creating Text 创建文字](./creating-text.md)                                 | PARTIAL | –                           |
-| [Drawing Lines 绘制线条](./drawing-lines.md)                                 | PARTIAL | ▶ `manual-drawing-lines`    |
-| [FAQ 常见问题](./faq.md)                                                     | META    | –                           |
-| [Libraries and Plugins 库与插件](./libraries-and-plugins.md)                 | META    | –                           |
-| [Loading 3D Models 加载 3D 模型](./loading-3d-models.md)                     | FULL    | ▶ `manual-loading-models`   |
-| [Uniform Types Uniform 类型](./uniform-types.md)                             | PARTIAL | ▶ `manual-uniform-types`    |
-| [Useful Links 有用链接](./useful-links.md)                                   | META    | –                           |
-| [WebGL Compatibility Check WebGL 兼容性检查](./webgl-compatibility-check.md) | FULL    | ▶ `manual-webgl-compat`     |
+| 篇目                                                                         | 状态    | 示例                                                  |
+| ---------------------------------------------------------------------------- | ------- | ----------------------------------------------------- |
+| [Installation 安装与引入](./installation.md)                                 | FULL    | ▶ `manual-installation`                               |
+| [Creating a Scene 创建场景](./creating-a-scene.md)                           | FULL    | ▶ `manual-creating-a-scene`                           |
+| [Creating Text 创建文字](./creating-text.md)                                 | PARTIAL | –                                                     |
+| [Drawing Lines 绘制线条](./drawing-lines.md)                                 | PARTIAL | ▶ `manual-drawing-lines`                              |
+| [FAQ 常见问题](./faq.md)                                                     | META    | –                                                     |
+| [Libraries and Plugins 库与插件](./libraries-and-plugins.md)                 | META    | –                                                     |
+| [Loading 3D Models 加载 3D 模型](./loading-3d-models.md)                     | FULL    | ▶ `manual-loading-models`                             |
+| [Uniform Types Uniform 类型](./uniform-types.md)                             | PARTIAL | ▶ `manual-uniform-types`                              |
+| [Useful Links 有用链接](./useful-links.md)                                   | META    | –                                                     |
+| [WebGL Compatibility Check WebGL 兼容性检查](./webgl-compatibility-check.md) | FULL    | ▶ `manual-webgl-compat`                               |
 | [Capturing Screenshots 页面截图采集](./capturing-screenshots.md)             | FULL    | – （W03 矩阵实测，验证器 `tools/verify/capture.cjs`） |
 
 ## Next Steps（进阶）
@@ -174,6 +174,18 @@ npm run dev                       # dev server（默认 7454）
 
 手册示例均为**零外部资产**（程序化几何 + inline glTF JSON），不依赖 decoder 注入，
 以仓库根为 web 根的任何静态服务器也可直接打开。
+
+## 程序化场景行为合同
+
+以下专题补充现有API教程，不改变上表篇目的验收范围：
+
+| 专题              | 阅读入口                                                                    | 对应示例                                                 |
+| ----------------- | --------------------------------------------------------------------------- | -------------------------------------------------------- |
+| 图元与effect生成  | [自定义Shader §7–8](custom-shaders.md#7-从声明表生成-effect-json)           | `point-cloud-basics`                                     |
+| 批处理与规模观测  | [三路线Recipe](batching-recipes.md)                                         | `batching-shared`、`batching-merged`、`batching-dynamic` |
+| API长尾与调用语义 | [行为合同](api-behavior-contracts.md)                                       | 原生几何、组件查询与动态mesh                             |
+| 光照单位与夜景    | [固定单位标定](lighting-units.md)、[阴影支持矩阵](shadow-support-matrix.md) | `campfire-night`                                         |
+| 精确unlit雾       | [运行时雾合同](fog-runtime-contract.md)                                     | `fog-accuracy`、`neon-night-city`                        |
 
 ## 验证与台账
 

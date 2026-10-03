@@ -1,0 +1,276 @@
+{
+  "briefId": "E09",
+  "briefVersion": "1.0.0",
+  "frozen": true,
+  "frozenAt": "2026-10-02T00:00:00Z",
+  "briefSha256": "d58aa5b7f4d6ae55b80b6b022cb62e019c37aed71c52deadfd358f9dc9eece9d",
+  "title": "珠宝展示台 (Jewelry Display Stand)",
+  "goal": "暗色摄影棚中的多切面宝石:高折射/反射/色散观感 + 三点棚拍 + 转台自转 + 5 色色板 + 双击推近相机过渡 + 真实 PNG 下载导出。",
+  "domains": [
+    "Material ceiling",
+    "Reflection-Refraction look",
+    "Lighting",
+    "Camera transition",
+    "Screenshot export"
+  ],
+  "assets": [
+    {
+      "path": "assets/gem.glb",
+      "required": false,
+      "sha256": "fc0f895d029f648e40ea66fd20deb47588d94e0abe16b21a065078ebba8611aa",
+      "note": "共享资产可选:单颗多切面宝石;允许程序化替代(>=20 切面),但折射/反射/色散观感必须达成"
+    }
+  ],
+  "stateContract": {
+    "rotationAngle": "number,转台累计角度(度),单调增,初始 0,自转角速度 >= 25 度/s",
+    "selectedColor": "string,色板色名之一(diamond|ruby|emerald|sapphire|amber),初始 diamond",
+    "cameraDistance": "number,相机到宝石距离,初始 10;双击推近后 <= 6,再双击拉回 >= 9",
+    "exportCount": "integer >= 0,成功触发 PNG 下载的次数,初始 0"
+  },
+  "scaleAndPerformance": {
+    "minFps": 30,
+    "notes": "1 宝石 + 1 展台 + 三点布光 + 环境;宝石几何 60-200 切面;相机过渡 >= 600ms 缓动且不掉帧;导出读当前画布像素且不冻结主循环 > 200ms。"
+  },
+  "completionContract": {
+    "build": "npm run build 必须退出码 0",
+    "ready": "window.__appReady === true(10s 内)",
+    "state": "window.__bench = { getState(): object, reset(): void }",
+    "noUncaughtErrors": true
+  },
+  "forbiddenShortcuts": [
+    "禁止漫反射平面贴图冒充折射/反射观感",
+    "禁止贴图烘焙固定彩虹条纹冒充色散(火彩须随转台/视角流动)",
+    "禁止内嵌预置 PNG 冒充截图(必须导出当前画布像素)",
+    "禁止视口/样式缩放冒充相机推近",
+    "禁止 rotationAngle 返回常数或与画面不一致",
+    "禁止 exportCount 无真实下载而递增",
+    "禁止 reset 通过页面刷新实现"
+  ],
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:1500",
+      "waitMs": 1500,
+      "stateAssertion": {
+        "jq": "$.selectedColor == \"diamond\" && $.cameraDistance >= 9 && $.exportCount == 0 && $.rotationAngle >= 0"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "minCoverage": 0.08
+        }
+      },
+      "threshold": "宝石在画面中央可见,非空非纯色",
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
+    },
+    {
+      "probeId": "P2",
+      "precondition": "P1",
+      "action": "wait:2000",
+      "waitMs": 2000,
+      "stateAssertion": {
+        "jq": "$.rotationAngle >= 50"
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "frameGapMs": 500
+        }
+      },
+      "threshold": "转台自转 >= 25 度/s(累计 >= 50 度),宝石高光/火彩流动",
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
+    },
+    {
+      "probeId": "P3",
+      "precondition": "P2",
+      "action": "click:ui=swatch-2",
+      "waitMs": 800,
+      "stateAssertion": {
+        "jq": "$.selectedColor == \"ruby\""
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "frameGapMs": 400
+        }
+      },
+      "threshold": "点击色样 2 后 selectedColor=ruby,宝石色调立即变化",
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
+    },
+    {
+      "probeId": "P4",
+      "precondition": "P3",
+      "action": "dblclick:{x:640,y:360}",
+      "waitMs": 1200,
+      "stateAssertion": {
+        "jq": "$.cameraDistance <= 6"
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.25,
+            "y": 0.15,
+            "w": 0.5,
+            "h": 0.7
+          },
+          "frameGapMs": 600
+        }
+      },
+      "threshold": "双击后相机平滑推近(过渡 >= 600ms),cameraDistance <= 6,宝石在画面中显著变大",
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
+    },
+    {
+      "probeId": "P5",
+      "precondition": "P4",
+      "action": "dblclick:{x:640,y:360}",
+      "waitMs": 1200,
+      "stateAssertion": {
+        "jq": "$.cameraDistance >= 9"
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.25,
+            "y": 0.15,
+            "w": 0.5,
+            "h": 0.7
+          },
+          "frameGapMs": 600
+        }
+      },
+      "threshold": "再次双击拉回远景,cameraDistance >= 9",
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
+    },
+    {
+      "probeId": "P6",
+      "precondition": "P5",
+      "action": "click:ui=export-png",
+      "waitMs": 1500,
+      "stateAssertion": {
+        "jq": "$.exportCount == 1"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "minCoverage": 0.08
+        }
+      },
+      "threshold": "independent observable:浏览器 download 事件发生,文件为 PNG 且 > 10240 字节,分辨率与画布一致;exportCount == 1",
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "downloadEvent"
+      ]
+    },
+    {
+      "probeId": "P7",
+      "precondition": "P6",
+      "action": "click:ui=export-png",
+      "waitMs": 1500,
+      "stateAssertion": {
+        "jq": "$.exportCount == 2"
+      },
+      "visualAssertion": {
+        "type": "motion",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "spanMs": 600
+        }
+      },
+      "threshold": "第二次导出成功(再次观测 download 事件,文件 > 10240 字节),转台在导出后仍运转",
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "downloadEvent"
+      ]
+    },
+    {
+      "probeId": "P8",
+      "precondition": "P7",
+      "action": "click:ui=reset",
+      "waitMs": 1500,
+      "stateAssertion": {
+        "jq": "$.selectedColor == \"diamond\" && $.cameraDistance >= 9 && $.exportCount == 0"
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "frameGapMs": 500
+        }
+      },
+      "threshold": "reset 后色板/相机/导出计数恢复初始,转台继续自转(画面仍有高光流动)",
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
+    }
+  ],
+  "scoring": {
+    "behaviorItems": [
+      "宝石呈高折射观感:透过宝石可见背景倒置/扭曲,表观折射 >= 1.5 的晶体感",
+      "切面有锐利镜面反射高光,随转台转动扫动",
+      "切面棱线出现色散火彩,且随转台/视角流动变化",
+      "三点棚拍布光:主光/辅光/轮廓光层次肉眼可辨",
+      "转台自转 >= 25 度/s,rotationAngle 单调累计增长",
+      "色板 >= 5 色,点击切换 selectedColor 与宝石色调同步变化",
+      "双击推近:相机平滑过渡(>= 600ms 缓动)cameraDistance 10 -> <= 6",
+      "再次双击拉回 >= 9,过渡平滑无跳变",
+      "PNG 导出触发真实浏览器下载,文件 > 10KB,分辨率与画布一致",
+      "连续导出 exportCount 正确递增,导出不冻结画面",
+      "reset 后颜色/相机/导出计数恢复初始,转台继续运转"
+    ]
+  }
+}

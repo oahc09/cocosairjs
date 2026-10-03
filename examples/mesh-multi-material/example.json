@@ -135,7 +135,7 @@
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L27"
+        "sourceLocation": "L30"
       }
     ]
   },
@@ -278,9 +278,9 @@
     }
   },
   "promotion": {
-    "spec": "aaa92922c830",
-    "source": "3248cf0cb2aab8c6",
-    "candidate": "0b9588dc80fd7afd",
+    "spec": "5b954574f669",
+    "source": "e5951aeb106da7e3",
+    "candidate": "ba485e1b91643c46",
     "verified": 16,
     "attested": 0,
     "units": 16

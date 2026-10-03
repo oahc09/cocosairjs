@@ -17,6 +17,7 @@ import type { GLTFExtensionHandler } from '../../src/air/assets/gltf/extension-r
 import type { GLTFMaterial } from '../../src/air/assets/gltf/schema';
 import { CCObject } from '../../src/cocos/core/data/object';
 import { Texture2D } from '../../src/cocos/asset/assets/texture-2d';
+import { BlendFactor } from '../../src/cocos/gfx';
 import { fixture, toGLB } from '../fixtures/gltf/fixture';
 
 Object.assign(globalThis, { TextDecoder, TextEncoder });
@@ -47,6 +48,28 @@ describe('glTF T5.1 physical materials', () => {
         await createAirApp({ canvas: '#GameCanvas', renderMode: 3 });
     });
     afterEach(async () => { CCObject._deferredDestroy(); await Promise.resolve(); CCObject._deferredDestroy(); });
+
+    test('opaque and masked glTF materials preserve additive-light pass depth and blend states', () => {
+        for (const alphaMode of ['OPAQUE', 'MASK'] as const) {
+            const material = createGLTFMaterial(physicalFeatures({ alphaMode }), [], false);
+            const additive = material.passes.filter((pass) => !!pass.defines.CC_FORWARD_ADD);
+            expect(additive.length).toBeGreaterThan(0);
+            expect(material.passes[0].blendState.targets[0].blend).toBe(false);
+            for (const pass of additive) {
+                expect(pass.depthStencilState.depthWrite).toBe(false);
+                expect(pass.blendState.targets[0].blend).toBe(true);
+                expect(pass.blendState.targets[0].blendSrc).toBe(BlendFactor.ONE);
+                expect(pass.blendState.targets[0].blendDst).toBe(BlendFactor.ONE);
+            }
+            material.destroy();
+        }
+        const blended = createGLTFMaterial(physicalFeatures({ alphaMode: 'BLEND' }), [], false);
+        expect(blended.passes.length).toBe(1);
+        expect(blended.passes[0].depthStencilState.depthWrite).toBe(false);
+        expect(blended.passes[0].blendState.targets[0].blendSrc).toBe(BlendFactor.SRC_ALPHA);
+        expect(blended.passes[0].blendState.targets[0].blendDst).toBe(BlendFactor.ONE_MINUS_SRC_ALPHA);
+        blended.destroy();
+    });
 
     test('handler validation accepts valid and rejects invalid extension bodies', () => {
         expect(() => validate(emissiveStrengthFactory, [{ extensions: { KHR_materials_emissive_strength: {} } },

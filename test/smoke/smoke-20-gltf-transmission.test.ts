@@ -12,6 +12,7 @@ import { transmissionFactory } from '../../src/air/assets/gltf/extensions/materi
 import { volumeFactory } from '../../src/air/assets/gltf/extensions/material/volume';
 import { dispersionFactory } from '../../src/air/assets/gltf/extensions/material/dispersion';
 import { setTransmissionPipelineAvailable } from '../../src/air/assets/gltf/material/transmission-capability';
+import { gltfPhysicalEffect } from '../../src/air/assets/gltf/material/physical-effect';
 import type { GLTFExtensionHandler } from '../../src/air/assets/gltf/extension-registry';
 import { CCObject } from '../../src/cocos/core/data/object';
 import { fixture, toGLB } from '../fixtures/gltf/fixture';
@@ -50,6 +51,30 @@ describe('glTF T6 transmission/volume/dispersion', () => {
         expect(extend(volumeFactory, { extensions: { KHR_materials_volume: {} } } as never).volume)
             .toEqual({ thicknessFactor: 0, attenuationDistance: Infinity, attenuationColor: [1, 1, 1] });
         expect(extend(dispersionFactory, { extensions: { KHR_materials_dispersion: { dispersion: 4.0 } } } as never).dispersion).toEqual({ factor: 4.0 });
+    });
+
+    test('transmission and volume shader factors are initialized before shading in each language', () => {
+        const effect = gltfPhysicalEffect();
+        for (const shader of effect.shaders) {
+            for (const language of ['glsl1', 'glsl3', 'glsl4'] as const) {
+                const fragment = shader[language]?.frag;
+                if (!fragment || !fragment.includes('StandardSurface s; surf(s);')) { continue; }
+                const entries = fragment.split('StandardSurface s; surf(s);').slice(1);
+                expect(entries.length).toBeGreaterThan(0);
+                for (const main of entries) {
+                    expect(main).toContain('airTrFactorTex = airTransmission.x;');
+                    expect(main).toContain('airThickTex = airTransmission.z;');
+                    expect(main).toMatch(/airTrFactorTex \*= (texture2D|texture)\(transmissionMap,[^;]+\)\.r;/);
+                    expect(main).toMatch(/airThickTex \*= (texture2D|texture)\(volumeThicknessMap,[^;]+\)\.g;/);
+                    const shading = main.indexOf('CCStandardShadingBase(s, v_shadowPos)');
+                    if (shading >= 0) {
+                        expect(main.indexOf('airTrFactorTex = airTransmission.x;')).toBeLessThan(shading);
+                    }
+                    expect(main).not.toContain('${');
+                    expect(main).toMatch(/airSpecColor = SRGBToLinear\((texture2D|texture)\(specularColorMap,/);
+                }
+            }
+        }
     });
 
     test('report device-dependent while the pipeline is unarmed, supported when armed', () => {
