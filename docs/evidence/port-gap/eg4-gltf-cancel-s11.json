@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG4",
+  "subject": {
+    "description": "Browser subset: output/playwright/air-gltf-cancel-s9-initial.json"
+  },
+  "evidenceTypes": [
+    "SOURCE_CHECKED"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-gltf-cancellation-browser.cjs --bundle=output/playwright/skinning-s8-build/cocosair.module.js --out=output/playwright/air-gltf-cancel-s9-initial.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T04:35:21.721Z",
+    "endedAt": "2026-10-04T04:35:34.860Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 3,
+    "measuredCases": 3,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; Public GLTFParserContext child buffer/image fetch carries signal; native loadAsync container downloader does not; Independent parse requests tested, not a transport subscription pool; No compressed decoder cancellation or GPU memory claim"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "output/playwright/skinning-s8-build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "src/air/assets/gltf/loader.ts",
+      "sha256": "e833d2f7e134e936c8f91e4cc5e8a637fca4cab126bf3fe836a28e800a20e9f9"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/gltf-cancellation/main.ts",
+      "sha256": "5a64506fd0954cc54b0831f63fd4b3b66103d85e67d67fd05ddb196fc23e63a8"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-gltf-cancellation-browser.cjs",
+      "sha256": "d5460c1a9a4b2b5b7b00b8a1bb638f4b261dca54ebed403f274daf5e72bfea31"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-gltf-cancel-s9-initial.json",
+      "sha256": "1f388de01e28a1c0cc455d10a00832f296468bc520079de36664707b92b7372b",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/gltf-cancellation/index.html",
+      "sha256": "6fc7b753c215786f44c0cd1e8eeef8d40720a9513ee69f2959fd877598922428"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-gltf-cancel-s9-initial.json",
+    "sha256": "1f388de01e28a1c0cc455d10a00832f296468bc520079de36664707b92b7372b",
+    "allFingerprints": {
+      "output/playwright/skinning-s8-build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "src/air/assets/gltf/loader.ts": "e833d2f7e134e936c8f91e4cc5e8a637fca4cab126bf3fe836a28e800a20e9f9",
+      "src/air/assets/gltf/parser-context.ts": "464c1b9ca9ce8a9c23ad8830faf7e4c1548a74c24303e2c91373ec54326484fb",
+      "test/fixtures/gltf-cancellation/main.ts": "5a64506fd0954cc54b0831f63fd4b3b66103d85e67d67fd05ddb196fc23e63a8",
+      "test/fixtures/gltf-cancellation/index.html": "6fc7b753c215786f44c0cd1e8eeef8d40720a9513ee69f2959fd877598922428",
+      "tools/verify/air-gltf-cancellation-browser.cjs": "d5460c1a9a4b2b5b7b00b8a1bb638f4b261dca54ebed403f274daf5e72bfea31"
+    },
+    "installed": null,
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-gltf-cancel-s9-initial.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-gltf-cancel-s9-initial.json"
+      }
+    ],
+    "screenshots": []
+  }
+}

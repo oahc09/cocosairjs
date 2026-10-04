@@ -6,7 +6,10 @@
   "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
-  "benchmarkRefs": ["CB-18", "E05"],
+  "benchmarkRefs": [
+    "CB-18",
+    "E05"
+  ],
   "recipeRefs": [],
   "learning": {
     "goal": "Native procedural shader disk, point streams and explicit bloom-impostor scope",
@@ -21,9 +24,17 @@
     "visual": "Centered tilted luminous disk and dark core over a procedurally generated star field, with analytic additive halo."
   },
   "api": {
-    "primary": ["EffectAsset.onLoaded", "Material.setProperty", "utils.createMesh"],
+    "primary": [
+      "EffectAsset.onLoaded",
+      "Material.setProperty",
+      "utils.createMesh"
+    ],
     "supporting": [],
-    "claims": ["EffectAsset.onLoaded", "Material.setProperty", "utils.createMesh"],
+    "claims": [
+      "EffectAsset.onLoaded",
+      "Material.setProperty",
+      "utils.createMesh"
+    ],
     "forbiddenShortcut": [
       "External images or video must not impersonate procedural motion",
       "State counts and rotation must reflect native geometry and shader inputs",
@@ -50,7 +61,10 @@
       }
     ]
   },
-  "capabilities": ["shader", "rendering"],
+  "capabilities": [
+    "shader",
+    "rendering"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
@@ -73,13 +87,24 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -93,7 +118,7 @@
   "promotion": {
     "spec": "c4a1c45f2260",
     "source": "a6e9df1cec851de8",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 3,
     "attested": 0,
     "units": 3

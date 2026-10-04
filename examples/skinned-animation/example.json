@@ -49,12 +49,26 @@
     "SkinnedMeshUnit.size",
     "SkinnedMeshUnit.copyFrom"
   ],
-  "capabilities": ["animation", "skeleton"],
+  "capabilities": [
+    "animation",
+    "skeleton"
+  ],
   "validation": {
-    "functional": ["node-exists", "animation-playing", "no-runtime-error", "material-property", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "animation-playing",
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -71,7 +85,10 @@
     "visual": "程序化\"触手\"网格随骨骼摆动弯曲变形，顶点位置逐帧变化（帧差可测）"
   },
   "api": {
-    "primary": ["buildSkeletonTree", "SkinnedMeshRenderer"],
+    "primary": [
+      "buildSkeletonTree",
+      "SkinnedMeshRenderer"
+    ],
     "supporting": [
       "restoreBindPose",
       "Component",
@@ -170,7 +187,9 @@
       "SkinnedMeshUnit.size",
       "SkinnedMeshUnit.copyFrom"
     ],
-    "forbiddenShortcut": ["用整体旋转网格冒充蒙皮变形（顶点必须随关节移动）"],
+    "forbiddenShortcut": [
+      "用整体旋转网格冒充蒙皮变形（顶点必须随关节移动）"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -501,14 +520,20 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Armature"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Armature"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -521,7 +546,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -529,12 +558,28 @@
             "text": "position 默认值 [0,8,0]（示例显式传入）"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "Armature": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -549,7 +594,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [240, 160, 40, 255],
+            "value": [
+              240,
+              160,
+              40,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -573,7 +623,7 @@
   "promotion": {
     "spec": "01fa4e3a9f64",
     "source": "a454e3685141457c",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 54,
     "attested": 0,
     "units": 54

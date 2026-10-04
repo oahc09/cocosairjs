@@ -4,20 +4,37 @@
   "status": "stable",
   "title": "glTF Animation Instances",
   "category": "animation",
-  "benchmarkRefs": ["CB-07", "CB-13"],
+  "benchmarkRefs": [
+    "CB-07",
+    "CB-13"
+  ],
   "recipeRefs": [],
   "requiresDevTools": false,
-  "capabilities": ["gltf", "animation"],
+  "capabilities": [
+    "gltf",
+    "animation"
+  ],
   "apiClaims": [],
   "learning": {
     "goal": "Native glTF playback and instance/resource isolation",
-    "points": ["Explicit instance loop policy", "Native play/pause/resume/clip switch", "Private material variants"]
+    "points": [
+      "Explicit instance loop policy",
+      "Native play/pause/resume/clip switch",
+      "Private material variants"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -26,10 +43,20 @@
     "visual": "Two textured Fox characters, or two Morph cubes, under a fixed camera."
   },
   "api": {
-    "primary": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate", "Animation.play"],
+    "primary": [
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate",
+      "Animation.play"
+    ],
     "supporting": [],
-    "claims": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate", "Animation.play"],
-    "forbiddenShortcut": ["Synthetic timers or fields must not impersonate native state or rendered behavior."],
+    "claims": [
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate",
+      "Animation.play"
+    ],
+    "forbiddenShortcut": [
+      "Synthetic timers or fields must not impersonate native state or rendered behavior."
+    ],
     "evidence": [
       {
         "api": "GLTFLoader.parseAsync",
@@ -59,14 +86,20 @@
   ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Camera", "Light", "Playback"]
+      "nodes": [
+        "Camera",
+        "Light",
+        "Playback"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -79,7 +112,7 @@
   "promotion": {
     "spec": "be1e9a74c2ca",
     "source": "3cd5ff4cd6abb130",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 3,
     "attested": 0,
     "units": 3

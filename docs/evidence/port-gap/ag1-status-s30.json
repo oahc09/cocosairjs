@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "AG1",
+  "subject": {
+    "description": "Current complete gate status; component execution remains separately scoped"
+  },
+  "evidenceTypes": [
+    "SOURCE_CHECKED"
+  ],
+  "execution": {
+    "status": "BLOCKED",
+    "reason": "External 30 consumer projects, pinned revisions and port assets have not been provided; current workspace cannot execute their per-project compatibility scope.",
+    "blockedBy": "Missing external consumer/application materials"
+  },
+  "scope": {
+    "declared": [
+      "External 30 consumer projects, pinned revisions and port assets have not been provided; current workspace cannot execute their per-project compatibility scope."
+    ],
+    "subset": false,
+    "completed": false,
+    "totalCases": 1,
+    "measuredCases": 0,
+    "skippedCases": 1,
+    "skippedDetail": [
+      {
+        "reason": "External 30 consumer projects, pinned revisions and port assets have not been provided; current workspace cannot execute their per-project compatibility scope."
+      }
+    ],
+    "countingUnit": "complete gate decision"
+  },
+  "method": {
+    "kind": "CONTRACT_STATIC",
+    "detail": "Requirements and existing actual execution review; this status writer does not execute or manufacture a complete gate"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "output/playwright/port-s30-root-candidate.json",
+      "bytes": 607689,
+      "sha256": "8336cb8d23bfd470ff52cfae82559805e3c3cb82e167b068cc5f9335be9b10f7",
+      "detail": "Current provisional deep inventory; not complete gate freeze"
+    },
+    "contract": {
+      "present": true,
+      "path": "ai/plans/port-gap-remediation.md",
+      "sha256": "0508bfe7cef13942cdb50db45f0325f81abff940b1d3081b8b5851c9cf5947fc"
+    },
+    "runner": {
+      "present": true,
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-gate-status.cjs",
+      "bytes": 3697,
+      "sha256": "38ef3de9f2785c36090401484b48a762d092a7dba523ee4030bcc1df18794031"
+    },
+    "browser": {
+      "present": false,
+      "status": "NOT_RUN",
+      "reason": "Complete gate not executed; component reports record actual browsers"
+    },
+    "application": {
+      "present": false,
+      "status": "NOT_RUN",
+      "reason": "External projects unavailable"
+    }
+  },
+  "componentEvidence": [],
+  "externalMaterials": {
+    "available": false,
+    "reason": "External consumer/port materials not provided"
+  },
+  "generatedBy": {
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-gate-status.cjs",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T14:13:43.110Z",
+    "endedAt": "2026-10-04T14:13:43.302Z",
+    "detail": "Status aggregation only, no browser execution and no complete gate PASS"
+  },
+  "observations": {
+    "validator": {
+      "path": "tools/verify/port-gap-evidence-schema.cjs",
+      "sha256": "ec2e1b588093786b20e755fedd966b41df95ad173a483bfd20254b16f13c9dd4"
+    },
+    "currentPreflight": "docs/reference/port-gap-evidence-preflight-s20.json",
+    "legacyRelease": {
+      "log": "output/playwright/port-s12-release-readiness.log",
+      "observedExitCode": 1,
+      "reason": "dirty worktree; not full PG gate proof"
+    },
+    "postSubset": {
+      "path": "docs/evidence/port-gap/eg4-native-post-s30.json",
+      "status": "PASS",
+      "total": 9,
+      "measured": 9,
+      "skipped": 0,
+      "completeGate": false
+    }
+  }
+}

@@ -9,15 +9,31 @@
  "types": "./build/cocosair.module.d.ts",
  "exports": {
   ".": {
+   "types@<5.0": "./build/cocosair.legacy.d.ts",
    "types": "./build/cocosair.module.d.ts",
    "import": "./build/npm/cocosair.module.js",
    "default": "./build/npm/cocosair.module.js"
+  },
+  "./bootstrap": {
+   "types@<5.0": "./build/bootstrap.legacy.d.ts",
+   "types": "./build/bootstrap.d.ts",
+   "import": "./build/npm/bootstrap.js",
+   "default": "./build/npm/bootstrap.js"
+  }
+ },
+ "typesVersions": {
+  "<5.0": {
+   "build/cocosair.module.d.ts": ["build/cocosair.legacy.d.ts"]
   }
  },
  "files": [
   "build/package.json",
   "build/npm/cocosair.module.js",
   "build/npm/cocosair.module.min.js",
+  "build/npm/bootstrap.js",
+  "build/bootstrap.d.ts",
+  "build/bootstrap.legacy.d.ts",
+  "build/cocosair.legacy.d.ts",
   "build/cocosair.module.d.ts",
   "build/gltf-decoders/package.json",
   "build/gltf-decoders/",
@@ -65,6 +81,9 @@
   "verify:wasm-backends": "node tools/verify/verify-wasm-backends.cjs",
   "verify:custom-exports": "node tools/verify/verify-custom-exports.cjs",
   "verify:doc-refs": "node tools/verify/verify-doc-refs.cjs",
+  "verify:port-candidate": "node tools/verify/port-gap-candidate-snapshot.cjs",
+  "verify:port-evidence": "node tools/verify/port-gap-evidence-schema.cjs",
+  "verify:port-env": "node tools/verify/port-gap-env-preflight.cjs",
   "verify:feature-exports": "node tools/verify/verify-feature-exports.cjs",
   "verify:example-chain": "node tools/verify/verify-example-chain.cjs",
   "gallery:manifest": "node tools/examples/generate-manifest.cjs",

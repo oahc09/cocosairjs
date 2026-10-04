@@ -1,0 +1,1838 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG4",
+  "subject": {
+    "description": "NP05 owner #6(b) isolated native post subset: nine browser/effect A/B cases, per-effect restore, exact six-color LUT oracle and owned-resource cleanup; not a full EG4 or default-SDK claim"
+  },
+  "evidenceTypes": [
+    "SOURCE_CHECKED",
+    "BROWSER_RENDER_PASS",
+    "GPU_MEASURED"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-probe.cjs --browser=chromium --out-dir=output/playwright/port-s30-root-final-chromium\nD:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-probe.cjs --browser=firefox --out-dir=output/playwright/port-s30-root-final-firefox\nD:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-probe.cjs --browser=webkit --out-dir=output/playwright/port-s30-root-final-webkit",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T14:03:56.962Z",
+    "endedAt": "2026-10-04T14:04:26.903Z",
+    "exitCode": 0,
+    "detail": "Aggregate of three observed child exit codes 0; each immutable execution envelope records its own command/time/signal"
+  },
+  "attempts": [
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-probe.cjs --browser=chromium --out-dir=output/playwright/port-s30-root-attempt1-chromium",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T14:01:37.593Z",
+      "endedAt": "2026-10-04T14:01:40.951Z",
+      "exitCode": 1,
+      "failureStage": "application",
+      "executionRecord": {
+        "present": true,
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-attempt1-chromium\\process.log",
+        "bytes": 11995,
+        "sha256": "4a8c868a96861eb770302d2d9c560c07be091998db3b998c99e538af1a5951b1"
+      },
+      "supersededBy": 1,
+      "reason": "Initial collector contract rejected wrong ROI and UUID assumptions; archived executed sources preserved"
+    },
+    {
+      "status": "PASS",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-probe.cjs --browser=chromium --out-dir=output/playwright/port-s30-root-final-chromium",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T14:03:56.962Z",
+      "endedAt": "2026-10-04T14:04:00.198Z",
+      "exitCode": 0,
+      "executionRecord": {
+        "present": true,
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\process.log",
+        "bytes": 12433,
+        "sha256": "fd90a102a9507dadfe51341d2cc9a1fed6c6337a119d46c727bc80f45616922d"
+      }
+    },
+    {
+      "status": "PASS",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-probe.cjs --browser=firefox --out-dir=output/playwright/port-s30-root-final-firefox",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T14:04:15.639Z",
+      "endedAt": "2026-10-04T14:04:22.916Z",
+      "exitCode": 0,
+      "executionRecord": {
+        "present": true,
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\process.log",
+        "bytes": 12432,
+        "sha256": "a89582b623cb56a4cae75fb68634eb749c8a830960abe5f77cb20421fda1d9ac"
+      }
+    },
+    {
+      "status": "PASS",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-probe.cjs --browser=webkit --out-dir=output/playwright/port-s30-root-final-webkit",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T14:04:15.628Z",
+      "endedAt": "2026-10-04T14:04:26.903Z",
+      "exitCode": 0,
+      "executionRecord": {
+        "present": true,
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\process.log",
+        "bytes": 12431,
+        "sha256": "4e731cf4622e1f84f30ba35c13b309fb623353dc60f1782c207ec39c7e43fec1"
+      }
+    }
+  ],
+  "scope": {
+    "declared": [
+      "chromium/bloom",
+      "chromium/fxaa",
+      "chromium/color-grading",
+      "firefox/bloom",
+      "firefox/fxaa",
+      "firefox/color-grading",
+      "webkit/bloom",
+      "webkit/fxaa",
+      "webkit/color-grading"
+    ],
+    "totalCases": 9,
+    "measuredCases": 9,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "subset": true,
+    "completed": false,
+    "countingUnit": "browser/effect native pixel A/B; isolated compound candidate only"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Native PostProcessBuilder, Bloom/FXAA/ColorGrading; controlled director ticks with paused pacer; gl.readPixels plus real-browser PNG recomputation",
+    "limitations": "Local cocos-cli release provenance unverified; Node compiler/layout shims only, none in browser. Synthetic deterministic LUT is stimulus, not a replacement renderer. GPU allocation unavailable; default runtime unchanged; other complete gate scopes remain pending."
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "output/playwright/port-s26-worker-build/cocosair.module.js",
+      "bytes": 6538120,
+      "sha256": "647f1c0decc22bb8936c524956adb22b11d3e3c4f419ad01f88e84e7963ce7b4"
+    },
+    "source": {
+      "present": true,
+      "path": "src/air/bootstrap.ts",
+      "bytes": 9134,
+      "sha256": "5d098324dd1ee48decddc40086e925ec193fb6f61bcfc136ab9d55c26ccd5497"
+    },
+    "contract": {
+      "present": true,
+      "path": "src/cocos/rendering/post-process/post-process-builder.ts",
+      "bytes": 8620,
+      "sha256": "67348ba98aebd88e74dd5e63f39f2b175247787e53531e649ed526d5fe45c7ff"
+    },
+    "runner": {
+      "present": true,
+      "path": "output/playwright/port-s30-root-driver.cjs",
+      "bytes": 1751,
+      "sha256": "46465dbada4bd3c2945e2ad02ab2af721746c74eb95f222b76464ce4cf31634a"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/port-s30-root-summary.json",
+      "bytes": 52648,
+      "sha256": "b94b9d2535996b2afc142d8c52687ab786d4e8537a68d71313ac9a0fb2cb9dff"
+    },
+    "application": {
+      "present": true,
+      "path": "output/playwright/port-s30-root-runtime.cjs",
+      "bytes": 8230,
+      "sha256": "b04caa4733225dff0d6c5c9e31eefa5a649ea95e0297972b3bd30c88ca5753b9"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/port-s30-root-summary.json",
+    "sha256": "b94b9d2535996b2afc142d8c52687ab786d4e8537a68d71313ac9a0fb2cb9dff",
+    "allFingerprints": {
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-probe.cjs": "47bb0a96dad78a4fb8302c56dbd86c229d63a374f8898d51698c9247f08bbcd2",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-runtime.cjs": "b04caa4733225dff0d6c5c9e31eefa5a649ea95e0297972b3bd30c88ca5753b9",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-oracle.cjs": "fb68f0f14158a7a05efd913c64268fc73fdcc701ea00aafe52c7f11136109218",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-validate.cjs": "b93c6257108e060dab18cdf61e640aa13ccea3dd6efb0698d4edef533afbe0c2",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-driver.cjs": "46465dbada4bd3c2945e2ad02ab2af721746c74eb95f222b76464ce4cf31634a",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\index.html": "669e081fce82fb38213e6f12d5ce5ea7af93d6826dfe5673a9c110e2b5b56b3b",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\permutation.rgba": "b829af3338d2cbb9caf4489c1a3ee6ccc69ead22c8f064feda674700684a60cb",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\identity.rgba": "5838b003775dbdee04640fd3c22922737c8c71318e8348a0becf6b0ee2a54f1c",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s26-worker-build\\cocosair.module.js": "647f1c0decc22bb8936c524956adb22b11d3e3c4f419ad01f88e84e7963ce7b4",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s26-worker-toolchain\\port-s26-worker-effect.bin": "2358dbb4b6d30d73b17b1472055cc45186a2d21e61f141b3d69a770ee0446773",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s26-worker-toolchain\\port-s26-worker-effect-library.json": "948a3f8be10b777c736b689f7cb8fb9897e1a9c03c5ba320b957d728f2dc90af",
+      "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+      "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\competitive-example-server.cjs": "f4f98af13a026451a951d3dcd697b6ae73b2e0db17adddf1d6d322598ac3334b",
+      "E:\\AIProMax\\github\\cocosair.js\\src\\air\\builtin\\register.ts": "d632bd738f10a42db72c39feb26f4be04db67864908522d4f667eeca54385959",
+      "E:\\AIProMax\\github\\cocosair.js\\build\\cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "E:\\AIProMax\\github\\cocosair.js\\build\\cocosair.module.d.ts": "25f87a9ca4261908df6a5648acfe029224032ab4e090229e884cf46e08268f57",
+      "E:\\AIProMax\\github\\cocosair.js\\build\\npm\\cocosair.module.js": "8e00b56eab747b53fce288403b5668a2a7ecf443df966e5144547064091a81a9",
+      "E:\\AIProMax\\github\\cocosair.js\\src\\cocos\\rendering\\post-process\\post-process-builder.ts": "67348ba98aebd88e74dd5e63f39f2b175247787e53531e649ed526d5fe45c7ff",
+      "E:\\AIProMax\\github\\cocosair.js\\src\\cocos\\rendering\\post-process\\passes\\color-grading-pass.ts": "ba270f3b0bc0cacbc99311ceafdf3f5dbda13386ebc6101a6833d95500ff0b68",
+      "E:\\AIProMax\\github\\cocos4\\editor\\assets\\effects\\pipeline\\post-process\\color-grading.effect": "caa0bff7b19ad132a05919ab6bb2298ee279a482d473d872c138572d4a98e273",
+      "E:\\AIProMax\\github\\cocos4\\editor\\assets\\effects\\pipeline\\post-process\\post-final.effect": "8b21e5e815718d71c28a7ce8ce1bd888dacb7b49ef495f4772b9449f893877cd",
+      "E:\\AIProMax\\github\\cocos4\\editor\\assets\\effects\\pipeline\\float-output-process.effect": "8697bdf661f3cad7c72cdc85988f2c1c104ec9216672f4da11a967d582b8c358",
+      "E:\\AIProMax\\github\\cocos4\\editor\\assets\\chunks\\common\\color\\gamma.chunk": "58e8a46747db5c2e15fa88bd9e383aa3d693fd550a56486b8eb3c26f7b3b62a6",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\index.html": "669e081fce82fb38213e6f12d5ce5ea7af93d6826dfe5673a9c110e2b5b56b3b",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\permutation.rgba": "b829af3338d2cbb9caf4489c1a3ee6ccc69ead22c8f064feda674700684a60cb",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\identity.rgba": "5838b003775dbdee04640fd3c22922737c8c71318e8348a0becf6b0ee2a54f1c",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\index.html": "669e081fce82fb38213e6f12d5ce5ea7af93d6826dfe5673a9c110e2b5b56b3b",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\permutation.rgba": "b829af3338d2cbb9caf4489c1a3ee6ccc69ead22c8f064feda674700684a60cb",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\identity.rgba": "5838b003775dbdee04640fd3c22922737c8c71318e8348a0becf6b0ee2a54f1c"
+    },
+    "candidateConfiguration": {
+      "variant": true,
+      "defaultRuntimeUnchanged": true,
+      "pipeline": "Custom",
+      "compoundCandidate": {
+        "sdk": {
+          "present": true,
+          "path": "output/playwright/port-s26-worker-build/cocosair.module.js",
+          "bytes": 6538120,
+          "sha256": "647f1c0decc22bb8936c524956adb22b11d3e3c4f419ad01f88e84e7963ce7b4"
+        },
+        "layout": {
+          "present": true,
+          "path": "output/playwright/port-s26-worker-toolchain/port-s26-worker-effect.bin",
+          "bytes": 3118,
+          "sha256": "2358dbb4b6d30d73b17b1472055cc45186a2d21e61f141b3d69a770ee0446773"
+        },
+        "library": {
+          "present": true,
+          "path": "output/playwright/port-s26-worker-toolchain/port-s26-worker-effect-library.json",
+          "bytes": 4786481,
+          "sha256": "948a3f8be10b777c736b689f7cb8fb9897e1a9c03c5ba320b957d728f2dc90af"
+        },
+        "application": {
+          "present": true,
+          "path": "output/playwright/port-s30-root-runtime.cjs",
+          "bytes": 8230,
+          "sha256": "b04caa4733225dff0d6c5c9e31eefa5a649ea95e0297972b3bd30c88ca5753b9"
+        },
+        "oracle": {
+          "present": true,
+          "path": "output/playwright/port-s30-root-oracle.cjs",
+          "bytes": 1119,
+          "sha256": "fb68f0f14158a7a05efd913c64268fc73fdcc701ea00aafe52c7f11136109218"
+        }
+      }
+    },
+    "executionChannel": "Lead",
+    "inherited": false
+  },
+  "measurements": {
+    "gpu": {
+      "available": true,
+      "kind": "actual WebGL2 readPixels and PNG pixel/ROI measurements",
+      "browserEffectCases": 9,
+      "inferred": false
+    },
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No complete portable WebGL allocation metric"
+    },
+    "rows": [
+      {
+        "engine": "chromium",
+        "measurements": {
+          "states": {
+            "baseline": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "bloom-on": {
+              "exact": 51985,
+              "significant": 48757,
+              "max": 255,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  255,
+                  255,
+                  255
+                ],
+                [
+                  255,
+                  255,
+                  255
+                ]
+              ]
+            },
+            "bloom-restore": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "fxaa-on": {
+              "exact": 607,
+              "significant": 540,
+              "max": 110,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "fxaa-restore": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "cg-permute": {
+              "exact": 47060,
+              "significant": 26036,
+              "max": 232,
+              "centers": [
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  232,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  159,
+                  157
+                ],
+                [
+                  229,
+                  232,
+                  229
+                ]
+              ]
+            },
+            "cg-identity": {
+              "exact": 29764,
+              "significant": 0,
+              "max": 3,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  232
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  159
+                ],
+                [
+                  229,
+                  229,
+                  232
+                ]
+              ]
+            },
+            "cg-zero": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "cg-restore": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            }
+          },
+          "bloom": {
+            "haloGain": 100.72663834951456,
+            "haloCount": 6592,
+            "backgroundGain": 0,
+            "backgroundCount": 1464
+          },
+          "fxaa": {
+            "edge": 540,
+            "interior": 0,
+            "corners": 0,
+            "outsideEdge": 0
+          },
+          "oracle": [
+            {
+              "name": "red",
+              "off": [
+                229,
+                0,
+                0
+              ],
+              "observed": [
+                0,
+                0,
+                229
+              ],
+              "expected": [
+                0,
+                0,
+                229
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "green",
+              "off": [
+                0,
+                229,
+                0
+              ],
+              "observed": [
+                229,
+                0,
+                0
+              ],
+              "expected": [
+                229,
+                0,
+                0
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "blue",
+              "off": [
+                0,
+                0,
+                229
+              ],
+              "observed": [
+                0,
+                232,
+                0
+              ],
+              "expected": [
+                0,
+                232,
+                0
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "black",
+              "off": [
+                0,
+                0,
+                0
+              ],
+              "observed": [
+                0,
+                0,
+                0
+              ],
+              "expected": [
+                0,
+                0,
+                0
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "gray",
+              "off": [
+                157,
+                157,
+                157
+              ],
+              "observed": [
+                157,
+                159,
+                157
+              ],
+              "expected": [
+                157,
+                159,
+                157
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "white",
+              "off": [
+                229,
+                229,
+                229
+              ],
+              "observed": [
+                229,
+                232,
+                229
+              ],
+              "expected": [
+                229,
+                232,
+                229
+              ],
+              "maxError": 0
+            }
+          ]
+        }
+      },
+      {
+        "engine": "firefox",
+        "measurements": {
+          "states": {
+            "baseline": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "bloom-on": {
+              "exact": 51985,
+              "significant": 48757,
+              "max": 255,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  255,
+                  255,
+                  255
+                ],
+                [
+                  255,
+                  255,
+                  255
+                ]
+              ]
+            },
+            "bloom-restore": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "fxaa-on": {
+              "exact": 607,
+              "significant": 540,
+              "max": 110,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "fxaa-restore": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "cg-permute": {
+              "exact": 47060,
+              "significant": 26036,
+              "max": 232,
+              "centers": [
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  232,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  159,
+                  157
+                ],
+                [
+                  229,
+                  232,
+                  229
+                ]
+              ]
+            },
+            "cg-identity": {
+              "exact": 29764,
+              "significant": 0,
+              "max": 3,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  232
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  159
+                ],
+                [
+                  229,
+                  229,
+                  232
+                ]
+              ]
+            },
+            "cg-zero": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "cg-restore": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            }
+          },
+          "bloom": {
+            "haloGain": 100.72663834951456,
+            "haloCount": 6592,
+            "backgroundGain": 0,
+            "backgroundCount": 1464
+          },
+          "fxaa": {
+            "edge": 540,
+            "interior": 0,
+            "corners": 0,
+            "outsideEdge": 0
+          },
+          "oracle": [
+            {
+              "name": "red",
+              "off": [
+                229,
+                0,
+                0
+              ],
+              "observed": [
+                0,
+                0,
+                229
+              ],
+              "expected": [
+                0,
+                0,
+                229
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "green",
+              "off": [
+                0,
+                229,
+                0
+              ],
+              "observed": [
+                229,
+                0,
+                0
+              ],
+              "expected": [
+                229,
+                0,
+                0
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "blue",
+              "off": [
+                0,
+                0,
+                229
+              ],
+              "observed": [
+                0,
+                232,
+                0
+              ],
+              "expected": [
+                0,
+                232,
+                0
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "black",
+              "off": [
+                0,
+                0,
+                0
+              ],
+              "observed": [
+                0,
+                0,
+                0
+              ],
+              "expected": [
+                0,
+                0,
+                0
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "gray",
+              "off": [
+                157,
+                157,
+                157
+              ],
+              "observed": [
+                157,
+                159,
+                157
+              ],
+              "expected": [
+                157,
+                159,
+                157
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "white",
+              "off": [
+                229,
+                229,
+                229
+              ],
+              "observed": [
+                229,
+                232,
+                229
+              ],
+              "expected": [
+                229,
+                232,
+                229
+              ],
+              "maxError": 0
+            }
+          ]
+        }
+      },
+      {
+        "engine": "webkit",
+        "measurements": {
+          "states": {
+            "baseline": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "bloom-on": {
+              "exact": 51985,
+              "significant": 48757,
+              "max": 255,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  255,
+                  255,
+                  255
+                ],
+                [
+                  255,
+                  255,
+                  255
+                ]
+              ]
+            },
+            "bloom-restore": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "fxaa-on": {
+              "exact": 607,
+              "significant": 540,
+              "max": 110,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "fxaa-restore": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "cg-permute": {
+              "exact": 47060,
+              "significant": 26036,
+              "max": 232,
+              "centers": [
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  232,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  159,
+                  157
+                ],
+                [
+                  229,
+                  232,
+                  229
+                ]
+              ]
+            },
+            "cg-identity": {
+              "exact": 29764,
+              "significant": 0,
+              "max": 3,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  232
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  159
+                ],
+                [
+                  229,
+                  229,
+                  232
+                ]
+              ]
+            },
+            "cg-zero": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            },
+            "cg-restore": {
+              "exact": 0,
+              "significant": 0,
+              "max": 0,
+              "centers": [
+                [
+                  229,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  229,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  229
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  157,
+                  157,
+                  157
+                ],
+                [
+                  229,
+                  229,
+                  229
+                ]
+              ]
+            }
+          },
+          "bloom": {
+            "haloGain": 100.72663834951456,
+            "haloCount": 6592,
+            "backgroundGain": 0,
+            "backgroundCount": 1464
+          },
+          "fxaa": {
+            "edge": 540,
+            "interior": 0,
+            "corners": 0,
+            "outsideEdge": 0
+          },
+          "oracle": [
+            {
+              "name": "red",
+              "off": [
+                229,
+                0,
+                0
+              ],
+              "observed": [
+                0,
+                0,
+                229
+              ],
+              "expected": [
+                0,
+                0,
+                229
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "green",
+              "off": [
+                0,
+                229,
+                0
+              ],
+              "observed": [
+                229,
+                0,
+                0
+              ],
+              "expected": [
+                229,
+                0,
+                0
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "blue",
+              "off": [
+                0,
+                0,
+                229
+              ],
+              "observed": [
+                0,
+                232,
+                0
+              ],
+              "expected": [
+                0,
+                232,
+                0
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "black",
+              "off": [
+                0,
+                0,
+                0
+              ],
+              "observed": [
+                0,
+                0,
+                0
+              ],
+              "expected": [
+                0,
+                0,
+                0
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "gray",
+              "off": [
+                157,
+                157,
+                157
+              ],
+              "observed": [
+                157,
+                159,
+                157
+              ],
+              "expected": [
+                157,
+                159,
+                157
+              ],
+              "maxError": 0
+            },
+            {
+              "name": "white",
+              "off": [
+                229,
+                229,
+                229
+              ],
+              "observed": [
+                229,
+                232,
+                229
+              ],
+              "expected": [
+                229,
+                232,
+                229
+              ],
+              "maxError": 0
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "observations": {
+    "historicalAttempts": [
+      {
+        "present": true,
+        "path": "output/playwright/port-s21-post-prerequisites.json",
+        "bytes": 60408,
+        "sha256": "1e4dfcbfb9d927ef884af1d0111053bddeed8b664029f8679578640d15f367a7",
+        "detail": "Historical, retained unchanged; invalid old gates are not inherited"
+      },
+      {
+        "present": true,
+        "path": "output/playwright/port-s22-worker-phaseB.json",
+        "bytes": 2948,
+        "sha256": "25c45a5ed892ab093bba145984556b946da8bb1c0f50b9f67eb29c13e2ba54b6",
+        "detail": "Historical, retained unchanged; invalid old gates are not inherited"
+      },
+      {
+        "present": true,
+        "path": "output/playwright/port-s24-worker-ab.json",
+        "bytes": 251474,
+        "sha256": "eaad4464fe2b931eff2f7ef7f4c925256c21c149b277526896205a39a8da07ab",
+        "detail": "Historical, retained unchanged; invalid old gates are not inherited"
+      },
+      {
+        "present": true,
+        "path": "output/playwright/port-s25-worker-init.json",
+        "bytes": 24303,
+        "sha256": "f74847f2e84f775ad0c8a81bc79262b8dc62448ea41fe8885b9b601ccbdfdfbb",
+        "detail": "Historical, retained unchanged; invalid old gates are not inherited"
+      },
+      {
+        "present": true,
+        "path": "output/playwright/port-s26-worker-init-draw-chromium.json",
+        "bytes": 16634,
+        "sha256": "4c7fd14ddaf8a9e7b2c736eab1eadb26659b8e504eb06a5ebd93b54ad5bc3b1f",
+        "detail": "Historical, retained unchanged; invalid old gates are not inherited"
+      },
+      {
+        "present": true,
+        "path": "output/playwright/port-s27-worker-summary.json",
+        "bytes": 2003,
+        "sha256": "543910ead45b618b63673f5b035322c38b3e7d0f8f53761ecb070b3daef08454",
+        "detail": "Historical, retained unchanged; invalid old gates are not inherited"
+      },
+      {
+        "present": true,
+        "path": "output/playwright/port-s28-worker-report-chromium.json",
+        "bytes": 17153,
+        "sha256": "211fcd6b9a52c9e06aae6cff178658bde64f7027c22093e918578d38e4488fdb",
+        "detail": "Historical, retained unchanged; invalid old gates are not inherited"
+      },
+      {
+        "present": true,
+        "path": "output/playwright/port-s29-worker-summary.json",
+        "bytes": 1281,
+        "sha256": "810bb06cd7027b2f5b183f9b756c199326bcddea977b2615a83bb060726380b8",
+        "detail": "Historical, retained unchanged; invalid old gates are not inherited"
+      }
+    ],
+    "initialFailedSourceArchive": {
+      "present": true,
+      "path": "output/playwright/port-s30-root-attempt1-chromium/executed-sources/manifest.json",
+      "bytes": 1431,
+      "sha256": "3448344086fc62c2d717e5e7a6d60048a7983469fc366b832dbc8b9052c20ed9"
+    },
+    "regression": {
+      "present": true,
+      "path": "output/playwright/port-s30-root-regression.json",
+      "bytes": 21388,
+      "sha256": "7f90e129000f9a75749aedf9f1454db3e3dbd3c9a2f972670cabedd64d292ed4"
+    },
+    "normalizer": {
+      "present": true,
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-formal.cjs",
+      "bytes": 7169,
+      "sha256": "647a3946b2425fd13af073eb7d7dc7092f9aaf500ef8d3951943a1bb9afdd78f"
+    },
+    "schema": {
+      "present": true,
+      "path": "tools/verify/port-gap-evidence-schema.cjs",
+      "bytes": 27603,
+      "sha256": "ec2e1b588093786b20e755fedd966b41df95ad173a483bfd20254b16f13c9dd4"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\process.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\process.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\report.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\process.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\report.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\process.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\report.json"
+      },
+      {
+        "path": "output/playwright/port-s30-root-summary.json"
+      },
+      {
+        "path": "output/playwright/port-s30-root-regression.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-attempt1-chromium\\process.log"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\baseline.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\bloom-on.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\bloom-restore.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\fxaa-on.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\fxaa-restore.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\cg-permute.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\cg-identity.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\cg-zero.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-chromium\\cg-restore.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\baseline.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\bloom-on.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\bloom-restore.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\fxaa-on.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\fxaa-restore.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\cg-permute.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\cg-identity.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\cg-zero.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-firefox\\cg-restore.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\baseline.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\bloom-on.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\bloom-restore.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\fxaa-on.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\fxaa-restore.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\cg-permute.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\cg-identity.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\cg-zero.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s30-root-final-webkit\\cg-restore.png"
+      }
+    ]
+  }
+}

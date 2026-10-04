@@ -47,14 +47,22 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Rect 全 API：几何谓词（intersects/contains/containsRect）、lerp、Mat4 变换与四点变换。",
-    "points": ["相交与包含的边界语义", "平移矩阵变换后的 x/y", "transformMat4ToPoints 输出四点"]
+    "points": [
+      "相交与包含的边界语义",
+      "平移矩阵变换后的 x/y",
+      "transformMat4ToPoints 输出四点"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 140,210,190）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["math.Rect.intersects", "math.Rect.contains", "math.Rect.transformMat4"],
+    "primary": [
+      "math.Rect.intersects",
+      "math.Rect.contains",
+      "math.Rect.transformMat4"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -110,7 +118,9 @@
       "math.Rect.prototype.equals",
       "math.Rect.prototype.lerp"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -327,21 +337,32 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "lifecycle": [],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -355,7 +376,7 @@
   "promotion": {
     "spec": "027f9c6f22cf",
     "source": "7c55d767a20d0caa",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 35,
     "attested": 0,
     "units": 35

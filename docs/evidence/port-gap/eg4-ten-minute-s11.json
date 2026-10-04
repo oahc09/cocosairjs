@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG4",
+  "subject": {
+    "description": "Browser subset: output/playwright/air-lifecycle-s9-ten-minute.json"
+  },
+  "evidenceTypes": [
+    "SOURCE_CHECKED"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-lifecycle-stability-browser.cjs --bundle=output/playwright/skinning-s8-build/cocosair.module.js --out=output/playwright/air-lifecycle-s9-ten-minute.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T04:29:05.618Z",
+    "endedAt": "2026-10-04T04:39:46.059Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 3,
+    "measuredCases": 3,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "output/playwright/skinning-s8-build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "src/air/app.ts",
+      "sha256": "82dc85409ddf4c5184bbb259265ca40e37d3d7f253fab326eda57aea288dab7b"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/lifecycle-stability/main.ts",
+      "sha256": "9d449db5d19d95828f603ca2592df38d5b1877b749fc59cea47339f341fc25c7"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-lifecycle-stability-browser.cjs",
+      "sha256": "8c0277f31e88a5e9b36915a32f2879f725469e75653339bec17bbb6395e8b15a"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-lifecycle-s9-ten-minute.json",
+      "sha256": "481ebc520943a7ebfbc8d70d98806f79eec686b98f2a95a7f6e7ff58aaa8b51a",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/lifecycle-stability/index.html",
+      "sha256": "b6ce96d6c63e645f4f278a1c831ab407b2cb20211c8f85e312b77d4b285eff95"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-lifecycle-s9-ten-minute.json",
+    "sha256": "481ebc520943a7ebfbc8d70d98806f79eec686b98f2a95a7f6e7ff58aaa8b51a",
+    "allFingerprints": {
+      "output/playwright/skinning-s8-build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "src/air/app.ts": "82dc85409ddf4c5184bbb259265ca40e37d3d7f253fab326eda57aea288dab7b",
+      "src/air/session-scope.ts": "ab90b1c12a29aa9ded5c0d8e720a8bfc73b6694790a28258208647cf42f04171",
+      "src/air/context-health.ts": "ec9934a581ee187d2e440ab0641213acb8cc9e4875c166af61b1143ef34ee55f",
+      "test/fixtures/lifecycle-stability/main.ts": "9d449db5d19d95828f603ca2592df38d5b1877b749fc59cea47339f341fc25c7",
+      "test/fixtures/lifecycle-stability/index.html": "b6ce96d6c63e645f4f278a1c831ab407b2cb20211c8f85e312b77d4b285eff95",
+      "tools/verify/air-lifecycle-stability-browser.cjs": "8c0277f31e88a5e9b36915a32f2879f725469e75653339bec17bbb6395e8b15a"
+    },
+    "installed": null,
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-lifecycle-s9-ten-minute.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-lifecycle-s9-ten-minute.json"
+      }
+    ],
+    "screenshots": []
+  }
+}

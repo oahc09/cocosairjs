@@ -52,7 +52,9 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 200,230,210）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["GLTFExtensionRegistry.register"],
+    "primary": [
+      "GLTFExtensionRegistry.register"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -105,7 +107,9 @@
       "GLTFExtensionRegistry",
       "GLTFExtensionRegistry.size"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -283,24 +287,39 @@
       }
     ]
   },
-  "assets": ["assets/BoxTextured.glb"],
+  "assets": [
+    "assets/BoxTextured.glb"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -314,7 +333,7 @@
   "promotion": {
     "spec": "410987ea135f",
     "source": "213a22d7c2c3ca48",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 29,
     "attested": 0,
     "units": 29

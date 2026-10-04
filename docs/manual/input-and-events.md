@@ -11,7 +11,7 @@
 |          | 全局 `input` 单例                           | 节点事件（`node.on(Node.EventType.*)`）                            |
 | -------- | ------------------------------------------- | ------------------------------------------------------------------ |
 | 订阅     | `input.on(Input.EventType.TOUCH_START, cb)` | `node.on(Node.EventType.TOUCH_START, cb)`                          |
-| 前提     | 无（window/canvas 级，即订即用）            | 节点要有 `UITransform`（2D/UI 命中测试）且在 UI 相机可见层         |
+| 前提     | 平台绑定已初始化；Web 键盘要求 canvas 聚焦，指针事件遵循画布通道 | 节点要有 `UITransform`（2D/UI 命中测试）且在 UI 相机可见层         |
 | 坐标     | `event.getUILocation()`（UI 坐标）          | 命中测试已完成，回调即"点在我身上"                                 |
 | 生命周期 | **不随节点销毁清理**，必须手动 `input.off`  | 随节点销毁自动清理                                                 |
 | 吞掉     | 节点命中的事件**不会**再到达全局监听        | 命中节点处理后沿父链冒泡，`event.propagationStopped = true` 可阻断 |
@@ -430,7 +430,7 @@ class SeqDriver extends Component {
     private drive(): void {
         switch (driverTicks) {
             case 1: {
-                // P1 点击 child（断言在下一拍：派发按帧 flush，同拍读取存在竞态）
+                // P1 点击 child（Web 输入立即派发；下一拍断言等待相关场景更新）
                 clickChild();
                 break;
             }

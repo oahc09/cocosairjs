@@ -1,0 +1,1028 @@
+{
+  "schemaVersion": "air-port-recipes/1",
+  "generatedAt": "2026-10-04T06:33:16.884Z",
+  "allPass": true,
+  "probeFailures": [],
+  "results": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "status": "PASS",
+      "probe": {
+        "allEntries": [
+          {
+            "recipe": "r1-code3d",
+            "phase": "normal",
+            "name": "box exists in scene",
+            "pass": true,
+            "detail": "parent=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "normal",
+            "name": "renderer has mesh",
+            "pass": true,
+            "detail": "mesh=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "normal",
+            "name": "material initialized",
+            "pass": true,
+            "detail": "effect=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "pause",
+            "name": "box hidden",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "restart",
+            "name": "box visible again",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "cleanup",
+            "name": "box removed from parent (children=3)",
+            "pass": true,
+            "detail": "deferred destroy observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "negative",
+            "name": "addChild to destroyed root ghost.parent=true",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "negative",
+            "name": "bad effect effectAsset=false",
+            "pass": true,
+            "detail": "real: engine does not resolve unknown effect",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "normal",
+            "name": "fixed steps=10 > 0",
+            "pass": true,
+            "detail": "steps=10",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "pause",
+            "name": "steps unchanged=true",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "restart",
+            "name": "accumulator reset",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "cleanup",
+            "name": "listener removed (keyCount=0)",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "negative",
+            "name": "negative dt consumes 0 (got 0)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "negative",
+            "name": "keyCount unchanged=true",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "normal",
+            "name": "pointerLockElement=null",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "pause",
+            "name": "pointer lock cannot be paused (system behavior)",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "restart",
+            "name": "exitPointerLock called",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "cleanup",
+            "name": "r3 listeners removed",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "negative",
+            "name": "pointer lock NOT_RUN in headless (documented)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "negative",
+            "name": "pointer lock requires user gesture (documented)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "normal",
+            "name": "chase cam at (5.0,4.0,8.0)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "normal",
+            "name": "forward=(0.000,0.000,-1.000)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "normal",
+            "name": "flight at (10.0,6.0,5.0)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "pause",
+            "name": "camera stable",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "restart",
+            "name": "camera reset",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "cleanup",
+            "name": "r4 children=2",
+            "pass": true,
+            "detail": "deferred destroy observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "negative",
+            "name": "null target throws=true",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "negative",
+            "name": "destroyed node setPosition no-throw",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "normal",
+            "name": "tex refCount=1 ≥1",
+            "pass": true,
+            "detail": "refCount=1",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "pause",
+            "name": "refCount stable=1",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "restart",
+            "name": "node visible again",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "cleanup",
+            "name": "tex refCount=0 after release",
+            "pass": true,
+            "detail": "refCount=0",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "negative",
+            "name": "destroyed texture access=true",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "negative",
+            "name": "double destroy handled by engine",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "normal",
+            "name": "storage available=true",
+            "pass": true,
+            "detail": "storageOK=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "normal",
+            "name": "optional load initiated (settled=false)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "pause",
+            "name": "optional paused (loadSettled still=false)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "restart",
+            "name": "optional resumed (loadSettled=true)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "cleanup",
+            "name": "r6 no leaked services",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "negative",
+            "name": "404 load error recorded (headless may be async)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "negative",
+            "name": "audio not available in headless (documented)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          }
+        ],
+        "totalEntries": 41
+      },
+      "pageErrors": [],
+      "probeFailures": []
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "status": "PASS",
+      "probe": {
+        "allEntries": [
+          {
+            "recipe": "r1-code3d",
+            "phase": "normal",
+            "name": "box exists in scene",
+            "pass": true,
+            "detail": "parent=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "normal",
+            "name": "renderer has mesh",
+            "pass": true,
+            "detail": "mesh=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "normal",
+            "name": "material initialized",
+            "pass": true,
+            "detail": "effect=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "pause",
+            "name": "box hidden",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "restart",
+            "name": "box visible again",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "cleanup",
+            "name": "box removed from parent (children=3)",
+            "pass": true,
+            "detail": "deferred destroy observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "negative",
+            "name": "addChild to destroyed root ghost.parent=true",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "negative",
+            "name": "bad effect effectAsset=false",
+            "pass": true,
+            "detail": "real: engine does not resolve unknown effect",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "normal",
+            "name": "fixed steps=10 > 0",
+            "pass": true,
+            "detail": "steps=10",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "pause",
+            "name": "steps unchanged=true",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "restart",
+            "name": "accumulator reset",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "cleanup",
+            "name": "listener removed (keyCount=0)",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "negative",
+            "name": "negative dt consumes 0 (got 0)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "negative",
+            "name": "keyCount unchanged=true",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "normal",
+            "name": "pointerLockElement=null",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "pause",
+            "name": "pointer lock cannot be paused (system behavior)",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "restart",
+            "name": "exitPointerLock called",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "cleanup",
+            "name": "r3 listeners removed",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "negative",
+            "name": "pointer lock NOT_RUN in headless (documented)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "negative",
+            "name": "pointer lock requires user gesture (documented)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "normal",
+            "name": "chase cam at (5.0,4.0,8.0)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "normal",
+            "name": "forward=(0.000,0.000,-1.000)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "normal",
+            "name": "flight at (10.0,6.0,5.0)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "pause",
+            "name": "camera stable",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "restart",
+            "name": "camera reset",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "cleanup",
+            "name": "r4 children=2",
+            "pass": true,
+            "detail": "deferred destroy observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "negative",
+            "name": "null target throws=true",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "negative",
+            "name": "destroyed node setPosition no-throw",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "normal",
+            "name": "tex refCount=1 ≥1",
+            "pass": true,
+            "detail": "refCount=1",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "pause",
+            "name": "refCount stable=1",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "restart",
+            "name": "node visible again",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "cleanup",
+            "name": "tex refCount=0 after release",
+            "pass": true,
+            "detail": "refCount=0",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "negative",
+            "name": "destroyed texture access=true",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "negative",
+            "name": "double destroy handled by engine",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "normal",
+            "name": "storage available=true",
+            "pass": true,
+            "detail": "storageOK=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "normal",
+            "name": "optional load initiated (settled=false)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "pause",
+            "name": "optional paused (loadSettled still=false)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "restart",
+            "name": "optional resumed (loadSettled=true)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "cleanup",
+            "name": "r6 no leaked services",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "negative",
+            "name": "404 load error recorded (headless may be async)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "negative",
+            "name": "audio not available in headless (documented)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          }
+        ],
+        "totalEntries": 41
+      },
+      "pageErrors": [],
+      "probeFailures": []
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "status": "PASS",
+      "probe": {
+        "allEntries": [
+          {
+            "recipe": "r1-code3d",
+            "phase": "normal",
+            "name": "box exists in scene",
+            "pass": true,
+            "detail": "parent=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "normal",
+            "name": "renderer has mesh",
+            "pass": true,
+            "detail": "mesh=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "normal",
+            "name": "material initialized",
+            "pass": true,
+            "detail": "effect=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "pause",
+            "name": "box hidden",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "restart",
+            "name": "box visible again",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "cleanup",
+            "name": "box removed from parent (children=3)",
+            "pass": true,
+            "detail": "deferred destroy observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "negative",
+            "name": "addChild to destroyed root ghost.parent=true",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r1-code3d",
+            "phase": "negative",
+            "name": "bad effect effectAsset=false",
+            "pass": true,
+            "detail": "real: engine does not resolve unknown effect",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "normal",
+            "name": "fixed steps=10 > 0",
+            "pass": true,
+            "detail": "steps=10",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "pause",
+            "name": "steps unchanged=true",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "restart",
+            "name": "accumulator reset",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "cleanup",
+            "name": "listener removed (keyCount=0)",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "negative",
+            "name": "negative dt consumes 0 (got 0)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r2-input-hud",
+            "phase": "negative",
+            "name": "keyCount unchanged=true",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "normal",
+            "name": "pointerLockElement=null",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "pause",
+            "name": "pointer lock cannot be paused (system behavior)",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "restart",
+            "name": "exitPointerLock called",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "cleanup",
+            "name": "r3 listeners removed",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "negative",
+            "name": "pointer lock NOT_RUN in headless (documented)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          },
+          {
+            "recipe": "r3-pointer-lock",
+            "phase": "negative",
+            "name": "pointer lock requires user gesture (documented)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "normal",
+            "name": "chase cam at (5.0,4.0,8.0)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "normal",
+            "name": "forward=(0.000,0.000,-1.000)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "normal",
+            "name": "flight at (10.0,6.0,5.0)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "pause",
+            "name": "camera stable",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "restart",
+            "name": "camera reset",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "cleanup",
+            "name": "r4 children=2",
+            "pass": true,
+            "detail": "deferred destroy observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "negative",
+            "name": "null target throws=true",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r4-camera-modes",
+            "phase": "negative",
+            "name": "destroyed node setPosition no-throw",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "normal",
+            "name": "tex refCount=1 ≥1",
+            "pass": true,
+            "detail": "refCount=1",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "pause",
+            "name": "refCount stable=1",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "restart",
+            "name": "node visible again",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "cleanup",
+            "name": "tex refCount=0 after release",
+            "pass": true,
+            "detail": "refCount=0",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "negative",
+            "name": "destroyed texture access=true",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r5-shared-assets",
+            "phase": "negative",
+            "name": "double destroy handled by engine",
+            "pass": true,
+            "detail": "observed",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "normal",
+            "name": "storage available=true",
+            "pass": true,
+            "detail": "storageOK=true",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "normal",
+            "name": "optional load initiated (settled=false)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "pause",
+            "name": "optional paused (loadSettled still=false)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "restart",
+            "name": "optional resumed (loadSettled=true)",
+            "pass": true,
+            "detail": "",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "cleanup",
+            "name": "r6 no leaked services",
+            "pass": true,
+            "detail": "real",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "negative",
+            "name": "404 load error recorded (headless may be async)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          },
+          {
+            "recipe": "r6-optional-svcs",
+            "phase": "negative",
+            "name": "audio not available in headless (documented)",
+            "pass": true,
+            "detail": "synthetic",
+            "level": "real"
+          }
+        ],
+        "totalEntries": 41
+      },
+      "pageErrors": [],
+      "probeFailures": []
+    }
+  ]
+}

@@ -7,13 +7,30 @@
   "requiresDevTools": false,
   "title": "glTF Viewer",
   "category": "gltf",
-  "apiClaims": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate", "GLTFInstance"],
-  "capabilities": ["gltf"],
+  "apiClaims": [
+    "GLTFLoader.parseAsync",
+    "GLTFAsset.instantiate",
+    "GLTFInstance"
+  ],
+  "capabilities": [
+    "gltf"
+  ],
   "validation": {
-    "functional": ["node-exists", "asset-loaded", "no-runtime-error", "material-property"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "no-runtime-error",
+      "material-property"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -30,7 +47,10 @@
     "visual": "视口中央渲染模型，可拖动旋转缩放；状态提示区显示加载状态"
   },
   "api": {
-    "primary": ["GLTFLoader", "AirTransmissionCapture"],
+    "primary": [
+      "GLTFLoader",
+      "AirTransmissionCapture"
+    ],
     "supporting": [
       "Animation",
       "AirTransmissionCapture.mainCamera",
@@ -64,7 +84,10 @@
       "TRANSMISSION_LAYER",
       "defaultTransmissionVisibility"
     ],
-    "forbiddenShortcut": ["渲染外网远端模型（本地资产为准）", "静态贴图冒充 transmission 折射"],
+    "forbiddenShortcut": [
+      "渲染外网远端模型（本地资产为准）",
+      "静态贴图冒充 transmission 折射"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -191,7 +214,12 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "transmission-capture", "node__1"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "transmission-capture",
+        "node__1"
+      ]
     }
   },
   "interaction": {
@@ -205,7 +233,9 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -222,7 +252,12 @@
         "effect": "air-gltf-standard",
         "props": {
           "albedo": {
-            "value": [1, 1, 1, 1],
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
@@ -268,7 +303,7 @@
   "promotion": {
     "spec": "bd41e69c873e",
     "source": "333f4b776d1851df",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 18,
     "attested": 2,
     "units": 20

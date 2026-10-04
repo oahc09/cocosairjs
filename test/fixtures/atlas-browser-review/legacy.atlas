@@ -1,0 +1,33 @@
+page-0.png
+size: 32,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+plain
+  rotate: false
+  xy: 0,0
+  size: 8,8
+hero
+  rotate: true
+  xy: 8,0
+  size: 4,12
+trimmed
+  xy: 20,0
+  size: 8,8
+  orig: 16,16
+  offset: 4,2
+
+page-1.png
+size: 16,16
+walk
+  xy: 0,0
+  size: 4,4
+  index: 0
+walk
+  xy: 4,0
+  size: 4,4
+  index: 1
+walk
+  xy: 8,0
+  size: 4,4
+  index: 2

@@ -19,8 +19,14 @@
     "visual": "初始画面以蓝色球为中心，点击后取景中心跳到橙色球，相机角度切换干脆无插值"
   },
   "api": {
-    "primary": ["Camera", "Node.setRotationFromEuler"],
-    "supporting": ["input", "Input"],
+    "primary": [
+      "Camera",
+      "Node.setRotationFromEuler"
+    ],
+    "supporting": [
+      "input",
+      "Input"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -42,7 +48,10 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": ["移动相机位置冒充朝向变化", "调用不存在的 Camera.lookAt（当前 Inventory 无此 API）"],
+    "forbiddenShortcut": [
+      "移动相机位置冒充朝向变化",
+      "调用不存在的 Camera.lookAt（当前 Inventory 无此 API）"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -160,11 +169,18 @@
       }
     ]
   },
-  "capabilities": ["camera"],
+  "capabilities": [
+    "camera"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "TargetLeft", "TargetRight"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "TargetLeft",
+        "TargetRight"
+      ]
     }
   },
   "interaction": {
@@ -176,12 +192,23 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error",
+      "material-property"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -196,7 +223,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 2.5, 7],
+        "position": [
+          0,
+          2.5,
+          7
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -206,7 +237,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -214,10 +249,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "TargetLeft": {
-        "position": [-3, 0.6, 0],
+        "position": [
+          -3,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -227,7 +270,11 @@
         ]
       },
       "TargetRight": {
-        "position": [3, 0.6, 0],
+        "position": [
+          3,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -242,7 +289,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [65, 155, 235, 255],
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -257,7 +309,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [235, 125, 65, 255],
+            "value": [
+              235,
+              125,
+              65,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -273,7 +330,7 @@
   "promotion": {
     "spec": "466cfd2b2403",
     "source": "ef1843dfdc0ab7c7",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 19,
     "attested": 0,
     "units": 19

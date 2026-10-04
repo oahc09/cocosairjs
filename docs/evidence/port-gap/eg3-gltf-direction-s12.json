@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG3",
+  "subject": {
+    "description": "Browser subset: Public GLTFLoader external PNG and embedded image bufferView, top-origin nearest/clamp sampling and unchanged original textures after interleaved byte uploads; Invalid sampler rejection and explicit instance/asset ownership cleanup"
+  },
+  "evidenceTypes": [
+    "BROWSER_RENDER_PASS"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-gltf-texture-direction-browser.cjs --out=output/playwright/air-gltf-texture-s12-sampler-enums.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T05:34:22.915Z",
+    "endedAt": "2026-10-04T05:34:31.726Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 3,
+    "measuredCases": 3,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; No compressed textures, complete color-space certification or all glTF sampler combinations; GPU allocation measurement unavailable"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "src/air/assets/gltf/material.ts",
+      "sha256": "7f210daaefb0aa1222a62694b99416c5cd2d3565aecc1b98ba9abd0324a3962e"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/gltf-texture-direction/index.html",
+      "sha256": "b6644d754eff30f2de5b2e920844d87446f30c61b0c1b81d479a0e43c4fb801c"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-gltf-texture-direction-browser.cjs",
+      "sha256": "6b9a7e8f45ad957f5850c1f02f84354a51f46b6c5471afb53544e7c805fb9e35"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-gltf-texture-s12-sampler-enums.json",
+      "sha256": "738c76f0032ca09c814e0e0c143723d64d08fbf41c4de15f8eedc9a502966c52",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/gltf-texture-direction/index.html",
+      "sha256": "b6644d754eff30f2de5b2e920844d87446f30c61b0c1b81d479a0e43c4fb801c"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-gltf-texture-s12-sampler-enums.json",
+    "sha256": "738c76f0032ca09c814e0e0c143723d64d08fbf41c4de15f8eedc9a502966c52",
+    "allFingerprints": {
+      "build/bootstrap.js": "4ba4b2081457c811d5c0d45fa11ae3e96a99b5e986ac3075086318200467e52e",
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "src/air/assets/gltf/material.ts": "7f210daaefb0aa1222a62694b99416c5cd2d3565aecc1b98ba9abd0324a3962e",
+      "src/air/assets/gltf/mesh.ts": "7c87868428c8baff6c16a834323a0e873a053d343a314c8ff3a6fdf46329a8e1",
+      "src/air/assets/gltf/loader.ts": "e833d2f7e134e936c8f91e4cc5e8a637fca4cab126bf3fe836a28e800a20e9f9",
+      "test/fixtures/gltf-texture-direction/index.html": "b6644d754eff30f2de5b2e920844d87446f30c61b0c1b81d479a0e43c4fb801c",
+      "test/fixtures/gltf-texture-direction/main.ts": "b9cae02672236463a6c7730e638e94334284ce91efbb0de7d63acdb6913481d8",
+      "tools/verify/air-gltf-texture-direction-browser.cjs": "6b9a7e8f45ad957f5850c1f02f84354a51f46b6c5471afb53544e7c805fb9e35",
+      "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+    },
+    "installed": null,
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-gltf-texture-s12-sampler-enums.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-gltf-texture-s12-sampler-enums.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-gltf-texture-s12-initial.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-gltf-texture-s12-initial.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-gltf-texture-s12-public-sampler-types.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-gltf-texture-s12-sampler-enums-types.log"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-gltf-texture-s12-sampler-enums-artifacts\\chromium.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-gltf-texture-s12-sampler-enums-artifacts\\firefox.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-gltf-texture-s12-sampler-enums-artifacts\\webkit.png"
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-gltf-texture-direction-browser.cjs --out=output/playwright/air-gltf-texture-s12-initial.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T05:28:43.767Z",
+      "endedAt": "2026-10-04T05:29:00.990Z",
+      "exitCode": 1,
+      "failureStage": "application",
+      "reason": "Probe queried nonexistent texture methods; public GFX sampler inspection replaces those calls",
+      "supersededBy": 1
+    },
+    {
+      "status": "PASS",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-gltf-texture-direction-browser.cjs --out=output/playwright/air-gltf-texture-s12-sampler-enums.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T05:34:22.915Z",
+      "endedAt": "2026-10-04T05:34:31.726Z",
+      "exitCode": 0
+    }
+  ]
+}

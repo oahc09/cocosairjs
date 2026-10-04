@@ -17,26 +17,46 @@
     "utils.createMesh",
     "primitives.box"
   ],
-  "capabilities": ["basics"],
+  "capabilities": [
+    "basics"
+  ],
   "validation": {
-    "functional": ["node-exists", "no-runtime-error", "material-property"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error",
+      "material-property"
+    ],
     "interaction": [],
-    "visual": ["visible-frame", "frame-diff"],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
     "lifecycle": [],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
     "goal": "第一个完整 3D 场景：相机 + 平行光 + 旋转立方体（E001 basic-cube）",
-    "points": ["Camera 组件与投影参数", "DirectionalLight 照明", "Component.update 驱动自转"]
+    "points": [
+      "Camera 组件与投影参数",
+      "DirectionalLight 照明",
+      "Component.update 驱动自转"
+    ]
   },
   "effect": {
     "functional": "Scene 含 Main Camera（PERSPECTIVE, fov45, SOLID_COLOR 清屏）、Main Light（illuminance=2）与 Cube（box 图元 + builtin-standard）；Cube 的 Y 欧拉角逐帧增加 dt*45。",
     "visual": "画面中央立方体持续缓慢自转，三个可见面呈现不同明暗，背景深蓝"
   },
   "api": {
-    "primary": ["createAirApp", "MeshRenderer", "Component"],
-    "supporting": ["Camera", "DirectionalLight"],
+    "primary": [
+      "createAirApp",
+      "MeshRenderer",
+      "Component"
+    ],
+    "supporting": [
+      "Camera",
+      "DirectionalLight"
+    ],
     "claims": [
       "Layers",
       "createAirApp",
@@ -56,7 +76,10 @@
       "Node.setRotationFromEuler",
       "Node.addComponent"
     ],
-    "forbiddenShortcut": ["加载 .scene 文件冒充 Code First", "用贴图立方体图片冒充实时渲染"],
+    "forbiddenShortcut": [
+      "加载 .scene 文件冒充 Code First",
+      "用贴图立方体图片冒充实时渲染"
+    ],
     "evidence": [
       {
         "api": "Layers",
@@ -165,14 +188,20 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -196,7 +225,7 @@
   "promotion": {
     "spec": "1eec40a9fdad",
     "source": "037467dd34348936",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 17,
     "attested": 0,
     "units": 17

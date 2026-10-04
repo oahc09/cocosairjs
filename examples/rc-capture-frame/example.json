@@ -8,14 +8,20 @@
   "requiresDevTools": true,
   "learning": {
     "goal": "掌握 captureFrame 的受控帧捕获：AFTER_DRAW 时机、可重复、不改播放状态",
-    "points": ["session 捕获合同的调用方式与 dataURL 结果", "捕获帧显示为页面缩略图", "旋转场景后再次捕获验证可重复性"]
+    "points": [
+      "session 捕获合同的调用方式与 dataURL 结果",
+      "捕获帧显示为页面缩略图",
+      "旋转场景后再次捕获验证可重复性"
+    ]
   },
   "effect": {
     "functional": "捕获到的 dataURL 长度 > 512 且渲染为页面内 <img>；场景旋转 45° 后再次捕获成功；__rcState.captured === true。",
     "visual": "右下角出现画布帧的缩略图（含绿色方块），面板展示 dataURL 字节数"
   },
   "api": {
-    "primary": ["DevToolsSession.captureFrame"],
+    "primary": [
+      "DevToolsSession.captureFrame"
+    ],
     "supporting": [],
     "claims": [
       "createAirApp",
@@ -37,7 +43,10 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": ["截取整页 DOM 冒充画布帧捕获", "改写播放状态换取捕获时机"],
+    "forbiddenShortcut": [
+      "截取整页 DOM 冒充画布帧捕获",
+      "改写播放状态换取捕获时机"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -149,23 +158,38 @@
       }
     ]
   },
-  "capabilities": ["runtime-control"],
+  "capabilities": [
+    "runtime-control"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "DemoCube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "DemoCube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -180,7 +204,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 2.2, 6.5],
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -190,7 +218,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -198,10 +230,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "DemoCube": {
-        "position": [0, 0.6, 0],
+        "position": [
+          0,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -209,7 +249,11 @@
             "text": "demoCube.setPosition(new Vec3(0, 0.6, 0));"
           }
         ],
-        "rotationEuler": [0, 45, 0]
+        "rotationEuler": [
+          0,
+          45,
+          0
+        ]
       }
     },
     "material-property": {
@@ -217,7 +261,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [95, 205, 120, 255],
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -241,7 +290,7 @@
   "promotion": {
     "spec": "4daffe289d95",
     "source": "14dcaa1b1f04abd7",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 17,
     "attested": 1,
     "units": 18

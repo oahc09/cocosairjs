@@ -16,6 +16,10 @@ import type { AirApp, AirAppOptions } from './app';
 import { registerBuiltinAirAssets } from './builtin/register';
 import { selectPhysicsBackend } from './physics-backend';
 import { attachContextHealth } from './context-health';
+import { createAirDiagnostics } from './diagnostics';
+import { admitAirOptions, normalizeAirOptions, airError, AirNormalizedOptions } from './app-config';
+import { view } from '../cocos/ui/view';
+import { screenAdapter } from 'pal/screen-adapter';
 
 export type { AirApp, AirAppOptions } from './app';
 
@@ -97,43 +101,64 @@ function ensureCanvasDOM (canvas: HTMLCanvasElement): void {
  * app.getScene(); // → Scene | null
  * ```
  */
-export async function createAirApp (options: AirAppOptions): Promise<AirApp> {
-    let canvas = options.canvas;
-    if (typeof canvas === 'string') {
-        const el = document.querySelector(canvas);
-        if (!(el instanceof HTMLCanvasElement)) {
-            throw new Error(`[cocosair] createAirApp: selector '${canvas}' did not match a <canvas> element.`);
+export function createAirApp (options: AirAppOptions): Promise<AirApp> {
+    try {
+        const normalized = normalizeAirOptions(options), state = admitAirOptions(normalized);
+        if (state.initPromise) return state.initPromise;
+        // The PAL has already evaluated on the eager path. Never change its density silently.
+        if (Math.abs(screenAdapter.devicePixelRatio - Math.min(window.devicePixelRatio ?? 1, normalized.pixelRatioCap)) > 1e-9) {
+            throw airError('AIR_E_PIXEL_RATIO_IMPORT_ORDER', 'Set __CCDPR_CAP__ before importing the engine, or use cocosair.js/bootstrap.');
         }
-        canvas = el;
-    }
-    if (!canvas) {
-        throw new Error('[cocosair] createAirApp requires a canvas.');
-    }
+        const globals = globalThis as { __CC_CANVAS__?: HTMLCanvasElement; __CCDPR_CAP__?: number };
+        if (globals.__CC_CANVAS__ && globals.__CC_CANVAS__ !== normalized.canvas) {
+            throw airError('AIR_E_CANVAS_IMPORT_ORDER', 'The imported runtime is bound to another canvas; reload and use cocosair.js/bootstrap.');
+        }
+        globals.__CCDPR_CAP__ = normalized.pixelRatioCap;
+        state.options = normalized; state.status = 'initializing';
+        state.initPromise = Promise.resolve().then(() => initializeAirApp(normalized)).then((app) => {
+            state.app = app; state.status = 'ready'; return app;
+        }, (error) => { state.status = 'failed'; state.failure = error; throw error; });
+        return state.initPromise;
+    } catch (error) { return Promise.reject(error); }
+}
+
+async function initializeAirApp (options: AirNormalizedOptions): Promise<AirApp> {
+    const canvas = options.canvas;
     ensureCanvasDOM(canvas);
 
     // W01：上下文健康状态机（在引擎 init 前挂接，早于 swapchain 自身的 lost 告警监听）。
     const contextHealth = attachContextHealth(canvas, options.contextLoss);
+    const diagnostics = createAirDiagnostics(options.diagnostics ?? 'errors');
 
     // 3D 物理后端选择（r46，#8(a)）：官方两个 instantiate 在模块求值期向
     // Game.EVENT_PRE_SUBSYSTEM_INIT 各挂一个 register 监听器（builtin 先、cannon 后，
     // 故模块序默认会让 cannon 胜出）。本监听器在两个之后注册 ⇒ 同事件内最后执行，
     // 用户后端确定性胜出；世界在该事件之后的子系统初始化期才创建，时序安全。
-    game.once(Game.EVENT_PRE_SUBSYSTEM_INIT, () => selectPhysicsBackend(options.physics ?? 'builtin'));
+    const selectBackend = (): void => selectPhysicsBackend(options.physics);
+    game.once(Game.EVENT_PRE_SUBSYSTEM_INIT, selectBackend);
 
     // 注册引擎同源 builtin effects/materials（glsl3 适配，见 builtin/register.ts）
-    game.on(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
+    game.once(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
 
     // V0.1: 无远程 settings.json；默认走 legacy 渲染管线
     try {
         await game.init({
-            debugMode: DebugMode.ERROR,
+            debugMode: options.diagnostics === 'warnings' ? DebugMode.WARN : DebugMode.ERROR,
             settingsPath: '',
             overrideSettings: { rendering: { renderMode: options.renderMode } },
         });
+        if (options.designResolution) {
+            const { width, height, policy } = options.designResolution;
+            view.setDesignResolutionSize(width, height, policy);
+        }
     } catch (error) {
         contextHealth.destroy();
+        diagnostics.destroy();
         throw error;
+    } finally {
+        game.off(Game.EVENT_PRE_SUBSYSTEM_INIT, selectBackend);
+        game.off(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
     }
 
-    return new AirAppImpl(canvas, contextHealth);
+    return new AirAppImpl(canvas, contextHealth, diagnostics);
 }

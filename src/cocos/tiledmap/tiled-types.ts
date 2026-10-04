@@ -450,6 +450,8 @@ export interface TMXObject {
     y: number;
     rotation: number;
     type: TMXObjectType;
+    /** Tiled user class (modern `class` or legacy `type`), separate from the shape enum. */
+    className?: string;
     visible: boolean;
     wrap: boolean;
     color: Color;

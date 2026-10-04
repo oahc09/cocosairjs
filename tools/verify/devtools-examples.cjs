@@ -98,7 +98,8 @@ function checkRuntimeBundleBoundary () {
   const bundle = path.join(REPO, 'build', 'cocosair.module.js');
   if (!fs.existsSync(bundle)) { return check('runtime-bundle-boundary', false, 'build/cocosair.module.js missing'); }
   const text = fs.readFileSync(bundle, 'utf8');
-  const leaked = ['createAgentSession', 'agent-session', 'SESSION_CLOSED', 'STALE_TARGET'].filter((token) => text.includes(token));
+  const leaked = ['createAgentSession', 'agent-session', 'SESSION_CLOSED', 'STALE_TARGET'].filter((token) =>
+    token === 'SESSION_CLOSED' ? /\bSESSION_CLOSED\b/.test(text) : text.includes(token));
   return check('runtime-bundle-boundary', leaked.length === 0, leaked.length ? `bundle contains: ${leaked.join(',')}` : 'runtime bundle free of DevTools session implementation');
 }
 
@@ -388,9 +389,11 @@ function writeEvidence (results, globals, done) {
     pass,
     fail: merged.length - pass,
     partial: !globals || !!targetIds || done !== true,
-    // completed 只在整轮跑完（done）时为 true；每条示例的进度快照一律 false，
+    // 完整非空全绿运行才 completed；进度、子集与全局失败一律 false。
     // 被 kill 后文件不自认"当期测量"，消费端按 NOT_RUN 处理（F-72）。
-    completed: done === true,
+    completed: done === true && !targetIds && results.length > 0 && results.every((row) => row.result === 'PASS')
+      && globals.every((row) => row.state === 'PASS'),
+    scopePassed: done === true && results.length > 0 && results.every((row) => row.result === 'PASS') && globals.every((row) => row.state === 'PASS'),
     subset: targetIds ? [...ran].sort() : undefined,
     runPass: results.filter((r) => r.result === 'PASS').length,
     runTotal: results.length,
@@ -414,13 +417,15 @@ function writeEvidence (results, globals, done) {
     writeEvidence(results, globalChecks, false);
   }
   writeEvidence(results, globalChecks, true);
-  const promotion = promoteFromEvidence(results);
+  const scopePassed = results.length > 0 && results.every((row) => row.result === 'PASS')
+    && globalChecks.every((row) => row.state === 'PASS');
+  const promotion = scopePassed && !targetIds ? promoteFromEvidence(results) : { promoted: 0, demoted: 0 };
   require('child_process').execFileSync('node', [path.join(REPO, 'tools', 'examples', 'generate-manifest.cjs')], { cwd: REPO });
   const pass = results.filter((r) => r.result === 'PASS').length;
   const boundary = globalChecks[0];
   console.log(`\n== DevTools examples: ${pass}/${results.length} PASS, runtime bundle boundary ${boundary.state}, `
     + `${promotion.promoted} promoted / ${promotion.demoted} demoted (stable 需逐 API 证明无 unproven) ==`);
-  process.exitCode = (pass === results.length && boundary.state === 'PASS') ? 0 : 1;
+  process.exitCode = scopePassed ? 0 : 1;
 })().catch((error) => {
   console.error('FATAL:', String(error && error.stack || error).slice(0, 600));
   process.exit(1);

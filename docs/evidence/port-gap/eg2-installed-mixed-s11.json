@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG2",
+  "subject": {
+    "description": "Browser subset: output/playwright/air-mixed-s10-installed.json"
+  },
+  "evidenceTypes": [
+    "BROWSER_INPUT_PASS"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-mixed-input-browser.cjs --installed --out=output/playwright/air-mixed-s10-installed.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T04:49:14.521Z",
+    "endedAt": "2026-10-04T04:50:01.237Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium/native/default",
+      "chromium/native/custom",
+      "chromium/dom/default",
+      "chromium/dom/custom",
+      "firefox/native/default",
+      "firefox/native/custom",
+      "firefox/dom/default",
+      "firefox/dom/custom",
+      "webkit/native/default",
+      "webkit/native/custom",
+      "webkit/dom/default",
+      "webkit/dom/custom"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 12,
+    "measuredCases": 12,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER_WITH_EXPLICIT_SYNTHETIC_CONTACTS. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; Two simultaneous contacts and cancellation are synthetic DOM events through production listeners; physical multitouch not certified; Trusted protocol mouse/key are separate measured sources; Actual hidden only credited if document.hidden changes; synthetic hidden is never upgraded"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "src/air/action-input.ts",
+      "sha256": "c279eb75c5123fb1a7582c4e650d9a37e34ff6d13bd4d457c51284fc75a33f4d"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/mixed-input/main.ts",
+      "sha256": "a341b69e757b90e802380392bd188bbd1eabc7323a7f258d080ddc0579940531"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-mixed-input-browser.cjs",
+      "sha256": "52527a375b6b857fffe15a10c7ec404bdf8b07189f4ff1c290710361478ec956"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-mixed-s10-installed.json",
+      "sha256": "13bac99c056e695effa70388f7e17007589354cffc6f4c3e63d6f2b9ebd3a773",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/mixed-input/index.html",
+      "sha256": "c6e8c58588ae96fecd388ca3a3e4002f33e5852bd94429fb321d9035318a75b2"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-mixed-s10-installed.json",
+    "sha256": "13bac99c056e695effa70388f7e17007589354cffc6f4c3e63d6f2b9ebd3a773",
+    "allFingerprints": {
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "src/air/action-input.ts": "c279eb75c5123fb1a7582c4e650d9a37e34ff6d13bd4d457c51284fc75a33f4d",
+      "src/air/action-state.ts": "060d8dbf14a2df8b0de34ad32f95b33ecb647bfa5fee8151d013600dc03a52b4",
+      "tools/debug/test-input.ts": "56e6715261f3c0979dd4ea40e889c692b600ecd1ecc920811d1e74f3c591433a",
+      "test/fixtures/mixed-input/main.ts": "a341b69e757b90e802380392bd188bbd1eabc7323a7f258d080ddc0579940531",
+      "test/fixtures/mixed-input/index.html": "c6e8c58588ae96fecd388ca3a3e4002f33e5852bd94429fb321d9035318a75b2",
+      "tools/verify/air-mixed-input-browser.cjs": "52527a375b6b857fffe15a10c7ec404bdf8b07189f4ff1c290710361478ec956",
+      "tools/verify/installed-atlas-package.cjs": "51671f2ae98f937408e56de2e5f513e2e7dd27312d949bd2b7bb258b4a812587"
+    },
+    "installed": {
+      "method": "ACTUAL_TARBALL_OFFLINE_INSTALL",
+      "packageName": "cocosair.js",
+      "tarball": {
+        "filename": "cocosair.js-1.0.0.tgz",
+        "bytes": 4054135,
+        "sha256": "f4fa11515e9706008636ab9ab36330857ab1b223dc083aa18ae05208d701ab18"
+      },
+      "chunks": {
+        "bootstrap.js": {
+          "bytes": 5533,
+          "sha256": "ace69dca81220f8062f6f2033a9249eed4e45c7b9e19fa9ad136704ed8cf52dc"
+        },
+        "runtime.js": {
+          "bytes": 20348,
+          "sha256": "269ef8d37fede140c89f6fe649aa59c3d4a9af3c4f4faf2cb1ddd15ce8946580"
+        },
+        "chunk-4SNSPYL7.js": {
+          "bytes": 20348,
+          "sha256": "269ef8d37fede140c89f6fe649aa59c3d4a9af3c4f4faf2cb1ddd15ce8946580"
+        },
+        "chunk-CYPJCPH7.js": {
+          "bytes": 6724317,
+          "sha256": "1d203b926dece434e970e8c296ebcba679cf9f0f72ba6954c28777fa1d2a8073"
+        }
+      },
+      "installOutput": "\nadded 1 package in 2s\n"
+    },
+    "originalMethod": "REAL_BROWSER_WITH_EXPLICIT_SYNTHETIC_CONTACTS"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-mixed-s10-installed.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-mixed-s10-installed.json"
+      }
+    ],
+    "screenshots": []
+  }
+}

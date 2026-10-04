@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 91,
+    "modifiedCount": 106,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -176,14 +176,14 @@
       "upstreamPath": "cocos/2d/assembler/label/text-output-data.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates."
+        "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates."
     },
     {
-      "airPath": "src/cocos/2d/assembler/label/text-processing.ts",
-      "upstreamPath": "cocos/2d/assembler/label/text-processing.ts",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": true,
-      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates."
+        "airPath": "src/cocos/2d/assembler/label/text-processing.ts",
+        "upstreamPath": "cocos/2d/assembler/label/text-processing.ts",
+        "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+        "modified": true,
+        "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates. PG-02: retain the final character's incoming BMFont kerning pair instead of forcing it to zero; native layout already consumes the next character's incoming value."
     },
     {
       "airPath": "src/cocos/2d/assembler/label/text-style.ts",
@@ -413,8 +413,8 @@
       "airPath": "src/cocos/2d/framework/canvas.ts",
       "upstreamPath": "cocos/2d/framework/canvas.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR PG-08: screen-aligned Canvas derives independent orthographic half-width/height from native view scale, fixing EXACT_FIT projection and hit-test cropping; target textures retain automatic aspect."
     },
     {
       "airPath": "src/cocos/2d/framework/deprecated-1.2.0.ts",
@@ -683,11 +683,11 @@
       "reason": "extraction copy"
     },
     {
-      "airPath": "src/cocos/3d/assets/mesh.ts",
-      "upstreamPath": "cocos/3d/assets/mesh.ts",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+        "airPath": "src/cocos/3d/assets/mesh.ts",
+        "upstreamPath": "cocos/3d/assets/mesh.ts",
+        "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+        "modified": true,
+        "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved."
     },
     {
       "airPath": "src/cocos/3d/assets/morph-rendering.ts",
@@ -882,8 +882,8 @@
       "airPath": "src/cocos/3d/models/baked-skinning-model.ts",
       "upstreamPath": "cocos/3d/models/baked-skinning-model.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "PG-18: validate weighted joint paths and mesh data before replacing a baked skinning binding"
     },
     {
       "airPath": "src/cocos/3d/models/morph-model.ts",
@@ -896,8 +896,8 @@
       "airPath": "src/cocos/3d/models/skinning-model.ts",
       "upstreamPath": "cocos/3d/models/skinning-model.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "PG-18/19: reject invalid weighted joint paths and realtime palette capacity overflow before releasing the previous binding; keep large skeletons with legal local palettes"
     },
     {
       "airPath": "src/cocos/3d/reflection-probe/index.ts",
@@ -973,8 +973,8 @@
       "airPath": "src/cocos/3d/skeletal-animation/skeletal-animation-state.ts",
       "upstreamPath": "cocos/3d/skeletal-animation/skeletal-animation-state.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "PG-19: enable native node curve evaluation when a clip initialized in baked mode first switches to realtime via the public animation preference"
     },
     {
       "airPath": "src/cocos/3d/skeletal-animation/skeletal-animation-utils.ts",
@@ -1015,8 +1015,8 @@
       "airPath": "src/cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts",
       "upstreamPath": "cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "PG-19: defer incomplete live skinning submodels and refresh native descriptors/macros when skeleton/root assignment completes or replaces binding"
     },
     {
       "airPath": "src/cocos/animation/animation-clip.ts",
@@ -2268,8 +2268,8 @@
       "airPath": "src/cocos/asset/asset-manager/release-manager.ts",
       "upstreamPath": "cocos/asset/asset-manager/release-manager.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "PG-30: scene-only release and paused queue drain retain persistent/shared ownership; pending releases use weak asset identity so anonymous Code First assets do not overwrite one another"
     },
     {
       "airPath": "src/cocos/asset/asset-manager/request-item.ts",
@@ -3172,7 +3172,7 @@
       "upstreamPath": "cocos/core/platform/debug.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR L13-fix: import '../../../DebugInfos' -> '../../../DebugInfos.json'（显式扩展名）。独立 src/ 树下 ccbuild node-resolve 无法解析扩展名less 的 DebugInfos（同工具链下原始 cocos4-vulkan 树可解析，疑似 @cocos/typescript 插件解析差异）；显式 .json 后 build/typecheck 全部通过。"
+        "reason": "AIR L13-fix: import '../../../DebugInfos' -> '../../../DebugInfos.json'（显式扩展名）。独立 src/ 树下 ccbuild node-resolve 无法解析扩展名less 的 DebugInfos（同工具链下原始 cocos4-vulkan 树可解析，疑似 @cocos/typescript 插件解析差异）；显式 .json 后 build/typecheck 全部通过。PG-18 adds an internal opt-in native warning/error observer with stable numeric IDs, isolated callbacks and recursion protection; it does not change console filtering or wrap console/WebGL. AIR's bounded per-app channel and optional debug session consume the observer."
     },
     {
       "airPath": "src/cocos/core/platform/deprecated.ts",
@@ -3472,8 +3472,8 @@
       "airPath": "src/cocos/game/director.ts",
       "upstreamPath": "cocos/game/director.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "PG-30: internal scene-only immediate detach/drain retaining runtime, shared caches and persistent nodes, usable while paused or context lost"
     },
     {
       "airPath": "src/cocos/game/game.ts",
@@ -4138,7 +4138,7 @@
       "upstreamPath": "cocos/input/input.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "CB-03 isolate input listeners with structured diagnostics and preserve queued input after dispatcher errors."
+      "reason": "CB-03 isolate input listeners with structured diagnostics and preserve queued input after dispatcher errors. PG-28 includes existing mouse-enter/mouse-leave dispatch in InputEventMap so native ownership cleanup has a typed subscription."
     },
     {
       "airPath": "src/cocos/input/system-event.ts",
@@ -4263,8 +4263,8 @@
       "airPath": "src/cocos/misc/camera-component.ts",
       "upstreamPath": "cocos/misc/camera-component.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR PG-08: serialized opt-in orthoWidth half-width with validated zero-as-automatic default, forwarded to the native render camera."
     },
     {
       "airPath": "src/cocos/misc/deprecated.ts",
@@ -4487,8 +4487,8 @@
       "airPath": "src/cocos/particle/billboard.ts",
       "upstreamPath": "cocos/particle/billboard.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR PG-25: destroy exclusive billboard model/mesh/material on component destruction; return technique-replaced models through Root pool, retain borrowed texture ownership."
     },
     {
       "airPath": "src/cocos/particle/burst.ts",
@@ -5376,8 +5376,8 @@
       "airPath": "src/cocos/render-scene/scene/camera.ts",
       "upstreamPath": "cocos/render-scene/scene/camera.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR PG-08: opt-in independent orthographic half-width in projection/inverse projection; zero preserves original aspect behavior and pooled camera initialization resets the override."
     },
     {
       "airPath": "src/cocos/render-scene/scene/directional-light.ts",
@@ -6496,8 +6496,8 @@
       "airPath": "src/cocos/tiledmap/tiled-object-group.ts",
       "upstreamPath": "cocos/tiledmap/tiled-object-group.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+      "modified": true,
+      "reason": "PG-03 readonly original object/point snapshots and class/shape queries; repeated initialization converts from original coordinates without cumulative flipping. Native first-load rendering remains unchanged."
     },
     {
       "airPath": "src/cocos/tiledmap/tiled-tile.ts",
@@ -6510,8 +6510,8 @@
       "airPath": "src/cocos/tiledmap/tiled-types.ts",
       "upstreamPath": "cocos/tiledmap/tiled-types.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+      "modified": true,
+      "reason": "PG-03 optional className preserves Tiled user class separately from the original TMXObjectType shape enum."
     },
     {
       "airPath": "src/cocos/tiledmap/tiled-utils.ts",
@@ -6524,8 +6524,8 @@
       "airPath": "src/cocos/tiledmap/tmx-xml-parser.ts",
       "upstreamPath": "cocos/tiledmap/tmx-xml-parser.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+      "modified": true,
+      "reason": "PG-03 retain modern object class and legacy type in className; existing native shape classification remains unchanged."
     },
     {
       "airPath": "src/cocos/tween/actions/action-instant.ts",
@@ -7232,7 +7232,7 @@
       "upstreamPath": "public-pal/pal/env/web/env.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; PG-35 rounds physical window dimensions consistently with bootstrap for fractional DPR on startup/resize."
     },
     {
       "airPath": "src/pal/input/input-source.js",
@@ -9256,6 +9256,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
       "reason": "AIR original internal location output validator shared by mouse and touch."
+    },
+    {
+      "airPath": "src/cocos/3d/models/skinning-validation.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR original internal weighted joint binding validation shared by realtime and baked models."
     }
   ]
 }

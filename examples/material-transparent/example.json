@@ -19,8 +19,14 @@
     "visual": "半透明青色面板悬浮在红色实心立方体前，透过面板可隐约看到后方立方体的轮廓与颜色"
   },
   "api": {
-    "primary": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate"],
-    "supporting": ["Material", "MeshRenderer"],
+    "primary": [
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate"
+    ],
+    "supporting": [
+      "Material",
+      "MeshRenderer"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -45,7 +51,10 @@
       "Mesh.destroy",
       "isValid"
     ],
-    "forbiddenShortcut": ["用 opacity 贴图外挂冒充 alphaMode BLEND", "把面板放到方块后方伪造遮挡关系"],
+    "forbiddenShortcut": [
+      "用 opacity 贴图外挂冒充 alphaMode BLEND",
+      "把面板放到方块后方伪造遮挡关系"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -181,24 +190,43 @@
       }
     ]
   },
-  "capabilities": ["materials"],
+  "capabilities": [
+    "materials"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "SolidReference", "BlendPanel"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "SolidReference",
+        "BlendPanel"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "material-property", "asset-loaded", "no-runtime-error", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "material-property",
+      "asset-loaded",
+      "no-runtime-error",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -212,9 +240,21 @@
   "validationExpectations": {
     "transform-equals": {
       "BlendPanel": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -230,7 +270,11 @@
         "handAuthored": true
       },
       "Main Camera": {
-        "position": [0, 2, 6],
+        "position": [
+          0,
+          2,
+          6
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -240,7 +284,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -248,10 +296,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "SolidReference": {
-        "position": [0, 0.5, -0.8],
+        "position": [
+          0,
+          0.5,
+          -0.8
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -266,7 +322,12 @@
         "materialName": "glass-panel",
         "props": {
           "albedo": {
-            "value": [0.3, 0.75, 0.95, 0.45],
+            "value": [
+              0.3,
+              0.75,
+              0.95,
+              0.45
+            ],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
@@ -289,7 +350,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [230, 90, 60, 255],
+            "value": [
+              230,
+              90,
+              60,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -326,7 +392,7 @@
   "promotion": {
     "spec": "3551d7ace883",
     "source": "7add401a7a5e9dd7",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 22,
     "attested": 0,
     "units": 22

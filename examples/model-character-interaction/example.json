@@ -20,8 +20,18 @@
     "visual": "深蓝背景下两个蒙皮四边形角色（A 灰白、B 淡蓝）随骨骼动画摆动（B 明显更快）；点击 A 后 A 变橙色高亮；B 销毁后画面只剩 A 继续动画；左上角面板显示 selected/clicks/B 状态"
   },
   "api": {
-    "primary": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate", "Camera.screenPointToRay"],
-    "supporting": ["Animation.getState", "input", "geometry.intersect", "AnimationClip.wrapMode", "isValid"],
+    "primary": [
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate",
+      "Camera.screenPointToRay"
+    ],
+    "supporting": [
+      "Animation.getState",
+      "input",
+      "geometry.intersect",
+      "AnimationClip.wrapMode",
+      "isValid"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -348,7 +358,10 @@
       }
     ]
   },
-  "capabilities": ["gltf", "animation"],
+  "capabilities": [
+    "gltf",
+    "animation"
+  ],
   "assets": [
     "assets/SimpleSkin.gltf",
     "assets/SimpleSkin_animation.bin",
@@ -358,7 +371,11 @@
   ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "CharA"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "CharA"
+      ]
     }
   },
   "interaction": {
@@ -370,13 +387,28 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "asset-loaded", "animation-playing", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "asset-loaded",
+      "animation-playing",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -390,7 +422,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0.5, 1.2, 4.5],
+        "position": [
+          0.5,
+          1.2,
+          4.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -400,8 +436,16 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
-        "rotationEuler": [-45, -30, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -416,7 +460,11 @@
         ]
       },
       "CharA": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -492,7 +540,7 @@
   "promotion": {
     "spec": "1e712e56bb86",
     "source": "a6f36b8c7acce1c3",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 45,
     "attested": 0,
     "units": 45

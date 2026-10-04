@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T10:43:19.991Z",
+  "generatedAt": "2026-10-04T09:40:14.396Z",
   "suites": [
     {
       "file": "test/smoke/competitive-api-tail.test.ts",
@@ -218,6 +218,544 @@
         "AIR accurate unlit fog specialization rejects incompatible builtin source before registering a partial effect",
         "AIR accurate unlit fog specialization repeated owned assets share one template and leave no deferred listener or registry growth",
         "AIR accurate unlit fog specialization transforms every shader variant without changing builtin data and keeps instance ownership independent"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-action-input-dom.test.ts",
+      "tests": [
+        "PG-28 adapter lifecycle remediations (Lead review fixes 2-4) blur/hidden lifecycle listeners are removed on detach/dispose (precise cleanup)",
+        "PG-28 adapter lifecycle remediations (Lead review fixes 2-4) dispose is terminal: attach after dispose throws AIR_E_DISPOSED without leaking listeners",
+        "PG-28 adapter lifecycle remediations (Lead review fixes 2-4) dispose unbinds the gate listener: transitions after dispose do not touch state",
+        "PG-28 adapter lifecycle remediations (Lead review fixes 2-4) externally owned gate without onChange stays structurally compatible (admission only)",
+        "PG-28 adapter lifecycle remediations (Lead review fixes 2-4) gate onChange triggers immediate reset on deactivate and restart on new generation",
+        "PG-28 dom backend adapter (real DOM listeners) 100 resets/restarts keep listeners at baseline and the adapter functional",
+        "PG-28 dom backend adapter (real DOM listeners) attach is idempotent: double attach does not double-count one physical keydown",
+        "PG-28 dom backend adapter (real DOM listeners) attach never steals focus; requestFocus is explicit for Start/Resume",
+        "PG-28 dom backend adapter (real DOM listeners) detach alone keeps reducer state; dom backend requires explicit canvas",
+        "PG-28 dom backend adapter (real DOM listeners) dispose is reentrantly idempotent; detached listeners leave no residue",
+        "PG-28 dom backend adapter (real DOM listeners) editable keydown is not admitted, but keyup of a held source still releases",
+        "PG-28 dom backend adapter (real DOM listeners) explicit canvas pointer and multi-touch independence on the legacy channel",
+        "PG-28 dom backend adapter (real DOM listeners) repeat keydown does not re-arm the press edge",
+        "PG-28 dom backend adapter (real DOM listeners) session gate: no events while inactive, admission returns after activate",
+        "PG-28 dom backend adapter (real DOM listeners) window blur resets held state with reason blur; hidden resets with reason hidden",
+        "PG-28 dom backend adapter (real DOM listeners) window capture precedes canvas-level masking: stopPropagation on canvas cannot hide keys"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-action-input-native.test.ts",
+      "tests": [
+        "PG-28 native backend adapter (real engine dispatch chain) a held key released into an editable uses PAL identity cleanup exactly once",
+        "PG-28 native backend adapter (real engine dispatch chain) duplicate KEY_DOWN without repeat is deduped by the (action, source) contract",
+        "PG-28 native backend adapter (real engine dispatch chain) editable guard: no keydown admission while an editable element owns focus; keyup unaffected",
+        "PG-28 native backend adapter (real engine dispatch chain) gate onChange on the native backend: deactivate clears held immediately, new generation restarts",
+        "PG-28 native backend adapter (real engine dispatch chain) keyboard flows through the real PAL→input chain; adapter sees engine KeyCode identity",
+        "PG-28 native backend adapter (real engine dispatch chain) native backend also resets on window blur / document hidden with distinct reasons",
+        "PG-28 native backend adapter (real engine dispatch chain) repeat keydown arrives as KEY_PRESSING in the chain and never re-arms the press",
+        "PG-28 native backend adapter (real engine dispatch chain) session gate admission and explicit reset work on the native backend",
+        "PG-28 native backend adapter (real engine dispatch chain) touch flows through the real chain (isolated engine graph with INPUT_TOUCH enabled)"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-action-inspector.test.ts",
+      "tests": [
+        "PG-28 optional input inspector default disabled: no snapshots, no entries, reducer untouched",
+        "PG-28 optional input inspector diagnostic switch does not change action counts or reset records (pure read)",
+        "PG-28 optional input inspector enabled snapshots are read-only and always throttled at 2Hz",
+        "PG-28 optional input inspector ring is capped at 80 with dropped counter; clear resets",
+        "PG-28 optional input inspector source contract: no DOM listeners, no network, no persistence primitives"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-action-multi-touch.test.ts",
+      "tests": [
+        "native per-contact dispatch with a partly swallowed touch batch the globally dispatched contact cannot import a UI-owned sibling into action state"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-action-scope-integration.test.ts",
+      "tests": [
+        "production action adapter consumes the scene scope generation and detaches its subscription"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-action-source-ownership.test.ts",
+      "tests": [
+        "PG-28 caller-owned source identity axis sources and pointer pattern declarations are copied on admission",
+        "PG-28 caller-owned source identity queued edges and held sources retain the event-time identity after caller mutation"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-action-state.test.ts",
+      "tests": [
+        "PG-28 axis actions analog setAxis writes clamp and treats 0 as release",
+        "PG-28 axis actions sum of active contributions, clamped to [-1, 1]; axis actions produce no press edges",
+        "PG-28 ordered transitions contract (Lead review fix 1) multi-action interleaved edges keep queue order in transitions",
+        "PG-28 ordered transitions contract (Lead review fix 1) multi-source OR: each release produces exactly one transition; held only falls when the last source leaves",
+        "PG-28 ordered transitions contract (Lead review fix 1) no new events -> repeated consumeTick returns empty transitions (no replay)",
+        "PG-28 ordered transitions contract (Lead review fix 1) same-tick press→release→press survives as three ordered transitions",
+        "PG-28 ordered transitions contract (Lead review fix 1) transitions carry the concrete source identity",
+        "PG-28 press edges and repeat discipline 100 repeats produce exactly one press; repeat does not re-arm",
+        "PG-28 press edges and repeat discipline edges within one tick keep queue order (quick press/release sequences)",
+        "PG-28 press edges and repeat discipline multiple business ticks consume once each; pending presses do not leak across reset",
+        "PG-28 press edges and repeat discipline zero-tick quick press+release survives to the next business tick without loss",
+        "PG-28 reset reasons each lifecycle reason is recorded distinctly and monotonically",
+        "PG-28 runtime validation and stable errors (Lead review fix 5) invalid sources are rejected with AIR_E_INVALID_SOURCE at declaration and runtime",
+        "PG-28 runtime validation and stable errors (Lead review fix 5) non-finite axis values are rejected with AIR_E_INVALID_VALUE and never pollute queries",
+        "PG-28 runtime validation and stable errors (Lead review fix 5) public readonly data is frozen and copied: snapshots cannot mutate internal identity",
+        "PG-28 runtime validation and stable errors (Lead review fix 5) reducer keeps engine dependency type-only (no runtime cocos import in action-state)",
+        "PG-28 runtime validation and stable errors (Lead review fix 5) unknown action names throw AIR_E_UNKNOWN_ACTION consistently across queries and mutations",
+        "PG-28 source identity actionsFor routes adapter events through the declared source set",
+        "PG-28 source identity alias keys on different channels are distinct sources, never conflated",
+        "PG-28 source identity duplicate source inside one action is rejected up front",
+        "PG-28 source identity pointer patterns bind dynamic pointer ids without enumerating them",
+        "PG-28 source-set OR semantics manual HUD press/release works without pre-declared bindings; unknown action throws",
+        "PG-28 source-set OR semantics multi-pointer and keyboard coexist; releasing one touch clears neither keyboard nor other touch",
+        "PG-28 source-set OR semantics releasing A keeps ArrowLeft held (keyboard independence)"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-asset-bank-races.test.ts",
+      "tests": [
+        "PG-32 AssetBank race boundaries (Lead review) a revoked old request cannot remove a fresh in-flight request with the same key",
+        "PG-32 AssetBank race boundaries (Lead review) cache-hit completion progress abort rejects and does not add a ghost subscription",
+        "PG-32 AssetBank race boundaries (Lead review) cache-hit releaseAll from progress rejects rather than returning a revoked asset",
+        "PG-32 AssetBank race boundaries (Lead review) cancelled native cache hit preserves the unrelated external owner",
+        "PG-32 AssetBank race boundaries (Lead review) cancelling inside completion progress does not adopt that subscriber",
+        "PG-32 AssetBank race boundaries (Lead review) explicit ext honors the native parser even when the URL already caches a different asset type",
+        "PG-32 AssetBank race boundaries (Lead review) native loadRemote cache hit does not transfer an external owner reference to the bank",
+        "PG-32 AssetBank race boundaries (Lead review) releaseAll from completion progress cannot leave a revoked ghost owner"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-asset-bank.test.ts",
+      "tests": [
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) a revoked old callback cannot remove a fresh same-key in-flight record (identity-guarded delete)",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) aborting inside completion progress cancels that subscriber instead of resolving it",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) adopting an asset with an existing external owner: bank adds its own reference and release keeps the owner",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) all subscribers cancel: late completion is adopted by nobody (paired addRef/decRef keeps refCount at zero)",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) bank holds exactly one engine addRef regardless of subscriber count; decRef only when the last subscription leaves",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) cache hit with an already-aborted signal rejects AIR_E_ABORTED (cancelled subscriber, not served)",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) cache-hit deferred delivery: release inside progress keeps the subscription; releaseAll inside revokes it",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) compat signature preserved: suffix URL uses native inference, two-phase progress, dedup + release semantics",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) cross-bank shared asset: each bank holds its own reference; releasing one never touches the other",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) explicit ext participates in the key: different ext loads independently, same ext merges",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) explicit ext: reloadAsset option bypasses the URL strong-cache; key and engine param both normalized lowercase",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) ext shape validation rejects malformed values with AIR_E_INVALID_EXT",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) honest capability flag: underlying loadRemote is not network-cancellable",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) late unadopted completion preserves an unrelated external owner (no phantom decRef)",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) load failure rejects all waiters with AIR_E_LOAD_FAILED; retry after failure starts a fresh request",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) one subscriber aborts mid-flight: its subscription cancels, the shared load and peer are unaffected",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) releaseAll during in-flight revokes waiters (AIR_E_REVOKED); late result not adopted; next load is a fresh request",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) releaseAll inside completion progress revokes that subscription; no ghost entry is stored",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) releaseAll releases all cached entries and returns the count (idempotent)",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) same-tick abort on a cache hit rolls back exactly this subscription (deferred delivery aligns with native asyncify)",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) subscriber progress callback throwing rejects only that subscription; peer and bank stay consistent",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) suffix-less URL without ext is rejected with AIR_E_EXT_REQUIRED and starts no request",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) synchronous loadRemote callback settles normally (no forever-pending promise)",
+        "PG-06/PG-32 AssetBank loading and ownership (controlled loadRemote, real Asset) synchronous loadRemote throw rejects with AIR_E_LOAD_FAILED instead of pending"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-atlas-review.test.ts",
+      "tests": [
+        "libGDX compatibility and out-of-order atlas page completion duplicate page URL returns every bank subscription on dispose",
+        "libGDX compatibility and out-of-order atlas page completion legacy writer uses unindented page fields with indented region fields",
+        "libGDX compatibility and out-of-order atlas page completion official compact output permits page and region fields without indentation",
+        "libGDX compatibility and out-of-order atlas page completion official offsets fields are left, bottom, originalWidth, originalHeight",
+        "libGDX compatibility and out-of-order atlas page completion official rotated bounds use logical width/height, the packed footprint swaps them",
+        "libGDX compatibility and out-of-order atlas page completion page 1 completing first preserves the document page order"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-atlas.test.ts",
+      "tests": [
+        "PG-01 loadAtlas over the shared AssetBank context duplicate page URL: every bank subscription is recorded and returned on dispose",
+        "PG-01 loadAtlas over the shared AssetBank context explicit baseURL overrides atlas-relative resolution",
+        "PG-01 loadAtlas over the shared AssetBank context loads text then both relative pages, builds frames, releases subscriptions on dispose",
+        "PG-01 loadAtlas over the shared AssetBank context mid-load abort rejects AIR_E_ABORTED and releases owned subscriptions",
+        "PG-01 loadAtlas over the shared AssetBank context non-png page suffix and suffix-less page without pageExt are rejected with AIR_E_ATLAS_PAGE_FORMAT",
+        "PG-01 loadAtlas over the shared AssetBank context page load failure releases the completed text subscription and leaves no half handle",
+        "PG-01 native SpriteFrame factory and ownership handle owns one texture ref and one frame ref; dispose is idempotent and refuses extra owners",
+        "PG-01 native SpriteFrame factory and ownership indexed animation frames are individually addressable, never merged",
+        "PG-01 native SpriteFrame factory and ownership page texture dimension mismatch fails without leaving half-built frames",
+        "PG-01 native SpriteFrame factory and ownership rect keeps logical size at region.xy (GPU-verified top-origin); rotated consumes the swapped footprint via native UV",
+        "PG-01 native SpriteFrame factory and ownership wrong page texture count fails",
+        "PG-01 parseAtlasText (pure parser) animated same-name different-index stays queryable without silent overwrite",
+        "PG-01 parseAtlasText (pure parser) bounds mixed with xy/size rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) duplicate name+index rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) duplicate page field rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) empty input rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) first block not a page rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) legacy format: pages, plain/rotated/trimmed regions with libGDX semantics",
+        "PG-01 parseAtlasText (pure parser) negative coordinate rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) new format: bounds/offsets derive logical size, original size and trim",
+        "PG-01 parseAtlasText (pure parser) offsets mixed with orig rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) page missing size surfaces at region close rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) region beyond page rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) rotated footprint beyond page rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) unknown page field rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) unknown region field rejects with a stable code",
+        "PG-01 parseAtlasText (pure parser) unknown rotation rejects with a stable code"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-audio-service.test.ts",
+      "tests": [
+        "PG-05 audio channel validation volume changes without a loaded channel and rejects invalid values before mutation"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-bmfont.test.ts",
+      "tests": [
+        "BMFont text, native assembly and ownership XML input rejects explicitly",
+        "BMFont text, native assembly and ownership binary input rejects explicitly",
+        "BMFont text, native assembly and ownership count mismatch input rejects explicitly",
+        "BMFont text, native assembly and ownership duplicate character input rejects explicitly",
+        "BMFont text, native assembly and ownership malformed field input rejects explicitly",
+        "BMFont text, native assembly and ownership multiple pages input rejects explicitly",
+        "BMFont text, native assembly and ownership native font initializes glyphs, refuses extra owner disposal and releases only owned references",
+        "BMFont text, native assembly and ownership native incoming kerning includes the final character in AV",
+        "BMFont text, native assembly and ownership native incoming kerning includes the final character in AVA",
+        "BMFont text, native assembly and ownership native incoming kerning includes the final character in V",
+        "BMFont text, native assembly and ownership nonfinite size input rejects explicitly",
+        "BMFont text, native assembly and ownership other glyph page input rejects explicitly",
+        "BMFont text, native assembly and ownership outside page input rejects explicitly",
+        "BMFont text, native assembly and ownership packed input rejects explicitly",
+        "BMFont text, native assembly and ownership page load failure resolves a font-relative URL and releases the completed text subscription",
+        "BMFont text, native assembly and ownership quoted metadata, glyph geometry and signed kerning parse without engine resource allocation",
+        "BMFont text, native assembly and ownership unknown kerning character input rejects explicitly"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-bootstrap-config.test.ts",
+      "tests": [
+        "PG-29 engine-free config normalization default and explicit default options match, callbacks use identity",
+        "PG-29 engine-free config normalization invalid density \"2\" rejects before modifying DOM",
+        "PG-29 engine-free config normalization invalid density -1 rejects before modifying DOM",
+        "PG-29 engine-free config normalization invalid density 0 rejects before modifying DOM",
+        "PG-29 engine-free config normalization invalid density Infinity rejects before modifying DOM",
+        "PG-29 engine-free config normalization invalid density NaN rejects before modifying DOM",
+        "PG-29 engine-free config normalization resolution is copied and frozen; native policy is validated"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-bootstrap-singleton.test.ts",
+      "tests": [
+        "PG-29 native singleton admission concurrent same-canvas normalized defaults share the exact promise and app",
+        "PG-29 native singleton admission different canvas or configuration rejects without restarting the running app",
+        "PG-29 native singleton admission invalid options retain the existing scene and do not acquire another canvas"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-browser-evidence.test.ts",
+      "tests": [
+        "Browser evidence normalization preserves execution limits does not promote native completed marker to a full gate",
+        "Browser evidence normalization preserves execution limits rejects an unobserved or contradictory exit code",
+        "Browser evidence normalization preserves execution limits rejects missing original logs rather than creating substitute output",
+        "Browser evidence normalization preserves execution limits rejects same-name candidate with different bytes",
+        "Browser evidence normalization preserves execution limits retains FAIL and NOT_RUN browser rows without dropping scope"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-diagnostics.test.ts",
+      "tests": [
+        "port diagnostics: native generation, visibility and optional tool capture bounded history deduplicates identical warnings, protects snapshots, and resets explicitly",
+        "port diagnostics: native generation, visibility and optional tool capture default errors do not capture native warnings; warnings capture IDs even with filtered console",
+        "port diagnostics: native generation, visibility and optional tool capture failing/recursive observers do not interrupt logging; identical callbacks own independent subscriptions",
+        "port diagnostics: native generation, visibility and optional tool capture invalid options reject before bootstrap side effects",
+        "port diagnostics: native generation, visibility and optional tool capture real HEADLESS material warning reaches native console and existing debug session once"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-effect-layout.test.ts",
+      "tests": [
+        "port effect layout preflight on actual generated JSON UBO member type and order must match the actual GLSL block in both stages",
+        "port effect layout preflight on actual generated JSON conditional/array layouts require a macro-aware compiler rather than a guessed PASS",
+        "port effect layout preflight on actual generated JSON count/type/set and finite binding errors cannot escape as valid layouts",
+        "port effect layout preflight on actual generated JSON generated two-sampler UBO shader passes; implicit allocation avoids explicit UBO/peer slots without mutating input",
+        "port effect layout preflight on actual generated JSON rejects reflected binding mismatch against actual GLSL and missing declarations",
+        "port effect layout preflight on actual generated JSON rejects sampler overlap with UBO and duplicate samplers before registration",
+        "port effect layout preflight on actual generated JSON stage flags must include actual uniform usage in each stage",
+        "port effect layout preflight on actual generated JSON unknown pass program and repeated shader name are rejected"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-evidence-tooling.test.ts",
+      "tests": [
+        "PG-27 candidate snapshot drift detection AIR identity inputs change the snapshot identity digest",
+        "PG-27 candidate snapshot drift detection artifact byte drift is detected on the exact artifact path",
+        "PG-27 candidate snapshot drift detection artifact removal is detected as removed, not silently tolerated",
+        "PG-27 candidate snapshot drift detection explicit AIR_OUT_DIR variant bytes are measured independently of default build",
+        "PG-27 candidate snapshot drift detection git dirty candidates hash untracked source and gitignored npm/decoder bytes",
+        "PG-27 candidate snapshot drift detection identical state -> check clean (same candidate)",
+        "PG-27 candidate snapshot drift detection loadUrl is an explicit identity input: same files, different URL -> drift",
+        "PG-27 candidate snapshot drift detection non-git fixture records honest git.unavailable and collects groups",
+        "PG-27 candidate snapshot drift detection same-version shipped manual and example changes drift without rebuilding runtime",
+        "PG-27 candidate snapshot drift detection same-version source drift is detected with per-file detail",
+        "PG-34 evidence report schema validation AG1 PASS without external materials -> rejected by externalMaterials",
+        "PG-34 evidence report schema validation BROWSER evidence without browser fingerprint -> rejected by evidence.browser",
+        "PG-34 evidence report schema validation FAIL without failureStage -> rejected by failureStage",
+        "PG-34 evidence report schema validation GPU placeholder inference recorded as GPU_MEASURED -> rejected by evidence.gpu",
+        "PG-34 evidence report schema validation NOT_CONFIGURED items are disclosed structurally",
+        "PG-34 evidence report schema validation PASS without candidate fingerprint -> rejected by candidate",
+        "PG-34 evidence report schema validation SYNTHETIC method PASS without limitations disclosure -> rejected by method.limitations",
+        "PG-34 evidence report schema validation USER_CONFIRMED as the only evidence on an instrumented gate -> rejected by evidence.userConfirmed",
+        "PG-34 evidence report schema validation empty scope (no declared, no cases) -> rejected by scope.empty",
+        "PG-34 evidence report schema validation fabricated PASS without command/exit/rawOutputs -> rejected by execution.command",
+        "PG-34 evidence report schema validation fingerprint key silently omitted -> rejected by fingerprints.required",
+        "PG-34 evidence report schema validation honest NOT_RUN report without candidate is acceptable (as long as status is not PASS)",
+        "PG-34 evidence report schema validation inherited prior evidence with mismatched candidate fingerprint -> rejected by priorEvidence",
+        "PG-34 evidence report schema validation invented evidence type -> rejected by evidenceTypes",
+        "PG-34 evidence report schema validation old-round FAIL superseded by nothing but final PASS -> rejected by attempts.supersededBy",
+        "PG-34 evidence report schema validation schema version constant and valid report accepted",
+        "PG-34 evidence report schema validation scope counts account for every case and reject invalid numeric counts",
+        "PG-34 evidence report schema validation subset run claimed completed -> rejected by scope.completed",
+        "PG-34 evidence report schema validation unresolved actual attempts remain honest under NOT_RUN or FAIL, never PASS"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-initial-session-ownership.test.ts",
+      "tests": [
+        "first run adopts prepared session ownership and cleanup occurs only on release"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-input-inspector-boundaries.test.ts",
+      "tests": [
+        "PG-28 inspector hard limits force, clear and enable toggles cannot bypass the sampling ceiling",
+        "PG-28 inspector hard limits non-finite or invalid limits fail explicitly"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-orthographic-width.test.ts",
+      "tests": [
+        "native orthographic width opt-in and projection automatic aspect remains the default; explicit width changes projection and its inverse",
+        "native orthographic width opt-in and projection invalid half-width \"5\" preserves the component value",
+        "native orthographic width opt-in and projection invalid half-width -1 preserves the component value",
+        "native orthographic width opt-in and projection invalid half-width Infinity preserves the component value",
+        "native orthographic width opt-in and projection invalid half-width NaN preserves the component value",
+        "native orthographic width opt-in and projection pooled camera initialization resets the width override and perspective ignores it"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-primitive-descriptor.test.ts",
+      "tests": [
+        "named primitive descriptors preserve native geometry box default geometry is byte-for-byte native data",
+        "named primitive descriptors preserve native geometry cone default geometry is byte-for-byte native data",
+        "named primitive descriptors preserve native geometry custom box channels and segments preserve native data and caller options",
+        "named primitive descriptors preserve native geometry custom sphere, cylinder and cone match each native positional signature",
+        "named primitive descriptors preserve native geometry cylinder default geometry is byte-for-byte native data",
+        "named primitive descriptors preserve native geometry invalid descriptor null fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"box\",\"radius\":1} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"box\",\"width\":0} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"box\",\"widthSegments\":1024,\"heightSegments\":1024} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"box\",\"widthSegments\":1025} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"cone\",\"arc\":0} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"cone\",\"arc\":7} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"cone\",\"capped\":\"false\"} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"cone\",\"height\":null} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"cylinder\",\"radiusTop\":-1} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"cylinder\",\"radiusTop\":0,\"radiusBottom\":0} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"pyramid\"} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"sphere\",\"radius\":null} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"sphere\",\"segments\":1024} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"sphere\",\"segments\":2} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry invalid descriptor {\"type\":\"sphere\",\"segments\":3.5} fails before allocating native geometry",
+        "named primitive descriptors preserve native geometry sphere default geometry is byte-for-byte native data"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-recipes.test.ts",
+      "tests": [
+        "PG-33 fixed-step accumulator 60fps continuous frames consume exactly 1 step each; total = frame count",
+        "PG-33 fixed-step accumulator carry-over: remainder from short frame feeds next frame",
+        "PG-33 fixed-step accumulator dt=0ms consumes 0 steps",
+        "PG-33 fixed-step accumulator dt=1×fixed consumes exactly 1 step",
+        "PG-33 fixed-step accumulator dt=2×fixed consumes 2 steps in one frame",
+        "PG-33 fixed-step accumulator maxCatchup caps runaway accumulation",
+        "PG-33 speed decay classification air velocity stays constant",
+        "PG-33 speed decay classification ground friction decays velocity to near zero",
+        "PG-33 speed decay classification insufficient data returns unknown",
+        "PG-33 texture source contract five sources with per-basis orientation expectations"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-render-visibility.test.ts",
+      "tests": [
+        "optional native visibility filters real native OR visibility, frustum, disable and repeated session reads are independent of ownership",
+        "optional native visibility filters unbound model is explicit and does not initialize resources"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-scene-release.test.ts",
+      "tests": [
+        "PG-30 native paused scene release 100 paused switch/release cycles clear nodes, ownership, tokens and singleton state",
+        "PG-30 native paused scene release close is terminal, shared, and subsequent initialization requires reload",
+        "PG-30 native paused scene release in-flight repeat shares promise, run is gated, cleanup drains without an AFTER_DRAW",
+        "PG-30 native paused scene release late scope releases drain native asset destruction without harming another owner",
+        "PG-30 native paused scene release never-run release is bounded, empty, and preserves runtime for first run",
+        "PG-30 native paused scene release persistent nodes survive detached and reattach on next run"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-session-scope.test.ts",
+      "tests": [
+        "PG-30 production session ownership cleanup is exactly once and shared even when a notification reenters disposal",
+        "PG-30 production session ownership generation retires stale continuations and notifies subscribed gates",
+        "PG-30 production session ownership throwing cleanup and timed-out async ownership are explicit failures, never success"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-skeletal-mode-switch.test.ts",
+      "tests": [
+        "native public skeletal mode preference clip started baked=false keeps real evaluation after public mode changes",
+        "native public skeletal mode preference clip started baked=true keeps real evaluation after public mode changes"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-skinning-cache.test.ts",
+      "tests": [
+        "port skinning bounds: same native asset reuse and mutation changing bindpose data behind a cached skeleton hash recomputes actual bounds",
+        "port skinning bounds: same native asset reuse and mutation nonfinite used bindpose rejects, while an unused bindpose remains irrelevant",
+        "port skinning bounds: same native asset reuse and mutation partial skin attributes produce a layout diagnostic with resource context",
+        "port skinning bounds: same native asset reuse and mutation reset different geometry on the same mesh invalidates the cached bone bounds",
+        "port skinning bounds: same native asset reuse and mutation weighted invalid joint -1 fails with an actionable native boundary diagnostic",
+        "port skinning bounds: same native asset reuse and mutation weighted invalid joint 0.5 fails with an actionable native boundary diagnostic",
+        "port skinning bounds: same native asset reuse and mutation weighted invalid joint 9 fails with an actionable native boundary diagnostic",
+        "port skinning bounds: same native asset reuse and mutation weighted invalid joint NaN fails with an actionable native boundary diagnostic",
+        "port skinning bounds: same native asset reuse and mutation weighted invalid value -1 reports weight rather than a bound failure",
+        "port skinning bounds: same native asset reuse and mutation weighted invalid value Infinity reports weight rather than a bound failure",
+        "port skinning bounds: same native asset reuse and mutation weighted invalid value NaN reports weight rather than a bound failure"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-skinning-capacity.test.ts",
+      "tests": [
+        "native realtime skinning palette capacity large skeleton with a small local palette remains legal",
+        "native realtime skinning palette capacity last legal uniform index and last legal texture index fit actual arrays",
+        "native realtime skinning palette capacity local palette slot 256 rejects with resource and palette context",
+        "native realtime skinning palette capacity unused large skeleton tail does not reject a legal weighted slot",
+        "native realtime skinning palette capacity weighted index 256 rejects before discarding a valid binding"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-skinning-inspector.test.ts",
+      "tests": [
+        "optional native skinning inspection not-ready state does not create a model or claim transport",
+        "optional native skinning inspection public animation preference and effective model stay separate observations",
+        "optional native skinning inspection real native binding exposes effective transport, weighted count and reflection without writes"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-skinning-lifecycle.test.ts",
+      "tests": [
+        "port native skinning lifecycle: assignment orders and enabled state a weighted missing joint path rejects before discarding a valid [Function BakedSkinningModel] binding",
+        "port native skinning lifecycle: assignment orders and enabled state a weighted missing joint path rejects before discarding a valid [Function SkinningModel] binding",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=false order=[\"mesh\", \"root\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=false order=[\"mesh\", \"skeleton\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=false order=[\"root\", \"mesh\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=false order=[\"root\", \"skeleton\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=false order=[\"skeleton\", \"mesh\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=false order=[\"skeleton\", \"root\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=true order=[\"mesh\", \"root\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=true order=[\"mesh\", \"skeleton\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=true order=[\"root\", \"mesh\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=true order=[\"root\", \"skeleton\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=true order=[\"skeleton\", \"mesh\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=false baked=true order=[\"skeleton\", \"root\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=false order=[\"mesh\", \"root\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=false order=[\"mesh\", \"skeleton\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=false order=[\"root\", \"mesh\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=false order=[\"root\", \"skeleton\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=false order=[\"skeleton\", \"mesh\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=false order=[\"skeleton\", \"root\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=true order=[\"mesh\", \"root\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=true order=[\"mesh\", \"skeleton\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=true order=[\"root\", \"mesh\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=true order=[\"root\", \"skeleton\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=true order=[\"skeleton\", \"mesh\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=false enabled=true baked=true order=[\"skeleton\", \"root\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=false order=[\"mesh\", \"root\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=false order=[\"mesh\", \"skeleton\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=false order=[\"root\", \"mesh\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=false order=[\"root\", \"skeleton\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=false order=[\"skeleton\", \"mesh\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=false order=[\"skeleton\", \"root\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=true order=[\"mesh\", \"root\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=true order=[\"mesh\", \"skeleton\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=true order=[\"root\", \"mesh\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=true order=[\"root\", \"skeleton\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=true order=[\"skeleton\", \"mesh\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=false baked=true order=[\"skeleton\", \"root\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=false order=[\"mesh\", \"root\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=false order=[\"mesh\", \"skeleton\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=false order=[\"root\", \"mesh\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=false order=[\"root\", \"skeleton\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=false order=[\"skeleton\", \"mesh\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=false order=[\"skeleton\", \"root\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=true order=[\"mesh\", \"root\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=true order=[\"mesh\", \"skeleton\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=true order=[\"root\", \"mesh\", \"skeleton\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=true order=[\"root\", \"skeleton\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=true order=[\"skeleton\", \"mesh\", \"root\"]",
+        "port native skinning lifecycle: assignment orders and enabled state animation=true enabled=true baked=true order=[\"skeleton\", \"root\", \"mesh\"]",
+        "port native skinning lifecycle: assignment orders and enabled state dynamic positions, joints and weights invalidate same-mesh bone bounds and hash",
+        "port native skinning lifecycle: assignment orders and enabled state merge recomputes bounds from both meshes rather than keeping the old skeleton cache"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-skinning-live-assignment.test.ts",
+      "tests": [
+        "native skinning assignment in an already running scene live property order mesh / root / skeleton completes native submodels",
+        "native skinning assignment in an already running scene live property order mesh / skeleton / root completes native submodels",
+        "native skinning assignment in an already running scene live property order root / mesh / skeleton completes native submodels",
+        "native skinning assignment in an already running scene live property order root / skeleton / mesh completes native submodels",
+        "native skinning assignment in an already running scene live property order skeleton / mesh / root completes native submodels",
+        "native skinning assignment in an already running scene live property order skeleton / root / mesh completes native submodels"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-test-input.test.ts",
+      "tests": [
+        "opt-in synthetic DOM input ownership real DOM dispatch has untrusted events, independent contacts and symmetric terminal releases",
+        "opt-in synthetic DOM input ownership session retirement and a new generation reject injection without changing contacts",
+        "opt-in synthetic DOM input ownership validation rejects an entire malformed batch before mutation or dispatch"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-texture-orientation.test.ts",
+      "tests": [
+        "PG-24 texture orientation contract (pure) classifyTexelGrid derives all four orientations geometrically",
+        "PG-24 texture orientation contract (pure) flipRows matches the copyCanvasRows convention: top-down → bottom-first, columns preserved",
+        "PG-24 texture orientation contract (pure) marker pattern: 16 unique colors, top-left origin, row-major RGBA",
+        "PG-24 texture orientation contract (pure) source contract matrix: five sources with honest acceptance and memory order",
+        "PG-24 texture orientation contract (pure) texelCenterFractions are the four corner texel centers",
+        "PG-24 texture orientation contract (pure) texelFromColor identifies every texel and rejects unknown colors"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-tiled-objects.test.ts",
+      "tests": [
+        "Tiled original geometry and class queries isometric exposes original and native coordinates together",
+        "Tiled original geometry and class queries isometric shared parsed objects do not convert cumulatively",
+        "Tiled original geometry and class queries orthogonal exposes original and native coordinates together",
+        "Tiled original geometry and class queries orthogonal shared parsed objects do not convert cumulatively"
+      ]
+    },
+    {
+      "file": "test/smoke/port-gap-ui-mesh.test.ts",
+      "tests": [
+        "native UI mesh geometry and asset leases UV outside frame rejects before GPU allocation",
+        "native UI mesh geometry and asset leases capacity rejects before GPU allocation",
+        "native UI mesh geometry and asset leases dynamic atlas keeps both original and packed page leases through restoration",
+        "native UI mesh geometry and asset leases fractional index rejects before GPU allocation",
+        "native UI mesh geometry and asset leases incomplete triangle rejects before GPU allocation",
+        "native UI mesh geometry and asset leases negative index rejects before GPU allocation",
+        "native UI mesh geometry and asset leases nonfinite position rejects before GPU allocation",
+        "native UI mesh geometry and asset leases odd positions rejects before GPU allocation",
+        "native UI mesh geometry and asset leases public component preserves copied geometry and validates before replacing it",
+        "native UI mesh geometry and asset leases replace and dispose release only component leases, leaving shared owners alive",
+        "native UI mesh geometry and asset leases wrong UV count rejects before GPU allocation"
       ]
     },
     {
@@ -659,9 +1197,9 @@
     }
   ],
   "totals": {
-    "suites": 51,
-    "tests": 401,
-    "passed": 401,
+    "suites": 88,
+    "tests": 754,
+    "passed": 754,
     "failed": 0
   }
 }

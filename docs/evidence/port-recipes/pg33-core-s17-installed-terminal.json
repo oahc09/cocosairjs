@@ -1,0 +1,3741 @@
+{
+  "schemaVersion": "air-port-recipes/2",
+  "startedAt": "2026-10-04T07:29:46.371Z",
+  "endedAt": "2026-10-04T07:30:01.205Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs",
+    "--installed",
+    "--browser=all",
+    "--out=docs/evidence/port-recipes/pg33-core-s17-installed-terminal.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "method": "REAL_BROWSER_INSTALLED_PACKAGE",
+  "installed": {
+    "method": "ACTUAL_TARBALL_OFFLINE_INSTALL",
+    "packageName": "cocosair.js",
+    "tarball": {
+      "filename": "cocosair.js-1.0.0.tgz",
+      "bytes": 4079509,
+      "sha256": "aa7814cafc584e7a5ba221b2e127ea1b5f3fa1be79f1ce4ebbce40e42b704c9d"
+    },
+    "source": {
+      "path": "docs/manual/examples/manual-port-recipes/main.ts",
+      "bytes": 24000,
+      "sha256": "a1ad5ab3b0aece9aaf5f588c91bd1bca41aaa4a073954ca952a4097046e73bd3",
+      "matchesRepositoryManual": true
+    },
+    "typecheck": {
+      "version": "4.9.5",
+      "command": [
+        "D:\\Program Files\\nodejs\\node.exe",
+        "E:\\AIProMax\\github\\cocosair.js\\node_modules\\typescript\\bin\\tsc",
+        "-p",
+        "C:\\Users\\caosh\\AppData\\Local\\Temp\\cocosair-recipes-consumer-kK4gLP\\recipe-types.json",
+        "--listFiles"
+      ],
+      "exitCode": 0,
+      "installedDeclarationsOnly": true,
+      "rawOutput": "E:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es5.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2016.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2021.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.dom.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.core.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.collection.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.generator.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.iterable.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.promise.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.proxy.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.reflect.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.symbol.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2016.array.include.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.object.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.string.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.promise.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.regexp.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.array.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.object.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.string.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.symbol.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.bigint.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.date.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.promise.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.sharedmemory.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.string.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.number.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2021.promise.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2021.string.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2021.weakref.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2021.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.array.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.error.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.object.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.sharedmemory.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.string.d.ts\r\nC:/Users/caosh/AppData/Local/Temp/cocosair-recipes-consumer-kK4gLP/node_modules/cocosair.js/build/cocosair.module.d.ts\r\nC:/Users/caosh/AppData/Local/Temp/cocosair-recipes-consumer-kK4gLP/node_modules/cocosair.js/build/cocosair.legacy.d.ts\r\nC:/Users/caosh/AppData/Local/Temp/cocosair-recipes-consumer-kK4gLP/node_modules/cocosair.js/docs/manual/examples/manual-port-recipes/main.ts\r\n"
+    },
+    "chunks": {
+      "runtime.js": {
+        "bytes": 6726704,
+        "sha256": "4962e5cb0d7535cf554a8317db7e43014acbe0a36f39afe0c44b238b17d3b979"
+      }
+    },
+    "installOutput": "\nadded 1 package in 1s\n"
+  },
+  "playwrightVersion": "1.63.0",
+  "fingerprints": {
+    "package.json": "a76ff405f7f66d351bb1910fb8baa57f9c9dd79df91db5a3b3454818b4e07153",
+    "build/npm/cocosair.module.js": "8e00b56eab747b53fce288403b5668a2a7ecf443df966e5144547064091a81a9",
+    "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+    "build/cocosair.module.d.ts": "25f87a9ca4261908df6a5648acfe029224032ab4e090229e884cf46e08268f57",
+    "test/fixtures/port-recipes/main.ts": "dc736fb6e02d3c241bb9af78c6d4658e1bc717aeae513d28f1c8033df4522067",
+    "docs/manual/examples/manual-port-recipes/main.ts": "a1ad5ab3b0aece9aaf5f588c91bd1bca41aaa4a073954ca952a4097046e73bd3",
+    "test/fixtures/port-recipes/contract.ts": "efd31b2ca61727e71d71f58e3cf0e8a7f84f40e820d8a2b3fda4b36cd66d3811",
+    "test/fixtures/port-recipes/index.html": "179ee16a8e856b9ecc6d9f6062f6fa94af51a558ccf9981a46f9fa3f7a2c6319",
+    "tools/verify/air-port-recipes-browser.cjs": "2aa92856ec1772850043925bf906076a7df2b22cf47581bc156b20618578467f",
+    "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+    "tools/verify/competitive-example-server.cjs": "f4f98af13a026451a951d3dcd697b6ae73b2e0db17adddf1d6d322598ac3334b",
+    "tools/verify/installed-recipe-package.cjs": "0e1efce23da8e339b0370d9a14a1e6b3ff61c48eb9cd31d08fccbeb93fc52aaa"
+  },
+  "scope": [
+    "r1-code3d",
+    "r2-input-hud",
+    "r3-pointer-lock",
+    "r4-camera-modes",
+    "r5-shared-assets"
+  ],
+  "subset": true,
+  "completed": false,
+  "scopePassed": false,
+  "notRun": [
+    {
+      "id": "r6-optional-svcs",
+      "reason": "Orca Worker separate module pending integration and same-channel terminal"
+    }
+  ],
+  "limitations": [
+    "Core five only; no six-recipe completion claim",
+    "Pointer lock absence is NOT_RUN",
+    "Camera target guards are application policy; pointer capture negatives are DOM API behavior",
+    "Controlled business dt; trusted Playwright keyboard/mouse checked separately",
+    "GPU memory unavailable",
+    "No external original app comparison"
+  ],
+  "results": [
+    {
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "status": "NOT_RUN",
+      "recipes": [
+        {
+          "id": "r1-code3d",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "meshValid": true,
+              "materialValid": true,
+              "boxParent": true
+            },
+            "run": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                15,
+                30,
+                0
+              ]
+            },
+            "pauseRestart": {
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "negative-half-width",
+                  "error": "Error: AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.",
+                  "errorCode": "AIR_E_ORTHO_WIDTH",
+                  "legacyCode": "AIR_E_ORTHO_WIDTH",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "invalid-geometry-size",
+                  "error": "RangeError: AIR_E_PRIMITIVE_DESCRIPTOR: width must be finite and > 0",
+                  "errorCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "legacyCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "widthBefore": 0,
+              "widthAfter": 0,
+              "meshValid": true
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ]
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\chromium-r1-code3d.png"
+        },
+        {
+          "id": "r2-input-hud",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "x": 0,
+              "steps": 0,
+              "accumulator": 0,
+              "held": false,
+              "pressed": false,
+              "ticks": [],
+              "label": "X=0 steps=0",
+              "inkPixels": 720,
+              "attached": true,
+              "generation": 1,
+              "renderedFrames": 12
+            },
+            "run": {
+              "zero": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": true,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 720,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 14
+              },
+              "one": {
+                "x": 2,
+                "steps": 1,
+                "accumulator": 0,
+                "held": true,
+                "pressed": true,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  }
+                ],
+                "label": "X=2 steps=1",
+                "inkPixels": 674,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 16
+              },
+              "many": {
+                "x": 8,
+                "steps": 4,
+                "accumulator": 6.938893903907228e-18,
+                "held": true,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  }
+                ],
+                "label": "X=8 steps=4",
+                "inkPixels": 728,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 18
+              },
+              "released": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 738,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "pauseTrusted": {
+                "before": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 738,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 22
+                },
+                "after": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 738,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 24
+                }
+              },
+              "retired": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "",
+                "inkPixels": 0,
+                "attached": false,
+                "generation": 3,
+                "renderedFrames": 32
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 738,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 26
+              },
+              "after": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 738,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 28
+              },
+              "restarted": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 720,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "unknown-action",
+                  "error": "AirActionError: unknown action: \"misspelled\" (declared: right)",
+                  "errorCode": "AIR_E_UNKNOWN_ACTION",
+                  "legacyCode": "AIR_E_UNKNOWN_ACTION",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "nonfinite-axis",
+                  "error": "AirActionError: setAxis value of action \"right\" must be a finite number, got NaN",
+                  "errorCode": "AIR_E_INVALID_VALUE",
+                  "legacyCode": "AIR_E_INVALID_VALUE",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "state": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 720,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "attached": false,
+              "held": false,
+              "reattach": {
+                "name": "terminal-attach",
+                "error": "AirActionError: adapter is disposed; create a new instance to attach again",
+                "errorCode": "AIR_E_DISPOSED",
+                "legacyCode": "AIR_E_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\chromium-r2-input-hud.png"
+        },
+        {
+          "id": "r3-pointer-lock",
+          "status": "NOT_RUN",
+          "phases": {
+            "construct": {
+              "locked": false,
+              "yaw": 0,
+              "moves": 0,
+              "trustedMoves": 0,
+              "changes": 0,
+              "lastError": null,
+              "requestTrusted": false,
+              "paused": false,
+              "disposed": false
+            },
+            "run": {
+              "before": {
+                "locked": true,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "after": {
+                "locked": true,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "pixel": [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              },
+              "unavailableReason": "Pointer lock acquired, but trusted relative mouse movement was not delivered by this headless automation",
+              "retiredBefore": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              },
+              "retiredAfter": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "restarted": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "inactive-pointer-capture",
+                  "error": "NotFoundError: Failed to execute 'setPointerCapture' on 'Element': No active pointer with the given id is found.",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "detached-pointer-capture",
+                  "error": "NotFoundError: Failed to execute 'setPointerCapture' on 'Element': No active pointer with the given id is found.",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "limitations": [
+                "DOM pointer-capture negatives do not certify pointer-lock denial",
+                "Paused movement is synthetic; trusted movement checked separately"
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\chromium-r3-pointer-lock.png"
+        },
+        {
+          "id": "r4-camera-modes",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "mode": "chase",
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "camera": [
+                0,
+                2,
+                6
+              ],
+              "forward": [
+                0,
+                -0.316227766016838,
+                -0.9486832980505138
+              ],
+              "vehicleForward": [
+                -1,
+                0,
+                -2.220446049250313e-16
+              ],
+              "groundForward": [
+                0,
+                0,
+                -1
+              ],
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "run": {
+              "chase": {
+                "mode": "chase",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  2,
+                  2,
+                  5
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  -2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "flight": {
+                "mode": "flight",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ],
+                "forward": [
+                  -0.4850712500726658,
+                  -0.4850712500726659,
+                  -0.727606875108999
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  -2.220446049250313e-16
+                ],
+                "groundForward": [
+                  -0.554700196225229,
+                  0,
+                  -0.8320502943378438
+                ]
+              },
+              "chasePixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "flightPixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "after": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "restarted": {
+                "mode": "chase",
+                "target": [
+                  0,
+                  0,
+                  0
+                ],
+                "camera": [
+                  0,
+                  2,
+                  6
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  -2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "nonfinite-target",
+                  "error": "Error: RECIPE_INVALID_TARGET",
+                  "errorCode": "RECIPE_INVALID_TARGET",
+                  "legacyCode": "RECIPE_INVALID_TARGET",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "zero-ground-basis",
+                  "error": "Error: RECIPE_VERTICAL_BASIS",
+                  "errorCode": "RECIPE_VERTICAL_BASIS",
+                  "legacyCode": "RECIPE_VERTICAL_BASIS",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "cameraBefore": [
+                0,
+                2,
+                6
+              ],
+              "cameraAfter": [
+                0,
+                2,
+                6
+              ],
+              "method": "APPLICATION_POLICY_WITH_NATIVE_NODE"
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "terminal": {
+                "name": "retired-target",
+                "error": "Error: RECIPE_TARGET_DISPOSED",
+                "errorCode": "RECIPE_TARGET_DISPOSED",
+                "legacyCode": "RECIPE_TARGET_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\chromium-r4-camera-modes.png"
+        },
+        {
+          "id": "r5-shared-assets",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "texture": 1,
+              "frame": 4,
+              "pool": 0,
+              "nodesValid": [
+                true,
+                true,
+                true
+              ],
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "sameFrame": true
+            },
+            "run": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hidden": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 1,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hiddenPixels": [
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "reusedSameNode": true,
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "replacement": {
+                "oldValid": false,
+                "newValid": true,
+                "peersPreserved": true,
+                "refs": {
+                  "texture": 1,
+                  "frame": 4,
+                  "pool": 0,
+                  "nodesValid": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "duplicate-pool-put",
+                  "once": 1,
+                  "twice": 1,
+                  "sameNode": true,
+                  "method": "NATIVE_NODE_POOL"
+                },
+                {
+                  "name": "empty-pool-get",
+                  "value": null,
+                  "size": 0,
+                  "method": "NATIVE_NODE_POOL"
+                }
+              ],
+              "refs": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": {
+                "texture": 0,
+                "frame": 0,
+                "pool": 0,
+                "nodesValid": [
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "beforeOwnerRelease": {
+                "texture": 1,
+                "frame": 1,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "frameValid": false,
+              "textureValid": false
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\chromium-r5-shared-assets.png"
+        }
+      ],
+      "pageErrors": [],
+      "buildRequests": [],
+      "clock": {
+        "renderedFrames": 72,
+        "enginePaused": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "155.0",
+      "status": "NOT_RUN",
+      "recipes": [
+        {
+          "id": "r1-code3d",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "meshValid": true,
+              "materialValid": true,
+              "boxParent": true
+            },
+            "run": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                15,
+                30,
+                0
+              ]
+            },
+            "pauseRestart": {
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "negative-half-width",
+                  "error": "Error: AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.",
+                  "errorCode": "AIR_E_ORTHO_WIDTH",
+                  "legacyCode": "AIR_E_ORTHO_WIDTH",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "invalid-geometry-size",
+                  "error": "RangeError: AIR_E_PRIMITIVE_DESCRIPTOR: width must be finite and > 0",
+                  "errorCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "legacyCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "widthBefore": 0,
+              "widthAfter": 0,
+              "meshValid": true
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ]
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\firefox-r1-code3d.png"
+        },
+        {
+          "id": "r2-input-hud",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "x": 0,
+              "steps": 0,
+              "accumulator": 0,
+              "held": false,
+              "pressed": false,
+              "ticks": [],
+              "label": "X=0 steps=0",
+              "inkPixels": 684,
+              "attached": true,
+              "generation": 1,
+              "renderedFrames": 12
+            },
+            "run": {
+              "zero": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": true,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 684,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 14
+              },
+              "one": {
+                "x": 2,
+                "steps": 1,
+                "accumulator": 0,
+                "held": true,
+                "pressed": true,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  }
+                ],
+                "label": "X=2 steps=1",
+                "inkPixels": 645,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 16
+              },
+              "many": {
+                "x": 8,
+                "steps": 4,
+                "accumulator": 6.938893903907228e-18,
+                "held": true,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  }
+                ],
+                "label": "X=8 steps=4",
+                "inkPixels": 694,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 18
+              },
+              "released": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 699,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "pauseTrusted": {
+                "before": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 699,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 22
+                },
+                "after": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 699,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 24
+                }
+              },
+              "retired": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "",
+                "inkPixels": 0,
+                "attached": false,
+                "generation": 3,
+                "renderedFrames": 32
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 699,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 26
+              },
+              "after": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 699,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 28
+              },
+              "restarted": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 684,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "unknown-action",
+                  "error": "AirActionError: unknown action: \"misspelled\" (declared: right)",
+                  "errorCode": "AIR_E_UNKNOWN_ACTION",
+                  "legacyCode": "AIR_E_UNKNOWN_ACTION",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "nonfinite-axis",
+                  "error": "AirActionError: setAxis value of action \"right\" must be a finite number, got NaN",
+                  "errorCode": "AIR_E_INVALID_VALUE",
+                  "legacyCode": "AIR_E_INVALID_VALUE",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "state": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 684,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "attached": false,
+              "held": false,
+              "reattach": {
+                "name": "terminal-attach",
+                "error": "AirActionError: adapter is disposed; create a new instance to attach again",
+                "errorCode": "AIR_E_DISPOSED",
+                "legacyCode": "AIR_E_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\firefox-r2-input-hud.png"
+        },
+        {
+          "id": "r3-pointer-lock",
+          "status": "NOT_RUN",
+          "phases": {
+            "construct": {
+              "locked": false,
+              "yaw": 0,
+              "moves": 0,
+              "trustedMoves": 0,
+              "changes": 0,
+              "lastError": null,
+              "requestTrusted": false,
+              "paused": false,
+              "disposed": false
+            },
+            "run": {
+              "before": {
+                "locked": true,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "after": {
+                "locked": true,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "pixel": [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              },
+              "unavailableReason": "Pointer lock acquired, but trusted relative mouse movement was not delivered by this headless automation",
+              "retiredBefore": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 2,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              },
+              "retiredAfter": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 2,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 2,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 2,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "restarted": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 2,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "inactive-pointer-capture",
+                  "error": "NotFoundError: Element.setPointerCapture: Invalid pointer id",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "detached-pointer-capture",
+                  "error": "NotFoundError: Element.setPointerCapture: Invalid pointer id",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 2,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "limitations": [
+                "DOM pointer-capture negatives do not certify pointer-lock denial",
+                "Paused movement is synthetic; trusted movement checked separately"
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 2,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\firefox-r3-pointer-lock.png"
+        },
+        {
+          "id": "r4-camera-modes",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "mode": "chase",
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "camera": [
+                0,
+                2,
+                6
+              ],
+              "forward": [
+                0,
+                -0.316227766016838,
+                -0.9486832980505138
+              ],
+              "vehicleForward": [
+                -1,
+                0,
+                2.220446049250313e-16
+              ],
+              "groundForward": [
+                0,
+                0,
+                -1
+              ],
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "run": {
+              "chase": {
+                "mode": "chase",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  2,
+                  2,
+                  5
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "flight": {
+                "mode": "flight",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ],
+                "forward": [
+                  -0.4850712500726658,
+                  -0.4850712500726659,
+                  -0.727606875108999
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  -0.554700196225229,
+                  0,
+                  -0.8320502943378438
+                ]
+              },
+              "chasePixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "flightPixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "after": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "restarted": {
+                "mode": "chase",
+                "target": [
+                  0,
+                  0,
+                  0
+                ],
+                "camera": [
+                  0,
+                  2,
+                  6
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "nonfinite-target",
+                  "error": "Error: RECIPE_INVALID_TARGET",
+                  "errorCode": "RECIPE_INVALID_TARGET",
+                  "legacyCode": "RECIPE_INVALID_TARGET",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "zero-ground-basis",
+                  "error": "Error: RECIPE_VERTICAL_BASIS",
+                  "errorCode": "RECIPE_VERTICAL_BASIS",
+                  "legacyCode": "RECIPE_VERTICAL_BASIS",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "cameraBefore": [
+                0,
+                2,
+                6
+              ],
+              "cameraAfter": [
+                0,
+                2,
+                6
+              ],
+              "method": "APPLICATION_POLICY_WITH_NATIVE_NODE"
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "terminal": {
+                "name": "retired-target",
+                "error": "Error: RECIPE_TARGET_DISPOSED",
+                "errorCode": "RECIPE_TARGET_DISPOSED",
+                "legacyCode": "RECIPE_TARGET_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\firefox-r4-camera-modes.png"
+        },
+        {
+          "id": "r5-shared-assets",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "texture": 1,
+              "frame": 4,
+              "pool": 0,
+              "nodesValid": [
+                true,
+                true,
+                true
+              ],
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "sameFrame": true
+            },
+            "run": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hidden": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 1,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hiddenPixels": [
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "reusedSameNode": true,
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "replacement": {
+                "oldValid": false,
+                "newValid": true,
+                "peersPreserved": true,
+                "refs": {
+                  "texture": 1,
+                  "frame": 4,
+                  "pool": 0,
+                  "nodesValid": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "duplicate-pool-put",
+                  "once": 1,
+                  "twice": 1,
+                  "sameNode": true,
+                  "method": "NATIVE_NODE_POOL"
+                },
+                {
+                  "name": "empty-pool-get",
+                  "value": null,
+                  "size": 0,
+                  "method": "NATIVE_NODE_POOL"
+                }
+              ],
+              "refs": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": {
+                "texture": 0,
+                "frame": 0,
+                "pool": 0,
+                "nodesValid": [
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "beforeOwnerRelease": {
+                "texture": 1,
+                "frame": 1,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "frameValid": false,
+              "textureValid": false
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\firefox-r5-shared-assets.png"
+        }
+      ],
+      "pageErrors": [],
+      "buildRequests": [],
+      "clock": {
+        "renderedFrames": 72,
+        "enginePaused": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "status": "NOT_RUN",
+      "recipes": [
+        {
+          "id": "r1-code3d",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "meshValid": true,
+              "materialValid": true,
+              "boxParent": true
+            },
+            "run": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                15,
+                30,
+                0
+              ]
+            },
+            "pauseRestart": {
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "negative-half-width",
+                  "error": "Error: AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.",
+                  "errorCode": "AIR_E_ORTHO_WIDTH",
+                  "legacyCode": "AIR_E_ORTHO_WIDTH",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "invalid-geometry-size",
+                  "error": "RangeError: AIR_E_PRIMITIVE_DESCRIPTOR: width must be finite and > 0",
+                  "errorCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "legacyCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "widthBefore": 0,
+              "widthAfter": 0,
+              "meshValid": true
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ]
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\webkit-r1-code3d.png"
+        },
+        {
+          "id": "r2-input-hud",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "x": 0,
+              "steps": 0,
+              "accumulator": 0,
+              "held": false,
+              "pressed": false,
+              "ticks": [],
+              "label": "X=0 steps=0",
+              "inkPixels": 599,
+              "attached": true,
+              "generation": 1,
+              "renderedFrames": 12
+            },
+            "run": {
+              "zero": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": true,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 599,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 14
+              },
+              "one": {
+                "x": 2,
+                "steps": 1,
+                "accumulator": 0,
+                "held": true,
+                "pressed": true,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  }
+                ],
+                "label": "X=2 steps=1",
+                "inkPixels": 559,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 16
+              },
+              "many": {
+                "x": 8,
+                "steps": 4,
+                "accumulator": 6.938893903907228e-18,
+                "held": true,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  }
+                ],
+                "label": "X=8 steps=4",
+                "inkPixels": 596,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 18
+              },
+              "released": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 611,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "pauseTrusted": {
+                "before": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 611,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 22
+                },
+                "after": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 611,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 24
+                }
+              },
+              "retired": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "",
+                "inkPixels": 0,
+                "attached": false,
+                "generation": 3,
+                "renderedFrames": 32
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 611,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 26
+              },
+              "after": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 611,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 28
+              },
+              "restarted": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 599,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "unknown-action",
+                  "error": "AirActionError: unknown action: \"misspelled\" (declared: right)",
+                  "errorCode": "AIR_E_UNKNOWN_ACTION",
+                  "legacyCode": "AIR_E_UNKNOWN_ACTION",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "nonfinite-axis",
+                  "error": "AirActionError: setAxis value of action \"right\" must be a finite number, got NaN",
+                  "errorCode": "AIR_E_INVALID_VALUE",
+                  "legacyCode": "AIR_E_INVALID_VALUE",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "state": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 599,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "attached": false,
+              "held": false,
+              "reattach": {
+                "name": "terminal-attach",
+                "error": "AirActionError: adapter is disposed; create a new instance to attach again",
+                "errorCode": "AIR_E_DISPOSED",
+                "legacyCode": "AIR_E_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\webkit-r2-input-hud.png"
+        },
+        {
+          "id": "r3-pointer-lock",
+          "status": "NOT_RUN",
+          "phases": {
+            "construct": {
+              "locked": false,
+              "yaw": 0,
+              "moves": 0,
+              "trustedMoves": 0,
+              "changes": 0,
+              "lastError": null,
+              "requestTrusted": false,
+              "paused": false,
+              "disposed": false
+            },
+            "run": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "pixel": [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              },
+              "unavailableReason": "pointerlockerror",
+              "retiredBefore": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              },
+              "retiredAfter": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "restarted": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "inactive-pointer-capture",
+                  "error": "NotFoundError: The object can not be found here.",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "detached-pointer-capture",
+                  "error": "NotFoundError: The object can not be found here.",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "limitations": [
+                "DOM pointer-capture negatives do not certify pointer-lock denial",
+                "Paused movement is synthetic; trusted movement checked separately"
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\webkit-r3-pointer-lock.png"
+        },
+        {
+          "id": "r4-camera-modes",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "mode": "chase",
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "camera": [
+                0,
+                2,
+                6
+              ],
+              "forward": [
+                0,
+                -0.316227766016838,
+                -0.9486832980505138
+              ],
+              "vehicleForward": [
+                -1,
+                0,
+                2.220446049250313e-16
+              ],
+              "groundForward": [
+                0,
+                0,
+                -1
+              ],
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "run": {
+              "chase": {
+                "mode": "chase",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  2,
+                  2,
+                  5
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "flight": {
+                "mode": "flight",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ],
+                "forward": [
+                  -0.4850712500726658,
+                  -0.4850712500726659,
+                  -0.727606875108999
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  -0.554700196225229,
+                  0,
+                  -0.8320502943378438
+                ]
+              },
+              "chasePixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "flightPixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "after": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "restarted": {
+                "mode": "chase",
+                "target": [
+                  0,
+                  0,
+                  0
+                ],
+                "camera": [
+                  0,
+                  2,
+                  6
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "nonfinite-target",
+                  "error": "Error: RECIPE_INVALID_TARGET",
+                  "errorCode": "RECIPE_INVALID_TARGET",
+                  "legacyCode": "RECIPE_INVALID_TARGET",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "zero-ground-basis",
+                  "error": "Error: RECIPE_VERTICAL_BASIS",
+                  "errorCode": "RECIPE_VERTICAL_BASIS",
+                  "legacyCode": "RECIPE_VERTICAL_BASIS",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "cameraBefore": [
+                0,
+                2,
+                6
+              ],
+              "cameraAfter": [
+                0,
+                2,
+                6
+              ],
+              "method": "APPLICATION_POLICY_WITH_NATIVE_NODE"
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "terminal": {
+                "name": "retired-target",
+                "error": "Error: RECIPE_TARGET_DISPOSED",
+                "errorCode": "RECIPE_TARGET_DISPOSED",
+                "legacyCode": "RECIPE_TARGET_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\webkit-r4-camera-modes.png"
+        },
+        {
+          "id": "r5-shared-assets",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "texture": 1,
+              "frame": 4,
+              "pool": 0,
+              "nodesValid": [
+                true,
+                true,
+                true
+              ],
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "sameFrame": true
+            },
+            "run": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hidden": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 1,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hiddenPixels": [
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "reusedSameNode": true,
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "replacement": {
+                "oldValid": false,
+                "newValid": true,
+                "peersPreserved": true,
+                "refs": {
+                  "texture": 1,
+                  "frame": 4,
+                  "pool": 0,
+                  "nodesValid": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "duplicate-pool-put",
+                  "once": 1,
+                  "twice": 1,
+                  "sameNode": true,
+                  "method": "NATIVE_NODE_POOL"
+                },
+                {
+                  "name": "empty-pool-get",
+                  "value": null,
+                  "size": 0,
+                  "method": "NATIVE_NODE_POOL"
+                }
+              ],
+              "refs": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": {
+                "texture": 0,
+                "frame": 0,
+                "pool": 0,
+                "nodesValid": [
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "beforeOwnerRelease": {
+                "texture": 1,
+                "frame": 1,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "frameValid": false,
+              "textureValid": false
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s17-installed-terminal-artifacts\\webkit-r5-shared-assets.png"
+        }
+      ],
+      "pageErrors": [],
+      "buildRequests": [],
+      "clock": {
+        "renderedFrames": 72,
+        "enginePaused": true,
+        "diagnostics": []
+      }
+    }
+  ]
+}

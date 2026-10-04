@@ -20,11 +20,20 @@
     "Profiler.setBackgroundColor",
     "Profiler.setFontColor"
   ],
-  "capabilities": ["profiler"],
+  "capabilities": [
+    "profiler"
+  ],
   "validation": {
-    "functional": ["node-exists", "no-runtime-error", "material-property"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error",
+      "material-property"
+    ],
     "interaction": [],
-    "visual": ["visible-frame", "frame-diff"],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -42,8 +51,14 @@
     "visual": "画面中央立方体持续自转，左下角叠加半透明统计面板（Framerate/Draw call/Frame time/Triangle/Logic/Physics/Renderer/Present/内存）"
   },
   "api": {
-    "primary": ["profiler", "Profiler"],
-    "supporting": ["Profiler.showStats", "MeshRenderer"],
+    "primary": [
+      "profiler",
+      "Profiler"
+    ],
+    "supporting": [
+      "Profiler.showStats",
+      "MeshRenderer"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -218,14 +233,20 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -249,7 +270,7 @@
   "promotion": {
     "spec": "7452de8c11ca",
     "source": "86784386074fa41c",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 23,
     "attested": 0,
     "units": 23

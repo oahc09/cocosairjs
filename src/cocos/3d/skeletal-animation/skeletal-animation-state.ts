@@ -106,6 +106,9 @@ export class SkeletalAnimationState extends AnimationState {
             this._sampleCurves = super._sampleCurves;
             this.duration = this.clip.duration;
             if (!this._curvesInited) {
+                // The initial baked state intentionally skipped node evaluation.
+                // Clear that flag before initializing the first realtime evaluator.
+                this._doNotCreateEval = false;
                 this._curveLoaded = false;
                 super.initialize(this._targetNode!);
                 this._curvesInited = true;

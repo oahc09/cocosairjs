@@ -45,12 +45,24 @@
     "ResolutionPolicy",
     "Node.on"
   ],
-  "capabilities": ["video"],
+  "capabilities": [
+    "video"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -74,7 +86,11 @@
     "visual": "深蓝底（clearColor 10,14,22,255）一屏：顶部状态行依次改写 `video: loading → video meta ok → video controls ok → video transparency ok → video geometry ok → video source switch ok → video loop ok → video ready — click to fullscreen → video fullscreen ok`；中部是一条 160x120 的**真视频**（DOM `<video>`，靠 `stayOnBottom` 压到 canvas 之下并由透明 swapchain 露出），其外叠一圈琥珀色描边矩形标示 VideoPlayer 的世界矩形；下方一条绿色小块 = `Graphics` 画的帧时钟（每 2400 ms 横扫一次，与视频后端无关，保证三引擎都有持续的帧间变化）；底部一行提示 `click the video to toggle fullscreen`。frame-diff 的持续变化来源是绿色帧时钟 + 视频本体像素（实测 mean≈114、colorBins≈250-350 逐帧变化）⇒ 三引擎 frameChanged 全 PASS；「是否真解码出图」由 probe 的 `frameA/frameB/live.frameMeanNow` 独立回读，不用画面替引擎背书"
   },
   "api": {
-    "primary": ["VideoPlayer", "VideoClip", "EventHandler"],
+    "primary": [
+      "VideoPlayer",
+      "VideoClip",
+      "EventHandler"
+    ],
     "supporting": [
       "VideoPlayer.play",
       "VideoPlayer.pause",
@@ -365,10 +381,21 @@
       }
     ]
   },
-  "assets": ["assets/clip.mp4"],
+  "assets": [
+    "assets/clip.mp4"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Canvas", "UICamera", "Status", "Hint", "FrameGuide", "Clock", "ClockHost", "VideoHost"]
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Status",
+        "Hint",
+        "FrameGuide",
+        "Clock",
+        "ClockHost",
+        "VideoHost"
+      ]
     }
   },
   "interaction": {
@@ -380,7 +407,9 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -393,9 +422,21 @@
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -405,7 +446,11 @@
         ]
       },
       "UICamera": {
-        "position": [0, 0, 1000],
+        "position": [
+          0,
+          0,
+          1000
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -415,7 +460,11 @@
         ]
       },
       "Status": {
-        "position": [0, 148, 0],
+        "position": [
+          0,
+          148,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -425,7 +474,11 @@
         ]
       },
       "Hint": {
-        "position": [0, -150, 0],
+        "position": [
+          0,
+          -150,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -435,9 +488,21 @@
         ]
       },
       "FrameGuide": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -447,7 +512,11 @@
         ]
       },
       "Clock": {
-        "position": [0, -124, 0],
+        "position": [
+          0,
+          -124,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -457,9 +526,21 @@
         ]
       },
       "ClockHost": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -469,7 +550,11 @@
         ]
       },
       "VideoHost": {
-        "position": [0, -10, 0],
+        "position": [
+          0,
+          -10,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -483,7 +568,7 @@
   "promotion": {
     "spec": "131f1ec448fd",
     "source": "6bf9e6f3199f8aa6",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 29,
     "attested": 7,
     "units": 36

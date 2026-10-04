@@ -62,14 +62,21 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 MeshRenderer 高级面：ON/OFF 常量、bakeSettings 读取、蒙皮权重 set/get（无蒙皮下走兜底路径）与实例属性写入通道。",
-    "points": ["ON/OFF 数值常量回读", "bakeSettings 为对象/空", "setWeight 无蒙皮时安全（try 兜底）"]
+    "points": [
+      "ON/OFF 数值常量回读",
+      "bakeSettings 为对象/空",
+      "setWeight 无蒙皮时安全（try 兜底）"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 200,220,250）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["MeshRenderer.setWeight", "MeshRenderer.getWeight"],
+    "primary": [
+      "MeshRenderer.setWeight",
+      "MeshRenderer.getWeight"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -166,7 +173,9 @@
       "MeshRenderer.updateReflectionProbeBlendId",
       "MeshRenderer.updateReflectionProbeBlendWeight"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -473,21 +482,34 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -501,7 +523,7 @@
   "promotion": {
     "spec": "5921a5fa608c",
     "source": "d9b62d4d799956ec",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 50,
     "attested": 0,
     "units": 50

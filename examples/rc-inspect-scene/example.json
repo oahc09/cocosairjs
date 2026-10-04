@@ -19,8 +19,14 @@
     "visual": "左上角面板展示场景快照字段与 DemoCube 的位置/缩放；画布内为相机/灯光/方块骨架场景"
   },
   "api": {
-    "primary": ["DevToolsSession.inspectScene", "DevToolsSession.inspectNode"],
-    "supporting": ["Scene", "Node"],
+    "primary": [
+      "DevToolsSession.inspectScene",
+      "DevToolsSession.inspectNode"
+    ],
+    "supporting": [
+      "Scene",
+      "Node"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -163,23 +169,38 @@
       }
     ]
   },
-  "capabilities": ["runtime-control"],
+  "capabilities": [
+    "runtime-control"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "DemoCube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "DemoCube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -194,7 +215,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 2.2, 6.5],
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -204,7 +229,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -212,10 +241,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "DemoCube": {
-        "position": [0, 0.6, 0],
+        "position": [
+          0,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -230,7 +267,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [95, 205, 120, 255],
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -254,7 +296,7 @@
   "promotion": {
     "spec": "dc7942ac2896",
     "source": "8dbf1e634cee45fa",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 17,
     "attested": 2,
     "units": 19

@@ -35,14 +35,21 @@
   "capabilities": [],
   "learning": {
     "goal": "验证 Mat4 组合恒等式：单位阵乘法不变、逆阵往返、fromRTS 行列式=缩放体积。",
-    "points": ["M·I=M（对角回读）", "M·M⁻¹=I（取整回读）", "det(RTS)=sx·sy·sz（体积不变量）"]
+    "points": [
+      "M·I=M（对角回读）",
+      "M·M⁻¹=I（取整回读）",
+      "det(RTS)=sx·sy·sz（体积不变量）"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 210,190,250）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["math.Mat4.fromRTS", "math.Mat4.multiply"],
+    "primary": [
+      "math.Mat4.fromRTS",
+      "math.Mat4.multiply"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -84,7 +91,9 @@
       "math.Mat4.invert",
       "math.Mat4.determinant"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -229,21 +238,32 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "lifecycle": [],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -257,7 +277,7 @@
   "promotion": {
     "spec": "414e57637b2f",
     "source": "23ff32f2b04abb5a",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 23,
     "attested": 0,
     "units": 23

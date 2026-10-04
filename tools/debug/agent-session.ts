@@ -24,6 +24,8 @@
 import * as cc from 'cocosair';
 import type { AirApp } from 'cocosair';
 import { inspectRuntimeAssets } from '../../tools/verify/runtime-assets';
+import { inspectSkinning } from './skinning-inspector';
+import { inspectRenderVisibility } from './render-visibility';
 
 /** 观察请求/操作的统一错误码（计划书 §6.2 最小集合 + capture 专用码）。 */
 export type AgentErrorCode =
@@ -88,6 +90,7 @@ export interface NodeSummary {
     childrenIds: string[];
     active: boolean;
     activeSelf: boolean;
+    layer: number;
     components: { id: string; type: string; enabled: boolean }[];
     local: { position: number[]; rotationEuler: number[]; scale: number[] };
     world: { position: number[] };
@@ -98,7 +101,9 @@ export interface NodeSummary {
         sprite: { frameId: string | null; frameName: string | null; rect: number[] | null;
             textureId: string | null; textureValid: boolean | null;
             frameLabel: string | null; textureLabel: string | null } | null;
-        mesh: { meshId: string | null; materialIds: (string | null)[] } | null;
+        mesh: { meshId: string | null; materialIds: (string | null)[];
+            skinning: ReturnType<typeof inspectSkinning> | null;
+            visibility: ReturnType<typeof inspectRenderVisibility> } | null;
     };
 }
 
@@ -125,7 +130,7 @@ export interface FrameCapture {
 export interface RuntimeErrorMessage {
     seq: number;
     time: string;
-    category: 'window-error' | 'unhandled-rejection' | 'shader' | 'link' | 'session-load';
+    category: 'window-error' | 'unhandled-rejection' | 'shader' | 'link' | 'session-load' | 'engine-warning' | 'engine-error';
     message: string;
     source?: string;
     requestId?: string;
@@ -205,13 +210,24 @@ class Collector {
         return collector;
     }
 
-    attach (session: AgentSessionImpl): void {
+    attach (session: AgentSessionImpl, app: AirApp): void {
         this.owners.add(session);
         if (this.owners.size > 1 && this.hook) { return; } // 已安装（attach 幂等）
         const ownership: HookOwnership = { subscribers: new Set(), ownedListeners: [], ownedContextWrap: null };
         const push = (category: RuntimeErrorMessage['category'], message: string, source?: string, requestId?: string): void => {
             this.emit({ seq: ++this.seq, time: new Date().toISOString(), category, message, source, requestId });
         };
+        // AIR's native diagnostic channel is independent of window errors/shader hooks.
+        // Older custom app handles can omit it; no second console wrapper is installed.
+        const diagnostics = app.diagnostics;
+        if (diagnostics) {
+            const collect = (entry: Readonly<import('cocosair').AirDiagnosticMessage>): void => {
+                push(entry.severity === 'warning' ? 'engine-warning' : 'engine-error', entry.message,
+                    entry.id === null ? undefined : `cocos:${entry.id}`);
+            };
+            for (const entry of diagnostics.snapshot()) { collect(entry); }
+            ownership.subscribers.add(diagnostics.onMessage(collect));
+        }
         // 共享 air-prelude hub：只订阅/分发——同一事件绝不能被 hub 与自有监听各记一次
         //（合同：不各自包裹同一 WebGL 函数、不重复安装 window 监听）。
         if (window.__airErrorHub) {
@@ -334,7 +350,7 @@ export class AgentSessionImpl {
     constructor (private readonly options: AgentSessionOptions) {
         this.id = `agent-session-${++AgentSessionImpl.counter}`;
         this.collector = Collector.for(options.app, options.errorBufferLimit ?? DEFAULT_ERROR_LIMIT);
-        this.collector.attach(this);
+        this.collector.attach(this, options.app);
     }
 
     /** Business-supplied names for assets such as atlas frames; never inferred from a texture UUID. */
@@ -506,6 +522,7 @@ export class AgentSessionImpl {
             childrenIds: node.children.map((child) => this.nodeId(child)),
             active: node.activeInHierarchy,
             activeSelf: node.active,
+            layer: node.layer,
             components: node.components.map((component) => ({
                 id: this.componentId(component),
                 type: component.constructor.name,
@@ -532,6 +549,9 @@ export class AgentSessionImpl {
                 mesh: renderer ? {
                     meshId: renderer.mesh ? this.assetId(renderer.mesh) : null,
                     materialIds: renderer.sharedMaterials.map((material) => material ? this.assetId(material) : null),
+                    skinning: renderer instanceof cc.SkinnedMeshRenderer ? inspectSkinning(renderer) : null,
+                    visibility: inspectRenderVisibility(renderer,this.currentScene().getComponentsInChildren(cc.Camera),
+                        (bounds,frustum)=>cc.geometry.intersect.aabbFrustum(bounds,frustum)),
                 } : null,
             },
         };

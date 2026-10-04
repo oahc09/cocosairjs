@@ -1,0 +1,602 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG3",
+  "subject": {
+    "description": "Browser subset: r1-code3d; r2-input-hud; r3-pointer-lock; r4-camera-modes; r5-shared-assets; r6-optional-svcs"
+  },
+  "evidenceTypes": [
+    "BROWSER_RENDER_PASS",
+    "BROWSER_INPUT_PASS"
+  ],
+  "execution": {
+    "status": "NOT_RUN",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --installed --browser=all --out=docs/evidence/port-recipes/pg33-six-s19-installed-same-origin.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T08:47:18.809Z",
+    "endedAt": "2026-10-04T08:48:18.107Z",
+    "exitCode": 1,
+    "reason": "Executed subset remains incomplete: webkit/r3-pointer-lock/pointerlockerror"
+  },
+  "scope": {
+    "declared": [
+      "chromium/r1-code3d",
+      "chromium/r2-input-hud",
+      "chromium/r3-pointer-lock",
+      "chromium/r4-camera-modes",
+      "chromium/r5-shared-assets",
+      "chromium/r6-optional-svcs",
+      "firefox/r1-code3d",
+      "firefox/r2-input-hud",
+      "firefox/r3-pointer-lock",
+      "firefox/r4-camera-modes",
+      "firefox/r5-shared-assets",
+      "firefox/r6-optional-svcs",
+      "webkit/r1-code3d",
+      "webkit/r2-input-hud",
+      "webkit/r3-pointer-lock",
+      "webkit/r4-camera-modes",
+      "webkit/r5-shared-assets",
+      "webkit/r6-optional-svcs"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 18,
+    "measuredCases": 17,
+    "skippedCases": 1,
+    "skippedDetail": [
+      {
+        "engine": "webkit",
+        "recipeId": "r3-pointer-lock",
+        "reason": "pointerlockerror"
+      }
+    ],
+    "countingUnit": "browser/recipe scenario rows; phases and nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER_INSTALLED_PACKAGE. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; Six application recipes; not a full 35-item gate; Pointer lock/audio clock absence is NOT_RUN; Camera target guards are application policy; pointer capture negatives are DOM API behavior; Controlled business dt; trusted Playwright keyboard/mouse checked separately; GPU memory unavailable; No external original app comparison"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "docs/manual/examples/manual-port-recipes/main.ts",
+      "sha256": "f3555ced0d811c9d7189bca75545d79f2242175bde2e2e86bce8381a5a13badd"
+    },
+    "contract": {
+      "present": true,
+      "path": "tools/verify/air-port-recipes-browser.cjs",
+      "sha256": "9673a0bc37d086b1b5d5ce32188457f2dd97bc6df0f5b5ccb8ef1f1bd4a5000c"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-port-recipes-browser.cjs",
+      "sha256": "9673a0bc37d086b1b5d5ce32188457f2dd97bc6df0f5b5ccb8ef1f1bd4a5000c"
+    },
+    "browser": {
+      "present": true,
+      "path": "docs/evidence/port-recipes/pg33-six-s19-installed-same-origin.json",
+      "sha256": "c0764c15b57b107a8c3476cbeb0eb2f2f85a9b3c4fe2f43b72a41c6542c6133f",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/port-recipes/index.html",
+      "sha256": "2dad37316547982a52d999adb1d601d3ab5147c2a2977132471d4bcaea87b9b9"
+    }
+  },
+  "nativeEvidence": {
+    "path": "docs/evidence/port-recipes/pg33-six-s19-installed-same-origin.json",
+    "sha256": "c0764c15b57b107a8c3476cbeb0eb2f2f85a9b3c4fe2f43b72a41c6542c6133f",
+    "allFingerprints": {
+      "package.json": "a76ff405f7f66d351bb1910fb8baa57f9c9dd79df91db5a3b3454818b4e07153",
+      "build/npm/cocosair.module.js": "8e00b56eab747b53fce288403b5668a2a7ecf443df966e5144547064091a81a9",
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "build/cocosair.module.d.ts": "25f87a9ca4261908df6a5648acfe029224032ab4e090229e884cf46e08268f57",
+      "test/fixtures/port-recipes/main.ts": "ffc40774942a5f4dddfbb975e4f5b5f8b70a7695dda57c6ca026b09ee6f87d0e",
+      "docs/manual/examples/manual-port-recipes/main.ts": "f3555ced0d811c9d7189bca75545d79f2242175bde2e2e86bce8381a5a13badd",
+      "test/fixtures/port-recipes/contract.ts": "efd31b2ca61727e71d71f58e3cf0e8a7f84f40e820d8a2b3fda4b36cd66d3811",
+      "test/fixtures/port-recipes/index.html": "2dad37316547982a52d999adb1d601d3ab5147c2a2977132471d4bcaea87b9b9",
+      "docs/manual/examples/manual-port-recipes/optional-recipe.ts": "93866b63e6363c743d6385c2a52b234112d72be1699be19ae27a75ec7519590f",
+      "docs/manual/examples/manual-port-recipes/optional-assets/manifest.json": "d5440d9a164dc59d7ae841d2d188de45fe777a09c9f3959293cecc4aae7d1716",
+      "docs/manual/examples/manual-port-recipes/optional-assets/tone4s.wav": "b1a52b6832a682f66944220b9c07dc8203aaa2849e6400ef345110eb4de4f361",
+      "tools/verify/air-port-recipes-browser.cjs": "9673a0bc37d086b1b5d5ce32188457f2dd97bc6df0f5b5ccb8ef1f1bd4a5000c",
+      "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+      "tools/verify/competitive-example-server.cjs": "f4f98af13a026451a951d3dcd697b6ae73b2e0db17adddf1d6d322598ac3334b",
+      "tools/verify/installed-recipe-package.cjs": "9322d8a3047ab87149c292174be81cc59867b794f1aaacefc9713c3e8c261d02"
+    },
+    "installed": {
+      "method": "ACTUAL_TARBALL_OFFLINE_INSTALL",
+      "packageName": "cocosair.js",
+      "tarball": {
+        "filename": "cocosair.js-1.0.0.tgz",
+        "bytes": 4086000,
+        "sha256": "27469a9c2a694634b7d552789e4f7ad092732abf225466a81934d70c1d16763f"
+      },
+      "source": {
+        "path": "docs/manual/examples/manual-port-recipes/main.ts",
+        "bytes": 27872,
+        "sha256": "f3555ced0d811c9d7189bca75545d79f2242175bde2e2e86bce8381a5a13badd",
+        "matchesRepositoryManual": true
+      },
+      "optionalSource": {
+        "path": "docs/manual/examples/manual-port-recipes/optional-recipe.ts",
+        "bytes": 16249,
+        "sha256": "93866b63e6363c743d6385c2a52b234112d72be1699be19ae27a75ec7519590f",
+        "matchesRepositoryManual": true
+      },
+      "assets": {
+        "manifest.json": {
+          "bytes": 99,
+          "sha256": "d5440d9a164dc59d7ae841d2d188de45fe777a09c9f3959293cecc4aae7d1716",
+          "source": "docs/manual/examples/manual-port-recipes/optional-assets/manifest.json"
+        },
+        "tone4s.wav": {
+          "bytes": 64044,
+          "sha256": "b1a52b6832a682f66944220b9c07dc8203aaa2849e6400ef345110eb4de4f361",
+          "source": "docs/manual/examples/manual-port-recipes/optional-assets/tone4s.wav"
+        }
+      },
+      "typecheck": {
+        "version": "4.9.5",
+        "command": [
+          "D:\\Program Files\\nodejs\\node.exe",
+          "E:\\AIProMax\\github\\cocosair.js\\node_modules\\typescript\\bin\\tsc",
+          "-p",
+          "C:\\Users\\caosh\\AppData\\Local\\Temp\\cocosair-recipes-consumer-TM905j\\recipe-types.json",
+          "--listFiles"
+        ],
+        "exitCode": 0,
+        "installedDeclarationsOnly": true,
+        "rawOutput": "E:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es5.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2016.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2021.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.dom.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.core.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.collection.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.generator.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.iterable.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.promise.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.proxy.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.reflect.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.symbol.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2016.array.include.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.object.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.string.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.promise.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2018.regexp.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.array.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.object.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.string.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.symbol.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2019.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.bigint.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.date.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.promise.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.sharedmemory.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.string.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2020.number.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2021.promise.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2021.string.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2021.weakref.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2021.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.array.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.error.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.intl.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.object.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.sharedmemory.d.ts\r\nE:/AIProMax/github/cocosair.js/node_modules/typescript/lib/lib.es2022.string.d.ts\r\nC:/Users/caosh/AppData/Local/Temp/cocosair-recipes-consumer-TM905j/node_modules/cocosair.js/build/cocosair.module.d.ts\r\nC:/Users/caosh/AppData/Local/Temp/cocosair-recipes-consumer-TM905j/node_modules/cocosair.js/build/cocosair.legacy.d.ts\r\nC:/Users/caosh/AppData/Local/Temp/cocosair-recipes-consumer-TM905j/node_modules/cocosair.js/docs/manual/examples/manual-port-recipes/optional-recipe.ts\r\nC:/Users/caosh/AppData/Local/Temp/cocosair-recipes-consumer-TM905j/node_modules/cocosair.js/docs/manual/examples/manual-port-recipes/main.ts\r\n"
+      },
+      "chunks": {
+        "runtime.js": {
+          "bytes": 6726704,
+          "sha256": "6d024af644e2e89cdf9fc37dd99a3c60fd7000a9ad043ef80bffeef816979ecb"
+        }
+      },
+      "installOutput": "\nadded 1 package in 1s\n",
+      "assetDelivery": {
+        "method": "REAL_HTTP_VERIFIED_INSTALLED_BYTES",
+        "origin": "http://127.0.0.1:56006",
+        "workspaceFallback": false
+      }
+    },
+    "originalMethod": "REAL_BROWSER_INSTALLED_PACKAGE"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-installed-same-origin.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-workspace-attempt1.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-workspace-attempt1.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-workspace-canvas-gesture.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-workspace-canvas-gesture.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-webkit-native-ready.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-webkit-native-ready.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-webkit-repeated-gesture.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-webkit-repeated-gesture.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-webkit-dom-ready-bound.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-webkit-dom-ready-bound.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-webkit-clock-window.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-webkit-clock-window.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-webkit-window-poll.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-webkit-window-poll.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-workspace-terminal.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-terminal.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-installed-terminal.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-http-terminal.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-installed-http-terminal.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-installed-same-origin.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-workspace-same-contract.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-workspace-same-contract.log"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\chromium-r1-code3d.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\chromium-r2-input-hud.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\chromium-r3-pointer-lock.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\chromium-r4-camera-modes.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\chromium-r5-shared-assets.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\chromium-r6-optional-svcs.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\firefox-r1-code3d.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\firefox-r2-input-hud.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\firefox-r3-pointer-lock.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\firefox-r4-camera-modes.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\firefox-r5-shared-assets.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\firefox-r6-optional-svcs.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\webkit-r1-code3d.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\webkit-r2-input-hud.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\webkit-r3-pointer-lock.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\webkit-r4-camera-modes.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\webkit-r5-shared-assets.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\port-recipes\\pg33-six-s19-installed-same-origin-artifacts\\webkit-r6-optional-svcs.png"
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "status": "NOT_RUN",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --browser=all --out=docs/evidence/port-recipes/pg33-six-s19-workspace-attempt1.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:20:16.491Z",
+      "endedAt": "2026-10-04T08:21:02.353Z",
+      "reason": "Recorded recipe scope remains incomplete; see original per-recipe outcomes",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-workspace-attempt1.json",
+        "sha256": "bc53fb7e66895fcdf6747171d09f6c26830be01ad00e758dc0dda333107fa616"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-workspace-attempt1.log",
+        "sha256": "8838cbfb79fe1f84329e9ef3a9b525a8f925c8514597cec06641a7824894e8fd"
+      },
+      "changedInputs": [
+        "docs/manual/examples/manual-port-recipes/main.ts",
+        "docs/manual/examples/manual-port-recipes/optional-recipe.ts",
+        "tools/verify/air-port-recipes-browser.cjs",
+        "tools/verify/installed-recipe-package.cjs"
+      ],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "NOT_RUN",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --browser=all --out=docs/evidence/port-recipes/pg33-six-s19-workspace-canvas-gesture.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:24:01.566Z",
+      "endedAt": "2026-10-04T08:24:50.185Z",
+      "reason": "Recorded recipe scope remains incomplete; see original per-recipe outcomes",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-workspace-canvas-gesture.json",
+        "sha256": "645bf219cac6bc64b448e45b4a69b7d557a52f673e09a699b50a3d3b2430be35"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-workspace-canvas-gesture.log",
+        "sha256": "def28cfbead34fd6637eb11caa3fcefa11cd961b69ae4dd531572170a2340e4c"
+      },
+      "changedInputs": [
+        "docs/manual/examples/manual-port-recipes/main.ts",
+        "docs/manual/examples/manual-port-recipes/optional-recipe.ts",
+        "tools/verify/air-port-recipes-browser.cjs",
+        "tools/verify/installed-recipe-package.cjs"
+      ],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "NOT_RUN",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --browser=webkit --out=docs/evidence/port-recipes/pg33-six-s19-webkit-native-ready.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:25:54.427Z",
+      "endedAt": "2026-10-04T08:26:18.327Z",
+      "reason": "Recorded recipe scope remains incomplete; see original per-recipe outcomes",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-webkit-native-ready.json",
+        "sha256": "5d893b1147ddf09d5f8cff8ae4f914f21437f13d8f2854264b1087502e3ba5b3"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-webkit-native-ready.log",
+        "sha256": "a81150ef6b6c389fa4eea5f616983d44beea2cfdf49cdae7c6320729da727207"
+      },
+      "changedInputs": [
+        "docs/manual/examples/manual-port-recipes/main.ts",
+        "docs/manual/examples/manual-port-recipes/optional-recipe.ts",
+        "tools/verify/air-port-recipes-browser.cjs",
+        "tools/verify/installed-recipe-package.cjs"
+      ],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "NOT_RUN",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --browser=webkit --out=docs/evidence/port-recipes/pg33-six-s19-webkit-repeated-gesture.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:27:14.476Z",
+      "endedAt": "2026-10-04T08:27:40.681Z",
+      "reason": "Recorded recipe scope remains incomplete; see original per-recipe outcomes",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-webkit-repeated-gesture.json",
+        "sha256": "ad0b617b0143feb095784f56ff6b2b720602e94f3c42b43ee783e2e9f96be19b"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-webkit-repeated-gesture.log",
+        "sha256": "a81150ef6b6c389fa4eea5f616983d44beea2cfdf49cdae7c6320729da727207"
+      },
+      "changedInputs": [
+        "docs/manual/examples/manual-port-recipes/main.ts",
+        "docs/manual/examples/manual-port-recipes/optional-recipe.ts",
+        "tools/verify/air-port-recipes-browser.cjs",
+        "tools/verify/installed-recipe-package.cjs"
+      ],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "NOT_RUN",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --browser=webkit --out=docs/evidence/port-recipes/pg33-six-s19-webkit-dom-ready-bound.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:29:16.793Z",
+      "endedAt": "2026-10-04T08:29:46.791Z",
+      "reason": "Recorded recipe scope remains incomplete; see original per-recipe outcomes",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-webkit-dom-ready-bound.json",
+        "sha256": "6faa08b24919ac4d2cf5873789ef7301a622300ca593ee48cc09fa36c8119437"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-webkit-dom-ready-bound.log",
+        "sha256": "a81150ef6b6c389fa4eea5f616983d44beea2cfdf49cdae7c6320729da727207"
+      },
+      "changedInputs": [
+        "docs/manual/examples/manual-port-recipes/optional-recipe.ts",
+        "tools/verify/air-port-recipes-browser.cjs",
+        "tools/verify/installed-recipe-package.cjs"
+      ],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "NOT_RUN",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --browser=webkit --out=docs/evidence/port-recipes/pg33-six-s19-webkit-clock-window.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:37:02.710Z",
+      "endedAt": "2026-10-04T08:37:35.810Z",
+      "reason": "Recorded recipe scope remains incomplete; see original per-recipe outcomes",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-webkit-clock-window.json",
+        "sha256": "c17c2b5c12fef54321653b468a850b8cc7c73203aad9a93d9908d949d688c948"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-webkit-clock-window.log",
+        "sha256": "a81150ef6b6c389fa4eea5f616983d44beea2cfdf49cdae7c6320729da727207"
+      },
+      "changedInputs": [
+        "tools/verify/air-port-recipes-browser.cjs",
+        "tools/verify/installed-recipe-package.cjs"
+      ],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "NOT_RUN",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --browser=webkit --out=docs/evidence/port-recipes/pg33-six-s19-webkit-window-poll.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:38:15.272Z",
+      "endedAt": "2026-10-04T08:38:45.669Z",
+      "reason": "Recorded recipe scope remains incomplete; see original per-recipe outcomes",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-webkit-window-poll.json",
+        "sha256": "b227d291de0fd5df53cd520a429d97d1448e0c95e343ee17608272da863225fa"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-webkit-window-poll.log",
+        "sha256": "627e2ecba162e32b3cd6363388a8b205c221417fddeabd401600f43cdf17e47b"
+      },
+      "changedInputs": [
+        "tools/verify/air-port-recipes-browser.cjs",
+        "tools/verify/installed-recipe-package.cjs"
+      ],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "NOT_RUN",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --browser=all --out=docs/evidence/port-recipes/pg33-six-s19-workspace-terminal.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:40:03.843Z",
+      "endedAt": "2026-10-04T08:40:59.186Z",
+      "reason": "Recorded recipe scope remains incomplete; see original per-recipe outcomes",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-workspace-terminal.json",
+        "sha256": "9ecd97f3fdad240e48dc38673cc35300b3bd0d0b58ac7716c9437f0dd83ffc0c"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-workspace-terminal.log",
+        "sha256": "643feb4f5bd761c93447638404df52372b55c908eaab0dadbe71a85cdd52be62"
+      },
+      "changedInputs": [
+        "tools/verify/air-port-recipes-browser.cjs",
+        "tools/verify/installed-recipe-package.cjs"
+      ],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --installed --browser=all --out=docs/evidence/port-recipes/pg33-six-s19-installed-terminal.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:41:16.740Z",
+      "endedAt": "2026-10-04T08:42:07.802Z",
+      "exitCode": 1,
+      "failureStage": "resource-deployment",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-installed-terminal.json",
+        "sha256": "5d85b8a36c6055f57c516e5a3f2dfd525ce6ca00683938ff2bcc8c4a04b232db"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-installed-terminal.log",
+        "sha256": "a91ac4a46f6dca679c1d8bf8d5101bf3f43a9e24fee7da86d9b0330033c3cd9d"
+      },
+      "changedInputs": [
+        "tools/verify/air-port-recipes-browser.cjs",
+        "tools/verify/installed-recipe-package.cjs"
+      ],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --installed --browser=all --out=docs/evidence/port-recipes/pg33-six-s19-installed-http-terminal.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:44:52.210Z",
+      "endedAt": "2026-10-04T08:46:01.395Z",
+      "exitCode": 1,
+      "failureStage": "resource-deployment",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-installed-http-terminal.json",
+        "sha256": "1964bcfa78e32463cd7315246b435a16aeb9b9f9314eb67e134e2e33bc2dc5aa"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-installed-http-terminal.log",
+        "sha256": "a34810f2e4880b51e84c9ce4c06da9ce0cd8011eeae9539021f6cdcd39f3d3dc"
+      },
+      "changedInputs": [
+        "tools/verify/air-port-recipes-browser.cjs"
+      ],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "NOT_RUN",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --installed --browser=all --out=docs/evidence/port-recipes/pg33-six-s19-installed-same-origin.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:47:18.809Z",
+      "endedAt": "2026-10-04T08:48:18.107Z",
+      "reason": "Recorded recipe scope remains incomplete; see original per-recipe outcomes",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-installed-same-origin.json",
+        "sha256": "c0764c15b57b107a8c3476cbeb0eb2f2f85a9b3c4fe2f43b72a41c6542c6133f"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-installed-same-origin.log",
+        "sha256": "a2fa86f364b880f3db47f2fac0fe5d4167bd6a26e62cc91878340a0938096662"
+      },
+      "changedInputs": [],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    },
+    {
+      "status": "NOT_RUN",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs --browser=all --out=docs/evidence/port-recipes/pg33-six-s19-workspace-same-contract.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T08:48:37.950Z",
+      "endedAt": "2026-10-04T08:49:33.168Z",
+      "reason": "Recorded recipe scope remains incomplete; see original per-recipe outcomes",
+      "rawReport": {
+        "path": "docs/evidence/port-recipes/pg33-six-s19-workspace-same-contract.json",
+        "sha256": "7309e4c6d7668fa625c6baba13dbb94e8fb5b7256a87fa69081a2adb018e37f7"
+      },
+      "rawLog": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s19-six-workspace-same-contract.log",
+        "sha256": "643feb4f5bd761c93447638404df52372b55c908eaab0dadbe71a85cdd52be62"
+      },
+      "changedInputs": [],
+      "inherited": false,
+      "note": "Historical app/collector changes are disclosed, not inherited as current evidence; no compensating complete PASS is claimed"
+    }
+  ],
+  "historyNote": "Current installed execution remains NOT_RUN. Earlier actual FAIL/NOT_RUN attempts are retained without inventing a complete compensation.",
+  "normalization": {
+    "tool": "tools/verify/port-gap-browser-evidence.cjs",
+    "sha256": "94f84a84ad29d99d14a638819b53e9542acb5c5808b0a20a7becf04b37266dee",
+    "schemaSha256": "31f8a9e6aa702bc7a5f772d8d962ea58fac3fd1656d13a9430ffd40573ce1f77",
+    "historyWriter": {
+      "path": "output\\playwright\\port-s20-recipes-history.cjs",
+      "sha256": "d0799dc38571471664d11e269942c3d4795529e8562dc58f697652bac29b6428"
+    },
+    "command": [
+      "D:\\Program Files\\nodejs\\node.exe",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s20-recipes-history.cjs"
+    ],
+    "detail": "Normalization/history assembly only; execution metadata belongs to the actual installed collector"
+  }
+}

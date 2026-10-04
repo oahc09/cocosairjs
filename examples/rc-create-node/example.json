@@ -19,8 +19,13 @@
     "visual": "场景右侧出现新方块（橙色系），面板展示 nodeId、节点数变化与幂等错误码"
   },
   "api": {
-    "primary": ["DevToolsSession.dispatch"],
-    "supporting": ["DevToolsSession.inspectScene", "Node.setPosition"],
+    "primary": [
+      "DevToolsSession.dispatch"
+    ],
+    "supporting": [
+      "DevToolsSession.inspectScene",
+      "Node.setPosition"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -43,7 +48,10 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": ["直接 new Node 加入场景冒充 agent 创建（必须走 dispatch）", "忽略 requestId 幂等合同"],
+    "forbiddenShortcut": [
+      "直接 new Node 加入场景冒充 agent 创建（必须走 dispatch）",
+      "忽略 requestId 幂等合同"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -167,23 +175,40 @@
       }
     ]
   },
-  "capabilities": ["runtime-control"],
+  "capabilities": [
+    "runtime-control"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "DemoCube", "AgentGenerated"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "DemoCube",
+        "AgentGenerated"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "node-count", "transform-equals", "no-runtime-error", "material-property"],
+    "functional": [
+      "node-exists",
+      "node-count",
+      "transform-equals",
+      "no-runtime-error",
+      "material-property"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -198,9 +223,21 @@
   "validationExpectations": {
     "transform-equals": {
       "AgentGenerated": {
-        "position": [1.8, 0.6, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [0.8, 0.8, 0.8],
+        "position": [
+          1.8,
+          0.6,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.8,
+          0.8,
+          0.8
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -211,7 +248,11 @@
         "handAuthored": true
       },
       "Main Camera": {
-        "position": [0, 2.2, 6.5],
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -221,7 +262,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -229,10 +274,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "DemoCube": {
-        "position": [0, 0.6, 0],
+        "position": [
+          0,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -247,7 +300,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [95, 205, 120, 255],
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -271,7 +329,7 @@
   "promotion": {
     "spec": "4533f62e9a73",
     "source": "adc7fb751d03f149",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 17,
     "attested": 3,
     "units": 20

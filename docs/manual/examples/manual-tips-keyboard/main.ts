@@ -2,9 +2,9 @@
  * Cocos AIR 开发手册 — Tips / Get Keyboard Input From a Canvas（画布键盘输入）
  * 配套文章：docs/manual/tips.md#get-keyboard-input-from-a-canvas-从画布获取键盘输入
  *
- * AIR 的键盘事件走 window 级 input 单例（input.on(SystemEventType.KEY_DOWN/KEY_UP)），
- * 不需要给 canvas 加 tabindex/聚焦——事件来自全局 input 单例，与页面焦点在哪无关，
- * 任意时刻按下都会被收到。
+ * Web PAL 在聚焦的 canvas 上接收键盘，再派发给全局 input 单例。
+ * createAirApp 设置可聚焦性；画布交互或显式 Start/Resume 聚焦后才接收按键。
+ * 文本输入保留自己的焦点，不由游戏每帧抢回。
  * 本例维护一个 pressed 集合：WASD/方向键平移立方体、Space 加速自转，覆盖层实时回显；
  * 无按键时立方体仍空闲自转 20°/s，保证 frame-diff 有帧间差异。
  */

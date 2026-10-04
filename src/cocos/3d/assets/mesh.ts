@@ -28,7 +28,7 @@ import { Asset } from '../../asset/assets/asset';
 import { IDynamicGeometry } from '../../primitive/define';
 import { BufferBlob } from '../misc/buffer-blob';
 import { Skeleton } from './skeleton';
-import { geometry, cclegacy, sys, warnID, Mat4, Quat, Vec3, assertIsTrue, murmurhash2_32_gc, errorID, halfToFloat, v3 } from '../../core';
+import { geometry, cclegacy, sys, warnID, Mat4, Quat, Vec3, assertIsTrue, murmurhash2_32_gc, errorID, error, halfToFloat, v3 } from '../../core';
 import { RenderingSubMesh } from '../../asset/assets';
 import {
     Attribute, Device, Buffer, BufferInfo, AttributeName, BufferUsageBit, Feature, Format,
@@ -386,7 +386,9 @@ export class Mesh extends Asset {
 
     private _renderingSubMeshes: RenderingSubMesh[] | null = null;
 
-    private _boneSpaceBounds: Map<number, (geometry.AABB | null)[]> = new Map();
+    // Skeleton.hash is cached and cannot identify mutable Code First bindpose data.
+    // Weak ownership avoids keeping a discarded skeleton alive through a mesh cache.
+    private _boneSpaceBounds = new WeakMap<Skeleton, { signature: string; bounds: (geometry.AABB | null)[] }>();
 
     private _jointBufferIndices: number[] | null = null;
 
@@ -615,6 +617,8 @@ export class Mesh extends Asset {
         const drawInfo = subMesh.drawInfo!;
 
         // update _data & buffer
+        this._boneSpaceBounds = new WeakMap();
+        this._hash = 0;
         for (let index = 0; index < buffers.length; index++) {
             const vertices = buffers[index];
             const bundle = this._struct.vertexBundles[primitive.vertexBundelIndices[index]];
@@ -688,6 +692,7 @@ export class Mesh extends Asset {
      * @zh 销毁此网格，并释放它占有的所有 GPU 资源。
      */
     public destroy (): boolean {
+        this._boneSpaceBounds = new WeakMap();
         this.destroyRenderingMesh();
         return super.destroy();
     }
@@ -727,6 +732,7 @@ export class Mesh extends Asset {
      * @param info @en Mesh creation information including struct and data @zh 网格创建信息，包含结构及数据
      */
     public reset (info: Mesh.ICreateInfo): void {
+        this._boneSpaceBounds = new WeakMap();
         this.destroyRenderingMesh();
         this._struct = info.struct;
         this._data = info.data;
@@ -740,13 +746,18 @@ export class Mesh extends Asset {
      * @param skeleton @en skeleton data @zh 骨骼信息
      */
     public getBoneSpaceBounds (skeleton: Skeleton): (geometry.AABB | null)[] {
-        if (this._boneSpaceBounds.has(skeleton.hash)) {
-            return this._boneSpaceBounds.get(skeleton.hash)!;
-        }
-        const bounds: (geometry.AABB | null)[] = [];
-        this._boneSpaceBounds.set(skeleton.hash, bounds);
-        const valid: boolean[] = [];
         const { bindposes } = skeleton;
+        const signature = bindposes.map((pose) => pose ? Mat4.toArray([], pose).join(',') : '<missing>').join(';');
+        const cached = this._boneSpaceBounds.get(skeleton);
+        if (cached && cached.signature === signature) { return cached.bounds; }
+        const bounds: (geometry.AABB | null)[] = [];
+        const valid: boolean[] = [];
+        const checkedBindposes = new Set<number>();
+        const fail = (code: string, location: string, detail: string): never => {
+            const message = `[${code}] Mesh "${this.name || this.uuid}" ${location}: ${detail}`;
+            error(message);
+            throw Object.assign(new RangeError(message), { code, resource: this.name || this.uuid, location });
+        };
         for (let i = 0; i < bindposes.length; i++) {
             bounds.push(new geometry.AABB(Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity));
             valid.push(false);
@@ -756,15 +767,41 @@ export class Mesh extends Asset {
             const joints = this.readAttribute(p, AttributeName.ATTR_JOINTS);
             const weights = this.readAttribute(p, AttributeName.ATTR_WEIGHTS);
             const positions = this.readAttribute(p, AttributeName.ATTR_POSITION);
-            if (!joints || !weights || !positions) { continue; }
-            const vertCount = Math.min(joints.length / 4, weights.length / 4, positions.length / 3);
+            if (!joints && !weights) { continue; }
+            if (!joints || !weights || !positions || joints.length % 4 !== 0 || weights.length % 4 !== 0
+                || positions.length % 3 !== 0 || joints.length !== weights.length || joints.length / 4 !== positions.length / 3) {
+                fail('AIR_E_SKINNING_ATTRIBUTE_LAYOUT', `primitive ${p}`,
+                    'positions require 3 components and joints/weights require 4 matching components per vertex; rebuild the mesh with matching attribute counts.');
+            }
+            const vertCount = positions!.length / 3;
             for (let i = 0; i < vertCount; i++) {
-                Vec3.set(v3_1, positions[3 * i + 0], positions[3 * i + 1], positions[3 * i + 2]);
+                Vec3.set(v3_1, positions![3 * i + 0], positions![3 * i + 1], positions![3 * i + 2]);
                 for (let j = 0; j < 4; ++j) {
                     const idx = 4 * i + j;
-                    const joint = joints[idx];
-                    if (weights[idx] === 0 || joint >= bindposes.length) { continue; }
+                    const weight = weights![idx];
+                    if (!Number.isFinite(weight) || weight < 0) {
+                        fail('AIR_E_SKINNING_WEIGHT', `primitive ${p} vertex ${i} influence ${j}`,
+                            `weight ${weight} must be finite and nonnegative; correct the skin weights.`);
+                    }
+                    if (weight === 0) { continue; }
+                    const joint = joints![idx];
+                    if (!Number.isInteger(joint) || joint < 0 || joint >= bindposes.length) {
+                        fail('AIR_E_SKINNING_JOINT_INDEX', `primitive ${p} vertex ${i} influence ${j}`,
+                            `weighted joint ${joint} must be an integer in [0, ${bindposes.length}); correct joints/weights or the skeleton bindposes.`);
+                    }
+                    if (!Number.isFinite(v3_1.x) || !Number.isFinite(v3_1.y) || !Number.isFinite(v3_1.z)) {
+                        fail('AIR_E_SKINNING_BOUNDS', `primitive ${p} vertex ${i}`, 'weighted position must be finite; rebuild the mesh with valid positions.');
+                    }
+                    if (!checkedBindposes.has(joint)) {
+                        if (!bindposes[joint] || !Mat4.toArray([], bindposes[joint]).every(Number.isFinite)) {
+                            fail('AIR_E_SKINNING_BINDPOSE', `joint ${joint}`, 'weighted bindpose must contain 16 finite values; rebuild or replace the skeleton.');
+                        }
+                        checkedBindposes.add(joint);
+                    }
                     vec3TransformMat4(v3_2, v3_1, bindposes[joint]);
+                    if (!Number.isFinite(v3_2.x) || !Number.isFinite(v3_2.y) || !Number.isFinite(v3_2.z)) {
+                        fail('AIR_E_SKINNING_BOUNDS', `primitive ${p} vertex ${i} joint ${joint}`, 'transformed position must be finite; correct mesh positions and bindposes.');
+                    }
                     valid[joint] = true;
                     const b = bounds[joint]!;
                     vec3Min(b.center, b.center, v3_2);
@@ -776,6 +813,8 @@ export class Mesh extends Asset {
             const b = bounds[i]!;
             if (!valid[i]) { bounds[i] = null; } else { aabbFromPoints(b, b.center, b.halfExtents); }
         }
+        // Only complete, valid calculations enter the cache; a failure never stores partial bounds.
+        this._boneSpaceBounds.set(skeleton, { signature, bounds });
         return bounds;
     }
 

@@ -40,7 +40,10 @@
     "visual": "深色画面中央上方显示浅蓝标题“Widget and UI lifecycle”，背景由 WebGL 相机清屏。"
   },
   "api": {
-    "primary": ["Widget.AlignMode", "UIRenderer"],
+    "primary": [
+      "Widget.AlignMode",
+      "UIRenderer"
+    ],
     "supporting": [
       "Widget.editorTop",
       "Widget.editorBottom",
@@ -79,7 +82,10 @@
       "Sprite.onDestroy",
       "Label.onDestroy"
     ],
-    "forbiddenShortcut": ["用 DOM/CSS 文本冒充 Canvas 内 Label", "用手工调用事件冒充组件生命周期"],
+    "forbiddenShortcut": [
+      "用 DOM/CSS 文本冒充 Canvas 内 Label",
+      "用手工调用事件冒充组件生命周期"
+    ],
     "evidence": [
       {
         "api": "Widget.editorTop",
@@ -187,7 +193,11 @@
   },
   "scene": {
     "expectedGraph": {
-      "nodes": ["Canvas", "UICamera", "TitleLabel"]
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "TitleLabel"
+      ]
     }
   },
   "interaction": {
@@ -195,13 +205,22 @@
   },
   "assets": [],
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -215,7 +234,7 @@
   "promotion": {
     "spec": "fb73abcb354f",
     "source": "59231c951d6a22fd",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 17,
     "attested": 0,
     "units": 17

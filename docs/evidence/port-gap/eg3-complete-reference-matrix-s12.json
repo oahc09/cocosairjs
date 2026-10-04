@@ -1,0 +1,175 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG3",
+  "subject": {
+    "description": "Browser subset: output/playwright/port-s11-full-browser-matrix.json"
+  },
+  "evidenceTypes": [
+    "BROWSER_RENDER_PASS"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\browser-matrix.cjs --out=output/playwright/port-s11-full-browser-matrix.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T05:16:45.309Z",
+    "endedAt": "2026-10-04T05:30:53.398Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium/profiler-overlay",
+      "firefox/profiler-overlay",
+      "webkit/profiler-overlay",
+      "chromium/ui-components",
+      "firefox/ui-components",
+      "webkit/ui-components",
+      "chromium/ui-layout",
+      "firefox/ui-layout",
+      "webkit/ui-layout",
+      "chromium/physics-2d-basic",
+      "firefox/physics-2d-basic",
+      "webkit/physics-2d-basic",
+      "chromium/physics-2d-collision",
+      "firefox/physics-2d-collision",
+      "webkit/physics-2d-collision",
+      "chromium/particle-2d-basic",
+      "firefox/particle-2d-basic",
+      "webkit/particle-2d-basic",
+      "chromium/tiledmap-basic",
+      "firefox/tiledmap-basic",
+      "webkit/tiledmap-basic",
+      "chromium/audio-basic",
+      "firefox/audio-basic",
+      "webkit/audio-basic",
+      "chromium/video-basic",
+      "firefox/video-basic",
+      "webkit/video-basic",
+      "chromium/webview-basic",
+      "firefox/webview-basic",
+      "webkit/webview-basic",
+      "chromium/physics-3d-basic",
+      "firefox/physics-3d-basic",
+      "webkit/physics-3d-basic",
+      "chromium/dragonbones-basic",
+      "firefox/dragonbones-basic",
+      "webkit/dragonbones-basic",
+      "chromium/physics-3d-collision",
+      "firefox/physics-3d-collision",
+      "webkit/physics-3d-collision",
+      "chromium/point-cloud-basics",
+      "firefox/point-cloud-basics",
+      "webkit/point-cloud-basics",
+      "chromium/batching-shared",
+      "firefox/batching-shared",
+      "webkit/batching-shared",
+      "chromium/batching-merged",
+      "firefox/batching-merged",
+      "webkit/batching-merged",
+      "chromium/batching-dynamic",
+      "firefox/batching-dynamic",
+      "webkit/batching-dynamic",
+      "chromium/campfire-night",
+      "firefox/campfire-night",
+      "webkit/campfire-night",
+      "chromium/fog-accuracy",
+      "firefox/fog-accuracy",
+      "webkit/fog-accuracy",
+      "chromium/neon-night-city",
+      "firefox/neon-night-city",
+      "webkit/neon-night-city",
+      "chromium/starfield-galaxy",
+      "firefox/starfield-galaxy",
+      "webkit/starfield-galaxy",
+      "chromium/black-hole-accretion",
+      "firefox/black-hole-accretion",
+      "webkit/black-hole-accretion",
+      "chromium/glass-refraction",
+      "firefox/glass-refraction",
+      "webkit/glass-refraction",
+      "chromium/animated-character-showcase",
+      "firefox/animated-character-showcase",
+      "webkit/animated-character-showcase",
+      "chromium/orbit-controls",
+      "firefox/orbit-controls",
+      "webkit/orbit-controls",
+      "chromium/gltf-animation-contract",
+      "firefox/gltf-animation-contract",
+      "webkit/gltf-animation-contract"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 78,
+    "measuredCases": 78,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": false,
+      "status": "NOT_RUN",
+      "reason": "Native report identifies runtime bytes; individual source entry not recorded"
+    },
+    "contract": {
+      "present": true,
+      "path": "tools/verify/browser-matrix-contract.json",
+      "sha256": "a7f257f7c3ad9e3c25cd049f28121aea3557da013edfbb4bdd8297c41cc64f27"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/browser-matrix.cjs",
+      "sha256": "57aaade88cc2506eb95c43c129a695d2e37da38086cef2d903bffe07abc22e8f"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/port-s11-full-browser-matrix.json",
+      "sha256": "a16d12fd1e2c2a9e61dc5dfa24dd001c802a083bf91bfd09a687f6a46f8a3343",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": false,
+      "status": "NOT_RUN",
+      "reason": "Reference application source was not separately fingerprinted in the native report"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/port-s11-full-browser-matrix.json",
+    "sha256": "a16d12fd1e2c2a9e61dc5dfa24dd001c802a083bf91bfd09a687f6a46f8a3343",
+    "allFingerprints": {
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "tools/verify/browser-matrix-contract.json": "a7f257f7c3ad9e3c25cd049f28121aea3557da013edfbb4bdd8297c41cc64f27",
+      "tools/verify/browser-matrix.cjs": "57aaade88cc2506eb95c43c129a695d2e37da38086cef2d903bffe07abc22e8f",
+      "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+      "tools/verify/browser-probe.cjs": "d0e39db7f521a8eb6dcc6e483bf3912fa2ee82169698d22b9b11fa86de87427b"
+    },
+    "installed": null,
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s11-full-browser-matrix.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s11-full-browser-matrix.json"
+      }
+    ],
+    "screenshots": []
+  }
+}

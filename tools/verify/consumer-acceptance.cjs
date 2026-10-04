@@ -13,10 +13,17 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, execFileSync } = require('child_process');
 const { pathToFileURL } = require('url');
 const root = path.resolve(__dirname, '../..');
 const failures = [];
+const browserOut = process.argv.find((arg) => arg.startsWith('--browser-out='))?.slice(14);
+const modernTsArg = process.argv.find((arg) => arg.startsWith('--modern-ts='))?.slice(12);
+const modernTsPath = modernTsArg && path.resolve(root, modernTsArg);
+if (process.argv.includes('--bootstrap-browser') && (!browserOut || fs.existsSync(path.resolve(root, browserOut)))) {
+    throw new Error('--bootstrap-browser requires --browser-out=<new.json>');
+}
+let bundledConsumer;
 
 function run (cmd, opts) {
     return execSync(cmd, { encoding: 'utf8', maxBuffer: 4 * 1024 * 1024, ...opts });
@@ -55,6 +62,10 @@ const requiredFiles = [
     'build/npm/cocosair.module.js',
     'build/npm/cocosair.module.min.js',
     'build/cocosair.module.d.ts',
+    'build/npm/bootstrap.js',
+    'build/bootstrap.d.ts',
+    'build/bootstrap.legacy.d.ts',
+    'build/cocosair.legacy.d.ts',
     'build/gltf-decoders/MANIFEST.md',
     'build/gltf-decoders/meshopt/meshopt_decoder.cjs',
     'build/gltf-decoders/draco/draco3d.js',
@@ -79,6 +90,24 @@ if (fs.existsSync(path.join(nodeModules, 'build', 'package.json'))) {
 }
 
 // 4. Real dynamic import() of the installed entry, with browser globals from jsdom.
+// The safe package subpath must resolve and evaluate before any browser globals exist.
+try {
+    const output = execFileSync(process.execPath, ['--input-type=module', '-e',
+        "import { createAirApp } from 'cocosair/bootstrap'; if (typeof createAirApp !== 'function' || typeof document !== 'undefined') throw new Error('eager bootstrap'); console.log('BOOTSTRAP_NO_DOM_PASS');"],
+        { cwd: consumerDir, encoding: 'utf8', timeout: 30000 });
+    if (!output.includes('BOOTSTRAP_NO_DOM_PASS')) failures.push('safe bootstrap package subpath did not evaluate independently');
+} catch (error) { failures.push(`safe bootstrap package subpath failed: ${String(error.message).slice(0, 300)}`); }
+try {
+    const built = require('esbuild').buildSync({ stdin: {
+        contents: "export { createAirApp } from 'cocosair/bootstrap'; export function loadRuntime() { return import('cocosair'); }", resolveDir: consumerDir, sourcefile: 'bootstrap-consumer.js' },
+        bundle: true, write: false, format: 'esm', splitting: true, platform: 'browser', target: 'es2020',
+        outdir: path.join(packDir, 'bundled-consumer'), metafile: true });
+    bundledConsumer = built;
+    const inputs = Object.keys(built.metafile.inputs);
+    if (!inputs.some((file) => /build[\\/]npm[\\/]cocosair\.module\.js$/.test(file)) || built.outputFiles.length < 2) {
+        failures.push('safe bootstrap dynamic runtime import is not resolvable by a real consumer bundler');
+    }
+} catch (error) { failures.push(`safe bootstrap consumer bundling failed: ${String(error.message).slice(0, 300)}`); }
 // The engine evaluates browser globals at module scope (SystemInfo reads window.navigator);
 // that is a documented runtime characteristic — the consumer gate must still perform the
 // actual import instead of patching or skipping it.
@@ -100,11 +129,19 @@ try {
     const mod = await import(pathToFileURL(entryPath).href);
     exportCount = Object.keys(mod).length;
     const expected = ['createAirApp', 'GLTFLoader', 'GLTFAsset', 'Node', 'Scene', 'Vec3', 'MeshRenderer',
-        'Camera', 'DirectionalLight', 'Animation', 'AnimationClip', 'Layers', 'Material', 'Texture2D'];
+        'Camera', 'DirectionalLight', 'Animation', 'AnimationClip', 'Layers', 'Material', 'Texture2D',
+        'AssetBank', 'createActionState', 'createActionInput', 'createPrimitiveGeometry', 'AirAppImpl',
+        'parseFnt', 'createBitmapFont', 'loadBitmapFont', 'Billboard', 'AirUIMesh',
+        'parseAtlasText', 'createAtlasHandle', 'createAtlasSpriteFrame', 'loadAtlas'];
     for (const name of expected) {
         if (typeof mod[name] === 'undefined') { failures.push(`cocosair.${name} is missing from the installed module`); }
     }
     if (typeof mod.utils?.MeshUtils?.createDynamicMesh !== 'function') { failures.push('official dynamic mesh entry utils.MeshUtils.createDynamicMesh is missing from the installed module'); }
+    for (const type of ['box', 'sphere', 'cylinder', 'cone']) {
+        if (!require('node:util').isDeepStrictEqual(mod.createPrimitiveGeometry({ type }), mod.primitives[type]())) {
+            failures.push('installed primitive descriptor differs from native geometry: ' + type);
+        }
+    }
     if (exportCount < 100) { failures.push(`implausibly low export count: ${exportCount}`); }
 } catch (error) {
     failures.push(`dynamic import of installed module failed: ${String(error && error.stack ? error.stack.split('\n').slice(0, 3).join(' | ') : error).slice(0, 400)}`);
@@ -115,9 +152,38 @@ const tsOut = path.join(consumerDir, 'type-test.ts');
 fs.writeFileSync(tsOut, [
     "import { createAirApp, GLTFLoader, GLTFAsset, Node, Scene, Vec3, MeshRenderer,",
     "  Camera, DirectionalLight, Animation, AnimationClip, Layers,",
-    "  configureGLTFLoaderDefaults, utils,",
+    "  configureGLTFLoaderDefaults, utils, createPrimitiveGeometry, createActionState, AssetBank, AudioService, TiledObjectGroup, parseFnt, createBitmapFont, loadBitmapFont, SpriteFrame, Billboard, AirUIMesh,",
     "} from 'cocosair';",
-    "import type { GLTFLoaderOptions } from 'cocosair';",
+    "import { parseAtlasText, createAtlasHandle, createAtlasSpriteFrame, loadAtlas } from 'cocosair';",
+    "import type { GLTFLoaderOptions, AirAtlasDocument, AirAtlasHandle, AirAtlasLoadOptions } from 'cocosair';",
+    "import { createAirApp as createSafeAirApp } from 'cocosair/bootstrap';",
+    "const safeInit = createSafeAirApp({ canvas: '#GameCanvas', pixelRatioCap: 1.5, designResolution: { width: 640, height: 480, policy: 0 } });",
+    "safeInit.then(app => { const token = app.session?.token(); void app.releaseScene?.(); void app.close?.(); });",
+    "const decompression = new DecompressionStream('gzip');",
+    "const readable: ReadableStream<Uint8Array> = decompression.readable;",
+    "const writable: WritableStream<BufferSource> = decompression.writable;",
+    "const primitive = createPrimitiveGeometry({ type: 'cylinder', radiusTop: 0, radiusBottom: 1, height: 2 });",
+    "const mesh = utils.createMesh(primitive);",
+    "// @ts-expect-error box has dimensions, not a radius",
+    "createPrimitiveGeometry({ type: 'box', radius: 1 });",
+    "// @ts-expect-error geometry is not Mesh",
+    "const wrongMesh: import('cocosair').Mesh = primitive;",
+    "const actionState = createActionState({ actions: { jump: { mode: 'button', sources: [{ backend: 'dom', physicalCode: 'Space' }] } } });",
+    "const bank = new AssetBank(); bank.load('/no-suffix', { ext: 'json', signal: new AbortController().signal });",
+    "declare const audio: AudioService; audio.stopBgm(); audio.setBgmVolume(0.5);",
+    "declare const objectGroup: TiledObjectGroup; objectGroup.getRawObjects(); objectGroup.getObjectsByType('Solid');",
+    "declare const page: SpriteFrame; const data = parseFnt(''); const fontHandle = createBitmapFont(data, page);",
+    "const atlasDoc: AirAtlasDocument = parseAtlasText('page.png\\nsize:16,16\\nblob\\nbounds:0,0,4,4\\n');",
+    "declare const atlasPages: import('cocosair').Texture2D[]; const atlasHandle: AirAtlasHandle = createAtlasHandle(atlasDoc, atlasPages);",
+    "const atlasFrame = createAtlasSpriteFrame(atlasDoc, atlasPages, atlasDoc.regions[0]); atlasHandle.getFrames('walk'); atlasHandle.dispose();",
+    "const atlasOptions: AirAtlasLoadOptions = { bank, signal: new AbortController().signal, pageExt: 'png' }; void loadAtlas('/art/pack.atlas', atlasOptions);",
+    "// @ts-expect-error atlas page textures must be Texture2D, not SpriteFrame",
+    "createAtlasHandle(atlasDoc, [page]);",
+    "fontHandle.dispose(); void loadBitmapFont('/font.fnt', { bank, signal: new AbortController().signal });",
+    "declare const billboard: Billboard; billboard.width = 2; billboard.height = 1; billboard.rotation = 90; billboard.technique = 0;",
+    "declare const viewportCamera: Camera; viewportCamera.orthoWidth = 489; viewportCamera.orthoHeight = 423; viewportCamera.orthoWidth = 0;",
+    "declare const uiMesh: AirUIMesh; uiMesh.spriteFrame = page; uiMesh.setGeometry({ positions: [0,0,1,0,0,1], uvs: [0,0,1,0,0,1], indices: [0,1,2] }); uiMesh.dispose();",
+    "void readable; void writable; void mesh; void actionState;",
     "const loader = new GLTFLoader();",
     "loader.setMeshoptDecoder(null); loader.setDRACODecoder(null); loader.setKTX2Transcoder(null);",
     "loader.register(() => ({ name: 'test', support: () => ({ name: 'test', status: 'supported' as const }) }));",
@@ -146,8 +212,30 @@ fs.writeFileSync(consumerTsconfig, JSON.stringify({
 try {
     // 临时目录已移到系统 tmp：不能用 npx（会拉到假 tsc 包），直接用仓库内的 typescript。
     run(`node ${path.join(root, 'node_modules', 'typescript', 'bin', 'tsc')} -p ${consumerTsconfig}`, { cwd: consumerDir });
+    const classicSource = path.join(consumerDir, 'type-classic.ts');
+    fs.writeFileSync(classicSource, "import { createPrimitiveGeometry } from 'cocosair';\nconst decoder = new DecompressionStream('gzip');\nvoid decoder; void createPrimitiveGeometry;\n");
+    execFileSync(process.execPath, [path.join(root, 'node_modules/typescript/bin/tsc'), '--noEmit', '--strict',
+        '--skipLibCheck', '--target', 'es2020', '--module', 'commonjs', '--moduleResolution', 'node', classicSource],
+        { cwd: consumerDir, encoding: 'utf8' });
 } catch (error) {
     failures.push(`consumer typecheck failed: ${String(error.stdout || error.message).slice(0, 300)}`);
+}
+if (modernTsPath) {
+    try {
+        if (!fs.existsSync(modernTsPath)) throw new Error('compiler not found: ' + modernTsPath);
+        const compilerVersion = execFileSync(process.execPath, [modernTsPath, '--version'], { encoding: 'utf8' }).trim();
+        // The existing SDK contract uses skipLibCheck. File-list acceptance also
+        // proves the legacy global augmentation was never loaded by this compiler.
+        const resolved = execFileSync(process.execPath, [modernTsPath, '-p', consumerTsconfig, '--listFiles'],
+            { cwd: consumerDir, encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 });
+        if (/cocosair\.legacy\.d\.ts|bootstrap\.legacy\.d\.ts/.test(resolved)) {
+            failures.push('modern compiler incorrectly selected the TS4.9 ambient fallback');
+        }
+        if (!/cocosair\.module\.d\.ts/.test(resolved) || !/lib\.dom\.d\.ts/.test(resolved)) {
+            failures.push('modern compiler did not load the SDK and native lib.dom declarations');
+        }
+        console.log('[t1] modern type consumer: ' + compilerVersion + ' PASS (native DOM entry)');
+    } catch (error) { failures.push(`modern consumer typecheck failed: ${String(error.stdout || error.message).slice(0, 600)}`); }
 }
 
 // 6. README relative links must resolve inside the package (R7)
@@ -164,6 +252,13 @@ for (const target of linkTargets) {
     }
 }
 
+if (process.argv.includes('--bootstrap-browser')) {
+    try {
+        const report = await require('./bootstrap-consumer-browser.cjs').verify({ root, built: bundledConsumer,
+            out: path.resolve(root, browserOut), tarballPath });
+        if (!report.scopePassed) failures.push('installed bundled bootstrap browser verification failed; see ' + browserOut);
+    } catch (error) { failures.push('installed bundled bootstrap browser verification: ' + String(error.stack || error)); }
+}
 // 7. Cleanup
 fs.rmSync(packDir, { recursive: true, force: true });
 fs.rmSync(tarballPath, { force: true });

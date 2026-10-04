@@ -103,6 +103,8 @@ export declare namespace Input {
 }
 
 interface InputEventMap {
+    [InputEventType.MOUSE_ENTER]: (event: EventMouse) => void,
+    [InputEventType.MOUSE_LEAVE]: (event: EventMouse) => void,
     [InputEventType.MOUSE_DOWN]: (event: EventMouse) => void,
     [InputEventType.MOUSE_MOVE]: (event: EventMouse) => void,
     [InputEventType.MOUSE_UP]: (event: EventMouse) => void,

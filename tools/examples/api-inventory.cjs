@@ -24,6 +24,12 @@ const supporting =
 const requiredAdvancedFeature =
     /^(?:dragonBones\.(?:DragonBonesAsset|DragonBonesAtlasAsset|ArmatureDisplay|CCFactory|AnimationCacheMode)|geometry\.(?:Ray|AABB|intersect)|renderer\.scene\.Camera|(?:createMeshoptDecoder|isMeshoptAvailable|createDracoDecoder|createKTX2Transcoder|isKTX2Available|meshQuantizationFactory|KHR_MESH_QUANTIZATION|meshoptCompressionFactory|KHR_MESHOPT_COMPRESSION|EXT_MESHOPT_COMPRESSION|dracoCompressionFactory|KHR_DRACO_MESH_COMPRESSION|AirTransmissionCapture|isTransmissionMaterial|TRANSMISSION_LAYER|defaultTransmissionVisibility))(?:\.|$)/;
 const documentedOnly = {
+    'renderer.scene.Camera.orthoWidth':
+        'The component Camera.orthoWidth is verified by the current Gallery property example, including renderer synchronization. Direct renderer-level access has no separately claimed per-API trace here; prefer the component API, which also owns stored state and synchronization.',
+    ...Object.fromEntries(['Billboard', 'Billboard.texture', 'Billboard.height', 'Billboard.width', 'Billboard.rotation',
+        'Billboard.technique', 'Billboard.constructor', 'Billboard.onLoad', 'Billboard.onEnable', 'Billboard.onDisable',
+        'Billboard.onDestroy'].map((unit) => [unit,
+        'Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks.'])),
     'dragonBones.CCFactory.constructor':
         'CCFactory is a process-wide singleton. Its constructor subscribes to game restart and registers the global DragonBones update schedule; direct extra construction can duplicate global ownership. Use the verified getInstance() entry point.',
     'dragonBones.CCFactory.onRestart':

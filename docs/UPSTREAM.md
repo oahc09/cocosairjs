@@ -260,3 +260,43 @@ Changed paths are registered in upstream-file-map. The competitive uniform/input
 PixelFormat adds SRGB888/SRGBA8888 names for existing GFX sRGB formats, preserving old enum values. These opt-in formats perform hardware sampling decode; standard effects retain their software decode, so callers must not combine both paths. GPU acceptance covers equivalent color inputs, row orientation, alpha and linear normal data in three browsers.
 
 EffectAsset early registration also differs between source/headless and full Web bundles. Before a device exists, the full bundle may expose the effect-import library that game.init later disables for the legacy configuration. AIR now registers effect metadata immediately and defers program registration until renderer initialization, selecting the active library at that time. Destroy removes pending callbacks. This keeps legal early onLoaded calls usable instead of requiring a blanket prohibition; dedicated tests cover both library choices and a full-bundle browser probe verifies actual drawing.
+
+## Port diagnostics (PG-18)
+
+`cocos/core/platform/debug.ts` adds an internal explicit warning/error subscription, including native numeric diagnostic IDs. Logging keeps the original console filtering; observer exceptions and recursive observation cannot interrupt native calls. AIR bootstrap exposes an 80-entry bounded, deduplicated channel, defaults to errors, and offers `diagnostics: 'warnings'` to enable native warnings. The separate debug session subscribes to that channel without console or WebGL monkey patches. This change does not classify normal culling or automatic skinning transport as failures. Verification and remaining diagnostic boundaries are tracked in the [port ledger](../ai/ledgers/port-gap-remediation.md).
+
+## Scene-only release (PG-30)
+
+`Director._releaseSceneImmediate` is an internal AIR detach/destroy/drain path. It clears the running-scene pointer, preserves persist registrations while detaching their nodes, and drains native CPU destruction without waiting for drawing. It keeps the runtime, scheduler and shared asset caches. ReleaseManager accepts a null next scene and offers an internal flush for already requested releases. Its pending queue uses weak asset identity: multiple Code First assets with empty UUIDs no longer overwrite one another. Existing reference-count and ignored-asset checks still apply. This differs from `purgeDirector`, which releases all assets. AIR callbacks use a cooperative 5-second deadline; receipts report failures/pending ownership and unavailable GPU memory measurements. No lost-context reconstruction is attempted.
+
+## Nonuniform UI viewport (PG-08/35)
+
+Camera adds an opt-in orthographic half-width, `orthoWidth`, whose zero default preserves the original height-times-aspect projection. The component forwards and serializes it; pooled native cameras reset it. Screen-aligned Canvas derives both half-axes from native view scales, so EXACT_FIT stretches the whole design rectangle and its native inverse projection/hit testing agrees with getUILocation. Target-texture Canvas retains automatic aspect. No virtual-stage node scaling or body/CSS policy is added. Fractional DPR previously supplied fractional window dimensions that HTML canvas truncated; the frozen-public-PAL generation transform now rounds physical dimensions to match AIR bootstrap on startup and resize, without editing frozen source. See the port ledger for actual repro and verification.
+
+## Billboard ownership (PG-25)
+
+The native Billboard is now directly exported by AIR without importing the particle aggregate. Its extracted source destroys its exclusive model, mesh and material on component destruction; technique changes return the old model through Root's model pool. Input textures remain borrowed and are never destroyed by this cleanup. Three-browser scene-release probes first reproduced the missing mesh/material cleanup; this difference addresses that concrete lifecycle failure.
+
+## Bitmap font kerning (PG-02)
+
+PG-02 also corrects native BMFont kerning in `cocos/2d/assembler/label/text-processing.ts`: the final character retains its incoming pair, which layout already consumes as the next character's kerning. Previously two-character strings such as AV lost the pair entirely. The existing TTF shadow adaptation in this file is preserved. AIR's single-page text parser/factory and owned font handle remain in `src/air/assets/bmfont.ts`.
+
+## Tiled object queries (PG-03)
+
+The TMX parser retains the modern `class` attribute (falling back to legacy `type`) in optional `className`, independently of the existing numeric shape enum. TiledObjectGroup adds string-class/numeric-shape queries and immutable original geometry snapshots. Reinitializing the same parsed objects now converts from the original coordinates and polygon/polyline points, preventing repeated Y flips or cumulative isometric conversion. First initialization retains the native coordinate formulas and rendering behavior. This is an intentional change to three extracted Tiled files; it does not add a collision solver or alter tile rendering/culling.
+
+## Input action ownership (PG-28)
+
+`cocos/input/input.ts` includes the already-dispatched `MOUSE_ENTER` and `MOUSE_LEAVE` events in its native input type map (PG-28). This adds typed subscriptions without changing event dispatch. The optional AIR action adapter uses mouse-leave to release its simulated mouse source and PAL's existing physical-key map to clean up held keys released after focus moves away from the canvas. It does not admit a second keydown channel or synthesize engine events.
+
+## Bone-space bounds cache (PG-18/21)
+
+Realtime and baked skinning models validate weighted joint paths before replacing their binding. The shared internal `skinning-validation.ts` helper keeps legitimately unused missing joints legal; invalid weighted paths report `AIR_E_SKINNING_JOINT_PATH` with mesh, root, joint and correction context. A validation failure preserves the previous valid model binding.
+
+Realtime skinning additionally validates the weighted palette slots before changing the binding. The native joint texture fallback has a fixed 256-joint capacity; previously a weighted slot 256 silently wrote past its typed array and disappeared on the GPU. `AIR_E_SKINNING_CAPACITY` now includes the mesh, skeleton, root, global joint, local palette, slot and actual transport capacity. Large skeletons remain legal when their used slots fit local joint maps or their unused tail does not occupy the transport. This adds an actionable rejection; it does not increase the shader/texture capacity or force baked mode.
+
+`cocos/3d/skeletal-animation/skeletal-animation-state.ts` clears its initial baked-only evaluator suppression before creating the first realtime evaluator. A clip first initialized with `useBakedAnimation=true` previously changed model type when the public preference became false, but its node curves remained unevaluated. The native clip/state APIs and later mode changes are preserved; the fix supplies the evaluator that the existing transition already intended to create.
+
+`cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts` defers submodel initialization while mesh, skeleton or root is missing, keeping that incomplete model disabled. Completing or replacing a live skeleton/root binding validates first, then rebuilds native submodels and reattaches their descriptors/macros to the current joint buffers. Previously root→mesh→skeleton in an already active scene attempted to dereference a null joint-buffer index; later bindings could also retain descriptors for replaced buffers. This preserves automatic animation association and native renderer types.
+
+`cocos/3d/assets/mesh.ts` invalidates bone bounds on reset, dynamic submesh writes and asset destruction. The cache uses weak skeleton identity and the full bindpose values; a cached or colliding skeleton hash cannot hide bindpose mutation. Unchanged data still reuses the same bounds. Weighted joints and attribute data are validated before calculation, with resource/primitive/vertex/influence context and explicit correction instructions; zero-weight joints are ignored and legitimately unused joints retain null bounds. Rejected calculations never enter the cache. This does not automatically rebind an already active renderer or invalidate other animation pools when application code mutates assets in place; bind/rebuild those assets explicitly.

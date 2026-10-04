@@ -4,19 +4,32 @@
   "status": "stable",
   "title": "Orbit Controls",
   "category": "interaction",
-  "benchmarkRefs": ["CB-09"],
+  "benchmarkRefs": [
+    "CB-09"
+  ],
   "recipeRefs": [],
   "requiresDevTools": false,
-  "capabilities": ["input"],
+  "capabilities": [
+    "input"
+  ],
   "apiClaims": [],
   "learning": {
     "goal": "Native input orbit camera with time-based damping",
-    "points": ["TOUCH_* mouse/touch deduplication", "MOUSE_WHEEL input contract", "Exponential angular damping"]
+    "points": [
+      "TOUCH_* mouse/touch deduplication",
+      "MOUSE_WHEEL input contract",
+      "Exponential angular damping"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -26,10 +39,18 @@
     "visual": "Five lit markers with a movable orbit camera."
   },
   "api": {
-    "primary": ["Input.on", "Node.lookAt"],
+    "primary": [
+      "Input.on",
+      "Node.lookAt"
+    ],
     "supporting": [],
-    "claims": ["Input.on", "Node.lookAt"],
-    "forbiddenShortcut": ["Synthetic timers or fields must not impersonate native state or rendered behavior."],
+    "claims": [
+      "Input.on",
+      "Node.lookAt"
+    ],
+    "forbiddenShortcut": [
+      "Synthetic timers or fields must not impersonate native state or rendered behavior."
+    ],
     "evidence": [
       {
         "api": "Input.on",
@@ -48,14 +69,19 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Orbit Camera", "Marker 2"]
+      "nodes": [
+        "Orbit Camera",
+        "Marker 2"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -68,7 +94,7 @@
   "promotion": {
     "spec": "5f5dce1baf01",
     "source": "57a546012fee3bed",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 2,
     "attested": 0,
     "units": 2

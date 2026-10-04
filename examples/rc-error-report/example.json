@@ -19,7 +19,10 @@
     "visual": "面板展示错误基线、稳定错误码与\"主循环不受影响\"的核对行；画布场景正常渲染"
   },
   "api": {
-    "primary": ["DevToolsSession.getRuntimeErrors", "DevToolsSession.dispatch"],
+    "primary": [
+      "DevToolsSession.getRuntimeErrors",
+      "DevToolsSession.dispatch"
+    ],
     "supporting": [],
     "claims": [
       "createAirApp",
@@ -42,7 +45,10 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": ["故意制造未捕获异常冒充稳定错误码", "吞掉 dispatch 错误不校验 error.code"],
+    "forbiddenShortcut": [
+      "故意制造未捕获异常冒充稳定错误码",
+      "吞掉 dispatch 错误不校验 error.code"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -160,23 +166,38 @@
       }
     ]
   },
-  "capabilities": ["runtime-control"],
+  "capabilities": [
+    "runtime-control"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "DemoCube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "DemoCube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -191,7 +212,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 2.2, 6.5],
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -201,7 +226,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -209,10 +238,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "DemoCube": {
-        "position": [0, 0.6, 0],
+        "position": [
+          0,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -227,7 +264,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [95, 205, 120, 255],
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -251,7 +293,7 @@
   "promotion": {
     "spec": "01b9b4271da2",
     "source": "8d42f5b915ecd42a",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 17,
     "attested": 2,
     "units": 19

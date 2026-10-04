@@ -14,6 +14,8 @@ import { createAirApp, Scene, Node, Camera, Layers, Color } from 'cocosair';
 
 const app = await createAirApp({
     canvas: '#GameCanvas',
+    // Native EXACT_FIT. UI Canvas uses the same two-axis projection for display and hit tests.
+    designResolution: { width: 978, height: 846, policy: 0 },
 });
 
 const scene = new Scene('Main');

@@ -100,6 +100,8 @@ glTF 载入的原生 `AnimationClip` 默认 `WrapMode.Normal`：播放一次，�
 
 ## 3. 示例拆解
 
+Code First 的合法 joints/weights、根空间、手动TRS、暂停首帧与资产重建合同见[蒙皮接入配方](skinning-code-first.md)。
+
 ```js
 tween(cubeNode)
     .call(() => showStage('move right'))

@@ -228,3 +228,15 @@ Stable 计数 **131 ≥ 120 达标**；Core VerifiedRate **6.9% → 36%**（294/
 已实施范围的正式运行、API调用和生命周期证据见 `docs/evidence/examples-verified.json`，
 对应三浏览器结果见 `docs/evidence/browser-matrix/browser-matrix.json`。只有完整标记和适用的源码/candidate/contract指纹匹配时才可采信；
 正在重采的partial报告不是完成证明。这些证据也不构成表中未实施入口或新框架的批复。
+
+## 13. 端口缺口范围决议（2026-10-04）
+
+用户在具体方案问答中选择以下范围。此决议关闭设计选择；实现项仍须通过对应运行验收。
+
+| 项 | 用户选择 | 执行范围与验收 |
+| --- | --- | --- |
+| PG-04 Spine 2.1 | 不支持 | 本轮不实现2.1转换器、兼容解析层或外挂播放器；如实公开不支持边界。已有3.8/4.2声明与后端部署条件保留，图集、字体和通用UI mesh独立交付。此项是范围决议，不是Spine播放PASS。 |
+| PG-11 UI mesh | UI-mesh薄封装 | 在AIR接入原生UI组件/assembler与2D batcher，验证Sprite混排、Mask、材质/脏标记和资源释放；不能以普通MeshRenderer配方代替。 |
+| PG-25 Billboard | 公开原生组件 | 直接导出已有Billboard文件，保留原生API；验证默认小闭包、bundle/d.ts、安装消费者、移动相机像素及销毁。 |
+
+依据见[决策备忘录](../notes/port-spine-and-billboard-decisions.md)，进度见[实施台账](../../ai/ledgers/port-gap-remediation.md)。本决议不授权提交、发布或修改外部应用；AG1/AG2材料缺口继续独立披露。

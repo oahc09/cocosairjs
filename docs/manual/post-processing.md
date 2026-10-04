@@ -19,8 +19,7 @@
   装配 `addSetting` + 挂 `camera.postProcess` 零报错。**但效果应用的像素级 A/B 不可归因**
   （开/关对照无差异、两次开态非确定差异），状态保持"可装配、效果未证实"——
   见 [How to use Post Processing](how-to-use-post-processing.md) §2/§3。
-- **兜底路线也缺最后一块**：用 render target 手工合成（[render-targets](rendertargets.md) PARTIAL 走过的路）
-  需要"对纹理做像素运算的自定义着色器"，而 AIR 无用户面 GLSL 入口（[debugging-glsl](debugging-glsl.md) N/A 篇的同一结论）。
+- **自定义Effect与后处理装配分开验收**：原生EffectAsset的GLSL阶段、显式资源binding与Material接线已由PG-23真实验证，见[自定义着色器](custom-shaders.md)。render target手工合成（[render-targets](rendertargets.md)）仍须验证目标纹理与实际像素；这一路通过也不能替代原生postProcess设置的效果验收。此前“没有用户面GLSL入口”的结论已过期。
 
 ## 2. 与 how-to-use 篇的分工
 

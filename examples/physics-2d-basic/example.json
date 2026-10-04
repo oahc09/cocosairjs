@@ -45,12 +45,22 @@
     "PolygonCollider2D.threshold",
     "PHYSICS_2D_PTM_RATIO"
   ],
-  "capabilities": ["physics-2d"],
+  "capabilities": [
+    "physics-2d"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -68,7 +78,11 @@
     "visual": "深蓝底一屏：灰色地面长条横贯下方，其上左橙（盒木箱）、中绿（圆球）、右蓝（六边形宝石）四个色块等间距排布，顶部状态行实时写着后端类型与木箱坐标；点击后橙木箱瞬移到地面上表面（截图取点击后状态）"
   },
   "api": {
-    "primary": ["PhysicsSystem2D", "RigidBody2D", "Collider2D"],
+    "primary": [
+      "PhysicsSystem2D",
+      "RigidBody2D",
+      "Collider2D"
+    ],
     "supporting": [
       "BoxCollider2D",
       "CircleCollider2D",
@@ -352,19 +366,33 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Canvas", "UICamera", "Ground", "Crate", "Ball", "Gem", "Status"]
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Ground",
+        "Crate",
+        "Ball",
+        "Gem",
+        "Status"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -374,7 +402,11 @@
         ]
       },
       "UICamera": {
-        "position": [0, 0, 1000],
+        "position": [
+          0,
+          0,
+          1000
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -384,7 +416,11 @@
         ]
       },
       "Ground": {
-        "position": [0, -120, 0],
+        "position": [
+          0,
+          -120,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -394,7 +430,11 @@
         ]
       },
       "Crate": {
-        "position": [-120, 40, 0],
+        "position": [
+          -120,
+          40,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -404,7 +444,11 @@
         ]
       },
       "Ball": {
-        "position": [0, 40, 0],
+        "position": [
+          0,
+          40,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -414,7 +458,11 @@
         ]
       },
       "Gem": {
-        "position": [120, 40, 0],
+        "position": [
+          120,
+          40,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -424,7 +472,11 @@
         ]
       },
       "Status": {
-        "position": [-10, 150, 0],
+        "position": [
+          -10,
+          150,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -446,7 +498,7 @@
   "promotion": {
     "spec": "2992f3827c45",
     "source": "0c29ffa9f366c5cf",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 33,
     "attested": 3,
     "units": 36

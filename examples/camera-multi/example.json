@@ -19,8 +19,14 @@
     "visual": "地面与蓝球由基础相机呈现，橙球由叠加相机画在同一画面上（两层内容同屏可见，且橙球位置正确遮挡/被遮挡于空间中）"
   },
   "api": {
-    "primary": ["Camera", "Layers"],
-    "supporting": ["Layers.Enum", "Node.setPosition"],
+    "primary": [
+      "Camera",
+      "Layers"
+    ],
+    "supporting": [
+      "Layers.Enum",
+      "Node.setPosition"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -42,7 +48,10 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": ["用两份 canvas 冒充分屏", "把另一台相机 viewport 设为全屏互相覆盖"],
+    "forbiddenShortcut": [
+      "用两份 canvas 冒充分屏",
+      "把另一台相机 viewport 设为全屏互相覆盖"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -160,23 +169,42 @@
       }
     ]
   },
-  "capabilities": ["camera"],
+  "capabilities": [
+    "camera"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Light", "Floor", "BlueSphere", "OrangeSphere", "BaseCamera", "OverlayCamera"]
+      "nodes": [
+        "Main Light",
+        "Floor",
+        "BlueSphere",
+        "OrangeSphere",
+        "BaseCamera",
+        "OverlayCamera"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "node-count", "no-runtime-error", "material-property", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "node-count",
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -191,7 +219,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -199,10 +231,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "Floor": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -212,7 +252,11 @@
         ]
       },
       "BlueSphere": {
-        "position": [-1.2, 0.6, 0],
+        "position": [
+          -1.2,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -222,7 +266,11 @@
         ]
       },
       "OrangeSphere": {
-        "position": [1.4, 0.6, 0],
+        "position": [
+          1.4,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -232,7 +280,11 @@
         ]
       },
       "BaseCamera": {
-        "position": [0, 2.2, 6.5],
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -242,7 +294,11 @@
         ]
       },
       "OverlayCamera": {
-        "position": [0, 2.2, 6.5],
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -257,7 +313,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [80, 90, 110, 255],
+            "value": [
+              80,
+              90,
+              110,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -272,7 +333,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [65, 155, 235, 255],
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -287,7 +353,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [235, 125, 65, 255],
+            "value": [
+              235,
+              125,
+              65,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -303,7 +374,7 @@
   "promotion": {
     "spec": "e428c783e31d",
     "source": "7fec7450acdbcb31",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 19,
     "attested": 0,
     "units": 19

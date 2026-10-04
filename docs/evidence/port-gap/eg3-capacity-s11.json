@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG3",
+  "subject": {
+    "description": "Browser subset: Realtime weighted uniform/texture palette boundary, segmented local palettes, actionable rejection"
+  },
+  "evidenceTypes": [
+    "BROWSER_RENDER_PASS"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-skinning-capacity-browser.cjs --out=output/playwright/air-capacity-s10-unified.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T04:52:35.850Z",
+    "endedAt": "2026-10-04T04:53:01.327Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 3,
+    "measuredCases": 3,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; Actual device uniform cap and sampled texture format recorded; RGBA8 fallback is not forced; Native onLoad catches thrown binding errors and reports diagnostics; direct binding throws are separately tested; GPU memory unavailable"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "src/cocos/3d/models/skinning-model.ts",
+      "sha256": "3dc93d5456471df2fa52424035a81c32e0e024a71c0c53cc994176a28dde96c9"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/skinning-capacity/index.html",
+      "sha256": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-skinning-capacity-browser.cjs",
+      "sha256": "49142a8ce5dca13818589233313b865c6f68946e880347b0f112e1f560c4080d"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-capacity-s10-unified.json",
+      "sha256": "c4105a5cf915c052b63950885000bf483cf4ef3ec9e712b97ba4851af1ed456b",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/skinning-capacity/index.html",
+      "sha256": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-capacity-s10-unified.json",
+    "sha256": "c4105a5cf915c052b63950885000bf483cf4ef3ec9e712b97ba4851af1ed456b",
+    "allFingerprints": {
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "src/cocos/3d/models/skinning-model.ts": "3dc93d5456471df2fa52424035a81c32e0e024a71c0c53cc994176a28dde96c9",
+      "src/cocos/3d/models/skinning-validation.ts": "79af3f889647c4d4918b36e285eae7530cc7683045c2c5c2d98b10ada7de3f5d",
+      "src/cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts": "16479ad76865cb7bd03fc8bc16527b65416711f503da8277fbecfc348355a575",
+      "test/fixtures/skinning-capacity/index.html": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9",
+      "test/fixtures/skinning-capacity/main.ts": "ba73a15c192f546555829a19cf233c0bfabc37c9abf50e7b9665680a3f11d1fb",
+      "tools/verify/air-skinning-capacity-browser.cjs": "49142a8ce5dca13818589233313b865c6f68946e880347b0f112e1f560c4080d"
+    },
+    "installed": null,
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-capacity-s10-unified.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-capacity-s10-unified.json"
+      }
+    ],
+    "screenshots": []
+  }
+}

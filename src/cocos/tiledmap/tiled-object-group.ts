@@ -36,6 +36,37 @@ import { CCBoolean, Vec2, Color, CCObjectFlags } from '../core';
 import { SpriteFrame } from '../2d/assets';
 import { Node } from '../scene-graph/node';
 
+/** Original TMX object geometry, before the native coordinate conversion. */
+export interface TMXRawObject {
+    readonly id: number | string;
+    readonly name: string;
+    readonly className: string;
+    readonly type: TMXObjectType;
+    readonly x: number;
+    readonly y: number;
+    readonly width: number;
+    readonly height: number;
+    readonly rotation: number;
+    readonly visible: boolean;
+    readonly gid: number | undefined;
+    readonly points: readonly Readonly<{ x: number; y: number }>[] | null;
+    readonly polylinePoints: readonly Readonly<{ x: number; y: number }>[] | null;
+}
+
+const rawSnapshots = new WeakMap<TMXObject, TMXRawObject>();
+function snapshotRawObject (object: TMXObject): TMXRawObject {
+    let raw = rawSnapshots.get(object);
+    if (!raw) {
+        const points = (values: { x: number; y: number }[] | null | undefined): TMXRawObject['points'] => values
+            ? Object.freeze(values.map((point) => Object.freeze({ x: point.x, y: point.y }))) : null;
+        raw = Object.freeze({ id: object.id, name: object.name, className: object.className ?? '', type: object.type,
+            x: object.x, y: object.y, width: object.width, height: object.height, rotation: object.rotation,
+            visible: object.visible, gid: object.gid, points: points(object.points), polylinePoints: points(object.polylinePoints) });
+        rawSnapshots.set(object, raw);
+    }
+    return raw;
+}
+
 /**
  * @en Renders the TMX object group.
  * @zh 渲染 tmx object group。
@@ -139,6 +170,17 @@ export class TiledObjectGroup extends Component {
         return this._objects;
     }
 
+    /** Readonly original TMX coordinates and points; independent of getObjects() mutations. */
+    public getRawObjects (): readonly TMXRawObject[] {
+        return this._rawObjects;
+    }
+
+    /** Strings query Tiled class/legacy type; numbers query the existing shape enum. */
+    public getObjectsByType (objectType: string | TMXObjectType): TMXObject[] {
+        return this._objects.filter((object) => typeof objectType === 'string'
+            ? (object.className ?? '') === objectType : object.type === objectType);
+    }
+
     protected _groupName?: string;
     protected _positionOffset?: Vec2;
     protected _mapInfo?: TMXMapInfo;
@@ -157,6 +199,7 @@ export class TiledObjectGroup extends Component {
         gridGID: GID
     }[];
     protected _objects: TMXObject[] = [];
+    protected _rawObjects: readonly TMXRawObject[] = Object.freeze([]);
 
     /**
      * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
@@ -214,16 +257,21 @@ export class TiledObjectGroup extends Component {
         const leftTopY = height * (1 - transComp.anchorY);
 
         const objects = groupInfo.objects;
+        this._rawObjects = Object.freeze(objects.map(snapshotRawObject));
         const aliveNodes = {};
         for (let i = 0, l = objects.length; i < l; i++) {
             const object = objects[i];
+            const raw = this._rawObjects[i];
+            object.x = raw.x;
+            object.y = raw.y;
             const objType = object.type;
             object.offset = new Vec2(object.x, object.y);
 
             const points = object.points || object.polylinePoints;
+            const rawPoints = raw.points || raw.polylinePoints;
             if (points) {
                 for (let pi = 0; pi < points.length; pi++) {
-                    points[pi].y *= -1;
+                    points[pi].y = -rawPoints![pi].y;
                 }
             }
 

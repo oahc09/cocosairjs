@@ -57,12 +57,24 @@
     "Node.getChildByName",
     "Node.on"
   ],
-  "capabilities": ["tiledmap"],
+  "capabilities": [
+    "tiledmap"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -89,7 +101,11 @@
     "visual": "深蓝底（clearColor 12,16,24）一屏：左侧 6×4 正交石/草地图（外圈蓝色石砖带对角白纹、内圈绿格草砖，deco 层三块带水平/垂直/对角翻转标记的砖明显与正放砖不同朝向），右侧 4×4 等距菱形砖簇（含运行时补写的一格），顶部一行状态文字 `tiledmap ortho=ground+deco iso=2:ISO filled=23 objects=5`。正交图所有草砖（gid 1）由引擎的 tile 动画在草/石两帧之间每 500 ms 交替（帧间唯一持续变化来源，证明渲染循环真的在驱动图层重建 render data）；点击另造成一次性画面变化（deco 层隐藏 + ground 补一格 + 状态行改写）⇒ frame-diff 可测（三引擎矩阵 frameChanged 全 PASS）"
   },
   "api": {
-    "primary": ["TiledMap", "TiledMapAsset", "TiledLayer"],
+    "primary": [
+      "TiledMap",
+      "TiledMapAsset",
+      "TiledLayer"
+    ],
     "supporting": [
       "TiledObjectGroup",
       "TiledMap.getMapSize",
@@ -475,10 +491,21 @@
       }
     ]
   },
-  "assets": ["assets/orthogonal.tmx", "assets/isometric.tmx", "assets/tiles.tsx", "assets/tiles.png"],
+  "assets": [
+    "assets/orthogonal.tmx",
+    "assets/isometric.tmx",
+    "assets/tiles.tsx",
+    "assets/tiles.png"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Canvas", "UICamera", "Status", "OrthoMap", "IsoMap"]
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Status",
+        "OrthoMap",
+        "IsoMap"
+      ]
     }
   },
   "interaction": {
@@ -490,14 +517,28 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -507,7 +548,11 @@
         ]
       },
       "UICamera": {
-        "position": [0, 0, 1000],
+        "position": [
+          0,
+          0,
+          1000
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -517,7 +562,11 @@
         ]
       },
       "Status": {
-        "position": [0, 162, 0],
+        "position": [
+          0,
+          162,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -527,7 +576,11 @@
         ]
       },
       "OrthoMap": {
-        "position": [-84, -10, 0],
+        "position": [
+          -84,
+          -10,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -537,7 +590,11 @@
         ]
       },
       "IsoMap": {
-        "position": [118, -10, 0],
+        "position": [
+          118,
+          -10,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -558,8 +615,8 @@
   },
   "promotion": {
     "spec": "7cc79446c2a9",
-    "source": "d190ac5740586673",
-    "candidate": "ba485e1b91643c46",
+    "source": "9b9f778541adc13a",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 48,
     "attested": 0,
     "units": 48

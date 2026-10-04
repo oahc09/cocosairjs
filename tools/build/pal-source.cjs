@@ -31,6 +31,9 @@ function generate() {
         }
         if (row.source === 'pal/screen-adapter/web/screen-adapter.ts') {
             source = source.replace('return Math.min(window.devicePixelRatio ?? 1, 2);', 'const cap = Number((window as any).__CCDPR_CAP__); return Math.min(window.devicePixelRatio ?? 1, Number.isFinite(cap) && cap > 0 ? cap : 2);');
+            // Match bootstrap and integer drawing buffers for fractional DPR, on first frame and resize.
+            source = source.replace('result.width *= dpr;', 'result.width = Math.round(result.width * dpr);');
+            source = source.replace('result.height *= dpr;', 'result.height = Math.round(result.height * dpr);');
             source = source.replace(/(this\._gameCanvas = [^;]+;)/, '$1\n        if (!this._gameCanvas && !TEST && !EDITOR) throw new Error("[cocosair] GameCanvas or __CC_CANVAS__ must exist before importing the engine.");');
         }
         const result = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.ES2020, newLine: ts.NewLineKind.LineFeed, removeComments: false, useDefineForClassFields: false }, fileName: row.source });

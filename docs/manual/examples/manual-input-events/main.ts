@@ -263,7 +263,7 @@ class SeqDriver extends Component {
     private drive(): void {
         switch (driverTicks) {
             case 1: {
-                // P1 点击 child（断言在下一拍：派发按帧 flush，同拍读取存在竞态）
+                // P1 点击 child（Web 输入立即派发；下一拍断言等待相关场景更新）
                 clickChild();
                 break;
             }

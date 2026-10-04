@@ -84,12 +84,23 @@
     "UIRenderer.requestRenderData",
     "UIRenderer.postUpdateAssembler"
   ],
-  "capabilities": ["ui"],
+  "capabilities": [
+    "ui"
+  ],
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -107,7 +118,11 @@
     "visual": "深蓝底上一屏 UI：左上标题、左列按钮/两个开关/滑杆/输入框、右上 2x2 色块网格、右下裁切列表；左下角红点持续脉动（证明每帧真实重绘）"
   },
   "api": {
-    "primary": ["Canvas", "Button", "Layout"],
+    "primary": [
+      "Canvas",
+      "Button",
+      "Layout"
+    ],
     "supporting": [
       "UITransform",
       "Widget",
@@ -864,7 +879,14 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Canvas", "UICamera", "Title", "Stack", "Grid", "ScrollView"]
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Title",
+        "Stack",
+        "Grid",
+        "ScrollView"
+      ]
     }
   },
   "interaction": {
@@ -880,7 +902,9 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -894,7 +918,7 @@
   "promotion": {
     "spec": "9784ade4e206",
     "source": "b6ae4901f3c74129",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 96,
     "attested": 0,
     "units": 96

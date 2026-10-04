@@ -1,0 +1,5059 @@
+{
+  "schemaVersion": "air-port-recipes/2",
+  "startedAt": "2026-10-04T08:40:03.843Z",
+  "endedAt": "2026-10-04T08:40:59.186Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs",
+    "--browser=all",
+    "--out=docs/evidence/port-recipes/pg33-six-s19-workspace-terminal.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "method": "REAL_BROWSER",
+  "installed": null,
+  "playwrightVersion": "1.63.0",
+  "fingerprints": {
+    "package.json": "a76ff405f7f66d351bb1910fb8baa57f9c9dd79df91db5a3b3454818b4e07153",
+    "build/npm/cocosair.module.js": "8e00b56eab747b53fce288403b5668a2a7ecf443df966e5144547064091a81a9",
+    "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+    "build/cocosair.module.d.ts": "25f87a9ca4261908df6a5648acfe029224032ab4e090229e884cf46e08268f57",
+    "test/fixtures/port-recipes/main.ts": "ffc40774942a5f4dddfbb975e4f5b5f8b70a7695dda57c6ca026b09ee6f87d0e",
+    "docs/manual/examples/manual-port-recipes/main.ts": "f3555ced0d811c9d7189bca75545d79f2242175bde2e2e86bce8381a5a13badd",
+    "test/fixtures/port-recipes/contract.ts": "efd31b2ca61727e71d71f58e3cf0e8a7f84f40e820d8a2b3fda4b36cd66d3811",
+    "test/fixtures/port-recipes/index.html": "2dad37316547982a52d999adb1d601d3ab5147c2a2977132471d4bcaea87b9b9",
+    "docs/manual/examples/manual-port-recipes/optional-recipe.ts": "93866b63e6363c743d6385c2a52b234112d72be1699be19ae27a75ec7519590f",
+    "docs/manual/examples/manual-port-recipes/optional-assets/manifest.json": "d5440d9a164dc59d7ae841d2d188de45fe777a09c9f3959293cecc4aae7d1716",
+    "docs/manual/examples/manual-port-recipes/optional-assets/tone4s.wav": "b1a52b6832a682f66944220b9c07dc8203aaa2849e6400ef345110eb4de4f361",
+    "tools/verify/air-port-recipes-browser.cjs": "5a27fa901327342f7e48a880e1752b8dd1228af58ff8a41db4b3862fc353b7cd",
+    "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+    "tools/verify/competitive-example-server.cjs": "f4f98af13a026451a951d3dcd697b6ae73b2e0db17adddf1d6d322598ac3334b",
+    "tools/verify/installed-recipe-package.cjs": "9a4aa3bb23c641105bfdaf7c9dc383a908351bf32c6c7808dea20c2e6eabaa92"
+  },
+  "scope": [
+    "r1-code3d",
+    "r2-input-hud",
+    "r3-pointer-lock",
+    "r4-camera-modes",
+    "r5-shared-assets",
+    "r6-optional-svcs"
+  ],
+  "subset": true,
+  "completed": false,
+  "scopePassed": false,
+  "notRun": [
+    {
+      "engine": "webkit",
+      "id": "r3-pointer-lock",
+      "reason": "pointerlockerror"
+    }
+  ],
+  "limitations": [
+    "Six application recipes; not a full 35-item gate",
+    "Pointer lock/audio clock absence is NOT_RUN",
+    "Camera target guards are application policy; pointer capture negatives are DOM API behavior",
+    "Controlled business dt; trusted Playwright keyboard/mouse checked separately",
+    "GPU memory unavailable",
+    "No external original app comparison"
+  ],
+  "results": [
+    {
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "status": "PASS",
+      "recipes": [
+        {
+          "id": "r1-code3d",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "meshValid": true,
+              "materialValid": true,
+              "boxParent": true
+            },
+            "run": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                15,
+                30,
+                0
+              ]
+            },
+            "pauseRestart": {
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "negative-half-width",
+                  "error": "Error: AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.",
+                  "errorCode": "AIR_E_ORTHO_WIDTH",
+                  "legacyCode": "AIR_E_ORTHO_WIDTH",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "invalid-geometry-size",
+                  "error": "RangeError: AIR_E_PRIMITIVE_DESCRIPTOR: width must be finite and > 0",
+                  "errorCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "legacyCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "widthBefore": 0,
+              "widthAfter": 0,
+              "meshValid": true
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ]
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\chromium-r1-code3d.png"
+        },
+        {
+          "id": "r2-input-hud",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "x": 0,
+              "steps": 0,
+              "accumulator": 0,
+              "held": false,
+              "pressed": false,
+              "ticks": [],
+              "label": "X=0 steps=0",
+              "inkPixels": 720,
+              "attached": true,
+              "generation": 1,
+              "renderedFrames": 12
+            },
+            "run": {
+              "zero": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": true,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 720,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 14
+              },
+              "one": {
+                "x": 2,
+                "steps": 1,
+                "accumulator": 0,
+                "held": true,
+                "pressed": true,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  }
+                ],
+                "label": "X=2 steps=1",
+                "inkPixels": 674,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 16
+              },
+              "many": {
+                "x": 8,
+                "steps": 4,
+                "accumulator": 6.938893903907228e-18,
+                "held": true,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  }
+                ],
+                "label": "X=8 steps=4",
+                "inkPixels": 728,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 18
+              },
+              "released": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 738,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "pauseTrusted": {
+                "before": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 738,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 22
+                },
+                "after": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 738,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 24
+                }
+              },
+              "retired": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "",
+                "inkPixels": 0,
+                "attached": false,
+                "generation": 3,
+                "renderedFrames": 32
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 738,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 26
+              },
+              "after": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 738,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 28
+              },
+              "restarted": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 720,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "unknown-action",
+                  "error": "AirActionError: unknown action: \"misspelled\" (declared: right)",
+                  "errorCode": "AIR_E_UNKNOWN_ACTION",
+                  "legacyCode": "AIR_E_UNKNOWN_ACTION",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "nonfinite-axis",
+                  "error": "AirActionError: setAxis value of action \"right\" must be a finite number, got NaN",
+                  "errorCode": "AIR_E_INVALID_VALUE",
+                  "legacyCode": "AIR_E_INVALID_VALUE",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "state": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 720,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "attached": false,
+              "held": false,
+              "reattach": {
+                "name": "terminal-attach",
+                "error": "AirActionError: adapter is disposed; create a new instance to attach again",
+                "errorCode": "AIR_E_DISPOSED",
+                "legacyCode": "AIR_E_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\chromium-r2-input-hud.png"
+        },
+        {
+          "id": "r3-pointer-lock",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "locked": false,
+              "yaw": 0,
+              "moves": 0,
+              "trustedMoves": 0,
+              "changes": 0,
+              "lastError": null,
+              "requestTrusted": false,
+              "paused": false,
+              "disposed": false,
+              "acceptedMoves": []
+            },
+            "run": {
+              "before": {
+                "locked": true,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": []
+              },
+              "after": {
+                "locked": true,
+                "yaw": 1.6,
+                "moves": 6,
+                "trustedMoves": 7,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": [
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ],
+                "pixel": [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              },
+              "pauseTrusted": {
+                "before": {
+                  "locked": false,
+                  "yaw": 1.6,
+                  "moves": 6,
+                  "trustedMoves": 7,
+                  "changes": 2,
+                  "lastError": null,
+                  "requestTrusted": true,
+                  "paused": true,
+                  "disposed": false,
+                  "acceptedMoves": [
+                    {
+                      "dx": 1,
+                      "dy": 0,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 1,
+                      "dy": 1,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 1,
+                      "dy": 0,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 1,
+                      "dy": 1,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 2,
+                      "dy": 0,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 2,
+                      "dy": 1,
+                      "trusted": true
+                    }
+                  ]
+                },
+                "after": {
+                  "locked": false,
+                  "yaw": 1.6,
+                  "moves": 6,
+                  "trustedMoves": 10,
+                  "changes": 2,
+                  "lastError": null,
+                  "requestTrusted": true,
+                  "paused": true,
+                  "disposed": false,
+                  "acceptedMoves": [
+                    {
+                      "dx": 1,
+                      "dy": 0,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 1,
+                      "dy": 1,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 1,
+                      "dy": 0,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 1,
+                      "dy": 1,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 2,
+                      "dy": 0,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 2,
+                      "dy": 1,
+                      "trusted": true
+                    }
+                  ]
+                }
+              },
+              "retiredBefore": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 6,
+                "trustedMoves": 10,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true,
+                "acceptedMoves": [
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              },
+              "retiredAfter": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 6,
+                "trustedMoves": 10,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true,
+                "acceptedMoves": [
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 6,
+                "trustedMoves": 10,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false,
+                "acceptedMoves": [
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 6,
+                "trustedMoves": 10,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false,
+                "acceptedMoves": [
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              },
+              "restarted": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 6,
+                "trustedMoves": 10,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": [
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "inactive-pointer-capture",
+                  "error": "NotFoundError: Failed to execute 'setPointerCapture' on 'Element': No active pointer with the given id is found.",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "detached-pointer-capture",
+                  "error": "NotFoundError: Failed to execute 'setPointerCapture' on 'Element': No active pointer with the given id is found.",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 6,
+                "trustedMoves": 10,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": [
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              },
+              "limitations": [
+                "DOM pointer-capture negatives do not certify pointer-lock denial",
+                "Paused movement is synthetic; trusted movement checked separately"
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 6,
+                "trustedMoves": 10,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true,
+                "acceptedMoves": [
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 1,
+                    "dy": 1,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 0,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\chromium-r3-pointer-lock.png"
+        },
+        {
+          "id": "r4-camera-modes",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "mode": "chase",
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "camera": [
+                0,
+                2,
+                6
+              ],
+              "forward": [
+                0,
+                -0.316227766016838,
+                -0.9486832980505138
+              ],
+              "vehicleForward": [
+                -1,
+                0,
+                -2.220446049250313e-16
+              ],
+              "groundForward": [
+                0,
+                0,
+                -1
+              ],
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "run": {
+              "chase": {
+                "mode": "chase",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  2,
+                  2,
+                  5
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  -2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "flight": {
+                "mode": "flight",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ],
+                "forward": [
+                  -0.4850712500726658,
+                  -0.4850712500726659,
+                  -0.727606875108999
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  -2.220446049250313e-16
+                ],
+                "groundForward": [
+                  -0.554700196225229,
+                  0,
+                  -0.8320502943378438
+                ]
+              },
+              "chasePixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "flightPixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "after": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "restarted": {
+                "mode": "chase",
+                "target": [
+                  0,
+                  0,
+                  0
+                ],
+                "camera": [
+                  0,
+                  2,
+                  6
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  -2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "nonfinite-target",
+                  "error": "Error: RECIPE_INVALID_TARGET",
+                  "errorCode": "RECIPE_INVALID_TARGET",
+                  "legacyCode": "RECIPE_INVALID_TARGET",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "zero-ground-basis",
+                  "error": "Error: RECIPE_VERTICAL_BASIS",
+                  "errorCode": "RECIPE_VERTICAL_BASIS",
+                  "legacyCode": "RECIPE_VERTICAL_BASIS",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "cameraBefore": [
+                0,
+                2,
+                6
+              ],
+              "cameraAfter": [
+                0,
+                2,
+                6
+              ],
+              "method": "APPLICATION_POLICY_WITH_NATIVE_NODE"
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "terminal": {
+                "name": "retired-target",
+                "error": "Error: RECIPE_TARGET_DISPOSED",
+                "errorCode": "RECIPE_TARGET_DISPOSED",
+                "legacyCode": "RECIPE_TARGET_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\chromium-r4-camera-modes.png"
+        },
+        {
+          "id": "r5-shared-assets",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "texture": 1,
+              "frame": 4,
+              "pool": 0,
+              "nodesValid": [
+                true,
+                true,
+                true
+              ],
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "sameFrame": true
+            },
+            "run": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hidden": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 1,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hiddenPixels": [
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "reusedSameNode": true,
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "replacement": {
+                "oldValid": false,
+                "newValid": true,
+                "peersPreserved": true,
+                "refs": {
+                  "texture": 1,
+                  "frame": 4,
+                  "pool": 0,
+                  "nodesValid": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "duplicate-pool-put",
+                  "once": 1,
+                  "twice": 1,
+                  "sameNode": true,
+                  "method": "NATIVE_NODE_POOL"
+                },
+                {
+                  "name": "empty-pool-get",
+                  "value": null,
+                  "size": 0,
+                  "method": "NATIVE_NODE_POOL"
+                }
+              ],
+              "refs": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": {
+                "texture": 0,
+                "frame": 0,
+                "pool": 0,
+                "nodesValid": [
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "beforeOwnerRelease": {
+                "texture": 1,
+                "frame": 1,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "frameValid": false,
+              "textureValid": false
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\chromium-r5-shared-assets.png"
+        },
+        {
+          "id": "r6-optional-svcs",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "phase": "construct",
+              "instanceId": "opt-mutklqua-fquo0rif2i",
+              "labelAttached": true,
+              "hostStillValid": true,
+              "sceneStillValid": true,
+              "borrowedValid": [
+                true
+              ],
+              "audioLoaded": true,
+              "audioError": null,
+              "bankLoaded": true,
+              "bankError": null,
+              "clipDuration": 4,
+              "clipRefCount": 1,
+              "bankSize": 1,
+              "storageAvailable": true,
+              "storageError": null,
+              "inkPixels": 622,
+              "startAlreadyReady": true
+            },
+            "run": {
+              "phase": "run",
+              "instanceId": "opt-mutklqua-fquo0rif2i",
+              "stateBefore": {
+                "id": "opt-mutklqua-fquo0rif2i",
+                "playing": true,
+                "currentTime": 0.15529999999701993,
+                "loop": true,
+                "volume": 1
+              },
+              "stateAfter": {
+                "id": "opt-mutklqua-fquo0rif2i",
+                "playing": true,
+                "currentTime": 0.4563999999985098,
+                "loop": true,
+                "volume": 1
+              },
+              "readinessMs": 289,
+              "clockWindow": {
+                "available": true,
+                "duration": 4,
+                "elapsedMs": 106,
+                "samples": [
+                  {
+                    "currentTime": 0.050000000000000044,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.07659999999403966,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.10259999999403946,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.12869999999552983,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.15529999999701993,
+                    "playing": true
+                  }
+                ]
+              },
+              "playError": null,
+              "audioError": null,
+              "bankError": null,
+              "counterSet": true,
+              "counter": "1",
+              "storageError": null,
+              "bankSize": 1,
+              "bankRefCount": 1,
+              "clipRefCount": 1,
+              "manifestRefCount": 1,
+              "inkPixels": 518,
+              "trustedRun": true,
+              "trustedCanvasGestures": 1
+            },
+            "pauseRestart": {
+              "phase": "pauseRestart",
+              "instanceId": "opt-mutklqua-fquo0rif2i",
+              "clockWindow": {
+                "available": true,
+                "duration": 4,
+                "elapsedMs": 0,
+                "samples": [
+                  {
+                    "currentTime": 0.46599999999999997,
+                    "playing": true
+                  }
+                ]
+              },
+              "pre": {
+                "id": "opt-mutklqua-fquo0rif2i",
+                "playing": true,
+                "currentTime": 0.4660999999940396,
+                "loop": true,
+                "volume": 1
+              },
+              "paused": {
+                "id": "opt-mutklqua-fquo0rif2i",
+                "playing": false,
+                "currentTime": 0.46619999999552975,
+                "loop": true,
+                "volume": 1
+              },
+              "resumed": {
+                "id": "opt-mutklqua-fquo0rif2i",
+                "playing": true,
+                "currentTime": 0.6808999999985101,
+                "loop": true,
+                "volume": 1
+              },
+              "stopped": {
+                "id": "opt-mutklqua-fquo0rif2i",
+                "playing": false,
+                "currentTime": 0,
+                "loop": true,
+                "volume": 1
+              },
+              "restarted": {
+                "id": "opt-mutklqua-fquo0rif2i",
+                "playing": true,
+                "currentTime": 0.20150000000000023,
+                "loop": true,
+                "volume": 1
+              },
+              "inkPixels": 858
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "missing-extension",
+                  "error": "AirAssetError: [AssetBank] suffix-less URL requires an explicit ext: http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/noext",
+                  "errorCode": "AIR_E_EXT_REQUIRED",
+                  "method": "REAL_BROWSER",
+                  "measurements": {
+                    "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/noext",
+                    "rejected": true,
+                    "bankSize": 1,
+                    "inFlight": 0
+                  }
+                },
+                {
+                  "name": "http-404",
+                  "error": "AirAssetError: [AssetBank] load failed: http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png (Load image ( http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png ) failed)",
+                  "errorCode": "AIR_E_LOAD_FAILED",
+                  "method": "REAL_BROWSER",
+                  "measurements": {
+                    "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                    "rejected": true,
+                    "bankSize": 1,
+                    "inFlight": 0
+                  }
+                },
+                {
+                  "name": "corrupt-storage",
+                  "method": "REAL_BROWSER",
+                  "measurements": {
+                    "raw": "{broken json",
+                    "parseError": "SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+                    "recovered": "0",
+                    "unavailableReason": null
+                  }
+                }
+              ],
+              "inkPixels": 953,
+              "peerValid": true,
+              "http404": [
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                }
+              ]
+            },
+            "release": {
+              "phase": "release",
+              "instanceId": "opt-mutklqua-fquo0rif2i",
+              "labelNodeValid": false,
+              "serviceNodesValid": [
+                false
+              ],
+              "clipRefCount": 0,
+              "clipValid": true,
+              "manifestRefCount": 0,
+              "bankSize": 0,
+              "inFlight": 0,
+              "hostStillValid": true,
+              "sceneStillValid": true,
+              "borrowedValid": [
+                true
+              ],
+              "restored": [
+                {
+                  "key": "pg33-opt-mutklqua-fquo0rif2i-counter",
+                  "before": null,
+                  "after": null
+                },
+                {
+                  "key": "pg33-opt-mutklqua-fquo0rif2i-corrupt",
+                  "before": null,
+                  "after": null
+                }
+              ],
+              "storageError": null,
+              "ourKeyNames": [
+                "pg33-opt-mutklqua-fquo0rif2i-counter",
+                "pg33-opt-mutklqua-fquo0rif2i-corrupt"
+              ],
+              "ourKeysCleared": true,
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "samePromise": true,
+              "peerBeforeCallerCleanup": true
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\chromium-r6-optional-svcs.png"
+        }
+      ],
+      "pageErrors": [],
+      "buildRequests": [
+        "http://127.0.0.1:51012/build/cocosair.module.js"
+      ],
+      "clock": {
+        "renderedFrames": 122,
+        "enginePaused": true,
+        "diagnostics": [
+          {
+            "severity": "error",
+            "id": null,
+            "message": "Load image ( http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png ) failed Error: Load image ( http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png ) failed\n    at Image.errorCallback (http://127.0.0.1:51012/build/cocosair.module.js:26551:18)",
+            "occurrences": 2,
+            "firstSeen": 1791103215624,
+            "lastSeen": 1791103215626
+          }
+        ]
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "155.0",
+      "status": "PASS",
+      "recipes": [
+        {
+          "id": "r1-code3d",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "meshValid": true,
+              "materialValid": true,
+              "boxParent": true
+            },
+            "run": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                15,
+                30,
+                0
+              ]
+            },
+            "pauseRestart": {
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "negative-half-width",
+                  "error": "Error: AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.",
+                  "errorCode": "AIR_E_ORTHO_WIDTH",
+                  "legacyCode": "AIR_E_ORTHO_WIDTH",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "invalid-geometry-size",
+                  "error": "RangeError: AIR_E_PRIMITIVE_DESCRIPTOR: width must be finite and > 0",
+                  "errorCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "legacyCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "widthBefore": 0,
+              "widthAfter": 0,
+              "meshValid": true
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ]
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\firefox-r1-code3d.png"
+        },
+        {
+          "id": "r2-input-hud",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "x": 0,
+              "steps": 0,
+              "accumulator": 0,
+              "held": false,
+              "pressed": false,
+              "ticks": [],
+              "label": "X=0 steps=0",
+              "inkPixels": 684,
+              "attached": true,
+              "generation": 1,
+              "renderedFrames": 12
+            },
+            "run": {
+              "zero": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": true,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 684,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 14
+              },
+              "one": {
+                "x": 2,
+                "steps": 1,
+                "accumulator": 0,
+                "held": true,
+                "pressed": true,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  }
+                ],
+                "label": "X=2 steps=1",
+                "inkPixels": 645,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 16
+              },
+              "many": {
+                "x": 8,
+                "steps": 4,
+                "accumulator": 6.938893903907228e-18,
+                "held": true,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  }
+                ],
+                "label": "X=8 steps=4",
+                "inkPixels": 694,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 18
+              },
+              "released": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 699,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "pauseTrusted": {
+                "before": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 699,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 22
+                },
+                "after": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 699,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 24
+                }
+              },
+              "retired": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "",
+                "inkPixels": 0,
+                "attached": false,
+                "generation": 3,
+                "renderedFrames": 32
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 699,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 26
+              },
+              "after": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 699,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 28
+              },
+              "restarted": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 684,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "unknown-action",
+                  "error": "AirActionError: unknown action: \"misspelled\" (declared: right)",
+                  "errorCode": "AIR_E_UNKNOWN_ACTION",
+                  "legacyCode": "AIR_E_UNKNOWN_ACTION",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "nonfinite-axis",
+                  "error": "AirActionError: setAxis value of action \"right\" must be a finite number, got NaN",
+                  "errorCode": "AIR_E_INVALID_VALUE",
+                  "legacyCode": "AIR_E_INVALID_VALUE",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "state": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 684,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "attached": false,
+              "held": false,
+              "reattach": {
+                "name": "terminal-attach",
+                "error": "AirActionError: adapter is disposed; create a new instance to attach again",
+                "errorCode": "AIR_E_DISPOSED",
+                "legacyCode": "AIR_E_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\firefox-r2-input-hud.png"
+        },
+        {
+          "id": "r3-pointer-lock",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "locked": false,
+              "yaw": 0,
+              "moves": 0,
+              "trustedMoves": 0,
+              "changes": 0,
+              "lastError": null,
+              "requestTrusted": false,
+              "paused": false,
+              "disposed": false,
+              "acceptedMoves": []
+            },
+            "run": {
+              "before": {
+                "locked": true,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": []
+              },
+              "after": {
+                "locked": true,
+                "yaw": -1.4,
+                "moves": 2,
+                "trustedMoves": 3,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": [
+                  {
+                    "dx": -9,
+                    "dy": 45,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ],
+                "pixel": [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              },
+              "pauseTrusted": {
+                "before": {
+                  "locked": false,
+                  "yaw": -1.4,
+                  "moves": 2,
+                  "trustedMoves": 4,
+                  "changes": 2,
+                  "lastError": null,
+                  "requestTrusted": true,
+                  "paused": true,
+                  "disposed": false,
+                  "acceptedMoves": [
+                    {
+                      "dx": -9,
+                      "dy": 45,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 2,
+                      "dy": 1,
+                      "trusted": true
+                    }
+                  ]
+                },
+                "after": {
+                  "locked": false,
+                  "yaw": -1.4,
+                  "moves": 2,
+                  "trustedMoves": 7,
+                  "changes": 2,
+                  "lastError": null,
+                  "requestTrusted": true,
+                  "paused": true,
+                  "disposed": false,
+                  "acceptedMoves": [
+                    {
+                      "dx": -9,
+                      "dy": 45,
+                      "trusted": true
+                    },
+                    {
+                      "dx": 2,
+                      "dy": 1,
+                      "trusted": true
+                    }
+                  ]
+                }
+              },
+              "retiredBefore": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 2,
+                "trustedMoves": 7,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true,
+                "acceptedMoves": [
+                  {
+                    "dx": -9,
+                    "dy": 45,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              },
+              "retiredAfter": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 2,
+                "trustedMoves": 7,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true,
+                "acceptedMoves": [
+                  {
+                    "dx": -9,
+                    "dy": 45,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 2,
+                "trustedMoves": 7,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false,
+                "acceptedMoves": [
+                  {
+                    "dx": -9,
+                    "dy": 45,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 2,
+                "trustedMoves": 7,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false,
+                "acceptedMoves": [
+                  {
+                    "dx": -9,
+                    "dy": 45,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              },
+              "restarted": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 2,
+                "trustedMoves": 7,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": [
+                  {
+                    "dx": -9,
+                    "dy": 45,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "inactive-pointer-capture",
+                  "error": "NotFoundError: Element.setPointerCapture: Invalid pointer id",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "detached-pointer-capture",
+                  "error": "NotFoundError: Element.setPointerCapture: Invalid pointer id",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 2,
+                "trustedMoves": 7,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": [
+                  {
+                    "dx": -9,
+                    "dy": 45,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              },
+              "limitations": [
+                "DOM pointer-capture negatives do not certify pointer-lock denial",
+                "Paused movement is synthetic; trusted movement checked separately"
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 2,
+                "trustedMoves": 7,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true,
+                "acceptedMoves": [
+                  {
+                    "dx": -9,
+                    "dy": 45,
+                    "trusted": true
+                  },
+                  {
+                    "dx": 2,
+                    "dy": 1,
+                    "trusted": true
+                  }
+                ]
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\firefox-r3-pointer-lock.png"
+        },
+        {
+          "id": "r4-camera-modes",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "mode": "chase",
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "camera": [
+                0,
+                2,
+                6
+              ],
+              "forward": [
+                0,
+                -0.316227766016838,
+                -0.9486832980505138
+              ],
+              "vehicleForward": [
+                -1,
+                0,
+                2.220446049250313e-16
+              ],
+              "groundForward": [
+                0,
+                0,
+                -1
+              ],
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "run": {
+              "chase": {
+                "mode": "chase",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  2,
+                  2,
+                  5
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "flight": {
+                "mode": "flight",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ],
+                "forward": [
+                  -0.4850712500726658,
+                  -0.4850712500726659,
+                  -0.727606875108999
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  -0.554700196225229,
+                  0,
+                  -0.8320502943378438
+                ]
+              },
+              "chasePixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "flightPixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "after": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "restarted": {
+                "mode": "chase",
+                "target": [
+                  0,
+                  0,
+                  0
+                ],
+                "camera": [
+                  0,
+                  2,
+                  6
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "nonfinite-target",
+                  "error": "Error: RECIPE_INVALID_TARGET",
+                  "errorCode": "RECIPE_INVALID_TARGET",
+                  "legacyCode": "RECIPE_INVALID_TARGET",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "zero-ground-basis",
+                  "error": "Error: RECIPE_VERTICAL_BASIS",
+                  "errorCode": "RECIPE_VERTICAL_BASIS",
+                  "legacyCode": "RECIPE_VERTICAL_BASIS",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "cameraBefore": [
+                0,
+                2,
+                6
+              ],
+              "cameraAfter": [
+                0,
+                2,
+                6
+              ],
+              "method": "APPLICATION_POLICY_WITH_NATIVE_NODE"
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "terminal": {
+                "name": "retired-target",
+                "error": "Error: RECIPE_TARGET_DISPOSED",
+                "errorCode": "RECIPE_TARGET_DISPOSED",
+                "legacyCode": "RECIPE_TARGET_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\firefox-r4-camera-modes.png"
+        },
+        {
+          "id": "r5-shared-assets",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "texture": 1,
+              "frame": 4,
+              "pool": 0,
+              "nodesValid": [
+                true,
+                true,
+                true
+              ],
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "sameFrame": true
+            },
+            "run": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hidden": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 1,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hiddenPixels": [
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "reusedSameNode": true,
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "replacement": {
+                "oldValid": false,
+                "newValid": true,
+                "peersPreserved": true,
+                "refs": {
+                  "texture": 1,
+                  "frame": 4,
+                  "pool": 0,
+                  "nodesValid": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "duplicate-pool-put",
+                  "once": 1,
+                  "twice": 1,
+                  "sameNode": true,
+                  "method": "NATIVE_NODE_POOL"
+                },
+                {
+                  "name": "empty-pool-get",
+                  "value": null,
+                  "size": 0,
+                  "method": "NATIVE_NODE_POOL"
+                }
+              ],
+              "refs": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": {
+                "texture": 0,
+                "frame": 0,
+                "pool": 0,
+                "nodesValid": [
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "beforeOwnerRelease": {
+                "texture": 1,
+                "frame": 1,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "frameValid": false,
+              "textureValid": false
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\firefox-r5-shared-assets.png"
+        },
+        {
+          "id": "r6-optional-svcs",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "phase": "construct",
+              "instanceId": "opt-mutkm0ok-7s7z50q6s4o",
+              "labelAttached": true,
+              "hostStillValid": true,
+              "sceneStillValid": true,
+              "borrowedValid": [
+                true
+              ],
+              "audioLoaded": true,
+              "audioError": null,
+              "bankLoaded": true,
+              "bankError": null,
+              "clipDuration": 4,
+              "clipRefCount": 1,
+              "bankSize": 1,
+              "storageAvailable": true,
+              "storageError": null,
+              "inkPixels": 552,
+              "startAlreadyReady": true
+            },
+            "run": {
+              "phase": "run",
+              "instanceId": "opt-mutkm0ok-7s7z50q6s4o",
+              "stateBefore": {
+                "id": "opt-mutkm0ok-7s7z50q6s4o",
+                "playing": true,
+                "currentTime": 0.17099999999999982,
+                "loop": true,
+                "volume": 1
+              },
+              "stateAfter": {
+                "id": "opt-mutkm0ok-7s7z50q6s4o",
+                "playing": true,
+                "currentTime": 0.48599999999999977,
+                "loop": true,
+                "volume": 1
+              },
+              "readinessMs": 206,
+              "clockWindow": {
+                "available": true,
+                "duration": 4,
+                "elapsedMs": 131,
+                "samples": [
+                  {
+                    "currentTime": 0.040000000000000036,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.06599999999999984,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.09200000000000008,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.11899999999999977,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.14500000000000002,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.17099999999999982,
+                    "playing": true
+                  }
+                ]
+              },
+              "playError": null,
+              "audioError": null,
+              "bankError": null,
+              "counterSet": true,
+              "counter": "1",
+              "storageError": null,
+              "bankSize": 1,
+              "bankRefCount": 1,
+              "clipRefCount": 1,
+              "manifestRefCount": 1,
+              "inkPixels": 466,
+              "trustedRun": true,
+              "trustedCanvasGestures": 1
+            },
+            "pauseRestart": {
+              "phase": "pauseRestart",
+              "instanceId": "opt-mutkm0ok-7s7z50q6s4o",
+              "clockWindow": {
+                "available": true,
+                "duration": 4,
+                "elapsedMs": 0,
+                "samples": [
+                  {
+                    "currentTime": 0.4950000000000001,
+                    "playing": true
+                  }
+                ]
+              },
+              "pre": {
+                "id": "opt-mutkm0ok-7s7z50q6s4o",
+                "playing": true,
+                "currentTime": 0.4950000000000001,
+                "loop": true,
+                "volume": 1
+              },
+              "paused": {
+                "id": "opt-mutkm0ok-7s7z50q6s4o",
+                "playing": false,
+                "currentTime": 0.4950000000000001,
+                "loop": true,
+                "volume": 1
+              },
+              "resumed": {
+                "id": "opt-mutkm0ok-7s7z50q6s4o",
+                "playing": true,
+                "currentTime": 0.6960000000000002,
+                "loop": true,
+                "volume": 1
+              },
+              "stopped": {
+                "id": "opt-mutkm0ok-7s7z50q6s4o",
+                "playing": false,
+                "currentTime": 0,
+                "loop": true,
+                "volume": 1
+              },
+              "restarted": {
+                "id": "opt-mutkm0ok-7s7z50q6s4o",
+                "playing": true,
+                "currentTime": 0.20199999999999996,
+                "loop": true,
+                "volume": 1
+              },
+              "inkPixels": 809
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "missing-extension",
+                  "error": "AirAssetError: [AssetBank] suffix-less URL requires an explicit ext: http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/noext",
+                  "errorCode": "AIR_E_EXT_REQUIRED",
+                  "method": "REAL_BROWSER",
+                  "measurements": {
+                    "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/noext",
+                    "rejected": true,
+                    "bankSize": 1,
+                    "inFlight": 0
+                  }
+                },
+                {
+                  "name": "http-404",
+                  "error": "AirAssetError: [AssetBank] load failed: http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png (Load image ( http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png ) failed)",
+                  "errorCode": "AIR_E_LOAD_FAILED",
+                  "method": "REAL_BROWSER",
+                  "measurements": {
+                    "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                    "rejected": true,
+                    "bankSize": 1,
+                    "inFlight": 0
+                  }
+                },
+                {
+                  "name": "corrupt-storage",
+                  "method": "REAL_BROWSER",
+                  "measurements": {
+                    "raw": "{broken json",
+                    "parseError": "SyntaxError: JSON.parse: expected property name or '}' at line 1 column 2 of the JSON data",
+                    "recovered": "0",
+                    "unavailableReason": null
+                  }
+                }
+              ],
+              "inkPixels": 873,
+              "peerValid": true,
+              "http404": [
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                }
+              ]
+            },
+            "release": {
+              "phase": "release",
+              "instanceId": "opt-mutkm0ok-7s7z50q6s4o",
+              "labelNodeValid": false,
+              "serviceNodesValid": [
+                false
+              ],
+              "clipRefCount": 0,
+              "clipValid": true,
+              "manifestRefCount": 0,
+              "bankSize": 0,
+              "inFlight": 0,
+              "hostStillValid": true,
+              "sceneStillValid": true,
+              "borrowedValid": [
+                true
+              ],
+              "restored": [
+                {
+                  "key": "pg33-opt-mutkm0ok-7s7z50q6s4o-counter",
+                  "before": null,
+                  "after": null
+                },
+                {
+                  "key": "pg33-opt-mutkm0ok-7s7z50q6s4o-corrupt",
+                  "before": null,
+                  "after": null
+                }
+              ],
+              "storageError": null,
+              "ourKeyNames": [
+                "pg33-opt-mutkm0ok-7s7z50q6s4o-counter",
+                "pg33-opt-mutkm0ok-7s7z50q6s4o-corrupt"
+              ],
+              "ourKeysCleared": true,
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "samePromise": true,
+              "peerBeforeCallerCleanup": true
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\firefox-r6-optional-svcs.png"
+        }
+      ],
+      "pageErrors": [],
+      "buildRequests": [
+        "http://127.0.0.1:51012/build/cocosair.module.js"
+      ],
+      "clock": {
+        "renderedFrames": 114,
+        "enginePaused": true,
+        "diagnostics": [
+          {
+            "severity": "error",
+            "id": null,
+            "message": "Load image ( http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png ) failed errorCallback@http://127.0.0.1:51012/build/cocosair.module.js:26551:18\nEventListener.handleEvent*downloadDomImage@http://127.0.0.1:51012/build/cocosair.module.js:26555:7\ndownloadImage@http://127.0.0.1:51012/build/cocosair.module.js:26657:7\nprocess@http://127.0.0.1:51012/build/cocosair.module.js:26800:16\nretry@http://127.0.0.1:51012/build/cocosair.module.js:26150:10\nretry/</<@http://127.0.0.1:51012/build/cocosair.module.js:26158:14\nsetTimeout handler*retry/<@http://127.0.0.1",
+            "occurrences": 2,
+            "firstSeen": 1791103228715,
+            "lastSeen": 1791103228716
+          }
+        ]
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "status": "NOT_RUN",
+      "recipes": [
+        {
+          "id": "r1-code3d",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "meshValid": true,
+              "materialValid": true,
+              "boxParent": true
+            },
+            "run": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                15,
+                30,
+                0
+              ]
+            },
+            "pauseRestart": {
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "negative-half-width",
+                  "error": "Error: AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.",
+                  "errorCode": "AIR_E_ORTHO_WIDTH",
+                  "legacyCode": "AIR_E_ORTHO_WIDTH",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "invalid-geometry-size",
+                  "error": "RangeError: AIR_E_PRIMITIVE_DESCRIPTOR: width must be finite and > 0",
+                  "errorCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "legacyCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "widthBefore": 0,
+              "widthAfter": 0,
+              "meshValid": true
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ]
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\webkit-r1-code3d.png"
+        },
+        {
+          "id": "r2-input-hud",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "x": 0,
+              "steps": 0,
+              "accumulator": 0,
+              "held": false,
+              "pressed": false,
+              "ticks": [],
+              "label": "X=0 steps=0",
+              "inkPixels": 599,
+              "attached": true,
+              "generation": 1,
+              "renderedFrames": 12
+            },
+            "run": {
+              "zero": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": true,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 599,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 14
+              },
+              "one": {
+                "x": 2,
+                "steps": 1,
+                "accumulator": 0,
+                "held": true,
+                "pressed": true,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  }
+                ],
+                "label": "X=2 steps=1",
+                "inkPixels": 559,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 16
+              },
+              "many": {
+                "x": 8,
+                "steps": 4,
+                "accumulator": 6.938893903907228e-18,
+                "held": true,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  }
+                ],
+                "label": "X=8 steps=4",
+                "inkPixels": 596,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 18
+              },
+              "released": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 611,
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "pauseTrusted": {
+                "before": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 611,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 22
+                },
+                "after": {
+                  "x": 8,
+                  "steps": 5,
+                  "accumulator": 6.938893903907228e-18,
+                  "held": false,
+                  "pressed": false,
+                  "ticks": [
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "press",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [
+                        "right"
+                      ],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [],
+                      "pressed": [],
+                      "released": []
+                    },
+                    {
+                      "transitions": [
+                        {
+                          "action": "right",
+                          "kind": "release",
+                          "source": {
+                            "backend": "native",
+                            "keyCode": 68
+                          }
+                        }
+                      ],
+                      "pressed": [],
+                      "released": [
+                        "right"
+                      ]
+                    }
+                  ],
+                  "label": "X=8 steps=5",
+                  "inkPixels": 611,
+                  "attached": true,
+                  "generation": 1,
+                  "renderedFrames": 24
+                }
+              },
+              "retired": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "",
+                "inkPixels": 0,
+                "attached": false,
+                "generation": 3,
+                "renderedFrames": 32
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 611,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 26
+              },
+              "after": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "inkPixels": 611,
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 28
+              },
+              "restarted": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 599,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "unknown-action",
+                  "error": "AirActionError: unknown action: \"misspelled\" (declared: right)",
+                  "errorCode": "AIR_E_UNKNOWN_ACTION",
+                  "legacyCode": "AIR_E_UNKNOWN_ACTION",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "nonfinite-axis",
+                  "error": "AirActionError: setAxis value of action \"right\" must be a finite number, got NaN",
+                  "errorCode": "AIR_E_INVALID_VALUE",
+                  "legacyCode": "AIR_E_INVALID_VALUE",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "state": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "inkPixels": 599,
+                "attached": true,
+                "generation": 3,
+                "renderedFrames": 30
+              }
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "attached": false,
+              "held": false,
+              "reattach": {
+                "name": "terminal-attach",
+                "error": "AirActionError: adapter is disposed; create a new instance to attach again",
+                "errorCode": "AIR_E_DISPOSED",
+                "legacyCode": "AIR_E_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\webkit-r2-input-hud.png"
+        },
+        {
+          "id": "r3-pointer-lock",
+          "status": "NOT_RUN",
+          "phases": {
+            "construct": {
+              "locked": false,
+              "yaw": 0,
+              "moves": 0,
+              "trustedMoves": 0,
+              "changes": 0,
+              "lastError": null,
+              "requestTrusted": false,
+              "paused": false,
+              "disposed": false,
+              "acceptedMoves": []
+            },
+            "run": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": []
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 1,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": [],
+                "pixel": [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              },
+              "pauseTrusted": {
+                "before": {
+                  "locked": false,
+                  "yaw": 0,
+                  "moves": 0,
+                  "trustedMoves": 1,
+                  "changes": 0,
+                  "lastError": "pointerlockerror",
+                  "requestTrusted": true,
+                  "paused": true,
+                  "disposed": false,
+                  "acceptedMoves": []
+                },
+                "after": {
+                  "locked": false,
+                  "yaw": 0,
+                  "moves": 0,
+                  "trustedMoves": 4,
+                  "changes": 0,
+                  "lastError": "pointerlockerror",
+                  "requestTrusted": true,
+                  "paused": true,
+                  "disposed": false,
+                  "acceptedMoves": []
+                }
+              },
+              "unavailableReason": "pointerlockerror",
+              "retiredBefore": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 4,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true,
+                "acceptedMoves": []
+              },
+              "retiredAfter": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 4,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true,
+                "acceptedMoves": []
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 4,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false,
+                "acceptedMoves": []
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 4,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false,
+                "acceptedMoves": []
+              },
+              "restarted": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 4,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": []
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "inactive-pointer-capture",
+                  "error": "NotFoundError: The object can not be found here.",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "detached-pointer-capture",
+                  "error": "NotFoundError: The object can not be found here.",
+                  "errorCode": "NotFoundError",
+                  "legacyCode": 8,
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 4,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "acceptedMoves": []
+              },
+              "limitations": [
+                "DOM pointer-capture negatives do not certify pointer-lock denial",
+                "Paused movement is synthetic; trusted movement checked separately"
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "trustedMoves": 4,
+                "changes": 0,
+                "lastError": "pointerlockerror",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true,
+                "acceptedMoves": []
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\webkit-r3-pointer-lock.png"
+        },
+        {
+          "id": "r4-camera-modes",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "mode": "chase",
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "camera": [
+                0,
+                2,
+                6
+              ],
+              "forward": [
+                0,
+                -0.316227766016838,
+                -0.9486832980505138
+              ],
+              "vehicleForward": [
+                -1,
+                0,
+                2.220446049250313e-16
+              ],
+              "groundForward": [
+                0,
+                0,
+                -1
+              ],
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "run": {
+              "chase": {
+                "mode": "chase",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  2,
+                  2,
+                  5
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "flight": {
+                "mode": "flight",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ],
+                "forward": [
+                  -0.4850712500726658,
+                  -0.4850712500726659,
+                  -0.727606875108999
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  -0.554700196225229,
+                  0,
+                  -0.8320502943378438
+                ]
+              },
+              "chasePixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "flightPixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "after": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "restarted": {
+                "mode": "chase",
+                "target": [
+                  0,
+                  0,
+                  0
+                ],
+                "camera": [
+                  0,
+                  2,
+                  6
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "nonfinite-target",
+                  "error": "Error: RECIPE_INVALID_TARGET",
+                  "errorCode": "RECIPE_INVALID_TARGET",
+                  "legacyCode": "RECIPE_INVALID_TARGET",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "zero-ground-basis",
+                  "error": "Error: RECIPE_VERTICAL_BASIS",
+                  "errorCode": "RECIPE_VERTICAL_BASIS",
+                  "legacyCode": "RECIPE_VERTICAL_BASIS",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "cameraBefore": [
+                0,
+                2,
+                6
+              ],
+              "cameraAfter": [
+                0,
+                2,
+                6
+              ],
+              "method": "APPLICATION_POLICY_WITH_NATIVE_NODE"
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "terminal": {
+                "name": "retired-target",
+                "error": "Error: RECIPE_TARGET_DISPOSED",
+                "errorCode": "RECIPE_TARGET_DISPOSED",
+                "legacyCode": "RECIPE_TARGET_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\webkit-r4-camera-modes.png"
+        },
+        {
+          "id": "r5-shared-assets",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "texture": 1,
+              "frame": 4,
+              "pool": 0,
+              "nodesValid": [
+                true,
+                true,
+                true
+              ],
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "sameFrame": true
+            },
+            "run": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hidden": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 1,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hiddenPixels": [
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "reusedSameNode": true,
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "replacement": {
+                "oldValid": false,
+                "newValid": true,
+                "peersPreserved": true,
+                "refs": {
+                  "texture": 1,
+                  "frame": 4,
+                  "pool": 0,
+                  "nodesValid": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "duplicate-pool-put",
+                  "once": 1,
+                  "twice": 1,
+                  "sameNode": true,
+                  "method": "NATIVE_NODE_POOL"
+                },
+                {
+                  "name": "empty-pool-get",
+                  "value": null,
+                  "size": 0,
+                  "method": "NATIVE_NODE_POOL"
+                }
+              ],
+              "refs": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": {
+                "texture": 0,
+                "frame": 0,
+                "pool": 0,
+                "nodesValid": [
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "beforeOwnerRelease": {
+                "texture": 1,
+                "frame": 1,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "frameValid": false,
+              "textureValid": false
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\webkit-r5-shared-assets.png"
+        },
+        {
+          "id": "r6-optional-svcs",
+          "status": "PASS",
+          "phases": {
+            "construct": {
+              "phase": "construct",
+              "instanceId": "opt-mutkmbq2-zisqpc591i",
+              "labelAttached": true,
+              "hostStillValid": true,
+              "sceneStillValid": true,
+              "borrowedValid": [
+                true
+              ],
+              "audioLoaded": true,
+              "audioError": null,
+              "bankLoaded": true,
+              "bankError": null,
+              "clipDuration": 1.02125,
+              "clipRefCount": 1,
+              "bankSize": 1,
+              "storageAvailable": true,
+              "storageError": null,
+              "inkPixels": 355,
+              "startAlreadyReady": true
+            },
+            "run": {
+              "phase": "run",
+              "instanceId": "opt-mutkmbq2-zisqpc591i",
+              "stateBefore": {
+                "id": "opt-mutkmbq2-zisqpc591i",
+                "playing": true,
+                "currentTime": 0.1727292,
+                "loop": true,
+                "volume": 1
+              },
+              "stateAfter": {
+                "id": "opt-mutkmbq2-zisqpc591i",
+                "playing": true,
+                "currentTime": 0.4789375,
+                "loop": true,
+                "volume": 1
+              },
+              "readinessMs": 8062,
+              "clockWindow": {
+                "available": true,
+                "duration": 1.02125,
+                "elapsedMs": 461,
+                "samples": [
+                  {
+                    "currentTime": 1.02125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 1.02125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 1.02125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 1.02125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 1.02125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 1.02125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 1.02125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 1.02125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 1.02125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 1.02125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.0193125,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.0499792,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.0810625,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.1127083,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.1421042,
+                    "playing": true
+                  },
+                  {
+                    "currentTime": 0.1726875,
+                    "playing": true
+                  }
+                ]
+              },
+              "playError": null,
+              "audioError": null,
+              "bankError": null,
+              "counterSet": true,
+              "counter": "1",
+              "storageError": null,
+              "bankSize": 1,
+              "bankRefCount": 1,
+              "clipRefCount": 1,
+              "manifestRefCount": 1,
+              "inkPixels": 403,
+              "trustedRun": true,
+              "trustedCanvasGestures": 10
+            },
+            "pauseRestart": {
+              "phase": "pauseRestart",
+              "instanceId": "opt-mutkmbq2-zisqpc591i",
+              "clockWindow": {
+                "available": true,
+                "duration": 1.02125,
+                "elapsedMs": 0,
+                "samples": [
+                  {
+                    "currentTime": 0.49075,
+                    "playing": true
+                  }
+                ]
+              },
+              "pre": {
+                "id": "opt-mutkmbq2-zisqpc591i",
+                "playing": true,
+                "currentTime": 0.4907708,
+                "loop": true,
+                "volume": 1
+              },
+              "paused": {
+                "id": "opt-mutkmbq2-zisqpc591i",
+                "playing": false,
+                "currentTime": 0.4907708,
+                "loop": true,
+                "volume": 1
+              },
+              "resumed": {
+                "id": "opt-mutkmbq2-zisqpc591i",
+                "playing": true,
+                "currentTime": 0.6995833,
+                "loop": true,
+                "volume": 1
+              },
+              "stopped": {
+                "id": "opt-mutkmbq2-zisqpc591i",
+                "playing": false,
+                "currentTime": 0,
+                "loop": true,
+                "volume": 1
+              },
+              "restarted": {
+                "id": "opt-mutkmbq2-zisqpc591i",
+                "playing": true,
+                "currentTime": 0.172,
+                "loop": true,
+                "volume": 1
+              },
+              "inkPixels": 565
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "missing-extension",
+                  "error": "AirAssetError: [AssetBank] suffix-less URL requires an explicit ext: http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/noext",
+                  "errorCode": "AIR_E_EXT_REQUIRED",
+                  "method": "REAL_BROWSER",
+                  "measurements": {
+                    "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/noext",
+                    "rejected": true,
+                    "bankSize": 1,
+                    "inFlight": 0
+                  }
+                },
+                {
+                  "name": "http-404",
+                  "error": "AirAssetError: [AssetBank] load failed: http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png (Load image ( http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png ) failed)",
+                  "errorCode": "AIR_E_LOAD_FAILED",
+                  "method": "REAL_BROWSER",
+                  "measurements": {
+                    "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                    "rejected": true,
+                    "bankSize": 1,
+                    "inFlight": 0
+                  }
+                },
+                {
+                  "name": "corrupt-storage",
+                  "method": "REAL_BROWSER",
+                  "measurements": {
+                    "raw": "{broken json",
+                    "parseError": "SyntaxError: JSON Parse error: Expected '}'",
+                    "recovered": "0",
+                    "unavailableReason": null
+                  }
+                }
+              ],
+              "inkPixels": 572,
+              "peerValid": true,
+              "http404": [
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                },
+                {
+                  "url": "http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png",
+                  "status": 404
+                }
+              ]
+            },
+            "release": {
+              "phase": "release",
+              "instanceId": "opt-mutkmbq2-zisqpc591i",
+              "labelNodeValid": false,
+              "serviceNodesValid": [
+                false
+              ],
+              "clipRefCount": 0,
+              "clipValid": true,
+              "manifestRefCount": 0,
+              "bankSize": 0,
+              "inFlight": 0,
+              "hostStillValid": true,
+              "sceneStillValid": true,
+              "borrowedValid": [
+                true
+              ],
+              "restored": [
+                {
+                  "key": "pg33-opt-mutkmbq2-zisqpc591i-counter",
+                  "before": null,
+                  "after": null
+                },
+                {
+                  "key": "pg33-opt-mutkmbq2-zisqpc591i-corrupt",
+                  "before": null,
+                  "after": null
+                }
+              ],
+              "storageError": null,
+              "ourKeyNames": [
+                "pg33-opt-mutkmbq2-zisqpc591i-counter",
+                "pg33-opt-mutkmbq2-zisqpc591i-corrupt"
+              ],
+              "ourKeysCleared": true,
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "samePromise": true,
+              "peerBeforeCallerCleanup": true
+            }
+          },
+          "releaseIdentity": true,
+          "terminal": {
+            "construct": "RECIPE_DISPOSED",
+            "run": "RECIPE_DISPOSED",
+            "pauseRestart": "RECIPE_DISPOSED"
+          },
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-six-s19-workspace-terminal-artifacts\\webkit-r6-optional-svcs.png"
+        }
+      ],
+      "pageErrors": [],
+      "buildRequests": [
+        "http://127.0.0.1:51012/build/cocosair.module.js"
+      ],
+      "clock": {
+        "renderedFrames": 382,
+        "enginePaused": true,
+        "diagnostics": [
+          {
+            "severity": "error",
+            "id": null,
+            "message": "Load image ( http://127.0.0.1:51012/docs/manual/examples/manual-port-recipes/optional-assets/nonexistent-404.png ) failed errorCallback@http://127.0.0.1:51012/build/cocosair.module.js:26551:27",
+            "occurrences": 2,
+            "firstSeen": 1791103259055,
+            "lastSeen": 1791103259082
+          }
+        ]
+      }
+    }
+  ]
+}

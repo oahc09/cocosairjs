@@ -1,0 +1,550 @@
+{
+  "schemaVersion": "air-platformer-recipe/1",
+  "startedAt": "2026-10-04T05:55:24.324Z",
+  "endedAt": "2026-10-04T05:55:35.685Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs",
+    "--browser=all",
+    "--out=docs/evidence/platformer-recipe/pg12-platformer-run-final.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "nodeVersion": "v24.14.0",
+  "playwrightVersion": "1.63.0",
+  "fingerprints": {
+    "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+    "test/fixtures/platformer-recipe/index.html": "6b041059942bfd5f45d6026ce701d461ca1798314c18633e4df2ede79b0e72be",
+    "test/fixtures/platformer-recipe/main.ts": "9f8904adec2544a14c13dff96ffec741591eb2b7d0653bd887c749475a52fc70",
+    "test/fixtures/platformer-recipe/recipe-contract.ts": "3641bfb5a9b932f159bb7368b73a18a684c4390b20c842d990f041434a3c1eec",
+    "test/fixtures/platformer-recipe/level.tmx": "4fe4dfbd63f1f6f617e775cb9fe20862b3c09a08b085d88c1911f4611a97b560",
+    "test/fixtures/platformer-recipe/platformer.tsx": "a839bbdd4c46cba8a3baa8909189f323e93bdbfd121f66133ffec32fa3fba182",
+    "test/fixtures/platformer-recipe/tiles.png": "5b90fe7acf1baf03e70f6a5f409bd733b7fc636f45dad11da8e457899e8ecd04",
+    "tools/verify/air-platformer-browser.cjs": "368bed4ca1d314ddb68fdf5685fa598ac5039713f4ceac4e74a085c88b85bb2d"
+  },
+  "recipe": {
+    "fixedDt": 0.016666666666666666,
+    "gravityY": -640,
+    "moveSpeed": 90,
+    "jumpVelocity": 260,
+    "groundFriction": 0.2,
+    "disclosure": "box2d 默认摩擦混合、无 linearDamping、松键靠接地摩擦；原作材料缺失，不宣称 1:1"
+  },
+  "scope": [
+    "real TMX/TSX/PNG assets parsed by TiledMap (no synthetic map data)",
+    "tile property driven static colliders via getTileGIDAt/getPropertiesForGID",
+    "real box2d simulation: autoSimulation=false + explicit step + scene sync",
+    "one-way platform: pass-through rising, landing falling (disabledOnce in PRE_SOLVE)",
+    "fixed-step vs rendering decoupled; pause negative; restart reset",
+    "real keyboard sanity path"
+  ],
+  "gpuMemory": "unavailable（无公开 GPU 物理内存计数器）",
+  "subset": true,
+  "completed": false,
+  "unverified": [
+    "glTF/3D 交叉范围",
+    "完整 35 项计划",
+    "原作 1:1 复刻（材料缺失）"
+  ],
+  "results": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "status": "FAIL",
+      "probeFailures": [
+        "groundDeceleration.verdict",
+        "oneWay",
+        "keyboardSanity.ok=false"
+      ],
+      "keyboardSanity": {
+        "vx": 0,
+        "x": -119.98536682128906,
+        "ok": false
+      },
+      "probe": {
+        "ready": true,
+        "fixedSteps": 643,
+        "playerSpawn": {
+          "x": -120,
+          "y": -56
+        },
+        "results": {
+          "diagnostics": {
+            "mapNodePos": "0,0",
+            "layerFound": true,
+            "layerWorldPos": "0,0",
+            "layerChildren": 46,
+            "tiledDataArrayLen": 0
+          },
+          "spawn": {
+            "x": -119.9869384765625,
+            "y": -86.23551940917969,
+            "vx": 8.533268669452809e-7,
+            "vy": 4.6230056227614114e-8,
+            "landedOnGround": true,
+            "groundBegin": 1,
+            "stoneCount": 42,
+            "plankCount": 3,
+            "fixedSteps": 40
+          },
+          "renderRows": {
+            "stoneMinYFrac": null,
+            "stoneMaxYFrac": null,
+            "playerMinX": null,
+            "playerMaxX": null
+          },
+          "groundDeceleration": {
+            "runVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "releaseVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "startAbs": 90,
+            "endAbs": 90,
+            "decayedToHalf": false,
+            "maxDrift": 0,
+            "verdict": "constant"
+          },
+          "airConstant": {
+            "airVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "startAbs": 90,
+            "endAbs": 90,
+            "decayedToHalf": false,
+            "maxDrift": 0,
+            "verdict": "constant"
+          },
+          "oneWay": {
+            "passThrough": 0,
+            "landedOnPlatform": false,
+            "onewayLandings": 0,
+            "groundBegin": 6,
+            "groundEnd": 6
+          },
+          "pauseNegative": {
+            "moved": 0,
+            "unchanged": true
+          },
+          "tileQueryNegative": {
+            "outOfBoundsGid": "null",
+            "outOfBoundsError": "cc.TiledLayer.getTileGIDAt(): invalid position",
+            "unknownPropsUndefined": true
+          },
+          "restart": {
+            "backAtSpawn": true,
+            "grounded": true
+          }
+        },
+        "scenarioLog": [
+          "diagnostics: {\"mapNodePos\":\"0,0\",\"layerFound\":true,\"layerWorldPos\":\"0,0\",\"layerChildren\":46,\"tiledDataArrayLen\":0}",
+          "spawn: landed=true groundBegin=1 stone=42 plank=3",
+          "groundDeceleration verdict=constant 90→90",
+          "airConstant verdict=constant",
+          "oneWay: passThrough=0 landedOnPlatform=false",
+          "pause: unchanged=true"
+        ]
+      },
+      "pageErrors": [],
+      "screenshot": "output/playwright/platformer-recipe-chromium.png",
+      "rawLog": "output\\playwright\\platformer-recipe-chromium.log"
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "status": "FAIL",
+      "probeFailures": [
+        "groundDeceleration.verdict",
+        "oneWay",
+        "keyboardSanity.ok=false"
+      ],
+      "keyboardSanity": {
+        "vx": 0,
+        "x": -119.98536682128906,
+        "ok": false
+      },
+      "probe": {
+        "ready": true,
+        "fixedSteps": 643,
+        "playerSpawn": {
+          "x": -120,
+          "y": -56
+        },
+        "results": {
+          "diagnostics": {
+            "mapNodePos": "0,0",
+            "layerFound": true,
+            "layerWorldPos": "0,0",
+            "layerChildren": 46,
+            "tiledDataArrayLen": 0
+          },
+          "spawn": {
+            "x": -119.9869384765625,
+            "y": -86.23551940917969,
+            "vx": 8.533268669452809e-7,
+            "vy": 4.6230056227614114e-8,
+            "landedOnGround": true,
+            "groundBegin": 1,
+            "stoneCount": 42,
+            "plankCount": 3,
+            "fixedSteps": 40
+          },
+          "renderRows": {
+            "stoneMinYFrac": null,
+            "stoneMaxYFrac": null,
+            "playerMinX": null,
+            "playerMaxX": null
+          },
+          "groundDeceleration": {
+            "runVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "releaseVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "startAbs": 90,
+            "endAbs": 90,
+            "decayedToHalf": false,
+            "maxDrift": 0,
+            "verdict": "constant"
+          },
+          "airConstant": {
+            "airVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "startAbs": 90,
+            "endAbs": 90,
+            "decayedToHalf": false,
+            "maxDrift": 0,
+            "verdict": "constant"
+          },
+          "oneWay": {
+            "passThrough": 0,
+            "landedOnPlatform": false,
+            "onewayLandings": 0,
+            "groundBegin": 6,
+            "groundEnd": 6
+          },
+          "pauseNegative": {
+            "moved": 0,
+            "unchanged": true
+          },
+          "tileQueryNegative": {
+            "outOfBoundsGid": "null",
+            "outOfBoundsError": "cc.TiledLayer.getTileGIDAt(): invalid position",
+            "unknownPropsUndefined": true
+          },
+          "restart": {
+            "backAtSpawn": true,
+            "grounded": true
+          }
+        },
+        "scenarioLog": [
+          "diagnostics: {\"mapNodePos\":\"0,0\",\"layerFound\":true,\"layerWorldPos\":\"0,0\",\"layerChildren\":46,\"tiledDataArrayLen\":0}",
+          "spawn: landed=true groundBegin=1 stone=42 plank=3",
+          "groundDeceleration verdict=constant 90→90",
+          "airConstant verdict=constant",
+          "oneWay: passThrough=0 landedOnPlatform=false",
+          "pause: unchanged=true"
+        ]
+      },
+      "pageErrors": [],
+      "screenshot": "output/playwright/platformer-recipe-firefox.png",
+      "rawLog": "output\\playwright\\platformer-recipe-firefox.log"
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "status": "FAIL",
+      "probeFailures": [
+        "groundDeceleration.verdict",
+        "oneWay",
+        "keyboardSanity.ok=false"
+      ],
+      "keyboardSanity": {
+        "vx": 0,
+        "x": -119.98536682128906,
+        "ok": false
+      },
+      "probe": {
+        "ready": true,
+        "fixedSteps": 643,
+        "playerSpawn": {
+          "x": -120,
+          "y": -56
+        },
+        "results": {
+          "diagnostics": {
+            "mapNodePos": "0,0",
+            "layerFound": true,
+            "layerWorldPos": "0,0",
+            "layerChildren": 46,
+            "tiledDataArrayLen": 0
+          },
+          "spawn": {
+            "x": -119.9869384765625,
+            "y": -86.23551940917969,
+            "vx": 8.533268669452809e-7,
+            "vy": 4.6230056227614114e-8,
+            "landedOnGround": true,
+            "groundBegin": 1,
+            "stoneCount": 42,
+            "plankCount": 3,
+            "fixedSteps": 40
+          },
+          "renderRows": {
+            "stoneMinYFrac": null,
+            "stoneMaxYFrac": null,
+            "playerMinX": null,
+            "playerMaxX": null
+          },
+          "groundDeceleration": {
+            "runVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "releaseVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "startAbs": 90,
+            "endAbs": 90,
+            "decayedToHalf": false,
+            "maxDrift": 0,
+            "verdict": "constant"
+          },
+          "airConstant": {
+            "airVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "startAbs": 90,
+            "endAbs": 90,
+            "decayedToHalf": false,
+            "maxDrift": 0,
+            "verdict": "constant"
+          },
+          "oneWay": {
+            "passThrough": 0,
+            "landedOnPlatform": false,
+            "onewayLandings": 0,
+            "groundBegin": 6,
+            "groundEnd": 6
+          },
+          "pauseNegative": {
+            "moved": 0,
+            "unchanged": true
+          },
+          "tileQueryNegative": {
+            "outOfBoundsGid": "null",
+            "outOfBoundsError": "cc.TiledLayer.getTileGIDAt(): invalid position",
+            "unknownPropsUndefined": true
+          },
+          "restart": {
+            "backAtSpawn": true,
+            "grounded": true
+          }
+        },
+        "scenarioLog": [
+          "diagnostics: {\"mapNodePos\":\"0,0\",\"layerFound\":true,\"layerWorldPos\":\"0,0\",\"layerChildren\":46,\"tiledDataArrayLen\":0}",
+          "spawn: landed=true groundBegin=1 stone=42 plank=3",
+          "groundDeceleration verdict=constant 90→90",
+          "airConstant verdict=constant",
+          "oneWay: passThrough=0 landedOnPlatform=false",
+          "pause: unchanged=true"
+        ]
+      },
+      "pageErrors": [],
+      "screenshot": "output/playwright/platformer-recipe-webkit.png",
+      "rawLog": "output\\playwright\\platformer-recipe-webkit.log"
+    }
+  ],
+  "screenshots": [
+    "output/playwright/platformer-recipe-chromium.png",
+    "output/playwright/platformer-recipe-firefox.png",
+    "output/playwright/platformer-recipe-webkit.png"
+  ]
+}

@@ -187,6 +187,23 @@ npm run dev                       # dev server（默认 7454）
 | 光照单位与夜景    | [固定单位标定](lighting-units.md)、[阴影支持矩阵](shadow-support-matrix.md) | `campfire-night`                                         |
 | 精确unlit雾       | [运行时雾合同](fog-runtime-contract.md)                                     | `fog-accuracy`、`neon-night-city`                        |
 
+## 端口缺口接入
+
+| 专题 | 阅读入口 |
+| --- | --- |
+| 初始化与清理 | [安全启动/单例/session](safe-startup-and-release.md)、[场景切换与复入](scene-switching.md) |
+| 子系统症状索引 | [28项集成合同](port-integration-contracts.md) |
+| 能力与取消分层 | [十类原生能力、配置与验证](runtime-capability-layers.md) |
+| 虚拟舞台与方向 | [设计视口/DPR/控制模式](design-viewport-and-controls.md) |
+| 按键与触点所有权 | [动作状态](input-action-state.md)、[输入与观察速查](porting-input-and-inspection.md) |
+| 手工步进与测试输入 | [显式合成输入](test-input-injection.md) |
+| 资产、图集与文字 | [AssetBank](asset-bank-loading.md)、[图集](atlas-loading.md)、[BMFont](bitmap-font-loading.md) |
+| 贴图三角形与朝向 | [UI-mesh](ui-textured-mesh.md)、[原生Billboard](billboard.md) |
+| 原生几何与消费类型 | [primitive descriptor](primitive-descriptors.md)、[TypeScript DOM兼容](typescript-dom-compatibility.md) |
+| 瓦片与蒙皮 | [原始对象查询](tiled-object-queries.md)、[裁剪/脏标记](tiled-culling-and-dirty-state.md)、[Code First蒙皮](skinning-code-first.md) |
+
+实现、当前证据和未验范围见[端口实施台账](../../ai/ledgers/port-gap-remediation.md)，不从目录链接推断API已发布或完整gate通过。
+
 ## 验证与台账
 
 | 事实               | 来源                                                                                                                                   |

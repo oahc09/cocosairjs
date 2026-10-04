@@ -1,0 +1,269 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG3",
+  "subject": {
+    "description": "Browser subset: TMX/TSX/PNG native map and tile colliders; Box2D µ=0.2 friction, velocity unit conversion and released air controls; one-way PRE_SOLVE pass through then stable upward-normal support; wall/queries negatives; single paused-engine accumulator, rendered pause and restart; trusted Playwright keyboard → native PAL/input; teardown removes listeners, cancels rAF and releases assets"
+  },
+  "evidenceTypes": [
+    "BROWSER_RENDER_PASS",
+    "BROWSER_INPUT_PASS"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs --browser=all --out=output/playwright/air-platformer-s14-terminal.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T06:33:23.018Z",
+    "endedAt": "2026-10-04T06:33:33.328Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 3,
+    "measuredCases": 3,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; Scripted scenario sets the same gameplay state directly; trusted keyboard is checked separately; No original external app/assets for 1:1 comparison; GPU memory unavailable; Not complete 35-item or release readiness"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": false,
+      "status": "NOT_RUN",
+      "reason": "Native report identifies runtime bytes; individual source entry not recorded"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/platformer-recipe/index.html",
+      "sha256": "6b041059942bfd5f45d6026ce701d461ca1798314c18633e4df2ede79b0e72be"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-platformer-browser.cjs",
+      "sha256": "778d506b88a24f620cb5fced295c2e19504e7cb24de1eb4a6d0cf8e93a51b80b"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-platformer-s14-terminal.json",
+      "sha256": "39f0fa79f92bb0141f4b041a83ad72a2f432f782df5b4cd3e95a504434a417a7",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/platformer-recipe/index.html",
+      "sha256": "6b041059942bfd5f45d6026ce701d461ca1798314c18633e4df2ede79b0e72be"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-platformer-s14-terminal.json",
+    "sha256": "39f0fa79f92bb0141f4b041a83ad72a2f432f782df5b4cd3e95a504434a417a7",
+    "allFingerprints": {
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "build/cocosair.module.d.ts": "25f87a9ca4261908df6a5648acfe029224032ab4e090229e884cf46e08268f57",
+      "test/fixtures/platformer-recipe/index.html": "6b041059942bfd5f45d6026ce701d461ca1798314c18633e4df2ede79b0e72be",
+      "test/fixtures/platformer-recipe/main.ts": "d48d8199830ebeb61eb08fe80892d9945488873507d5d11cd1f3685d36b0ee40",
+      "test/fixtures/platformer-recipe/recipe-contract.ts": "56b10f18e55861fa1281c5c7a5651a8b1f37c2c4f89d12f20cdb4861dcf14c17",
+      "test/fixtures/platformer-recipe/level.tmx": "4fe4dfbd63f1f6f617e775cb9fe20862b3c09a08b085d88c1911f4611a97b560",
+      "test/fixtures/platformer-recipe/platformer.tsx": "a839bbdd4c46cba8a3baa8909189f323e93bdbfd121f66133ffec32fa3fba182",
+      "test/fixtures/platformer-recipe/tiles.png": "5b90fe7acf1baf03e70f6a5f409bd733b7fc636f45dad11da8e457899e8ecd04",
+      "tools/verify/air-platformer-browser.cjs": "778d506b88a24f620cb5fced295c2e19504e7cb24de1eb4a6d0cf8e93a51b80b",
+      "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+      "tools/verify/competitive-example-server.cjs": "f4f98af13a026451a951d3dcd697b6ae73b2e0db17adddf1d6d322598ac3334b"
+    },
+    "installed": null,
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-terminal.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-terminal.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-unit-review.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-unit-review.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-native-fixtures.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-native-fixtures.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-support-roundoff.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-support-roundoff.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-foot-support.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-foot-support.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-contact-span.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-contact-span.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-retired.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-retired.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-session-release.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-session-release.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-final.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-final.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-terminal.json"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-terminal.log"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s14-platformer-terminal-types.log"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-terminal-artifacts\\chromium.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-terminal-artifacts\\firefox.png"
+      },
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-platformer-s14-terminal-artifacts\\webkit.png"
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs --browser=chromium --out=output/playwright/air-platformer-s14-unit-review.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T06:25:25.562Z",
+      "endedAt": "2026-10-04T06:25:27.470Z",
+      "exitCode": 1,
+      "failureStage": "application",
+      "reason": "AssertionError [ERR_ASSERTION]: -86.23201751708984 differs from -73\n    at near (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:9:50)\n    at checkScenario (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:10:83)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:58:132)",
+      "supersededBy": 8
+    },
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs --browser=chromium --out=output/playwright/air-platformer-s14-native-fixtures.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T06:26:43.193Z",
+      "endedAt": "2026-10-04T06:26:44.994Z",
+      "exitCode": 1,
+      "failureStage": "application",
+      "reason": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(one.final.grounded && one.final.supportTags.includes(2))\n\n    at checkScenario (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:23:5)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:58:132)",
+      "supersededBy": 8
+    },
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs --browser=chromium --out=output/playwright/air-platformer-s14-support-roundoff.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T06:27:16.294Z",
+      "endedAt": "2026-10-04T06:27:18.116Z",
+      "exitCode": 1,
+      "failureStage": "application",
+      "reason": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at checkScenario (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:24:12)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:58:132)",
+      "supersededBy": 8
+    },
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs --browser=chromium --out=output/playwright/air-platformer-s14-foot-support.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T06:28:24.748Z",
+      "endedAt": "2026-10-04T06:28:26.524Z",
+      "exitCode": 1,
+      "failureStage": "application",
+      "reason": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at checkScenario (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:10:12)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:58:132)",
+      "supersededBy": 8
+    },
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs --browser=chromium --out=output/playwright/air-platformer-s14-contact-span.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T06:28:53.385Z",
+      "endedAt": "2026-10-04T06:28:55.593Z",
+      "exitCode": 1,
+      "failureStage": "application",
+      "reason": "page.evaluate: TypeError: Cannot read properties of null (reading 'x')\n    at getPlayer (http://127.0.0.1:57782/test/fixtures/platformer-recipe/main.ts:313:31)\n    at http://127.0.0.1:57782/test/fixtures/platformer-recipe/main.ts:489:14\n    at async <anonymous>:337:30\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:70:36)",
+      "supersededBy": 8
+    },
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs --browser=all --out=output/playwright/air-platformer-s14-retired.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T06:29:24.585Z",
+      "endedAt": "2026-10-04T06:29:34.517Z",
+      "exitCode": 1,
+      "failureStage": "application",
+      "reason": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(cleanup.valid.length>=8 && cleanup.valid.every((v)=>v===false))\n\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:72:17)",
+      "supersededBy": 8
+    },
+    {
+      "status": "PASS",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs --browser=all --out=output/playwright/air-platformer-s14-session-release.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T06:30:55.743Z",
+      "endedAt": "2026-10-04T06:31:05.309Z",
+      "exitCode": 0
+    },
+    {
+      "status": "FAIL",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs --browser=all --out=output/playwright/air-platformer-s14-final.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T06:32:11.745Z",
+      "endedAt": "2026-10-04T06:32:23.570Z",
+      "exitCode": 1,
+      "failureStage": "application",
+      "reason": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(cleanup.receipt.completed.includes('platformer-assets'))\n\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs:73:17)",
+      "supersededBy": 8
+    },
+    {
+      "status": "PASS",
+      "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs --browser=all --out=output/playwright/air-platformer-s14-terminal.json",
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "startedAt": "2026-10-04T06:33:23.018Z",
+      "endedAt": "2026-10-04T06:33:33.328Z",
+      "exitCode": 0
+    }
+  ]
+}

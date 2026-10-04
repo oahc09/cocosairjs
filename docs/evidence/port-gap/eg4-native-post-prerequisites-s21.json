@@ -1,0 +1,1673 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG4",
+  "subject": {
+    "description": "NP05 approved isolated custom-pipeline variant: native configuration and failed initialization observations; bloom/FXAA/color-grading pixel A/B remains unexecuted"
+  },
+  "evidenceTypes": [
+    "SOURCE_CHECKED"
+  ],
+  "execution": {
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s21-post-prerequisites.cjs",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "status": "NOT_RUN",
+    "exitCode": 1,
+    "startedAt": "2026-10-04T09:47:50.902Z",
+    "endedAt": "2026-10-04T09:47:59.424Z",
+    "reason": "Three browsers reached registered native configuration but initialization failed with missing effect layout/resources; no native effect pixel A/B was executed"
+  },
+  "scope": {
+    "declared": [
+      "chromium/bloom",
+      "chromium/fxaa",
+      "chromium/color-grading",
+      "firefox/bloom",
+      "firefox/fxaa",
+      "firefox/color-grading",
+      "webkit/bloom",
+      "webkit/fxaa",
+      "webkit/color-grading"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 9,
+    "measuredCases": 0,
+    "skippedCases": 9,
+    "skippedDetail": [
+      {
+        "engine": "chromium",
+        "effect": "bloom",
+        "reason": "Native custom pipeline initialization failed before effect A/B: effectSettings data absent and required native effect resources unregistered"
+      },
+      {
+        "engine": "chromium",
+        "effect": "fxaa",
+        "reason": "Native custom pipeline initialization failed before effect A/B: effectSettings data absent and required native effect resources unregistered"
+      },
+      {
+        "engine": "chromium",
+        "effect": "color-grading",
+        "reason": "Native custom pipeline initialization failed before effect A/B: effectSettings data absent and required native effect resources unregistered"
+      },
+      {
+        "engine": "firefox",
+        "effect": "bloom",
+        "reason": "Native custom pipeline initialization failed before effect A/B: effectSettings data absent and required native effect resources unregistered"
+      },
+      {
+        "engine": "firefox",
+        "effect": "fxaa",
+        "reason": "Native custom pipeline initialization failed before effect A/B: effectSettings data absent and required native effect resources unregistered"
+      },
+      {
+        "engine": "firefox",
+        "effect": "color-grading",
+        "reason": "Native custom pipeline initialization failed before effect A/B: effectSettings data absent and required native effect resources unregistered"
+      },
+      {
+        "engine": "webkit",
+        "effect": "bloom",
+        "reason": "Native custom pipeline initialization failed before effect A/B: effectSettings data absent and required native effect resources unregistered"
+      },
+      {
+        "engine": "webkit",
+        "effect": "fxaa",
+        "reason": "Native custom pipeline initialization failed before effect A/B: effectSettings data absent and required native effect resources unregistered"
+      },
+      {
+        "engine": "webkit",
+        "effect": "color-grading",
+        "reason": "Native custom pipeline initialization failed before effect A/B: effectSettings data absent and required native effect resources unregistered"
+      }
+    ],
+    "countingUnit": "browser/effect pixel A/B cases; initialization diagnostics are recorded separately and do not count as measured effect pixels"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Actual isolated build and real Chromium/Firefox/WebKit native initialization; canonical metadata inventory checked independently",
+    "limitations": "Initialization failure screenshots do not prove effects. No replacement shader or quad. This variant cannot certify the default legacy pipeline. GPU allocation unavailable."
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "output/playwright/post-s21-build/cocosair.module.js",
+      "sha256": "647f1c0decc22bb8936c524956adb22b11d3e3c4f419ad01f88e84e7963ce7b4"
+    },
+    "source": {
+      "present": true,
+      "path": "src/air/bootstrap.ts",
+      "sha256": "5d098324dd1ee48decddc40086e925ec193fb6f61bcfc136ab9d55c26ccd5497"
+    },
+    "contract": {
+      "present": true,
+      "path": "src/cocos/rendering/post-process/post-process-builder.ts",
+      "sha256": "67348ba98aebd88e74dd5e63f39f2b175247787e53531e649ed526d5fe45c7ff"
+    },
+    "runner": {
+      "present": true,
+      "path": "output/playwright/port-s21-post-prerequisites.cjs",
+      "sha256": "d8c7263fe77b0148a2ad7c3db439ced08b4e510e1e2f609571dadc3699999eac"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/port-s21-post-prerequisites.json",
+      "sha256": "1e4dfcbfb9d927ef884af1d0111053bddeed8b664029f8679578640d15f367a7"
+    },
+    "application": {
+      "present": true,
+      "path": "output/playwright/port-s21-post-probe.html",
+      "sha256": "e8f63e832e3656baa728b08380078c7ee456b5419c653320ffa3e152a1d73431"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/port-s21-post-prerequisites.json",
+    "sha256": "1e4dfcbfb9d927ef884af1d0111053bddeed8b664029f8679578640d15f367a7",
+    "allFingerprints": {
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "build/cocosair.module.d.ts": "25f87a9ca4261908df6a5648acfe029224032ab4e090229e884cf46e08268f57",
+      "build/npm/cocosair.module.js": "8e00b56eab747b53fce288403b5668a2a7ecf443df966e5144547064091a81a9",
+      "output/playwright/post-s21-build/cocosair.module.js": "647f1c0decc22bb8936c524956adb22b11d3e3c4f419ad01f88e84e7963ce7b4",
+      "output/playwright/port-s21-post-probe.html": "e8f63e832e3656baa728b08380078c7ee456b5419c653320ffa3e152a1d73431",
+      "output/playwright/port-s21-post-prerequisites.cjs": "d8c7263fe77b0148a2ad7c3db439ced08b4e510e1e2f609571dadc3699999eac",
+      "tools/build/build.cjs": "73dbb1ce55fcb7c0a30093d89d95df6af51209dfb8d97d0acf8d62f8de5f9fdf",
+      "src/cocos/game/game.ts": "66eb3ac36fa55f9608a2a1b6ae1e51a6ecb2bc7d37802a038bf5e1077feac62f",
+      "src/cocos/core/effect-settings.ts": "e4bbb7f78ea2961922b6ec6f00f4f02d2910d54f311bbedbf1ad3114f39f7e09",
+      "src/cocos/core/settings.ts": "b3bd90a8be079252ed30ff6789f135de57f7f90ba8ab1519bcb293e4f78a02b2",
+      "src/cocos/rendering/custom/index.ts": "2e1833763c779834eb9482985714df0ac0fa2ec2e0fc8daf53ed05fa2889f7f8",
+      "src/cocos/rendering/custom/web-program-library.ts": "32e0844964c2287346fba0cd0d80caa8c96124b955f94915e945e677125c151b",
+      "src/cocos/rendering/post-process/index.ts": "9178e6a5b080b6e953af9ee122e71b9e9ce246d30dd8febdfb7a71ba65107a11",
+      "src/cocos/rendering/post-process/post-process-builder.ts": "67348ba98aebd88e74dd5e63f39f2b175247787e53531e649ed526d5fe45c7ff",
+      "src/cocos/rendering/post-process/passes/bloom-pass.ts": "1bc324b6e598e656a9eb401ec056f56c45f11b6c8dd5bc8f1052b7d68da3cb9d",
+      "src/cocos/rendering/post-process/passes/fxaa-pass.ts": "af6953bdf12942d0fe81bd7b88802b73dd00a499cb545ed5b3ec1af4c423e31e",
+      "src/cocos/rendering/post-process/passes/color-grading-pass.ts": "ba270f3b0bc0cacbc99311ceafdf3f5dbda13386ebc6101a6833d95500ff0b68",
+      "src/air/bootstrap.ts": "5d098324dd1ee48decddc40086e925ec193fb6f61bcfc136ab9d55c26ccd5497",
+      "src/air/builtin/register.ts": "d632bd738f10a42db72c39feb26f4be04db67864908522d4f667eeca54385959",
+      "src/air/builtin/builtin-effects.ts": "a8493532814122e78b489e9a2fbd847ba72abf0112c3cc7b397763ce247fb44b"
+    },
+    "candidateConfiguration": {
+      "AIR_FEATURES": "air,base,gfx-webgl2,gfx-empty,3d,primitive,custom-pipeline,legacy-pipeline,custom-pipeline-post-process",
+      "AIR_OUT_DIR": "output/playwright/post-s21-build",
+      "variant": true,
+      "defaultRuntimeUnchanged": true
+    },
+    "originalMethod": "REAL_BROWSER",
+    "inherited": false
+  },
+  "observations": {
+    "nativeInitialization": [
+      {
+        "engine": "chromium",
+        "version": "149.0.7827.55",
+        "actualURL": "http://127.0.0.1:59608/output/playwright/port-s21-post-probe.html",
+        "exported": {
+          "rendering": true,
+          "settings": true,
+          "postProcess": true,
+          "bloom": true,
+          "colorGrading": true
+        },
+        "requiredEffects": [
+          "pipeline/post-process/bloom",
+          "pipeline/post-process/fxaa-hq",
+          "pipeline/post-process/color-grading",
+          "pipeline/post-process/blit-screen",
+          "pipeline/post-process/post-final",
+          "pipeline/float-output-process"
+        ],
+        "builderBeforeInit": "PostProcessBuilder",
+        "configuration": {
+          "customPipeline": true,
+          "pipelineName": "Custom",
+          "effectSettingsPath": null
+        },
+        "init": {
+          "status": "FAIL",
+          "name": "TypeError",
+          "message": "TypeError: Cannot read properties of null (reading 'blocks')",
+          "stack": "TypeError: Cannot read properties of null (reading 'blocks')\n    at Pass.resetUBOs (http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:29606:42)\n    at Pass.initialize (http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:29459:10)\n    at Material._createPasses (http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:30744:12)\n    at Material._update (http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:30751:27)\n    at Material.initialize (http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:30574:10)\n    at initBuiltinMaterial (http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:141775:17)\n    at registerBuiltinAirAssets (http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:142022:3)\n    at Game._invokeCallback (http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:3540:7)\n    at Game.emit (http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:3522:20)\n    at http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:47118:12"
+        },
+        "effectSettingsDataBytes": 0,
+        "effects": [
+          {
+            "name": "pipeline/post-process/bloom",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/fxaa-hq",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/color-grading",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/blit-screen",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/post-final",
+            "registered": false
+          },
+          {
+            "name": "pipeline/float-output-process",
+            "registered": false
+          }
+        ],
+        "renderingPreserved": true,
+        "cleanup": {
+          "appCreated": false
+        },
+        "consoleMessages": [
+          {
+            "type": "timeEnd",
+            "text": "Init Base: 0.64599609375 ms"
+          },
+          {
+            "type": "timeEnd",
+            "text": "Init Infrastructure: 23.89599609375 ms"
+          },
+          {
+            "type": "warning",
+            "text": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。"
+          },
+          {
+            "type": "error",
+            "text": "Effect settings not found, effects will not be imported."
+          },
+          {
+            "type": "timeEnd",
+            "text": "Init SubSystem: 3.43896484375 ms"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: billboard|vert:vs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: billboard|vert:vs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: clear-stencil|sprite-vs:vert|sprite-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: clear-stencil|sprite-vs:vert|sprite-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: debug-renderer|debug-renderer-vs:vert|debug-renderer-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: debug-renderer|debug-renderer-vs:vert|debug-renderer-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|line-vs:vert|line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|line-vs:vert|line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|line-vs:vert|line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|line-vs:vert|line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|line-vs:vert|line-fs:back"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|line-vs:vert|line-fs:back not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:back"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:back not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|triangle-vs:vert|triangle-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|triangle-vs:vert|triangle-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|triangle-vs:vert|triangle-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|triangle-vs:vert|triangle-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|triangle-vs:vert|triangle-fs:back"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|triangle-vs:vert|triangle-fs:back not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: graphics|vs:vert|fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: graphics|vs:vert|fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: occlusion-query|occlusion-query-vs:vert|occlusion-query-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: occlusion-query|occlusion-query-vs:vert|occlusion-query-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: particle-gpu|builtin/internal/particle-vs-gpu:gpvs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: particle-gpu|builtin/internal/particle-vs-gpu:gpvs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: particle-trail|builtin/internal/particle-trail:vs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: particle-trail|builtin/internal/particle-trail:vs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: particle|builtin/internal/particle-vs-legacy:lpvs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: particle|builtin/internal/particle-vs-legacy:lpvs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: spine|sprite-vs:vert|sprite-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: spine|sprite-vs:vert|sprite-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: sprite|sprite-vs:vert|sprite-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: sprite|sprite-vs:vert|sprite-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: standard|standard-vs|standard-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: standard|standard-vs|standard-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: standard|standard-vs|standard-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: standard|standard-vs|standard-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: standard|shadow-caster-vs:vert|shadow-caster-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: standard|shadow-caster-vs:vert|shadow-caster-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: terrain|terrain-vs|terrain-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: terrain|terrain-vs|terrain-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: terrain|terrain-vs|terrain-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: terrain|terrain-vs|terrain-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: terrain|shadow-caster-vs:vert|shadow-caster-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: terrain|shadow-caster-vs:vert|shadow-caster-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: unlit|unlit-vs:vert|unlit-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: unlit|unlit-vs:vert|unlit-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|prefilter-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|prefilter-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|combine-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|combine-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: deferred-lighting|lighting-vs|lighting-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: deferred-lighting|lighting-vs|lighting-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: planar-shadow|planar-shadow-vs:vert|planar-shadow-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: planar-shadow|planar-shadow-vs:vert|planar-shadow-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: post-process|post-process-vs|post-process-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: post-process|post-process-vs|post-process-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: skybox|sky-vs:vert|sky-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: skybox|sky-vs:vert|sky-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: profiler|profiler-vs:vert|profiler-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: profiler|profiler-vs:vert|profiler-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: splash-screen|splash-screen-vs:vert|splash-screen-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: splash-screen|splash-screen-vs:vert|splash-screen-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Custom pipeline invalid render pass, program: unlit|unlit-vs:vert|unlit-fs:frag. Please reimport all effects (Menu->Developer->Refresh All Effect) and restart creator."
+          }
+        ],
+        "pageErrors": []
+      },
+      {
+        "engine": "firefox",
+        "version": "155.0",
+        "actualURL": "http://127.0.0.1:59608/output/playwright/port-s21-post-probe.html",
+        "exported": {
+          "rendering": true,
+          "settings": true,
+          "postProcess": true,
+          "bloom": true,
+          "colorGrading": true
+        },
+        "requiredEffects": [
+          "pipeline/post-process/bloom",
+          "pipeline/post-process/fxaa-hq",
+          "pipeline/post-process/color-grading",
+          "pipeline/post-process/blit-screen",
+          "pipeline/post-process/post-final",
+          "pipeline/float-output-process"
+        ],
+        "builderBeforeInit": "PostProcessBuilder",
+        "configuration": {
+          "customPipeline": true,
+          "pipelineName": "Custom",
+          "effectSettingsPath": null
+        },
+        "init": {
+          "status": "FAIL",
+          "name": "TypeError",
+          "message": "TypeError: can't access property \"blocks\", this._shaderInfo is null",
+          "stack": "resetUBOs@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:29606:25\ninitialize@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:29459:10\n_createPasses@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:30744:12\n_update@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:30751:27\ninitialize@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:30574:10\ninitBuiltinMaterial@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:141775:17\nregisterBuiltinAirAssets@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:142022:3\n_invokeCallback@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:3540:15\nemit@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:3522:20\ninit/<@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:47118:12\npromise callback*init@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:47114:8\ninitializeAirApp@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:142364:16\ncreateAirApp/state.initPromise<@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:142340:70\npromise callback*createAirApp@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:142340:43\n@debugger eval code line 311 > eval:21:40\nasync*evaluate@debugger eval code:313:16\n@debugger eval code:1:44\n@debugger eval code:1:62\n"
+        },
+        "effectSettingsDataBytes": 0,
+        "effects": [
+          {
+            "name": "pipeline/post-process/bloom",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/fxaa-hq",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/color-grading",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/blit-screen",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/post-final",
+            "registered": false
+          },
+          {
+            "name": "pipeline/float-output-process",
+            "registered": false
+          }
+        ],
+        "renderingPreserved": true,
+        "cleanup": {
+          "appCreated": false
+        },
+        "consoleMessages": [
+          {
+            "type": "timeEnd",
+            "text": "Init Base"
+          },
+          {
+            "type": "timeEnd",
+            "text": "Init Infrastructure"
+          },
+          {
+            "type": "warning",
+            "text": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。"
+          },
+          {
+            "type": "error",
+            "text": "Effect settings not found, effects will not be imported."
+          },
+          {
+            "type": "timeEnd",
+            "text": "Init SubSystem"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: billboard|vert:vs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: billboard|vert:vs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: clear-stencil|sprite-vs:vert|sprite-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: clear-stencil|sprite-vs:vert|sprite-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: debug-renderer|debug-renderer-vs:vert|debug-renderer-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: debug-renderer|debug-renderer-vs:vert|debug-renderer-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|line-vs:vert|line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|line-vs:vert|line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|line-vs:vert|line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|line-vs:vert|line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|line-vs:vert|line-fs:back"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|line-vs:vert|line-fs:back not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:back"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:back not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|triangle-vs:vert|triangle-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|triangle-vs:vert|triangle-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|triangle-vs:vert|triangle-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|triangle-vs:vert|triangle-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|triangle-vs:vert|triangle-fs:back"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|triangle-vs:vert|triangle-fs:back not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: graphics|vs:vert|fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: graphics|vs:vert|fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: occlusion-query|occlusion-query-vs:vert|occlusion-query-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: occlusion-query|occlusion-query-vs:vert|occlusion-query-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: particle-gpu|builtin/internal/particle-vs-gpu:gpvs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: particle-gpu|builtin/internal/particle-vs-gpu:gpvs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: particle-trail|builtin/internal/particle-trail:vs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: particle-trail|builtin/internal/particle-trail:vs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: particle|builtin/internal/particle-vs-legacy:lpvs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: particle|builtin/internal/particle-vs-legacy:lpvs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: spine|sprite-vs:vert|sprite-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: spine|sprite-vs:vert|sprite-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: sprite|sprite-vs:vert|sprite-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: sprite|sprite-vs:vert|sprite-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: standard|standard-vs|standard-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: standard|standard-vs|standard-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: standard|standard-vs|standard-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: standard|standard-vs|standard-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: standard|shadow-caster-vs:vert|shadow-caster-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: standard|shadow-caster-vs:vert|shadow-caster-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: terrain|terrain-vs|terrain-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: terrain|terrain-vs|terrain-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: terrain|terrain-vs|terrain-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: terrain|terrain-vs|terrain-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: terrain|shadow-caster-vs:vert|shadow-caster-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: terrain|shadow-caster-vs:vert|shadow-caster-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: unlit|unlit-vs:vert|unlit-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: unlit|unlit-vs:vert|unlit-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|prefilter-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|prefilter-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|combine-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|combine-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: deferred-lighting|lighting-vs|lighting-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: deferred-lighting|lighting-vs|lighting-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: planar-shadow|planar-shadow-vs:vert|planar-shadow-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: planar-shadow|planar-shadow-vs:vert|planar-shadow-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: post-process|post-process-vs|post-process-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: post-process|post-process-vs|post-process-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: skybox|sky-vs:vert|sky-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: skybox|sky-vs:vert|sky-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: profiler|profiler-vs:vert|profiler-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: profiler|profiler-vs:vert|profiler-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: splash-screen|splash-screen-vs:vert|splash-screen-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: splash-screen|splash-screen-vs:vert|splash-screen-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Custom pipeline invalid render pass, program: unlit|unlit-vs:vert|unlit-fs:frag. Please reimport all effects (Menu->Developer->Refresh All Effect) and restart creator."
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\" {file: \"http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js\" line: 154456}]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+          },
+          {
+            "type": "warning",
+            "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+          }
+        ],
+        "pageErrors": []
+      },
+      {
+        "engine": "webkit",
+        "version": "26.6",
+        "actualURL": "http://127.0.0.1:59608/output/playwright/port-s21-post-probe.html",
+        "exported": {
+          "rendering": true,
+          "settings": true,
+          "postProcess": true,
+          "bloom": true,
+          "colorGrading": true
+        },
+        "requiredEffects": [
+          "pipeline/post-process/bloom",
+          "pipeline/post-process/fxaa-hq",
+          "pipeline/post-process/color-grading",
+          "pipeline/post-process/blit-screen",
+          "pipeline/post-process/post-final",
+          "pipeline/float-output-process"
+        ],
+        "builderBeforeInit": "PostProcessBuilder",
+        "configuration": {
+          "customPipeline": true,
+          "pipelineName": "Custom",
+          "effectSettingsPath": null
+        },
+        "init": {
+          "status": "FAIL",
+          "name": "TypeError",
+          "message": "TypeError: null is not an object (evaluating 'this._shaderInfo.blocks')",
+          "stack": "resetUBOs@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:29606:41\ninitialize@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:29459:19\n_createPasses@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:30744:22\n_update@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:30751:40\ninitialize@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:30574:17\ninitBuiltinMaterial@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:141775:27\nregisterBuiltinAirAssets@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:142022:22\n_invokeCallback@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:3540:15\nemit@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:3522:35\n@http://127.0.0.1:59608/output/playwright/post-s21-build/cocosair.module.js:47118:16"
+        },
+        "effectSettingsDataBytes": 0,
+        "effects": [
+          {
+            "name": "pipeline/post-process/bloom",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/fxaa-hq",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/color-grading",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/blit-screen",
+            "registered": false
+          },
+          {
+            "name": "pipeline/post-process/post-final",
+            "registered": false
+          },
+          {
+            "name": "pipeline/float-output-process",
+            "registered": false
+          }
+        ],
+        "renderingPreserved": true,
+        "cleanup": {
+          "appCreated": false
+        },
+        "consoleMessages": [
+          {
+            "type": "timeEnd",
+            "text": "Init Base: 2.518ms"
+          },
+          {
+            "type": "timeEnd",
+            "text": "Init Infrastructure: 249.190ms"
+          },
+          {
+            "type": "warning",
+            "text": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。"
+          },
+          {
+            "type": "error",
+            "text": "Effect settings not found, effects will not be imported."
+          },
+          {
+            "type": "timeEnd",
+            "text": "Init SubSystem: 3.374ms"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: billboard|vert:vs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: billboard|vert:vs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: clear-stencil|sprite-vs:vert|sprite-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: clear-stencil|sprite-vs:vert|sprite-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: debug-renderer|debug-renderer-vs:vert|debug-renderer-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: debug-renderer|debug-renderer-vs:vert|debug-renderer-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|line-vs:vert|line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|line-vs:vert|line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|line-vs:vert|line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|line-vs:vert|line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|line-vs:vert|line-fs:back"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|line-vs:vert|line-fs:back not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:back"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|dashed-line-vs:vert|dashed-line-fs:back not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|triangle-vs:vert|triangle-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|triangle-vs:vert|triangle-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|triangle-vs:vert|triangle-fs:front"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|triangle-vs:vert|triangle-fs:front not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: geometry-renderer|triangle-vs:vert|triangle-fs:back"
+          },
+          {
+            "type": "error",
+            "text": "program: geometry-renderer|triangle-vs:vert|triangle-fs:back not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: graphics|vs:vert|fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: graphics|vs:vert|fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: occlusion-query|occlusion-query-vs:vert|occlusion-query-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: occlusion-query|occlusion-query-vs:vert|occlusion-query-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: particle-gpu|builtin/internal/particle-vs-gpu:gpvs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: particle-gpu|builtin/internal/particle-vs-gpu:gpvs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: particle-trail|builtin/internal/particle-trail:vs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: particle-trail|builtin/internal/particle-trail:vs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: particle|builtin/internal/particle-vs-legacy:lpvs_main|tinted-fs:add"
+          },
+          {
+            "type": "error",
+            "text": "program: particle|builtin/internal/particle-vs-legacy:lpvs_main|tinted-fs:add not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: spine|sprite-vs:vert|sprite-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: spine|sprite-vs:vert|sprite-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: sprite|sprite-vs:vert|sprite-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: sprite|sprite-vs:vert|sprite-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: standard|standard-vs|standard-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: standard|standard-vs|standard-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: standard|standard-vs|standard-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: standard|standard-vs|standard-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: standard|shadow-caster-vs:vert|shadow-caster-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: standard|shadow-caster-vs:vert|shadow-caster-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: terrain|terrain-vs|terrain-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: terrain|terrain-vs|terrain-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: terrain|terrain-vs|terrain-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: terrain|terrain-vs|terrain-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: terrain|shadow-caster-vs:vert|shadow-caster-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: terrain|shadow-caster-vs:vert|shadow-caster-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: unlit|unlit-vs:vert|unlit-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: unlit|unlit-vs:vert|unlit-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|prefilter-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|prefilter-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|downsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|downsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|upsample-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|upsample-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: bloom|bloom-vs|combine-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: bloom|bloom-vs|combine-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: deferred-lighting|lighting-vs|lighting-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: deferred-lighting|lighting-vs|lighting-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: planar-shadow|planar-shadow-vs:vert|planar-shadow-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: planar-shadow|planar-shadow-vs:vert|planar-shadow-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: post-process|post-process-vs|post-process-fs"
+          },
+          {
+            "type": "error",
+            "text": "program: post-process|post-process-vs|post-process-fs not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: skybox|sky-vs:vert|sky-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: skybox|sky-vs:vert|sky-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: profiler|profiler-vs:vert|profiler-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: profiler|profiler-vs:vert|profiler-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Invalid render pass, program: splash-screen|splash-screen-vs:vert|splash-screen-fs:frag"
+          },
+          {
+            "type": "error",
+            "text": "program: splash-screen|splash-screen-vs:vert|splash-screen-fs:frag not found"
+          },
+          {
+            "type": "error",
+            "text": "Custom pipeline invalid render pass, program: unlit|unlit-vs:vert|unlit-fs:frag. Please reimport all effects (Menu->Developer->Refresh All Effect) and restart creator."
+          }
+        ],
+        "pageErrors": []
+      }
+    ],
+    "resourceInventory": {
+      "present": true,
+      "path": "output/playwright/port-s21-post-resource-inventory.json",
+      "sha256": "09de5dc65b9cd34b46978cf03546049042f8701201a5cf113ff78014e97ba6e4"
+    },
+    "normalization": {
+      "command": [
+        "D:\\Program Files\\nodejs\\node.exe",
+        "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s21-post-formal.cjs"
+      ],
+      "cwd": "E:\\AIProMax\\github\\cocosair.js",
+      "runner": {
+        "present": true,
+        "path": "output/playwright/port-s21-post-formal.cjs",
+        "sha256": "fbd0b8b9a2f9bf5f7f1312cad21041e2f9e03c102e519f9e9549f49a51692dd2"
+      },
+      "validator": {
+        "present": true,
+        "path": "tools/verify/port-gap-evidence-schema.cjs",
+        "sha256": "ec2e1b588093786b20e755fedd966b41df95ad173a483bfd20254b16f13c9dd4"
+      }
+    }
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "output/playwright/port-s21-post-prerequisites.log"
+    },
+    "logs": [
+      {
+        "path": "output/playwright/port-s21-post-prerequisites.json"
+      },
+      {
+        "path": "output/playwright/port-s21-post-variant-build.log"
+      },
+      {
+        "path": "output/playwright/port-s21-post-resource-inventory.json"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "output/playwright/port-s21-post-prerequisites-chromium.png"
+      },
+      {
+        "path": "output/playwright/port-s21-post-prerequisites-firefox.png"
+      },
+      {
+        "path": "output/playwright/port-s21-post-prerequisites-webkit.png"
+      }
+    ]
+  }
+}

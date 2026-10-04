@@ -19,8 +19,6 @@ import { Label } from '../cocos/2d/components/label';
 import { Color } from '../cocos/core/math';
 import { Layers } from '../cocos/scene-graph/layers';
 import { Scene } from '../cocos/scene-graph/scene';
-import { assetManager } from '../cocos/asset/asset-manager';
-import { Asset } from '../cocos/asset/assets/asset';
 
 /** @en Options for [[createUICanvas]]. @zh createUICanvas 选项。 */
 export interface UICanvasOptions {
@@ -126,81 +124,14 @@ export function labelNode (parent: Node, text: string, name = 'Label', options: 
     return node;
 }
 
-type ProgressFn = (current: number, total: number) => void;
-
-interface BankEntry {
-    asset: Asset;
-    refs: number;
-}
-
 /**
- * @en Minimal reference-counted asset bank over `assetManager.loadRemote`.
- * @zh 基于 assetManager.loadRemote 的最小引用计数资产库：
- * - 并发去重：同 URL 在途请求只发一次，等待者共享同一 Promise；
- * - 每个 bank 对资产持有一份引擎引用；release 只归还自己的引用。其他持有者
- *   也需使用 addRef/decRef 合同，不能使用强制 releaseAsset；
- * - 失败清理：加载失败不留悬挂条目；
- * - 进度：loadRemote 无任务级进度时以 0→100 两阶报告（如实，不伪造细粒度）。
+ * @en Reference-counted raw-remote asset bank over `assetManager.loadRemote`.
+ * @zh 基于 assetManager.loadRemote 的引用计数原始远程资产库。
+ *
+ * PG-06/PG-32 起实现移至 [src/air/assets/asset-bank.ts](./assets/asset-bank.ts)（独立加载
+ * 辅助模块），此处按原公共名重导出保持兼容：原有 `new AssetBank()` / `load(url, onProgress?)`
+ * / `refCount(url)` / `release(url)` / `size` 语义不变；新增 { ext?, signal?, onProgress? }
+ * 选项、releaseAll 与 AIR_E_* 稳定错误，详见 docs/manual/asset-bank-loading.md。
  */
-export class AssetBank {
-    private _entries = new Map<string, BankEntry>();
-    private _inFlight = new Map<string, Promise<Asset>>();
-
-    /** 当前在库条目数（测试观测面）。 */
-    get size (): number { return this._entries.size; }
-
-    /** 引用计数（测试观测面）。 */
-    refCount (url: string): number { return this._entries.get(url)?.refs ?? 0; }
-
-    /**
-     * @en Load (or join the in-flight load of) an asset by URL, incrementing its refcount.
-     * @zh 按 URL 加载（或在途合并）资产并递增引用计数。
-     */
-    load<T extends Asset> (url: string, onProgress?: ProgressFn): Promise<T> {
-        const existing = this._entries.get(url);
-        if (existing) {
-            existing.refs += 1;
-            onProgress?.(1, 1);
-            return Promise.resolve(existing.asset as T);
-        }
-        let pending = this._inFlight.get(url);
-        if (!pending) {
-            pending = new Promise<Asset>((resolve, reject) => {
-                assetManager.loadRemote(url, (err, asset) => {
-                    if (err || !asset) {
-                        this._inFlight.delete(url);
-                        reject(new Error(`[AssetBank] load failed: ${url} (${(err && err.message) || err})`));
-                        return;
-                    }
-                    this._inFlight.delete(url);
-                    asset.addRef();
-                    this._entries.set(url, { asset, refs: 0 });
-                    resolve(asset);
-                });
-            });
-            this._inFlight.set(url, pending);
-        }
-        return pending.then((asset) => {
-            const entry = this._entries.get(url)!;
-            entry.refs += 1;
-            onProgress?.(1, 1);
-            return asset as T;
-        });
-    }
-
-    /**
-     * @en Release this bank's reference when its local count reaches zero.
-     * @zh 本 bank 归零时只归还自己持有的引擎引用。
-     */
-    release (url: string): boolean {
-        const entry = this._entries.get(url);
-        if (!entry) { return false; }
-        entry.refs -= 1;
-        if (entry.refs <= 0) {
-            this._entries.delete(url);
-            entry.asset.decRef();
-            return true;
-        }
-        return false;
-    }
-}
+export { AssetBank } from './assets/asset-bank';
+export type { AssetBankLoadOptions, AssetProgressFn, AirAssetError, AirAssetErrorCode } from './assets/asset-bank';

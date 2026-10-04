@@ -1,0 +1,184 @@
+{
+  "schemaVersion": "air-optional-recipe/2",
+  "generatedAt": "2026-10-04T07:27:45.419Z",
+  "engine": "chromium",
+  "browserVersion": "149.0.7827.55",
+  "allPass": true,
+  "scope": "full",
+  "notRun": [],
+  "probeFailures": [],
+  "pageErrors": [],
+  "serverRequests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59325/test/fixtures/port-recipes/index.html",
+      "statusCode": 200,
+      "ts": 1791098855472
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59325/test/fixtures/port-recipes/main.ts",
+      "statusCode": 200,
+      "ts": 1791098855483
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59325/test/fixtures/port-recipes/driver.ts",
+      "statusCode": 200,
+      "ts": 1791098855515
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59325/build/cocosair.module.js",
+      "statusCode": 200,
+      "ts": 1791098855614
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59325/test/fixtures/port-recipes/optional-assets/tone.wav",
+      "statusCode": 200,
+      "ts": 1791098856159
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59325/optional-assets/nonexistent-404.png",
+      "statusCode": 404,
+      "ts": 1791098857367
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59325/optional-assets/nonexistent-404.png",
+      "statusCode": 404,
+      "ts": 1791098859383
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59325/optional-assets/nonexistent-404.png",
+      "statusCode": 404,
+      "ts": 1791098861390
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59325/optional-assets/nonexistent-404.png",
+      "statusCode": 404,
+      "ts": 1791098863395
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59325/optional-assets/nonexistent-404.png",
+      "statusCode": 404,
+      "ts": 1791098865401
+    }
+  ],
+  "serverRequests404Count": 5,
+  "probe": {
+    "phases": {
+      "construct": {
+        "phase": "construct",
+        "instanceId": "opt-z2110a",
+        "storageAvailable": true,
+        "audioCreated": true,
+        "bankCreated": true,
+        "labelAttached": true,
+        "sentinelAttached": true,
+        "hostStillValid": true,
+        "sceneStillValid": true
+      },
+      "run": {
+        "phase": "run",
+        "instanceId": "opt-z2110a",
+        "bankLoaded": true,
+        "bankLoadError": null,
+        "audioLoaded": true,
+        "audioLoadError": null,
+        "clipOwned": true,
+        "bankSize": 1,
+        "bankRefCount": 1,
+        "stateBefore": {
+          "id": "pg33-tone",
+          "playing": false,
+          "currentTime": 0,
+          "loop": false,
+          "volume": 1
+        },
+        "stateAfter": {
+          "id": "pg33-tone",
+          "playing": true,
+          "currentTime": 0.31399999999999995,
+          "loop": false,
+          "volume": 1
+        },
+        "currentTimeAdvanced": true,
+        "counterSet": true,
+        "counter": 1
+      },
+      "pauseRestart": {
+        "phase": "pauseRestart",
+        "instanceId": "opt-z2110a",
+        "preCurrentTime": 0.3323999999985098,
+        "preAfterWaitCurrentTime": 0,
+        "pausedCurrentTime": 0,
+        "resumedCurrentTime": 0.2037999999970197,
+        "stoppedCurrentTime": 0,
+        "restartedCurrentTime": 0.20189999999850983,
+        "pausePreservedClock": true,
+        "resumeAdvanced": true,
+        "stoppedAtZero": true,
+        "restartedAdvanced": true
+      },
+      "release": {
+        "phase": "release",
+        "instanceId": "opt-z2110a",
+        "labelNodeValid": false,
+        "sentinelValid": false,
+        "clipValid": false,
+        "clipRefCount": 0,
+        "bankReleasedCount": 1,
+        "bankSize": 0,
+        "hostStillValid": true,
+        "sceneStillValid": true,
+        "storageRestored": true
+      }
+    },
+    "negatives": [
+      {
+        "name": "missing-extension",
+        "error": "[AssetBank] suffix-less URL requires an explicit ext: http://127.0.0.1:59325/optional-assets/noext",
+        "errorCode": "AIR_E_EXT_REQUIRED",
+        "measurements": {
+          "syncThrew": true,
+          "url": "http://127.0.0.1:59325/optional-assets/noext",
+          "extProvided": false,
+          "bankSize": 0,
+          "bankInFlight": 0
+        },
+        "method": "AssetBank.load(suffix-less url) without ext: sync AirAssetError AIR_E_EXT_REQUIRED"
+      },
+      {
+        "name": "http-404",
+        "error": "[AssetBank] load failed: http://127.0.0.1:59325/optional-assets/nonexistent-404.png (Load image ( http://127.0.0.1:59325/optional-assets/nonexistent-404.png ) failed)",
+        "errorCode": "AIR_E_LOAD_FAILED",
+        "measurements": {
+          "rejected": true,
+          "url": "http://127.0.0.1:59325/optional-assets/nonexistent-404.png",
+          "bankSizeAfter": 0,
+          "bankInFlightAfter": 0
+        },
+        "method": "AssetBank.load nonexistent path with ext: AirAssetError AIR_E_LOAD_FAILED (cause preserved)"
+      },
+      {
+        "name": "corrupt-storage",
+        "measurements": {
+          "rawValue": "{broken json!!",
+          "parseError": "Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+          "recovered": true,
+          "restoredValue": "0",
+          "storageAvailable": true
+        },
+        "method": "write broken JSON, read, JSON.parse throws, clear and write default, verify restored"
+      }
+    ],
+    "clickLog": [],
+    "postReleaseError": "[opt-z2110a] construct called after release (terminal state)"
+  }
+}

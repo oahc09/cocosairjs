@@ -32,13 +32,8 @@ const specCommon = require(path.join(REPO, 'tools', 'verify', 'example-spec-comm
 const { evaluateProbeRanges } = require('./probe-ranges.cjs');
 const { readBrowserProbe } = require('./browser-probe.cjs');
 const { loopbackBrowserEnv } = require('./loopback-browser-env.cjs');
+const { ENGINES, launchOptions } = require('./browser-engines.cjs');
 
-// 三引擎二进制：Playwright 包版本与 ms-playwright 缓存构建号不一致，必须显式指路
-const ENGINES = {
-  chromium: { dir: 'chromium-1228', exe: 'chrome-win64/chrome.exe', args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'] },
-  firefox: { dir: 'firefox-1543', exe: 'firefox/firefox.exe', args: [] },
-  webkit: { dir: 'webkit-2336', exe: 'Playwright.exe', args: [] }, // r53：外部 playwright 1.62.1 协议要求 webkit-2336（2311 组合挂起，r52 环境阻断项已解堵：安装匹配构建 + 钉版更新，披露于 v11-progress r53）
-};
 // V1.1 全 40 例共同存在的非致命日志，不计入失败（披露在证据 benignConsole 字段）
 const BENIGN_CONSOLE = ['[Physics] PhysicsSystem initDefaultMaterial()'];
 
@@ -92,11 +87,11 @@ function evalProbe (probe, contract) {
 async function runOne (pw, id, contract, port, engines) {
   const records = [];
   for (const engine of engines) {
-    const conf = ENGINES[engine];
     const rec = { engine, example: id, group: contract.group };
     let browser;
     try {
-      browser = await pw[engine].launch({ executablePath: path.join(process.env.LOCALAPPDATA || '', 'ms-playwright', conf.dir, conf.exe), args: conf.args, env: loopbackBrowserEnv() });
+      browser = await pw[engine].launch({ ...launchOptions(engine), env: loopbackBrowserEnv() });
+      rec.browserVersion = browser.version();
     } catch (e) {
       records.push({ ...rec, result: 'NOT_RUN', reason: 'launch failed: ' + String(e).split('\n')[0].slice(0, 200) });
       continue;
@@ -195,6 +190,7 @@ async function runOne (pw, id, contract, port, engines) {
 }
 
 (async () => {
+  const startedAt = new Date().toISOString();
   const args = process.argv.slice(2);
   const idsArg = args.find((a) => a.startsWith('--ids='));
   const enginesArg = args.find((a) => a.startsWith('--engines='));
@@ -202,6 +198,9 @@ async function runOne (pw, id, contract, port, engines) {
   const contractAll = JSON.parse(fs.readFileSync(CONTRACT, 'utf8'));
   const bundleFile = path.join(REPO, 'build', 'cocosair.module.js');
   const bundleBuf = fs.readFileSync(bundleFile);
+  const identityFiles = [bundleFile, CONTRACT, __filename, path.join(__dirname, 'browser-engines.cjs'), path.join(__dirname, 'browser-probe.cjs')];
+  const sha256 = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+  const fingerprints = Object.fromEntries(identityFiles.map((file) => [path.relative(REPO, file).replace(/\\/g, '/'), sha256(file)]));
   const { server, port } = await serveRepo();
   const ids = idsArg ? idsArg.slice(6).split(',') : Object.keys(contractAll);
   const records = [];
@@ -215,12 +214,25 @@ async function runOne (pw, id, contract, port, engines) {
     for (const r of rows) { console.log(`[browser-matrix] ${id} ${r.engine} → ${r.result}${r.reason ? ' (' + r.reason + ')' : ''}`); }
   }
   server.close();
+  for (const file of identityFiles) {
+    if (sha256(file) !== fingerprints[path.relative(REPO, file).replace(/\\/g, '/')]) { completed = false; records.push({ result: 'FAIL', reason: 'candidate drift: ' + file }); }
+  }
   const pass = records.filter((r) => r.result === 'PASS').length;
+  const subset = Boolean(idsArg || enginesArg);
+  const scopePassed = completed;
+  completed = scopePassed && !subset;
   specCommon.writeJsonAtomic(OUT, {
     schema: 'v12-browser-matrix-v1',
+    startedAt,
+    endedAt: new Date().toISOString(),
+    command: process.argv,
+    cwd: REPO,
+    method: 'REAL_BROWSER',
     completed,
     measuredAt: new Date().toISOString(),
-    subset: Boolean(idsArg),
+    subset,
+    scopePassed,
+    fingerprints,
     runPass: pass,
     runTotal: records.length,
     bundle: { path: 'build/cocosair.module.js', bytes: bundleBuf.length, sha256_16: sha16(bundleBuf) },
@@ -233,5 +245,5 @@ async function runOne (pw, id, contract, port, engines) {
     records,
   });
   console.log(`[browser-matrix] ${pass}/${records.length} PASS across ${new Set(records.map((r) => r.engine)).size} engines → ${path.relative(REPO, OUT)} (completed=${completed})`);
-  if (!completed) { process.exitCode = 1; }
+  if (!scopePassed) { process.exitCode = 1; }
 })();

@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG3",
+  "subject": {
+    "description": "Browser subset: HTML image/canvas/bitmap and typed array/memory image with native Sprite and +90X plane UVs; original DOM textures/frames before and after byte uploads; actual ownership release"
+  },
+  "evidenceTypes": [
+    "BROWSER_RENDER_PASS"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-texture-source-review.cjs --out=output/playwright/air-texture-source-s13-identity.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T06:07:58.216Z",
+    "endedAt": "2026-10-04T06:08:06.020Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 3,
+    "measuredCases": 3,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; ImageData is a compile-time NOT_APPLICABLE source, not forced into unsupported engine upload; No physical device, all color-space/compressed-texture or GPU allocation certification"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "src/cocos/asset/assets/image-asset.ts",
+      "sha256": "1e7af3e07e53cebfcbe8b8bfaf2a1a28d6b9057e89bc1635e1de5277a2337796"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/texture-source-review/index.html",
+      "sha256": "b6644d754eff30f2de5b2e920844d87446f30c61b0c1b81d479a0e43c4fb801c"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-texture-source-review.cjs",
+      "sha256": "895ce681fda7dbc0a4224f454bc5c1214325ae1a9ad39b8ed3cc27abd7ac5a47"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-texture-source-s13-identity.json",
+      "sha256": "b45e01ee1141d60dabf2d4f52a24eaaa4057f8d248d76275768516bdbbf52973",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/texture-source-review/index.html",
+      "sha256": "b6644d754eff30f2de5b2e920844d87446f30c61b0c1b81d479a0e43c4fb801c"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-texture-source-s13-identity.json",
+    "sha256": "b45e01ee1141d60dabf2d4f52a24eaaa4057f8d248d76275768516bdbbf52973",
+    "allFingerprints": {
+      "build/bootstrap.js": "4ba4b2081457c811d5c0d45fa11ae3e96a99b5e986ac3075086318200467e52e",
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "build/cocosair.module.d.ts": "25f87a9ca4261908df6a5648acfe029224032ab4e090229e884cf46e08268f57",
+      "examples/shared/canvas-texture.js": "99454a4370c557d221deac3a7e747325ee2f284e30b862b8d49bbd6e72d7cc9c",
+      "src/cocos/asset/assets/image-asset.ts": "1e7af3e07e53cebfcbe8b8bfaf2a1a28d6b9057e89bc1635e1de5277a2337796",
+      "src/cocos/asset/assets/texture-2d.ts": "1f1ace0e8694220fafe897e59f3e97c1a68529e6d0b145a16c5ba6641dfbae5a",
+      "src/cocos/primitive/plane.ts": "aa21fe6f3bade46c16fa6b7d90b3ae38b0b95c9c1359db287d5d83ea10f88b80",
+      "test/fixtures/texture-source-review/index.html": "b6644d754eff30f2de5b2e920844d87446f30c61b0c1b81d479a0e43c4fb801c",
+      "test/fixtures/texture-source-review/main.ts": "25720aed28a8059b87475f8c40524c229f35a04321902b216e3c78d349044587",
+      "tools/verify/air-texture-source-review.cjs": "895ce681fda7dbc0a4224f454bc5c1214325ae1a9ad39b8ed3cc27abd7ac5a47",
+      "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+    },
+    "installed": null,
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-texture-source-s13-identity.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-texture-source-s13-identity.json"
+      }
+    ],
+    "screenshots": []
+  }
+}

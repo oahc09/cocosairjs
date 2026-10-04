@@ -55,12 +55,25 @@
     "dragonBones.DragonBonesData.armatureNames",
     "dragonBones.DragonBonesData.version"
   ],
-  "capabilities": ["dragon-bones"],
+  "capabilities": [
+    "dragon-bones"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error", "animation-playing"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error",
+      "animation-playing"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -90,7 +103,11 @@
     "visual": "深蓝底（clearColor 12,16,24）随窗口大小出图（`view.setDesignResolutionSize(innerWidth, innerHeight, EXACT_FIT)`；矩阵固定 480×360）：中央一只由纯色矩形拼成的会动的「小 Dragon」——绿色 plate 方块做身体、左右两块蓝色 wing 方块随 flap 逐帧摆角（`bone.global.skew` 实测 0.7→0.24→0.63 rad），尾部位移在 plate（绿）与 tip（红）之间按 displayFrame 时间线交替；顶部一行状态文字 `dragonbones: armature=airdragon anim=<flap|idle> slots=4 click=N`。龙骨动画每帧改像素 ⇒ 相邻截图逐字节必不同（animation-playing 与 frame-diff 双判据同源不同层）；点击一次把 flap 切成 idle（摆幅小、周期 12 帧）并改写状态行，再点切回。⚠️ 判「出图」不能只看整体亮度：本例龙骨色块只占约 0.6% 采样点，`minPngBytes` 与 `litRatio` 下界必须按实测留余量"
   },
   "api": {
-    "primary": ["dragonBones.ArmatureDisplay", "dragonBones.DragonBonesAsset", "dragonBones.DragonBonesAtlasAsset"],
+    "primary": [
+      "dragonBones.ArmatureDisplay",
+      "dragonBones.DragonBonesAsset",
+      "dragonBones.DragonBonesAtlasAsset"
+    ],
     "supporting": [
       "dragonBones.CCFactory",
       "dragonBones.AnimationCacheMode",
@@ -874,10 +891,19 @@
       }
     ]
   },
-  "assets": ["assets/AirDragon.json", "assets/AirDragon_atlas.json", "assets/AirDragon_atlas.png"],
+  "assets": [
+    "assets/AirDragon.json",
+    "assets/AirDragon_atlas.json",
+    "assets/AirDragon_atlas.png"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Canvas", "UICamera", "Status", "airdragon"]
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Status",
+        "airdragon"
+      ]
     }
   },
   "interaction": {
@@ -889,14 +915,28 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -906,7 +946,11 @@
         ]
       },
       "UICamera": {
-        "position": [0, 0, 1000],
+        "position": [
+          0,
+          0,
+          1000
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -916,7 +960,11 @@
         ]
       },
       "Status": {
-        "position": [0, 150, 0],
+        "position": [
+          0,
+          150,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -926,7 +974,11 @@
         ]
       },
       "airdragon": {
-        "position": [0, -10, 0],
+        "position": [
+          0,
+          -10,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -948,7 +1000,7 @@
   "promotion": {
     "spec": "8a974b0bce33",
     "source": "13925128ed9b6d46",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 93,
     "attested": 5,
     "units": 98

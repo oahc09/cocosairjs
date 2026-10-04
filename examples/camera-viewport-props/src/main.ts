@@ -147,6 +147,7 @@ requestAnimationFrame(async () => {
         'Camera.fovAxis': camera.fovAxis,
         'Camera.fov': camera.fov,
         'Camera.orthoHeight': camera.orthoHeight,
+        'Camera.orthoWidth': camera.orthoWidth,
         'Camera.near': camera.near,
         'Camera.far': camera.far,
         'Camera.aperture': camera.aperture,
@@ -173,6 +174,16 @@ requestAnimationFrame(async () => {
         );
     }
     const renderCamera = camera.camera;
+    cameraCheck('Camera.orthoWidth.default', camera.orthoWidth === 0);
+    camera.orthoWidth = 1.75;
+    cameraCheck('Camera.orthoWidth.explicit', camera.orthoWidth === 1.75 && renderCamera.orthoWidth === 1.75);
+    for (const invalid of [-1, NaN, Infinity]) {
+        let rejected = false;
+        try { camera.orthoWidth = invalid; } catch { rejected = true; }
+        cameraCheck('Camera.orthoWidth.invalid:' + String(invalid), rejected && camera.orthoWidth === 1.75);
+    }
+    camera.orthoWidth = 0;
+    cameraCheck('Camera.orthoWidth.auto', camera.orthoWidth === 0 && renderCamera.orthoWidth === 0);
     cameraCheck('Camera.camera', !!renderCamera);
     cameraCheck(
         'renderer.scene.Camera.pipeline',

@@ -71,49 +71,49 @@
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L21"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L22"
+        "sourceLocation": "L24"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L23"
+        "sourceLocation": "L25"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L24"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L24"
+        "sourceLocation": "L26"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L28"
+        "sourceLocation": "L30"
       },
       {
         "api": "Layers.Enum",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L28"
+        "sourceLocation": "L30"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L27"
+        "sourceLocation": "L29"
       }
     ]
   },
@@ -138,9 +138,9 @@
     "assets": "无第三方资产（程序化场景，代码随仓库 MIT 授权）"
   },
   "promotion": {
-    "spec": "caf382e1364f",
-    "source": "5c2b55c4103485c7",
-    "candidate": "ba485e1b91643c46",
+    "spec": "42f31ac5e836",
+    "source": "b5961af8e31f5651",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 9,
     "attested": 0,
     "units": 9

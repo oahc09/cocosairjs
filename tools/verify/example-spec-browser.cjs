@@ -178,9 +178,10 @@ function writeEvidence (results, done) {
     pass,
     fail: merged.length - pass,
     partial: !done || !!targetIds,
-    // completed 只在整轮跑完（done）时为 true；每条示例的进度快照一律 false，
-    // 被 kill 后文件不自认"当期测量"，消费端按 NOT_RUN 处理（F-72）。
-    completed: done === true,
+    // A finished --ids run remains a subset. Retained rows are historical,
+    // rather than proof that the current full candidate was executed.
+    completed: done === true && !targetIds && results.every((r) => r.result === 'PASS'),
+    scopePassed: done === true && results.every((r) => r.result === 'PASS'),
     subset: targetIds ? [...ran].sort() : undefined,
     runPass: results.filter((r) => r.result === 'PASS').length,
     runTotal: results.length,

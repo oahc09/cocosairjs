@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG3",
+  "subject": {
+    "description": "Browser subset: Canvas/raw/helper rows with native Sprite versus native plane rotated +90X; reuse DOM texture after uploads"
+  },
+  "evidenceTypes": [
+    "BROWSER_RENDER_PASS"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-texture-uv-basis.cjs --out=output/playwright/air-uv-s11-runner-current.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T05:05:19.680Z",
+    "endedAt": "2026-10-04T05:05:27.663Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 3,
+    "measuredCases": 3,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; UV contracts differ between Sprite and this plane; GPU allocation measurements unavailable"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "src/cocos/primitive/plane.ts",
+      "sha256": "aa21fe6f3bade46c16fa6b7d90b3ae38b0b95c9c1359db287d5d83ea10f88b80"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/texture-uv-basis/index.html",
+      "sha256": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-texture-uv-basis.cjs",
+      "sha256": "47f0c59a6c9dc205ff3f3f82e6287a452b73ad240ce32d58a2492059725ed55a"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-uv-s11-runner-current.json",
+      "sha256": "c39bbcef4383a249ea9901401f9640fe35782e462b5fd6ef63ca5596d659474e",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/texture-uv-basis/index.html",
+      "sha256": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-uv-s11-runner-current.json",
+    "sha256": "c39bbcef4383a249ea9901401f9640fe35782e462b5fd6ef63ca5596d659474e",
+    "allFingerprints": {
+      "build/bootstrap.js": "4ba4b2081457c811d5c0d45fa11ae3e96a99b5e986ac3075086318200467e52e",
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "examples/shared/canvas-texture.js": "99454a4370c557d221deac3a7e747325ee2f284e30b862b8d49bbd6e72d7cc9c",
+      "src/cocos/primitive/plane.ts": "aa21fe6f3bade46c16fa6b7d90b3ae38b0b95c9c1359db287d5d83ea10f88b80",
+      "test/fixtures/texture-uv-basis/index.html": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9",
+      "test/fixtures/texture-uv-basis/main.ts": "5887ff782cc01e231e253e0a89aa310e3f940b9455f9d2e62b11b527f457c14f",
+      "tools/verify/air-texture-uv-basis.cjs": "47f0c59a6c9dc205ff3f3f82e6287a452b73ad240ce32d58a2492059725ed55a",
+      "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+    },
+    "installed": null,
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-uv-s11-runner-current.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-uv-s11-runner-current.json"
+      }
+    ],
+    "screenshots": []
+  }
+}

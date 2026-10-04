@@ -1,0 +1,3045 @@
+{
+  "schemaVersion": "air-port-recipes/2",
+  "startedAt": "2026-10-04T07:10:06.201Z",
+  "endedAt": "2026-10-04T07:10:15.782Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs",
+    "--browser=all",
+    "--out=docs/evidence/port-recipes/pg33-core-s16-attempt1.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "method": "REAL_BROWSER",
+  "playwrightVersion": "1.63.0",
+  "fingerprints": {
+    "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+    "build/cocosair.module.d.ts": "25f87a9ca4261908df6a5648acfe029224032ab4e090229e884cf46e08268f57",
+    "test/fixtures/port-recipes/main.ts": "8022fb42b827ee4725df63322d2b50aa662da887b9af255828f3f61de4a129ae",
+    "test/fixtures/port-recipes/contract.ts": "efd31b2ca61727e71d71f58e3cf0e8a7f84f40e820d8a2b3fda4b36cd66d3811",
+    "test/fixtures/port-recipes/index.html": "179ee16a8e856b9ecc6d9f6062f6fa94af51a558ccf9981a46f9fa3f7a2c6319",
+    "tools/verify/air-port-recipes-browser.cjs": "4c73b6466a7b7093e3a5dba3fa8f91e4bc579d436dace4798d82e707dbd40d70",
+    "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+    "tools/verify/competitive-example-server.cjs": "f4f98af13a026451a951d3dcd697b6ae73b2e0db17adddf1d6d322598ac3334b"
+  },
+  "scope": [
+    "r1-code3d",
+    "r2-input-hud",
+    "r3-pointer-lock",
+    "r4-camera-modes",
+    "r5-shared-assets"
+  ],
+  "subset": true,
+  "completed": false,
+  "scopePassed": false,
+  "notRun": [
+    {
+      "id": "r6-optional-svcs",
+      "reason": "Orca Worker separate module pending integration and same-channel terminal"
+    }
+  ],
+  "limitations": [
+    "Core five only; no six-recipe completion claim",
+    "Pointer lock absence is NOT_RUN",
+    "Camera target guards are application policy; pointer capture negatives are DOM API behavior",
+    "Controlled business dt; trusted Playwright keyboard/mouse checked separately",
+    "GPU memory unavailable",
+    "No external original app comparison"
+  ],
+  "results": [
+    {
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "status": "FAIL",
+      "recipes": [
+        {
+          "id": "r1-code3d",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "meshValid": true,
+              "materialValid": true,
+              "boxParent": true
+            },
+            "run": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                15,
+                30,
+                0
+              ]
+            },
+            "pauseRestart": {
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "negative-half-width",
+                  "error": "Error: AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.",
+                  "errorCode": "AIR_E_ORTHO_WIDTH",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "invalid-geometry-size",
+                  "error": "RangeError: AIR_E_PRIMITIVE_DESCRIPTOR: width must be finite and > 0",
+                  "errorCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "widthBefore": 0,
+              "widthAfter": 0,
+              "meshValid": true
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ]
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: [229,0,0,255]\n    at red (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:8:48)\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:17:9)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\chromium-r1-code3d.png"
+        },
+        {
+          "id": "r2-input-hud",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "x": 0,
+              "steps": 0,
+              "accumulator": 0,
+              "held": false,
+              "pressed": false,
+              "ticks": [],
+              "label": "X=0 steps=0",
+              "attached": true,
+              "generation": 1,
+              "renderedFrames": 12
+            },
+            "run": {
+              "zero": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": true,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 14
+              },
+              "one": {
+                "x": 2,
+                "steps": 1,
+                "accumulator": 0,
+                "held": true,
+                "pressed": true,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  }
+                ],
+                "label": "X=2 steps=1",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 16
+              },
+              "many": {
+                "x": 8,
+                "steps": 4,
+                "accumulator": 6.938893903907228e-18,
+                "held": true,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  }
+                ],
+                "label": "X=8 steps=4",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 18
+              },
+              "released": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "retired": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "",
+                "attached": false,
+                "generation": 2,
+                "renderedFrames": 26
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "after": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 22
+              },
+              "restarted": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 24
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "unknown-action",
+                  "error": "AirActionError: unknown action: \"misspelled\" (declared: right)",
+                  "errorCode": "AIR_E_UNKNOWN_ACTION",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "nonfinite-axis",
+                  "error": "AirActionError: setAxis value of action \"right\" must be a finite number, got NaN",
+                  "errorCode": "AIR_E_INVALID_VALUE",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "state": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 24
+              }
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "attached": false,
+              "held": false,
+              "reattach": {
+                "name": "terminal-attach",
+                "error": "AirActionError: adapter is disposed; create a new instance to attach again",
+                "errorCode": "AIR_E_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(r.zero.held && r.zero.pressed)\n\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:21:95)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\chromium-r2-input-hud.png"
+        },
+        {
+          "id": "r3-pointer-lock",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "locked": false,
+              "yaw": 0,
+              "moves": 0,
+              "changes": 0,
+              "lastError": null,
+              "requestTrusted": false,
+              "paused": false,
+              "disposed": false
+            },
+            "run": {
+              "before": {
+                "locked": true,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "after": {
+                "locked": true,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "pixel": [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "restarted": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "inactive-pointer-capture",
+                  "error": "NotFoundError: Failed to execute 'setPointerCapture' on 'Element': No active pointer with the given id is found.",
+                  "errorCode": 8,
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "detached-pointer-capture",
+                  "error": "NotFoundError: Failed to execute 'setPointerCapture' on 'Element': No active pointer with the given id is found.",
+                  "errorCode": 8,
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "limitations": [
+                "DOM pointer-capture negatives do not certify pointer-lock denial",
+                "Paused movement is synthetic; trusted movement checked separately"
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              }
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: [229,0,0,255]\n    at red (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:8:48)\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:30:53)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\chromium-r3-pointer-lock.png"
+        },
+        {
+          "id": "r4-camera-modes",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "mode": "chase",
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "camera": [
+                0,
+                2,
+                6
+              ],
+              "forward": [
+                0,
+                -0.316227766016838,
+                -0.9486832980505138
+              ],
+              "vehicleForward": [
+                -1,
+                0,
+                -2.220446049250313e-16
+              ],
+              "groundForward": [
+                0,
+                0,
+                -1
+              ],
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "run": {
+              "chase": {
+                "mode": "chase",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  2,
+                  2,
+                  5
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  -2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "flight": {
+                "mode": "flight",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ],
+                "forward": [
+                  -0.4850712500726658,
+                  -0.4850712500726659,
+                  -0.727606875108999
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  -2.220446049250313e-16
+                ],
+                "groundForward": [
+                  -0.554700196225229,
+                  0,
+                  -0.8320502943378438
+                ]
+              },
+              "chasePixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "flightPixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "after": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "restarted": {
+                "mode": "chase",
+                "target": [
+                  0,
+                  0,
+                  0
+                ],
+                "camera": [
+                  0,
+                  2,
+                  6
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  -2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "nonfinite-target",
+                  "error": "Error: RECIPE_INVALID_TARGET",
+                  "errorCode": "RECIPE_INVALID_TARGET",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "zero-ground-basis",
+                  "error": "Error: RECIPE_VERTICAL_BASIS",
+                  "errorCode": "RECIPE_VERTICAL_BASIS",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "cameraBefore": [
+                0,
+                2,
+                6
+              ],
+              "cameraAfter": [
+                0,
+                2,
+                6
+              ],
+              "method": "APPLICATION_POLICY_WITH_NATIVE_NODE"
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "terminal": {
+                "name": "retired-target",
+                "error": "Error: RECIPE_TARGET_DISPOSED",
+                "errorCode": "RECIPE_TARGET_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: [229,0,0,255]\n    at red (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:8:48)\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:36:9)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\chromium-r4-camera-modes.png"
+        },
+        {
+          "id": "r5-shared-assets",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "texture": 1,
+              "frame": 4,
+              "pool": 0,
+              "nodesValid": [
+                true,
+                true,
+                true
+              ],
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "sameFrame": true
+            },
+            "run": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hidden": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 1,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hiddenPixels": [
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "reusedSameNode": true,
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "duplicate-pool-put",
+                  "once": 1,
+                  "twice": 1,
+                  "sameNode": true,
+                  "method": "NATIVE_NODE_POOL"
+                },
+                {
+                  "name": "empty-pool-get",
+                  "value": null,
+                  "size": 0,
+                  "method": "NATIVE_NODE_POOL"
+                }
+              ],
+              "refs": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": {
+                "texture": 0,
+                "frame": 0,
+                "pool": 0,
+                "nodesValid": [
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "beforeOwnerRelease": {
+                "texture": 1,
+                "frame": 1,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "frameValid": true,
+              "textureValid": true
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:46:122)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\chromium-r5-shared-assets.png"
+        }
+      ],
+      "pageErrors": [],
+      "clock": {
+        "renderedFrames": 62,
+        "enginePaused": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "155.0",
+      "status": "FAIL",
+      "recipes": [
+        {
+          "id": "r1-code3d",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "meshValid": true,
+              "materialValid": true,
+              "boxParent": true
+            },
+            "run": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                15,
+                30,
+                0
+              ]
+            },
+            "pauseRestart": {
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "negative-half-width",
+                  "error": "Error: AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.",
+                  "errorCode": "AIR_E_ORTHO_WIDTH",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "invalid-geometry-size",
+                  "error": "RangeError: AIR_E_PRIMITIVE_DESCRIPTOR: width must be finite and > 0",
+                  "errorCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "widthBefore": 0,
+              "widthAfter": 0,
+              "meshValid": true
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ]
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: [229,0,0,255]\n    at red (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:8:48)\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:17:9)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\firefox-r1-code3d.png"
+        },
+        {
+          "id": "r2-input-hud",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "x": 0,
+              "steps": 0,
+              "accumulator": 0,
+              "held": false,
+              "pressed": false,
+              "ticks": [],
+              "label": "X=0 steps=0",
+              "attached": true,
+              "generation": 1,
+              "renderedFrames": 12
+            },
+            "run": {
+              "zero": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": true,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 14
+              },
+              "one": {
+                "x": 2,
+                "steps": 1,
+                "accumulator": 0,
+                "held": true,
+                "pressed": true,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  }
+                ],
+                "label": "X=2 steps=1",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 16
+              },
+              "many": {
+                "x": 8,
+                "steps": 4,
+                "accumulator": 6.938893903907228e-18,
+                "held": true,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  }
+                ],
+                "label": "X=8 steps=4",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 18
+              },
+              "released": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "retired": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "",
+                "attached": false,
+                "generation": 2,
+                "renderedFrames": 26
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "after": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 22
+              },
+              "restarted": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 24
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "unknown-action",
+                  "error": "AirActionError: unknown action: \"misspelled\" (declared: right)",
+                  "errorCode": "AIR_E_UNKNOWN_ACTION",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "nonfinite-axis",
+                  "error": "AirActionError: setAxis value of action \"right\" must be a finite number, got NaN",
+                  "errorCode": "AIR_E_INVALID_VALUE",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "state": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 24
+              }
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "attached": false,
+              "held": false,
+              "reattach": {
+                "name": "terminal-attach",
+                "error": "AirActionError: adapter is disposed; create a new instance to attach again",
+                "errorCode": "AIR_E_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(r.zero.held && r.zero.pressed)\n\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:21:95)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\firefox-r2-input-hud.png"
+        },
+        {
+          "id": "r3-pointer-lock",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "locked": false,
+              "yaw": 0,
+              "moves": 0,
+              "changes": 0,
+              "lastError": null,
+              "requestTrusted": false,
+              "paused": false,
+              "disposed": false
+            },
+            "run": {
+              "before": {
+                "locked": true,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "after": {
+                "locked": true,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 1,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "pixel": [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "restarted": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "inactive-pointer-capture",
+                  "error": "NotFoundError: Element.setPointerCapture: Invalid pointer id",
+                  "errorCode": 8,
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "detached-pointer-capture",
+                  "error": "NotFoundError: Element.setPointerCapture: Invalid pointer id",
+                  "errorCode": 8,
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "limitations": [
+                "DOM pointer-capture negatives do not certify pointer-lock denial",
+                "Paused movement is synthetic; trusted movement checked separately"
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 2,
+                "lastError": null,
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              }
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: [229,0,0,255]\n    at red (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:8:48)\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:30:53)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\firefox-r3-pointer-lock.png"
+        },
+        {
+          "id": "r4-camera-modes",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "mode": "chase",
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "camera": [
+                0,
+                2,
+                6
+              ],
+              "forward": [
+                0,
+                -0.316227766016838,
+                -0.9486832980505138
+              ],
+              "vehicleForward": [
+                -1,
+                0,
+                2.220446049250313e-16
+              ],
+              "groundForward": [
+                0,
+                0,
+                -1
+              ],
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "run": {
+              "chase": {
+                "mode": "chase",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  2,
+                  2,
+                  5
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "flight": {
+                "mode": "flight",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ],
+                "forward": [
+                  -0.4850712500726658,
+                  -0.4850712500726659,
+                  -0.727606875108999
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  -0.554700196225229,
+                  0,
+                  -0.8320502943378438
+                ]
+              },
+              "chasePixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "flightPixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "after": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "restarted": {
+                "mode": "chase",
+                "target": [
+                  0,
+                  0,
+                  0
+                ],
+                "camera": [
+                  0,
+                  2,
+                  6
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "nonfinite-target",
+                  "error": "Error: RECIPE_INVALID_TARGET",
+                  "errorCode": "RECIPE_INVALID_TARGET",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "zero-ground-basis",
+                  "error": "Error: RECIPE_VERTICAL_BASIS",
+                  "errorCode": "RECIPE_VERTICAL_BASIS",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "cameraBefore": [
+                0,
+                2,
+                6
+              ],
+              "cameraAfter": [
+                0,
+                2,
+                6
+              ],
+              "method": "APPLICATION_POLICY_WITH_NATIVE_NODE"
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "terminal": {
+                "name": "retired-target",
+                "error": "Error: RECIPE_TARGET_DISPOSED",
+                "errorCode": "RECIPE_TARGET_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: [229,0,0,255]\n    at red (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:8:48)\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:36:9)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\firefox-r4-camera-modes.png"
+        },
+        {
+          "id": "r5-shared-assets",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "texture": 1,
+              "frame": 4,
+              "pool": 0,
+              "nodesValid": [
+                true,
+                true,
+                true
+              ],
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "sameFrame": true
+            },
+            "run": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hidden": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 1,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hiddenPixels": [
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "reusedSameNode": true,
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "duplicate-pool-put",
+                  "once": 1,
+                  "twice": 1,
+                  "sameNode": true,
+                  "method": "NATIVE_NODE_POOL"
+                },
+                {
+                  "name": "empty-pool-get",
+                  "value": null,
+                  "size": 0,
+                  "method": "NATIVE_NODE_POOL"
+                }
+              ],
+              "refs": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": {
+                "texture": 0,
+                "frame": 0,
+                "pool": 0,
+                "nodesValid": [
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "beforeOwnerRelease": {
+                "texture": 1,
+                "frame": 1,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "frameValid": true,
+              "textureValid": true
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:46:122)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\firefox-r5-shared-assets.png"
+        }
+      ],
+      "pageErrors": [],
+      "clock": {
+        "renderedFrames": 62,
+        "enginePaused": true,
+        "diagnostics": []
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "status": "FAIL",
+      "recipes": [
+        {
+          "id": "r1-code3d",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "meshValid": true,
+              "materialValid": true,
+              "boxParent": true
+            },
+            "run": {
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                15,
+                30,
+                0
+              ]
+            },
+            "pauseRestart": {
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "negative-half-width",
+                  "error": "Error: AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.",
+                  "errorCode": "AIR_E_ORTHO_WIDTH",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "invalid-geometry-size",
+                  "error": "RangeError: AIR_E_PRIMITIVE_DESCRIPTOR: width must be finite and > 0",
+                  "errorCode": "AIR_E_PRIMITIVE_DESCRIPTOR",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "widthBefore": 0,
+              "widthAfter": 0,
+              "meshValid": true
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ]
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: [229,0,0,255]\n    at red (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:8:48)\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:17:9)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:472:9)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\webkit-r1-code3d.png"
+        },
+        {
+          "id": "r2-input-hud",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "x": 0,
+              "steps": 0,
+              "accumulator": 0,
+              "held": false,
+              "pressed": false,
+              "ticks": [],
+              "label": "X=0 steps=0",
+              "attached": true,
+              "generation": 1,
+              "renderedFrames": 12
+            },
+            "run": {
+              "zero": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": true,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 14
+              },
+              "one": {
+                "x": 2,
+                "steps": 1,
+                "accumulator": 0,
+                "held": true,
+                "pressed": true,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  }
+                ],
+                "label": "X=2 steps=1",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 16
+              },
+              "many": {
+                "x": 8,
+                "steps": 4,
+                "accumulator": 6.938893903907228e-18,
+                "held": true,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  }
+                ],
+                "label": "X=8 steps=4",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 18
+              },
+              "released": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "retired": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "",
+                "attached": false,
+                "generation": 2,
+                "renderedFrames": 26
+              }
+            },
+            "pauseRestart": {
+              "before": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 20
+              },
+              "after": {
+                "x": 8,
+                "steps": 5,
+                "accumulator": 6.938893903907228e-18,
+                "held": false,
+                "pressed": false,
+                "ticks": [
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "press",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [
+                      "right"
+                    ],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [],
+                    "pressed": [],
+                    "released": []
+                  },
+                  {
+                    "transitions": [
+                      {
+                        "action": "right",
+                        "kind": "release",
+                        "source": {
+                          "backend": "native",
+                          "keyCode": 68
+                        }
+                      }
+                    ],
+                    "pressed": [],
+                    "released": [
+                      "right"
+                    ]
+                  }
+                ],
+                "label": "X=8 steps=5",
+                "attached": true,
+                "generation": 1,
+                "renderedFrames": 22
+              },
+              "restarted": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 24
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "unknown-action",
+                  "error": "AirActionError: unknown action: \"misspelled\" (declared: right)",
+                  "errorCode": "AIR_E_UNKNOWN_ACTION",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "nonfinite-axis",
+                  "error": "AirActionError: setAxis value of action \"right\" must be a finite number, got NaN",
+                  "errorCode": "AIR_E_INVALID_VALUE",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "state": {
+                "x": 0,
+                "steps": 0,
+                "accumulator": 0,
+                "held": false,
+                "pressed": false,
+                "ticks": [],
+                "label": "X=0 steps=0",
+                "attached": true,
+                "generation": 2,
+                "renderedFrames": 24
+              }
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": [],
+              "attached": false,
+              "held": false,
+              "reattach": {
+                "name": "terminal-attach",
+                "error": "AirActionError: adapter is disposed; create a new instance to attach again",
+                "errorCode": "AIR_E_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(r.zero.held && r.zero.pressed)\n\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:21:95)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\webkit-r2-input-hud.png"
+        },
+        {
+          "id": "r3-pointer-lock",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "locked": false,
+              "yaw": 0,
+              "moves": 0,
+              "changes": 0,
+              "lastError": null,
+              "requestTrusted": false,
+              "paused": false,
+              "disposed": false
+            },
+            "run": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 0,
+                "lastError": "WrongDocumentError: Pointer lock requires the window to have focus.",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 0,
+                "lastError": "WrongDocumentError: Pointer lock requires the window to have focus.",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false,
+                "pixel": [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              },
+              "unavailableReason": "WrongDocumentError: Pointer lock requires the window to have focus."
+            },
+            "pauseRestart": {
+              "before": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 0,
+                "lastError": "WrongDocumentError: Pointer lock requires the window to have focus.",
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "after": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 0,
+                "lastError": "WrongDocumentError: Pointer lock requires the window to have focus.",
+                "requestTrusted": true,
+                "paused": true,
+                "disposed": false
+              },
+              "restarted": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 0,
+                "lastError": "WrongDocumentError: Pointer lock requires the window to have focus.",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              }
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "inactive-pointer-capture",
+                  "error": "NotFoundError: The object can not be found here.",
+                  "errorCode": 8,
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "detached-pointer-capture",
+                  "error": "NotFoundError: The object can not be found here.",
+                  "errorCode": 8,
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 0,
+                "lastError": "WrongDocumentError: Pointer lock requires the window to have focus.",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": false
+              },
+              "limitations": [
+                "DOM pointer-capture negatives do not certify pointer-lock denial",
+                "Paused movement is synthetic; trusted movement checked separately"
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "snapshot": {
+                "locked": false,
+                "yaw": 0,
+                "moves": 0,
+                "changes": 0,
+                "lastError": "WrongDocumentError: Pointer lock requires the window to have focus.",
+                "requestTrusted": true,
+                "paused": false,
+                "disposed": true
+              }
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: [229,0,0,255]\n    at red (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:8:48)\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:30:53)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\webkit-r3-pointer-lock.png"
+        },
+        {
+          "id": "r4-camera-modes",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "mode": "chase",
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "camera": [
+                0,
+                2,
+                6
+              ],
+              "forward": [
+                0,
+                -0.316227766016838,
+                -0.9486832980505138
+              ],
+              "vehicleForward": [
+                -1,
+                0,
+                2.220446049250313e-16
+              ],
+              "groundForward": [
+                0,
+                0,
+                -1
+              ],
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "run": {
+              "chase": {
+                "mode": "chase",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  2,
+                  2,
+                  5
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "flight": {
+                "mode": "flight",
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ],
+                "forward": [
+                  -0.4850712500726658,
+                  -0.4850712500726659,
+                  -0.727606875108999
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  -0.554700196225229,
+                  0,
+                  -0.8320502943378438
+                ]
+              },
+              "chasePixel": [
+                229,
+                0,
+                0,
+                255
+              ],
+              "flightPixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "after": {
+                "target": [
+                  2,
+                  0,
+                  -1
+                ],
+                "camera": [
+                  6,
+                  4,
+                  5
+                ]
+              },
+              "restarted": {
+                "mode": "chase",
+                "target": [
+                  0,
+                  0,
+                  0
+                ],
+                "camera": [
+                  0,
+                  2,
+                  6
+                ],
+                "forward": [
+                  0,
+                  -0.316227766016838,
+                  -0.9486832980505138
+                ],
+                "vehicleForward": [
+                  -1,
+                  0,
+                  2.220446049250313e-16
+                ],
+                "groundForward": [
+                  0,
+                  0,
+                  -1
+                ]
+              },
+              "pixel": [
+                229,
+                0,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "nonfinite-target",
+                  "error": "Error: RECIPE_INVALID_TARGET",
+                  "errorCode": "RECIPE_INVALID_TARGET",
+                  "method": "REAL_BROWSER"
+                },
+                {
+                  "name": "zero-ground-basis",
+                  "error": "Error: RECIPE_VERTICAL_BASIS",
+                  "errorCode": "RECIPE_VERTICAL_BASIS",
+                  "method": "REAL_BROWSER"
+                }
+              ],
+              "cameraBefore": [
+                0,
+                2,
+                6
+              ],
+              "cameraAfter": [
+                0,
+                2,
+                6
+              ],
+              "method": "APPLICATION_POLICY_WITH_NATIVE_NODE"
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [
+                false,
+                false
+              ],
+              "refs": [
+                0,
+                0
+              ],
+              "terminal": {
+                "name": "retired-target",
+                "error": "Error: RECIPE_TARGET_DISPOSED",
+                "errorCode": "RECIPE_TARGET_DISPOSED",
+                "method": "REAL_BROWSER"
+              }
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: [229,0,0,255]\n    at red (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:8:48)\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:36:9)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\webkit-r4-camera-modes.png"
+        },
+        {
+          "id": "r5-shared-assets",
+          "status": "FAIL",
+          "phases": {
+            "construct": {
+              "texture": 1,
+              "frame": 4,
+              "pool": 0,
+              "nodesValid": [
+                true,
+                true,
+                true
+              ],
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "sameFrame": true
+            },
+            "run": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hidden": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 1,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "hiddenPixels": [
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ],
+              "reusedSameNode": true,
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixels": [
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  255,
+                  0,
+                  255
+                ]
+              ]
+            },
+            "pauseRestart": {
+              "before": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "after": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pausedPixel": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "restartedPixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "negatives": {
+              "cases": [
+                {
+                  "name": "duplicate-pool-put",
+                  "once": 1,
+                  "twice": 1,
+                  "sameNode": true,
+                  "method": "NATIVE_NODE_POOL"
+                },
+                {
+                  "name": "empty-pool-get",
+                  "value": null,
+                  "size": 0,
+                  "method": "NATIVE_NODE_POOL"
+                }
+              ],
+              "refs": {
+                "texture": 1,
+                "frame": 4,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "pixel": [
+                0,
+                255,
+                0,
+                255
+              ]
+            },
+            "release": {
+              "rootValid": false,
+              "assetsValid": [],
+              "refs": {
+                "texture": 0,
+                "frame": 0,
+                "pool": 0,
+                "nodesValid": [
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "beforeOwnerRelease": {
+                "texture": 1,
+                "frame": 1,
+                "pool": 0,
+                "nodesValid": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "frameValid": true,
+              "textureValid": true
+            }
+          },
+          "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at checkRecipe (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:46:122)\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:90:46)",
+          "screenshot": "docs\\evidence\\port-recipes\\pg33-core-s16-attempt1-artifacts\\webkit-r5-shared-assets.png"
+        }
+      ],
+      "pageErrors": [],
+      "clock": {
+        "renderedFrames": 62,
+        "enginePaused": true,
+        "diagnostics": []
+      }
+    }
+  ]
+}

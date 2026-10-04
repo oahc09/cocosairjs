@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "air-port-recipes/2",
+  "startedAt": "2026-10-04T07:28:35.456Z",
+  "endedAt": "2026-10-04T07:30:56.167Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs",
+    "--browser=all",
+    "--out=docs/evidence/port-recipes/pg33-core-s17-workspace-terminal.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "method": "REAL_BROWSER",
+  "installed": null,
+  "playwrightVersion": "1.63.0",
+  "fingerprints": {
+    "package.json": "a76ff405f7f66d351bb1910fb8baa57f9c9dd79df91db5a3b3454818b4e07153",
+    "build/npm/cocosair.module.js": "8e00b56eab747b53fce288403b5668a2a7ecf443df966e5144547064091a81a9",
+    "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+    "build/cocosair.module.d.ts": "25f87a9ca4261908df6a5648acfe029224032ab4e090229e884cf46e08268f57",
+    "test/fixtures/port-recipes/main.ts": "dc736fb6e02d3c241bb9af78c6d4658e1bc717aeae513d28f1c8033df4522067",
+    "docs/manual/examples/manual-port-recipes/main.ts": "a1ad5ab3b0aece9aaf5f588c91bd1bca41aaa4a073954ca952a4097046e73bd3",
+    "test/fixtures/port-recipes/contract.ts": "efd31b2ca61727e71d71f58e3cf0e8a7f84f40e820d8a2b3fda4b36cd66d3811",
+    "test/fixtures/port-recipes/index.html": "179ee16a8e856b9ecc6d9f6062f6fa94af51a558ccf9981a46f9fa3f7a2c6319",
+    "tools/verify/air-port-recipes-browser.cjs": "2aa92856ec1772850043925bf906076a7df2b22cf47581bc156b20618578467f",
+    "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+    "tools/verify/competitive-example-server.cjs": "f4f98af13a026451a951d3dcd697b6ae73b2e0db17adddf1d6d322598ac3334b",
+    "tools/verify/installed-recipe-package.cjs": "0e1efce23da8e339b0370d9a14a1e6b3ff61c48eb9cd31d08fccbeb93fc52aaa"
+  },
+  "scope": [
+    "r1-code3d",
+    "r2-input-hud",
+    "r3-pointer-lock",
+    "r4-camera-modes",
+    "r5-shared-assets"
+  ],
+  "subset": true,
+  "completed": false,
+  "scopePassed": false,
+  "notRun": [
+    {
+      "id": "r6-optional-svcs",
+      "reason": "Orca Worker separate module pending integration and same-channel terminal"
+    }
+  ],
+  "limitations": [
+    "Core five only; no six-recipe completion claim",
+    "Pointer lock absence is NOT_RUN",
+    "Camera target guards are application policy; pointer capture negatives are DOM API behavior",
+    "Controlled business dt; trusted Playwright keyboard/mouse checked separately",
+    "GPU memory unavailable",
+    "No external original app comparison"
+  ],
+  "results": [
+    {
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "status": "FAIL",
+      "recipes": [],
+      "pageErrors": [
+        "SyntaxError: Unexpected reserved word"
+      ],
+      "buildRequests": [],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:79:91)"
+    },
+    {
+      "engine": "firefox",
+      "version": "155.0",
+      "status": "FAIL",
+      "recipes": [],
+      "pageErrors": [
+        "SyntaxError: await is a reserved identifier"
+      ],
+      "buildRequests": [],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:79:91)"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "status": "FAIL",
+      "recipes": [],
+      "pageErrors": [
+        "SyntaxError: Unexpected identifier 'init_main'"
+      ],
+      "buildRequests": [],
+      "error": "page.waitForFunction: Timeout 45000ms exceeded.\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-port-recipes-browser.cjs:79:91)"
+    }
+  ]
+}

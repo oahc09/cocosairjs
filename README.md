@@ -23,6 +23,8 @@ app.run(new Scene('Main'));
 app.getScene(); // → Scene | null
 ```
 
+自定义canvas或需要在引擎导入前配置DPR时，使用无eager engine import的 `cocosair.js/bootstrap` 子路径；同canvas/config共享初始化，释放场景可用 `app.releaseScene()`，关闭后要求reload。完整用法见[安全启动与释放](docs/manual/safe-startup-and-release.md)。
+
 Promise 资产加载：
 
 ```ts
@@ -136,12 +138,12 @@ cocosair.js/
 
 ## Code First 注意事项
 
-- `#GameCanvas` 必须在引擎 import 前存在于 DOM（pal/screen-adapter 为模块顶层单例），
+- 使用eager主入口时，`#GameCanvas`或显式 `__CC_CANVAS__` 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例），
   参考 `examples/hello-cube/index.html` 的模板结构。
-- Camera 组件需显式设置 `visibility = Layers.Enum.DEFAULT`（4.0-alpha 的默认值为 undefined）。
+- 原生Camera默认可见层已包含 `Layers.Enum.DEFAULT`；只在需要隔离层时显式配置visibility。
 - builtin 材质/效果由 `src/air/builtin/register.ts` 程序化注册（无 Creator internal db）。
 - `Skeleton.joints` 必须是**相对 skinningRoot 的完整路径**（`getChildByPath` 解析），
-  层级骨骼写 `bone0/bone1` 而非 `bone1`，否则关节不会注册、蒙皮不变形。
+  层级骨骼写 `bone0/bone1` 而非 `bone1`；使用中的路径缺失报 `AIR_E_SKINNING_JOINT_PATH`。根空间、首帧与重绑定合同见[蒙皮配方](docs/manual/skinning-code-first.md)。
 - 三关节蒙皮与骨骼动画用法见 `examples/skinned-animation/`，工具说明见 [骨骼工具](docs/guides/skinned-model.md)。
 
 ## 基线与上游

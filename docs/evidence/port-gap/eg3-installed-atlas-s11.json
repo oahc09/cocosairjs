@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG3",
+  "subject": {
+    "description": "Browser subset: Public Atlas runtime: legacy/compact, 90 rotation, trim, multipage indexed pixels and ownership"
+  },
+  "evidenceTypes": [
+    "BROWSER_RENDER_PASS"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-atlas-browser-review.cjs --installed --out=output/playwright/air-atlas-s11-order-fixed.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T05:05:51.395Z",
+    "endedAt": "2026-10-04T05:06:12.263Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 3,
+    "measuredCases": 3,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; GPU allocation measurements unavailable"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "src/air/assets/asset-bank.ts",
+      "sha256": "033a30387a8669f9bd53acf496013a8b4914f25e156a7abefad02adcf4bf6997"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/atlas-browser-review/index.html",
+      "sha256": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-atlas-browser-review.cjs",
+      "sha256": "a85a83bcbf4a91a9f75a88dc991da6f3f1662f53f6cd2264833d699bf1b0143e"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-atlas-s11-order-fixed.json",
+      "sha256": "6adbacdf308a1f9cc9ea9680e4756180184823783820c18763a5ef0f82ac7037",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/atlas-browser-review/index.html",
+      "sha256": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-atlas-s11-order-fixed.json",
+    "sha256": "6adbacdf308a1f9cc9ea9680e4756180184823783820c18763a5ef0f82ac7037",
+    "allFingerprints": {
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "build/bootstrap.js": "4ba4b2081457c811d5c0d45fa11ae3e96a99b5e986ac3075086318200467e52e",
+      "src/air/assets/asset-bank.ts": "033a30387a8669f9bd53acf496013a8b4914f25e156a7abefad02adcf4bf6997",
+      "src/air/assets/atlas/atlas-parser.ts": "b0f9285b53d72624346712535a0116bd709ab25797a586848c8d985d6311e267",
+      "src/air/assets/atlas/atlas-factory.ts": "1c99fc08fdfaca7559959451e1f24c988562c82dd9b6e08f96156f54210e274d",
+      "src/air/assets/atlas/atlas-loader.ts": "86c3d2d813a75f3b24b9c330431af5bbb6a673031670883ef09af15f2b083b81",
+      "test/fixtures/atlas-browser-review/index.html": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9",
+      "test/fixtures/atlas-browser-review/main.ts": "7fe0c7d9a45dd56e06e8d9853a37e1500d890f70694913f2c0defec38bd02b98",
+      "test/fixtures/atlas-browser-review/legacy.atlas": "c9b71e1ea6c08a7b583df7686035038ff7e4bb97436e3d513e230d1d3d6505b8",
+      "test/fixtures/atlas-browser-review/compact.atlas": "125eed667913b6cca2c96a330bba7be971949c84b367e0e767281380a1b9796b",
+      "test/fixtures/atlas-browser-review/generate-pages.cjs": "e7b5612f94096e50f1838419f843481bdb25b397be69850ca10888d3c49009ed",
+      "test/fixtures/atlas-browser-review/page-0.png": "1496bdfa1bb38d4aa05b448d8509b89e8fa77ff988c4520160746a4f64f2e141",
+      "test/fixtures/atlas-browser-review/page-1.png": "312485961614b9e98bd5dd78eb81aa3d2765234ccd3adb0dbc876d5783c5f819",
+      "tools/verify/air-atlas-browser-review.cjs": "a85a83bcbf4a91a9f75a88dc991da6f3f1662f53f6cd2264833d699bf1b0143e",
+      "tools/verify/installed-atlas-package.cjs": "51671f2ae98f937408e56de2e5f513e2e7dd27312d949bd2b7bb258b4a812587",
+      "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+    },
+    "installed": {
+      "method": "ACTUAL_TARBALL_OFFLINE_INSTALL",
+      "packageName": "cocosair.js",
+      "tarball": {
+        "filename": "cocosair.js-1.0.0.tgz",
+        "bytes": 4054135,
+        "sha256": "f4fa11515e9706008636ab9ab36330857ab1b223dc083aa18ae05208d701ab18"
+      },
+      "chunks": {
+        "bootstrap.js": {
+          "bytes": 5533,
+          "sha256": "88172a559804bcf43c6cc1a86afcfca6bafcfc272b7c623b3892d57ca3309cf1"
+        },
+        "runtime.js": {
+          "bytes": 20348,
+          "sha256": "00ac17cbfb7d4c5f70a392f757f3558602362629c19af690aa984c9f101e59eb"
+        },
+        "chunk-FIQO4E5U.js": {
+          "bytes": 20348,
+          "sha256": "00ac17cbfb7d4c5f70a392f757f3558602362629c19af690aa984c9f101e59eb"
+        },
+        "chunk-7QYH5NTU.js": {
+          "bytes": 6724317,
+          "sha256": "4ae2635ae684baa08e05aa09d260bf3eddfdf5719493aa858649d9d2b8e13d07"
+        }
+      },
+      "installOutput": "\nadded 1 package in 1s\n"
+    },
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-atlas-s11-order-fixed.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-atlas-s11-order-fixed.json"
+      }
+    ],
+    "screenshots": []
+  }
+}

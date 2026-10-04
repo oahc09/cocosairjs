@@ -8,17 +8,33 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "渲染真实 POINT_LIST 与 LINE_LIST，理解 mesh/pass 的双入口和 pointSize 的像素单位",
-    "points": ["POINT_LIST=0 必须保留", "mesh 和 effect pass 必须匹配图元", "生成 JSON 不等于 shader 已在 GPU 编译"]
+    "points": [
+      "POINT_LIST=0 必须保留",
+      "mesh 和 effect pass 必须匹配图元",
+      "生成 JSON 不等于 shader 已在 GPU 编译"
+    ]
   },
   "effect": {
     "functional": "上半区48个青色原生点，下半区4条橙色线段；检查mesh/pass枚举相等、实际像素和pointSize从8到16的覆盖面积变化。无纹理依赖。",
     "visual": "中心青色点阵与橙色横线，深色背景"
   },
   "api": {
-    "primary": ["utils.createMesh", "EffectAsset.onLoaded", "Material.initialize"],
+    "primary": [
+      "utils.createMesh",
+      "EffectAsset.onLoaded",
+      "Material.initialize"
+    ],
     "supporting": [],
-    "claims": ["utils.createMesh", "EffectAsset.onLoaded", "Material.initialize"],
-    "forbiddenShortcut": ["用quad冒充原生点", "仅检查mesh字段冒充实际渲染", "声称仅设置mesh primitiveMode即可渲染"],
+    "claims": [
+      "utils.createMesh",
+      "EffectAsset.onLoaded",
+      "Material.initialize"
+    ],
+    "forbiddenShortcut": [
+      "用quad冒充原生点",
+      "仅检查mesh字段冒充实际渲染",
+      "声称仅设置mesh primitiveMode即可渲染"
+    ],
     "evidence": [
       {
         "api": "utils.createMesh",
@@ -40,24 +56,42 @@
       }
     ]
   },
-  "capabilities": ["shader", "rendering"],
-  "assets": ["point.effect.json"],
+  "capabilities": [
+    "shader",
+    "rendering"
+  ],
+  "assets": [
+    "point.effect.json"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "PointCloud", "LineGrid"]
+      "nodes": [
+        "Main Camera",
+        "PointCloud",
+        "LineGrid"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -71,7 +105,7 @@
   "promotion": {
     "spec": "937a7a051d1f",
     "source": "464c7ed802269cad",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 3,
     "attested": 0,
     "units": 3

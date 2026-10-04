@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "e375e55122a04cb2",
-  "apiInventoryRevision": "1e8ea940c7082c56",
+  "sourceFingerprint": "25f87a9ca4261908",
+  "apiInventoryRevision": "abb85e4ef9f80a3f",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -10832,6 +10832,14 @@
       "tier": "advanced",
       "coverageRequired": true,
       "parent": "renderer.scene.Camera"
+    },
+    "renderer.scene.Camera.orthoWidth": {
+      "kind": "property",
+      "tier": "advanced",
+      "coverageRequired": true,
+      "parent": "renderer.scene.Camera",
+      "coverageStatus": "documented-only",
+      "coverageReason": "The component Camera.orthoWidth is verified by the current Gallery property example, including renderer synchronization. Direct renderer-level access has no separately claimed per-API trace here; prefer the component API, which also owns stored state and synchronization."
     },
     "renderer.scene.Camera.fovAxis": {
       "kind": "property",
@@ -24867,6 +24875,12 @@
       "coverageRequired": true,
       "parent": "Camera"
     },
+    "Camera.orthoWidth": {
+      "kind": "property",
+      "tier": "core",
+      "coverageRequired": true,
+      "parent": "Camera"
+    },
     "Camera.near": {
       "kind": "property",
       "tier": "core",
@@ -34558,6 +34572,18 @@
       "parent": "TiledObjectGroup"
     },
     "TiledObjectGroup.getObjects": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TiledObjectGroup"
+    },
+    "TiledObjectGroup.getRawObjects": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TiledObjectGroup"
+    },
+    "TiledObjectGroup.getObjectsByType": {
       "kind": "method",
       "tier": "supporting",
       "coverageRequired": false,
@@ -53147,6 +53173,100 @@
       "coverageRequired": false,
       "parent": "AudioPCMDataView"
     },
+    "createSessionScope": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "Billboard": {
+      "kind": "class",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": null,
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
+    "Billboard.texture": {
+      "kind": "property",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": "Billboard",
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
+    "Billboard.height": {
+      "kind": "property",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": "Billboard",
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
+    "Billboard.width": {
+      "kind": "property",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": "Billboard",
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
+    "Billboard.rotation": {
+      "kind": "property",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": "Billboard",
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
+    "Billboard.technique": {
+      "kind": "property",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": "Billboard",
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
+    "Billboard.constructor": {
+      "kind": "constructor",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": "Billboard",
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
+    "Billboard.onLoad": {
+      "kind": "method",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": "Billboard",
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
+    "Billboard.onEnable": {
+      "kind": "method",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": "Billboard",
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
+    "Billboard.onDisable": {
+      "kind": "method",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": "Billboard",
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
+    "Billboard.onDestroy": {
+      "kind": "method",
+      "tier": "important",
+      "coverageRequired": true,
+      "parent": "Billboard",
+      "coverageStatus": "documented-only",
+      "coverageReason": "Newly exposed native component. Dedicated browser and installed-consumer checks are recorded in docs/manual/billboard.md and the port-gap ledger, but this unit has no current Gallery per-API execution proof. It remains unverified in this coverage inventory; add via Node.addComponent and let node/component ownership invoke lifecycle callbacks."
+    },
     "createAirUnlitFogEffect": {
       "kind": "function",
       "tier": "supporting",
@@ -53183,6 +53303,18 @@
       "coverageRequired": false,
       "parent": "AirAppImpl"
     },
+    "AirAppImpl.diagnostics": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirAppImpl"
+    },
+    "AirAppImpl.session": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirAppImpl"
+    },
     "AirAppImpl.constructor": {
       "kind": "constructor",
       "tier": "supporting",
@@ -53196,6 +53328,18 @@
       "parent": "AirAppImpl"
     },
     "AirAppImpl.getScene": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirAppImpl"
+    },
+    "AirAppImpl.releaseScene": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirAppImpl"
+    },
+    "AirAppImpl.close": {
       "kind": "method",
       "tier": "supporting",
       "coverageRequired": false,
@@ -53225,6 +53369,54 @@
       "coverageRequired": false,
       "parent": null
     },
+    "airActionSourceKey": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "assertValidSource": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createActionState": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirActionError": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirActionError.code": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirActionError"
+    },
+    "AirActionError.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirActionError"
+    },
+    "createSessionGate": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createActionInput": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "createUICanvas": {
       "kind": "function",
       "tier": "supporting",
@@ -53249,7 +53441,19 @@
       "coverageRequired": false,
       "parent": null
     },
+    "AssetBank.underlyingCancelSupported": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AssetBank"
+    },
     "AssetBank.size": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AssetBank"
+    },
+    "AssetBank.inFlightCount": {
       "kind": "property",
       "tier": "supporting",
       "coverageRequired": false,
@@ -53272,6 +53476,90 @@
       "tier": "supporting",
       "coverageRequired": false,
       "parent": "AssetBank"
+    },
+    "AssetBank.releaseAll": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AssetBank"
+    },
+    "AirAssetError": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirAssetError.code": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirAssetError"
+    },
+    "AirAssetError.cause": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirAssetError"
+    },
+    "AirAssetError.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirAssetError"
+    },
+    "AirUIMesh": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirUIMesh.geometry": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirUIMesh"
+    },
+    "AirUIMesh.disposed": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirUIMesh"
+    },
+    "AirUIMesh.spriteFrame": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirUIMesh"
+    },
+    "AirUIMesh.setGeometry": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirUIMesh"
+    },
+    "AirUIMesh.clear": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirUIMesh"
+    },
+    "AirUIMesh.dispose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirUIMesh"
+    },
+    "AirUIMesh.onDestroy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirUIMesh"
+    },
+    "AirUIMesh.refreshFrame": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "AirUIMesh"
     },
     "SceneStack": {
       "kind": "class",
@@ -53393,6 +53681,24 @@
       "coverageRequired": false,
       "parent": "AudioService"
     },
+    "AudioService.stopBgm": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.setBgmVolume": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.bgmVolume": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
     "AudioService.resumeBgm": {
       "kind": "method",
       "tier": "supporting",
@@ -53451,6 +53757,12 @@
       "kind": "function",
       "tier": "core",
       "coverageRequired": true,
+      "parent": null
+    },
+    "createPrimitiveGeometry": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
       "parent": null
     },
     "GLTFAsset": {
@@ -53784,6 +54096,48 @@
       "parent": null,
       "coverageStatus": "documented-only",
       "coverageReason": "Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable decoder example checks its runtime value; keep it documented-only until primitive-export read tracing is supported."
+    },
+    "parseFnt": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createBitmapFont": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "loadBitmapFont": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "parseAtlasText": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAtlasSpriteFrame": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAtlasHandle": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "loadAtlas": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
     },
     "isTransmissionMaterial": {
       "kind": "function",
@@ -74179,12 +74533,12 @@
     }
   },
   "tierSummary": {
-    "core": 963,
-    "important": 272,
-    "advanced": 191,
-    "supporting": 8156,
-    "internal": 2623
+    "core": 964,
+    "important": 283,
+    "advanced": 192,
+    "supporting": 8197,
+    "internal": 2624
   },
-  "totalUnits": 12205,
-  "coverageRequiredUnits": 1426
+  "totalUnits": 12260,
+  "coverageRequiredUnits": 1439
 }

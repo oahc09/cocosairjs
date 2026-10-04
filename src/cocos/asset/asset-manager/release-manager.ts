@@ -117,6 +117,14 @@ export class ReleaseManager {
     private _toDelete = new Cache<Asset>();
     private _eventListener = false;
     private _dontDestroyAssets: string[] = [];
+    private _releaseKeys = new WeakMap<Asset, string>();
+    private _nextReleaseKey = 0;
+
+    private _pendingReleaseKey (asset: Asset): string {
+        let key = this._releaseKeys.get(asset);
+        if (!key) { key = `release#${++this._nextReleaseKey}`; this._releaseKeys.set(asset, key); }
+        return key;
+    }
 
     public addIgnoredAsset (asset: Asset): void {
         this._dontDestroyAssets.push(asset._uuid);
@@ -162,7 +170,7 @@ export class ReleaseManager {
     /**
      * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
      */
-    public _autoRelease (oldScene: Scene, newScene: Scene, persistNodes: Record<string, Node>): void {
+    public _autoRelease (oldScene: Scene, newScene: Scene | null, persistNodes: Record<string, Node>): void {
         if (oldScene) {
             const childs = dependUtil.getDeps(oldScene.uuid);
             for (let i = 0, l = childs.length; i < l; i++) {
@@ -183,12 +191,13 @@ export class ReleaseManager {
                 }
             }
 
-            if (oldScene.uuid !== newScene.uuid) {
+            if (oldScene.uuid !== newScene?.uuid) {
                 dependUtil.remove(oldScene.uuid);
             }
         }
 
         // transfer refs from persist nodes to new scene
+        if (!newScene) { return; }
         const sceneDeps = dependUtil._depends.get(newScene.uuid);
         if (sceneDeps) { sceneDeps.persistDeps = []; }
         for (const key in persistNodes) {
@@ -212,13 +221,16 @@ export class ReleaseManager {
             return;
         }
 
-        this._toDelete.add(asset._uuid, asset);
+        this._toDelete.add(this._pendingReleaseKey(asset), asset);
         if (TEST) return;
         if (!this._eventListener) {
             this._eventListener = true;
             misc.callInNextTick(this._freeAssets.bind(this));
         }
     }
+
+    /** @engineInternal Drain already requested releases while the render loop is paused. */
+    public _flushAirReleaseQueue (): void { this._freeAssets(); }
 
     private _freeAssets (): void {
         this._eventListener = false;
@@ -230,7 +242,7 @@ export class ReleaseManager {
 
     private _free (asset: Asset, force = false): void {
         const uuid = asset._uuid;
-        this._toDelete.remove(uuid);
+        this._toDelete.remove(this._pendingReleaseKey(asset));
 
         if (!isValid(asset, true) || this._dontDestroyAssets.indexOf(uuid) !== -1) { return; }
 

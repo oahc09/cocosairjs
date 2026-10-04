@@ -21,8 +21,16 @@
     "visual": "深色战场上砖墙（红棕十字纹）与钢块（灰色）构成对称地图；绿色玩家坦克（白色炮管指向 + hp 点）与两辆橙红敌方坦克沿固定路线巡逻、对齐时停驻射击；白色弹丸飞行；左上角 DOM 面板显示 state/hp/kills/shots/bricks/steel-blocks/pool-spent"
   },
   "api": {
-    "primary": ["Texture2D.reset", "AudioSource.play", "Component"],
-    "supporting": ["assetManager", "input", "AudioClip.getDuration"],
+    "primary": [
+      "Texture2D.reset",
+      "AudioSource.play",
+      "Component"
+    ],
+    "supporting": [
+      "assetManager",
+      "input",
+      "AudioClip.getDuration"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -223,11 +231,21 @@
       }
     ]
   },
-  "capabilities": ["game", "audio"],
-  "assets": ["assets/tone.wav"],
+  "capabilities": [
+    "game",
+    "audio"
+  ],
+  "assets": [
+    "assets/tone.wav"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Board", "Driver", "Audio"]
+      "nodes": [
+        "Main Camera",
+        "Board",
+        "Driver",
+        "Audio"
+      ]
     }
   },
   "interaction": {
@@ -239,13 +257,28 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "material-property", "asset-loaded", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "material-property",
+      "asset-loaded",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -259,7 +292,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 0, 6],
+        "position": [
+          0,
+          0,
+          6
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -269,8 +306,16 @@
         ]
       },
       "Board": {
-        "position": [0, 0, 0],
-        "rotationEuler": [90, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          90,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -285,7 +330,11 @@
         ]
       },
       "Driver": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -295,7 +344,11 @@
         ]
       },
       "Audio": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -310,7 +363,12 @@
         "effect": "builtin-unlit",
         "props": {
           "mainColor": {
-            "value": [255, 255, 255, 255],
+            "value": [
+              255,
+              255,
+              255,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.01,
             "provenance": {
@@ -348,7 +406,7 @@
   "promotion": {
     "spec": "b73eafe44754",
     "source": "ff2b442ea1080e8f",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 27,
     "attested": 0,
     "units": 27

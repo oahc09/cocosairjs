@@ -1,0 +1,9 @@
+newpage.png
+size: 16,16
+format: RGBA8888
+pma: true
+
+blob
+bounds: 0,0,8,8
+offsets: 2,1,16,16
+index: -1

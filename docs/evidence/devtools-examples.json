@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-10-03T09:18:48.297Z",
+  "measuredAt": "2026-10-04T05:43:59.283Z",
   "runner": "tools/verify/devtools-examples.cjs",
   "mode": "devtools-session-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
-  "candidateFingerprint": "ba485e1b91643c46",
+  "candidateFingerprint": "2f089f6ce25eaccd",
   "apiProofTotals": {
     "verified": 77,
     "attested": 10,
@@ -17,13 +17,13 @@
       "result": "PASS",
       "specFingerprint": "735d00cae975",
       "sourceFingerprint": "e89d32ce3ed3bbb6",
-      "candidateFingerprint": "ba485e1b91643c46",
+      "candidateFingerprint": "2f089f6ce25eaccd",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 584,
+        "exports": 601,
         "unitCount": 11,
-        "bytes": 55278,
-        "hash": "2d2639b54f08c9a2",
+        "bytes": 56497,
+        "hash": "1711fd5d7d4b6cde",
         "notes": [
           "Node.addChild: no own descriptor on static"
         ],
@@ -340,13 +340,13 @@
       "result": "PASS",
       "specFingerprint": "4daffe289d95",
       "sourceFingerprint": "14dcaa1b1f04abd7",
-      "candidateFingerprint": "ba485e1b91643c46",
+      "candidateFingerprint": "2f089f6ce25eaccd",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 584,
+        "exports": 601,
         "unitCount": 18,
-        "bytes": 55979,
-        "hash": "54965e28b099d325",
+        "bytes": 57198,
+        "hash": "be984b8a99771e79",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -761,7 +761,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -778,13 +778,13 @@
       "result": "PASS",
       "specFingerprint": "4533f62e9a73",
       "sourceFingerprint": "adc7fb751d03f149",
-      "candidateFingerprint": "ba485e1b91643c46",
+      "candidateFingerprint": "2f089f6ce25eaccd",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 584,
+        "exports": 601,
         "unitCount": 20,
-        "bytes": 56170,
-        "hash": "516fa955b1b7db51",
+        "bytes": 57389,
+        "hash": "83ddeff01858709d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1256,7 +1256,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -1273,13 +1273,13 @@
       "result": "PASS",
       "specFingerprint": "01b9b4271da2",
       "sourceFingerprint": "8d42f5b915ecd42a",
-      "candidateFingerprint": "ba485e1b91643c46",
+      "candidateFingerprint": "2f089f6ce25eaccd",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 584,
+        "exports": 601,
         "unitCount": 19,
-        "bytes": 56082,
-        "hash": "8a7446f5f99185cd",
+        "bytes": 57301,
+        "hash": "2af327ee055a267c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1749,13 +1749,13 @@
       "result": "PASS",
       "specFingerprint": "dc7942ac2896",
       "sourceFingerprint": "8dbf1e634cee45fa",
-      "candidateFingerprint": "ba485e1b91643c46",
+      "candidateFingerprint": "2f089f6ce25eaccd",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 584,
+        "exports": 601,
         "unitCount": 19,
-        "bytes": 56079,
-        "hash": "bef14df7e3414bb4",
+        "bytes": 57298,
+        "hash": "70f829ad51d9fa85",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1772,7 +1772,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 13,
+          "reads": 20,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -2207,13 +2207,13 @@
       "result": "PASS",
       "specFingerprint": "735d00cae975",
       "sourceFingerprint": "e89d32ce3ed3bbb6",
-      "candidateFingerprint": "ba485e1b91643c46",
+      "candidateFingerprint": "2f089f6ce25eaccd",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 584,
+        "exports": 601,
         "unitCount": 11,
-        "bytes": 55278,
-        "hash": "2d2639b54f08c9a2",
+        "bytes": 56497,
+        "hash": "1711fd5d7d4b6cde",
         "notes": [
           "Node.addChild: no own descriptor on static"
         ],
@@ -2530,13 +2530,13 @@
       "result": "PASS",
       "specFingerprint": "4daffe289d95",
       "sourceFingerprint": "14dcaa1b1f04abd7",
-      "candidateFingerprint": "ba485e1b91643c46",
+      "candidateFingerprint": "2f089f6ce25eaccd",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 584,
+        "exports": 601,
         "unitCount": 18,
-        "bytes": 55979,
-        "hash": "54965e28b099d325",
+        "bytes": 57198,
+        "hash": "be984b8a99771e79",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -2951,7 +2951,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2968,13 +2968,13 @@
       "result": "PASS",
       "specFingerprint": "4533f62e9a73",
       "sourceFingerprint": "adc7fb751d03f149",
-      "candidateFingerprint": "ba485e1b91643c46",
+      "candidateFingerprint": "2f089f6ce25eaccd",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 584,
+        "exports": 601,
         "unitCount": 20,
-        "bytes": 56170,
-        "hash": "516fa955b1b7db51",
+        "bytes": 57389,
+        "hash": "83ddeff01858709d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3446,7 +3446,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -3463,13 +3463,13 @@
       "result": "PASS",
       "specFingerprint": "01b9b4271da2",
       "sourceFingerprint": "8d42f5b915ecd42a",
-      "candidateFingerprint": "ba485e1b91643c46",
+      "candidateFingerprint": "2f089f6ce25eaccd",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 584,
+        "exports": 601,
         "unitCount": 19,
-        "bytes": 56082,
-        "hash": "8a7446f5f99185cd",
+        "bytes": 57301,
+        "hash": "2af327ee055a267c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3939,13 +3939,13 @@
       "result": "PASS",
       "specFingerprint": "dc7942ac2896",
       "sourceFingerprint": "8dbf1e634cee45fa",
-      "candidateFingerprint": "ba485e1b91643c46",
+      "candidateFingerprint": "2f089f6ce25eaccd",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 584,
+        "exports": 601,
         "unitCount": 19,
-        "bytes": 56079,
-        "hash": "bef14df7e3414bb4",
+        "bytes": 57298,
+        "hash": "70f829ad51d9fa85",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3962,7 +3962,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 13,
+          "reads": 20,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -4402,6 +4402,7 @@
   "fail": 0,
   "partial": false,
   "completed": true,
+  "scopePassed": true,
   "runPass": 5,
   "runTotal": 5
 }

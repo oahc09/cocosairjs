@@ -36,6 +36,7 @@ import { IAnimInfo, IJointTextureHandle } from '../skeletal-animation/skeletal-a
 import { MorphModel } from './morph-model';
 import { jointTextureSamplerInfo } from '../misc/joint-texture-sampler-info';
 import { SubModel } from '../../render-scene/scene';
+import { validateSkinningBinding } from './skinning-validation';
 
 interface IJointsInfo {
     buffer: Buffer | null;
@@ -92,6 +93,7 @@ export class BakedSkinningModel extends MorphModel {
 
     // Override
     public bindSkeleton (skeleton: Skeleton | null = null, skinningRoot: Node | null = null, mesh: Mesh | null = null): void {
+        if (skeleton && skinningRoot && mesh) { validateSkinningBinding(skeleton, skinningRoot, mesh); }
         this._skeleton = skeleton;
         this._mesh = mesh;
         if (!skeleton || !skinningRoot || !mesh) { return; }

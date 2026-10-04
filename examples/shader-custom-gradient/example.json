@@ -20,7 +20,11 @@
     "visual": "深色背景上横贯画面的水平渐变色带（初始红→蓝，colorA 更新后绿→蓝），整体明度随时间缓慢脉动；点击后右端色相在蓝/黄间切换；左上角面板显示后端与 colorB 状态"
   },
   "api": {
-    "primary": ["EffectAsset.onLoaded", "Material.initialize", "Material.setProperty"],
+    "primary": [
+      "EffectAsset.onLoaded",
+      "Material.initialize",
+      "Material.setProperty"
+    ],
     "supporting": [
       "EffectAsset.get",
       "EffectAsset.remove",
@@ -275,11 +279,17 @@
       }
     ]
   },
-  "capabilities": ["shader", "rendering"],
+  "capabilities": [
+    "shader",
+    "rendering"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "GradientQuad"]
+      "nodes": [
+        "Main Camera",
+        "GradientQuad"
+      ]
     }
   },
   "interaction": {
@@ -291,13 +301,27 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "material-property", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "material-property",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -311,7 +335,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 0, 5],
+        "position": [
+          0,
+          0,
+          5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -321,7 +349,11 @@
         ]
       },
       "GradientQuad": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -334,7 +366,11 @@
             "text": "quad.setRotationFromEuler(90, 0, 0);"
           }
         ],
-        "rotationEuler": [90, 0, 0]
+        "rotationEuler": [
+          90,
+          0,
+          0
+        ]
       }
     },
     "material-property": {
@@ -342,7 +378,12 @@
         "effect": "air-example-gradient",
         "props": {
           "colorA": {
-            "value": [40, 220, 90, 255],
+            "value": [
+              40,
+              220,
+              90,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.01,
             "provenance": {
@@ -352,7 +393,12 @@
             }
           },
           "colorB": {
-            "value": [64, 114, 230, 255],
+            "value": [
+              64,
+              114,
+              230,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.01,
             "provenance": {
@@ -368,7 +414,7 @@
   "promotion": {
     "spec": "b433fdcd5f3f",
     "source": "4cab0849e36df44f",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 33,
     "attested": 0,
     "units": 33

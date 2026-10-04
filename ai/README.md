@@ -27,7 +27,7 @@
 | Runtime Release 演进 | [计划](plans/runtime-release-evolution.md) | — |
 | 全局质量审查 | [计划](plans/global-quality-audit.md) | — |
 | 竞争力基准回灌 | [计划](plans/competitive-benchmark-remediation.md) | [台账](ledgers/competitive-benchmark-remediation.md) |
-| 1:1 复刻端口缺口 | [计划](plans/port-gap-remediation.md) | — |
+| 1:1 复刻端口缺口 | [计划](plans/port-gap-remediation.md) | [台账](ledgers/port-gap-remediation.md) |
 
 ## 专项提示词
 

@@ -20,7 +20,10 @@
     "visual": "机械臂式三节结构（蓝根/绿臂/橙手）绕中心缓慢旋转，子节点的位移轨迹随父节点转动"
   },
   "api": {
-    "primary": ["Node.addChild", "Node.getChildByName"],
+    "primary": [
+      "Node.addChild",
+      "Node.getChildByName"
+    ],
     "supporting": [
       "Node.setScale",
       "Component",
@@ -149,7 +152,10 @@
       "Node.resetHasChangedFlags",
       "Node.clearNodeArray"
     ],
-    "forbiddenShortcut": ["用三个平级独立节点冒充父子层级", "直接设置 world 变换绕过 parent × local 合成"],
+    "forbiddenShortcut": [
+      "用三个平级独立节点冒充父子层级",
+      "直接设置 world 变换绕过 parent × local 合成"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -639,23 +645,40 @@
       }
     ]
   },
-  "capabilities": ["basics"],
+  "capabilities": [
+    "basics"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Root", "Arm", "Hand"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Root",
+        "Arm",
+        "Hand"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error",
+      "material-property"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -670,7 +693,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 3.2, 8],
+        "position": [
+          0,
+          3.2,
+          8
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -680,7 +707,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -688,10 +719,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "Root": {
-        "position": [0, 0.4, 0],
+        "position": [
+          0,
+          0.4,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -699,10 +738,18 @@
             "text": "boxNode(Root) → position [0,0.4,0]（工厂形参见 L29）"
           }
         ],
-        "scale": [0.6, 0.6, 0.6]
+        "scale": [
+          0.6,
+          0.6,
+          0.6
+        ]
       },
       "Arm": {
-        "position": [0, 1.2, 0],
+        "position": [
+          0,
+          1.2,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -710,10 +757,18 @@
             "text": "boxNode(Arm) → position [0,1.2,0]（工厂形参见 L29）"
           }
         ],
-        "scale": [0.4, 1.6, 0.4]
+        "scale": [
+          0.4,
+          1.6,
+          0.4
+        ]
       },
       "Hand": {
-        "position": [0, 1.2, 0],
+        "position": [
+          0,
+          1.2,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -721,7 +776,11 @@
             "text": "boxNode(Hand) → position [0,1.2,0]（工厂形参见 L29）"
           }
         ],
-        "scale": [0.7, 0.4, 0.7]
+        "scale": [
+          0.7,
+          0.4,
+          0.7
+        ]
       }
     },
     "material-property": {
@@ -729,7 +788,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [65, 155, 235, 255],
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -744,7 +808,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [95, 205, 120, 255],
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -759,7 +828,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [235, 125, 65, 255],
+            "value": [
+              235,
+              125,
+              65,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -783,7 +857,7 @@
   "promotion": {
     "spec": "9cad82ae2901",
     "source": "6647945ed1133b9b",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 81,
     "attested": 0,
     "units": 81

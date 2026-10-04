@@ -42,6 +42,8 @@ camera.visibility = Layers.Enum.DEFAULT;
 `near`/`far` 两种投影都生效：它们决定深度缓冲的精度分布，`near` 贴得太近或 `far` 拉得太远
 都会让中远距离出现深度抖动（z-fighting）。默认 `0.1 / 100` 对桌面演示足够。
 
+正交相机默认 `orthoWidth = 0`，半宽由半高乘窗口宽高比决定；设置有限正数可独立指定取景半宽，恢复 `0` 即回到自动模式。负数或非有限值抛 `AIR_E_ORTHO_WIDTH`，保留原值。透视投影不使用这个参数。屏幕对齐的原生 `Canvas` 自动维护 UI 相机的两个半轴；设计分辨率在横竖屏、DPR 与输入坐标中的用法见[设计视口与控制方向](design-viewport-and-controls.md)。
+
 ## 2. 位置与朝向：lookAt 每帧都要重算
 
 相机看向目标用 `node.lookAt(target)`。一旦相机移动，朝向不会自动跟随，必须再调一次——

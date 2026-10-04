@@ -8,17 +8,31 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "用原生POINT_LIST批量提交50k星点，在GPU进行旋转与颜色梯度，交互真实相机并披露fps测量边界",
-    "points": ["mesh和pass拓扑须匹配", "uniform使用Vec4", "render-loop fps不是GPU或present吞吐"]
+    "points": [
+      "mesh和pass拓扑须匹配",
+      "uniform使用Vec4",
+      "render-loop fps不是GPU或present吞吐"
+    ]
   },
   "effect": {
     "functional": "四条程序化对数旋臂和7000颗核球星；GPU旋转/色彩；平滑视差、滚轮穿行、实时HUD、Reset与资源重建",
     "visual": "暖白核球、蓝色旋臂与深黑宇宙"
   },
   "api": {
-    "primary": ["utils.createMesh", "Material.setProperty"],
+    "primary": [
+      "utils.createMesh",
+      "Material.setProperty"
+    ],
     "supporting": [],
-    "claims": ["utils.createMesh", "Material.setProperty"],
-    "forbiddenShortcut": ["用图片冒充星点", "假fps或虚报顶点数", "CPU逐星点提交或CSS替代3D旋转"],
+    "claims": [
+      "utils.createMesh",
+      "Material.setProperty"
+    ],
+    "forbiddenShortcut": [
+      "用图片冒充星点",
+      "假fps或虚报顶点数",
+      "CPU逐星点提交或CSS替代3D旋转"
+    ],
     "evidence": [
       {
         "api": "utils.createMesh",
@@ -34,11 +48,19 @@
       }
     ]
   },
-  "capabilities": ["rendering", "shader"],
-  "assets": ["galaxy.effect.json"],
+  "capabilities": [
+    "rendering",
+    "shader"
+  ],
+  "assets": [
+    "galaxy.effect.json"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Observatory Camera", "Galaxy"]
+      "nodes": [
+        "Observatory Camera",
+        "Galaxy"
+      ]
     }
   },
   "interaction": {
@@ -59,13 +81,25 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -87,7 +121,7 @@
   "promotion": {
     "spec": "5a055cbc312f",
     "source": "71fe39e265d47e5f",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 2,
     "attested": 0,
     "units": 2

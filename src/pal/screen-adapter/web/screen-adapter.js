@@ -83,8 +83,8 @@ class ScreenAdapter extends EventTarget {
     get windowSize() {
         const result = this._windowSizeInCssPixels;
         const dpr = this.devicePixelRatio;
-        result.width *= dpr;
-        result.height *= dpr;
+        result.width = Math.round(result.width * dpr);
+        result.height = Math.round(result.height * dpr);
         return result;
     }
     set windowSize(size) {

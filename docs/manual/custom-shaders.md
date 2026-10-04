@@ -113,6 +113,8 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 - **材质实例语义**：`renderer.setSharedMaterial(mat,0)` 直接引用（多渲染器共享同一 uniform 状态）；
   `renderer.material` getter 创建 MaterialInstance 副本（各自 setProperty 互不影响——
   "每个产品独立调色"用实例，"全场统一参数"用共享）。
+  实时 `SkinnedMeshRenderer` 是明确例外：`setSharedMaterial` 会为模型宏创建实例；绑定后用
+  `renderer.getMaterialInstance(0).setProperty(...)` 更新实际绘制材质，继续改原共享Material不保证更新该实例。
 - `material.recompileShaders` / `overridePipelineStates` 当前为 warn 存根：**defines 必须在
   initialize 时给定**，运行期改宏不可用。
 
@@ -122,7 +124,7 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 运行期 `mat.setProperty('mainTexture', texture2D)`。注意 **builtin-unlit 的纹理宏是 `USE_TEXTURE`**；
 `USE_ALBEDO_MAP` 会被静默忽略渲染成纯色（GAP-M1，实测）。程序化纹理走
 `new Texture2D(); tex.image = new ImageAsset(canvas)` 或 `tex.reset({…}) + uploadData(pixels)`
-（uploadData 不做 Y 翻转——绘制时自行倒序，[canvas-textures](canvas-textures.md) 同注记）。
+（uploadData 保留字节行序；Sprite视觉顶边v=0，而旋转+90X的原生plane顶边v=1，按实际UV选择行序，见[纹理源方向](texture-source-orientation.md)）。
 
 ## 5. 调试与诊断
 
@@ -150,6 +152,28 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 | `docs/evidence/g4-shader-probe.json`      | 当前 WebGL2 探针证据（14/14 PASS，含 registerBeforeBoot 边界）            |
 
 ## 7. 从声明表生成 effect JSON
+
+### 注册前布局检查与双贴图（2026-10-04）
+
+可选开发工具[effect-layout.ts](../../tools/debug/effect-layout.ts)提供 `prepareEffectForRegistration(effectJson)`：克隆JSON后为缺省材质sampler分配不冲突槽位，检查set/binding、sampler类型/数量、顶点/片元stageFlags、UBO成员顺序/类型及GLSL4布局和反射一致性。失败抛 `AIR_E_EFFECT_LAYOUT`，`issues`给出shader、resource、stage和稳定规则码。调用它以后，仍由原生 `EffectAsset.onLoaded()` 注册；直接调用原生入口不会自动启用此工具。
+
+```ts
+// 仓库开发工具，调用方显式接入；不在npm默认运行时导出内。
+import { prepareEffectForRegistration } from '../../tools/debug/effect-layout';
+const { effect: checkedJson, bindings } = prepareEffectForRegistration(effectJson);
+const effect = Object.assign(new EffectAsset(), checkedJson);
+effect.onLoaded(); // 已await createAirApp，后续使用原生Material
+const material = new Material();
+material.initialize({ effectAsset: effect });
+material.setProperty('mapA', firstTexture);
+material.setProperty('mapB', secondTexture);
+```
+
+当前预检范围是**无条件vec4/mat4 UBO及sampler2D**，UBO必须从材质binding=0连续排列；有一个UBO时两个sampler为1/2，没有UBO时为0/1。显式与自动分配均检查同一GLSL4声明；存在条件资源、数组/其他成员格式时明确拒绝 `UNSUPPORTED`，需完整编译工具处理，不能推断为合法。它不验证所有GLSL语法、Vulkan或完整反射，也不把builtin私有toGlsl3当作通用编译器。
+
+VERT和FRAG各自预处理，顶点源码内的`#define`不会出现在片元源码；通过Effect的defines元数据与Material.initialize传入的宏才会按原生模板合同配置两阶段。受限声明表生成器本身不接受macro/include，手写编译产物可以使用自包含宏源码。`setProperty`更新uniform或纹理，不是运行期改宏入口。
+
+本轮[执行台账](../../ai/ledgers/port-gap-remediation.md)记录三浏览器真实双贴图切换、两阶段UBO变化、自动/显式布局、MR/SMR的effectName/effectAsset，以及现有builtin Material对照。负Shader必须进入实际绘制才触发本轮设备路径的编译/链接；原生错误16323/16326保留program名，开发session分别捕获shader/link类别，正常场景仍可绘制。SMR此探针用不蒙皮的自定义shader隔离材质注册，骨骼变形另验；GPU内存量不可测，不能以资源isValid=false代替零泄漏证明。
 
 开发工具 [effect-json.mjs](../../tools/build/effect-json.mjs) 可以生成 WebGL2 可注册的 JSON，
 不需要手抄 `blocks`、attributes、枚举和三份 shader 源码。它是受限模板生成器，运行时包不依赖该工具。

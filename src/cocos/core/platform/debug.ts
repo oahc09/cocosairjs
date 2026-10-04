@@ -33,6 +33,36 @@ const ERROR_MAP_URL = `https://github.com/cocos/cocos-engine/blob/${VERSION}/Eng
 
 export type StringSubstitution = number | string;
 
+/** @engineInternal Observes native diagnostics without changing console filtering. */
+export interface DiagnosticLogEntry {
+    severity: 'warning' | 'error';
+    id: number | null;
+    message: string;
+}
+
+const diagnosticObservers = new Set<(entry: DiagnosticLogEntry) => void>();
+const notifyingObservers = new Set<(entry: DiagnosticLogEntry) => void>();
+
+/** @engineInternal AIR tools subscribe explicitly; the ordinary runtime has no observers. */
+export function _subscribeDiagnosticLogs (listener: (entry: DiagnosticLogEntry) => void): () => void {
+    const ownedListener = (entry: DiagnosticLogEntry): void => listener(entry);
+    diagnosticObservers.add(ownedListener);
+    return (): void => { diagnosticObservers.delete(ownedListener); };
+}
+
+function notifyDiagnostic (severity: DiagnosticLogEntry['severity'], id: number | null, data: unknown[]): void {
+    if (diagnosticObservers.size === 0) { return; }
+    let message: string;
+    try { message = formatString(...data); } catch { message = '[unformattable native diagnostic]'; }
+    const entry: DiagnosticLogEntry = { severity, id, message };
+    for (const observer of Array.from(diagnosticObservers)) {
+        if (!diagnosticObservers.has(observer) || notifyingObservers.has(observer)) { continue; }
+        notifyingObservers.add(observer);
+        try { observer(entry); } catch { /* An observer must not interrupt native logging. */ }
+        finally { notifyingObservers.delete(observer); }
+    }
+}
+
 // The html element displays log in web page (DebugMode.INFO_FOR_WEB_PAGE)
 let logList: HTMLTextAreaElement | null = null;
 
@@ -76,6 +106,7 @@ export function log (...data: unknown[]): void {
  *     - 在 Chrome 中，警告信息有着黄色的图标以及黄色的消息文本。<br/>
  */
 export function warn (...data: unknown[]): void {
+    notifyDiagnostic('warning', null, data);
     return ccWarn(...data);
 }
 
@@ -89,6 +120,7 @@ export function warn (...data: unknown[]): void {
  *     - 在 Chrome 中，错误信息有红色的图标以及红色的消息文本。<br/>
  */
 export function error (...data: unknown[]): void {
+    notifyDiagnostic('error', null, data);
     return ccError(...data);
 }
 
@@ -283,12 +315,16 @@ export function debugID (id: number, ...optionalParams: StringSubstitution[]): v
 
 const warnFormatter = getTypedFormatter('Warning');
 export function warnID (id: number, ...optionalParams: StringSubstitution[]): void {
-    warn(warnFormatter(id, ...optionalParams));
+    const message = warnFormatter(id, ...optionalParams);
+    notifyDiagnostic('warning', id, [message]);
+    ccWarn(message);
 }
 
 const errorFormatter = getTypedFormatter('Error');
 export function errorID (id: number, ...optionalParams: StringSubstitution[]): void {
-    error(errorFormatter(id, ...optionalParams));
+    const message = errorFormatter(id, ...optionalParams);
+    notifyDiagnostic('error', id, [message]);
+    ccError(message);
 }
 
 const assertFormatter = getTypedFormatter('Assert');

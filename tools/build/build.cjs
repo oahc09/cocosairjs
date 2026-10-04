@@ -140,6 +140,10 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         }
     }
     console.log('[build] output: ' + relative(ROOT, join(OUT, bundleName)) + (VARIANT ? '  [variant]' : ''));
+    if (moduleFormat === 'esm') {
+        await require('./bootstrap-entry.cjs').buildBootstrapEntry(OUT);
+        console.log('[build] output: ' + relative(ROOT, join(OUT, 'bootstrap.js')) + ' (engine-free safe entry)');
+    }
     if (!VARIANT) {
     // R1（v051 review）：根 package.json 是 type:commonjs（构建工具链需要），
     // 而 build/ 产物是 ESM。随包在 build/ 内发出 {"type":"module"}，

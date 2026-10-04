@@ -29,7 +29,13 @@ describe('debug/agent 模块与默认 runtime 隔离', () => {
         expect(fs.existsSync(BUNDLE)).toBe(true);
         const source = fs.readFileSync(BUNDLE, 'utf8');
         for (const marker of DEBUG_MARKERS) {
-            expect(source.includes(marker)).toBe(false);
+            // Runtime scopes expose AIR_E_SESSION_CLOSED. The optional inspector
+            // uses the distinct standalone SESSION_CLOSED code; keep detecting it.
+            if (marker === 'SESSION_CLOSED') {
+                expect(source).not.toMatch(/\bSESSION_CLOSED\b/);
+            } else {
+                expect(source.includes(marker)).toBe(false);
+            }
         }
     });
 

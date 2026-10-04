@@ -15,10 +15,10 @@
  *
  * 八条实测的非显然点（都钉在 results 里）：
  * 1) `Orientation` 枚举是 ORTHO=0 / HEX=1 / **ISO=2**（tiled-types.ts:54-72），不是按 XML 字面顺序。
- * 2) `<object>` 的 Tiled `type="solid"` 属性**不读**：`objectProp.type` 只由子元素/`gid` 推出
- *    （tmx-xml-parser.ts:964-1008），所以点对象 `<point/>` 落进 RECT(0)；`type` 只在 `<property>` 上表示值类型。
+ * 2) `<object>` 的 `class`/旧版 `type="solid"` 保存在 `className`，可用 getObjectsByType('solid') 查询。
+ *    `objectProp.type` 仍是几何形状枚举；点对象 `<point/>` 沿用 RECT(0)。
  * 3) `_init` 会**就地改写** `object.x/y`（正交 `y = height - y`，等距走菱形公式），
- *    Tiled 原始坐标只留在 `object.offset` 上（tiled-object-group.ts:221-237）⇒ 读回要分两套。
+ *    getRawObjects() 另提供冻结的原始几何；本例旧字段仍通过 object.offset 读原值，保持既有合同。
  * 4) 只有 TEXT/IMAGE 两类对象会生成节点（`text<id>` / `img<id>`），RECT/ELLIPSE/POLYGON 纯数据。
  * 5) 等距对象换算用的是 `object.x / tileSize.height`（`:231-232`，分母是 tile **height**），
  *    本例 tile 32×32 看不出来，但它是上游逐字节行为，登记不改。
@@ -275,7 +275,7 @@ function objectSnap(tm, groupName) {
             id: o.id,
             name: o.name,
             typeEnum: `${o.type}:${enumName(OBJT, o.type)}`,
-            // x/y 已被 _init 改写成引擎坐标；offset.* 才是 TMX 原值
+            // x/y 是引擎坐标；旧 probe 保留 offset 字段，业务也可用 getRawObjects()。
             engineXY: [r(o.x), r(o.y)],
             tmxXY: [r(o.offset.x), r(o.offset.y)],
             size: [r(o.width), r(o.height)],

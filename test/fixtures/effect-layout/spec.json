@@ -1,0 +1,9 @@
+{
+  "name": "air-port-two-textures",
+  "attributes": [{"name":"a_position","type":"vec3","location":0},{"name":"a_texCoord","type":"vec2","location":2}],
+  "varyings": [{"name":"v_uv","type":"vec2"}],
+  "uniforms": [{"name":"tint","type":"vec4","value":[1,1,1,1]},{"name":"params","type":"vec4","value":[0,0,0,0]}],
+  "samplers": [{"name":"mapA","type":"sampler2D","value":"white"},{"name":"mapB","type":"sampler2D","value":"black"}],
+  "vertex": "void main() { v_uv = a_texCoord; gl_Position = cc_matViewProj * cc_matWorld * vec4(a_position + vec3(params.z,0.0,0.0),1.0); }",
+  "fragment": "void main() { cc_FragColor = mix(texture(mapA,v_uv),texture(mapB,v_uv),params.x) * tint; }"
+}

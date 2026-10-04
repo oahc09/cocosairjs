@@ -10,16 +10,22 @@
 import { createAirApp, Scene, Material, EffectAsset } from "cocosair";
 
 const app = await createAirApp({ canvas: "#GameCanvas" }); // ① 引擎引导（device/programLib 就绪）
-const mat = new Material(); // ② 引导之后才能构造材质/注册 effect
+const mat = new Material(); // ② 引导之后初始化材质；EffectAsset 可提前注册
 mat.initialize({ effectName: "builtin-standard" });
 ```
 
-- **`Material.initialize` / `EffectAsset.onLoaded` 必须在 `createAirApp` 之后**。引导前调用会抛
-  `TypeError: Cannot read properties of undefined (reading 'capabilities')`（WebProgramLibrary 空 device）。
-  实证：`docs/evidence/g4-shader-probe.json` 的 `registerBeforeBoot` 相位（双后端复现）。
+- **`Material.initialize` 必须在 renderer 就绪后调用**，推荐在 `await createAirApp` 之后。
+  当前未就绪路径明确抛 `AIR_E_MATERIAL_NOT_READY`。`EffectAsset.onLoaded` 可在引导前注册，
+  编译与设备相关注册延迟到 renderer 就绪；它与材质初始化的时机不同。
+  当前合同见 `test/smoke/competitive-bootstrap-contract.test.ts` 和
+  `tools/verify/competitive-early-effect-browser.cjs`；旧 `registerBeforeBoot` 报告记录的是历史缺陷。
 - 默认模板的 `#GameCanvas` 必须在引擎模块 import 前存在于 DOM。使用自定义 id 时，
   在动态 import 前执行 `globalThis.__CC_CANVAS__ = canvas`；`createAirApp` 不改写该 id，
   缺少预绑定会明确报错。键盘事件要求 canvas 聚焦。
+- `createAirApp` 将负 `tabIndex` 设为 0，PAL 在画布 mousedown/touchstart 时聚焦；
+  首屏尚未交互时不能假定画布已经聚焦。明确的 Start/Resume 操作可调用 `app.canvas.focus()`，
+  普通 HUD 和文本输入不应持续抢焦点。PAL 在画布上停止键盘冒泡，若需要观察 DOM按键，
+  使用受控 window capture 和 active-session/editable准入，不能依赖 window冒泡。
 - 物理后端等启动配置在 `createAirApp({ physics: 'cannon' })` 一次性给定（`physics-interaction` 实证；
   r46 owner 批复 #8(a) 的交付期后端切换）。
 

@@ -21,8 +21,16 @@
     "visual": "深色展台场景：中央主产品（BoxTextured 纹理盒 / 更换后为蒙皮动画件）缓慢自转，右侧 SimpleSkin 蒙皮副件持续动画；地面灰蓝平面；左上信息面板（main/selected/swaps/shots/resize/wheel/drags/nodes），左下状态行，右上三枚 DOM 按钮（截图/换材质/更换模型）"
   },
   "api": {
-    "primary": ["GLTFLoader.parseAsync", "Camera.screenPointToRay", "frameObject"],
-    "supporting": ["GLTFAsset.instantiate", "input", "isValid"],
+    "primary": [
+      "GLTFLoader.parseAsync",
+      "Camera.screenPointToRay",
+      "frameObject"
+    ],
+    "supporting": [
+      "GLTFAsset.instantiate",
+      "input",
+      "isValid"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -321,7 +329,10 @@
       }
     ]
   },
-  "capabilities": ["gltf", "animation"],
+  "capabilities": [
+    "gltf",
+    "animation"
+  ],
   "assets": [
     "assets/BoxTextured.glb",
     "assets/SimpleSkin.gltf",
@@ -333,7 +344,14 @@
   ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Ground", "ProductMain", "ProductSide", "Spinner"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Ground",
+        "ProductMain",
+        "ProductSide",
+        "Spinner"
+      ]
     }
   },
   "interaction": {
@@ -360,18 +378,40 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "asset-loaded", "animation-playing", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "asset-loaded",
+      "animation-playing",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
     "benchmarkRefs": [],
-    "recipeRefs": ["R006", "R007", "R009", "R010", "R011", "R019"]
+    "recipeRefs": [
+      "R006",
+      "R007",
+      "R009",
+      "R010",
+      "R011",
+      "R019"
+    ]
   },
   "screenshot": {},
   "license": {
@@ -380,8 +420,16 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [0, 8, 0],
-        "rotationEuler": [-45, -30, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -396,7 +444,11 @@
         ]
       },
       "Ground": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -406,7 +458,11 @@
         ]
       },
       "Spinner": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -416,7 +472,11 @@
         ]
       },
       "ProductMain": {
-        "position": [0, 0.6, 0],
+        "position": [
+          0,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -426,7 +486,11 @@
         ]
       },
       "ProductSide": {
-        "position": [2.6, 1, 0],
+        "position": [
+          2.6,
+          1,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -522,7 +586,7 @@
   "promotion": {
     "spec": "e568b27b4292",
     "source": "ce8c2f3d46c24e7f",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 41,
     "attested": 0,
     "units": 41

@@ -779,11 +779,9 @@ export class TextProcessing {
         for (let i = 0; i < stringLen; ++i) {
             const key = string.charCodeAt(i);
             const kerningAmount = kerningDict[(prev << 16) | (key & 0xffff)] || 0;
-            if (i < stringLen - 1) {
-                horizontalKerning[i] = kerningAmount;
-            } else {
-                horizontalKerning[i] = 0;
-            }
+            // Layout consumes the next character's incoming kerning. The final
+            // character still has an incoming pair (for example the V in AV).
+            horizontalKerning[i] = kerningAmount;
             prev = key;
         }
     }

@@ -945,6 +945,7 @@ export class TMXMapInfo {
 
                 // Set the name of the object to the value for "name"
                 objectProp.name = selObj.getAttribute('name') || '';
+                objectProp.className = selObj.getAttribute('class') || selObj.getAttribute('type') || '';
 
                 // Assign all the attributes as key/name pairs in the properties dictionary
                 objectProp.width = parseFloat(selObj.getAttribute('width')!) || 0;

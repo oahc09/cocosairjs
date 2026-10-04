@@ -151,6 +151,8 @@ export class Camera extends Component {
     @serializable
     protected _orthoHeight = 10;
     @serializable
+    protected _orthoWidth = 0;
+    @serializable
     protected _near = 1;
     @serializable
     protected _far = 1000;
@@ -376,6 +378,16 @@ export class Camera extends Component {
     set orthoHeight (val) {
         this._orthoHeight = val;
         if (this._camera) { this._camera.orthoHeight = val; }
+    }
+
+    /** Orthographic half-width. Zero keeps the native height-times-window-aspect behavior. */
+    get orthoWidth (): number { return this._orthoWidth; }
+    set orthoWidth (val: number) {
+        if (typeof val !== 'number' || !Number.isFinite(val) || val < 0) {
+            throw Object.assign(new Error('AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.'), { code: 'AIR_E_ORTHO_WIDTH' });
+        }
+        if (this._camera) { this._camera.orthoWidth = val; }
+        this._orthoWidth = val;
     }
 
     /**
@@ -715,6 +727,7 @@ export class Camera extends Component {
             this._camera.fovAxis = this._fovAxis;
             this._camera.fov = toRadian(this._fov);
             this._camera.orthoHeight = this._orthoHeight;
+            this._camera.orthoWidth = this._orthoWidth;
             this._camera.nearClip = this._near;
             this._camera.farClip = this._far;
             this._camera.clearColor = this._color;

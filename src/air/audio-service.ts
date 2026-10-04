@@ -7,7 +7,7 @@
  * - 音乐/音效开关独立；
  * - 判据纪律：不以 playing=true 单独证明时钟推进——以 currentTime 实测推进为准（probe 断言）。
  *
- * 浏览器后端（Web Audio vs DOM `<audio>`）与 Safari/WebKit 行为为未测条件（环境限制，台账登记）。
+ * 浏览器后端由 PAL 选择（Web Audio vs DOM `<audio>`）；播放头验证见专用浏览器探针与台账。
  * 手势解锁：引擎/浏览器 autoplay 策略域——部署侧以 --autoplay-policy 或用户手势解锁，
  * 本服务遇到未解锁播放会在 currentTime 上如实表现为不推进（可被 probe/业务观测）。
  *
@@ -27,6 +27,8 @@ export interface BgmState {
     /** 实测播放头（秒）；未播放/无 clip 为 0。 */
     currentTime: number;
     loop: boolean;
+    /** 通道音量，范围 [0, 1]。 */
+    volume: number;
 }
 
 /** @en Options for [[AudioService]]. @zh AudioService 选项。 */
@@ -50,6 +52,7 @@ export class AudioService {
     private _musicEnabled = true;
     private _sfxEnabled = true;
     private _bgmId: string | null = null;
+    private _bgmVolume = 1;
     /** 超限被丢弃的音效次数（观测面）。 */
     sfxDropped = 0;
 
@@ -82,6 +85,7 @@ export class AudioService {
             this._scene.addChild(node);
             src = node.addComponent(AudioSource);
             src.playOnAwake = false;
+            src.volume = this._bgmVolume;
             src.clip = this._clips.get(id) ?? null;
             node.active = true;
             this._sources.set(id, src);
@@ -117,6 +121,25 @@ export class AudioService {
         const src = this._bgmId ? this._sources.get(this._bgmId) : null;
         if (src) { src.pause(); }
     }
+
+    /** 停止当前 BGM 并将播放头归零；保留 ID，resumeBgm 从零开始。节点名不是公开契约。 */
+    stopBgm (): void {
+        const src = this._bgmId ? this._sources.get(this._bgmId) : null;
+        if (src) { src.stop(); src.currentTime = 0; }
+    }
+
+    /** 设置所有现有及后续 BGM 通道的音量；不改变音效音量、开关或播放头。 */
+    setBgmVolume (volume: number): void {
+        if (!Number.isFinite(volume) || volume < 0 || volume > 1) {
+            throw Object.assign(new RangeError('[AudioService] BGM volume must be finite and in [0, 1]'), {
+                code: 'AIR_E_AUDIO_VOLUME',
+            });
+        }
+        this._bgmVolume = volume;
+        for (const src of this._sources.values()) { src.volume = volume; }
+    }
+
+    get bgmVolume (): number { return this._bgmVolume; }
 
     /** 恢复当前 BGM 台（从暂停点续播）。 */
     resumeBgm (): void {
@@ -177,7 +200,7 @@ export class AudioService {
         if (!this._bgmId) { return null; }
         const src = this._sources.get(this._bgmId);
         if (!src) { return null; }
-        return { id: this._bgmId, playing: src.playing, currentTime: src.currentTime, loop: src.loop };
+        return { id: this._bgmId, playing: src.playing, currentTime: src.currentTime, loop: src.loop, volume: src.volume };
     }
 
     /** @en Stop everything and destroy source nodes（页面销毁路径）。 @zh 停止并销毁全部源节点。 */

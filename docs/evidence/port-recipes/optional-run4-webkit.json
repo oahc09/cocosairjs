@@ -1,0 +1,187 @@
+{
+  "schemaVersion": "air-optional-recipe/2",
+  "generatedAt": "2026-10-04T07:28:19.371Z",
+  "engine": "webkit",
+  "browserVersion": "26.6",
+  "allPass": true,
+  "scope": "partial",
+  "notRun": [
+    {
+      "item": "audio-clock-advance-run",
+      "reason": "webkit headless does not advance audio currentTime"
+    },
+    {
+      "item": "audio-clock-advance-restart",
+      "reason": "webkit headless does not advance audio after restart"
+    }
+  ],
+  "probeFailures": [],
+  "pageErrors": [],
+  "serverRequests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:56078/test/fixtures/port-recipes/index.html",
+      "statusCode": 200,
+      "ts": 1791098881522
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:56078/test/fixtures/port-recipes/main.ts",
+      "statusCode": 200,
+      "ts": 1791098881529
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:56078/test/fixtures/port-recipes/driver.ts",
+      "statusCode": 200,
+      "ts": 1791098881587
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:56078/build/cocosair.module.js",
+      "statusCode": 200,
+      "ts": 1791098881597
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:56078/optional-assets/nonexistent-404.png",
+      "statusCode": 404,
+      "ts": 1791098891271
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:56078/optional-assets/nonexistent-404.png",
+      "statusCode": 404,
+      "ts": 1791098893281
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:56078/optional-assets/nonexistent-404.png",
+      "statusCode": 404,
+      "ts": 1791098895309
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:56078/optional-assets/nonexistent-404.png",
+      "statusCode": 404,
+      "ts": 1791098897338
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:56078/optional-assets/nonexistent-404.png",
+      "statusCode": 404,
+      "ts": 1791098899352
+    }
+  ],
+  "serverRequests404Count": 5,
+  "probe": {
+    "phases": {
+      "construct": {
+        "phase": "construct",
+        "instanceId": "opt-utvas9",
+        "storageAvailable": true,
+        "audioCreated": true,
+        "bankCreated": true,
+        "labelAttached": true,
+        "sentinelAttached": true,
+        "hostStillValid": true,
+        "sceneStillValid": true
+      },
+      "run": {
+        "phase": "run",
+        "instanceId": "opt-utvas9",
+        "bankLoaded": true,
+        "bankLoadError": null,
+        "audioLoaded": true,
+        "audioLoadError": null,
+        "clipOwned": true,
+        "bankSize": 1,
+        "bankRefCount": 1,
+        "stateBefore": {
+          "id": "pg33-tone",
+          "playing": false,
+          "currentTime": 0,
+          "loop": false,
+          "volume": 1
+        },
+        "stateAfter": {
+          "id": "pg33-tone",
+          "playing": false,
+          "currentTime": 0,
+          "loop": false,
+          "volume": 1
+        },
+        "currentTimeAdvanced": false,
+        "counterSet": true,
+        "counter": 1
+      },
+      "pauseRestart": {
+        "phase": "pauseRestart",
+        "instanceId": "opt-utvas9",
+        "preCurrentTime": 0,
+        "preAfterWaitCurrentTime": 0,
+        "pausedCurrentTime": 0,
+        "resumedCurrentTime": 0,
+        "stoppedCurrentTime": 0,
+        "restartedCurrentTime": 0,
+        "pausePreservedClock": true,
+        "resumeAdvanced": false,
+        "stoppedAtZero": true,
+        "restartedAdvanced": false
+      },
+      "release": {
+        "phase": "release",
+        "instanceId": "opt-utvas9",
+        "labelNodeValid": false,
+        "sentinelValid": false,
+        "clipValid": false,
+        "clipRefCount": 0,
+        "bankReleasedCount": 1,
+        "bankSize": 0,
+        "hostStillValid": true,
+        "sceneStillValid": true,
+        "storageRestored": true
+      }
+    },
+    "negatives": [
+      {
+        "name": "missing-extension",
+        "error": "[AssetBank] suffix-less URL requires an explicit ext: http://127.0.0.1:56078/optional-assets/noext",
+        "errorCode": "AIR_E_EXT_REQUIRED",
+        "measurements": {
+          "syncThrew": true,
+          "url": "http://127.0.0.1:56078/optional-assets/noext",
+          "extProvided": false,
+          "bankSize": 0,
+          "bankInFlight": 0
+        },
+        "method": "AssetBank.load(suffix-less url) without ext: sync AirAssetError AIR_E_EXT_REQUIRED"
+      },
+      {
+        "name": "http-404",
+        "error": "[AssetBank] load failed: http://127.0.0.1:56078/optional-assets/nonexistent-404.png (Load image ( http://127.0.0.1:56078/optional-assets/nonexistent-404.png ) failed)",
+        "errorCode": "AIR_E_LOAD_FAILED",
+        "measurements": {
+          "rejected": true,
+          "url": "http://127.0.0.1:56078/optional-assets/nonexistent-404.png",
+          "bankSizeAfter": 0,
+          "bankInFlightAfter": 0
+        },
+        "method": "AssetBank.load nonexistent path with ext: AirAssetError AIR_E_LOAD_FAILED (cause preserved)"
+      },
+      {
+        "name": "corrupt-storage",
+        "measurements": {
+          "rawValue": "{broken json!!",
+          "parseError": "JSON Parse error: Expected '}'",
+          "recovered": true,
+          "restoredValue": "0",
+          "storageAvailable": true
+        },
+        "method": "write broken JSON, read, JSON.parse throws, clear and write default, verify restored"
+      }
+    ],
+    "clickLog": [],
+    "postReleaseError": "[opt-utvas9] construct called after release (terminal state)"
+  }
+}

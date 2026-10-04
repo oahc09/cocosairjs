@@ -1,4 +1,6 @@
-/** Convert Canvas2D top-first rows to the bottom-first rows consumed by uploadData. */
+/** Flip Canvas2D rows for the examples' +90X native plane (visual top has v=1).
+ * uploadData itself preserves byte order; Sprite's visual top has v=0 and needs top-first bytes.
+ */
 export function copyCanvasRows(image, target) {
     const stride = image.width * 4;
     if (target.length !== image.data.length) throw new Error('canvas texture buffer size mismatch');

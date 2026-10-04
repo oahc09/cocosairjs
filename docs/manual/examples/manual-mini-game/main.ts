@@ -5,7 +5,7 @@
  * 不用任何游戏框架，纯引擎手写一个"方向键/WASD 移动小球、吃随机出现的
  * 方块、计分"的迷你游戏——碰撞用中心距离判定（勾股免开方），相机固定俯视。
  * （距离判定是本示例为最小闭环选择的近似；AIR 自带组件级 2D/3D 物理，physics 篇）：
- *   - 输入：window 级 input 单例，input.on(SystemEventType.KEY_DOWN/KEY_UP) + KeyCode
+ *   - 输入：聚焦 canvas 的键盘经全局 input 单例派发，input.on(SystemEventType.KEY_DOWN/KEY_UP) + KeyCode
  *     （tips-keyboard 篇同款按下集合模式，源码锚：d.ts 28294 export const input）；
  *   - 移动：update(dt) 里按合成方向平移 + 场地边界 clamp；
  *   - 判定：XZ 平面平方距离 < (r_ball + r_coin)^2 即吃到——不开方；

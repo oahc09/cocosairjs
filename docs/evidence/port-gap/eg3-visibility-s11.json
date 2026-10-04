@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG3",
+  "subject": {
+    "description": "Browser subset: Optional native layer/model flag OR, AABB-frustum and enabled/attachment diagnostics matched to actual GPU visibility"
+  },
+  "evidenceTypes": [
+    "BROWSER_RENDER_PASS"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-render-visibility-browser.cjs --bundle=output/playwright/skinning-s8-build/cocosair.module.js --out=output/playwright/air-visibility-s9-typed.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T04:24:11.442Z",
+    "endedAt": "2026-10-04T04:24:20.495Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 3,
+    "measuredCases": 3,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; No LOD/occlusion/shader/material/deployment draw inference; GPU memory unavailable"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "output/playwright/skinning-s8-build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": false,
+      "status": "NOT_RUN",
+      "reason": "Native report identifies runtime bytes; individual source entry not recorded"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/render-visibility/main.ts",
+      "sha256": "1db706d9b6e4e5bff4f94c6be4717a9edd8108e53a19c2c5d4cbd579f953a612"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-render-visibility-browser.cjs",
+      "sha256": "dd638f2aa9d68ab8f30119a9f1089544e19933f7cc4132b6f202ddab09fabefa"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-visibility-s9-typed.json",
+      "sha256": "0a2519b5c205d77d88349606d8826b111e6a26cc2584b5cf5dd8521c25f47f4b",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/render-visibility/index.html",
+      "sha256": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-visibility-s9-typed.json",
+    "sha256": "0a2519b5c205d77d88349606d8826b111e6a26cc2584b5cf5dd8521c25f47f4b",
+    "allFingerprints": {
+      "output/playwright/skinning-s8-build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "test/fixtures/render-visibility/main.ts": "1db706d9b6e4e5bff4f94c6be4717a9edd8108e53a19c2c5d4cbd579f953a612",
+      "test/fixtures/render-visibility/index.html": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9",
+      "tools/debug/render-visibility.ts": "d1261e872a6d1aac4b6d014afb5d9e6a697f0c19b08b05b51d83fc116a3f8477",
+      "tools/debug/agent-session.ts": "9b87fe73b6d0c27af39df08d56fe8fe317daff8f3e026a55b605a4f3c4950deb",
+      "tools/debug/skinning-inspector.ts": "b3887d484bc9fdfe6798f6e09f7dab18723b4872248fe68719b8c3c8e6db3b65",
+      "tools/verify/air-render-visibility-browser.cjs": "dd638f2aa9d68ab8f30119a9f1089544e19933f7cc4132b6f202ddab09fabefa"
+    },
+    "installed": null,
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-visibility-s9-typed.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-visibility-s9-typed.json"
+      }
+    ],
+    "screenshots": []
+  }
+}

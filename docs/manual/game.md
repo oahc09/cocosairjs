@@ -24,7 +24,7 @@ AIR 本身带组件级 2D/3D 物理（[physics](physics.md) 篇），需要摩�
 
 | 入口                    | 锚点                                   | 语义（实测）                                                              |
 | ----------------------- | -------------------------------------- | ------------------------------------------------------------------------- |
-| `input` 单例            | d.ts 28294 `export const input: Input` | window 级全局输入，`input.on(type, cb)` 即订即用，不必等 `app.run`        |
+| `input` 单例            | d.ts 28294 `export const input: Input` | 全局订阅接口；Web 键盘来自聚焦的 canvas，画布交互或 Start/Resume 后接收，见[tips](tips.md) |
 | `EventKeyboard.keyCode` | d.ts 27150/27160                       | KEY_DOWN/KEY_UP 事件携带 `KeyCode` 枚举值                                 |
 | `KeyCode`               | d.ts 27626                             | `KEY_W/A/S/D`、`ARROW_UP/…`、`SPACE` 等，与 tips-keyboard 篇同一张表      |
 | `Component.update(dt)`  | update-things 篇                       | 游戏主循环：每帧一次，`dt` 秒——移动/判定/重生全在这里                     |
@@ -206,7 +206,7 @@ node tools/verify/manual-doc-consistency.cjs
  * 不用任何游戏框架，纯引擎手写一个"方向键/WASD 移动小球、吃随机出现的
  * 方块、计分"的迷你游戏——碰撞用中心距离判定（勾股免开方），相机固定俯视。
  * （距离判定是本示例为最小闭环选择的近似；AIR 自带组件级 2D/3D 物理，physics 篇）：
- *   - 输入：window 级 input 单例，input.on(SystemEventType.KEY_DOWN/KEY_UP) + KeyCode
+ *   - 输入：聚焦 canvas 的键盘经全局 input 单例派发，input.on(SystemEventType.KEY_DOWN/KEY_UP) + KeyCode
  *     （tips-keyboard 篇同款按下集合模式，源码锚：d.ts 28294 export const input）；
  *   - 移动：update(dt) 里按合成方向平移 + 场地边界 clamp；
  *   - 判定：XZ 平面平方距离 < (r_ball + r_coin)^2 即吃到——不开方；

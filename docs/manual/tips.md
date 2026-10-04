@@ -6,11 +6,10 @@
 
 ## Taking a screenshot 截图
 
-**PARTIAL。** AIR 的 d.ts 里 grep `toDataURL|preserveDrawingBuffer` **零命中**——引擎不暴露截图 API，也不暴露 WebGL 上下文的 preserveDrawingBuffer 开关；
-WebGL 默认 `preserveDrawingBuffer=false`，在绘制回调之外调 `canvas.toDataURL()` 通常得到空白帧。
+**PARTIAL。** 引擎没有专用截图 API，也没有公开的 `preserveDrawingBuffer` 配置入口。当前 WebGL2 实现创建主上下文时设置 `preserveDrawingBuffer: true`，但浏览器页面呈现、resize 与帧内 GPU 读回仍需分别验证，不能据此保证所有截图方式都有效。
 
 本仓库实际可行的截图路是**外部抓帧**：验证器用 Playwright 对页面做 canvas-only 截图，落到 `docs/evidence/examples/<id>.png`
-（见 [验证工具](../../tools/verify/manual-examples-verify.cjs)）。要在应用内截图，升级条件是 AIR 暴露 readback/截图 API 或允许配置 preserveDrawingBuffer。
+（见 [验证工具](../../tools/verify/manual-examples-verify.cjs)）。应用可调用 DOM canvas 的 `toDataURL()`，须自行验证采样时机与结果；它不是 AIR 的跨浏览器截图保证。本轮 WebKit resize 的呈现限制见[设计视口](design-viewport-and-controls.md)。
 
 ## Prevent the Canvas Being Cleared 阻止画布被清除
 
@@ -22,7 +21,7 @@ WebGL 默认 `preserveDrawingBuffer=false`，在绘制回调之外调 `canvas.to
 
 ## Get Keyboard Input From a Canvas 从画布获取键盘输入
 
-**FULL。** AIR 的键盘事件走 **window 级 `input` 单例**，与 canvas 聚焦无关，**不需要给 canvas 加 tabindex/做聚焦技巧**：
+AIR 的键盘事件经绑定 canvas 的 Web PAL 转给全局 `input` 单例，要求该 canvas 聚焦。`createAirApp` 会把负 `tabIndex` 设为 0，画布交互会聚焦；首屏不主动抢焦点，Start/Resume 可显式调用 `app.canvas.focus()`。文本输入与普通 HUD 不应持续抢焦点，具体规则见[组件流程](script-component-workflow.md)。订阅仍使用原生接口：
 
 ```js
 input.on(SystemEventType.KEY_DOWN, (e) => {
@@ -140,9 +139,9 @@ AIR 侧的 CSS 定位部分完全可行（canvas 就是普通 DOM 元素，`posi
  * Cocos AIR 开发手册 — Tips / Get Keyboard Input From a Canvas（画布键盘输入）
  * 配套文章：docs/manual/tips.md#get-keyboard-input-from-a-canvas-从画布获取键盘输入
  *
- * AIR 的键盘事件走 window 级 input 单例（input.on(SystemEventType.KEY_DOWN/KEY_UP)），
- * 不需要给 canvas 加 tabindex/聚焦——事件来自全局 input 单例，与页面焦点在哪无关，
- * 任意时刻按下都会被收到。
+ * Web PAL 在聚焦的 canvas 上接收键盘，再派发给全局 input 单例。
+ * createAirApp 设置可聚焦性；画布交互或显式 Start/Resume 聚焦后才接收按键。
+ * 文本输入保留自己的焦点，不由游戏每帧抢回。
  * 本例维护一个 pressed 集合：WASD/方向键平移立方体、Space 加速自转，覆盖层实时回显；
  * 无按键时立方体仍空闲自转 20°/s，保证 frame-diff 有帧间差异。
  */

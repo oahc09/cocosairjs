@@ -56,14 +56,22 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Vec3 静态 out-形算术全族（向量/标量双形态、取负、克隆、重置），与 Vec2 同构对照。",
-    "points": ["3f 后缀形态与向量形态等价", "multiplyScalar 广播到三分量", "set(clone) 往返一致"]
+    "points": [
+      "3f 后缀形态与向量形态等价",
+      "multiplyScalar 广播到三分量",
+      "set(clone) 往返一致"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 214,148,96）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["math.Vec3.add", "math.Vec3.subtract", "math.Vec3.multiply"],
+    "primary": [
+      "math.Vec3.add",
+      "math.Vec3.subtract",
+      "math.Vec3.multiply"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -141,7 +149,9 @@
       "math.Vec3.prototype.transformMat4",
       "math.Vec3.prototype.cross"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -412,21 +422,32 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "lifecycle": [],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -440,7 +461,7 @@
   "promotion": {
     "spec": "30f3848c9bf2",
     "source": "7391fe4bff75816e",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 44,
     "attested": 0,
     "units": 44

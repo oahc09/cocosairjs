@@ -50,6 +50,7 @@
     "Camera.fovAxis",
     "Camera.fov",
     "Camera.orthoHeight",
+    "Camera.orthoWidth",
     "Camera.near",
     "Camera.far",
     "Camera.aperture",
@@ -77,7 +78,10 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 155,215,205）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["Camera.postProcess", "renderer.scene.Camera.pipeline"],
+    "primary": [
+      "Camera.postProcess",
+      "renderer.scene.Camera.pipeline"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -112,6 +116,7 @@
       "Camera.fovAxis",
       "Camera.fov",
       "Camera.orthoHeight",
+      "Camera.orthoWidth",
       "Camera.near",
       "Camera.far",
       "Camera.aperture",
@@ -168,6 +173,7 @@
       "Camera.fovAxis",
       "Camera.fov",
       "Camera.orthoHeight",
+      "Camera.orthoWidth",
       "Camera.near",
       "Camera.far",
       "Camera.aperture",
@@ -181,7 +187,9 @@
       "Camera.onDestroy",
       "Camera.convertToUINode"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -436,6 +444,12 @@
         "sourceLocation": "L149"
       },
       {
+        "api": "Camera.orthoWidth",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L177"
+      },
+      {
         "api": "Camera.near",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
@@ -451,82 +465,95 @@
         "api": "Camera.aperture",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L152"
+        "sourceLocation": "L153"
       },
       {
         "api": "Camera.shutter",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L153"
+        "sourceLocation": "L154"
       },
       {
         "api": "Camera.iso",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L154"
+        "sourceLocation": "L155"
       },
       {
         "api": "Camera.rect",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L155"
+        "sourceLocation": "L156"
       },
       {
         "api": "Camera.targetTexture",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L156"
+        "sourceLocation": "L157"
       },
       {
         "api": "Camera.onLoad",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L157"
+        "sourceLocation": "L158"
       },
       {
         "api": "Camera.onEnable",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L158"
+        "sourceLocation": "L159"
       },
       {
         "api": "Camera.onDisable",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L159"
+        "sourceLocation": "L160"
       },
       {
         "api": "Camera.onDestroy",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L160"
+        "sourceLocation": "L161"
       },
       {
         "api": "Camera.convertToUINode",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L182"
+        "sourceLocation": "L193"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -538,11 +565,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "be7616c97447",
-    "source": "a2a681a948975be9",
-    "candidate": "ba485e1b91643c46",
-    "verified": 54,
+    "spec": "baba5dbfd187",
+    "source": "ad016b8ffdafe73e",
+    "candidate": "2f089f6ce25eaccd",
+    "verified": 55,
     "attested": 0,
-    "units": 54
+    "units": 55
   }
 }

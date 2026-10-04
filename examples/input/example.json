@@ -7,27 +7,52 @@
   "requiresDevTools": false,
   "title": "Input Events",
   "category": "interaction",
-  "apiClaims": ["input.on", "Input.EventType.KEY_DOWN", "Input.EventType.TOUCH_MOVE"],
-  "capabilities": ["input"],
+  "apiClaims": [
+    "input.on",
+    "Input.EventType.KEY_DOWN",
+    "Input.EventType.TOUCH_MOVE"
+  ],
+  "capabilities": [
+    "input"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error",
+      "material-property"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
     "goal": "输入系统全景：键盘 WASD 平移、滚轮推拉、拖拽旋转（真实输入链）",
-    "points": ["input.on + Input.EventType.KEY_DOWN/KEY_UP", "MOUSE_WHEEL 相机推拉", "TOUCH_START/MOVE/END 拖拽旋转"]
+    "points": [
+      "input.on + Input.EventType.KEY_DOWN/KEY_UP",
+      "MOUSE_WHEEL 相机推拉",
+      "TOUCH_START/MOVE/END 拖拽旋转"
+    ]
   },
   "effect": {
     "functional": "按键集合驱动 KeyboardMover.update 平移；滚轮改变相机 z（3~20 夹取）；按下拖动改变 cube 欧拉角。",
     "visual": "WASD 移动方块、滚轮拉近拉远、拖拽旋转方块，三者实时响应"
   },
   "api": {
-    "primary": ["input", "Input"],
-    "supporting": ["Component", "Camera"],
+    "primary": [
+      "input",
+      "Input"
+    ],
+    "supporting": [
+      "Component",
+      "Camera"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -45,7 +70,10 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": ["直接监听 document 事件绕过 input.on 合同", "定时器模拟按键冒充真实输入"],
+    "forbiddenShortcut": [
+      "直接监听 document 事件绕过 input.on 合同",
+      "定时器模拟按键冒充真实输入"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -142,7 +170,11 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "interactive-cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "interactive-cube"
+      ]
     }
   },
   "interaction": {
@@ -158,7 +190,9 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -171,7 +205,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "examples/shared/scene-kit.js",
@@ -179,7 +217,11 @@
             "text": "position 默认值 [0,8,0]（shared 形参默认值）"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "interactive-cube": {
         "position": {
@@ -225,7 +267,7 @@
   "promotion": {
     "spec": "aeed6a7d4db8",
     "source": "37642ffb95c12375",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 15,
     "attested": 0,
     "units": 15

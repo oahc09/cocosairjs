@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "port-gap-env-preflight/1",
+  "checkedAt": "2026-10-04T06:45:13.856Z",
+  "host": {
+    "platform": "win32/x64",
+    "release": "10.0.28120",
+    "node": "v24.14.0"
+  },
+  "checks": {
+    "node": {
+      "status": "AVAILABLE",
+      "detail": {
+        "version": "v24.14.0"
+      }
+    },
+    "npm": {
+      "status": "AVAILABLE",
+      "detail": {
+        "version": "11.11.1"
+      }
+    },
+    "git": {
+      "status": "AVAILABLE",
+      "detail": {
+        "version": "git version 2.46.2.windows.1"
+      }
+    },
+    "typescript": {
+      "status": "AVAILABLE",
+      "detail": {
+        "version": "4.9.5"
+      }
+    },
+    "jest": {
+      "status": "AVAILABLE",
+      "detail": {
+        "version": "28.1.3"
+      }
+    },
+    "tsJest": {
+      "status": "AVAILABLE",
+      "detail": {
+        "version": "28.0.8"
+      }
+    },
+    "playwrightModule": {
+      "status": "AVAILABLE",
+      "detail": {
+        "resolvedVia": "default-resolve",
+        "version": "1.63.0",
+        "attempts": [
+          {
+            "via": "default-resolve",
+            "ok": true,
+            "version": "1.63.0"
+          },
+          {
+            "via": "NODE_PATH",
+            "ok": true,
+            "version": "1.63.0"
+          }
+        ]
+      }
+    },
+    "browserBinaries": {
+      "cacheDir": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright",
+      "cacheDirExists": true,
+      "engines": {
+        "chromium": {
+          "status": "AVAILABLE",
+          "detail": {
+            "revisions": [
+              "chromium-1193",
+              "chromium-1217",
+              "chromium-1228",
+              "chromium_headless_shell-1193",
+              "chromium_headless_shell-1217",
+              "chromium_headless_shell-1228"
+            ]
+          }
+        },
+        "firefox": {
+          "status": "AVAILABLE",
+          "detail": {
+            "revisions": [
+              "firefox-1543"
+            ]
+          }
+        },
+        "webkit": {
+          "status": "AVAILABLE",
+          "detail": {
+            "revisions": [
+              "webkit-2311",
+              "webkit-2336",
+              "webkit-2359"
+            ]
+          }
+        },
+        "ffmpeg": {
+          "status": "AVAILABLE",
+          "detail": {
+            "revisions": [
+              "ffmpeg-1011"
+            ]
+          }
+        }
+      }
+    },
+    "browserLaunch": {
+      "status": "AVAILABLE",
+      "detail": {
+        "chromium": {
+          "status": "AVAILABLE",
+          "detail": {
+            "launched": true,
+            "version": "149.0.7827.55",
+            "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe"
+          }
+        },
+        "firefox": {
+          "status": "AVAILABLE",
+          "detail": {
+            "launched": true,
+            "version": "155.0",
+            "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe"
+          }
+        },
+        "webkit": {
+          "status": "AVAILABLE",
+          "detail": {
+            "launched": true,
+            "version": "26.6",
+            "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\webkit-2359\\Playwright.exe"
+          }
+        }
+      }
+    }
+  },
+  "head": "cac42f6e897fa184cd486d4e38f07ec7c8768c0a",
+  "notes": [
+    "本预检只读：不安装依赖、不改 node_modules、不下载浏览器。",
+    "AVAILABLE 仅代表环境具备，不构成任何 gate 的 PASS；证据须按 PG-34 schema 另行采集。",
+    "缺失项如实记录；历史报告不当作本轮结果。"
+  ]
+}

@@ -631,6 +631,26 @@ export class Director extends EventTarget {
         return this._scene;
     }
 
+    /** @engineInternal AIR scene-only detach; keeps scheduler, device, shared assets and persist nodes. */
+    public _releaseSceneImmediate (): string[] {
+        const oldScene = this._scene;
+        const retained = Object.keys(this._persistRootNodes);
+        if (!oldScene) { return retained; }
+        for (const id of retained) {
+            const node = this._persistRootNodes[id];
+            // Node.parent normally removes persistence when detached. Preserve the
+            // director-owned registration and its asset refs across this empty interval.
+            node._persistNode = false;
+            try { node.parent = null; } finally { node._persistNode = true; }
+        }
+        // onDestroy must observe no active scene, including paused/context-lost cleanup.
+        this._scene = null;
+        oldScene.destroy();
+        if (!EDITOR) { releaseManager._autoRelease(oldScene, null, this._persistRootNodes); }
+        CCObject._deferredDestroy();
+        return retained;
+    }
+
     /**
      * @en Returns the delta time since last frame.
      * @zh 获取上一帧的增量时间。

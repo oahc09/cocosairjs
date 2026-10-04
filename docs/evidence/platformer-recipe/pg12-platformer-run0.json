@@ -1,0 +1,217 @@
+{
+  "schemaVersion": "air-platformer-recipe/1",
+  "startedAt": "2026-10-04T04:13:44.744Z",
+  "endedAt": "2026-10-04T04:13:46.775Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-platformer-browser.cjs",
+    "--browser=chromium",
+    "--out=docs/evidence/platformer-recipe/pg12-platformer-run0.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "nodeVersion": "v24.14.0",
+  "playwrightVersion": "1.63.0",
+  "fingerprints": {
+    "build/cocosair.module.js": "54c567a15a9d0521c692903d4418643289bc4a463e20c43c13b2cac205694210",
+    "test/fixtures/platformer-recipe/index.html": "6b041059942bfd5f45d6026ce701d461ca1798314c18633e4df2ede79b0e72be",
+    "test/fixtures/platformer-recipe/main.ts": "9cc041375dd52dd0e09c2ad3797cccaded052cb1fd0458f04d7e0580258fad1d",
+    "test/fixtures/platformer-recipe/recipe-contract.ts": "3641bfb5a9b932f159bb7368b73a18a684c4390b20c842d990f041434a3c1eec",
+    "test/fixtures/platformer-recipe/level.tmx": "4fe4dfbd63f1f6f617e775cb9fe20862b3c09a08b085d88c1911f4611a97b560",
+    "test/fixtures/platformer-recipe/platformer.tsx": "a839bbdd4c46cba8a3baa8909189f323e93bdbfd121f66133ffec32fa3fba182",
+    "test/fixtures/platformer-recipe/tiles.png": "5b90fe7acf1baf03e70f6a5f409bd733b7fc636f45dad11da8e457899e8ecd04",
+    "tools/verify/air-platformer-browser.cjs": "9cb9812a59fc77de59721f02830606bdb0a339f1127928f788ce5b6ddb72cd80"
+  },
+  "recipe": {
+    "fixedDt": 0.016666666666666666,
+    "gravityY": -640,
+    "moveSpeed": 90,
+    "jumpVelocity": 260,
+    "groundFriction": 0.2,
+    "disclosure": "box2d 默认摩擦混合、无 linearDamping、松键靠接地摩擦；原作材料缺失，不宣称 1:1"
+  },
+  "scope": [
+    "real TMX/TSX/PNG assets parsed by TiledMap (no synthetic map data)",
+    "tile property driven static colliders via getTileGIDAt/getPropertiesForGID",
+    "real box2d simulation: autoSimulation=false + explicit step + scene sync",
+    "one-way platform: pass-through rising, landing falling (contact.disabled in PRE_SOLVE)",
+    "fixed-step vs rendering decoupled; pause negative; restart reset",
+    "real keyboard sanity path"
+  ],
+  "gpuMemory": "unavailable（无公开 GPU 物理内存计数器）",
+  "subset": true,
+  "completed": false,
+  "unverified": [
+    "glTF/3D 交叉范围",
+    "完整 35 项计划",
+    "原作 1:1 复刻（材料缺失）"
+  ],
+  "results": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "status": "FAIL",
+      "probeFailures": [
+        "groundDeceleration.verdict",
+        "oneWay"
+      ],
+      "keyboardSanity": {
+        "vx": 7.906218115749652e-7,
+        "x": -119.98535919189453,
+        "ok": false
+      },
+      "probe": {
+        "ready": true,
+        "fixedSteps": 643,
+        "playerSpawn": {
+          "x": -120,
+          "y": -56
+        },
+        "results": {
+          "diagnostics": {
+            "mapNodePos": "0,0",
+            "layerFound": true,
+            "layerWorldPos": "0,0",
+            "layerChildren": 46,
+            "tiledDataArrayLen": 0
+          },
+          "spawn": {
+            "x": -119.98694610595703,
+            "y": -86.23551940917969,
+            "vx": 8.239539397436602e-7,
+            "vy": 4.4638156282417185e-8,
+            "landedOnGround": true,
+            "groundBegin": 0,
+            "stoneCount": 42,
+            "plankCount": 3,
+            "fixedSteps": 40
+          },
+          "renderRows": {
+            "stoneMinYFrac": null,
+            "stoneMaxYFrac": null,
+            "playerMinX": null,
+            "playerMaxX": null
+          },
+          "groundDeceleration": {
+            "runVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "releaseVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "startAbs": 90,
+            "endAbs": 90,
+            "decayedToHalf": false,
+            "maxDrift": 0,
+            "verdict": "constant"
+          },
+          "airConstant": {
+            "airVx": [
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90,
+              90
+            ],
+            "startAbs": 90,
+            "endAbs": 90,
+            "decayedToHalf": false,
+            "maxDrift": 0,
+            "verdict": "constant"
+          },
+          "oneWay": {
+            "passThrough": 0,
+            "landedOnPlatform": false,
+            "onewayLandings": 0,
+            "groundBegin": 0,
+            "groundEnd": 0
+          },
+          "pauseNegative": {
+            "moved": 0,
+            "unchanged": true
+          },
+          "tileQueryNegative": {
+            "outOfBoundsGid": "null",
+            "outOfBoundsError": "cc.TiledLayer.getTileGIDAt(): invalid position",
+            "unknownPropsUndefined": true
+          },
+          "restart": {
+            "backAtSpawn": true,
+            "grounded": false
+          }
+        },
+        "scenarioLog": [
+          "diagnostics: {\"mapNodePos\":\"0,0\",\"layerFound\":true,\"layerWorldPos\":\"0,0\",\"layerChildren\":46,\"tiledDataArrayLen\":0}",
+          "spawn: landed=true groundBegin=0 stone=42 plank=3",
+          "groundDeceleration verdict=constant 90→90",
+          "airConstant verdict=constant",
+          "oneWay: passThrough=0 landedOnPlatform=false",
+          "pause: unchanged=true"
+        ]
+      },
+      "pageErrors": [],
+      "screenshot": "output/playwright/platformer-recipe-chromium.png",
+      "rawLog": "output\\playwright\\platformer-recipe-chromium.log"
+    }
+  ],
+  "screenshots": [
+    "output/playwright/platformer-recipe-chromium.png"
+  ]
+}

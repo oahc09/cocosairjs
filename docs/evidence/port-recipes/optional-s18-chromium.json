@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "air-optional-recipe/3",
+  "task": "PG33-OPTIONAL-S18-REVIEW-FIX",
+  "generatedAt": "2026-10-04T08:00:39.543Z",
+  "startedAt": "2026-10-04T08:00:28.424Z",
+  "command": "node tools/verify/air-optional-recipe-browser.cjs --browser=chromium --out=docs/evidence/port-recipes/optional-s18-chromium.json",
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "engine": "chromium",
+  "browserVersion": "149.0.7827.55",
+  "scopePassed": true,
+  "completed": true,
+  "subset": false,
+  "allPass": true,
+  "probeFailures": [],
+  "notRun": [],
+  "pageErrors": [],
+  "httpObservations": {
+    "total": 11,
+    "paths404": 5,
+    "wav200": 1
+  },
+  "hudWhitePixels": 1321,
+  "releasePromiseSameObject": true,
+  "postReleaseErrors": {
+    "construct": "RECIPE_DISPOSED",
+    "run": "RECIPE_DISPOSED",
+    "pauseRestart": "RECIPE_DISPOSED",
+    "negatives": "RECIPE_DISPOSED"
+  },
+  "borrowedKeyIntact": true,
+  "fingerprints": {
+    "optionalRecipeTs": {
+      "sha256": "6e7a380ae0eb38d07cd8bd5c7006aa199f09563aed9e1e73c9fb04982c1d13c2",
+      "bytes": 19113,
+      "path": "test/fixtures/port-recipes/optional-recipe.ts"
+    },
+    "optionalPreviewHtml": {
+      "sha256": "591782f767836314ca0720328ffeb6a293c4f7bd1e192752f3124a8f6af336ea",
+      "bytes": 3049,
+      "path": "test/fixtures/port-recipes/optional-preview/index.html"
+    },
+    "runner": {
+      "sha256": "1241d20a2d9088dcf1823935ad34a6185413a6885b2a6d9033138d64bd5f7caf",
+      "bytes": 15416,
+      "path": "tools/verify/air-optional-recipe-browser.cjs"
+    },
+    "manual": {
+      "sha256": "42a9d31fc31636f6c3003b58bf2020dea1a1aeef9377353bb1c59a84a47ec5fd",
+      "bytes": 5941,
+      "path": "docs/manual/optional-service-recipe.md"
+    },
+    "tone4s": {
+      "sha256": "b1a52b6832a682f66944220b9c07dc8203aaa2849e6400ef345110eb4de4f361",
+      "bytes": 64044,
+      "path": "test/fixtures/port-recipes/optional-assets/tone4s.wav"
+    },
+    "manifest": {
+      "sha256": "d5440d9a164dc59d7ae841d2d188de45fe777a09c9f3959293cecc4aae7d1716",
+      "bytes": 99,
+      "path": "test/fixtures/port-recipes/optional-assets/manifest.json"
+    }
+  },
+  "probe": {
+    "phases": {
+      "construct": {
+        "phase": "construct",
+        "instanceId": "opt-5xid8m",
+        "storageAvailable": true,
+        "audioCreated": true,
+        "bankCreated": true,
+        "labelAttached": true,
+        "sentinelAttached": true,
+        "hostStillValid": true,
+        "sceneStillValid": true,
+        "borrowedKeyPreexisting": true
+      },
+      "run": {
+        "phase": "run",
+        "instanceId": "opt-5xid8m",
+        "bankJsonLoaded": true,
+        "bankJsonError": null,
+        "bankSize": 1,
+        "bankRefCount": 1,
+        "jsonOwned": true,
+        "audioLoaded": true,
+        "audioLoadError": null,
+        "playError": null,
+        "clipOwned": true,
+        "stateBefore": {
+          "id": "pg33-tone",
+          "playing": false,
+          "currentTime": 0,
+          "loop": false,
+          "volume": 1
+        },
+        "stateAfter": {
+          "id": "pg33-tone",
+          "playing": true,
+          "currentTime": 0.3322000000029802,
+          "loop": false,
+          "volume": 1
+        },
+        "currentTimeDelta": 0.3322000000029802,
+        "currentTimeAdvanced": true,
+        "counterSet": true,
+        "counter": 1
+      },
+      "pauseRestart": {
+        "phase": "pauseRestart",
+        "instanceId": "opt-5xid8m",
+        "preCurrentTime": 0.3001000000014902,
+        "preIsPlayingEnough": true,
+        "pausedCurrentTime": 0.30039999999850986,
+        "pausedDrift": 0.00029999999701968427,
+        "pausePreservedClock": true,
+        "resumedCurrentTime": 0.5335000000000001,
+        "resumeDelta": 0.23310000000149023,
+        "resumeAdvanced": true,
+        "stoppedCurrentTime": 0,
+        "stoppedAtZero": true,
+        "restartedCurrentTime": 0.23230000000447015,
+        "restartDelta": 0.23230000000447015,
+        "restartedAdvanced": true
+      },
+      "release": {
+        "phase": "release",
+        "instanceId": "opt-5xid8m",
+        "labelNodeValid": false,
+        "peerSentinelValid": true,
+        "peerSentinelStillChildOfHost": true,
+        "clipValid": false,
+        "clipRefCount": 0,
+        "jsonRefCount": 0,
+        "bankReleasedCount": 1,
+        "bankSize": 0,
+        "hostStillValid": true,
+        "sceneStillValid": true,
+        "storageRestored": true,
+        "borrowedKeyUnchanged": true,
+        "ourKeysCleared": true
+      }
+    },
+    "negatives": [
+      {
+        "name": "missing-extension",
+        "error": "[AssetBank] suffix-less URL requires an explicit ext: http://127.0.0.1:55397/test/fixtures/port-recipes/optional-assets/noext",
+        "errorCode": "AIR_E_EXT_REQUIRED",
+        "measurements": {
+          "syncThrew": true,
+          "url": "http://127.0.0.1:55397/test/fixtures/port-recipes/optional-assets/noext",
+          "bankSize": 1,
+          "bankInFlight": 0
+        },
+        "method": "AssetBank.load(suffix-less url) without ext: sync AirAssetError AIR_E_EXT_REQUIRED"
+      },
+      {
+        "name": "http-404",
+        "error": "[AssetBank] load failed: http://127.0.0.1:55397/test/fixtures/port-recipes/optional-assets/nonexistent-404.png (Load image ( http://127.0.0.1:55397/test/fixtures/port-recipes/optional-assets/nonexistent-404.png ) failed)",
+        "errorCode": "AIR_E_LOAD_FAILED",
+        "measurements": {
+          "rejected": true,
+          "url": "http://127.0.0.1:55397/test/fixtures/port-recipes/optional-assets/nonexistent-404.png",
+          "bankSizeAfter": 1,
+          "bankInFlightAfter": 0
+        },
+        "method": "AssetBank.load nonexistent path with ext: AirAssetError AIR_E_LOAD_FAILED (cause preserved)"
+      },
+      {
+        "name": "corrupt-storage",
+        "measurements": {
+          "rawValue": "{broken json!!",
+          "parseError": "Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+          "recovered": true,
+          "restoredValue": "0",
+          "storageAvailable": true
+        },
+        "method": "write broken JSON, read, JSON.parse throws (error preserved), clear, write default, verify"
+      }
+    ],
+    "postReleaseErrors": {
+      "construct": "RECIPE_DISPOSED",
+      "run": "RECIPE_DISPOSED",
+      "pauseRestart": "RECIPE_DISPOSED",
+      "negatives": "RECIPE_DISPOSED"
+    },
+    "borrowedKey": {
+      "key": "pg33-borrowed-peer-key",
+      "value": "peer-do-not-touch-1791100829950"
+    },
+    "releasePromise1": null,
+    "releasePromise2": null,
+    "releasePromiseSameObject": true,
+    "hudReady": true,
+    "hudWhitePixels": 1321
+  }
+}

@@ -67,7 +67,7 @@ export class SkinnedMeshRenderer extends MeshRenderer {
     set skeleton (val) {
         if (val === this._skeleton) { return; }
         this._skeleton = val;
-        this._update();
+        this._refreshBinding();
     }
 
     /**
@@ -83,7 +83,7 @@ export class SkinnedMeshRenderer extends MeshRenderer {
         if (value === this._skinningRoot) { return; }
         this._skinningRoot = value;
         this._tryBindAnimation();
-        this._update();
+        this._refreshBinding();
     }
 
     get model (): SkinningModel | BakedSkinningModel | null {
@@ -152,8 +152,29 @@ export class SkinnedMeshRenderer extends MeshRenderer {
     }
 
     protected _updateModelParams (): void {
+        // Live Code First assignment may supply mesh before skeleton/root.
+        // Do not create skinning descriptors until all binding inputs exist.
+        if (!this._mesh || !this._skeleton || !this._skinningRoot) {
+            if (this.model) { this.model.enabled = false; }
+            return;
+        }
         this._update(); // should bind skeleton before super create pso
         super._updateModelParams();
+    }
+
+    private _refreshBinding (): void {
+        // Validate before rebuilding so a rejected bind keeps the old model.
+        this._update();
+        if (!this._mesh || !this._skeleton || !this._skinningRoot) {
+            if (this.model) { this.model.enabled = false; }
+            return;
+        }
+        if (this.enabledInHierarchy) {
+            // bindSkeleton replaces its buffers/textures. Refresh submodels so
+            // descriptors and transport macros reference the new binding.
+            this._updateModels();
+            this._attachToScene();
+        }
     }
 
     private _tryBindAnimation (): void {

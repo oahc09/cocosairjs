@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG4",
+  "subject": {
+    "description": "Preliminary complete gate status; subset components are recorded separately"
+  },
+  "evidenceTypes": [
+    "SOURCE_CHECKED"
+  ],
+  "execution": {
+    "status": "NOT_RUN",
+    "reason": "100 render/release cycles and 10-minute contexts passed on identical runtime; final complete deployment/resource/capability scope and candidate aggregation pending."
+  },
+  "scope": {
+    "declared": [
+      "100 render/release cycles and 10-minute contexts passed on identical runtime; final complete deployment/resource/capability scope and candidate aggregation pending."
+    ],
+    "subset": false,
+    "completed": false,
+    "totalCases": 1,
+    "measuredCases": 0,
+    "skippedCases": 1,
+    "skippedDetail": [
+      {
+        "reason": "100 render/release cycles and 10-minute contexts passed on identical runtime; final complete deployment/resource/capability scope and candidate aggregation pending."
+      }
+    ],
+    "countingUnit": "complete gate decision"
+  },
+  "method": {
+    "kind": "CONTRACT_STATIC",
+    "detail": "Current gate requirements review; no instrumented gate execution is manufactured"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": false,
+      "status": "NOT_RUN",
+      "reason": "Complete candidate freeze pending"
+    },
+    "contract": {
+      "present": true,
+      "path": "ai/plans/port-gap-remediation.md",
+      "sha256": "0508bfe7cef13942cdb50db45f0325f81abff940b1d3081b8b5851c9cf5947fc"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/port-gap-evidence-schema.cjs",
+      "sha256": "9901531b16f79d5c248764b657d3e56eeb733911eef579b3e3add9ff139923c0"
+    },
+    "browser": {
+      "present": false,
+      "status": "NOT_RUN",
+      "reason": "Complete gate did not execute; component reports record actual browsers"
+    },
+    "application": {
+      "present": false,
+      "status": "NOT_APPLICABLE",
+      "reason": "Complete engine/integration gate, external application acceptance tracked separately"
+    }
+  },
+  "externalMaterials": {
+    "available": false,
+    "reason": "External consumer/port materials not provided"
+  },
+  "componentEvidence": [
+    {
+      "path": "docs/evidence/port-gap/eg4-scene-cycles-s11.json",
+      "gate": "EG4",
+      "status": "PASS",
+      "rows": 3
+    },
+    {
+      "path": "docs/evidence/port-gap/eg4-ten-minute-s11.json",
+      "gate": "EG4",
+      "status": "PASS",
+      "rows": 3
+    },
+    {
+      "path": "docs/evidence/port-gap/eg4-gltf-cancel-s11.json",
+      "gate": "EG4",
+      "status": "PASS",
+      "rows": 3
+    }
+  ],
+  "generatedBy": {
+    "command": [
+      "D:\\Program Files\\nodejs\\node.exe",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s11-normalize-batch.cjs"
+    ],
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T05:10:24.755Z",
+    "endedAt": "2026-10-04T05:10:24.881Z",
+    "detail": "Report generation only; execution.status remains the actual gate status"
+  }
+}

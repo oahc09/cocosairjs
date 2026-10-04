@@ -690,6 +690,16 @@ export class Camera {
         return this._orthoHeight;
     }
 
+    /** Orthographic half-width; zero retains the height-times-aspect projection. */
+    get orthoWidth (): number { return this._orthoWidth; }
+    set orthoWidth (val: number) {
+        if (typeof val !== 'number' || !Number.isFinite(val) || val < 0) {
+            throw Object.assign(new Error('AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.'), { code: 'AIR_E_ORTHO_WIDTH' });
+        }
+        this._orthoWidth = val;
+        this._isProjDirty = true;
+    }
+
     /**
      * @en The axis on which the FOV would be fixed regardless of screen aspect changes.
      * @zh 指定视角的固定轴向，在此轴上不会跟随屏幕长宽比例变化。
@@ -832,6 +842,7 @@ export class Camera {
     private _proj: CameraProjection = -1 as CameraProjection;
     private _aspect: number = 1;
     private _orthoHeight = 10.0;
+    private _orthoWidth = 0;
     private _fovAxis = CameraFOVAxis.VERTICAL;
     private _fov: number = toRadian(45);
     private _nearClip = 1.0;
@@ -925,6 +936,7 @@ export class Camera {
         this._proj = info.projection;
         this._priority = info.priority || 0;
         this._aspect = this.screenScale = 1;
+        this._orthoWidth = 0;
         this.updateExposure();
         this.changeTargetWindow(info.window);
     }
@@ -1064,7 +1076,7 @@ export class Camera {
                     );
                 }
             } else {
-                const x = this._orthoHeight * this._aspect;
+                const x = this._orthoWidth || this._orthoHeight * this._aspect;
                 const y = this._orthoHeight;
                 Mat4.ortho(
                     matProj,

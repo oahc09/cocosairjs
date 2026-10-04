@@ -7,13 +7,30 @@
   "requiresDevTools": false,
   "title": "Static Model",
   "category": "mesh",
-  "apiClaims": ["MeshRenderer", "Material", "Texture2D"],
-  "capabilities": ["gltf", "assets"],
+  "apiClaims": [
+    "MeshRenderer",
+    "Material",
+    "Texture2D"
+  ],
+  "capabilities": [
+    "gltf",
+    "assets"
+  ],
   "validation": {
-    "functional": ["node-exists", "asset-loaded", "material-property", "no-runtime-error", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "material-property",
+      "no-runtime-error",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -30,8 +47,14 @@
     "visual": "棋盘格贴图的金字塔/方块置于绿色地面上，纹理随视角变化清晰可辨"
   },
   "api": {
-    "primary": ["loadAssetAsync", "assetManager"],
-    "supporting": ["Texture2D", "ImageAsset"],
+    "primary": [
+      "loadAssetAsync",
+      "assetManager"
+    ],
+    "supporting": [
+      "Texture2D",
+      "ImageAsset"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -205,14 +228,21 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "StaticBox", "Ground"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "StaticBox",
+        "Ground"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -225,7 +255,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [0, 10, 0],
+        "position": [
+          0,
+          10,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -233,10 +267,18 @@
             "text": "position 默认值 [0,10,0]（示例显式传入）"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "StaticBox": {
-        "position": [0, -0.8, 0],
+        "position": [
+          0,
+          -0.8,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -246,7 +288,11 @@
         ]
       },
       "Ground": {
-        "position": [0, -2, 0],
+        "position": [
+          0,
+          -2,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -276,7 +322,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [90, 110, 90, 255],
+            "value": [
+              90,
+              110,
+              90,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -314,7 +365,7 @@
   "promotion": {
     "spec": "55ff2f5976e3",
     "source": "b3419d3d54e6f20e",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 23,
     "attested": 0,
     "units": 23

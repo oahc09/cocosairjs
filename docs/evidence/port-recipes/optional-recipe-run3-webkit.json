@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "air-optional-recipe/1",
+  "generatedAt": "2026-10-04T07:03:05.728Z",
+  "engine": "webkit",
+  "browserVersion": "26.6",
+  "allPass": true,
+  "probeFailures": [],
+  "pageErrors": [],
+  "probe": {
+    "phases": {
+      "construct": {
+        "phase": "construct",
+        "storageAvailable": true,
+        "audioCreated": true,
+        "labelAttached": true,
+        "storageProbe": "0",
+        "baseURL": "http://127.0.0.1:52597"
+      },
+      "run": {
+        "phase": "run",
+        "audioLoadError": "[AudioService] load failed: http://127.0.0.1:52597/optional-assets/tone.wav",
+        "clipLoaded": false,
+        "bgmId": null,
+        "stateBefore": null,
+        "stateAfter": null,
+        "currentTimeAdvanced": false,
+        "storageCounter": 1
+      },
+      "pauseRestart": {
+        "phase": "pauseRestart",
+        "preCurrentTime": null,
+        "pausedCurrentTime": null,
+        "resumedCurrentTime": null,
+        "pausePreservedClock": false,
+        "resumeContinuity": false
+      },
+      "release": {
+        "phase": "release",
+        "labelNodeValid": false,
+        "storageCleared": true,
+        "released": true
+      }
+    },
+    "negatives": [
+      {
+        "name": "missing-extension",
+        "error": "download failed: http://127.0.0.1:52597/optional-assets/noext, status: 404(no response)",
+        "measurements": {
+          "loaded": false,
+          "suffixLessUrl": true,
+          "extProvided": false
+        },
+        "method": "assetManager.loadRemote(noext-url) without explicit ext"
+      },
+      {
+        "name": "http-404",
+        "error": "Load image ( http://127.0.0.1:52597/optional-assets/nonexistent-404.png ) failed",
+        "measurements": {
+          "statusCode": 127,
+          "url": "./optional-assets/nonexistent-404.png"
+        },
+        "method": "assetManager.loadRemote with explicit ext to a nonexistent path"
+      },
+      {
+        "name": "corrupt-storage",
+        "measurements": {
+          "rawValue": "{broken json!!",
+          "recovered": true,
+          "storageAvailable": true
+        },
+        "method": "write broken JSON, read, catch parse error, clear and write default"
+      }
+    ]
+  }
+}

@@ -7,12 +7,23 @@
   "requiresDevTools": true,
   "title": "Agent Automation",
   "category": "devtools",
-  "apiClaims": ["createAgentSession", "dispatch"],
-  "capabilities": ["runtime-control"],
+  "apiClaims": [
+    "createAgentSession",
+    "dispatch"
+  ],
+  "capabilities": [
+    "runtime-control"
+  ],
   "validation": {
-    "functional": ["node-exists", "no-runtime-error", "material-property"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error",
+      "material-property"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -30,7 +41,10 @@
     "visual": "基础场景 + agent 生成的节点；面板/工具侧展示会话观察数据"
   },
   "api": {
-    "primary": ["DevToolsSession.inspectScene", "DevToolsSession.dispatch"],
+    "primary": [
+      "DevToolsSession.inspectScene",
+      "DevToolsSession.dispatch"
+    ],
     "supporting": [],
     "claims": [
       "createAirApp",
@@ -45,7 +59,10 @@
       "DevToolsSession.dispatch",
       "Node.addChild"
     ],
-    "forbiddenShortcut": ["在 Runtime-only 包内预置 DevTools 代码", "绕过 session 合同直接改内部状态"],
+    "forbiddenShortcut": [
+      "在 Runtime-only 包内预置 DevTools 代码",
+      "绕过 session 合同直接改内部状态"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -118,14 +135,20 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "existing-cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "existing-cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -149,7 +172,7 @@
   "promotion": {
     "spec": "735d00cae975",
     "source": "e89d32ce3ed3bbb6",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 9,
     "attested": 2,
     "units": 11

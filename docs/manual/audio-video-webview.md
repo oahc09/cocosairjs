@@ -43,6 +43,24 @@ for (const s of [srcA, srcB]) {
 该示例的 8 阶段读回覆盖：运行时资产/解码 PCM（`AudioPCMDataView`）/手势解锁/播放头/音量/seek
 判尾/循环；`AudioSource.EventType.STARTED/ENDED` 事件计数可回读。
 
+Code First 多通道业务可用原生 `AudioSource` 之上的 `AudioService`：
+
+```ts
+const audio = new AudioService(scene);
+await audio.load('level', './assets/music.wav');
+audio.setBgmVolume(0.35); // [0, 1]；现有和后续 BGM 通道都生效
+// 首次播放应由用户手势解锁。
+audio.playBgm('level');
+audio.pauseBgm();        // 保留播放头
+audio.resumeBgm();       // 从暂停位置续播
+audio.stopBgm();         // 停止并归零，保留当前 ID
+audio.resumeBgm();       // 此时从零开始
+const state = audio.bgmState(); // id/playing/currentTime/loop/volume
+audio.dispose();
+```
+
+从 `cocosair.js` 导入 `AudioService`；`stopBgm()` 在没有当前通道时无操作。`setBgmVolume()` 拒绝非有限数或范围外数值并返回 `AIR_E_AUDIO_VOLUME`，不会部分修改状态。BGM 音量不改变 SFX 音量或音乐开关；静音与停止也有不同语义。`AudioService/BGM/...` 节点名仅供观察，业务不能按名字挖内部节点控制播放。暂停、停止、续播的确认应观察实际 `currentTime`；异步浏览器后端完成停止后才可确认归零，调用返回不保证音频设备已经完成操作。DOM audio 后端可能要求恢复或换曲也在新的用户手势回调里调用；不能假定首次播放解锁后所有后续播放都会获准。
+
 ## 2. 视频：VideoPlayer（DOM 元素挂载、全屏、透明）
 
 `VideoPlayer` 往 `game.container` 追加真实 `<video class="cocosVideo">` 元素；换源先

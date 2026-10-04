@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG4",
+  "subject": {
+    "description": "Browser subset: Direct replacement, 100 actual render/release cycles, shared/persistent ownership, Node page navigation, reload and unavailable bundle scene"
+  },
+  "evidenceTypes": [
+    "SOURCE_CHECKED"
+  ],
+  "execution": {
+    "status": "PASS",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-scene-switch-browser.cjs --out=output/playwright/air-scene-s11-unified.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T05:02:28.202Z",
+    "endedAt": "2026-10-04T05:02:53.645Z",
+    "exitCode": 0
+  },
+  "scope": {
+    "declared": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "subset": true,
+    "completed": false,
+    "totalCases": 3,
+    "measuredCases": 3,
+    "skippedCases": 0,
+    "skippedDetail": [],
+    "countingUnit": "browser scenario rows; nested assertions are not counted again"
+  },
+  "method": {
+    "kind": "REAL_BROWSER",
+    "detail": "Original collector: REAL_BROWSER. Normalize recorded executions only; explicit synthetic contacts remain synthetic and are not physical device evidence.",
+    "limitations": "Scope and source-type limits from the native report remain applicable; No complete gate, physical device, real hidden background or GPU allocation certification; GPU allocation measurements unavailable; No 10-minute stability run; No successful external Creator scene bundle supplied"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "src/air/app.ts",
+      "sha256": "82dc85409ddf4c5184bbb259265ca40e37d3d7f253fab326eda57aea288dab7b"
+    },
+    "contract": {
+      "present": true,
+      "path": "test/fixtures/scene-switch-contract/index.html",
+      "sha256": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9"
+    },
+    "runner": {
+      "present": true,
+      "path": "tools/verify/air-scene-switch-browser.cjs",
+      "sha256": "76dffde02b3f095236dc0b1d31ccaad0633af1255799b0281d628cbc9ed5ccc5"
+    },
+    "browser": {
+      "present": true,
+      "path": "output/playwright/air-scene-s11-unified.json",
+      "sha256": "5e71effa19f1fa59bc6fa49101bbe5cee117465582c8e289c1f3ce77073271dc",
+      "detail": "Native report contains per-row actual browser versions"
+    },
+    "application": {
+      "present": true,
+      "path": "test/fixtures/scene-switch-contract/index.html",
+      "sha256": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9"
+    }
+  },
+  "nativeEvidence": {
+    "path": "output/playwright/air-scene-s11-unified.json",
+    "sha256": "5e71effa19f1fa59bc6fa49101bbe5cee117465582c8e289c1f3ce77073271dc",
+    "allFingerprints": {
+      "build/bootstrap.js": "4ba4b2081457c811d5c0d45fa11ae3e96a99b5e986ac3075086318200467e52e",
+      "build/cocosair.module.js": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69",
+      "src/air/app.ts": "82dc85409ddf4c5184bbb259265ca40e37d3d7f253fab326eda57aea288dab7b",
+      "src/air/session-scope.ts": "ab90b1c12a29aa9ded5c0d8e720a8bfc73b6694790a28258208647cf42f04171",
+      "src/air/scene-stack.ts": "d3d9cc29cc8385c0d29d2a18a5185dd55989a49937e2d02af1556302dcd627c0",
+      "src/cocos/game/director.ts": "7b1be62cd9e84e926d1744ccc5d467a63e115f689f888a720df44511f51aa224",
+      "src/cocos/asset/asset-manager/release-manager.ts": "01f047ec218e18c8676c1a8eb2ae6dfe013953e61e53c9ee9a5f47210668322f",
+      "test/fixtures/scene-switch-contract/index.html": "9710f6f8f265f2ba7676cc757bdbf45d178172445b84b7d55c2d69dbab3f40f9",
+      "test/fixtures/scene-switch-contract/main.ts": "f299464d4b9b7b80324e65d3acdf9cca17c8c1622f02c7c6e68496dd2ca1412f",
+      "tools/verify/air-scene-switch-browser.cjs": "76dffde02b3f095236dc0b1d31ccaad0633af1255799b0281d628cbc9ed5ccc5"
+    },
+    "installed": null,
+    "originalMethod": "REAL_BROWSER"
+  },
+  "measurements": {
+    "gpuMemory": {
+      "available": false,
+      "unavailableReason": "No portable complete WebGL allocation measurement"
+    }
+  },
+  "rawOutputs": {
+    "stdout": {
+      "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-scene-s11-unified.log"
+    },
+    "logs": [
+      {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\air-scene-s11-unified.json"
+      }
+    ],
+    "screenshots": []
+  }
+}

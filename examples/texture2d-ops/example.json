@@ -42,14 +42,20 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Texture2D 数据面：构造、create 分配、mipmap 更新、HTML 元素获取、描述字符串、reset/release 资源语义与缺省化（多数走 try 兜底）。",
-    "points": ["new Texture2D() 构造即回读", "description/toString 字符串型", "releaseTexture 后可再 initDefault"]
+    "points": [
+      "new Texture2D() 构造即回读",
+      "description/toString 字符串型",
+      "releaseTexture 后可再 initDefault"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 210,180,230）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["Texture2D.create"],
+    "primary": [
+      "Texture2D.create"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -101,7 +107,9 @@
       "Texture2D.image",
       "Texture2D.description"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -288,21 +296,34 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -316,7 +337,7 @@
   "promotion": {
     "spec": "94f1a97e35bc",
     "source": "5d1037188542fa8c",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 30,
     "attested": 0,
     "units": 30

@@ -8821,6 +8821,9 @@
                  */
                 set orthoHeight(val: number);
                 get orthoHeight(): number;
+                /** Orthographic half-width; zero retains the height-times-aspect projection. */
+                get orthoWidth(): number;
+                set orthoWidth(val: number);
                 /**
                  * @en The axis on which the FOV would be fixed regardless of screen aspect changes.
                  * @zh 指定视角的固定轴向，在此轴上不会跟随屏幕长宽比例变化。
@@ -24997,6 +25000,7 @@
         protected _fov: number;
         protected _fovAxis: renderer.scene.CameraFOVAxis;
         protected _orthoHeight: number;
+        protected _orthoWidth: number;
         protected _near: number;
         protected _far: number;
         protected _color: math.Color;
@@ -25083,6 +25087,9 @@
          */
         get orthoHeight(): number;
         set orthoHeight(val: number);
+        /** Orthographic half-width. Zero keeps the native height-times-window-aspect behavior. */
+        get orthoWidth(): number;
+        set orthoWidth(val: number);
         /**
          * @en Near clipping distance of the camera, should be as large as possible within acceptable range.
          * @zh 相机的近裁剪距离，应在可接受范围内尽量取最大。
@@ -39462,6 +39469,28 @@
         protected createRenderEntity(): __private._cocos_2d_renderer_render_entity__RenderEntity;
         prepareDrawData(): void;
     }
+    /** Original TMX object geometry, before the native coordinate conversion. */
+    export interface TMXRawObject {
+        readonly id: number | string;
+        readonly name: string;
+        readonly className: string;
+        readonly type: __private._cocos_tiledmap_tiled_types__TMXObjectType;
+        readonly x: number;
+        readonly y: number;
+        readonly width: number;
+        readonly height: number;
+        readonly rotation: number;
+        readonly visible: boolean;
+        readonly gid: number | undefined;
+        readonly points: readonly Readonly<{
+            x: number;
+            y: number;
+        }>[] | null;
+        readonly polylinePoints: readonly Readonly<{
+            x: number;
+            y: number;
+        }>[] | null;
+    }
     /**
      * @en Renders the TMX object group.
      * @zh 渲染 tmx object group。
@@ -39529,6 +39558,10 @@
          * let objects = tMXObjectGroup.getObjects();
          */
         getObjects(): __private._cocos_tiledmap_tiled_types__TMXObject[];
+        /** Readonly original TMX coordinates and points; independent of getObjects() mutations. */
+        getRawObjects(): readonly TMXRawObject[];
+        /** Strings query Tiled class/legacy type; numbers query the existing shape enum. */
+        getObjectsByType(objectType: string | __private._cocos_tiledmap_tiled_types__TMXObjectType): __private._cocos_tiledmap_tiled_types__TMXObject[];
         protected _groupName?: string;
         protected _positionOffset?: math.Vec2;
         protected _mapInfo?: __private._cocos_tiledmap_tmx_xml_parser__TMXMapInfo;
@@ -39546,6 +39579,7 @@
             gridGID: __private._cocos_tiledmap_tiled_types__GID;
         }[];
         protected _objects: __private._cocos_tiledmap_tiled_types__TMXObject[];
+        protected _rawObjects: readonly TMXRawObject[];
         /**
          * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
          */
@@ -55649,12 +55683,101 @@
         get length(): number;
         getData(offset: number): number;
     }
+    /** A cooperative cleanup scope; it cannot preempt a blocking synchronous callback. */
+    export function createSessionScope(): AirSessionScope;
+    export interface AirSessionScope {
+        readonly generation: number;
+        readonly active: boolean;
+        readonly deactivateReason: string | null;
+        readonly ownedCount: number;
+        activate(): number;
+        deactivate(reason?: string): void;
+        token(): AirSessionToken;
+        /** Cleanup is invoked at most once; unregister transfers its ownership to the caller. */
+        own(cleanup: () => void | Promise<void>, label?: string): () => void;
+        onChange(callback: (change: AirSessionChange) => void): () => void;
+        offChange(callback: (change: AirSessionChange) => void): void;
+        /** Default 5s deadline. Does not wait for rendering or restore a lost context. */
+        dispose(options?: {
+            timeoutMs?: number;
+        }): Promise<AirCleanupReceipt>;
+    }
+    export interface AirSessionToken {
+        readonly generation: number;
+        isCurrent(): boolean;
+    }
+    export interface AirSessionChange {
+        readonly generation: number;
+        readonly active: boolean;
+        readonly reason: string | null;
+    }
+    export interface AirCleanupReceipt {
+        readonly status: "released" | "failed";
+        readonly completed: readonly string[];
+        readonly pending: readonly string[];
+        readonly failures: readonly Readonly<{
+            label: string;
+            message: string;
+        }>[];
+    }
+    export interface AirDiagnostics {
+        readonly mode: AirDiagnosticMode;
+        snapshot(): readonly AirDiagnosticMessage[];
+        onMessage(listener: (message: Readonly<AirDiagnosticMessage>) => void): () => void;
+        clear(): void;
+        /** Idempotently unsubscribe this channel. Used by app cleanup or failed boot. */
+        destroy(): void;
+    }
+    export interface AirDiagnosticMessage extends __private._cocos_core_platform_debug__DiagnosticLogEntry {
+        /** Repeated identical native diagnostics share one bounded entry. */
+        occurrences: number;
+        firstSeen: number;
+        lastSeen: number;
+    }
+    export type AirDiagnosticMode = "errors" | "warnings";
+    export class Billboard extends Component {
+        /**
+         * @zh Billboard纹理。
+         */
+        get texture(): Texture2D | null;
+        set texture(val: Texture2D | null);
+        /**
+         * @zh 高度。
+         */
+        get height(): number;
+        set height(val: number);
+        /**
+         * @zh 宽度。
+         */
+        get width(): number;
+        set width(val: number);
+        /**
+         * @zh billboard绕中心点旋转的角度
+         */
+        get rotation(): number;
+        set rotation(val: number);
+        get technique(): number;
+        set technique(val: number);
+        constructor();
+        onLoad(): void;
+        onEnable(): void;
+        onDisable(): void;
+        onDestroy(): void;
+    }
     /**
      * Creates an independently owned WebGL2 unlit effect with per-fragment accurate fog.
      * Initialize AIR builtin assets first. The builtin-unlit template is left unchanged.
      * Its native world matrix, instancing, skinning and morph code is retained.
      */
     export function createAirUnlitFogEffect(): EffectAsset;
+    export interface AirSceneReleaseReceipt extends AirCleanupReceipt {
+        readonly scene: string | null;
+        readonly retained: readonly string[];
+        readonly measurements: Readonly<{
+            gpuMemory: "unavailable";
+            reason: string;
+        }>;
+    }
     /**
      * @en Cocos AIR runtime version. The single source of truth is the `version` field of
      * package.json; this literal must stay identical to it (locked by
@@ -55691,6 +55814,16 @@
          * 业务时钟；恢复路径如实现不能安全重建 GPU 资源，进入 failed 并提供受控重载。
          */
         contextLoss?: AirContextLossOptions;
+        /** 原生日志与有界观察通道；默认 errors，warnings 显示并收集引擎警告。 */
+        diagnostics?: AirDiagnosticMode;
+        /** Effective browser DPR is min(devicePixelRatio, cap); configure before importing the engine. Default 2. */
+        pixelRatioCap?: number;
+        /** Native ResolutionPolicy integer: 0 EXACT_FIT, 1 NO_BORDER, 2 SHOW_ALL, 3 FIXED_HEIGHT, 4 FIXED_WIDTH. */
+        designResolution?: {
+            width: number;
+            height: number;
+            policy: number;
+        };
     }
     export interface AirApp {
         /** @en The canvas this app renders into. @zh 本应用渲染目标画布（构造时传入）。 */
@@ -55700,19 +55833,28 @@
          * snapshot() 轮询状态、onChange 订阅迁移、requestReload() 受控重载（仅 failed 态）。
          */
         readonly contextHealth: AirContextHealth;
+        /** Native diagnostic history (80 entries); optional for compatibility with older custom handles. */
+        readonly diagnostics?: AirDiagnostics;
         /** @en Run the given scene and start the main loop. @zh 运行场景并启动主循环（幂等）。 */
         run(scene: Scene): void;
         /** @en Current running scene, or null before run(). @zh 当前运行中的场景；run() 之前为 null。 */
         getScene(): Scene | null;
+        /** Active scene ownership scope. Optional for older custom AirApp handles. */
+        readonly session?: AirSessionScope;
+        releaseScene?(): Promise<AirSceneReleaseReceipt>;
+        /** Terminates this handle. Same-document runtime reconstruction requires reload. */
+        close?(): Promise<AirSceneReleaseReceipt>;
     }
     /**
      * @en Internal implementation of [[AirApp]].
-     * @zh [[AirApp]] 的内部实现；对外不暴露。
+     * @zh [[AirApp]] 的实现；此名字已发布，保留构造兼容，通常使用 createAirApp。
      */
     export class AirAppImpl implements AirApp {
         readonly canvas: HTMLCanvasElement;
         readonly contextHealth: AirContextHealth;
-        constructor(canvas: HTMLCanvasElement, contextHealth: AirContextHealth);
+        readonly diagnostics?: AirDiagnostics | undefined;
+        get session(): AirSessionScope;
+        constructor(canvas: HTMLCanvasElement, contextHealth: AirContextHealth, diagnostics?: AirDiagnostics | undefined);
         /**
          * @en Run the given scene and start the main loop (idempotent for the loop).
          * @zh 运行传入的场景并启动主循环（主循环只启动一次）。
@@ -55723,6 +55865,8 @@
          * @zh 当前运行中的场景；run() 之前为 null。
          */
         getScene(): Scene | null;
+        releaseScene(): Promise<AirSceneReleaseReceipt>;
+        close(): Promise<AirSceneReleaseReceipt>;
     }
     /**
      * @en Create a Cocos AIR application on the given canvas.
@@ -55901,6 +56045,225 @@
         /** 单步 AFTER_DRAW 等待超时毫秒（默认 2000；超时抛错而非静默成功）。 */
         stepTimeoutMs?: number;
     }
+    /** @en Canonical identity of a source; distinct channels/alias keys never share a key. @zh source 的规范身份；不同通道/别名键永不共享同一 key。 */
+    export function airActionSourceKey(source: AirActionSource): string;
+    /** @en Runtime source validation with stable AIR_E_* failures. @zh 运行期 source 校验，失败抛稳定 AIR_E_* 错误。 */
+    export function assertValidSource(source: AirActionSource): void;
+    /**
+     * @en Create the pure action-state reducer. No engine input subscription happens here;
+     * pair with [[createActionInput]] (action-input.ts) for event plumbing.
+     * @zh 创建输入动作纯 reducer。此处不订阅任何引擎输入；事件接线请配合
+     * action-input.ts 的 [[createActionInput]]。
+     */
+    export function createActionState(options: AirActionStateOptions): AirActionState;
+    /** @en Stable error codes thrown by the action-state runtime surface. @zh 动作状态运行面的稳定错误码。 */
+    export type AirActionErrorCode = "AIR_E_INVALID_SOURCE" | "AIR_E_INVALID_VALUE" | "AIR_E_UNKNOWN_ACTION" | "AIR_E_DISPOSED";
+    /** @en Error with a stable machine-readable code. @zh 带稳定错误码的动作模块错误。 */
+    export class AirActionError extends Error {
+        readonly code: AirActionErrorCode;
+        constructor(code: AirActionErrorCode, message: string);
+    }
+    /** @en Input channel that produced a source. @zh 产生该 source 的输入通道。 */
+    export type AirActionBackend = "native" | "dom" | "manual";
+    /**
+     * @en Identity of one physical input source (one held key or one touch point).
+     * @zh 单一物理输入源的身份（一个按住的键或一个触点）。
+     *
+     * `native` 后端以引擎 `KeyCode` 标识键盘；`dom` 后端以 `KeyboardEvent.code` 标识物理键。
+     * 两条通道的同名键是不同 source（alias 不合并）；指针源用 `pointerId`。
+     * `manual` 供 HUD 按钮等显式 press/release 场景，任意可区分字段组合皆可。
+     */
+    export interface AirActionSource {
+        readonly backend: AirActionBackend;
+        /** @en DOM `KeyboardEvent.code`（dom 后端的物理键身份）。 @zh dom 后端物理键（如 'KeyA'）。 */
+        readonly physicalCode?: string;
+        /** @en Engine KeyCode（native 后端的物理键身份）。 @zh native 后端引擎键码。 */
+        readonly keyCode?: KeyCode;
+        /** @en Pointer / touch identifier. @zh 指针/触点 ID。 */
+        readonly pointerId?: number;
+    }
+    /** @en Action behavior: button = press-style discrete action, axis = continuous analog value. @zh 动作形态：button 为按键型离散动作，axis 为连续模拟量。 */
+    export type AirActionMode = "button" | "axis";
+    /** @en One binding entry: a source plus its axis contribution. @zh 绑定项：source 及其轴贡献值。 */
+    export interface AirActionBinding {
+        readonly source: AirActionSource;
+        /** @en Axis contribution while this source is active (default 1; buttons ignore it). @zh 活跃时的轴贡献（默认 1；按钮动作忽略）。 */
+        readonly value?: number;
+    }
+    /**
+     * @en Pointer pattern: binds every pointer/touch of the given backend regardless of id.
+     * Keyboard sources are enumerable, so patterns are pointer-only by design. A pattern is a
+     * declaration-time matcher — it is not itself a valid runtime source.
+     * @zh 指针模式绑定：匹配该后端的任意触点/指针。键盘 source 可枚举，模式绑定只面向指针。
+     * 模式只是声明期匹配器，不是合法的运行期 source。
+     */
+    export interface AirActionPointerPattern {
+        readonly backend: AirActionBackend;
+        readonly pointerId: "*";
+    }
+    /** @en Action declaration. @zh 动作声明。 */
+    export interface AirActionDefinition {
+        /** @en Defaults to 'button'. @zh 默认 'button'。 */
+        readonly mode?: AirActionMode;
+        /** @en Initial source set (OR semantics; `pointerId:'*'` patterns bind dynamic pointers). @zh 初始 source 集合（或语义；`pointerId:'*'` 模式绑定动态指针）。 */
+        readonly sources?: ReadonlyArray<AirActionSource | AirActionBinding | AirActionPointerPattern | (AirActionBinding & {
+            source: AirActionPointerPattern;
+        })>;
+    }
+    /** @en Reasons for a state reset; callers must distinguish them. @zh 重置原因；调用方必须区分。 */
+    export type AirActionResetReason = "blur" | "hidden" | "pause" | "restart" | "deactivate" | "dispose" | "manual";
+    /** @en Record of the most recent reset. @zh 最近一次重置的记录。 */
+    export interface AirActionResetRecord {
+        readonly reason: AirActionResetReason;
+        readonly at: number;
+        /** @en Monotonic reset counter across the state lifetime. @zh 整个生命周期内的单调重置计数。 */
+        readonly count: number;
+    }
+    /** @en One ordered transition consumed from the queue (not deduped). @zh 队列消费出的一条有序 transition（不去重）。 */
+    export interface AirActionTransition {
+        readonly action: string;
+        readonly kind: "press" | "release";
+        readonly source: AirActionSource;
+    }
+    /** @en Ordered changes consumed by one [[AirActionState.consumeTick]] call. @zh 一次 consumeTick 消费到的有序变化。 */
+    export interface AirActionTick {
+        /**
+         * @en Every edge this tick in queue order — press→release→press of the same action is
+         * preserved as three entries. Frozen.
+         * @zh 本 tick 全部边沿，按队列顺序——同一动作的 press→release→press 保留为三项。已冻结。
+         */
+        readonly transitions: readonly AirActionTransition[];
+        /** @en Convenience flags: actions with a press edge, first-occurrence order, deduped. @zh 便利 flag：出现 press 边沿的动作（首现序、去重）。已冻结。 */
+        readonly pressed: readonly string[];
+        /** @en Convenience flags: actions with a release edge, first-occurrence order, deduped. @zh 便利 flag：出现 release 边沿的动作（首现序、去重）。已冻结。 */
+        readonly released: readonly string[];
+    }
+    /** @en Pure input-action state machine. @zh 输入动作纯状态机。 */
+    export interface AirActionState {
+        /** @en Declared action names (frozen). @zh 已声明的动作名（冻结）。 */
+        readonly actions: readonly string[];
+        /** @en Mode of an action; unknown names throw AIR_E_UNKNOWN_ACTION. @zh 动作形态；未知动作名抛 AIR_E_UNKNOWN_ACTION。 */
+        mode(action: string): AirActionMode | undefined;
+        /** @en Whether any source of the action is currently active. @zh 动作是否有任一 source 活跃。 */
+        held(action: string): boolean;
+        /** @en Whether the action had a press edge in the last consumed tick. @zh 最近一次消费的 tick 内是否有 press 边沿。 */
+        pressed(action: string): boolean;
+        /** @en Whether the action had a release edge in the last consumed tick. @zh 最近一次消费的 tick 内是否有 release 边沿。 */
+        released(action: string): boolean;
+        /** @en Axis value = clamped sum of active source values (buttons report 0). @zh 轴值 = 活跃 source 贡献之和（截断到 [-1,1]；按钮恒 0）。 */
+        axis(action: string): number;
+        /** @en Frozen copies of the action's active sources. @zh 动作当前活跃 source 的冻结拷贝。 */
+        heldSources(action: string): readonly AirActionSource[];
+        /** @en Most recent reset record, or null. @zh 最近一次重置记录，未重置过为 null。 */
+        lastReset(): AirActionResetRecord | null;
+        /** @en Actions the source is bound to (adapter event routing; patterns included). @zh 该 source 绑定到的动作（适配器事件入口用，含模式绑定）。 */
+        actionsFor(source: AirActionSource): readonly string[];
+        /**
+         * @en Mark a source active on an action. Idempotent per (action, source): re-press of an
+         * active source (key repeat) is a no-op and does not re-arm the press edge.
+         * @zh 将 source 标记为动作活跃。对 (动作, source) 幂等：已活跃 source 的重复 press
+         * （按键 repeat）是 no-op，不重新武装 press 边沿。
+         * @returns true when this call activated the source.
+         */
+        press(action: string, source: AirActionSource, value?: number): boolean;
+        /** @en Mark a source inactive; other sources of the action stay held. @zh 释放单个 source；动作的其他 source 保持。 */
+        release(action: string, source: AirActionSource): boolean;
+        /** @en Direct analog write; value 0 releases the source, out-of-range values are clamped. @zh 模拟量直写；0 视为释放，超范围值截断。 */
+        setAxis(action: string, source: AirActionSource, value: number): void;
+        /**
+         * @en Consume edges queued since the previous call: `transitions` keeps every edge in
+         * order (press→release→press survives), `pressed`/`released` are deduped flags. Quick
+         * press+release with no tick in between survives to this call; repeated calls without
+         * new events return empty (no replay). Also refreshes the pressed()/released() state.
+         * @zh 有序消费自上次调用以来积压的边沿：transitions 完整保序（同动作 press→release→press
+         * 保留三项），pressed/released 为去重 flag。0 tick 的快按快放保留至此；无新事件时重复
+         * 调用返回空（不重放）。同时刷新 pressed()/released() 查询状态。
+         */
+        consumeTick(): AirActionTick;
+        /**
+         * @en Reset by reason: clears active sources and the pending queue (no synthetic edges),
+         * keeps bindings. `reset` never removes listeners — adapter detach is a separate concern.
+         * @zh 按原因重置：清空活跃集合与待处理队列（不产生伪造边沿），保留绑定。
+         * reset 不负责监听器——解绑是适配器的职责。
+         */
+        reset(reason: AirActionResetReason): void;
+    }
+    /** @en Options for [[createActionState]]. @zh createActionState 选项。 */
+    export interface AirActionStateOptions {
+        /** @en Action declarations; at least one action. @zh 动作声明；至少一个动作。 */
+        readonly actions: Readonly<Record<string, AirActionDefinition>>;
+    }
+    /** @en Create the default session gate with transition notification. @zh 创建带迁移通知的默认会话门。 */
+    export function createSessionGate(): AirActionSessionGate;
+    /**
+     * @en Create the adapter binding one real input backend to the reducer.
+     * @zh 创建把单一真实输入后端接到 reducer 的适配器。
+     */
+    export function createActionInput(options: AirActionInputOptions): AirActionInput;
+    /** @en Session change payload delivered to gate subscribers. @zh 会话状态迁移通知载荷。 */
+    export interface AirActionSessionChange {
+        readonly generation: number;
+        readonly active: boolean;
+        readonly reason: string | null;
+    }
+    /**
+     * @en Session admission gate (PG-30 connection point). `onChange`/`offChange` are optional
+     * so externally owned gates stay structurally compatible; when present, the adapter
+     * subscribes and resets on transitions.
+     * @zh 会话准入门（PG-30 连接点）。onChange/offChange 可选：外部 gate 不实现也能接入
+     * （仅准入门语义）；实现时适配器会订阅迁移并同步 reset。
+     */
+    export interface AirActionSessionGate {
+        /** @en Current session generation; increments on every activate(). @zh 当前会话代次；每次 activate() 递增。 */
+        readonly generation: number;
+        /** @en Whether the session currently admits input. @zh 当前会话是否准入输入。 */
+        readonly active: boolean;
+        /** @en Reason passed to the last deactivate(); null while active. @zh 最近一次 deactivate 的原因；活跃期为 null。 */
+        readonly deactivateReason: string | null;
+        /** @en Begin (or restart) a session generation. @zh 开启/重启会话代次。 */
+        activate(): number;
+        /** @en Retire the session; further input is rejected until activate(). @zh 退役当前会话；activate() 前拒绝输入。 */
+        deactivate(reason?: string): void;
+        /** @en Optional transition notification for adapter-side reset. @zh 可选：状态迁移通知，适配器据此同步 reset。 */
+        onChange?(listener: (change: AirActionSessionChange) => void): void;
+        /** @en Optional counterpart of [[onChange]]. @zh 与 onChange 配对的解绑。 */
+        offChange?(listener: (change: AirActionSessionChange) => void): void;
+    }
+    /** @en Options for [[createActionInput]]. @zh createActionInput 选项。 */
+    export interface AirActionInputOptions {
+        /** @en Reducer created by [[createActionState]]. @zh 纯 reducer。 */
+        readonly state: AirActionState;
+        /** @en Exactly one backend; default 'native'. @zh 二选一后端；默认 'native'。 */
+        readonly backend?: "native" | "dom";
+        /**
+         * @en Explicit canvas. Required for 'dom' (pointer event target); used as the focus
+         * target for 'native'. Never auto-discovered here.
+         * @zh 显式 canvas。'dom' 后端必填（指针事件目标）；'native' 后端仅作焦点目标。不做自动探测。
+         */
+        readonly canvas?: HTMLCanvasElement;
+        /** @en Session admission gate; omit to admit always (PG-30 may supply its own). @zh 会话准入门；缺省恒准入（PG-30 可后续提供）。 */
+        readonly session?: AirActionSessionGate;
+        /** @en preventDefault on admitted events; default false (never over-prevent). @zh 对准入事件 preventDefault；默认 false（不过度阻止默认行为）。 */
+        readonly preventDefault?: boolean;
+    }
+    export interface AirActionInput {
+        /** @en Selected backend. @zh 选定后端。 */
+        readonly backend: "native" | "dom";
+        /** @en DOM listener family actually installed ('pointer' or 'legacy' for the dom backend). @zh dom 后端实际安装的监听族（'pointer' 或退化的 'legacy'）。 */
+        readonly domChannel: "pointer" | "legacy" | null;
+        /** @en Whether listeners are currently installed. @zh 当前是否已安装监听。 */
+        readonly attached: boolean;
+        /** @en Install listeners once; no-op when already attached; throws AIR_E_DISPOSED after dispose. @zh 安装监听（幂等）；已安装为 no-op；dispose 后抛 AIR_E_DISPOSED。 */
+        attach(): void;
+        /** @en Remove listeners exactly; idempotent, keeps reducer state. @zh 精确移除监听（幂等），保留 reducer 状态。 */
+        detach(): void;
+        /** @en Explicit focus request for Start/Resume; never called by attach; no-op after dispose. @zh Start/Resume 显式请求焦点；attach 不调用；dispose 后为 no-op。 */
+        requestFocus(): boolean;
+        /** @en Forward a reset reason to the reducer (pause/restart/deactivate/...); no-op after dispose. @zh 按原因转发 reset（pause/restart/deactivate/...）；dispose 后为 no-op。 */
+        reset(reason: AirActionResetReason): void;
+        /** @en Terminal: reset('dispose') + detach + gate unbind; idempotent; re-attach impossible. @zh 终态：reset('dispose') + detach + 解绑 gate；幂等；不可再 attach。 */
+        dispose(): void;
+    }
     /**
      * @en Assemble a fullscreen UI Canvas (Canvas + Widget + ortho UI camera) under the scene.
      * @zh 在场景内组装全屏 UI Canvas（Canvas + Widget 全对齐 + 正交 UI 相机）。
@@ -55954,29 +56317,109 @@
         layer?: number;
     }
     /**
-     * @en Minimal reference-counted asset bank over `assetManager.loadRemote`.
-     * @zh 基于 assetManager.loadRemote 的最小引用计数资产库：
-     * - 并发去重：同 URL 在途请求只发一次，等待者共享同一 Promise；
-     * - 每个 bank 对资产持有一份引擎引用；release 只归还自己的引用。其他持有者
-     *   也需使用 addRef/decRef 合同，不能使用强制 releaseAsset；
-     * - 失败清理：加载失败不留悬挂条目；
-     * - 进度：loadRemote 无任务级进度时以 0→100 两阶报告（如实，不伪造细粒度）。
+     * @en Reference-counted raw-remote asset bank (Promise API over `assetManager.loadRemote`).
+     * @zh 基于 assetManager.loadRemote 的引用计数原始远程资产库（Promise API）：
+     * - 并发去重：同键在途请求只发一次，等待者共享底层操作、各自持独立 Promise；
+     * - ext：带后缀 URL 原生推断（可用引擎 URL 缓存）；无后缀 URL 必须显式 ext；显式 ext
+     *   以 reloadAsset 绕过按 URL 的强缓存，保证解析真实符合 ext；显式 ext 参与键，不同 ext
+     *   独立加载；
+     * - 取消：signal 只取消订阅者；底层不可取消（见 [[AssetBank.underlyingCancelSupported]]），
+     *   全员取消/无人持有后完成的结果按成对 addRef→decRef 触发正常 tryRelease（净 0，不侵害外部 owner）；
+     * - 进度：loadRemote 无任务级进度，如实两阶报告（订阅时 0/1，完成时 1/1），不伪造细粒度。
      */
     export class AssetBank {
+        /** @en Honest capability flag: the underlying loadRemote cannot be network-cancelled. @zh 如实能力声明：底层 loadRemote 不支持网络级取消。 */
+        static readonly underlyingCancelSupported = false;
         /** 当前在库条目数（测试观测面）。 */
         get size(): number;
-        /** 引用计数（测试观测面）。 */
-        refCount(url: string): number;
+        /** 在途请求数（测试观测面）。 */
+        get inFlightCount(): number;
+        /** @en Subscriber refcount of a cached entry (0 when absent; ext participates in the key). @zh 入库条目的订阅计数（不存在为 0；ext 参与键）。 */
+        refCount(url: string, ext?: string): number;
         /**
-         * @en Load (or join the in-flight load of) an asset by URL, incrementing its refcount.
-         * @zh 按 URL 加载（或在途合并）资产并递增引用计数。
+         * @en Load (or join the in-flight load of) an asset by URL.
+         * Legacy signature `load(url, onProgress?)` is preserved; the incremental signature is
+         * `load(url, { ext?, signal?, onProgress? })`. The generic parameter is the caller's
+         * assertion — the bank never guesses a type from it.
+         * @zh 按 URL 加载（或在途合并）资产。兼容签名 load(url, onProgress?) 保留；增量签名为
+         * load(url, { ext?, signal?, onProgress? })。泛型参数只是调用方断言，bank 不据此猜类型。
          */
-        load<T extends Asset>(url: string, onProgress?: __private._air_ui_kit__ProgressFn): Promise<T>;
+        load<T extends Asset = Asset>(url: string, optionsOrProgress?: AssetBankLoadOptions | AssetProgressFn): Promise<T>;
         /**
-         * @en Release this bank's reference when its local count reaches zero.
-         * @zh 本 bank 归零时只归还自己持有的引擎引用。
+         * @en Release the bank's subscription; when the local count reaches zero the bank returns
+         * its own engine reference. Never force-releases the asset (other holders keep theirs).
+         * @zh 归还本 bank 的订阅；本地计数归零时 bank 才归还自己持有的引擎引用。
+         * 绝不 force release 资产（其他拥有者不受影响）。
          */
-        release(url: string): boolean;
+        release(url: string, ext?: string): boolean;
+        /**
+         * @en Release every cached entry and revoke in-flight subscriptions (session-end recipe):
+         * waiters reject with AIR_E_REVOKED; the still-uncancellable underlying requests complete
+         * later and the bank requests normal release with a net-zero addRef/decRef pair; subsequent loads start
+         * fresh requests that revoked late callbacks cannot remove.
+         * @zh 释放全部入库条目并撤销在途订阅（会话结束配方）：在途等待者以 AIR_E_REVOKED 拒绝；
+         * 不可取消的底层请求稍后完成时 bank 成对 addRef→decRef 触发正常 tryRelease（净 0）；之后的加载是新请求，被撤销请求的
+         * 迟到回调不会移除它们。
+         * @returns number of cached entries released.
+         */
+        releaseAll(): number;
+    }
+    /** @en Incremental load options (PG-06). @zh 增量加载选项（PG-06）。 */
+    export interface AssetBankLoadOptions {
+        /**
+         * @en Explicit extension for suffix-less URLs (required there) or to disambiguate a URL
+         * whose suffix does not describe the intended type. Letters/digits only, ≤16 chars.
+         * Passed to loadRemote lower-cased with a leading dot and with `reloadAsset: true`,
+         * so the native parser truly honors it instead of the URL-keyed cache.
+         * @zh 显式扩展名：无后缀 URL 必填；或用于区分后缀与预期类型不符的 URL。仅字母数字，≤16 字符。
+         * 传给 loadRemote 时小写、带前导点，并附 `reloadAsset: true` 绕过按 URL 的强缓存早退，
+         * 保证原生解析器真实按 ext 解析。
+         */
+        readonly ext?: string;
+        /**
+         * @en Subscriber-side cancellation. Aborts only this subscription; the underlying
+         * request is NOT network-cancelled (loadRemote has no cancellation), so a fully
+         * abandoned request still completes. Native callbacks carry no ownership reference;
+         * an addRef/decRef pair requests normal release without reducing external owners.
+         * @zh 订阅者取消：只取消本订阅；底层请求不做网络级取消（loadRemote 无取消通道），
+         * 全部订阅者取消后请求仍会完成，完成时 bank 成对 addRef→decRef 触发正常 tryRelease（净 0）。
+         */
+        readonly signal?: AbortSignal;
+        /** @en Progress callback. Throws inside it reject only this subscription (AIR_E_PROGRESS_ERROR). @zh 进度回调；内部抛错只拒绝本订阅（AIR_E_PROGRESS_ERROR）。 */
+        readonly onProgress?: AssetProgressFn;
+    }
+    /** @en Progress callback shape (two-phase honest reporting, see manual). @zh 进度回调（两阶如实报告，见手册）。 */
+    export type AssetProgressFn = (current: number, total: number) => void;
+    /** @en Error with a stable machine-readable code; original failure kept in `cause`. @zh 带稳定错误码的资产错误；原始失败保留在 cause。 */
+    export class AirAssetError extends Error {
+        readonly code: AirAssetErrorCode;
+        readonly cause?: unknown;
+        constructor(code: AirAssetErrorCode, message: string, cause?: unknown);
+    }
+    /** @en Stable error codes of the asset-loading surface. @zh 资产加载面的稳定错误码。 */
+    export type AirAssetErrorCode = "AIR_E_EXT_REQUIRED" | "AIR_E_INVALID_EXT" | "AIR_E_ABORTED" | "AIR_E_REVOKED" | "AIR_E_LOAD_FAILED" | "AIR_E_PROGRESS_ERROR";
+    /** Positions are local XY pairs; UV pairs address the frame with (0,0) at its bottom-left. */
+    export interface AirUIMeshGeometry {
+        readonly positions: ReadonlyArray<number>;
+        readonly uvs: ReadonlyArray<number>;
+        readonly indices: ReadonlyArray<number>;
+    }
+    /** Native UI renderer: shares Sprite materials, stencil masks, sibling order and batch buffers. */
+    export class AirUIMesh extends UIRenderer {
+        get geometry(): AirUIMeshGeometry;
+        get disposed(): boolean;
+        get spriteFrame(): SpriteFrame | null;
+        set spriteFrame(value: SpriteFrame | null);
+        setGeometry(value: AirUIMeshGeometry): void;
+        clear(): void;
+        /** Clears this renderer and releases its frame/texture leases. Does not destroy the node or shared assets. */
+        dispose(): void;
+        onDestroy(): void;
+        protected _flushAssembler(): void;
+        protected _canRender(): boolean;
+        protected _render(renderer: __private._cocos_2d_renderer_i_batcher__IBatcher): void;
+        /** @internal Keeps the packed texture and original page alive through dynamic-atlas restoration. */
+        refreshFrame(): void;
     }
     /** @en A persistent page handle. @zh 常驻页面句柄。 */
     export interface PageHandle {
@@ -56035,6 +56478,8 @@
         /** 实测播放头（秒）；未播放/无 clip 为 0。 */
         currentTime: number;
         loop: boolean;
+        /** 通道音量，范围 [0, 1]。 */
+        volume: number;
     }
     /** @en Options for [[AudioService]]. @zh AudioService 选项。 */
     export interface AudioServiceOptions {
@@ -56064,6 +56509,11 @@
          */
         playBgm(id: string, loop?: boolean): void;
         pauseBgm(): void;
+        /** 停止当前 BGM 并将播放头归零；保留 ID，resumeBgm 从零开始。节点名不是公开契约。 */
+        stopBgm(): void;
+        /** 设置所有现有及后续 BGM 通道的音量；不改变音效音量、开关或播放头。 */
+        setBgmVolume(volume: number): void;
+        get bgmVolume(): number;
         /** 恢复当前 BGM 台（从暂停点续播）。 */
         resumeBgm(): void;
         /**
@@ -56143,6 +56593,38 @@
      * ```
      */
     export function frameObject(camera: Camera, target: Node, fallbackDistance?: number): void;
+    /** Validate named parameters, then forward to the original geometry functions. Returns geometry, not Mesh. */
+    export function createPrimitiveGeometry(descriptor: AirPrimitiveDescriptor): primitives.IGeometry;
+    export type AirPrimitiveDescriptor = (__private._air_primitive_geometry__GeometryChannels & {
+        type: "box";
+        width?: number;
+        height?: number;
+        length?: number;
+        widthSegments?: number;
+        heightSegments?: number;
+        lengthSegments?: number;
+    }) | (__private._air_primitive_geometry__GeometryChannels & {
+        type: "sphere";
+        radius?: number;
+        segments?: number;
+    }) | (__private._air_primitive_geometry__GeometryChannels & {
+        type: "cylinder";
+        radiusTop?: number;
+        radiusBottom?: number;
+        height?: number;
+        radialSegments?: number;
+        heightSegments?: number;
+        capped?: boolean;
+        arc?: number;
+    }) | (__private._air_primitive_geometry__GeometryChannels & {
+        type: "cone";
+        radius?: number;
+        height?: number;
+        radialSegments?: number;
+        heightSegments?: number;
+        capped?: boolean;
+        arc?: number;
+    });
     /** Shared native assets; instantiate creates independent node/animation/morph state. */
     export class GLTFAsset extends Asset {
         /** @internal Resource builder; public accessors expose readonly collections. */
@@ -56406,6 +56888,167 @@
         /** T5 physical extensions extend this record with normalized scalar/vector features. */
         readonly physical: Record<string, unknown>;
         unlit: boolean;
+    }
+    /** Parse the text BMFont format. Native BitmapFont supports one unpacked page in this factory. */
+    export function parseFnt(text: string): AirFntData;
+    /** Assemble and initialize a native font from an untrimmed, unrotated full-page SpriteFrame. */
+    export function createBitmapFont(data: AirFntData, page: SpriteFrame): AirBitmapFontHandle;
+    /** Load .fnt text and its relative page through independent, cancellable bank subscriptions. */
+    export function loadBitmapFont(url: string, options: AirBitmapFontLoadOptions): Promise<AirBitmapFontHandle>;
+    export interface AirFntGlyph {
+        readonly rect: Readonly<{
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        }>;
+        readonly xOffset: number;
+        readonly yOffset: number;
+        readonly xAdvance: number;
+    }
+    export interface AirFntData {
+        readonly fontSize: number;
+        readonly commonHeight: number;
+        readonly base: number;
+        readonly scaleW: number;
+        readonly scaleH: number;
+        readonly atlasName: string;
+        readonly pages: readonly Readonly<{
+            id: 0;
+            file: string;
+        }>[];
+        readonly fontDefDictionary: Readonly<Record<string, AirFntGlyph>>;
+        readonly kerningDict: Readonly<Record<string, number>>;
+    }
+    export interface AirBitmapFontHandle {
+        readonly font: BitmapFont;
+        readonly data: AirFntData;
+        readonly disposed: boolean;
+        /** Detach labels first. Extra font owners must release their references before disposal. */
+        dispose(): void;
+    }
+    export interface AirBitmapFontLoadOptions {
+        bank: AssetBank;
+        signal?: AbortSignal;
+        baseURL?: string;
+    }
+    /** @en Parse libGDX .atlas/.pack text into a frozen document. @zh 解析 libGDX .atlas/.pack 文本为冻结文档。 */
+    export function parseAtlasText(text: string): AirAtlasDocument;
+    /**
+     * Cocos Air — libGDX 文本图集纯解析器（PG-01，port-gap-remediation S4）。
+     *
+     * 解析 libGDX TexturePacker 的 .atlas/.pack 文本格式为冻结数据文档；不做任何引擎
+     * 资源分配，可独立单测。语法与语义对齐官方实现（TextureAtlas.java 读侧、
+     * TexturePacker.java writePage/writeRect/writePageLegacy 写侧）：
+     *
+     * 行识别（与缩进无关）：
+     *   - 字段行 = 匹配 `key: value`（key 为字母开头的标识符）；页/区域字段均可无缩进
+     *     （legacy 写侧：页字段无缩进、region 字段带缩进；紧凑新格式：全部无缩进）。
+     *   - 名字行 = 其余行（无 key: 前缀，如 page-0.png / regionName）。名字含 `:` 不支持。
+     * 块边界（size 前瞻判别）：名字行后首个字段若为 `size:` 则该名字行是**新页文件名**
+     *   （两代写侧的页块首个字段恒为 size，且区域字段永不以 size 开头——legacy 区域以
+     *   rotate/xy 开头、新格式以 bounds 开头）；否则该名字行是**新区域名**（归属当前页）。
+     *   空行跳过；CRLF 与 BOM 支持；多页与同页多区域均支持。
+     *
+     * 页字段：size: w,h（必需）；format；filter/filt（两拼写等价，不得同现）；repeat；pma: true|false。
+     * 区域字段：
+     *   - rotate: false|true|90（true ≡ 90；其他值拒绝）
+     *   - 旧格式 xy: x,y + size: w,h —— size 为逻辑（未旋转裁剪后）尺寸，rotate 时页上占用 = 交换
+     *   - 新格式 bounds: x,y,w,h —— x/y 为页上位置，w/h 为**逻辑**尺寸；rotate 时页上占用 = 交换
+     *     （与 xy/size 互斥）
+     *   - 旧格式 orig: w,h + offset: left,bottom（自原图左/下边的修剪距离；缺省 orig=逻辑、offset=0,0）
+     *   - 新格式 offsets: offsetX, offsetY, originalWidth, originalHeight（官方 TextureAtlas 语义：
+     *     前两元为修剪距离 left/bottom，后两元为原始完整尺寸）—— 与 orig/offset 互斥
+     *   - index: n（≥ -1；n ≥ 0 为动画帧，同名不同 index 全部可查，绝不静默覆盖）
+     *
+     * 显式拒绝（稳定 AIR_E_ATLAS_* 错误码）：未知字段键、未知 rotate 值、区域越界页、
+     * 页块前出现区域字段、同 name+index 重复、bounds 与 xy/size 混用、offsets 与 orig/offset
+     * 混用、非法整数/负数、页缺 size、字段先于任何名行、名字含冒号、空输入。
+     */
+    /** @en Rotation as stored: 0 = unrotated, 90 = packed rotated (footprint swapped). @zh 打包旋转：0 未旋转；90 已旋转（占用宽高交换）。 */
+    export type AirAtlasRotation = 0 | 90;
+    /** @en One page block. @zh 一个页块。 */
+    export interface AirAtlasPage {
+        readonly file: string;
+        readonly pageIndex: number;
+        readonly width: number;
+        readonly height: number;
+        readonly format?: string;
+        readonly filter?: string;
+        readonly repeat?: string;
+        readonly pma?: boolean;
+    }
+    /** @en One region with libGDX semantics translated to explicit geometry. @zh 一个区域，libGDX 语义已翻译为显式几何。 */
+    export interface AirAtlasRegion {
+        readonly name: string;
+        /** @en -1 = plain region; ≥ 0 = animation frame. @zh -1 普通区域；≥0 动画帧序号。 */
+        readonly index: number;
+        readonly pageIndex: number;
+        readonly rotate: AirAtlasRotation;
+        /** @en Packed position on the page, top-left origin. @zh 页上打包位置（左上原点）。 */
+        readonly xy: Readonly<{
+            x: number;
+            y: number;
+        }>;
+        /** @en On-page footprint (swapped for rotated). @zh 页上占用（旋转时宽高交换）。 */
+        readonly packed: Readonly<{
+            width: number;
+            height: number;
+        }>;
+        /** @en Unrotated trimmed size. @zh 未旋转的裁剪后尺寸。 */
+        readonly logical: Readonly<{
+            width: number;
+            height: number;
+        }>;
+        /** @en Full size before trimming. @zh 修剪前完整尺寸。 */
+        readonly original: Readonly<{
+            width: number;
+            height: number;
+        }>;
+        /** @en Trim distances from the original's left/bottom edges. @zh 自原图左/下边的修剪距离。 */
+        readonly offset: Readonly<{
+            left: number;
+            bottom: number;
+        }>;
+    }
+    /** @en Frozen parsed document with name queries. @zh 冻结的解析文档与名称查询。 */
+    export interface AirAtlasDocument {
+        readonly pages: readonly AirAtlasPage[];
+        readonly regions: readonly AirAtlasRegion[];
+        /** @en Plain (index -1) region; undefined when the name only has animation frames. @zh 普通区域（index -1）；同名仅有动画帧时 undefined（不得静默覆盖）。 */
+        getRegion(name: string): AirAtlasRegion | undefined;
+        /** @en All regions of the name ordered by index. @zh 该名称全部区域（按 index 升序）。 */
+        getRegions(name: string): readonly AirAtlasRegion[];
+    }
+    /** @en Stable error codes of the atlas parser. @zh 图集解析的稳定错误码。 */
+    export type AirAtlasErrorCode = "AIR_E_ATLAS_FORMAT" | "AIR_E_ATLAS_DATA" | "AIR_E_ATLAS_ROTATION" | "AIR_E_ATLAS_BOUNDS" | "AIR_E_ATLAS_DUPLICATE" | "AIR_E_ATLAS_PAGE";
+    /** @en Build one native SpriteFrame for a region. @zh 为一个区域构建原生 SpriteFrame。 */
+    export function createAtlasSpriteFrame(document: AirAtlasDocument, pageTextures: readonly Texture2D[], region: AirAtlasRegion): SpriteFrame;
+    /** @en Assemble the native frames and own pages/frames. @zh 组装原生帧并接管页纹理/帧引用。 */
+    export function createAtlasHandle(document: AirAtlasDocument, pageTextures: readonly Texture2D[]): AirAtlasHandle;
+    /** @en Owned handle over the atlas pages and its SpriteFrames. @zh 图集页纹理与 SpriteFrame 的持有句柄。 */
+    export interface AirAtlasHandle {
+        readonly document: AirAtlasDocument;
+        readonly textures: readonly Texture2D[];
+        readonly disposed: boolean;
+        /** @en Plain (index -1) frame of the name. Indexed frames need an explicit index. @zh 名称的普通帧（index -1）；动画帧必须显式给 index。 */
+        getFrame(name: string, index?: number): SpriteFrame | undefined;
+        /** @en All frames of the name ordered by index (animation frames queryable, never merged). @zh 名称全部帧（按 index 升序，动画帧可查、绝不合并）。 */
+        getFrames(name: string): readonly SpriteFrame[];
+        /** @en Idempotent; refuses while any frame has extra owners (AIR_E_ATLAS_IN_USE). @zh 幂等；任一帧仍有额外持有者时拒绝（AIR_E_ATLAS_IN_USE）。 */
+        dispose(): void;
+    }
+    /** @en Load a libGDX text atlas and its pages through the shared bank; the handle owns textures/frames. @zh 经共享 bank 加载 libGDX 文本图集与页纹理；handle 持有纹理/帧。 */
+    export function loadAtlas(url: string, options: AirAtlasLoadOptions): Promise<AirAtlasHandle>;
+    export interface AirAtlasLoadOptions {
+        /** @en The shared AssetBank context (subscriptions follow the PG-06/32 contract). @zh 共享 AssetBank 上下文（订阅遵循 PG-06/32 合同）。 */
+        readonly bank: AssetBank;
+        /** @en Subscriber-side cancellation (no network-level cancel — see AssetBank contract). @zh 订阅者取消（非网络级取消——见 AssetBank 合同）。 */
+        readonly signal?: AbortSignal;
+        /** @en Explicit base for relative page URLs; defaults to the atlas URL, then document base. @zh 相对页 URL 的显式基址；缺省依次取 atlas URL 与 document base。 */
+        readonly baseURL?: string;
+        /** @en Ext for suffix-less page files (default 'png'); other formats rejected on the auto path. @zh 无后缀页文件的扩展名（默认 'png'）；其他格式在自动路径拒绝。 */
+        readonly pageExt?: string;
     }
     /**
      * True when a material's compiled variant actually enables USE_AIR_TRANSMISSION. The
@@ -64286,6 +64929,8 @@
             public get handheldOrientation(): _pal_input__InputSourceOrientation;
         }
         export interface _cocos_input_input__InputEventMap {
+            [_cocos_input_types_event_enum__InputEventType.MOUSE_ENTER]: (event: EventMouse) => void;
+            [_cocos_input_types_event_enum__InputEventType.MOUSE_LEAVE]: (event: EventMouse) => void;
             [_cocos_input_types_event_enum__InputEventType.MOUSE_DOWN]: (event: EventMouse) => void;
             [_cocos_input_types_event_enum__InputEventType.MOUSE_MOVE]: (event: EventMouse) => void;
             [_cocos_input_types_event_enum__InputEventType.MOUSE_UP]: (event: EventMouse) => void;
@@ -66613,6 +67258,8 @@
             y: number;
             rotation: number;
             type: _cocos_tiledmap_tiled_types__TMXObjectType;
+            /** Tiled user class (modern `class` or legacy `type`), separate from the shape enum. */
+            className?: string;
             visible: boolean;
             wrap: boolean;
             color: math.Color;
@@ -69019,7 +69666,16 @@
             ENDED = "ended"
         }
         export type _pal_audio_type__AudioBufferView = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array;
-        export type _air_ui_kit__ProgressFn = (current: number, total: number) => void;
+        /** @engineInternal Observes native diagnostics without changing console filtering. */
+        export interface _cocos_core_platform_debug__DiagnosticLogEntry {
+            severity: "warning" | "error";
+            id: number | null;
+            message: string;
+        }
+        export interface _air_primitive_geometry__GeometryChannels {
+            includeNormal?: boolean;
+            includeUV?: boolean;
+        }
         /** glTF 2.0 wire types. Unknown extension data is retained, never executed. */
         export interface _air_assets_gltf_schema__Property {
             name?: string;

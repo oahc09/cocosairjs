@@ -1,22 +1,22 @@
 {
-  "measuredAt": "2026-10-02T02:13:35.961Z",
+  "measuredAt": "2026-10-04T05:55:42.641Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "runner": "tools/verify/gallery-artifact.cjs",
   "completed": true,
   "scope": {
-    "examples": 146,
-    "booted": 141,
+    "examples": 159,
+    "booted": 154,
     "devToolsPagesServed": 5,
-    "lifecycle": 53
+    "lifecycle": 65
   },
   "artifactBytes": {
-    "engineCopySha256_16": "bcc9f69e08f018ed",
-    "liveBundleSha256_16": "bcc9f69e08f018ed",
+    "engineCopySha256_16": "de4e0472e8a9cf86",
+    "liveBundleSha256_16": "de4e0472e8a9cf86",
     "identical": true
   },
-  "total": 220,
-  "pass": 220,
+  "total": 245,
+  "pass": 245,
   "results": [
     {
       "id": "artifact:no-absolute-path-dependency",
@@ -31,7 +31,7 @@
     {
       "id": "artifact:engine-copy-current",
       "ok": true,
-      "detail": "artifact bcc9f69e08f018ed vs live build bcc9f69e08f018ed"
+      "detail": "artifact de4e0472e8a9cf86 vs live build de4e0472e8a9cf86"
     },
     {
       "id": "static:index.html",
@@ -56,7 +56,7 @@
     {
       "id": "artifact:thumbnails-all",
       "ok": true,
-      "detail": "141/141 thumbnails reachable"
+      "detail": "154/154 thumbnails reachable"
     },
     {
       "id": "artifact:devtools-page-served:automation",
@@ -86,12 +86,12 @@
     {
       "id": "gallery:list-rendered",
       "ok": true,
-      "detail": "links=146 expected=146"
+      "detail": "links=159 expected=159"
     },
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:52892/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:53720/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",
@@ -114,6 +114,16 @@
       "detail": "booted via /anim-rotation/"
     },
     {
+      "id": "example-boot:animated-character-showcase",
+      "ok": true,
+      "detail": "booted via /animated-character-showcase/"
+    },
+    {
+      "id": "lifecycle:animated-character-showcase",
+      "ok": true,
+      "detail": "held=17 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:audio-basic",
       "ok": true,
       "detail": "booted via /audio-basic/"
@@ -124,9 +134,49 @@
       "detail": "held=1 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:batching-dynamic",
+      "ok": true,
+      "detail": "booted via /batching-dynamic/"
+    },
+    {
+      "id": "lifecycle:batching-dynamic",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:batching-merged",
+      "ok": true,
+      "detail": "booted via /batching-merged/"
+    },
+    {
+      "id": "lifecycle:batching-merged",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:batching-shared",
+      "ok": true,
+      "detail": "booted via /batching-shared/"
+    },
+    {
+      "id": "lifecycle:batching-shared",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:batching-utility",
       "ok": true,
       "detail": "booted via /batching-utility/"
+    },
+    {
+      "id": "example-boot:black-hole-accretion",
+      "ok": true,
+      "detail": "booted via /black-hole-accretion/"
+    },
+    {
+      "id": "lifecycle:black-hole-accretion",
+      "ok": true,
+      "detail": "held=19 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:camera",
@@ -179,6 +229,16 @@
       "detail": "held=2 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:campfire-night",
+      "ok": true,
+      "detail": "booted via /campfire-night/"
+    },
+    {
+      "id": "lifecycle:campfire-night",
+      "ok": true,
+      "detail": "held=10 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:collector-dodge",
       "ok": true,
       "detail": "booted via /collector-dodge/"
@@ -222,6 +282,36 @@
       "id": "lifecycle:dragonbones-basic",
       "ok": true,
       "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:fog-accuracy",
+      "ok": true,
+      "detail": "booted via /fog-accuracy/"
+    },
+    {
+      "id": "lifecycle:fog-accuracy",
+      "ok": true,
+      "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:glass-refraction",
+      "ok": true,
+      "detail": "booted via /glass-refraction/"
+    },
+    {
+      "id": "lifecycle:glass-refraction",
+      "ok": true,
+      "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-animation-contract",
+      "ok": true,
+      "detail": "booted via /gltf-animation-contract/"
+    },
+    {
+      "id": "lifecycle:gltf-animation-contract",
+      "ok": true,
+      "detail": "held=15 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:gltf-asset-readonly",
@@ -719,6 +809,16 @@
       "detail": "held=4 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:neon-night-city",
+      "ok": true,
+      "detail": "booted via /neon-night-city/"
+    },
+    {
+      "id": "lifecycle:neon-night-city",
+      "ok": true,
+      "detail": "held=13 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:node-active",
       "ok": true,
       "detail": "booted via /node-active/"
@@ -762,6 +862,11 @@
       "id": "example-boot:node-scene-id",
       "ok": true,
       "detail": "booted via /node-scene-id/"
+    },
+    {
+      "id": "example-boot:orbit-controls",
+      "ok": true,
+      "detail": "booted via /orbit-controls/"
     },
     {
       "id": "example-boot:particle-2d-basic",
@@ -822,6 +927,16 @@
       "id": "lifecycle:physics-interaction",
       "ok": true,
       "detail": "held=21 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:point-cloud-basics",
+      "ok": true,
+      "detail": "booted via /point-cloud-basics/"
+    },
+    {
+      "id": "lifecycle:point-cloud-basics",
+      "ok": true,
+      "detail": "held=6 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:primitives-geometry-ops",
@@ -937,6 +1052,16 @@
       "id": "lifecycle:skinned-animation",
       "ok": true,
       "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:starfield-galaxy",
+      "ok": true,
+      "detail": "booted via /starfield-galaxy/"
+    },
+    {
+      "id": "lifecycle:starfield-galaxy",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:starter",
@@ -1096,12 +1221,12 @@
     {
       "id": "artifact:all-boottable-examples",
       "ok": true,
-      "detail": "141/141 booted under nested mount"
+      "detail": "154/154 booted under nested mount"
     },
     {
       "id": "artifact:lifecycle-covered",
       "ok": true,
-      "detail": "53 §25 合同示例在部署物内完成释放核对"
+      "detail": "65 §25 合同示例在部署物内完成释放核对"
     },
     {
       "id": "artifact:no-http-errors",

@@ -26,6 +26,8 @@ atlasAsset = new DragonBonesAtlasAsset(NAME);
 
 ## 2. TiledMap：TMX/TSX 文本资产 + 手搭 TiledMapAsset
 
+对象原始坐标、class/形状查询及瓦片碰撞数据读法见 [Tiled 对象与瓦片查询](./tiled-object-queries.md)。
+
 `assetManager.loadRemote` 对 `.tmx/.tsx` 走 `downloadText → createTextAsset`（拿到 `TextAsset`）；
 组件侧不吃这些 asset，而是吃一个**手搭的 `TiledMapAsset`**（贴图/图层/对象手工组装），
 `TiledMap.tmxAsset` setter 直接 `_applyFile()`（`examples/tiledmap-basic/main.js` 实测注释）：
@@ -53,6 +55,8 @@ plist 文本在运行时**程序化生成**，交给引擎自己的解析器（`
 可复现（终态两系统各 146 粒）。
 
 ## 4. Spine：导出面在、浏览器验证缺（待验证）
+
+本轮端口缺口决议明确 **Spine 2.1不支持**，不实现2.1转换器或外挂播放器。图集与字体入口独立见[图集加载](./atlas-loading.md)、[BMFont](./bitmap-font-loading.md)；任意UI贴图三角形见[UI-mesh](./ui-textured-mesh.md)。已有3.8/4.2的后端与资产条件继续按下表披露，不能从这些通用入口推断Spine播放能力。
 
 | 项         | 现状                                                                                                                                                               |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

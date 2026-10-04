@@ -1,0 +1,2116 @@
+{
+  "schemaVersion": "air-texture-orientation/1",
+  "startedAt": "2026-10-04T01:52:37.688Z",
+  "endedAt": "2026-10-04T01:52:51.568Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\air-texture-orientation-browser.cjs",
+    "--browser=all",
+    "--out=docs/evidence/texture-orientation/pg24-texture-orientation-run1.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "nodeVersion": "v24.14.0",
+  "playwrightVersion": "1.63.0",
+  "fingerprints": {
+    "build/cocosair.module.js": "122e6930bbc7d211eb4b7ff07b0bce8b45b8d2da2820ee8294472ab88a9d05f5",
+    "test/fixtures/texture-orientation/index.html": "347ed7a736eef8f879709231aa51013165ddd94ad3556736668b084959bf2236",
+    "test/fixtures/texture-orientation/main.ts": "48a452a4937755f6bc4d2213198b64b71f98c9c01401737f91b7301f57ddc0c9",
+    "test/fixtures/texture-orientation/contract.ts": "92617abfa7ca8bc9f40287aa0f4eafc55f5687e626af7cbb01416ec6be414181",
+    "tools/verify/air-texture-orientation-browser.cjs": "b5c923faba0123e9db6cc5ea7725ed5cb76983cebbc5fb8ddfc5fcbab53f6ab8",
+    "examples/shared/canvas-texture.js": "afa76174f9e05a02f8547d6d85b2d0b1bf73a6487ead46f96cd686a088577b99"
+  },
+  "scope": [
+    "PG-24 texture source orientation: five source kinds via public ImageAsset/Texture2D/native render chain",
+    "per-source UV/vertical/horizontal pixel assertions via gl.readPixels quadrant sampling",
+    "3D plane (MeshRenderer + builtin-unlit) convention probe",
+    "resource release ref-count evidence per source"
+  ],
+  "gpuMemory": "unavailable（当前引擎/管线无公开 GPU 物理内存计数器，如实记录不推断）",
+  "subset": true,
+  "completed": false,
+  "unverified": [
+    "glTF sampler/UV 补偿层不改动、仅引用既有证据（NP01/CB-16）",
+    "物理设备显示差异、color space 联动（CB-16）",
+    "完整 35 项计划范围"
+  ],
+  "results": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "status": "PASS",
+      "stage": "engine",
+      "sources": [
+        {
+          "source": "image",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "image",
+            "acceptedByPublicType": true,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "upright",
+            "note": "HTMLImageElement 为原生图像对象，texImage2D 直传不翻转"
+          }
+        },
+        {
+          "source": "canvas",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "canvas",
+            "acceptedByPublicType": true,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "upright",
+            "note": "HTMLCanvasElement 同为原生图像对象"
+          }
+        },
+        {
+          "source": "imageBitmap",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "imageBitmap",
+            "acceptedByPublicType": true,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "upright",
+            "note": "ImageBitmap 在公开联合类型内；sys.Feature.IMAGE_BITMAP 仅影响类型收敛，不影响 gfx 直传"
+          }
+        },
+        {
+          "source": "imageData",
+          "acceptedByPublicType": false,
+          "samples": {
+            "TL": [
+              24,
+              30,
+              44,
+              255
+            ],
+            "TR": [
+              24,
+              30,
+              44,
+              255
+            ],
+            "BL": [
+              24,
+              30,
+              44,
+              255
+            ],
+            "BR": [
+              24,
+              30,
+              44,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": null,
+            "TR": null,
+            "BL": null,
+            "BR": null
+          },
+          "classify": {
+            "upright": false,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "incomplete"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "imageData",
+            "acceptedByPublicType": false,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "not-applicable",
+            "note": "ImageData 不在 ImageSource 联合类型内：公开入口 NOT_APPLICABLE，等价对照=内存字节直传（观察其实际方向）"
+          }
+        },
+        {
+          "source": "typedArray",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              128,
+              0,
+              255
+            ],
+            "BL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              255,
+              255,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              3
+            ],
+            "TR": [
+              3,
+              3
+            ],
+            "BL": [
+              0,
+              0
+            ],
+            "BR": [
+              3,
+              0
+            ]
+          },
+          "classify": {
+            "upright": false,
+            "verticallyFlipped": true,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "vertically-flipped"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": -1,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "typedArray",
+            "acceptedByPublicType": true,
+            "memoryOrder": "bottom-first",
+            "expectedVerdict": "upright",
+            "note": "IMemoryImageSource 底优先字节（copyCanvasRows 约定）→ 朝上正确"
+          }
+        },
+        {
+          "source": "bytesTopDown",
+          "acceptedByPublicType": false,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": -1,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": null
+        }
+      ],
+      "threeD": {
+        "planeGeometryUVs": [
+          0,
+          0,
+          0.1,
+          0,
+          0.2,
+          0,
+          0.3,
+          0,
+          0.4,
+          0,
+          0.5,
+          0,
+          0.6,
+          0,
+          0.7,
+          0,
+          0.8,
+          0,
+          0.9,
+          0,
+          1,
+          0,
+          0,
+          0.1,
+          0.1,
+          0.1,
+          0.2,
+          0.1,
+          0.3,
+          0.1,
+          0.4,
+          0.1,
+          0.5,
+          0.1,
+          0.6,
+          0.1,
+          0.7,
+          0.1,
+          0.8,
+          0.1,
+          0.9,
+          0.1,
+          1,
+          0.1,
+          0,
+          0.2,
+          0.1,
+          0.2,
+          0.2,
+          0.2,
+          0.3,
+          0.2,
+          0.4,
+          0.2,
+          0.5,
+          0.2,
+          0.6,
+          0.2,
+          0.7,
+          0.2,
+          0.8,
+          0.2,
+          0.9,
+          0.2,
+          1,
+          0.2,
+          0,
+          0.3,
+          0.1,
+          0.3,
+          0.2,
+          0.3,
+          0.3,
+          0.3,
+          0.4,
+          0.3,
+          0.5,
+          0.3,
+          0.6,
+          0.3,
+          0.7,
+          0.3,
+          0.8,
+          0.3,
+          0.9,
+          0.3,
+          1,
+          0.3,
+          0,
+          0.4,
+          0.1,
+          0.4,
+          0.2,
+          0.4,
+          0.3,
+          0.4,
+          0.4,
+          0.4,
+          0.5,
+          0.4,
+          0.6,
+          0.4,
+          0.7,
+          0.4,
+          0.8,
+          0.4,
+          0.9,
+          0.4,
+          1,
+          0.4,
+          0,
+          0.5,
+          0.1,
+          0.5,
+          0.2,
+          0.5,
+          0.3,
+          0.5,
+          0.4,
+          0.5,
+          0.5,
+          0.5,
+          0.6,
+          0.5,
+          0.7,
+          0.5,
+          0.8,
+          0.5,
+          0.9,
+          0.5,
+          1,
+          0.5,
+          0,
+          0.6,
+          0.1,
+          0.6,
+          0.2,
+          0.6,
+          0.3,
+          0.6,
+          0.4,
+          0.6,
+          0.5,
+          0.6,
+          0.6,
+          0.6,
+          0.7,
+          0.6,
+          0.8,
+          0.6,
+          0.9,
+          0.6,
+          1,
+          0.6,
+          0,
+          0.7,
+          0.1,
+          0.7,
+          0.2,
+          0.7,
+          0.3,
+          0.7,
+          0.4,
+          0.7,
+          0.5,
+          0.7,
+          0.6,
+          0.7,
+          0.7,
+          0.7,
+          0.8,
+          0.7,
+          0.9,
+          0.7,
+          1,
+          0.7,
+          0,
+          0.8,
+          0.1,
+          0.8,
+          0.2,
+          0.8,
+          0.3,
+          0.8,
+          0.4,
+          0.8,
+          0.5,
+          0.8,
+          0.6,
+          0.8,
+          0.7,
+          0.8,
+          0.8,
+          0.8,
+          0.9,
+          0.8,
+          1,
+          0.8,
+          0,
+          0.9,
+          0.1,
+          0.9,
+          0.2,
+          0.9,
+          0.3,
+          0.9,
+          0.4,
+          0.9,
+          0.5,
+          0.9,
+          0.6,
+          0.9,
+          0.7,
+          0.9,
+          0.8,
+          0.9,
+          0.9,
+          0.9,
+          1,
+          0.9,
+          0,
+          1,
+          0.1,
+          1,
+          0.2,
+          1,
+          0.3,
+          1,
+          0.4,
+          1,
+          0.5,
+          1,
+          0.6,
+          1,
+          0.7,
+          1,
+          0.8,
+          1,
+          0.9,
+          1,
+          1,
+          1
+        ],
+        "samples": {
+          "TL": [
+            24,
+            30,
+            44,
+            255
+          ],
+          "TR": [
+            24,
+            30,
+            44,
+            255
+          ],
+          "BL": [
+            24,
+            30,
+            44,
+            255
+          ],
+          "BR": [
+            24,
+            30,
+            44,
+            255
+          ]
+        },
+        "observedTexels": {
+          "TL": null,
+          "TR": null,
+          "BL": null,
+          "BR": null
+        },
+        "verdict": "incomplete",
+        "diagnostics": {
+          "uiCameraFound": true,
+          "uiCameraClearFlag": "6",
+          "uiCameraPriority": 0,
+          "camera3dPriority": -1,
+          "camera3dWorld": "{\"x\":0,\"y\":10,\"z\":0}",
+          "planeWorld": "{\"x\":0,\"y\":0,\"z\":0}",
+          "materialEffect": "builtin-unlit",
+          "planeLayer": 1073741824,
+          "cameraLayer": 1073741824
+        }
+      },
+      "pageErrors": [],
+      "screenshot": "output/playwright/texture-orientation-chromium.png",
+      "rawLog": "output\\playwright\\texture-orientation-chromium.log"
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "status": "PASS",
+      "stage": "engine",
+      "sources": [
+        {
+          "source": "image",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "image",
+            "acceptedByPublicType": true,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "upright",
+            "note": "HTMLImageElement 为原生图像对象，texImage2D 直传不翻转"
+          }
+        },
+        {
+          "source": "canvas",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "canvas",
+            "acceptedByPublicType": true,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "upright",
+            "note": "HTMLCanvasElement 同为原生图像对象"
+          }
+        },
+        {
+          "source": "imageBitmap",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "imageBitmap",
+            "acceptedByPublicType": true,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "upright",
+            "note": "ImageBitmap 在公开联合类型内；sys.Feature.IMAGE_BITMAP 仅影响类型收敛，不影响 gfx 直传"
+          }
+        },
+        {
+          "source": "imageData",
+          "acceptedByPublicType": false,
+          "samples": {
+            "TL": [
+              24,
+              30,
+              44,
+              255
+            ],
+            "TR": [
+              24,
+              30,
+              44,
+              255
+            ],
+            "BL": [
+              24,
+              30,
+              44,
+              255
+            ],
+            "BR": [
+              24,
+              30,
+              44,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": null,
+            "TR": null,
+            "BL": null,
+            "BR": null
+          },
+          "classify": {
+            "upright": false,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "incomplete"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "imageData",
+            "acceptedByPublicType": false,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "not-applicable",
+            "note": "ImageData 不在 ImageSource 联合类型内：公开入口 NOT_APPLICABLE，等价对照=内存字节直传（观察其实际方向）"
+          }
+        },
+        {
+          "source": "typedArray",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              128,
+              0,
+              255
+            ],
+            "BL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              255,
+              255,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              3
+            ],
+            "TR": [
+              3,
+              3
+            ],
+            "BL": [
+              0,
+              0
+            ],
+            "BR": [
+              3,
+              0
+            ]
+          },
+          "classify": {
+            "upright": false,
+            "verticallyFlipped": true,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "vertically-flipped"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": -1,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "typedArray",
+            "acceptedByPublicType": true,
+            "memoryOrder": "bottom-first",
+            "expectedVerdict": "upright",
+            "note": "IMemoryImageSource 底优先字节（copyCanvasRows 约定）→ 朝上正确"
+          }
+        },
+        {
+          "source": "bytesTopDown",
+          "acceptedByPublicType": false,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": -1,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": null
+        }
+      ],
+      "threeD": {
+        "planeGeometryUVs": [
+          0,
+          0,
+          0.1,
+          0,
+          0.2,
+          0,
+          0.3,
+          0,
+          0.4,
+          0,
+          0.5,
+          0,
+          0.6,
+          0,
+          0.7,
+          0,
+          0.8,
+          0,
+          0.9,
+          0,
+          1,
+          0,
+          0,
+          0.1,
+          0.1,
+          0.1,
+          0.2,
+          0.1,
+          0.3,
+          0.1,
+          0.4,
+          0.1,
+          0.5,
+          0.1,
+          0.6,
+          0.1,
+          0.7,
+          0.1,
+          0.8,
+          0.1,
+          0.9,
+          0.1,
+          1,
+          0.1,
+          0,
+          0.2,
+          0.1,
+          0.2,
+          0.2,
+          0.2,
+          0.3,
+          0.2,
+          0.4,
+          0.2,
+          0.5,
+          0.2,
+          0.6,
+          0.2,
+          0.7,
+          0.2,
+          0.8,
+          0.2,
+          0.9,
+          0.2,
+          1,
+          0.2,
+          0,
+          0.3,
+          0.1,
+          0.3,
+          0.2,
+          0.3,
+          0.3,
+          0.3,
+          0.4,
+          0.3,
+          0.5,
+          0.3,
+          0.6,
+          0.3,
+          0.7,
+          0.3,
+          0.8,
+          0.3,
+          0.9,
+          0.3,
+          1,
+          0.3,
+          0,
+          0.4,
+          0.1,
+          0.4,
+          0.2,
+          0.4,
+          0.3,
+          0.4,
+          0.4,
+          0.4,
+          0.5,
+          0.4,
+          0.6,
+          0.4,
+          0.7,
+          0.4,
+          0.8,
+          0.4,
+          0.9,
+          0.4,
+          1,
+          0.4,
+          0,
+          0.5,
+          0.1,
+          0.5,
+          0.2,
+          0.5,
+          0.3,
+          0.5,
+          0.4,
+          0.5,
+          0.5,
+          0.5,
+          0.6,
+          0.5,
+          0.7,
+          0.5,
+          0.8,
+          0.5,
+          0.9,
+          0.5,
+          1,
+          0.5,
+          0,
+          0.6,
+          0.1,
+          0.6,
+          0.2,
+          0.6,
+          0.3,
+          0.6,
+          0.4,
+          0.6,
+          0.5,
+          0.6,
+          0.6,
+          0.6,
+          0.7,
+          0.6,
+          0.8,
+          0.6,
+          0.9,
+          0.6,
+          1,
+          0.6,
+          0,
+          0.7,
+          0.1,
+          0.7,
+          0.2,
+          0.7,
+          0.3,
+          0.7,
+          0.4,
+          0.7,
+          0.5,
+          0.7,
+          0.6,
+          0.7,
+          0.7,
+          0.7,
+          0.8,
+          0.7,
+          0.9,
+          0.7,
+          1,
+          0.7,
+          0,
+          0.8,
+          0.1,
+          0.8,
+          0.2,
+          0.8,
+          0.3,
+          0.8,
+          0.4,
+          0.8,
+          0.5,
+          0.8,
+          0.6,
+          0.8,
+          0.7,
+          0.8,
+          0.8,
+          0.8,
+          0.9,
+          0.8,
+          1,
+          0.8,
+          0,
+          0.9,
+          0.1,
+          0.9,
+          0.2,
+          0.9,
+          0.3,
+          0.9,
+          0.4,
+          0.9,
+          0.5,
+          0.9,
+          0.6,
+          0.9,
+          0.7,
+          0.9,
+          0.8,
+          0.9,
+          0.9,
+          0.9,
+          1,
+          0.9,
+          0,
+          1,
+          0.1,
+          1,
+          0.2,
+          1,
+          0.3,
+          1,
+          0.4,
+          1,
+          0.5,
+          1,
+          0.6,
+          1,
+          0.7,
+          1,
+          0.8,
+          1,
+          0.9,
+          1,
+          1,
+          1
+        ],
+        "samples": {
+          "TL": [
+            24,
+            30,
+            44,
+            255
+          ],
+          "TR": [
+            24,
+            30,
+            44,
+            255
+          ],
+          "BL": [
+            24,
+            30,
+            44,
+            255
+          ],
+          "BR": [
+            24,
+            30,
+            44,
+            255
+          ]
+        },
+        "observedTexels": {
+          "TL": null,
+          "TR": null,
+          "BL": null,
+          "BR": null
+        },
+        "verdict": "incomplete",
+        "diagnostics": {
+          "uiCameraFound": true,
+          "uiCameraClearFlag": "6",
+          "uiCameraPriority": 0,
+          "camera3dPriority": -1,
+          "camera3dWorld": "{\"x\":0,\"y\":10,\"z\":0}",
+          "planeWorld": "{\"x\":0,\"y\":0,\"z\":0}",
+          "materialEffect": "builtin-unlit",
+          "planeLayer": 1073741824,
+          "cameraLayer": 1073741824
+        }
+      },
+      "pageErrors": [],
+      "screenshot": "output/playwright/texture-orientation-firefox.png",
+      "rawLog": "output\\playwright\\texture-orientation-firefox.log"
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "status": "PASS",
+      "stage": "engine",
+      "sources": [
+        {
+          "source": "image",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              1,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "image",
+            "acceptedByPublicType": true,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "upright",
+            "note": "HTMLImageElement 为原生图像对象，texImage2D 直传不翻转"
+          }
+        },
+        {
+          "source": "canvas",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "canvas",
+            "acceptedByPublicType": true,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "upright",
+            "note": "HTMLCanvasElement 同为原生图像对象"
+          }
+        },
+        {
+          "source": "imageBitmap",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "imageBitmap",
+            "acceptedByPublicType": true,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "upright",
+            "note": "ImageBitmap 在公开联合类型内；sys.Feature.IMAGE_BITMAP 仅影响类型收敛，不影响 gfx 直传"
+          }
+        },
+        {
+          "source": "imageData",
+          "acceptedByPublicType": false,
+          "samples": {
+            "TL": [
+              24,
+              30,
+              44,
+              255
+            ],
+            "TR": [
+              24,
+              30,
+              44,
+              255
+            ],
+            "BL": [
+              24,
+              30,
+              44,
+              255
+            ],
+            "BR": [
+              24,
+              30,
+              44,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": null,
+            "TR": null,
+            "BL": null,
+            "BR": null
+          },
+          "classify": {
+            "upright": false,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "incomplete"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": 0,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "imageData",
+            "acceptedByPublicType": false,
+            "memoryOrder": "top-down",
+            "expectedVerdict": "not-applicable",
+            "note": "ImageData 不在 ImageSource 联合类型内：公开入口 NOT_APPLICABLE，等价对照=内存字节直传（观察其实际方向）"
+          }
+        },
+        {
+          "source": "typedArray",
+          "acceptedByPublicType": true,
+          "samples": {
+            "TL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              128,
+              0,
+              255
+            ],
+            "BL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              255,
+              255,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              3
+            ],
+            "TR": [
+              3,
+              3
+            ],
+            "BL": [
+              0,
+              0
+            ],
+            "BR": [
+              3,
+              0
+            ]
+          },
+          "classify": {
+            "upright": false,
+            "verticallyFlipped": true,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "vertically-flipped"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": -1,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": {
+            "source": "typedArray",
+            "acceptedByPublicType": true,
+            "memoryOrder": "bottom-first",
+            "expectedVerdict": "upright",
+            "note": "IMemoryImageSource 底优先字节（copyCanvasRows 约定）→ 朝上正确"
+          }
+        },
+        {
+          "source": "bytesTopDown",
+          "acceptedByPublicType": false,
+          "samples": {
+            "TL": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "TR": [
+              0,
+              255,
+              255,
+              255
+            ],
+            "BL": [
+              255,
+              255,
+              0,
+              255
+            ],
+            "BR": [
+              0,
+              128,
+              0,
+              255
+            ]
+          },
+          "observedTexels": {
+            "TL": [
+              0,
+              0
+            ],
+            "TR": [
+              3,
+              0
+            ],
+            "BL": [
+              0,
+              3
+            ],
+            "BR": [
+              3,
+              3
+            ]
+          },
+          "classify": {
+            "upright": true,
+            "verticallyFlipped": false,
+            "horizontalMirrored": false,
+            "rotated180": false,
+            "verdict": "upright"
+          },
+          "release": {
+            "textureRefCount": 0,
+            "assetRefCount": -1,
+            "spriteFrameNull": true
+          },
+          "error": null,
+          "contract": null
+        }
+      ],
+      "threeD": {
+        "planeGeometryUVs": [
+          0,
+          0,
+          0.1,
+          0,
+          0.2,
+          0,
+          0.3,
+          0,
+          0.4,
+          0,
+          0.5,
+          0,
+          0.6,
+          0,
+          0.7,
+          0,
+          0.8,
+          0,
+          0.9,
+          0,
+          1,
+          0,
+          0,
+          0.1,
+          0.1,
+          0.1,
+          0.2,
+          0.1,
+          0.3,
+          0.1,
+          0.4,
+          0.1,
+          0.5,
+          0.1,
+          0.6,
+          0.1,
+          0.7,
+          0.1,
+          0.8,
+          0.1,
+          0.9,
+          0.1,
+          1,
+          0.1,
+          0,
+          0.2,
+          0.1,
+          0.2,
+          0.2,
+          0.2,
+          0.3,
+          0.2,
+          0.4,
+          0.2,
+          0.5,
+          0.2,
+          0.6,
+          0.2,
+          0.7,
+          0.2,
+          0.8,
+          0.2,
+          0.9,
+          0.2,
+          1,
+          0.2,
+          0,
+          0.3,
+          0.1,
+          0.3,
+          0.2,
+          0.3,
+          0.3,
+          0.3,
+          0.4,
+          0.3,
+          0.5,
+          0.3,
+          0.6,
+          0.3,
+          0.7,
+          0.3,
+          0.8,
+          0.3,
+          0.9,
+          0.3,
+          1,
+          0.3,
+          0,
+          0.4,
+          0.1,
+          0.4,
+          0.2,
+          0.4,
+          0.3,
+          0.4,
+          0.4,
+          0.4,
+          0.5,
+          0.4,
+          0.6,
+          0.4,
+          0.7,
+          0.4,
+          0.8,
+          0.4,
+          0.9,
+          0.4,
+          1,
+          0.4,
+          0,
+          0.5,
+          0.1,
+          0.5,
+          0.2,
+          0.5,
+          0.3,
+          0.5,
+          0.4,
+          0.5,
+          0.5,
+          0.5,
+          0.6,
+          0.5,
+          0.7,
+          0.5,
+          0.8,
+          0.5,
+          0.9,
+          0.5,
+          1,
+          0.5,
+          0,
+          0.6,
+          0.1,
+          0.6,
+          0.2,
+          0.6,
+          0.3,
+          0.6,
+          0.4,
+          0.6,
+          0.5,
+          0.6,
+          0.6,
+          0.6,
+          0.7,
+          0.6,
+          0.8,
+          0.6,
+          0.9,
+          0.6,
+          1,
+          0.6,
+          0,
+          0.7,
+          0.1,
+          0.7,
+          0.2,
+          0.7,
+          0.3,
+          0.7,
+          0.4,
+          0.7,
+          0.5,
+          0.7,
+          0.6,
+          0.7,
+          0.7,
+          0.7,
+          0.8,
+          0.7,
+          0.9,
+          0.7,
+          1,
+          0.7,
+          0,
+          0.8,
+          0.1,
+          0.8,
+          0.2,
+          0.8,
+          0.3,
+          0.8,
+          0.4,
+          0.8,
+          0.5,
+          0.8,
+          0.6,
+          0.8,
+          0.7,
+          0.8,
+          0.8,
+          0.8,
+          0.9,
+          0.8,
+          1,
+          0.8,
+          0,
+          0.9,
+          0.1,
+          0.9,
+          0.2,
+          0.9,
+          0.3,
+          0.9,
+          0.4,
+          0.9,
+          0.5,
+          0.9,
+          0.6,
+          0.9,
+          0.7,
+          0.9,
+          0.8,
+          0.9,
+          0.9,
+          0.9,
+          1,
+          0.9,
+          0,
+          1,
+          0.1,
+          1,
+          0.2,
+          1,
+          0.3,
+          1,
+          0.4,
+          1,
+          0.5,
+          1,
+          0.6,
+          1,
+          0.7,
+          1,
+          0.8,
+          1,
+          0.9,
+          1,
+          1,
+          1
+        ],
+        "samples": {
+          "TL": [
+            24,
+            30,
+            44,
+            255
+          ],
+          "TR": [
+            24,
+            30,
+            44,
+            255
+          ],
+          "BL": [
+            24,
+            30,
+            44,
+            255
+          ],
+          "BR": [
+            24,
+            30,
+            44,
+            255
+          ]
+        },
+        "observedTexels": {
+          "TL": null,
+          "TR": null,
+          "BL": null,
+          "BR": null
+        },
+        "verdict": "incomplete",
+        "diagnostics": {
+          "uiCameraFound": true,
+          "uiCameraClearFlag": "6",
+          "uiCameraPriority": 0,
+          "camera3dPriority": -1,
+          "camera3dWorld": "{\"x\":0,\"y\":10,\"z\":0}",
+          "planeWorld": "{\"x\":0,\"y\":0,\"z\":0}",
+          "materialEffect": "builtin-unlit",
+          "planeLayer": 1073741824,
+          "cameraLayer": 1073741824
+        }
+      },
+      "pageErrors": [],
+      "screenshot": "output/playwright/texture-orientation-webkit.png",
+      "rawLog": "output\\playwright\\texture-orientation-webkit.log"
+    }
+  ],
+  "screenshots": [
+    "output/playwright/texture-orientation-chromium.png",
+    "output/playwright/texture-orientation-firefox.png",
+    "output/playwright/texture-orientation-webkit.png"
+  ]
+}

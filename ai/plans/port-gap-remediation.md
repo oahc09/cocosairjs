@@ -1,5 +1,9 @@
 # Cocos AIR 引擎改进与复刻端口统一计划
 
+> **范围决议（2026-10-04）**：用户选择PG-04 Spine 2.1不支持、PG-11 UI-mesh薄封装、PG-25公开原生Billboard。决议见[owner第13节](../../docs/reference/owner-decisions.md#13-端口缺口范围决议2026-10-04)。历史备选方案不再是待选分支；实现项仍按其运行验收完成，AG1/AG2材料缺口独立披露。
+
+> **实施入口（2026-10-03）**：用户已授权由 Lead 主导、现有 Orca Worker 配合完成本计划。历史段落中的“尚未获实施授权”“暂不执行”“本轮未运行”描述的是计划编写时点；当前实施、实际验收及残余边界以 [执行台账](../ledgers/port-gap-remediation.md) 为准。范围、依赖、上游纪律和证据要求继续有效；不包含提交、发布或外部消费者迁移授权。
+
 > 统一执行入口；合并 libGDX 端口报告、28 项子系统报告及30项目引擎改进来源计划（原文件名 `CocosAirJS-Engine-Improvement-Task-Plan.zh-CN.md`，当前未随本仓提交）。原 PG-01…27 保持编号，新增 PG-28…35。**唯一执行顺序以 §12 为准**；§1 的优先级只是风险标签，旧波次已被替代。本计划尚未获实施授权。
 
 > 2026-10-03 基于 owner 提交的一次 libGDX APK 1:1 复刻所暴露的 AIR 接口/能力缺口清单整理。端口工程在仓库外（端口侧文件 `src/runtime/spine21.ts`、`atlas.ts`、`font.ts`、`level.ts`、`game.ts`、`actor.ts`、`select.ts`、`press.ts`、`stage.ts`、`audio.ts`、`tiled.ts`、`main.ts` 与 `_scratch/drive.mjs` 均不在本仓），其断言以 owner 报告为准。本文是待执行清单，不代表任何条目已交付。

@@ -39,6 +39,7 @@ import { director } from '../../game';
 import { TextureFilter, PixelFormat, WrapMode } from '../../asset/assets/asset-enum';
 import { Texture2D, ImageAsset } from '../../asset/assets';
 import { SubModel } from '../../render-scene/scene';
+import { validateSkinningBinding, validateSkinningCapacity } from './skinning-validation';
 
 const uniformPatches: IMacroPatch[] = [
     { name: 'CC_USE_SKINNING', value: true },
@@ -137,6 +138,12 @@ export class SkinningModel extends MorphModel {
      * @returns void
      */
     public bindSkeleton (skeleton: Skeleton | null = null, skinningRoot: Node | null = null, mesh: Mesh | null = null): void {
+        const boneSpaceBounds = skeleton && skinningRoot && mesh ? validateSkinningBinding(skeleton, skinningRoot, mesh) : [];
+        if (skeleton && skinningRoot && mesh) {
+            const capacity = skeleton.joints.length > UBOSkinning.JOINT_UNIFORM_CAPACITY
+                ? RealTimeJointTexture.WIDTH : UBOSkinning.JOINT_UNIFORM_CAPACITY;
+            validateSkinningCapacity(skeleton, skinningRoot, mesh, boneSpaceBounds, capacity);
+        }
         for (let i = 0; i < this._joints.length; i++) {
             deleteTransform(this._joints[i].target);
         }
@@ -145,7 +152,6 @@ export class SkinningModel extends MorphModel {
         this._realTimeTextureMode = false;
         if (UBOSkinning.JOINT_UNIFORM_CAPACITY < skeleton.joints.length) { this._realTimeTextureMode = true; }
         this.transform = skinningRoot;
-        const boneSpaceBounds = mesh.getBoneSpaceBounds(skeleton);
         const jointMaps = mesh.struct.jointMaps;
         this._ensureEnoughBuffers(jointMaps && jointMaps.length || 1);
         this._bufferIndices = mesh.jointBufferIndices;

@@ -158,7 +158,7 @@ export class Billboard extends Component {
         if (this._model && this._mesh && this._material && this._material.technique !== this._techIndex) {
             // destroy model
             this.detachFromScene();
-            this._model.destroy();
+            (cclegacy.director as Director).root!.destroyModel(this._model);
             this._model = null;
             this._material.destroy();
             this._material = null;
@@ -209,6 +209,20 @@ export class Billboard extends Component {
 
     public onDisable (): void {
         this.detachFromScene();
+    }
+
+    public onDestroy (): void {
+        this.detachFromScene();
+        if (this._model) {
+            (cclegacy.director as Director).root!.destroyModel(this._model);
+            this._model = null;
+        }
+        this._mesh?.destroy();
+        this._mesh = null;
+        this._material?.destroy();
+        this._material = null;
+        // The application owns this texture; destroying a billboard must not destroy shared input.
+        this._texture = null;
     }
 
     private attachToScene (): void {

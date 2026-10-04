@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "port-gap-evidence/1",
+  "gate": "EG5",
+  "subject": {
+    "description": "Current complete gate status; component execution remains separately scoped"
+  },
+  "evidenceTypes": [
+    "SOURCE_CHECKED"
+  ],
+  "execution": {
+    "status": "NOT_RUN",
+    "reason": "Complete PG release gate not run: required scopes incomplete and current worktree dirty. Actual legacy S12 verify:release failed only on dirty worktree. No commit/publish authority or clean-state bypass."
+  },
+  "scope": {
+    "declared": [
+      "Complete PG release gate not run: required scopes incomplete and current worktree dirty. Actual legacy S12 verify:release failed only on dirty worktree. No commit/publish authority or clean-state bypass."
+    ],
+    "subset": false,
+    "completed": false,
+    "totalCases": 1,
+    "measuredCases": 0,
+    "skippedCases": 1,
+    "skippedDetail": [
+      {
+        "reason": "Complete PG release gate not run: required scopes incomplete and current worktree dirty. Actual legacy S12 verify:release failed only on dirty worktree. No commit/publish authority or clean-state bypass."
+      }
+    ],
+    "countingUnit": "complete gate decision"
+  },
+  "method": {
+    "kind": "CONTRACT_STATIC",
+    "detail": "Requirements and existing actual execution review; this status writer does not execute or manufacture a complete gate"
+  },
+  "fingerprints": {
+    "candidate": {
+      "present": true,
+      "path": "build/cocosair.module.js",
+      "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+    },
+    "source": {
+      "present": true,
+      "path": "output/playwright/port-s20-final-candidate.json",
+      "sha256": "4397c90ef1b095321fa0dba04b1128d1939f95d24f6365a495bcc684e10863bd",
+      "detail": "Provisional complete source/config/runner/contract/artifact byte inventory; not a final freeze"
+    },
+    "contract": {
+      "present": true,
+      "path": "ai/plans/port-gap-remediation.md",
+      "sha256": "0508bfe7cef13942cdb50db45f0325f81abff940b1d3081b8b5851c9cf5947fc"
+    },
+    "runner": {
+      "present": true,
+      "path": "output/playwright/port-s20-final-gate-status.cjs",
+      "sha256": "60a69c38256b5f16e957a5c8d9fdddb7ec8f65cf67eb03ba8f1f0f7f2759b600"
+    },
+    "browser": {
+      "present": false,
+      "status": "NOT_RUN",
+      "reason": "Complete gate not executed; component reports record actual browsers"
+    },
+    "application": {
+      "present": false,
+      "status": "NOT_APPLICABLE",
+      "reason": "Engine/integration gate; application gates separate"
+    }
+  },
+  "componentEvidence": [],
+  "externalMaterials": {
+    "available": false,
+    "reason": "External consumer/port materials not provided"
+  },
+  "generatedBy": {
+    "command": [
+      "D:\\Program Files\\nodejs\\node.exe",
+      "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\port-s20-final-gate-status.cjs"
+    ],
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-04T09:41:53.578Z",
+    "endedAt": "2026-10-04T09:41:53.717Z",
+    "detail": "Status generation only; execution.status stays NOT_RUN/BLOCKED"
+  },
+  "observations": {
+    "validator": {
+      "path": "tools/verify/port-gap-evidence-schema.cjs",
+      "sha256": "ec2e1b588093786b20e755fedd966b41df95ad173a483bfd20254b16f13c9dd4"
+    },
+    "currentPreflight": "docs/reference/port-gap-evidence-preflight-s20.json",
+    "legacyRelease": {
+      "log": "output/playwright/port-s12-release-readiness.log",
+      "observedExitCode": 1,
+      "reason": "dirty worktree; not full PG gate proof"
+    }
+  }
+}

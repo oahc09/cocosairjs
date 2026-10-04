@@ -45,12 +45,24 @@
     "view",
     "ResolutionPolicy"
   ],
-  "capabilities": ["webview"],
+  "capabilities": [
+    "webview"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -75,7 +87,9 @@
     "visual": "深蓝底（clearColor 10,14,22,255）一屏：顶部状态行依次改写 `webview: loading → … → webview mounted — clicks land in iframe`；中部是**真 iframe**（本地页，浅灰渐变底 + 一条横扫动画 + 点击计数文本），其外叠一圈琥珀色 2px 描边矩形（`Graphics` 画的 204x154，标示 WebView 节点的世界矩形）；下方一条绿色小块 = `Graphics` 帧时钟（每 2400 ms 横扫一次，与 iframe 无关，保证三引擎都有持续帧间变化）；底部一行提示 `iframe overlay: clicks inside the box never reach the engine`。frame-diff 的变化来源全在 WebGL 画布内 ⇒ 三引擎 frameChanged 可判；iframe 是否真挂载/真出页由 probe 的 `sameOriginDoc/pageName/titleNow/__clicks` 独立回读，不用画面替引擎背书"
   },
   "api": {
-    "primary": ["WebView"],
+    "primary": [
+      "WebView"
+    ],
     "supporting": [
       "WebView.webviewEvents",
       "WebView.evaluateJS",
@@ -363,10 +377,22 @@
       }
     ]
   },
-  "assets": ["assets/page.html", "assets/page-error-like.html"],
+  "assets": [
+    "assets/page.html",
+    "assets/page-error-like.html"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Canvas", "UICamera", "Status", "Hint", "FrameGuide", "Clock", "ClockHost", "WebViewHost"]
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Status",
+        "Hint",
+        "FrameGuide",
+        "Clock",
+        "ClockHost",
+        "WebViewHost"
+      ]
     }
   },
   "interaction": {
@@ -378,7 +404,9 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -391,9 +419,21 @@
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -403,7 +443,11 @@
         ]
       },
       "UICamera": {
-        "position": [0, 0, 1000],
+        "position": [
+          0,
+          0,
+          1000
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -413,7 +457,11 @@
         ]
       },
       "Status": {
-        "position": [0, 160, 0],
+        "position": [
+          0,
+          160,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -423,7 +471,11 @@
         ]
       },
       "Hint": {
-        "position": [0, -162, 0],
+        "position": [
+          0,
+          -162,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -433,9 +485,21 @@
         ]
       },
       "FrameGuide": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -445,7 +509,11 @@
         ]
       },
       "Clock": {
-        "position": [0, -132, 0],
+        "position": [
+          0,
+          -132,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -455,9 +523,21 @@
         ]
       },
       "ClockHost": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -467,7 +547,11 @@
         ]
       },
       "WebViewHost": {
-        "position": [0, 14, 0],
+        "position": [
+          0,
+          14,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -481,7 +565,7 @@
   "promotion": {
     "spec": "293bf690ec0f",
     "source": "dba2e31f1d56561a",
-    "candidate": "ba485e1b91643c46",
+    "candidate": "2f089f6ce25eaccd",
     "verified": 31,
     "attested": 5,
     "units": 36
