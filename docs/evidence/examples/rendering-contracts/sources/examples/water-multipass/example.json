@@ -1,0 +1,103 @@
+{
+  "id": "water-multipass",
+  "version": "1.0.0",
+  "title": "Multipass Water: Reflection, Refraction, Depth and Caustics",
+  "category": "rendering",
+  "status": "draft",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "用原生场景与四个真实通道实现水面，明确 HDR/MSAA/深度附件合同和透明叠加顺序",
+    "points": [
+      "镜像相机与斜裁剪",
+      "采样实际深度并反投影到世界空间",
+      "折射光线落点的 Jacobian 焦散",
+      "resize 自动重绑",
+      "固定时间与真实鼠标/雨滴响应"
+    ]
+  },
+  "effect": {
+    "functional": "离屏焦散优先-40、反射-30、折射-20，主相机0和通道查看10。反射/折射用RGBA16F与请求4xMSAA，采样同帧resolve后的颜色和raw深度；绑定在resize后保持有效。每个光学通道可独立关闭。",
+    "visual": "固定斜视相机观察沙色池底、橙色岸上标记、青色水下标记与木栈桥。密集真实水面网格产生波纹、Fresnel反射、折射吸收及岸线泡沫；半透明鱼鳍、水花和可开雨滴处于正确深度顺序。"
+  },
+  "api": {
+    "primary": ["createAirApp", "utils.createMesh", "Material.initialize"],
+    "supporting": ["Camera"],
+    "claims": ["createAirApp", "utils.createMesh", "Material.initialize", "Camera"],
+    "forbiddenShortcut": [
+      "Three.js runtime",
+      "DOM图片代替3D水面",
+      "伪造深度纹理",
+      "只检查uniform而不检查像素",
+      "把CPU帧时间当GPU或present时间"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L73",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L119",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L110",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L146",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": ["rendering"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Reflection Camera",
+        "Refraction Camera",
+        "Caustic Camera",
+        "Water Surface",
+        "Sand Receiver",
+        "Transparent Fish Fin"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击切换雨",
+        "expected": "真实雨滴与水面环状扰动出现",
+        "buttonText": "Rain off"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "Original procedural meshes and GLSL, MIT. No downloaded textures or model assets."
+  }
+}

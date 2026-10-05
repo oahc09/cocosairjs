@@ -289,6 +289,14 @@ The TMX parser retains the modern `class` attribute (falling back to legacy `typ
 
 `cocos/input/input.ts` includes the already-dispatched `MOUSE_ENTER` and `MOUSE_LEAVE` events in its native input type map (PG-28). This adds typed subscriptions without changing event dispatch. The optional AIR action adapter uses mouse-leave to release its simulated mouse source and PAL's existing physical-key map to clean up held keys released after focus moves away from the canvas. It does not admit a second keydown channel or synthesize engine events.
 
+## Explicit offscreen attachments and clip projection
+
+`asset/assets/render-texture.ts` preserves an explicitly supplied render pass's color formats; the default target still follows the swapchain. Its public pixel-format metadata follows the created color texture. `render-scene/core/render-window.ts` forwards each attachment's sample count into its native TextureInfo and identifies color-only offscreen windows. This makes the native camera target usable by AIR's owned render-target adapter without constructing parallel renderer objects.
+
+`asset/assets/asset-enum.ts` adds the existing GFX RGBA16F format as a public PixelFormat alias. `render-scene/scene/camera.ts` validates oblique clip planes, rebuilds the base projection for repeat calls, preserves caller input, and refreshes inverse/view-projection/frustum matrices after clipping. The standalone calculation must still be applied before camera culling and uniform upload; it does not introduce an automatic world-space water plane.
+
+`rendering/render-pipeline.ts` derives camera render-pass sample counts from the actual framebuffer, handles absent depth, and stores sampled depth/stencil so later cameras can reconstruct depth. Unsampled depth retains the native discard optimization. This closes the camera-path attachment contract rather than adding a separate render pipeline.
+
 ## Bone-space bounds cache (PG-18/21)
 
 Realtime and baked skinning models validate weighted joint paths before replacing their binding. The shared internal `skinning-validation.ts` helper keeps legitimately unused missing joints legal; invalid weighted paths report `AIR_E_SKINNING_JOINT_PATH` with mesh, root, joint and correction context. A validation failure preserves the previous valid model binding.

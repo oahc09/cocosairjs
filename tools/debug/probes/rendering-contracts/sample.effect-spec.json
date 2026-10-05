@@ -1,0 +1,10 @@
+{
+  "name": "air-rendering-contract-sample",
+  "primitive": "TRIANGLE_LIST",
+  "attributes": [{ "name": "a_position", "type": "vec3", "location": 0 }],
+  "varyings": [{ "name": "sampleUV", "type": "vec2" }],
+  "uniforms": [{ "name": "contrast", "type": "vec4", "value": [1, 1, 1, 1] }],
+  "samplers": [{ "name": "colorSource", "type": "sampler2D", "value": "black" }],
+  "vertex": "void main() { sampleUV = a_position.xy * 0.5 + 0.5; gl_Position = cc_matViewProj * cc_matWorld * vec4(a_position, 1.0); }",
+  "fragment": "void main() { vec3 c = texture(colorSource, sampleUV).rgb * contrast.x; cc_FragColor = vec4(c / (vec3(1.0) + c), 1.0); }"
+}

@@ -1,0 +1,19 @@
+{
+  "measuredAt": "2026-10-05T07:05:57.896Z",
+  "total": 2,
+  "frozen": 2,
+  "draft": 0,
+  "blocked": 0,
+  "examples": [
+    {
+      "id": "hdr-color-pipeline",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "water-multipass",
+      "specStatus": "frozen",
+      "issues": []
+    }
+  ]
+}

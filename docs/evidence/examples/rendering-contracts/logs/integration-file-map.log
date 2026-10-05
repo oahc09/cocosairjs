@@ -1,0 +1,7 @@
+
+> cocosair.js@1.0.0 verify:file-map
+> node tools/verify/verify-file-map.cjs
+
+[file-map] rows=1322 modified=109 scanned(src/cocos|exports|pal)=1274 manifest=1281 upstream=E:\AIProMax\github\cocos4
+[file-map] moduleOverrides pairs upstream=103 air=104 airOnlyRegistered=1 byteChecked=73 excludedOneSide=53 missingBoth=33
+[file-map] PASS

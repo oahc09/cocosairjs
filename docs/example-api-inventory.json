@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "25f87a9ca4261908",
-  "apiInventoryRevision": "abb85e4ef9f80a3f",
+  "sourceFingerprint": "67ff4c489feb3ed7",
+  "apiInventoryRevision": "a21b14a9c9eb7d60",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -54205,6 +54205,162 @@
       "coverageStatus": "documented-only",
       "coverageReason": "Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable viewer checks it against the capture layer; keep it documented-only until primitive-export read tracing is supported."
     },
+    "createAirRenderTarget": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirRenderTarget": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirRenderTarget.renderTexture": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.texture": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.depthTexture": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.info": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.resize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.attachCamera": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.resolve": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.bindColor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.bindDepth": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.readColor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "AirRenderTarget.dispose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirRenderTarget"
+    },
+    "isAirSRGBFormat": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "isAirDepthFormat": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "resolveAirTextureFormat": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "validateAirTextureColorContract": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "validateAirPrefilteredEnvironment": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "bindAirPrefilteredEnvironment": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "describeAirTextureFormat": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirColorContractError": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirColorContractError.code": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirColorContractError"
+    },
+    "AirColorContractError.property": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirColorContractError"
+    },
+    "AirColorContractError.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirColorContractError"
+    },
+    "inspectAirMaterial": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "rendering.createCustomPipeline": {
       "kind": "function",
       "tier": "supporting",
@@ -74536,9 +74692,9 @@
     "core": 964,
     "important": 283,
     "advanced": 192,
-    "supporting": 8197,
+    "supporting": 8223,
     "internal": 2624
   },
-  "totalUnits": 12260,
+  "totalUnits": 12286,
   "coverageRequiredUnits": 1439
 }

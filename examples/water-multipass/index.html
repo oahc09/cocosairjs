@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Cocos AIR — Multipass water</title>
+        <link rel="icon" href="data:," />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <style>
+            html,
+            body {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #172b39;
+            }
+            canvas {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            aside {
+                position: absolute;
+                left: 16px;
+                top: 14px;
+                color: #e5f4f4;
+                font:
+                    13px/1.6 system-ui,
+                    sans-serif;
+                max-width: 420px;
+            }
+            h1 {
+                margin: 0 0 4px;
+                font-size: 20px;
+                font-weight: 500;
+            }
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+                margin: 6px 0;
+            }
+            button,
+            select {
+                font: inherit;
+                color: #e5f4f4;
+                border: 1px solid #587981;
+                background: #183a42e6;
+                padding: 3px 8px;
+                border-radius: 3px;
+            }
+            output {
+                display: block;
+                font-size: 11px;
+                opacity: 0.85;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <canvas id="GameCanvas" tabindex="0" aria-label="3D water; move pointer to create ripples"></canvas>
+        <aside>
+            <h1>Multipass water</h1>
+            Native 3D reflection · refraction · depth · caustics
+            <nav>
+                <button id="play">Play</button><button id="reset">Reset</button>
+                <button id="reflection">Reflection on</button><button id="refraction">Refraction on</button>
+                <button id="depth">Depth on</button><button id="caustics">Caustics on</button>
+                <button id="rain">Rain off</button><button id="overlays">Overlays on</button>
+                <select id="channel" aria-label="Visible render channel">
+                    <option value="final">Final composition</option>
+                    <option value="reflection">Reflection target</option>
+                    <option value="refraction">Refraction target</option>
+                    <option value="depth">Linear reconstructed depth</option>
+                    <option value="caustics">Caustic target</option>
+                </select>
+            </nav>
+            <output id="status">Initializing WebGL2 attachments…</output>
+        </aside>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

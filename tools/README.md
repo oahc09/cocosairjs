@@ -25,21 +25,21 @@ PAL 的运行时来源固定在 `vendor/pal-source/` 的公开 MIT 快照；
 `node tools/build/pal-source.cjs --check` 校验冻结来源及全部生成输出，
 `--write` 才会重建 JS、声明和版权 notice。该工具不读取旧 engine-pal npm 包，不下载源码。
 
-| 任务                    | 入口                                                                                        | 产物或副作用                                                                                                       |
-| ----------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| 生成公开 API 清单       | `npm run gallery:api`                                                                       | 唯一正式生成器为 `examples/api-inventory.cjs --write`；写 `docs/example-api-inventory.json`。试验用 `--out=PATH`。 |
-| 按示例回填规格行号      | `node tools/examples/spec-fixlines.cjs --ids=hello-cube --check`                            | `--check` 仅检查；省略时原地维护指定示例的 `example.json`。                                                        |
-| 试跑页面行为探针        | `node tools/verify/trial-probes.cjs --root=tools/debug/probes --ids=lights-hdr-calibration` | 需要 Playwright 与开发 bundle；结果写系统临时目录，不改正典证据。                                                  |
-| Shader 探针             | `node tools/verify/shader-probe.cjs`                                                        | 需要 Playwright 与 bundle；会写 Shader 证据。                                                                      |
-| 示例规格浏览器验证      | `node tools/verify/example-spec-browser.cjs`                                                | 会采集运行证据并按规格处理示例晋级。                                                                               |
-| DevTools 示例验证       | `node tools/verify/devtools-examples.cjs`                                                   | 会写独立 DevTools 示例证据。                                                                                       |
-| 静态 Gallery 构建与验证 | `node tools/verify/gallery-artifact.cjs build`                                              | `build` 写 `build/examples/`；验证子命令见脚本文件头。                                                             |
-| 手册源码一致性          | `node tools/verify/manual-doc-consistency.cjs --strict`                                     | 只读核对手册代码块与示例源码。                                                                                     |
-| 文档路径引用            | `npm run verify:doc-refs`                                                                   | 默认只读；使用显式输出参数才写报告。                                                                               |
-| JS/TS 原生签名误用 | `node tools/verify/air-signature-usage.cjs --types <file.ts|file.js> ...` | 只读指定文件；输出真实类型诊断及Scene组件、addChild返回值、geometry/Mesh误用。自测：`node tools/verify/air-signature-usage.test.cjs`。 |
-| 原生输入与场景检查合同 | `node tools/verify/air-input-browser.cjs --browser=all --out=output/playwright/<new-report>.json` | 使用只读临时服务和当前bundle，覆盖默认/自定义canvas、focus/editable/纯输入节点/鼠标转触摸/inspector。报告路径必须未存在；协议touch不等于实体设备。需可解析Playwright。 |
-| 原生诊断通道 | `node tools/verify/air-diagnostics-browser.cjs --out=output/playwright/<new-report>.json` | 三浏览器检查errors/warnings、原生Material警告与独立debug session；只读临时服务，写新报告和截图，不重建bundle。 |
-| 蒙皮首帧与变换 | `node tools/verify/air-skinning-browser.cjs --out=output/playwright/<new-report>.json` | 三浏览器实时/烘焙模式、暂停dt=0首帧、非对称网格SMR/root/ancestor缩放和bounds/像素。需当前bundle、可解析Playwright及匹配浏览器。写新报告/截图，完整范围及未测项由报告列明。 |
+| 任务                    | 入口                                                                                              | 产物或副作用                                                                                                                                                               |
+| ----------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 生成公开 API 清单       | `npm run gallery:api`                                                                             | 唯一正式生成器为 `examples/api-inventory.cjs --write`；写 `docs/example-api-inventory.json`。试验用 `--out=PATH`。                                                         |
+| 按示例回填规格行号      | `node tools/examples/spec-fixlines.cjs --ids=hello-cube --check`                                  | `--check` 仅检查；省略时原地维护指定示例的 `example.json`。                                                                                                                |
+| 试跑页面行为探针        | `node tools/verify/trial-probes.cjs --root=tools/debug/probes --ids=lights-hdr-calibration`       | 需要 Playwright 与开发 bundle；结果写系统临时目录，不改正典证据。                                                                                                          |
+| Shader 探针             | `node tools/verify/shader-probe.cjs`                                                              | 需要 Playwright 与 bundle；会写 Shader 证据。                                                                                                                              |
+| 示例规格浏览器验证      | `node tools/verify/example-spec-browser.cjs`                                                      | 会采集运行证据并按规格处理示例晋级。                                                                                                                                       |
+| DevTools 示例验证       | `node tools/verify/devtools-examples.cjs`                                                         | 会写独立 DevTools 示例证据。                                                                                                                                               |
+| 静态 Gallery 构建与验证 | `node tools/verify/gallery-artifact.cjs build`                                                    | `build` 写 `build/examples/`；验证子命令见脚本文件头。                                                                                                                     |
+| 手册源码一致性          | `node tools/verify/manual-doc-consistency.cjs --strict`                                           | 只读核对手册代码块与示例源码。                                                                                                                                             |
+| 文档路径引用            | `npm run verify:doc-refs`                                                                         | 默认只读；使用显式输出参数才写报告。                                                                                                                                       |
+| JS/TS 原生签名误用      | `node tools/verify/air-signature-usage.cjs --types <file.ts                                       | file.js> ...`                                                                                                                                                              | 只读指定文件；输出真实类型诊断及Scene组件、addChild返回值、geometry/Mesh误用。自测：`node tools/verify/air-signature-usage.test.cjs`。 |
+| 原生输入与场景检查合同  | `node tools/verify/air-input-browser.cjs --browser=all --out=output/playwright/<new-report>.json` | 使用只读临时服务和当前bundle，覆盖默认/自定义canvas、focus/editable/纯输入节点/鼠标转触摸/inspector。报告路径必须未存在；协议touch不等于实体设备。需可解析Playwright。     |
+| 原生诊断通道            | `node tools/verify/air-diagnostics-browser.cjs --out=output/playwright/<new-report>.json`         | 三浏览器检查errors/warnings、原生Material警告与独立debug session；只读临时服务，写新报告和截图，不重建bundle。                                                             |
+| 蒙皮首帧与变换          | `node tools/verify/air-skinning-browser.cjs --out=output/playwright/<new-report>.json`            | 三浏览器实时/烘焙模式、暂停dt=0首帧、非对称网格SMR/root/ancestor缩放和bounds/像素。需当前bundle、可解析Playwright及匹配浏览器。写新报告/截图，完整范围及未测项由报告列明。 |
 
 ## 程序化场景与独立验收工具
 
@@ -77,6 +77,10 @@ Effect布局与双贴图：`node tools/verify/air-effect-layout-browser.cjs --ou
 CPU提交与rAF观测不能替代GPU耗时或显示present；发布验证仍使用正式规格、矩阵与包消费门禁。
 
 ## 命名与历史合同
+
+`tools/debug/render-queue.ts` 是显式导入的开发观察器：`attachAirRenderQueueObserver(director.root, callback)` 在原生相机结束时复制 legacy 已排序队列的实际顺序、节点和 pass 信息；不重算排序。custom pipeline 或私有字段缺失返回 `unavailable`，不覆盖 instancing、UI 或队列外辅助绘制。它不进入默认 SDK，完整调用见[渲染合同](../docs/manual/rendering-contracts.md#查看原生实际排序队列)。
+
+`node tools/verify/rendering-contracts.cjs --out=<new.json> --browser=all`串行检查真实RGBA8/RGBA16F附件、1×/4×MSAA、resolve、浮点读回、深度重建、resize重绑与销毁；自启只读服务,不build、不安装浏览器,拒绝覆盖输出。环境需已配置Playwright/pngjs,报告和截图写到显式路径。GPU计时缺失或disjoint记录null,不转换为呈现FPS。前提与能力边界见[渲染目标合同](../docs/manual/rendering-contracts.md)。
 
 CB21 成本复测使用 [benchmark/prepare-cost-retest.mjs](benchmark/prepare-cost-retest.mjs) 创建新的隔离批次；默认 dry-run，`--execute` 才写入不存在的新目录。候选包、知识、规范、模型配置和预算计数脚本均有独立指纹，不覆盖旧 benchmark。
 

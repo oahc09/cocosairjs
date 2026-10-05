@@ -1,0 +1,11 @@
+PASS test/smoke/render-dx-material-diagnostics.test.ts (10.323 s)
+PASS test/smoke/render-dx-render-queue.test.ts
+PASS test/smoke/render-dx-native-attachments.test.ts
+PASS test/smoke/render-dx-target-options.test.ts
+PASS test/smoke/render-dx-color-contract.test.ts
+PASS test/smoke/render-dx-depth-layout.test.ts
+
+Test Suites: 6 passed, 6 total
+Tests:       22 passed, 22 total
+Snapshots:   0 total
+Time:        16.221 s, estimated 23 s

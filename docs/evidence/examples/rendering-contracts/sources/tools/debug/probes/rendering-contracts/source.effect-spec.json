@@ -1,0 +1,8 @@
+{
+  "name": "air-rendering-contract-source",
+  "primitive": "TRIANGLE_LIST",
+  "attributes": [{ "name": "a_position", "type": "vec3", "location": 0 }],
+  "uniforms": [{ "name": "hdrColor", "type": "vec4", "value": [4, 2, 0.5, 1] }],
+  "vertex": "void main() { gl_Position = cc_matViewProj * cc_matWorld * vec4(a_position, 1.0); }",
+  "fragment": "void main() { cc_FragColor = hdrColor; }"
+}

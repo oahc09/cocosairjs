@@ -1,0 +1,140 @@
+{
+  "log": [
+    {
+      "format": "rgba8",
+      "samples": 1,
+      "physicalReadIsSource": false,
+      "cacheReadIsSource": false,
+      "cacheReadMatchesPhysical": true,
+      "cacheDrawMatchesPhysical": true,
+      "pixel": [
+        255,
+        255,
+        127,
+        255
+      ],
+      "glError": 0
+    },
+    {
+      "format": "rgba8",
+      "samples": 4,
+      "physicalReadIsSource": false,
+      "cacheReadIsSource": true,
+      "cacheReadMatchesPhysical": false,
+      "cacheDrawMatchesPhysical": true,
+      "pixel": [
+        12,
+        18,
+        28,
+        255
+      ],
+      "glError": 0
+    },
+    {
+      "format": "rgba16f",
+      "samples": 1,
+      "physicalReadIsSource": false,
+      "cacheReadIsSource": false,
+      "cacheReadMatchesPhysical": true,
+      "cacheDrawMatchesPhysical": true,
+      "pixel": [
+        4,
+        2,
+        0.5,
+        1
+      ],
+      "glError": 0
+    },
+    {
+      "format": "rgba16f",
+      "samples": 4,
+      "physicalReadIsSource": false,
+      "cacheReadIsSource": true,
+      "cacheReadMatchesPhysical": false,
+      "cacheDrawMatchesPhysical": true,
+      "pixel": [
+        4,
+        2,
+        0.5,
+        1
+      ],
+      "glError": 1282
+    },
+    {
+      "format": "rgba8",
+      "samples": 4,
+      "physicalReadIsSource": false,
+      "cacheReadIsSource": true,
+      "cacheReadMatchesPhysical": false,
+      "cacheDrawMatchesPhysical": true,
+      "pixel": [
+        12,
+        18,
+        28,
+        255
+      ],
+      "glError": 0
+    },
+    {
+      "format": "rgba8",
+      "samples": 1,
+      "physicalReadIsSource": true,
+      "cacheReadIsSource": false,
+      "cacheReadMatchesPhysical": false,
+      "cacheDrawMatchesPhysical": true,
+      "pixel": [
+        76,
+        0,
+        247,
+        255
+      ],
+      "glError": 0
+    },
+    {
+      "format": "rgba8",
+      "samples": 1,
+      "physicalReadIsSource": true,
+      "cacheReadIsSource": false,
+      "cacheReadMatchesPhysical": false,
+      "cacheDrawMatchesPhysical": true,
+      "pixel": [
+        51,
+        0,
+        243,
+        255
+      ],
+      "glError": 0
+    },
+    {
+      "format": "rgba8",
+      "samples": 1,
+      "physicalReadIsSource": true,
+      "cacheReadIsSource": false,
+      "cacheReadMatchesPhysical": false,
+      "cacheDrawMatchesPhysical": true,
+      "pixel": [
+        76,
+        0,
+        247,
+        255
+      ],
+      "glError": 0
+    },
+    {
+      "format": "rgba8",
+      "samples": 1,
+      "physicalReadIsSource": true,
+      "cacheReadIsSource": false,
+      "cacheReadMatchesPhysical": false,
+      "cacheDrawMatchesPhysical": true,
+      "pixel": [
+        51,
+        0,
+        243,
+        255
+      ],
+      "glError": 0
+    }
+  ],
+  "resultStatus": "FAIL"
+}

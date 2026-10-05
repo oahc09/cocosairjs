@@ -107,6 +107,9 @@ export enum PixelFormat {
      * 32位浮点数像素格式：RGBA32F。
      */
     RGBA32F = Format.RGBA32F,
+    /** @en Linear half-float RGBA. Renderability and filtering require device capabilities.
+     * @zh 线性半浮点RGBA；作为渲染目标与过滤时必须检查设备能力。 */
+    RGBA16F = Format.RGBA16F,
     /**
      * @en
      * 8-bit pixel format used as masks

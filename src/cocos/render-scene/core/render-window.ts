@@ -200,21 +200,25 @@ export class RenderWindow {
                     this._width,
                     this._height,
                 );
+                textureInfo.samples = info.renderPassInfo.colorAttachments[i].sampleCount;
 
                 if (info.externalFlag && (info.externalFlag & TextureFlagBit.EXTERNAL_NORMAL || info.externalFlag & TextureFlagBit.EXTERNAL_OES)) {
                     textureInfo.flags |= info.externalFlag;
                     textureInfo.externalRes = info.externalResLow ? info.externalResLow : 0;
                 }
                 this._colorTextures.push(device.createTexture(textureInfo));
+                this._hasOffScreenAttachments = true;
             }
             if (info.renderPassInfo.depthStencilAttachment && info.renderPassInfo.depthStencilAttachment.format !== Format.UNKNOWN) {
-                this._depthStencilTexture = device.createTexture(new TextureInfo(
+                const depthInfo = new TextureInfo(
                     TextureType.TEX2D,
                     TextureUsageBit.DEPTH_STENCIL_ATTACHMENT | TextureUsageBit.SAMPLED,
                     info.renderPassInfo.depthStencilAttachment.format,
                     this._width,
                     this._height,
-                ));
+                );
+                depthInfo.samples = info.renderPassInfo.depthStencilAttachment.sampleCount;
+                this._depthStencilTexture = device.createTexture(depthInfo);
                 this._hasOffScreenAttachments = true;
             }
         }

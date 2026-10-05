@@ -1,0 +1,131 @@
+{
+  "name": "air-rendering-contract-depth",
+  "techniques": [
+    {
+      "passes": [
+        {
+          "program": "air-rendering-contract-depth|5906f5007dfb4dc9",
+          "rasterizerState": {
+            "cullMode": 0
+          },
+          "depthStencilState": {
+            "depthTest": true,
+            "depthWrite": true
+          },
+          "blendState": {
+            "targets": [
+              {
+                "blend": false
+              }
+            ]
+          },
+          "properties": {
+            "depthParams": {
+              "type": 16,
+              "value": [0.1, 30, 1, 0]
+            },
+            "sceneDepth": {
+              "type": 28,
+              "value": "black"
+            }
+          },
+          "primitive": 7
+        }
+      ]
+    }
+  ],
+  "shaders": [
+    {
+      "name": "air-rendering-contract-depth|5906f5007dfb4dc9",
+      "hash": 1493628160,
+      "builtins": {
+        "statistics": {
+          "CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS": 48,
+          "CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS": 5
+        },
+        "globals": {
+          "blocks": [
+            {
+              "name": "CCGlobal",
+              "defines": [],
+              "set": 0,
+              "binding": 0
+            },
+            {
+              "name": "CCCamera",
+              "defines": [],
+              "set": 0,
+              "binding": 1
+            }
+          ],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        },
+        "locals": {
+          "blocks": [
+            {
+              "name": "CCLocal",
+              "defines": [],
+              "set": 2,
+              "binding": 0
+            }
+          ],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        }
+      },
+      "defines": [],
+      "attributes": [
+        {
+          "name": "a_position",
+          "defines": [],
+          "format": 32,
+          "location": 0
+        }
+      ],
+      "blocks": [
+        {
+          "name": "Constants",
+          "defines": [],
+          "binding": 0,
+          "stageFlags": 17,
+          "members": [
+            {
+              "name": "depthParams",
+              "type": 16,
+              "count": 1
+            }
+          ]
+        }
+      ],
+      "samplerTextures": [
+        {
+          "name": "sceneDepth",
+          "type": 28,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 16,
+          "set": 1,
+          "binding": 1
+        }
+      ],
+      "buffers": [],
+      "images": [],
+      "textures": [],
+      "samplers": [],
+      "subpassInputs": [],
+      "glsl4": {
+        "vert": "precision highp float;\nlayout(set = 0, binding = 1) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nlayout(set = 2, binding = 0) uniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n};\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 depthParams;\n};\nlayout(location = 0) in vec3 a_position;\nout highp vec2 sampleUV;\nvoid main() { sampleUV = a_position.xy * 0.5 + 0.5; gl_Position = cc_matViewProj * cc_matWorld * vec4(a_position, 1.0); }",
+        "frag": "precision highp float;\nlayout(set = 0, binding = 0) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 depthParams;\n};\nlayout(set = 1, binding = 1) uniform sampler2D sceneDepth;\nin highp vec2 sampleUV;\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() { float d = texture(sceneDepth, sampleUV).r; float viewDistance = depthParams.x * depthParams.y / (depthParams.y - d * (depthParams.y - depthParams.x)); cc_FragColor = vec4(viewDistance / 10.0, sceneDepthVisibility(sampleUV, depthParams.z, depthParams.w), d, 1.0); }"
+      },
+      "glsl3": {
+        "vert": "precision highp float;\nuniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nuniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n};\nuniform Constants {\n  vec4 depthParams;\n};\nin vec3 a_position;\nout highp vec2 sampleUV;\nvoid main() { sampleUV = a_position.xy * 0.5 + 0.5; gl_Position = cc_matViewProj * cc_matWorld * vec4(a_position, 1.0); }",
+        "frag": "precision highp float;\nuniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_debug_view_mode;\n};\nuniform Constants {\n  vec4 depthParams;\n};\nuniform sampler2D sceneDepth;\nin highp vec2 sampleUV;\nout vec4 cc_FragColor;\nvoid main() { float d = texture(sceneDepth, sampleUV).r; float viewDistance = depthParams.x * depthParams.y / (depthParams.y - d * (depthParams.y - depthParams.x)); cc_FragColor = vec4(viewDistance / 10.0, sceneDepthVisibility(sampleUV, depthParams.z, depthParams.w), d, 1.0); }"
+      }
+    }
+  ],
+  "combinations": [],
+  "hideInEditor": false
+}

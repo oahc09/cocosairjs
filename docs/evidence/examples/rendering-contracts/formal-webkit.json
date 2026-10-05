@@ -1,0 +1,487 @@
+{
+  "measuredAt": "2026-10-05T07:20:40.185Z",
+  "runner": "tools/verify/example-spec-browser.cjs",
+  "browser": "webkit",
+  "mode": "spec-driven-v3",
+  "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
+  "candidateFingerprint": "36938d0c6e6194b3",
+  "apiProofTotals": {
+    "verified": 7,
+    "attested": 0,
+    "unproven": 0
+  },
+  "total": 2,
+  "pass": 2,
+  "fail": 0,
+  "partial": true,
+  "completed": false,
+  "scopePassed": true,
+  "subset": [
+    "hdr-color-pipeline",
+    "water-multipass"
+  ],
+  "runPass": 2,
+  "runTotal": 2,
+  "results": [
+    {
+      "id": "hdr-color-pipeline",
+      "result": "PASS",
+      "specFingerprint": "ac8301fccfc7",
+      "sourceFingerprint": "a4ed304b7a97750c",
+      "candidateFingerprint": "36938d0c6e6194b3",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 612,
+        "unitCount": 3,
+        "bytes": 56817,
+        "hash": "8c89f3319f35aa43",
+        "notes": [
+          "Material.setProperty: no own descriptor on static"
+        ],
+        "observed": 3,
+        "total": 3
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 50,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 53,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "TextureCube",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 12,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "expectationGaps": {
+        "transform-equals": {
+          "compared": 0,
+          "graph": 9,
+          "missing": [
+            "Main Camera",
+            "HDR Capture Camera",
+            "LDR Capture Camera",
+            "sRGB hardware decode",
+            "Equivalent linear bytes",
+            "Double decode negative control",
+            "HDR tone mapped display",
+            "LDR clamped display",
+            "Native GGX sphere 0"
+          ]
+        },
+        "material-property": {
+          "compared": 0,
+          "graph": 9,
+          "missing": [
+            "Main Camera",
+            "HDR Capture Camera",
+            "LDR Capture Camera",
+            "sRGB hardware decode",
+            "Equivalent linear bytes",
+            "Double decode negative control",
+            "HDR tone mapped display",
+            "LDR clamped display",
+            "Native GGX sphere 0"
+          ]
+        },
+        "asset-loaded": {
+          "paths": 0,
+          "specAssets": 3,
+          "kinds": 0
+        }
+      },
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=15"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "9 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=1.0000"
+        },
+        {
+          "validatorId": "interaction:button-click",
+          "state": "PASS",
+          "detail": "点击「Tone map on」已执行 lit=1.0000 differs=true"
+        },
+        {
+          "validatorId": "interaction:frame-diff",
+          "state": "PASS",
+          "detail": "canvas state changed after real input"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "held=94 leaked=0 reloaded=true litRatio=1.0000 assetUnits=29"
+        }
+      ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/environment.json",
+          "status": 200,
+          "bytes": 2339,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/environment.bin",
+          "status": 200,
+          "bytes": 32760,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/ggx-prefiltered.bin",
+          "status": 200,
+          "bytes": 32760,
+          "observation": "server-response"
+        },
+        {
+          "path": "/color-input.effect.json",
+          "status": 200,
+          "bytes": 6317,
+          "observation": "server-response"
+        },
+        {
+          "path": "/source.effect.json",
+          "status": 200,
+          "bytes": 5597,
+          "observation": "server-response"
+        },
+        {
+          "path": "/output.effect.json",
+          "status": 200,
+          "bytes": 6339,
+          "observation": "server-response"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rendering-contracts/formal-webkit-artifacts/hdr-color-pipeline.png",
+        "bytes": 31198,
+        "hash": "839be14ce9ae5ff2"
+      },
+      "assetDigests": [
+        {
+          "path": "assets/LICENSE.md",
+          "declared": false,
+          "bytes": 1105,
+          "hash": "6180739800d17a37",
+          "present": true
+        },
+        {
+          "path": "assets/environment.bin",
+          "declared": true,
+          "bytes": 32760,
+          "hash": "d505c257703c16be",
+          "present": true
+        },
+        {
+          "path": "assets/environment.json",
+          "declared": true,
+          "bytes": 2339,
+          "hash": "6e4952e3d6ee21b5",
+          "present": true
+        },
+        {
+          "path": "assets/ggx-prefiltered.bin",
+          "declared": true,
+          "bytes": 32760,
+          "hash": "ab6f31646de65154",
+          "present": true
+        }
+      ],
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "water-multipass",
+      "result": "PASS",
+      "specFingerprint": "a4aad142f1b9",
+      "sourceFingerprint": "557a2bb5a5aced08",
+      "candidateFingerprint": "36938d0c6e6194b3",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 612,
+        "unitCount": 4,
+        "bytes": 56954,
+        "hash": "99d63925bdf76961",
+        "notes": [
+          "Material.initialize: no own descriptor on static"
+        ],
+        "observed": 4,
+        "total": 4
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 10,
+          "reads": 724,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 47,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 12,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "expectationGaps": {
+        "transform-equals": {
+          "compared": 0,
+          "graph": 7,
+          "missing": [
+            "Main Camera",
+            "Reflection Camera",
+            "Refraction Camera",
+            "Caustic Camera",
+            "Water Surface",
+            "Sand Receiver",
+            "Transparent Fish Fin"
+          ]
+        },
+        "material-property": {
+          "compared": 0,
+          "graph": 7,
+          "missing": [
+            "Main Camera",
+            "Reflection Camera",
+            "Refraction Camera",
+            "Caustic Camera",
+            "Water Surface",
+            "Sand Receiver",
+            "Transparent Fish Fin"
+          ]
+        },
+        "asset-loaded": {
+          "paths": 0,
+          "specAssets": 0,
+          "kinds": 0
+        }
+      },
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=62"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "7 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=1.0000"
+        },
+        {
+          "validatorId": "interaction:button-click",
+          "state": "PASS",
+          "detail": "点击「Rain off」已执行 lit=1.0000 differs=true"
+        },
+        {
+          "validatorId": "interaction:frame-diff",
+          "state": "PASS",
+          "detail": "canvas state changed after real input"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "held=30 leaked=0 reloaded=true litRatio=1.0000 assetUnits=78"
+        }
+      ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/scene.effect.json",
+          "status": 200,
+          "bytes": 6987,
+          "observation": "server-response"
+        },
+        {
+          "path": "/water.effect.json",
+          "status": 200,
+          "bytes": 14493,
+          "observation": "server-response"
+        },
+        {
+          "path": "/caustic.effect.json",
+          "status": 200,
+          "bytes": 9610,
+          "observation": "server-response"
+        },
+        {
+          "path": "/debug.effect.json",
+          "status": 200,
+          "bytes": 6567,
+          "observation": "server-response"
+        },
+        {
+          "path": "/overlay.effect.json",
+          "status": 200,
+          "bytes": 5279,
+          "observation": "server-response"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rendering-contracts/formal-webkit-artifacts/water-multipass.png",
+        "bytes": 122497,
+        "hash": "30c72dc805f0d87e"
+      },
+      "assetDigests": [],
+      "nodeCount": 0,
+      "errors": []
+    }
+  ]
+}

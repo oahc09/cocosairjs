@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-04T05:52:32.665Z",
-  "revision": "cac42f6",
+  "generatedAt": "2026-10-05T07:05:03.123Z",
+  "revision": "c9f1dbb",
   "examples": [
     {
       "dir": "anim-position",
@@ -4256,6 +4256,93 @@
         "verified": 18,
         "attested": 2,
         "units": 20
+      }
+    },
+    {
+      "dir": "hdr-color-pipeline",
+      "id": "hdr-color-pipeline",
+      "version": "1.0.0",
+      "title": "Color and Radiance: sRGB, HDR and Offline GGX",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "以真实贴图与离屏目标区分颜色编码、线性数据、HDR范围和预过滤环境消费",
+        "points": [
+          "等价输入比较而非相同字节",
+          "重复解码负控",
+          "HDR先保留再tone map",
+          "GGX离线卷积与普通mipmap区别",
+          "原生RGBE与LOD约定"
+        ]
+      },
+      "effect": {
+        "functional": "硬件sRGB/等价线性输入与double-decode反例；RGBA16F>1与RGBA8夹断经过同一Reinhard和sRGB输出；native TextureCube离线GGX六级与四roughness原生PBR球；曝光、HDR增益、tone-map、环境对照、Reset和真实生命周期重建",
+        "visual": "三组非对称色块、浮点与夹断的暖色HDR亮斑、四个不同粗糙度的彩色环境金属反射球"
+      },
+      "api": {
+        "primary": [
+          "Material.setProperty"
+        ],
+        "supporting": [
+          "TextureCube",
+          "Camera"
+        ],
+        "claims": [
+          "Material.setProperty",
+          "TextureCube",
+          "Camera"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "HDR Capture Camera",
+            "LDR Capture Camera",
+            "sRGB hardware decode",
+            "Equivalent linear bytes",
+            "Double decode negative control",
+            "HDR tone mapped display",
+            "LDR clamped display",
+            "Native GGX sphere 0"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "关闭tone map",
+            "buttonText": "Tone map on",
+            "expected": "真实shader tone-map参数关闭，HDR显示夹断，随后Reset复原"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
       }
     },
     {
@@ -18732,6 +18819,92 @@
       }
     },
     {
+      "dir": "water-multipass",
+      "id": "water-multipass",
+      "version": "1.0.0",
+      "title": "Multipass Water: Reflection, Refraction, Depth and Caustics",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "用原生场景与四个真实通道实现水面，明确 HDR/MSAA/深度附件合同和透明叠加顺序",
+        "points": [
+          "镜像相机与斜裁剪",
+          "采样实际深度并反投影到世界空间",
+          "折射光线落点的 Jacobian 焦散",
+          "resize 自动重绑",
+          "固定时间与真实鼠标/雨滴响应"
+        ]
+      },
+      "effect": {
+        "functional": "离屏焦散优先-40、反射-30、折射-20，主相机0和通道查看10。反射/折射用RGBA16F与请求4xMSAA，采样同帧resolve后的颜色和raw深度；绑定在resize后保持有效。每个光学通道可独立关闭。",
+        "visual": "固定斜视相机观察沙色池底、橙色岸上标记、青色水下标记与木栈桥。密集真实水面网格产生波纹、Fresnel反射、折射吸收及岸线泡沫；半透明鱼鳍、水花和可开雨滴处于正确深度顺序。"
+      },
+      "api": {
+        "primary": [
+          "createAirApp",
+          "utils.createMesh",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "Camera"
+        ],
+        "claims": [
+          "createAirApp",
+          "utils.createMesh",
+          "Material.initialize",
+          "Camera"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Reflection Camera",
+            "Refraction Camera",
+            "Caustic Camera",
+            "Water Surface",
+            "Sand Receiver",
+            "Transparent Fish Fin"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击切换雨",
+            "expected": "真实雨滴与水面环状扰动出现",
+            "buttonText": "Rain off"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      }
+    },
+    {
       "dir": "webview-basic",
       "id": "webview-basic",
       "version": "1.0.0",
@@ -19084,7 +19257,9 @@
       "render-composite",
       "campfire-night",
       "fog-accuracy",
-      "neon-night-city"
+      "neon-night-city",
+      "water-multipass",
+      "hdr-color-pipeline"
     ],
     "shader": [
       "shader-custom-gradient",

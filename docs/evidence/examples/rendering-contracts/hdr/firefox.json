@@ -1,0 +1,605 @@
+{
+  "schema": "air-hdr-color-example-proof/1",
+  "browser": "firefox",
+  "browserVersion": "155.0",
+  "executable": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe",
+  "started": "2026-10-05T07:14:16.995Z",
+  "finished": "2026-10-05T07:14:25.507Z",
+  "bundle": "72f37ee6f4fdd80e2fb89908e7c634ae422ce7fb52ab5d54812b43a2438650ba",
+  "sourceHashes": {
+    "src/main.ts": "d4516378711d5865d33a04bbb098c81dea87a863f43689d3340da1790c2bf6d2",
+    "generate-assets.mjs": "915a65e0c8a0919104828a875ead3aa258942789298c0f0ab651dff8d73428d7",
+    "verify.cjs": "ac25983c5b70857a4d7322a467e2d4e8c2d6d04fdaa404753c7866966a7634de",
+    "index.html": "9957445296ec8a730120a8e63fbe3bc553a2cf8520d416d17c5bcb473dbc2400",
+    "color-input.effect.json": "98b1aef0f48958dff7c183cda5637ea4f11b612c8a42a4b669a71224d5d3bd1f",
+    "source.effect.json": "bb16d8020495009bd4345f5faf5869b1f5a1a3f3fd678dedfd22cd01299c6ad1",
+    "output.effect.json": "842cca22b82a29e9dcc8007ea9edc6da8ca025f055ceb6beb0e2212dc517c00b",
+    "assets/environment.json": "6e4952e3d6ee21b5d6b6d65a04bbdbf2b9a5f1406186d90000cd9481292bd621",
+    "assets/environment.bin": "d505c257703c16bea501cf01c1db27a6539957679ce382a43d8f21baed731c3e",
+    "assets/ggx-prefiltered.bin": "ab6f31646de651543dcba6603fac2d7f4fa0e1fc74eb4457ea7786c1eb6b4a26"
+  },
+  "checks": [
+    {
+      "name": "native six-level IBL enabled and RGBE metadata agrees",
+      "ok": true,
+      "actual": {
+        "exposure": 1,
+        "gain": 1,
+        "toneMap": true,
+        "prefiltered": true,
+        "rotation": 0,
+        "generation": 1,
+        "frames": 8,
+        "targets": {
+          "hdr": {
+            "requested": {
+              "name": "HDR RGBA16F radiance",
+              "width": 192,
+              "height": 96,
+              "colorFormat": "rgba16f",
+              "depthFormat": "none",
+              "filter": "nearest"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "none",
+              "filter": "nearest",
+              "samples": 1,
+              "scale": 1
+            },
+            "width": 192,
+            "height": 96,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 0
+          },
+          "ldr": {
+            "requested": {
+              "name": "RGBA8 clamped radiance",
+              "width": 192,
+              "height": 96,
+              "colorFormat": "rgba8",
+              "depthFormat": "none",
+              "filter": "nearest"
+            },
+            "effective": {
+              "colorFormat": "rgba8",
+              "depthFormat": "none",
+              "filter": "nearest",
+              "samples": 1,
+              "scale": 1
+            },
+            "width": 192,
+            "height": 96,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 0
+          }
+        },
+        "fixture": {
+          "source": "Original analytic directional light environment, CC0-1.0",
+          "files": {
+            "environment.bin": {
+              "bytes": 32760,
+              "sha256": "d505c257703c16bea501cf01c1db27a6539957679ce382a43d8f21baed731c3e"
+            },
+            "ggx-prefiltered.bin": {
+              "bytes": 32760,
+              "sha256": "ab6f31646de651543dcba6603fac2d7f4fa0e1fc74eb4457ea7786c1eb6b4a26"
+            }
+          },
+          "levels": [
+            {
+              "size": 32,
+              "roughness": 0,
+              "offset": 0,
+              "faceBytes": 4096
+            },
+            {
+              "size": 16,
+              "roughness": 0.16666666666666666,
+              "offset": 24576,
+              "faceBytes": 1024
+            },
+            {
+              "size": 8,
+              "roughness": 0.3333333333333333,
+              "offset": 30720,
+              "faceBytes": 256
+            },
+            {
+              "size": 4,
+              "roughness": 0.5,
+              "offset": 32256,
+              "faceBytes": 64
+            },
+            {
+              "size": 2,
+              "roughness": 0.6666666666666666,
+              "offset": 32640,
+              "faceBytes": 16
+            },
+            {
+              "size": 1,
+              "roughness": 0.8333333333333334,
+              "offset": 32736,
+              "faceBytes": 4
+            }
+          ],
+          "encoding": "native-rgbe-base1.1",
+          "samplesPerTexel": 512
+        },
+        "roughnesses": [
+          0.03,
+          0.16666666666666666,
+          0.5,
+          0.8333333333333334
+        ],
+        "nativeIBL": true,
+        "nativeRGBE": true
+      }
+    },
+    {
+      "name": "native sampler formats use hardware sRGB only for encoded inputs",
+      "ok": true,
+      "actual": [
+        {
+          "name": "colorMap",
+          "binding": 1,
+          "index": 0,
+          "bound": true,
+          "format": {
+            "format": 37,
+            "name": "SRGB8_A8",
+            "srgb": true,
+            "depth": false
+          },
+          "width": 2,
+          "height": 2,
+          "mipLevels": 1,
+          "comparison": 7
+        },
+        {
+          "name": "colorMap",
+          "binding": 1,
+          "index": 0,
+          "bound": true,
+          "format": {
+            "format": 35,
+            "name": "RGBA8",
+            "srgb": false,
+            "depth": false
+          },
+          "width": 2,
+          "height": 2,
+          "mipLevels": 1,
+          "comparison": 7
+        },
+        {
+          "name": "colorMap",
+          "binding": 1,
+          "index": 0,
+          "bound": true,
+          "format": {
+            "format": 37,
+            "name": "SRGB8_A8",
+            "srgb": true,
+            "depth": false
+          },
+          "width": 2,
+          "height": 2,
+          "mipLevels": 1,
+          "comparison": 7
+        }
+      ]
+    },
+    {
+      "name": "floating-point radiance actually exceeds 1",
+      "ok": true,
+      "actual": {
+        "hdr": [
+          7.23046875,
+          4.078125,
+          1.205078125,
+          1
+        ],
+        "ldr": [
+          255,
+          255,
+          255,
+          255
+        ]
+      }
+    },
+    {
+      "name": "RGBA8 actually clamps HDR radiance",
+      "ok": true,
+      "actual": {
+        "hdr": [
+          7.23046875,
+          4.078125,
+          1.205078125,
+          1
+        ],
+        "ldr": [
+          255,
+          255,
+          255,
+          255
+        ]
+      }
+    },
+    {
+      "name": "hardware sRGB and equivalent linear bytes agree within 3 levels",
+      "ok": true,
+      "actual": {
+        "equivalent": [
+          0,
+          1,
+          1,
+          0
+        ],
+        "samples": [
+          [
+            [
+              128,
+              90,
+              50
+            ],
+            [
+              220,
+              160,
+              65
+            ],
+            [
+              35,
+              110,
+              200
+            ],
+            [
+              175,
+              75,
+              155
+            ]
+          ],
+          [
+            [
+              128,
+              90,
+              50
+            ],
+            [
+              220,
+              160,
+              64
+            ],
+            [
+              34,
+              110,
+              200
+            ],
+            [
+              175,
+              75,
+              155
+            ]
+          ],
+          [
+            [
+              55,
+              26,
+              8
+            ],
+            [
+              182,
+              90,
+              13
+            ],
+            [
+              4,
+              40,
+              147
+            ],
+            [
+              109,
+              18,
+              84
+            ]
+          ],
+          [
+            [
+              198,
+              168,
+              126
+            ],
+            [
+              222,
+              200,
+              128
+            ],
+            [
+              203,
+              174,
+              131
+            ],
+            [
+              229,
+              212,
+              153
+            ]
+          ],
+          [
+            [
+              188,
+              168,
+              126
+            ],
+            [
+              188,
+              188,
+              128
+            ],
+            [
+              188,
+              174,
+              132
+            ],
+            [
+              188,
+              188,
+              153
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "name": "double-decode negative control has genuinely darker pixels",
+      "ok": true,
+      "actual": [
+        [
+          [
+            128,
+            90,
+            50
+          ],
+          [
+            220,
+            160,
+            65
+          ],
+          [
+            35,
+            110,
+            200
+          ],
+          [
+            175,
+            75,
+            155
+          ]
+        ],
+        [
+          [
+            128,
+            90,
+            50
+          ],
+          [
+            220,
+            160,
+            64
+          ],
+          [
+            34,
+            110,
+            200
+          ],
+          [
+            175,
+            75,
+            155
+          ]
+        ],
+        [
+          [
+            55,
+            26,
+            8
+          ],
+          [
+            182,
+            90,
+            13
+          ],
+          [
+            4,
+            40,
+            147
+          ],
+          [
+            109,
+            18,
+            84
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "same tonemap preserves HDR/LDR image differences",
+      "ok": true,
+      "actual": [
+        [
+          [
+            198,
+            168,
+            126
+          ],
+          [
+            222,
+            200,
+            128
+          ],
+          [
+            203,
+            174,
+            131
+          ],
+          [
+            229,
+            212,
+            153
+          ]
+        ],
+        [
+          [
+            188,
+            168,
+            126
+          ],
+          [
+            188,
+            188,
+            128
+          ],
+          [
+            188,
+            174,
+            132
+          ],
+          [
+            188,
+            188,
+            153
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "exposure changes actual tone-mapped image",
+      "ok": true,
+      "actual": {
+        "sum": 11139337,
+        "max": 33,
+        "changed": 142227
+      }
+    },
+    {
+      "name": "tone-map bypass is an actual visual negative control",
+      "ok": true,
+      "actual": {
+        "sum": 15895907,
+        "max": 68,
+        "changed": 142155
+      }
+    },
+    {
+      "name": "real GGX vs unfiltered control changes roughness sphere reflections",
+      "ok": true,
+      "actual": [
+        {
+          "roughness": 0.03,
+          "sum": 1477,
+          "changed": 0
+        },
+        {
+          "roughness": 0.16666666666666666,
+          "sum": 7949,
+          "changed": 373
+        },
+        {
+          "roughness": 0.5,
+          "sum": 67566,
+          "changed": 2398
+        },
+        {
+          "roughness": 0.8333333333333334,
+          "sum": 92970,
+          "changed": 2401
+        }
+      ]
+    },
+    {
+      "name": "roughness spheres produce distinct nonblack reflection pixels",
+      "ok": true,
+      "actual": [
+        [
+          67,
+          77,
+          94
+        ],
+        [
+          64,
+          74,
+          90
+        ],
+        [
+          70,
+          73,
+          86
+        ],
+        [
+          69,
+          70,
+          83
+        ]
+      ]
+    },
+    {
+      "name": "reset returns the fixed rendered state",
+      "ok": true,
+      "actual": {
+        "sum": 0,
+        "max": 0,
+        "changed": 0
+      }
+    },
+    {
+      "name": "owned native resources release and rebuild",
+      "ok": true,
+      "actual": {
+        "label": "hdr-color-pipeline",
+        "held": 94,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      }
+    },
+    {
+      "name": "reloaded resources preserve the rendered result",
+      "ok": true,
+      "actual": {
+        "sum": 0,
+        "max": 0,
+        "changed": 0
+      }
+    },
+    {
+      "name": "browser runtime console has no errors",
+      "ok": true,
+      "actual": []
+    }
+  ],
+  "failures": [],
+  "status": "PASS"
+}

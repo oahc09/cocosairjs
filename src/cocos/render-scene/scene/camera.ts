@@ -1387,12 +1387,24 @@ export class Camera {
      * @param clipPlane clip plane in camera space
      */
     public calculateObliqueMat (viewSpacePlane: Vec4): void {
+        if (![viewSpacePlane.x, viewSpacePlane.y, viewSpacePlane.z, viewSpacePlane.w].every(Number.isFinite)
+            || Math.hypot(viewSpacePlane.x, viewSpacePlane.y, viewSpacePlane.z) < 1e-8) {
+            throw new TypeError('[AIR_E_CLIP_PLANE] supply a finite nonzero view-space plane');
+        }
+        // Rebuild the ordinary projection first, so repeated per-frame clipping
+        // does not compound last frame's modified near plane.
+        this._isProjDirty = true;
+        this.update(true);
         const clipFar = new Vec4(Math.sign(viewSpacePlane.x), Math.sign(viewSpacePlane.y), 1.0, 1.0);
         const viewFar = clipFar.transformMat4(this._matProjInv);
 
         const m4 = new Vec4(this._matProj.m03, this._matProj.m07, this._matProj.m11, this._matProj.m15);
-        const scale = 2.0 / Vec4.dot(viewSpacePlane, viewFar);
-        const newViewSpaceNearPlane = viewSpacePlane.multiplyScalar(scale);
+        const denominator = Vec4.dot(viewSpacePlane, viewFar);
+        if (!Number.isFinite(denominator) || Math.abs(denominator) < 1e-8) {
+            throw new RangeError('[AIR_E_CLIP_PLANE] plane is degenerate against the projection');
+        }
+        const scale = 2.0 / denominator;
+        const newViewSpaceNearPlane = viewSpacePlane.clone().multiplyScalar(scale);
 
         const m3 = newViewSpaceNearPlane.subtract(m4);
 
@@ -1400,6 +1412,10 @@ export class Camera {
         this._matProj.m06 = m3.y;
         this._matProj.m10 = m3.z;
         this._matProj.m14 = m3.w;
+        Mat4.invert(this._matProjInv, this._matProj);
+        Mat4.multiply(this._matViewProj, this._matProj, this._matView);
+        Mat4.invert(this._matViewProjInv, this._matViewProj);
+        this._frustum.update(this._matViewProj, this._matViewProjInv);
     }
 
     public getClipSpaceMinz (): number {

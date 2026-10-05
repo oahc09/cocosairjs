@@ -1,0 +1,72 @@
+{
+  "name": "air-water-multipass-overlay",
+  "techniques": [
+    {
+      "passes": [
+        {
+          "program": "air-water-multipass-overlay|516342ce5ba7500a",
+          "rasterizerState": { "cullMode": 0 },
+          "depthStencilState": { "depthTest": true, "depthWrite": false },
+          "blendState": {
+            "targets": [{ "blend": true, "blendSrc": 2, "blendDst": 4, "blendSrcAlpha": 1, "blendDstAlpha": 4 }]
+          },
+          "properties": { "tint": { "type": 16, "value": [0.7, 0.95, 1, 0.4] } }
+        }
+      ]
+    }
+  ],
+  "shaders": [
+    {
+      "name": "air-water-multipass-overlay|516342ce5ba7500a",
+      "hash": 1365459662,
+      "builtins": {
+        "statistics": { "CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS": 48, "CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS": 5 },
+        "globals": {
+          "blocks": [
+            { "name": "CCGlobal", "defines": [], "set": 0, "binding": 0 },
+            { "name": "CCCamera", "defines": [], "set": 0, "binding": 1 }
+          ],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        },
+        "locals": {
+          "blocks": [{ "name": "CCLocal", "defines": [], "set": 2, "binding": 0 }],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        }
+      },
+      "defines": [],
+      "attributes": [
+        { "name": "a_position", "defines": [], "format": 32, "location": 0 },
+        { "name": "a_texCoord", "defines": [], "format": 21, "location": 2 }
+      ],
+      "blocks": [
+        {
+          "name": "Constants",
+          "defines": [],
+          "binding": 0,
+          "stageFlags": 17,
+          "members": [{ "name": "tint", "type": 16, "count": 1 }]
+        }
+      ],
+      "samplerTextures": [],
+      "buffers": [],
+      "images": [],
+      "textures": [],
+      "samplers": [],
+      "subpassInputs": [],
+      "glsl4": {
+        "vert": "precision highp float;\nlayout(set = 0, binding = 1) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nlayout(set = 2, binding = 0) uniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n};\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 tint;\n};\nlayout(location = 0) in vec3 a_position;\nlayout(location = 2) in vec2 a_texCoord;\nout highp vec2 localUV;\nvoid main() {\n    localUV = a_texCoord;\n    gl_Position = cc_matViewProj * cc_matWorld * vec4(a_position, 1.0);\n}",
+        "frag": "precision highp float;\nlayout(set = 0, binding = 0) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 tint;\n};\nin highp vec2 localUV;\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() {\n    float edge = smoothstep(0.0, 0.08, localUV.x) * smoothstep(0.0, 0.08, 1.0 - localUV.x);\n    edge *= smoothstep(0.0, 0.06, localUV.y) * smoothstep(0.0, 0.06, 1.0 - localUV.y);\n    cc_FragColor = vec4(tint.rgb, tint.a * edge);\n}"
+      },
+      "glsl3": {
+        "vert": "precision highp float;\nuniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nuniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n};\nuniform Constants {\n  vec4 tint;\n};\nin vec3 a_position;\nin vec2 a_texCoord;\nout highp vec2 localUV;\nvoid main() {\n    localUV = a_texCoord;\n    gl_Position = cc_matViewProj * cc_matWorld * vec4(a_position, 1.0);\n}",
+        "frag": "precision highp float;\nuniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_debug_view_mode;\n};\nuniform Constants {\n  vec4 tint;\n};\nin highp vec2 localUV;\nout vec4 cc_FragColor;\nvoid main() {\n    float edge = smoothstep(0.0, 0.08, localUV.x) * smoothstep(0.0, 0.08, 1.0 - localUV.x);\n    edge *= smoothstep(0.0, 0.06, localUV.y) * smoothstep(0.0, 0.06, 1.0 - localUV.y);\n    cc_FragColor = vec4(tint.rgb, tint.a * edge);\n}"
+      }
+    }
+  ],
+  "combinations": [],
+  "hideInEditor": false
+}

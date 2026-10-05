@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Cocos AIR · Color and radiance</title>
+        <link rel="icon" href="data:," />
+        <style>
+            html,
+            body {
+                margin: 0;
+                height: 100%;
+                background: #0d111c;
+                color: #e1e7f0;
+                font:
+                    13px system-ui,
+                    sans-serif;
+                overflow: hidden;
+            }
+            header {
+                height: 86px;
+                padding: 14px 24px 0;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: space-between;
+                align-items: start;
+                gap: 18px;
+            }
+            h1 {
+                font-size: 21px;
+                font-weight: 500;
+                margin: 0 0 5px;
+                letter-spacing: -0.4px;
+            }
+            p {
+                margin: 0;
+                color: #9eaec7;
+                font-size: 12px;
+            }
+            nav {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: end;
+            }
+            button {
+                background: #172237;
+                border: 1px solid #3c4b66;
+                color: inherit;
+                padding: 5px 9px;
+                font: inherit;
+                border-radius: 3px;
+            }
+            label {
+                font-size: 11px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            input {
+                width: 90px;
+                accent-color: #ecac65;
+            }
+            canvas {
+                display: block;
+                width: 100%;
+                height: calc(100% - 116px);
+            }
+            .caption {
+                position: fixed;
+                text-align: center;
+                transform: translate(-50%, -50%);
+                white-space: nowrap;
+                font-size: 11px;
+                color: #bcc9de;
+                pointer-events: none;
+            }
+            footer {
+                height: 30px;
+                text-align: center;
+                font-size: 10px;
+                color: #7f92ae;
+            }
+            @media (max-width: 650px) {
+                header {
+                    height: 135px;
+                    padding: 12px;
+                    display: block;
+                }
+                nav {
+                    justify-content: start;
+                    margin-top: 10px;
+                }
+                canvas {
+                    height: calc(100% - 165px);
+                }
+                .caption {
+                    font-size: 8px;
+                }
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <header>
+            <div>
+                <h1>Color & radiance</h1>
+                <p>Equivalent inputs · HDR range · offline GGX environment</p>
+            </div>
+            <nav>
+                <label>Exposure <input id="exposure" type="range" min="0.1" max="4" value="1" step="0.05" /></label>
+                <label>HDR gain <input id="gain" type="range" min="0.2" max="2" value="1" step="0.05" /></label>
+                <button id="tone">Tone map on</button><button id="environment">GGX prefiltered</button
+                ><button id="reset">Reset</button>
+            </nav>
+        </header>
+        <canvas id="GameCanvas" tabindex="0" aria-label="Native color, HDR and PBR material comparison"></canvas>
+        <div id="captions"></div>
+        <footer><output id="status">Preparing native textures and floating-point attachments…</output></footer>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

@@ -29,7 +29,7 @@ import { Asset } from '../asset/assets/asset';
 import { AccessFlagBit, Attribute, Buffer, BufferInfo, BufferUsageBit, ClearFlagBit, ClearFlags, ColorAttachment, CommandBuffer,
     DepthStencilAttachment, DescriptorSet, Device, Feature, Format, FormatFeatureBit, Framebuffer, FramebufferInfo, InputAssembler,
     InputAssemblerInfo, LoadOp, MemoryUsageBit, Rect, RenderPass, RenderPassInfo, Sampler, StoreOp, SurfaceTransform, Swapchain,
-    Texture, TextureInfo, TextureType, TextureUsageBit, Viewport, GeneralBarrierInfo, deviceManager, DescriptorSetLayout,
+    Texture, TextureInfo, TextureType, TextureUsageBit, Viewport, GeneralBarrierInfo, deviceManager, DescriptorSetLayout, SampleCount,
 } from '../gfx';
 import { MacroRecord } from '../render-scene/core/pass-utils';
 import { RenderWindow } from '../render-scene/core/render-window';
@@ -290,7 +290,7 @@ export abstract class RenderPipeline extends Asset implements IPipelineEvent, Pi
         return true;
     }
 
-    public createRenderPass (clearFlags: ClearFlags, colorFmt: Format, depthFmt: Format): RenderPass {
+    public createRenderPass (clearFlags: ClearFlags, colorFmt: Format, depthFmt: Format, samples = SampleCount.X1, preserveDepth = false): RenderPass {
         const device = this._device;
         const colorAttachment = new ColorAttachment();
         const depthStencilAttachment = new DepthStencilAttachment();
@@ -298,6 +298,12 @@ export abstract class RenderPipeline extends Asset implements IPipelineEvent, Pi
         depthStencilAttachment.format = depthFmt;
         depthStencilAttachment.stencilStoreOp = StoreOp.DISCARD;
         depthStencilAttachment.depthStoreOp = StoreOp.DISCARD;
+        colorAttachment.sampleCount = samples;
+        depthStencilAttachment.sampleCount = samples;
+        if (preserveDepth) {
+            depthStencilAttachment.depthStoreOp = StoreOp.STORE;
+            depthStencilAttachment.stencilStoreOp = StoreOp.STORE;
+        }
 
         if (!(clearFlags & ClearFlagBit.COLOR)) {
             if (clearFlags & SkyBoxFlagValue.VALUE) {
@@ -330,7 +336,9 @@ export abstract class RenderPipeline extends Asset implements IPipelineEvent, Pi
         const hash = murmurhash2_32_gc(`${fbHash}_${clearFlags}`, 666);
         let renderPass = this._renderPasses.get(hash);
         if (renderPass) { return renderPass; }
-        renderPass = this.createRenderPass(clearFlags, fbo.colorTextures[0]!.format, fbo.depthStencilTexture!.format);
+        renderPass = this.createRenderPass(clearFlags, fbo.colorTextures[0]!.format,
+            fbo.depthStencilTexture?.format ?? Format.UNKNOWN, fbo.colorTextures[0]!.samples,
+            !!(fbo.depthStencilTexture && (fbo.depthStencilTexture.usage & TextureUsageBit.SAMPLED)));
         this._renderPasses.set(hash, renderPass);
         return renderPass;
     }

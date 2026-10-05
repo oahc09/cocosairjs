@@ -1,0 +1,8 @@
+[manual-doc] index.md 条目 70 篇（Tips 锚点已归并），已写 70，带示例并已核对 44
+  WARN input-and-events.md: ts 片段不是示例文件的连续子串（前 60 字："import { input, Input, EventMouse } from 'cocosair';\n\nfuncti"）
+  WARN input-and-events.md: ts 片段不是示例文件的连续子串（前 60 字："const canvas = document.querySelector('#GameCanvas') as HTML"）
+  WARN installation.md: ts 片段不是示例文件的连续子串（前 60 字："export interface AirAppOptions {\n        /** canvas 元素，或 CSS"）
+  WARN webgl-compatibility-check.md: ts 片段不是示例文件的连续子串（前 60 字："const app = await createAirApp({ canvas: '#GameCanvas' });\n\n"）
+  WARN responsive.md: html 片段不是示例文件的连续子串（前 60 字："<script>window.__CCDPR_CAP__ = 3;</script><!-- 必须在 import co"）
+  FAIL examples/manual-port-recipes: 存在示例目录但 index.md 未声明
+[manual-doc] FAIL (fail=1, warn=5, missing=0, strict)

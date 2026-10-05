@@ -1,0 +1,81 @@
+{
+  "name": "air-water-multipass-debug",
+  "techniques": [
+    {
+      "passes": [
+        {
+          "program": "air-water-multipass-debug|3b94369a15c9abf0",
+          "rasterizerState": { "cullMode": 0 },
+          "depthStencilState": { "depthTest": false, "depthWrite": false },
+          "blendState": { "targets": [{ "blend": false }] },
+          "properties": {
+            "debugParams": { "type": 16, "value": [0, 25, 0, 0] },
+            "inverseRefractionVP": { "type": 25, "value": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1] },
+            "refractionView": { "type": 25, "value": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1] },
+            "displayMap": { "type": 28, "value": "black" }
+          }
+        }
+      ]
+    }
+  ],
+  "shaders": [
+    {
+      "name": "air-water-multipass-debug|3b94369a15c9abf0",
+      "hash": 999569050,
+      "builtins": {
+        "statistics": { "CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS": 56, "CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS": 13 },
+        "globals": {
+          "blocks": [
+            { "name": "CCGlobal", "defines": [], "set": 0, "binding": 0 },
+            { "name": "CCCamera", "defines": [], "set": 0, "binding": 1 }
+          ],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        },
+        "locals": {
+          "blocks": [{ "name": "CCLocal", "defines": [], "set": 2, "binding": 0 }],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        }
+      },
+      "defines": [],
+      "attributes": [
+        { "name": "a_position", "defines": [], "format": 32, "location": 0 },
+        { "name": "a_texCoord", "defines": [], "format": 21, "location": 2 }
+      ],
+      "blocks": [
+        {
+          "name": "Constants",
+          "defines": [],
+          "binding": 0,
+          "stageFlags": 17,
+          "members": [
+            { "name": "debugParams", "type": 16, "count": 1 },
+            { "name": "inverseRefractionVP", "type": 25, "count": 1 },
+            { "name": "refractionView", "type": 25, "count": 1 }
+          ]
+        }
+      ],
+      "samplerTextures": [
+        { "name": "displayMap", "type": 28, "count": 1, "defines": [], "stageFlags": 16, "set": 1, "binding": 1 }
+      ],
+      "buffers": [],
+      "images": [],
+      "textures": [],
+      "samplers": [],
+      "subpassInputs": [],
+      "glsl4": {
+        "vert": "precision highp float;\nlayout(set = 0, binding = 1) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nlayout(set = 2, binding = 0) uniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n};\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 debugParams;\n  mat4 inverseRefractionVP;\n  mat4 refractionView;\n};\nlayout(location = 0) in vec3 a_position;\nlayout(location = 2) in vec2 a_texCoord;\nout highp vec2 screenUV;\nvoid main() {\n    screenUV = a_texCoord;\n    gl_Position = vec4(a_position.xy, 0.0, 1.0);\n}",
+        "frag": "precision highp float;\nlayout(set = 0, binding = 0) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 debugParams;\n  mat4 inverseRefractionVP;\n  mat4 refractionView;\n};\nlayout(set = 1, binding = 1) uniform sampler2D displayMap;\nin highp vec2 screenUV;\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() {\n    vec4 sampleColor = texture(displayMap, screenUV);\n    if (debugParams.x > 0.5) {\n        vec4 receiver = inverseRefractionVP * vec4(screenUV * 2.0 - 1.0, sampleColor.r * 2.0 - 1.0, 1.0);\n        vec3 world = receiver.xyz / receiver.w;\n        float linearDistance = max(-(refractionView * vec4(world, 1.0)).z, 0.0);\n        sampleColor = vec4(vec3(sampleColor.r > 0.999999 ? 1.0 : linearDistance / debugParams.y), 1.0);\n    }\n    cc_FragColor = vec4(sampleColor.rgb, 1.0);\n}"
+      },
+      "glsl3": {
+        "vert": "precision highp float;\nuniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nuniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n};\nuniform Constants {\n  vec4 debugParams;\n  mat4 inverseRefractionVP;\n  mat4 refractionView;\n};\nin vec3 a_position;\nin vec2 a_texCoord;\nout highp vec2 screenUV;\nvoid main() {\n    screenUV = a_texCoord;\n    gl_Position = vec4(a_position.xy, 0.0, 1.0);\n}",
+        "frag": "precision highp float;\nuniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_debug_view_mode;\n};\nuniform Constants {\n  vec4 debugParams;\n  mat4 inverseRefractionVP;\n  mat4 refractionView;\n};\nuniform sampler2D displayMap;\nin highp vec2 screenUV;\nout vec4 cc_FragColor;\nvoid main() {\n    vec4 sampleColor = texture(displayMap, screenUV);\n    if (debugParams.x > 0.5) {\n        vec4 receiver = inverseRefractionVP * vec4(screenUV * 2.0 - 1.0, sampleColor.r * 2.0 - 1.0, 1.0);\n        vec3 world = receiver.xyz / receiver.w;\n        float linearDistance = max(-(refractionView * vec4(world, 1.0)).z, 0.0);\n        sampleColor = vec4(vec3(sampleColor.r > 0.999999 ? 1.0 : linearDistance / debugParams.y), 1.0);\n    }\n    cc_FragColor = vec4(sampleColor.rgb, 1.0);\n}"
+      }
+    }
+  ],
+  "combinations": [],
+  "hideInEditor": false
+}

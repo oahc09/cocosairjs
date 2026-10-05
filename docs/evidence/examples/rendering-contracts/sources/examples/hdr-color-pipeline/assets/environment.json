@@ -1,0 +1,98 @@
+{
+  "schema": "air-native-ggx-fixture/1",
+  "generator": "generate-assets.mjs",
+  "source": "Original analytic directional light environment, CC0-1.0",
+  "distribution": "ggx",
+  "alphaMapping": "perceptualRoughness^2",
+  "integration": "V=N, normalized sum Li(L)*NdotL; Hammersley GGX NDF sampling",
+  "samplesPerTexel": 512,
+  "encoding": "native-rgbe-base1.1",
+  "faces": [
+    "right",
+    "left",
+    "top",
+    "bottom",
+    "front",
+    "back"
+  ],
+  "levels": [
+    {
+      "size": 32,
+      "roughness": 0,
+      "offset": 0,
+      "faceBytes": 4096
+    },
+    {
+      "size": 16,
+      "roughness": 0.16666666666666666,
+      "offset": 24576,
+      "faceBytes": 1024
+    },
+    {
+      "size": 8,
+      "roughness": 0.3333333333333333,
+      "offset": 30720,
+      "faceBytes": 256
+    },
+    {
+      "size": 4,
+      "roughness": 0.5,
+      "offset": 32256,
+      "faceBytes": 64
+    },
+    {
+      "size": 2,
+      "roughness": 0.6666666666666666,
+      "offset": 32640,
+      "faceBytes": 16
+    },
+    {
+      "size": 1,
+      "roughness": 0.8333333333333334,
+      "offset": 32736,
+      "faceBytes": 4
+    }
+  ],
+  "stats": [
+    {
+      "roughness": 0,
+      "meanAbsoluteDifferenceFromUnfiltered": 0,
+      "variance": 0.07258319545073985
+    },
+    {
+      "roughness": 0.16666666666666666,
+      "meanAbsoluteDifferenceFromUnfiltered": 0.008116266597818668,
+      "variance": 0.05783273058840145
+    },
+    {
+      "roughness": 0.3333333333333333,
+      "meanAbsoluteDifferenceFromUnfiltered": 0.036831652009449274,
+      "variance": 0.025338867850905215
+    },
+    {
+      "roughness": 0.5,
+      "meanAbsoluteDifferenceFromUnfiltered": 0.0596977547021076,
+      "variance": 0.01135378488102288
+    },
+    {
+      "roughness": 0.6666666666666666,
+      "meanAbsoluteDifferenceFromUnfiltered": 0.07418565139693525,
+      "variance": 0.006851145590237989
+    },
+    {
+      "roughness": 0.8333333333333334,
+      "meanAbsoluteDifferenceFromUnfiltered": 0.04700075099217491,
+      "variance": 0.004625275515286123
+    }
+  ],
+  "files": {
+    "environment.bin": {
+      "bytes": 32760,
+      "sha256": "d505c257703c16bea501cf01c1db27a6539957679ce382a43d8f21baed731c3e"
+    },
+    "ggx-prefiltered.bin": {
+      "bytes": 32760,
+      "sha256": "ab6f31646de651543dcba6603fac2d7f4fa0e1fc74eb4457ea7786c1eb6b4a26"
+    }
+  }
+}

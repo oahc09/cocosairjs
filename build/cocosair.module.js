@@ -21645,16 +21645,29 @@ let Camera$1 = class Camera {
     return out;
   }
   calculateObliqueMat(viewSpacePlane) {
+    if (![viewSpacePlane.x, viewSpacePlane.y, viewSpacePlane.z, viewSpacePlane.w].every(Number.isFinite) || Math.hypot(viewSpacePlane.x, viewSpacePlane.y, viewSpacePlane.z) < 1e-8) {
+      throw new TypeError('[AIR_E_CLIP_PLANE] supply a finite nonzero view-space plane');
+    }
+    this._isProjDirty = true;
+    this.update(true);
     const clipFar = new Vec4(Math.sign(viewSpacePlane.x), Math.sign(viewSpacePlane.y), 1.0, 1.0);
     const viewFar = clipFar.transformMat4(this._matProjInv);
     const m4 = new Vec4(this._matProj.m03, this._matProj.m07, this._matProj.m11, this._matProj.m15);
-    const scale = 2.0 / Vec4.dot(viewSpacePlane, viewFar);
-    const newViewSpaceNearPlane = viewSpacePlane.multiplyScalar(scale);
+    const denominator = Vec4.dot(viewSpacePlane, viewFar);
+    if (!Number.isFinite(denominator) || Math.abs(denominator) < 1e-8) {
+      throw new RangeError('[AIR_E_CLIP_PLANE] plane is degenerate against the projection');
+    }
+    const scale = 2.0 / denominator;
+    const newViewSpaceNearPlane = viewSpacePlane.clone().multiplyScalar(scale);
     const m3 = newViewSpaceNearPlane.subtract(m4);
     this._matProj.m02 = m3.x;
     this._matProj.m06 = m3.y;
     this._matProj.m10 = m3.z;
     this._matProj.m14 = m3.w;
+    Mat4.invert(this._matProjInv, this._matProj);
+    Mat4.multiply(this._matViewProj, this._matProj, this._matView);
+    Mat4.invert(this._matViewProjInv, this._matViewProj);
+    this._frustum.update(this._matViewProj, this._matViewProjInv);
   }
   getClipSpaceMinz() {
     return this._device.capabilities.clipSpaceMinZ;
@@ -22166,6 +22179,7 @@ let PixelFormat;
   PixelFormat[PixelFormat["SRGBA8888"] = Format.SRGB8_A8] = "SRGBA8888";
   PixelFormat[PixelFormat["BGRA8888"] = Format.BGRA8] = "BGRA8888";
   PixelFormat[PixelFormat["RGBA32F"] = Format.RGBA32F] = "RGBA32F";
+  PixelFormat[PixelFormat["RGBA16F"] = Format.RGBA16F] = "RGBA16F";
   PixelFormat[PixelFormat["A8"] = Format.A8] = "A8";
   PixelFormat[PixelFormat["I8"] = Format.L8] = "I8";
   PixelFormat[PixelFormat["AI8"] = Format.LA8] = "AI8";
@@ -33746,15 +33760,21 @@ let RenderTexture = (_dec$2Q = ccclass$w('cc.RenderTexture'), _dec$2Q(_class$2R 
     _windowInfo.externalResLow = info && info.externalResLow ? info.externalResLow : 0;
     _windowInfo.externalResHigh = info && info.externalResHigh ? info.externalResHigh : 0;
     _windowInfo.externalFlag = info && info.externalFlag ? info.externalFlag : TextureFlagBit.NONE;
-    _windowInfo.renderPassInfo.colorAttachments.forEach(colorAttachment => {
-      colorAttachment.format = root.device.swapchainFormat;
-    });
+    if (!(info != null && info.passInfo)) {
+      _windowInfo.renderPassInfo.colorAttachments.forEach(colorAttachment => {
+        colorAttachment.format = root.device.swapchainFormat;
+      });
+    }
     _colorAttachment.barrier = deviceManager.gfxDevice.getGeneralBarrier(new GeneralBarrierInfo(AccessFlagBit.FRAGMENT_SHADER_READ_TEXTURE, AccessFlagBit.FRAGMENT_SHADER_READ_TEXTURE));
     if (this._window) {
       this._window.destroy();
       this._window.initialize(deviceManager.gfxDevice, _windowInfo);
     } else {
       this._window = root.createWindow(_windowInfo);
+    }
+    const color = this.getGFXTexture();
+    if (color) {
+      this._format = color.format;
     }
   }
   initDefault(uuid) {
@@ -37333,14 +37353,18 @@ class RenderWindow {
     } else {
       for (let i = 0; i < info.renderPassInfo.colorAttachments.length; i++) {
         const textureInfo = new TextureInfo(TextureType.TEX2D, TextureUsageBit.COLOR_ATTACHMENT | TextureUsageBit.SAMPLED | TextureUsageBit.TRANSFER_SRC, info.renderPassInfo.colorAttachments[i].format, this._width, this._height);
+        textureInfo.samples = info.renderPassInfo.colorAttachments[i].sampleCount;
         if (info.externalFlag && (info.externalFlag & TextureFlagBit.EXTERNAL_NORMAL || info.externalFlag & TextureFlagBit.EXTERNAL_OES)) {
           textureInfo.flags |= info.externalFlag;
           textureInfo.externalRes = info.externalResLow ? info.externalResLow : 0;
         }
         this._colorTextures.push(device.createTexture(textureInfo));
+        this._hasOffScreenAttachments = true;
       }
       if (info.renderPassInfo.depthStencilAttachment && info.renderPassInfo.depthStencilAttachment.format !== Format.UNKNOWN) {
-        this._depthStencilTexture = device.createTexture(new TextureInfo(TextureType.TEX2D, TextureUsageBit.DEPTH_STENCIL_ATTACHMENT | TextureUsageBit.SAMPLED, info.renderPassInfo.depthStencilAttachment.format, this._width, this._height));
+        const depthInfo = new TextureInfo(TextureType.TEX2D, TextureUsageBit.DEPTH_STENCIL_ATTACHMENT | TextureUsageBit.SAMPLED, info.renderPassInfo.depthStencilAttachment.format, this._width, this._height);
+        depthInfo.samples = info.renderPassInfo.depthStencilAttachment.sampleCount;
+        this._depthStencilTexture = device.createTexture(depthInfo);
         this._hasOffScreenAttachments = true;
       }
     }
@@ -143507,7 +143531,7 @@ const EMPTY = Object.freeze({
   uvs: Object.freeze([]),
   indices: Object.freeze([])
 });
-function fail$5(field, message) {
+function fail$6(field, message) {
   const error = new Error(`AIR_E_UI_MESH_GEOMETRY: ${field}: ${message}`);
   Object.assign(error, {
     code: 'AIR_E_UI_MESH_GEOMETRY',
@@ -143516,19 +143540,19 @@ function fail$5(field, message) {
   throw error;
 }
 function copyGeometry(value) {
-  if (!value || !Array.isArray(value.positions) || !Array.isArray(value.uvs) || !Array.isArray(value.indices)) fail$5('geometry', 'three arrays required');
+  if (!value || !Array.isArray(value.positions) || !Array.isArray(value.uvs) || !Array.isArray(value.indices)) fail$6('geometry', 'three arrays required');
   const {
       positions,
       uvs,
       indices
     } = value,
     count = positions.length / 2;
-  if (!Number.isInteger(count) || count < 3 || count > 1024) fail$5('positions', '3..1024 XY vertices required');
-  if (uvs.length !== positions.length) fail$5('uvs', 'one UV pair per vertex required');
-  if (!positions.every(Number.isFinite)) fail$5('positions', 'finite coordinates required');
-  if (!uvs.every(n => Number.isFinite(n) && n >= 0 && n <= 1)) fail$5('uvs', 'finite frame coordinates in [0,1] required');
-  if (indices.length < 3 || indices.length > 4095 || indices.length % 3) fail$5('indices', '1..1365 triangles required');
-  if (!indices.every(n => Number.isInteger(n) && n >= 0 && n < count)) fail$5('indices', 'vertex index outside geometry');
+  if (!Number.isInteger(count) || count < 3 || count > 1024) fail$6('positions', '3..1024 XY vertices required');
+  if (uvs.length !== positions.length) fail$6('uvs', 'one UV pair per vertex required');
+  if (!positions.every(Number.isFinite)) fail$6('positions', 'finite coordinates required');
+  if (!uvs.every(n => Number.isFinite(n) && n >= 0 && n <= 1)) fail$6('uvs', 'finite frame coordinates in [0,1] required');
+  if (indices.length < 3 || indices.length > 4095 || indices.length % 3) fail$6('indices', '1..1365 triangles required');
+  if (!indices.every(n => Number.isInteger(n) && n >= 0 && n < count)) fail$6('indices', 'vertex index outside geometry');
   return Object.freeze({
     positions: Object.freeze(positions.slice()),
     uvs: Object.freeze(uvs.slice()),
@@ -147291,7 +147315,7 @@ function meshoptCompressionFactory(extension) {
 
 const KHR_DRACO_MESH_COMPRESSION = 'KHR_draco_mesh_compression';
 const EXTENSION = KHR_DRACO_MESH_COMPRESSION;
-function fail$4(message) {
+function fail$5(message) {
   throw new GLTFError('GLTF_DECODE_FAILED', `${EXTENSION}: ${message}`, EXTENSION);
 }
 async function decodePrimitive(context, meshIndex, primitiveIndex, definition, decoder) {
@@ -147313,7 +147337,7 @@ async function decodePrimitive(context, meshIndex, primitiveIndex, definition, d
   });
   const position = result.attributes.POSITION;
   if (!position) {
-    fail$4('decoded primitive has no POSITION');
+    fail$5('decoded primitive has no POSITION');
   }
   const count = position.length / 3;
   for (const [semantic, values] of Object.entries(result.attributes)) {
@@ -147327,16 +147351,16 @@ async function decodePrimitive(context, meshIndex, primitiveIndex, definition, d
       VEC4: 4
     }[declared.type]) !== null && _declared$type !== void 0 ? _declared$type : 4 : semantic === 'POSITION' || semantic === 'NORMAL' ? 3 : /^TEXCOORD_\d+$/.test(semantic) ? 2 : 4;
     if (values.length !== count * width) {
-      fail$4(`decoded ${semantic} has ${values.length} components, expected ${count * width}`);
+      fail$5(`decoded ${semantic} has ${values.length} components, expected ${count * width}`);
     }
     if (declared) {
       if (declared.count !== count) {
-        fail$4(`decoded ${semantic} count ${count} does not match accessor count ${declared.count}`);
+        fail$5(`decoded ${semantic} count ${count} does not match accessor count ${declared.count}`);
       }
     }
   }
   if (result.indices && !result.indices.every(index => index < count)) {
-    fail$4('index exceeds decoded vertex count');
+    fail$5('index exceeds decoded vertex count');
   }
   return result;
 }
@@ -148688,7 +148712,7 @@ function transcodeAll(file, width, height, levels, candidate) {
 
 registerGLTFLoader();
 
-function fail$3(code, message) {
+function fail$4(code, message) {
   const error = new Error(`${code}: ${message}`);
   Object.assign(error, {
     code
@@ -148699,60 +148723,60 @@ function integer(fields, name, minimum = 0, maximum = Number.MAX_SAFE_INTEGER) {
   const raw = fields[name],
     value = Number(raw);
   if (raw === undefined || raw.trim() === '' || !Number.isSafeInteger(value) || value < minimum || value > maximum) {
-    fail$3('AIR_E_FNT_DATA', `${name} must be an integer in [${minimum}, ${maximum}]`);
+    fail$4('AIR_E_FNT_DATA', `${name} must be an integer in [${minimum}, ${maximum}]`);
   }
   return value;
 }
 function parseFnt(text) {
-  if (typeof text !== 'string' || /^\s*</.test(text) || text.startsWith('BMF')) fail$3('AIR_E_FNT_FORMAT', 'expected BMFont text, not XML/binary');
+  if (typeof text !== 'string' || /^\s*</.test(text) || text.startsWith('BMF')) fail$4('AIR_E_FNT_FORMAT', 'expected BMFont text, not XML/binary');
   const records = new Map();
   for (const line of text.replace(/^\uFEFF/, '').split(/\r?\n/)) {
     if (!line.trim()) continue;
     const match = /^\s*(\w+)\s+(.*)$/.exec(line);
     if (!match || !['info', 'common', 'page', 'chars', 'char', 'kernings', 'kerning'].includes(match[1])) {
-      fail$3('AIR_E_FNT_FORMAT', `unsupported record: ${line.slice(0, 80)}`);
+      fail$4('AIR_E_FNT_FORMAT', `unsupported record: ${line.slice(0, 80)}`);
     }
     const fields = Object.create(null);
     const pattern = /([A-Za-z]\w*)=("(?:[^"\\]|\\.)*"|[^\s]+)/g;
     let end = 0,
       field;
     while (field = pattern.exec(match[2])) {
-      if (match[2].slice(end, field.index).trim() || fields[field[1]] !== undefined) fail$3('AIR_E_FNT_FORMAT', 'malformed or duplicate field');
+      if (match[2].slice(end, field.index).trim() || fields[field[1]] !== undefined) fail$4('AIR_E_FNT_FORMAT', 'malformed or duplicate field');
       fields[field[1]] = field[2].startsWith('"') ? field[2].slice(1, -1).replace(/\\(["\\])/g, '$1') : field[2];
       end = pattern.lastIndex;
     }
-    if (match[2].slice(end).trim()) fail$3('AIR_E_FNT_FORMAT', 'malformed field tail');
+    if (match[2].slice(end).trim()) fail$4('AIR_E_FNT_FORMAT', 'malformed field tail');
     const list = records.get(match[1]) || [];
     list.push(fields);
     records.set(match[1], list);
   }
   const single = name => {
     const list = records.get(name);
-    if ((list == null ? void 0 : list.length) !== 1) fail$3('AIR_E_FNT_DATA', `exactly one ${name} record required`);
+    if ((list == null ? void 0 : list.length) !== 1) fail$4('AIR_E_FNT_DATA', `exactly one ${name} record required`);
     return list[0];
   };
   const info = single('info'),
     common = single('common'),
     page = single('page');
   const size = integer(info, 'size', -65535, 65535);
-  if (!size) fail$3('AIR_E_FNT_DATA', 'font size cannot be zero');
-  if (integer(common, 'pages') !== 1 || integer(page, 'id') !== 0) fail$3('AIR_E_FNT_PAGES', 'only page 0 of a single-page font is supported');
-  if (common.packed !== undefined && integer(common, 'packed', 0, 1) !== 0) fail$3('AIR_E_FNT_PACKED', 'packed channel fonts are unsupported');
-  if (!page.file) fail$3('AIR_E_FNT_DATA', 'page file required');
+  if (!size) fail$4('AIR_E_FNT_DATA', 'font size cannot be zero');
+  if (integer(common, 'pages') !== 1 || integer(page, 'id') !== 0) fail$4('AIR_E_FNT_PAGES', 'only page 0 of a single-page font is supported');
+  if (common.packed !== undefined && integer(common, 'packed', 0, 1) !== 0) fail$4('AIR_E_FNT_PACKED', 'packed channel fonts are unsupported');
+  if (!page.file) fail$4('AIR_E_FNT_DATA', 'page file required');
   const scaleW = integer(common, 'scaleW', 1),
     scaleH = integer(common, 'scaleH', 1);
   const fontDefDictionary = Object.create(null);
   const chars = records.get('char') || [];
-  if (!chars.length || integer(single('chars'), 'count') !== chars.length) fail$3('AIR_E_FNT_DATA', 'character count mismatch or empty font');
+  if (!chars.length || integer(single('chars'), 'count') !== chars.length) fail$4('AIR_E_FNT_DATA', 'character count mismatch or empty font');
   for (const char of chars) {
     const id = integer(char, 'id', 0, 65535);
-    if (fontDefDictionary[id]) fail$3('AIR_E_FNT_DATA', `duplicate character ${id}`);
-    if (integer(char, 'page') !== 0) fail$3('AIR_E_FNT_PAGES', 'glyph references an unsupported page');
+    if (fontDefDictionary[id]) fail$4('AIR_E_FNT_DATA', `duplicate character ${id}`);
+    if (integer(char, 'page') !== 0) fail$4('AIR_E_FNT_PAGES', 'glyph references an unsupported page');
     const x = integer(char, 'x'),
       y = integer(char, 'y'),
       width = integer(char, 'width'),
       height = integer(char, 'height');
-    if (x + width > scaleW || y + height > scaleH) fail$3('AIR_E_FNT_DATA', `glyph ${id} exceeds its page`);
+    if (x + width > scaleW || y + height > scaleH) fail$4('AIR_E_FNT_DATA', `glyph ${id} exceeds its page`);
     fontDefDictionary[id] = Object.freeze({
       rect: Object.freeze({
         x,
@@ -148767,13 +148791,13 @@ function parseFnt(text) {
   }
   const kerningDict = Object.create(null),
     kernings = records.get('kerning') || [];
-  if (records.has('kernings') && integer(single('kernings'), 'count') !== kernings.length) fail$3('AIR_E_FNT_DATA', 'kerning count mismatch');
+  if (records.has('kernings') && integer(single('kernings'), 'count') !== kernings.length) fail$4('AIR_E_FNT_DATA', 'kerning count mismatch');
   for (const kerning of kernings) {
     const first = integer(kerning, 'first', 0, 65535),
       second = integer(kerning, 'second', 0, 65535);
-    if (!fontDefDictionary[first] || !fontDefDictionary[second]) fail$3('AIR_E_FNT_DATA', 'kerning refers to an unknown character');
+    if (!fontDefDictionary[first] || !fontDefDictionary[second]) fail$4('AIR_E_FNT_DATA', 'kerning refers to an unknown character');
     const key = first << 16 | second;
-    if (kerningDict[key] !== undefined) fail$3('AIR_E_FNT_DATA', 'duplicate kerning pair');
+    if (kerningDict[key] !== undefined) fail$4('AIR_E_FNT_DATA', 'duplicate kerning pair');
     kerningDict[key] = integer(kerning, 'amount', -65535, 65535);
   }
   return Object.freeze({
@@ -148793,7 +148817,7 @@ function parseFnt(text) {
 }
 function createBitmapFont(data, page) {
   if (!(page instanceof SpriteFrame) || page.rotated || page.rect.x !== 0 || page.rect.y !== 0 || page.rect.width !== data.scaleW || page.rect.height !== data.scaleH || page.originalSize.width !== data.scaleW || page.originalSize.height !== data.scaleH || page.offset.x !== 0 || page.offset.y !== 0 || page.texture.width !== data.scaleW || page.texture.height !== data.scaleH) {
-    fail$3('AIR_E_FNT_PAGE_TEXTURE', 'a full, unrotated page matching scaleW/scaleH is required');
+    fail$4('AIR_E_FNT_PAGE_TEXTURE', 'a full, unrotated page matching scaleW/scaleH is required');
   }
   const texture = page.texture;
   texture.addRef();
@@ -148821,7 +148845,7 @@ function createBitmapFont(data, page) {
     },
     dispose() {
       if (disposed) return;
-      if (font.refCount > 1) fail$3('AIR_E_FNT_IN_USE', 'release extra font owners and detach labels before dispose');
+      if (font.refCount > 1) fail$4('AIR_E_FNT_IN_USE', 'release extra font owners and detach labels before dispose');
       disposed = true;
       font.fontDefDictionary.texture = null;
       font.spriteFrame = null;
@@ -148857,22 +148881,22 @@ async function loadBitmapFont(url, options) {
       signal
     });
     textOwned = true;
-    if (!(text instanceof TextAsset)) fail$3('AIR_E_FNT_FORMAT', 'font URL did not produce TextAsset');
+    if (!(text instanceof TextAsset)) fail$4('AIR_E_FNT_FORMAT', 'font URL did not produce TextAsset');
     const data = parseFnt(text.text);
     try {
       const base = options.baseURL || new URL(url, typeof document !== 'undefined' ? document.baseURI : undefined).href;
       pageURL = new URL(data.atlasName, base).href;
     } catch {
-      fail$3('AIR_E_FNT_BASE_URL', 'relative pages require an absolute font URL, document base or explicit baseURL');
+      fail$4('AIR_E_FNT_BASE_URL', 'relative pages require an absolute font URL, document base or explicit baseURL');
     }
-    if (!/\.png(?:$|[?#])/i.test(pageURL)) fail$3('AIR_E_FNT_PAGE_TEXTURE', 'this loader supports PNG pages; supply other formats via createBitmapFont');
+    if (!/\.png(?:$|[?#])/i.test(pageURL)) fail$4('AIR_E_FNT_PAGE_TEXTURE', 'this loader supports PNG pages; supply other formats via createBitmapFont');
     const image = await bank.load(pageURL, {
       ext: 'png',
       signal
     });
     pageOwned = true;
-    if (signal != null && signal.aborted) fail$3('AIR_E_ABORTED', 'font subscription was cancelled');
-    if (!(image instanceof ImageAsset)) fail$3('AIR_E_FNT_PAGE_TEXTURE', 'page URL did not produce ImageAsset');
+    if (signal != null && signal.aborted) fail$4('AIR_E_ABORTED', 'font subscription was cancelled');
+    if (!(image instanceof ImageAsset)) fail$4('AIR_E_FNT_PAGE_TEXTURE', 'page URL did not produce ImageAsset');
     texture = new Texture2D();
     texture.image = image;
     frame = new SpriteFrame();
@@ -148898,7 +148922,7 @@ async function loadBitmapFont(url, options) {
   }
 }
 
-function fail$2(code, message) {
+function fail$3(code, message) {
   const error = new Error(`${code}: ${message}`);
   Object.assign(error, {
     code
@@ -148908,13 +148932,13 @@ function fail$2(code, message) {
 function nonNegativeInt(raw, what) {
   const value = Number(raw);
   if (raw.trim() === '' || !Number.isSafeInteger(value) || value < 0) {
-    fail$2('AIR_E_ATLAS_DATA', `${what} must be a non-negative safe integer, got "${raw}"`);
+    fail$3('AIR_E_ATLAS_DATA', `${what} must be a non-negative safe integer, got "${raw}"`);
   }
   return value;
 }
 function parsePair(raw, what) {
   const parts = raw.split(',').map(part => part.trim());
-  if (parts.length !== 2) fail$2('AIR_E_ATLAS_DATA', `${what} must be "a, b"`);
+  if (parts.length !== 2) fail$3('AIR_E_ATLAS_DATA', `${what} must be "a, b"`);
   return {
     a: nonNegativeInt(parts[0], `${what}[0]`),
     b: nonNegativeInt(parts[1], `${what}[1]`)
@@ -148922,7 +148946,7 @@ function parsePair(raw, what) {
 }
 function parseQuad(raw, what) {
   const parts = raw.split(',').map(part => part.trim());
-  if (parts.length !== 4) fail$2('AIR_E_ATLAS_DATA', `${what} must be "a, b, c, d"`);
+  if (parts.length !== 4) fail$3('AIR_E_ATLAS_DATA', `${what} must be "a, b, c, d"`);
   return [nonNegativeInt(parts[0], `${what}[0]`), nonNegativeInt(parts[1], `${what}[1]`), nonNegativeInt(parts[2], `${what}[2]`), nonNegativeInt(parts[3], `${what}[3]`)];
 }
 const PAGE_KEYS = new Set(['size', 'format', 'filter', 'filt', 'repeat', 'pma']);
@@ -148930,7 +148954,7 @@ const REGION_KEYS = new Set(['rotate', 'xy', 'size', 'orig', 'offset', 'index', 
 const FIELD_PATTERN = /^\s*([A-Za-z]\w*)\s*:\s?(.*?)\s*$/;
 function parseAtlasText(text) {
   if (typeof text !== 'string' || text.trim() === '') {
-    fail$2('AIR_E_ATLAS_FORMAT', 'atlas text is empty');
+    fail$3('AIR_E_ATLAS_FORMAT', 'atlas text is empty');
   }
   const lines = text.replace(/^\uFEFF/, '').split(/\r?\n/).map(line => line.replace(/\t/g, '    ')).filter(line => line.trim() !== '');
   const pageDrafts = [];
@@ -148945,14 +148969,14 @@ function parseAtlasText(text) {
     regionDraft = null;
     const page = pageDrafts[draft.pageIndex];
     if (!page || page.width === undefined || page.height === undefined) {
-      fail$2('AIR_E_ATLAS_PAGE', `region "${draft.name}" appears before any complete page block`);
+      fail$3('AIR_E_ATLAS_PAGE', `region "${draft.name}" appears before any complete page block`);
     }
-    if (!draft.xy) fail$2('AIR_E_ATLAS_DATA', `region "${draft.name}" has no position (xy/bounds)`);
+    if (!draft.xy) fail$3('AIR_E_ATLAS_DATA', `region "${draft.name}" has no position (xy/bounds)`);
     const logical = (_draft$logical = draft.logical) !== null && _draft$logical !== void 0 ? _draft$logical : draft.bounds ? {
       width: draft.bounds.width,
       height: draft.bounds.height
     } : undefined;
-    if (!logical) fail$2('AIR_E_ATLAS_DATA', `region "${draft.name}" has no size (size/bounds)`);
+    if (!logical) fail$3('AIR_E_ATLAS_DATA', `region "${draft.name}" has no size (size/bounds)`);
     const packed = draft.rotate === 90 ? {
       width: logical.height,
       height: logical.width
@@ -148961,7 +148985,7 @@ function parseAtlasText(text) {
       height: logical.height
     };
     if (draft.xy.x + packed.width > page.width || draft.xy.y + packed.height > page.height) {
-      fail$2('AIR_E_ATLAS_BOUNDS', `region "${draft.name}" packed ${packed.width}x${packed.height} at (${draft.xy.x}, ${draft.xy.y}) exceeds page ${page.width}x${page.height}`);
+      fail$3('AIR_E_ATLAS_BOUNDS', `region "${draft.name}" packed ${packed.width}x${packed.height} at (${draft.xy.x}, ${draft.xy.y}) exceeds page ${page.width}x${page.height}`);
     }
     let original = draft.original;
     let offset = (_draft$offset = draft.offset) !== null && _draft$offset !== void 0 ? _draft$offset : {
@@ -148983,10 +149007,10 @@ function parseAtlasText(text) {
       height: logical.height
     };
     if (original.width < logical.width || original.height < logical.height) {
-      fail$2('AIR_E_ATLAS_DATA', `region "${draft.name}" original ${original.width}x${original.height} is smaller than logical ${logical.width}x${logical.height}`);
+      fail$3('AIR_E_ATLAS_DATA', `region "${draft.name}" original ${original.width}x${original.height} is smaller than logical ${logical.width}x${logical.height}`);
     }
     const dedupe = `${draft.name}\u0000${draft.index}`;
-    if (seen.has(dedupe)) fail$2('AIR_E_ATLAS_DUPLICATE', `duplicate region "${draft.name}" index ${draft.index}`);
+    if (seen.has(dedupe)) fail$3('AIR_E_ATLAS_DUPLICATE', `duplicate region "${draft.name}" index ${draft.index}`);
     seen.add(dedupe);
     regionDrafts.push({
       name: draft.name,
@@ -149010,27 +149034,27 @@ function parseAtlasText(text) {
       const value = fieldMatch[2];
       if (regionDraft) {
         const region = regionDraft;
-        if (!REGION_KEYS.has(key)) fail$2('AIR_E_ATLAS_FORMAT', `unknown region field "${key}" (supported: ${[...REGION_KEYS].join(', ')})`);
-        if (region.keys.has(key)) fail$2('AIR_E_ATLAS_FORMAT', `duplicate region field "${key}" for "${region.name}"`);
+        if (!REGION_KEYS.has(key)) fail$3('AIR_E_ATLAS_FORMAT', `unknown region field "${key}" (supported: ${[...REGION_KEYS].join(', ')})`);
+        if (region.keys.has(key)) fail$3('AIR_E_ATLAS_FORMAT', `duplicate region field "${key}" for "${region.name}"`);
         region.keys.add(key);
         if (key === 'rotate') {
-          if (value === 'false') region.rotate = 0;else if (value === 'true' || value === '90') region.rotate = 90;else fail$2('AIR_E_ATLAS_ROTATION', `rotate must be false|true|90, got "${value}"`);
+          if (value === 'false') region.rotate = 0;else if (value === 'true' || value === '90') region.rotate = 90;else fail$3('AIR_E_ATLAS_ROTATION', `rotate must be false|true|90, got "${value}"`);
         } else if (key === 'xy') {
-          if (region.bounds) fail$2('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes bounds with xy/size`);
+          if (region.bounds) fail$3('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes bounds with xy/size`);
           const pair = parsePair(value, 'xy');
           region.xy = {
             x: pair.a,
             y: pair.b
           };
         } else if (key === 'size') {
-          if (region.bounds) fail$2('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes bounds with xy/size`);
+          if (region.bounds) fail$3('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes bounds with xy/size`);
           const pair = parsePair(value, 'size');
           region.logical = {
             width: pair.a,
             height: pair.b
           };
         } else if (key === 'bounds') {
-          if (region.logical || region.xy) fail$2('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes bounds with xy/size`);
+          if (region.logical || region.xy) fail$3('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes bounds with xy/size`);
           const quad = parseQuad(value, 'bounds');
           region.xy = {
             x: quad[0],
@@ -149041,21 +149065,21 @@ function parseAtlasText(text) {
             height: quad[3]
           };
         } else if (key === 'orig') {
-          if (region.offsets) fail$2('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes offsets with orig/offset`);
+          if (region.offsets) fail$3('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes offsets with orig/offset`);
           const pair = parsePair(value, 'orig');
           region.original = {
             width: pair.a,
             height: pair.b
           };
         } else if (key === 'offset') {
-          if (region.offsets) fail$2('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes offsets with orig/offset`);
+          if (region.offsets) fail$3('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes offsets with orig/offset`);
           const pair = parsePair(value, 'offset');
           region.offset = {
             left: pair.a,
             bottom: pair.b
           };
         } else if (key === 'offsets') {
-          if (region.original || region.offset) fail$2('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes offsets with orig/offset`);
+          if (region.original || region.offset) fail$3('AIR_E_ATLAS_FORMAT', `region "${region.name}" mixes offsets with orig/offset`);
           const quad = parseQuad(value, 'offsets');
           region.offsets = {
             left: quad[0],
@@ -149065,15 +149089,15 @@ function parseAtlasText(text) {
           };
         } else {
           const index = Number(value);
-          if (!Number.isSafeInteger(index) || index < -1) fail$2('AIR_E_ATLAS_DATA', `index must be an integer ≥ -1, got "${value}"`);
+          if (!Number.isSafeInteger(index) || index < -1) fail$3('AIR_E_ATLAS_DATA', `index must be an integer ≥ -1, got "${value}"`);
           region.index = index;
         }
         continue;
       }
       if (pageDraft) {
         const page = pageDraft;
-        if (!PAGE_KEYS.has(key)) fail$2('AIR_E_ATLAS_FORMAT', `unknown page field "${key}" (supported: ${[...PAGE_KEYS].join(', ')})`);
-        if (page.keys.has(key)) fail$2('AIR_E_ATLAS_FORMAT', `duplicate page field "${key}"`);
+        if (!PAGE_KEYS.has(key)) fail$3('AIR_E_ATLAS_FORMAT', `unknown page field "${key}" (supported: ${[...PAGE_KEYS].join(', ')})`);
+        if (page.keys.has(key)) fail$3('AIR_E_ATLAS_FORMAT', `duplicate page field "${key}"`);
         page.keys.add(key);
         if (key === 'size') {
           const pair = parsePair(value, 'page size');
@@ -149082,20 +149106,20 @@ function parseAtlasText(text) {
         } else if (key === 'format') {
           page.format = value;
         } else if (key === 'filter' || key === 'filt') {
-          if (page.keys.has('filter') && page.keys.has('filt')) fail$2('AIR_E_ATLAS_FORMAT', 'page cannot declare both filter and filt');
+          if (page.keys.has('filter') && page.keys.has('filt')) fail$3('AIR_E_ATLAS_FORMAT', 'page cannot declare both filter and filt');
           page.filter = value;
         } else if (key === 'repeat') {
           page.repeat = value;
         } else {
-          if (value !== 'true' && value !== 'false') fail$2('AIR_E_ATLAS_DATA', `pma must be true|false, got "${value}"`);
+          if (value !== 'true' && value !== 'false') fail$3('AIR_E_ATLAS_DATA', `pma must be true|false, got "${value}"`);
           page.pma = value === 'true';
         }
         continue;
       }
-      fail$2('AIR_E_ATLAS_FORMAT', `field "${key}" appears before any name line`);
+      fail$3('AIR_E_ATLAS_FORMAT', `field "${key}" appears before any name line`);
     }
     const name = rawLine.trim();
-    if (name.includes(':')) fail$2('AIR_E_ATLAS_FORMAT', `name lines with ":" are unsupported: "${name.slice(0, 80)}"`);
+    if (name.includes(':')) fail$3('AIR_E_ATLAS_FORMAT', `name lines with ":" are unsupported: "${name.slice(0, 80)}"`);
     const startsPage = (() => {
       for (let j = i + 1; j < lines.length; j += 1) {
         return /^\s*size\s*:/.test(lines[j]);
@@ -149110,7 +149134,7 @@ function parseAtlasText(text) {
       };
       pageDrafts.push(pageDraft);
     } else {
-      if (!pageDraft) fail$2('AIR_E_ATLAS_PAGE', `region "${name}" appears before any page block`);
+      if (!pageDraft) fail$3('AIR_E_ATLAS_PAGE', `region "${name}" appears before any page block`);
       regionDraft = {
         name,
         keys: new Set(),
@@ -149121,10 +149145,10 @@ function parseAtlasText(text) {
     }
   }
   finalizeRegion();
-  if (pageDrafts.length === 0) fail$2('AIR_E_ATLAS_FORMAT', 'no page block found');
+  if (pageDrafts.length === 0) fail$3('AIR_E_ATLAS_FORMAT', 'no page block found');
   const pages = pageDrafts.map((page, pageIndex) => {
     if (page.width === undefined || page.height === undefined) {
-      fail$2('AIR_E_ATLAS_FORMAT', `page "${page.file}" is missing size`);
+      fail$3('AIR_E_ATLAS_FORMAT', `page "${page.file}" is missing size`);
     }
     return Object.freeze({
       file: page.file,
@@ -149198,7 +149222,7 @@ function parseAtlasText(text) {
   });
 }
 
-function fail$1(code, message) {
+function fail$2(code, message) {
   const error = new Error(`${code}: ${message}`);
   Object.assign(error, {
     code
@@ -149209,10 +149233,10 @@ function createAtlasSpriteFrame(document, pageTextures, region) {
   const page = document.pages[region.pageIndex];
   const texture = pageTextures[region.pageIndex];
   if (!page || !(texture instanceof Texture2D)) {
-    fail$1('AIR_E_ATLAS_PAGE_TEXTURE', `page ${region.pageIndex} texture missing for region "${region.name}"`);
+    fail$2('AIR_E_ATLAS_PAGE_TEXTURE', `page ${region.pageIndex} texture missing for region "${region.name}"`);
   }
   if (texture.width !== page.width || texture.height !== page.height) {
-    fail$1('AIR_E_ATLAS_PAGE_TEXTURE', `page ${region.pageIndex} texture ${texture.width}x${texture.height} does not match atlas page ${page.width}x${page.height}`);
+    fail$2('AIR_E_ATLAS_PAGE_TEXTURE', `page ${region.pageIndex} texture ${texture.width}x${texture.height} does not match atlas page ${page.width}x${page.height}`);
   }
   const frame = new SpriteFrame();
   frame.texture = texture;
@@ -149225,7 +149249,7 @@ function createAtlasSpriteFrame(document, pageTextures, region) {
 
 function createAtlasHandle(document, pageTextures) {
   if (pageTextures.length !== document.pages.length) {
-    fail$1('AIR_E_ATLAS_PAGE_TEXTURE', `expected ${document.pages.length} page textures, got ${pageTextures.length}`);
+    fail$2('AIR_E_ATLAS_PAGE_TEXTURE', `expected ${document.pages.length} page textures, got ${pageTextures.length}`);
   }
   const frames = [];
   const byKey = new Map();
@@ -149264,7 +149288,7 @@ function createAtlasHandle(document, pageTextures) {
       if (disposed) return;
       for (const frame of frames) {
         if (frame.refCount > 1) {
-          fail$1('AIR_E_ATLAS_IN_USE', `frame "${frame.name}" still has extra owners; detach sprites / release extra owners before dispose`);
+          fail$2('AIR_E_ATLAS_IN_USE', `frame "${frame.name}" still has extra owners; detach sprites / release extra owners before dispose`);
         }
       }
       disposed = true;
@@ -149274,7 +149298,7 @@ function createAtlasHandle(document, pageTextures) {
   });
 }
 
-function fail(code, message) {
+function fail$1(code, message) {
   const error = new Error(`${code}: ${message}`);
   Object.assign(error, {
     code
@@ -149287,16 +149311,16 @@ function pageFileExtension(file, explicit) {
   if (dot > 0 && dot < path.length - 1) {
     const ext = path.slice(dot + 1).toLowerCase();
     if (ext !== 'png') {
-      fail('AIR_E_ATLAS_PAGE_FORMAT', `this loader supports PNG pages only, got ".${ext}"; supply other formats via createAtlasHandle`);
+      fail$1('AIR_E_ATLAS_PAGE_FORMAT', `this loader supports PNG pages only, got ".${ext}"; supply other formats via createAtlasHandle`);
     }
     return ext;
   }
   if (!explicit) {
-    fail('AIR_E_ATLAS_PAGE_FORMAT', `suffix-less page "${file}" requires options.pageExt`);
+    fail$1('AIR_E_ATLAS_PAGE_FORMAT', `suffix-less page "${file}" requires options.pageExt`);
   }
   const ext = explicit.toLowerCase();
   if (ext !== 'png') {
-    fail('AIR_E_ATLAS_PAGE_FORMAT', `this loader supports PNG pages only, got "${explicit}"; supply other formats via createAtlasHandle`);
+    fail$1('AIR_E_ATLAS_PAGE_FORMAT', `this loader supports PNG pages only, got "${explicit}"; supply other formats via createAtlasHandle`);
   }
   return ext;
 }
@@ -149325,14 +149349,14 @@ async function loadAtlas(url, options) {
       signal
     });
     textOwned = true;
-    if (!(text instanceof TextAsset)) fail('AIR_E_ATLAS_FORMAT', 'atlas URL did not produce TextAsset');
+    if (!(text instanceof TextAsset)) fail$1('AIR_E_ATLAS_FORMAT', 'atlas URL did not produce TextAsset');
     const document = parseAtlasText(text.text);
-    if (signal != null && signal.aborted) fail('AIR_E_ABORTED', 'atlas subscription was cancelled');
+    if (signal != null && signal.aborted) fail$1('AIR_E_ABORTED', 'atlas subscription was cancelled');
     let base;
     try {
       base = options.baseURL ? new URL(options.baseURL, documentBaseURI()).href : new URL(url, documentBaseURI()).href;
     } catch {
-      fail('AIR_E_ATLAS_BASE_URL', 'relative pages require an absolute atlas URL, document base or explicit baseURL');
+      fail$1('AIR_E_ATLAS_BASE_URL', 'relative pages require an absolute atlas URL, document base or explicit baseURL');
     }
     const textures = new Array(document.pages.length).fill(undefined);
 
@@ -149348,8 +149372,8 @@ async function loadAtlas(url, options) {
         url: pageURL,
         ext
       });
-      if (signal != null && signal.aborted) fail('AIR_E_ABORTED', 'atlas subscription was cancelled');
-      if (!(image instanceof ImageAsset)) fail('AIR_E_ATLAS_PAGE_TEXTURE', `page URL did not produce ImageAsset: ${pageURL}`);
+      if (signal != null && signal.aborted) fail$1('AIR_E_ABORTED', 'atlas subscription was cancelled');
+      if (!(image instanceof ImageAsset)) fail$1('AIR_E_ATLAS_PAGE_TEXTURE', `page URL did not produce ImageAsset: ${pageURL}`);
       const texture = new Texture2D();
       texture.image = image;
       intermediates.push(texture);
@@ -149362,7 +149386,7 @@ async function loadAtlas(url, options) {
       throw firstRejection.reason;
     }
     if (textures.some(texture => texture === undefined)) {
-      fail('AIR_E_ATLAS_PAGE_TEXTURE', 'not all page textures were created');
+      fail$1('AIR_E_ATLAS_PAGE_TEXTURE', 'not all page textures were created');
     }
     const inner = createAtlasHandle(document, textures);
     return Object.freeze({
@@ -149688,68 +149712,6 @@ function createAirUnlitFogEffect() {
   const precompile = effect._precompile;
   cclegacy.game.off(cclegacy.Game.EVENT_RENDERER_INITED, precompile, effect);
   return effect;
-}
-
-class WebGL2DescriptorSet extends DescriptorSet {
-  constructor() {
-    super();
-    this._gpuDescriptorSet = null;
-  }
-  get gpuDescriptorSet() {
-    return this._gpuDescriptorSet;
-  }
-  initialize(info) {
-    this._layout = info.layout;
-    const {
-      bindings,
-      descriptorIndices,
-      descriptorCount
-    } = info.layout.getGpuDescriptorSetLayout();
-    this._buffers = Array(descriptorCount).fill(null);
-    this._textures = Array(descriptorCount).fill(null);
-    this._samplers = Array(descriptorCount).fill(null);
-    const gpuDescriptors = [];
-    this._gpuDescriptorSet = {
-      gpuDescriptors,
-      descriptorIndices
-    };
-    for (let i = 0; i < bindings.length; ++i) {
-      const binding = bindings[i];
-      for (let j = 0; j < binding.count; j++) {
-        const gpuDescriptor = {
-          type: binding.descriptorType,
-          gpuBuffer: null,
-          gpuTextureView: null,
-          gpuSampler: null
-        };
-        gpuDescriptors.push(gpuDescriptor);
-      }
-    }
-  }
-  destroy() {
-    this._layout = null;
-    this._gpuDescriptorSet = null;
-  }
-  update() {
-    if (this._isDirty && this._gpuDescriptorSet) {
-      const descriptors = this._gpuDescriptorSet.gpuDescriptors;
-      for (let i = 0; i < descriptors.length; ++i) {
-        if (descriptors[i].type & DESCRIPTOR_BUFFER_TYPE) {
-          if (this._buffers[i]) {
-            descriptors[i].gpuBuffer = this._buffers[i].getGpuBuffer();
-          }
-        } else if (descriptors[i].type & DESCRIPTOR_SAMPLER_TYPE) {
-          if (this._textures[i]) {
-            descriptors[i].gpuTextureView = this._textures[i].gpuTextureView;
-          }
-          if (this._samplers[i]) {
-            descriptors[i].gpuSampler = this._samplers[i].gpuSampler;
-          }
-        }
-      }
-      this._isDirty = false;
-    }
-  }
 }
 
 let WebGL2EXT;
@@ -153186,6 +153148,35 @@ function WebGL2CmdFuncCopyTextureToBuffers(device, gpuTexture, buffers, regions)
   cache.glFramebuffer = null;
   gl.deleteFramebuffer(framebuffer);
 }
+function WebGL2CmdFuncBlitFramebuffer(device, src, dst, srcRect, dstRect, filter) {
+  const {
+    gl
+  } = device;
+  const cache = device.getStateCache();
+  if (cache.glReadFramebuffer !== src.glFramebuffer) {
+    gl.bindFramebuffer(WebGLConstants.READ_FRAMEBUFFER, src.glFramebuffer);
+    cache.glReadFramebuffer = src.glFramebuffer;
+  }
+  const rebindFBO = dst.glFramebuffer !== cache.glFramebuffer;
+  if (rebindFBO) {
+    gl.bindFramebuffer(WebGLConstants.DRAW_FRAMEBUFFER, dst.glFramebuffer);
+  }
+  let mask = 0;
+  if (src.gpuColorViews.length > 0) {
+    mask |= WebGLConstants.COLOR_BUFFER_BIT;
+  }
+  if (src.gpuDepthStencilView) {
+    mask |= WebGLConstants.DEPTH_BUFFER_BIT;
+    if (FormatInfos[src.gpuDepthStencilView.gpuTexture.format].hasStencil) {
+      mask |= WebGLConstants.STENCIL_BUFFER_BIT;
+    }
+  }
+  const glFilter = filter === Filter.LINEAR || filter === Filter.ANISOTROPIC ? WebGLConstants.LINEAR : WebGLConstants.NEAREST;
+  gl.blitFramebuffer(srcRect.x, srcRect.y, srcRect.x + srcRect.width, srcRect.y + srcRect.height, dstRect.x, dstRect.y, dstRect.x + dstRect.width, dstRect.y + dstRect.height, mask, glFilter);
+  if (rebindFBO) {
+    gl.bindFramebuffer(WebGLConstants.FRAMEBUFFER, cache.glFramebuffer);
+  }
+}
 function bindDrawFramebuffer(gl, framebuffer, cache) {
   gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, framebuffer);
   cache.glFramebuffer = framebuffer;
@@ -153284,6 +153275,539 @@ function WebGL2CmdFuncBlitTexture(device, src, dst, regions, filter) {
   if (cache.glFramebuffer !== origDrawFBO) {
     gl.bindFramebuffer(WebGLConstants.DRAW_FRAMEBUFFER, origDrawFBO);
     cache.glFramebuffer = origDrawFBO;
+  }
+}
+
+const formats = {
+  rgba8: Format.RGBA8,
+  rgba16f: Format.RGBA16F,
+  rgba32f: Format.RGBA32F,
+  'srgb8-alpha8': Format.SRGB8_A8
+};
+function failure(code, message) {
+  const error = new Error(`[${code}] ${message}`);
+  Object.assign(error, {
+    code
+  });
+  throw error;
+}
+function positive(value, name) {
+  if (!Number.isFinite(value) || value <= 0) failure('AIR_E_RENDER_TARGET_SIZE', `${name} must be finite and positive`);
+  return value;
+}
+class AttachmentView extends TextureBase {
+  constructor(read, format, filter) {
+    super();
+    this.read = read;
+    this._format = format;
+    this.setWrapMode(WrapMode$1.CLAMP_TO_EDGE, WrapMode$1.CLAMP_TO_EDGE);
+    this.setFilters(filter === 'linear' ? TextureFilter.LINEAR : TextureFilter.NEAREST, filter === 'linear' ? TextureFilter.LINEAR : TextureFilter.NEAREST);
+    this.setMipFilter(TextureFilter.NONE);
+  }
+  getGFXTexture() {
+    return this.read();
+  }
+  updateSize(width, height) {
+    this._width = width;
+    this._height = height;
+  }
+}
+class AirRenderTarget {
+  get renderTexture() {
+    return this.rendering;
+  }
+  constructor(options) {
+    var _director$root, _options$colorFormat, _options$depthFormat, _options$filter, _options$sampleFallba, _options$scale, _options$samples;
+    this.rendering = void 0;
+    this.texture = void 0;
+    this.depthTexture = void 0;
+    this.device = void 0;
+    this.requested = void 0;
+    this.effective = void 0;
+    this.supportedSamples = void 0;
+    this.output = void 0;
+    this.bindings = new Set();
+    this.rebind = new Set();
+    this.cameras = new Map();
+    this.width = 0;
+    this.height = 0;
+    this.generation = 0;
+    this.disposed = false;
+    this.glSamples = 0;
+    const device = (_director$root = director.root) == null ? void 0 : _director$root.device;
+    if (!device || device.gfxAPI !== API.WEBGL2) failure('AIR_E_RENDER_TARGET_DEVICE', 'await createAirApp(); this target requires WebGL2');
+    this.device = device;
+    if (!options || typeof options !== 'object') failure('AIR_E_RENDER_TARGET_OPTIONS', 'provide target options');
+    for (const key of Object.keys(options)) if (!['name', 'width', 'height', 'scale', 'colorFormat', 'depthFormat', 'samples', 'filter', 'sampleFallback'].includes(key)) failure('AIR_E_RENDER_TARGET_OPTION', `unknown option ${key}; use the explicit colorFormat/depthFormat contract`);
+    for (const key of ['colorFormat', 'depthFormat', 'samples', 'filter', 'scale', 'sampleFallback']) {
+      if (Object.prototype.hasOwnProperty.call(options, key) && options[key] === undefined) failure('AIR_E_RENDER_TARGET_OPTION', `${key} was explicitly undefined; check the enum/name or omit it to use the default`);
+    }
+    const colorFormat = (_options$colorFormat = options.colorFormat) !== null && _options$colorFormat !== void 0 ? _options$colorFormat : 'rgba8';
+    const depthFormat = (_options$depthFormat = options.depthFormat) !== null && _options$depthFormat !== void 0 ? _options$depthFormat : 'depth24-stencil8';
+    const filter = (_options$filter = options.filter) !== null && _options$filter !== void 0 ? _options$filter : 'nearest';
+    const fallback = (_options$sampleFallba = options.sampleFallback) !== null && _options$sampleFallba !== void 0 ? _options$sampleFallba : 'error';
+    const scale = positive((_options$scale = options.scale) !== null && _options$scale !== void 0 ? _options$scale : 1, 'scale');
+    const samples = (_options$samples = options.samples) !== null && _options$samples !== void 0 ? _options$samples : 1;
+    if (!Object.prototype.hasOwnProperty.call(formats, colorFormat)) failure('AIR_E_RENDER_TARGET_FORMAT', `unknown colorFormat ${String(colorFormat)}`);
+    if (!['none', 'depth24-stencil8'].includes(depthFormat) || !['nearest', 'linear'].includes(filter) || !['error', 'lower'].includes(fallback) || ![1, 2, 4, 8].includes(samples)) failure('AIR_E_RENDER_TARGET_OPTION', 'unsupported depthFormat/filter/sampleFallback/samples');
+    const features = device.getFormatFeatures(formats[colorFormat]);
+    if (!(features & FormatFeatureBit.RENDER_TARGET) || !(features & FormatFeatureBit.SAMPLED_TEXTURE)) failure('AIR_E_RENDER_TARGET_FORMAT', `${colorFormat} is not a renderable sampled format on this device`);
+    if (filter === 'linear' && !(features & FormatFeatureBit.LINEAR_FILTER)) failure('AIR_E_RENDER_TARGET_FILTER', `${colorFormat} does not support linear filtering`);
+    const gl = this.device.gl;
+    const internal = {
+      rgba8: gl.RGBA8,
+      rgba16f: gl.RGBA16F,
+      rgba32f: gl.RGBA32F,
+      'srgb8-alpha8': gl.SRGB8_ALPHA8
+    }[colorFormat];
+    const colorSamples = [1, ...Array.from(gl.getInternalformatParameter(gl.RENDERBUFFER, internal, gl.SAMPLES))];
+    const depthSamples = depthFormat === 'none' ? colorSamples : [1, ...Array.from(gl.getInternalformatParameter(gl.RENDERBUFFER, gl.DEPTH24_STENCIL8, gl.SAMPLES))];
+    this.supportedSamples = [...new Set(colorSamples.filter(sample => depthSamples.includes(sample)))].sort((a, b) => a - b);
+    const actualSamples = this.supportedSamples.includes(samples) ? samples : fallback === 'lower' ? Math.max(...this.supportedSamples.filter(sample => sample <= samples)) : 0;
+    if (!actualSamples) failure('AIR_E_RENDER_TARGET_SAMPLES', `${colorFormat}/${depthFormat} cannot use ${samples} samples; supported=${this.supportedSamples.join(',')}`);
+    this.requested = Object.freeze({
+      ...options
+    });
+    this.effective = Object.freeze({
+      colorFormat,
+      depthFormat,
+      filter,
+      samples: actualSamples,
+      scale
+    });
+    this.rendering = new RenderTexture(options.name);
+    this.output = this.rendering;
+    this.texture = new AttachmentView(() => this.colorGFX(), formats[colorFormat], filter);
+    this.depthTexture = depthFormat === 'none' ? null : new AttachmentView(() => this.depthGFX(), Format.DEPTH_STENCIL, 'nearest');
+    try {
+      this.resize(options.width, options.height);
+    } catch (error) {
+      this.dispose();
+      throw error;
+    }
+  }
+  alive() {
+    if (this.disposed) failure('AIR_E_RENDER_TARGET_DISPOSED', 'target has been disposed');
+  }
+  colorGFX() {
+    this.alive();
+    return this.output.getGFXTexture();
+  }
+  depthGFX() {
+    var _this$output$window;
+    this.alive();
+    const texture = (_this$output$window = this.output.window) == null ? void 0 : _this$output$window.framebuffer.depthStencilTexture;
+    if (!texture) failure('AIR_E_RENDER_TARGET_DEPTH', 'target has no readable depth attachment');
+    return texture;
+  }
+  get info() {
+    return Object.freeze({
+      requested: this.requested,
+      effective: this.effective,
+      width: this.width,
+      height: this.height,
+      samples: this.effective.samples,
+      generation: this.generation,
+      framebufferComplete: !this.disposed,
+      resolveRequired: this.effective.samples > 1,
+      disposed: this.disposed,
+      supportedSamples: Object.freeze([...this.supportedSamples]),
+      glSamples: this.glSamples
+    });
+  }
+  pass(samples) {
+    const color = new ColorAttachment(formats[this.effective.colorFormat], samples);
+    const depth = new DepthStencilAttachment(this.effective.depthFormat === 'none' ? Format.UNKNOWN : Format.DEPTH_STENCIL, samples);
+    return new RenderPassInfo([color], depth);
+  }
+  checkFramebuffer(target) {
+    const gl = this.device.gl;
+    const beforeDraw = gl.getParameter(gl.DRAW_FRAMEBUFFER_BINDING);
+    const beforeRead = gl.getParameter(gl.READ_FRAMEBUFFER_BINDING);
+    try {
+      const framebuffer = target.window.framebuffer;
+      gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, framebuffer.getGpuFramebuffer().glFramebuffer);
+      if (gl.checkFramebufferStatus(gl.DRAW_FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) failure('AIR_E_RENDER_TARGET_INCOMPLETE', `${this.effective.colorFormat} framebuffer is incomplete`);
+      return gl.getParameter(gl.SAMPLES);
+    } finally {
+      gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, beforeDraw);
+      gl.bindFramebuffer(gl.READ_FRAMEBUFFER, beforeRead);
+    }
+  }
+  resize(baseWidth, baseHeight) {
+    var _this$depthTexture;
+    this.alive();
+    const width = Math.max(1, Math.floor(positive(baseWidth, 'width') * this.effective.scale));
+    const height = Math.max(1, Math.floor(positive(baseHeight, 'height') * this.effective.scale));
+    if (width > this.device.capabilities.maxTextureSize || height > this.device.capabilities.maxTextureSize) failure('AIR_E_RENDER_TARGET_SIZE', 'scaled dimensions exceed MAX_TEXTURE_SIZE');
+    if (width === this.width && height === this.height) return;
+    const rendering = new RenderTexture(this.requested.name);
+    const output = this.effective.samples > 1 ? new RenderTexture(`${this.requested.name || 'AirTarget'} resolved`) : rendering;
+    let glSamples;
+    try {
+      rendering.initialize({
+        name: this.requested.name,
+        width,
+        height,
+        passInfo: this.pass(this.effective.samples)
+      });
+      if (output !== rendering) output.initialize({
+        width,
+        height,
+        passInfo: this.pass(1)
+      });
+      glSamples = this.checkFramebuffer(rendering);
+      this.checkFramebuffer(output);
+      if (Math.max(1, glSamples) !== this.effective.samples) failure('AIR_E_RENDER_TARGET_SAMPLES', `driver allocated ${glSamples} samples instead of ${this.effective.samples}`);
+    } catch (error) {
+      if (output !== rendering) output.destroy();
+      rendering.destroy();
+      throw error;
+    }
+    const oldRendering = this.rendering,
+      oldOutput = this.output;
+    this.rendering = rendering;
+    this.output = output;
+    this.glSamples = glSamples;
+    this.requested = Object.freeze({
+      ...this.requested,
+      width: baseWidth,
+      height: baseHeight
+    });
+    this.width = width;
+    this.height = height;
+    ++this.generation;
+    this.texture.updateSize(width, height);
+    (_this$depthTexture = this.depthTexture) == null ? void 0 : _this$depthTexture.updateSize(width, height);
+    for (const camera of this.cameras.keys()) {
+      camera.targetTexture = null;
+      camera.targetTexture = this.renderTexture;
+    }
+    for (const bind of this.rebind) bind();
+    if (oldOutput !== oldRendering) oldOutput.destroy();
+    oldRendering.destroy();
+  }
+  attachCamera(camera, beforeRender) {
+    this.alive();
+    if (this.cameras.has(camera)) failure('AIR_E_RENDER_TARGET_CAMERA', 'camera is already attached to this target');
+    const previous = camera.targetTexture;
+    const events = director.root.pipelineEvent;
+    const begin = native => {
+      if (native === camera.camera) beforeRender == null ? void 0 : beforeRender();
+    };
+    const end = native => {
+      if (native === camera.camera) this.resolve();
+    };
+    camera.targetTexture = this.renderTexture;
+    events.on(PipelineEventType.RENDER_CAMERA_BEGIN, begin);
+    events.on(PipelineEventType.RENDER_CAMERA_END, end);
+    const detach = () => {
+      if (!this.cameras.delete(camera)) return;
+      events.off(PipelineEventType.RENDER_CAMERA_BEGIN, begin);
+      events.off(PipelineEventType.RENDER_CAMERA_END, end);
+      if (camera.isValid && camera.targetTexture === this.renderTexture) camera.targetTexture = previous;
+    };
+    this.cameras.set(camera, {
+      previous,
+      detach
+    });
+    return detach;
+  }
+  resolve() {
+    this.alive();
+    if (this.output === this.renderTexture) return;
+    const gl = this.device.gl;
+    const oldRead = gl.getParameter(gl.READ_FRAMEBUFFER_BINDING);
+    const oldDraw = gl.getParameter(gl.DRAW_FRAMEBUFFER_BINDING);
+    const cache = this.device.getStateCache();
+    cache.glFramebuffer = oldDraw;
+    cache.glReadFramebuffer = oldRead;
+    try {
+      WebGL2CmdFuncBlitFramebuffer(this.device, this.renderTexture.window.framebuffer.getGpuFramebuffer(), this.output.window.framebuffer.getGpuFramebuffer(), new Rect$1(0, 0, this.width, this.height), new Rect$1(0, 0, this.width, this.height), Filter.POINT);
+      const error = gl.getError();
+      if (error !== gl.NO_ERROR) failure('AIR_E_RENDER_TARGET_RESOLVE', `resolve failed with GL error ${error}`);
+    } finally {
+      gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, oldDraw);
+      gl.bindFramebuffer(gl.READ_FRAMEBUFFER, oldRead);
+      cache.glFramebuffer = oldDraw;
+      cache.glReadFramebuffer = oldRead;
+    }
+  }
+  bind(material, property, view, passIdx) {
+    this.alive();
+    const passes = passIdx === undefined ? material.passes : [material.passes[passIdx]];
+    if (!passes.length || passes.some(pass => !pass || !pass.getHandle(property) || getTypeFromHandle(pass.getHandle(property)) !== Type.SAMPLER2D || getCountFromHandle(pass.getHandle(property)) !== 1)) failure('AIR_E_RENDER_TARGET_BINDING', `${material.name}.${property} must be an active sampler2D in the requested pass`);
+    const previous = material.getProperty(property, passIdx);
+    const rebind = () => {
+      if (material.isValid && material.passes.length) material.setProperty(property, view, passIdx);
+    };
+    rebind();
+    this.rebind.add(rebind);
+    const unbind = () => {
+      if (!this.bindings.delete(unbind)) return;
+      this.rebind.delete(rebind);
+      if (material.isValid && material.passes.length && material.getProperty(property, passIdx) === view) material.setProperty(property, previous !== null && previous !== void 0 ? previous : null, passIdx);
+    };
+    this.bindings.add(unbind);
+    return unbind;
+  }
+  bindColor(material, property, passIdx) {
+    return this.bind(material, property, this.texture, passIdx);
+  }
+  bindDepth(material, property, passIdx) {
+    if (!this.depthTexture) failure('AIR_E_RENDER_TARGET_DEPTH', 'request depth24-stencil8 before binding depth');
+    return this.bind(material, property, this.depthTexture, passIdx);
+  }
+  readColor(region = {}) {
+    var _region$x, _region$y, _region$width, _region$height;
+    this.alive();
+    this.resolve();
+    const x = (_region$x = region.x) !== null && _region$x !== void 0 ? _region$x : 0,
+      y = (_region$y = region.y) !== null && _region$y !== void 0 ? _region$y : 0,
+      width = (_region$width = region.width) !== null && _region$width !== void 0 ? _region$width : this.width,
+      height = (_region$height = region.height) !== null && _region$height !== void 0 ? _region$height : this.height;
+    if (![x, y, width, height].every(Number.isInteger) || x < 0 || y < 0 || width < 1 || height < 1 || x + width > this.width || y + height > this.height) failure('AIR_E_RENDER_TARGET_READ', 'read rectangle must be integral and inside the target');
+    const floats = ['rgba16f', 'rgba32f'].includes(this.effective.colorFormat);
+    const data = floats ? new Float32Array(width * height * 4) : new Uint8Array(width * height * 4);
+    const gl = this.device.gl;
+    const previous = gl.getParameter(gl.READ_FRAMEBUFFER_BINDING);
+    try {
+      gl.bindFramebuffer(gl.READ_FRAMEBUFFER, this.output.window.framebuffer.getGpuFramebuffer().glFramebuffer);
+      gl.readBuffer(gl.COLOR_ATTACHMENT0);
+      gl.readPixels(x, y, width, height, gl.RGBA, floats ? gl.FLOAT : gl.UNSIGNED_BYTE, data);
+      const error = gl.getError();
+      if (error !== gl.NO_ERROR) failure('AIR_E_RENDER_TARGET_READ', `color readback failed with GL error ${error}`);
+    } finally {
+      gl.bindFramebuffer(gl.READ_FRAMEBUFFER, previous);
+    }
+    return data;
+  }
+  dispose() {
+    var _this$depthTexture2;
+    if (this.disposed) return;
+    for (const unbind of [...this.bindings]) unbind();
+    for (const record of [...this.cameras.values()]) record.detach();
+    this.disposed = true;
+    this.texture.destroy();
+    (_this$depthTexture2 = this.depthTexture) == null ? void 0 : _this$depthTexture2.destroy();
+    if (this.output !== this.renderTexture) this.output.destroy();
+    this.renderTexture.destroy();
+  }
+}
+function createAirRenderTarget(options) {
+  return new AirRenderTarget(options);
+}
+
+class AirColorContractError extends TypeError {
+  constructor(code, property, message) {
+    super(`[${code}] ${property}: ${message}`);
+    this.code = code;
+    this.property = property;
+    this.name = 'AirColorContractError';
+  }
+}
+const fail = (code, property, message) => {
+  throw new AirColorContractError(code, property, message);
+};
+const srgbFormats = new Set([Format.SRGB8, Format.SRGB8_A8, Format.BC1_SRGB, Format.BC1_SRGB_ALPHA, Format.BC2_SRGB, Format.BC3_SRGB, Format.BC7_SRGB, Format.ETC2_SRGB8, Format.ETC2_SRGB8_A1, Format.ETC2_SRGB8_A8]);
+function isAirSRGBFormat(format) {
+  return srgbFormats.has(format) || format >= Format.ASTC_SRGBA_4X4 && format <= Format.ASTC_SRGBA_12X12;
+}
+function isAirDepthFormat(format) {
+  return format === Format.DEPTH || format === Format.DEPTH_STENCIL;
+}
+function resolveAirTextureFormat(info, defaultFormat = Format.RGBA8) {
+  const explicit = Object.prototype.hasOwnProperty.call(info, 'format');
+  const value = explicit ? info.format : defaultFormat;
+  if (explicit && value === undefined) fail('AIR_E_TEXTURE_FORMAT', 'format', 'explicit undefined is not a pixel format; omit format for the default');
+  if (typeof value !== 'number' || !Number.isInteger(value) || value <= Format.UNKNOWN || value >= Format.COUNT && ![PixelFormat.RGB_A_PVRTC_2BPPV1, PixelFormat.RGB_A_PVRTC_4BPPV1, PixelFormat.RGBA_ETC1].includes(value)) {
+    fail('AIR_E_TEXTURE_FORMAT', 'format', 'use a supported numeric GFX/PixelFormat value');
+  }
+  return value;
+}
+function validateAirTextureColorContract(input) {
+  const format = resolveAirTextureFormat(input);
+  if (!['color', 'linear-data', 'depth'].includes(input.usage)) fail('AIR_E_TEXTURE_COLOR', 'usage', 'declare color, linear-data or depth');
+  if (!['none', 'shader-srgb', 'hardware-srgb'].includes(input.decode)) fail('AIR_E_TEXTURE_COLOR', 'decode', 'declare the actual sampling decode exactly once');
+  const srgb = isAirSRGBFormat(format),
+    depth = isAirDepthFormat(format);
+  if (input.usage === 'depth' !== depth) fail('AIR_E_TEXTURE_COLOR', 'format', 'depth usage requires a depth format; depth formats cannot be color/data textures');
+  if (input.usage !== 'color' && (srgb || input.decode !== 'none')) fail('AIR_E_TEXTURE_COLOR', 'decode', 'normal/roughness/metallic/depth data must remain linear, with no sRGB decode');
+  if (input.decode === 'hardware-srgb' !== srgb) fail('AIR_E_TEXTURE_COLOR', 'decode', 'hardware-srgb requires an sRGB GPU format; an sRGB format already decodes RGB and must not be software-decoded again');
+  return Object.freeze({
+    format,
+    usage: input.usage,
+    decode: input.decode
+  });
+}
+const faces = ['right', 'left', 'top', 'bottom', 'front', 'back'];
+function validateAirPrefilteredEnvironment(cube, contract) {
+  if (!(cube instanceof TextureCube) || !cube.isValid) fail('AIR_E_ENV_PREFILTER', 'cube', 'a live native TextureCube is required');
+  if (!cube.isUsingOfflineMipmaps()) fail('AIR_E_ENV_PREFILTER', 'cube.mipmapMode', 'native baked convolution data is required; ordinary/AUTO mipmaps are not PMREM');
+  if (contract.distribution !== 'ggx' || typeof contract.source !== 'string' || !contract.source.trim()) fail('AIR_E_ENV_PREFILTER', 'source', 'declare GGX prefilter provenance');
+  const levels = cube.mipmaps;
+  if (levels.length < 2 || !Array.isArray(contract.roughnessLevels) || contract.roughnessLevels.length !== levels.length) fail('AIR_E_ENV_PREFILTER', 'roughnessLevels', 'provide explicit six-face mipmaps and one roughness value for every level');
+  const format = cube.getPixelFormat();
+  try {
+    resolveAirTextureFormat({
+      format
+    });
+  } catch {
+    fail('AIR_E_ENV_PREFILTER', 'format', 'a known native color pixel format is required');
+  }
+  if (cube.mipmapLevel !== levels.length) fail('AIR_E_ENV_PREFILTER', 'cube.mipmapLevel', 'GPU mip count must match the explicit prefiltered levels');
+  for (let level = 0; level < levels.length; ++level) {
+    const roughness = contract.roughnessLevels[level];
+    if (!Number.isFinite(roughness) || Math.abs(roughness - level / levels.length) > 1e-6) fail('AIR_E_ENV_PREFILTER', 'roughnessLevels', 'native standard shader uses roughness*envmap.mipmapLevel, clamped to the last mip; incompatible schedules need a custom shader');
+    const width = Math.max(1, cube.width >> level);
+    for (const face of faces) {
+      const image = levels[level][face];
+      if (!image || !image.isValid || image.width !== width || image.height !== width || image.format !== format) fail('AIR_E_ENV_PREFILTER', `mipmaps[${level}].${face}`, 'all six native image faces must have matching square mip dimensions and format');
+    }
+  }
+  if (!['linear', 'srgb', 'rgbe'].includes(contract.encoding) || isAirDepthFormat(format)) fail('AIR_E_ENV_PREFILTER', 'encoding', 'declare a color encoding for the filtered environment');
+  if (contract.encoding === 'linear') fail('AIR_E_ENV_PREFILTER', 'encoding', 'native standard environment sampling decodes sRGB or RGBE; linear input requires a custom environment shader');
+  if (cube.isRGBE !== (contract.encoding === 'rgbe')) fail('AIR_E_ENV_PREFILTER', 'cube.isRGBE', 'native cube RGBE metadata must match the declared encoding');
+  if (isAirSRGBFormat(format)) fail('AIR_E_ENV_PREFILTER', 'format', 'native environment shaders use software decode; hardware sRGB requires an explicit custom environment shader');
+  return Object.freeze({
+    levels: levels.length,
+    format,
+    source: contract.source,
+    lodMapping: 'roughness*envmap.mipmapLevel (clamped)'
+  });
+}
+function bindAirPrefilteredEnvironment(scene, cube, contract) {
+  const receipt = validateAirPrefilteredEnvironment(cube, contract);
+  const envmap = scene == null ? void 0 : scene.globals.skybox.envmap;
+  if (!(scene != null && scene.isValid) || !envmap) fail('AIR_E_ENV_PREFILTER', 'scene.envmap', 'set a compatible native environment map first; this helper does not implicitly enable lighting');
+  if (envmap.isRGBE !== cube.isRGBE) fail('AIR_E_ENV_PREFILTER', 'scene.envmap.isRGBE', 'the native shader decode macro comes from envmap; reflectionMap encoding must match it');
+  if (envmap.mipmapLevel !== receipt.levels) fail('AIR_E_ENV_PREFILTER', 'scene.envmap.mipmapLevel', 'native roughness LOD comes from envmap; its mip count must match reflectionMap');
+  scene.globals.skybox.reflectionMap = cube;
+  return receipt;
+}
+function describeAirTextureFormat(format) {
+  var _FormatInfos$format;
+  return Object.freeze({
+    format,
+    name: ((_FormatInfos$format = FormatInfos[format]) == null ? void 0 : _FormatInfos$format.name) || PixelFormat[format] || 'UNKNOWN',
+    srgb: isAirSRGBFormat(format),
+    depth: isAirDepthFormat(format)
+  });
+}
+
+function inspectAirMaterial(material) {
+  return Object.freeze(material.passes.map((pass, index) => {
+    var _material$effectAsset;
+    const shader = (_material$effectAsset = material.effectAsset) == null ? void 0 : _material$effectAsset.shaders.find(candidate => candidate.name === pass.program);
+    const textures = [];
+    for (const entry of (shader == null ? void 0 : shader.samplerTextures) || []) {
+      for (let element = 0; element < entry.count; ++element) {
+        var _pass$descriptorSet, _pass$descriptorSet2;
+        const texture = (_pass$descriptorSet = pass.descriptorSet) == null ? void 0 : _pass$descriptorSet.getTexture(entry.binding, element);
+        const sampler = (_pass$descriptorSet2 = pass.descriptorSet) == null ? void 0 : _pass$descriptorSet2.getSampler(entry.binding, element);
+        textures.push(Object.freeze({
+          name: entry.name,
+          binding: entry.binding,
+          index: element,
+          bound: !!texture,
+          ...(texture ? {
+            format: describeAirTextureFormat(texture.format),
+            width: texture.width,
+            height: texture.height,
+            mipLevels: texture.levelCount
+          } : {}),
+          ...(sampler ? {
+            comparison: sampler.info.cmpFunc
+          } : {})
+        }));
+      }
+    }
+    const dss = pass.depthStencilState;
+    return Object.freeze({
+      index,
+      program: pass.program,
+      propertyIndex: pass.propertyIndex,
+      priority: pass.priority,
+      phase: pass.phase,
+      stage: pass.stage,
+      depthTest: dss.depthTest,
+      depthWrite: dss.depthWrite,
+      depthFunc: dss.depthFunc,
+      cullMode: pass.rasterizerState.cullMode,
+      blendTargets: Object.freeze(pass.blendState.targets.map(target => Object.freeze({
+        blend: target.blend,
+        blendSrc: target.blendSrc,
+        blendDst: target.blendDst,
+        blendEq: target.blendEq,
+        blendSrcAlpha: target.blendSrcAlpha,
+        blendDstAlpha: target.blendDstAlpha,
+        blendAlphaEq: target.blendAlphaEq,
+        blendColorMask: target.blendColorMask
+      }))),
+      textures: Object.freeze(textures)
+    });
+  }));
+}
+
+class WebGL2DescriptorSet extends DescriptorSet {
+  constructor() {
+    super();
+    this._gpuDescriptorSet = null;
+  }
+  get gpuDescriptorSet() {
+    return this._gpuDescriptorSet;
+  }
+  initialize(info) {
+    this._layout = info.layout;
+    const {
+      bindings,
+      descriptorIndices,
+      descriptorCount
+    } = info.layout.getGpuDescriptorSetLayout();
+    this._buffers = Array(descriptorCount).fill(null);
+    this._textures = Array(descriptorCount).fill(null);
+    this._samplers = Array(descriptorCount).fill(null);
+    const gpuDescriptors = [];
+    this._gpuDescriptorSet = {
+      gpuDescriptors,
+      descriptorIndices
+    };
+    for (let i = 0; i < bindings.length; ++i) {
+      const binding = bindings[i];
+      for (let j = 0; j < binding.count; j++) {
+        const gpuDescriptor = {
+          type: binding.descriptorType,
+          gpuBuffer: null,
+          gpuTextureView: null,
+          gpuSampler: null
+        };
+        gpuDescriptors.push(gpuDescriptor);
+      }
+    }
+  }
+  destroy() {
+    this._layout = null;
+    this._gpuDescriptorSet = null;
+  }
+  update() {
+    if (this._isDirty && this._gpuDescriptorSet) {
+      const descriptors = this._gpuDescriptorSet.gpuDescriptors;
+      for (let i = 0; i < descriptors.length; ++i) {
+        if (descriptors[i].type & DESCRIPTOR_BUFFER_TYPE) {
+          if (this._buffers[i]) {
+            descriptors[i].gpuBuffer = this._buffers[i].getGpuBuffer();
+          }
+        } else if (descriptors[i].type & DESCRIPTOR_SAMPLER_TYPE) {
+          if (this._textures[i]) {
+            descriptors[i].gpuTextureView = this._textures[i].gpuTextureView;
+          }
+          if (this._samplers[i]) {
+            descriptors[i].gpuSampler = this._samplers[i].gpuSampler;
+          }
+        }
+      }
+      this._isDirty = false;
+    }
   }
 }
 
@@ -156232,7 +156756,7 @@ let RenderPipeline = (_dec$e = ccclass$w('cc.RenderPipeline'), _dec2$8 = type$a(
     }
     return true;
   }
-  createRenderPass(clearFlags, colorFmt, depthFmt) {
+  createRenderPass(clearFlags, colorFmt, depthFmt, samples = SampleCount.X1, preserveDepth = false) {
     const device = this._device;
     const colorAttachment = new ColorAttachment();
     const depthStencilAttachment = new DepthStencilAttachment();
@@ -156240,6 +156764,12 @@ let RenderPipeline = (_dec$e = ccclass$w('cc.RenderPipeline'), _dec2$8 = type$a(
     depthStencilAttachment.format = depthFmt;
     depthStencilAttachment.stencilStoreOp = StoreOp.DISCARD;
     depthStencilAttachment.depthStoreOp = StoreOp.DISCARD;
+    colorAttachment.sampleCount = samples;
+    depthStencilAttachment.sampleCount = samples;
+    if (preserveDepth) {
+      depthStencilAttachment.depthStoreOp = StoreOp.STORE;
+      depthStencilAttachment.stencilStoreOp = StoreOp.STORE;
+    }
     if (!(clearFlags & ClearFlagBit.COLOR)) {
       if (clearFlags & SkyBoxFlagValue.VALUE) {
         colorAttachment.loadOp = LoadOp.CLEAR;
@@ -156257,13 +156787,14 @@ let RenderPipeline = (_dec$e = ccclass$w('cc.RenderPipeline'), _dec2$8 = type$a(
     return device.createRenderPass(renderPassInfo);
   }
   getRenderPass(clearFlags, fbo) {
+    var _fbo$depthStencilText, _fbo$depthStencilText2;
     const fbHash = hashFrameBuffer(fbo);
     const hash = murmurhash2_32_gc(`${fbHash}_${clearFlags}`, 666);
     let renderPass = this._renderPasses.get(hash);
     if (renderPass) {
       return renderPass;
     }
-    renderPass = this.createRenderPass(clearFlags, fbo.colorTextures[0].format, fbo.depthStencilTexture.format);
+    renderPass = this.createRenderPass(clearFlags, fbo.colorTextures[0].format, (_fbo$depthStencilText = (_fbo$depthStencilText2 = fbo.depthStencilTexture) == null ? void 0 : _fbo$depthStencilText2.format) !== null && _fbo$depthStencilText !== void 0 ? _fbo$depthStencilText : Format.UNKNOWN, fbo.colorTextures[0].samples, !!(fbo.depthStencilTexture && fbo.depthStencilTexture.usage & TextureUsageBit.SAMPLED));
     this._renderPasses.set(hash, renderPass);
     return renderPass;
   }
@@ -159728,5 +160259,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { AIR_REVISION, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirTransmissionCapture, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, parseAtlasText, parseFnt, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
+export { AIR_REVISION, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirRenderTarget, AirTransmissionCapture, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirRenderTarget, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirMaterial, instantiate, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, parseAtlasText, parseFnt, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
 //# sourceMappingURL=cocosair.module.js.map

@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 106,
+    "modifiedCount": 109,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -176,14 +176,14 @@
       "upstreamPath": "cocos/2d/assembler/label/text-output-data.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-        "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates."
+      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates."
     },
     {
-        "airPath": "src/cocos/2d/assembler/label/text-processing.ts",
-        "upstreamPath": "cocos/2d/assembler/label/text-processing.ts",
-        "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-        "modified": true,
-        "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates. PG-02: retain the final character's incoming BMFont kerning pair instead of forcing it to zero; native layout already consumes the next character's incoming value."
+      "airPath": "src/cocos/2d/assembler/label/text-processing.ts",
+      "upstreamPath": "cocos/2d/assembler/label/text-processing.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": true,
+      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates. PG-02: retain the final character's incoming BMFont kerning pair instead of forcing it to zero; native layout already consumes the next character's incoming value."
     },
     {
       "airPath": "src/cocos/2d/assembler/label/text-style.ts",
@@ -683,11 +683,11 @@
       "reason": "extraction copy"
     },
     {
-        "airPath": "src/cocos/3d/assets/mesh.ts",
-        "upstreamPath": "cocos/3d/assets/mesh.ts",
-        "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-        "modified": true,
-        "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved."
+      "airPath": "src/cocos/3d/assets/mesh.ts",
+      "upstreamPath": "cocos/3d/assets/mesh.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": true,
+      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved."
     },
     {
       "airPath": "src/cocos/3d/assets/morph-rendering.ts",
@@ -2318,7 +2318,7 @@
       "upstreamPath": "cocos/asset/assets/asset-enum.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "CB-16 additive SRGB888/SRGBA8888 PixelFormat aliases for existing WebGL2 formats; existing enum values and standard material decoding unchanged."
+      "reason": "CB-16 additive SRGB888/SRGBA8888 PixelFormat aliases for existing WebGL2 formats; existing enum values and standard material decoding unchanged. AIR rendering contracts: additive RGBA16F PixelFormat alias for existing GFX half-float RGBA; existing values unchanged."
     },
     {
       "airPath": "src/cocos/asset/assets/asset.ts",
@@ -2387,8 +2387,8 @@
       "airPath": "src/cocos/asset/assets/render-texture.ts",
       "upstreamPath": "cocos/asset/assets/render-texture.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR rendering contracts: preserve explicitly supplied attachment formats (default follows swapchain); expose actual created color format."
     },
     {
       "airPath": "src/cocos/asset/assets/rendering-sub-mesh.ts",
@@ -3172,7 +3172,7 @@
       "upstreamPath": "cocos/core/platform/debug.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-        "reason": "AIR L13-fix: import '../../../DebugInfos' -> '../../../DebugInfos.json'（显式扩展名）。独立 src/ 树下 ccbuild node-resolve 无法解析扩展名less 的 DebugInfos（同工具链下原始 cocos4-vulkan 树可解析，疑似 @cocos/typescript 插件解析差异）；显式 .json 后 build/typecheck 全部通过。PG-18 adds an internal opt-in native warning/error observer with stable numeric IDs, isolated callbacks and recursion protection; it does not change console filtering or wrap console/WebGL. AIR's bounded per-app channel and optional debug session consume the observer."
+      "reason": "AIR L13-fix: import '../../../DebugInfos' -> '../../../DebugInfos.json'（显式扩展名）。独立 src/ 树下 ccbuild node-resolve 无法解析扩展名less 的 DebugInfos（同工具链下原始 cocos4-vulkan 树可解析，疑似 @cocos/typescript 插件解析差异）；显式 .json 后 build/typecheck 全部通过。PG-18 adds an internal opt-in native warning/error observer with stable numeric IDs, isolated callbacks and recursion protection; it does not change console filtering or wrap console/WebGL. AIR's bounded per-app channel and optional debug session consume the observer."
     },
     {
       "airPath": "src/cocos/core/platform/deprecated.ts",
@@ -5341,8 +5341,8 @@
       "airPath": "src/cocos/render-scene/core/render-window.ts",
       "upstreamPath": "cocos/render-scene/core/render-window.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR rendering contracts: forward color/depth attachment sample counts into native TextureInfo and identify color-only offscreen targets."
     },
     {
       "airPath": "src/cocos/render-scene/core/texture-buffer-pool.ts",
@@ -5377,7 +5377,7 @@
       "upstreamPath": "cocos/render-scene/scene/camera.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR PG-08: opt-in independent orthographic half-width in projection/inverse projection; zero preserves original aspect behavior and pooled camera initialization resets the override."
+      "reason": "AIR PG-08: opt-in independent orthographic half-width in projection/inverse projection; zero preserves original aspect behavior and pooled camera initialization resets the override. AIR rendering contracts: validate/copy oblique plane, rebuild base projection for repeat calls, and update inverse/view-projection/frustum after clipping."
     },
     {
       "airPath": "src/cocos/render-scene/scene/directional-light.ts",
@@ -5908,8 +5908,8 @@
       "airPath": "src/cocos/rendering/render-pipeline.ts",
       "upstreamPath": "cocos/rendering/render-pipeline.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR rendering contracts: create camera render passes with actual framebuffer samples, support absent depth, and preserve sampled depth/stencil attachments for later resolve/reconstruction; ordinary unsampled depth keeps discard."
     },
     {
       "airPath": "src/cocos/rendering/render-queue.ts",

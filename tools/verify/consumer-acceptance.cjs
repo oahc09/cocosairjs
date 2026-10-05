@@ -132,10 +132,25 @@ try {
         'Camera', 'DirectionalLight', 'Animation', 'AnimationClip', 'Layers', 'Material', 'Texture2D',
         'AssetBank', 'createActionState', 'createActionInput', 'createPrimitiveGeometry', 'AirAppImpl',
         'parseFnt', 'createBitmapFont', 'loadBitmapFont', 'Billboard', 'AirUIMesh',
-        'parseAtlasText', 'createAtlasHandle', 'createAtlasSpriteFrame', 'loadAtlas'];
+        'parseAtlasText', 'createAtlasHandle', 'createAtlasSpriteFrame', 'loadAtlas',
+        'AirRenderTarget', 'createAirRenderTarget', 'resolveAirTextureFormat', 'validateAirTextureColorContract',
+        'validateAirPrefilteredEnvironment', 'bindAirPrefilteredEnvironment', 'inspectAirMaterial', 'describeAirTextureFormat'];
     for (const name of expected) {
         if (typeof mod[name] === 'undefined') { failures.push(`cocosair.${name} is missing from the installed module`); }
     }
+    for (const name of ['prepareEffectForRegistration', 'createAirDepthSamplerTemplate', 'locateAirEffectBinding',
+        'inspectAirRenderQueues', 'attachAirRenderQueueObserver']) {
+        if (typeof mod[name] !== 'undefined') failures.push(`development-only ${name} leaked into the installed runtime`);
+    }
+    const hdrFormat = mod.Texture2D.PixelFormat.RGBA16F;
+    if (!Number.isInteger(hdrFormat) || mod.resolveAirTextureFormat({ format: hdrFormat }) !== hdrFormat)
+        failures.push('installed RGBA16F alias/format contract is missing or changes the format');
+    if (mod.validateAirTextureColorContract({ format: hdrFormat, usage: 'linear-data', decode: 'none' }).format !== hdrFormat)
+        failures.push('installed color preflight silently replaces HDR format');
+    try { mod.resolveAirTextureFormat({ format: undefined }); failures.push('installed explicit undefined format was accepted'); }
+    catch (error) { if (error.code !== 'AIR_E_TEXTURE_FORMAT') failures.push('installed invalid format diagnostic is missing'); }
+    if (mod.inspectAirMaterial(new mod.Material()).length !== 0)
+        failures.push('installed material inspector fabricates passes on an uninitialized native material');
     if (typeof mod.utils?.MeshUtils?.createDynamicMesh !== 'function') { failures.push('official dynamic mesh entry utils.MeshUtils.createDynamicMesh is missing from the installed module'); }
     for (const type of ['box', 'sphere', 'cylinder', 'cone']) {
         if (!require('node:util').isDeepStrictEqual(mod.createPrimitiveGeometry({ type }), mod.primitives[type]())) {
@@ -155,11 +170,27 @@ fs.writeFileSync(tsOut, [
     "  configureGLTFLoaderDefaults, utils, createPrimitiveGeometry, createActionState, AssetBank, AudioService, TiledObjectGroup, parseFnt, createBitmapFont, loadBitmapFont, SpriteFrame, Billboard, AirUIMesh,",
     "} from 'cocosair';",
     "import { parseAtlasText, createAtlasHandle, createAtlasSpriteFrame, loadAtlas } from 'cocosair';",
+    "import { AirRenderTarget, createAirRenderTarget, Texture2D, TextureCube, Material, resolveAirTextureFormat, validateAirTextureColorContract, validateAirPrefilteredEnvironment, bindAirPrefilteredEnvironment, inspectAirMaterial } from 'cocosair';",
+    "import type { AirRenderTargetOptions, AirPrefilteredEnvironmentContract } from 'cocosair';",
+    "// @ts-expect-error developer tools are not default runtime exports",
+    "import { attachAirRenderQueueObserver } from 'cocosair';",
     "import type { GLTFLoaderOptions, AirAtlasDocument, AirAtlasHandle, AirAtlasLoadOptions } from 'cocosair';",
     "import { createAirApp as createSafeAirApp } from 'cocosair/bootstrap';",
     "const safeInit = createSafeAirApp({ canvas: '#GameCanvas', pixelRatioCap: 1.5, designResolution: { width: 640, height: 480, policy: 0 } });",
     "safeInit.then(app => { const token = app.session?.token(); void app.releaseScene?.(); void app.close?.(); });",
     "const decompression = new DecompressionStream('gzip');",
+    "const renderOptions: AirRenderTargetOptions = { width: 640, height: 480, scale: 0.5, colorFormat: 'rgba16f', depthFormat: 'depth24-stencil8', samples: 4, filter: 'nearest', sampleFallback: 'lower' };",
+    "const renderingTarget: AirRenderTarget = createAirRenderTarget(renderOptions);",
+    "declare const offscreenCamera: Camera; declare const renderingMaterial: Material; declare const renderingScene: Scene; declare const renderingEnvironment: TextureCube;",
+    "const detachTarget = renderingTarget.attachCamera(offscreenCamera, () => {}); const detachColor = renderingTarget.bindColor(renderingMaterial, 'sceneColor'); const detachDepth = renderingTarget.bindDepth(renderingMaterial, 'sceneDepth');",
+    "renderingTarget.resize(800, 600); renderingTarget.resolve(); const actualTargetColor: Float32Array | Uint8Array = renderingTarget.readColor({ width: 1, height: 1 });",
+    "const chosenSamples: number = renderingTarget.info.effective.samples; detachColor(); detachDepth(); detachTarget(); renderingTarget.dispose();",
+    "resolveAirTextureFormat({ format: Texture2D.PixelFormat.RGBA16F }); validateAirTextureColorContract({ usage: 'linear-data', decode: 'none' });",
+    "const envContract: AirPrefilteredEnvironmentContract = { distribution: 'ggx', roughnessLevels: [0, 0.5], encoding: 'rgbe', source: 'offline asset recipe' };",
+    "validateAirPrefilteredEnvironment(renderingEnvironment, envContract); bindAirPrefilteredEnvironment(renderingScene, renderingEnvironment, envContract); const actualPasses = inspectAirMaterial(renderingMaterial);",
+    "// @ts-expect-error target format is an explicit name, not a native numeric enum",
+    "createAirRenderTarget({ width: 1, height: 1, colorFormat: Texture2D.PixelFormat.RGBA16F });",
+    "void actualTargetColor; void chosenSamples; void actualPasses;",
     "const readable: ReadableStream<Uint8Array> = decompression.readable;",
     "const writable: WritableStream<BufferSource> = decompression.writable;",
     "const primitive = createPrimitiveGeometry({ type: 'cylinder', radiusTop: 0, radiusBottom: 1, height: 2 });",

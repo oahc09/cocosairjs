@@ -1,0 +1,6 @@
+Verifying 2 examples (spec-driven v2)...
+PASS hdr-color-pipeline
+PASS water-multipass
+[skip-promote] 本次写入 docs\evidence\examples\rendering-contracts\formal-firefox.json（非当期证据路径）⇒ 不回写 example.json / files.json
+
+== Examples spec-driven verify: 2/2 PASS, 0 promoted / 0 demoted ==

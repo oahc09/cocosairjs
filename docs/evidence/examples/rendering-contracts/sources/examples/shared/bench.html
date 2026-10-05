@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>cocosair — runtime bench（非示例，V0.5.1 T6 测量页）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #1a1a2e;
+            }
+            #GameCanvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <canvas id="GameCanvas"></canvas>
+        <script type="module" src="./bench.ts"></script>
+    </body>
+</html>

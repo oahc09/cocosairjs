@@ -1,0 +1,87 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es2015", "es2017", "dom"],
+    "module": "commonjs",
+    "sourceMap": true,
+    "noEmit": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "downlevelIteration": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./src",
+    "paths": {
+        "cocosair": [
+            "./index.ts"
+        ],
+        "pal/*": [
+            "pal/*"
+        ],
+        "cc.decorator": [
+            "cocos/core/data/decorators/index.ts"
+        ],
+        "@cocos/engine/*": [
+            "*"
+        ]
+    },
+    "types": [
+      "jest",
+      "./node_modules/@cocos/cannon/CANNON",
+      "./src/@types/globals",
+      "./src/@types/consts",
+      "./src/@types/jsb",
+      "./src/@types/editor-extends",
+      "./src/@types/webGL.extras",
+      "./src/@types/webGL2.extras",
+
+      // pal
+      "./src/@types/pal/system-info",
+      "./src/@types/pal/screen-adapter",
+      "./src/@types/pal/minigame",
+      "./src/@types/pal/audio",
+      "./src/@types/pal/input",
+      "./src/@types/pal/env",
+      "./src/@types/pal/pacer",
+      "./src/@types/pal/wasm"
+    ]
+  },
+  "include": [
+      "src/**/*.ts",
+      "src/**/*.d.ts"
+  ],
+  "exclude": [
+      "src/editor",
+      // 上游该文件整体被注释掉（0 行可执行代码），Air 的 typecheck 门禁开了 isolatedModules，
+      // 空文件会报 TS1208；为保持抽取文件与官方逐字节一致，此处只把它移出检查列表。
+      "src/cocos/physics/cannon/constraints/cannon-distance-constraint.ts",
+
+      // V1.2 批次 E（UPSTREAM.md Deviation-04）：gfx-webgpu 子图上游只由 emscripten 平台变体
+      // cocos/gfx/index.ems.ts 引用（web 变体 cocos/gfx/index.ts 零引用），其运行时/类型依赖
+      // native/external/emscripten/**（webgpu_wasm·glslang·twgsl 的 js/wasm 与 d.ts，由上游
+      // `npm run update:native-external` 拉取）不在基线快照内 → 上游自身 tsc 在本快照 exit=2。
+      // Air 的 include 覆盖 src/**（严于上游），故按上游引用图对等移出本子图；26 个抽取文件仍逐字节一致，
+      // 未写替代实现。范围由 smoke-30 断言钉住，解禁条件见 Deviation-04。
+      "src/cocos/gfx/webgpu/**",
+      "src/cocos/webgpu/**",
+      "src/exports/gfx-webgpu.ts",
+
+      // V1.2 批次 D-4 / G-3（UPSTREAM.md Deviation-05，与 Deviation-04 同因同治）：
+      // bullet / physx / box2d-wasm 三后端子图已按上游原文抽取并逐字节核对（82 文件，manifest + upstream-file-map 在册），
+      // 但它们的类型与运行时资产同源同缺 —— 上游 tsconfig.json 的 types[] 指着
+      // native/external/emscripten/{bullet/bullet,physx/physx,box2d/box2d}.d.ts（由 `npm run update:native-external` 拉取，
+      // 不在基线快照内，见 docs/notes/physics-asset-sourcing.md = R8 结论）。实测纳入本子图时
+      // npm run typecheck 从 0 红到 118（Cannot find namespace 'Bullet' ×35 / 'PhysX'、Namespace 'B2' has no exported member ×…、
+      // Cannot find module 'external:emscripten/{bullet,physx}/…'）。上游自身 tsc 在本快照同样 exit=2，
+      // 故按上游引用图对等移出；未写任何替代实现或 any 垫片。解禁条件与 LV12-14/16 的运行级取证同卡 owner 批复（#10）。
+      "src/cocos/physics/bullet/**",
+      "src/cocos/physics/physx/**",
+      "src/cocos/physics-2d/box2d-wasm/**",
+      "src/exports/physics-ammo.ts",
+      "src/exports/physics-physx.ts",
+      "src/exports/physics-2d-box2d-wasm.ts"
+  ]
+}

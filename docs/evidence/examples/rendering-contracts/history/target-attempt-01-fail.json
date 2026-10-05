@@ -1,0 +1,2360 @@
+{
+  "schema": "air-rendering-contracts/1",
+  "measuredAt": "2026-10-05T06:20:44.252Z",
+  "scope": "public-target-contracts",
+  "bundleSha256": "bccf9e47ba06dec686cba987d06f83b58615435d88eb2323dcee4bc661d83965",
+  "sourceSha256": {
+    "tools/verify/rendering-contracts.cjs": "f1873897f4170b3bfc3abba6de3bc5197130e821d30785050a04a81a6041b256",
+    "tools/debug/effect-layout.ts": "4962380276707df7c722d4427fec7af11740e9e8c477951c63a9a6d0383326df",
+    "tools/debug/probes/rendering-contracts/index.html": "222bc8df18c934c2b4036a103321a5bcb32349a5831ddf81c1455d257cce3a11",
+    "tools/debug/probes/rendering-contracts/main.js": "210156710fe86909560b0c7d705d3d0bc38739f7141c9f488f81421776ed94ef",
+    "tools/debug/probes/rendering-contracts/source.effect-spec.json": "e7862c5481de1f574c6a53e1040b1cdb1d23d2d144fe8324246a5c1b0671eee7",
+    "tools/debug/probes/rendering-contracts/sample.effect-spec.json": "76f2570330f5245a1956f339f38744c72a13e9cdad88923e3b1f5c70ea1c6d43",
+    "tools/debug/probes/rendering-contracts/source.effect.json": "8574edba2d1b0c06f14ba3d51ad84168a9c837d1d363f7d489f966ea9268d249",
+    "tools/debug/probes/rendering-contracts/sample.effect.json": "4e27f8e00c384cbdff31d587f1ebf7c62a2669a817a1ff3fc13897a687894c31",
+    "tools/debug/probes/rendering-contracts/depth.effect-spec.json": "58971750503d2942fb8ec6e1fa6e4a9d2fde4da687a3e3703738dc029b8acc9c",
+    "tools/debug/probes/rendering-contracts/depth.effect.json": "5b25c1d1b9914b752d203989fbbe855558aa15cb8a353e00b3ac4fc6af4124f2"
+  },
+  "candidateUnchanged": true,
+  "completed": true,
+  "subset": false,
+  "results": [
+    {
+      "browser": "chromium",
+      "status": "PASS",
+      "cpu": {
+        "scope": "native-frame-submit-wall",
+        "samplesMs": [
+          2.9000000059604645,
+          1.5999999940395355,
+          1.0999999940395355,
+          0.800000011920929,
+          23.799999982118607,
+          0.9000000059604645
+        ]
+      },
+      "gpu": {
+        "scope": "EXT_disjoint_timer_query_webgl2",
+        "samplesMs": [
+          0.023552,
+          0.820224,
+          0.022528,
+          0.72704,
+          0.023552,
+          0.840704
+        ],
+        "unavailableReasons": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "screenshot": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\rendering-contracts\\attempt-01-artifacts\\chromium.png",
+        "wallMs": 119.84090000000015,
+        "width": 960,
+        "height": 640,
+        "center": [
+          127,
+          127,
+          85
+        ]
+      },
+      "startupWallMs": 1250.8024999999998,
+      "probe": {
+        "status": "PASS",
+        "capabilities": {
+          "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)",
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "maxSamples": 8,
+          "floatColorAttachment": true,
+          "gpuTimer": true,
+          "formats": {
+            "RGBA8": {
+              "samples": [
+                8,
+                4,
+                2,
+                1
+              ],
+              "featureMask": 31
+            },
+            "RGBA16F": {
+              "samples": [
+                8,
+                4,
+                2,
+                1
+              ],
+              "featureMask": 27
+            }
+          }
+        },
+        "coverage": {
+          "requestedColorCombinations": 4,
+          "executedColorCombinations": 4,
+          "unsupportedColorCombinations": []
+        },
+        "rows": [
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba8",
+              "depthFormat": "depth24-stencil8",
+              "samples": 1,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 1,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 1,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 1,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": false,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 0
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 1
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 1
+            },
+            "center": [
+              1,
+              1,
+              0.4980392156862745,
+              1
+            ],
+            "pixelType": "Uint8Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 2.9000000059604645,
+              "gpuMs": 0.023552,
+              "gpuUnavailableReason": null
+            }
+          },
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba8",
+              "depthFormat": "depth24-stencil8",
+              "samples": 4,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 4,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 36161,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 4,
+              "internalFormat": 32856,
+              "width": 128,
+              "height": 96
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 1
+            },
+            "center": [
+              1,
+              1,
+              0.4980392156862745,
+              1
+            ],
+            "pixelType": "Uint8Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 1.5999999940395355,
+              "gpuMs": 0.820224,
+              "gpuUnavailableReason": null
+            }
+          },
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "samples": 1,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "samples": 1,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 1,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 1,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": false,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 0
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 1
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 1
+            },
+            "center": [
+              4,
+              2,
+              0.5,
+              1
+            ],
+            "pixelType": "Float32Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 1.0999999940395355,
+              "gpuMs": 0.022528,
+              "gpuUnavailableReason": null
+            }
+          },
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "samples": 4,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 4,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 36161,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 4,
+              "internalFormat": 34842,
+              "width": 128,
+              "height": 96
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 1
+            },
+            "center": [
+              4,
+              2,
+              0.5,
+              1
+            ],
+            "pixelType": "Float32Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 0.800000011920929,
+              "gpuMs": 0.72704,
+              "gpuUnavailableReason": null
+            }
+          },
+          {
+            "name": "scale-resize-rebind",
+            "status": "PASS",
+            "before": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "lower",
+                "scale": 0.5
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 0.5
+              },
+              "width": 64,
+              "height": 48,
+              "samples": 4,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "after": {
+              "requested": {
+                "width": 160,
+                "height": 120,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "lower",
+                "scale": 0.5
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 0.5
+              },
+              "width": 80,
+              "height": 60,
+              "samples": 4,
+              "generation": 2,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 36161,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 4,
+              "internalFormat": 32856,
+              "width": 80,
+              "height": 60
+            },
+            "center": [
+              0.2,
+              0.8,
+              0.4,
+              1
+            ]
+          },
+          {
+            "name": "dispose-release-restore",
+            "status": "PASS",
+            "checks": [
+              {
+                "name": "camera-binding-restored",
+                "ok": true
+              },
+              {
+                "name": "material-binding-restored",
+                "ok": true
+              },
+              {
+                "name": "gpu-storage-released",
+                "ok": true
+              },
+              {
+                "name": "disposed-read-diagnostic",
+                "ok": true
+              },
+              {
+                "name": "idempotent-dispose",
+                "ok": true
+              }
+            ],
+            "readError": {
+              "name": "Error",
+              "code": "AIR_E_RENDER_TARGET_DISPOSED",
+              "message": "[AIR_E_RENDER_TARGET_DISPOSED] target has been disposed"
+            }
+          }
+        ],
+        "depth": {
+          "status": "PASS",
+          "rows": [
+            {
+              "samples": 1,
+              "status": "PASS",
+              "center": [
+                0.2980392156862745,
+                0,
+                0.9686274509803922,
+                1
+              ],
+              "resizedCenter": [
+                0.2,
+                0,
+                0.9529411764705882,
+                1
+              ],
+              "reconstructedViewDistance": 2.980392156862745,
+              "expectedViewDistance": 3,
+              "referenceDepth": 0.9698996655518395,
+              "checks": [
+                {
+                  "name": "perspective-depth-reconstruction",
+                  "ok": true
+                },
+                {
+                  "name": "manual-occlusion-comparison",
+                  "ok": true
+                },
+                {
+                  "name": "raw-depth-texture-sampling",
+                  "ok": true
+                },
+                {
+                  "name": "depth-resize-rebind-new-geometry",
+                  "ok": true
+                }
+              ],
+              "timing": {
+                "cpuSubmitMs": 23.799999982118607,
+                "gpuMs": 0.023552,
+                "gpuUnavailableReason": null
+              }
+            },
+            {
+              "samples": 4,
+              "status": "PASS",
+              "center": [
+                0.2980392156862745,
+                0,
+                0.9686274509803922,
+                1
+              ],
+              "resizedCenter": [
+                0.2,
+                0,
+                0.9529411764705882,
+                1
+              ],
+              "reconstructedViewDistance": 2.980392156862745,
+              "expectedViewDistance": 3,
+              "referenceDepth": 0.9698996655518395,
+              "checks": [
+                {
+                  "name": "perspective-depth-reconstruction",
+                  "ok": true
+                },
+                {
+                  "name": "manual-occlusion-comparison",
+                  "ok": true
+                },
+                {
+                  "name": "raw-depth-texture-sampling",
+                  "ok": true
+                },
+                {
+                  "name": "depth-resize-rebind-new-geometry",
+                  "ok": true
+                }
+              ],
+              "timing": {
+                "cpuSubmitMs": 0.9000000059604645,
+                "gpuMs": 0.840704,
+                "gpuUnavailableReason": null
+              }
+            }
+          ]
+        }
+      },
+      "interaction": {
+        "status": "PASS",
+        "checks": [
+          {
+            "name": "resolved-sampler-visible",
+            "ok": true
+          },
+          {
+            "name": "resize-rebind-new-content",
+            "ok": true
+          },
+          {
+            "name": "contrast-control-pixel-response",
+            "ok": true
+          }
+        ],
+        "initial": {
+          "path": "E:\\AIProMax\\github\\cocosair.js\\output\\rendering-contracts\\attempt-01-artifacts\\chromium.png",
+          "wallMs": 119.84090000000015,
+          "width": 960,
+          "height": 640,
+          "center": [
+            127,
+            127,
+            85
+          ]
+        },
+        "resized": {
+          "path": "E:\\AIProMax\\github\\cocosair.js\\output\\rendering-contracts\\attempt-01-artifacts\\chromium-resize.png",
+          "wallMs": 86.84730000000036,
+          "width": 960,
+          "height": 640,
+          "center": [
+            42,
+            113,
+            73
+          ]
+        },
+        "contrasted": {
+          "path": "E:\\AIProMax\\github\\cocosair.js\\output\\rendering-contracts\\attempt-01-artifacts\\chromium-contrast.png",
+          "wallMs": 82.13720000000012,
+          "width": 960,
+          "height": 640,
+          "center": [
+            9,
+            32,
+            17
+          ]
+        },
+        "resizeReport": {
+          "before": {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba8",
+              "samples": 4,
+              "sampleFallback": "lower",
+              "scale": 0.5
+            },
+            "effective": {
+              "colorFormat": "rgba8",
+              "depthFormat": "depth24-stencil8",
+              "filter": "nearest",
+              "samples": 4,
+              "scale": 0.5
+            },
+            "width": 64,
+            "height": 48,
+            "samples": 4,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": true,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 4
+          },
+          "after": {
+            "requested": {
+              "width": 160,
+              "height": 120,
+              "colorFormat": "rgba8",
+              "samples": 4,
+              "sampleFallback": "lower",
+              "scale": 0.5
+            },
+            "effective": {
+              "colorFormat": "rgba8",
+              "depthFormat": "depth24-stencil8",
+              "filter": "nearest",
+              "samples": 4,
+              "scale": 0.5
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 4,
+            "generation": 2,
+            "framebufferComplete": true,
+            "resolveRequired": true,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 4
+          },
+          "actual": {
+            "framebufferStatus": 36053,
+            "objectType": 36161,
+            "componentType": 35863,
+            "redBits": 8,
+            "greenBits": 8,
+            "blueBits": 8,
+            "alphaBits": 8,
+            "samples": 4,
+            "internalFormat": 32856,
+            "width": 80,
+            "height": 60
+          },
+          "center": [
+            0.2,
+            0.8,
+            0.4,
+            1
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "status": "FAIL",
+      "cpu": {
+        "scope": "native-frame-submit-wall",
+        "samplesMs": [
+          1,
+          0,
+          1,
+          1,
+          10,
+          1
+        ]
+      },
+      "gpu": {
+        "scope": "EXT_disjoint_timer_query_webgl2",
+        "samplesMs": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unavailableReasons": [
+          "EXT_disjoint_timer_query_webgl2 unavailable",
+          "EXT_disjoint_timer_query_webgl2 unavailable",
+          "EXT_disjoint_timer_query_webgl2 unavailable",
+          "EXT_disjoint_timer_query_webgl2 unavailable",
+          "EXT_disjoint_timer_query_webgl2 unavailable",
+          "EXT_disjoint_timer_query_webgl2 unavailable"
+        ]
+      },
+      "screenshot": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\rendering-contracts\\attempt-01-artifacts\\firefox.png",
+        "wallMs": 120.20770000000084,
+        "width": 960,
+        "height": 640,
+        "center": [
+          127,
+          127,
+          85
+        ]
+      },
+      "startupWallMs": 2058.0836,
+      "probe": {
+        "status": "FAIL",
+        "capabilities": {
+          "webglVersion": "WebGL 2.0",
+          "shadingLanguage": "WebGL GLSL ES 3.00",
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+          "maxSamples": 8,
+          "floatColorAttachment": true,
+          "gpuTimer": false,
+          "formats": {
+            "RGBA8": {
+              "samples": [
+                8,
+                4,
+                2,
+                1
+              ],
+              "featureMask": 31
+            },
+            "RGBA16F": {
+              "samples": [
+                8,
+                4,
+                2,
+                1
+              ],
+              "featureMask": 27
+            }
+          }
+        },
+        "coverage": {
+          "requestedColorCombinations": 4,
+          "executedColorCombinations": 3,
+          "unsupportedColorCombinations": []
+        },
+        "rows": [
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba8",
+              "depthFormat": "depth24-stencil8",
+              "samples": 1,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 1,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 1,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 1,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": false,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 0
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 1
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 1
+            },
+            "center": [
+              1,
+              1,
+              0.4980392156862745,
+              1
+            ],
+            "pixelType": "Uint8Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 1,
+              "gpuMs": null,
+              "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+            }
+          },
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba8",
+              "depthFormat": "depth24-stencil8",
+              "samples": 4,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "FAIL",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 4,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 36161,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 4,
+              "internalFormat": 32856,
+              "width": 128,
+              "height": 96
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 1
+            },
+            "center": [
+              0.047058823529411764,
+              0.07058823529411765,
+              0.10980392156862745,
+              1
+            ],
+            "pixelType": "Uint8Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": false
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 0,
+              "gpuMs": null,
+              "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+            }
+          },
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "samples": 1,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "samples": 1,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 1,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 1,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": false,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 0
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 1
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 1
+            },
+            "center": [
+              4,
+              2,
+              0.5,
+              1
+            ],
+            "pixelType": "Float32Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 1,
+              "gpuMs": null,
+              "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+            }
+          },
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "samples": 4,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 4,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 36161,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 4,
+              "internalFormat": 34842,
+              "width": 128,
+              "height": 96
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 1
+            },
+            "center": [
+              4,
+              2,
+              0.5,
+              1
+            ],
+            "pixelType": "Float32Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 1,
+              "gpuMs": null,
+              "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+            }
+          },
+          {
+            "name": "scale-resize-rebind",
+            "status": "FAIL",
+            "before": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "lower",
+                "scale": 0.5
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 0.5
+              },
+              "width": 64,
+              "height": 48,
+              "samples": 4,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "after": {
+              "requested": {
+                "width": 160,
+                "height": 120,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "lower",
+                "scale": 0.5
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 0.5
+              },
+              "width": 80,
+              "height": 60,
+              "samples": 4,
+              "generation": 2,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 36161,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 4,
+              "internalFormat": 32856,
+              "width": 80,
+              "height": 60
+            },
+            "center": [
+              0.047058823529411764,
+              0.07058823529411765,
+              0.10980392156862745,
+              1
+            ]
+          },
+          {
+            "name": "dispose-release-restore",
+            "status": "PASS",
+            "checks": [
+              {
+                "name": "camera-binding-restored",
+                "ok": true
+              },
+              {
+                "name": "material-binding-restored",
+                "ok": true
+              },
+              {
+                "name": "gpu-storage-released",
+                "ok": true
+              },
+              {
+                "name": "disposed-read-diagnostic",
+                "ok": true
+              },
+              {
+                "name": "idempotent-dispose",
+                "ok": true
+              }
+            ],
+            "readError": {
+              "name": "Error",
+              "code": "AIR_E_RENDER_TARGET_DISPOSED",
+              "message": "[AIR_E_RENDER_TARGET_DISPOSED] target has been disposed"
+            }
+          }
+        ],
+        "depth": {
+          "status": "PASS",
+          "rows": [
+            {
+              "samples": 1,
+              "status": "PASS",
+              "center": [
+                0.2980392156862745,
+                0,
+                0.9686274509803922,
+                1
+              ],
+              "resizedCenter": [
+                0.2,
+                0,
+                0.9529411764705882,
+                1
+              ],
+              "reconstructedViewDistance": 2.980392156862745,
+              "expectedViewDistance": 3,
+              "referenceDepth": 0.9698996655518395,
+              "checks": [
+                {
+                  "name": "perspective-depth-reconstruction",
+                  "ok": true
+                },
+                {
+                  "name": "manual-occlusion-comparison",
+                  "ok": true
+                },
+                {
+                  "name": "raw-depth-texture-sampling",
+                  "ok": true
+                },
+                {
+                  "name": "depth-resize-rebind-new-geometry",
+                  "ok": true
+                }
+              ],
+              "timing": {
+                "cpuSubmitMs": 10,
+                "gpuMs": null,
+                "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+              }
+            },
+            {
+              "samples": 4,
+              "status": "PASS",
+              "center": [
+                0.2980392156862745,
+                0,
+                0.9686274509803922,
+                1
+              ],
+              "resizedCenter": [
+                0.2,
+                0,
+                0.9529411764705882,
+                1
+              ],
+              "reconstructedViewDistance": 2.980392156862745,
+              "expectedViewDistance": 3,
+              "referenceDepth": 0.9698996655518395,
+              "checks": [
+                {
+                  "name": "perspective-depth-reconstruction",
+                  "ok": true
+                },
+                {
+                  "name": "manual-occlusion-comparison",
+                  "ok": true
+                },
+                {
+                  "name": "raw-depth-texture-sampling",
+                  "ok": true
+                },
+                {
+                  "name": "depth-resize-rebind-new-geometry",
+                  "ok": true
+                }
+              ],
+              "timing": {
+                "cpuSubmitMs": 1,
+                "gpuMs": null,
+                "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+              }
+            }
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "status": "PASS",
+      "cpu": {
+        "scope": "native-frame-submit-wall",
+        "samplesMs": [
+          3,
+          2,
+          2,
+          1,
+          33,
+          2
+        ]
+      },
+      "gpu": {
+        "scope": "EXT_disjoint_timer_query_webgl2",
+        "samplesMs": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unavailableReasons": [
+          "EXT_disjoint_timer_query_webgl2 unavailable",
+          "EXT_disjoint_timer_query_webgl2 unavailable",
+          "EXT_disjoint_timer_query_webgl2 unavailable",
+          "EXT_disjoint_timer_query_webgl2 unavailable",
+          "EXT_disjoint_timer_query_webgl2 unavailable",
+          "EXT_disjoint_timer_query_webgl2 unavailable"
+        ]
+      },
+      "screenshot": {
+        "path": "E:\\AIProMax\\github\\cocosair.js\\output\\rendering-contracts\\attempt-01-artifacts\\webkit.png",
+        "wallMs": 237.23679999999877,
+        "width": 960,
+        "height": 640,
+        "center": [
+          127,
+          127,
+          85
+        ]
+      },
+      "startupWallMs": 1543.3538999999982,
+      "probe": {
+        "status": "PASS",
+        "capabilities": {
+          "webglVersion": "WebGL 2.0",
+          "shadingLanguage": "WebGL GLSL ES 3.00",
+          "renderer": "Apple GPU",
+          "maxSamples": 8,
+          "floatColorAttachment": true,
+          "gpuTimer": false,
+          "formats": {
+            "RGBA8": {
+              "samples": [
+                8,
+                4,
+                2,
+                1
+              ],
+              "featureMask": 31
+            },
+            "RGBA16F": {
+              "samples": [
+                8,
+                4,
+                2,
+                1
+              ],
+              "featureMask": 27
+            }
+          }
+        },
+        "coverage": {
+          "requestedColorCombinations": 4,
+          "executedColorCombinations": 4,
+          "unsupportedColorCombinations": []
+        },
+        "rows": [
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba8",
+              "depthFormat": "depth24-stencil8",
+              "samples": 1,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 1,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 1,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 1,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": false,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 0
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 1
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 1
+            },
+            "center": [
+              1,
+              1,
+              0.4980392156862745,
+              1
+            ],
+            "pixelType": "Uint8Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 3,
+              "gpuMs": null,
+              "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+            }
+          },
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba8",
+              "depthFormat": "depth24-stencil8",
+              "samples": 4,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 4,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 36161,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 4,
+              "internalFormat": 32856,
+              "width": 128,
+              "height": 96
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 1
+            },
+            "center": [
+              1,
+              1,
+              0.4980392156862745,
+              1
+            ],
+            "pixelType": "Uint8Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 2,
+              "gpuMs": null,
+              "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+            }
+          },
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "samples": 1,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "samples": 1,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 1,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 1,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": false,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 0
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 1
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 1
+            },
+            "center": [
+              4,
+              2,
+              0.5,
+              1
+            ],
+            "pixelType": "Float32Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 2,
+              "gpuMs": null,
+              "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+            }
+          },
+          {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "samples": 4,
+              "sampleFallback": "error",
+              "filter": "nearest"
+            },
+            "status": "PASS",
+            "info": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "error",
+                "filter": "nearest"
+              },
+              "effective": {
+                "colorFormat": "rgba16f",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 1
+              },
+              "width": 128,
+              "height": 96,
+              "samples": 4,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 36161,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 4,
+              "internalFormat": 34842,
+              "width": 128,
+              "height": 96
+            },
+            "sampled": {
+              "framebufferStatus": 36053,
+              "objectType": 5890,
+              "componentType": 5126,
+              "redBits": 16,
+              "greenBits": 16,
+              "blueBits": 16,
+              "alphaBits": 16,
+              "samples": 1
+            },
+            "center": [
+              4,
+              2,
+              0.5,
+              1
+            ],
+            "pixelType": "Float32Array",
+            "checks": [
+              {
+                "name": "framebuffer-complete",
+                "ok": true
+              },
+              {
+                "name": "actual-color-storage",
+                "ok": true
+              },
+              {
+                "name": "actual-samples",
+                "ok": true
+              },
+              {
+                "name": "resolved-sampled-attachment",
+                "ok": true
+              },
+              {
+                "name": "color-readback",
+                "ok": true
+              }
+            ],
+            "timing": {
+              "cpuSubmitMs": 1,
+              "gpuMs": null,
+              "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+            }
+          },
+          {
+            "name": "scale-resize-rebind",
+            "status": "PASS",
+            "before": {
+              "requested": {
+                "width": 128,
+                "height": 96,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "lower",
+                "scale": 0.5
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 0.5
+              },
+              "width": 64,
+              "height": 48,
+              "samples": 4,
+              "generation": 1,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "after": {
+              "requested": {
+                "width": 160,
+                "height": 120,
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "samples": 4,
+                "sampleFallback": "lower",
+                "scale": 0.5
+              },
+              "effective": {
+                "colorFormat": "rgba8",
+                "depthFormat": "depth24-stencil8",
+                "filter": "nearest",
+                "samples": 4,
+                "scale": 0.5
+              },
+              "width": 80,
+              "height": 60,
+              "samples": 4,
+              "generation": 2,
+              "framebufferComplete": true,
+              "resolveRequired": true,
+              "disposed": false,
+              "supportedSamples": [
+                1,
+                2,
+                4,
+                8
+              ],
+              "glSamples": 4
+            },
+            "actual": {
+              "framebufferStatus": 36053,
+              "objectType": 36161,
+              "componentType": 35863,
+              "redBits": 8,
+              "greenBits": 8,
+              "blueBits": 8,
+              "alphaBits": 8,
+              "samples": 4,
+              "internalFormat": 32856,
+              "width": 80,
+              "height": 60
+            },
+            "center": [
+              0.2,
+              0.8,
+              0.4,
+              1
+            ]
+          },
+          {
+            "name": "dispose-release-restore",
+            "status": "PASS",
+            "checks": [
+              {
+                "name": "camera-binding-restored",
+                "ok": true
+              },
+              {
+                "name": "material-binding-restored",
+                "ok": true
+              },
+              {
+                "name": "gpu-storage-released",
+                "ok": true
+              },
+              {
+                "name": "disposed-read-diagnostic",
+                "ok": true
+              },
+              {
+                "name": "idempotent-dispose",
+                "ok": true
+              }
+            ],
+            "readError": {
+              "name": "Error",
+              "code": "AIR_E_RENDER_TARGET_DISPOSED",
+              "message": "[AIR_E_RENDER_TARGET_DISPOSED] target has been disposed"
+            }
+          }
+        ],
+        "depth": {
+          "status": "PASS",
+          "rows": [
+            {
+              "samples": 1,
+              "status": "PASS",
+              "center": [
+                0.2980392156862745,
+                0,
+                0.9686274509803922,
+                1
+              ],
+              "resizedCenter": [
+                0.2,
+                0,
+                0.9529411764705882,
+                1
+              ],
+              "reconstructedViewDistance": 2.980392156862745,
+              "expectedViewDistance": 3,
+              "referenceDepth": 0.9698996655518395,
+              "checks": [
+                {
+                  "name": "perspective-depth-reconstruction",
+                  "ok": true
+                },
+                {
+                  "name": "manual-occlusion-comparison",
+                  "ok": true
+                },
+                {
+                  "name": "raw-depth-texture-sampling",
+                  "ok": true
+                },
+                {
+                  "name": "depth-resize-rebind-new-geometry",
+                  "ok": true
+                }
+              ],
+              "timing": {
+                "cpuSubmitMs": 33,
+                "gpuMs": null,
+                "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+              }
+            },
+            {
+              "samples": 4,
+              "status": "PASS",
+              "center": [
+                0.2980392156862745,
+                0,
+                0.9686274509803922,
+                1
+              ],
+              "resizedCenter": [
+                0.2,
+                0,
+                0.9529411764705882,
+                1
+              ],
+              "reconstructedViewDistance": 2.980392156862745,
+              "expectedViewDistance": 3,
+              "referenceDepth": 0.9698996655518395,
+              "checks": [
+                {
+                  "name": "perspective-depth-reconstruction",
+                  "ok": true
+                },
+                {
+                  "name": "manual-occlusion-comparison",
+                  "ok": true
+                },
+                {
+                  "name": "raw-depth-texture-sampling",
+                  "ok": true
+                },
+                {
+                  "name": "depth-resize-rebind-new-geometry",
+                  "ok": true
+                }
+              ],
+              "timing": {
+                "cpuSubmitMs": 2,
+                "gpuMs": null,
+                "gpuUnavailableReason": "EXT_disjoint_timer_query_webgl2 unavailable"
+              }
+            }
+          ]
+        }
+      },
+      "interaction": {
+        "status": "PASS",
+        "checks": [
+          {
+            "name": "resolved-sampler-visible",
+            "ok": true
+          },
+          {
+            "name": "resize-rebind-new-content",
+            "ok": true
+          },
+          {
+            "name": "contrast-control-pixel-response",
+            "ok": true
+          }
+        ],
+        "initial": {
+          "path": "E:\\AIProMax\\github\\cocosair.js\\output\\rendering-contracts\\attempt-01-artifacts\\webkit.png",
+          "wallMs": 237.23679999999877,
+          "width": 960,
+          "height": 640,
+          "center": [
+            127,
+            127,
+            85
+          ]
+        },
+        "resized": {
+          "path": "E:\\AIProMax\\github\\cocosair.js\\output\\rendering-contracts\\attempt-01-artifacts\\webkit-resize.png",
+          "wallMs": 247.517399999997,
+          "width": 960,
+          "height": 640,
+          "center": [
+            42,
+            113,
+            73
+          ]
+        },
+        "contrasted": {
+          "path": "E:\\AIProMax\\github\\cocosair.js\\output\\rendering-contracts\\attempt-01-artifacts\\webkit-contrast.png",
+          "wallMs": 210.68930000000182,
+          "width": 960,
+          "height": 640,
+          "center": [
+            9,
+            32,
+            17
+          ]
+        },
+        "resizeReport": {
+          "before": {
+            "requested": {
+              "width": 128,
+              "height": 96,
+              "colorFormat": "rgba8",
+              "samples": 4,
+              "sampleFallback": "lower",
+              "scale": 0.5
+            },
+            "effective": {
+              "colorFormat": "rgba8",
+              "depthFormat": "depth24-stencil8",
+              "filter": "nearest",
+              "samples": 4,
+              "scale": 0.5
+            },
+            "width": 64,
+            "height": 48,
+            "samples": 4,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": true,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 4
+          },
+          "after": {
+            "requested": {
+              "width": 160,
+              "height": 120,
+              "colorFormat": "rgba8",
+              "samples": 4,
+              "sampleFallback": "lower",
+              "scale": 0.5
+            },
+            "effective": {
+              "colorFormat": "rgba8",
+              "depthFormat": "depth24-stencil8",
+              "filter": "nearest",
+              "samples": 4,
+              "scale": 0.5
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 4,
+            "generation": 2,
+            "framebufferComplete": true,
+            "resolveRequired": true,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 4
+          },
+          "actual": {
+            "framebufferStatus": 36053,
+            "objectType": 36161,
+            "componentType": 35863,
+            "redBits": 8,
+            "greenBits": 8,
+            "blueBits": 8,
+            "alphaBits": 8,
+            "samples": 4,
+            "internalFormat": 32856,
+            "width": 80,
+            "height": 60
+          },
+          "center": [
+            0.2,
+            0.8,
+            0.4,
+            1
+          ]
+        }
+      },
+      "errors": []
+    }
+  ],
+  "status": "FAIL"
+}

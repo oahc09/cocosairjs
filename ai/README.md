@@ -28,6 +28,7 @@
 | 全局质量审查 | [计划](plans/global-quality-audit.md) | — |
 | 竞争力基准回灌 | [计划](plans/competitive-benchmark-remediation.md) | [台账](ledgers/competitive-benchmark-remediation.md) |
 | 1:1 复刻端口缺口 | [计划](plans/port-gap-remediation.md) | [台账](ledgers/port-gap-remediation.md) |
+| 渲染目标、颜色与多通道 DX | — | [定向实施与验收](ledgers/rendering-contracts.md) |
 
 ## 专项提示词
 

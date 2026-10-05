@@ -29,3 +29,6 @@ export * from './assets/atlas/atlas-factory';
 export * from './assets/atlas/atlas-loader';
 export * from './rendering/transmission-capture';
 export { createAirUnlitFogEffect } from './effects/unlit-fog';
+export * from './rendering/render-target';
+export * from './rendering/color-contract';
+export * from './rendering/material-diagnostics';

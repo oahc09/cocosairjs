@@ -1,0 +1,1610 @@
+{
+  "schema": "air-rendering-integration-evidence/1",
+  "measuredAt": "2026-10-05T07:27:24.865Z",
+  "scope": [
+    "render-target",
+    "water-multipass",
+    "hdr-color-pipeline",
+    "legacy-native-queue",
+    "new-example-specification"
+  ],
+  "scopePassed": true,
+  "fullGalleryVerified": false,
+  "releaseReadyClaimed": false,
+  "candidate": {
+    "build/cocosair.module.js": {
+      "sha256": "72f37ee6f4fdd80e2fb89908e7c634ae422ce7fb52ab5d54812b43a2438650ba",
+      "bytes": 6566450
+    },
+    "build/cocosair.module.min.js": {
+      "sha256": "c4a14cc5d9a5644010c4ecaa9a8c7e5ee26a551afcb9996abc0c4121d8df6eaf",
+      "bytes": 3665744
+    },
+    "build/cocosair.module.d.ts": {
+      "sha256": "67ff4c489feb3ed79b69341a4cceaddc004d674e7ce756671ba730309274c9b9",
+      "bytes": 3142167
+    },
+    "build/npm/cocosair.module.js": {
+      "sha256": "da9005bfe8ed0cd07414ec33325cc0f8459aca609a83265f6eeb82758990a0db",
+      "bytes": 6566406
+    }
+  },
+  "scopedChecks": {
+    "targetBrowsers": 3,
+    "water": "3 browsers x 39 PASS",
+    "hdr": "3 browsers x 15 PASS",
+    "nativeQueue": "6 PASS",
+    "formal": "3 browsers x 2 examples; scopePassed=true, producer completed=false/subset preserved",
+    "unit": "6 suites / 22 tests PASS"
+  },
+  "limitations": [
+    "No actual hardware sample reduction on these devices; lower contract covered by explicitly simulated CPU test.",
+    "Firefox/WebKit GPU timer unavailable=null; no physical present/FPS claim.",
+    "RGBA32F/sRGB render-target combinations, custom queues, instancing/UI global draw ordering are outside the dedicated target proof.",
+    "Old whole-gallery evidence was not recaptured and must not be claimed current."
+  ],
+  "baselineFailures": [
+    {
+      "command": "node tools/verify/manual-doc-consistency.cjs --strict",
+      "exitCode": 1,
+      "scope": "pre-existing module-only manual-port-recipes lacks standalone index.html / traditional index entry; HEAD-tracked before this change",
+      "log": "docs/evidence/examples/rendering-contracts/logs/integration-manual-consistency.log"
+    },
+    {
+      "command": "npm run format:check",
+      "exitCode": 1,
+      "scope": "159 tracked warnings; all byte-unchanged compared to HEAD",
+      "log": "docs/evidence/examples/rendering-contracts/logs/integration-repo-format.log",
+      "baselineProof": "docs/evidence/examples/rendering-contracts/logs/integration-format-baseline.json"
+    }
+  ],
+  "files": [
+    {
+      "origin": "output/rendering-contracts/attempt-02.json",
+      "stored": "docs/evidence/examples/rendering-contracts/target/report.json",
+      "kind": "current-raw-report",
+      "bytes": 73677,
+      "sha256": "7ed9b725b276ba0140b8a5b774cd06d5a9bce8833266df565c43457efb82a0d4"
+    },
+    {
+      "origin": "output/rendering-contracts/attempt-02-artifacts/chromium.png",
+      "stored": "docs/evidence/examples/rendering-contracts/target/screenshots/chromium.png",
+      "kind": "current-screenshot",
+      "bytes": 3164,
+      "sha256": "e0846abf4da7335758345dad42fc6f44f7b2dd49f482c8c5d49bb96613262704"
+    },
+    {
+      "origin": "output/rendering-contracts/attempt-02-artifacts/chromium-resize.png",
+      "stored": "docs/evidence/examples/rendering-contracts/target/screenshots/chromium-resize.png",
+      "kind": "current-screenshot",
+      "bytes": 3164,
+      "sha256": "a19d05b0cb686c5561d88dd7e7a1b3edae996b9ded6b217deb2ae6e69875a383"
+    },
+    {
+      "origin": "output/rendering-contracts/attempt-02-artifacts/chromium-contrast.png",
+      "stored": "docs/evidence/examples/rendering-contracts/target/screenshots/chromium-contrast.png",
+      "kind": "current-screenshot",
+      "bytes": 3161,
+      "sha256": "73cb82e94929db1d861a4b7c87c95e6e1faec8414058cb06d305184a00d6b725"
+    },
+    {
+      "origin": "output/rendering-contracts/attempt-02-artifacts/firefox.png",
+      "stored": "docs/evidence/examples/rendering-contracts/target/screenshots/firefox.png",
+      "kind": "current-screenshot",
+      "bytes": 6664,
+      "sha256": "8729aa185617f197db5a7671f42a8bbc83842acad68a51ddaf6f265120a0daa3"
+    },
+    {
+      "origin": "output/rendering-contracts/attempt-02-artifacts/firefox-resize.png",
+      "stored": "docs/evidence/examples/rendering-contracts/target/screenshots/firefox-resize.png",
+      "kind": "current-screenshot",
+      "bytes": 6664,
+      "sha256": "868137cb7edb1db936c7529065e1b4c2177c01aa4913d364044f7e90c183004c"
+    },
+    {
+      "origin": "output/rendering-contracts/attempt-02-artifacts/firefox-contrast.png",
+      "stored": "docs/evidence/examples/rendering-contracts/target/screenshots/firefox-contrast.png",
+      "kind": "current-screenshot",
+      "bytes": 6661,
+      "sha256": "09a71013ab385250db0423cc402d55f11bea05033de5f32fac0edb48cedc00db"
+    },
+    {
+      "origin": "output/rendering-contracts/attempt-02-artifacts/webkit.png",
+      "stored": "docs/evidence/examples/rendering-contracts/target/screenshots/webkit.png",
+      "kind": "current-screenshot",
+      "bytes": 4159,
+      "sha256": "54cf3eb789e54c12ff62f91ebcb9753fada43d14e92f0cbe9295b0400f28e8b0"
+    },
+    {
+      "origin": "output/rendering-contracts/attempt-02-artifacts/webkit-resize.png",
+      "stored": "docs/evidence/examples/rendering-contracts/target/screenshots/webkit-resize.png",
+      "kind": "current-screenshot",
+      "bytes": 4159,
+      "sha256": "e35111917329036bd708cc3f232fe28a7215b8491b379234ded5aaebcbceceb9"
+    },
+    {
+      "origin": "output/rendering-contracts/attempt-02-artifacts/webkit-contrast.png",
+      "stored": "docs/evidence/examples/rendering-contracts/target/screenshots/webkit-contrast.png",
+      "kind": "current-screenshot",
+      "bytes": 4156,
+      "sha256": "08de7ea9c139c0e04b12ddfe404e6079b190b298c09f42581fd5463357cb5197"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/final-fixed.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/final-fixed.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 218828,
+      "sha256": "1868ac356a3dd8acb4f697c03ee221e20b6d89cacc6d5968b0640194d151281c"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/channel-reflection.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/channel-reflection.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 17664,
+      "sha256": "006fa5e5c2e5a1321d9628e2c46377056b6de23c3f116bda6ed5ebca85e271cc"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/channel-refraction.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/channel-refraction.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 163500,
+      "sha256": "14b11eb6206286d9947b49a80b64d79145a3cd6d6e9a33e4a07756202804f95d"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/channel-depth.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/channel-depth.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 22024,
+      "sha256": "ba318d6dee39f78c52d21edd91b26066550b3c456557e25dcda72db9861f5285"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/channel-caustics.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/channel-caustics.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 191466,
+      "sha256": "fa6a62f26ae96c2c12e112ef67318fff7f36c5ff6b74ad979c67b191d315ea06"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/final-repeat.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/final-repeat.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 218828,
+      "sha256": "1868ac356a3dd8acb4f697c03ee221e20b6d89cacc6d5968b0640194d151281c"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/without-reflection.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/without-reflection.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 206096,
+      "sha256": "81fcc75ec9223a945ba79ef9f4f69cc8b7f7b51c422ea2827a30d676ac7aab90"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/without-refraction.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/without-refraction.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 138054,
+      "sha256": "e34362e078b599f64a68c6c41ff654e0053a0c26f6799dacef40db1648a07037"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/without-depth.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/without-depth.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 228641,
+      "sha256": "3e2eb91eb3327da6335d2c8bd048236a3d5abe9504e6950e9c0e3c1f114fdae0"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/without-caustics.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/without-caustics.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 201054,
+      "sha256": "70a04d9ec671ab7d926eebde8c13fea932ef4c65e77cc6c8b62ec84500f3f79f"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/without-overlays.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/without-overlays.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 218244,
+      "sha256": "95e05331edb2dd9178136dc01b3d86d3f096d28f9681d77028f5ce46eb6ba314"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/fin-background.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/fin-background.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 218244,
+      "sha256": "95e05331edb2dd9178136dc01b3d86d3f096d28f9681d77028f5ce46eb6ba314"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/fin-with-depth.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/fin-with-depth.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 218828,
+      "sha256": "1868ac356a3dd8acb4f697c03ee221e20b6d89cacc6d5968b0640194d151281c"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/fin-no-depth-negative-control.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/fin-no-depth-negative-control.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 218851,
+      "sha256": "32ea1fa9828eee1e823fd5dd7566f72c0511de607a5d7650f8d8c4a8c0c606af"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/pointer-ripple.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/pointer-ripple.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 220481,
+      "sha256": "040ec5393691ae26101bac24290cb1d1aabb7fd7f67dca01d50f9db406453d80"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/rain-disabled-no-overlays.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/rain-disabled-no-overlays.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 219842,
+      "sha256": "0bf7e0d488e02ff41d530337fe8b21be3bc634c133a92deba1f2a916964227c8"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/rain-enabled-no-overlays.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/rain-enabled-no-overlays.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 263180,
+      "sha256": "0cc5a64eb733d856188917aac59349ddee0144a5c529a71bd2dcb6f9ffd121f6"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/rain.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/rain.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 266954,
+      "sha256": "fc35be45f8db134dca51fe77c5dd3170ca2ce4c0fc1c28789dc7298943515388"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/resized.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/resized.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 190630,
+      "sha256": "b75a28e8bd7fece17d0219974e41d3f9704104f79a795c92f84cea294da69c71"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium/report.json",
+      "stored": "docs/evidence/examples/rendering-contracts/water/chromium/report.json",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 38156,
+      "sha256": "5dd58419ff0d39fda88c43b76140fdbc0b3eabeaec80ae56f314900157da4ac0"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/final-fixed.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/final-fixed.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 249281,
+      "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/channel-reflection.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/channel-reflection.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 15715,
+      "sha256": "b59c5bdfd5ffa99e335b45043e696322ff7eacc749bd5fa907dc375a9acd0305"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/channel-refraction.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/channel-refraction.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 184972,
+      "sha256": "31e23a7bbca68ac90a77ac07331a938eaaab6ed52e778d0627538c379298aef5"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/channel-depth.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/channel-depth.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 23112,
+      "sha256": "def3a21d9752a052d87b898d34883f14bca10e359af2c02d5582861a434c831f"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/channel-caustics.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/channel-caustics.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 214582,
+      "sha256": "9d2a9d31c0c4724890be9bbe906798351225c7251451c0fb4d03eb80b254f2c5"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/final-repeat.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/final-repeat.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 249281,
+      "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/without-reflection.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/without-reflection.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 233782,
+      "sha256": "9f55c61e90900e990597b30db1d7eeef8021b50fdea47aa3122c6cf615225308"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/without-refraction.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/without-refraction.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 157593,
+      "sha256": "055bb575fba2eb65e5b30429e9a39f0c380c4e4180d7b18fa26ce6c17b6a224b"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/without-depth.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/without-depth.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 257882,
+      "sha256": "55d155549f3b4a13f2803c4a0406aa5db16e7f48d066a584663a6031607b5ad7"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/without-caustics.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/without-caustics.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 222031,
+      "sha256": "f805977ea2a268cc419209d34a454003ae83d108e9c47b5257525797a0c99524"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/without-overlays.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/without-overlays.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 248000,
+      "sha256": "584977416e6e774a641c82fcb2170fa6bb43168f1e18ec07b5b7e780834bb5a4"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/fin-background.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/fin-background.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 248000,
+      "sha256": "584977416e6e774a641c82fcb2170fa6bb43168f1e18ec07b5b7e780834bb5a4"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/fin-with-depth.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/fin-with-depth.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 249281,
+      "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/fin-no-depth-negative-control.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/fin-no-depth-negative-control.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 249327,
+      "sha256": "deb48847fac6d630c462cbe8cc175d31fe508efe39a8c253226d92881a6e1769"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/pointer-ripple.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/pointer-ripple.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 250812,
+      "sha256": "f3b10358ef50a5d317659363167eda04e27364f7d220325ea6b58f7d4da75eb2"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/rain-disabled-no-overlays.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/rain-disabled-no-overlays.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 249331,
+      "sha256": "1273e5cf7abe41253585ff097d63edc477c47da39a6c58303ae64f9a8932352d"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/rain-enabled-no-overlays.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/rain-enabled-no-overlays.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 289762,
+      "sha256": "18ff58cab8f1841367fe64a7ce0b3eb94fd40e8643f2d07db29134d99b4614f3"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/rain.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/rain.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 294272,
+      "sha256": "776db46f14c3c48b0d5f91f2e86b5cff3d58ffe70ddec453bbf6b70d78d4990f"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/resized.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/resized.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 208039,
+      "sha256": "b81df02e26de8513db68b7567a24e1eb801e9ca8605b8e5b40beb1f31c8db53f"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox/report.json",
+      "stored": "docs/evidence/examples/rendering-contracts/water/firefox/report.json",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 38156,
+      "sha256": "0551c355ff2cfe2c8ee50a7e1848fbec9543b428e2940f7c43e41e1822b9fe7e"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/final-fixed.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/final-fixed.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 236982,
+      "sha256": "2224472376aa0491653e48e35259f560962d821505f1da1fa01e362245938ce9"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/channel-reflection.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/channel-reflection.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 15919,
+      "sha256": "c54568764a87d0e2dbdff27cc042afbccdeb6e7c8fbe7e739d9a7518a34d9ed5"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/channel-refraction.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/channel-refraction.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 175564,
+      "sha256": "dd6ab6e9c1b2c2d504bd84db7fa6513a3187609e3f605a6b50ea555614b92888"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/channel-depth.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/channel-depth.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 21734,
+      "sha256": "f0cb7ce54140bd993477b84845aa39063a7b956ffe471c681f9289c5a3626451"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/channel-caustics.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/channel-caustics.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 201351,
+      "sha256": "552d4030b84e9d79c96cd08c91b1d70ec76794c84071cae3fa9285ed1230eab5"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/final-repeat.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/final-repeat.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 236982,
+      "sha256": "2224472376aa0491653e48e35259f560962d821505f1da1fa01e362245938ce9"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/without-reflection.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/without-reflection.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 222390,
+      "sha256": "8f94df66f18c6bc4af1b37d8c6dad60838d284214f2373a46a3b6165c586e727"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/without-refraction.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/without-refraction.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 149863,
+      "sha256": "f546aa0847704fa8db287ee1b62b04875b81107acdb2389d7c47635a72688e72"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/without-depth.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/without-depth.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 245651,
+      "sha256": "48713ae6f091716f9b433cd6275233036a656d63b9ba3fa53b3128f11e683f66"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/without-caustics.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/without-caustics.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 214640,
+      "sha256": "e5aacea32c3a9e3837fff75042f213ac8be618b766b340f7f35ad8b518747698"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/without-overlays.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/without-overlays.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 236246,
+      "sha256": "318cefa169f40051acea9ffb3e01df11b9cde3e21d8ded8252f3ffbcd397c821"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/fin-background.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/fin-background.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 236246,
+      "sha256": "318cefa169f40051acea9ffb3e01df11b9cde3e21d8ded8252f3ffbcd397c821"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/fin-with-depth.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/fin-with-depth.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 236982,
+      "sha256": "2224472376aa0491653e48e35259f560962d821505f1da1fa01e362245938ce9"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/fin-no-depth-negative-control.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/fin-no-depth-negative-control.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 237004,
+      "sha256": "4b295eb1cc884d359e084478f0bf715f8341429a4ddbf29b7603d7c650a5e41d"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/pointer-ripple.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/pointer-ripple.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 238823,
+      "sha256": "7a828ce66d1b506a441dcf109d9ad7e646d7418a8d476e37a4280c17cfef0201"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/rain-disabled-no-overlays.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/rain-disabled-no-overlays.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 238067,
+      "sha256": "c9aeca6a7f3a4a7e6bb11e0f837a21292eee5428ce107c748662db14b069243e"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/rain-enabled-no-overlays.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/rain-enabled-no-overlays.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 284735,
+      "sha256": "4858c67f0eac9c2b9e7b7d6462c0497a8045866aaa9b6a299a0f7aebae329bb8"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/rain.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/rain.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 288970,
+      "sha256": "bfbb5d71c9c81550917b7fa6c2a149911313c368507be9933c71641ea1379f24"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/resized.png",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/resized.png",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 13248,
+      "sha256": "706ede529c7ebfdf06b455bd8b8dac6834c230378cd4d065accdea1b1711613e"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit/report.json",
+      "stored": "docs/evidence/examples/rendering-contracts/water/webkit/report.json",
+      "kind": "current-water-report-or-screenshot",
+      "bytes": 38154,
+      "sha256": "3089eff962dfe28495894caf09ac38b8b2a6c78e58426dc6ec0fc358a34d1146"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/chromium-initial.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/chromium-initial.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 97346,
+      "sha256": "c9b1d4541f11360348b030c14838582cce22152e426bb62d7abcf066f510925a"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/chromium-exposure.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/chromium-exposure.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 95697,
+      "sha256": "a705078ce65756c5f9c9ab7c889c016bee175ab26d80b25fae9df1a07374b7e1"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/chromium-no-tonemap.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/chromium-no-tonemap.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 95553,
+      "sha256": "b37b8b7b5dd9bea27c93237aab1fbd9075f9cb6818fe82fa927c056593601675"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/chromium-unfiltered.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/chromium-unfiltered.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 95004,
+      "sha256": "9470764da2ab15b9a9b529fcd6d5ec22ccc7d61f13a3b1ccbcec29e6f28da5da"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/chromium-reset.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/chromium-reset.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 97346,
+      "sha256": "c9b1d4541f11360348b030c14838582cce22152e426bb62d7abcf066f510925a"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/chromium-reloaded.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/chromium-reloaded.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 97346,
+      "sha256": "c9b1d4541f11360348b030c14838582cce22152e426bb62d7abcf066f510925a"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/chromium.json",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/chromium.json",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 12952,
+      "sha256": "7663a72691d42725718c483129849d23995b42c6409d621b133f56e268210f6c"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/firefox-initial.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/firefox-initial.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 135063,
+      "sha256": "0eea57601990aa2b41e9e308181e14dbf79e95ed96ca5a8e7f7f58b0c3997f16"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/firefox-exposure.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/firefox-exposure.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 132718,
+      "sha256": "6ef883cfdf4104ec5e1d366a8572ecb05388a4ab0f515bb6cfe053a13fc6d753"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/firefox-no-tonemap.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/firefox-no-tonemap.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 131726,
+      "sha256": "6c729fa58870782ccdc4c075e90575910b545a5990eabae035e45945b1355e50"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/firefox-unfiltered.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/firefox-unfiltered.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 131344,
+      "sha256": "ee84d457d0b455b4b61f5388ef517186a6de01cb46f7bd848f880f3637af7f4b"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/firefox-reset.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/firefox-reset.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 135063,
+      "sha256": "0eea57601990aa2b41e9e308181e14dbf79e95ed96ca5a8e7f7f58b0c3997f16"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/firefox-reloaded.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/firefox-reloaded.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 135063,
+      "sha256": "0eea57601990aa2b41e9e308181e14dbf79e95ed96ca5a8e7f7f58b0c3997f16"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/firefox.json",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/firefox.json",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 12938,
+      "sha256": "72d9d95558f9fa7b0ae68709898b91863dd0671965358ed79035d9b778b4ac23"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/webkit-initial.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/webkit-initial.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 102624,
+      "sha256": "545f7f7913926087a8499088cf086f38df7833aaed649843ec3369b946f7bdb4"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/webkit-exposure.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/webkit-exposure.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 100680,
+      "sha256": "df9950ffc2bc4daa5b79ff7075c6dec9177b0acfd985f3f0c387ae80b11934ce"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/webkit-no-tonemap.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/webkit-no-tonemap.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 100176,
+      "sha256": "671f84b07908e9bd34699488a1459597331ef278adc7f4e2261e7e53155df23b"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/webkit-unfiltered.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/webkit-unfiltered.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 100371,
+      "sha256": "147278eb36fd3147945d5f73590af57130261db15404b938d7c91926deef2336"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/webkit-reset.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/webkit-reset.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 102624,
+      "sha256": "545f7f7913926087a8499088cf086f38df7833aaed649843ec3369b946f7bdb4"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/webkit-reloaded.png",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/webkit-reloaded.png",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 102624,
+      "sha256": "545f7f7913926087a8499088cf086f38df7833aaed649843ec3369b946f7bdb4"
+    },
+    {
+      "origin": "output/hdr-color-pipeline/attempt-1791184450694/webkit.json",
+      "stored": "docs/evidence/examples/rendering-contracts/hdr/webkit.json",
+      "kind": "current-hdr-report-or-screenshot",
+      "bytes": 12929,
+      "sha256": "e2d19276b96be7cadb91076c8dc500cd37064d0940e09086f0de0185c9f76c06"
+    },
+    {
+      "origin": "output/water-multipass/native-queue/report.json",
+      "stored": "docs/evidence/examples/rendering-contracts/native-queue/report.json",
+      "kind": "current-native-queue-proof",
+      "bytes": 69363,
+      "sha256": "6fed59e8b6b55472531d0a9996a37dd03e2609b1d6726bfd26a50306170772c2"
+    },
+    {
+      "origin": "output/water-multipass/native-queue/frame.png",
+      "stored": "docs/evidence/examples/rendering-contracts/native-queue/frame.png",
+      "kind": "current-native-queue-proof",
+      "bytes": 218828,
+      "sha256": "1868ac356a3dd8acb4f697c03ee221e20b6d89cacc6d5968b0640194d151281c"
+    },
+    {
+      "origin": "output/rendering-contracts/attempt-01.json",
+      "stored": "docs/evidence/examples/rendering-contracts/history/target-attempt-01-fail.json",
+      "kind": "historical-failure-not-current",
+      "bytes": 67658,
+      "sha256": "1ab2bf42ed2f5262f7540ef2d817c8f8ab762f42da6a9a6cd2dca2537ebaacec"
+    },
+    {
+      "origin": "output/rendering-contracts/firefox-read-cache-diagnosis.json",
+      "stored": "docs/evidence/examples/rendering-contracts/history/firefox-read-cache-diagnosis.json",
+      "kind": "historical-diagnosis",
+      "bytes": 2765,
+      "sha256": "f1a41674f296072286d7bedc709988851e15f96be0490481fd8a52da692de7a1"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-spec-validation.json",
+      "stored": "docs/evidence/examples/rendering-contracts/history/spec-validation-attempt-01-fail.json",
+      "kind": "historical-failure-not-current",
+      "bytes": 430,
+      "sha256": "60a6bca6680abd359bd61d47553388f38317182076d21a08c461cb151de8d9e8"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/waves.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/waves.glsl",
+      "kind": "current-example-source",
+      "bytes": 1646,
+      "sha256": "a62250bb66a472e06d89a1b18053597f6585e12fe5a5b58c3da6bc76767dc0fc"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/scene.vert.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/scene.vert.glsl",
+      "kind": "current-example-source",
+      "bytes": 215,
+      "sha256": "01b471210b32005b2c0602f3e7870fcf4f2252d8afb19b699508f5bf433b9494"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/scene.frag.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/scene.frag.glsl",
+      "kind": "current-example-source",
+      "bytes": 587,
+      "sha256": "d0a241d0c118050610301671b4b705124ff1b88d9f4d30c373ea8113e6fb19fc"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/water.vert.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/water.vert.glsl",
+      "kind": "current-example-source",
+      "bytes": 361,
+      "sha256": "c89b13790c44013d4ed8f5b376a0da9ac93d2254053c46e5f756d02d342e32ff"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/water.frag.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/water.frag.glsl",
+      "kind": "current-example-source",
+      "bytes": 1648,
+      "sha256": "bd273a0690eeaa0d85ba813d77cbf92c0eb8264fb2d3bc72236a9062526524de"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/caustic.vert.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/caustic.vert.glsl",
+      "kind": "current-example-source",
+      "bytes": 725,
+      "sha256": "6ea4807bbb63d0427c4a1cb869be6841e081b2f2f757b371426adf1284a2dbfd"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/caustic.frag.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/caustic.frag.glsl",
+      "kind": "current-example-source",
+      "bytes": 129,
+      "sha256": "1fbd30fb5440963e352c4e3e22f82414d68b4a1e34cba5bc5b18b2c00c0ba2ed"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/debug.vert.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/debug.vert.glsl",
+      "kind": "current-example-source",
+      "bytes": 92,
+      "sha256": "d53c3e3924b448aa86447a6b4bf7adc0bb721548556c95915c265f320d9b9f98"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/debug.frag.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/debug.frag.glsl",
+      "kind": "current-example-source",
+      "bytes": 493,
+      "sha256": "3f164645b0316640745418d299ae1175d8e31f7bb200c485a80bf0adaac79237"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/overlay.vert.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/overlay.vert.glsl",
+      "kind": "current-example-source",
+      "bytes": 114,
+      "sha256": "c40e81a01c025ff61845cd1638ac6f8502c7a22e21c51275de52a42d5d6d1e62"
+    },
+    {
+      "origin": "examples/water-multipass/shaders/overlay.frag.glsl",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/shaders/overlay.frag.glsl",
+      "kind": "current-example-source",
+      "bytes": 245,
+      "sha256": "d54896c5b20a9274016d344e9b2a2d8893c17a040d53026a21360d16b51722f7"
+    },
+    {
+      "origin": "examples/water-multipass/generate-effects.mjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/generate-effects.mjs",
+      "kind": "current-example-source",
+      "bytes": 3594,
+      "sha256": "987b89df76c90469dc74b8a27b0a94ddc3dc5e3dd672b71d8aaca9ddef8ae9ef"
+    },
+    {
+      "origin": "examples/water-multipass/scene.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/scene.effect.json",
+      "kind": "current-example-source",
+      "bytes": 6987,
+      "sha256": "66fb116f476d2c960d3b59d64585bbb29dfbc8400f362e3fed8c950df54150b3"
+    },
+    {
+      "origin": "examples/water-multipass/water.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/water.effect.json",
+      "kind": "current-example-source",
+      "bytes": 14493,
+      "sha256": "c2cdb872e4dd0d6ba64d95c68495cdcaf626f486f368dbf1a24876f151403e9b"
+    },
+    {
+      "origin": "examples/water-multipass/caustic.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/caustic.effect.json",
+      "kind": "current-example-source",
+      "bytes": 9610,
+      "sha256": "63e226bc336f996e95e5feb4d29d10848de0795a1c01ff9600fe0d44c93bffba"
+    },
+    {
+      "origin": "examples/water-multipass/debug.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/debug.effect.json",
+      "kind": "current-example-source",
+      "bytes": 6567,
+      "sha256": "423e52fc681e7cab7375a169d0f06dbba29ef7416f11f9c33f5cfd3b230ff0a0"
+    },
+    {
+      "origin": "examples/water-multipass/overlay.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/overlay.effect.json",
+      "kind": "current-example-source",
+      "bytes": 5279,
+      "sha256": "8fc04d2af9e441d80543cd7cb883a4f36fca70d21ec45cdbeb8924391c5d1643"
+    },
+    {
+      "origin": "examples/water-multipass/index.html",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/index.html",
+      "kind": "current-example-source",
+      "bytes": 3016,
+      "sha256": "fab2955a846c755be1a64083bcdebea53e5c0428dde7129e9c5687d0ad3e4040"
+    },
+    {
+      "origin": "examples/water-multipass/src/main.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/src/main.ts",
+      "kind": "current-example-source",
+      "bytes": 25937,
+      "sha256": "dcca27a41321fd442a0c22984f7f8503060d93d7de03b2232c178a2ca2e287eb"
+    },
+    {
+      "origin": "examples/water-multipass/example.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/example.json",
+      "kind": "current-example-source",
+      "bytes": 3164,
+      "sha256": "aaaf23d6c90c8f1cb7676e555b783243c4ae4a7535983824702f26e10e894d73"
+    },
+    {
+      "origin": "examples/water-multipass/README.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/README.md",
+      "kind": "current-example-source",
+      "bytes": 5262,
+      "sha256": "3af65b5fa6ad849aed157a184f5a8f286a6ac65435a7b1b67203a21275cb3d67"
+    },
+    {
+      "origin": "examples/water-multipass/verify-browser.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/water-multipass/verify-browser.cjs",
+      "kind": "current-example-source",
+      "bytes": 16711,
+      "sha256": "4a36181a7f517c01d5c5cf427488e37b10b36f4bca969b879c36fdc5f2841e97"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/generate-assets.mjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/generate-assets.mjs",
+      "kind": "current-example-source",
+      "bytes": 8816,
+      "sha256": "915a65e0c8a0919104828a875ead3aa258942789298c0f0ab651dff8d73428d7"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/assets/environment.bin",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/assets/environment.bin",
+      "kind": "current-example-source",
+      "bytes": 32760,
+      "sha256": "d505c257703c16bea501cf01c1db27a6539957679ce382a43d8f21baed731c3e"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/assets/ggx-prefiltered.bin",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/assets/ggx-prefiltered.bin",
+      "kind": "current-example-source",
+      "bytes": 32760,
+      "sha256": "ab6f31646de651543dcba6603fac2d7f4fa0e1fc74eb4457ea7786c1eb6b4a26"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/assets/environment.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/assets/environment.json",
+      "kind": "current-example-source",
+      "bytes": 2339,
+      "sha256": "6e4952e3d6ee21b5d6b6d65a04bbdbf2b9a5f1406186d90000cd9481292bd621"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/assets/LICENSE.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/assets/LICENSE.md",
+      "kind": "current-example-source",
+      "bytes": 1105,
+      "sha256": "6180739800d17a3775d153cbfed96f6d103408196f064e213ad5b4e876a36e65"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/color-input.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/color-input.effect.json",
+      "kind": "current-example-source",
+      "bytes": 6317,
+      "sha256": "98b1aef0f48958dff7c183cda5637ea4f11b612c8a42a4b669a71224d5d3bd1f"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/source.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/source.effect.json",
+      "kind": "current-example-source",
+      "bytes": 5597,
+      "sha256": "bb16d8020495009bd4345f5faf5869b1f5a1a3f3fd678dedfd22cd01299c6ad1"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/output.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/output.effect.json",
+      "kind": "current-example-source",
+      "bytes": 6339,
+      "sha256": "842cca22b82a29e9dcc8007ea9edc6da8ca025f055ceb6beb0e2212dc517c00b"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/src/main.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/src/main.ts",
+      "kind": "current-example-source",
+      "bytes": 19318,
+      "sha256": "d4516378711d5865d33a04bbb098c81dea87a863f43689d3340da1790c2bf6d2"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/index.html",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/index.html",
+      "kind": "current-example-source",
+      "bytes": 4039,
+      "sha256": "9957445296ec8a730120a8e63fbe3bc553a2cf8520d416d17c5bcb473dbc2400"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/example.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/example.json",
+      "kind": "current-example-source",
+      "bytes": 3012,
+      "sha256": "01e0008ab4f994c84b5c76aa9b95dee60593250e61081748589ad4e6f69bc9a2"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/verify.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/verify.cjs",
+      "kind": "current-example-source",
+      "bytes": 11590,
+      "sha256": "ac25983c5b70857a4d7322a467e2d4e8c2d6d04fdaa404753c7866966a7634de"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/README.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/README.md",
+      "kind": "current-example-source",
+      "bytes": 4926,
+      "sha256": "4478a8fb9fa644c6e710da7bcfe78360e008e5d5b97590e3ef0100d36346d4ed"
+    },
+    {
+      "origin": "examples/hdr-color-pipeline/typecheck.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/hdr-color-pipeline/typecheck.cjs",
+      "kind": "current-example-source",
+      "bytes": 1229,
+      "sha256": "444a69ff81de232299c0b8957f39a583f1f2e9a3d6da0e47f684de4bb4846106"
+    },
+    {
+      "origin": "examples/shared/bench.html",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/shared/bench.html",
+      "kind": "current-shared-source",
+      "bytes": 832,
+      "sha256": "1fd2016771d99f07045a1cb9ab970dea76d18c6cbb6b89062288e339737b8e2f"
+    },
+    {
+      "origin": "examples/shared/bench.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/shared/bench.ts",
+      "kind": "current-shared-source",
+      "bytes": 7595,
+      "sha256": "94de633289e045408378d9b1621f9bf597ed16099ed42e18e17e74dff4ddab3f"
+    },
+    {
+      "origin": "examples/shared/scene-kit.js",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/shared/scene-kit.js",
+      "kind": "current-shared-source",
+      "bytes": 2608,
+      "sha256": "15c0d3b2cf7c639119a7bd4b25633ddde73d85aa28418ddf54ae5d41b6595be3"
+    },
+    {
+      "origin": "examples/shared/asset-lifecycle.js",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/shared/asset-lifecycle.js",
+      "kind": "current-shared-source",
+      "bytes": 5595,
+      "sha256": "c2bc01e8c73ab866f11194fc802bb8ce464b3738bfecf8d30cf5967907e5e346"
+    },
+    {
+      "origin": "examples/shared/shader-blocks.js",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/shared/shader-blocks.js",
+      "kind": "current-shared-source",
+      "bytes": 8627,
+      "sha256": "31e9577ae7f99a740f3053550435c78278b644c466397f6b2588c3404e4b22ab"
+    },
+    {
+      "origin": "examples/shared/canvas-texture.js",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/shared/canvas-texture.js",
+      "kind": "current-shared-source",
+      "bytes": 525,
+      "sha256": "99454a4370c557d221deac3a7e747325ee2f284e30b862b8d49bbd6e72d7cc9c"
+    },
+    {
+      "origin": "examples/shared/batching-routes.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/examples/shared/batching-routes.ts",
+      "kind": "current-shared-source",
+      "bytes": 10732,
+      "sha256": "181c96f75142e4a487d5dc5dfcc8a885e86e2308d1c019a4cba6a6be5661bfc6"
+    },
+    {
+      "origin": "tools/verify/rendering-contracts.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/verify/rendering-contracts.cjs",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 9135,
+      "sha256": "f1873897f4170b3bfc3abba6de3bc5197130e821d30785050a04a81a6041b256"
+    },
+    {
+      "origin": "tools/debug/effect-layout.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/debug/effect-layout.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 16256,
+      "sha256": "4962380276707df7c722d4427fec7af11740e9e8c477951c63a9a6d0383326df"
+    },
+    {
+      "origin": "tools/debug/probes/rendering-contracts/index.html",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/debug/probes/rendering-contracts/index.html",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 2079,
+      "sha256": "222bc8df18c934c2b4036a103321a5bcb32349a5831ddf81c1455d257cce3a11"
+    },
+    {
+      "origin": "tools/debug/probes/rendering-contracts/main.js",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/debug/probes/rendering-contracts/main.js",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 26056,
+      "sha256": "238673c7943a5d998f8979a2bb5a6fb647c156b74ebf85cc27b7a838bc25a697"
+    },
+    {
+      "origin": "tools/debug/probes/rendering-contracts/source.effect-spec.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/debug/probes/rendering-contracts/source.effect-spec.json",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 391,
+      "sha256": "e7862c5481de1f574c6a53e1040b1cdb1d23d2d144fe8324246a5c1b0671eee7"
+    },
+    {
+      "origin": "tools/debug/probes/rendering-contracts/sample.effect-spec.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/debug/probes/rendering-contracts/sample.effect-spec.json",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 645,
+      "sha256": "76f2570330f5245a1956f339f38744c72a13e9cdad88923e3b1f5c70ea1c6d43"
+    },
+    {
+      "origin": "tools/debug/probes/rendering-contracts/source.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/debug/probes/rendering-contracts/source.effect.json",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 5097,
+      "sha256": "8574edba2d1b0c06f14ba3d51ad84168a9c837d1d363f7d489f966ea9268d249"
+    },
+    {
+      "origin": "tools/debug/probes/rendering-contracts/sample.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/debug/probes/rendering-contracts/sample.effect.json",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 5826,
+      "sha256": "4e27f8e00c384cbdff31d587f1ebf7c62a2669a817a1ff3fc13897a687894c31"
+    },
+    {
+      "origin": "tools/debug/probes/rendering-contracts/depth.effect-spec.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/debug/probes/rendering-contracts/depth.effect-spec.json",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 807,
+      "sha256": "58971750503d2942fb8ec6e1fa6e4a9d2fde4da687a3e3703738dc029b8acc9c"
+    },
+    {
+      "origin": "tools/debug/probes/rendering-contracts/depth.effect.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/debug/probes/rendering-contracts/depth.effect.json",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 6157,
+      "sha256": "5b25c1d1b9914b752d203989fbbe855558aa15cb8a353e00b3ac4fc6af4124f2"
+    },
+    {
+      "origin": "src/air/rendering/render-target.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/src/air/rendering/render-target.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 18988,
+      "sha256": "b374dea8c9d8068d7d353b7aa4d34d7ce5a323ec2f2abdbea9a70fcc4b866b96"
+    },
+    {
+      "origin": "src/air/rendering/color-contract.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/src/air/rendering/color-contract.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 8579,
+      "sha256": "94eece036d30bddfaf0e2c774ab62a0d9be6ee11b17881293c1c2d6a2b6f338a"
+    },
+    {
+      "origin": "src/air/rendering/material-diagnostics.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/src/air/rendering/material-diagnostics.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 3165,
+      "sha256": "0b6dc7e1afe3022c8b958ee59323ec374ed037b1095b35b628e176fa6b60dff5"
+    },
+    {
+      "origin": "src/air/index.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/src/air/index.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 1356,
+      "sha256": "1682c68c7e019e2b9d865f1d04e3cb29a8ec1612deba3d7e69afeb353bdaa8ad"
+    },
+    {
+      "origin": "src/cocos/asset/assets/asset-enum.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/src/cocos/asset/assets/asset-enum.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 12671,
+      "sha256": "06eef7b41be56eca078b356a552c2963e571bfb5f533dee6680a332f34bcffc5"
+    },
+    {
+      "origin": "src/cocos/asset/assets/render-texture.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/src/cocos/asset/assets/render-texture.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 11178,
+      "sha256": "97f0c048214da4fe805b3a858bef80343d372cf6c3341024e7dd87101f43962b"
+    },
+    {
+      "origin": "src/cocos/render-scene/core/render-window.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/src/cocos/render-scene/core/render-window.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 14290,
+      "sha256": "daa3a6467ec6a5c8b85a35df4580ddfa1678e1eef671778f16b9f0b0e257856d"
+    },
+    {
+      "origin": "src/cocos/render-scene/scene/camera.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/src/cocos/render-scene/scene/camera.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 44903,
+      "sha256": "e8b8399d6f655683add3b66baf7c8213e2be283ceb882ab28a57fad4e57d8af2"
+    },
+    {
+      "origin": "src/cocos/rendering/render-pipeline.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/src/cocos/rendering/render-pipeline.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 34871,
+      "sha256": "3a1648e3961d76e2708a67fe6dcc1abdbd6c070c59e936d756d2b0703de635a9"
+    },
+    {
+      "origin": "tools/debug/render-queue.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/debug/render-queue.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 8914,
+      "sha256": "cdd60d2b442a9a17ca7da7b30d41ace43308841f14ec791c5f73f85059fd622b"
+    },
+    {
+      "origin": "tools/verify/consumer-acceptance.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/verify/consumer-acceptance.cjs",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 21766,
+      "sha256": "ae3ebf1a6bf414818b7adf97b245985114feee29ed870047656123508a4b09bd"
+    },
+    {
+      "origin": "tools/verify/example-spec-browser.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/verify/example-spec-browser.cjs",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 50081,
+      "sha256": "c527ea29e6c8fdc82c014652a745ce2d8555a408b647c653e6f210fcd6e428c1"
+    },
+    {
+      "origin": "tools/verify/api-trace.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/verify/api-trace.cjs",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 45968,
+      "sha256": "0c29e8aa44587cb84f16696f42c27b2b6d3745e073289721643c0f9ab69407d9"
+    },
+    {
+      "origin": "tools/verify/example-spec-common.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/verify/example-spec-common.cjs",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 11567,
+      "sha256": "37f4c94b175bde531476360583e5cb60daedce780d7e25d28ce2dd532c49f2a3"
+    },
+    {
+      "origin": "tools/examples/spec-fixlines.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/examples/spec-fixlines.cjs",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 9180,
+      "sha256": "13b53d804790232f92f05158051a71db6dddee0a39bfd2d8043f345683414519"
+    },
+    {
+      "origin": "tools/examples/spec-validate.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/examples/spec-validate.cjs",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 21118,
+      "sha256": "48eeabd37cd7f7adb4eb23a44510366b9738d7a26214b013bd0af815fdad4242"
+    },
+    {
+      "origin": "tools/examples/generate-manifest.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/examples/generate-manifest.cjs",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 3313,
+      "sha256": "8d1bb52fa01d7c623b2979c3aa18e605bd6df5b53a165ebcb10f83f5a4295e40"
+    },
+    {
+      "origin": "package.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/package.json",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 5496,
+      "sha256": "a76ff405f7f66d351bb1910fb8baa57f9c9dd79df91db5a3b3454818b4e07153"
+    },
+    {
+      "origin": "tsconfig.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tsconfig.json",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 3722,
+      "sha256": "84faebcc67c54aed9e0c389205bf7d49eebff59a1be0d1a8433ea6af43221428"
+    },
+    {
+      "origin": "src/cc.config.json",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/src/cc.config.json",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 33136,
+      "sha256": "846e0ebcc52713bc0dc89256b6631f75521b527d0a8d53874ef92f72d861d342"
+    },
+    {
+      "origin": "README.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/README.md",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 15962,
+      "sha256": "a3b727300b677ea5a381214af15b121d9e31d7bb4af521179ea4018cc78cec07"
+    },
+    {
+      "origin": "tools/README.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/tools/README.md",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 29437,
+      "sha256": "b2011b8cbfbddad86569d030ecbe4af7e75d042117e9da454cb203c7a89f4fb7"
+    },
+    {
+      "origin": "docs/UPSTREAM.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/docs/UPSTREAM.md",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 38945,
+      "sha256": "ce4f7746cc79dba43d2065c6d9e9e78f1cd98ca7ea58672e6b7ca87f9e7c557a"
+    },
+    {
+      "origin": "docs/manual/rendering-contracts.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/docs/manual/rendering-contracts.md",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 8066,
+      "sha256": "b0dc523adc8ddeed8e8dcd78ff35b13231adfc14dd751ab217d86eaf603e8212"
+    },
+    {
+      "origin": "docs/reference/rendering-color-diagnostics.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/docs/reference/rendering-color-diagnostics.md",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 6480,
+      "sha256": "38ae5bfcf16b174ce9abdece80cba964e03a9f629f61ed0a6e885edbd0d472f6"
+    },
+    {
+      "origin": "docs/manual/index.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/docs/manual/index.md",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 20132,
+      "sha256": "6af76afb64a71e45415952dc656b3ce7326f6755acef96ad24b18dcc39d2ca99"
+    },
+    {
+      "origin": "test/smoke/render-dx-color-contract.test.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/test/smoke/render-dx-color-contract.test.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 5453,
+      "sha256": "96ceaa680000355fc5f2f31536d93890306865ee3eb4e693993b17df1b3e555a"
+    },
+    {
+      "origin": "test/smoke/render-dx-material-diagnostics.test.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/test/smoke/render-dx-material-diagnostics.test.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 3264,
+      "sha256": "9dcad979c9f3d2bb2f0f33eab1cd8f3568b2b12c2fe7510dc954283be4c2ae3e"
+    },
+    {
+      "origin": "test/smoke/render-dx-depth-layout.test.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/test/smoke/render-dx-depth-layout.test.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 2951,
+      "sha256": "2b7f87e25f3dd59ae80775798dd404e50a079da774b0d3cc8c7677fa79f9897e"
+    },
+    {
+      "origin": "test/smoke/render-dx-native-attachments.test.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/test/smoke/render-dx-native-attachments.test.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 3728,
+      "sha256": "2588a74d18129b291fddaf40bde4741ef69c745d8b6192c6de4d7b2f0e0b1d4e"
+    },
+    {
+      "origin": "test/smoke/render-dx-target-options.test.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/test/smoke/render-dx-target-options.test.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 9129,
+      "sha256": "30a81581950a539912a431f3c166ce901bc8a5fba3eb4e2050d68b65626fa17e"
+    },
+    {
+      "origin": "test/smoke/render-dx-render-queue.test.ts",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/test/smoke/render-dx-render-queue.test.ts",
+      "kind": "current-implementation-or-validator-source",
+      "bytes": 3967,
+      "sha256": "81fb934d3c1d71707c6fa078482cd34c237fdbeb5436f032e2ddb6531135154b"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-typecheck.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-typecheck.log",
+      "kind": "observed-command-log",
+      "bytes": 59,
+      "sha256": "d996ffd3b476e6e5dffd2f9cd9fa997108aaae86a665274146f03b527f950e94"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-build-all.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-build-all.log",
+      "kind": "observed-command-log",
+      "bytes": 133023,
+      "sha256": "422d1da7a9776691cda82503797b6e1a07b78e129837414f3da62a936ec1ff8d"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-render-tests.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-render-tests.log",
+      "kind": "observed-command-log",
+      "bytes": 446,
+      "sha256": "f7ad4e2fd1ee17ec023ec8f9aa84ddc9c63ade582ce9a6a95490f155acc87729"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-web-only.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-web-only.log",
+      "kind": "observed-command-log",
+      "bytes": 375,
+      "sha256": "1e407b1b3a761a0e473a0a39eea81ac11754ab23490fded02c7def0fbd0f2478"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-file-map.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-file-map.log",
+      "kind": "observed-command-log",
+      "bytes": 343,
+      "sha256": "e72cb4ec5d2692d27e0a2ea862ec1ded99697f34e027a2226a2e9e10b8391b53"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-consumer.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-consumer.log",
+      "kind": "observed-command-log",
+      "bytes": 576,
+      "sha256": "4157517b5fea23006dc57dea6b876bbe07494389fad51930cd26c9567b598b7f"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-formal-chromium.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-formal-chromium.log",
+      "kind": "observed-command-log",
+      "bytes": 332,
+      "sha256": "04173d319a5d173b869d7fc8784140ba265e8f12e8d55c0264ff85d79812b78f"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-formal-chromium-attempt2.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-formal-chromium-attempt2.log",
+      "kind": "observed-command-log",
+      "bytes": 328,
+      "sha256": "378df0959f46d325024ed360051ee0db5eabe7bdb1ec30291f2fdfe91fd497e4"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-chromium.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-water-chromium.log",
+      "kind": "observed-command-log",
+      "bytes": 39512,
+      "sha256": "77f0f416b45b36c92ffaddf26829b935d0fed6552f0df9d316e755bc8950fb3f"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-doc-format-first.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-doc-format-first.log",
+      "kind": "observed-command-log",
+      "bytes": 127,
+      "sha256": "d721a33bf8bacae7038bf9d43b3fdba99c4f55f5b9136b1fb8fd81b684fc259e"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-doc-format.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-doc-format.log",
+      "kind": "observed-command-log",
+      "bytes": 68,
+      "sha256": "f20510a9da4717c51c4cffee6d0dd88d6c9a723d0a83711d01216f5b48961283"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-firefox.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-water-firefox.log",
+      "kind": "observed-command-log",
+      "bytes": 39512,
+      "sha256": "9f45c6226098c1da3c9c70ab247ac89ebc5a3f32e1950efb75435ddd71e2229a"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-consumer-final.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-consumer-final.log",
+      "kind": "observed-command-log",
+      "bytes": 576,
+      "sha256": "6ff5500a15de78255aab462295a4344420829f2c1c44d629fc1a8bf7c678f311"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-water-webkit.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-water-webkit.log",
+      "kind": "observed-command-log",
+      "bytes": 39510,
+      "sha256": "af15fefec906be7af9cf50d0762afa7e969d3846bc091ff29049819c91ffea9e"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-manual-consistency.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-manual-consistency.log",
+      "kind": "observed-command-log",
+      "bytes": 1021,
+      "sha256": "6853d0c9bb7a4d7ef4c74a383885e9210d59d71a3d3833ffb9f5fe6a7cb1127e"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-hdr-all.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-hdr-all.log",
+      "kind": "observed-command-log",
+      "bytes": 195,
+      "sha256": "078defded4b754d50e93f9ad59c432c1d6d21237f8f39255dd6cdc67b70dfd87"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-target-format.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-target-format.log",
+      "kind": "observed-command-log",
+      "bytes": 68,
+      "sha256": "f20510a9da4717c51c4cffee6d0dd88d6c9a723d0a83711d01216f5b48961283"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-formal-firefox.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-formal-firefox.log",
+      "kind": "observed-command-log",
+      "bytes": 318,
+      "sha256": "18e0f24e258f01354d4424d72990dd2af72b8d420b241253f2d378fe6f49f2cd"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-formal-webkit.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-formal-webkit.log",
+      "kind": "observed-command-log",
+      "bytes": 317,
+      "sha256": "56d46bf8cd44657c97e18c087a1f50803dd25c3e5ed52427feaa62da5f5be40d"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-chromium-artifacts/hdr-color-pipeline.png",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-chromium-artifacts/hdr-color-pipeline.png",
+      "kind": "historical-formal-failure-artifact",
+      "bytes": 48495,
+      "sha256": "b7ba3a811bfd95c8b04f188be9e34affe652a927176bd61af322b5785e71764b"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-chromium-artifacts/water-multipass.png",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-chromium-artifacts/water-multipass.png",
+      "kind": "historical-formal-failure-artifact",
+      "bytes": 162656,
+      "sha256": "962f3d235ba2640eb7426f2de9ab929474ea259d0159011e94e9d2161914c89a"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-chromium.json",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-chromium.json",
+      "kind": "historical-formal-failure",
+      "bytes": 12293,
+      "sha256": "eae60e9ee1a6b4a493ac737579d9b0da399d2560b71f760c7ff5a8943760922f"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/spec-validation.json",
+      "stored": "docs/evidence/examples/rendering-contracts/spec-validation.json",
+      "kind": "current-formal-report-or-artifact",
+      "bytes": 315,
+      "sha256": "56281eb63c9a9b3fa04410d8f33d9aa6f8151eaa7d4e7f0128d4215d6206424f"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-chromium-attempt2-artifacts/hdr-color-pipeline.png",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-chromium-attempt2-artifacts/hdr-color-pipeline.png",
+      "kind": "current-formal-report-or-artifact",
+      "bytes": 48495,
+      "sha256": "b7ba3a811bfd95c8b04f188be9e34affe652a927176bd61af322b5785e71764b"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-chromium-attempt2-artifacts/water-multipass.png",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-chromium-attempt2-artifacts/water-multipass.png",
+      "kind": "current-formal-report-or-artifact",
+      "bytes": 162656,
+      "sha256": "962f3d235ba2640eb7426f2de9ab929474ea259d0159011e94e9d2161914c89a"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-chromium-attempt2.json",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-chromium-attempt2.json",
+      "kind": "current-formal-report-or-artifact",
+      "bytes": 12510,
+      "sha256": "00f8ee45a198f1790b69281e914414bf3de2720ef7b1c047a758f8eec98b9b34"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-firefox-artifacts/hdr-color-pipeline.png",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-firefox-artifacts/hdr-color-pipeline.png",
+      "kind": "current-formal-report-or-artifact",
+      "bytes": 37370,
+      "sha256": "57fd5a66ccff4e46fc5e5fb7ffac38b81b9937e39ea1df3895db21a74343c567"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-firefox-artifacts/water-multipass.png",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-firefox-artifacts/water-multipass.png",
+      "kind": "current-formal-report-or-artifact",
+      "bytes": 122193,
+      "sha256": "7ce1d9a427a485aea81474f5f26d866956b2a66b680a5e1d909111bfefa4796e"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-firefox.json",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-firefox.json",
+      "kind": "current-formal-report-or-artifact",
+      "bytes": 12489,
+      "sha256": "85b43f8ff62e1ebe00b343f760a1322a34088c78f8e66024327df2ac66db9538"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-webkit-artifacts/hdr-color-pipeline.png",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-webkit-artifacts/hdr-color-pipeline.png",
+      "kind": "current-formal-report-or-artifact",
+      "bytes": 31198,
+      "sha256": "839be14ce9ae5ff22de1fac7cd2083707372d2fcd7177d70d27368c99f771ec0"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-webkit-artifacts/water-multipass.png",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-webkit-artifacts/water-multipass.png",
+      "kind": "current-formal-report-or-artifact",
+      "bytes": 122497,
+      "sha256": "30c72dc805f0d87e86025900ef496b54dc4eaefa04c0426bab811bdaeadf443d"
+    },
+    {
+      "origin": "docs/evidence/examples/rendering-contracts/formal-webkit.json",
+      "stored": "docs/evidence/examples/rendering-contracts/formal-webkit.json",
+      "kind": "current-formal-report-or-artifact",
+      "bytes": 12486,
+      "sha256": "12e32bbdf4bd2491fc71bd770c07b45cba67bfa50a84393eda1afe8304f45b69"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-doc-refs.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-doc-refs.log",
+      "kind": "observed-command-log",
+      "bytes": 295,
+      "sha256": "e0b926014ec9c6440b25dba869270d47d38d3f75c38c703fd81909e6427fef74"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-repo-format.log",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-repo-format.log",
+      "kind": "observed-command-log",
+      "bytes": 8111,
+      "sha256": "aff5d9a7dcb4278b03f630d145427af8c0c65ee67bca040cd0b825ac7e9be82f"
+    },
+    {
+      "origin": "output/rendering-contracts/archive-rendering.cjs",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/archive-producer.cjs",
+      "kind": "integration-archive-producer",
+      "bytes": 9524,
+      "sha256": "eeeef68def76f54dc8d307aa285946b9edb7556b3220a846e1818a1cb031cbeb"
+    },
+    {
+      "origin": "ai/ledgers/rendering-contracts.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/ai/ledgers/rendering-contracts.md",
+      "kind": "current-ledger-source",
+      "bytes": 7531,
+      "sha256": "c97786aaf116daaa4c15d16105cf4d6fe974d5adcdb192d2dbda19ce48931535"
+    },
+    {
+      "origin": "ai/README.md",
+      "stored": "docs/evidence/examples/rendering-contracts/sources/ai/README.md",
+      "kind": "current-ledger-index",
+      "bytes": 2458,
+      "sha256": "091177cc060ca0b1ff4a2eaf34ab38450df39dca717fbf67eaee5490679dc033"
+    },
+    {
+      "origin": "output/rendering-contracts/integration-format-baseline.json",
+      "stored": "docs/evidence/examples/rendering-contracts/logs/integration-format-baseline.json",
+      "kind": "observed-baseline-comparison",
+      "bytes": 114,
+      "sha256": "c303dcf6a5fd3893f77301537d97cd4e14c615f358afeb7f972efe621304a6d2"
+    }
+  ],
+  "gates": {
+    "buildAll": "PASS exit0",
+    "typecheck": "PASS exit0",
+    "webOnly": "PASS exit0",
+    "fileMap": "PASS exit0 modified109",
+    "consumer": "PASS exit0 installed exports612",
+    "targetedTests": "PASS 22/22 in six suites",
+    "strictNewSpecs": "PASS 2 frozen 0 issues",
+    "formalNewExamples": "PASS 2/2 in all three browsers with native subset semantics",
+    "docReferences": "PASS 1220 refs 0 unresolved",
+    "targetAndDocsFormat": "PASS",
+    "repoFormat": "FAIL: 159 HEAD-unchanged baseline warnings; new scope formatting PASS",
+    "manualConsistency": "FAIL pre-existing module-only recipe contract; not suppressed"
+  }
+}

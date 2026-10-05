@@ -1,0 +1,118 @@
+{
+ "name": "cocosair.js",
+ "version": "1.0.0",
+ "description": "Cocos AIR — Agent-first Interactive Runtime. A code-first, standalone Web TypeScript engine extracted from cocos4.",
+ "license": "MIT",
+ "type": "commonjs",
+ "main": "build/npm/cocosair.module.js",
+ "module": "build/npm/cocosair.module.js",
+ "types": "./build/cocosair.module.d.ts",
+ "exports": {
+  ".": {
+   "types@<5.0": "./build/cocosair.legacy.d.ts",
+   "types": "./build/cocosair.module.d.ts",
+   "import": "./build/npm/cocosair.module.js",
+   "default": "./build/npm/cocosair.module.js"
+  },
+  "./bootstrap": {
+   "types@<5.0": "./build/bootstrap.legacy.d.ts",
+   "types": "./build/bootstrap.d.ts",
+   "import": "./build/npm/bootstrap.js",
+   "default": "./build/npm/bootstrap.js"
+  }
+ },
+ "typesVersions": {
+  "<5.0": {
+   "build/cocosair.module.d.ts": ["build/cocosair.legacy.d.ts"]
+  }
+ },
+ "files": [
+  "build/package.json",
+  "build/npm/cocosair.module.js",
+  "build/npm/cocosair.module.min.js",
+  "build/npm/bootstrap.js",
+  "build/bootstrap.d.ts",
+  "build/bootstrap.legacy.d.ts",
+  "build/cocosair.legacy.d.ts",
+  "build/cocosair.module.d.ts",
+  "build/gltf-decoders/package.json",
+  "build/gltf-decoders/",
+  "docs/*.md",
+  "docs/*.json",
+  "docs/gltf/",
+  "docs/guides/",
+  "docs/reference/",
+  "docs/manual/",
+  "docs/notes/",
+  "README.md",
+  "LICENSE",
+  "licenses/"
+ ],
+ "engines": {
+  "node": ">=18.0.0"
+ },
+ "scripts": {
+  "build": "node tools/build/build.cjs --format esm",
+  "build:min": "node tools/build/build.cjs --format esm --min",
+  "build:dts": "node tools/build/build-dts.cjs",
+  "build:all": "node tools/build/build.cjs --format esm && node tools/build/build.cjs --format esm --min && node tools/build/build-dts.cjs && node tools/build/prepare-package.cjs && node tools/verify/published-artifacts.cjs",
+  "prepack": "node tools/build/prepare-package.cjs",
+  "build:system": "node tools/build/build.cjs --format system",
+  "baseline": "node tools/baseline/build-baseline.cjs",
+  "analyze": "node tools/analyze/dep-graph.cjs",
+  "vendor:npm": "node tools/build/vendor-package-subset.cjs",
+  "typecheck": "tsc -p tsconfig.json",
+  "verify:decoders": "node tools/verify/decoder-audit.cjs",
+  "verify:test-inventory": "node tools/verify/test-inventory.cjs",
+  "verify:api-coverage": "node tools/examples/coverage-report.cjs",
+  "verify:release": "node tools/verify/release-readiness.cjs",
+  "capabilities": "node tools/verify/update-capabilities.cjs",
+  "verify:web-only": "node tools/verify/verify-web-only.cjs",
+  "verify:file-map": "node tools/verify/verify-file-map.cjs",
+  "verify:licenses": "node tools/verify/verify-licenses.cjs",
+  "test": "jest",
+  "dev": "node tools/dev/dev-server.cjs",
+  "verify:consumer": "node tools/verify/consumer-acceptance.cjs",
+  "verify:perf-lifecycle": "node tools/verify/perf-lifecycle.cjs",
+  "verify:tarball-consumer": "node tools/verify/tarball-browser-consumer.cjs",
+  "verify:benchmark": "tsc -p tools/benchmark/tsconfig.json && node tools/verify/benchmark-regression.cjs",
+  "verify:v06-gate": "node tools/verify/recipe-review-gate.cjs",
+  "verify:browser-matrix": "node tools/verify/browser-matrix.cjs",
+  "verify:wasm-backends": "node tools/verify/verify-wasm-backends.cjs",
+  "verify:custom-exports": "node tools/verify/verify-custom-exports.cjs",
+  "verify:doc-refs": "node tools/verify/verify-doc-refs.cjs",
+  "verify:port-candidate": "node tools/verify/port-gap-candidate-snapshot.cjs",
+  "verify:port-evidence": "node tools/verify/port-gap-evidence-schema.cjs",
+  "verify:port-env": "node tools/verify/port-gap-env-preflight.cjs",
+  "verify:feature-exports": "node tools/verify/verify-feature-exports.cjs",
+  "verify:example-chain": "node tools/verify/verify-example-chain.cjs",
+  "gallery:manifest": "node tools/examples/generate-manifest.cjs",
+  "gallery:api": "node tools/examples/api-inventory.cjs --write",
+  "format": "prettier --write \"examples/**/*.{ts,js,json,html,css}\" \"docs/manual/examples/**/*.{ts,js,json,html,css}\" \"tools/debug/probes/**/*.{ts,js,json,html}\" \"tools/verify/trial-probes.cjs\" \"tools/verify/shader-probe.cjs\" \"tools/examples/spec-fixlines.cjs\" \"tools/dev/resolve-script.cjs\" \"tools/verify/dev-tooling.cjs\" \".github/workflows/format.yml\" \"docs/manual/script-component-workflow.md\" \"docs/manual/custom-shaders.md\" \"tools/verify/dev-samples.cjs\"",
+  "format:check": "prettier --check \"examples/**/*.{ts,js,json,html,css}\" \"docs/manual/examples/**/*.{ts,js,json,html,css}\" \"tools/debug/probes/**/*.{ts,js,json,html}\" \"tools/verify/trial-probes.cjs\" \"tools/verify/shader-probe.cjs\" \"tools/examples/spec-fixlines.cjs\" \"tools/dev/resolve-script.cjs\" \"tools/verify/dev-tooling.cjs\" \".github/workflows/format.yml\" \"docs/manual/script-component-workflow.md\" \"docs/manual/custom-shaders.md\" \"tools/verify/dev-samples.cjs\"",
+  "verify:g3-tooling": "node tools/verify/dev-tooling.cjs",
+  "verify:g3-dev": "node tools/verify/dev-samples.cjs"
+ },
+ "devDependencies": {
+  "@babel/preset-env": "^7.29.7",
+  "@cocos/babel-preset-cc": "2.2.0",
+  "@cocos/box2d": "1.0.2",
+  "@cocos/cannon": "1.2.8",
+  "@cocos/ccbuild": "^2.3.21",
+  "@cocos/dragonbones-js": "^1.0.1",
+  "@types/jest": "^24.9.1",
+  "babel-jest": "28.1.3",
+  "esbuild": "^0.28.2",
+  "fs-extra": "^7.0.1",
+  "jest": "^28.0.2",
+  "jest-environment-jsdom": "^28.0.2",
+  "jsdom": "19.0.0",
+  "prettier": "3.9.9",
+  "ts-jest": "^28.0.8",
+  "tslib": "^2.8.1",
+  "typescript": "^4.9.5"
+ },
+ "overrides": {
+  "decamelize": "1.0.0"
+ }
+}

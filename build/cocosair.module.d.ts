@@ -57074,6 +57074,138 @@
         lateUpdate(): void;
     }
     export const defaultTransmissionVisibility: number;
+    export function createAirRenderTarget(options: AirRenderTargetOptions): AirRenderTarget;
+    export type AirTargetColorFormat = "rgba8" | "rgba16f" | "rgba32f" | "srgb8-alpha8";
+    export interface AirRenderTargetOptions {
+        name?: string;
+        /** Reference backing-pixel dimensions, before scale; not CSS dimensions. */
+        width: number;
+        height: number;
+        scale?: number;
+        colorFormat?: AirTargetColorFormat;
+        depthFormat?: "none" | "depth24-stencil8";
+        samples?: 1 | 2 | 4 | 8;
+        filter?: "nearest" | "linear";
+        sampleFallback?: "error" | "lower";
+    }
+    export interface AirRenderTargetInfo {
+        readonly requested: Readonly<AirRenderTargetOptions>;
+        readonly effective: Readonly<{
+            colorFormat: AirTargetColorFormat;
+            depthFormat: "none" | "depth24-stencil8";
+            samples: number;
+            filter: "nearest" | "linear";
+            scale: number;
+        }>;
+        readonly width: number;
+        readonly height: number;
+        readonly samples: number;
+        readonly generation: number;
+        readonly framebufferComplete: boolean;
+        readonly resolveRequired: boolean;
+        readonly disposed: boolean;
+        readonly supportedSamples: readonly number[];
+        readonly glSamples: number;
+    }
+    /** Owns native RenderTextures. WebGL2 legacy camera paths resolve before the next camera samples. */
+    export class AirRenderTarget {
+        get renderTexture(): RenderTexture;
+        readonly texture: __private._cocos_asset_assets_texture_base__TextureBase;
+        readonly depthTexture: __private._cocos_asset_assets_texture_base__TextureBase | null;
+        constructor(options: AirRenderTargetOptions);
+        get info(): Readonly<AirRenderTargetInfo>;
+        resize(baseWidth: number, baseHeight: number): void;
+        attachCamera(camera: Camera, beforeRender?: () => void): () => void;
+        resolve(): void;
+        bindColor(material: Material, property: string, passIdx?: number): () => void;
+        bindDepth(material: Material, property: string, passIdx?: number): () => void;
+        readColor(region?: {
+            x?: number;
+            y?: number;
+            width?: number;
+            height?: number;
+        }): Float32Array | Uint8Array;
+        dispose(): void;
+    }
+    export function isAirSRGBFormat(format: number): boolean;
+    export function isAirDepthFormat(format: number): boolean;
+    /** Omitting format preserves the caller's native default. An explicitly undefined format is a mistake. */
+    export function resolveAirTextureFormat(info: {
+        format?: gfx.Format | __private._cocos_asset_assets_asset_enum__PixelFormat;
+    }, defaultFormat?: gfx.Format): gfx.Format;
+    /** Pure preflight: never changes texture bytes, standard material decode or framebuffer output. */
+    export function validateAirTextureColorContract(input: AirTextureColorContract): Readonly<Required<AirTextureColorContract>>;
+    /** Validate actual native offline cube data; AUTO box-filtered mipmaps are never called PMREM. */
+    export function validateAirPrefilteredEnvironment(cube: TextureCube, contract: AirPrefilteredEnvironmentContract): AirPrefilteredEnvironmentReceipt;
+    /** Bind already validated native data. Does not generate convolution, enable IBL or change exposure. */
+    export function bindAirPrefilteredEnvironment(scene: Scene, cube: TextureCube, contract: AirPrefilteredEnvironmentContract): AirPrefilteredEnvironmentReceipt;
+    export function describeAirTextureFormat(format: number): Readonly<{
+        format: number;
+        name: string;
+        srgb: boolean;
+        depth: boolean;
+    }>;
+    export class AirColorContractError extends TypeError {
+        readonly code: string;
+        readonly property: string;
+        constructor(code: string, property: string, message: string);
+    }
+    export interface AirTextureColorContract {
+        format?: gfx.Format | __private._cocos_asset_assets_asset_enum__PixelFormat;
+        usage: "color" | "linear-data" | "depth";
+        decode: "none" | "shader-srgb" | "hardware-srgb";
+    }
+    export interface AirPrefilteredEnvironmentContract {
+        distribution: "ggx";
+        roughnessLevels: readonly number[];
+        encoding: "linear" | "srgb" | "rgbe";
+        /** Identifies the producer/convolution recipe. This is caller attestation, not proof of filtering quality. */
+        source: string;
+    }
+    export interface AirPrefilteredEnvironmentReceipt {
+        readonly levels: number;
+        readonly format: number;
+        readonly source: string;
+        readonly lodMapping: "roughness*envmap.mipmapLevel (clamped)";
+    }
+    /** Read-only native pass/descriptor snapshot. Does not compile, mutate, draw or query the GPU.
+     * Priority/phase are submission inputs, not a prediction of final camera/depth-sorted draw order.
+     * Only material-set combined sampler textures are reported; global/local bindings belong to the renderer.
+     */
+    export function inspectAirMaterial(material: Material): readonly AirMaterialPassDiagnostic[];
+    export interface AirMaterialPassDiagnostic {
+        readonly index: number;
+        readonly program: string;
+        readonly propertyIndex: number;
+        readonly priority: number;
+        readonly phase: number;
+        readonly stage: number;
+        readonly depthTest: boolean;
+        readonly depthWrite: boolean;
+        readonly depthFunc: number;
+        readonly cullMode: number;
+        readonly blendTargets: readonly Readonly<{
+            blend: boolean;
+            blendSrc: number;
+            blendDst: number;
+            blendEq: number;
+            blendSrcAlpha: number;
+            blendDstAlpha: number;
+            blendAlphaEq: number;
+            blendColorMask: number;
+        }>[];
+        readonly textures: readonly Readonly<{
+            name: string;
+            binding: number;
+            index: number;
+            bound: boolean;
+            format?: ReturnType<typeof describeAirTextureFormat>;
+            width?: number;
+            height?: number;
+            mipLevels?: number;
+            comparison?: number;
+        }>[];
+    }
     export namespace rendering {
         export function createCustomPipeline(): BasicPipeline;
         export function setCustomPipeline(name: string, builder: PipelineBuilder): void;
@@ -58959,7 +59091,7 @@
          * @param info The render pipeline information
          */
         initialize(info: __private._cocos_rendering_render_pipeline__IRenderPipelineInfo): boolean;
-        createRenderPass(clearFlags: gfx.ClearFlags, colorFmt: gfx.Format, depthFmt: gfx.Format): gfx.RenderPass;
+        createRenderPass(clearFlags: gfx.ClearFlags, colorFmt: gfx.Format, depthFmt: gfx.Format, samples?: gfx.SampleCount, preserveDepth?: boolean): gfx.RenderPass;
         getRenderPass(clearFlags: gfx.ClearFlags, fbo: gfx.Framebuffer): gfx.RenderPass;
         newFramebufferByRatio(dyingFramebuffer: gfx.Framebuffer): gfx.Framebuffer;
         /**
@@ -59430,6 +59562,9 @@
              * 32位浮点数像素格式：RGBA32F。
              */
             RGBA32F = 44,
+            /** @en Linear half-float RGBA. Renderability and filtering require device capabilities.
+             * @zh 线性半浮点RGBA；作为渲染目标与过滤时必须检查设备能力。 */
+            RGBA16F = 41,
             /**
              * @en
              * 8-bit pixel format used as masks

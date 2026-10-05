@@ -1,0 +1,5 @@
+
+> cocosair.js@1.0.0 verify:doc-refs
+> node tools/verify/verify-doc-refs.cjs
+
+{"ok":true,"docs":148,"refsChecked":1220,"skippedCounts":{"glob":36,"external":0,"outOfRepo":0,"removedEvidence":42,"removedAudit":1},"baseline":{"entries":1,"hits":1},"unresolvedCount":0,"staleBaselineCount":0}

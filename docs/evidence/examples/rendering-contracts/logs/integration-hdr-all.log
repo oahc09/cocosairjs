@@ -1,0 +1,3 @@
+{"browser":"chromium","status":"PASS","checks":15,"failures":[]}
+{"browser":"firefox","status":"PASS","checks":15,"failures":[]}
+{"browser":"webkit","status":"PASS","checks":15,"failures":[]}

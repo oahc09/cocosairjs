@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="icon" href="data:," />
+        <title>Cocos AIR Rendering Contracts</title>
+        <style>
+            html,
+            body,
+            #GameDiv,
+            #Cocos3dGameContainer {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #151c28;
+            }
+            #GameCanvas {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            aside {
+                position: absolute;
+                top: 16px;
+                left: 20px;
+                color: #dbe7f6;
+                font: 14px/1.5 system-ui;
+            }
+            h1 {
+                font-size: 20px;
+                margin: 0;
+            }
+            button {
+                padding: 6px 10px;
+                margin: 8px 6px 0 0;
+            }
+            pre {
+                font-size: 12px;
+                max-height: 32vh;
+                overflow: auto;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div>
+        </div>
+        <aside>
+            <h1>Rendering Contracts</h1>
+            <div>Real attachments · resolved sampling · resize/rebind · depth · separate timings</div>
+            <button data-action="baseline">Inspect legacy baseline</button
+            ><button data-action="run">Run target contracts</button>
+            <button data-action="resize">Resize + rebind</button
+            ><button data-action="contrast">Change sampled contrast</button>
+            <pre id="status">Initializing WebGL2…</pre>
+        </aside>
+        <script type="module" src="./main.js"></script>
+    </body>
+</html>

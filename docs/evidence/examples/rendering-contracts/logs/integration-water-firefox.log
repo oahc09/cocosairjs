@@ -1,0 +1,1356 @@
+{
+  "scope": "water-multipass-runtime",
+  "browser": "firefox",
+  "completed": true,
+  "checks": [
+    {
+      "name": "five GLSL3 programs compile and link",
+      "ok": true,
+      "detail": [
+        {
+          "id": "scene",
+          "vertex": true,
+          "fragment": true,
+          "linked": true,
+          "logs": []
+        },
+        {
+          "id": "water",
+          "vertex": true,
+          "fragment": true,
+          "linked": true,
+          "logs": []
+        },
+        {
+          "id": "caustic",
+          "vertex": true,
+          "fragment": true,
+          "linked": true,
+          "logs": []
+        },
+        {
+          "id": "debug",
+          "vertex": true,
+          "fragment": true,
+          "linked": true,
+          "logs": []
+        },
+        {
+          "id": "overlay",
+          "vertex": true,
+          "fragment": true,
+          "linked": true,
+          "logs": []
+        }
+      ]
+    },
+    {
+      "name": "requested/effective HDR and complete attachments",
+      "ok": true,
+      "detail": {
+        "reflection": {
+          "requested": {
+            "name": "Water reflection",
+            "width": 800,
+            "height": 600,
+            "scale": 0.75,
+            "colorFormat": "rgba16f",
+            "depthFormat": "depth24-stencil8",
+            "samples": 4,
+            "sampleFallback": "lower"
+          },
+          "effective": {
+            "colorFormat": "rgba16f",
+            "depthFormat": "depth24-stencil8",
+            "filter": "nearest",
+            "samples": 4,
+            "scale": 0.75
+          },
+          "width": 600,
+          "height": 450,
+          "samples": 4,
+          "generation": 1,
+          "framebufferComplete": true,
+          "resolveRequired": true,
+          "disposed": false,
+          "supportedSamples": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "glSamples": 4
+        },
+        "refraction": {
+          "requested": {
+            "name": "Water refraction",
+            "width": 800,
+            "height": 600,
+            "scale": 0.75,
+            "colorFormat": "rgba16f",
+            "depthFormat": "depth24-stencil8",
+            "samples": 4,
+            "sampleFallback": "lower"
+          },
+          "effective": {
+            "colorFormat": "rgba16f",
+            "depthFormat": "depth24-stencil8",
+            "filter": "nearest",
+            "samples": 4,
+            "scale": 0.75
+          },
+          "width": 600,
+          "height": 450,
+          "samples": 4,
+          "generation": 1,
+          "framebufferComplete": true,
+          "resolveRequired": true,
+          "disposed": false,
+          "supportedSamples": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "glSamples": 4
+        },
+        "caustics": {
+          "requested": {
+            "name": "Water caustics",
+            "width": 512,
+            "height": 512,
+            "colorFormat": "rgba16f",
+            "depthFormat": "none",
+            "samples": 1
+          },
+          "effective": {
+            "colorFormat": "rgba16f",
+            "depthFormat": "none",
+            "filter": "nearest",
+            "samples": 1,
+            "scale": 1
+          },
+          "width": 512,
+          "height": 512,
+          "samples": 1,
+          "generation": 1,
+          "framebufferComplete": true,
+          "resolveRequired": false,
+          "disposed": false,
+          "supportedSamples": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "glSamples": 0
+        }
+      }
+    },
+    {
+      "name": "real geometry and transparent depth state",
+      "ok": true,
+      "detail": {
+        "time": 1.25,
+        "seed": 1.7,
+        "paused": true,
+        "reflection": true,
+        "refraction": true,
+        "depth": true,
+        "caustics": true,
+        "overlays": true,
+        "rain": false,
+        "channel": "final",
+        "waveAmplitude": 0.115,
+        "distortion": 0.025,
+        "absorption": 1,
+        "mouseHits": 0,
+        "resizeCount": 0,
+        "frames": 20,
+        "targets": {
+          "reflection": {
+            "requested": {
+              "name": "Water reflection",
+              "width": 800,
+              "height": 600,
+              "scale": 0.75,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "samples": 4,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "nearest",
+              "samples": 4,
+              "scale": 0.75
+            },
+            "width": 600,
+            "height": 450,
+            "samples": 4,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": true,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 4
+          },
+          "refraction": {
+            "requested": {
+              "name": "Water refraction",
+              "width": 800,
+              "height": 600,
+              "scale": 0.75,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "samples": 4,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "nearest",
+              "samples": 4,
+              "scale": 0.75
+            },
+            "width": 600,
+            "height": 450,
+            "samples": 4,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": true,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 4
+          },
+          "caustics": {
+            "requested": {
+              "name": "Water caustics",
+              "width": 512,
+              "height": 512,
+              "colorFormat": "rgba16f",
+              "depthFormat": "none",
+              "samples": 1
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "none",
+              "filter": "nearest",
+              "samples": 1,
+              "scale": 1
+            },
+            "width": 512,
+            "height": 512,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 0
+          }
+        },
+        "geometry": {
+          "waterVertices": 10201,
+          "waterTriangles": 20000,
+          "fish": 3,
+          "splashes": 12,
+          "rainDrops": 0
+        },
+        "cameraOrder": [
+          {
+            "name": "Caustic Camera",
+            "priority": -40,
+            "mask": 8388608
+          },
+          {
+            "name": "Reflection Camera",
+            "priority": -30,
+            "mask": 1048576
+          },
+          {
+            "name": "Refraction Camera",
+            "priority": -20,
+            "mask": 3145728
+          },
+          {
+            "name": "Main Camera",
+            "priority": 0,
+            "mask": 24117248
+          },
+          {
+            "name": "Channel Camera",
+            "priority": 10,
+            "mask": 33554432
+          }
+        ],
+        "overlayState": [
+          {
+            "depthWrite": false,
+            "blend": true
+          },
+          {
+            "depthWrite": false,
+            "blend": true
+          },
+          {
+            "depthWrite": false,
+            "blend": true
+          }
+        ],
+        "drawCalls": 46
+      }
+    },
+    {
+      "name": "final-fixed: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "three genuine targets contain finite nonuniform pixels",
+      "ok": true,
+      "detail": {
+        "reflection": {
+          "min": 0.1109619140625,
+          "max": 0.53759765625,
+          "finite": true,
+          "distinct": 26,
+          "orange": 1234,
+          "cyan": 0
+        },
+        "refraction": {
+          "min": 0.02398681640625,
+          "max": 0.75341796875,
+          "finite": true,
+          "distinct": 94,
+          "orange": 0,
+          "cyan": 1487
+        },
+        "caustics": {
+          "min": 0,
+          "max": 0.72119140625,
+          "finite": true,
+          "distinct": 93,
+          "orange": 0,
+          "cyan": 0
+        }
+      }
+    },
+    {
+      "name": "above/below markers remain in correct clipped captures",
+      "ok": true,
+      "detail": {
+        "reflection": {
+          "min": 0.1109619140625,
+          "max": 0.53759765625,
+          "finite": true,
+          "distinct": 26,
+          "orange": 1234,
+          "cyan": 0
+        },
+        "refraction": {
+          "min": 0.02398681640625,
+          "max": 0.75341796875,
+          "finite": true,
+          "distinct": 94,
+          "orange": 0,
+          "cyan": 1487
+        },
+        "caustics": {
+          "min": 0,
+          "max": 0.72119140625,
+          "finite": true,
+          "distinct": 93,
+          "orange": 0,
+          "cyan": 0
+        }
+      }
+    },
+    {
+      "name": "channel-reflection: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "channel-refraction: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "channel-depth: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "channel-caustics: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "depth/reflection/refraction/caustics differ",
+      "ok": true,
+      "detail": {
+        "reflection": "b59c5bdfd5ffa99e335b45043e696322ff7eacc749bd5fa907dc375a9acd0305",
+        "refraction": "31e23a7bbca68ac90a77ac07331a938eaaab6ed52e778d0627538c379298aef5",
+        "depth": "def3a21d9752a052d87b898d34883f14bca10e359af2c02d5582861a434c831f",
+        "caustics": "9d2a9d31c0c4724890be9bbe906798351225c7251451c0fb4d03eb80b254f2c5"
+      }
+    },
+    {
+      "name": "linear depth at three known world-space floor points",
+      "ok": true,
+      "detail": [
+        {
+          "world": [
+            -4,
+            -2,
+            -2
+          ],
+          "x": 334,
+          "y": 280,
+          "expected": 0.7232222085694636,
+          "measured": 0.7215686274509804
+        },
+        {
+          "world": [
+            0,
+            -2,
+            -3
+          ],
+          "x": 479,
+          "y": 313,
+          "expected": 0.6589954754788883,
+          "measured": 0.6588235294117647
+        },
+        {
+          "world": [
+            3.7,
+            -2,
+            -1
+          ],
+          "x": 579,
+          "y": 413,
+          "expected": 0.5210247752124981,
+          "measured": 0.5215686274509804
+        }
+      ]
+    },
+    {
+      "name": "final-repeat: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "fixed state reproduces byte-identical canvas",
+      "ok": true,
+      "detail": [
+        {
+          "name": "final-fixed",
+          "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+        },
+        {
+          "name": "channel-reflection",
+          "sha256": "b59c5bdfd5ffa99e335b45043e696322ff7eacc749bd5fa907dc375a9acd0305"
+        },
+        {
+          "name": "channel-refraction",
+          "sha256": "31e23a7bbca68ac90a77ac07331a938eaaab6ed52e778d0627538c379298aef5"
+        },
+        {
+          "name": "channel-depth",
+          "sha256": "def3a21d9752a052d87b898d34883f14bca10e359af2c02d5582861a434c831f"
+        },
+        {
+          "name": "channel-caustics",
+          "sha256": "9d2a9d31c0c4724890be9bbe906798351225c7251451c0fb4d03eb80b254f2c5"
+        },
+        {
+          "name": "final-repeat",
+          "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+        },
+        {
+          "name": "without-reflection",
+          "sha256": "9f55c61e90900e990597b30db1d7eeef8021b50fdea47aa3122c6cf615225308"
+        },
+        {
+          "name": "without-refraction",
+          "sha256": "055bb575fba2eb65e5b30429e9a39f0c380c4e4180d7b18fa26ce6c17b6a224b"
+        },
+        {
+          "name": "without-depth",
+          "sha256": "55d155549f3b4a13f2803c4a0406aa5db16e7f48d066a584663a6031607b5ad7"
+        },
+        {
+          "name": "without-caustics",
+          "sha256": "f805977ea2a268cc419209d34a454003ae83d108e9c47b5257525797a0c99524"
+        },
+        {
+          "name": "without-overlays",
+          "sha256": "584977416e6e774a641c82fcb2170fa6bb43168f1e18ec07b5b7e780834bb5a4"
+        },
+        {
+          "name": "fin-background",
+          "sha256": "584977416e6e774a641c82fcb2170fa6bb43168f1e18ec07b5b7e780834bb5a4"
+        },
+        {
+          "name": "fin-with-depth",
+          "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+        },
+        {
+          "name": "fin-no-depth-negative-control",
+          "sha256": "deb48847fac6d630c462cbe8cc175d31fe508efe39a8c253226d92881a6e1769"
+        },
+        {
+          "name": "pointer-ripple",
+          "sha256": "f3b10358ef50a5d317659363167eda04e27364f7d220325ea6b58f7d4da75eb2"
+        },
+        {
+          "name": "rain-disabled-no-overlays",
+          "sha256": "1273e5cf7abe41253585ff097d63edc477c47da39a6c58303ae64f9a8932352d"
+        },
+        {
+          "name": "rain-enabled-no-overlays",
+          "sha256": "18ff58cab8f1841367fe64a7ce0b3eb94fd40e8643f2d07db29134d99b4614f3"
+        },
+        {
+          "name": "rain",
+          "sha256": "776db46f14c3c48b0d5f91f2e86b5cff3d58ffe70ddec453bbf6b70d78d4990f"
+        },
+        {
+          "name": "resized",
+          "sha256": "b81df02e26de8513db68b7567a24e1eb801e9ca8605b8e5b40beb1f31c8db53f"
+        }
+      ]
+    },
+    {
+      "name": "without-reflection: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "without-refraction: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "without-depth: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "without-caustics: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "without-overlays: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "each optical/transparent channel changes final pixels",
+      "ok": true,
+      "detail": {
+        "reflection": "9f55c61e90900e990597b30db1d7eeef8021b50fdea47aa3122c6cf615225308",
+        "refraction": "055bb575fba2eb65e5b30429e9a39f0c380c4e4180d7b18fa26ce6c17b6a224b",
+        "depth": "55d155549f3b4a13f2803c4a0406aa5db16e7f48d066a584663a6031607b5ad7",
+        "caustics": "f805977ea2a268cc419209d34a454003ae83d108e9c47b5257525797a0c99524",
+        "overlays": "584977416e6e774a641c82fcb2170fa6bb43168f1e18ec07b5b7e780834bb5a4"
+      }
+    },
+    {
+      "name": "fin-background: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "fin-with-depth: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "fin performs source-over alpha blending",
+      "ok": true,
+      "detail": {
+        "upper": {
+          "x": 401,
+          "y": 321,
+          "world": [
+            1.3865869511936524,
+            0.34469245794219733,
+            1.607256548539029
+          ],
+          "alpha": 0.45,
+          "tint": [
+            0.2,
+            0.82,
+            0.84
+          ]
+        },
+        "backgroundRGB": [
+          0.17647058823529413,
+          0.38823529411764707,
+          0.3058823529411765
+        ],
+        "foregroundRGB": [
+          0.18823529411764706,
+          0.5843137254901961,
+          0.5450980392156862
+        ],
+        "expectedRGB": [
+          0.18705882352941178,
+          0.582529411764706,
+          0.5462352941176472
+        ]
+      }
+    },
+    {
+      "name": "submerged fin is depth-occluded by water",
+      "ok": true,
+      "detail": {
+        "lower": {
+          "x": 401,
+          "y": 341,
+          "world": [
+            1.3865869511936524,
+            -0.06480754205780272,
+            1.607256548539029
+          ],
+          "alpha": 0.45,
+          "tint": [
+            0.2,
+            0.82,
+            0.84
+          ]
+        },
+        "lowerBackground": [
+          0.043137254901960784,
+          0.25098039215686274,
+          0.2235294117647059
+        ],
+        "lowerForeground": [
+          0.043137254901960784,
+          0.25098039215686274,
+          0.2235294117647059
+        ]
+      }
+    },
+    {
+      "name": "fin-no-depth-negative-control: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "depth-off negative control exposes submerged fin",
+      "ok": true,
+      "detail": {
+        "lowerForeground": [
+          0.043137254901960784,
+          0.25098039215686274,
+          0.2235294117647059
+        ],
+        "noDepthRGB": [
+          0.10980392156862745,
+          0.4980392156862745,
+          0.49019607843137253
+        ]
+      }
+    },
+    {
+      "name": "real pointer reaches water",
+      "ok": true,
+      "detail": 1
+    },
+    {
+      "name": "pointer-ripple: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "pointer ripple changes pixels at fixed time",
+      "ok": true,
+      "detail": [
+        {
+          "name": "final-fixed",
+          "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+        },
+        {
+          "name": "channel-reflection",
+          "sha256": "b59c5bdfd5ffa99e335b45043e696322ff7eacc749bd5fa907dc375a9acd0305"
+        },
+        {
+          "name": "channel-refraction",
+          "sha256": "31e23a7bbca68ac90a77ac07331a938eaaab6ed52e778d0627538c379298aef5"
+        },
+        {
+          "name": "channel-depth",
+          "sha256": "def3a21d9752a052d87b898d34883f14bca10e359af2c02d5582861a434c831f"
+        },
+        {
+          "name": "channel-caustics",
+          "sha256": "9d2a9d31c0c4724890be9bbe906798351225c7251451c0fb4d03eb80b254f2c5"
+        },
+        {
+          "name": "final-repeat",
+          "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+        },
+        {
+          "name": "without-reflection",
+          "sha256": "9f55c61e90900e990597b30db1d7eeef8021b50fdea47aa3122c6cf615225308"
+        },
+        {
+          "name": "without-refraction",
+          "sha256": "055bb575fba2eb65e5b30429e9a39f0c380c4e4180d7b18fa26ce6c17b6a224b"
+        },
+        {
+          "name": "without-depth",
+          "sha256": "55d155549f3b4a13f2803c4a0406aa5db16e7f48d066a584663a6031607b5ad7"
+        },
+        {
+          "name": "without-caustics",
+          "sha256": "f805977ea2a268cc419209d34a454003ae83d108e9c47b5257525797a0c99524"
+        },
+        {
+          "name": "without-overlays",
+          "sha256": "584977416e6e774a641c82fcb2170fa6bb43168f1e18ec07b5b7e780834bb5a4"
+        },
+        {
+          "name": "fin-background",
+          "sha256": "584977416e6e774a641c82fcb2170fa6bb43168f1e18ec07b5b7e780834bb5a4"
+        },
+        {
+          "name": "fin-with-depth",
+          "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+        },
+        {
+          "name": "fin-no-depth-negative-control",
+          "sha256": "deb48847fac6d630c462cbe8cc175d31fe508efe39a8c253226d92881a6e1769"
+        },
+        {
+          "name": "pointer-ripple",
+          "sha256": "f3b10358ef50a5d317659363167eda04e27364f7d220325ea6b58f7d4da75eb2"
+        },
+        {
+          "name": "rain-disabled-no-overlays",
+          "sha256": "1273e5cf7abe41253585ff097d63edc477c47da39a6c58303ae64f9a8932352d"
+        },
+        {
+          "name": "rain-enabled-no-overlays",
+          "sha256": "18ff58cab8f1841367fe64a7ce0b3eb94fd40e8643f2d07db29134d99b4614f3"
+        },
+        {
+          "name": "rain",
+          "sha256": "776db46f14c3c48b0d5f91f2e86b5cff3d58ffe70ddec453bbf6b70d78d4990f"
+        },
+        {
+          "name": "resized",
+          "sha256": "b81df02e26de8513db68b7567a24e1eb801e9ca8605b8e5b40beb1f31c8db53f"
+        }
+      ]
+    },
+    {
+      "name": "rain-disabled-no-overlays: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "rain-enabled-no-overlays: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "rain changes actual water pixels independently of overlay rain geometry",
+      "ok": true,
+      "detail": {
+        "dryWater": "1273e5cf7abe41253585ff097d63edc477c47da39a6c58303ae64f9a8932352d",
+        "wetWater": "18ff58cab8f1841367fe64a7ce0b3eb94fd40e8643f2d07db29134d99b4614f3"
+      }
+    },
+    {
+      "name": "24 real rain geometries",
+      "ok": true,
+      "detail": {
+        "time": 1.65,
+        "seed": 1.7,
+        "paused": true,
+        "reflection": true,
+        "refraction": true,
+        "depth": true,
+        "caustics": true,
+        "overlays": true,
+        "rain": true,
+        "channel": "final",
+        "waveAmplitude": 0.115,
+        "distortion": 0.025,
+        "absorption": 1,
+        "mouseHits": 1,
+        "resizeCount": 0,
+        "frames": 164,
+        "targets": {
+          "reflection": {
+            "requested": {
+              "name": "Water reflection",
+              "width": 800,
+              "height": 600,
+              "scale": 0.75,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "samples": 4,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "nearest",
+              "samples": 4,
+              "scale": 0.75
+            },
+            "width": 600,
+            "height": 450,
+            "samples": 4,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": true,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 4
+          },
+          "refraction": {
+            "requested": {
+              "name": "Water refraction",
+              "width": 800,
+              "height": 600,
+              "scale": 0.75,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "samples": 4,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "nearest",
+              "samples": 4,
+              "scale": 0.75
+            },
+            "width": 600,
+            "height": 450,
+            "samples": 4,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": true,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 4
+          },
+          "caustics": {
+            "requested": {
+              "name": "Water caustics",
+              "width": 512,
+              "height": 512,
+              "colorFormat": "rgba16f",
+              "depthFormat": "none",
+              "samples": 1
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "none",
+              "filter": "nearest",
+              "samples": 1,
+              "scale": 1
+            },
+            "width": 512,
+            "height": 512,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "glSamples": 0
+          }
+        },
+        "geometry": {
+          "waterVertices": 10201,
+          "waterTriangles": 20000,
+          "fish": 3,
+          "splashes": 12,
+          "rainDrops": 24
+        },
+        "cameraOrder": [
+          {
+            "name": "Caustic Camera",
+            "priority": -40,
+            "mask": 8388608
+          },
+          {
+            "name": "Reflection Camera",
+            "priority": -30,
+            "mask": 1048576
+          },
+          {
+            "name": "Refraction Camera",
+            "priority": -20,
+            "mask": 3145728
+          },
+          {
+            "name": "Main Camera",
+            "priority": 0,
+            "mask": 24117248
+          },
+          {
+            "name": "Channel Camera",
+            "priority": 10,
+            "mask": 33554432
+          }
+        ],
+        "overlayState": [
+          {
+            "depthWrite": false,
+            "blend": true
+          },
+          {
+            "depthWrite": false,
+            "blend": true
+          },
+          {
+            "depthWrite": false,
+            "blend": true
+          }
+        ],
+        "drawCalls": 70
+      }
+    },
+    {
+      "name": "rain: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "resize recreates targets, keeps current resolved bindings",
+      "ok": true,
+      "detail": {
+        "reflection": {
+          "requested": {
+            "name": "Water reflection",
+            "width": 640,
+            "height": 480,
+            "scale": 0.75,
+            "colorFormat": "rgba16f",
+            "depthFormat": "depth24-stencil8",
+            "samples": 4,
+            "sampleFallback": "lower"
+          },
+          "effective": {
+            "colorFormat": "rgba16f",
+            "depthFormat": "depth24-stencil8",
+            "filter": "nearest",
+            "samples": 4,
+            "scale": 0.75
+          },
+          "width": 480,
+          "height": 360,
+          "samples": 4,
+          "generation": 2,
+          "framebufferComplete": true,
+          "resolveRequired": true,
+          "disposed": false,
+          "supportedSamples": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "glSamples": 4
+        },
+        "refraction": {
+          "requested": {
+            "name": "Water refraction",
+            "width": 640,
+            "height": 480,
+            "scale": 0.75,
+            "colorFormat": "rgba16f",
+            "depthFormat": "depth24-stencil8",
+            "samples": 4,
+            "sampleFallback": "lower"
+          },
+          "effective": {
+            "colorFormat": "rgba16f",
+            "depthFormat": "depth24-stencil8",
+            "filter": "nearest",
+            "samples": 4,
+            "scale": 0.75
+          },
+          "width": 480,
+          "height": 360,
+          "samples": 4,
+          "generation": 2,
+          "framebufferComplete": true,
+          "resolveRequired": true,
+          "disposed": false,
+          "supportedSamples": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "glSamples": 4
+        },
+        "caustics": {
+          "requested": {
+            "name": "Water caustics",
+            "width": 512,
+            "height": 512,
+            "colorFormat": "rgba16f",
+            "depthFormat": "none",
+            "samples": 1
+          },
+          "effective": {
+            "colorFormat": "rgba16f",
+            "depthFormat": "none",
+            "filter": "nearest",
+            "samples": 1,
+            "scale": 1
+          },
+          "width": 512,
+          "height": 512,
+          "samples": 1,
+          "generation": 1,
+          "framebufferComplete": true,
+          "resolveRequired": false,
+          "disposed": false,
+          "supportedSamples": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "glSamples": 0
+        }
+      }
+    },
+    {
+      "name": "resized: no WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "owned resources released and rebuilt",
+      "ok": true,
+      "detail": {
+        "label": "water-multipass",
+        "held": 30,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      }
+    },
+    {
+      "name": "no runtime or WebGL errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "candidate and all example inputs stayed unchanged",
+      "ok": true,
+      "detail": {
+        "candidateStart": "72f37ee6f4fdd80e2fb89908e7c634ae422ce7fb52ab5d54812b43a2438650ba",
+        "sourceStart": [
+          {
+            "path": "caustic.effect.json",
+            "sha256": "63e226bc336f996e95e5feb4d29d10848de0795a1c01ff9600fe0d44c93bffba"
+          },
+          {
+            "path": "debug.effect.json",
+            "sha256": "423e52fc681e7cab7375a169d0f06dbba29ef7416f11f9c33f5cfd3b230ff0a0"
+          },
+          {
+            "path": "example.json",
+            "sha256": "aaaf23d6c90c8f1cb7676e555b783243c4ae4a7535983824702f26e10e894d73"
+          },
+          {
+            "path": "generate-effects.mjs",
+            "sha256": "987b89df76c90469dc74b8a27b0a94ddc3dc5e3dd672b71d8aaca9ddef8ae9ef"
+          },
+          {
+            "path": "index.html",
+            "sha256": "fab2955a846c755be1a64083bcdebea53e5c0428dde7129e9c5687d0ad3e4040"
+          },
+          {
+            "path": "overlay.effect.json",
+            "sha256": "8fc04d2af9e441d80543cd7cb883a4f36fca70d21ec45cdbeb8924391c5d1643"
+          },
+          {
+            "path": "README.md",
+            "sha256": "3af65b5fa6ad849aed157a184f5a8f286a6ac65435a7b1b67203a21275cb3d67"
+          },
+          {
+            "path": "scene.effect.json",
+            "sha256": "66fb116f476d2c960d3b59d64585bbb29dfbc8400f362e3fed8c950df54150b3"
+          },
+          {
+            "path": "shaders/caustic.frag.glsl",
+            "sha256": "1fbd30fb5440963e352c4e3e22f82414d68b4a1e34cba5bc5b18b2c00c0ba2ed"
+          },
+          {
+            "path": "shaders/caustic.vert.glsl",
+            "sha256": "6ea4807bbb63d0427c4a1cb869be6841e081b2f2f757b371426adf1284a2dbfd"
+          },
+          {
+            "path": "shaders/debug.frag.glsl",
+            "sha256": "3f164645b0316640745418d299ae1175d8e31f7bb200c485a80bf0adaac79237"
+          },
+          {
+            "path": "shaders/debug.vert.glsl",
+            "sha256": "d53c3e3924b448aa86447a6b4bf7adc0bb721548556c95915c265f320d9b9f98"
+          },
+          {
+            "path": "shaders/overlay.frag.glsl",
+            "sha256": "d54896c5b20a9274016d344e9b2a2d8893c17a040d53026a21360d16b51722f7"
+          },
+          {
+            "path": "shaders/overlay.vert.glsl",
+            "sha256": "c40e81a01c025ff61845cd1638ac6f8502c7a22e21c51275de52a42d5d6d1e62"
+          },
+          {
+            "path": "shaders/scene.frag.glsl",
+            "sha256": "d0a241d0c118050610301671b4b705124ff1b88d9f4d30c373ea8113e6fb19fc"
+          },
+          {
+            "path": "shaders/scene.vert.glsl",
+            "sha256": "01b471210b32005b2c0602f3e7870fcf4f2252d8afb19b699508f5bf433b9494"
+          },
+          {
+            "path": "shaders/water.frag.glsl",
+            "sha256": "bd273a0690eeaa0d85ba813d77cbf92c0eb8264fb2d3bc72236a9062526524de"
+          },
+          {
+            "path": "shaders/water.vert.glsl",
+            "sha256": "c89b13790c44013d4ed8f5b376a0da9ac93d2254053c46e5f756d02d342e32ff"
+          },
+          {
+            "path": "shaders/waves.glsl",
+            "sha256": "a62250bb66a472e06d89a1b18053597f6585e12fe5a5b58c3da6bc76767dc0fc"
+          },
+          {
+            "path": "src/main.ts",
+            "sha256": "dcca27a41321fd442a0c22984f7f8503060d93d7de03b2232c178a2ca2e287eb"
+          },
+          {
+            "path": "verify-browser.cjs",
+            "sha256": "4a36181a7f517c01d5c5cf427488e37b10b36f4bca969b879c36fdc5f2841e97"
+          },
+          {
+            "path": "water.effect.json",
+            "sha256": "c2cdb872e4dd0d6ba64d95c68495cdcaf626f486f368dbf1a24876f151403e9b"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "snapshots": [
+    {
+      "name": "final-fixed",
+      "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+    },
+    {
+      "name": "channel-reflection",
+      "sha256": "b59c5bdfd5ffa99e335b45043e696322ff7eacc749bd5fa907dc375a9acd0305"
+    },
+    {
+      "name": "channel-refraction",
+      "sha256": "31e23a7bbca68ac90a77ac07331a938eaaab6ed52e778d0627538c379298aef5"
+    },
+    {
+      "name": "channel-depth",
+      "sha256": "def3a21d9752a052d87b898d34883f14bca10e359af2c02d5582861a434c831f"
+    },
+    {
+      "name": "channel-caustics",
+      "sha256": "9d2a9d31c0c4724890be9bbe906798351225c7251451c0fb4d03eb80b254f2c5"
+    },
+    {
+      "name": "final-repeat",
+      "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+    },
+    {
+      "name": "without-reflection",
+      "sha256": "9f55c61e90900e990597b30db1d7eeef8021b50fdea47aa3122c6cf615225308"
+    },
+    {
+      "name": "without-refraction",
+      "sha256": "055bb575fba2eb65e5b30429e9a39f0c380c4e4180d7b18fa26ce6c17b6a224b"
+    },
+    {
+      "name": "without-depth",
+      "sha256": "55d155549f3b4a13f2803c4a0406aa5db16e7f48d066a584663a6031607b5ad7"
+    },
+    {
+      "name": "without-caustics",
+      "sha256": "f805977ea2a268cc419209d34a454003ae83d108e9c47b5257525797a0c99524"
+    },
+    {
+      "name": "without-overlays",
+      "sha256": "584977416e6e774a641c82fcb2170fa6bb43168f1e18ec07b5b7e780834bb5a4"
+    },
+    {
+      "name": "fin-background",
+      "sha256": "584977416e6e774a641c82fcb2170fa6bb43168f1e18ec07b5b7e780834bb5a4"
+    },
+    {
+      "name": "fin-with-depth",
+      "sha256": "c838578aa172690b609270918718eb296fcb56d7e453a0363b07aa3278b6b0a8"
+    },
+    {
+      "name": "fin-no-depth-negative-control",
+      "sha256": "deb48847fac6d630c462cbe8cc175d31fe508efe39a8c253226d92881a6e1769"
+    },
+    {
+      "name": "pointer-ripple",
+      "sha256": "f3b10358ef50a5d317659363167eda04e27364f7d220325ea6b58f7d4da75eb2"
+    },
+    {
+      "name": "rain-disabled-no-overlays",
+      "sha256": "1273e5cf7abe41253585ff097d63edc477c47da39a6c58303ae64f9a8932352d"
+    },
+    {
+      "name": "rain-enabled-no-overlays",
+      "sha256": "18ff58cab8f1841367fe64a7ce0b3eb94fd40e8643f2d07db29134d99b4614f3"
+    },
+    {
+      "name": "rain",
+      "sha256": "776db46f14c3c48b0d5f91f2e86b5cff3d58ffe70ddec453bbf6b70d78d4990f"
+    },
+    {
+      "name": "resized",
+      "sha256": "b81df02e26de8513db68b7567a24e1eb801e9ca8605b8e5b40beb1f31c8db53f"
+    }
+  ],
+  "candidate": "72f37ee6f4fdd80e2fb89908e7c634ae422ce7fb52ab5d54812b43a2438650ba",
+  "source": "dcca27a41321fd442a0c22984f7f8503060d93d7de03b2232c178a2ca2e287eb",
+  "sourceFiles": [
+    {
+      "path": "caustic.effect.json",
+      "sha256": "63e226bc336f996e95e5feb4d29d10848de0795a1c01ff9600fe0d44c93bffba"
+    },
+    {
+      "path": "debug.effect.json",
+      "sha256": "423e52fc681e7cab7375a169d0f06dbba29ef7416f11f9c33f5cfd3b230ff0a0"
+    },
+    {
+      "path": "example.json",
+      "sha256": "aaaf23d6c90c8f1cb7676e555b783243c4ae4a7535983824702f26e10e894d73"
+    },
+    {
+      "path": "generate-effects.mjs",
+      "sha256": "987b89df76c90469dc74b8a27b0a94ddc3dc5e3dd672b71d8aaca9ddef8ae9ef"
+    },
+    {
+      "path": "index.html",
+      "sha256": "fab2955a846c755be1a64083bcdebea53e5c0428dde7129e9c5687d0ad3e4040"
+    },
+    {
+      "path": "overlay.effect.json",
+      "sha256": "8fc04d2af9e441d80543cd7cb883a4f36fca70d21ec45cdbeb8924391c5d1643"
+    },
+    {
+      "path": "README.md",
+      "sha256": "3af65b5fa6ad849aed157a184f5a8f286a6ac65435a7b1b67203a21275cb3d67"
+    },
+    {
+      "path": "scene.effect.json",
+      "sha256": "66fb116f476d2c960d3b59d64585bbb29dfbc8400f362e3fed8c950df54150b3"
+    },
+    {
+      "path": "shaders/caustic.frag.glsl",
+      "sha256": "1fbd30fb5440963e352c4e3e22f82414d68b4a1e34cba5bc5b18b2c00c0ba2ed"
+    },
+    {
+      "path": "shaders/caustic.vert.glsl",
+      "sha256": "6ea4807bbb63d0427c4a1cb869be6841e081b2f2f757b371426adf1284a2dbfd"
+    },
+    {
+      "path": "shaders/debug.frag.glsl",
+      "sha256": "3f164645b0316640745418d299ae1175d8e31f7bb200c485a80bf0adaac79237"
+    },
+    {
+      "path": "shaders/debug.vert.glsl",
+      "sha256": "d53c3e3924b448aa86447a6b4bf7adc0bb721548556c95915c265f320d9b9f98"
+    },
+    {
+      "path": "shaders/overlay.frag.glsl",
+      "sha256": "d54896c5b20a9274016d344e9b2a2d8893c17a040d53026a21360d16b51722f7"
+    },
+    {
+      "path": "shaders/overlay.vert.glsl",
+      "sha256": "c40e81a01c025ff61845cd1638ac6f8502c7a22e21c51275de52a42d5d6d1e62"
+    },
+    {
+      "path": "shaders/scene.frag.glsl",
+      "sha256": "d0a241d0c118050610301671b4b705124ff1b88d9f4d30c373ea8113e6fb19fc"
+    },
+    {
+      "path": "shaders/scene.vert.glsl",
+      "sha256": "01b471210b32005b2c0602f3e7870fcf4f2252d8afb19b699508f5bf433b9494"
+    },
+    {
+      "path": "shaders/water.frag.glsl",
+      "sha256": "bd273a0690eeaa0d85ba813d77cbf92c0eb8264fb2d3bc72236a9062526524de"
+    },
+    {
+      "path": "shaders/water.vert.glsl",
+      "sha256": "c89b13790c44013d4ed8f5b376a0da9ac93d2254053c46e5f756d02d342e32ff"
+    },
+    {
+      "path": "shaders/waves.glsl",
+      "sha256": "a62250bb66a472e06d89a1b18053597f6585e12fe5a5b58c3da6bc76767dc0fc"
+    },
+    {
+      "path": "src/main.ts",
+      "sha256": "dcca27a41321fd442a0c22984f7f8503060d93d7de03b2232c178a2ca2e287eb"
+    },
+    {
+      "path": "verify-browser.cjs",
+      "sha256": "4a36181a7f517c01d5c5cf427488e37b10b36f4bca969b879c36fdc5f2841e97"
+    },
+    {
+      "path": "water.effect.json",
+      "sha256": "c2cdb872e4dd0d6ba64d95c68495cdcaf626f486f368dbf1a24876f151403e9b"
+    }
+  ],
+  "candidateStart": "72f37ee6f4fdd80e2fb89908e7c634ae422ce7fb52ab5d54812b43a2438650ba"
+}

@@ -30,6 +30,7 @@ import { Texture, ColorAttachment, DepthStencilAttachment, GeneralBarrierInfo, A
 import { RenderWindow, IRenderWindowInfo } from '../../render-scene/core/render-window';
 import { Root } from '../../root';
 import { TextureBase } from './texture-base';
+import { PixelFormat } from './asset-enum';
 
 export interface IRenderTextureCreateInfo {
     name?: string;
@@ -179,9 +180,13 @@ export class RenderTexture extends TextureBase {
         _windowInfo.externalResLow = info && info.externalResLow ? info.externalResLow : 0;
         _windowInfo.externalResHigh = info && info.externalResHigh ? info.externalResHigh : 0;
         _windowInfo.externalFlag = info && info.externalFlag ? info.externalFlag : TextureFlagBit.NONE;
-        _windowInfo.renderPassInfo.colorAttachments.forEach((colorAttachment) => {
-            colorAttachment.format = root.device.swapchainFormat;
-        });
+        // Default targets follow the swapchain; explicitly supplied attachments
+        // retain their requested formats (HDR targets must not silently become RGBA8).
+        if (!info?.passInfo) {
+            _windowInfo.renderPassInfo.colorAttachments.forEach((colorAttachment) => {
+                colorAttachment.format = root.device.swapchainFormat;
+            });
+        }
 
         _colorAttachment.barrier = deviceManager.gfxDevice.getGeneralBarrier(new GeneralBarrierInfo(
             AccessFlagBit.FRAGMENT_SHADER_READ_TEXTURE,
@@ -194,6 +199,8 @@ export class RenderTexture extends TextureBase {
         } else {
             this._window = root.createWindow(_windowInfo);
         }
+        const color = this.getGFXTexture();
+        if (color) { this._format = color.format as unknown as PixelFormat; }
     }
 
     /**

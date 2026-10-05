@@ -68,32 +68,33 @@ cocosair.js/
 
 ## 命令
 
-| 命令 | 说明 |
-|---|---|
-| `npm run dev` | 三频道 Watch：engine(src/cocos\|pal\|exports)/air(src/air) 自动重建，example 只刷新不构建；example .ts 即时编译 + importmap |
-| `npm run build` | Development ESM 构建 → `build/cocosair.module.js`（附 source map） |
-| `npm run build:min` | 压缩 ESM 本地构建 → `build/cocosair.module.min.js`（附 source map） |
-| `npm run build:dts` | 类型声明 → `build/cocosair.module.d.ts`（编辑器补全 / Go to Definition） |
-| `npm run build:all` | 以上全量构建，并生成 npm 专用的 `build/npm/` bundle 副本（不含 source map）；本地 `build/cocosair.module*.js.map` 保留调试用途 |
-| `npm run typecheck` | TypeScript 独立编译校验（0 依赖 Creator） |
-| `npm run verify:web-only` | Web-only 依赖守卫（按依赖可达性判定，禁止 native/minigame 泄入） |
-| `npm run verify:file-map` | 簿记一致性：每行上游可解析 + 逐字节比对 + `modified` 标记互证 + `moduleOverrides` 替换件清点 |
-| `npm run verify:licenses` | 上游/第三方许可头清点（抽取件不得丢版权头） |
-| `npm run verify:browser-matrix` | 三引擎（chromium/firefox/webkit）逐例截图 + probe 断言矩阵 → 产物指针见 `docs/reference/verification.md`（证据目录未随 npm 包发布） |
-| `npm run verify:wasm-backends` | wasm 三后端护栏（只读，A1–A7）：抽取闭包落盘 / 范围计数不漂移 / 字节偏差 ⊆ 在册 / emscripten 说明符只在动态分支 / feature 声明面对账 / **A6 = 类型豁免解禁触发器** / **A7 = 物理子树缺件必须登记在差集** |
-| `npm run verify:custom-exports` | 后处理与 custom 管线交付面护栏（只读，C1–C5）：接线门面与子图逐字节 + 簿记在册 + feature unit 声明与默认发行姿态不漂移 |
-| `npm run verify:doc-refs` | 文档互引棘轮（只读）：markdown 里的仓库内路径必须存在；已知断链登记在 `tools/verify/doc-refs-baseline.json`，新增断链或基线腐烂即红 |
-| `npm run verify:benchmark` | Benchmark 工具类型检查、编译诊断、指标聚合及隔离/超时回归；不生成性能成绩 |
-| `npm run verify:api-coverage` | 逐 API 执行证明与发布覆盖门槛（Core 100% / Important 90% / Advanced 80%）；`--check` 可只读核对报告是否对应当期库存、规格和证据 |
-| `npm run verify:release` | 发布候选总门禁：干净工作树、覆盖率、示例数、许可、示例/DevTools/Gallery/三浏览器证据与当前构建一致性 |
-| `npm test` | smoke tests（jsdom + HEADLESS 渲染模式；当期数量以 `docs/test-inventory.json` 为准） |
-| `npm run analyze` | 更新 docs 中的抽取清单与文件映射，依赖图写入 build/reports/ |
-| `npm run baseline` | 在上游引擎目录复现 Web 基线构建；前置条件见 AGENTS.md |
+| 命令                            | 说明                                                                                                                                                                                                     |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`                   | 三频道 Watch：engine(src/cocos\|pal\|exports)/air(src/air) 自动重建，example 只刷新不构建；example .ts 即时编译 + importmap                                                                              |
+| `npm run build`                 | Development ESM 构建 → `build/cocosair.module.js`（附 source map）                                                                                                                                       |
+| `npm run build:min`             | 压缩 ESM 本地构建 → `build/cocosair.module.min.js`（附 source map）                                                                                                                                      |
+| `npm run build:dts`             | 类型声明 → `build/cocosair.module.d.ts`（编辑器补全 / Go to Definition）                                                                                                                                 |
+| `npm run build:all`             | 以上全量构建，并生成 npm 专用的 `build/npm/` bundle 副本（不含 source map）；本地 `build/cocosair.module*.js.map` 保留调试用途                                                                           |
+| `npm run typecheck`             | TypeScript 独立编译校验（0 依赖 Creator）                                                                                                                                                                |
+| `npm run verify:web-only`       | Web-only 依赖守卫（按依赖可达性判定，禁止 native/minigame 泄入）                                                                                                                                         |
+| `npm run verify:file-map`       | 簿记一致性：每行上游可解析 + 逐字节比对 + `modified` 标记互证 + `moduleOverrides` 替换件清点                                                                                                             |
+| `npm run verify:licenses`       | 上游/第三方许可头清点（抽取件不得丢版权头）                                                                                                                                                              |
+| `npm run verify:browser-matrix` | 三引擎（chromium/firefox/webkit）逐例截图 + probe 断言矩阵 → 产物指针见 `docs/reference/verification.md`（证据目录未随 npm 包发布）                                                                      |
+| `npm run verify:wasm-backends`  | wasm 三后端护栏（只读，A1–A7）：抽取闭包落盘 / 范围计数不漂移 / 字节偏差 ⊆ 在册 / emscripten 说明符只在动态分支 / feature 声明面对账 / **A6 = 类型豁免解禁触发器** / **A7 = 物理子树缺件必须登记在差集** |
+| `npm run verify:custom-exports` | 后处理与 custom 管线交付面护栏（只读，C1–C5）：接线门面与子图逐字节 + 簿记在册 + feature unit 声明与默认发行姿态不漂移                                                                                   |
+| `npm run verify:doc-refs`       | 文档互引棘轮（只读）：markdown 里的仓库内路径必须存在；已知断链登记在 `tools/verify/doc-refs-baseline.json`，新增断链或基线腐烂即红                                                                      |
+| `npm run verify:benchmark`      | Benchmark 工具类型检查、编译诊断、指标聚合及隔离/超时回归；不生成性能成绩                                                                                                                                |
+| `npm run verify:api-coverage`   | 逐 API 执行证明与发布覆盖门槛（Core 100% / Important 90% / Advanced 80%）；`--check` 可只读核对报告是否对应当期库存、规格和证据                                                                          |
+| `npm run verify:release`        | 发布候选总门禁：干净工作树、覆盖率、示例数、许可、示例/DevTools/Gallery/三浏览器证据与当前构建一致性                                                                                                     |
+| `npm test`                      | smoke tests（jsdom + HEADLESS 渲染模式；当期数量以 `docs/test-inventory.json` 为准）                                                                                                                     |
+| `npm run analyze`               | 更新 docs 中的抽取清单与文件映射，依赖图写入 build/reports/                                                                                                                                              |
+| `npm run baseline`              | 在上游引擎目录复现 Web 基线构建；前置条件见 AGENTS.md                                                                                                                                                    |
 
 ## 文档
 
 - [文档导航](docs/README.md) — 目录与主题入口
 - [开发手册](docs/manual/index.md) — API 教程与可运行示例
+- [渲染目标与 MSAA](docs/manual/rendering-contracts.md) · [纹理颜色、离线 GGX 与材质诊断](docs/reference/rendering-color-diagnostics.md)
 - [Code First 入门](docs/guides/code-first.md) — 启动与画布约定
 - [资源加载](docs/guides/asset-loading.md) · [骨骼工具](docs/guides/skinned-model.md) · [开发循环](docs/guides/engine-development.md)
 - [运行时资源检查](docs/guides/runtime-inspection.md) · [Agent 调试会话](docs/guides/agent-development.md)
@@ -108,14 +109,16 @@ cocosair.js/
 
 ### 默认运行时
 
-| 能力 | 当前范围 |
-|---|---|
-| 场景与渲染 | Core/Math、Scene Graph、Component、Game/Director、Camera/Light、Mesh/Material/Texture、WebGL 2、渲染管线与程序化 builtin 材质/效果。 |
-| 动画与模型 | Animation、Skeleton/Skinning、primitive、tween、glTF/GLB 加载及已登记扩展。压缩与纹理转码需应用配置 decoder，详见 [模型加载](docs/gltf/gltf-runtime.md)。 |
-| 2D 与 UI | 2D/UI、Mask、Graphics、Sorting2D、TiledMap、2D Particle。 |
-| 浏览器交互与媒体 | Web Input、Web PAL、AudioSource、VideoPlayer、WebView。 |
-| 物理 | 2D 默认为纯 JS Box2D；3D 同时包含 builtin 与 Cannon。builtin 提供离散碰撞检测，Cannon 提供刚体模拟；初始化前用 `createAirApp({ physics: 'cannon' })` 选择，默认仍为 builtin。 |
-| 其他模块 | DragonBones、Profiler、GeometryRenderer、intersection-2d、custom pipeline / post-process 导出。具体渲染效果以相应示例与浏览器验证为准。 |
+`createAirRenderTarget()` 将原生离屏相机、颜色／深度附件、MSAA resolve 和 resize 重绑组合成薄入口；请求与有效格式、采样数分别记录，不把不支持的浮点格式静默替换为 RGBA8。完整仓库示例见 `examples/water-multipass/` 和 `examples/hdr-color-pipeline/`。它们的定向验收不代表旧 Gallery 全集或完整发布门禁已重新通过。
+
+| 能力             | 当前范围                                                                                                                                                                      |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 场景与渲染       | Core/Math、Scene Graph、Component、Game/Director、Camera/Light、Mesh/Material/Texture、WebGL 2、渲染管线与程序化 builtin 材质/效果。                                          |
+| 动画与模型       | Animation、Skeleton/Skinning、primitive、tween、glTF/GLB 加载及已登记扩展。压缩与纹理转码需应用配置 decoder，详见 [模型加载](docs/gltf/gltf-runtime.md)。                     |
+| 2D 与 UI         | 2D/UI、Mask、Graphics、Sorting2D、TiledMap、2D Particle。                                                                                                                     |
+| 浏览器交互与媒体 | Web Input、Web PAL、AudioSource、VideoPlayer、WebView。                                                                                                                       |
+| 物理             | 2D 默认为纯 JS Box2D；3D 同时包含 builtin 与 Cannon。builtin 提供离散碰撞检测，Cannon 提供刚体模拟；初始化前用 `createAirApp({ physics: 'cannon' })` 选择，默认仍为 builtin。 |
+| 其他模块         | DragonBones、Profiler、GeometryRenderer、intersection-2d、custom pipeline / post-process 导出。具体渲染效果以相应示例与浏览器验证为准。                                       |
 
 ### 构建开关与聚合导出
 
