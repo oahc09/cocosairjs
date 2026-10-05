@@ -43,6 +43,34 @@ function normalizeAirOptions(options) {
     throw airError("AIR_E_DESIGN_RESOLUTION", "designResolution requires finite positive width/height and a native policy integer (0..4).");
   }
   const context = options.contextLoss ?? {};
+  if (options.screenMode !== void 0 && !["window", "container"].includes(options.screenMode)) {
+    throw airError("AIR_E_SCREEN_MODE", "screenMode must be window or container.");
+  }
+  if (options.container !== void 0 && options.screenMode !== "container") {
+    throw airError("AIR_E_CONTAINER", "container requires screenMode: container.");
+  }
+  let container = options.container;
+  if (typeof container === "string") {
+    try {
+      container = document.querySelector(container);
+    } catch {
+      throw airError("AIR_E_CONTAINER", "Invalid container selector.");
+    }
+  }
+  if (options.screenMode === "container") {
+    if (options.container === void 0) container = document.getElementById("GameDiv") ?? canvas.parentElement;
+    if (!(container instanceof HTMLElement) || container === document.body || container === document.documentElement || !container.contains(canvas) || container === canvas) {
+      throw airError("AIR_E_CONTAINER", "Container must be an existing non-body ancestor of the canvas.");
+    }
+    const frame = document.getElementById("GameDiv");
+    if (frame && (!frame.contains(canvas) || !container.contains(frame))) {
+      throw airError("AIR_E_CONTAINER_CONFLICT", "GameDiv must contain the canvas inside the selected container.");
+    }
+    const inner = document.getElementById("Cocos3dGameContainer");
+    if (inner && (!inner.contains(canvas) || !container.contains(inner) || frame && !frame.contains(inner))) {
+      throw airError("AIR_E_CONTAINER_CONFLICT", "Cocos3dGameContainer belongs to a different canvas or frame.");
+    }
+  }
   if (!context || typeof context !== "object" || context.autoPause !== void 0 && typeof context.autoPause !== "boolean" || context.reload !== void 0 && typeof context.reload !== "function" || context.onEvent !== void 0 && typeof context.onEvent !== "function") {
     throw airError("AIR_E_CONTEXT_OPTIONS", "contextLoss requires optional boolean autoPause and function reload/onEvent.");
   }
@@ -52,12 +80,45 @@ function normalizeAirOptions(options) {
     physics,
     diagnostics,
     pixelRatioCap,
+    screenMode: options.screenMode,
+    container,
     designResolution: resolution && Object.freeze({ width: resolution.width, height: resolution.height, policy: resolution.policy }),
     contextLoss: Object.freeze({ autoPause: context.autoPause ?? true, reload: context.reload, onEvent: context.onEvent })
   });
 }
 function equalAirOptions(a, b) {
-  return a.canvas === b.canvas && a.renderMode === b.renderMode && a.physics === b.physics && a.diagnostics === b.diagnostics && a.pixelRatioCap === b.pixelRatioCap && a.designResolution?.width === b.designResolution?.width && a.designResolution?.height === b.designResolution?.height && a.designResolution?.policy === b.designResolution?.policy && a.contextLoss.autoPause === b.contextLoss.autoPause && a.contextLoss.reload === b.contextLoss.reload && a.contextLoss.onEvent === b.contextLoss.onEvent;
+  return a.canvas === b.canvas && a.renderMode === b.renderMode && a.physics === b.physics && a.diagnostics === b.diagnostics && a.pixelRatioCap === b.pixelRatioCap && a.screenMode === b.screenMode && a.container === b.container && a.designResolution?.width === b.designResolution?.width && a.designResolution?.height === b.designResolution?.height && a.designResolution?.policy === b.designResolution?.policy && a.contextLoss.autoPause === b.contextLoss.autoPause && a.contextLoss.reload === b.contextLoss.reload && a.contextLoss.onEvent === b.contextLoss.onEvent;
+}
+function prepareAirContainer(options) {
+  if (options.screenMode !== "container") return void 0;
+  let frame = document.getElementById("GameDiv");
+  if (!frame) {
+    frame = document.createElement("div");
+    frame.id = "GameDiv";
+    frame.style.width = "100%";
+    frame.style.height = "100%";
+    options.canvas.parentElement.insertBefore(frame, options.canvas);
+    frame.appendChild(options.canvas);
+  }
+  let inner = document.getElementById("Cocos3dGameContainer");
+  if (inner && (!frame.contains(inner) || !inner.contains(options.canvas))) {
+    throw airError("AIR_E_CONTAINER_CONFLICT", "Cocos3dGameContainer must contain the canvas inside GameDiv.");
+  }
+  if (!inner) {
+    inner = document.createElement("div");
+    inner.id = "Cocos3dGameContainer";
+    inner.style.width = "100%";
+    inner.style.height = "100%";
+    options.canvas.parentElement.insertBefore(inner, options.canvas);
+    inner.appendChild(options.canvas);
+  }
+  options.canvas.style.width = "100%";
+  options.canvas.style.height = "100%";
+  options.canvas.style.display = "block";
+  if (frame.clientWidth <= 0 || frame.clientHeight <= 0) {
+    throw airError("AIR_E_CONTAINER_SIZE", "Container must have a positive layout size at startup; show it before createAirApp.");
+  }
+  return frame;
 }
 function admitAirOptions(options) {
   const state = airBootstrapRegistry();
@@ -75,6 +136,7 @@ function createAirApp(options) {
     const normalized = normalizeAirOptions(options), state = admitAirOptions(normalized);
     if (state.initPromise) return state.initPromise;
     if (state.loadPromise) return state.loadPromise;
+    prepareAirContainer(normalized);
     state.options = normalized;
     state.status = "initializing";
     const globals = globalThis;

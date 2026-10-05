@@ -1,0 +1,61 @@
+{
+  "schema": "air-responsive-host-proof/1",
+  "startedAt": "2026-10-05T12:31:58.144Z",
+  "endedAt": "2026-10-05T12:33:29.917Z",
+  "scope": "native responsive container, three board recipes, deterministic input/visual verification",
+  "completed": true,
+  "subset": true,
+  "scopePassed": false,
+  "fullExternalGamesVerified": false,
+  "fingerprints": {
+    "build/cocosair.module.js": "0e218b0f6f5e671dd78313ddbba949a815bbfd225203a45b804befc695917cde",
+    "build/bootstrap.js": "e5d39cf6a03bc0b3b17ac00adc00503fed2e8c5d869d12a1a44e68686b0447ac",
+    "src/air/bootstrap.ts": "afec7a86b0aa887b717f32d6fe460d5924f43572a0132725f9f65302b4c34a37",
+    "src/air/app-config.ts": "5d7ef9c8089441c21348a59df1d96f2848f7ab2954c67f131deb8656e9d5165c",
+    "src/air/ui-kit.ts": "576a24a43a016bdef7ffdfe0dc114ae16931bf67b7c7f186ac9c3cbdf4e16dba",
+    "tools/build/screen-layout-patch.cjs": "b07646812a6a8a7be4e004ade029007da6923913c1beb5de0d5543d9234fbb09",
+    "src/pal/screen-adapter/web/screen-adapter.js": "8a6d8b0e5574265704d8f7460782ab4610bc16f8f2a869c0c84e787d3a8a8c87",
+    "tools/recipes/board-state.ts": "7af53eb39237ad81f1195ce98cff7784df641fabd33a18e4666d418087a19a06",
+    "examples/responsive-board-recipes/index.html": "2a1b8841b8276e99944ac0a6928eec758e1d2d48f34fc27bcb4bacf7bb33d077",
+    "examples/responsive-board-recipes/model.ts": "f5c7ceb0ea412cab59a3aac1afa58908ed5b4c363ec8bd64689aca1db4bf108a",
+    "examples/responsive-board-recipes/src/main.ts": "8d311094941d8421b264cef5700d785b5f53383c85cb8ef46a36d1c739852ac0",
+    "tools/verify/responsive-host-browser.cjs": "cf8acbc2a39fd2558c3e3047cb83d009bf3e6617b28e10f2bb5f279c5290c837"
+  },
+  "baseline": {
+    "revision": "b1ef301",
+    "sha256": "72f37ee6f4fdd80e2fb89908e7c634ae422ce7fb52ab5d54812b43a2438650ba"
+  },
+  "results": [
+    {
+      "engine": "chromium",
+      "dpr": 1,
+      "status": "FAIL",
+      "checks": [],
+      "screenshots": [],
+      "errors": [
+        "addComponent: Cannot add any component to the scene."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "chromium",
+      "dpr": 2,
+      "status": "FAIL",
+      "checks": [],
+      "screenshots": [],
+      "errors": [
+        "addComponent: Cannot add any component to the scene."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    }
+  ],
+  "negativeControls": [
+    {
+      "status": "FAIL",
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    }
+  ],
+  "limitations": [
+    "External 50 games and 707 scenarios not available; no physical device/present/FPS claims."
+  ]
+}

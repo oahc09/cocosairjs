@@ -210,6 +210,8 @@ npm run dev                       # dev server（默认 7454）
 
 ## 验证与台账
 
+[响应式容器、输入与棋盘缓存配方](responsive-board-recipes.md)：明确窗口/宿主容器启动、局部坐标命中、单行按钮、视觉失效、单时钟截图和独立首次接入统计。
+
 | 事实               | 来源                                                                                                                                   |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
 | 手册示例浏览器验证 | `node tools/verify/manual-examples-verify.cjs` → `docs/evidence/manual-examples-verified.json` + `docs/evidence/examples/manual-*.png` |

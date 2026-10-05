@@ -17,9 +17,10 @@ import { registerBuiltinAirAssets } from './builtin/register';
 import { selectPhysicsBackend } from './physics-backend';
 import { attachContextHealth } from './context-health';
 import { createAirDiagnostics } from './diagnostics';
-import { admitAirOptions, normalizeAirOptions, airError, AirNormalizedOptions } from './app-config';
+import { admitAirOptions, normalizeAirOptions, airError, AirNormalizedOptions, prepareAirContainer, validateAirScreenMode } from './app-config';
 import { view } from '../cocos/ui/view';
 import { screenAdapter } from 'pal/screen-adapter';
+import { settings, SettingsCategory } from '../cocos/core/settings';
 
 export type { AirApp, AirAppOptions } from './app';
 
@@ -36,7 +37,8 @@ export type { AirApp, AirAppOptions } from './app';
  * - 画布默认 `tabIndex=0`（可聚焦；PAL 在 mousedown/touchstart 时自动 focus），
  *   键盘事件仅在画布聚焦时到达——焦点合同见 docs/manual/script-component-workflow.md。
  */
-function ensureCanvasDOM (canvas: HTMLCanvasElement): void {
+function ensureCanvasDOM (canvas: HTMLCanvasElement, options: AirNormalizedOptions): void {
+    const hostFrame = prepareAirContainer(options);
     if (canvas.id !== 'GameCanvas') {
         const decoy = document.getElementById('GameCanvas');
         if (decoy && decoy !== canvas) {
@@ -80,8 +82,8 @@ function ensureCanvasDOM (canvas: HTMLCanvasElement): void {
     const dprCapRaw = Number((globalThis as { __CCDPR_CAP__?: unknown }).__CCDPR_CAP__);
     const dprCap = Number.isFinite(dprCapRaw) && dprCapRaw > 0 ? dprCapRaw : 2;
     const effDpr = Math.min(window.devicePixelRatio ?? 1, dprCap);
-    const bufW = Math.round(window.innerWidth * effDpr);
-    const bufH = Math.round(window.innerHeight * effDpr);
+    const bufW = Math.round((hostFrame?.clientWidth ?? window.innerWidth) * effDpr);
+    const bufH = Math.round((hostFrame?.clientHeight ?? window.innerHeight) * effDpr);
     if (canvas.width !== bufW || canvas.height !== bufH) {
         canvas.width = bufW;
         canvas.height = bufH;
@@ -124,7 +126,9 @@ export function createAirApp (options: AirAppOptions): Promise<AirApp> {
 
 async function initializeAirApp (options: AirNormalizedOptions): Promise<AirApp> {
     const canvas = options.canvas;
-    ensureCanvasDOM(canvas);
+    const exactFit = settings.querySettings(SettingsCategory.SCREEN, 'exactFitScreen');
+    validateAirScreenMode(options.screenMode, exactFit);
+    ensureCanvasDOM(canvas, options);
 
     // W01：上下文健康状态机（在引擎 init 前挂接，早于 swapchain 自身的 lost 告警监听）。
     const contextHealth = attachContextHealth(canvas, options.contextLoss);
@@ -145,13 +149,15 @@ async function initializeAirApp (options: AirNormalizedOptions): Promise<AirApp>
         await game.init({
             debugMode: options.diagnostics === 'warnings' ? DebugMode.WARN : DebugMode.ERROR,
             settingsPath: '',
-            overrideSettings: { rendering: { renderMode: options.renderMode } },
+            overrideSettings: { rendering: { renderMode: options.renderMode },
+                ...(options.screenMode !== undefined ? { screen: { exactFitScreen: options.screenMode === 'window' } } : {}) },
         });
         if (options.designResolution) {
             const { width, height, policy } = options.designResolution;
             view.setDesignResolutionSize(width, height, policy);
         }
     } catch (error) {
+        (screenAdapter as unknown as { destroyLayoutObserver?: () => void }).destroyLayoutObserver?.();
         contextHealth.destroy();
         diagnostics.destroy();
         throw error;

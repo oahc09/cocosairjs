@@ -1,0 +1,559 @@
+{
+  "schema": "air-responsive-host-proof/1",
+  "startedAt": "2026-10-05T12:52:37.993Z",
+  "endedAt": "2026-10-05T12:59:20.531Z",
+  "scope": "native responsive container, three board recipes, deterministic input/visual verification",
+  "completed": true,
+  "subset": true,
+  "scopePassed": false,
+  "fullExternalGamesVerified": false,
+  "fingerprints": {
+    "build/cocosair.module.js": "bfd73b0cd5919da9e9fc23fb2fc345cab5cec79260794945cbefbc49139f9c35",
+    "build/bootstrap.js": "57b2dfc7f7b5d29d43b7d9619274c1879f6f37223c7ae2685c0d2619707aef8f",
+    "src/air/bootstrap.ts": "2e20a69161c58e0c32f5012ad24387b1cda9eaa26752c49c102aadd89e84c5d2",
+    "src/air/app-config.ts": "8c568318b8389417181251379c71591b025e26692d0acdcbc092f52324152d47",
+    "src/air/ui-kit.ts": "503b7f1048cce20f58d63ba395dca3c0da172dd6706113d9ff43cd59348eaa32",
+    "tools/build/screen-layout-patch.cjs": "609c7c606da629df99486fdc4eeed9073409881721229dad286aa6244ac27b38",
+    "src/pal/screen-adapter/web/screen-adapter.js": "d9b1c799e62658f1574d564b638af5661af1000e00eeb427fd5e6c4fa801fa05",
+    "tools/recipes/board-state.ts": "2c3cb129e5463de5cd226f9d3af4e378a5da0c13172abed136230bade2885b2b",
+    "examples/responsive-board-recipes/index.html": "815ee14edd1119854bf9ec0b2882cef845d274cd13dcc03d97cf607cd5bf825f",
+    "examples/responsive-board-recipes/model.ts": "3608bcd750aa839c240a182937815a452b2bf80eb0f522e5b65459f59a7c6158",
+    "examples/responsive-board-recipes/src/main.ts": "858aeb06fe586772a6c2e6b84cdc15dd7bf7a1503df77e6bfd04eae7f3a22586",
+    "tools/verify/responsive-host-browser.cjs": "99a0ffd2e280b60f8382067fee6f6bf39616cf797a024f5359b159cfb2a016ee"
+  },
+  "baseline": {
+    "revision": "b1ef301",
+    "sha256": "72f37ee6f4fdd80e2fb89908e7c634ae422ce7fb52ab5d54812b43a2438650ba"
+  },
+  "results": [
+    {
+      "engine": "chromium",
+      "dpr": 1,
+      "status": "FAIL",
+      "checks": [],
+      "screenshots": [],
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "chromium",
+      "dpr": 2,
+      "status": "FAIL",
+      "checks": [],
+      "screenshots": [],
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "chromium",
+      "mode": "safe-bootstrap-custom-container",
+      "status": "FAIL",
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "chromium",
+      "mode": "window",
+      "status": "FAIL",
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "chromium",
+      "mode": "default",
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "window fill startup and resize preserve native policy and target hit",
+          "ok": true,
+          "detail": {
+            "initial": {
+              "columns": 4,
+              "rows": 4,
+              "hits": 0,
+              "selected": -1,
+              "pulse": 0,
+              "paused": false,
+              "drops": 0,
+              "flags": 0,
+              "hover": 0,
+              "keyboard": {
+                "down": 0,
+                "pressing": 0,
+                "up": 0
+              },
+              "draws": 1,
+              "nodes": 6,
+              "buffer": [
+                1800,
+                1400
+              ],
+              "dpr": 2,
+              "viewScale": [
+                2.5,
+                1.9444444444444444
+              ],
+              "context": {
+                "state": "healthy",
+                "backend": "webgl2",
+                "lostCount": 0,
+                "restoredCount": 0,
+                "isContextLost": false,
+                "gamePaused": true,
+                "reason": null,
+                "suggestion": "none",
+                "lastEvent": null,
+                "lastEventAt": null,
+                "timeline": []
+              }
+            },
+            "resized": {
+              "columns": 4,
+              "rows": 4,
+              "hits": 1,
+              "selected": 9,
+              "pulse": 0.35,
+              "paused": false,
+              "drops": 0,
+              "flags": 0,
+              "hover": 1,
+              "keyboard": {
+                "down": 0,
+                "pressing": 0,
+                "up": 0
+              },
+              "draws": 2,
+              "nodes": 6,
+              "buffer": [
+                780,
+                1688
+              ],
+              "dpr": 2,
+              "viewScale": [
+                1.0833333333333333,
+                2.3444444444444446
+              ],
+              "context": {
+                "state": "healthy",
+                "backend": "webgl2",
+                "lostCount": 0,
+                "restoredCount": 0,
+                "isContextLost": false,
+                "gamePaused": true,
+                "reason": null,
+                "suggestion": "none",
+                "lastEvent": null,
+                "lastEventAt": null,
+                "timeline": []
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "engine": "firefox",
+      "dpr": 1,
+      "status": "FAIL",
+      "checks": [],
+      "screenshots": [],
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "firefox",
+      "dpr": 2,
+      "status": "FAIL",
+      "checks": [],
+      "screenshots": [],
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "firefox",
+      "mode": "safe-bootstrap-custom-container",
+      "status": "FAIL",
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "firefox",
+      "mode": "window",
+      "status": "FAIL",
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "firefox",
+      "mode": "default",
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "window fill startup and resize preserve native policy and target hit",
+          "ok": true,
+          "detail": {
+            "initial": {
+              "columns": 4,
+              "rows": 4,
+              "hits": 0,
+              "selected": -1,
+              "pulse": 0,
+              "paused": false,
+              "drops": 0,
+              "flags": 0,
+              "hover": 0,
+              "keyboard": {
+                "down": 0,
+                "pressing": 0,
+                "up": 0
+              },
+              "draws": 1,
+              "nodes": 6,
+              "buffer": [
+                1800,
+                1400
+              ],
+              "dpr": 2,
+              "viewScale": [
+                2.5,
+                1.9444444444444444
+              ],
+              "context": {
+                "state": "healthy",
+                "backend": "webgl2",
+                "lostCount": 0,
+                "restoredCount": 0,
+                "isContextLost": false,
+                "gamePaused": true,
+                "reason": null,
+                "suggestion": "none",
+                "lastEvent": null,
+                "lastEventAt": null,
+                "timeline": []
+              }
+            },
+            "resized": {
+              "columns": 4,
+              "rows": 4,
+              "hits": 1,
+              "selected": 9,
+              "pulse": 0.35,
+              "paused": false,
+              "drops": 0,
+              "flags": 0,
+              "hover": 1,
+              "keyboard": {
+                "down": 0,
+                "pressing": 0,
+                "up": 0
+              },
+              "draws": 2,
+              "nodes": 6,
+              "buffer": [
+                780,
+                1688
+              ],
+              "dpr": 2,
+              "viewScale": [
+                1.0833333333333333,
+                2.3444444444444446
+              ],
+              "context": {
+                "state": "healthy",
+                "backend": "webgl2",
+                "lostCount": 0,
+                "restoredCount": 0,
+                "isContextLost": false,
+                "gamePaused": true,
+                "reason": null,
+                "suggestion": "none",
+                "lastEvent": null,
+                "lastEventAt": null,
+                "timeline": []
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "dpr": 1,
+      "status": "FAIL",
+      "checks": [],
+      "screenshots": [],
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "webkit",
+      "dpr": 2,
+      "status": "FAIL",
+      "checks": [],
+      "screenshots": [],
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "webkit",
+      "mode": "safe-bootstrap-custom-container",
+      "status": "FAIL",
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "webkit",
+      "mode": "window",
+      "status": "FAIL",
+      "errors": [
+        "[AIR_E_SCREEN_CONFIG_CONFLICT] screenMode conflicts with native screen.exactFitScreen; use one matching configuration."
+      ],
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+    },
+    {
+      "engine": "webkit",
+      "mode": "default",
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "window fill startup and resize preserve native policy and target hit",
+          "ok": true,
+          "detail": {
+            "initial": {
+              "columns": 4,
+              "rows": 4,
+              "hits": 0,
+              "selected": -1,
+              "pulse": 0,
+              "paused": false,
+              "drops": 0,
+              "flags": 0,
+              "hover": 0,
+              "keyboard": {
+                "down": 0,
+                "pressing": 0,
+                "up": 0
+              },
+              "draws": 1,
+              "nodes": 6,
+              "buffer": [
+                1800,
+                1400
+              ],
+              "dpr": 2,
+              "viewScale": [
+                2.5,
+                1.9444444444444444
+              ],
+              "context": {
+                "state": "healthy",
+                "backend": "webgl2",
+                "lostCount": 0,
+                "restoredCount": 0,
+                "isContextLost": false,
+                "gamePaused": true,
+                "reason": null,
+                "suggestion": "none",
+                "lastEvent": null,
+                "lastEventAt": null,
+                "timeline": []
+              }
+            },
+            "resized": {
+              "columns": 4,
+              "rows": 4,
+              "hits": 1,
+              "selected": 9,
+              "pulse": 0.35,
+              "paused": false,
+              "drops": 0,
+              "flags": 0,
+              "hover": 1,
+              "keyboard": {
+                "down": 0,
+                "pressing": 0,
+                "up": 0
+              },
+              "draws": 2,
+              "nodes": 6,
+              "buffer": [
+                780,
+                1688
+              ],
+              "dpr": 2,
+              "viewScale": [
+                1.0833333333333333,
+                2.3444444444444446
+              ],
+              "context": {
+                "state": "healthy",
+                "backend": "webgl2",
+                "lostCount": 0,
+                "restoredCount": 0,
+                "isContextLost": false,
+                "gamePaused": true,
+                "reason": null,
+                "suggestion": "none",
+                "lastEvent": null,
+                "lastEventAt": null,
+                "timeline": []
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "negativeControls": [
+    {
+      "status": "PASS",
+      "originalFails": true,
+      "applicationWorkaroundPasses": true,
+      "originalState": {
+        "columns": 4,
+        "rows": 4,
+        "hits": 0,
+        "selected": -1,
+        "pulse": 0,
+        "paused": false,
+        "drops": 0,
+        "flags": 0,
+        "hover": 0,
+        "keyboard": {
+          "down": 0,
+          "pressing": 0,
+          "up": 0
+        },
+        "draws": 1,
+        "nodes": 6,
+        "buffer": [
+          1800,
+          1800
+        ],
+        "dpr": 2,
+        "viewScale": [
+          2.5,
+          2.5
+        ],
+        "context": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        }
+      },
+      "wrongHit": {
+        "columns": 4,
+        "rows": 4,
+        "hits": 1,
+        "selected": 12,
+        "pulse": 0.35,
+        "paused": false,
+        "drops": 0,
+        "flags": 0,
+        "hover": 1,
+        "keyboard": {
+          "down": 0,
+          "pressing": 0,
+          "up": 0
+        },
+        "draws": 2,
+        "nodes": 6,
+        "buffer": [
+          1800,
+          1800
+        ],
+        "dpr": 2,
+        "viewScale": [
+          2.5,
+          2.5
+        ],
+        "context": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        }
+      },
+      "workaround": {
+        "columns": 4,
+        "rows": 4,
+        "hits": 1,
+        "selected": 9,
+        "pulse": 0.35,
+        "paused": false,
+        "drops": 0,
+        "flags": 0,
+        "hover": 2,
+        "keyboard": {
+          "down": 0,
+          "pressing": 0,
+          "up": 0
+        },
+        "draws": 4,
+        "nodes": 6,
+        "buffer": [
+          780,
+          780
+        ],
+        "dpr": 2,
+        "viewScale": [
+          1.0833333333333333,
+          1.0833333333333333
+        ],
+        "context": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "External 50 games and 707 scenarios not available; no physical device/present/FPS claims."
+  ]
+}

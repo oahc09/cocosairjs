@@ -7,6 +7,8 @@ export interface AirNormalizedOptions {
     readonly physics: 'builtin' | 'cannon';
     readonly diagnostics: 'errors' | 'warnings';
     readonly pixelRatioCap: number;
+    readonly screenMode: 'window' | 'container' | undefined;
+    readonly container: HTMLElement | undefined;
     readonly designResolution: Readonly<{ width: number; height: number; policy: number }> | undefined;
     readonly contextLoss: Readonly<{ autoPause: boolean; reload?: () => void; onEvent?: NonNullable<AirAppOptions['contextLoss']>['onEvent'] }>;
 }
@@ -29,6 +31,13 @@ export function airBootstrapRegistry (): BootstrapRegistry {
 
 export function airError (code: string, message: string): Error & { code: string } {
     return Object.assign(new Error(`[${code}] ${message}`), { code });
+}
+
+/** Native settings uses null for missing values; omitted AIR mode preserves it. */
+export function validateAirScreenMode (mode: AirAppOptions['screenMode'], exactFit: unknown): void {
+    if (mode !== undefined && exactFit != null && exactFit !== (mode === 'window')) {
+        throw airError('AIR_E_SCREEN_CONFIG_CONFLICT', 'screenMode conflicts with native screen.exactFitScreen; use one matching configuration.');
+    }
 }
 
 export function normalizeAirOptions (options: AirAppOptions): AirNormalizedOptions {
@@ -65,12 +74,39 @@ export function normalizeAirOptions (options: AirAppOptions): AirNormalizedOptio
         throw airError('AIR_E_DESIGN_RESOLUTION', 'designResolution requires finite positive width/height and a native policy integer (0..4).');
     }
     const context = options.contextLoss ?? {};
+    if (options.screenMode !== undefined && !['window', 'container'].includes(options.screenMode)) {
+        throw airError('AIR_E_SCREEN_MODE', 'screenMode must be window or container.');
+    }
+    if (options.container !== undefined && options.screenMode !== 'container') {
+        throw airError('AIR_E_CONTAINER', 'container requires screenMode: container.');
+    }
+    let container: unknown = options.container;
+    if (typeof container === 'string') {
+        try { container = document.querySelector(container); }
+        catch { throw airError('AIR_E_CONTAINER', 'Invalid container selector.'); }
+    }
+    if (options.screenMode === 'container') {
+        if (options.container === undefined) container = document.getElementById('GameDiv') ?? canvas.parentElement;
+        if (!(container instanceof HTMLElement) || container === document.body || container === document.documentElement
+            || !container.contains(canvas) || container === canvas) {
+            throw airError('AIR_E_CONTAINER', 'Container must be an existing non-body ancestor of the canvas.');
+        }
+        const frame = document.getElementById('GameDiv');
+        if (frame && (!frame.contains(canvas) || !(container as HTMLElement).contains(frame))) {
+            throw airError('AIR_E_CONTAINER_CONFLICT', 'GameDiv must contain the canvas inside the selected container.');
+        }
+        const inner = document.getElementById('Cocos3dGameContainer');
+        if (inner && (!inner.contains(canvas) || !(container as HTMLElement).contains(inner) || (frame && !frame.contains(inner)))) {
+            throw airError('AIR_E_CONTAINER_CONFLICT', 'Cocos3dGameContainer belongs to a different canvas or frame.');
+        }
+    }
     if (!context || typeof context !== 'object' || (context.autoPause !== undefined && typeof context.autoPause !== 'boolean')
         || (context.reload !== undefined && typeof context.reload !== 'function')
         || (context.onEvent !== undefined && typeof context.onEvent !== 'function')) {
         throw airError('AIR_E_CONTEXT_OPTIONS', 'contextLoss requires optional boolean autoPause and function reload/onEvent.');
     }
     return Object.freeze({ canvas, renderMode: options.renderMode ?? 0, physics, diagnostics, pixelRatioCap,
+        screenMode: options.screenMode, container: container as HTMLElement | undefined,
         designResolution: resolution && Object.freeze({ width: resolution.width, height: resolution.height, policy: resolution.policy }),
         contextLoss: Object.freeze({ autoPause: context.autoPause ?? true, reload: context.reload, onEvent: context.onEvent }) });
 }
@@ -78,9 +114,36 @@ export function normalizeAirOptions (options: AirAppOptions): AirNormalizedOptio
 export function equalAirOptions (a: AirNormalizedOptions, b: AirNormalizedOptions): boolean {
     return a.canvas === b.canvas && a.renderMode === b.renderMode && a.physics === b.physics
         && a.diagnostics === b.diagnostics && a.pixelRatioCap === b.pixelRatioCap
+        && a.screenMode === b.screenMode && a.container === b.container
         && a.designResolution?.width === b.designResolution?.width && a.designResolution?.height === b.designResolution?.height
         && a.designResolution?.policy === b.designResolution?.policy && a.contextLoss.autoPause === b.contextLoss.autoPause
         && a.contextLoss.reload === b.contextLoss.reload && a.contextLoss.onEvent === b.contextLoss.onEvent;
+}
+
+/** Prepare only native wrappers inside the selected host, before PAL import. Never size body. */
+export function prepareAirContainer (options: AirNormalizedOptions): HTMLElement | undefined {
+    if (options.screenMode !== 'container') return undefined;
+    let frame = document.getElementById('GameDiv');
+    if (!frame) {
+        frame = document.createElement('div'); frame.id = 'GameDiv';
+        frame.style.width = '100%'; frame.style.height = '100%';
+        options.canvas.parentElement!.insertBefore(frame, options.canvas);
+        frame.appendChild(options.canvas);
+    }
+    let inner = document.getElementById('Cocos3dGameContainer');
+    if (inner && (!frame.contains(inner) || !inner.contains(options.canvas))) {
+        throw airError('AIR_E_CONTAINER_CONFLICT', 'Cocos3dGameContainer must contain the canvas inside GameDiv.');
+    }
+    if (!inner) {
+        inner = document.createElement('div'); inner.id = 'Cocos3dGameContainer';
+        inner.style.width = '100%'; inner.style.height = '100%';
+        options.canvas.parentElement!.insertBefore(inner, options.canvas); inner.appendChild(options.canvas);
+    }
+    options.canvas.style.width = '100%'; options.canvas.style.height = '100%'; options.canvas.style.display = 'block';
+    if (frame.clientWidth <= 0 || frame.clientHeight <= 0) {
+        throw airError('AIR_E_CONTAINER_SIZE', 'Container must have a positive layout size at startup; show it before createAirApp.');
+    }
+    return frame;
 }
 
 export function admitAirOptions (options: AirNormalizedOptions): BootstrapRegistry {

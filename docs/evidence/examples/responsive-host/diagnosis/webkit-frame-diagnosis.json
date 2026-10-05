@@ -1,0 +1,274 @@
+[
+  {
+    "name": "initial",
+    "state": {
+      "columns": 4,
+      "rows": 4,
+      "hits": 0,
+      "selected": -1,
+      "pulse": 0,
+      "paused": false,
+      "drops": 0,
+      "flags": 0,
+      "hover": 0,
+      "keyboard": {
+        "down": 0,
+        "pressing": 0,
+        "up": 0
+      },
+      "held": false,
+      "adapterAttached": true,
+      "draws": 1,
+      "nodes": 6,
+      "buffer": [
+        900,
+        900
+      ],
+      "dpr": 1,
+      "viewScale": [
+        1.25,
+        1.25
+      ],
+      "context": {
+        "state": "healthy",
+        "backend": "webgl2",
+        "lostCount": 0,
+        "restoredCount": 0,
+        "isContextLost": false,
+        "gamePaused": true,
+        "reason": null,
+        "suggestion": "none",
+        "lastEvent": null,
+        "lastEventAt": null,
+        "timeline": []
+      }
+    },
+    "rgba": [
+      35,
+      61,
+      89,
+      255
+    ],
+    "attrs": {
+      "alpha": false,
+      "antialias": true,
+      "depth": true,
+      "failIfMajorPerformanceCaveat": false,
+      "powerPreference": "default",
+      "premultipliedAlpha": false,
+      "preserveDrawingBuffer": true,
+      "stencil": true
+    },
+    "draw": [
+      900,
+      900
+    ],
+    "drawFBOIsNull": true,
+    "readFBOIsNull": true,
+    "error": 0
+  },
+  {
+    "name": "zero",
+    "state": {
+      "columns": 4,
+      "rows": 4,
+      "hits": 1,
+      "selected": 9,
+      "pulse": 0.35,
+      "paused": false,
+      "drops": 0,
+      "flags": 0,
+      "hover": 0,
+      "keyboard": {
+        "down": 0,
+        "pressing": 0,
+        "up": 0
+      },
+      "held": false,
+      "adapterAttached": true,
+      "draws": 2,
+      "nodes": 6,
+      "buffer": [
+        512,
+        512
+      ],
+      "dpr": 1,
+      "viewScale": [
+        0.7111111111111111,
+        0.7111111111111111
+      ],
+      "context": {
+        "state": "healthy",
+        "backend": "webgl2",
+        "lostCount": 0,
+        "restoredCount": 0,
+        "isContextLost": false,
+        "gamePaused": true,
+        "reason": null,
+        "suggestion": "none",
+        "lastEvent": null,
+        "lastEventAt": null,
+        "timeline": []
+      }
+    },
+    "rgba": [
+      210,
+      185,
+      110,
+      255
+    ],
+    "attrs": {
+      "alpha": false,
+      "antialias": true,
+      "depth": true,
+      "failIfMajorPerformanceCaveat": false,
+      "powerPreference": "default",
+      "premultipliedAlpha": false,
+      "preserveDrawingBuffer": true,
+      "stencil": true
+    },
+    "draw": [
+      512,
+      512
+    ],
+    "drawFBOIsNull": true,
+    "readFBOIsNull": true,
+    "error": 0
+  },
+  {
+    "name": "raf-zero",
+    "state": {
+      "columns": 4,
+      "rows": 4,
+      "hits": 1,
+      "selected": 9,
+      "pulse": 0.35,
+      "paused": false,
+      "drops": 0,
+      "flags": 0,
+      "hover": 0,
+      "keyboard": {
+        "down": 0,
+        "pressing": 0,
+        "up": 0
+      },
+      "held": false,
+      "adapterAttached": true,
+      "draws": 2,
+      "nodes": 6,
+      "buffer": [
+        512,
+        512
+      ],
+      "dpr": 1,
+      "viewScale": [
+        0.7111111111111111,
+        0.7111111111111111
+      ],
+      "context": {
+        "state": "healthy",
+        "backend": "webgl2",
+        "lostCount": 0,
+        "restoredCount": 0,
+        "isContextLost": false,
+        "gamePaused": true,
+        "reason": null,
+        "suggestion": "none",
+        "lastEvent": null,
+        "lastEventAt": null,
+        "timeline": []
+      }
+    },
+    "rgba": [
+      210,
+      185,
+      110,
+      255
+    ],
+    "attrs": {
+      "alpha": false,
+      "antialias": true,
+      "depth": true,
+      "failIfMajorPerformanceCaveat": false,
+      "powerPreference": "default",
+      "premultipliedAlpha": false,
+      "preserveDrawingBuffer": true,
+      "stencil": true
+    },
+    "draw": [
+      512,
+      512
+    ],
+    "drawFBOIsNull": true,
+    "readFBOIsNull": true,
+    "error": 0
+  },
+  {
+    "name": "positive",
+    "state": {
+      "columns": 4,
+      "rows": 4,
+      "hits": 1,
+      "selected": 9,
+      "pulse": 0.3333333333333333,
+      "paused": false,
+      "drops": 0,
+      "flags": 0,
+      "hover": 0,
+      "keyboard": {
+        "down": 0,
+        "pressing": 0,
+        "up": 0
+      },
+      "held": false,
+      "adapterAttached": true,
+      "draws": 3,
+      "nodes": 6,
+      "buffer": [
+        512,
+        512
+      ],
+      "dpr": 1,
+      "viewScale": [
+        0.7111111111111111,
+        0.7111111111111111
+      ],
+      "context": {
+        "state": "healthy",
+        "backend": "webgl2",
+        "lostCount": 0,
+        "restoredCount": 0,
+        "isContextLost": false,
+        "gamePaused": true,
+        "reason": null,
+        "suggestion": "none",
+        "lastEvent": null,
+        "lastEventAt": null,
+        "timeline": []
+      }
+    },
+    "rgba": [
+      195,
+      185,
+      110,
+      255
+    ],
+    "attrs": {
+      "alpha": false,
+      "antialias": true,
+      "depth": true,
+      "failIfMajorPerformanceCaveat": false,
+      "powerPreference": "default",
+      "premultipliedAlpha": false,
+      "preserveDrawingBuffer": true,
+      "stencil": true
+    },
+    "draw": [
+      512,
+      512
+    ],
+    "drawFBOIsNull": true,
+    "readFBOIsNull": true,
+    "error": 0
+  }
+]

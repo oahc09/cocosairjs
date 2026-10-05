@@ -1,0 +1,6 @@
+PASS test/smoke/responsive-host-recipes.test.ts (8.161 s)
+
+Test Suites: 1 passed, 1 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        10.696 s

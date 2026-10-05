@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-05T07:05:03.123Z",
-  "revision": "c9f1dbb",
+  "generatedAt": "2026-10-05T12:54:40.468Z",
+  "revision": "b1ef301",
   "examples": [
     {
       "dir": "anim-position",
@@ -15639,6 +15639,13 @@
       }
     },
     {
+      "dir": "responsive-board-recipes",
+      "id": "responsive-board-recipes",
+      "title": "Responsive board recipes",
+      "category": "ui",
+      "status": "draft"
+    },
+    {
       "dir": "runtime-asset-release",
       "id": "runtime-asset-release",
       "version": "1.0.0",
@@ -19161,7 +19168,8 @@
       "ui-layout",
       "webview-basic",
       "ui-asset-loading",
-      "ui-api-lifecycle"
+      "ui-api-lifecycle",
+      "responsive-board-recipes"
     ],
     "physics-2d": [
       "physics-2d-basic",

@@ -6,6 +6,8 @@
 
 ## 基线标识
 
+2026-10-05 响应式宿主适配：通过 `tools/build/screen-layout-patch.cjs` 在 PAL 生成流程中应用实测布局尺寸去重、ResizeObserver 合并、隐藏恢复和关闭清理；冻结 `vendor/pal-source/` 保持原字节。沿用原生 window-resize → View → Root 链，不新增输入坐标系统。AIR 启动新增可选 screenMode/container，未指定时保持原生 settings 默认；新增 Label helper 换行参数不改变 Label 默认行为。
+
 | 项 | 值 |
 |---|---|
 | Upstream package | `cocos-creator` |

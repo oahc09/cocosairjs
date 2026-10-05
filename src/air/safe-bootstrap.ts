@@ -1,5 +1,5 @@
 import type { AirApp, AirAppOptions } from './app';
-import { admitAirOptions, normalizeAirOptions } from './app-config';
+import { admitAirOptions, normalizeAirOptions, prepareAirContainer } from './app-config';
 export type { AirApp, AirAppOptions } from './app';
 
 /** Validate and bind the canvas before dynamically importing the same runtime. */
@@ -8,6 +8,7 @@ export function createAirApp (options: AirAppOptions): Promise<AirApp> {
         const normalized = normalizeAirOptions(options), state = admitAirOptions(normalized);
         if (state.initPromise) return state.initPromise;
         if (state.loadPromise) return state.loadPromise;
+        prepareAirContainer(normalized);
         state.options = normalized; state.status = 'initializing';
         const globals = globalThis as { __CC_CANVAS__?: HTMLCanvasElement; __CCDPR_CAP__?: number };
         globals.__CC_CANVAS__ = normalized.canvas;

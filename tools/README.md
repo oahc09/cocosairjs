@@ -1,5 +1,15 @@
 # Cocos AIR 工具
 
+## 响应式宿主与棋盘配方
+
+- `tools/build/screen-layout-patch.cjs`：PAL 生成器内部补丁，保留冻结上游；由 `node tools/build/pal-source.cjs --write` 生成，`--check` 只读核验，不直接执行补丁文件。
+- `tools/recipes/board-state.ts`：可选的局部格子拾取、确定随机/合法滑动打乱、视觉缓存配方；显式导入，不进默认 SDK，不安装监听或修改时钟。
+- `node tools/verify/responsive-host-browser.cjs --out=<new.json>`：要求当前开发 bundle、Playwright 与缓存浏览器；三浏览器真实 resize/点击/截图，并运行固定原版负例。写新 JSON 及相邻截图，拒绝覆盖；`--browser=<engine>` 为子集，不构建、下载、发布。
+  `--capture=canvas` 显式选择原生 framebuffer PNG，并同时保留页面截图对照；默认 page 通道的失败不因此改成成功。报告记录实际浏览器版本、路径与 Playwright 版本。
+- `node tools/verify/integration-attempts.cjs <attempts.json>`：只读核对 provenance、指纹和 UNKNOWN/null，分别聚合共享集成、应用、浏览器验收及协调；不回写历史，不推断缺失成本或首次成功。
+
+使用合同见[响应式配方手册](../docs/manual/responsive-board-recipes.md)。外部 50 游戏工程缺失时，本仓结果不冒称其全量重采。
+
 从仓库根目录执行工具。日常入口优先使用 [package.json](../package.json) 的 npm scripts；前置条件、产物和写入行为见 [AGENTS.md](../AGENTS.md#development-workflow)。
 
 ## 按任务找工具

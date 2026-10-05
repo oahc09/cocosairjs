@@ -1,0 +1,2466 @@
+{
+  "schema": "air-responsive-host-proof/1",
+  "startedAt": "2026-10-05T12:36:10.501Z",
+  "endedAt": "2026-10-05T12:36:14.334Z",
+  "scope": "native responsive container, three board recipes, deterministic input/visual verification",
+  "completed": true,
+  "subset": true,
+  "scopePassed": false,
+  "fullExternalGamesVerified": false,
+  "fingerprints": {
+    "build/cocosair.module.js": "0e218b0f6f5e671dd78313ddbba949a815bbfd225203a45b804befc695917cde",
+    "build/bootstrap.js": "e5d39cf6a03bc0b3b17ac00adc00503fed2e8c5d869d12a1a44e68686b0447ac",
+    "src/air/bootstrap.ts": "2e20a69161c58e0c32f5012ad24387b1cda9eaa26752c49c102aadd89e84c5d2",
+    "src/air/app-config.ts": "5d7ef9c8089441c21348a59df1d96f2848f7ab2954c67f131deb8656e9d5165c",
+    "src/air/ui-kit.ts": "576a24a43a016bdef7ffdfe0dc114ae16931bf67b7c7f186ac9c3cbdf4e16dba",
+    "tools/build/screen-layout-patch.cjs": "b07646812a6a8a7be4e004ade029007da6923913c1beb5de0d5543d9234fbb09",
+    "src/pal/screen-adapter/web/screen-adapter.js": "8a6d8b0e5574265704d8f7460782ab4610bc16f8f2a869c0c84e787d3a8a8c87",
+    "tools/recipes/board-state.ts": "7af53eb39237ad81f1195ce98cff7784df641fabd33a18e4666d418087a19a06",
+    "examples/responsive-board-recipes/index.html": "2a1b8841b8276e99944ac0a6928eec758e1d2d48f34fc27bcb4bacf7bb33d077",
+    "examples/responsive-board-recipes/model.ts": "f5c7ceb0ea412cab59a3aac1afa58908ed5b4c363ec8bd64689aca1db4bf108a",
+    "examples/responsive-board-recipes/src/main.ts": "7848e33cfb0c0a8f5935c0176e941100714b403495fa8a43c9d30ec2cbac3e84",
+    "tools/verify/responsive-host-browser.cjs": "4d71c6c1f9c348fe76dd4e775ac011804fde1253d4b2db0dc4e948999b6f5a6b"
+  },
+  "baseline": {
+    "revision": "b1ef301",
+    "sha256": "72f37ee6f4fdd80e2fb89908e7c634ae422ce7fb52ab5d54812b43a2438650ba"
+  },
+  "results": [
+    {
+      "engine": "chromium",
+      "dpr": 1,
+      "status": "FAIL",
+      "checks": [
+        {
+          "name": "initial container buffer uses effective DPR",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 0,
+            "selected": -1,
+            "pulse": 0,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 0,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 1,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "resize synchronizes buffer and native input scale 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 0,
+            "selected": -1,
+            "pulse": 0,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 0,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 1,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,122 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 1,
+            "selected": 12,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 1,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 2,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,122 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 2,
+            "selected": 15,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 2,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 3,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,598 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 3,
+            "selected": 0,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 3,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 4,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,598 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 4,
+            "selected": 3,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 4,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 5,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 300,300 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 5,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 5,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 6,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 360,360 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 6,
+            "selected": 10,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 6,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 7,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "resize synchronizes buffer and native input scale 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 6,
+            "selected": 10,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 6,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 7,
+            "nodes": 6,
+            "buffer": [
+              390,
+              390
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.5416666666666666,
+              0.5416666666666666
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,122 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 7,
+            "selected": 12,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 7,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 8,
+            "nodes": 6,
+            "buffer": [
+              390,
+              390
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.5416666666666666,
+              0.5416666666666666
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,122 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 8,
+            "selected": 15,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 8,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 9,
+            "nodes": 6,
+            "buffer": [
+              390,
+              390
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.5416666666666666,
+              0.5416666666666666
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,598 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 9,
+            "selected": 0,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 9,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 10,
+            "nodes": 6,
+            "buffer": [
+              390,
+              390
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.5416666666666666,
+              0.5416666666666666
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,598 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 10,
+            "selected": 3,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 10,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 11,
+            "nodes": 6,
+            "buffer": [
+              390,
+              390
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.5416666666666666,
+              0.5416666666666666
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 300,300 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 11,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 11,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 12,
+            "nodes": 6,
+            "buffer": [
+              390,
+              390
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.5416666666666666,
+              0.5416666666666666
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 360,360 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 12,
+            "selected": 10,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 12,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 13,
+            "nodes": 6,
+            "buffer": [
+              390,
+              390
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.5416666666666666,
+              0.5416666666666666
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "resize synchronizes buffer and native input scale 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 12,
+            "selected": 10,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 12,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 13,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,122 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 13,
+            "selected": 12,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 13,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 14,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,122 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 14,
+            "selected": 15,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 14,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 15,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,598 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 15,
+            "selected": 0,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 15,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 16,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,598 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 16,
+            "selected": 3,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 16,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 17,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 300,300 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 17,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 17,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 18,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 360,360 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 18,
+            "selected": 10,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 18,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 19,
+            "nodes": 6,
+            "buffer": [
+              900,
+              900
+            ],
+            "dpr": 1,
+            "viewScale": [
+              1.25,
+              1.25
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "parent-only resize and trusted touch hit once",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 19,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 18,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 20,
+            "nodes": 6,
+            "buffer": [
+              512,
+              512
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.7111111111111111,
+              0.7111111111111111
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "selected cell is actually presented, not only a changed model",
+          "ok": true,
+          "detail": [
+            210,
+            185,
+            110,
+            255
+          ]
+        },
+        {
+          "name": "hidden zero-size retains valid buffer and reveals",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 19,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 18,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 20,
+            "nodes": 6,
+            "buffer": [
+              512,
+              512
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.7111111111111111,
+              0.7111111111111111
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "board 4x4 local picking",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 1,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 19,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 22,
+            "nodes": 6,
+            "buffer": [
+              512,
+              512
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.7111111111111111,
+              0.7111111111111111
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "board 10x20 local picking",
+          "ok": true,
+          "detail": {
+            "columns": 10,
+            "rows": 20,
+            "hits": 1,
+            "selected": 123,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 20,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 24,
+            "nodes": 6,
+            "buffer": [
+              512,
+              512
+            ],
+            "dpr": 1,
+            "viewScale": [
+              0.7111111111111111,
+              0.7111111111111111
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "output/responsive-host/attempt-02-artifacts/chromium-dpr1-startup.png",
+          "sha256": "e2df5a1d388bea0b14ab62b5d8d5fdaf048d8f90524a6814721d1e4867c4cca0"
+        },
+        {
+          "file": "output/responsive-host/attempt-02-artifacts/chromium-dpr1-parent-touch.png",
+          "sha256": "6750ba5af753c5fe7936bd08fc0942bed84f4d312defc29dfdff09f4c049801a"
+        }
+      ],
+      "errors": [],
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n149 !== 166\n"
+    },
+    {
+      "engine": "chromium",
+      "dpr": 2,
+      "status": "FAIL",
+      "checks": [
+        {
+          "name": "initial container buffer uses effective DPR",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 0,
+            "selected": -1,
+            "pulse": 0,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 0,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 1,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "resize synchronizes buffer and native input scale 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 0,
+            "selected": -1,
+            "pulse": 0,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 0,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 1,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,122 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 1,
+            "selected": 12,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 1,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 2,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,122 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 2,
+            "selected": 15,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 2,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 3,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,598 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 3,
+            "selected": 0,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 3,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 4,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,598 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 4,
+            "selected": 3,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 4,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 5,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 300,300 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 5,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 5,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 6,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 360,360 at 900",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 6,
+            "selected": 10,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 6,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 7,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "resize synchronizes buffer and native input scale 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 6,
+            "selected": 10,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 6,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 7,
+            "nodes": 6,
+            "buffer": [
+              780,
+              780
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.0833333333333333,
+              1.0833333333333333
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,122 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 7,
+            "selected": 12,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 7,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 8,
+            "nodes": 6,
+            "buffer": [
+              780,
+              780
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.0833333333333333,
+              1.0833333333333333
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,122 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 8,
+            "selected": 15,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 8,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 9,
+            "nodes": 6,
+            "buffer": [
+              780,
+              780
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.0833333333333333,
+              1.0833333333333333
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,598 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 9,
+            "selected": 0,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 9,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 10,
+            "nodes": 6,
+            "buffer": [
+              780,
+              780
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.0833333333333333,
+              1.0833333333333333
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,598 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 10,
+            "selected": 3,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 10,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 11,
+            "nodes": 6,
+            "buffer": [
+              780,
+              780
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.0833333333333333,
+              1.0833333333333333
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 300,300 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 11,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 11,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 12,
+            "nodes": 6,
+            "buffer": [
+              780,
+              780
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.0833333333333333,
+              1.0833333333333333
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 360,360 at 390",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 12,
+            "selected": 10,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 12,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 13,
+            "nodes": 6,
+            "buffer": [
+              780,
+              780
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.0833333333333333,
+              1.0833333333333333
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "resize synchronizes buffer and native input scale 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 12,
+            "selected": 10,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 12,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 13,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,122 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 13,
+            "selected": 12,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 13,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 14,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,122 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 14,
+            "selected": 15,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 14,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 15,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 122,598 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 15,
+            "selected": 0,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 15,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 16,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 598,598 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 16,
+            "selected": 3,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 16,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 17,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 300,300 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 17,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 17,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 18,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "trusted click 360,360 at 1100",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 18,
+            "selected": 10,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 18,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 19,
+            "nodes": 6,
+            "buffer": [
+              1800,
+              1800
+            ],
+            "dpr": 2,
+            "viewScale": [
+              2.5,
+              2.5
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "parent-only resize and trusted touch hit once",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 19,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 18,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 20,
+            "nodes": 6,
+            "buffer": [
+              1024,
+              1024
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.4222222222222223,
+              1.4222222222222223
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "selected cell is actually presented, not only a changed model",
+          "ok": true,
+          "detail": [
+            210,
+            185,
+            110,
+            255
+          ]
+        },
+        {
+          "name": "hidden zero-size retains valid buffer and reveals",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 19,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 18,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 20,
+            "nodes": 6,
+            "buffer": [
+              1024,
+              1024
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.4222222222222223,
+              1.4222222222222223
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "board 4x4 local picking",
+          "ok": true,
+          "detail": {
+            "columns": 4,
+            "rows": 4,
+            "hits": 1,
+            "selected": 9,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 19,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 22,
+            "nodes": 6,
+            "buffer": [
+              1024,
+              1024
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.4222222222222223,
+              1.4222222222222223
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        },
+        {
+          "name": "board 10x20 local picking",
+          "ok": true,
+          "detail": {
+            "columns": 10,
+            "rows": 20,
+            "hits": 1,
+            "selected": 123,
+            "pulse": 0.35,
+            "paused": false,
+            "drops": 0,
+            "flags": 0,
+            "hover": 20,
+            "keyboard": {
+              "down": 0,
+              "pressing": 0,
+              "up": 0
+            },
+            "draws": 24,
+            "nodes": 6,
+            "buffer": [
+              1024,
+              1024
+            ],
+            "dpr": 2,
+            "viewScale": [
+              1.4222222222222223,
+              1.4222222222222223
+            ],
+            "context": {
+              "state": "healthy",
+              "backend": "webgl2",
+              "lostCount": 0,
+              "restoredCount": 0,
+              "isContextLost": false,
+              "gamePaused": true,
+              "reason": null,
+              "suggestion": "none",
+              "lastEvent": null,
+              "lastEventAt": null,
+              "timeline": []
+            }
+          }
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "output/responsive-host/attempt-02-artifacts/chromium-dpr2-startup.png",
+          "sha256": "468dfe0be4850788c61413535c11282116a6e8e8f8f4b1c8ab69b6410ad32ceb"
+        },
+        {
+          "file": "output/responsive-host/attempt-02-artifacts/chromium-dpr2-parent-touch.png",
+          "sha256": "64311b80836708a09cdf8800146200302bbed15b3d63ac3495218316dda9f55d"
+        }
+      ],
+      "errors": [],
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n149 !== 166\n"
+    }
+  ],
+  "negativeControls": [
+    {
+      "status": "PASS",
+      "originalFails": true,
+      "applicationWorkaroundPasses": true,
+      "originalState": {
+        "columns": 4,
+        "rows": 4,
+        "hits": 0,
+        "selected": -1,
+        "pulse": 0,
+        "paused": false,
+        "drops": 0,
+        "flags": 0,
+        "hover": 0,
+        "keyboard": {
+          "down": 0,
+          "pressing": 0,
+          "up": 0
+        },
+        "draws": 1,
+        "nodes": 6,
+        "buffer": [
+          1800,
+          1800
+        ],
+        "dpr": 2,
+        "viewScale": [
+          2.5,
+          2.5
+        ],
+        "context": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        }
+      },
+      "workaround": {
+        "columns": 4,
+        "rows": 4,
+        "hits": 0,
+        "selected": -1,
+        "pulse": 0,
+        "paused": false,
+        "drops": 0,
+        "flags": 0,
+        "hover": 0,
+        "keyboard": {
+          "down": 0,
+          "pressing": 0,
+          "up": 0
+        },
+        "draws": 1,
+        "nodes": 6,
+        "buffer": [
+          780,
+          780
+        ],
+        "dpr": 2,
+        "viewScale": [
+          1.0833333333333333,
+          1.0833333333333333
+        ],
+        "context": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "External 50 games and 707 scenarios not available; no physical device/present/FPS claims."
+  ]
+}

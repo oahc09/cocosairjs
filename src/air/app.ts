@@ -7,6 +7,7 @@
  */
 
 import { game, director } from '../cocos/game';
+import { screenAdapter } from 'pal/screen-adapter';
 import { Scene } from '../cocos/scene-graph/scene';
 import type { AirContextHealth, AirContextLossOptions } from './context-health';
 import type { AirDiagnostics, AirDiagnosticMode } from './diagnostics';
@@ -64,6 +65,10 @@ export interface AirAppOptions {
     diagnostics?: AirDiagnosticMode;
     /** Effective browser DPR is min(devicePixelRatio, cap); configure before importing the engine. Default 2. */
     pixelRatioCap?: number;
+    /** Explicit window fill or host-container layout; omitted preserves native screen settings. */
+    screenMode?: 'window' | 'container';
+    /** Existing canvas ancestor for container mode. Safe bootstrap creates native wrappers inside it. */
+    container?: HTMLElement | string;
     /** Native ResolutionPolicy integer: 0 EXACT_FIT, 1 NO_BORDER, 2 SHOW_ALL, 3 FIXED_HEIGHT, 4 FIXED_WIDTH. */
     designResolution?: { width: number; height: number; policy: number };
 }
@@ -179,6 +184,7 @@ export class AirAppImpl implements AirApp {
 
     close (): Promise<AirSceneReleaseReceipt> {
         if (this._close) return this._close;
+        (screenAdapter as unknown as { destroyLayoutObserver?: () => void }).destroyLayoutObserver?.();
         const registry = airBootstrapRegistry();
         if (registry.app === this) registry.status = 'closed';
         this._close = Promise.resolve().then(() => this.releaseScene()).then((receipt) => {

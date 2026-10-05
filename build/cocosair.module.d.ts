@@ -55818,6 +55818,10 @@
         diagnostics?: AirDiagnosticMode;
         /** Effective browser DPR is min(devicePixelRatio, cap); configure before importing the engine. Default 2. */
         pixelRatioCap?: number;
+        /** Explicit window fill or host-container layout; omitted preserves native screen settings. */
+        screenMode?: "window" | "container";
+        /** Existing canvas ancestor for container mode. Safe bootstrap creates native wrappers inside it. */
+        container?: HTMLElement | string;
         /** Native ResolutionPolicy integer: 0 EXACT_FIT, 1 NO_BORDER, 2 SHOW_ALL, 3 FIXED_HEIGHT, 4 FIXED_WIDTH. */
         designResolution?: {
             width: number;
@@ -56310,6 +56314,8 @@
         ];
         color?: math.Color;
         overflow?: number;
+        /** SHRINK/CLAMP wrapping; omitted keeps the native Label default. */
+        enableWrapText?: boolean;
         boxSize?: [
             number,
             number

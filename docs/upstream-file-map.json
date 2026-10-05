@@ -7302,7 +7302,7 @@
       "upstreamPath": "public-pal/pal/input/web/keyboard-input.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; measured layout resize, coalesced ResizeObserver, zero-size reveal and explicit close cleanup via screen-layout-patch.cjs"
     },
     {
       "airPath": "src/pal/input/web/mouse-input.js",

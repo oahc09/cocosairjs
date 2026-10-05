@@ -1,0 +1,12 @@
+PASS test/smoke/responsive-host-layout.test.ts (8.682 s)
+PASS test/smoke/port-gap-scene-release.test.ts
+PASS test/smoke/port-gap-bootstrap-singleton.test.ts
+PASS test/smoke/responsive-host-recipes.test.ts
+PASS test/smoke/port-gap-action-input-native.test.ts
+PASS test/smoke/port-gap-action-input-dom.test.ts
+PASS test/smoke/port-gap-bootstrap-config.test.ts
+
+Test Suites: 7 passed, 7 total
+Tests:       56 passed, 56 total
+Snapshots:   0 total
+Time:        18.952 s, estimated 19 s

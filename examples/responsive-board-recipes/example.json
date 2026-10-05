@@ -1,0 +1,8 @@
+{
+  "id": "responsive-board-recipes",
+  "title": "Responsive board recipes",
+  "category": "ui",
+  "description": "Native container resize, single-line labels, input edges and visual cache recipes.",
+  "status": "draft",
+  "entry": "index.html"
+}

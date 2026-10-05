@@ -151,6 +151,19 @@ try {
     catch (error) { if (error.code !== 'AIR_E_TEXTURE_FORMAT') failures.push('installed invalid format diagnostic is missing'); }
     if (mod.inspectAirMaterial(new mod.Material()).length !== 0)
         failures.push('installed material inspector fabricates passes on an uninitialized native material');
+    const labelRoot = new mod.Node('consumer-wrap');
+        const label = mod
+            .labelNode(labelRoot, 'RIGHT', 'single', { enableWrapText: false, overflow: mod.Label.Overflow.SHRINK })
+            .getComponent(mod.Label);
+        if (label.enableWrapText !== false)
+            failures.push('installed Label helper does not forward explicit single-line wrapping');
+        try {
+            mod.labelNode(labelRoot, 'bad', 'invalid', { enableWrapText: 'false' });
+            failures.push('installed Label helper accepts non-boolean wrap');
+        } catch (error) {
+            if (error.code !== 'AIR_E_LABEL_WRAP') failures.push('installed Label wrap diagnostic missing');
+        }
+        labelRoot.destroy();
     if (typeof mod.utils?.MeshUtils?.createDynamicMesh !== 'function') { failures.push('official dynamic mesh entry utils.MeshUtils.createDynamicMesh is missing from the installed module'); }
     for (const type of ['box', 'sphere', 'cylinder', 'cone']) {
         if (!require('node:util').isDeepStrictEqual(mod.createPrimitiveGeometry({ type }), mod.primitives[type]())) {
@@ -177,6 +190,11 @@ fs.writeFileSync(tsOut, [
     "import type { GLTFLoaderOptions, AirAtlasDocument, AirAtlasHandle, AirAtlasLoadOptions } from 'cocosair';",
     "import { createAirApp as createSafeAirApp } from 'cocosair/bootstrap';",
     "const safeInit = createSafeAirApp({ canvas: '#GameCanvas', pixelRatioCap: 1.5, designResolution: { width: 640, height: 480, policy: 0 } });",
+            "const containerInit = createSafeAirApp({ canvas: '#board', screenMode: 'container', container: '#host', pixelRatioCap: 2 }); void containerInit;",
+            '// @ts-expect-error screen mode is an explicit public contract',
+            "createSafeAirApp({ canvas: '#board', screenMode: 'embedded' });",
+            "import { labelNode, Label } from 'cocosair';",
+            "labelNode(new Node(), 'RIGHT', 'single', { enableWrapText: false, overflow: Label.Overflow.SHRINK });",
     "safeInit.then(app => { const token = app.session?.token(); void app.releaseScene?.(); void app.close?.(); });",
     "const decompression = new DecompressionStream('gzip');",
     "const renderOptions: AirRenderTargetOptions = { width: 640, height: 480, scale: 0.5, colorFormat: 'rgba16f', depthFormat: 'depth24-stencil8', samples: 4, filter: 'nearest', sampleFallback: 'lower' };",

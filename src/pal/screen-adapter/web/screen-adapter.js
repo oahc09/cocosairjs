@@ -146,6 +146,37 @@ class ScreenAdapter extends EventTarget {
         this._isProportionalToFrame = v;
         this._updateContainer();
     }
+    destroyLayoutObserver() {
+        this._layoutStopped = true;
+        this._dprCleanup?.();
+        this._dprCleanup = undefined;
+        this._layoutObserver?.disconnect();
+        this._layoutObserver = undefined;
+        if (this._layoutFrame)
+            window.cancelAnimationFrame(this._layoutFrame);
+        this._layoutFrame = 0;
+    }
+    _observeLayout() {
+        this.destroyLayoutObserver();
+        this._layoutStopped = false;
+        if (!this._isHeadlessMode)
+            this._watchDPR?.();
+        if (this._isHeadlessMode || typeof ResizeObserver === 'undefined')
+            return;
+        this._layoutObserver = new ResizeObserver(() => {
+            if (this._layoutStopped || !this.handleResizeEvent || this._layoutFrame)
+                return;
+            this._layoutFrame = window.requestAnimationFrame(() => {
+                this._layoutFrame = 0;
+                if (!this._layoutStopped && this.handleResizeEvent)
+                    this._updateFrame();
+            });
+        });
+        if (this._gameFrame)
+            this._layoutObserver.observe(this._gameFrame);
+        if (this._gameContainer)
+            this._layoutObserver.observe(this._gameContainer);
+    }
     get _windowSizeInCssPixels() {
         if (TEST) {
             return new Size(window.innerWidth, window.innerHeight);
@@ -211,6 +242,9 @@ class ScreenAdapter extends EventTarget {
         this._orientationChangeTimeoutId = -1;
         this._cachedFrameSize = new Size(0, 0); // cache before enter fullscreen.
         this._exactFitScreen = false;
+        this._measuredLayout = '';
+        this._layoutFrame = 0;
+        this._layoutStopped = false;
         this._isHeadlessMode = false;
         this._fn = {};
         // Function mapping for cross browser support
@@ -302,6 +336,7 @@ class ScreenAdapter extends EventTarget {
         this._exactFitScreen = options.exactFitScreen;
         this._isHeadlessMode = options.isHeadlessMode;
         this._resizeFrame();
+        this._observeLayout();
     }
     requestFullScreen() {
         return new Promise((resolve, reject) => {
@@ -394,21 +429,26 @@ class ScreenAdapter extends EventTarget {
         };
         if (typeof window.matchMedia === 'function') {
             const updateDPRChangeListener = () => {
-                const dpr = this.devicePixelRatio;
-                // NOTE: some browsers especially on iPhone doesn't support MediaQueryList
-                const mediaQueryResolution = window.matchMedia(`(resolution: ${dpr}dppx)`);
-                if (mediaQueryResolution.addEventListener) {
-                    mediaQueryResolution.addEventListener('change', () => {
-                        this.emit('window-resize', this.windowSize.width, this.windowSize.height);
-                        updateDPRChangeListener();
-                    }, { once: true });
+                this._dprCleanup?.();
+                // Watch actual browser density; comparing/allocating still uses the effective cap.
+                const query = window.matchMedia(`(resolution: ${window.devicePixelRatio ?? 1}dppx)`);
+                const changed = () => {
+                    if (this._layoutStopped)
+                        return;
+                    if (this.handleResizeEvent)
+                        this._updateContainer();
+                    updateDPRChangeListener();
+                };
+                if (query.addEventListener) {
+                    query.addEventListener('change', changed, { once: true });
+                    this._dprCleanup = () => query.removeEventListener('change', changed);
                 }
-                else if (mediaQueryResolution.addListener) {
-                    mediaQueryResolution.addListener(() => {
-                        this.emit('window-resize', this.windowSize.width, this.windowSize.height);
-                    });
+                else if (query.addListener) {
+                    query.addListener(changed);
+                    this._dprCleanup = () => query.removeListener(changed);
                 }
             };
+            this._watchDPR = updateDPRChangeListener;
             updateDPRChangeListener();
             const mediaQueryPortrait = window.matchMedia('(orientation: portrait)');
             const mediaQueryLandscape = window.matchMedia('(orientation: landscape)');
@@ -606,18 +646,18 @@ class ScreenAdapter extends EventTarget {
             containerStyle.width = '100%';
             containerStyle.height = '100%';
         }
-        // Cache Test
-        if (this._gameFrame
-            && (this._cachedFrameStyle.width !== this._gameFrame.style.width
-                || this._cachedFrameStyle.height !== this._gameFrame.style.height
-                || this._cachedContainerStyle.width !== this._gameContainer.style.width
-                || this._cachedContainerStyle.height !== this._gameContainer.style.height)) {
-            this.emit('window-resize', this.windowSize.width, this.windowSize.height);
-            // Update Cache
-            this._cachedFrameStyle.width = this._gameFrame.style.width;
-            this._cachedFrameStyle.height = this._gameFrame.style.height;
-            this._cachedContainerStyle.width = this._gameContainer.style.width;
-            this._cachedContainerStyle.height = this._gameContainer.style.height;
+        // CSS/parent layout changes need the same native resize chain as inline changes.
+        const size = this.windowSize;
+        if (size.width <= 0 || size.height <= 0) {
+            // Keep the last valid framebuffer while hidden; reveal must notify even at the old size.
+            this._measuredLayout = '';
+            return;
+        }
+        const key = [size.width, size.height, this.devicePixelRatio, this.isFrameRotated].join(':');
+        if (key !== this._measuredLayout) {
+            // Cache before dispatch: view's policy update may re-enter this method.
+            this._measuredLayout = key;
+            this.emit('window-resize', size.width, size.height);
         }
     }
 }

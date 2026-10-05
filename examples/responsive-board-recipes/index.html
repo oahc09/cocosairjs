@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="icon" href="data:," />
+        <title>Responsive board recipes · Cocos AIR</title>
+        <style>
+            body {
+                margin: 0;
+                background: #111827;
+                color: #dbeafe;
+                font: 14px system-ui;
+            }
+            header {
+                padding: 12px;
+            }
+            #host {
+                width: min(100vw, 900px);
+                height: min(100vw, 900px);
+            }
+            #GameDiv,
+            #Cocos3dGameContainer,
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
+            canvas {
+                display: block;
+            }
+            button,
+            select,
+            input {
+                margin: 4px;
+                padding: 6px;
+            }
+            p {
+                margin: 4px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <strong>响应式棋盘 / 原生坐标与单时钟验收</strong>
+            <select id="board">
+                <option value="4,4">4 × 4</option>
+                <option value="10,20">10 × 20</option>
+                <option value="16,16">16 × 16</option>
+            </select>
+            <button id="pause">Pause</button><button id="restart">Restart</button><button id="flag">Flag</button>
+            <label>文本输入 <input id="text" aria-label="文本输入" /></label>
+            <p>点击格子触发短暂高亮；Space / 2 / 9 只消费按下边沿。Flag 独立适配移动设备。</p>
+        </header>
+        <section id="host">
+            <div id="GameDiv">
+                <div id="Cocos3dGameContainer"><canvas id="GameCanvas" tabindex="0"></canvas></div>
+            </div>
+        </section>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+        <script type="module" src="./src/main.js"></script>
+    </body>
+</html>

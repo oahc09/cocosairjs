@@ -98,6 +98,8 @@ export interface LabelNodeOptions {
     position?: [number, number];
     color?: Color;
     overflow?: number;
+    /** SHRINK/CLAMP wrapping; omitted keeps the native Label default. */
+    enableWrapText?: boolean;
     boxSize?: [number, number];
     layer?: number;
 }
@@ -107,6 +109,9 @@ export interface LabelNodeOptions {
  * @zh 创建带 UITransform + Label 的 UI 子节点。
  */
 export function labelNode (parent: Node, text: string, name = 'Label', options: LabelNodeOptions = {}): Node {
+    if (options.enableWrapText !== undefined && typeof options.enableWrapText !== 'boolean') {
+        throw Object.assign(new Error('[AIR_E_LABEL_WRAP] enableWrapText must be boolean'), { code: 'AIR_E_LABEL_WRAP' });
+    }
     const node = new Node(name);
     node.layer = options.layer ?? Layers.Enum.UI_2D;
     const fontSize = options.fontSize ?? 28;
@@ -119,6 +124,7 @@ export function labelNode (parent: Node, text: string, name = 'Label', options: 
     label.lineHeight = Math.round(fontSize * 1.25);
     label.color = options.color ?? Color.WHITE.clone();
     if (options.overflow !== undefined) { label.overflow = options.overflow; }
+    if (options.enableWrapText !== undefined) { label.enableWrapText = options.enableWrapText; }
     if (options.position) { node.setPosition(options.position[0], options.position[1], 0); }
     parent.addChild(node);
     return node;

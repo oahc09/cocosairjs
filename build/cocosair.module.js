@@ -14923,6 +14923,32 @@ class ScreenAdapter extends EventTarget {
     this._isProportionalToFrame = v;
     this._updateContainer();
   }
+  destroyLayoutObserver() {
+    var _this$_dprCleanup, _this$_layoutObserver;
+    this._layoutStopped = true;
+    (_this$_dprCleanup = this._dprCleanup) == null ? void 0 : _this$_dprCleanup.call(this);
+    this._dprCleanup = undefined;
+    (_this$_layoutObserver = this._layoutObserver) == null ? void 0 : _this$_layoutObserver.disconnect();
+    this._layoutObserver = undefined;
+    if (this._layoutFrame) window.cancelAnimationFrame(this._layoutFrame);
+    this._layoutFrame = 0;
+  }
+  _observeLayout() {
+    var _this$_watchDPR;
+    this.destroyLayoutObserver();
+    this._layoutStopped = false;
+    if (!this._isHeadlessMode) (_this$_watchDPR = this._watchDPR) == null ? void 0 : _this$_watchDPR.call(this);
+    if (this._isHeadlessMode || typeof ResizeObserver === 'undefined') return;
+    this._layoutObserver = new ResizeObserver(() => {
+      if (this._layoutStopped || !this.handleResizeEvent || this._layoutFrame) return;
+      this._layoutFrame = window.requestAnimationFrame(() => {
+        this._layoutFrame = 0;
+        if (!this._layoutStopped && this.handleResizeEvent) this._updateFrame();
+      });
+    });
+    if (this._gameFrame) this._layoutObserver.observe(this._gameFrame);
+    if (this._gameContainer) this._layoutObserver.observe(this._gameContainer);
+  }
   get _windowSizeInCssPixels() {
     if (this.isProportionalToFrame) {
       if (!this._gameContainer) {
@@ -14988,6 +15014,9 @@ class ScreenAdapter extends EventTarget {
     this._orientationChangeTimeoutId = -1;
     this._cachedFrameSize = new Size(0, 0);
     this._exactFitScreen = false;
+    this._measuredLayout = '';
+    this._layoutFrame = 0;
+    this._layoutStopped = false;
     this._isHeadlessMode = false;
     this._fn = {};
     this._fnGroup = [['requestFullscreen', 'exitFullscreen', 'fullscreenchange', 'fullscreenEnabled', 'fullscreenElement', 'fullscreenerror'], ['requestFullScreen', 'exitFullScreen', 'fullScreenchange', 'fullScreenEnabled', 'fullScreenElement', 'fullscreenerror'], ['webkitRequestFullScreen', 'webkitCancelFullScreen', 'webkitfullscreenchange', 'webkitIsFullScreen', 'webkitCurrentFullScreenElement', 'webkitfullscreenerror'], ['mozRequestFullScreen', 'mozCancelFullScreen', 'mozfullscreenchange', 'mozFullScreen', 'mozFullScreenElement', 'mozfullscreenerror'], ['msRequestFullscreen', 'msExitFullscreen', 'MSFullscreenChange', 'msFullscreenEnabled', 'msFullscreenElement', 'msfullscreenerror']];
@@ -15035,6 +15064,7 @@ class ScreenAdapter extends EventTarget {
     this._exactFitScreen = options.exactFitScreen;
     this._isHeadlessMode = options.isHeadlessMode;
     this._resizeFrame();
+    this._observeLayout();
   }
   requestFullScreen() {
     return new Promise((resolve, reject) => {
@@ -15124,21 +15154,25 @@ class ScreenAdapter extends EventTarget {
     };
     if (typeof window.matchMedia === 'function') {
       const updateDPRChangeListener = () => {
-        const dpr = this.devicePixelRatio;
-        const mediaQueryResolution = window.matchMedia(`(resolution: ${dpr}dppx)`);
-        if (mediaQueryResolution.addEventListener) {
-          mediaQueryResolution.addEventListener('change', () => {
-            this.emit('window-resize', this.windowSize.width, this.windowSize.height);
-            updateDPRChangeListener();
-          }, {
+        var _this$_dprCleanup2, _window$devicePixelRa2;
+        (_this$_dprCleanup2 = this._dprCleanup) == null ? void 0 : _this$_dprCleanup2.call(this);
+        const query = window.matchMedia(`(resolution: ${(_window$devicePixelRa2 = window.devicePixelRatio) !== null && _window$devicePixelRa2 !== void 0 ? _window$devicePixelRa2 : 1}dppx)`);
+        const changed = () => {
+          if (this._layoutStopped) return;
+          if (this.handleResizeEvent) this._updateContainer();
+          updateDPRChangeListener();
+        };
+        if (query.addEventListener) {
+          query.addEventListener('change', changed, {
             once: true
           });
-        } else if (mediaQueryResolution.addListener) {
-          mediaQueryResolution.addListener(() => {
-            this.emit('window-resize', this.windowSize.width, this.windowSize.height);
-          });
+          this._dprCleanup = () => query.removeEventListener('change', changed);
+        } else if (query.addListener) {
+          query.addListener(changed);
+          this._dprCleanup = () => query.removeListener(changed);
         }
       };
+      this._watchDPR = updateDPRChangeListener;
       updateDPRChangeListener();
       const mediaQueryPortrait = window.matchMedia('(orientation: portrait)');
       const mediaQueryLandscape = window.matchMedia('(orientation: landscape)');
@@ -15308,12 +15342,15 @@ class ScreenAdapter extends EventTarget {
       containerStyle.width = '100%';
       containerStyle.height = '100%';
     }
-    if (this._gameFrame && (this._cachedFrameStyle.width !== this._gameFrame.style.width || this._cachedFrameStyle.height !== this._gameFrame.style.height || this._cachedContainerStyle.width !== this._gameContainer.style.width || this._cachedContainerStyle.height !== this._gameContainer.style.height)) {
-      this.emit('window-resize', this.windowSize.width, this.windowSize.height);
-      this._cachedFrameStyle.width = this._gameFrame.style.width;
-      this._cachedFrameStyle.height = this._gameFrame.style.height;
-      this._cachedContainerStyle.width = this._gameContainer.style.width;
-      this._cachedContainerStyle.height = this._gameContainer.style.height;
+    const size = this.windowSize;
+    if (size.width <= 0 || size.height <= 0) {
+      this._measuredLayout = '';
+      return;
+    }
+    const key = [size.width, size.height, this.devicePixelRatio, this.isFrameRotated].join(':');
+    if (key !== this._measuredLayout) {
+      this._measuredLayout = key;
+      this.emit('window-resize', size.width, size.height);
     }
   }
 }
@@ -136062,6 +136099,11 @@ function airError(code, message) {
     code
   });
 }
+function validateAirScreenMode(mode, exactFit) {
+  if (mode !== undefined && exactFit != null && exactFit !== (mode === 'window')) {
+    throw airError('AIR_E_SCREEN_CONFIG_CONFLICT', 'screenMode conflicts with native screen.exactFitScreen; use one matching configuration.');
+  }
+}
 function normalizeAirOptions(options) {
   var _options$physics, _options$diagnostics, _options$pixelRatioCa, _options$contextLoss, _options$renderMode, _context$autoPause;
   if (!options || typeof options !== 'object') throw airError('AIR_E_APP_OPTIONS', 'createAirApp requires an options object.');
@@ -136100,6 +136142,35 @@ function normalizeAirOptions(options) {
     throw airError('AIR_E_DESIGN_RESOLUTION', 'designResolution requires finite positive width/height and a native policy integer (0..4).');
   }
   const context = (_options$contextLoss = options.contextLoss) !== null && _options$contextLoss !== void 0 ? _options$contextLoss : {};
+  if (options.screenMode !== undefined && !['window', 'container'].includes(options.screenMode)) {
+    throw airError('AIR_E_SCREEN_MODE', 'screenMode must be window or container.');
+  }
+  if (options.container !== undefined && options.screenMode !== 'container') {
+    throw airError('AIR_E_CONTAINER', 'container requires screenMode: container.');
+  }
+  let container = options.container;
+  if (typeof container === 'string') {
+    try {
+      container = document.querySelector(container);
+    } catch {
+      throw airError('AIR_E_CONTAINER', 'Invalid container selector.');
+    }
+  }
+  if (options.screenMode === 'container') {
+    var _document$getElementB;
+    if (options.container === undefined) container = (_document$getElementB = document.getElementById('GameDiv')) !== null && _document$getElementB !== void 0 ? _document$getElementB : canvas.parentElement;
+    if (!(container instanceof HTMLElement) || container === document.body || container === document.documentElement || !container.contains(canvas) || container === canvas) {
+      throw airError('AIR_E_CONTAINER', 'Container must be an existing non-body ancestor of the canvas.');
+    }
+    const frame = document.getElementById('GameDiv');
+    if (frame && (!frame.contains(canvas) || !container.contains(frame))) {
+      throw airError('AIR_E_CONTAINER_CONFLICT', 'GameDiv must contain the canvas inside the selected container.');
+    }
+    const inner = document.getElementById('Cocos3dGameContainer');
+    if (inner && (!inner.contains(canvas) || !container.contains(inner) || frame && !frame.contains(inner))) {
+      throw airError('AIR_E_CONTAINER_CONFLICT', 'Cocos3dGameContainer belongs to a different canvas or frame.');
+    }
+  }
   if (!context || typeof context !== 'object' || context.autoPause !== undefined && typeof context.autoPause !== 'boolean' || context.reload !== undefined && typeof context.reload !== 'function' || context.onEvent !== undefined && typeof context.onEvent !== 'function') {
     throw airError('AIR_E_CONTEXT_OPTIONS', 'contextLoss requires optional boolean autoPause and function reload/onEvent.');
   }
@@ -136109,6 +136180,8 @@ function normalizeAirOptions(options) {
     physics,
     diagnostics,
     pixelRatioCap,
+    screenMode: options.screenMode,
+    container: container,
     designResolution: resolution && Object.freeze({
       width: resolution.width,
       height: resolution.height,
@@ -136123,7 +136196,38 @@ function normalizeAirOptions(options) {
 }
 function equalAirOptions(a, b) {
   var _a$designResolution, _b$designResolution, _a$designResolution2, _b$designResolution2, _a$designResolution3, _b$designResolution3;
-  return a.canvas === b.canvas && a.renderMode === b.renderMode && a.physics === b.physics && a.diagnostics === b.diagnostics && a.pixelRatioCap === b.pixelRatioCap && ((_a$designResolution = a.designResolution) == null ? void 0 : _a$designResolution.width) === ((_b$designResolution = b.designResolution) == null ? void 0 : _b$designResolution.width) && ((_a$designResolution2 = a.designResolution) == null ? void 0 : _a$designResolution2.height) === ((_b$designResolution2 = b.designResolution) == null ? void 0 : _b$designResolution2.height) && ((_a$designResolution3 = a.designResolution) == null ? void 0 : _a$designResolution3.policy) === ((_b$designResolution3 = b.designResolution) == null ? void 0 : _b$designResolution3.policy) && a.contextLoss.autoPause === b.contextLoss.autoPause && a.contextLoss.reload === b.contextLoss.reload && a.contextLoss.onEvent === b.contextLoss.onEvent;
+  return a.canvas === b.canvas && a.renderMode === b.renderMode && a.physics === b.physics && a.diagnostics === b.diagnostics && a.pixelRatioCap === b.pixelRatioCap && a.screenMode === b.screenMode && a.container === b.container && ((_a$designResolution = a.designResolution) == null ? void 0 : _a$designResolution.width) === ((_b$designResolution = b.designResolution) == null ? void 0 : _b$designResolution.width) && ((_a$designResolution2 = a.designResolution) == null ? void 0 : _a$designResolution2.height) === ((_b$designResolution2 = b.designResolution) == null ? void 0 : _b$designResolution2.height) && ((_a$designResolution3 = a.designResolution) == null ? void 0 : _a$designResolution3.policy) === ((_b$designResolution3 = b.designResolution) == null ? void 0 : _b$designResolution3.policy) && a.contextLoss.autoPause === b.contextLoss.autoPause && a.contextLoss.reload === b.contextLoss.reload && a.contextLoss.onEvent === b.contextLoss.onEvent;
+}
+function prepareAirContainer(options) {
+  if (options.screenMode !== 'container') return undefined;
+  let frame = document.getElementById('GameDiv');
+  if (!frame) {
+    frame = document.createElement('div');
+    frame.id = 'GameDiv';
+    frame.style.width = '100%';
+    frame.style.height = '100%';
+    options.canvas.parentElement.insertBefore(frame, options.canvas);
+    frame.appendChild(options.canvas);
+  }
+  let inner = document.getElementById('Cocos3dGameContainer');
+  if (inner && (!frame.contains(inner) || !inner.contains(options.canvas))) {
+    throw airError('AIR_E_CONTAINER_CONFLICT', 'Cocos3dGameContainer must contain the canvas inside GameDiv.');
+  }
+  if (!inner) {
+    inner = document.createElement('div');
+    inner.id = 'Cocos3dGameContainer';
+    inner.style.width = '100%';
+    inner.style.height = '100%';
+    options.canvas.parentElement.insertBefore(inner, options.canvas);
+    inner.appendChild(options.canvas);
+  }
+  options.canvas.style.width = '100%';
+  options.canvas.style.height = '100%';
+  options.canvas.style.display = 'block';
+  if (frame.clientWidth <= 0 || frame.clientHeight <= 0) {
+    throw airError('AIR_E_CONTAINER_SIZE', 'Container must have a positive layout size at startup; show it before createAirApp.');
+  }
+  return frame;
 }
 function admitAirOptions(options) {
   const state = airBootstrapRegistry();
@@ -136371,6 +136475,7 @@ class AirAppImpl {
   }
   close() {
     if (this._close) return this._close;
+    screenAdapter.destroyLayoutObserver == null ? void 0 : screenAdapter.destroyLayoutObserver();
     const registry = airBootstrapRegistry();
     if (registry.app === this) registry.status = 'closed';
     this._close = Promise.resolve().then(() => this.releaseScene()).then(receipt => {
@@ -142316,8 +142421,9 @@ function createAirDiagnostics(mode = 'errors') {
   };
 }
 
-function ensureCanvasDOM(canvas) {
-  var _window$devicePixelRa;
+function ensureCanvasDOM(canvas, options) {
+  var _window$devicePixelRa, _hostFrame$clientWidt, _hostFrame$clientHeig;
+  const hostFrame = prepareAirContainer(options);
   if (canvas.id !== 'GameCanvas') {
     const decoy = document.getElementById('GameCanvas');
     if (decoy && decoy !== canvas) {
@@ -142345,8 +142451,8 @@ function ensureCanvasDOM(canvas) {
   const dprCapRaw = Number(globalThis.__CCDPR_CAP__);
   const dprCap = Number.isFinite(dprCapRaw) && dprCapRaw > 0 ? dprCapRaw : 2;
   const effDpr = Math.min((_window$devicePixelRa = window.devicePixelRatio) !== null && _window$devicePixelRa !== void 0 ? _window$devicePixelRa : 1, dprCap);
-  const bufW = Math.round(window.innerWidth * effDpr);
-  const bufH = Math.round(window.innerHeight * effDpr);
+  const bufW = Math.round(((_hostFrame$clientWidt = hostFrame == null ? void 0 : hostFrame.clientWidth) !== null && _hostFrame$clientWidt !== void 0 ? _hostFrame$clientWidt : window.innerWidth) * effDpr);
+  const bufH = Math.round(((_hostFrame$clientHeig = hostFrame == null ? void 0 : hostFrame.clientHeight) !== null && _hostFrame$clientHeig !== void 0 ? _hostFrame$clientHeig : window.innerHeight) * effDpr);
   if (canvas.width !== bufW || canvas.height !== bufH) {
     canvas.width = bufW;
     canvas.height = bufH;
@@ -142385,7 +142491,9 @@ function createAirApp(options) {
 async function initializeAirApp(options) {
   var _options$diagnostics;
   const canvas = options.canvas;
-  ensureCanvasDOM(canvas);
+  const exactFit = settings.querySettings(SettingsCategory.SCREEN, 'exactFitScreen');
+  validateAirScreenMode(options.screenMode, exactFit);
+  ensureCanvasDOM(canvas, options);
   const contextHealth = attachContextHealth(canvas, options.contextLoss);
   const diagnostics = createAirDiagnostics((_options$diagnostics = options.diagnostics) !== null && _options$diagnostics !== void 0 ? _options$diagnostics : 'errors');
   const selectBackend = () => selectPhysicsBackend(options.physics);
@@ -142398,7 +142506,12 @@ async function initializeAirApp(options) {
       overrideSettings: {
         rendering: {
           renderMode: options.renderMode
-        }
+        },
+        ...(options.screenMode !== undefined ? {
+          screen: {
+            exactFitScreen: options.screenMode === 'window'
+          }
+        } : {})
       }
     });
     if (options.designResolution) {
@@ -142410,6 +142523,7 @@ async function initializeAirApp(options) {
       view.setDesignResolutionSize(width, height, policy);
     }
   } catch (error) {
+    screenAdapter.destroyLayoutObserver == null ? void 0 : screenAdapter.destroyLayoutObserver();
     contextHealth.destroy();
     diagnostics.destroy();
     throw error;
@@ -143504,6 +143618,11 @@ function spriteNode(parent, name = 'Sprite', options = {}) {
 
 function labelNode(parent, text, name = 'Label', options = {}) {
   var _options$layer3, _options$fontSize, _options$boxSize$, _options$boxSize, _options$boxSize$2, _options$boxSize2, _options$color;
+  if (options.enableWrapText !== undefined && typeof options.enableWrapText !== 'boolean') {
+    throw Object.assign(new Error('[AIR_E_LABEL_WRAP] enableWrapText must be boolean'), {
+      code: 'AIR_E_LABEL_WRAP'
+    });
+  }
   const node = new Node$1(name);
   node.layer = (_options$layer3 = options.layer) !== null && _options$layer3 !== void 0 ? _options$layer3 : Layers.Enum.UI_2D;
   const fontSize = (_options$fontSize = options.fontSize) !== null && _options$fontSize !== void 0 ? _options$fontSize : 28;
@@ -143517,6 +143636,9 @@ function labelNode(parent, text, name = 'Label', options = {}) {
   label.color = (_options$color = options.color) !== null && _options$color !== void 0 ? _options$color : Color.WHITE.clone();
   if (options.overflow !== undefined) {
     label.overflow = options.overflow;
+  }
+  if (options.enableWrapText !== undefined) {
+    label.enableWrapText = options.enableWrapText;
   }
   if (options.position) {
     node.setPosition(options.position[0], options.position[1], 0);
