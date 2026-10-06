@@ -74,6 +74,8 @@ npm run dev
 
 Default `build`, `build:min`, and `build:system` runs write `build/package.json` (`type: module`) and `build/gltf-decoders/package.json` (`type: commonjs`). The latter only declares the module format of existing decoder files; it **does not download or generate decoder JS/WASM assets**. The build script supports `AIR_FEATURES` to override the feature set and `AIR_OUT_DIR` to redirect output. These variants neither refresh default release-side files nor share the default ESM incremental cache. `build:dts` is independent and does not follow `AIR_OUT_DIR`.
 
+Runtime builds inject `AIR_BUILD_DATE` in `yyyyMMddHHmm` format using Asia/Shanghai time and `AIR_BUILD_NUMBER` as a compilation counter starting at 1. Each successful runtime JS build advances `tools/build/build-number.json`; `build:all` compiles development and minified JS separately, consuming two numbers. Declaration builds and packaging do not increment it. The counter survives cleanup of generated `build/`. `SOURCE_DATE_EPOCH` pins only the time, not the counter. Direct source imports return `unbuilt` and the number's default 1; declarations expose `string` and `number` without stamping the source file.
+
 ### Inventories, resource registration, and report generation
 
 These commands write repository content; a name containing `verify` does not necessarily indicate a read-only operation.

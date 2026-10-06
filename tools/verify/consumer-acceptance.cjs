@@ -128,6 +128,12 @@ try {
     dom.window.HTMLCanvasElement.prototype.toDataURL = function () { return 'data:image/png;base64,'; };
     const mod = await import(pathToFileURL(entryPath).href);
     exportCount = Object.keys(mod).length;
+    if (typeof mod.AIR_BUILD_DATE !== 'string' || !/^\d{12}$/.test(mod.AIR_BUILD_DATE)) {
+        failures.push('installed AIR_BUILD_DATE is not a compiled yyyyMMddHHmm timestamp');
+    }
+    if (!Number.isSafeInteger(mod.AIR_BUILD_NUMBER) || mod.AIR_BUILD_NUMBER < 1) {
+        failures.push('installed AIR_BUILD_NUMBER is not a positive compilation number');
+    }
     const expected = ['createAirApp', 'GLTFLoader', 'GLTFAsset', 'Node', 'Scene', 'Vec3', 'MeshRenderer',
         'Camera', 'DirectionalLight', 'Animation', 'AnimationClip', 'Layers', 'Material', 'Texture2D',
         'AssetBank', 'createActionState', 'createActionInput', 'createPrimitiveGeometry', 'AirAppImpl',
@@ -189,6 +195,11 @@ fs.writeFileSync(tsOut, [
     "  Camera, DirectionalLight, Animation, AnimationClip, Layers,",
     "  configureGLTFLoaderDefaults, utils, createPrimitiveGeometry, createActionState, AssetBank, AudioService, TiledObjectGroup, parseFnt, createBitmapFont, loadBitmapFont, SpriteFrame, Billboard, AirUIMesh,",
     "} from 'cocosair';",
+    "import { AIR_BUILD_DATE, AIR_BUILD_NUMBER } from 'cocosair';",
+    "const buildDate: string = AIR_BUILD_DATE; void buildDate;",
+    "const buildNumber: number = AIR_BUILD_NUMBER; void buildNumber;",
+    "// @ts-expect-error the compile timestamp is a string, not a Date object",
+    "const invalidBuildDate: Date = AIR_BUILD_DATE;",
     "import type { EventGamepad } from 'cocosair';",
     "declare const gamepadEvent: EventGamepad;",
     "const buttonValue: number = gamepadEvent.gamepad.buttonSouth.getValue();",

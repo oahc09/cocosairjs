@@ -55800,6 +55800,18 @@
      * @zh AIR_VERSION 去掉点号后的数字版本：1.0.0 → 100，1.0.1 → 101。
      */
     export const AIR_REVISION = 100;
+    /**
+     * @en Build time in yyyyMMddHHmm, Asia/Shanghai, injected by the AIR build.
+     * Direct source imports return 'unbuilt'. SOURCE_DATE_EPOCH can pin the time.
+     * @zh 编译时间（北京时间 yyyyMMddHHmm），由 AIR 构建自动注入。源码为 'unbuilt'；
+     * 可用 SOURCE_DATE_EPOCH（Unix 秒）固定时间。
+     */
+    export const AIR_BUILD_DATE: string;
+    /**
+     * @en Successful runtime compilation number, starting at 1. Source default is 1.
+     * @zh 运行时编译序号，从 1 开始；每次成功输出 JS 后递增。源码默认值为 1。
+     */
+    export const AIR_BUILD_NUMBER: number;
     export interface AirAppOptions {
         /** canvas 元素，或 CSS selector 字符串（如 '#game'）。 */
         canvas: HTMLCanvasElement | string;

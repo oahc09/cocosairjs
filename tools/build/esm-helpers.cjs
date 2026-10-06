@@ -21,11 +21,11 @@ function esmHelperPlugin(root) {
     };
 }
 
-async function withESMHelpers(root, build) {
+async function withESMHelpers(root, build, plugins = []) {
     const entry = require.resolve('@cocos/ccbuild');
     const rollup = require(require.resolve('rollup', { paths: [path.dirname(entry)] }));
     const original = rollup.rollup;
-    rollup.rollup = options => original({ ...options, plugins: [esmHelperPlugin(root), ...options.plugins] });
+    rollup.rollup = options => original({ ...options, plugins: [...plugins, esmHelperPlugin(root), ...options.plugins] });
     try { return await build(); }
     finally { rollup.rollup = original; }
 }

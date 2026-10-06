@@ -13,7 +13,7 @@ async function withIncrementalCache (root, build) {
     const hash = crypto.createHash('sha256').update('air-cache-v1');
     for (const file of ['package-lock.json', 'package.json', 'babel.config.js', 'tsconfig.json',
         'src/tsconfig.json', 'src/cc.config.json', 'src/package.json',
-        'tools/build/build.cjs', 'tools/build/incremental.cjs', 'tools/build/esm-helpers.cjs']) {
+        'tools/build/build.cjs', 'tools/build/incremental.cjs', 'tools/build/esm-helpers.cjs', 'tools/build/build-metadata.cjs']) {
         const filename = path.join(root, file);
         hash.update(file).update(fs.existsSync(filename) ? fs.readFileSync(filename) : 'missing');
     }

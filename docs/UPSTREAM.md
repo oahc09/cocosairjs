@@ -6,6 +6,8 @@
 
 ## 基线标识
 
+2026-10-06 AIR 构建身份：新增 `AIR_BUILD_DATE: string`（北京时间 yyyyMMddHHmm）与 `AIR_BUILD_NUMBER: number`。ESM/min/System 编译从 1 开始计数，成功输出后更新 tools/build/build-number.json；build:all 的 dev/min 分别占一个序号，声明/打包不计数。计数状态保存在生成目录之外。源码默认 unbuilt/1；SOURCE_DATE_EPOCH 仅固定时间。增量缓存刷新日期与序号，不改变 AIR_VERSION/AIR_REVISION 或上游版本。
+
 2026-10-06 ESM 构建告警：PAL 生成器将装饰器 helper 中必为 undefined 的顶层 this 回退读取去掉，保留本地实现；DragonBones 的同类 __extends 通过 `tools/build/esm-helpers.cjs` 在 Rollup 内存转换中处理，保留原始 npm 字节与源映射，不修改依赖或过滤警告。glTF 的基础 effect 提取为 `standard-effect.ts`，解除 material 与 physical-effect 的循环导入，保留原导出路径和着色器逻辑。
 
 2026-10-06 构建类型诊断：`src/tsconfig.json` 显式选择 bundler 使用的 Node 路径解析，加载已有 B2/Spine 环境声明及 Meshopt 外部模块声明，并与根配置同步官方空脚本豁免。Box2D 类型从官方已安装包生成 declaration-only 文件至 `src/node_modules/@cocos/box2d/types/`（约 181 KB），避免依赖 TS 被发射到引擎 rootDir 外；运行时包字节不变。PAL 生成器从冻结 MIT 源码补发 `input-source.d.ts`，输入与音频环境声明使用相对类型引用，消除 SDK 声明中的悬空 PAL 路径。外部 WASM 资产的部署要求和 feature 边界保持。

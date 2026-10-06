@@ -16,6 +16,7 @@ const { ensureDir, moveSync, existsSync } = require('fs-extra');
 const { buildEngine } = require('@cocos/ccbuild');
 const { withIncrementalCache, acquireBuildLock } = require('./incremental.cjs');
 const { withESMHelpers } = require('./esm-helpers.cjs');
+const { resolveBuildDate, readBuildNumber, commitBuildNumber, buildMetadataPlugin } = require('./build-metadata.cjs');
 
 const ROOT = join(__dirname, '..', '..');
 const ENGINE = join(ROOT, 'src');
@@ -76,6 +77,9 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
     await ensureDir(tmpOut);
 
     console.log(`[build] cocosair moduleFormat=${moduleFormat} min=${min}`);
+    const buildDate = resolveBuildDate(process.env.SOURCE_DATE_EPOCH);
+    const buildNumber = readBuildNumber(ROOT) + 1;
+    console.log(`[build] AIR_BUILD_DATE=${buildDate} AIR_BUILD_NUMBER=${buildNumber}`);
     const started = Date.now();
     const build = () => withESMHelpers(ROOT, () => buildEngine({
         engine: ENGINE,
@@ -95,7 +99,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         // 会把 `for (let ...)` 闭包转换为 _loop 函数，与 rollup scope 提升组合
         // 会产生 `_i is not defined` 的上游变换 bug（program-lib 布局合并路径）。
         targets: { chrome: '66' },
-    }));
+    }), [buildMetadataPlugin(ROOT, buildDate, buildNumber)]);
     if (!min && moduleFormat === 'esm' && !VARIANT) await withIncrementalCache(ROOT, build);
     else await build();
     console.log(`[build] ccbuild done in ${((Date.now() - started) / 1000).toFixed(1)}s`);
@@ -164,6 +168,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
     } catch (e) {
         console.warn('[build] WARNING tmp dir left behind: ' + relative(ROOT, tmpOut) + ' (' + e.message + ')');
     }
+    commitBuildNumber(ROOT, buildNumber);
     } finally { release(); }
 })().catch((e) => {
     console.error('[build] FAILED:', e && e.message ? e.message : e);

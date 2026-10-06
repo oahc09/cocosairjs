@@ -15,7 +15,7 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。 2026-10-06：新增 AIR_BUILD_DATE（北京时间 yyyyMMddHHmm）与 AIR_BUILD_NUMBER（每次成功运行时编译递增，从1开始）；tools/build/build-metadata.cjs 注入，tools/build/build-number.json 持久化序号，源码默认 unbuilt/1；SOURCE_DATE_EPOCH 仅固定时间，不修改版本号。"
     },
     {
       "airPath": "src/air/bootstrap.ts",
