@@ -43,10 +43,13 @@ export interface IRenderWindowInfo {
     externalFlag?: TextureFlags; // external texture type normal or oes
 }
 
-// NOTE: `Orientation` is a flag enum whose composite members (LANDSCAPE, AUTO) are never
-// actual runtime orientations, so this map intentionally only covers the physical ones.
-// It is therefore typed as Partial rather than a total Record<Orientation, ...>.
+// ScreenAdapter exposes requested policies as well as physical orientations.
+// Keep Partial so unknown values remain diagnosable rather than assuming all flags are valid.
 const orientationMap: Partial<Record<Orientation, SurfaceTransform>> = {
+    // AUTO/LANDSCAPE are valid orientation policies, not concrete surface rotations.
+    // Web PAL applies any forced rotation through the frame layout; do not rotate twice.
+    [Orientation.AUTO]: SurfaceTransform.IDENTITY,
+    [Orientation.LANDSCAPE]: SurfaceTransform.IDENTITY,
     [Orientation.PORTRAIT]: SurfaceTransform.IDENTITY,
     [Orientation.LANDSCAPE_RIGHT]: SurfaceTransform.ROTATE_90,
     [Orientation.PORTRAIT_UPSIDE_DOWN]: SurfaceTransform.ROTATE_180,
@@ -266,7 +269,7 @@ export class RenderWindow {
             if (DEBUG && surfaceTransform === undefined) {
                 warn(`Unexpected screen orientation: ${screenAdapter.orientation}`);
             }
-            this._swapchain.resize(width, height, surfaceTransform || SurfaceTransform.IDENTITY);
+            this._swapchain.resize(width, height, surfaceTransform ?? SurfaceTransform.IDENTITY);
             this._width = this._swapchain.width;
             this._height = this._swapchain.height;
         } else {

@@ -5342,7 +5342,7 @@
       "upstreamPath": "cocos/render-scene/core/render-window.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR rendering contracts: forward color/depth attachment sample counts into native TextureInfo and identify color-only offscreen targets."
+      "reason": "AIR rendering contracts: forward color/depth attachment sample counts into native TextureInfo and identify color-only offscreen targets.; Orientation AUTO/LANDSCAPE policy values use Web IDENTITY transform without false resize warnings; concrete direction and invalid-value diagnostics preserved."
     },
     {
       "airPath": "src/cocos/render-scene/core/texture-buffer-pool.ts",

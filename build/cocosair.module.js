@@ -37340,6 +37340,8 @@ class LodStateCache {
 }
 
 const orientationMap$1 = {
+  [Orientation$1.AUTO]: SurfaceTransform.IDENTITY,
+  [Orientation$1.LANDSCAPE]: SurfaceTransform.IDENTITY,
   [Orientation$1.PORTRAIT]: SurfaceTransform.IDENTITY,
   [Orientation$1.LANDSCAPE_RIGHT]: SurfaceTransform.ROTATE_90,
   [Orientation$1.PORTRAIT_UPSIDE_DOWN]: SurfaceTransform.ROTATE_180,
@@ -37459,7 +37461,7 @@ class RenderWindow {
       if (surfaceTransform === undefined) {
         warn(`Unexpected screen orientation: ${screenAdapter.orientation}`);
       }
-      this._swapchain.resize(width, height, surfaceTransform || SurfaceTransform.IDENTITY);
+      this._swapchain.resize(width, height, surfaceTransform !== null && surfaceTransform !== void 0 ? surfaceTransform : SurfaceTransform.IDENTITY);
       this._width = this._swapchain.width;
       this._height = this._swapchain.height;
     } else {

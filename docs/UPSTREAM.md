@@ -6,6 +6,8 @@
 
 ## 基线标识
 
+2026-10-06 resize 方向策略：RenderWindow 接受原生 Orientation.AUTO（13）与 LANDSCAPE（12），映射为 Web 的 IDENTITY surface transform；强制布局旋转仍由 PAL 处理。四个具体方向的映射和非法方向告警保持，修复 DPR/resize 将合法策略误报为 Unexpected screen orientation 的问题。
+
 2026-10-06 ENG-01–09：原生 Mesh 的动态容量/索引预检、语义流局部更新、保留索引和分配失败清理；Fog 分离配置与有效 NONE；Node 的 TRS/setRTS 非有限值前置拒绝。Animation 重复控制器与多方向光仅增加现有 warning 通道诊断，不改变播放或主光选择。AIR 只读检查复用原生网格、材质、路径与 renderScene，不创建平行对象。原生辅助源码与修改原因登记在 upstream-file-map.json，冻结上游保持原样。
 
 2026-10-05 响应式宿主适配：通过 `tools/build/screen-layout-patch.cjs` 在 PAL 生成流程中应用实测布局尺寸去重、ResizeObserver 合并、隐藏恢复和关闭清理；冻结 `vendor/pal-source/` 保持原字节。沿用原生 window-resize → View → Root 链，不新增输入坐标系统。AIR 启动新增可选 screenMode/container，未指定时保持原生 settings 默认；新增 Label helper 换行参数不改变 Label 默认行为。
