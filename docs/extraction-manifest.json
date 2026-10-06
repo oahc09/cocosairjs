@@ -6410,6 +6410,16 @@
       "source": "pal/system-info/enum-type/event.js",
       "destination": "src/pal/system-info/enum-type/event.js",
       "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/input/input-source.d.ts",
+      "destination": "src/pal/input/input-source.d.ts",
+      "category": "PUBLIC_PAL_GENERATED_TYPES"
+    },
+    {
+      "source": "air/assets/gltf/material/standard-effect.ts",
+      "destination": "src/air/assets/gltf/material/standard-effect.ts",
+      "category": "AIR_GLTF"
     }
   ]
 }

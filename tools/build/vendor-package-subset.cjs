@@ -14,9 +14,8 @@
  *   故等价做法是把包放进 src/node_modules/——同样是「包内容按需复制进 src/」，
  *   且复制的是发布包原始字节（不做 esbuild 改写），provenance 最强。
  *
- * 类型侧：包内只放运行期所需文件，package.json 的 types 字段回指
- *   已安装的 node_modules 声明（box2d 的 index.d.ts 依赖其 33 MB 的 src/ 源，
- *   不进仓库）。因此依赖仍需按 P1 声明在 package.json 中供 typecheck 使用。
+ * 类型侧：Box2D 的入口引用包内 TS 源码，先生成声明到本地 types/，避免
+ *   ccbuild 越过引擎 rootDir 发射第三方 TS。其他包复用安装包的声明。
  *
  * 用法: node tools/build/vendor-package-subset.cjs
  */
@@ -33,7 +32,7 @@ const SPEC = [
         name: '@cocos/box2d',
         main: './index.js',
         files: ['index.js', 'build/box2d/box2d.umd.js', 'LICENSE'],
-        types: '../../../../node_modules/@cocos/box2d/index.d.ts',
+        types: './types/index.d.ts',
     },
     {
         name: '@cocos/cannon',
@@ -76,13 +75,24 @@ for (const spec of SPEC) {
         fs.writeFileSync(to, buf);
         report.push(`${spec.name}/${rel} ${buf.length}B sha256:${sha256(buf)}`);
     }
+    if (spec.name === '@cocos/box2d') {
+        const declarations = require('./box2d-types.cjs').generateBox2DTypes(srcDir);
+        spec.generated = [...declarations.keys()];
+        for (const [rel, text] of declarations) {
+            const target = path.join(destDir, rel);
+            fs.mkdirSync(path.dirname(target), { recursive: true });
+            fs.writeFileSync(target, text);
+        }
+        report.push(`${spec.name}/types (${declarations.size} declaration-only files)`);
+    }
     fs.writeFileSync(path.join(destDir, 'package.json'), JSON.stringify(manifest, null, 4) + '\n');
     report.push(`${spec.name}/package.json (air-authored, version pinned to ${installed.version})`);
 }
 
 console.log('[vendor-pkg] engine-root packages:');
 for (const line of report) { console.log('  ' + line); }
-console.log(`[vendor-pkg] ${report.length} files under src/node_modules/`);
+const fileCount = SPEC.reduce((count, spec) => count + spec.files.length + (spec.generated || []).length + 1, 0);
+console.log(`[vendor-pkg] ${fileCount} files under src/node_modules/`);
 
 // --- 偏差登记（计划书 P1：每个非上游原文的文件都要有理由） -----------------------
 // 运行库文件 = 官方发布包原始字节（modified:false）；
@@ -109,6 +119,13 @@ console.log(`[vendor-pkg] ${report.length} files under src/node_modules/`);
             });
         }
         const pkgJsonPath = `src/node_modules/${spec.name}/package.json`;
+        for (const rel of spec.generated || []) {
+            const airPath = `src/node_modules/${spec.name}/${rel}`;
+            if (!have.has(airPath)) rows.push({
+                airPath, upstreamPath: null, baseline, modified: true,
+                reason: 'AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。',
+            });
+        }
         if (!have.has(pkgJsonPath)) {
             rows.push({
                 airPath: pkgJsonPath,

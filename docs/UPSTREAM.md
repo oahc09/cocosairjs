@@ -6,6 +6,12 @@
 
 ## 基线标识
 
+2026-10-06 ESM 构建告警：PAL 生成器将装饰器 helper 中必为 undefined 的顶层 this 回退读取去掉，保留本地实现；DragonBones 的同类 __extends 通过 `tools/build/esm-helpers.cjs` 在 Rollup 内存转换中处理，保留原始 npm 字节与源映射，不修改依赖或过滤警告。glTF 的基础 effect 提取为 `standard-effect.ts`，解除 material 与 physical-effect 的循环导入，保留原导出路径和着色器逻辑。
+
+2026-10-06 构建类型诊断：`src/tsconfig.json` 显式选择 bundler 使用的 Node 路径解析，加载已有 B2/Spine 环境声明及 Meshopt 外部模块声明，并与根配置同步官方空脚本豁免。Box2D 类型从官方已安装包生成 declaration-only 文件至 `src/node_modules/@cocos/box2d/types/`（约 181 KB），避免依赖 TS 被发射到引擎 rootDir 外；运行时包字节不变。PAL 生成器从冻结 MIT 源码补发 `input-source.d.ts`，输入与音频环境声明使用相对类型引用，消除 SDK 声明中的悬空 PAL 路径。外部 WASM 资产的部署要求和 feature 边界保持。
+
+2026-10-06 Web 构建配置：从 `src/cc.config.json` 的 `treeShake.noSideEffectFiles` 移除四个未抽取的 `pal/input/minigame/*-input.js` 路径。它们仅是上游 MiniGame 的无副作用声明，不参与 HTML5 闭包；保留全部九条现有文件声明，不补入 MiniGame 实现，也不抑制构建诊断。
+
 2026-10-06 resize 方向策略：RenderWindow 接受原生 Orientation.AUTO（13）与 LANDSCAPE（12），映射为 Web 的 IDENTITY surface transform；强制布局旋转仍由 PAL 处理。四个具体方向的映射和非法方向告警保持，修复 DPR/resize 将合法策略误报为 Unexpected screen orientation 的问题。
 
 2026-10-06 ENG-01–09：原生 Mesh 的动态容量/索引预检、语义流局部更新、保留索引和分配失败清理；Fog 分离配置与有效 NONE；Node 的 TRS/setRTS 非有限值前置拒绝。Animation 重复控制器与多方向光仅增加现有 warning 通道诊断，不改变播放或主光选择。AIR 只读检查复用原生网格、材质、路径与 renderScene，不创建平行对象。原生辅助源码与修改原因登记在 upstream-file-map.json，冻结上游保持原样。

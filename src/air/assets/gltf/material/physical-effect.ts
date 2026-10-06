@@ -19,7 +19,7 @@ import { EffectAsset } from '../../../../cocos/asset/assets/effect-asset';
 import { Type, Uniform } from '../../../../cocos/gfx';
 import { Vec4 } from '../../../../cocos/core/math';
 import { check } from '../schema';
-import { gltfEffect } from '../material';
+import { gltfEffect } from './standard-effect';
 import { textureTransform, textureUVExpression } from './texture-slots';
 
 export const PHYSICAL_CONSTANT = 'airPhysicalParams';

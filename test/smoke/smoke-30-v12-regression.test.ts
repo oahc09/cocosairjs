@@ -146,6 +146,25 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
                 });
             }
         }
+        const packageDir = join(ROOT, 'node_modules', '@cocos', 'box2d');
+        const types = require(join(ROOT, 'tools/build/box2d-types.cjs')).generateBox2DTypes(packageDir);
+        expect(types.size).toBe(64);
+        for (const [rel, text] of types) {
+            expect(readFileSync(join(ROOT, 'src/node_modules/@cocos/box2d', rel), 'utf8')).toBe(text);
+        }
+        const plugin = require(join(ROOT, 'tools/build/esm-helpers.cjs')).esmHelperPlugin(ROOT);
+        const dragonPath = join(ROOT, 'src/node_modules/@cocos/dragonbones-js/out/dragonBones.js');
+        const original = readFileSync(dragonPath, 'utf8');
+        const transformed = plugin.transform(original, dragonPath);
+        expect(transformed.code).not.toContain('(this && this.__extends)');
+        expect(JSON.parse(transformed.map.toString()).sourcesContent[0]).toBe(original);
+        expect(plugin.transform(original, dragonPath + '.unrelated')).toBeNull();
+        const inherit = (source: string) => require('vm').runInNewContext(
+            '(function () { "use strict"; ' + source.slice(0, source.indexOf('let dragonBones'))
+            + '; class Base {} Base.token = 42; function Child() {} __extends(Child, Base); '
+            + 'return [Child.token, new Child() instanceof Base, new Child().constructor === Child]; })()',
+        );
+        expect(Array.from(inherit(transformed.code))).toEqual(Array.from(inherit(original)));
     });
 
     test('PAL 来源、MIT 许可与 AIR 画布适配均有可复现登记', () => {
@@ -154,7 +173,7 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         expect(source.revision).toBe('9f0e30acb31f6d670f2c0bf818d61039846a2860');
         expect(readFileSync(join(ROOT, 'vendor/pal-source/LICENSE'), 'utf8')).toContain('MIT License');
         const palRows = fileMap.mapping.filter((row: any) => row.airPath.startsWith('src/pal/'));
-        expect(palRows).toHaveLength(39);
+        expect(palRows).toHaveLength(40);
         expect(palRows.every((row: any) => row.upstreamPath.startsWith('public-pal/') && row.modified && row.reason)).toBe(true);
         expect(palRows.filter((row: any) => row.reason.includes('AIR host')).map((row: any) => row.airPath).sort()).toEqual([
             'src/pal/env/web/env.js', 'src/pal/input/web/keyboard-input.js', 'src/pal/input/web/mouse-input.js',
@@ -189,7 +208,7 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
     test('src/pal 与冻结 MIT 源码的可复现生成结果完全一致', () => {
         const failures = require(join(ROOT, 'tools/build/pal-source.cjs')).check();
         expect(failures).toEqual([]);
-        expect(listFiles(join(ROOT, 'src/pal')).length).toBe(39);
+        expect(listFiles(join(ROOT, 'src/pal')).length).toBe(40);
     });
 
     test('V1.2 新增导出在 .d.ts 发布面中可见（类型与产物同源）', () => {
@@ -320,6 +339,7 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             ]);
             expect(strip(join('src', 'tsconfig.json')).exclude).toEqual([
                 'editor',
+                'cocos/physics/cannon/constraints/cannon-distance-constraint.ts',
                 'cocos/gfx/webgpu/**',
                 'cocos/webgpu/**',
                 'exports/gfx-webgpu.ts',

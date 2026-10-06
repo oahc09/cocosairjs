@@ -3,6 +3,9 @@
     "target": "es6",
     "lib": ["es2015", "es2017", "dom"],
     "module": "commonjs",
+    // Runtime imports are bundled by Rollup, not executed as Node CommonJS.
+    // Match the root typecheck resolver instead of ccbuild's NodeNext fallback.
+    "moduleResolution": "node",
     "sourceMap": true,
     "noEmit": true,
     "resolveJsonModule": true,
@@ -40,6 +43,9 @@
       "./@types/webGL.extras",
       "./@types/webGL2.extras",
       "./@types/webGPU",
+      "./@types/box2d",
+      "./@types/emscripten-assets",
+      "./@types/external-modules",
 
       // pal
       "./@types/pal/system-info",
@@ -61,6 +67,8 @@
   ],
   "exclude": [
       "editor",
+      // Same upstream empty-script exemption as the root typecheck.
+      "cocos/physics/cannon/constraints/cannon-distance-constraint.ts",
 
       // V1.2 批次 E / D10（与根 tsconfig.json 的同名豁免配对，理由见 UPSTREAM.md Deviation-04）：
       // dtsBundler 用本配置把 exports/** 全部收进声明图，未接线的 gfx-webgpu 会被并入发布面

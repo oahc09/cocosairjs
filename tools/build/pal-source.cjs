@@ -38,25 +38,30 @@ function generate() {
             source = source.replace(/(this\._gameCanvas = [^;]+;)/, '$1\n        if (!this._gameCanvas && !TEST && !EDITOR) throw new Error("[cocosair] GameCanvas or __CC_CANVAS__ must exist before importing the engine.");');
         }
         const result = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.ES2020, newLine: ts.NewLineKind.LineFeed, removeComments: false, useDefineForClassFields: false }, fileName: row.source });
-        outputs.set(row.output, original.includes('Permission is hereby granted') ? result.outputText : '/*\n' + license.toString() + '\n*/\n' + result.outputText);
+        // ESM top-level this is undefined: the emitted decorator helper always
+        // selects its local function. Preserve that behavior without the dead read.
+        const esm = result.outputText.replace('var __decorate = (this && this.__decorate) || function', 'var __decorate = function');
+        outputs.set(row.output, original.includes('Permission is hereby granted') ? esm : '/*\n' + license.toString() + '\n*/\n' + esm);
     }
-    // Emit the one declaration consumed directly by the engine; avoid retaining npm d.ts bytes.
+    // Emit declarations from the frozen sources, including input value types.
     const tempBase = path.resolve(os.tmpdir());
     const temp = fs.mkdtempSync(path.join(tempBase, 'cocosair-pal-dts-'));
     try {
-        const file = path.join(temp, 'pal-audio-type.ts');
-        fs.copyFileSync(path.join(SOURCE, 'pal/audio/type.ts'), file);
-        ts.createProgram([file, path.join(ROOT, 'src/@types/globals.d.ts')], { declaration: true, emitDeclarationOnly: true, noEmitOnError: false, types: [], skipLibCheck: true, newLine: ts.NewLineKind.LineFeed, target: ts.ScriptTarget.ES2020 }).emit(undefined, (name, text) => {
-            if (name.endsWith('pal-audio-type.d.ts')) {
-                const header = fs.readFileSync(path.join(SOURCE, 'pal/audio/type.ts'), 'utf8').match(/^\/\*[\s\S]*?\*\//)[0];
-                outputs.set('src/pal/audio/type.d.ts', header + '\n' + text);
-            }
-        });
+        for (const rel of ['pal/audio/type', 'pal/input/input-source']) {
+            const file = path.join(temp, path.basename(rel) + '.ts');
+            fs.copyFileSync(path.join(SOURCE, rel + '.ts'), file);
+            ts.createProgram([file, path.join(ROOT, 'src/@types/globals.d.ts')], { declaration: true, emitDeclarationOnly: true, noEmitOnError: false, types: [], skipLibCheck: true, newLine: ts.NewLineKind.LineFeed, target: ts.ScriptTarget.ES2020 }).emit(undefined, (name, text) => {
+                if (name.endsWith(path.basename(rel) + '.d.ts')) {
+                    const header = fs.readFileSync(path.join(SOURCE, rel + '.ts'), 'utf8').match(/^\/\*[\s\S]*?\*\//)[0];
+                    outputs.set('src/' + rel + '.d.ts', header + '\n' + text);
+                }
+            });
+        }
     } finally {
         if (!path.resolve(temp).startsWith(tempBase + path.sep)) throw Error('Invalid PAL temp cleanup path');
         fs.rmSync(temp, { recursive: true, force: true });
     }
-    if (!outputs.has('src/pal/audio/type.d.ts')) throw Error('PAL declaration emission failed');
+    if (!outputs.has('src/pal/audio/type.d.ts') || !outputs.has('src/pal/input/input-source.d.ts')) throw Error('PAL declaration emission failed');
     outputs.set('licenses/LICENSE_pal.txt', license);
     outputs.set('licenses/NOTICE_pal.txt', 'Cocos PAL public source notices\nCommit: ' + manifest.revision + '\n\n' + notices.join('\n\n') + '\n');
     return { manifest, outputs };

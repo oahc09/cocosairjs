@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 115,
+    "modifiedCount": 183,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -8184,14 +8184,14 @@
       "upstreamPath": "public-pal/pal/audio/web/player-dom.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; 2026-10-06 PAL generator makes the decorator helper local: top-level this is undefined in ESM, preserving the existing fallback function without changing frozen sources."
     },
     {
       "airPath": "src/pal/audio/web/player-web.js",
       "upstreamPath": "public-pal/pal/audio/web/player-web.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; 2026-10-06 PAL generator makes the decorator helper local: top-level this is undefined in ESM, preserving the existing fallback function without changing frozen sources."
     },
     {
       "airPath": "src/pal/audio/web/player.js",
@@ -8226,7 +8226,7 @@
       "upstreamPath": "@cocos/box2d@1.0.2/package.json",
       "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
       "modified": true,
-      "reason": "V1.2 P1 Air 侧撰写（非上游原文）：ccbuild 的 moduleOverrides 用 `export * from` 实现虚拟模块，按 ESM 规范不转发 default，而官方物理/骨骼代码写的是默认导入；nodeResolve 的 jail=realpath(src) 又使仓库根 node_modules 不可达。故把包按真实布局复制进 src/node_modules/，本 manifest 只声明 main/type，并把 types 回指已安装包（../../../../node_modules/@cocos/box2d/index.d.ts）以复用官方声明，避免把发布包全量源码（box2d 约 92 MB）纳入仓库。"
+      "reason": "V1.2 P1 Air 侧撰写（非上游原文）：ccbuild 的 moduleOverrides 用 `export * from` 实现虚拟模块，按 ESM 规范不转发 default，而官方物理/骨骼代码写的是默认导入；nodeResolve 的 jail=realpath(src) 又使仓库根 node_modules 不可达。故把包按真实布局复制进 src/node_modules/，本 manifest 只声明 main/type，并把 types 回指已安装包（../../../../node_modules/@cocos/box2d/index.d.ts）以复用官方声明，避免把发布包全量源码（box2d 约 92 MB）纳入仓库。 2026-10-06：types 指向 tools/build/box2d-types.cjs 从官方包生成的本地 declaration-only types/index.d.ts（64 文件约 181 KB），不再跨 engine rootDir 发射第三方 TS；运行时原字节保持。"
     },
     {
       "airPath": "src/node_modules/@cocos/cannon/build/cannon.js",
@@ -8289,14 +8289,14 @@
       "upstreamPath": "cc.config.json",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。"
+      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。 2026-10-06：treeShake.noSideEffectFiles 移除四个未抽取的 pal/input/minigame/*-input.js 声明；保留九条实际存在的文件声明及全部 moduleOverrides，不引入 MiniGame 闭包。"
     },
     {
       "airPath": "src/tsconfig.json",
       "upstreamPath": "tsconfig.json",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "V1.2 P1（Air 修改）：显式钉住 \"rootDir\": \"./\"。ccbuild 的 dtsBundler 不带 rootDir 调 tsc，中间产物目录按「全部输入文件的最长公共根」布局；V1.2 把 @cocos/box2d 等运行库 vendored 到 src/node_modules/ 后，其 types 回指仓库根 node_modules（box2d 类型闭包约 92 MB，不入仓库），公共根上移到仓库根，emit 落到 __dts_before_bundle/src/**，而 ccbuild 生成的 virtual-cc.d.ts 仍按 __dts_before_bundle/exports/** 引用 → 解析全空，发布 d.ts 退化为 `declare module \"cc\" { export {}; }`。钉住后声明布局恒以引擎根为准（build/cocosair.module.d.ts 恢复 3.08 MB 完整面）。另：Air 版裁掉上游的 outDir/editor typedoc include 项，files 收敛为 predefine/cocos/external；@types 引用去掉 native/jest/box2d-jsb 项。V1.2 批次 E 把 ./@types/webGPU 按上游同名项回接（gfx-webgpu 后端需要 GPU* 全局类型）。批次 E / D10 另在 exclude 追加 cocos/gfx/webgpu/**、cocos/webgpu/**、exports/gfx-webgpu.ts：dtsBundler 用本配置把 exports/** 全量收进声明图，未接线的 gfx-webgpu 会被并入发布面（cc.d.ts 多出 `export class WebGPUDevice` 而默认 bundle 导出表无此符号，实测 +60,649 B 类型/产物不一致），且该 emscripten-only 子图在本快照内无法核对，故整图移出声明与核对闭包（详见 UPSTREAM.md Deviation-04）。"
+      "reason": "V1.2 P1（Air 修改）：显式钉住 \"rootDir\": \"./\"。ccbuild 的 dtsBundler 不带 rootDir 调 tsc，中间产物目录按「全部输入文件的最长公共根」布局；V1.2 把 @cocos/box2d 等运行库 vendored 到 src/node_modules/ 后，其 types 回指仓库根 node_modules（box2d 类型闭包约 92 MB，不入仓库），公共根上移到仓库根，emit 落到 __dts_before_bundle/src/**，而 ccbuild 生成的 virtual-cc.d.ts 仍按 __dts_before_bundle/exports/** 引用 → 解析全空，发布 d.ts 退化为 `declare module \"cc\" { export {}; }`。钉住后声明布局恒以引擎根为准（build/cocosair.module.d.ts 恢复 3.08 MB 完整面）。另：Air 版裁掉上游的 outDir/editor typedoc include 项，files 收敛为 predefine/cocos/external；@types 引用去掉 native/jest/box2d-jsb 项。V1.2 批次 E 把 ./@types/webGPU 按上游同名项回接（gfx-webgpu 后端需要 GPU* 全局类型）。批次 E / D10 另在 exclude 追加 cocos/gfx/webgpu/**、cocos/webgpu/**、exports/gfx-webgpu.ts：dtsBundler 用本配置把 exports/** 全量收进声明图，未接线的 gfx-webgpu 会被并入发布面（cc.d.ts 多出 `export class WebGPUDevice` 而默认 bundle 导出表无此符号，实测 +60,649 B 类型/产物不一致），且该 emscripten-only 子图在本快照内无法核对，故整图移出声明与核对闭包（详见 UPSTREAM.md Deviation-04）。 2026-10-06：显式 moduleResolution=node 与 Rollup bundler/root typecheck 对齐，避免 ccbuild NodeNext 回落误判 DragonBones ESM/CJS；types 接入既有 box2d、emscripten-assets 与 external-modules 声明；同步根配置对官方全注释 cannon-distance-constraint.ts 的空脚本豁免。"
     },
     {
       "airPath": "src/EngineErrorMap.md",
@@ -8386,8 +8386,8 @@
       "airPath": "src/@types/pal/audio.d.ts",
       "upstreamPath": "@types/pal/audio.d.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": false,
-      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+      "modified": true,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登） 2026-10-06：audio/type 的 inline import type 改用相对路径，消除发布声明中的悬空 PAL 引用；API 与运行时不变。"
     },
     {
       "airPath": "src/@types/pal/env.d.ts",
@@ -8407,8 +8407,8 @@
       "airPath": "src/@types/pal/input.d.ts",
       "upstreamPath": "@types/pal/input.d.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": false,
-      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+      "modified": true,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登） 2026-10-06：input-source 的 inline import type 改用相对路径，供 ccbuild 声明 bundler 解析生成的 PAL 类型；API 与运行时不变。"
     },
     {
       "airPath": "src/@types/pal/minigame.d.ts",
@@ -9277,6 +9277,468 @@
       "baseline": "AIR engine contracts 2026-10-06",
       "modified": true,
       "reason": "AIR-owned finite TRS guard used by native Node setters."
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/index.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_settings.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_math.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_draw.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_timer.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_growable_stack.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_block_allocator.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_stack_allocator.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_distance.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_shape.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_collision.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_dynamic_tree.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_broad_phase.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_time_of_impact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_circle_shape.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_polygon_shape.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_collide_circle.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_collide_polygon.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_edge_shape.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_collide_edge.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_chain_shape.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_time_step.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/particle/b2_particle.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_distance_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_area_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_friction_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_prismatic_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_revolute_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_gear_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_motor_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_mouse_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_pulley_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_rope_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_weld_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_wheel_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_circle_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_polygon_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_polygon_circle_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_edge_circle_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_edge_polygon_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_chain_circle_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_chain_polygon_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_contact_factory.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_contact_manager.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_contact_solver.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_island.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_world.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/particle/b2_stack_queue.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/particle/b2_voronoi_diagram.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/particle/b2_particle_system.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/particle/b2_particle_group.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_world_callbacks.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_body.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_fixture.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_buoyancy_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_constant_accel_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_constant_force_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_gravity_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_tensor_damping_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/rope/b2_rope.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/box2d.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/pal/input/input-source.d.ts",
+      "upstreamPath": "public-pal/pal/input/input-source.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "Declaration emitted from frozen MIT public input-source by tools/build/pal-source.cjs; native Vec2/Vec3/Quat types preserved."
+    },
+    {
+      "airPath": "src/air/assets/gltf/material/standard-effect.ts",
+      "upstreamPath": null,
+      "baseline": "AIR glTF adapter",
+      "modified": true,
+      "reason": "2026-10-06：原 material.ts 的 gltfEffect 与 UV_SLOTS 原逻辑提取为叶模块，physical-effect 不再反向引用材质装配模块；旧 gltfEffect 导出路径继续转发，shader/effect 行为保持。"
     }
   ]
 }

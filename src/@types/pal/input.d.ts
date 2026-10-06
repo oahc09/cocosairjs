@@ -1,9 +1,9 @@
 declare module 'pal/input' {
-    type InputSourceButton = import('pal/input/input-source').InputSourceButton;
-    type InputSourceStick = import('pal/input/input-source').InputSourceStick;
-    type InputSourceDpad = import('pal/input/input-source').InputSourceDpad;
-    type InputSourcePosition = import('pal/input/input-source').InputSourcePosition;
-    type InputSourceOrientation = import('pal/input/input-source').InputSourceOrientation;
+    type InputSourceButton = import('../../pal/input/input-source').InputSourceButton;
+    type InputSourceStick = import('../../pal/input/input-source').InputSourceStick;
+    type InputSourceDpad = import('../../pal/input/input-source').InputSourceDpad;
+    type InputSourcePosition = import('../../pal/input/input-source').InputSourcePosition;
+    type InputSourceOrientation = import('../../pal/input/input-source').InputSourceOrientation;
 
     type TouchCallback = (res: import('cocos/input/types').EventTouch) => void;
     /**
