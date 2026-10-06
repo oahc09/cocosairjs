@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="data:," />
+        <title>Native engine contracts</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #10131b;
+            }
+            #GameDiv,
+            #Cocos3dGameContainer,
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
+            canvas {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer"><canvas id="GameCanvas" tabindex="0"></canvas></div>
+        </div>
+        <script type="module" src="./main.js"></script>
+    </body>
+</html>

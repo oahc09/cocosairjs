@@ -1,0 +1,275 @@
+{
+  "schema": "air-engine-contract-proof/1",
+  "measuredAt": "2026-10-06T03:16:08.169Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\engine-contract-browser.cjs",
+    "--browser=chromium",
+    "--out=output/engine-contract-browser-01.json"
+  ],
+  "playwright": "1.62.1",
+  "scope": "ENG-01..09 focused native pixel and diagnostic contracts",
+  "captureMethod": "CANVAS_NATIVE",
+  "pageCompositorVerified": false,
+  "completed": true,
+  "subset": true,
+  "fullGalleryVerified": false,
+  "scopePassed": false,
+  "fingerprints": {
+    "build/cocosair.module.js": "9c9545f7ef1d6e7bc6ad38f60a6f0c25154410d0e6e8537651196888dffe3642",
+    "src/cocos/3d/assets/mesh.ts": "6a9c30a9a8a36a39e85fa5b3218ee54ff269ff31f740c10474db6a495dd23152",
+    "src/cocos/3d/misc/create-mesh.ts": "6202c9759e1e2f6bc0d32f2b4892cad87065d21dd8be25c414a8b373d80c4e40",
+    "src/cocos/3d/misc/mesh-validation.ts": "3b790c1ad24cf4f0f74d193182e746abe11b6887d1eb77db0f7209c3527bddf6",
+    "src/cocos/render-scene/scene/fog.ts": "29a0a545c798531ceed27ab8ad087ec57b6ef06353607bd8f9713d8607c640c5",
+    "src/cocos/scene-graph/node.ts": "385eabe981cf2c20c65211a488d03a702727e895029d3743193264cf9b500a2b",
+    "src/cocos/scene-graph/node-transform-validation.ts": "b2332b6d50688fbd34f53f0fa4c23e3ce8eb96b0680e7edde355a431e14daecc",
+    "src/cocos/animation/animation-component.ts": "b9f98a4f40c770e759a46b76ade2517cf0e641c29598950e845deafdb1fa5bb2",
+    "src/cocos/render-scene/core/render-scene.ts": "1485053d92c751149dc8145710062bed65f9a04c2523d6cc771489141c512c2e",
+    "src/air/rendering/engine-contracts.ts": "c5584e45def41f1d336ba5c80d71c3c3b44a9e4c1bc4a06534f12a10391f7b26",
+    "tools/debug/probes/engine-contracts/main.js": "d3019436d3011c8ae60845e33bba51289477ee29b016013f8eeb5dee80096c69",
+    "tools/debug/probes/engine-contracts/index.html": "6c17ea8a6ef07a26b0e657899ffeb4a6a65d579a21e6c56b3b3520d8e0758b68",
+    "tools/verify/engine-contract-browser.cjs": "25d889c257b57eb0f103e1af4432d2cf20d75b0409701188cc9f30ef6bed483d"
+  },
+  "results": [
+    {
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "executable": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe",
+      "status": "FAIL",
+      "checks": [
+        {
+          "name": "vertex color reaches actual GPU output",
+          "ok": false,
+          "detail": {
+            "pixel": [
+              229,
+              0,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "unavailable",
+                  "activeAttributes": null
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791256567431,
+                "lastSeen": 1791256567431
+              }
+            ],
+            "paused": true
+          }
+        }
+      ],
+      "images": [],
+      "errors": [],
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'unavailable'\n- 'webgl-active'\n"
+    }
+  ]
+}

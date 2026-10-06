@@ -28,6 +28,8 @@ import { Vec3 } from '../../core';
 import { IGeometry, IDynamicGeometry, ICreateMeshOptions, ICreateDynamicMeshOptions } from '../../primitive/define';
 import { writeBuffer } from './buffer';
 import { BufferBlob } from './buffer-blob';
+import { dynamicOptions, validateDynamicCreation, validateStaticIndices, meshFailure } from './mesh-validation';
+import { deviceManager } from '../../gfx';
 
 const _defAttrs: Attribute[] = [
     new Attribute(AttributeName.ATTR_POSITION, Format.RGB32F),
@@ -42,6 +44,7 @@ const v3_1 = new Vec3();
  * @deprecated
  */
 export function createMesh (geometry: IGeometry, out?: Mesh, options?: ICreateMeshOptions): Mesh {
+    validateStaticIndices(geometry);
     options = options || {};
     // Collect attributes and calculate length of result vertex buffer.
     const attributes: Attribute[] = [];
@@ -257,28 +260,30 @@ function getPadding (length: number, align: number): number {
 }
 
 function createDynamicMesh (primitiveIndex: number, geometry: IDynamicGeometry, out?: Mesh, options?: ICreateDynamicMeshOptions): Mesh {
-    options = options || { maxSubMeshes: 1, maxSubMeshVertices: 1024, maxSubMeshIndices: 1024 };
+    options = dynamicOptions(options);
+    validateDynamicCreation(geometry, options, primitiveIndex);
+    if (!deviceManager.gfxDevice) meshFailure('AIR_E_MESH_NOT_READY', 'await createAirApp() before creating a dynamic mesh');
 
     const attributes: Attribute[] = [];
     let stream = 0;
 
-    if (geometry.positions.length > 0) {
+    if (geometry.positions) {
         attributes.push(new Attribute(AttributeName.ATTR_POSITION, Format.RGB32F, false, stream++, false, 0));
     }
 
-    if (geometry.normals && geometry.normals.length > 0) {
+    if (geometry.normals) {
         attributes.push(new Attribute(AttributeName.ATTR_NORMAL, Format.RGB32F, false, stream++, false, 0));
     }
 
-    if (geometry.uvs && geometry.uvs.length > 0) {
+    if (geometry.uvs) {
         attributes.push(new Attribute(AttributeName.ATTR_TEX_COORD, Format.RG32F, false, stream++, false, 0));
     }
 
-    if (geometry.tangents && geometry.tangents.length > 0) {
+    if (geometry.tangents) {
         attributes.push(new Attribute(AttributeName.ATTR_TANGENT, Format.RGBA32F, false, stream++, false, 0));
     }
 
-    if (geometry.colors && geometry.colors.length > 0) {
+    if (geometry.colors) {
         attributes.push(new Attribute(AttributeName.ATTR_COLOR, Format.RGBA32F, false, stream++, false, 0));
     }
 
@@ -327,9 +332,9 @@ function createDynamicMesh (primitiveIndex: number, geometry: IDynamicGeometry, 
 
         // add index buffer
         let stride = 0;
-        if (geometry.indices16 && geometry.indices16.length > 0) {
+        if (geometry.indices16) {
             stride = 2;
-        } else if (geometry.indices32 && geometry.indices32.length > 0) {
+        } else if (geometry.indices32) {
             stride = 4;
         }
 

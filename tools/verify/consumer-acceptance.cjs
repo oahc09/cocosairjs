@@ -163,7 +163,14 @@ try {
         } catch (error) {
             if (error.code !== 'AIR_E_LABEL_WRAP') failures.push('installed Label wrap diagnostic missing');
         }
-        labelRoot.destroy();
+    labelRoot.destroy();
+    for (const name of ['inspectAirMeshMaterial', 'inspectAirGeometry', 'inspectAirAnimationControllers', 'inspectAirDirectionalLights']) {
+        if (typeof mod[name] !== 'function') failures.push(`installed native contract inspector ${name} is missing`);
+    }
+    const transformNode = new mod.Node('consumer-finite-transform');
+    try { transformNode.setScale([2, 2, 2]); failures.push('installed Node accepts invalid array scale'); }
+    catch (error) { if (error.code !== 'AIR_E_NODE_TRANSFORM') failures.push('installed TRS diagnostic missing'); }
+    transformNode.destroy();
     if (typeof mod.utils?.MeshUtils?.createDynamicMesh !== 'function') { failures.push('official dynamic mesh entry utils.MeshUtils.createDynamicMesh is missing from the installed module'); }
     for (const type of ['box', 'sphere', 'cylinder', 'cone']) {
         if (!require('node:util').isDeepStrictEqual(mod.createPrimitiveGeometry({ type }), mod.primitives[type]())) {
@@ -178,7 +185,7 @@ try {
 // 5. TypeScript type consumption (bundler resolution, strict)
 const tsOut = path.join(consumerDir, 'type-test.ts');
 fs.writeFileSync(tsOut, [
-    "import { createAirApp, GLTFLoader, GLTFAsset, Node, Scene, Vec3, MeshRenderer,",
+    "import { createAirApp, GLTFLoader, GLTFAsset, Node, Scene, Vec3, Mesh, MeshRenderer,",
     "  Camera, DirectionalLight, Animation, AnimationClip, Layers,",
     "  configureGLTFLoaderDefaults, utils, createPrimitiveGeometry, createActionState, AssetBank, AudioService, TiledObjectGroup, parseFnt, createBitmapFont, loadBitmapFont, SpriteFrame, Billboard, AirUIMesh,",
     "} from 'cocosair';",
@@ -193,7 +200,13 @@ fs.writeFileSync(tsOut, [
             "const containerInit = createSafeAirApp({ canvas: '#board', screenMode: 'container', container: '#host', pixelRatioCap: 2 }); void containerInit;",
             '// @ts-expect-error screen mode is an explicit public contract',
             "createSafeAirApp({ canvas: '#board', screenMode: 'embedded' });",
-            "import { labelNode, Label } from 'cocosair';",
+    "import { labelNode, Label } from 'cocosair';",
+    "import { inspectAirMeshMaterial, inspectAirGeometry, inspectAirAnimationControllers, inspectAirDirectionalLights } from 'cocosair';",
+    "declare const contractMesh: Mesh; declare const contractMaterial: Material; declare const contractNode: Node; declare const contractScene: Scene;",
+    "const contract = inspectAirMeshMaterial(contractMesh, contractMaterial); const code: string | undefined = contract.issues[0]?.code;",
+    "const winding = inspectAirGeometry(contractMesh, contractNode, contractMaterial); const determinant: number = winding.determinant;",
+    "const controllers = inspectAirAnimationControllers(contractNode); const controllerCount: number = controllers.controllerCount; inspectAirDirectionalLights(contractScene);",
+    "contractMesh.updateSubMesh(0, { uvs: new Float32Array(6) }); void code; void determinant; void controllerCount;",
             "labelNode(new Node(), 'RIGHT', 'single', { enableWrapText: false, overflow: Label.Overflow.SHRINK });",
     "safeInit.then(app => { const token = app.session?.token(); void app.releaseScene?.(); void app.close?.(); });",
     "const decompression = new DecompressionStream('gzip');",

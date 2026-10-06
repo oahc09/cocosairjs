@@ -1,0 +1,6103 @@
+{
+  "schema": "air-engine-contract-proof/1",
+  "measuredAt": "2026-10-06T03:24:19.884Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\engine-contract-browser.cjs",
+    "--out=output/engine-contract-browser-final.json"
+  ],
+  "playwright": "1.62.1",
+  "scope": "ENG-01..09 focused native pixel and diagnostic contracts",
+  "captureMethod": "CANVAS_NATIVE",
+  "pageCompositorVerified": false,
+  "completed": true,
+  "subset": false,
+  "fullGalleryVerified": false,
+  "scopePassed": true,
+  "fingerprints": {
+    "build/cocosair.module.js": "ba9a0c0fc04e74df64db468ca259fc71a4d80f1b56903cfb844dfe98d856c208",
+    "src/cocos/3d/assets/mesh.ts": "6a9c30a9a8a36a39e85fa5b3218ee54ff269ff31f740c10474db6a495dd23152",
+    "src/cocos/3d/misc/create-mesh.ts": "6202c9759e1e2f6bc0d32f2b4892cad87065d21dd8be25c414a8b373d80c4e40",
+    "src/cocos/3d/misc/mesh-validation.ts": "3b790c1ad24cf4f0f74d193182e746abe11b6887d1eb77db0f7209c3527bddf6",
+    "src/cocos/render-scene/scene/fog.ts": "29a0a545c798531ceed27ab8ad087ec57b6ef06353607bd8f9713d8607c640c5",
+    "src/cocos/scene-graph/node.ts": "385eabe981cf2c20c65211a488d03a702727e895029d3743193264cf9b500a2b",
+    "src/cocos/scene-graph/node-transform-validation.ts": "b2332b6d50688fbd34f53f0fa4c23e3ce8eb96b0680e7edde355a431e14daecc",
+    "src/cocos/animation/animation-component.ts": "b9f98a4f40c770e759a46b76ade2517cf0e641c29598950e845deafdb1fa5bb2",
+    "src/cocos/render-scene/core/render-scene.ts": "1485053d92c751149dc8145710062bed65f9a04c2523d6cc771489141c512c2e",
+    "src/air/rendering/engine-contracts.ts": "791b53b8e520057cac25baa9efbba796ae3772b45c40dd27f4fdcdf1923d6b66",
+    "tools/debug/probes/engine-contracts/main.js": "48e703437ad75d5dceea280ebd80d9c89dae4103a33c1f651fe9cab9860bc7ce",
+    "tools/debug/probes/engine-contracts/index.html": "6c17ea8a6ef07a26b0e657899ffeb4a6a65d579a21e6c56b3b3520d8e0758b68",
+    "tools/verify/engine-contract-browser.cjs": "25d889c257b57eb0f103e1af4432d2cf20d75b0409701188cc9f30ef6bed483d"
+  },
+  "results": [
+    {
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "executable": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe",
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "vertex color reaches actual GPU output",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              229,
+              0,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257041828,
+                "lastSeen": 1791257041828
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "color-only update retains indices and renders green",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              229,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257041828,
+                "lastSeen": 1791257041828
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "UV-only update preserves normals and triangle connectivity",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              229,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257041828,
+                "lastSeen": 1791257041828
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "invalid index rejects before mutation",
+          "ok": true,
+          "detail": {
+            "code": "AIR_E_MESH_INDEX_RANGE",
+            "unchanged": true
+          }
+        },
+        {
+          "name": "disabled vertex macro diagnosed with actual color difference",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              229,
+              229,
+              229,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": false,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": [
+                {
+                  "code": "AIR_W_VERTEX_COLOR_DISABLED",
+                  "severity": "warning",
+                  "message": "pass 0: mesh colors exist but USE_VERTEX_COLOR is disabled"
+                }
+              ]
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257041828,
+                "lastSeen": 1791257041828
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "negative scale changes native winding and back-face visibility",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              16,
+              19,
+              27,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": false,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": [
+                {
+                  "code": "AIR_W_VERTEX_COLOR_DISABLED",
+                  "severity": "warning",
+                  "message": "pass 0: mesh colors exist but USE_VERTEX_COLOR is disabled"
+                }
+              ]
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                -1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": -1,
+              "negativeScale": true,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257041828,
+                "lastSeen": 1791257041828
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "explicit cull override restores the same geometry",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              229,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 0,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                -1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": -1,
+              "negativeScale": true,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 0,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257041828,
+                "lastSeen": 1791257041828
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "invalid JS scale is rejected before matrix poisoning",
+          "ok": true,
+          "detail": {
+            "code": "AIR_E_NODE_TRANSFORM",
+            "unchanged": true
+          }
+        },
+        {
+          "name": "disabled-first fog configuration activates correct shader and visible pixels",
+          "ok": true,
+          "detail": {
+            "fogConfig": {
+              "type": 0,
+              "macro": 0
+            },
+            "fog": {
+              "pixel": [
+                0,
+                0,
+                229,
+                255
+              ],
+              "error": 0,
+              "indices": [
+                0,
+                1,
+                2,
+                1,
+                3,
+                2
+              ],
+              "uv": [
+                0.25,
+                0.25,
+                0.75,
+                0.25,
+                0.25,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "normals": [
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
+              ],
+              "material": {
+                "primitiveIndex": 0,
+                "attributes": [
+                  "a_position",
+                  "a_normal",
+                  "a_texCoord",
+                  "a_color"
+                ],
+                "builtinContractChecked": true,
+                "passes": [
+                  {
+                    "passIndex": 0,
+                    "defines": {
+                      "USE_VERTEX_COLOR": true,
+                      "CC_PIPELINE_TYPE": 0,
+                      "CC_USE_HDR": true,
+                      "CC_USE_DEBUG_VIEW": 0,
+                      "CC_SHADOWMAP_FORMAT": 0,
+                      "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                      "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                      "CC_SHADOW_TYPE": 0,
+                      "CC_DIR_SHADOW_PCF_TYPE": 0,
+                      "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                      "CC_CASCADED_LAYERS_TRANSITION": 0,
+                      "CC_USE_IBL": 0,
+                      "CC_USE_DIFFUSEMAP": 0,
+                      "CC_IBL_CONVOLUTED": false,
+                      "CC_USE_FOG": 0,
+                      "CC_USE_ACCURATE_FOG": 0,
+                      "CC_TONE_MAPPING_TYPE": 0
+                    },
+                    "reflection": "webgl-active",
+                    "activeAttributes": [
+                      "a_position",
+                      "a_color"
+                    ]
+                  }
+                ],
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "issues": []
+              },
+              "geometry": {
+                "scope": "sampled-local-triangle-winding",
+                "available": true,
+                "reason": null,
+                "worldMatrix": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "determinant": 1,
+                "negativeScale": false,
+                "singular": false,
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "triangles": [
+                  {
+                    "index": 0,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  },
+                  {
+                    "index": 1,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  }
+                ]
+              },
+              "diagnostics": [
+                {
+                  "severity": "warning",
+                  "id": null,
+                  "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                  "occurrences": 1,
+                  "firstSeen": 1791257041828,
+                  "lastSeen": 1791257041828
+                }
+              ],
+              "paused": true
+            }
+          }
+        },
+        {
+          "name": "disabled fog is effective NONE while config remains reusable",
+          "ok": true,
+          "detail": {
+            "offConfig": {
+              "type": 4,
+              "macro": 4
+            },
+            "off": {
+              "pixel": [
+                0,
+                229,
+                0,
+                255
+              ],
+              "error": 0,
+              "indices": [
+                0,
+                1,
+                2,
+                1,
+                3,
+                2
+              ],
+              "uv": [
+                0.25,
+                0.25,
+                0.75,
+                0.25,
+                0.25,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "normals": [
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
+              ],
+              "material": {
+                "primitiveIndex": 0,
+                "attributes": [
+                  "a_position",
+                  "a_normal",
+                  "a_texCoord",
+                  "a_color"
+                ],
+                "builtinContractChecked": true,
+                "passes": [
+                  {
+                    "passIndex": 0,
+                    "defines": {
+                      "USE_VERTEX_COLOR": true,
+                      "CC_PIPELINE_TYPE": 0,
+                      "CC_USE_HDR": true,
+                      "CC_USE_DEBUG_VIEW": 0,
+                      "CC_SHADOWMAP_FORMAT": 0,
+                      "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                      "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                      "CC_SHADOW_TYPE": 0,
+                      "CC_DIR_SHADOW_PCF_TYPE": 0,
+                      "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                      "CC_CASCADED_LAYERS_TRANSITION": 0,
+                      "CC_USE_IBL": 0,
+                      "CC_USE_DIFFUSEMAP": 0,
+                      "CC_IBL_CONVOLUTED": false,
+                      "CC_USE_FOG": 4,
+                      "CC_USE_ACCURATE_FOG": 0,
+                      "CC_TONE_MAPPING_TYPE": 0
+                    },
+                    "reflection": "webgl-active",
+                    "activeAttributes": [
+                      "a_position",
+                      "a_color"
+                    ]
+                  }
+                ],
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "issues": []
+              },
+              "geometry": {
+                "scope": "sampled-local-triangle-winding",
+                "available": true,
+                "reason": null,
+                "worldMatrix": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "determinant": 1,
+                "negativeScale": false,
+                "singular": false,
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "triangles": [
+                  {
+                    "index": 0,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  },
+                  {
+                    "index": 1,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  }
+                ]
+              },
+              "diagnostics": [
+                {
+                  "severity": "warning",
+                  "id": null,
+                  "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                  "occurrences": 1,
+                  "firstSeen": 1791257041828,
+                  "lastSeen": 1791257041828
+                }
+              ],
+              "paused": true
+            }
+          }
+        },
+        {
+          "name": "main light removal and extra-light warning preserve native selection",
+          "ok": true,
+          "detail": {
+            "first": {
+              "status": "available",
+              "scope": "legacy-forward-main-directional",
+              "ordinaryDirectionalCapacity": 1,
+              "selection": "native-mainLight",
+              "lights": [
+                {
+                  "node": "Node.921",
+                  "name": "light-a",
+                  "effective": false
+                },
+                {
+                  "node": "Node.922",
+                  "name": "light-b",
+                  "effective": true
+                }
+              ],
+              "mainLight": "Node.922",
+              "note": "Custom pipeline/ranged directionals are outside this ordinary mainLight contract."
+            },
+            "after": {
+              "status": "available",
+              "scope": "legacy-forward-main-directional",
+              "ordinaryDirectionalCapacity": 1,
+              "selection": "native-mainLight",
+              "lights": [
+                {
+                  "node": "Node.921",
+                  "name": "light-a",
+                  "effective": true
+                }
+              ],
+              "mainLight": "Node.921",
+              "note": "Custom pipeline/ranged directionals are outside this ordinary mainLight contract."
+            }
+          }
+        },
+        {
+          "name": "warning channel identifies ordinary directional limit",
+          "ok": true,
+          "detail": [
+            {
+              "severity": "warning",
+              "id": null,
+              "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+              "occurrences": 1,
+              "firstSeen": 1791257041828,
+              "lastSeen": 1791257041828
+            },
+            {
+              "severity": "warning",
+              "id": null,
+              "message": "[AIR_W_DIRECTIONAL_LIGHT_LIMIT] ordinary directionals share one legacy mainLight; extra registered lights do not add illumination. Inspect scene.mainLight.",
+              "occurrences": 1,
+              "firstSeen": 1791257042468,
+              "lastSeen": 1791257042468
+            }
+          ]
+        },
+        {
+          "name": "native resources and scene release return successful receipt",
+          "ok": true,
+          "detail": {
+            "status": "released",
+            "scene": "Node.918",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          }
+        },
+        {
+          "name": "no console/page errors",
+          "ok": true,
+          "detail": []
+        }
+      ],
+      "images": [
+        {
+          "file": "output/engine-contract-browser-final-artifacts/chromium-red.png",
+          "sha256": "d56cf7caa38f6dd32032691e121aeb2dd153fa4a20f573cf9ba3d48385501426",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/chromium-green.png",
+          "sha256": "3f3c1704ac4cd5f3aedd37dd3bc2247120a9e0af4c1ae9a78a89da4fba0b46bd",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/chromium-vertex-disabled.png",
+          "sha256": "6b869eba1db9aff2b26722b21a093a987a6603dc1bac749a6964e038faae0289",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/chromium-culled.png",
+          "sha256": "955a006ecc1cf7fcf2c01509fc71b9a3b56332bea9fd2a545ca87201699cf94d",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/chromium-no-cull.png",
+          "sha256": "3f3c1704ac4cd5f3aedd37dd3bc2247120a9e0af4c1ae9a78a89da4fba0b46bd",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/chromium-fog.png",
+          "sha256": "acd89420e6b50ca15844c89454b59a75e45c61002bbc2c53ff7cebb067d9464d",
+          "method": "CANVAS_NATIVE"
+        }
+      ]
+    },
+    {
+      "engine": "firefox",
+      "version": "155.0",
+      "executable": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe",
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "vertex color reaches actual GPU output",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              229,
+              0,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257048715,
+                "lastSeen": 1791257048715
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "color-only update retains indices and renders green",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              229,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257048715,
+                "lastSeen": 1791257048715
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "UV-only update preserves normals and triangle connectivity",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              229,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257048715,
+                "lastSeen": 1791257048715
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "invalid index rejects before mutation",
+          "ok": true,
+          "detail": {
+            "code": "AIR_E_MESH_INDEX_RANGE",
+            "unchanged": true
+          }
+        },
+        {
+          "name": "disabled vertex macro diagnosed with actual color difference",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              229,
+              229,
+              229,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": false,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": [
+                {
+                  "code": "AIR_W_VERTEX_COLOR_DISABLED",
+                  "severity": "warning",
+                  "message": "pass 0: mesh colors exist but USE_VERTEX_COLOR is disabled"
+                }
+              ]
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257048715,
+                "lastSeen": 1791257048715
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "negative scale changes native winding and back-face visibility",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              16,
+              19,
+              27,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": false,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": [
+                {
+                  "code": "AIR_W_VERTEX_COLOR_DISABLED",
+                  "severity": "warning",
+                  "message": "pass 0: mesh colors exist but USE_VERTEX_COLOR is disabled"
+                }
+              ]
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                -1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": -1,
+              "negativeScale": true,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257048715,
+                "lastSeen": 1791257048715
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "explicit cull override restores the same geometry",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              229,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 0,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                -1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": -1,
+              "negativeScale": true,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 0,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257048715,
+                "lastSeen": 1791257048715
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "invalid JS scale is rejected before matrix poisoning",
+          "ok": true,
+          "detail": {
+            "code": "AIR_E_NODE_TRANSFORM",
+            "unchanged": true
+          }
+        },
+        {
+          "name": "disabled-first fog configuration activates correct shader and visible pixels",
+          "ok": true,
+          "detail": {
+            "fogConfig": {
+              "type": 0,
+              "macro": 0
+            },
+            "fog": {
+              "pixel": [
+                0,
+                0,
+                229,
+                255
+              ],
+              "error": 0,
+              "indices": [
+                0,
+                1,
+                2,
+                1,
+                3,
+                2
+              ],
+              "uv": [
+                0.25,
+                0.25,
+                0.75,
+                0.25,
+                0.25,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "normals": [
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
+              ],
+              "material": {
+                "primitiveIndex": 0,
+                "attributes": [
+                  "a_position",
+                  "a_normal",
+                  "a_texCoord",
+                  "a_color"
+                ],
+                "builtinContractChecked": true,
+                "passes": [
+                  {
+                    "passIndex": 0,
+                    "defines": {
+                      "USE_VERTEX_COLOR": true,
+                      "CC_PIPELINE_TYPE": 0,
+                      "CC_USE_HDR": true,
+                      "CC_USE_DEBUG_VIEW": 0,
+                      "CC_SHADOWMAP_FORMAT": 0,
+                      "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                      "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                      "CC_SHADOW_TYPE": 0,
+                      "CC_DIR_SHADOW_PCF_TYPE": 0,
+                      "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                      "CC_CASCADED_LAYERS_TRANSITION": 0,
+                      "CC_USE_IBL": 0,
+                      "CC_USE_DIFFUSEMAP": 0,
+                      "CC_IBL_CONVOLUTED": false,
+                      "CC_USE_FOG": 0,
+                      "CC_USE_ACCURATE_FOG": 0,
+                      "CC_TONE_MAPPING_TYPE": 0
+                    },
+                    "reflection": "webgl-active",
+                    "activeAttributes": [
+                      "a_position",
+                      "a_color"
+                    ]
+                  }
+                ],
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "issues": []
+              },
+              "geometry": {
+                "scope": "sampled-local-triangle-winding",
+                "available": true,
+                "reason": null,
+                "worldMatrix": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "determinant": 1,
+                "negativeScale": false,
+                "singular": false,
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "triangles": [
+                  {
+                    "index": 0,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  },
+                  {
+                    "index": 1,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  }
+                ]
+              },
+              "diagnostics": [
+                {
+                  "severity": "warning",
+                  "id": null,
+                  "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                  "occurrences": 1,
+                  "firstSeen": 1791257048715,
+                  "lastSeen": 1791257048715
+                }
+              ],
+              "paused": true
+            }
+          }
+        },
+        {
+          "name": "disabled fog is effective NONE while config remains reusable",
+          "ok": true,
+          "detail": {
+            "offConfig": {
+              "type": 4,
+              "macro": 4
+            },
+            "off": {
+              "pixel": [
+                0,
+                229,
+                0,
+                255
+              ],
+              "error": 0,
+              "indices": [
+                0,
+                1,
+                2,
+                1,
+                3,
+                2
+              ],
+              "uv": [
+                0.25,
+                0.25,
+                0.75,
+                0.25,
+                0.25,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "normals": [
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
+              ],
+              "material": {
+                "primitiveIndex": 0,
+                "attributes": [
+                  "a_position",
+                  "a_normal",
+                  "a_texCoord",
+                  "a_color"
+                ],
+                "builtinContractChecked": true,
+                "passes": [
+                  {
+                    "passIndex": 0,
+                    "defines": {
+                      "USE_VERTEX_COLOR": true,
+                      "CC_PIPELINE_TYPE": 0,
+                      "CC_USE_HDR": true,
+                      "CC_USE_DEBUG_VIEW": 0,
+                      "CC_SHADOWMAP_FORMAT": 0,
+                      "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                      "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                      "CC_SHADOW_TYPE": 0,
+                      "CC_DIR_SHADOW_PCF_TYPE": 0,
+                      "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                      "CC_CASCADED_LAYERS_TRANSITION": 0,
+                      "CC_USE_IBL": 0,
+                      "CC_USE_DIFFUSEMAP": 0,
+                      "CC_IBL_CONVOLUTED": false,
+                      "CC_USE_FOG": 4,
+                      "CC_USE_ACCURATE_FOG": 0,
+                      "CC_TONE_MAPPING_TYPE": 0
+                    },
+                    "reflection": "webgl-active",
+                    "activeAttributes": [
+                      "a_position",
+                      "a_color"
+                    ]
+                  }
+                ],
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "issues": []
+              },
+              "geometry": {
+                "scope": "sampled-local-triangle-winding",
+                "available": true,
+                "reason": null,
+                "worldMatrix": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "determinant": 1,
+                "negativeScale": false,
+                "singular": false,
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "triangles": [
+                  {
+                    "index": 0,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  },
+                  {
+                    "index": 1,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  }
+                ]
+              },
+              "diagnostics": [
+                {
+                  "severity": "warning",
+                  "id": null,
+                  "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                  "occurrences": 1,
+                  "firstSeen": 1791257048715,
+                  "lastSeen": 1791257048715
+                }
+              ],
+              "paused": true
+            }
+          }
+        },
+        {
+          "name": "main light removal and extra-light warning preserve native selection",
+          "ok": true,
+          "detail": {
+            "first": {
+              "status": "available",
+              "scope": "legacy-forward-main-directional",
+              "ordinaryDirectionalCapacity": 1,
+              "selection": "native-mainLight",
+              "lights": [
+                {
+                  "node": "Node.379",
+                  "name": "light-a",
+                  "effective": false
+                },
+                {
+                  "node": "Node.380",
+                  "name": "light-b",
+                  "effective": true
+                }
+              ],
+              "mainLight": "Node.380",
+              "note": "Custom pipeline/ranged directionals are outside this ordinary mainLight contract."
+            },
+            "after": {
+              "status": "available",
+              "scope": "legacy-forward-main-directional",
+              "ordinaryDirectionalCapacity": 1,
+              "selection": "native-mainLight",
+              "lights": [
+                {
+                  "node": "Node.379",
+                  "name": "light-a",
+                  "effective": true
+                }
+              ],
+              "mainLight": "Node.379",
+              "note": "Custom pipeline/ranged directionals are outside this ordinary mainLight contract."
+            }
+          }
+        },
+        {
+          "name": "warning channel identifies ordinary directional limit",
+          "ok": true,
+          "detail": [
+            {
+              "severity": "warning",
+              "id": null,
+              "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+              "occurrences": 1,
+              "firstSeen": 1791257048715,
+              "lastSeen": 1791257048715
+            },
+            {
+              "severity": "warning",
+              "id": null,
+              "message": "[AIR_W_DIRECTIONAL_LIGHT_LIMIT] ordinary directionals share one legacy mainLight; extra registered lights do not add illumination. Inspect scene.mainLight.",
+              "occurrences": 1,
+              "firstSeen": 1791257049611,
+              "lastSeen": 1791257049611
+            }
+          ]
+        },
+        {
+          "name": "native resources and scene release return successful receipt",
+          "ok": true,
+          "detail": {
+            "status": "released",
+            "scene": "Node.376",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          }
+        },
+        {
+          "name": "no console/page errors",
+          "ok": true,
+          "detail": []
+        }
+      ],
+      "images": [
+        {
+          "file": "output/engine-contract-browser-final-artifacts/firefox-red.png",
+          "sha256": "f87cf9d7ba975f93105ee6e5a96c1b195ede168b42ea72cf4cd3f6ec9af84dfe",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/firefox-green.png",
+          "sha256": "df3972bb9f98c1490367d646dd2fd323ffca836dc0f5dfc0a5ef7d2c360b1c4c",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/firefox-vertex-disabled.png",
+          "sha256": "bc8c97791f4c2114a8674302be12b2a15722ac13c596d8d3dbbf0adc83680d86",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/firefox-culled.png",
+          "sha256": "ef596df8b9dc0d77a161a028c5021d6a26a24704e38380d018cae5a88dab14f1",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/firefox-no-cull.png",
+          "sha256": "df3972bb9f98c1490367d646dd2fd323ffca836dc0f5dfc0a5ef7d2c360b1c4c",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/firefox-fog.png",
+          "sha256": "5dc947601c2555a79a680b6c3e3f5b05c3984ddd9e894a60bf2180bb31b54c23",
+          "method": "CANVAS_NATIVE"
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "26.5",
+      "executable": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\webkit-2336\\Playwright.exe",
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "vertex color reaches actual GPU output",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              229,
+              0,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257058898,
+                "lastSeen": 1791257058898
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "color-only update retains indices and renders green",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              229,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257058898,
+                "lastSeen": 1791257058898
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "UV-only update preserves normals and triangle connectivity",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              229,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257058898,
+                "lastSeen": 1791257058898
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "invalid index rejects before mutation",
+          "ok": true,
+          "detail": {
+            "code": "AIR_E_MESH_INDEX_RANGE",
+            "unchanged": true
+          }
+        },
+        {
+          "name": "disabled vertex macro diagnosed with actual color difference",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              229,
+              229,
+              229,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": false,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": [
+                {
+                  "code": "AIR_W_VERTEX_COLOR_DISABLED",
+                  "severity": "warning",
+                  "message": "pass 0: mesh colors exist but USE_VERTEX_COLOR is disabled"
+                }
+              ]
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": 1,
+              "negativeScale": false,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257058898,
+                "lastSeen": 1791257058898
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "negative scale changes native winding and back-face visibility",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              16,
+              19,
+              27,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": false,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": [
+                {
+                  "code": "AIR_W_VERTEX_COLOR_DISABLED",
+                  "severity": "warning",
+                  "message": "pass 0: mesh colors exist but USE_VERTEX_COLOR is disabled"
+                }
+              ]
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                -1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": -1,
+              "negativeScale": true,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257058898,
+                "lastSeen": 1791257058898
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "explicit cull override restores the same geometry",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              229,
+              0,
+              255
+            ],
+            "error": 0,
+            "indices": [
+              0,
+              1,
+              2,
+              1,
+              3,
+              2
+            ],
+            "uv": [
+              0.25,
+              0.25,
+              0.75,
+              0.25,
+              0.25,
+              0.75,
+              0.75,
+              0.75
+            ],
+            "normals": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "material": {
+              "primitiveIndex": 0,
+              "attributes": [
+                "a_position",
+                "a_normal",
+                "a_texCoord",
+                "a_color"
+              ],
+              "builtinContractChecked": true,
+              "passes": [
+                {
+                  "passIndex": 0,
+                  "defines": {
+                    "USE_VERTEX_COLOR": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 0,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                    "CC_CASCADED_LAYERS_TRANSITION": 0,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  },
+                  "reflection": "webgl-active",
+                  "activeAttributes": [
+                    "a_position",
+                    "a_color"
+                  ]
+                }
+              ],
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 0,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "issues": []
+            },
+            "geometry": {
+              "scope": "sampled-local-triangle-winding",
+              "available": true,
+              "reason": null,
+              "worldMatrix": [
+                -1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              "determinant": -1,
+              "negativeScale": true,
+              "singular": false,
+              "states": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 0,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "triangles": [
+                {
+                  "index": 0,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                },
+                {
+                  "index": 1,
+                  "normal": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "providedNormalDot": 1,
+                  "degenerate": false
+                }
+              ]
+            },
+            "diagnostics": [
+              {
+                "severity": "warning",
+                "id": null,
+                "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                "occurrences": 1,
+                "firstSeen": 1791257058898,
+                "lastSeen": 1791257058898
+              }
+            ],
+            "paused": true
+          }
+        },
+        {
+          "name": "invalid JS scale is rejected before matrix poisoning",
+          "ok": true,
+          "detail": {
+            "code": "AIR_E_NODE_TRANSFORM",
+            "unchanged": true
+          }
+        },
+        {
+          "name": "disabled-first fog configuration activates correct shader and visible pixels",
+          "ok": true,
+          "detail": {
+            "fogConfig": {
+              "type": 0,
+              "macro": 0
+            },
+            "fog": {
+              "pixel": [
+                0,
+                0,
+                229,
+                255
+              ],
+              "error": 0,
+              "indices": [
+                0,
+                1,
+                2,
+                1,
+                3,
+                2
+              ],
+              "uv": [
+                0.25,
+                0.25,
+                0.75,
+                0.25,
+                0.25,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "normals": [
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
+              ],
+              "material": {
+                "primitiveIndex": 0,
+                "attributes": [
+                  "a_position",
+                  "a_normal",
+                  "a_texCoord",
+                  "a_color"
+                ],
+                "builtinContractChecked": true,
+                "passes": [
+                  {
+                    "passIndex": 0,
+                    "defines": {
+                      "USE_VERTEX_COLOR": true,
+                      "CC_PIPELINE_TYPE": 0,
+                      "CC_USE_HDR": true,
+                      "CC_USE_DEBUG_VIEW": 0,
+                      "CC_SHADOWMAP_FORMAT": 0,
+                      "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                      "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                      "CC_SHADOW_TYPE": 0,
+                      "CC_DIR_SHADOW_PCF_TYPE": 0,
+                      "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                      "CC_CASCADED_LAYERS_TRANSITION": 0,
+                      "CC_USE_IBL": 0,
+                      "CC_USE_DIFFUSEMAP": 0,
+                      "CC_IBL_CONVOLUTED": false,
+                      "CC_USE_FOG": 0,
+                      "CC_USE_ACCURATE_FOG": 0,
+                      "CC_TONE_MAPPING_TYPE": 0
+                    },
+                    "reflection": "webgl-active",
+                    "activeAttributes": [
+                      "a_position",
+                      "a_color"
+                    ]
+                  }
+                ],
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "issues": []
+              },
+              "geometry": {
+                "scope": "sampled-local-triangle-winding",
+                "available": true,
+                "reason": null,
+                "worldMatrix": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "determinant": 1,
+                "negativeScale": false,
+                "singular": false,
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "triangles": [
+                  {
+                    "index": 0,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  },
+                  {
+                    "index": 1,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  }
+                ]
+              },
+              "diagnostics": [
+                {
+                  "severity": "warning",
+                  "id": null,
+                  "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                  "occurrences": 1,
+                  "firstSeen": 1791257058898,
+                  "lastSeen": 1791257058898
+                }
+              ],
+              "paused": true
+            }
+          }
+        },
+        {
+          "name": "disabled fog is effective NONE while config remains reusable",
+          "ok": true,
+          "detail": {
+            "offConfig": {
+              "type": 4,
+              "macro": 4
+            },
+            "off": {
+              "pixel": [
+                0,
+                229,
+                0,
+                255
+              ],
+              "error": 0,
+              "indices": [
+                0,
+                1,
+                2,
+                1,
+                3,
+                2
+              ],
+              "uv": [
+                0.25,
+                0.25,
+                0.75,
+                0.25,
+                0.25,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "normals": [
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
+              ],
+              "material": {
+                "primitiveIndex": 0,
+                "attributes": [
+                  "a_position",
+                  "a_normal",
+                  "a_texCoord",
+                  "a_color"
+                ],
+                "builtinContractChecked": true,
+                "passes": [
+                  {
+                    "passIndex": 0,
+                    "defines": {
+                      "USE_VERTEX_COLOR": true,
+                      "CC_PIPELINE_TYPE": 0,
+                      "CC_USE_HDR": true,
+                      "CC_USE_DEBUG_VIEW": 0,
+                      "CC_SHADOWMAP_FORMAT": 0,
+                      "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                      "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                      "CC_SHADOW_TYPE": 0,
+                      "CC_DIR_SHADOW_PCF_TYPE": 0,
+                      "CC_DIR_LIGHT_SHADOW_TYPE": 0,
+                      "CC_CASCADED_LAYERS_TRANSITION": 0,
+                      "CC_USE_IBL": 0,
+                      "CC_USE_DIFFUSEMAP": 0,
+                      "CC_IBL_CONVOLUTED": false,
+                      "CC_USE_FOG": 4,
+                      "CC_USE_ACCURATE_FOG": 0,
+                      "CC_TONE_MAPPING_TYPE": 0
+                    },
+                    "reflection": "webgl-active",
+                    "activeAttributes": [
+                      "a_position",
+                      "a_color"
+                    ]
+                  }
+                ],
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "issues": []
+              },
+              "geometry": {
+                "scope": "sampled-local-triangle-winding",
+                "available": true,
+                "reason": null,
+                "worldMatrix": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "determinant": 1,
+                "negativeScale": false,
+                "singular": false,
+                "states": [
+                  {
+                    "index": 0,
+                    "program": "unlit|unlit-vs:vert|unlit-fs:frag|air-fog:2734718999",
+                    "propertyIndex": 0,
+                    "priority": 128,
+                    "phase": 16,
+                    "stage": 100,
+                    "depthTest": true,
+                    "depthWrite": true,
+                    "depthFunc": 1,
+                    "cullMode": 2,
+                    "blendTargets": [
+                      {
+                        "blend": false,
+                        "blendSrc": 1,
+                        "blendDst": 0,
+                        "blendEq": 0,
+                        "blendSrcAlpha": 1,
+                        "blendDstAlpha": 0,
+                        "blendAlphaEq": 0,
+                        "blendColorMask": 15
+                      }
+                    ],
+                    "textures": [
+                      {
+                        "name": "mainTexture",
+                        "binding": 2,
+                        "index": 0,
+                        "bound": true,
+                        "format": {
+                          "format": 35,
+                          "name": "RGBA8",
+                          "srgb": false,
+                          "depth": false
+                        },
+                        "width": 2,
+                        "height": 2,
+                        "mipLevels": 1,
+                        "comparison": 7
+                      }
+                    ]
+                  }
+                ],
+                "triangles": [
+                  {
+                    "index": 0,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  },
+                  {
+                    "index": 1,
+                    "normal": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "providedNormalDot": 1,
+                    "degenerate": false
+                  }
+                ]
+              },
+              "diagnostics": [
+                {
+                  "severity": "warning",
+                  "id": null,
+                  "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+                  "occurrences": 1,
+                  "firstSeen": 1791257058898,
+                  "lastSeen": 1791257058898
+                }
+              ],
+              "paused": true
+            }
+          }
+        },
+        {
+          "name": "main light removal and extra-light warning preserve native selection",
+          "ok": true,
+          "detail": {
+            "first": {
+              "status": "available",
+              "scope": "legacy-forward-main-directional",
+              "ordinaryDirectionalCapacity": 1,
+              "selection": "native-mainLight",
+              "lights": [
+                {
+                  "node": "Node.860",
+                  "name": "light-a",
+                  "effective": false
+                },
+                {
+                  "node": "Node.861",
+                  "name": "light-b",
+                  "effective": true
+                }
+              ],
+              "mainLight": "Node.861",
+              "note": "Custom pipeline/ranged directionals are outside this ordinary mainLight contract."
+            },
+            "after": {
+              "status": "available",
+              "scope": "legacy-forward-main-directional",
+              "ordinaryDirectionalCapacity": 1,
+              "selection": "native-mainLight",
+              "lights": [
+                {
+                  "node": "Node.860",
+                  "name": "light-a",
+                  "effective": true
+                }
+              ],
+              "mainLight": "Node.860",
+              "note": "Custom pipeline/ranged directionals are outside this ordinary mainLight contract."
+            }
+          }
+        },
+        {
+          "name": "warning channel identifies ordinary directional limit",
+          "ok": true,
+          "detail": [
+            {
+              "severity": "warning",
+              "id": null,
+              "message": "[Spine]: 该构建未部署 spine 运行时资产（external:emscripten/spine/... 不在引擎快照内）。 代码闭包与类型面已回归，但 SkeletonData 无法创建；如需 spine 渲染，请按 docs/notes/spine-asset-sourcing.md 落位 wasm/asm 产物。",
+              "occurrences": 1,
+              "firstSeen": 1791257058898,
+              "lastSeen": 1791257058898
+            },
+            {
+              "severity": "warning",
+              "id": null,
+              "message": "[AIR_W_DIRECTIONAL_LIGHT_LIMIT] ordinary directionals share one legacy mainLight; extra registered lights do not add illumination. Inspect scene.mainLight.",
+              "occurrences": 1,
+              "firstSeen": 1791257059739,
+              "lastSeen": 1791257059739
+            }
+          ]
+        },
+        {
+          "name": "native resources and scene release return successful receipt",
+          "ok": true,
+          "detail": {
+            "status": "released",
+            "scene": "Node.857",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          }
+        },
+        {
+          "name": "no console/page errors",
+          "ok": true,
+          "detail": []
+        }
+      ],
+      "images": [
+        {
+          "file": "output/engine-contract-browser-final-artifacts/webkit-red.png",
+          "sha256": "fbe693b0330f2a31be196fae481ab61767a3db1c002e9b15bd334491f6241f20",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/webkit-green.png",
+          "sha256": "8ac54659c9e28b9641f1f1c2eeede9607be806841f5ced37826a76d0b90c933c",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/webkit-vertex-disabled.png",
+          "sha256": "f5cdc3dc47524b33e7774dce6e5fc513674d641902091d1081cb8f8ddaaac8aa",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/webkit-culled.png",
+          "sha256": "00e0d60766d126f813623cbe1d8918892fae2a589525351c169f6a19cca9a603",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/webkit-no-cull.png",
+          "sha256": "8ac54659c9e28b9641f1f1c2eeede9607be806841f5ced37826a76d0b90c933c",
+          "method": "CANVAS_NATIVE"
+        },
+        {
+          "file": "output/engine-contract-browser-final-artifacts/webkit-fog.png",
+          "sha256": "24275060c57b51dc54e718b26d2abf14bbf0019509dfa21a8e20c2509b7b84c7",
+          "method": "CANVAS_NATIVE"
+        }
+      ]
+    }
+  ]
+}

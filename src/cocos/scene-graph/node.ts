@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { validateTransformValues } from './node-transform-validation';
 import { ccclass, editable, serializable, type } from 'cc.decorator';
 import { DEV, DEBUG, EDITOR, EDITOR_NOT_IN_PREVIEW, USE_UI_SKEW, NODEJS } from 'internal:constants';
 import { Layers } from './layers';
@@ -2420,6 +2421,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setPosition(x: number, y: number, z?: number): void;
 
     public setPosition (val: Readonly<Vec3> | number, y?: number, z?: number): void {
+        validateTransformValues('setPosition', y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, z === undefined ? this._lpos.z : z], this.uuid);
         const localPosition = this._lpos;
 
         if (y === undefined) {
@@ -2471,6 +2473,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setRotation(x: number, y: number, z: number, w: number): void;
 
     public setRotation (val: Readonly<Quat> | number, y?: number, z?: number, w?: number): void {
+        validateTransformValues('setRotation', y === undefined ? [(val as Quat)?.x, (val as Quat)?.y, (val as Quat)?.z, (val as Quat)?.w] : [val, y, z, w], this.uuid);
         if (y === undefined) {
             Quat.copy(this._lrot, val as Quat);
         } else {
@@ -2501,6 +2504,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setRotationFromEuler(x: number, y: number, zOpt?: number): void;
 
     public setRotationFromEuler (val: Vec3 | number, y?: number, zOpt?: number): void {
+        validateTransformValues('setRotationFromEuler', y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, zOpt === undefined ? this._euler.z : zOpt], this.uuid);
         if (y === undefined) {
             Vec3.copy(this._euler, val as Vec3);
             Quat.fromEuler(this._lrot, (val as Vec3).x, (val as Vec3).y, (val as Vec3).z);
@@ -2548,6 +2552,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setScale(x: number, y: number, z?: number): void;
 
     public setScale (val: Readonly<Vec3> | number, y?: number, z?: number): void {
+        validateTransformValues('setScale', y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, z === undefined ? this._lscale.z : z], this.uuid);
         const localScale = this._lscale;
 
         if (y === undefined) {
@@ -2619,6 +2624,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setWorldPosition(x: number, y: number, z?: number): void;
 
     public setWorldPosition (val: Vec3 | number, y?: number, z?: number): void {
+        validateTransformValues('setWorldPosition', y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, z === undefined ? this.worldPosition.z : z], this.uuid);
         const worldPosition = this._pos;
 
         if (y === undefined) {
@@ -2683,6 +2689,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setWorldRotation(x: number, y: number, z: number, w: number): void;
 
     public setWorldRotation (val: Quat | number, y?: number, z?: number, w?: number): void {
+        validateTransformValues('setWorldRotation', y === undefined ? [(val as Quat)?.x, (val as Quat)?.y, (val as Quat)?.z, (val as Quat)?.w] : [val, y, z, w], this.uuid);
         const worldRotation = this._rot;
         if (y === undefined) {
             Quat.copy(worldRotation, val as Quat);
@@ -2747,6 +2754,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setWorldScale(x: number, y: number, z: number): void;
 
     public setWorldScale (val: Vec3 | number, y?: number, z?: number): void {
+        validateTransformValues('setWorldScale', y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, z === undefined ? this.worldScale.z : z], this.uuid);
         const self = this;
         const parent = self._parent;
         if (parent) {
@@ -2877,6 +2885,9 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @param scale The scale
      */
     public setRTS (rot?: Quat | Vec3, pos?: Vec3, scale?: Vec3): void {
+        if (rot) validateTransformValues('setRTS.rotation', (rot as Quat).w === undefined ? [rot.x, rot.y, rot.z] : [rot.x, rot.y, rot.z, (rot as Quat).w], this.uuid);
+        if (pos) validateTransformValues('setRTS.position', [pos.x, pos.y, pos.z], this.uuid);
+        if (scale) validateTransformValues('setRTS.scale', [scale.x, scale.y, scale.z], this.uuid);
         let dirtyBit: TransformBit = 0;
         if (rot) {
             dirtyBit |= TransformBit.ROTATION;

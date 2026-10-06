@@ -29,6 +29,7 @@ import { IDynamicGeometry } from '../../primitive/define';
 import { BufferBlob } from '../misc/buffer-blob';
 import { Skeleton } from './skeleton';
 import { geometry, cclegacy, sys, warnID, Mat4, Quat, Vec3, assertIsTrue, murmurhash2_32_gc, errorID, error, halfToFloat, v3 } from '../../core';
+import { meshFailure, planDynamicUpdate } from '../misc/mesh-validation';
 import { RenderingSubMesh } from '../../asset/assets';
 import {
     Attribute, Device, Buffer, BufferInfo, AttributeName, BufferUsageBit, Feature, Format,
@@ -412,7 +413,8 @@ export class Mesh extends Asset {
         if (this._initialized) {
             return;
         }
-        this._initialized = true;
+        if (this._struct.dynamic && !deviceManager.gfxDevice) meshFailure('AIR_E_MESH_NOT_READY', 'await createAirApp() before initializing a dynamic mesh');
+        this._initialized = !this._struct.dynamic;
 
         let info = { struct: this.struct, data: this.data };
         if (info.struct.compressed) { // decompress mesh data
@@ -434,60 +436,71 @@ export class Mesh extends Asset {
             const device: Device = deviceManager.gfxDevice;
             const vertexBuffers: Buffer[] = [];
             const subMeshes: RenderingSubMesh[] = [];
+            const allocated = new Set<Buffer>();
+            try {
 
-            for (let i = 0; i < this._struct.vertexBundles.length; i++) {
-                const vertexBundle = this._struct.vertexBundles[i];
-                const vertexBuffer = device.createBuffer(new BufferInfo(
-                    BufferUsageBit.VERTEX | BufferUsageBit.TRANSFER_DST,
-                    MemoryUsageBit.DEVICE,
-                    vertexBundle.view.length,
-                    vertexBundle.view.stride,
-                ));
-
-                vertexBuffers.push(vertexBuffer);
-            }
-
-            for (let i = 0; i < this._struct.primitives.length; i++) {
-                const primitive = this._struct.primitives[i];
-                const indexView = primitive.indexView;
-                let indexBuffer: Buffer | null = null;
-
-                if (indexView) {
-                    indexBuffer = device.createBuffer(new BufferInfo(
-                        BufferUsageBit.INDEX | BufferUsageBit.TRANSFER_DST,
+                for (let i = 0; i < this._struct.vertexBundles.length; i++) {
+                    const vertexBundle = this._struct.vertexBundles[i];
+                    const vertexBuffer = device.createBuffer(new BufferInfo(
+                        BufferUsageBit.VERTEX | BufferUsageBit.TRANSFER_DST,
                         MemoryUsageBit.DEVICE,
-                        indexView.length,
-                        indexView.stride,
+                        vertexBundle.view.length,
+                        vertexBundle.view.stride,
                     ));
+
+                    vertexBuffers.push(vertexBuffer);
+                    allocated.add(vertexBuffer);
                 }
 
-                const subVBs: Buffer[] = [];
-                for (let k = 0; k < primitive.vertexBundelIndices.length; k++) {
-                    const idx = primitive.vertexBundelIndices[k];
-                    subVBs.push(vertexBuffers[idx]);
-                }
+                for (let i = 0; i < this._struct.primitives.length; i++) {
+                    const primitive = this._struct.primitives[i];
+                    const indexView = primitive.indexView;
+                    let indexBuffer: Buffer | null = null;
 
-                const allAttributes: Attribute[] = [];
-                for (let k = 0; k < primitive.vertexBundelIndices.length; k++) {
-                    const idx = primitive.vertexBundelIndices[k];
-                    const attributes = this._struct.vertexBundles[idx].attributes;
-                    for (let j = 0; j < attributes.length; j++) {
-                        const attr = attributes[j];
-                        const attribute = new Attribute();
-                        attribute.copy(attr);
-                        allAttributes.push(attribute);
+                    if (indexView) {
+                        indexBuffer = device.createBuffer(new BufferInfo(
+                            BufferUsageBit.INDEX | BufferUsageBit.TRANSFER_DST,
+                            MemoryUsageBit.DEVICE,
+                            indexView.length,
+                            indexView.stride,
+                        ));
+                        allocated.add(indexBuffer);
                     }
+
+                    const subVBs: Buffer[] = [];
+                    for (let k = 0; k < primitive.vertexBundelIndices.length; k++) {
+                        const idx = primitive.vertexBundelIndices[k];
+                        subVBs.push(vertexBuffers[idx]);
+                    }
+
+                    const allAttributes: Attribute[] = [];
+                    for (let k = 0; k < primitive.vertexBundelIndices.length; k++) {
+                        const idx = primitive.vertexBundelIndices[k];
+                        const attributes = this._struct.vertexBundles[idx].attributes;
+                        for (let j = 0; j < attributes.length; j++) {
+                            const attr = attributes[j];
+                            const attribute = new Attribute();
+                            attribute.copy(attr);
+                            allAttributes.push(attribute);
+                        }
+                    }
+
+                    const subMesh = new RenderingSubMesh(subVBs, allAttributes, primitive.primitiveMode, indexBuffer);
+                    subMesh.drawInfo = new DrawInfo();
+                    subMesh.mesh = this;
+                    subMesh.subMeshIdx = i;
+
+                    subMeshes.push(subMesh);
                 }
 
-                const subMesh = new RenderingSubMesh(subVBs, allAttributes, primitive.primitiveMode, indexBuffer);
-                subMesh.drawInfo = new DrawInfo();
-                subMesh.mesh = this;
-                subMesh.subMeshIdx = i;
-
-                subMeshes.push(subMesh);
+                this._renderingSubMeshes = subMeshes;
+                this._initialized = true;
+            } catch (cause) {
+                for (const buffer of allocated) { try { buffer.destroy(); } catch { /* Continue releasing remaining allocations. */ } }
+                this._renderingSubMeshes = null;
+                this._initialized = false;
+                meshFailure('AIR_E_MESH_GPU_ALLOCATION', 'dynamic buffer initialization failed; partial buffers released', { cause });
             }
-
-            this._renderingSubMeshes = subMeshes;
         } else {
             const { buffer } = this._data;
             const gfxDevice: Device = deviceManager.gfxDevice;
@@ -572,118 +585,47 @@ export class Mesh extends Asset {
      * @param primitiveIndex @en sub mesh index @zh 子网格索引
      * @param dynamicGeometry @en sub mesh geometry data @zh 子网格几何数据
      */
-    public updateSubMesh (primitiveIndex: number, dynamicGeometry: IDynamicGeometry): void {
-        if (!this._struct.dynamic) {
-            warnID(14200);
-            return;
-        }
-
-        if (primitiveIndex >= this._struct.primitives.length) {
-            warnID(14201);
-            return;
-        }
-
-        const buffers: Float32Array[] = [];
-        if (dynamicGeometry.positions.length > 0) {
-            buffers.push(dynamicGeometry.positions);
-        }
-
-        if (dynamicGeometry.normals && dynamicGeometry.normals.length > 0) {
-            buffers.push(dynamicGeometry.normals);
-        }
-
-        if (dynamicGeometry.uvs && dynamicGeometry.uvs.length > 0) {
-            buffers.push(dynamicGeometry.uvs);
-        }
-
-        if (dynamicGeometry.tangents && dynamicGeometry.tangents.length > 0) {
-            buffers.push(dynamicGeometry.tangents);
-        }
-
-        if (dynamicGeometry.colors && dynamicGeometry.colors.length > 0) {
-            buffers.push(dynamicGeometry.colors);
-        }
-
-        if (dynamicGeometry.customAttributes) {
-            for (let k = 0; k < dynamicGeometry.customAttributes.length; k++) {
-                buffers.push(dynamicGeometry.customAttributes[k].values);
-            }
-        }
-
-        const dynamic = this._struct.dynamic;
-        const info = dynamic.info;
-        const primitive = this._struct.primitives[primitiveIndex];
-        const subMesh = this._renderingSubMeshes![primitiveIndex];
+    public updateSubMesh (primitiveIndex: number, dynamicGeometry: Partial<IDynamicGeometry>): void {
+        const plan = planDynamicUpdate(this._struct, this._data, primitiveIndex, dynamicGeometry);
+        if (!this._initialized || !this._renderingSubMeshes) meshFailure('AIR_E_MESH_NOT_READY', 'initialize the dynamic mesh before updateSubMesh', { primitiveIndex });
+        const dynamic = this._struct.dynamic!, subMesh = this._renderingSubMeshes[primitiveIndex];
         const drawInfo = subMesh.drawInfo!;
-
-        // update _data & buffer
-        this._boneSpaceBounds = new WeakMap();
-        this._hash = 0;
-        for (let index = 0; index < buffers.length; index++) {
-            const vertices = buffers[index];
-            const bundle = this._struct.vertexBundles[primitive.vertexBundelIndices[index]];
-            const stride = bundle.view.stride;
-            const vertexCount = vertices.byteLength / stride;
-            const updateSize  = vertices.byteLength;
-            const dstBuffer   = new Uint8Array(this._data.buffer, bundle.view.offset, updateSize);
-            const srcBuffer    = new Uint8Array(vertices.buffer, vertices.byteOffset, updateSize);
-            const vertexBuffer = subMesh.vertexBuffers[index];
-            assertIsTrue(vertexCount <= info.maxSubMeshVertices, 'Too many vertices.');
-
-            if (updateSize > 0) {
-                dstBuffer.set(srcBuffer);
-                vertexBuffer.update(srcBuffer, updateSize);
+        // All input/layout/capacity/range checks completed before any CPU or GPU write.
+        for (const { stream, bundle, values, count } of plan.streams) {
+            if (values.byteLength) {
+                const source = new Uint8Array(values.buffer, values.byteOffset, values.byteLength);
+                new Uint8Array(this._data.buffer, this._data.byteOffset + bundle.view.offset, values.byteLength).set(source);
+                subMesh.vertexBuffers[stream].update(source, source.byteLength);
             }
-
-            bundle.view.count = vertexCount;
-            drawInfo.vertexCount = vertexCount;
+            bundle.view.count = count;
         }
-
-        if (primitive.indexView) {
-            const indexView = primitive.indexView;
-            const stride       = indexView.stride;
-            const indexCount   = (stride === 2) ? dynamicGeometry.indices16!.length : dynamicGeometry.indices32!.length;
-            const updateSize   = indexCount * stride;
-            const dstBuffer   = new Uint8Array(this._data.buffer, indexView.offset, updateSize);
-            const srcBuffer    = (stride === 2) ? new Uint8Array(dynamicGeometry.indices16!.buffer, dynamicGeometry.indices16!.byteOffset, updateSize)
-                : new Uint8Array(dynamicGeometry.indices32!.buffer, dynamicGeometry.indices32!.byteOffset, updateSize);
-            const indexBuffer  = subMesh.indexBuffer!;
-            assertIsTrue(indexCount <= info.maxSubMeshIndices, 'Too many indices.');
-
-            if (updateSize > 0) {
-                dstBuffer.set(srcBuffer);
-                indexBuffer.update(srcBuffer, updateSize);
+        drawInfo.vertexCount = plan.vertexCount;
+        if (plan.indices) {
+            const view = plan.primitive.indexView!, source = new Uint8Array(plan.indices.buffer, plan.indices.byteOffset, plan.indices.byteLength);
+            if (source.byteLength) {
+                new Uint8Array(this._data.buffer, this._data.byteOffset + view.offset, source.byteLength).set(source);
+                subMesh.indexBuffer!.update(source, source.byteLength);
             }
-
-            indexView.count     = indexCount;
-            drawInfo.indexCount = indexCount;
+            view.count = plan.indices.length; drawInfo.indexCount = plan.indices.length;
         }
-
-        // update bound
-        if (dynamicGeometry.minPos && dynamicGeometry.maxPos) {
-            const minPos = v3(dynamicGeometry.minPos.x, dynamicGeometry.minPos.y, dynamicGeometry.minPos.z);
-            const maxPos = v3(dynamicGeometry.maxPos.x, dynamicGeometry.maxPos.y, dynamicGeometry.maxPos.z);
-
-            if (!dynamic.bounds[primitiveIndex]) {
-                dynamic.bounds[primitiveIndex] = new geometry.AABB();
+        let min = dynamicGeometry.minPos, max = dynamicGeometry.maxPos;
+        if (!min && dynamicGeometry.positions?.length) {
+            const p = dynamicGeometry.positions;
+            min = { x: Infinity, y: Infinity, z: Infinity }; max = { x: -Infinity, y: -Infinity, z: -Infinity };
+            for (let i = 0; i < p.length; i += 3) {
+                min.x = Math.min(min.x, p[i]); min.y = Math.min(min.y, p[i + 1]); min.z = Math.min(min.z, p[i + 2]);
+                max.x = Math.max(max.x, p[i]); max.y = Math.max(max.y, p[i + 1]); max.z = Math.max(max.z, p[i + 2]);
             }
-
-            aabbFromPoints(dynamic.bounds[primitiveIndex], minPos, maxPos);
-
-            const subMin = v3();
-            const subMax = v3();
-            dynamic.bounds.forEach((bound) => {
-                if (bound) {
-                    bound.getBoundary(subMin, subMax);
-                    vec3Min(minPos, subMin, minPos);
-                    vec3Max(maxPos, subMax, maxPos);
-                }
-            });
-
-            this._struct.minPosition = v3(minPos.x, minPos.y, minPos.z);
-            this._struct.maxPosition = v3(maxPos.x, maxPos.y, maxPos.z);
         }
-
+        if (min && max) {
+            if (!dynamic.bounds[primitiveIndex]) dynamic.bounds[primitiveIndex] = new geometry.AABB();
+            aabbFromPoints(dynamic.bounds[primitiveIndex], v3(min.x, min.y, min.z), v3(max.x, max.y, max.z));
+            const aggregateMin = v3(Infinity, Infinity, Infinity), aggregateMax = v3(-Infinity, -Infinity, -Infinity);
+            const subMin = v3(), subMax = v3();
+            for (const bound of dynamic.bounds) if (bound) { bound.getBoundary(subMin, subMax); vec3Min(aggregateMin, subMin, aggregateMin); vec3Max(aggregateMax, subMax, aggregateMax); }
+            this._struct.minPosition = aggregateMin; this._struct.maxPosition = aggregateMax;
+        }
+        this._boneSpaceBounds = new WeakMap(); this._hash = 0;
         subMesh.invalidateGeometricInfo();
     }
 

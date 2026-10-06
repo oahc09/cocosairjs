@@ -1,0 +1,11 @@
+PASS test/smoke/port-gap-skinning-cache.test.ts (9.11 s)
+PASS test/smoke/competitive-unlit-fog.test.ts
+PASS test/smoke/engine-contract-state.test.ts
+PASS test/smoke/engine-contract-inspection.test.ts
+PASS test/smoke/competitive-gltf-animation-contract.test.ts
+PASS test/smoke/engine-contract-mesh.test.ts
+
+Test Suites: 6 passed, 6 total
+Tests:       33 passed, 33 total
+Snapshots:   0 total
+Time:        15.432 s, estimated 67 s

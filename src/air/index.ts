@@ -32,3 +32,4 @@ export { createAirUnlitFogEffect } from './effects/unlit-fog';
 export * from './rendering/render-target';
 export * from './rendering/color-contract';
 export * from './rendering/material-diagnostics';
+export * from './rendering/engine-contracts';

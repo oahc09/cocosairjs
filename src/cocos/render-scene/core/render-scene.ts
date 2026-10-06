@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 import { Root } from '../../root';
+import { warn } from '../../core/platform/debug';
 import { Node } from '../../scene-graph';
 import { Camera } from '../scene/camera';
 import { DirectionalLight } from '../scene/directional-light';
@@ -95,6 +96,10 @@ export class RenderScene {
      */
     get mainLight (): DirectionalLight | null {
         return this._mainLight;
+    }
+    /** Registered ordinary directionals; the legacy forward camera UBO uses mainLight only. */
+    get directionalLights (): readonly DirectionalLight[] {
+        return Object.freeze(this._directionalLights.slice());
     }
 
     /**
@@ -330,6 +335,7 @@ export class RenderScene {
     public addDirectionalLight (dl: DirectionalLight): void {
         dl.attachToScene(this);
         this._directionalLights.push(dl);
+        if (this._directionalLights.length === 2) warn('[AIR_W_DIRECTIONAL_LIGHT_LIMIT] ordinary directionals share one legacy mainLight; extra registered lights do not add illumination. Inspect scene.mainLight.');
     }
 
     /**

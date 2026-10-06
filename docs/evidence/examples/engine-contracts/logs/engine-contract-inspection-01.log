@@ -1,0 +1,25 @@
+FAIL test/smoke/engine-contract-inspection.test.ts (7.976 s)
+  ● read-only native material geometry and light contracts › main directional query follows native selection and removal without rewriting light policy
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "unavailable"
+    Received: "available"
+
+      37 |     });
+      38 |     test('main directional query follows native selection and removal without rewriting light policy', async () => {
+    > 39 |         const unmounted = new Scene('unmounted'); expect(inspectAirDirectionalLights(unmounted).status).toBe('unavailable'); unmounted.destroy();
+         |                                                                                                         ^
+      40 |         const scene = new Scene('lights'); const a = new Node('first'), b = new Node('second');
+      41 |         scene.addChild(a); scene.addChild(b); a.addComponent(DirectionalLight); b.addComponent(DirectionalLight);
+      42 |         app.run(scene); game.pause();
+
+      at test/smoke/engine-contract-inspection.test.ts:39:105
+      at test/smoke/engine-contract-inspection.test.ts:8:71
+      at Object.<anonymous>.__awaiter (test/smoke/engine-contract-inspection.test.ts:4:12)
+      at Object.<anonymous> (test/smoke/engine-contract-inspection.test.ts:38:115)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 3 passed, 4 total
+Snapshots:   0 total
+Time:        9.438 s

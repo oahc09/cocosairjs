@@ -25,7 +25,7 @@
 import { ccclass, executeInEditMode, executionOrder, help, menu, type, serializable, editable } from 'cc.decorator';
 import { EDITOR_NOT_IN_PREVIEW, TEST } from 'internal:constants';
 import { Component } from '../scene-graph/component';
-import { Eventify, warnID, js, cclegacy } from '../core';
+import { Eventify, warnID, warn, js, cclegacy } from '../core';
 import { AnimationClip } from './animation-clip';
 import { AnimationState, AnimationStateEventType } from './animation-state';
 import { CrossFade } from './cross-fade';
@@ -158,8 +158,17 @@ export class Animation extends Eventify(Component) {
      * Whether if `crossFade()` or `play()` has been called before this component starts.
      */
     private _hasBeenPlayed = false;
+    private _reportedControllerConflict = false;
+
+    private _diagnoseControllers (): void {
+        if (!this._reportedControllerConflict && this.node.getComponents(Animation).length > 1) {
+            this._reportedControllerConflict = true;
+            warn(`[AIR_W_ANIMATION_CONTROLLERS] node ${this.node.name} (${this.node.uuid}) has multiple Animation controllers; reuse getComponent(Animation) and inspect overlapping target tracks.`);
+        }
+    }
 
     public onLoad (): void {
+        this._diagnoseControllers();
         this.clips = this._clips;
         for (const stateName in this._nameToState) {
             const state = this._nameToState[stateName];
@@ -198,6 +207,7 @@ export class Animation extends Eventify(Component) {
      * @param name The name of the animation to be played, if absent, the default clip will be played
      */
     public play (name?: string): void {
+        this._diagnoseControllers();
         this._hasBeenPlayed = true;
         if (!name) {
             if (!this._defaultClip) {

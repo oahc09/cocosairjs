@@ -87,7 +87,6 @@ export class Fog {
     set enabled (val: boolean) {
         this._enabled = val;
         if (!val) {
-            this._type = FOG_TYPE_NONE;
             this._updatePipeline();
         } else {
             this.activate();
@@ -138,10 +137,12 @@ export class Fog {
      * - 3:Layered fog
      */
     get type (): number {
-        return this._type;
+        return this.enabled ? this._type : FOG_TYPE_NONE;
     }
     set type (val: number) {
-        this._type = this.enabled ? val : FOG_TYPE_NONE;
+        if (!Number.isInteger(val) || val < FogType.LINEAR || val > FOG_TYPE_NONE)
+            throw Object.assign(new Error('[AIR_E_FOG_TYPE] invalid fog type'), { code: 'AIR_E_FOG_TYPE' });
+        this._type = val;
         if (this.enabled) this._updatePipeline();
     }
 
@@ -235,7 +236,7 @@ export class Fog {
         this._activated = false;
         this.fogColor = fogInfo.fogColor;
         this._enabled = fogInfo.enabled;
-        this._type = this.enabled ? fogInfo.type : FOG_TYPE_NONE;
+        this._type = fogInfo.type;
         this._accurate = fogInfo.accurate;
         this.fogDensity = fogInfo.fogDensity;
         this.fogStart = fogInfo.fogStart;

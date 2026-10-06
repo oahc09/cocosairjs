@@ -1,0 +1,20 @@
+
+> cocosair.js@1.0.0 verify:consumer
+> node tools/verify/consumer-acceptance.cjs
+
+[t1] published-artifacts: 4 markers x 2 bundles, 0 fail
+
+> cocosair.js@1.0.0 prepack
+> node tools/build/prepare-package.cjs
+
+[package] cocosair.module.js -> build\npm/cocosair.module.js (source map omitted)
+[package] cocosair.module.min.js -> build\npm/cocosair.module.min.js (source map omitted)
+[package] bootstrap.js -> build\npm/bootstrap.js (source map omitted)
+[t1] tarball: cocosair.js-1.0.0.tgz (4148380 bytes)
+{
+  "ok": false,
+  "failures": [
+    "consumer typecheck failed: type-test.ts(18,29): error TS2304: Cannot find name 'Mesh'.\r\n"
+  ],
+  "exportCount": 616
+}

@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 109,
+    "modifiedCount": 115,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -687,7 +687,7 @@
       "upstreamPath": "cocos/3d/assets/mesh.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved."
+      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved.; ENG-01..04: native dynamic preflight, semantic partial streams, retained index validation, bounds refresh, retryable buffer allocation and cleanup. Invalid inputs commit no CPU/GPU update."
     },
     {
       "airPath": "src/cocos/3d/assets/morph-rendering.ts",
@@ -841,7 +841,7 @@
       "upstreamPath": "cocos/3d/misc/create-mesh.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "V1.2 G0 上游漂移修复：对齐 alpha.34 #336 (60f9352c56) createMesh 按最大索引值自适应 R16UI/R32UI；Air 副本逐字节等于官方原文; CB-04 retain zero-valued POINT_LIST via nullish defaults for static/dynamic meshes; pass topology remains explicit."
+      "reason": "V1.2 G0 上游漂移修复：对齐 alpha.34 #336 (60f9352c56) createMesh 按最大索引值自适应 R16UI/R32UI；Air 副本逐字节等于官方原文; CB-04 retain zero-valued POINT_LIST via nullish defaults for static/dynamic meshes; pass topology remains explicit.; ENG-01/02/04: explicit capacity/index/readiness validation before out reset and allocation; omitted options retain 1024 defaults; empty typed streams reserve native layouts."
     },
     {
       "airPath": "src/cocos/3d/misc/index.ts",
@@ -1029,8 +1029,8 @@
       "airPath": "src/cocos/animation/animation-component.ts",
       "upstreamPath": "cocos/animation/animation-component.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "ENG-06: optional warning channel reports multiple same-node Animation controllers at load/play without disabling components or changing wrap defaults."
     },
     {
       "airPath": "src/cocos/animation/animation-curve.ts",
@@ -5334,8 +5334,8 @@
       "airPath": "src/cocos/render-scene/core/render-scene.ts",
       "upstreamPath": "cocos/render-scene/core/render-scene.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "ENG-09: readonly directional list and warning through native diagnostic channel; mainLight selection and legacy single-directional lighting preserved."
     },
     {
       "airPath": "src/cocos/render-scene/core/render-window.ts",
@@ -5390,8 +5390,8 @@
       "airPath": "src/cocos/render-scene/scene/fog.ts",
       "upstreamPath": "cocos/render-scene/scene/fog.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "ENG-05: retain requested fog type while disabled; getter/pipeline still report NONE until enabled; validate invalid types before mutation."
     },
     {
       "airPath": "src/cocos/render-scene/scene/index.ts",
@@ -6104,8 +6104,8 @@
       "airPath": "src/cocos/scene-graph/node.ts",
       "upstreamPath": "cocos/scene-graph/node.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "ENG-08: local/world TRS and setRTS reject nonfinite/non-float32/invalid numeric overload values before mutation; valid transforms and Euler degrees unchanged."
     },
     {
       "airPath": "src/cocos/scene-graph/prefab/index.ts",
@@ -9263,6 +9263,20 @@
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
       "reason": "AIR original internal weighted joint binding validation shared by realtime and baked models."
+    },
+    {
+      "airPath": "src/cocos/3d/misc/mesh-validation.ts",
+      "upstreamPath": null,
+      "baseline": "AIR engine contracts 2026-10-06",
+      "modified": true,
+      "reason": "AIR-owned native mesh validation; no parallel Mesh abstraction."
+    },
+    {
+      "airPath": "src/cocos/scene-graph/node-transform-validation.ts",
+      "upstreamPath": null,
+      "baseline": "AIR engine contracts 2026-10-06",
+      "modified": true,
+      "reason": "AIR-owned finite TRS guard used by native Node setters."
     }
   ]
 }

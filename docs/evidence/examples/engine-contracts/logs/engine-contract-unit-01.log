@@ -1,0 +1,7 @@
+PASS test/smoke/engine-contract-state.test.ts (9.1 s)
+PASS test/smoke/engine-contract-mesh.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        11.122 s, estimated 17 s

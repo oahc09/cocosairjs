@@ -1,0 +1,285 @@
+{
+  "schema": "air-engine-contract-evidence/1",
+  "measuredAt": "2026-10-06T03:24:19.884Z",
+  "scopePassed": true,
+  "pageCompositorVerified": false,
+  "fullGalleryVerified": false,
+  "releaseReadyClaimed": false,
+  "current": {
+    "build/cocosair.module.js": {
+      "sha256": "ba9a0c0fc04e74df64db468ca259fc71a4d80f1b56903cfb844dfe98d856c208",
+      "bytes": 6595284
+    },
+    "src/cocos/3d/assets/mesh.ts": {
+      "sha256": "6a9c30a9a8a36a39e85fa5b3218ee54ff269ff31f740c10474db6a495dd23152",
+      "bytes": 70561
+    },
+    "src/cocos/3d/misc/create-mesh.ts": {
+      "sha256": "6202c9759e1e2f6bc0d32f2b4892cad87065d21dd8be25c414a8b373d80c4e40",
+      "bytes": 15409
+    },
+    "src/cocos/3d/misc/mesh-validation.ts": {
+      "sha256": "3b790c1ad24cf4f0f74d193182e746abe11b6887d1eb77db0f7209c3527bddf6",
+      "bytes": 10483
+    },
+    "src/cocos/render-scene/scene/fog.ts": {
+      "sha256": "29a0a545c798531ceed27ab8ad087ec57b6ef06353607bd8f9713d8607c640c5",
+      "bytes": 7202
+    },
+    "src/cocos/scene-graph/node.ts": {
+      "sha256": "385eabe981cf2c20c65211a488d03a702727e895029d3743193264cf9b500a2b",
+      "bytes": 110703
+    },
+    "src/cocos/scene-graph/node-transform-validation.ts": {
+      "sha256": "b2332b6d50688fbd34f53f0fa4c23e3ce8eb96b0680e7edde355a431e14daecc",
+      "bytes": 548
+    },
+    "src/cocos/animation/animation-component.ts": {
+      "sha256": "b9f98a4f40c770e759a46b76ade2517cf0e641c29598950e845deafdb1fa5bb2",
+      "bytes": 17806
+    },
+    "src/cocos/render-scene/core/render-scene.ts": {
+      "sha256": "1485053d92c751149dc8145710062bed65f9a04c2523d6cc771489141c512c2e",
+      "bytes": 32820
+    },
+    "src/air/rendering/engine-contracts.ts": {
+      "sha256": "791b53b8e520057cac25baa9efbba796ae3772b45c40dd27f4fdcdf1923d6b66",
+      "bytes": 9415
+    },
+    "tools/debug/probes/engine-contracts/main.js": {
+      "sha256": "48e703437ad75d5dceea280ebd80d9c89dae4103a33c1f651fe9cab9860bc7ce",
+      "bytes": 5257
+    },
+    "tools/debug/probes/engine-contracts/index.html": {
+      "sha256": "6c17ea8a6ef07a26b0e657899ffeb4a6a65d579a21e6c56b3b3520d8e0758b68",
+      "bytes": 862
+    },
+    "tools/verify/engine-contract-browser.cjs": {
+      "sha256": "25d889c257b57eb0f103e1af4432d2cf20d75b0409701188cc9f30ef6bed483d",
+      "bytes": 11687
+    },
+    "build/cocosair.module.min.js": {
+      "sha256": "2c942707ea683fb45cf164081d1d88b2ed5988562a73913266fba0eef5218a92",
+      "bytes": 3683594
+    },
+    "build/cocosair.module.d.ts": {
+      "sha256": "d3140a19a76e8100ced0e06f53a691ae2af63546a37857a1a329c5a67a917da7",
+      "bytes": 3145442
+    },
+    "build/npm/cocosair.module.js": {
+      "sha256": "0f1a4b260230776d26fc2b1db73087f3c8a61c1362795853ff8b48d4b661373c",
+      "bytes": 6595240
+    },
+    "tools/verify/consumer-acceptance.cjs": {
+      "sha256": "1689223baccdedf19e1e7a4b58ca7e3e840f6e5dfde28a2657eb8ab70d7fbbc1",
+      "bytes": 24435
+    },
+    "test/smoke/engine-contract-mesh.test.ts": {
+      "sha256": "5761def1b64bb596d85cf2b44a80ea9467ce8acccb00bd3c105f5a2165e0ed08",
+      "bytes": 6253
+    },
+    "test/smoke/engine-contract-state.test.ts": {
+      "sha256": "b2ff567b1612c6ecf94be9bfa7b49fe325696f2bcf7819e73d5067c1549c7c6c",
+      "bytes": 5242
+    },
+    "test/smoke/engine-contract-inspection.test.ts": {
+      "sha256": "44d7822fa8208532afcc496322ae9546cc0696b92c117dab42d4f4ac1f640920",
+      "bytes": 4699
+    },
+    "docs/manual/engine-contract-hardening.md": {
+      "sha256": "a9161cf96bb398401f5f6cf2e562e2f8846197d1fc49f41fd6b4e9a883cab1ac",
+      "bytes": 6797
+    }
+  },
+  "files": [
+    {
+      "origin": "output/engine-contract-browser-final.json",
+      "stored": "docs/evidence/examples/engine-contracts/browser-report.json",
+      "kind": "current-native-report",
+      "bytes": 191996,
+      "sha256": "1a6aeca0e15eb253155c3386069583df89a422f3b37475e0abcaca9e4fd6b135"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/chromium-red.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/chromium-red.png",
+      "kind": "native-png",
+      "bytes": 11898,
+      "sha256": "d56cf7caa38f6dd32032691e121aeb2dd153fa4a20f573cf9ba3d48385501426"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/chromium-green.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/chromium-green.png",
+      "kind": "native-png",
+      "bytes": 11898,
+      "sha256": "3f3c1704ac4cd5f3aedd37dd3bc2247120a9e0af4c1ae9a78a89da4fba0b46bd"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/chromium-vertex-disabled.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/chromium-vertex-disabled.png",
+      "kind": "native-png",
+      "bytes": 11899,
+      "sha256": "6b869eba1db9aff2b26722b21a093a987a6603dc1bac749a6964e038faae0289"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/chromium-culled.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/chromium-culled.png",
+      "kind": "native-png",
+      "bytes": 11861,
+      "sha256": "955a006ecc1cf7fcf2c01509fc71b9a3b56332bea9fd2a545ca87201699cf94d"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/chromium-no-cull.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/chromium-no-cull.png",
+      "kind": "native-png",
+      "bytes": 11898,
+      "sha256": "3f3c1704ac4cd5f3aedd37dd3bc2247120a9e0af4c1ae9a78a89da4fba0b46bd"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/chromium-fog.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/chromium-fog.png",
+      "kind": "native-png",
+      "bytes": 11897,
+      "sha256": "acd89420e6b50ca15844c89454b59a75e45c61002bbc2c53ff7cebb067d9464d"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/firefox-red.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/firefox-red.png",
+      "kind": "native-png",
+      "bytes": 4785,
+      "sha256": "f87cf9d7ba975f93105ee6e5a96c1b195ede168b42ea72cf4cd3f6ec9af84dfe"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/firefox-green.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/firefox-green.png",
+      "kind": "native-png",
+      "bytes": 4785,
+      "sha256": "df3972bb9f98c1490367d646dd2fd323ffca836dc0f5dfc0a5ef7d2c360b1c4c"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/firefox-vertex-disabled.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/firefox-vertex-disabled.png",
+      "kind": "native-png",
+      "bytes": 4786,
+      "sha256": "bc8c97791f4c2114a8674302be12b2a15722ac13c596d8d3dbbf0adc83680d86"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/firefox-culled.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/firefox-culled.png",
+      "kind": "native-png",
+      "bytes": 3190,
+      "sha256": "ef596df8b9dc0d77a161a028c5021d6a26a24704e38380d018cae5a88dab14f1"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/firefox-no-cull.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/firefox-no-cull.png",
+      "kind": "native-png",
+      "bytes": 4785,
+      "sha256": "df3972bb9f98c1490367d646dd2fd323ffca836dc0f5dfc0a5ef7d2c360b1c4c"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/firefox-fog.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/firefox-fog.png",
+      "kind": "native-png",
+      "bytes": 4785,
+      "sha256": "5dc947601c2555a79a680b6c3e3f5b05c3984ddd9e894a60bf2180bb31b54c23"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/webkit-red.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/webkit-red.png",
+      "kind": "native-png",
+      "bytes": 3558,
+      "sha256": "fbe693b0330f2a31be196fae481ab61767a3db1c002e9b15bd334491f6241f20"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/webkit-green.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/webkit-green.png",
+      "kind": "native-png",
+      "bytes": 3558,
+      "sha256": "8ac54659c9e28b9641f1f1c2eeede9607be806841f5ced37826a76d0b90c933c"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/webkit-vertex-disabled.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/webkit-vertex-disabled.png",
+      "kind": "native-png",
+      "bytes": 3560,
+      "sha256": "f5cdc3dc47524b33e7774dce6e5fc513674d641902091d1081cb8f8ddaaac8aa"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/webkit-culled.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/webkit-culled.png",
+      "kind": "native-png",
+      "bytes": 3530,
+      "sha256": "00e0d60766d126f813623cbe1d8918892fae2a589525351c169f6a19cca9a603"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/webkit-no-cull.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/webkit-no-cull.png",
+      "kind": "native-png",
+      "bytes": 3558,
+      "sha256": "8ac54659c9e28b9641f1f1c2eeede9607be806841f5ced37826a76d0b90c933c"
+    },
+    {
+      "origin": "output/engine-contract-browser-final-artifacts/webkit-fog.png",
+      "stored": "docs/evidence/examples/engine-contracts/images/webkit-fog.png",
+      "kind": "native-png",
+      "bytes": 3557,
+      "sha256": "24275060c57b51dc54e718b26d2abf14bbf0019509dfa21a8e20c2509b7b84c7"
+    },
+    {
+      "origin": "output/engine-contract-browser-01.json",
+      "stored": "docs/evidence/examples/engine-contracts/history/browser-01.json",
+      "kind": "failed-report",
+      "bytes": 9434,
+      "sha256": "3cf5bf2b9e62417891de3d5887d53712263ea77dc6533960bc22fc6354c411e7"
+    },
+    {
+      "origin": "output/engine-contract-browser-02.json",
+      "stored": "docs/evidence/examples/engine-contracts/history/browser-02.json",
+      "kind": "chromium-subset",
+      "bytes": 65401,
+      "sha256": "df0157b63d0467138563090f2caeef52f952e6941299ba4475a7905a2520d505"
+    },
+    {
+      "origin": "output/engine-contract-build-all-final.log",
+      "stored": "docs/evidence/examples/engine-contracts/logs/engine-contract-build-all-final.log",
+      "kind": "raw-log",
+      "bytes": 133663,
+      "sha256": "bd8b52ca1c0c2fa1c89c4111d1f3a5ef5694e9488f3c42dfa1c2799946d7bcef"
+    },
+    {
+      "origin": "output/engine-contract-unit-final.log",
+      "stored": "docs/evidence/examples/engine-contracts/logs/engine-contract-unit-final.log",
+      "kind": "raw-log",
+      "bytes": 440,
+      "sha256": "a3c0e762c96fd9185156a46b1bb28a70ee55e6635b37f0e1e767d40c92bca840"
+    },
+    {
+      "origin": "output/engine-contract-consumer-final.log",
+      "stored": "docs/evidence/examples/engine-contracts/logs/engine-contract-consumer-final.log",
+      "kind": "raw-log",
+      "bytes": 576,
+      "sha256": "68fc24ea0adc3c764d9c34f449360e35a5bb81dc70d8692dfa973cd0ab974abf"
+    },
+    {
+      "origin": "output/engine-contract-consumer.log",
+      "stored": "docs/evidence/examples/engine-contracts/logs/engine-contract-consumer.log",
+      "kind": "raw-log",
+      "bytes": 679,
+      "sha256": "cbbf6f02caf754fed06e2438ebdbc8556bc2b51e8de3895c79c1ff8c8f01012e"
+    },
+    {
+      "origin": "output/engine-contract-unit-01.log",
+      "stored": "docs/evidence/examples/engine-contracts/logs/engine-contract-unit-01.log",
+      "kind": "raw-log",
+      "bytes": 230,
+      "sha256": "78b4ec9cd033c3cf051ff5f96e8139e22557891d26ff5a91de3c9ad1f6b852df"
+    },
+    {
+      "origin": "output/engine-contract-inspection-01.log",
+      "stored": "docs/evidence/examples/engine-contracts/logs/engine-contract-inspection-01.log",
+      "kind": "raw-log",
+      "bytes": 1471,
+      "sha256": "0791bd4d9d265a2b61d618ce3191336596bb48efe2a164b0488d4a0987ae803e"
+    }
+  ]
+}

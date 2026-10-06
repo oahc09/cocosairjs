@@ -3931,7 +3931,7 @@
          * @param primitiveIndex @en sub mesh index @zh 子网格索引
          * @param dynamicGeometry @en sub mesh geometry data @zh 子网格几何数据
          */
-        updateSubMesh(primitiveIndex: number, dynamicGeometry: primitives.IDynamicGeometry): void;
+        updateSubMesh(primitiveIndex: number, dynamicGeometry: Partial<primitives.IDynamicGeometry>): void;
         /**
          * @en Destroy the mesh and release all related GPU resources
          * @zh 销毁此网格，并释放它占有的所有 GPU 资源。
@@ -11498,6 +11498,8 @@
              * @zh 渲染场景管理的主方向光源。
              */
             get mainLight(): scene.DirectionalLight | null;
+            /** Registered ordinary directionals; the legacy forward camera UBO uses mainLight only. */
+            get directionalLights(): readonly scene.DirectionalLight[];
             /**
              * @en All sphere light sources of the render scene.
              * @zh 渲染场景管理的所有球面光源。
@@ -57211,6 +57213,71 @@
             mipLevels?: number;
             comparison?: number;
         }>[];
+    }
+    export function inspectAirMeshMaterial(mesh: Mesh, material: Material, primitiveIndex?: number, renderer?: MeshRenderer): Readonly<{
+        primitiveIndex: number;
+        attributes: readonly string[];
+        builtinContractChecked: boolean;
+        passes: readonly Readonly<{
+            passIndex: number;
+            defines: Readonly<{
+                [x: string]: string | number | boolean;
+            }>;
+            reflection: "unavailable" | "webgl-active";
+            activeAttributes: readonly string[] | null;
+        }>[];
+        states: readonly AirMaterialPassDiagnostic[];
+        issues: readonly Readonly<AirContractIssue>[];
+    }>;
+    export function inspectAirGeometry(mesh: Mesh, node: Node, material?: Material, primitiveIndex?: number, maxTriangles?: number): Readonly<{
+        scope: "sampled-local-triangle-winding";
+        available: boolean;
+        reason: "topology is not TRIANGLE_LIST" | "CPU positions unavailable" | null;
+        worldMatrix: readonly number[];
+        determinant: number;
+        negativeScale: boolean;
+        singular: boolean;
+        states: readonly AirMaterialPassDiagnostic[];
+        triangles: readonly Readonly<{
+            index: number;
+            normal: readonly number[];
+            providedNormalDot: number | null;
+            degenerate: boolean;
+        }>[];
+    }>;
+    export function inspectAirAnimationControllers(root: Node): Readonly<{
+        scope: "potential-track-overlap";
+        controllerCount: number;
+        conflicts: readonly (readonly Readonly<{
+            controller: string;
+            clip: string;
+            target: string;
+            channel: string;
+        }>[])[];
+        unresolved: readonly string[];
+        note: "Metadata overlaps are potential conflicts, not proof of simultaneous playback. No states were initialized.";
+    }>;
+    export function inspectAirDirectionalLights(scene: Scene): Readonly<{
+        status: "unavailable";
+        reason: "scene has no native render scene";
+        lights: never[];
+    }> | Readonly<{
+        status: "available";
+        scope: "legacy-forward-main-directional";
+        ordinaryDirectionalCapacity: 1;
+        selection: "native-mainLight";
+        lights: readonly Readonly<{
+            node: string | null;
+            name: string | null;
+            effective: boolean;
+        }>[];
+        mainLight: string | null;
+        note: "Custom pipeline/ranged directionals are outside this ordinary mainLight contract.";
+    }>;
+    export interface AirContractIssue {
+        readonly code: string;
+        readonly severity: "info" | "warning" | "error";
+        readonly message: string;
     }
     export namespace rendering {
         export function createCustomPipeline(): BasicPipeline;

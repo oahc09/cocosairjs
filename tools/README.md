@@ -1,5 +1,7 @@
 # Cocos AIR 工具
 
+`node tools/verify/engine-contract-browser.cjs --out=<new.json>`：要求当前开发 bundle 与可用 Playwright 浏览器，以原生 PNG/读回验证 ENG-01–09 的实际更新、颜色、剔除、雾与诊断。只写显式新 JSON 和相邻截图，拒绝覆盖；--browser=<engine> 为子集。不构建、下载、发布；不证明页面合成或显示器 present。详见[合同手册](../docs/manual/engine-contract-hardening.md)。
+
 ## 响应式宿主与棋盘配方
 
 - `tools/build/screen-layout-patch.cjs`：PAL 生成器内部补丁，保留冻结上游；由 `node tools/build/pal-source.cjs --write` 生成，`--check` 只读核验，不直接执行补丁文件。

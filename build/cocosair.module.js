@@ -31091,6 +31091,16 @@ Shadows.MAX_FAR = 2000.0;
 Shadows.COEFFICIENT_OF_EXPANSION = 2.0 * Math.sqrt(3.0);
 cclegacy.Shadows = Shadows;
 
+function validateTransformValues(method, values, node) {
+  if (values.some(value => typeof value !== 'number' || !Number.isFinite(value) || !Number.isFinite(Math.fround(value)))) {
+    throw Object.assign(new TypeError(`[AIR_E_NODE_TRANSFORM] ${method} requires finite float32 components; use a Vec3/Quat or the documented numeric overload`), {
+      code: 'AIR_E_NODE_TRANSFORM',
+      method,
+      node
+    });
+  }
+}
+
 class NodeUIProperties {
   get uiTransformComp() {
     if (!this._uiTransformComp) {
@@ -33390,6 +33400,7 @@ let Node$1 = (_dec$2R = ccclass$w('cc.Node'), _dec2$26 = type$a(Vec3), _dec3$1s 
   }
 
   setPosition(val, y, z) {
+    validateTransformValues('setPosition', y === undefined ? [val == null ? void 0 : val.x, val == null ? void 0 : val.y, val == null ? void 0 : val.z] : [val, y, z === undefined ? this._lpos.z : z], this.uuid);
     const localPosition = this._lpos;
     if (y === undefined) {
       Vec3.copy(localPosition, val);
@@ -33412,6 +33423,7 @@ let Node$1 = (_dec$2R = ccclass$w('cc.Node'), _dec2$26 = type$a(Vec3), _dec3$1s 
   }
 
   setRotation(val, y, z, w) {
+    validateTransformValues('setRotation', y === undefined ? [val == null ? void 0 : val.x, val == null ? void 0 : val.y, val == null ? void 0 : val.z, val == null ? void 0 : val.w] : [val, y, z, w], this.uuid);
     if (y === undefined) {
       Quat.copy(this._lrot, val);
     } else {
@@ -33425,6 +33437,7 @@ let Node$1 = (_dec$2R = ccclass$w('cc.Node'), _dec2$26 = type$a(Vec3), _dec3$1s 
   }
 
   setRotationFromEuler(val, y, zOpt) {
+    validateTransformValues('setRotationFromEuler', y === undefined ? [val == null ? void 0 : val.x, val == null ? void 0 : val.y, val == null ? void 0 : val.z] : [val, y, zOpt === undefined ? this._euler.z : zOpt], this.uuid);
     if (y === undefined) {
       Vec3.copy(this._euler, val);
       Quat.fromEuler(this._lrot, val.x, val.y, val.z);
@@ -33447,6 +33460,7 @@ let Node$1 = (_dec$2R = ccclass$w('cc.Node'), _dec2$26 = type$a(Vec3), _dec3$1s 
   }
 
   setScale(val, y, z) {
+    validateTransformValues('setScale', y === undefined ? [val == null ? void 0 : val.x, val == null ? void 0 : val.y, val == null ? void 0 : val.z] : [val, y, z === undefined ? this._lscale.z : z], this.uuid);
     const localScale = this._lscale;
     if (y === undefined) {
       Vec3.copy(localScale, val);
@@ -33483,6 +33497,7 @@ let Node$1 = (_dec$2R = ccclass$w('cc.Node'), _dec2$26 = type$a(Vec3), _dec3$1s 
   }
 
   setWorldPosition(val, y, z) {
+    validateTransformValues('setWorldPosition', y === undefined ? [val == null ? void 0 : val.x, val == null ? void 0 : val.y, val == null ? void 0 : val.z] : [val, y, z === undefined ? this.worldPosition.z : z], this.uuid);
     const worldPosition = this._pos;
     if (y === undefined) {
       Vec3.copy(worldPosition, val);
@@ -33514,6 +33529,7 @@ let Node$1 = (_dec$2R = ccclass$w('cc.Node'), _dec2$26 = type$a(Vec3), _dec3$1s 
   }
 
   setWorldRotation(val, y, z, w) {
+    validateTransformValues('setWorldRotation', y === undefined ? [val == null ? void 0 : val.x, val == null ? void 0 : val.y, val == null ? void 0 : val.z, val == null ? void 0 : val.w] : [val, y, z, w], this.uuid);
     const worldRotation = this._rot;
     if (y === undefined) {
       Quat.copy(worldRotation, val);
@@ -33545,6 +33561,7 @@ let Node$1 = (_dec$2R = ccclass$w('cc.Node'), _dec2$26 = type$a(Vec3), _dec3$1s 
   }
 
   setWorldScale(val, y, z) {
+    validateTransformValues('setWorldScale', y === undefined ? [val == null ? void 0 : val.x, val == null ? void 0 : val.y, val == null ? void 0 : val.z] : [val, y, z === undefined ? this.worldScale.z : z], this.uuid);
     const self = this;
     const parent = self._parent;
     if (parent) {
@@ -33634,6 +33651,9 @@ let Node$1 = (_dec$2R = ccclass$w('cc.Node'), _dec2$26 = type$a(Vec3), _dec3$1s 
     return Mat4.fromRT(target, this._rot, this._pos);
   }
   setRTS(rot, pos, scale) {
+    if (rot) validateTransformValues('setRTS.rotation', rot.w === undefined ? [rot.x, rot.y, rot.z] : [rot.x, rot.y, rot.z, rot.w], this.uuid);
+    if (pos) validateTransformValues('setRTS.position', [pos.x, pos.y, pos.z], this.uuid);
+    if (scale) validateTransformValues('setRTS.scale', [scale.x, scale.y, scale.z], this.uuid);
     let dirtyBit = 0;
     if (rot) {
       dirtyBit |= TransformBit.ROTATION;
@@ -35430,7 +35450,6 @@ class Fog {
   set enabled(val) {
     this._enabled = val;
     if (!val) {
-      this._type = FOG_TYPE_NONE;
       this._updatePipeline();
     } else {
       this.activate();
@@ -35455,10 +35474,13 @@ class Fog {
     return this._fogColor;
   }
   get type() {
-    return this._type;
+    return this.enabled ? this._type : FOG_TYPE_NONE;
   }
   set type(val) {
-    this._type = this.enabled ? val : FOG_TYPE_NONE;
+    if (!Number.isInteger(val) || val < FogType.LINEAR || val > FOG_TYPE_NONE) throw Object.assign(new Error('[AIR_E_FOG_TYPE] invalid fog type'), {
+      code: 'AIR_E_FOG_TYPE'
+    });
+    this._type = val;
     if (this.enabled) this._updatePipeline();
   }
   get fogDensity() {
@@ -35504,7 +35526,7 @@ class Fog {
     this._activated = false;
     this.fogColor = fogInfo.fogColor;
     this._enabled = fogInfo.enabled;
-    this._type = this.enabled ? fogInfo.type : FOG_TYPE_NONE;
+    this._type = fogInfo.type;
     this._accurate = fogInfo.accurate;
     this.fogDensity = fogInfo.fogDensity;
     this.fogStart = fogInfo.fogStart;
@@ -36801,6 +36823,9 @@ class RenderScene {
   get mainLight() {
     return this._mainLight;
   }
+  get directionalLights() {
+    return Object.freeze(this._directionalLights.slice());
+  }
   get sphereLights() {
     return this._sphereLights;
   }
@@ -36935,6 +36960,7 @@ class RenderScene {
   addDirectionalLight(dl) {
     dl.attachToScene(this);
     this._directionalLights.push(dl);
+    if (this._directionalLights.length === 2) warn('[AIR_W_DIRECTIONAL_LIGHT_LIMIT] ordinary directionals share one legacy mainLight; extra registered lights do not add illumination. Inspect scene.mainLight.');
   }
   removeDirectionalLight(dl) {
     for (let i = 0; i < this._directionalLights.length; ++i) {
@@ -47797,6 +47823,187 @@ class BufferBlob {
   }
 }
 
+function meshFailure(code, message, details = {}) {
+  throw Object.assign(new Error(`[${code}] ${message}`), {
+    code,
+    ...details
+  });
+}
+function validateStaticIndices(geometry) {
+  if (!geometry || typeof geometry !== 'object') meshFailure('AIR_E_MESH_GEOMETRY', 'createMesh requires geometry');
+  if ('indices16' in geometry || 'indices32' in geometry) meshFailure('AIR_E_MESH_INDEX_KEY', 'createMesh uses indices; dynamic indices16/32 belong to createDynamicMesh/updateSubMesh');
+  if (geometry.indices !== undefined) {
+    const count = geometry.positions.length / 3;
+    if (!Number.isInteger(count)) meshFailure('AIR_E_MESH_ATTRIBUTE', 'positions must contain XYZ triples');
+    for (const index of geometry.indices) if (!Number.isSafeInteger(index) || index < 0 || index >= count) meshFailure('AIR_E_MESH_INDEX_RANGE', 'index is outside positions', {
+      index,
+      vertexCount: count
+    });
+  }
+}
+function dynamicOptions(value) {
+  const result = value === undefined ? {
+    maxSubMeshes: 1,
+    maxSubMeshVertices: 1024,
+    maxSubMeshIndices: 1024
+  } : {
+    ...value
+  };
+  for (const key of ['maxSubMeshes', 'maxSubMeshVertices', 'maxSubMeshIndices']) {
+    if (!Number.isSafeInteger(result[key]) || (key === 'maxSubMeshIndices' ? result[key] < 0 : result[key] <= 0)) meshFailure('AIR_E_MESH_CAPACITY', `${key} must be a positive safe integer; provide all three capacity fields`, {
+      field: key
+    });
+  }
+  return result;
+}
+function planDynamicUpdate(struct, bytes, primitiveIndex, value) {
+  var _value$indices;
+  if (!struct.dynamic) meshFailure('AIR_E_MESH_NOT_DYNAMIC', 'updateSubMesh requires a dynamic mesh', {
+    primitiveIndex
+  });
+  if (!Number.isSafeInteger(primitiveIndex) || primitiveIndex < 0 || primitiveIndex >= struct.primitives.length) meshFailure('AIR_E_MESH_PRIMITIVE', 'invalid primitiveIndex', {
+    primitiveIndex
+  });
+  const channels = dynamicChannels(value),
+    primitive = struct.primitives[primitiveIndex],
+    info = struct.dynamic.info;
+  const bundles = primitive.vertexBundelIndices.map(i => struct.vertexBundles[i]);
+  if (bundles.some(b => !b || b.attributes.length !== 1)) meshFailure('AIR_E_MESH_LAYOUT', 'dynamic updates require one attribute per stream', {
+    primitiveIndex
+  });
+  const position = bundles.find(b => b.attributes[0].name === AttributeName.ATTR_POSITION);
+  if (!position) meshFailure('AIR_E_MESH_LAYOUT', 'dynamic mesh has no position stream', {
+    primitiveIndex
+  });
+  const vertexCount = value.positions ? value.positions.length / 3 : position.view.count;
+  if (vertexCount > info.maxSubMeshVertices) meshFailure('AIR_E_MESH_CAPACITY', 'vertices exceed reserved capacity', {
+    primitiveIndex,
+    requested: vertexCount,
+    capacity: info.maxSubMeshVertices
+  });
+  for (const name of channels.keys()) if (!bundles.some(b => b.attributes[0].name === name)) meshFailure('AIR_E_MESH_ATTRIBUTE', 'attribute was not reserved in this mesh', {
+    primitiveIndex,
+    attribute: name
+  });
+  const streams = [];
+  bundles.forEach((bundle, stream) => {
+    const name = bundle.attributes[0].name,
+      values = channels.get(name);
+    const count = values ? values.byteLength / bundle.view.stride : bundle.view.count;
+    if (!Number.isInteger(count) || vertexCount !== 0 && count !== vertexCount) meshFailure('AIR_E_MESH_ATTRIBUTE_COUNT', 'updated and retained streams must agree with positions', {
+      primitiveIndex,
+      attribute: name,
+      count,
+      vertexCount
+    });
+    if (!values) return;
+    if (values.byteLength > bundle.view.length || bundle.view.offset + values.byteLength > bytes.byteLength) meshFailure('AIR_E_MESH_CAPACITY', 'attribute update exceeds reserved stream bytes', {
+      primitiveIndex,
+      attribute: name
+    });
+    streams.push({
+      stream,
+      bundle,
+      values,
+      count
+    });
+  });
+  if (value.primitiveMode !== undefined && value.primitiveMode !== primitive.primitiveMode) meshFailure('AIR_E_MESH_TOPOLOGY', 'updateSubMesh cannot change the reserved topology', {
+    primitiveIndex
+  });
+  const indexView = primitive.indexView,
+    supplied = (_value$indices = value.indices16) !== null && _value$indices !== void 0 ? _value$indices : value.indices32;
+  if (!indexView && supplied !== undefined) meshFailure('AIR_E_MESH_INDEX_LAYOUT', 'mesh was created without an index buffer', {
+    primitiveIndex
+  });
+  if (indexView && (value.indices16 && indexView.stride !== 2 || value.indices32 && indexView.stride !== 4)) meshFailure('AIR_E_MESH_INDEX_TYPE', 'index width must match the reserved buffer', {
+    primitiveIndex
+  });
+  if (supplied && (supplied.length > info.maxSubMeshIndices || supplied.byteLength > indexView.length)) meshFailure('AIR_E_MESH_CAPACITY', 'indices exceed reserved capacity', {
+    primitiveIndex
+  });
+  const effectiveIndices = supplied !== null && supplied !== void 0 ? supplied : indexView ? indexView.stride === 2 ? new Uint16Array(bytes.buffer, bytes.byteOffset + indexView.offset, indexView.count) : new Uint32Array(bytes.buffer, bytes.byteOffset + indexView.offset, indexView.count) : undefined;
+  if (effectiveIndices) for (const index of effectiveIndices) if (index >= vertexCount) meshFailure('AIR_E_MESH_INDEX_RANGE', 'updated or retained index outside positions', {
+    primitiveIndex,
+    index,
+    vertexCount
+  });
+  return {
+    streams,
+    indices: supplied,
+    vertexCount,
+    primitive
+  };
+}
+function dynamicChannels(value) {
+  if (!value || typeof value !== 'object') meshFailure('AIR_E_MESH_GEOMETRY', 'dynamic geometry must be an object');
+  if ('indices' in value) meshFailure('AIR_E_MESH_INDEX_KEY', 'dynamic geometry uses indices16/indices32, not indices');
+  const result = new Map();
+  const add = (name, data, count) => {
+    if (!(data instanceof Float32Array) || data.length % count || !data.every(Number.isFinite)) meshFailure('AIR_E_MESH_ATTRIBUTE', `${name} requires finite Float32Array values in groups of ${count}`, {
+      attribute: name
+    });
+    if (result.has(name)) meshFailure('AIR_E_MESH_ATTRIBUTE', `duplicate attribute ${name}`, {
+      attribute: name
+    });
+    result.set(name, data);
+  };
+  for (const [field, name, count] of [['positions', AttributeName.ATTR_POSITION, 3], ['normals', AttributeName.ATTR_NORMAL, 3], ['uvs', AttributeName.ATTR_TEX_COORD, 2], ['tangents', AttributeName.ATTR_TANGENT, 4], ['colors', AttributeName.ATTR_COLOR, 4]]) if (Object.prototype.hasOwnProperty.call(value, field)) add(name, value[field], count);
+  for (const custom of (_value$customAttribut = value.customAttributes) !== null && _value$customAttribut !== void 0 ? _value$customAttribut : []) {
+    var _value$customAttribut, _custom$attr, _custom$attr2;
+    const info = FormatInfos[(_custom$attr = custom.attr) == null ? void 0 : _custom$attr.format];
+    if (!((_custom$attr2 = custom.attr) != null && _custom$attr2.name) || !info || info.size !== info.count * 4) meshFailure('AIR_E_MESH_ATTRIBUTE', 'custom dynamic attributes require named 32-bit component formats');
+    add(custom.attr.name, custom.values, info.count);
+  }
+  if (value.indices16 !== undefined && !(value.indices16 instanceof Uint16Array)) meshFailure('AIR_E_MESH_INDEX_TYPE', 'indices16 requires Uint16Array');
+  if (value.indices32 !== undefined && !(value.indices32 instanceof Uint32Array)) meshFailure('AIR_E_MESH_INDEX_TYPE', 'indices32 requires Uint32Array');
+  if (value.indices16 !== undefined && value.indices32 !== undefined) meshFailure('AIR_E_MESH_INDEX_TYPE', 'choose exactly one index width');
+  if (value.minPos === undefined !== (value.maxPos === undefined)) meshFailure('AIR_E_MESH_BOUNDS', 'provide both minPos and maxPos');
+  if (value.minPos && value.maxPos) for (const axis of ['x', 'y', 'z']) {
+    if (!Number.isFinite(value.minPos[axis]) || !Number.isFinite(value.maxPos[axis]) || value.minPos[axis] > value.maxPos[axis]) meshFailure('AIR_E_MESH_BOUNDS', 'bounds must be finite and ordered', {
+      axis
+    });
+  }
+  return result;
+}
+function validateDynamicCreation(geometry, options, primitiveIndex) {
+  var _geometry$indices;
+  const channels = dynamicChannels(geometry);
+  if (!channels.has(AttributeName.ATTR_POSITION)) meshFailure('AIR_E_MESH_ATTRIBUTE', 'creation requires positions');
+  if (!Number.isSafeInteger(primitiveIndex) || primitiveIndex < 0 || primitiveIndex >= options.maxSubMeshes) meshFailure('AIR_E_MESH_PRIMITIVE', 'primitiveIndex is outside maxSubMeshes', {
+    primitiveIndex
+  });
+  const count = geometry.positions.length / 3;
+  const sizes = {
+    [AttributeName.ATTR_POSITION]: 3,
+    [AttributeName.ATTR_NORMAL]: 3,
+    [AttributeName.ATTR_TEX_COORD]: 2,
+    [AttributeName.ATTR_TANGENT]: 4,
+    [AttributeName.ATTR_COLOR]: 4
+  };
+  for (const custom of (_geometry$customAttri = geometry.customAttributes) !== null && _geometry$customAttri !== void 0 ? _geometry$customAttri : []) {
+    var _geometry$customAttri;
+    sizes[custom.attr.name] = FormatInfos[custom.attr.format].count;
+  }
+  for (const [name, data] of channels) if (data.length / sizes[name] !== count) meshFailure('AIR_E_MESH_ATTRIBUTE_COUNT', 'all initial attributes must have the same vertex count', {
+    attribute: name
+  });
+  if (count > options.maxSubMeshVertices) meshFailure('AIR_E_MESH_CAPACITY', 'initial vertices exceed maxSubMeshVertices', {
+    requested: count,
+    capacity: options.maxSubMeshVertices
+  });
+  const indices = (_geometry$indices = geometry.indices16) !== null && _geometry$indices !== void 0 ? _geometry$indices : geometry.indices32;
+  if (indices && indices.length > options.maxSubMeshIndices) meshFailure('AIR_E_MESH_CAPACITY', 'initial indices exceed maxSubMeshIndices');
+  if (indices) for (const index of indices) if (index >= count) meshFailure('AIR_E_MESH_INDEX_RANGE', 'initial index outside positions', {
+    index,
+    vertexCount: count
+  });
+  const bytes = options.maxSubMeshes * (options.maxSubMeshVertices * [...channels.keys()].reduce((n, key) => n + sizes[key] * 4, 0) + options.maxSubMeshIndices * (geometry.indices32 ? 4 : geometry.indices16 ? 2 : 0) + 4);
+  if (!Number.isSafeInteger(bytes) || bytes > 512 * 1024 * 1024) meshFailure('AIR_E_MESH_CAPACITY', 'dynamic reservation exceeds the 512 MiB safety limit', {
+    bytes
+  });
+}
+
 function createMorphRendering(mesh, gfxDevice) {
   return new StdMorphRendering(mesh, gfxDevice);
 }
@@ -48668,7 +48875,8 @@ let Mesh = (_dec$2D = ccclass$w('cc.Mesh'), _dec$2D(_class$2E = (_class2$28 = cl
     if (this._initialized) {
       return;
     }
-    this._initialized = true;
+    if (this._struct.dynamic && !deviceManager.gfxDevice) meshFailure('AIR_E_MESH_NOT_READY', 'await createAirApp() before initializing a dynamic mesh');
+    this._initialized = !this._struct.dynamic;
     let info = {
       struct: this.struct,
       data: this.data
@@ -48688,41 +48896,58 @@ let Mesh = (_dec$2D = ccclass$w('cc.Mesh'), _dec$2D(_class$2E = (_class2$28 = cl
       const device = deviceManager.gfxDevice;
       const vertexBuffers = [];
       const subMeshes = [];
-      for (let i = 0; i < this._struct.vertexBundles.length; i++) {
-        const vertexBundle = this._struct.vertexBundles[i];
-        const vertexBuffer = device.createBuffer(new BufferInfo(BufferUsageBit.VERTEX | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.DEVICE, vertexBundle.view.length, vertexBundle.view.stride));
-        vertexBuffers.push(vertexBuffer);
-      }
-      for (let i = 0; i < this._struct.primitives.length; i++) {
-        const primitive = this._struct.primitives[i];
-        const indexView = primitive.indexView;
-        let indexBuffer = null;
-        if (indexView) {
-          indexBuffer = device.createBuffer(new BufferInfo(BufferUsageBit.INDEX | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.DEVICE, indexView.length, indexView.stride));
+      const allocated = new Set();
+      try {
+        for (let i = 0; i < this._struct.vertexBundles.length; i++) {
+          const vertexBundle = this._struct.vertexBundles[i];
+          const vertexBuffer = device.createBuffer(new BufferInfo(BufferUsageBit.VERTEX | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.DEVICE, vertexBundle.view.length, vertexBundle.view.stride));
+          vertexBuffers.push(vertexBuffer);
+          allocated.add(vertexBuffer);
         }
-        const subVBs = [];
-        for (let k = 0; k < primitive.vertexBundelIndices.length; k++) {
-          const idx = primitive.vertexBundelIndices[k];
-          subVBs.push(vertexBuffers[idx]);
-        }
-        const allAttributes = [];
-        for (let k = 0; k < primitive.vertexBundelIndices.length; k++) {
-          const idx = primitive.vertexBundelIndices[k];
-          const attributes = this._struct.vertexBundles[idx].attributes;
-          for (let j = 0; j < attributes.length; j++) {
-            const attr = attributes[j];
-            const attribute = new Attribute();
-            attribute.copy(attr);
-            allAttributes.push(attribute);
+        for (let i = 0; i < this._struct.primitives.length; i++) {
+          const primitive = this._struct.primitives[i];
+          const indexView = primitive.indexView;
+          let indexBuffer = null;
+          if (indexView) {
+            indexBuffer = device.createBuffer(new BufferInfo(BufferUsageBit.INDEX | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.DEVICE, indexView.length, indexView.stride));
+            allocated.add(indexBuffer);
           }
+          const subVBs = [];
+          for (let k = 0; k < primitive.vertexBundelIndices.length; k++) {
+            const idx = primitive.vertexBundelIndices[k];
+            subVBs.push(vertexBuffers[idx]);
+          }
+          const allAttributes = [];
+          for (let k = 0; k < primitive.vertexBundelIndices.length; k++) {
+            const idx = primitive.vertexBundelIndices[k];
+            const attributes = this._struct.vertexBundles[idx].attributes;
+            for (let j = 0; j < attributes.length; j++) {
+              const attr = attributes[j];
+              const attribute = new Attribute();
+              attribute.copy(attr);
+              allAttributes.push(attribute);
+            }
+          }
+          const subMesh = new RenderingSubMesh(subVBs, allAttributes, primitive.primitiveMode, indexBuffer);
+          subMesh.drawInfo = new DrawInfo();
+          subMesh.mesh = this;
+          subMesh.subMeshIdx = i;
+          subMeshes.push(subMesh);
         }
-        const subMesh = new RenderingSubMesh(subVBs, allAttributes, primitive.primitiveMode, indexBuffer);
-        subMesh.drawInfo = new DrawInfo();
-        subMesh.mesh = this;
-        subMesh.subMeshIdx = i;
-        subMeshes.push(subMesh);
+        this._renderingSubMeshes = subMeshes;
+        this._initialized = true;
+      } catch (cause) {
+        for (const buffer of allocated) {
+          try {
+            buffer.destroy();
+          } catch {}
+        }
+        this._renderingSubMeshes = null;
+        this._initialized = false;
+        meshFailure('AIR_E_MESH_GPU_ALLOCATION', 'dynamic buffer initialization failed; partial buffers released', {
+          cause
+        });
       }
-      this._renderingSubMeshes = subMeshes;
     } else {
       const {
         buffer
@@ -48785,94 +49010,78 @@ let Mesh = (_dec$2D = ccclass$w('cc.Mesh'), _dec$2D(_class$2E = (_class2$28 = cl
     }
   }
   updateSubMesh(primitiveIndex, dynamicGeometry) {
-    if (!this._struct.dynamic) {
-      warnID(14200);
-      return;
+    var _dynamicGeometry$posi;
+    const plan = planDynamicUpdate(this._struct, this._data, primitiveIndex, dynamicGeometry);
+    if (!this._initialized || !this._renderingSubMeshes) meshFailure('AIR_E_MESH_NOT_READY', 'initialize the dynamic mesh before updateSubMesh', {
+      primitiveIndex
+    });
+    const dynamic = this._struct.dynamic,
+      subMesh = this._renderingSubMeshes[primitiveIndex];
+    const drawInfo = subMesh.drawInfo;
+    for (const {
+      stream,
+      bundle,
+      values,
+      count
+    } of plan.streams) {
+      if (values.byteLength) {
+        const source = new Uint8Array(values.buffer, values.byteOffset, values.byteLength);
+        new Uint8Array(this._data.buffer, this._data.byteOffset + bundle.view.offset, values.byteLength).set(source);
+        subMesh.vertexBuffers[stream].update(source, source.byteLength);
+      }
+      bundle.view.count = count;
     }
-    if (primitiveIndex >= this._struct.primitives.length) {
-      warnID(14201);
-      return;
+    drawInfo.vertexCount = plan.vertexCount;
+    if (plan.indices) {
+      const view = plan.primitive.indexView,
+        source = new Uint8Array(plan.indices.buffer, plan.indices.byteOffset, plan.indices.byteLength);
+      if (source.byteLength) {
+        new Uint8Array(this._data.buffer, this._data.byteOffset + view.offset, source.byteLength).set(source);
+        subMesh.indexBuffer.update(source, source.byteLength);
+      }
+      view.count = plan.indices.length;
+      drawInfo.indexCount = plan.indices.length;
     }
-    const buffers = [];
-    if (dynamicGeometry.positions.length > 0) {
-      buffers.push(dynamicGeometry.positions);
-    }
-    if (dynamicGeometry.normals && dynamicGeometry.normals.length > 0) {
-      buffers.push(dynamicGeometry.normals);
-    }
-    if (dynamicGeometry.uvs && dynamicGeometry.uvs.length > 0) {
-      buffers.push(dynamicGeometry.uvs);
-    }
-    if (dynamicGeometry.tangents && dynamicGeometry.tangents.length > 0) {
-      buffers.push(dynamicGeometry.tangents);
-    }
-    if (dynamicGeometry.colors && dynamicGeometry.colors.length > 0) {
-      buffers.push(dynamicGeometry.colors);
-    }
-    if (dynamicGeometry.customAttributes) {
-      for (let k = 0; k < dynamicGeometry.customAttributes.length; k++) {
-        buffers.push(dynamicGeometry.customAttributes[k].values);
+    let min = dynamicGeometry.minPos,
+      max = dynamicGeometry.maxPos;
+    if (!min && (_dynamicGeometry$posi = dynamicGeometry.positions) != null && _dynamicGeometry$posi.length) {
+      const p = dynamicGeometry.positions;
+      min = {
+        x: Infinity,
+        y: Infinity,
+        z: Infinity
+      };
+      max = {
+        x: -Infinity,
+        y: -Infinity,
+        z: -Infinity
+      };
+      for (let i = 0; i < p.length; i += 3) {
+        min.x = Math.min(min.x, p[i]);
+        min.y = Math.min(min.y, p[i + 1]);
+        min.z = Math.min(min.z, p[i + 2]);
+        max.x = Math.max(max.x, p[i]);
+        max.y = Math.max(max.y, p[i + 1]);
+        max.z = Math.max(max.z, p[i + 2]);
       }
     }
-    const dynamic = this._struct.dynamic;
-    const info = dynamic.info;
-    const primitive = this._struct.primitives[primitiveIndex];
-    const subMesh = this._renderingSubMeshes[primitiveIndex];
-    const drawInfo = subMesh.drawInfo;
+    if (min && max) {
+      if (!dynamic.bounds[primitiveIndex]) dynamic.bounds[primitiveIndex] = new AABB();
+      aabbFromPoints(dynamic.bounds[primitiveIndex], v3(min.x, min.y, min.z), v3(max.x, max.y, max.z));
+      const aggregateMin = v3(Infinity, Infinity, Infinity),
+        aggregateMax = v3(-Infinity, -Infinity, -Infinity);
+      const subMin = v3(),
+        subMax = v3();
+      for (const bound of dynamic.bounds) if (bound) {
+        bound.getBoundary(subMin, subMax);
+        vec3Min(aggregateMin, subMin, aggregateMin);
+        vec3Max(aggregateMax, subMax, aggregateMax);
+      }
+      this._struct.minPosition = aggregateMin;
+      this._struct.maxPosition = aggregateMax;
+    }
     this._boneSpaceBounds = new WeakMap();
     this._hash = 0;
-    for (let index = 0; index < buffers.length; index++) {
-      const vertices = buffers[index];
-      const bundle = this._struct.vertexBundles[primitive.vertexBundelIndices[index]];
-      const stride = bundle.view.stride;
-      const vertexCount = vertices.byteLength / stride;
-      const updateSize = vertices.byteLength;
-      const dstBuffer = new Uint8Array(this._data.buffer, bundle.view.offset, updateSize);
-      const srcBuffer = new Uint8Array(vertices.buffer, vertices.byteOffset, updateSize);
-      const vertexBuffer = subMesh.vertexBuffers[index];
-      assertIsTrue(vertexCount <= info.maxSubMeshVertices, 'Too many vertices.');
-      if (updateSize > 0) {
-        dstBuffer.set(srcBuffer);
-        vertexBuffer.update(srcBuffer, updateSize);
-      }
-      bundle.view.count = vertexCount;
-      drawInfo.vertexCount = vertexCount;
-    }
-    if (primitive.indexView) {
-      const indexView = primitive.indexView;
-      const stride = indexView.stride;
-      const indexCount = stride === 2 ? dynamicGeometry.indices16.length : dynamicGeometry.indices32.length;
-      const updateSize = indexCount * stride;
-      const dstBuffer = new Uint8Array(this._data.buffer, indexView.offset, updateSize);
-      const srcBuffer = stride === 2 ? new Uint8Array(dynamicGeometry.indices16.buffer, dynamicGeometry.indices16.byteOffset, updateSize) : new Uint8Array(dynamicGeometry.indices32.buffer, dynamicGeometry.indices32.byteOffset, updateSize);
-      const indexBuffer = subMesh.indexBuffer;
-      assertIsTrue(indexCount <= info.maxSubMeshIndices, 'Too many indices.');
-      if (updateSize > 0) {
-        dstBuffer.set(srcBuffer);
-        indexBuffer.update(srcBuffer, updateSize);
-      }
-      indexView.count = indexCount;
-      drawInfo.indexCount = indexCount;
-    }
-    if (dynamicGeometry.minPos && dynamicGeometry.maxPos) {
-      const minPos = v3(dynamicGeometry.minPos.x, dynamicGeometry.minPos.y, dynamicGeometry.minPos.z);
-      const maxPos = v3(dynamicGeometry.maxPos.x, dynamicGeometry.maxPos.y, dynamicGeometry.maxPos.z);
-      if (!dynamic.bounds[primitiveIndex]) {
-        dynamic.bounds[primitiveIndex] = new AABB();
-      }
-      aabbFromPoints(dynamic.bounds[primitiveIndex], minPos, maxPos);
-      const subMin = v3();
-      const subMax = v3();
-      dynamic.bounds.forEach(bound => {
-        if (bound) {
-          bound.getBoundary(subMin, subMax);
-          vec3Min(minPos, subMin, minPos);
-          vec3Max(maxPos, subMax, maxPos);
-        }
-      });
-      this._struct.minPosition = v3(minPos.x, minPos.y, minPos.z);
-      this._struct.maxPosition = v3(maxPos.x, maxPos.y, maxPos.z);
-    }
     subMesh.invalidateGeometricInfo();
   }
   destroy() {
@@ -49763,6 +49972,7 @@ const _defAttrs = [new Attribute(AttributeName.ATTR_POSITION, Format.RGB32F), ne
 const v3_1$4 = new Vec3();
 function createMesh(geometry, out, options) {
   var _geometry$primitiveMo;
+  validateStaticIndices(geometry);
   options = options || {};
   const attributes = [];
   let stride = 0;
@@ -49968,26 +50178,24 @@ function getPadding(length, align) {
   return 0;
 }
 function createDynamicMesh(primitiveIndex, geometry, out, options) {
-  options = options || {
-    maxSubMeshes: 1,
-    maxSubMeshVertices: 1024,
-    maxSubMeshIndices: 1024
-  };
+  options = dynamicOptions(options);
+  validateDynamicCreation(geometry, options, primitiveIndex);
+  if (!deviceManager.gfxDevice) meshFailure('AIR_E_MESH_NOT_READY', 'await createAirApp() before creating a dynamic mesh');
   const attributes = [];
   let stream = 0;
-  if (geometry.positions.length > 0) {
+  if (geometry.positions) {
     attributes.push(new Attribute(AttributeName.ATTR_POSITION, Format.RGB32F, false, stream++, false, 0));
   }
-  if (geometry.normals && geometry.normals.length > 0) {
+  if (geometry.normals) {
     attributes.push(new Attribute(AttributeName.ATTR_NORMAL, Format.RGB32F, false, stream++, false, 0));
   }
-  if (geometry.uvs && geometry.uvs.length > 0) {
+  if (geometry.uvs) {
     attributes.push(new Attribute(AttributeName.ATTR_TEX_COORD, Format.RG32F, false, stream++, false, 0));
   }
-  if (geometry.tangents && geometry.tangents.length > 0) {
+  if (geometry.tangents) {
     attributes.push(new Attribute(AttributeName.ATTR_TANGENT, Format.RGBA32F, false, stream++, false, 0));
   }
-  if (geometry.colors && geometry.colors.length > 0) {
+  if (geometry.colors) {
     attributes.push(new Attribute(AttributeName.ATTR_COLOR, Format.RGBA32F, false, stream++, false, 0));
   }
   if (geometry.customAttributes) {
@@ -50027,9 +50235,9 @@ function createDynamicMesh(primitiveIndex, geometry, out, options) {
       dataSize += vertexBufferSize;
     }
     let stride = 0;
-    if (geometry.indices16 && geometry.indices16.length > 0) {
+    if (geometry.indices16) {
       stride = 2;
-    } else if (geometry.indices32 && geometry.indices32.length > 0) {
+    } else if (geometry.indices32) {
       stride = 4;
     }
     if (stride > 0) {
@@ -60618,6 +60826,7 @@ let Animation$1 = (_dec$28 = ccclass$w('cc.Animation'), _dec2$1I = executionOrde
     this._clips = _initializer2$1k && _initializer2$1k();
     this._defaultClip = _initializer3$Y && _initializer3$Y();
     this._hasBeenPlayed = false;
+    this._reportedControllerConflict = false;
   }
   get clips() {
     return this._clips;
@@ -60658,7 +60867,14 @@ let Animation$1 = (_dec$28 = ccclass$w('cc.Animation'), _dec2$1I = executionOrde
       this.createState(value);
     }
   }
+  _diagnoseControllers() {
+    if (!this._reportedControllerConflict && this.node.getComponents(Animation).length > 1) {
+      this._reportedControllerConflict = true;
+      warn(`[AIR_W_ANIMATION_CONTROLLERS] node ${this.node.name} (${this.node.uuid}) has multiple Animation controllers; reuse getComponent(Animation) and inspect overlapping target tracks.`);
+    }
+  }
   onLoad() {
+    this._diagnoseControllers();
     this.clips = this._clips;
     for (const stateName in this._nameToState) {
       const state = this._nameToState[stateName];
@@ -60685,6 +60901,7 @@ let Animation$1 = (_dec$28 = ccclass$w('cc.Animation'), _dec2$1I = executionOrde
     this._nameToState = createMap(true);
   }
   play(name) {
+    this._diagnoseControllers();
     this._hasBeenPlayed = true;
     if (!name) {
       if (!this._defaultClip) {
@@ -153871,6 +154088,186 @@ function inspectAirMaterial(material) {
   }));
 }
 
+function inspectAirMeshMaterial(mesh, material, primitiveIndex = 0, renderer) {
+  var _material$effectAsset, _material$effectAsset2;
+  const primitive = mesh.struct.primitives[primitiveIndex];
+  if (!primitive) throw Object.assign(new RangeError('[AIR_E_MESH_PRIMITIVE] invalid inspection primitiveIndex'), {
+    code: 'AIR_E_MESH_PRIMITIVE',
+    primitiveIndex
+  });
+  const attributes = primitive.vertexBundelIndices.reduce((all, index) => all.concat(mesh.struct.vertexBundles[index].attributes.map(a => a.name)), []);
+  const issues = [];
+  const builtin = ((_material$effectAsset = material.effectAsset) == null ? void 0 : _material$effectAsset.name) === 'builtin-unlit' || ((_material$effectAsset2 = material.effectAsset) == null ? void 0 : _material$effectAsset2.name.startsWith('air-unlit-fog-'));
+  const passes = material.passes.map((pass, passIndex) => {
+    var _renderer$model, _renderer$model$subMo, _raw$_shader;
+    const defines = {
+      ...pass.defines
+    };
+    const variant = renderer == null ? void 0 : (_renderer$model = renderer.model) == null ? void 0 : (_renderer$model$subMo = _renderer$model.subModels[primitiveIndex]) == null ? void 0 : _renderer$model$subMo.shaders[passIndex];
+    const raw = pass;
+    const reflection = variant ? variant._gpuShader : (_raw$_shader = raw._shader) == null ? void 0 : _raw$_shader._gpuShader;
+    const activeAttributes = reflection != null && reflection.glProgram ? reflection.glInputs.map(a => a.name) : null;
+    if (builtin) {
+      if (attributes.includes(AttributeName.ATTR_COLOR) && !defines.USE_VERTEX_COLOR) issues.push({
+        code: 'AIR_W_VERTEX_COLOR_DISABLED',
+        severity: 'warning',
+        message: `pass ${passIndex}: mesh colors exist but USE_VERTEX_COLOR is disabled`
+      });
+      if (defines.USE_VERTEX_COLOR && !attributes.includes(AttributeName.ATTR_COLOR)) issues.push({
+        code: 'AIR_E_VERTEX_COLOR_MISSING',
+        severity: 'error',
+        message: `pass ${passIndex}: USE_VERTEX_COLOR requires a_color`
+      });
+      if (defines.USE_VERTEX_COLOR && activeAttributes && !activeAttributes.includes(AttributeName.ATTR_COLOR)) issues.push({
+        code: 'AIR_W_VERTEX_COLOR_INACTIVE',
+        severity: 'warning',
+        message: `pass ${passIndex}: compiled WebGL reflection does not consume a_color`
+      });
+      if (defines.USE_TEXTURE && !attributes.includes(AttributeName.ATTR_TEX_COORD)) issues.push({
+        code: 'AIR_W_TEXTURE_UV_MISSING',
+        severity: 'warning',
+        message: `pass ${passIndex}: missing a_texCoord uses the generic constant attribute; verify intended sampling`
+      });
+    }
+    return Object.freeze({
+      passIndex,
+      defines: Object.freeze(defines),
+      reflection: activeAttributes ? 'webgl-active' : 'unavailable',
+      activeAttributes: activeAttributes && Object.freeze(activeAttributes)
+    });
+  });
+  return Object.freeze({
+    primitiveIndex,
+    attributes: Object.freeze(attributes),
+    builtinContractChecked: Boolean(builtin),
+    passes: Object.freeze(passes),
+    states: inspectAirMaterial(material),
+    issues: Object.freeze(issues.map(issue => Object.freeze(issue)))
+  });
+}
+function inspectAirGeometry(mesh, node, material, primitiveIndex = 0, maxTriangles = 64) {
+  if (!Number.isInteger(maxTriangles) || maxTriangles < 1 || maxTriangles > 1024) throw new RangeError('maxTriangles must be 1..1024');
+  const primitive = mesh.struct.primitives[primitiveIndex];
+  if (!primitive) throw new RangeError('invalid geometry primitiveIndex');
+  const matrix = node.getWorldMatrix();
+  const determinant = matrix.m00 * (matrix.m05 * matrix.m10 - matrix.m06 * matrix.m09) - matrix.m04 * (matrix.m01 * matrix.m10 - matrix.m02 * matrix.m09) + matrix.m08 * (matrix.m01 * matrix.m06 - matrix.m02 * matrix.m05);
+  const states = material ? inspectAirMaterial(material) : [];
+  const unavailable = primitive.primitiveMode !== PrimitiveMode.TRIANGLE_LIST;
+  const positions = unavailable ? null : mesh.readAttribute(primitiveIndex, AttributeName.ATTR_POSITION);
+  const normals = positions ? mesh.readAttribute(primitiveIndex, AttributeName.ATTR_NORMAL) : null;
+  const indices = positions ? mesh.readIndices(primitiveIndex) : null;
+  const triangles = [];
+  if (positions) {
+    var _indices$length;
+    const count = Math.floor(((_indices$length = indices == null ? void 0 : indices.length) !== null && _indices$length !== void 0 ? _indices$length : positions.length / 3) / 3);
+    for (let t = 0; t < Math.min(count, maxTriangles); t++) {
+      const ids = [0, 1, 2].map(j => indices ? indices[t * 3 + j] : t * 3 + j);
+      const p = ids.map(i => new Vec3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]));
+      const a = Vec3.subtract(new Vec3(), p[1], p[0]),
+        b = Vec3.subtract(new Vec3(), p[2], p[0]);
+      const normal = Vec3.cross(new Vec3(), a, b),
+        length = normal.length();
+      if (length) Vec3.multiplyScalar(normal, normal, 1 / length);
+      let dot = null;
+      if (normals) {
+        const average = new Vec3();
+        for (const i of ids) {
+          average.x += normals[i * 3];
+          average.y += normals[i * 3 + 1];
+          average.z += normals[i * 3 + 2];
+        }
+        if (average.length()) {
+          Vec3.normalize(average, average);
+          dot = Vec3.dot(normal, average);
+        }
+      }
+      triangles.push({
+        index: t,
+        normal: Object.freeze([normal.x, normal.y, normal.z]),
+        providedNormalDot: dot,
+        degenerate: length < 1e-8
+      });
+    }
+  }
+  return Object.freeze({
+    scope: 'sampled-local-triangle-winding',
+    available: Boolean(positions),
+    reason: unavailable ? 'topology is not TRIANGLE_LIST' : !positions ? 'CPU positions unavailable' : null,
+    worldMatrix: Object.freeze([matrix.m00, matrix.m01, matrix.m02, matrix.m03, matrix.m04, matrix.m05, matrix.m06, matrix.m07, matrix.m08, matrix.m09, matrix.m10, matrix.m11, matrix.m12, matrix.m13, matrix.m14, matrix.m15]),
+    determinant,
+    negativeScale: determinant < 0,
+    singular: Math.abs(determinant) < 1e-8,
+    states,
+    triangles: Object.freeze(triangles.map(triangle => Object.freeze(triangle)))
+  });
+}
+function inspectAirAnimationControllers(root) {
+  const claims = new Map();
+  const unresolved = [];
+  const controllers = root.getComponentsInChildren(Animation$1);
+  for (const animation of controllers) for (const clip of animation.clips) {
+    if (!clip) continue;
+    for (const track of clip.tracks) {
+      var _claims$get;
+      let target = animation.node;
+      const channel = [];
+      for (let i = 0; i < track.path.length; i++) {
+        var _target$getChildByPat, _target;
+        if (track.path.isHierarchyAt(i)) target = (_target$getChildByPat = (_target = target) == null ? void 0 : _target.getChildByPath(track.path.parseHierarchyAt(i))) !== null && _target$getChildByPat !== void 0 ? _target$getChildByPat : null;else if (track.path.isPropertyAt(i)) channel.push('property:' + track.path.parsePropertyAt(i));else if (track.path.isComponentAt(i)) channel.push('component:' + track.path.parseComponentAt(i));else if (track.path.isElementAt(i)) channel.push('element:' + track.path.parseElementAt(i));else {
+          target = null;
+          break;
+        }
+      }
+      if (!target) {
+        unresolved.push(`${animation.uuid}:${clip.name}`);
+        continue;
+      }
+      const key = target.uuid + ':' + channel.join('/'),
+        records = (_claims$get = claims.get(key)) !== null && _claims$get !== void 0 ? _claims$get : [];
+      records.push({
+        controller: animation.uuid,
+        clip: clip.name,
+        target: target.uuid,
+        channel: channel.join('/')
+      });
+      claims.set(key, records);
+    }
+  }
+  const conflicts = [...claims.values()].filter(records => new Set(records.map(r => r.controller)).size > 1);
+  return Object.freeze({
+    scope: 'potential-track-overlap',
+    controllerCount: controllers.length,
+    conflicts: Object.freeze(conflicts.map(records => Object.freeze(records.map(record => Object.freeze(record))))),
+    unresolved: Object.freeze(unresolved),
+    note: 'Metadata overlaps are potential conflicts, not proof of simultaneous playback. No states were initialized.'
+  });
+}
+function inspectAirDirectionalLights(scene) {
+  var _native$mainLight$nod, _native$mainLight, _native$mainLight$nod2;
+  const native = scene.renderScene;
+  if (!native) return Object.freeze({
+    status: 'unavailable',
+    reason: 'scene has no native render scene',
+    lights: []
+  });
+  return Object.freeze({
+    status: 'available',
+    scope: 'legacy-forward-main-directional',
+    ordinaryDirectionalCapacity: 1,
+    selection: 'native-mainLight',
+    lights: Object.freeze(native.directionalLights.map(light => {
+      var _light$node$uuid, _light$node, _light$node$name, _light$node2;
+      return Object.freeze({
+        node: (_light$node$uuid = (_light$node = light.node) == null ? void 0 : _light$node.uuid) !== null && _light$node$uuid !== void 0 ? _light$node$uuid : null,
+        name: (_light$node$name = (_light$node2 = light.node) == null ? void 0 : _light$node2.name) !== null && _light$node$name !== void 0 ? _light$node$name : null,
+        effective: light === native.mainLight
+      });
+    })),
+    mainLight: (_native$mainLight$nod = (_native$mainLight = native.mainLight) == null ? void 0 : (_native$mainLight$nod2 = _native$mainLight.node) == null ? void 0 : _native$mainLight$nod2.uuid) !== null && _native$mainLight$nod !== void 0 ? _native$mainLight$nod : null,
+    note: 'Custom pipeline/ranged directionals are outside this ordinary mainLight contract.'
+  });
+}
+
 class WebGL2DescriptorSet extends DescriptorSet {
   constructor() {
     super();
@@ -160381,5 +160778,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { AIR_REVISION, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirRenderTarget, AirTransmissionCapture, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirRenderTarget, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirMaterial, instantiate, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, parseAtlasText, parseFnt, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
+export { AIR_REVISION, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirRenderTarget, AirTransmissionCapture, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirRenderTarget, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirAnimationControllers, inspectAirDirectionalLights, inspectAirGeometry, inspectAirMaterial, inspectAirMeshMaterial, instantiate, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, parseAtlasText, parseFnt, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
 //# sourceMappingURL=cocosair.module.js.map

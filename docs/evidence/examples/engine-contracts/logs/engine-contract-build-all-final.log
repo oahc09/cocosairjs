@@ -1,0 +1,1100 @@
+
+> cocosair.js@1.0.0 build:all
+> node tools/build/build.cjs --format esm && node tools/build/build.cjs --format esm --min && node tools/build/build-dts.cjs && node tools/build/prepare-package.cjs && node tools/verify/published-artifacts.cjs
+
+[build] cocosair moduleFormat=esm min=false
+Module source "internal-constants":
+function tryDefineGlobal (name, value) {
+    const _global = typeof window === 'undefined' ? global : window;
+    if (typeof _global[name] === 'undefined') {
+        return (_global[name] = value);
+    } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return _global[name];
+    }
+}
+export const HTML5 = true;
+
+export const NATIVE = false;
+
+export const ANDROID = false;
+
+export const IOS = false;
+
+export const MAC = false;
+
+export const WINDOWS = false;
+
+export const LINUX = false;
+
+export const OHOS = false;
+
+export const OPEN_HARMONY = false;
+
+export const WECHAT = false;
+tryDefineGlobal('CC_WECHAT', false);
+
+export const WECHAT_MINI_PROGRAM = false;
+
+export const XIAOMI = false;
+tryDefineGlobal('CC_XIAOMI', false);
+
+export const ALIPAY = false;
+tryDefineGlobal('CC_ALIPAY', false);
+
+export const TAOBAO = false;
+
+export const TAOBAO_MINIGAME = false;
+
+export const BYTEDANCE = false;
+tryDefineGlobal('CC_BYTEDANCE', false);
+
+export const OPPO = false;
+tryDefineGlobal('CC_OPPO', false);
+
+export const VIVO = false;
+tryDefineGlobal('CC_VIVO', false);
+
+export const HUAWEI = false;
+tryDefineGlobal('CC_HUAWEI', false);
+
+export const MIGU = false;
+tryDefineGlobal('CC_MIGU', false);
+
+export const HONOR = false;
+tryDefineGlobal('CC_HONOR', false);
+
+export const COCOS_RUNTIME = false;
+tryDefineGlobal('CC_COCOS_RUNTIME', false);
+
+export const SUD = false;
+tryDefineGlobal('CC_SUD', false);
+
+export const SUDV2 = false;
+tryDefineGlobal('CC_SUDV2', false);
+
+export const NODEJS = false;
+tryDefineGlobal('CC_NODEJS', false);
+
+export const EDITOR = false;
+tryDefineGlobal('CC_EDITOR', false);
+
+export const EDITOR_NOT_IN_PREVIEW = false;
+
+export const PREVIEW = false;
+tryDefineGlobal('CC_PREVIEW', false);
+
+export const BUILD = true;
+tryDefineGlobal('CC_BUILD', true);
+
+export const TEST = false;
+tryDefineGlobal('CC_TEST', false);
+
+export const DEBUG = true;
+tryDefineGlobal('CC_DEBUG', true);
+
+export const SERVER_MODE = false;
+
+export const DEV = false;
+tryDefineGlobal('CC_DEV', false);
+
+export const MINIGAME = false;
+tryDefineGlobal('CC_MINIGAME', false);
+
+export const RUNTIME_BASED = false;
+tryDefineGlobal('CC_RUNTIME_BASED', false);
+
+export const SUPPORT_JIT = false;
+tryDefineGlobal('CC_SUPPORT_JIT', false);
+
+export const JSB = false;
+tryDefineGlobal('CC_JSB', false);
+
+export const NOT_PACK_PHYSX_LIBS = false;
+
+export const NET_MODE = 0;
+
+export const WEBGPU = false;
+
+export const NATIVE_CODE_BUNDLE_MODE = 2;
+
+export const WASM_SUBPACKAGE = false;
+
+export const CULL_MESHOPT = true;
+
+export const LOAD_SPINE_MANUALLY = false;
+
+export const LOAD_BOX2D_MANUALLY = false;
+
+export const LOAD_BULLET_MANUALLY = false;
+
+export const LOAD_PHYSX_MANUALLY = false;
+
+export const USE_3D = true;
+
+export const USE_UI_SKEW = false;
+
+export const USE_XR = false;
+
+export const USE_SORTING_2D = false;
+
+
+Module source "cc":
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\air.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\base.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-webgl2.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-empty.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\3d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\animation.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\skeletal-animation.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\primitive.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\tween.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\custom-pipeline.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\legacy-pipeline.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\profiler.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\video.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\webview.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\sorting.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-2d-framework.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\particle-2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\tiled-map.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\ui.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\spine.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\dragon-bones.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-2d-box2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-builtin.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-framework.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-cannon.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\custom-pipeline-post-process.ts';
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/gamepad-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/handheld-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/handle-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/hmd-input.js ) doesn't exist!
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (92:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (93:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (99:27): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/dragon-bones/ArmatureCache.ts (25:45): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/ArmatureDisplay.ts (26:61): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/assembler/simple.ts (25:37): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/AttachUtil.ts (25:34): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCArmatureDisplay.ts (26:63): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCFactory.ts (26:105): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCSlot.ts (25:46): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCTextureData.ts (25:59): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/DragonBonesAtlasAsset.ts (26:34): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/index.ts (105:15): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48:48): @cocos/rollup-plugin-typescript TS2833: Cannot find namespace 'B2'. Did you mean 'b2'?
+[plugin @cocos/typescript] src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48:65): @cocos/rollup-plugin-typescript TS2833: Cannot find namespace 'B2'. Did you mean 'b2'?
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (34:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (35:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (42:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (43:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (35:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (36:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (43:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (44:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (55:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (56:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (63:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (64:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (73:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (74:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (81:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (82:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-wasm-utils.ts (16:19): @cocos/rollup-plugin-typescript TS2503: Cannot find namespace 'SpineWasm'.
+Redirect module internal:native to E:\AIProMax\github\cocosair.js\src\cocos\native-binding\impl.ts
+Redirect module pal/system-info to E:\AIProMax\github\cocosair.js\src\pal\system-info\web\system-info.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-version.ts to E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-version-dynamic.ts
+Redirect module pal/screen-adapter to E:\AIProMax\github\cocosair.js\src\pal\screen-adapter\web\screen-adapter.js
+Redirect module pal/env to E:\AIProMax\github\cocosair.js\src\pal\env\web\env.js
+Redirect module pal/pacer to E:\AIProMax\github\cocosair.js\src\pal\pacer\pacer-web.js
+Redirect module pal/input to E:\AIProMax\github\cocosair.js\src\pal\input\web\index.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\2d\renderer\native-2d.ts to E:\AIProMax\github\cocosair.js\src\cocos\2d\renderer\native-2d-empty.ts
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-instantiate.ts to E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\air-spine-instantiate-js.ts
+Redirect module pal/minigame to E:\AIProMax\github\cocosair.js\src\pal\minigame\non-minigame.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\animation\marionette\runtime-exports.ts to E:\AIProMax\github\cocosair.js\src\cocos\animation\marionette\index-empty.ts
+Redirect module pal/audio to E:\AIProMax\github\cocosair.js\src\pal\audio\web\player.js
+Redirect module pal/wasm to E:\AIProMax\github\cocosair.js\src\pal\wasm\wasm-web.js
+Rollup warning 'THIS_IS_UNDEFINED' is omitted for E:\AIProMax\github\cocosair.js\src\node_modules\@cocos\dragonbones-js\out\dragonBones.js
+Rollup warning 'THIS_IS_UNDEFINED' is omitted for E:\AIProMax\github\cocosair.js\src\node_modules\@cocos\dragonbones-js\out\dragonBones.js
+src/pal/audio/web/player-web.js (24:18): The 'this' keyword is equivalent to 'undefined' at the top level of an ES module, and has been rewritten
+src/pal/audio/web/player-web.js (24:26): The 'this' keyword is equivalent to 'undefined' at the top level of an ES module, and has been rewritten
+src/pal/audio/web/player-dom.js (24:18): The 'this' keyword is equivalent to 'undefined' at the top level of an ES module, and has been rewritten
+src/pal/audio/web/player-dom.js (24:26): The 'this' keyword is equivalent to 'undefined' at the top level of an ES module, and has been rewritten
+Circular dependency: src/air/assets/gltf/material.ts -> src/air/assets/gltf/material/physical-effect.ts -> src/air/assets/gltf/material.ts
+==== Performance ====
+{"# BUILD":[44983.70420000001,613759472,1635677832],"## initialize":[32412.956199999997,703519896,1725448296],"- plugin 6 (node-resolve) - buildStart":[0.5895000000000437,7688,1021947016],"- plugin 8 (commonjs) - buildStart":[0.6268999999992957,12144,1021960608],"- plugin 9 (@cocos/typescript) - buildStart":[32411.161200000002,703486480,1725447632],"## generate module graph":[5590.4793999999965,-247261752,1478450000],"- plugin 0 (commonjs--resolver) - resolveId":[0.6446000000069034,29168,1996963784],"- plugin 1 (@cocos/ccbuild|external-loader) - resolveId":[0.07470000000466825,4464,1996972320],"- plugin 2 (@cocos/ccbuild|module-overrides) - resolveId":[0.04899999999906868,3736,1996992240],"- plugin 3 (virtual) - resolveId":[0.12649999999121064,11272,1997008576],"- plugin 1 (@cocos/ccbuild|external-loader) - load":[8.689000000020314,23864,2090595328],"- plugin 2 (@cocos/ccbuild|module-overrides) - load":[13.182799999973213,1359464,2090597224],"- plugin 3 (virtual) - load":[5.561199999996461,250008,2090598528],"- plugin 8 (commonjs) - shouldTransformCachedModule":[85.8041999999914,-33837328,2090625344],"- plugin 6 (node-resolve) - load":[5.458499999993364,843376,2090599832],"- plugin 8 (commonjs) - load":[7.199499999980617,820944,2090601136],"- plugin 9 (@cocos/typescript) - load":[72.5669999999518,14008816,2090616120],"generate ast":[3923.0804000000717,-295434952,2090452928],"- plugin 10 (babel) - load":[795.4586999999665,61204976,2090617760],"- plugin 7 (json) - transform":[0.18770000000222353,1864,1770977448],"- plugin 8 (commonjs) - transform":[0.06829999999899883,992,1771174480],"- plugin 10 (babel) - transform":[27.365599999997357,750920,1773289600],"- plugin 11 (air-transform-count) - transform":[0.07160000000294531,792,1969579432],"- plugin 4 (@cocos/ccbuild|module-query-plugin) - resolveId":[0.8082000000067637,20272,1997022240],"- plugin 5 (ts-paths) - resolveId":[0.04499999999825377,2280,2070008920],"- plugin 9 (@cocos/typescript) - resolveId":[18.31480000000738,527400,2070310744],"- plugin 10 (babel) - resolveId":[0.15020000000367872,752,2070312440],"## sort and bind modules":[571.1851999999999,39621296,1518071560],"## mark included statements":[6377.852400000003,116652328,1634724152],"treeshaking pass 1":[1544.8076,53438024,1572124280],"treeshaking pass 2":[1662.1793999999936,49263000,1621387544],"treeshaking pass 3":[715.7427000000025,-8418512,1612969296],"treeshaking pass 4":[447.00360000000364,5003424,1617972984],"treeshaking pass 5":[345.16109999999753,9466760,1627440008],"treeshaking pass 6":[294.92489999999816,-5097104,1622343168],"treeshaking pass 7":[299.8741000000009,52295792,1674639224],"treeshaking pass 8":[269.05489999999554,-24150400,1650489088],"treeshaking pass 9":[275.68039999999746,-25958904,1624530448],"treeshaking pass 10":[272.1035000000047,38713328,1663244040],"treeshaking pass 11":[247.7560999999987,-28520816,1634723488],"- plugin 8 (commonjs) - buildEnd":[0.22269999999844003,1712,1634730696],"- plugin 9 (@cocos/typescript) - buildEnd":[30.16320000000269,945728,1635676688]}
+====             ====
+[cache] {"reused":true,"reason":"hit","transformed":1,"modules":1030,"elapsedMs":50567}
+[build] ccbuild done in 56.4s
+[build] output: build\cocosair.module.js.map (source map)
+[build] output: build\cocosair.module.js
+[build] output: build\bootstrap.js (engine-free safe entry)
+[build] output: build\package.json (type: module)
+[build] output: build/gltf-decoders/package.json (type: commonjs)
+[build] cleaned: build\.tmp-dev-1791256748831
+[build] cocosair moduleFormat=esm min=true
+Module source "internal-constants":
+function tryDefineGlobal (name, value) {
+    const _global = typeof window === 'undefined' ? global : window;
+    if (typeof _global[name] === 'undefined') {
+        return (_global[name] = value);
+    } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return _global[name];
+    }
+}
+export const HTML5 = true;
+
+export const NATIVE = false;
+
+export const ANDROID = false;
+
+export const IOS = false;
+
+export const MAC = false;
+
+export const WINDOWS = false;
+
+export const LINUX = false;
+
+export const OHOS = false;
+
+export const OPEN_HARMONY = false;
+
+export const WECHAT = false;
+tryDefineGlobal('CC_WECHAT', false);
+
+export const WECHAT_MINI_PROGRAM = false;
+
+export const XIAOMI = false;
+tryDefineGlobal('CC_XIAOMI', false);
+
+export const ALIPAY = false;
+tryDefineGlobal('CC_ALIPAY', false);
+
+export const TAOBAO = false;
+
+export const TAOBAO_MINIGAME = false;
+
+export const BYTEDANCE = false;
+tryDefineGlobal('CC_BYTEDANCE', false);
+
+export const OPPO = false;
+tryDefineGlobal('CC_OPPO', false);
+
+export const VIVO = false;
+tryDefineGlobal('CC_VIVO', false);
+
+export const HUAWEI = false;
+tryDefineGlobal('CC_HUAWEI', false);
+
+export const MIGU = false;
+tryDefineGlobal('CC_MIGU', false);
+
+export const HONOR = false;
+tryDefineGlobal('CC_HONOR', false);
+
+export const COCOS_RUNTIME = false;
+tryDefineGlobal('CC_COCOS_RUNTIME', false);
+
+export const SUD = false;
+tryDefineGlobal('CC_SUD', false);
+
+export const SUDV2 = false;
+tryDefineGlobal('CC_SUDV2', false);
+
+export const NODEJS = false;
+tryDefineGlobal('CC_NODEJS', false);
+
+export const EDITOR = false;
+tryDefineGlobal('CC_EDITOR', false);
+
+export const EDITOR_NOT_IN_PREVIEW = false;
+
+export const PREVIEW = false;
+tryDefineGlobal('CC_PREVIEW', false);
+
+export const BUILD = true;
+tryDefineGlobal('CC_BUILD', true);
+
+export const TEST = false;
+tryDefineGlobal('CC_TEST', false);
+
+export const DEBUG = true;
+tryDefineGlobal('CC_DEBUG', true);
+
+export const SERVER_MODE = false;
+
+export const DEV = false;
+tryDefineGlobal('CC_DEV', false);
+
+export const MINIGAME = false;
+tryDefineGlobal('CC_MINIGAME', false);
+
+export const RUNTIME_BASED = false;
+tryDefineGlobal('CC_RUNTIME_BASED', false);
+
+export const SUPPORT_JIT = false;
+tryDefineGlobal('CC_SUPPORT_JIT', false);
+
+export const JSB = false;
+tryDefineGlobal('CC_JSB', false);
+
+export const NOT_PACK_PHYSX_LIBS = false;
+
+export const NET_MODE = 0;
+
+export const WEBGPU = false;
+
+export const NATIVE_CODE_BUNDLE_MODE = 2;
+
+export const WASM_SUBPACKAGE = false;
+
+export const CULL_MESHOPT = true;
+
+export const LOAD_SPINE_MANUALLY = false;
+
+export const LOAD_BOX2D_MANUALLY = false;
+
+export const LOAD_BULLET_MANUALLY = false;
+
+export const LOAD_PHYSX_MANUALLY = false;
+
+export const USE_3D = true;
+
+export const USE_UI_SKEW = false;
+
+export const USE_XR = false;
+
+export const USE_SORTING_2D = false;
+
+
+Module source "cc":
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\air.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\base.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-webgl2.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-empty.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\3d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\animation.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\skeletal-animation.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\primitive.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\tween.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\custom-pipeline.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\legacy-pipeline.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\profiler.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\video.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\webview.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\sorting.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-2d-framework.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\particle-2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\tiled-map.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\ui.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\spine.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\dragon-bones.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-2d-box2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-builtin.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-framework.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-cannon.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\custom-pipeline-post-process.ts';
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/gamepad-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/handheld-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/handle-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/hmd-input.js ) doesn't exist!
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (92:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (93:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (99:27): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/dragon-bones/ArmatureCache.ts (25:45): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/ArmatureDisplay.ts (26:61): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/assembler/simple.ts (25:37): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/AttachUtil.ts (25:34): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCArmatureDisplay.ts (26:63): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCFactory.ts (26:105): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCSlot.ts (25:46): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCTextureData.ts (25:59): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/DragonBonesAtlasAsset.ts (26:34): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/index.ts (105:15): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48:48): @cocos/rollup-plugin-typescript TS2833: Cannot find namespace 'B2'. Did you mean 'b2'?
+[plugin @cocos/typescript] src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48:65): @cocos/rollup-plugin-typescript TS2833: Cannot find namespace 'B2'. Did you mean 'b2'?
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (34:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (35:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (42:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (43:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (35:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (36:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (43:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (44:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (55:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (56:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (63:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (64:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (73:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (74:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (81:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (82:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-wasm-utils.ts (16:19): @cocos/rollup-plugin-typescript TS2503: Cannot find namespace 'SpineWasm'.
+Redirect module internal:native to E:\AIProMax\github\cocosair.js\src\cocos\native-binding\impl.ts
+Redirect module pal/system-info to E:\AIProMax\github\cocosair.js\src\pal\system-info\web\system-info.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-version.ts to E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-version-dynamic.ts
+Redirect module pal/screen-adapter to E:\AIProMax\github\cocosair.js\src\pal\screen-adapter\web\screen-adapter.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\2d\renderer\native-2d.ts to E:\AIProMax\github\cocosair.js\src\cocos\2d\renderer\native-2d-empty.ts
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\animation\marionette\runtime-exports.ts to E:\AIProMax\github\cocosair.js\src\cocos\animation\marionette\index-empty.ts
+Redirect module pal/env to E:\AIProMax\github\cocosair.js\src\pal\env\web\env.js
+Redirect module pal/pacer to E:\AIProMax\github\cocosair.js\src\pal\pacer\pacer-web.js
+Redirect module pal/input to E:\AIProMax\github\cocosair.js\src\pal\input\web\index.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-instantiate.ts to E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\air-spine-instantiate-js.ts
+Redirect module pal/minigame to E:\AIProMax\github\cocosair.js\src\pal\minigame\non-minigame.js
+Redirect module pal/audio to E:\AIProMax\github\cocosair.js\src\pal\audio\web\player.js
+Redirect module pal/wasm to E:\AIProMax\github\cocosair.js\src\pal\wasm\wasm-web.js
+Rollup warning 'THIS_IS_UNDEFINED' is omitted for E:\AIProMax\github\cocosair.js\src\node_modules\@cocos\dragonbones-js\out\dragonBones.js
+Rollup warning 'THIS_IS_UNDEFINED' is omitted for E:\AIProMax\github\cocosair.js\src\node_modules\@cocos\dragonbones-js\out\dragonBones.js
+src/pal/audio/web/player-dom.js (24:18): The 'this' keyword is equivalent to 'undefined' at the top level of an ES module, and has been rewritten
+src/pal/audio/web/player-dom.js (24:26): The 'this' keyword is equivalent to 'undefined' at the top level of an ES module, and has been rewritten
+src/pal/audio/web/player-web.js (24:18): The 'this' keyword is equivalent to 'undefined' at the top level of an ES module, and has been rewritten
+src/pal/audio/web/player-web.js (24:26): The 'this' keyword is equivalent to 'undefined' at the top level of an ES module, and has been rewritten
+Circular dependency: src/air/assets/gltf/material.ts -> src/air/assets/gltf/material/physical-effect.ts -> src/air/assets/gltf/material.ts
+==== Performance ====
+{"# BUILD":[75653.12299999999,1875871664,2003165128],"## initialize":[32271.063399999995,720294568,847598072],"- plugin 6 (node-resolve) - buildStart":[0.43479999999999563,7688,127322152],"- plugin 8 (commonjs) - buildStart":[0.595299999999952,12256,127335856],"- plugin 9 (@cocos/typescript) - buildStart":[32269.47,720258088,847594488],"## generate module graph":[37228.120500000005,941467488,1789428696],"- plugin 0 (commonjs--resolver) - resolveId":[81.50700000024517,-13913136,2082939984],"- plugin 1 (@cocos/ccbuild|external-loader) - resolveId":[25.191099999843573,2230296,2082963560],"- plugin 2 (@cocos/ccbuild|module-overrides) - resolveId":[33.56600000016624,1563728,2082986072],"- plugin 3 (virtual) - resolveId":[63.45340000021679,6904704,2083023616],"- plugin 1 (@cocos/ccbuild|external-loader) - load":[6.6534000000028755,1450296,2083675408],"- plugin 2 (@cocos/ccbuild|module-overrides) - load":[17.950100000176462,-34568,2083686392],"- plugin 3 (virtual) - load":[4.703599999927974,842576,2083693112],"- plugin 7 (json) - transform":[12.122499999997672,1190080,2084068648],"- plugin 8 (commonjs) - transform":[398.3299999999872,27577712,2084087912],"- plugin 10 (babel) - transform":[571.2182000001194,49669768,2084496664],"generate ast":[2061.1343000002234,543177720,2082818656],"- plugin 4 (@cocos/ccbuild|module-query-plugin) - resolveId":[38.349599999659404,4717816,2083057392],"- plugin 5 (ts-paths) - resolveId":[21.630199999759498,506568,2083076864],"- plugin 9 (@cocos/typescript) - resolveId":[8220.196700000393,49410056,2083505064],"- plugin 10 (babel) - resolveId":[5.908399999869289,130704,2051555552],"- plugin 6 (node-resolve) - resolveId":[23.20529999977589,1509304,1993797984],"- plugin 6 (node-resolve) - load":[4.39739999982703,513192,2083699832],"- plugin 8 (commonjs) - load":[5.814099999988684,305288,2083706576],"- plugin 9 (@cocos/typescript) - load":[57.511800000247604,13274936,2083829752],"- plugin 10 (babel) - load":[410.294599999972,51264952,1777393992],"## sort and bind modules":[475.5121999999974,51462160,1840890888],"## mark included statements":[5645.378899999996,161451520,2002342440],"treeshaking pass 1":[1403.0127000000066,54773240,1896271192],"treeshaking pass 2":[1389.2835999999952,65514448,1961785672],"treeshaking pass 3":[603.2381999999925,-1825128,1959960576],"treeshaking pass 4":[413.3487000000023,14932304,1974892912],"treeshaking pass 5":[302.6918000000005,19961760,1994854704],"treeshaking pass 6":[288.0234000000055,6115048,2000969784],"treeshaking pass 7":[279.1186999999918,-2836328,1998133488],"treeshaking pass 8":[249.5405000000028,-13566624,1984566896],"treeshaking pass 9":[229.69199999999546,-14921664,1969645264],"treeshaking pass 10":[236.01440000000002,-16933368,1952711928],"treeshaking pass 11":[248.19720000000962,49630048,2002342008],"- plugin 8 (commonjs) - buildEnd":[0.2445000000006985,1480,2002348552],"- plugin 9 (@cocos/typescript) - buildEnd":[31.851599999994505,815632,2003164216]}
+====             ====
+Workers failed to exit gracefully
+[build] ccbuild done in 119.8s
+[build] output: build\cocosair.module.min.js.map (source map)
+[build] output: build\cocosair.module.min.js
+[build] output: build\bootstrap.js (engine-free safe entry)
+[build] output: build\package.json (type: module)
+[build] output: build/gltf-decoders/package.json (type: commonjs)
+[build] cleaned: build\.tmp-min-1791256810408
+[dts] bundling type declarations (this may take a few minutes) ...
+Typescript version: 4.9.5
+With index: true
+With exports: false
+With editor exports: true
+Unbundled will write to: E:/AIProMax/github/cocosair.js/src/__dts_before_bundle
+Generating...
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts (2,65): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+    Imported via './src/box2d' from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/index.d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (28,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/common/b2_settings.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "./b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/common/b2_math.ts'
+    Imported via "./b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/common/b2_growable_stack.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collision.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_distance.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_dynamic_tree.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_time_of_impact.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_circle.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_circle_shape.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_polygon_shape.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_polygon.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_edge.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_edge_shape.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_chain_shape.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_fixture.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_body.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_time_step.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_area_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_distance_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_friction_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_gear_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_prismatic_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_revolute_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_motor_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_mouse_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_pulley_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_rope_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_weld_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_wheel_joint.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_voronoi_diagram.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_buoyancy_controller.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_gravity_controller.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_tensor_damping_controller.ts'
+    Imported via "../common/b2_settings.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/rope/b2_rope.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (29,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/common/b2_math.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "./b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/common/b2_draw.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collision.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_shape.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_distance.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_broad_phase.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_dynamic_tree.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_time_of_impact.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_circle.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_circle_shape.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_polygon_shape.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_polygon.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_edge.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_edge_shape.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_chain_shape.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_fixture.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_body.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_time_step.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_group.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_area_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_distance_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_friction_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_gear_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_prismatic_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_revolute_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_motor_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_mouse_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_pulley_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_rope_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_weld_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_wheel_joint.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_circle_contact.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_contact.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_circle_contact.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_circle_contact.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_polygon_contact.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_circle_contact.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_polygon_contact.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_voronoi_diagram.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_buoyancy_controller.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_constant_accel_controller.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_constant_force_controller.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_gravity_controller.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_tensor_damping_controller.ts'
+    Imported via "../common/b2_math.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/rope/b2_rope.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (30,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/common/b2_draw.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_group.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_controller.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_buoyancy_controller.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_constant_accel_controller.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_constant_force_controller.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_gravity_controller.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_tensor_damping_controller.ts'
+    Imported via "../common/b2_draw.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/rope/b2_rope.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (31,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/common/b2_timer.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./common/b2_timer.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../common/b2_timer.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_time_of_impact.ts'
+    Imported via "../common/b2_timer.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../common/b2_timer.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (32,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/common/b2_growable_stack.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./common/b2_growable_stack.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../common/b2_growable_stack.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_dynamic_tree.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (33,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/common/b2_block_allocator.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (34,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/common/b2_stack_allocator.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (36,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collision.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_shape.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_broad_phase.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_dynamic_tree.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_circle.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_circle_shape.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_polygon_shape.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_polygon.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_polygon.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_edge.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_edge.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_edge_shape.ts'
+    Imported via "./b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_chain_shape.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_fixture.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_manager.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_circle_contact.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_contact.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_circle_contact.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_circle_contact.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_polygon_contact.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_circle_contact.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_polygon_contact.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+    Imported via "../collision/b2_collision.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (38,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_broad_phase.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./collision/b2_broad_phase.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../collision/b2_broad_phase.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_manager.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (40,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_time_of_impact.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./collision/b2_time_of_impact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../collision/b2_time_of_impact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts'
+    Imported via "../collision/b2_time_of_impact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (41,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_circle.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./collision/b2_collide_circle.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../collision/b2_collide_circle.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_circle_contact.ts'
+    Imported via "../collision/b2_collide_circle.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_circle_contact.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (42,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_polygon.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./collision/b2_collide_polygon.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../collision/b2_collide_polygon.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_contact.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (43,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_edge.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./collision/b2_collide_edge.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../collision/b2_collide_edge.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_circle_contact.ts'
+    Imported via "../collision/b2_collide_edge.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_polygon_contact.ts'
+    Imported via "../collision/b2_collide_edge.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_circle_contact.ts'
+    Imported via "../collision/b2_collide_edge.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_polygon_contact.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (49,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_chain_shape.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./collision/b2_chain_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../collision/b2_chain_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "../collision/b2_chain_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../collision/b2_chain_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_circle_contact.ts'
+    Imported via "../collision/b2_chain_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_polygon_contact.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (51,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_fixture.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./dynamics/b2_fixture.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "./b2_fixture.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts'
+    Imported via "./b2_fixture.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts'
+    Imported via "../dynamics/b2_fixture.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "./b2_fixture.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts'
+    Imported via "./b2_fixture.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_manager.ts'
+    Imported via "./b2_fixture.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./b2_fixture.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+    Imported via "./b2_fixture.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_body.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (86,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_buoyancy_controller.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (87,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_constant_accel_controller.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (88,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_constant_force_controller.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (89,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_gravity_controller.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (90,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_tensor_damping_controller.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts (99,15): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/rope/b2_rope.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_broad_phase.ts (21,43): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_dynamic_tree.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_dynamic_tree.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_broad_phase.ts'
+    Imported via "./collision/b2_dynamic_tree.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../collision/b2_dynamic_tree.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_fixture.ts'
+    Imported via "../collision/b2_dynamic_tree.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../collision/b2_dynamic_tree.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_manager.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_circle.ts (4,31): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_circle_shape.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_circle_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_circle.ts'
+    Imported via "./b2_circle_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_edge.ts'
+    Imported via "./collision/b2_circle_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../collision/b2_circle_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../collision/b2_circle_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_circle_contact.ts'
+    Imported via "../collision/b2_circle_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_circle_contact.ts'
+    Imported via "../collision/b2_circle_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_circle_contact.ts'
+    Imported via "../collision/b2_circle_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_circle_contact.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_circle.ts (5,32): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_polygon_shape.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_polygon_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_circle.ts'
+    Imported via "./b2_polygon_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_polygon.ts'
+    Imported via "./b2_polygon_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_edge.ts'
+    Imported via "./collision/b2_polygon_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../collision/b2_polygon_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../collision/b2_polygon_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_contact.ts'
+    Imported via "../collision/b2_polygon_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_circle_contact.ts'
+    Imported via "../collision/b2_polygon_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_polygon_contact.ts'
+    Imported via "../collision/b2_polygon_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_polygon_contact.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_edge.ts (8,29): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_edge_shape.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_edge_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collide_edge.ts'
+    Imported via "./collision/b2_edge_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "./b2_edge_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_chain_shape.ts'
+    Imported via "../collision/b2_edge_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "../collision/b2_edge_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../collision/b2_edge_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_circle_contact.ts'
+    Imported via "../collision/b2_edge_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_polygon_contact.ts'
+    Imported via "../collision/b2_edge_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_circle_contact.ts'
+    Imported via "../collision/b2_edge_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_polygon_contact.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collision.ts (22,25): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_shape.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collision.ts'
+    Imported via "./b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_distance.ts'
+    Imported via "./b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_circle_shape.ts'
+    Imported via "./b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_circle_shape.ts'
+    Imported via "./b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_polygon_shape.ts'
+    Imported via "./b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_polygon_shape.ts'
+    Imported via "./b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_edge_shape.ts'
+    Imported via "./b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_edge_shape.ts'
+    Imported via "./collision/b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "./b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_chain_shape.ts'
+    Imported via "./b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_chain_shape.ts'
+    Imported via "../collision/b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_fixture.ts'
+    Imported via "../collision/b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_body.ts'
+    Imported via "../collision/b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts'
+    Imported via "../collision/b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_group.ts'
+    Imported via "../collision/b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "../collision/b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../collision/b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts'
+    Imported via "../collision/b2_shape.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_shape.ts (22,33): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_distance.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_distance.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_shape.ts'
+    Imported via "./b2_distance.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_collision.ts'
+    Imported via "./collision/b2_distance.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "./b2_distance.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_time_of_impact.ts'
+    Imported via "./b2_distance.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_circle_shape.ts'
+    Imported via "./b2_distance.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_polygon_shape.ts'
+    Imported via "./b2_distance.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_edge_shape.ts'
+    Imported via "./b2_distance.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/collision/b2_chain_shape.ts'
+    Imported via "../collision/b2_distance.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_area_joint.ts (5,53): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_distance_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_distance_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_area_joint.ts'
+    Imported via "./b2_distance_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_distance_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_body.ts (24,31): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_body.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_manager.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_circle_contact.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_contact.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_circle_contact.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_circle_contact.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_polygon_contact.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_circle_contact.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_polygon_contact.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "./b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+    Imported via "./dynamics/b2_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts (27,35): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_world_callbacks.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts'
+    Imported via "./b2_world_callbacks.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_manager.ts'
+    Imported via "./b2_world_callbacks.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "./b2_world_callbacks.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./b2_world_callbacks.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./b2_world_callbacks.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./b2_world_callbacks.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./b2_world_callbacks.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../dynamics/b2_world_callbacks.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "./dynamics/b2_world_callbacks.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts (4,33): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_circle_contact.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_circle_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts'
+    Imported via "./dynamics/b2_circle_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts (5,34): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_contact.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_polygon_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts'
+    Imported via "./dynamics/b2_polygon_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts (6,43): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_polygon_circle_contact.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_polygon_circle_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts'
+    Imported via "./dynamics/b2_polygon_circle_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts (7,40): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_circle_contact.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_edge_circle_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts'
+    Imported via "./dynamics/b2_edge_circle_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts (8,41): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_edge_polygon_contact.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_edge_polygon_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts'
+    Imported via "./dynamics/b2_edge_polygon_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts (9,41): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_circle_contact.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_chain_circle_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts'
+    Imported via "./dynamics/b2_chain_circle_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts (10,42): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_chain_polygon_contact.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_chain_polygon_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts'
+    Imported via "./dynamics/b2_chain_polygon_contact.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_manager.ts (24,34): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_factory.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_contact_factory.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_manager.ts'
+    Imported via "./dynamics/b2_contact_factory.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_fixture.ts (25,24): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_body.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_fixture.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_joint.ts'
+    Imported via "../dynamics/b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_distance_joint.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_area_joint.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_friction_joint.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_prismatic_joint.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_revolute_joint.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_gear_joint.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_motor_joint.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_pulley_joint.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_weld_joint.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_wheel_joint.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_manager.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+    Imported via "./b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "../dynamics/b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_controller.ts'
+    Imported via "./dynamics/b2_body.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_gear_joint.ts (24,34): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_prismatic_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_prismatic_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_gear_joint.ts'
+    Imported via "./b2_prismatic_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_prismatic_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_gear_joint.ts (25,33): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_revolute_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_revolute_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_gear_joint.ts'
+    Imported via "./b2_revolute_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_revolute_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts (27,53): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_contact_solver.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "./b2_contact_solver.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "./dynamics/b2_contact_solver.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_joint.ts (23,30): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_time_step.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_joint.ts'
+    Imported via "../dynamics/b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_distance_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_area_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_friction_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_prismatic_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_revolute_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_gear_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_motor_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_mouse_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_pulley_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_rope_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_weld_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_wheel_joint.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_solver.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "./b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../dynamics/b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_controller.ts'
+    Imported via "./dynamics/b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "../dynamics/b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_buoyancy_controller.ts'
+    Imported via "../dynamics/b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_constant_accel_controller.ts'
+    Imported via "../dynamics/b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_constant_force_controller.ts'
+    Imported via "../dynamics/b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_gravity_controller.ts'
+    Imported via "../dynamics/b2_time_step.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_tensor_damping_controller.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (34,46): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_area_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_area_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_area_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (36,54): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_friction_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_friction_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_friction_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (37,46): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_gear_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_gear_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_gear_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (38,48): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_motor_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_motor_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_motor_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (39,48): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_mouse_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_mouse_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_mouse_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (41,50): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_pulley_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_pulley_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_pulley_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (43,46): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_rope_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_rope_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_rope_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (44,46): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_weld_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_weld_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_weld_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (45,48): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_wheel_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_wheel_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_wheel_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (47,34): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_contact_manager.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_contact_manager.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_contact_manager.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (49,26): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_island.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./dynamics/b2_island.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts (62,48): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_controller.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "../controllers/b2_controller.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../controllers/b2_controller.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_body.ts'
+    Imported via "./controllers/b2_controller.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+    Imported via "./b2_controller.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_buoyancy_controller.ts'
+    Imported via "./b2_controller.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_constant_accel_controller.ts'
+    Imported via "./b2_controller.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_constant_force_controller.ts'
+    Imported via "./b2_controller.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_gravity_controller.ts'
+    Imported via "./b2_controller.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/controllers/b2_tensor_damping_controller.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts (24,25): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_joint.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_area_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_distance_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_friction_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_gear_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_prismatic_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_revolute_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_motor_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_mouse_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_pulley_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_rope_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_weld_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_wheel_joint.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_island.ts'
+    Imported via "./b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_body.ts'
+    Imported via "./dynamics/b2_joint.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts (27,33): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_group.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "../particle/b2_particle_group.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts'
+    Imported via "./b2_particle_group.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle.ts'
+    Imported via "./b2_particle_group.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "./particle/b2_particle_group.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_group.ts (25,32): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_particle.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_group.ts'
+    Imported via "../particle/b2_particle.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "./b2_particle.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "./particle/b2_particle.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_group.ts (26,34): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./b2_particle_system.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_group.ts'
+    Imported via "../particle/b2_particle_system.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts'
+    Imported via "../particle/b2_particle_system.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world_callbacks.ts'
+    Imported via "./particle/b2_particle_system.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts (33,25): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_world.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "../dynamics/b2_world.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts'
+    Imported via "./b2_world.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/dynamics/b2_body.ts'
+    Imported via "./dynamics/b2_world.js" from file 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/box2d.ts'
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_particle_system.ts (37,34): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_voronoi_diagram.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_voronoi_diagram.ts (24,30): File 'E:/AIProMax/github/cocosair.js/node_modules/@cocos/box2d/src/particle/b2_stack_queue.ts' is not under 'rootDir' 'E:/AIProMax/github/cocosair.js/src'. 'rootDir' is expected to contain all source files.
+E:/AIProMax/github/cocosair.js/src/cocos/3d/misc/mesh-codec.ts (92,24): Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.js' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/3d/misc/mesh-codec.ts (93,24): Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.wasm' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/3d/misc/mesh-codec.ts (99,27): Cannot find module 'external:emscripten/meshopt/meshopt_decoder.asm.js' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48,48): Cannot find namespace 'B2'. Did you mean 'b2'?
+E:/AIProMax/github/cocosair.js/src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48,48): Parameter 'point' of public method from exported class has or is using private name 'B2'.
+E:/AIProMax/github/cocosair.js/src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48,65): Cannot find namespace 'B2'. Did you mean 'b2'?
+E:/AIProMax/github/cocosair.js/src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48,65): Parameter 'normal' of public method from exported class has or is using private name 'B2'.
+E:/AIProMax/github/cocosair.js/src/cocos/physics/cannon/constraints/cannon-distance-constraint.ts (1,1): 'cannon-distance-constraint.ts' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-3.8.ts (34,24): Cannot find module 'external:emscripten/spine/3.8/spine.wasm.js' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-3.8.ts (35,24): Cannot find module 'external:emscripten/spine/3.8/spine.wasm' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-3.8.ts (42,24): Cannot find module 'external:emscripten/spine/3.8/spine.asm.js' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-3.8.ts (43,24): Cannot find module 'external:emscripten/spine/3.8/spine.js.mem' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-4.2.ts (35,24): Cannot find module 'external:emscripten/spine/4.2/spine.wasm.js' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-4.2.ts (36,24): Cannot find module 'external:emscripten/spine/4.2/spine.wasm' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-4.2.ts (43,24): Cannot find module 'external:emscripten/spine/4.2/spine.asm.js' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-4.2.ts (44,24): Cannot find module 'external:emscripten/spine/4.2/spine.js.mem' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-dynamic.ts (55,28): Cannot find module 'external:emscripten/spine/4.2/spine.wasm.js' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-dynamic.ts (56,28): Cannot find module 'external:emscripten/spine/4.2/spine.wasm' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-dynamic.ts (63,28): Cannot find module 'external:emscripten/spine/4.2/spine.asm.js' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-dynamic.ts (64,28): Cannot find module 'external:emscripten/spine/4.2/spine.js.mem' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-dynamic.ts (73,28): Cannot find module 'external:emscripten/spine/3.8/spine.wasm.js' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-dynamic.ts (74,28): Cannot find module 'external:emscripten/spine/3.8/spine.wasm' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-dynamic.ts (81,28): Cannot find module 'external:emscripten/spine/3.8/spine.asm.js' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-instantiate-dynamic.ts (82,28): Cannot find module 'external:emscripten/spine/3.8/spine.js.mem' or its corresponding type declarations.
+E:/AIProMax/github/cocosair.js/src/cocos/spine/lib/spine-wasm-utils.ts (16,19): Cannot find namespace 'SpineWasm'.
+E:/AIProMax/github/cocosair.js/src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48,48): Parameter 'point' of public method from exported class has or is using private name 'B2'.
+E:/AIProMax/github/cocosair.js/src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48,65): Parameter 'normal' of public method from exported class has or is using private name 'B2'.
+It's 2026/10/6 11:22:52, we're still doing the hack for spine-core.d.ts
+Bundling...
+DeprecationWarning: 'createIndexSignature' has been deprecated since v4.8.0. Decorators are no longer supported for this function. Callers should switch to an overload that does not accept a 'decorators' parameter.
+DeprecationWarning: '' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+Don't know how to handle type `${x}`(Syntax Kind: TemplateLiteralType)
+Don't know how to handle type `${x}`(Syntax Kind: TemplateLiteralType)
+Failed to resolve type import('pal/input/input-source').InputSourceButton, There is no symbol info.
+Failed to resolve type import('pal/input/input-source').InputSourceDpad, There is no symbol info.
+Failed to resolve type import('pal/input/input-source').InputSourceStick, There is no symbol info.
+Failed to resolve type import('pal/input/input-source').InputSourcePosition, There is no symbol info.
+Failed to resolve type import('pal/input/input-source').InputSourceOrientation, There is no symbol info.
+Failed to resolve type import('pal/audio/type').AudioLoadOptions, There is no symbol info.
+Failed to resolve type import('pal/audio/type').AudioLoadOptions, There is no symbol info.
+Failed to resolve type import('pal/audio/type').AudioLoadOptions, There is no symbol info.
+Failed to resolve type import('pal/audio/type').AudioType, There is no symbol info.
+Failed to resolve type import('pal/audio/type').AudioState, There is no symbol info.
+Failed to resolve type import('pal/audio/type').AudioPCMDataView, There is no symbol info.
+[dts] done in 48.6s → build/cocosair.module.d.ts
+[package] cocosair.module.js -> build\npm/cocosair.module.js (source map omitted)
+[package] cocosair.module.min.js -> build\npm/cocosair.module.min.js (source map omitted)
+[package] bootstrap.js -> build\npm/bootstrap.js (source map omitted)
+[published-artifacts] 4 markers x 2 bundles: PASS (build/npm/cocosair.module.js 6595240B, build/npm/cocosair.module.min.js 3683546B)

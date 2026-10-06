@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "cdafc907db9bebe2",
-  "apiInventoryRevision": "a21b14a9c9eb7d60",
+  "sourceFingerprint": "d3140a19a76e8100",
+  "apiInventoryRevision": "d1dd854fb6771ed1",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -13554,6 +13554,12 @@
       "parent": "renderer.RenderScene"
     },
     "renderer.RenderScene.mainLight": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "renderer.RenderScene"
+    },
+    "renderer.RenderScene.directionalLights": {
       "kind": "property",
       "tier": "supporting",
       "coverageRequired": false,
@@ -54361,6 +54367,30 @@
       "coverageRequired": false,
       "parent": null
     },
+    "inspectAirMeshMaterial": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "inspectAirGeometry": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "inspectAirAnimationControllers": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "inspectAirDirectionalLights": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "rendering.createCustomPipeline": {
       "kind": "function",
       "tier": "supporting",
@@ -74692,9 +74722,9 @@
     "core": 964,
     "important": 283,
     "advanced": 192,
-    "supporting": 8223,
+    "supporting": 8228,
     "internal": 2624
   },
-  "totalUnits": 12286,
+  "totalUnits": 12291,
   "coverageRequiredUnits": 1439
 }
