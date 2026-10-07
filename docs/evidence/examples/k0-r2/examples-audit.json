@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "k0-r2-examples-audit/1",
+  "executionChannel": "Lead",
+  "checkedAt": "2026-10-07T07:32:31.155Z",
+  "report": "docs/evidence/examples/k0-r2/examples-verified.json",
+  "fingerprints": 17,
+  "rows": 3,
+  "canvasPNGs": 30,
+  "oldTwoPaths": "PASS",
+  "ownReleaseRows": [
+    {
+      "engine": "chromium",
+      "leases": 13,
+      "loopTime": 6.163600000023825,
+      "duration": 5.5,
+      "litSkinPixels": 83423,
+      "exampleLifecycle": {
+        "label": "k0-r2-porting-contracts",
+        "held": 3,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      }
+    },
+    {
+      "engine": "firefox",
+      "leases": 13,
+      "loopTime": 6.172999999999983,
+      "duration": 5.5,
+      "litSkinPixels": 83186,
+      "exampleLifecycle": {
+        "label": "k0-r2-porting-contracts",
+        "held": 3,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      }
+    },
+    {
+      "engine": "webkit",
+      "leases": 13,
+      "loopTime": 6.201999999999983,
+      "duration": 5.5,
+      "litSkinPixels": 82419,
+      "exampleLifecycle": {
+        "label": "k0-r2-porting-contracts",
+        "held": 3,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      }
+    }
+  ],
+  "inventory": {
+    "suites": 106,
+    "tests": 846,
+    "passed": 842,
+    "failed": 4,
+    "exitCode": 1,
+    "log": "output/playwright/k0-r2-examples-inventory-final.log"
+  },
+  "limits": [
+    "bounded four-example acceptance",
+    "global four historical gates fail",
+    "GPU memory unavailable"
+  ]
+}

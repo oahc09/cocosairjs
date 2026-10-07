@@ -17,6 +17,8 @@ billboard.technique = 0; // 当前内建效果只有add这一项；超出范围�
 
 默认width/height为0，必须设置可见尺寸。原生API不新增AIR参数校验层；technique按原生效果数量截断。应用保留输入Texture2D的所有权并在最后一个使用者退役后释放它。组件创建的Model、Mesh、Material独占，改变technique与节点销毁会清理旧实例并归还原生模型池；不会销毁共享输入纹理。停用只是退出渲染场景，重新启用会重新挂接模型。
 
+尺寸由 `billboard.width/height` 控制。当前原生shader用节点世界矩阵移动中心，再在相机平面中按这两个值展开矩形，因此 `node.setScale(3,3,1)` 不会把矩形放大三倍；父节点变换仍影响中心位置。这与普通MeshRenderer、实例化网格、蒙皮网格的世界缩放不同。要放大Billboard，修改width/height；无需将所有其他网格的尺寸烘进顶点。当前三浏览器对照和边界见[K0 R2合同](k0-r2-porting-contracts.md)。
+
 `node tools/verify/air-billboard-browser.cjs --out=<新.json>` 检查三个相机角度、中心90°旋转以及场景释放；专用组件无需导入完整ParticleSystem。范围决议见[owner第13节](../reference/owner-decisions.md#13-端口缺口范围决议2026-10-04)，当前实测见[台账](../../ai/ledgers/port-gap-remediation.md)。
 
 覆盖率库存与专项验收分别记录。此新公开组件的11个单元尚无当前Gallery逐API执行证明，库存明确标为documented-only，不增加verified计数；专项像素/安装消费结果仍按台账的实际候选与范围读取。实例通过Node.addComponent创建，onLoad/onEnable/onDisable/onDestroy由引擎按生命周期调用，业务不直接调用这些回调。

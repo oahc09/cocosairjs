@@ -1,0 +1,446 @@
+{
+  "schemaVersion": "k0-r2-audit/1",
+  "executionChannel": "Lead",
+  "observedAt": "2026-10-07T06:42:44.081Z",
+  "checks": [
+    {
+      "path": "docs/evidence/examples/k0-r2/workspace.json",
+      "sha256": "0bfdac8c191a6597a0d1244389dfd61107a2d14bda8bcd6c8b0df151cf7fd756",
+      "pass": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "states": 36,
+          "assertions": 56,
+          "version": "149.0.7827.55",
+          "buildRequests": 1,
+          "owned": 27
+        },
+        {
+          "engine": "firefox",
+          "states": 36,
+          "assertions": 56,
+          "version": "155.0",
+          "buildRequests": 1,
+          "owned": 27
+        },
+        {
+          "engine": "webkit",
+          "states": 36,
+          "assertions": 56,
+          "version": "26.6",
+          "buildRequests": 1,
+          "owned": 27
+        }
+      ]
+    },
+    {
+      "path": "docs/evidence/examples/k0-r2/installed.json",
+      "sha256": "a31eb4166211b6e43896e97775917794314c57551aafc676b0bd1b0e1e68c436",
+      "pass": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "states": 36,
+          "assertions": 56,
+          "version": "149.0.7827.55",
+          "buildRequests": 0,
+          "owned": 27
+        },
+        {
+          "engine": "firefox",
+          "states": 36,
+          "assertions": 56,
+          "version": "155.0",
+          "buildRequests": 0,
+          "owned": 27
+        },
+        {
+          "engine": "webkit",
+          "states": 36,
+          "assertions": 56,
+          "version": "26.6",
+          "buildRequests": 0,
+          "owned": 27
+        }
+      ]
+    }
+  ],
+  "mutations": [
+    {
+      "name": "missingCase",
+      "rejected": true
+    },
+    {
+      "name": "whiteVertex",
+      "rejected": true
+    },
+    {
+      "name": "noActiveColor",
+      "rejected": true
+    },
+    {
+      "name": "invisibleFox",
+      "rejected": true
+    },
+    {
+      "name": "loopStopped",
+      "rejected": true
+    },
+    {
+      "name": "sharedNormalMutated",
+      "rejected": true
+    },
+    {
+      "name": "secondAnimation",
+      "rejected": true
+    },
+    {
+      "name": "emptyStillDraws",
+      "rejected": true
+    },
+    {
+      "name": "partialTopologyLost",
+      "rejected": true
+    },
+    {
+      "name": "partialNaN",
+      "rejected": true
+    },
+    {
+      "name": "GLerror",
+      "rejected": true
+    },
+    {
+      "name": "refsNotReturned",
+      "rejected": true
+    },
+    {
+      "name": "closeFailed",
+      "rejected": true
+    },
+    {
+      "name": "nodeNotRetired",
+      "rejected": true
+    },
+    {
+      "name": "pageError",
+      "rejected": true
+    },
+    {
+      "name": "consoleError",
+      "rejected": true
+    },
+    {
+      "name": "missingUVUnexpectedDraw",
+      "rejected": true
+    },
+    {
+      "name": "fogNotRestored",
+      "rejected": true
+    },
+    {
+      "name": "scaleNoEffect",
+      "rejected": true
+    },
+    {
+      "name": "billboardWrongContract",
+      "rejected": true
+    },
+    {
+      "name": "mainLightNotReplaced",
+      "rejected": true
+    },
+    {
+      "name": "coordNotInverted",
+      "rejected": true
+    },
+    {
+      "name": "bundle-SHA-drift",
+      "rejected": true
+    },
+    {
+      "name": "empty-browser-scope",
+      "rejected": true
+    }
+  ],
+  "browserRunsAdded": 0,
+  "sourceMapChecks": [
+    {
+      "path": "build/cocosair.module.js.map",
+      "sha256": "b9a6183d745ae774288c2d7963364a6fa9d87297f1a399b2421aa6d1e3a246f0",
+      "sources": [
+        {
+          "path": "src/air/builtin/builtin-effects.ts",
+          "sha256": "a8493532814122e78b489e9a2fbd847ba72abf0112c3cc7b397763ce247fb44b",
+          "matches": true
+        },
+        {
+          "path": "src/air/assets/gltf/asset.ts",
+          "sha256": "c95a23e8358c2ca4903c36f451b44a0674ea5f03af172f065c91b63f285708af",
+          "matches": true
+        },
+        {
+          "path": "src/air/assets/gltf/material/standard-effect.ts",
+          "sha256": "c4d866f2b86d94dd18df16000ed45c95bf4f4573a0b383776bdd3d35515c0db3",
+          "matches": true
+        },
+        {
+          "path": "src/air/rendering/engine-contracts.ts",
+          "sha256": "791b53b8e520057cac25baa9efbba796ae3772b45c40dd27f4fdcdf1923d6b66",
+          "matches": true
+        },
+        {
+          "path": "src/cocos/3d/assets/mesh.ts",
+          "sha256": "6a9c30a9a8a36a39e85fa5b3218ee54ff269ff31f740c10474db6a495dd23152",
+          "matches": true
+        },
+        {
+          "path": "src/cocos/3d/misc/mesh-validation.ts",
+          "sha256": "3b790c1ad24cf4f0f74d193182e746abe11b6887d1eb77db0f7209c3527bddf6",
+          "matches": true
+        },
+        {
+          "path": "src/cocos/render-scene/scene/fog.ts",
+          "sha256": "29a0a545c798531ceed27ab8ad087ec57b6ef06353607bd8f9713d8607c640c5",
+          "matches": true
+        },
+        {
+          "path": "src/cocos/particle/billboard.ts",
+          "sha256": "870919d0a483b13f51953536b0e9a514113956ec9230acb5266421e47151b44c",
+          "matches": true
+        },
+        {
+          "path": "src/cocos/scene-graph/node.ts",
+          "sha256": "385eabe981cf2c20c65211a488d03a702727e895029d3743193264cf9b500a2b",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "path": "build/cocosair.module.min.js.map",
+      "sha256": "42a43a8245b1e366b5efb839d150deda41a9fdf494917f7ac67ea16fe10d6374",
+      "sources": [
+        {
+          "path": "src/air/builtin/builtin-effects.ts",
+          "sha256": "a8493532814122e78b489e9a2fbd847ba72abf0112c3cc7b397763ce247fb44b",
+          "matches": true
+        },
+        {
+          "path": "src/air/assets/gltf/asset.ts",
+          "sha256": "c95a23e8358c2ca4903c36f451b44a0674ea5f03af172f065c91b63f285708af",
+          "matches": true
+        },
+        {
+          "path": "src/air/assets/gltf/material/standard-effect.ts",
+          "sha256": "c4d866f2b86d94dd18df16000ed45c95bf4f4573a0b383776bdd3d35515c0db3",
+          "matches": true
+        },
+        {
+          "path": "src/air/rendering/engine-contracts.ts",
+          "sha256": "791b53b8e520057cac25baa9efbba796ae3772b45c40dd27f4fdcdf1923d6b66",
+          "matches": true
+        },
+        {
+          "path": "src/cocos/3d/assets/mesh.ts",
+          "sha256": "6a9c30a9a8a36a39e85fa5b3218ee54ff269ff31f740c10474db6a495dd23152",
+          "matches": true
+        },
+        {
+          "path": "src/cocos/3d/misc/mesh-validation.ts",
+          "sha256": "3b790c1ad24cf4f0f74d193182e746abe11b6887d1eb77db0f7209c3527bddf6",
+          "matches": true
+        },
+        {
+          "path": "src/cocos/render-scene/scene/fog.ts",
+          "sha256": "29a0a545c798531ceed27ab8ad087ec57b6ef06353607bd8f9713d8607c640c5",
+          "matches": true
+        },
+        {
+          "path": "src/cocos/particle/billboard.ts",
+          "sha256": "870919d0a483b13f51953536b0e9a514113956ec9230acb5266421e47151b44c",
+          "matches": true
+        },
+        {
+          "path": "src/cocos/scene-graph/node.ts",
+          "sha256": "385eabe981cf2c20c65211a488d03a702727e895029d3743193264cf9b500a2b",
+          "matches": true
+        }
+      ]
+    }
+  ],
+  "historical": [
+    {
+      "path": "output/competitive-benchmark/k0/package/build/npm/cocosair.module.js",
+      "bytes": 6422525,
+      "sha256": "3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6",
+      "method": "READONLY_IDENTITY",
+      "armRuntimeReproduced": false
+    },
+    {
+      "path": "output/competitive-benchmark/baseline/cocosair.js-1.0.0.tgz",
+      "bytes": 3877213,
+      "sha256": "0e368ae572ecd3812db2b7387828a8ac41a0b632d33f75bf4a74d942fd262a54",
+      "method": "READONLY_IDENTITY",
+      "armRuntimeReproduced": false
+    }
+  ],
+  "focusedTests": {
+    "command": "node node_modules/jest/bin/jest.js --runInBand --runTestsByPath <five suites> --json --outputFile=output/playwright/k0-r2-lead-focused-tests.json",
+    "exitCode": 0,
+    "suites": 5,
+    "tests": 27,
+    "passed": 27,
+    "details": [
+      {
+        "file": "test/smoke/k0-r2-native-contracts.test.ts",
+        "tests": [
+          {
+            "name": "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N3 mesh writes require notification to synchronize an existing renderer draw count",
+            "status": "passed"
+          },
+          {
+            "name": "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N1 large capacity 4096 vertices allocates and reads back actual data",
+            "status": "passed"
+          },
+          {
+            "name": "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N3 100 repeated partial position updates preserve indices and other streams",
+            "status": "passed"
+          },
+          {
+            "name": "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N4 empty indices after populated update clears drawInfo indexCount",
+            "status": "passed"
+          },
+          {
+            "name": "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N14d setScale(Vec3) and setScale(x,y,z) are equivalent for a plain Mesh node",
+            "status": "passed"
+          },
+          {
+            "name": "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N14d parent scale compounds to child world position",
+            "status": "passed"
+          },
+          {
+            "name": "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N14b Euler 90° Z rotation maps +X to +Y",
+            "status": "passed"
+          },
+          {
+            "name": "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N14c multiple ordinary DirectionalLights register but only one is mainLight",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "file": "test/smoke/engine-contract-inspection.test.ts",
+        "tests": [
+          {
+            "name": "read-only native material geometry and light contracts explicit builtin vertex color and missing UV are distinguished without compiling",
+            "status": "passed"
+          },
+          {
+            "name": "read-only native material geometry and light contracts reflection detects a declared vertex-color macro whose active GPU shader omits a_color",
+            "status": "passed"
+          },
+          {
+            "name": "read-only native material geometry and light contracts winding mismatch, negative and singular transforms are actual data, not a camera-facing guess",
+            "status": "passed"
+          },
+          {
+            "name": "read-only native material geometry and light contracts main directional query follows native selection and removal without rewriting light policy",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "file": "test/smoke/competitive-gltf-animation-contract.test.ts",
+        "tests": [
+          {
+            "name": "competitive glTF animation contract default Normal completes once, loop override is per state and per instance",
+            "status": "passed"
+          },
+          {
+            "name": "competitive glTF animation contract native pause/resume/clip switching and private material variants preserve the second instance",
+            "status": "passed"
+          },
+          {
+            "name": "competitive glTF animation contract invalid names/options and disposed instances are diagnosed without changing shared clips",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "file": "test/smoke/engine-contract-state.test.ts",
+        "tests": [
+          {
+            "name": "native fog, TRS and controller contracts fog remembers disabled type and uses NONE only as effective pipeline state",
+            "status": "passed"
+          },
+          {
+            "name": "native fog, TRS and controller contracts invalid local/world TRS is rejected before poisoning transforms or emitting change events",
+            "status": "passed"
+          },
+          {
+            "name": "native fog, TRS and controller contracts valid scale and degree rotation affect actual transformed coordinates",
+            "status": "passed"
+          },
+          {
+            "name": "native fog, TRS and controller contracts duplicate same-node Animation is diagnosed without preventing independent components",
+            "status": "passed"
+          },
+          {
+            "name": "native fog, TRS and controller contracts readonly controller inspection resolves actual shared targets across distinct roots",
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "file": "test/smoke/engine-contract-mesh.test.ts",
+        "tests": [
+          {
+            "name": "native mesh contract preflight and updates capacity and wrong keys reject before resetting out or allocating GPU buffers",
+            "status": "passed"
+          },
+          {
+            "name": "native mesh contract preflight and updates default capacity remains 1024 and 1025 vertices reject before allocation",
+            "status": "passed"
+          },
+          {
+            "name": "native mesh contract preflight and updates partial updates preserve indices and update UV semantic without touching normal stream",
+            "status": "passed"
+          },
+          {
+            "name": "native mesh contract preflight and updates invalid full update is atomic across bytes, counts, bounds and GPU calls",
+            "status": "passed"
+          },
+          {
+            "name": "native mesh contract preflight and updates failed GPU initialization releases every allocation and leaves out retryable",
+            "status": "passed"
+          },
+          {
+            "name": "native mesh contract preflight and updates missing device has a structured readiness error and does not poison out",
+            "status": "passed"
+          },
+          {
+            "name": "native mesh contract preflight and updates empty reserved position and index streams can be populated later",
+            "status": "passed"
+          }
+        ]
+      }
+    ]
+  },
+  "globalInventory": {
+    "command": "npm run verify:test-inventory -- --update -- --runInBand",
+    "effectiveCommand": "node tools/verify/test-inventory.cjs --runInBand (npm swallowed --update; mode=check)",
+    "exitCode": 1,
+    "onDiskSuites": 105,
+    "observedSuites": 111,
+    "tests": 843,
+    "passed": 839,
+    "failed": 4,
+    "baselineManifestSuites": 88,
+    "reason": [
+      "six archived evidence test copies discovered outside test/smoke (four cannot execute)",
+      "four existing V1.1/V1.2 spec/matrix assertions failed",
+      "canonical inventory already stale; not replaced with fabricated PASS"
+    ]
+  }
+}

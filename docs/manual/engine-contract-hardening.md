@@ -15,6 +15,9 @@ const mesh = utils.MeshUtils.createDynamicMesh(0, {
 
 // 更新 UV，保留 positions 和索引；按语义找 stream。
 mesh.updateSubMesh(0, { uvs: new Float32Array([0.1,0.1, 0.9,0.1, 0.1,0.9]) });
+// Mesh的数据与已创建的Model/输入装配器分别维护。
+// 对每个借用此mesh的renderer同步绘制数量与包围盒。
+renderer.onGeometryChanged();
 ```
 
 静态 createMesh 使用 indices，动态创建/更新使用 indices16 或 indices32；混用字段、同时传两种宽度、越界索引明确报错。已有索引缓冲的宽度不能通过一次 update 改变。省略索引保留原有数据；显式空 typed array 把索引绘制数量设为零。创建时提供空 positions/indices typed array 仍会预留对应 layout，之后可填入。
@@ -22,6 +25,8 @@ mesh.updateSubMesh(0, { uvs: new Float32Array([0.1,0.1, 0.9,0.1, 0.1,0.9]) });
 更新接受 Partial<IDynamicGeometry>。不允许新增未预留属性、改变拓扑、超容量或留下长度不一致的可绘制 stream。改变顶点数量时须让相关属性与保留索引继续有效。自定义属性按 attr.name 匹配，当前原生 Float32Array 通道要求 32-bit 组件布局。输入、layout、容量、索引和 bounds 在写入前完成预检；校验失败时 CPU 数据、drawInfo、bounds 与 GPU 更新调用保持原状。设备意外故障不承诺 GPU 事务回滚，创建时分配失败会清理已分配 buffer，留下可重试的初始化状态。
 
 positions 更新没有显式 bounds 时会从新位置刷新包围盒。显式 minPos/maxPos 必须成对、有限、有序；业务自定义 bounds 的覆盖范围仍由业务保证。
+
+更新后调用每个使用者的 `MeshRenderer.onGeometryChanged()`。只写 `mesh.updateSubMesh()` 不会更新已创建的输入装配器绘制数量和Model包围盒：特别是将索引清空时，mesh侧 `indexCount=0` 与旧装配器仍保留6个索引可以同时存在。此时旧三角形继续绘制，不是WebGL清屏失效。通知后两者同步归零，下一次受控绘制恢复背景。共享mesh有多个renderer时分别通知；不因这一步重传未改变的索引。
 
 错误携带 code 和相关 primitiveIndex/attribute/capacity：AIR_E_MESH_CAPACITY、AIR_E_MESH_INDEX_KEY、AIR_E_MESH_INDEX_TYPE、AIR_E_MESH_INDEX_RANGE、AIR_E_MESH_ATTRIBUTE_COUNT、AIR_E_MESH_NOT_READY、AIR_E_MESH_GPU_ALLOCATION 等。错误在发布构建同样有效，不依赖 DEBUG 断言。
 

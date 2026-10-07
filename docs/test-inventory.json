@@ -1,6 +1,41 @@
 {
-  "generatedAt": "2026-10-04T09:40:14.396Z",
+  "generatedAt": "2026-10-07T07:28:50.642Z",
   "suites": [
+    {
+      "file": "test/smoke/air-dom-texture-blend.test.ts",
+      "tests": [
+        "DOM, texture sprite and opt-in blend ownership DOM elements restore original order/styles; duplicate and disposed bindings reject",
+        "DOM, texture sprite and opt-in blend ownership child override, reparent, particle inheritance and dispose restore native factors",
+        "DOM, texture sprite and opt-in blend ownership texture Sprite defaults and refresh borrow texture without changing anchor metadata"
+      ]
+    },
+    {
+      "file": "test/smoke/air-graphics-commands.test.ts",
+      "tests": [
+        "graphics command contracts arc covers full circle with two SVG arcs and respects direction",
+        "graphics command contracts gradient/holes SVG is explicit and native replay rejects before changing geometry",
+        "graphics command contracts invalid commands rejected",
+        "graphics command contracts invalid commands rejected",
+        "graphics command contracts invalid commands rejected",
+        "graphics command contracts invalid commands rejected",
+        "graphics command contracts invalid commands rejected",
+        "graphics command contracts invalid commands rejected",
+        "graphics command contracts native replay and SVG preserve separate fill/stroke snapshots and original curves"
+      ]
+    },
+    {
+      "file": "test/smoke/air-html-source.test.ts",
+      "tests": [
+        "experimental HTML entry rejects unsupported browser before mutating DOM or texture",
+        "paint upload restores binding; geometry, snapshot and disposal are explicit"
+      ]
+    },
+    {
+      "file": "test/smoke/air-pipeline-snapshot.test.ts",
+      "tests": [
+        "cached GPU pipeline state owns immutable input snapshots across material overrides"
+      ]
+    },
     {
       "file": "test/smoke/competitive-api-tail.test.ts",
       "tests": [
@@ -218,6 +253,64 @@
         "AIR accurate unlit fog specialization rejects incompatible builtin source before registering a partial effect",
         "AIR accurate unlit fog specialization repeated owned assets share one template and leave no deferred listener or registry growth",
         "AIR accurate unlit fog specialization transforms every shader variant without changing builtin data and keeps instance ownership independent"
+      ]
+    },
+    {
+      "file": "test/smoke/engine-contract-inspection.test.ts",
+      "tests": [
+        "read-only native material geometry and light contracts explicit builtin vertex color and missing UV are distinguished without compiling",
+        "read-only native material geometry and light contracts main directional query follows native selection and removal without rewriting light policy",
+        "read-only native material geometry and light contracts reflection detects a declared vertex-color macro whose active GPU shader omits a_color",
+        "read-only native material geometry and light contracts winding mismatch, negative and singular transforms are actual data, not a camera-facing guess"
+      ]
+    },
+    {
+      "file": "test/smoke/engine-contract-mesh.test.ts",
+      "tests": [
+        "native mesh contract preflight and updates capacity and wrong keys reject before resetting out or allocating GPU buffers",
+        "native mesh contract preflight and updates default capacity remains 1024 and 1025 vertices reject before allocation",
+        "native mesh contract preflight and updates empty reserved position and index streams can be populated later",
+        "native mesh contract preflight and updates failed GPU initialization releases every allocation and leaves out retryable",
+        "native mesh contract preflight and updates invalid full update is atomic across bytes, counts, bounds and GPU calls",
+        "native mesh contract preflight and updates missing device has a structured readiness error and does not poison out",
+        "native mesh contract preflight and updates partial updates preserve indices and update UV semantic without touching normal stream"
+      ]
+    },
+    {
+      "file": "test/smoke/engine-contract-state.test.ts",
+      "tests": [
+        "native fog, TRS and controller contracts duplicate same-node Animation is diagnosed without preventing independent components",
+        "native fog, TRS and controller contracts fog remembers disabled type and uses NONE only as effective pipeline state",
+        "native fog, TRS and controller contracts invalid local/world TRS is rejected before poisoning transforms or emitting change events",
+        "native fog, TRS and controller contracts readonly controller inspection resolves actual shared targets across distinct roots",
+        "native fog, TRS and controller contracts valid scale and degree rotation affect actual transformed coordinates"
+      ]
+    },
+    {
+      "file": "test/smoke/k0-r2-examples.test.ts",
+      "tests": [
+        "K0 R2 runnable examples acceptance a browser exception cannot pass",
+        "K0 R2 runnable examples acceptance a retained mesh reference cannot pass cleanup",
+        "K0 R2 runnable examples acceptance a white frame cannot pass vertex colors",
+        "K0 R2 runnable examples acceptance chromium has measured controls, pixels, loop and cleanup",
+        "K0 R2 runnable examples acceptance firefox has measured controls, pixels, loop and cleanup",
+        "K0 R2 runnable examples acceptance incomplete observation is rejected",
+        "K0 R2 runnable examples acceptance looping by modifying a shared clip cannot pass",
+        "K0 R2 runnable examples acceptance unchanged dynamic geometry cannot pass",
+        "K0 R2 runnable examples acceptance webkit has measured controls, pixels, loop and cleanup"
+      ]
+    },
+    {
+      "file": "test/smoke/k0-r2-native-contracts.test.ts",
+      "tests": [
+        "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N1 large capacity 4096 vertices allocates and reads back actual data",
+        "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N14b Euler 90° Z rotation maps +X to +Y",
+        "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N14c multiple ordinary DirectionalLights register but only one is mainLight",
+        "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N14d parent scale compounds to child world position",
+        "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N14d setScale(Vec3) and setScale(x,y,z) are equivalent for a plain Mesh node",
+        "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N3 100 repeated partial position updates preserve indices and other streams",
+        "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N3 empty indices after populated update clears drawInfo indexCount",
+        "K0 R2 native mesh contracts: large capacity, repeated partial updates, empty indices N3 mesh writes require notification to synchronize an existing renderer draw count"
       ]
     },
     {
@@ -759,6 +852,95 @@
       ]
     },
     {
+      "file": "test/smoke/render-dx-color-contract.test.ts",
+      "tests": [
+        "render DX explicit color and native prefiltered environment contracts bind validates decode macro and mip count before changing scene reflection map",
+        "render DX explicit color and native prefiltered environment contracts color input can use exactly one software or hardware sRGB decode; data and depth stay linear",
+        "render DX explicit color and native prefiltered environment contracts omitted format retains native default; explicit undefined and unknown formats fail",
+        "render DX explicit color and native prefiltered environment contracts real six-face native mips accepted only with offline attestation and actual native LOD schedule"
+      ]
+    },
+    {
+      "file": "test/smoke/render-dx-depth-layout.test.ts",
+      "tests": [
+        "render DX raw-depth effect template and binding locator hardware comparison fails explicitly and cannot pass by hiding shadow sampler in a source",
+        "render DX raw-depth effect template and binding locator invalid name/binding and unknown resource report exact diagnostic identity",
+        "render DX raw-depth effect template and binding locator manual depth sampler validates generated precision declarations and locates exact lines"
+      ]
+    },
+    {
+      "file": "test/smoke/render-dx-material-diagnostics.test.ts",
+      "tests": [
+        "render DX native material descriptor diagnostics reads actual pass and descriptor state, not stale material properties, without mutating resources"
+      ]
+    },
+    {
+      "file": "test/smoke/render-dx-native-attachments.test.ts",
+      "tests": [
+        "native camera target attachment contracts an explicit HDR render pass retains format and does not mutate the caller",
+        "native camera target attachment contracts camera render-pass creation retains samples and sampled depth; color-only is legal",
+        "native camera target attachment contracts render windows create matching actual color/depth multisample resources"
+      ]
+    },
+    {
+      "file": "test/smoke/render-dx-render-queue.test.ts",
+      "tests": [
+        "opt-in native legacy queue observation captures CAMERA_END synchronously before next-camera mutation and detaches idempotently",
+        "opt-in native legacy queue observation custom pipelines and changed private pins are unavailable instead of estimated",
+        "opt-in native legacy queue observation preserves the actual active array order rather than recalculating priority/depth sorting"
+      ]
+    },
+    {
+      "file": "test/smoke/render-dx-target-options.test.ts",
+      "tests": [
+        "AirRenderTarget CPU option validation and explicit simulated fallback explicit lower records requested 4 and simulated effective 1 without format replacement",
+        "AirRenderTarget CPU option validation and explicit simulated fallback explicit undefined options reject before native allocation",
+        "AirRenderTarget CPU option validation and explicit simulated fallback invalid enum values and unknown option aliases reject before allocation",
+        "AirRenderTarget CPU option validation and explicit simulated fallback invalid format names and native numeric enum values reject before allocation",
+        "AirRenderTarget CPU option validation and explicit simulated fallback missing attachment/filter capabilities reject before allocation",
+        "AirRenderTarget CPU option validation and explicit simulated fallback nonfinite/nonpositive sizes and scale reject before allocation",
+        "AirRenderTarget CPU option validation and explicit simulated fallback rejected resize preserves the native target, generation, storage and material binding",
+        "AirRenderTarget CPU option validation and explicit simulated fallback strict samples require the intersection of color and depth support"
+      ]
+    },
+    {
+      "file": "test/smoke/responsive-host-layout.test.ts",
+      "tests": [
+        "container startup admission explicit mode is part of singleton identity; conflicting or invalid containers reject",
+        "container startup admission native null/undefined are absent settings, matching explicit modes pass and real conflicts reject",
+        "container startup admission wrappers stay inside host, body dimensions unchanged, zero startup reports a diagnostic",
+        "responsive host native size transaction DPR watcher follows raw density but deduplicates capped sizes and cleans up",
+        "responsive host native size transaction frozen original fails CSS-only resize; candidate notifies once with effective DPR",
+        "responsive host native size transaction hidden retains buffer; reveal same size notifies, re-entry and repeated sizes deduplicate",
+        "responsive host native size transaction parent observation coalesces, respects auto-resize switch and cancels on disposal",
+        "responsive host native size transaction window fill, proportional frame and public backing-pixel setter preserve semantics"
+      ]
+    },
+    {
+      "file": "test/smoke/responsive-host-recipes.test.ts",
+      "tests": [
+        "Label helper explicitly controls wrap while preserving native default when omitted",
+        "attempt aggregation counts shared hosts once, leaves missing history unknown and rejects fabricated zero",
+        "cell picking 10x20 uses local coordinates and rejects outside",
+        "cell picking 16x16 uses local coordinates and rejects outside",
+        "cell picking 4x4 uses local coordinates and rejects outside",
+        "seed restore repeats sequence and legal-move shuffle has independently checked solvability parity",
+        "visible pulse invalidates cache without changing rules; unchanged idle key does not render"
+      ]
+    },
+    {
+      "file": "test/smoke/screen-orientation-contract.test.ts",
+      "tests": [
+        "native resize accepts orientation policy values an actually unknown direction still warns and falls back to identity",
+        "native resize accepts orientation policy values orientation 1 preserves resize and resolves transform 0 without warnings",
+        "native resize accepts orientation policy values orientation 12 preserves resize and resolves transform 0 without warnings",
+        "native resize accepts orientation policy values orientation 13 preserves resize and resolves transform 0 without warnings",
+        "native resize accepts orientation policy values orientation 2 preserves resize and resolves transform 2 without warnings",
+        "native resize accepts orientation policy values orientation 4 preserves resize and resolves transform 3 without warnings",
+        "native resize accepts orientation policy values orientation 8 preserves resize and resolves transform 1 without warnings"
+      ]
+    },
+    {
       "file": "test/smoke/smoke-01-bootstrap.test.ts",
       "tests": [
         "smoke 1 — createAirApp bootstrap AIR_VERSION appears in the built bundle export table",
@@ -1197,9 +1379,9 @@
     }
   ],
   "totals": {
-    "suites": 88,
-    "tests": 754,
-    "passed": 754,
-    "failed": 0
+    "suites": 106,
+    "tests": 846,
+    "passed": 842,
+    "failed": 4
   }
 }

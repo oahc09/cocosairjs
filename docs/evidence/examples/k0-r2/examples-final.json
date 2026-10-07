@@ -1,0 +1,1294 @@
+{
+  "schemaVersion": "k0-r2-examples/1",
+  "startedAt": "2026-10-07T07:27:04.023Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\k0-r2-examples.cjs",
+    "--browser=all",
+    "--out=docs/evidence/examples/k0-r2/examples-final.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "subset": true,
+  "completed": false,
+  "method": "REAL_BROWSER",
+  "fingerprints": {
+    "build/cocosair.module.js": {
+      "bytes": 6631057,
+      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+    },
+    "build/cocosair.module.d.ts": {
+      "bytes": 3303518,
+      "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+    },
+    "examples/k0-r2-porting-contracts/src/main.ts": {
+      "bytes": 12951,
+      "sha256": "2899805be0d660735eefec8adb6a0845908856b0b125d305fff66e4b3f4b920b"
+    },
+    "examples/k0-r2-porting-contracts/index.html": {
+      "bytes": 2215,
+      "sha256": "d39cffebe9cec237974757b7ac39195f4eeda30040b030d8f85e79ed56cda789"
+    },
+    "examples/shared/batching-routes.ts": {
+      "bytes": 11202,
+      "sha256": "ac6501f8798c4debe040dd567989720b8b738ffe932455d35ebab8ee4bfd5349"
+    },
+    "examples/shared/asset-lifecycle.js": {
+      "bytes": 5595,
+      "sha256": "c2bc01e8c73ab866f11194fc802bb8ce464b3738bfecf8d30cf5967907e5e346"
+    },
+    "examples/gltf-skin/src/main.ts": {
+      "bytes": 3576,
+      "sha256": "97c1606e81ba25e463fdbd10489360c6cedbed27cbef914cf62aa6108168bf03"
+    },
+    "docs/manual/examples/manual-drawing-lines/main.ts": {
+      "bytes": 7539,
+      "sha256": "0cc29b51376a71b9e331e7efc3deb6c16dd561696b1213cb5d2dfc56f0cb3360"
+    },
+    "tools/verify/k0-r2-examples.cjs": {
+      "bytes": 12639,
+      "sha256": "355cda36e620a6dddfa87a58aa6075eb9564f821dfa1ac1f65c8384388b3f6aa"
+    },
+    "tools/verify/k0-r2-examples.tsconfig.json": {
+      "bytes": 580,
+      "sha256": "2955ce606865f17da16b2e326f123b5d97d283681f428e9e74c2d67aefe02006"
+    }
+  },
+  "rows": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "captures": [
+        {
+          "name": "vertex",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/chromium-vertex.png",
+          "sha256": "26745a5a0daa3a7ab108e23eef0e8e990dda652a103c584787bf8d07a82d6fa7",
+          "bytes": 48057,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 12161,
+            "green": 32092,
+            "blue": 20472,
+            "yellow": 18651,
+            "cyan": 12581,
+            "foreground": 90000
+          }
+        },
+        {
+          "name": "blend",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/chromium-blend.png",
+          "sha256": "2860faf9e2c9c4dc9eb39cbbfb57b1c3d43254f91a02d7d9a7ea98e79fc27624",
+          "bytes": 11960,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 99000,
+            "blue": 0,
+            "yellow": 21600,
+            "cyan": 21600,
+            "foreground": 135000
+          }
+        },
+        {
+          "name": "billboard",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/chromium-billboard.png",
+          "sha256": "11228442015b8cb776957f0aa9e19acb75dd0dba8604e741594c47754d465bdc",
+          "bytes": 85923,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 7306,
+            "green": 22229,
+            "blue": 0,
+            "yellow": 31886,
+            "cyan": 7158,
+            "foreground": 67800
+          }
+        },
+        {
+          "name": "dynamic-before",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/chromium-dynamic-before.png",
+          "sha256": "047b90f686ff3425e522afd0b6be3e66ffd28e2b63130ab745b19c5cbcc66dac",
+          "bytes": 13189,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 87511,
+            "foreground": 87667
+          }
+        },
+        {
+          "name": "dynamic-after",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/chromium-dynamic-after.png",
+          "sha256": "9ccbea228152fd8642830a4aa89731635dd44e8d0a52528b5d04703bd50cae2f",
+          "bytes": 12945,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 83629,
+            "foreground": 83784
+          }
+        },
+        {
+          "name": "paused",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/chromium-paused.png",
+          "sha256": "9ccbea228152fd8642830a4aa89731635dd44e8d0a52528b5d04703bd50cae2f",
+          "bytes": 12945,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 83629,
+            "foreground": 83784
+          }
+        },
+        {
+          "name": "paused-after",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/chromium-paused-after.png",
+          "sha256": "9ccbea228152fd8642830a4aa89731635dd44e8d0a52528b5d04703bd50cae2f",
+          "bytes": 12945,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 83629,
+            "foreground": 83784
+          }
+        },
+        {
+          "name": "mobile",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/chromium-mobile.png",
+          "sha256": "8e9a0b5185c2785c794fc2e78612c53e66e96630abf5eb09e2222d13125c6e4d",
+          "bytes": 48690,
+          "width": 390,
+          "height": 720,
+          "counts": {
+            "red": 17518,
+            "green": 46250,
+            "blue": 29519,
+            "yellow": 26898,
+            "cyan": 17895,
+            "foreground": 129600
+          }
+        },
+        {
+          "name": "skin",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/chromium-skin.png",
+          "sha256": "7ba6e9e1664ca4ada0fa8f9a6928a0d3185e3a7f07a36d439b7252931a3aebed",
+          "bytes": 16450,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 0,
+            "foreground": 83350
+          }
+        },
+        {
+          "name": "lines",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/chromium-lines.png",
+          "sha256": "05d7f14f024996d5214e210fbbb926af435a123c8d65ca915ea575e43b6165b9",
+          "bytes": 56776,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 364,
+            "green": 330,
+            "blue": 3926,
+            "yellow": 1317,
+            "cyan": 47,
+            "foreground": 37672
+          }
+        }
+      ],
+      "vertex": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 12161,
+          "green": 32092,
+          "blue": 20472,
+          "yellow": 18651,
+          "cyan": 12581,
+          "foreground": 90000
+        }
+      },
+      "blend": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 0,
+          "green": 99000,
+          "blue": 0,
+          "yellow": 21600,
+          "cyan": 21600,
+          "foreground": 135000
+        }
+      },
+      "billboard": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 7306,
+          "green": 22229,
+          "blue": 0,
+          "yellow": 31886,
+          "cyan": 7158,
+          "foreground": 67800
+        }
+      },
+      "dynamic": {
+        "before": 1,
+        "after": 22,
+        "changedPixels": 4335
+      },
+      "pause": {
+        "before": 22,
+        "after": 22,
+        "pngSame": true
+      },
+      "resume": {
+        "before": 22,
+        "after": 27
+      },
+      "reset": {
+        "before": 27,
+        "after": 0
+      },
+      "release": {
+        "mode": "dynamic-mesh",
+        "paused": false,
+        "released": true,
+        "subscribed": false,
+        "ownedNodeCount": 0,
+        "ownedAssetCount": 0,
+        "releasedAssets": [
+          {
+            "name": "mesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "material",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "bgMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "bgMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "alphaMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "alphaMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "addMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "addMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "billboardTexture",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          }
+        ],
+        "dynamicUpdateCount": 0,
+        "errors": []
+      },
+      "releaseAgain": 13,
+      "mobile": {
+        "fits": true,
+        "capture": {
+          "width": 390,
+          "height": 720,
+          "counts": {
+            "red": 17518,
+            "green": 46250,
+            "blue": 29519,
+            "yellow": 26898,
+            "cyan": 17895,
+            "foreground": 129600
+          }
+        }
+      },
+      "exampleLifecycle": {
+        "label": "k0-r2-porting-contracts",
+        "held": 3,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "skin": {
+        "controllers": 1,
+        "playing": true,
+        "time": 6.1667999999523,
+        "duration": 5.5,
+        "loop": true,
+        "clipUnchanged": true,
+        "materials": [
+          "air-gltf-standard"
+        ]
+      },
+      "skinPixels": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 0,
+          "green": 0,
+          "blue": 0,
+          "yellow": 0,
+          "cyan": 0,
+          "foreground": 83350
+        }
+      },
+      "skinLifecycle": {
+        "label": "gltf-skin",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "batch": {
+        "id": "batching-dynamic",
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "batch-pixels-visible",
+            "ok": true,
+            "detail": "green pixels=81176"
+          },
+          {
+            "name": "batch-draw-count",
+            "ok": true,
+            "detail": "actual draws=1"
+          },
+          {
+            "name": "dynamic-pixel-change",
+            "ok": true,
+            "detail": "changed channels=47004"
+          }
+        ],
+        "state": {
+          "route": "dynamic",
+          "count": 256,
+          "instancing": false,
+          "litPixels": 81176,
+          "setupMs": 1.2999999523162842,
+          "drawCalls": 1
+        }
+      },
+      "batchLifecycle": {
+        "label": "batching-dynamic",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "lines": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 364,
+          "green": 330,
+          "blue": 3926,
+          "yellow": 1317,
+          "cyan": 47,
+          "foreground": 37672
+        }
+      },
+      "validation": {
+        "pass": true,
+        "errors": []
+      }
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "captures": [
+        {
+          "name": "vertex",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/firefox-vertex.png",
+          "sha256": "e0e2bdf96fdb4ae651667d7a2b1758615f434f6e52261a179cdbfdecbe0c3cfd",
+          "bytes": 55375,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 12161,
+            "green": 32092,
+            "blue": 20472,
+            "yellow": 18651,
+            "cyan": 12581,
+            "foreground": 90000
+          }
+        },
+        {
+          "name": "blend",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/firefox-blend.png",
+          "sha256": "e9e7a135bd98f64673ea6cc784cf9d05738f2a8dddbc765bf0fbe777feea680a",
+          "bytes": 6498,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 99000,
+            "blue": 0,
+            "yellow": 21600,
+            "cyan": 21600,
+            "foreground": 135000
+          }
+        },
+        {
+          "name": "billboard",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/firefox-billboard.png",
+          "sha256": "3801360de0ca463cbbd3120ea57b3e63e1a4f0ccbc2b5d35c76037085b05e5e4",
+          "bytes": 54240,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 7306,
+            "green": 22229,
+            "blue": 0,
+            "yellow": 31886,
+            "cyan": 7158,
+            "foreground": 67800
+          }
+        },
+        {
+          "name": "dynamic-before",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/firefox-dynamic-before.png",
+          "sha256": "586804c739ca2a5a2145652062421f414b815fb6521ad7ba17572635fdc961fe",
+          "bytes": 5075,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 87511,
+            "foreground": 87667
+          }
+        },
+        {
+          "name": "dynamic-after",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/firefox-dynamic-after.png",
+          "sha256": "1d8e0fce40dc667ae85410187fd36a1bd10f1c7c71f375361e59bde063c39ae5",
+          "bytes": 5035,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 83629,
+            "foreground": 83784
+          }
+        },
+        {
+          "name": "paused",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/firefox-paused.png",
+          "sha256": "1d8e0fce40dc667ae85410187fd36a1bd10f1c7c71f375361e59bde063c39ae5",
+          "bytes": 5035,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 83629,
+            "foreground": 83784
+          }
+        },
+        {
+          "name": "paused-after",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/firefox-paused-after.png",
+          "sha256": "1d8e0fce40dc667ae85410187fd36a1bd10f1c7c71f375361e59bde063c39ae5",
+          "bytes": 5035,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 83629,
+            "foreground": 83784
+          }
+        },
+        {
+          "name": "mobile",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/firefox-mobile.png",
+          "sha256": "25aa11dfa41a52a19167a574d15e3fa82bb075250154f01464e0f33d00cd7eba",
+          "bytes": 66861,
+          "width": 390,
+          "height": 720,
+          "counts": {
+            "red": 17518,
+            "green": 46250,
+            "blue": 29519,
+            "yellow": 26898,
+            "cyan": 17895,
+            "foreground": 129600
+          }
+        },
+        {
+          "name": "skin",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/firefox-skin.png",
+          "sha256": "6119f1f6a71efcba96089abbaf4136b6b15ae376e0e21d8cdeef0579df8c81e3",
+          "bytes": 6387,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 0,
+            "foreground": 83134
+          }
+        },
+        {
+          "name": "lines",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/firefox-lines.png",
+          "sha256": "7238c65b8b5f426b750f8d9c906fa6522d2df27bf8a98938b868bdd988044478",
+          "bytes": 29734,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 364,
+            "green": 330,
+            "blue": 3926,
+            "yellow": 1317,
+            "cyan": 47,
+            "foreground": 37672
+          }
+        }
+      ],
+      "vertex": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 12161,
+          "green": 32092,
+          "blue": 20472,
+          "yellow": 18651,
+          "cyan": 12581,
+          "foreground": 90000
+        }
+      },
+      "blend": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 0,
+          "green": 99000,
+          "blue": 0,
+          "yellow": 21600,
+          "cyan": 21600,
+          "foreground": 135000
+        }
+      },
+      "billboard": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 7306,
+          "green": 22229,
+          "blue": 0,
+          "yellow": 31886,
+          "cyan": 7158,
+          "foreground": 67800
+        }
+      },
+      "dynamic": {
+        "before": 1,
+        "after": 22,
+        "changedPixels": 4335
+      },
+      "pause": {
+        "before": 22,
+        "after": 22,
+        "pngSame": true
+      },
+      "resume": {
+        "before": 22,
+        "after": 27
+      },
+      "reset": {
+        "before": 27,
+        "after": 0
+      },
+      "release": {
+        "mode": "dynamic-mesh",
+        "paused": false,
+        "released": true,
+        "subscribed": false,
+        "ownedNodeCount": 0,
+        "ownedAssetCount": 0,
+        "releasedAssets": [
+          {
+            "name": "mesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "material",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "bgMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "bgMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "alphaMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "alphaMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "addMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "addMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "billboardTexture",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          }
+        ],
+        "dynamicUpdateCount": 0,
+        "errors": []
+      },
+      "releaseAgain": 13,
+      "mobile": {
+        "fits": true,
+        "capture": {
+          "width": 390,
+          "height": 720,
+          "counts": {
+            "red": 17518,
+            "green": 46250,
+            "blue": 29519,
+            "yellow": 26898,
+            "cyan": 17895,
+            "foreground": 129600
+          }
+        }
+      },
+      "exampleLifecycle": {
+        "label": "k0-r2-porting-contracts",
+        "held": 3,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "skin": {
+        "controllers": 1,
+        "playing": true,
+        "time": 6.174999999999984,
+        "duration": 5.5,
+        "loop": true,
+        "clipUnchanged": true,
+        "materials": [
+          "air-gltf-standard"
+        ]
+      },
+      "skinPixels": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 0,
+          "green": 0,
+          "blue": 0,
+          "yellow": 0,
+          "cyan": 0,
+          "foreground": 83134
+        }
+      },
+      "skinLifecycle": {
+        "label": "gltf-skin",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "batch": {
+        "id": "batching-dynamic",
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "batch-pixels-visible",
+            "ok": true,
+            "detail": "green pixels=81176"
+          },
+          {
+            "name": "batch-draw-count",
+            "ok": true,
+            "detail": "actual draws=1"
+          },
+          {
+            "name": "dynamic-pixel-change",
+            "ok": true,
+            "detail": "changed channels=47004"
+          }
+        ],
+        "state": {
+          "route": "dynamic",
+          "count": 256,
+          "instancing": false,
+          "litPixels": 81176,
+          "setupMs": 1,
+          "drawCalls": 1
+        }
+      },
+      "batchLifecycle": {
+        "label": "batching-dynamic",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "lines": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 364,
+          "green": 330,
+          "blue": 3926,
+          "yellow": 1317,
+          "cyan": 47,
+          "foreground": 37672
+        }
+      },
+      "validation": {
+        "pass": true,
+        "errors": []
+      }
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "captures": [
+        {
+          "name": "vertex",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/webkit-vertex.png",
+          "sha256": "093a35f96e158a4b950a9fa54d03f726dbf9c51449f2226e2bf36699f654e543",
+          "bytes": 9414,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 12161,
+            "green": 32092,
+            "blue": 20472,
+            "yellow": 18651,
+            "cyan": 12581,
+            "foreground": 90000
+          }
+        },
+        {
+          "name": "blend",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/webkit-blend.png",
+          "sha256": "c0c44c4318d236ba3ed89e29a244c4dd1cd98cfb1e0919d6760a17549c683a7c",
+          "bytes": 3601,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 99000,
+            "blue": 0,
+            "yellow": 21600,
+            "cyan": 21600,
+            "foreground": 135000
+          }
+        },
+        {
+          "name": "billboard",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/webkit-billboard.png",
+          "sha256": "576fd099e9efb7c1b636fa9de92df6e843cb6b7bec500cc074c9921c9992d024",
+          "bytes": 49770,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 7306,
+            "green": 22229,
+            "blue": 0,
+            "yellow": 31886,
+            "cyan": 7158,
+            "foreground": 67800
+          }
+        },
+        {
+          "name": "dynamic-before",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/webkit-dynamic-before.png",
+          "sha256": "ef992901baa81a6a953fe287e325b0c6ef9241f55581f483fbf835e093335baa",
+          "bytes": 3903,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 87511,
+            "foreground": 87667
+          }
+        },
+        {
+          "name": "dynamic-after",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/webkit-dynamic-after.png",
+          "sha256": "9e5ee698e31aab4b448cbe9dc82acb66bf629ae6cbbf51ba884d07d06fd5af31",
+          "bytes": 3888,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 83629,
+            "foreground": 83784
+          }
+        },
+        {
+          "name": "paused",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/webkit-paused.png",
+          "sha256": "9e5ee698e31aab4b448cbe9dc82acb66bf629ae6cbbf51ba884d07d06fd5af31",
+          "bytes": 3888,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 83629,
+            "foreground": 83784
+          }
+        },
+        {
+          "name": "paused-after",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/webkit-paused-after.png",
+          "sha256": "9e5ee698e31aab4b448cbe9dc82acb66bf629ae6cbbf51ba884d07d06fd5af31",
+          "bytes": 3888,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 83629,
+            "foreground": 83784
+          }
+        },
+        {
+          "name": "mobile",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/webkit-mobile.png",
+          "sha256": "1770a10cb459366ac44be64efede7e4110c35345fbdca93781621c2c60e38e47",
+          "bytes": 9369,
+          "width": 390,
+          "height": 720,
+          "counts": {
+            "red": 17518,
+            "green": 46250,
+            "blue": 29519,
+            "yellow": 26898,
+            "cyan": 17895,
+            "foreground": 129600
+          }
+        },
+        {
+          "name": "skin",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/webkit-skin.png",
+          "sha256": "664210445b8d95960a12e3313a3afeba298bd58e16e60e2aab7366e8f6f07aea",
+          "bytes": 6504,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 0,
+            "green": 0,
+            "blue": 0,
+            "yellow": 0,
+            "cyan": 0,
+            "foreground": 82402
+          }
+        },
+        {
+          "name": "lines",
+          "path": "docs/evidence/examples/k0-r2/examples-final-artifacts/webkit-lines.png",
+          "sha256": "aa3267a70ec1102493633acabfb27136f4b524f801677210922e488c09fe83fc",
+          "bytes": 23799,
+          "width": 800,
+          "height": 600,
+          "counts": {
+            "red": 364,
+            "green": 330,
+            "blue": 3926,
+            "yellow": 1317,
+            "cyan": 47,
+            "foreground": 37672
+          }
+        }
+      ],
+      "vertex": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 12161,
+          "green": 32092,
+          "blue": 20472,
+          "yellow": 18651,
+          "cyan": 12581,
+          "foreground": 90000
+        }
+      },
+      "blend": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 0,
+          "green": 99000,
+          "blue": 0,
+          "yellow": 21600,
+          "cyan": 21600,
+          "foreground": 135000
+        }
+      },
+      "billboard": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 7306,
+          "green": 22229,
+          "blue": 0,
+          "yellow": 31886,
+          "cyan": 7158,
+          "foreground": 67800
+        }
+      },
+      "dynamic": {
+        "before": 1,
+        "after": 22,
+        "changedPixels": 4335
+      },
+      "pause": {
+        "before": 22,
+        "after": 22,
+        "pngSame": true
+      },
+      "resume": {
+        "before": 22,
+        "after": 27
+      },
+      "reset": {
+        "before": 27,
+        "after": 0
+      },
+      "release": {
+        "mode": "dynamic-mesh",
+        "paused": false,
+        "released": true,
+        "subscribed": false,
+        "ownedNodeCount": 0,
+        "ownedAssetCount": 0,
+        "releasedAssets": [
+          {
+            "name": "mesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "material",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "bgMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "bgMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "alphaMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "alphaMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "addMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "addMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "billboardTexture",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMesh",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          },
+          {
+            "name": "dynMaterial",
+            "beforeRefCount": 1,
+            "afterRefCount": 0
+          }
+        ],
+        "dynamicUpdateCount": 0,
+        "errors": []
+      },
+      "releaseAgain": 13,
+      "mobile": {
+        "fits": true,
+        "capture": {
+          "width": 390,
+          "height": 720,
+          "counts": {
+            "red": 17518,
+            "green": 46250,
+            "blue": 29519,
+            "yellow": 26898,
+            "cyan": 17895,
+            "foreground": 129600
+          }
+        }
+      },
+      "exampleLifecycle": {
+        "label": "k0-r2-porting-contracts",
+        "held": 3,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "skin": {
+        "controllers": 1,
+        "playing": true,
+        "time": 6.202999999999983,
+        "duration": 5.5,
+        "loop": true,
+        "clipUnchanged": true,
+        "materials": [
+          "air-gltf-standard"
+        ]
+      },
+      "skinPixels": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 0,
+          "green": 0,
+          "blue": 0,
+          "yellow": 0,
+          "cyan": 0,
+          "foreground": 82402
+        }
+      },
+      "skinLifecycle": {
+        "label": "gltf-skin",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "batch": {
+        "id": "batching-dynamic",
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "batch-pixels-visible",
+            "ok": true,
+            "detail": "green pixels=81176"
+          },
+          {
+            "name": "batch-draw-count",
+            "ok": true,
+            "detail": "actual draws=1"
+          },
+          {
+            "name": "dynamic-pixel-change",
+            "ok": true,
+            "detail": "changed channels=47004"
+          }
+        ],
+        "state": {
+          "route": "dynamic",
+          "count": 256,
+          "instancing": false,
+          "litPixels": 81176,
+          "setupMs": 3,
+          "drawCalls": 1
+        }
+      },
+      "batchLifecycle": {
+        "label": "batching-dynamic",
+        "held": 2,
+        "released": true,
+        "leaked": [],
+        "reloaded": true,
+        "errors": [],
+        "runs": 1
+      },
+      "lines": {
+        "width": 800,
+        "height": 600,
+        "counts": {
+          "red": 364,
+          "green": 330,
+          "blue": 3926,
+          "yellow": 1317,
+          "cyan": 47,
+          "foreground": 37672
+        }
+      },
+      "validation": {
+        "pass": true,
+        "errors": []
+      }
+    }
+  ],
+  "endedAt": "2026-10-07T07:27:34.193Z",
+  "scopePassed": true,
+  "exitCode": 0
+}

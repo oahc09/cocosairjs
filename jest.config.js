@@ -4,7 +4,7 @@ module.exports = {
     "testEnvironment": "jsdom",
     "modulePathIgnorePatterns": ["<rootDir>/build/reports/"],
     "setupFiles": ["<rootDir>/test/setup-dom.js", "<rootDir>/test/setup-engine.js"],
-    "testRegex": "/test/smoke/.*\\.test\\.ts$",
+    "testMatch": ["<rootDir>/test/smoke/*.test.ts"],
     "transform": {
         "^.+\\.tsx?$": [
             "ts-jest",

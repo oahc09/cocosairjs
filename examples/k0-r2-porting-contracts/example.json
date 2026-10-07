@@ -1,0 +1,126 @@
+{
+  "id": "k0-r2-porting-contracts",
+  "version": "1.0.0",
+  "title": "Mesh and material porting contracts",
+  "category": "rendering",
+  "status": "validated",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "用原生网格和材质 API 比较顶点色、混合、局部更新与 Billboard 尺寸",
+    "points": [
+      "顶点色同时需要颜色属性和 USE_VERTEX_COLOR",
+      "透明和加色由 blendState 与 depthWrite 定义",
+      "动态局部更新保留索引并通知渲染器",
+      "Billboard 用 width/height 定义尺寸；所有模式归还自有引用"
+    ]
+  },
+  "effect": {
+    "functional": "四个真实按钮切换模式；暂停冻结动态网格，恢复继续更新；重置重建，释放解绑并归还自有资源。",
+    "visual": "顶点色是红绿蓝黄渐变四边形；混合模式在绿底上显示黄色透明区和青色加色区；动态青色网格边缘摆动；Billboard 显示四色纹理。"
+  },
+  "api": {
+    "primary": [
+      "Material.initialize",
+      "Mesh.updateSubMesh",
+      "Billboard"
+    ],
+    "supporting": [
+      "utils.MeshUtils.createDynamicMesh",
+      "MeshRenderer.onGeometryChanged"
+    ],
+    "claims": [
+      "Material.initialize",
+      "Mesh.updateSubMesh",
+      "Billboard",
+      "utils.MeshUtils.createDynamicMesh",
+      "MeshRenderer.onGeometryChanged"
+    ],
+    "forbiddenShortcut": [
+      "用宏存在冒充实际顶点色像素",
+      "每帧重传未改变的索引",
+      "用节点缩放冒充 Billboard 尺寸",
+      "用常量 PASS 冒充资源归还"
+    ],
+    "evidence": [
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L114",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Mesh.updateSubMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L189",
+        "validator": "frame-diff"
+      },
+      {
+        "api": "Billboard",
+        "source": "src/main.ts",
+        "sourceLocation": "L83",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.MeshUtils.createDynamicMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L107",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer.onGeometryChanged",
+        "source": "src/main.ts",
+        "sourceLocation": "L190",
+        "validator": "frame-diff"
+      }
+    ]
+  },
+  "capabilities": [
+    "rendering"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Camera"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "切换动态网格并暂停、恢复、重置、释放",
+        "expected": "暂停期间图像和计数不变，恢复继续更新，释放后没有自有节点和引用"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创程序化网格与 2×2 纹理，无外部资产"
+  }
+}

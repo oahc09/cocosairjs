@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "checkJs": false,
+    "baseUrl": "../..",
+    "paths": { "cocosair": ["build/cocosair.module.d.ts"] }
+  },
+  "files": [
+    "../../examples/k0-r2-porting-contracts/src/main.ts",
+    "../../examples/shared/batching-routes.ts",
+    "../../examples/gltf-skin/src/main.ts",
+    "../../docs/manual/examples/manual-drawing-lines/main.ts"
+  ]
+}

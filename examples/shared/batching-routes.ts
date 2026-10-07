@@ -56,6 +56,7 @@ export async function runBatchRoute(route: 'shared' | 'merged' | 'dynamic'): Pro
     let material: Material;
     let wave = 0;
     let updateMs = 0;
+    let activeRenderer: MeshRenderer | null = null;
     const positions = new Float32Array(count * 12);
     const basePositions = new Float32Array(count * 12);
     const indices = count * 4 > 65536 ? new Uint32Array(count * 6) : new Uint16Array(count * 6);
@@ -86,7 +87,10 @@ export async function runBatchRoute(route: 'shared' | 'merged' | 'dynamic'): Pro
                 positions[p] = basePositions[p] + offset;
             }
         }
-        mesh.updateSubMesh(0, geometry);
+        // Positions-only partial update: indices/UV/normals are preserved from the initial layout.
+        mesh.updateSubMesh(0, { positions, minPos: geometry.minPos, maxPos: geometry.maxPos });
+        // Notify the renderer that vertex data changed so it refreshes the model bounding.
+        activeRenderer?.onGeometryChanged();
         updateMs = performance.now() - start;
     }
     function build(): void {
@@ -132,12 +136,14 @@ export async function runBatchRoute(route: 'shared' | 'merged' | 'dynamic'): Pro
             const renderer = group.addComponent(MeshRenderer);
             renderer.mesh = mesh;
             renderer.setSharedMaterial(material, 0);
+            activeRenderer = renderer;
         }
         if (route === 'dynamic') director.on(Director.EVENT_BEFORE_UPDATE, update);
         setupMs = performance.now() - start;
     }
     function release(): void {
         director.off(Director.EVENT_BEFORE_UPDATE, update);
+        activeRenderer = null; // Prevent a late update from using a retired renderer.
         group.destroy();
         material.destroy();
         mesh.destroy();

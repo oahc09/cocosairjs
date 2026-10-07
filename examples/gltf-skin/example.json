@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "glTF Skin",
   "category": "gltf",
-  "status": "stable",
+  "status": "validated",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -11,7 +11,7 @@
     "points": [
       "parseAsync 加载 .gltf JSON + 外部 bin（baseUrl 解析）",
       "GLTFAsset.skeletons 蒙皮数据",
-      "Animation.play 循环播放骨骼动画"
+      "GLTFInstance.setAnimationLoop 在挂载前配置实例循环，复用自动 Animation"
     ]
   },
   "effect": {
@@ -35,7 +35,6 @@
       "DirectionalLight",
       "Animation",
       "Animation.play",
-      "AnimationClip",
       "Layers",
       "math.Vec3",
       "math.Color",
@@ -47,7 +46,6 @@
       "Node.setPosition",
       "Node.setRotationFromEuler",
       "GLTFAsset.destroy",
-      "Material.destroy",
       "isValid"
     ],
     "forbiddenShortcut": [
@@ -59,121 +57,109 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L24"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L28"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L28"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L34"
+        "sourceLocation": "L32"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L47"
+        "sourceLocation": "L45"
       },
       {
         "api": "Animation",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L85"
+        "sourceLocation": "L72"
       },
       {
         "api": "Animation.play",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L90"
-      },
-      {
-        "api": "AnimationClip",
-        "source": "src/main.ts",
-        "validator": "animation-playing",
-        "sourceLocation": "L88"
+        "sourceLocation": "L75"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L41"
+        "sourceLocation": "L39"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L32"
+        "sourceLocation": "L30"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L40"
+        "sourceLocation": "L38"
       },
       {
         "api": "frameObject",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L71"
+        "sourceLocation": "L69"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L68"
+        "sourceLocation": "L64"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L68"
+        "sourceLocation": "L64"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L69"
+        "sourceLocation": "L65"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L31"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L32"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L33"
+        "sourceLocation": "L31"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L110"
-      },
-      {
-        "api": "Material.destroy",
-        "source": "src/main.ts",
-        "validator": "resource-released",
-        "sourceLocation": "L110"
+        "sourceLocation": "L95"
       },
       {
         "api": "isValid",
@@ -243,7 +229,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 45,
+            "line": 43,
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
@@ -261,7 +247,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 53,
+              "line": 51,
               "text": "var jsonText = await (await fetch('./assets/SimpleSkin.gltf')).text();"
             }
           ]
@@ -273,16 +259,8 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, instance.root);）",
-        "line": "L71"
+        "line": "L69"
       }
     }
-  },
-  "promotion": {
-    "spec": "3880dfabf54b",
-    "source": "e186493d6be45bc6",
-    "candidate": "2f089f6ce25eaccd",
-    "verified": 21,
-    "attested": 0,
-    "units": 21
   }
 }

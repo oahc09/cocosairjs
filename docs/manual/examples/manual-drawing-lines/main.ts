@@ -10,7 +10,7 @@
  *
  * 两个实测坑（文章与台账都有记录）：
  *  - mesh 的 primitiveMode 会被 pass 的 PSO 覆盖成 TRIANGLE_LIST，不 override 就会把线顶点三角化成填充面；
- *  - builtin-unlit 打开 USE_COLOR 而几何没有颜色属性时，顶点色读成 0，线会变黑融进深色背景，
+ *  - builtin-unlit 打开 USE_VERTEX_COLOR 而几何没有颜色属性时，顶点色读成 0，线会变黑融进深色背景，
  *    所以本篇一律用 mainColor 上色，不用逐顶点色。
  */
 
@@ -60,7 +60,7 @@ light.illuminance = 2;
 // ============ 途径 1：真线拓扑 LINE_LIST ============
 
 /**
- * 纯色线材质：builtin-unlit（不打开 USE_COLOR，颜色只来自 mainColor）。
+ * 纯色线材质：builtin-unlit（不打开 USE_VERTEX_COLOR，颜色只来自 mainColor）。
  * 关键一步：mesh 的 primitiveMode 会被 pass 的 PSO 覆盖成 TRIANGLE_LIST，
  * 必须用材质实例 overridePipelineStates 把绘制图元改回 LINE_LIST。
  *
@@ -69,10 +69,11 @@ light.illuminance = 2;
  */
 function attachLineMaterial(renderer: MeshRenderer, rgba: number[]) {
     const material = new Material();
-    material.initialize({ effectName: 'builtin-unlit', defines: { USE_COLOR: false } });
+    material.initialize({ effectName: 'builtin-unlit', defines: { USE_VERTEX_COLOR: false } });
     material.setProperty('mainColor', new Color(rgba[0], rgba[1], rgba[2], rgba[3]));
     renderer.material = material;
     const instance = renderer.getMaterialInstance(0);
+    if (!instance) throw new Error('Line material instance was not created');
     instance.overridePipelineStates({ primitive: gfx.PrimitiveMode.LINE_LIST });
     return instance;
 }
@@ -194,9 +195,9 @@ cubeNode.setPosition(new Vec3(0, 0.5, 0));
 scene.addChild(cubeNode);
 const cubeRenderer = cubeNode.addComponent(MeshRenderer);
 cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-cubeRenderer.material = builtinResMgr.get('builtin-standard-material');
+cubeRenderer.material = builtinResMgr.get<Material>('builtin-standard-material');
 
-window.__airApp = app;
+(window as unknown as { __airApp: typeof app }).__airApp = app;
 app.run(scene);
 
 document.querySelector('#info')!.textContent = [

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="data:," />
+        <title>K0 R2 native rendering contracts</title>
+        <style>
+            body {
+                margin: 0;
+                background: #151515;
+            }
+            canvas {
+                display: block;
+                position: absolute;
+                left: 37px;
+                top: 29px;
+                width: 480px;
+                height: 360px;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <canvas id="GameCanvas" tabindex="0"></canvas>
+        <script type="module" src="./main.js"></script>
+    </body>
+</html>

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Batching: merged",
   "category": "performance",
-  "status": "stable",
+  "status": "validated",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -39,13 +39,13 @@
         "api": "Material.initialize",
         "source": "shared/batching-routes.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L100"
+        "sourceLocation": "L104"
       },
       {
         "api": "utils.createMesh",
         "source": "shared/batching-routes.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L103"
+        "sourceLocation": "L107"
       }
     ]
   },
@@ -90,13 +90,5 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序化网格，无第三方资产"
-  },
-  "promotion": {
-    "spec": "1b96e087cf7b",
-    "source": "9d8f0b145a6acf6d",
-    "candidate": "2f089f6ce25eaccd",
-    "verified": 2,
-    "attested": 0,
-    "units": 2
   }
 }

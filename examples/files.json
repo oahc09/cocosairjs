@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-07T00:43:54.600Z",
-  "revision": "a0bcc11",
+  "generatedAt": "2026-10-07T07:24:21.765Z",
+  "revision": "36cabc9",
   "examples": [
     {
       "dir": "anim-position",
@@ -602,7 +602,7 @@
       "version": "1.0.0",
       "title": "Batching: dynamic",
       "category": "performance",
-      "status": "stable",
+      "status": "validated",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -663,14 +663,6 @@
           "resource-released"
         ],
         "capability": []
-      },
-      "promotion": {
-        "spec": "ccb2069859ba",
-        "source": "798ab2ea9f249768",
-        "candidate": "2f089f6ce25eaccd",
-        "verified": 3,
-        "attested": 0,
-        "units": 3
       }
     },
     {
@@ -679,7 +671,7 @@
       "version": "1.0.0",
       "title": "Batching: merged",
       "category": "performance",
-      "status": "stable",
+      "status": "validated",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -738,14 +730,6 @@
           "resource-released"
         ],
         "capability": []
-      },
-      "promotion": {
-        "spec": "1b96e087cf7b",
-        "source": "9d8f0b145a6acf6d",
-        "candidate": "2f089f6ce25eaccd",
-        "verified": 2,
-        "attested": 0,
-        "units": 2
       }
     },
     {
@@ -754,7 +738,7 @@
       "version": "1.0.0",
       "title": "Batching: shared",
       "category": "performance",
-      "status": "stable",
+      "status": "validated",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -813,14 +797,6 @@
           "resource-released"
         ],
         "capability": []
-      },
-      "promotion": {
-        "spec": "abf29b474d78",
-        "source": "2f06d3d3e87ec648",
-        "candidate": "2f089f6ce25eaccd",
-        "verified": 2,
-        "attested": 0,
-        "units": 2
       }
     },
     {
@@ -4121,7 +4097,7 @@
       "version": "1.0.0",
       "title": "glTF Skin",
       "category": "gltf",
-      "status": "stable",
+      "status": "validated",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -4129,7 +4105,7 @@
         "points": [
           "parseAsync 加载 .gltf JSON + 外部 bin（baseUrl 解析）",
           "GLTFAsset.skeletons 蒙皮数据",
-          "Animation.play 循环播放骨骼动画"
+          "GLTFInstance.setAnimationLoop 在挂载前配置实例循环，复用自动 Animation"
         ]
       },
       "effect": {
@@ -4153,7 +4129,6 @@
           "DirectionalLight",
           "Animation",
           "Animation.play",
-          "AnimationClip",
           "Layers",
           "math.Vec3",
           "math.Color",
@@ -4165,7 +4140,6 @@
           "Node.setPosition",
           "Node.setRotationFromEuler",
           "GLTFAsset.destroy",
-          "Material.destroy",
           "isValid"
         ]
       },
@@ -4206,14 +4180,6 @@
           "resource-released"
         ],
         "capability": []
-      },
-      "promotion": {
-        "spec": "3880dfabf54b",
-        "source": "e186493d6be45bc6",
-        "candidate": "2f089f6ce25eaccd",
-        "verified": 21,
-        "attested": 0,
-        "units": 21
       }
     },
     {
@@ -4977,6 +4943,86 @@
         "verified": 20,
         "attested": 0,
         "units": 20
+      }
+    },
+    {
+      "dir": "k0-r2-porting-contracts",
+      "id": "k0-r2-porting-contracts",
+      "version": "1.0.0",
+      "title": "Mesh and material porting contracts",
+      "category": "rendering",
+      "status": "validated",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "用原生网格和材质 API 比较顶点色、混合、局部更新与 Billboard 尺寸",
+        "points": [
+          "顶点色同时需要颜色属性和 USE_VERTEX_COLOR",
+          "透明和加色由 blendState 与 depthWrite 定义",
+          "动态局部更新保留索引并通知渲染器",
+          "Billboard 用 width/height 定义尺寸；所有模式归还自有引用"
+        ]
+      },
+      "effect": {
+        "functional": "四个真实按钮切换模式；暂停冻结动态网格，恢复继续更新；重置重建，释放解绑并归还自有资源。",
+        "visual": "顶点色是红绿蓝黄渐变四边形；混合模式在绿底上显示黄色透明区和青色加色区；动态青色网格边缘摆动；Billboard 显示四色纹理。"
+      },
+      "api": {
+        "primary": [
+          "Material.initialize",
+          "Mesh.updateSubMesh",
+          "Billboard"
+        ],
+        "supporting": [
+          "utils.MeshUtils.createDynamicMesh",
+          "MeshRenderer.onGeometryChanged"
+        ],
+        "claims": [
+          "Material.initialize",
+          "Mesh.updateSubMesh",
+          "Billboard",
+          "utils.MeshUtils.createDynamicMesh",
+          "MeshRenderer.onGeometryChanged"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Camera"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "切换动态网格并暂停、恢复、重置、释放",
+            "expected": "暂停期间图像和计数不变，恢复继续更新，释放后没有自有节点和引用"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
       }
     },
     {
@@ -19565,7 +19611,8 @@
       "graphics-svg-paints",
       "sprite-mask-blend",
       "dom-overlay-texture",
-      "html-texture-experimental"
+      "html-texture-experimental",
+      "k0-r2-porting-contracts"
     ],
     "shader": [
       "shader-custom-gradient",

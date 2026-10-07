@@ -24,7 +24,7 @@
 ```ts
 function attachLineMaterial(renderer: MeshRenderer, rgba: number[]) {
     const material = new Material();
-    material.initialize({ effectName: 'builtin-unlit', defines: { USE_COLOR: false } });
+    material.initialize({ effectName: 'builtin-unlit', defines: { USE_VERTEX_COLOR: false } });
     material.setProperty('mainColor', new Color(rgba[0], rgba[1], rgba[2], rgba[3]));
     renderer.material = material;
     const instance = renderer.getMaterialInstance(0);
@@ -35,9 +35,9 @@ function attachLineMaterial(renderer: MeshRenderer, rgba: number[]) {
 
 注意 `overridePipelineStates` 只在**材质实例**上有效：`Material` 基类的同名方法是只告警的空实现，必须先 `renderer.getMaterialInstance(0)` 拿实例。
 
-## 坑 2：USE_COLOR 打开而几何没有颜色属性 = 黑线
+## 坑 2：USE_VERTEX_COLOR 打开而几何没有颜色属性 = 黑线
 
-`builtin-unlit` 支持 `defines: { USE_COLOR: true }` 读逐顶点色，但如果你的几何**没有** `colors` 数组，顶点色会读成 0，线与深色背景融为一体，看起来像"线没画出来"。本篇一律 `USE_COLOR: false`、颜色只走 `mainColor`；要逐顶点色，请确保 `createMesh` 时传了与顶点数匹配的 `colors`（每顶点 4 个 0..1 分量）。
+`builtin-unlit` 支持 `defines: { USE_VERTEX_COLOR: true }` 读逐顶点色，但如果你的几何**没有** `colors` 数组，顶点色会读成 0，线与深色背景融为一体，看起来像"线没画出来"。本篇一律 `USE_VERTEX_COLOR: false`、颜色只走 `mainColor`；要逐顶点色，请确保 `createMesh` 时传了与顶点数匹配的 `colors`（每顶点 4 个 0..1 分量）。
 
 ## 途径 1：真线拓扑
 
@@ -265,7 +265,7 @@ npm run dev
  *
  * 两个实测坑（文章与台账都有记录）：
  *  - mesh 的 primitiveMode 会被 pass 的 PSO 覆盖成 TRIANGLE_LIST，不 override 就会把线顶点三角化成填充面；
- *  - builtin-unlit 打开 USE_COLOR 而几何没有颜色属性时，顶点色读成 0，线会变黑融进深色背景，
+ *  - builtin-unlit 打开 USE_VERTEX_COLOR 而几何没有颜色属性时，顶点色读成 0，线会变黑融进深色背景，
  *    所以本篇一律用 mainColor 上色，不用逐顶点色。
  */
 
@@ -315,7 +315,7 @@ light.illuminance = 2;
 // ============ 途径 1：真线拓扑 LINE_LIST ============
 
 /**
- * 纯色线材质：builtin-unlit（不打开 USE_COLOR，颜色只来自 mainColor）。
+ * 纯色线材质：builtin-unlit（不打开 USE_VERTEX_COLOR，颜色只来自 mainColor）。
  * 关键一步：mesh 的 primitiveMode 会被 pass 的 PSO 覆盖成 TRIANGLE_LIST，
  * 必须用材质实例 overridePipelineStates 把绘制图元改回 LINE_LIST。
  *
@@ -324,7 +324,7 @@ light.illuminance = 2;
  */
 function attachLineMaterial(renderer: MeshRenderer, rgba: number[]) {
     const material = new Material();
-    material.initialize({ effectName: 'builtin-unlit', defines: { USE_COLOR: false } });
+    material.initialize({ effectName: 'builtin-unlit', defines: { USE_VERTEX_COLOR: false } });
     material.setProperty('mainColor', new Color(rgba[0], rgba[1], rgba[2], rgba[3]));
     renderer.material = material;
     const instance = renderer.getMaterialInstance(0);

@@ -214,6 +214,8 @@ npm run dev                       # dev server（默认 7454）
 
 [原生网格、TRS 与渲染合同](engine-contract-hardening.md)：动态流局部更新、错误前置、Fog 配置保留、控制器与主光边界、只读属性和绕序检查。
 
+[K0 R2端口合同](k0-r2-porting-contracts.md)：17项暗坑的当前处置、正确顶点色宏、透明/加色配方、动态renderer通知、实例动画、Billboard尺寸与DPR坐标转换。
+
 [响应式容器、输入与棋盘缓存配方](responsive-board-recipes.md)：明确窗口/宿主容器启动、局部坐标命中、单行按钮、视觉失效、单时钟截图和独立首次接入统计。
 
 | 事实               | 来源                                                                                                                                   |

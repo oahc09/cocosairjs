@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Batching: dynamic",
   "category": "performance",
-  "status": "stable",
+  "status": "validated",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -41,19 +41,19 @@
         "api": "Material.initialize",
         "source": "shared/batching-routes.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L100"
+        "sourceLocation": "L104"
       },
       {
         "api": "utils.MeshUtils.createDynamicMesh",
         "source": "shared/batching-routes.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L127"
+        "sourceLocation": "L131"
       },
       {
         "api": "Mesh.updateSubMesh",
         "source": "shared/batching-routes.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L89"
+        "sourceLocation": "L91"
       }
     ]
   },
@@ -98,13 +98,5 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序化网格，无第三方资产"
-  },
-  "promotion": {
-    "spec": "ccb2069859ba",
-    "source": "798ab2ea9f249768",
-    "candidate": "2f089f6ce25eaccd",
-    "verified": 3,
-    "attested": 0,
-    "units": 3
   }
 }
