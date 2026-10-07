@@ -1,0 +1,71 @@
+{
+  "id": "dom-overlay-texture",
+  "version": "1.0.0",
+  "title": "DOM · 场景同步与纹理锚点",
+  "category": "rendering",
+  "status": "draft",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "真实输入与点击随原生节点变换；纹理锚点和 resize 独立更新。",
+    "points": ["移动 / 旋转", "切换锚点", "纹理 Resize", "解绑再绑定"]
+  },
+  "effect": {
+    "functional": "真实输入与点击随原生节点变换；纹理锚点和 resize 独立更新。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
+    "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
+  },
+  "api": {
+    "primary": ["createAirDOMOverlay", "createAirTextureSprite"],
+    "supporting": [],
+    "claims": ["createAirDOMOverlay", "createAirTextureSprite"],
+    "forbiddenShortcut": ["用 DOM 图片代替原生 GPU 渲染", "将未支持的实验能力记录为已支持"],
+    "evidence": [
+      {
+        "api": "createAirDOMOverlay",
+        "source": "src/main.ts",
+        "sourceLocation": "L4",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirTextureSprite",
+        "source": "src/main.ts",
+        "sourceLocation": "L4",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": ["rendering"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Anchor preview", "DOM target"]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击 移动 / 旋转",
+        "buttonText": "移动 / 旋转",
+        "expected": "实际场景或模式更新；定向 __exampleProbe 断言验证结果"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "Original procedural textures, geometry and DOM; MIT. No third-party downloaded assets."
+  }
+}

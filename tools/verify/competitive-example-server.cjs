@@ -8,6 +8,7 @@ const mime = {
     '.js': 'text/javascript',
     '.ts': 'text/javascript',
     '.json': 'application/json',
+    '.css': 'text/css',
     '.png': 'image/png',
 };
 

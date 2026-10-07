@@ -1,0 +1,83 @@
+{
+  "id": "sprite-mask-blend",
+  "version": "1.0.0",
+  "title": "Sprite · 遮罩通道与粒子混合",
+  "category": "rendering",
+  "status": "draft",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "对照 red / alpha、软遮罩 / 阈值裁剪，以及粒子的 normal / add 混合。",
+    "points": ["Alpha 软遮罩", "Red 软遮罩", "Alpha 阈值", "反向遮罩", "粒子 Normal", "粒子 Add"]
+  },
+  "effect": {
+    "functional": "对照 red / alpha、软遮罩 / 阈值裁剪，以及粒子的 normal / add 混合。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
+    "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
+  },
+  "api": {
+    "primary": ["attachAirSpriteMask", "createAirUIBlendScope", "ParticleSystem2D"],
+    "supporting": ["createAirTextureSprite"],
+    "claims": ["attachAirSpriteMask", "createAirUIBlendScope", "ParticleSystem2D", "createAirTextureSprite"],
+    "forbiddenShortcut": ["用 DOM 图片代替原生 GPU 渲染", "将未支持的实验能力记录为已支持"],
+    "evidence": [
+      {
+        "api": "attachAirSpriteMask",
+        "source": "src/main.ts",
+        "sourceLocation": "L4",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirUIBlendScope",
+        "source": "src/main.ts",
+        "sourceLocation": "L4",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "ParticleSystem2D",
+        "source": "src/main.ts",
+        "sourceLocation": "L19",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirTextureSprite",
+        "source": "src/main.ts",
+        "sourceLocation": "L4",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": ["rendering"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Masked sprite", "Particles"]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击 Alpha 软遮罩",
+        "buttonText": "Alpha 软遮罩",
+        "expected": "实际场景或模式更新；定向 __exampleProbe 断言验证结果"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "Original procedural textures, geometry and DOM; MIT. No third-party downloaded assets."
+  }
+}

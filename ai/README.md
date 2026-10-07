@@ -20,6 +20,7 @@
 | 独立资产管线 | [计划](plans/standalone-asset-pipeline.md) | — |
 | glTF 扩展覆盖 | [计划](plans/gltf-extension-coverage.md) | — |
 | 开发者生态 | [计划](plans/developer-ecosystem.md) | — |
+| PixiJS June 能力借鉴 | [实施顺序与状态](plans/pixi-capability-implementation.md) | — |
 | 开发手册 | [计划](plans/development-manual.md) | — |
 | Creator 指南对照补缺 | [计划](plans/manual-creator-guide-coverage.md) | — |
 | Gallery 与 API 覆盖 | [计划](plans/examples-gallery-api-coverage.md) | — |

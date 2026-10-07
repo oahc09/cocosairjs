@@ -75,7 +75,7 @@ export class WebGL2PipelineState extends PipelineState {
 
             if (bsInfo.isA2C !== undefined) { bs.isA2C = bsInfo.isA2C; }
             if (bsInfo.isIndepend !== undefined) { bs.isIndepend = bsInfo.isIndepend; }
-            if (bsInfo.blendColor !== undefined) { bs.blendColor = bsInfo.blendColor; }
+            if (bsInfo.blendColor !== undefined) { Object.assign(bs.blendColor, bsInfo.blendColor); }
         }
         Object.assign(this._rs, info.rasterizerState);
         Object.assign(this._dss, info.depthStencilState);
@@ -94,9 +94,10 @@ export class WebGL2PipelineState extends PipelineState {
             glPrimitive: WebGLPrimitives[info.primitive],
             gpuShader: (info.shader as WebGL2Shader).gpuShader,
             gpuPipelineLayout: (info.pipelineLayout as WebGL2PipelineLayout).getGpuPipelineLayout(),
-            rs: info.rasterizerState,
-            dss: info.depthStencilState,
-            bs: info.blendState,
+            // Cached PSOs own snapshots; material overrides mutate the input state.
+            rs: this._rs,
+            dss: this._dss,
+            bs: this._bs,
             gpuRenderPass: (info.renderPass as WebGL2RenderPass).getGpuRenderPass(),
             dynamicStates,
         };

@@ -275,6 +275,10 @@ PixelFormat adds SRGB888/SRGBA8888 names for existing GFX sRGB formats, preservi
 
 EffectAsset early registration also differs between source/headless and full Web bundles. Before a device exists, the full bundle may expose the effect-import library that game.init later disables for the legacy configuration. AIR now registers effect metadata immediately and defers program registration until renderer initialization, selecting the active library at that time. Destroy removes pending callbacks. This keeps legal early onLoaded calls usable instead of requiring a blanket prohibition; dedicated tests cover both library choices and a full-bundle browser probe verifies actual drawing.
 
+## WebGL2 pipeline state snapshots
+
+`cocos/gfx/webgl2/webgl2-pipeline-state.ts` connects cached GPU pipeline states to the pipeline's owned rasterizer, depth/stencil and blend copies. Upstream retained the mutable material pass objects even though the pipeline was cached by its original hash. Alternating additive and normal Sprite/ParticleSystem2D draws could therefore reuse a cached additive pipeline whose blend factors had become normal. The AIR helper uses MaterialInstance pipeline overrides; this engine correction prevents those overrides from corrupting previously cached state. Focused CPU mutation tests and the graphics/DOM browser pixel probe cover the change. No renderer backend is added.
+
 ## Port diagnostics (PG-18)
 
 `cocos/core/platform/debug.ts` adds an internal explicit warning/error subscription, including native numeric diagnostic IDs. Logging keeps the original console filtering; observer exceptions and recursive observation cannot interrupt native calls. AIR bootstrap exposes an 80-entry bounded, deduplicated channel, defaults to errors, and offers `diagnostics: 'warnings'` to enable native warnings. The separate debug session subscribes to that channel without console or WebGL monkey patches. This change does not classify normal culling or automatic skinning transport as failures. Verification and remaining diagnostic boundaries are tracked in the [port ledger](../ai/ledgers/port-gap-remediation.md).

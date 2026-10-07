@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Cocos AIR · HTML · 实时纹理与快照</title>
+        <link rel="icon" href="data:," />
+        <link rel="stylesheet" href="../shared/capability-lab.css" />
+        <script type="importmap">
+            {
+                "imports": {
+                    "cocosair": "/build/cocosair.module.js",
+                    "cocosair/bootstrap": "/build/bootstrap.js",
+                    "cocosair/html-source": "/build/html-source.js"
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <header>
+            <a href="/">COCOS AIR / EXAMPLES</a>
+            <h1>HTML · 实时纹理与快照</h1>
+            <p>实验浏览器将表单上传为原生纹理；普通浏览器明确显示不支持。</p>
+        </header>
+        <main>
+            <div id="stage"><canvas id="GameCanvas"></canvas></div>
+            <aside>
+                <div class="controls">
+                    <button id="live">实时 HTML</button><button id="snapshot">不可变快照</button
+                    ><button id="color">改变 DOM 颜色</button>
+                </div>
+                <p id="availability">实验能力检测中。需要支持 HTML-in-Canvas API 的浏览器。</p>
+                <div class="controls"><button id="verify">运行断言</button><button id="dispose">释放资源</button></div>
+                <output id="status" aria-live="polite">BOOTING</output>
+                <pre id="results"></pre>
+            </aside>
+        </main>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

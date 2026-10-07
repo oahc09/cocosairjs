@@ -56441,6 +56441,207 @@
         /** @internal Keeps the packed texture and original page alive through dynamic-atlas restoration. */
         refreshFrame(): void;
     }
+    /** Owns one independent overlay; never changes game.container or the host's styles. */
+    export function createAirDOMOverlay(options: AirDOMOverlayOptions): AirDOMOverlay;
+    export interface AirDOMOverlayOptions {
+        canvas: HTMLCanvasElement;
+        host?: HTMLElement;
+        className?: string;
+    }
+    export interface AirDOMOverlayBinding {
+        /** Call after camera/node changes, or from the application's frame callback. */
+        update(): void;
+        dispose(): void;
+    }
+    export interface AirDOMOverlay {
+        readonly root: HTMLDivElement;
+        /** Element is borrowed and restored to its original DOM position on detach. */
+        attach(element: HTMLElement, node: Node, camera: Camera, options?: {
+            width?: number;
+            height?: number;
+            anchor?: readonly [
+                number,
+                number
+            ];
+        }): AirDOMOverlayBinding;
+        update(): void;
+        dispose(): void;
+    }
+    /** Texture is borrowed; owns the frame and node. No texture metadata is mutated. */
+    export function createAirTextureSprite(parent: Node, texture: __private._cocos_asset_assets_texture_base__TextureBase, options?: AirTextureSpriteOptions): {
+        readonly node: Node;
+        readonly sprite: Sprite;
+        readonly frame: SpriteFrame;
+        refresh(): void;
+        dispose(): void;
+    };
+    export interface AirTextureSpriteOptions extends SpriteNodeOptions {
+        name?: string;
+        anchor?: readonly [
+            number,
+            number
+        ];
+    }
+    export function validateAirGraphicsCommands(commands: readonly AirGraphicsCommand[], bounds?: AirGraphicsBounds): void;
+    /** Solid native replay; richer paints/holes use rasterizeAirGraphics, never silently degrade. */
+    export function drawAirGraphics(graphics: GraphicsComponent, commands: readonly AirGraphicsCommand[], clear?: boolean): void;
+    /** SVG preserves original curves and per-paint styles; cannot reconstruct arbitrary Graphics.impl. */
+    export function airGraphicsCommandsToSvg(commands: readonly AirGraphicsCommand[], bounds: AirGraphicsBounds): string;
+    /** Data only; replay uses the original Cocos Graphics component. Coordinates are Y up. */
+    export type AirGraphicsCommand = {
+        op: "moveTo" | "lineTo";
+        args: readonly [
+            number,
+            number
+        ];
+    } | {
+        op: "bezierCurveTo";
+        args: readonly [
+            number,
+            number,
+            number,
+            number,
+            number,
+            number
+        ];
+    } | {
+        op: "quadraticCurveTo";
+        args: readonly [
+            number,
+            number,
+            number,
+            number
+        ];
+    } | {
+        op: "arc";
+        args: readonly [
+            number,
+            number,
+            number,
+            number,
+            number,
+            boolean
+        ];
+    } | {
+        op: "rect" | "ellipse";
+        args: readonly [
+            number,
+            number,
+            number,
+            number
+        ];
+    } | {
+        op: "roundRect";
+        args: readonly [
+            number,
+            number,
+            number,
+            number,
+            number
+        ];
+    } | {
+        op: "circle";
+        args: readonly [
+            number,
+            number,
+            number
+        ];
+    } | {
+        op: "close";
+    } | {
+        op: "fill";
+        paint: AirGraphicsPaint;
+        rule?: "nonzero" | "evenodd";
+    } | {
+        op: "stroke";
+        paint: AirSolidPaint;
+        width: number;
+        cap?: "butt" | "round" | "square";
+        join?: "miter" | "round" | "bevel";
+    };
+    export interface AirSolidPaint {
+        color: string;
+        opacity?: number;
+    }
+    export interface AirGradientStop {
+        offset: number;
+        color: string;
+        opacity?: number;
+    }
+    export type AirAffine2D = readonly [
+        number,
+        number,
+        number,
+        number,
+        number,
+        number
+    ];
+    export type AirGraphicsPaint = AirSolidPaint | {
+        kind: "linear";
+        from: readonly [
+            number,
+            number
+        ];
+        to: readonly [
+            number,
+            number
+        ];
+        stops: readonly AirGradientStop[];
+    } | {
+        kind: "radial";
+        center: readonly [
+            number,
+            number
+        ];
+        radius: number;
+        stops: readonly AirGradientStop[];
+    } | {
+        kind: "pattern";
+        image: CanvasImageSource;
+        width: number;
+        height: number;
+        textureSpace?: "local" | "global";
+        transform?: AirAffine2D;
+        sourceURL?: string;
+    };
+    export interface AirGraphicsBounds {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    }
+    /** Canvas2D rasterizes rich paints into a native Texture2D. Explicit updates; no perpetual upload loop. */
+    export function rasterizeAirGraphics(commands: readonly AirGraphicsCommand[], options: AirGraphicsRasterOptions): {
+        readonly texture: Texture2D;
+        readonly canvas: HTMLCanvasElement;
+        update(commands?: readonly AirGraphicsCommand[], options?: AirGraphicsRasterOptions): void;
+        dispose(): void;
+    };
+    export interface AirGraphicsRasterOptions {
+        bounds: AirGraphicsBounds;
+        resolution?: number;
+        /** Local -> world affine matrix. Required for global patterns. Call update when it changes. */
+        worldTransform?: AirAffine2D;
+    }
+    /** Explicit opt-in subtree controller. Native nodes gain no implicit global blend inheritance. */
+    export function createAirUIBlendScope(root: Node, mode?: AirUIBlendMode): {
+        set(node: Node, mode: AirUIBlendMode | null): void;
+        update(): void;
+        dispose(): void;
+    };
+    export type AirUIBlendMode = "normal" | "add" | "multiply";
+    /** Per-sprite mask in normalized content UVs; supports trimmed/rotated atlas frames. */
+    export function attachAirSpriteMask(sprite: Sprite, texture: __private._cocos_asset_assets_texture_base__TextureBase, options?: AirSpriteMaskOptions): {
+        readonly material: Material;
+        update(): void;
+        dispose(): void;
+    };
+    export interface AirSpriteMaskOptions {
+        channel?: "alpha" | "red";
+        mode?: "soft" | "threshold";
+        threshold?: number;
+        inverted?: boolean;
+    }
     /** @en A persistent page handle. @zh 常驻页面句柄。 */
     export interface PageHandle {
         readonly name: string;

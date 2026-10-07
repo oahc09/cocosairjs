@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Cocos AIR · Sprite · 遮罩通道与粒子混合</title>
+        <link rel="icon" href="data:," />
+        <link rel="stylesheet" href="../shared/capability-lab.css" />
+        <script type="importmap">
+            {
+                "imports": {
+                    "cocosair": "/build/cocosair.module.js",
+                    "cocosair/bootstrap": "/build/bootstrap.js",
+                    "cocosair/html-source": "/build/html-source.js"
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <header>
+            <a href="/">COCOS AIR / EXAMPLES</a>
+            <h1>Sprite · 遮罩通道与粒子混合</h1>
+            <p>对照 red / alpha、软遮罩 / 阈值裁剪，以及粒子的 normal / add 混合。</p>
+        </header>
+        <main>
+            <div id="stage"><canvas id="GameCanvas"></canvas></div>
+            <aside>
+                <div class="controls">
+                    <button id="alpha">Alpha 软遮罩</button><button id="red">Red 软遮罩</button
+                    ><button id="threshold">Alpha 阈值</button><button id="invert">反向遮罩</button
+                    ><button id="normal">粒子 Normal</button><button id="add">粒子 Add</button>
+                </div>
+                <p>四列遮罩数据保持不变，只有通道与采样方式改变。粒子混合使用蓝色背景对照。</p>
+                <div class="controls"><button id="verify">运行断言</button><button id="dispose">释放资源</button></div>
+                <output id="status" aria-live="polite">BOOTING</output>
+                <pre id="results"></pre>
+            </aside>
+        </main>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

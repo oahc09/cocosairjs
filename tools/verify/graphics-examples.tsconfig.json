@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": [],
+    "baseUrl": "../..",
+    "paths": {
+      "cocosair": ["build/cocosair.legacy.d.ts"],
+      "cocosair/bootstrap": ["build/bootstrap.legacy.d.ts"],
+      "cocosair/html-source": ["build/html-source.d.ts"]
+    }
+  },
+  "include": [
+    "../../examples/shared/capability-lab.ts",
+    "../../examples/graphics-svg-paints/src/main.ts",
+    "../../examples/sprite-mask-blend/src/main.ts",
+    "../../examples/dom-overlay-texture/src/main.ts",
+    "../../examples/html-texture-experimental/src/main.ts"
+  ]
+}

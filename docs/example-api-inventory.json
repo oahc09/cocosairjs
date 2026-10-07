@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "d3140a19a76e8100",
-  "apiInventoryRevision": "d1dd854fb6771ed1",
+  "sourceFingerprint": "3c2b1853a372509d",
+  "apiInventoryRevision": "48ba46ec9d9ea6e8",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -53291,6 +53291,18 @@
       "coverageRequired": false,
       "parent": null
     },
+    "AIR_BUILD_DATE": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AIR_BUILD_NUMBER": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "AirAppImpl": {
       "kind": "class",
       "tier": "supporting",
@@ -53566,6 +53578,54 @@
       "tier": "internal",
       "coverageRequired": false,
       "parent": "AirUIMesh"
+    },
+    "createAirDOMOverlay": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAirTextureSprite": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "validateAirGraphicsCommands": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "drawAirGraphics": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "airGraphicsCommandsToSvg": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "rasterizeAirGraphics": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAirUIBlendScope": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "attachAirSpriteMask": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
     },
     "SceneStack": {
       "kind": "class",
@@ -61051,6 +61111,2436 @@
       "coverageRequired": false,
       "parent": null
     },
+    "__private.__pal_input_input_source__InputSource": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__InputSource.getValue": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__InputSource"
+    },
+    "__private.__pal_input_input_source__InputSourceAxis1D": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__InputSourceAxis1D.getValue": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__InputSourceAxis1D"
+    },
+    "__private.__pal_input_input_source__InputSourceButton": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__InputSourceButton.getValue": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__InputSourceButton"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis1D": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis1D.positive": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis1D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis1D.negative": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis1D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis1D.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis1D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis1D.getValue": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis1D"
+    },
+    "__private.__cocos_core_value_types_value_type__ValueType": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__cocos_core_value_types_value_type__ValueType.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_value_types_value_type__ValueType"
+    },
+    "__private.__cocos_core_value_types_value_type__ValueType.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_value_types_value_type__ValueType"
+    },
+    "__private.__cocos_core_value_types_value_type__ValueType.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_value_types_value_type__ValueType"
+    },
+    "__private.__cocos_core_value_types_value_type__ValueType.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_value_types_value_type__ValueType"
+    },
+    "__private.__cocos_core_value_types_value_type__ValueType.toString": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_value_types_value_type__ValueType"
+    },
+    "__private.__cocos_core_math_mat3__Mat3": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__cocos_core_math_mat3__Mat3.IDENTITY": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.clone": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.copy": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.set": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.identity": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.transpose": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.invert": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.determinant": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.multiply": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.multiplyMat4": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.transform": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.translate": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.scale": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.rotate": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.fromMat4": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.fromViewUp": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.fromTranslation": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.fromScaling": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.fromRotation": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.fromQuat": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.inverseTransposeMat4": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.toArray": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.fromArray": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.add": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.subtract": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.multiplyScalar": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.multiplyScalarAndAdd": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.strictEquals": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.equals": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.toEuler": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.m00": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.m01": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.m02": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.m03": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.m04": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.m05": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.m06": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.m07": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.m08": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.strictEquals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.toString": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.identity": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.transpose": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.invert": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.determinant": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.add": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.subtract": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.multiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.multiplyScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.scale": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.rotate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_mat3__Mat3.prototype.fromQuat": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat3__Mat3"
+    },
+    "__private.__cocos_core_math_quat__Quat": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__cocos_core_math_quat__Quat.IDENTITY": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.clone": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.copy": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.set": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.identity": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.rotationTo": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.getAxisAngle": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.multiply": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.multiplyScalar": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.scaleAndAdd": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.rotateX": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.rotateY": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.rotateZ": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.rotateAround": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.rotateAroundLocal": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.calculateW": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.dot": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.lerp": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.slerp": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.sqlerp": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.invert": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.conjugate": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.len": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.lengthSqr": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.normalize": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.fromAxes": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.fromViewUp": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.fromAxisAngle": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.fromMat3": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.fromEuler": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.fromAngleZ": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.toAxisX": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.toAxisY": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.toAxisZ": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.toEuler": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.toEulerInYXZOrder": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.toArray": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.fromArray": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.strictEquals": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.equals": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.angle": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.rotateTowards": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.x": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.y": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.z": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.w": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.prototype.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.prototype.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.prototype.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.prototype.strictEquals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.getEulerAngles": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.prototype.lerp": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.prototype.slerp": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.length": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.prototype.lengthSqr": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_quat__Quat.toString": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_quat__Quat"
+    },
+    "__private.__cocos_core_math_mat4__Mat4": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__cocos_core_math_mat4__Mat4.IDENTITY": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.clone": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.copy": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.set": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.identity": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.zero": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.transpose": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.invert": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.determinant": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.multiply": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.transform": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.translate": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.scale": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.rotate": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.rotateX": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.rotateY": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.rotateZ": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromTranslation": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromScaling": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromRotation": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromXRotation": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromYRotation": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromZRotation": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromRT": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.getTranslation": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.getScaling": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.getRotation": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.toRTS": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.toSRT": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.toEuler": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromRTS": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromSRT": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromRTSOrigin": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromSRTOrigin": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromQuat": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.frustum": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.perspective": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.ortho": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.lookAt": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.inverseTranspose": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.toArray": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.fromArray": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.add": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.subtract": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.multiplyScalar": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.multiplyScalarAndAdd": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.strictEquals": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.equals": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m00": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m01": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m02": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m03": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m04": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m05": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m06": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m07": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m08": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m09": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m10": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m11": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m12": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m13": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m14": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.m15": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.strictEquals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.toString": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.identity": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.zero": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.transpose": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.invert": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.determinant": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.add": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.subtract": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.multiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.multiplyScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.translate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.transform": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.scale": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.rotate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.getTranslation": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.getScale": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.getRotation": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.fromRTS": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.fromSRT": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_mat4__Mat4.prototype.fromQuat": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_mat4__Mat4"
+    },
+    "__private.__cocos_core_math_vec3__Vec3": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__cocos_core_math_vec3__Vec3.UNIT_X": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.UNIT_Y": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.UNIT_Z": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.RIGHT": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.UP": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.FORWARD": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.ZERO": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.ONE": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.NEG_ONE": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.zero": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.clone": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.copy": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.set": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.add": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.subtract": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.multiply": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.divide": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.ceil": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.floor": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.min": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.max": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.round": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.multiplyScalar": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.scaleAndAdd": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.distance": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.squaredDistance": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.len": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.lengthSqr": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.negate": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.invert": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.invertSafe": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.normalize": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.dot": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.cross": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.lerp": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.slerp": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.random": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.transformMat4": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.transformMat4Normal": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.transformMat3": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.transformAffine": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.transformQuat": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.transformRTS": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.transformInverseRTS": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.rotateX": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.rotateY": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.rotateZ": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.rotateN": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.toArray": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.fromArray": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.strictEquals": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.equals": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.angle": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.signedAngle": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.projectOnPlane": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.project": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.moveTowards": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.generateOrthogonal": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.x": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.y": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.z": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.equals3f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.strictEquals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.strictEquals3f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.toString": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.lerp": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.add": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.add3f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.subtract": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.subtract3f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.multiplyScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.multiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.multiply3f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.divide": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.divide3f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.negative": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.clampf": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.dot": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.cross": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.length": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.lengthSqr": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.normalize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.prototype.transformMat4": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec3__Vec3.toVec2": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec3__Vec3"
+    },
+    "__private.__cocos_core_math_vec2__Vec2": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__cocos_core_math_vec2__Vec2.ZERO": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.ONE": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.NEG_ONE": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.UNIT_X": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.UNIT_Y": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.clone": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.copy": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.set": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.add": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.subtract": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.multiply": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.divide": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.ceil": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.floor": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.min": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.max": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.round": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.multiplyScalar": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.scaleAndAdd": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.distance": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.squaredDistance": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.len": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.lengthSqr": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.negate": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.inverse": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.inverseSafe": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.normalize": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.dot": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.cross": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.lerp": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.random": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.transformMat3": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.transformMat4": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.str": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.toArray": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.fromArray": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.strictEquals": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.equals": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.angle": {
+      "kind": "static",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.x": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.y": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.equals2f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.strictEquals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.strictEquals2f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.toString": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.lerp": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.clampf": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.add": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.add2f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.subtract": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.subtract2f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.multiplyScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.multiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.multiply2f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.divide": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.divide2f": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.negative": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.dot": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.cross": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.length": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.lengthSqr": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.normalize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.angle": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.signAngle": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.rotate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.project": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.prototype.transformMat4": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__cocos_core_math_vec2__Vec2.toVec3": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__cocos_core_math_vec2__Vec2"
+    },
+    "__private.__pal_input_input_source__InputSourceAxis2D": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__InputSourceAxis2D.getValue": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__InputSourceAxis2D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis2D": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis2D.up": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis2D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis2D.down": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis2D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis2D.left": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis2D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis2D.right": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis2D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis2D.xAxis": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis2D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis2D.yAxis": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis2D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis2D.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis2D"
+    },
+    "__private.__pal_input_input_source__CompositeInputSourceAxis2D.getValue": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__CompositeInputSourceAxis2D"
+    },
+    "__private.__pal_input_input_source__InputSourceDpad": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__InputSourceStick": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__InputSourceAxis3D": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__InputSourceAxis3D.getValue": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__InputSourceAxis3D"
+    },
+    "__private.__pal_input_input_source__InputSourcePosition": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__InputSourcePosition.getValue": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__InputSourcePosition"
+    },
+    "__private.__pal_input_input_source__InputSourceQuat": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__InputSourceQuat.getValue": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__InputSourceQuat"
+    },
+    "__private.__pal_input_input_source__InputSourceOrientation": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_input_input_source__InputSourceOrientation.getValue": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_input_input_source__InputSourceOrientation"
+    },
     "__private._pal_input__GamepadInputDevice": {
       "kind": "class",
       "tier": "internal",
@@ -66787,6 +69277,12 @@
       "coverageRequired": false,
       "parent": null
     },
+    "__private.__pal_audio_type__AudioType": {
+      "kind": "enum",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
     "__private._pal_audio__OneShotAudio": {
       "kind": "class",
       "tier": "internal",
@@ -66816,6 +69312,36 @@
       "tier": "internal",
       "coverageRequired": false,
       "parent": "__private._pal_audio__OneShotAudio"
+    },
+    "__private.__pal_audio_type__AudioState": {
+      "kind": "enum",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_audio_type__AudioPCMDataView": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private.__pal_audio_type__AudioPCMDataView.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_audio_type__AudioPCMDataView"
+    },
+    "__private.__pal_audio_type__AudioPCMDataView.length": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_audio_type__AudioPCMDataView"
+    },
+    "__private.__pal_audio_type__AudioPCMDataView.getData": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private.__pal_audio_type__AudioPCMDataView"
     },
     "__private._pal_audio__AudioPlayer": {
       "kind": "class",
@@ -74722,9 +77248,9 @@
     "core": 964,
     "important": 283,
     "advanced": 192,
-    "supporting": 8228,
-    "internal": 2624
+    "supporting": 8238,
+    "internal": 3035
   },
-  "totalUnits": 12291,
+  "totalUnits": 12712,
   "coverageRequiredUnits": 1439
 }

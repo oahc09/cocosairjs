@@ -34,28 +34,45 @@ if (overrideArtifact) {
 const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'gallery-artifact.json');
 
 function buildArtifact () {
+  const manifest = JSON.parse(fs.readFileSync(path.join(REPO, 'examples', 'files.json'), 'utf8'));
+  const selected = process.env.COCOSAIR_GALLERY_EXAMPLES?.split(',').map(id => id.trim()).filter(Boolean);
+  if (selected) {
+    for (const id of selected) if (!manifest.examples.some(ex => ex.id === id)) throw new Error(`Unknown Gallery example: ${id}`);
+    manifest.examples = manifest.examples.filter(ex => selected.includes(ex.id));
+    manifest.categories = Object.fromEntries(Object.entries(manifest.categories).map(([category, ids]) => [category, ids.filter(id => selected.includes(id))]).filter(([, ids]) => ids.length));
+    manifest.subset = true;
+  }
+  const selectedDirs = selected && new Set(manifest.examples.map(ex => ex.dir.split('/')[0]));
   fs.rmSync(ARTIFACT, { recursive: true, force: true });
   fs.mkdirSync(ARTIFACT, { recursive: true });
   // 引擎与解码器（根相对）
   fs.copyFileSync(path.join(REPO, 'build', 'cocosair.module.js'), path.join(ARTIFACT, 'cocosair.module.js'));
+  for (const entry of ['bootstrap.js', 'html-source.js']) {
+    fs.copyFileSync(path.join(REPO, 'build', entry), path.join(ARTIFACT, entry));
+  }
   fs.cpSync(path.join(REPO, 'build', 'gltf-decoders'), path.join(ARTIFACT, 'gltf-decoders'), { recursive: true });
   // 示例（源目录全量 + 共享库）。shared/bench.* 是 V0.5.1 的 DevTools/基准测量台：
   // 它的 importmap 写死仓库根 /build/ 且需要 agent 通道，不属于静态交付物，故不随包发布。
   fs.cpSync(path.join(REPO, 'examples'), ARTIFACT, {
     recursive: true,
-    filter: (src) => !src.includes(`${path.sep}node_modules`) && !src.endsWith('files.json')
-      && !/[\\/]shared[\\/]bench\.(html|ts)$/.test(src),
+    filter: (src) => {
+      const relative = path.relative(path.join(REPO, 'examples'), src), first = relative.split(path.sep)[0];
+      if (selectedDirs && relative && fs.statSync(src).isDirectory() && !['shared', 'assets'].includes(first) && !selectedDirs.has(first)) return false;
+      return !src.includes(`${path.sep}node_modules`) && !src.endsWith('files.json') && !/[\\/]shared[\\/]bench\.(html|ts)$/.test(src);
+    },
   });
-  fs.copyFileSync(path.join(REPO, 'examples', 'files.json'), path.join(ARTIFACT, 'files.json'));
+  fs.writeFileSync(path.join(ARTIFACT, 'files.json'), JSON.stringify(manifest, null, 2) + '\n');
   // 示例 index.html importmap → 相对引擎；示例源内 /build/ 引用 → 相对
-  const manifest = JSON.parse(fs.readFileSync(path.join(REPO, 'examples', 'files.json'), 'utf8'));
   let rewrites = 0;
   for (const ex of manifest.examples) {
     const exDir = path.join(ARTIFACT, ex.dir);
     const htmlPath = path.join(exDir, 'index.html');
     if (fs.existsSync(htmlPath)) {
       const html = fs.readFileSync(htmlPath, 'utf8');
-      fs.writeFileSync(htmlPath, html.split('"/build/cocosair.module.js"').join('"../cocosair.module.js"'));
+      fs.writeFileSync(htmlPath, html
+        .split('"/build/cocosair.module.js"').join('"../cocosair.module.js"')
+        .split('"/build/bootstrap.js"').join('"../bootstrap.js"')
+        .split('"/build/html-source.js"').join('"../html-source.js"'));
       rewrites++;
     }
     for (const entry of ['src/main.ts', 'src/main.js', 'main.ts', 'main.js']) {

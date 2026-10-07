@@ -1,0 +1,83 @@
+{
+  "id": "graphics-svg-paints",
+  "version": "1.0.0",
+  "title": "Graphics · SVG 与富填充",
+  "category": "rendering",
+  "status": "draft",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "原生绘图、渐变孔洞、纹理填充与 SVG 导出对照。",
+    "points": ["原生 Graphics", "渐变与孔洞", "纹理填充", "下载 SVG"]
+  },
+  "effect": {
+    "functional": "原生绘图、渐变孔洞、纹理填充与 SVG 导出对照。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
+    "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
+  },
+  "api": {
+    "primary": ["drawAirGraphics", "airGraphicsCommandsToSvg", "rasterizeAirGraphics"],
+    "supporting": ["createAirTextureSprite"],
+    "claims": ["drawAirGraphics", "airGraphicsCommandsToSvg", "rasterizeAirGraphics", "createAirTextureSprite"],
+    "forbiddenShortcut": ["用 DOM 图片代替原生 GPU 渲染", "将未支持的实验能力记录为已支持"],
+    "evidence": [
+      {
+        "api": "drawAirGraphics",
+        "source": "src/main.ts",
+        "sourceLocation": "L5",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "airGraphicsCommandsToSvg",
+        "source": "src/main.ts",
+        "sourceLocation": "L5",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "rasterizeAirGraphics",
+        "source": "src/main.ts",
+        "sourceLocation": "L5",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirTextureSprite",
+        "source": "src/main.ts",
+        "sourceLocation": "L5",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": ["rendering"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Rich fill", "Native Graphics"]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击 原生 Graphics",
+        "buttonText": "原生 Graphics",
+        "expected": "实际场景或模式更新；定向 __exampleProbe 断言验证结果"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "Original procedural textures, geometry and DOM; MIT. No third-party downloaded assets."
+  }
+}

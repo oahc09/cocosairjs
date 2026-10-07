@@ -210,6 +210,8 @@ npm run dev                       # dev server（默认 7454）
 
 ## 验证与台账
 
+[Graphics、SVG 与 DOM 协同](graphics-and-dom.md)：命令回放、SVG 导出、栅格渐变/纹理/孔洞、Sprite 软遮罩、显式混合继承、DOM overlay 与实验性 HTML 纹理。
+
 [原生网格、TRS 与渲染合同](engine-contract-hardening.md)：动态流局部更新、错误前置、Fog 配置保留、控制器与主光边界、只读属性和绕序检查。
 
 [响应式容器、输入与棋盘缓存配方](responsive-board-recipes.md)：明确窗口/宿主容器启动、局部坐标命中、单行按钮、视觉失效、单时钟截图和独立首次接入统计。

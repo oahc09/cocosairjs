@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-05T12:54:40.468Z",
-  "revision": "b1ef301",
+  "generatedAt": "2026-10-07T00:43:54.600Z",
+  "revision": "a0bcc11",
   "examples": [
     {
       "dir": "anim-position",
@@ -2681,6 +2681,79 @@
       }
     },
     {
+      "dir": "dom-overlay-texture",
+      "id": "dom-overlay-texture",
+      "version": "1.0.0",
+      "title": "DOM · 场景同步与纹理锚点",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "真实输入与点击随原生节点变换；纹理锚点和 resize 独立更新。",
+        "points": [
+          "移动 / 旋转",
+          "切换锚点",
+          "纹理 Resize",
+          "解绑再绑定"
+        ]
+      },
+      "effect": {
+        "functional": "真实输入与点击随原生节点变换；纹理锚点和 resize 独立更新。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
+        "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
+      },
+      "api": {
+        "primary": [
+          "createAirDOMOverlay",
+          "createAirTextureSprite"
+        ],
+        "supporting": [],
+        "claims": [
+          "createAirDOMOverlay",
+          "createAirTextureSprite"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Anchor preview",
+            "DOM target"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击 移动 / 旋转",
+            "buttonText": "移动 / 旋转",
+            "expected": "实际场景或模式更新；定向 __exampleProbe 断言验证结果"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      }
+    },
+    {
       "dir": "dragonbones-basic",
       "id": "dragonbones-basic",
       "version": "1.0.0",
@@ -4259,6 +4332,84 @@
       }
     },
     {
+      "dir": "graphics-svg-paints",
+      "id": "graphics-svg-paints",
+      "version": "1.0.0",
+      "title": "Graphics · SVG 与富填充",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "原生绘图、渐变孔洞、纹理填充与 SVG 导出对照。",
+        "points": [
+          "原生 Graphics",
+          "渐变与孔洞",
+          "纹理填充",
+          "下载 SVG"
+        ]
+      },
+      "effect": {
+        "functional": "原生绘图、渐变孔洞、纹理填充与 SVG 导出对照。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
+        "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
+      },
+      "api": {
+        "primary": [
+          "drawAirGraphics",
+          "airGraphicsCommandsToSvg",
+          "rasterizeAirGraphics"
+        ],
+        "supporting": [
+          "createAirTextureSprite"
+        ],
+        "claims": [
+          "drawAirGraphics",
+          "airGraphicsCommandsToSvg",
+          "rasterizeAirGraphics",
+          "createAirTextureSprite"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Rich fill",
+            "Native Graphics"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击 原生 Graphics",
+            "buttonText": "原生 Graphics",
+            "expected": "实际场景或模式更新；定向 __exampleProbe 断言验证结果"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      }
+    },
+    {
       "dir": "hdr-color-pipeline",
       "id": "hdr-color-pipeline",
       "version": "1.0.0",
@@ -4437,6 +4588,69 @@
         "verified": 17,
         "attested": 0,
         "units": 17
+      }
+    },
+    {
+      "dir": "html-texture-experimental",
+      "id": "html-texture-experimental",
+      "version": "1.0.0",
+      "title": "HTML · 实时纹理与快照",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "实验浏览器将表单上传为原生纹理；普通浏览器明确显示不支持。",
+        "points": [
+          "实时 HTML",
+          "不可变快照",
+          "改变 DOM 颜色"
+        ]
+      },
+      "effect": {
+        "functional": "实验浏览器将表单上传为原生纹理；普通浏览器明确显示不支持。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
+        "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
+      },
+      "api": {
+        "primary": [
+          "Texture2D",
+          "createAirTextureSprite"
+        ],
+        "supporting": [],
+        "claims": [
+          "Texture2D",
+          "createAirTextureSprite"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "HTML texture surface"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
       }
     },
     {
@@ -16624,6 +16838,86 @@
       }
     },
     {
+      "dir": "sprite-mask-blend",
+      "id": "sprite-mask-blend",
+      "version": "1.0.0",
+      "title": "Sprite · 遮罩通道与粒子混合",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "对照 red / alpha、软遮罩 / 阈值裁剪，以及粒子的 normal / add 混合。",
+        "points": [
+          "Alpha 软遮罩",
+          "Red 软遮罩",
+          "Alpha 阈值",
+          "反向遮罩",
+          "粒子 Normal",
+          "粒子 Add"
+        ]
+      },
+      "effect": {
+        "functional": "对照 red / alpha、软遮罩 / 阈值裁剪，以及粒子的 normal / add 混合。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
+        "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
+      },
+      "api": {
+        "primary": [
+          "attachAirSpriteMask",
+          "createAirUIBlendScope",
+          "ParticleSystem2D"
+        ],
+        "supporting": [
+          "createAirTextureSprite"
+        ],
+        "claims": [
+          "attachAirSpriteMask",
+          "createAirUIBlendScope",
+          "ParticleSystem2D",
+          "createAirTextureSprite"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Masked sprite",
+            "Particles"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击 Alpha 软遮罩",
+            "buttonText": "Alpha 软遮罩",
+            "expected": "实际场景或模式更新；定向 __exampleProbe 断言验证结果"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      }
+    },
+    {
       "dir": "starfield-galaxy",
       "id": "starfield-galaxy",
       "version": "1.0.0",
@@ -19267,7 +19561,11 @@
       "fog-accuracy",
       "neon-night-city",
       "water-multipass",
-      "hdr-color-pipeline"
+      "hdr-color-pipeline",
+      "graphics-svg-paints",
+      "sprite-mask-blend",
+      "dom-overlay-texture",
+      "html-texture-experimental"
     ],
     "shader": [
       "shader-custom-gradient",

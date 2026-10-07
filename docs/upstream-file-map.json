@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 183,
+    "modifiedCount": 191,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -10,6 +10,55 @@
     }
   },
   "mapping": [
+    {
+      "airPath": "src/air/dom-overlay.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: borrowed DOM overlay bindings with native node/camera projection and deterministic restoration"
+    },
+    {
+      "airPath": "src/air/texture-sprite.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: compose native Sprite/UITransform/SpriteFrame from borrowed TextureBase with explicit anchor and refresh"
+    },
+    {
+      "airPath": "src/air/graphics-commands.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: validated drawing data, original Graphics replay and SVG serialization"
+    },
+    {
+      "airPath": "src/air/graphics-raster.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: explicit Canvas2D rich-paint rasterization into native Texture2D"
+    },
+    {
+      "airPath": "src/air/ui-blend.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: opt-in UI/particle subtree blend controller with native material instance state overrides"
+    },
+    {
+      "airPath": "src/air/effects/sprite-mask.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: owned builtin-sprite specialization for red/alpha soft and threshold masks"
+    },
+    {
+      "airPath": "src/air/html-source.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: engine-free experimental HTML-in-Canvas native texture adapter with snapshots and geometry synchronization"
+    },
     {
       "airPath": "src/air/app.ts",
       "upstreamPath": null,
@@ -4004,8 +4053,8 @@
       "airPath": "src/cocos/gfx/webgl2/webgl2-pipeline-state.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-pipeline-state.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: GPU pipeline cache keeps owned raster/depth/blend snapshots instead of mutable material state"
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-primary-command-buffer.ts",

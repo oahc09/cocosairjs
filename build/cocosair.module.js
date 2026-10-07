@@ -136592,8 +136592,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610062247";
-const AIR_BUILD_NUMBER = 1;
+const AIR_BUILD_DATE = "202610070854";
+const AIR_BUILD_NUMBER = 16;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -143874,7 +143874,7 @@ const EMPTY = Object.freeze({
   uvs: Object.freeze([]),
   indices: Object.freeze([])
 });
-function fail$6(field, message) {
+function fail$7(field, message) {
   const error = new Error(`AIR_E_UI_MESH_GEOMETRY: ${field}: ${message}`);
   Object.assign(error, {
     code: 'AIR_E_UI_MESH_GEOMETRY',
@@ -143883,19 +143883,19 @@ function fail$6(field, message) {
   throw error;
 }
 function copyGeometry(value) {
-  if (!value || !Array.isArray(value.positions) || !Array.isArray(value.uvs) || !Array.isArray(value.indices)) fail$6('geometry', 'three arrays required');
+  if (!value || !Array.isArray(value.positions) || !Array.isArray(value.uvs) || !Array.isArray(value.indices)) fail$7('geometry', 'three arrays required');
   const {
       positions,
       uvs,
       indices
     } = value,
     count = positions.length / 2;
-  if (!Number.isInteger(count) || count < 3 || count > 1024) fail$6('positions', '3..1024 XY vertices required');
-  if (uvs.length !== positions.length) fail$6('uvs', 'one UV pair per vertex required');
-  if (!positions.every(Number.isFinite)) fail$6('positions', 'finite coordinates required');
-  if (!uvs.every(n => Number.isFinite(n) && n >= 0 && n <= 1)) fail$6('uvs', 'finite frame coordinates in [0,1] required');
-  if (indices.length < 3 || indices.length > 4095 || indices.length % 3) fail$6('indices', '1..1365 triangles required');
-  if (!indices.every(n => Number.isInteger(n) && n >= 0 && n < count)) fail$6('indices', 'vertex index outside geometry');
+  if (!Number.isInteger(count) || count < 3 || count > 1024) fail$7('positions', '3..1024 XY vertices required');
+  if (uvs.length !== positions.length) fail$7('uvs', 'one UV pair per vertex required');
+  if (!positions.every(Number.isFinite)) fail$7('positions', 'finite coordinates required');
+  if (!uvs.every(n => Number.isFinite(n) && n >= 0 && n <= 1)) fail$7('uvs', 'finite frame coordinates in [0,1] required');
+  if (indices.length < 3 || indices.length > 4095 || indices.length % 3) fail$7('indices', '1..1365 triangles required');
+  if (!indices.every(n => Number.isInteger(n) && n >= 0 && n < count)) fail$7('indices', 'vertex index outside geometry');
   return Object.freeze({
     positions: Object.freeze(positions.slice()),
     uvs: Object.freeze(uvs.slice()),
@@ -144073,6 +144073,794 @@ let AirUIMesh = (_dec$l = ccclass$w('AirUIMesh'), _dec2$c = requireComponent(UIT
     this._textureLeases.clear();
   }
 }) || _class$l) || _class$l);
+
+function createAirDOMOverlay(options) {
+  var _options$className, _options$host;
+  const {
+    canvas
+  } = options;
+  const doc = canvas.ownerDocument,
+    root = doc.createElement('div');
+  root.className = (_options$className = options.className) !== null && _options$className !== void 0 ? _options$className : 'air-dom-overlay';
+  Object.assign(root.style, {
+    position: 'fixed',
+    left: '0',
+    top: '0',
+    width: '0',
+    height: '0',
+    pointerEvents: 'none',
+    zIndex: '1'
+  });
+  ((_options$host = options.host) !== null && _options$host !== void 0 ? _options$host : doc.body).appendChild(root);
+  let disposed = false;
+  const bindings = new Set(),
+    elements = new Set();
+  const alive = () => {
+    if (disposed) throw new Error('AIR_E_DOM_OVERLAY_DISPOSED');
+  };
+  return {
+    root,
+    attach(element, node, camera, config = {}) {
+      var _config$anchor, _config$width, _config$height, _config$width2, _config$height2;
+      alive();
+      if (elements.has(element) || element === canvas || element === root || element.contains(root)) throw new Error('AIR_E_DOM_OVERLAY_ELEMENT');
+      const [ax, ay] = (_config$anchor = config.anchor) !== null && _config$anchor !== void 0 ? _config$anchor : [0.5, 0.5];
+      if (![ax, ay, (_config$width = config.width) !== null && _config$width !== void 0 ? _config$width : 1, (_config$height = config.height) !== null && _config$height !== void 0 ? _config$height : 1].every(Number.isFinite) || ((_config$width2 = config.width) !== null && _config$width2 !== void 0 ? _config$width2 : 1) <= 0 || ((_config$height2 = config.height) !== null && _config$height2 !== void 0 ? _config$height2 : 1) <= 0) throw new Error('AIR_E_DOM_OVERLAY_SIZE');
+      const parent = element.parentNode,
+        next = element.nextSibling,
+        style = element.getAttribute('style');
+      const wrapper = doc.createElement('div');
+      Object.assign(wrapper.style, {
+        position: 'absolute',
+        pointerEvents: 'auto',
+        transformOrigin: '0 0'
+      });
+      root.appendChild(wrapper);
+      wrapper.appendChild(element);
+      elements.add(element);
+      if (config.width !== undefined) element.style.width = `${config.width}px`;
+      if (config.height !== undefined) element.style.height = `${config.height}px`;
+      const a = new Vec3(),
+        b = new Vec3(),
+        c = new Vec3();
+      let detached = false;
+      const binding = {
+        update() {
+          var _config$width3, _config$height3;
+          if (detached) return;
+          if (!node.isValid || !node.activeInHierarchy || !camera.enabledInHierarchy) {
+            wrapper.style.display = 'none';
+            return;
+          }
+          const m = node.worldMatrix,
+            bounds = canvas.getBoundingClientRect();
+          const width = (_config$width3 = config.width) !== null && _config$width3 !== void 0 ? _config$width3 : element.offsetWidth,
+            height = (_config$height3 = config.height) !== null && _config$height3 !== void 0 ? _config$height3 : element.offsetHeight;
+          const project = (out, x, y) => {
+            Vec3.transformMat4(out, new Vec3(x, y, 0), m);
+            camera.worldToScreen(out, out);
+            out.x = bounds.left + out.x * bounds.width / canvas.width;
+            out.y = bounds.top + (canvas.height - out.y) * bounds.height / canvas.height;
+          };
+          if (!canvas.width || !canvas.height || !width || !height) {
+            wrapper.style.display = 'none';
+            return;
+          }
+          project(a, -ax * width, (1 - ay) * height);
+          project(b, (1 - ax) * width, (1 - ay) * height);
+          project(c, -ax * width, -ay * height);
+          wrapper.style.display = a.z < 0 || a.z > 1 ? 'none' : '';
+          wrapper.style.transform = `matrix(${(b.x - a.x) / width},${(b.y - a.y) / width},${(c.x - a.x) / height},${(c.y - a.y) / height},${a.x},${a.y})`;
+        },
+        dispose() {
+          if (detached) return;
+          detached = true;
+          bindings.delete(binding);
+          elements.delete(element);
+          if (element.parentNode === wrapper) {
+            if (parent) parent.insertBefore(element, (next == null ? void 0 : next.parentNode) === parent ? next : null);else element.remove();
+            if (style === null) element.removeAttribute('style');else element.setAttribute('style', style);
+          }
+          wrapper.remove();
+        }
+      };
+      bindings.add(binding);
+      binding.update();
+      return binding;
+    },
+    update() {
+      alive();
+      bindings.forEach(binding => binding.update());
+    },
+    dispose() {
+      if (disposed) return;
+      bindings.forEach(binding => binding.dispose());
+      root.remove();
+      disposed = true;
+    }
+  };
+}
+
+function createAirTextureSprite(parent, texture, options = {}) {
+  var _options$anchor, _options$name, _options$size;
+  const anchor = (_options$anchor = options.anchor) !== null && _options$anchor !== void 0 ? _options$anchor : [0.5, 0.5];
+  if (!texture.isValid || texture.width <= 0 || texture.height <= 0 || !anchor.every(Number.isFinite) || options.size && !options.size.every(v => Number.isFinite(v) && v > 0)) throw new Error('AIR_E_TEXTURE_SPRITE_OPTIONS');
+  const frame = new SpriteFrame();
+  frame.packable = false;
+  const node = spriteNode(parent, (_options$name = options.name) !== null && _options$name !== void 0 ? _options$name : 'TextureSprite', {
+    ...options,
+    size: (_options$size = options.size) !== null && _options$size !== void 0 ? _options$size : [texture.width, texture.height]
+  });
+  const sprite = node.getComponent(Sprite);
+  node.getComponent(UITransform).setAnchorPoint(anchor[0], anchor[1]);
+  let disposed = false;
+  let previousTexture = texture.getGFXTexture();
+  const refresh = () => {
+    if (disposed) throw new Error('AIR_E_TEXTURE_SPRITE_DISPOSED');
+    const currentTexture = texture.getGFXTexture();
+    if (currentTexture !== previousTexture) {
+      var _director$root, _director$root$batche;
+      (_director$root = director.root) == null ? void 0 : (_director$root$batche = _director$root.batcher2D) == null ? void 0 : _director$root$batche._releaseDescriptorSetCache(texture.getHash());
+      previousTexture = currentTexture;
+    }
+    frame.reset({
+      texture,
+      rect: new Rect(0, 0, texture.width, texture.height),
+      originalSize: new Size(texture.width, texture.height)
+    });
+    if (sprite.spriteFrame === frame) {
+      sprite.spriteFrame = null;
+      sprite.spriteFrame = frame;
+    }
+    if (!options.size) node.getComponent(UITransform).setContentSize(texture.width, texture.height);
+  };
+  refresh();
+  sprite.spriteFrame = frame;
+  return {
+    node,
+    sprite,
+    frame,
+    refresh,
+    dispose() {
+      if (disposed) return;
+      disposed = true;
+      if (sprite.isValid) sprite.spriteFrame = null;
+      frame.destroy();
+      if (node.isValid) node.destroy();
+    }
+  };
+}
+
+const sizes = {
+  moveTo: 2,
+  lineTo: 2,
+  bezierCurveTo: 6,
+  quadraticCurveTo: 4,
+  arc: 6,
+  rect: 4,
+  ellipse: 4,
+  roundRect: 5,
+  circle: 3
+};
+const hex = /^#[0-9a-f]{6}$/i;
+function fail$6(message) {
+  throw new Error(`AIR_E_GRAPHICS_COMMAND: ${message}`);
+}
+function finite(values) {
+  if (!values.every(Number.isFinite)) fail$6('finite coordinates required');
+}
+function solid(paint) {
+  var _paint$opacity, _paint$opacity2, _paint$opacity3;
+  if (!paint || !hex.test(paint.color) || !Number.isFinite((_paint$opacity = paint.opacity) !== null && _paint$opacity !== void 0 ? _paint$opacity : 1) || ((_paint$opacity2 = paint.opacity) !== null && _paint$opacity2 !== void 0 ? _paint$opacity2 : 1) < 0 || ((_paint$opacity3 = paint.opacity) !== null && _paint$opacity3 !== void 0 ? _paint$opacity3 : 1) > 1) fail$6('use #rrggbb and opacity in [0,1]');
+}
+function validateAirGraphicsCommands(commands, bounds) {
+  if (!Array.isArray(commands)) fail$6('command array required');
+  if (bounds) {
+    finite([bounds.x, bounds.y, bounds.width, bounds.height]);
+    if (bounds.width <= 0 || bounds.height <= 0) fail$6('positive bounds required');
+  }
+  let path = false;
+  for (const command of commands) {
+    if (!command || typeof command !== 'object') fail$6('command object required');
+    if (command.op in sizes) {
+      const args = command.args;
+      if (!Array.isArray(args) || args.length !== sizes[command.op]) fail$6('invalid arguments');
+      finite(command.op === 'arc' ? args.slice(0, 5) : args);
+      if (command.op === 'arc' && typeof args[5] !== 'boolean') fail$6('arc direction must be boolean');
+      if (['arc', 'circle', 'roundRect'].includes(command.op) && args[command.op === 'roundRect' ? 4 : 2] < 0) fail$6('negative radius');
+      if (command.op === 'ellipse' && (args[2] < 0 || args[3] < 0)) fail$6('negative ellipse radius');
+      if (command.op === 'roundRect' && (args[2] <= 0 || args[3] <= 0)) fail$6('roundRect requires positive dimensions');
+      if (['lineTo', 'bezierCurveTo', 'quadraticCurveTo'].includes(command.op) && !path) fail$6('path must begin with moveTo or a shape');
+      path = true;
+    } else if (command.op === 'close') {
+      if (!path) fail$6('no path to close');
+    } else if (command.op === 'fill' || command.op === 'stroke') {
+      var _command$rule;
+      if (!path) fail$6('no path to paint');
+      const paint = command.paint;
+      if (!paint || !('kind' in paint)) solid(paint);else if (paint.kind === 'pattern') {
+        var _paint$textureSpace;
+        finite([paint.width, paint.height]);
+        if (!paint.image || paint.width <= 0 || paint.height <= 0 || !['local', 'global'].includes((_paint$textureSpace = paint.textureSpace) !== null && _paint$textureSpace !== void 0 ? _paint$textureSpace : 'local')) fail$6('invalid pattern');
+        if (paint.transform) {
+          if (paint.transform.length !== 6) fail$6('affine transform needs six values');
+          finite(paint.transform);
+          if (paint.transform[0] * paint.transform[3] === paint.transform[1] * paint.transform[2]) fail$6('singular pattern transform');
+        }
+      } else if (paint.kind === 'linear' || paint.kind === 'radial') {
+        if (paint.kind === 'linear') {
+          finite([...paint.from, ...paint.to]);
+          if (paint.from[0] === paint.to[0] && paint.from[1] === paint.to[1]) fail$6('zero gradient extent');
+        } else {
+          finite([...paint.center, paint.radius]);
+          if (paint.radius <= 0) fail$6('positive gradient radius required');
+        }
+        if (!Array.isArray(paint.stops) || paint.stops.length < 2) fail$6('at least two gradient stops required');
+        let previous = -1;
+        for (const stop of paint.stops) {
+          solid(stop);
+          if (!Number.isFinite(stop.offset) || stop.offset < previous || stop.offset < 0 || stop.offset > 1) fail$6('ordered stops in [0,1] required');
+          previous = stop.offset;
+        }
+      } else fail$6('unknown paint');
+      if (command.op === 'stroke') {
+        var _command$cap, _command$join;
+        solid(command.paint);
+        finite([command.width]);
+        if (command.width <= 0 || !['butt', 'round', 'square'].includes((_command$cap = command.cap) !== null && _command$cap !== void 0 ? _command$cap : 'butt') || !['miter', 'round', 'bevel'].includes((_command$join = command.join) !== null && _command$join !== void 0 ? _command$join : 'miter')) fail$6('invalid stroke');
+      } else if (!['nonzero', 'evenodd'].includes((_command$rule = command.rule) !== null && _command$rule !== void 0 ? _command$rule : 'nonzero')) fail$6('invalid fill rule');
+    } else fail$6('unknown operation');
+  }
+}
+function nativeColor(paint) {
+  var _paint$opacity4;
+  return new Color(parseInt(paint.color.slice(1, 3), 16), parseInt(paint.color.slice(3, 5), 16), parseInt(paint.color.slice(5, 7), 16), Math.round(((_paint$opacity4 = paint.opacity) !== null && _paint$opacity4 !== void 0 ? _paint$opacity4 : 1) * 255));
+}
+function drawAirGraphics(graphics, commands, clear = true) {
+  validateAirGraphicsCommands(commands);
+  if (commands.some(command => command.op === 'fill' && ('kind' in command.paint || command.rule === 'evenodd'))) fail$6('native replay supports solid nonzero fills; use rasterizeAirGraphics for gradients/patterns/holes');
+  if (clear) graphics.clear();
+  for (const command of commands) {
+    if (command.op === 'fill') {
+      graphics.fillColor = nativeColor(command.paint);
+      graphics.fill();
+    } else if (command.op === 'stroke') {
+      graphics.strokeColor = nativeColor(command.paint);
+      graphics.lineWidth = command.width;
+      graphics.lineCap = command.cap === 'round' ? Graphics.LineCap.ROUND : command.cap === 'square' ? Graphics.LineCap.SQUARE : Graphics.LineCap.BUTT;
+      graphics.lineJoin = command.join === 'round' ? Graphics.LineJoin.ROUND : command.join === 'bevel' ? Graphics.LineJoin.BEVEL : Graphics.LineJoin.MITER;
+      graphics.stroke();
+    } else if (command.op === 'close') graphics.close();else graphics[command.op].apply(graphics, command.args);
+  }
+}
+const xml = value => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function airGraphicsCommandsToSvg(commands, bounds) {
+  validateAirGraphicsCommands(commands, bounds);
+  let path = '',
+    x = 0,
+    y = 0,
+    startX = 0,
+    startY = 0,
+    painted = false;
+  const defs = [],
+    body = [];
+  const begin = () => {
+    if (painted) {
+      path = '';
+      painted = false;
+    }
+  };
+  const move = (a, b) => {
+    path += `M${a} ${b} `;
+    x = startX = a;
+    y = startY = b;
+  };
+  const line = (a, b) => {
+    path += `L${a} ${b} `;
+    x = a;
+    y = b;
+  };
+  const ellipse = (cx, cy, rx, ry) => {
+    move(cx + rx, cy);
+    path += `A${rx} ${ry} 0 1 0 ${cx - rx} ${cy} A${rx} ${ry} 0 1 0 ${cx + rx} ${cy} Z `;
+    x = cx + rx;
+    y = cy;
+  };
+  const paintValue = paint => {
+    var _paint$opacity5;
+    if (!('kind' in paint)) return {
+      value: paint.color,
+      opacity: (_paint$opacity5 = paint.opacity) !== null && _paint$opacity5 !== void 0 ? _paint$opacity5 : 1
+    };
+    const id = `air-paint-${defs.length}`;
+    if (paint.kind === 'pattern') {
+      var _paint$transform;
+      if (paint.textureSpace === 'global') fail$6('SVG export needs local pattern coordinates; transform global patterns explicitly');
+      if (!paint.sourceURL || !/^(?:data:image\/(?:png|jpeg|webp);base64,|https?:\/\/)/i.test(paint.sourceURL)) fail$6('pattern SVG needs a data:image or http(s) sourceURL');
+      defs.push(`<pattern id="${id}" patternUnits="userSpaceOnUse" width="${paint.width}" height="${paint.height}" patternTransform="matrix(${((_paint$transform = paint.transform) !== null && _paint$transform !== void 0 ? _paint$transform : [1, 0, 0, 1, 0, 0]).join(' ')})"><image href="${xml(paint.sourceURL)}" width="${paint.width}" height="${paint.height}" preserveAspectRatio="none" transform="translate(0 ${paint.height}) scale(1 -1)"/></pattern>`);
+    } else {
+      const stops = paint.stops.map(s => {
+        var _s$opacity;
+        return `<stop offset="${s.offset}" stop-color="${s.color}" stop-opacity="${(_s$opacity = s.opacity) !== null && _s$opacity !== void 0 ? _s$opacity : 1}"/>`;
+      }).join('');
+      defs.push(paint.kind === 'linear' ? `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${paint.from[0]}" y1="${paint.from[1]}" x2="${paint.to[0]}" y2="${paint.to[1]}">${stops}</linearGradient>` : `<radialGradient id="${id}" gradientUnits="userSpaceOnUse" cx="${paint.center[0]}" cy="${paint.center[1]}" r="${paint.radius}">${stops}</radialGradient>`);
+    }
+    return {
+      value: `url(#${id})`,
+      opacity: 1
+    };
+  };
+  for (const command of commands) {
+    if (command.op === 'fill' || command.op === 'stroke') {
+      var _command$rule2, _command$cap2, _command$join2;
+      const paint = paintValue(command.paint);
+      body.push(command.op === 'fill' ? `<path d="${path.trim()}" fill="${paint.value}" fill-opacity="${paint.opacity}" fill-rule="${(_command$rule2 = command.rule) !== null && _command$rule2 !== void 0 ? _command$rule2 : 'nonzero'}"/>` : `<path d="${path.trim()}" fill="none" stroke="${paint.value}" stroke-opacity="${paint.opacity}" stroke-width="${command.width}" stroke-linecap="${(_command$cap2 = command.cap) !== null && _command$cap2 !== void 0 ? _command$cap2 : 'butt'}" stroke-linejoin="${(_command$join2 = command.join) !== null && _command$join2 !== void 0 ? _command$join2 : 'miter'}"/>`);
+      painted = true;
+      continue;
+    }
+    begin();
+    if (command.op === 'close') {
+      path += 'Z ';
+      x = startX;
+      y = startY;
+      continue;
+    }
+    const a = command.args;
+    switch (command.op) {
+      case 'moveTo':
+        move(a[0], a[1]);
+        break;
+      case 'lineTo':
+        line(a[0], a[1]);
+        break;
+      case 'bezierCurveTo':
+        path += `C${a.join(' ')} `;
+        x = a[4];
+        y = a[5];
+        break;
+      case 'quadraticCurveTo':
+        path += `Q${a.join(' ')} `;
+        x = a[2];
+        y = a[3];
+        break;
+      case 'circle':
+        ellipse(a[0], a[1], a[2], a[2]);
+        break;
+      case 'ellipse':
+        ellipse(a[0], a[1], a[2], a[3]);
+        break;
+      case 'rect':
+        move(a[0], a[1]);
+        line(a[0] + a[2], a[1]);
+        line(a[0] + a[2], a[1] + a[3]);
+        line(a[0], a[1] + a[3]);
+        path += 'Z ';
+        break;
+      case 'roundRect':
+        {
+          const [rx, ry, w, h, radius] = a,
+            r = Math.min(radius, Math.abs(w) / 2, Math.abs(h) / 2);
+          if (w < 0 || h < 0) fail$6('roundRect requires positive dimensions');
+          move(rx, ry + r);
+          line(rx, ry + h - r);
+          path += `A${r} ${r} 0 0 0 ${rx + r} ${ry + h} `;
+          line(rx + w - r, ry + h);
+          path += `A${r} ${r} 0 0 0 ${rx + w} ${ry + h - r} `;
+          line(rx + w, ry + r);
+          path += `A${r} ${r} 0 0 0 ${rx + w - r} ${ry} `;
+          line(rx + r, ry);
+          path += `A${r} ${r} 0 0 0 ${rx} ${ry + r} Z `;
+          break;
+        }
+      case 'arc':
+        {
+          const [cx, cy, r, start, end, ccw] = command.args;
+          const sx = cx + r * Math.cos(start),
+            sy = cy + r * Math.sin(start);
+          move(sx, sy);
+          const tau = Math.PI * 2,
+            raw = end - start;
+          let delta = ccw ? (raw % tau + tau) % tau : -(((start - end) % tau + tau) % tau);
+          if (Math.abs(raw) >= tau) delta = ccw ? tau : -tau;
+          const count = Math.ceil(Math.abs(delta) / Math.PI);
+          for (let i = 1; i <= count; i++) {
+            const t = start + delta * i / count;
+            x = cx + r * Math.cos(t);
+            y = cy + r * Math.sin(t);
+            path += `A${r} ${r} 0 0 ${ccw ? 1 : 0} ${x} ${y} `;
+          }
+          break;
+        }
+    }
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${bounds.width}" height="${bounds.height}" viewBox="${bounds.x} ${-bounds.y - bounds.height} ${bounds.width} ${bounds.height}"><defs>${defs.join('')}</defs><g transform="scale(1 -1)">${body.join('')}</g></svg>`;
+}
+
+function rasterizeAirGraphics(commands, options) {
+  const canvas = document.createElement('canvas'),
+    context = canvas.getContext('2d');
+  if (!context) throw new Error('AIR_E_GRAPHICS_CANVAS');
+  const texture = new Texture2D();
+  texture.setMipFilter(Texture2D.Filter.NONE);
+  texture.setWrapMode(Texture2D.WrapMode.CLAMP_TO_EDGE, Texture2D.WrapMode.CLAMP_TO_EDGE);
+  let disposed = false,
+    currentCommands = commands,
+    currentOptions = options;
+  const rgba = paint => {
+    var _paint$opacity;
+    const value = parseInt(paint.color.slice(1), 16);
+    return `rgba(${value >> 16},${value >> 8 & 255},${value & 255},${(_paint$opacity = paint.opacity) !== null && _paint$opacity !== void 0 ? _paint$opacity : 1})`;
+  };
+  const update = (nextCommands = currentCommands, nextOptions = currentOptions) => {
+    var _nextOptions$resoluti;
+    if (disposed) throw new Error('AIR_E_GRAPHICS_RASTER_DISPOSED');
+    validateAirGraphicsCommands(nextCommands, nextOptions.bounds);
+    const {
+        bounds
+      } = nextOptions,
+      resolution = (_nextOptions$resoluti = nextOptions.resolution) !== null && _nextOptions$resoluti !== void 0 ? _nextOptions$resoluti : 1;
+    if (!Number.isFinite(resolution) || resolution <= 0 || Math.ceil(bounds.width * resolution) > 8192 || Math.ceil(bounds.height * resolution) > 8192) throw new Error('AIR_E_GRAPHICS_RESOLUTION');
+    const world = nextOptions.worldTransform;
+    if (world && (world.length !== 6 || !world.every(Number.isFinite) || world[0] * world[3] === world[1] * world[2])) throw new Error('AIR_E_GRAPHICS_WORLD_TRANSFORM');
+    for (const c of nextCommands) if (c.op === 'fill' && 'kind' in c.paint && c.paint.kind === 'pattern' && c.paint.textureSpace === 'global' && !world) throw new Error('AIR_E_GRAPHICS_WORLD_TRANSFORM');
+    canvas.width = Math.ceil(bounds.width * resolution);
+    canvas.height = Math.ceil(bounds.height * resolution);
+    context.setTransform(resolution, 0, 0, -resolution, -bounds.x * resolution, (bounds.y + bounds.height) * resolution);
+    let path = new Path2D(),
+      painted = false;
+    const style = paint => {
+      if (!('kind' in paint)) return rgba(paint);
+      if (paint.kind === 'pattern') {
+        const tile = document.createElement('canvas');
+        tile.width = Math.ceil(paint.width);
+        tile.height = Math.ceil(paint.height);
+        const tileContext = tile.getContext('2d');
+        if (!tileContext) throw new Error('AIR_E_GRAPHICS_CANVAS');
+        tileContext.drawImage(paint.image, 0, 0, tile.width, tile.height);
+        const pattern = context.createPattern(tile, 'repeat');
+        if (!pattern) throw new Error('AIR_E_GRAPHICS_PATTERN');
+        let transform = new DOMMatrix(paint.transform ? [...paint.transform] : undefined);
+        if (paint.textureSpace === 'global') transform = new DOMMatrix([...world]).inverse().multiply(transform);
+        pattern.setTransform(transform.multiply(new DOMMatrix([paint.width / tile.width, 0, 0, -paint.height / tile.height, 0, paint.height])));
+        return pattern;
+      }
+      const gradient = paint.kind === 'linear' ? context.createLinearGradient(...paint.from, ...paint.to) : context.createRadialGradient(...paint.center, 0, ...paint.center, paint.radius);
+      for (const stop of paint.stops) gradient.addColorStop(stop.offset, rgba(stop));
+      return gradient;
+    };
+    for (const command of nextCommands) {
+      if (command.op === 'fill') {
+        var _command$rule;
+        context.fillStyle = style(command.paint);
+        context.fill(path, (_command$rule = command.rule) !== null && _command$rule !== void 0 ? _command$rule : 'nonzero');
+        painted = true;
+        continue;
+      }
+      if (command.op === 'stroke') {
+        var _command$cap, _command$join;
+        context.strokeStyle = rgba(command.paint);
+        context.lineWidth = command.width;
+        context.lineCap = (_command$cap = command.cap) !== null && _command$cap !== void 0 ? _command$cap : 'butt';
+        context.lineJoin = (_command$join = command.join) !== null && _command$join !== void 0 ? _command$join : 'miter';
+        context.stroke(path);
+        painted = true;
+        continue;
+      }
+      if (painted) {
+        path = new Path2D();
+        painted = false;
+      }
+      if (command.op === 'close') {
+        path.closePath();
+        continue;
+      }
+      const a = command.args;
+      switch (command.op) {
+        case 'moveTo':
+          path.moveTo(a[0], a[1]);
+          break;
+        case 'lineTo':
+          path.lineTo(a[0], a[1]);
+          break;
+        case 'bezierCurveTo':
+          path.bezierCurveTo(a[0], a[1], a[2], a[3], a[4], a[5]);
+          break;
+        case 'quadraticCurveTo':
+          path.quadraticCurveTo(a[0], a[1], a[2], a[3]);
+          break;
+        case 'arc':
+          path.moveTo(a[0] + a[2] * Math.cos(a[3]), a[1] + a[2] * Math.sin(a[3]));
+          path.arc(a[0], a[1], a[2], a[3], a[4], !command.args[5]);
+          break;
+        case 'rect':
+          path.rect(a[0], a[1], a[2], a[3]);
+          break;
+        case 'roundRect':
+          {
+            const [x, y, w, h] = a,
+              r = Math.min(a[4], w / 2, h / 2);
+            path.moveTo(x, y + r);
+            path.lineTo(x, y + h - r);
+            path.arc(x + r, y + h - r, r, Math.PI, Math.PI / 2, true);
+            path.lineTo(x + w - r, y + h);
+            path.arc(x + w - r, y + h - r, r, Math.PI / 2, 0, true);
+            path.lineTo(x + w, y + r);
+            path.arc(x + w - r, y + r, r, 0, -Math.PI / 2, true);
+            path.lineTo(x + r, y);
+            path.arc(x + r, y + r, r, -Math.PI / 2, -Math.PI, true);
+            path.closePath();
+            break;
+          }
+        case 'circle':
+          path.moveTo(a[0] + a[2], a[1]);
+          path.arc(a[0], a[1], a[2], 0, -Math.PI * 2, true);
+          path.closePath();
+          break;
+        case 'ellipse':
+          path.moveTo(a[0] + a[2], a[1]);
+          path.ellipse(a[0], a[1], a[2], a[3], 0, 0, -Math.PI * 2, true);
+          path.closePath();
+          break;
+      }
+    }
+    const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+    if (texture.width !== canvas.width || texture.height !== canvas.height) texture.reset({
+      width: canvas.width,
+      height: canvas.height,
+      mipmapLevel: 1,
+      format: Texture2D.PixelFormat.RGBA8888
+    });
+    texture.uploadData(new Uint8Array(pixels.data.buffer));
+    currentCommands = nextCommands;
+    currentOptions = nextOptions;
+  };
+  try {
+    update();
+  } catch (error) {
+    texture.destroy();
+    throw error;
+  }
+  return {
+    texture,
+    canvas,
+    update,
+    dispose() {
+      if (disposed) return;
+      disposed = true;
+      texture.destroy();
+      canvas.width = canvas.height = 0;
+    }
+  };
+}
+
+const factors = {
+  normal: [BlendFactor.SRC_ALPHA, BlendFactor.ONE_MINUS_SRC_ALPHA],
+  add: [BlendFactor.SRC_ALPHA, BlendFactor.ONE],
+  multiply: [BlendFactor.DST_COLOR, BlendFactor.ONE_MINUS_SRC_ALPHA]
+};
+function createAirUIBlendScope(root, mode = 'normal') {
+  if (!Object.prototype.hasOwnProperty.call(factors, mode)) throw new Error('AIR_E_UI_BLEND_MODE');
+  const overrides = new Map([[root, mode]]);
+  const originals = new Map();
+  let disposed = false;
+  const alive = () => {
+    if (disposed) throw new Error('AIR_E_UI_BLEND_DISPOSED');
+  };
+  const apply = (renderer, pair) => {
+    var _material$passes$;
+    const native = renderer;
+    native._srcBlendFactor = pair[0];
+    native._dstBlendFactor = pair[1];
+    const material = renderer.getMaterialInstance(0),
+      target = material == null ? void 0 : (_material$passes$ = material.passes[0]) == null ? void 0 : _material$passes$.blendState.targets[0];
+    if (!material || !target || target.blendSrc === pair[0] && target.blendDst === pair[1]) return;
+    material.overridePipelineStates({
+      blendState: {
+        targets: [{
+          ...target,
+          blend: true,
+          blendSrc: pair[0],
+          blendDst: pair[1]
+        }]
+      }
+    }, 0);
+    renderer.markForUpdateRenderData();
+  };
+  const restore = renderer => {
+    const row = originals.get(renderer);
+    originals.delete(renderer);
+    if (!row || !renderer.isValid) return;
+    const native = renderer;
+    if (native._srcBlendFactor === row.applied[0] && native._dstBlendFactor === row.applied[1]) {
+      apply(renderer, row.factors);
+    }
+  };
+  const update = () => {
+    var _overrides$get2;
+    alive();
+    const visited = new Set();
+    const visit = (node, inherited) => {
+      var _overrides$get;
+      if (!node.isValid) return;
+      const selected = (_overrides$get = overrides.get(node)) !== null && _overrides$get !== void 0 ? _overrides$get : inherited,
+        pair = factors[selected];
+      for (const renderer of node.getComponents(UIRenderer)) {
+        visited.add(renderer);
+        const native = renderer;
+        let row = originals.get(renderer);
+        if (!row) {
+          row = {
+            factors: [native._srcBlendFactor, native._dstBlendFactor],
+            applied: pair
+          };
+          originals.set(renderer, row);
+        }
+        apply(renderer, pair);
+        row.applied = pair;
+      }
+      node.children.forEach(child => visit(child, selected));
+    };
+    visit(root, (_overrides$get2 = overrides.get(root)) !== null && _overrides$get2 !== void 0 ? _overrides$get2 : 'normal');
+    originals.forEach((_row, renderer) => {
+      if (!visited.has(renderer)) restore(renderer);
+    });
+  };
+  update();
+  return {
+    set(node, value) {
+      alive();
+      if (value !== null && !Object.prototype.hasOwnProperty.call(factors, value)) throw new Error('AIR_E_UI_BLEND_MODE');
+      if (value === null) overrides.delete(node);else overrides.set(node, value);
+      update();
+    },
+    update,
+    dispose() {
+      if (disposed) return;
+      originals.forEach((_row, renderer) => restore(renderer));
+      overrides.clear();
+      disposed = true;
+    }
+  };
+}
+
+let serial = 0;
+function attachAirSpriteMask(sprite, texture, options = {}) {
+  var _options$channel, _options$mode, _options$threshold, _options$threshold2, _options$threshold3, _options$threshold4;
+  if (!['alpha', 'red'].includes((_options$channel = options.channel) !== null && _options$channel !== void 0 ? _options$channel : 'alpha') || !['soft', 'threshold'].includes((_options$mode = options.mode) !== null && _options$mode !== void 0 ? _options$mode : 'soft') || !Number.isFinite((_options$threshold = options.threshold) !== null && _options$threshold !== void 0 ? _options$threshold : 0.1) || ((_options$threshold2 = options.threshold) !== null && _options$threshold2 !== void 0 ? _options$threshold2 : 0.1) < 0 || ((_options$threshold3 = options.threshold) !== null && _options$threshold3 !== void 0 ? _options$threshold3 : 0.1) > 1 || !sprite.spriteFrame || !texture.isValid) throw new Error('AIR_E_SPRITE_MASK_OPTIONS');
+  if (sprite.customMaterial) throw new Error('AIR_E_SPRITE_MASK_MATERIAL: detach the existing custom material first');
+  const source = EffectAsset.get('builtin-sprite');
+  if (!source) throw new Error('AIR_E_SPRITE_MASK_BUILTIN');
+  const effect = new EffectAsset();
+  effect.name = `air-sprite-mask-${++serial}`;
+  effect.techniques = JSON.parse(JSON.stringify(source.techniques));
+  effect.shaders = JSON.parse(JSON.stringify(source.shaders));
+  effect.combinations = [];
+  const fragment = `
+        vec2 air_maskUV = vec2(dot(airMaskRow0.xyz, vec3(uv0, 1.0)), dot(airMaskRow1.xyz, vec3(uv0, 1.0)));
+        vec4 air_sample = texture(airMaskTexture, clamp(air_maskUV, 0.0, 1.0));
+        float air_visibility = mix(air_sample.a, air_sample.r, airMaskParams.x);
+        air_visibility *= step(0.0, air_maskUV.x) * step(air_maskUV.x, 1.0) * step(0.0, air_maskUV.y) * step(air_maskUV.y, 1.0);
+        air_visibility = mix(air_visibility, 1.0 - air_visibility, airMaskParams.w);
+        if (airMaskParams.y > 0.5) { if (air_visibility < airMaskParams.z) discard; }
+        else o.a *= air_visibility;
+    `;
+  for (const shader of effect.shaders) {
+    const original = shader.name;
+    shader.blocks.push({
+      name: 'AirMask',
+      binding: 1,
+      stageFlags: ShaderStageFlagBit.FRAGMENT,
+      members: [new Uniform('airMaskRow0', Type.FLOAT4, 1), new Uniform('airMaskRow1', Type.FLOAT4, 1), new Uniform('airMaskParams', Type.FLOAT4, 1)]
+    });
+    shader.samplerTextures.push({
+      name: 'airMaskTexture',
+      binding: 0,
+      type: Type.SAMPLER2D,
+      count: 1,
+      stageFlags: ShaderStageFlagBit.FRAGMENT,
+      sampleType: SampleType.FLOAT
+    });
+    for (const variant of ['glsl3', 'glsl4']) {
+      const code = shader[variant];
+      if (!(code != null && code.frag.includes('ALPHA_TEST(o);'))) throw new Error('AIR_E_SPRITE_MASK_TEMPLATE');
+      const header = `${variant === 'glsl4' ? 'layout(set = 1, binding = 1) ' : ''}uniform AirMask { vec4 airMaskRow0; vec4 airMaskRow1; vec4 airMaskParams; };\n${variant === 'glsl4' ? 'layout(set = 1, binding = 0) ' : ''}uniform sampler2D airMaskTexture;`;
+      code.frag = code.frag.replace('precision highp float;', `precision highp float;\n${header}`).replace('ALPHA_TEST(o);', fragment + '\nALPHA_TEST(o);');
+    }
+    let hash = 2166136261;
+    const code = JSON.stringify([shader.glsl3, shader.glsl4]);
+    for (let i = 0; i < code.length; i++) hash = Math.imul(hash ^ code.charCodeAt(i), 16777619);
+    shader.hash = hash >>> 0;
+    shader.name = `${original}|air-mask:${shader.hash}`;
+    for (const technique of effect.techniques) for (const pass of technique.passes) {
+      if (pass.program === original) pass.program = shader.name;
+      pass.properties = {
+        ...pass.properties,
+        airMaskRow0: {
+          value: [1, 0, 0, 0],
+          type: Type.FLOAT4
+        },
+        airMaskRow1: {
+          value: [0, 1, 0, 0],
+          type: Type.FLOAT4
+        },
+        airMaskParams: {
+          value: [0, 0, 0.1, 0],
+          type: Type.FLOAT4
+        },
+        airMaskTexture: {
+          value: 'white',
+          type: Type.SAMPLER2D
+        }
+      };
+    }
+  }
+  effect.onLoaded();
+  cclegacy.game.off(cclegacy.Game.EVENT_RENDERER_INITED, effect._precompile, effect);
+  const material = new Material();
+  try {
+    material.initialize({
+      effectAsset: effect,
+      defines: {
+        USE_TEXTURE: true,
+        USE_ALPHA_TEST: false,
+        CC_USE_EMBEDDED_ALPHA: false
+      }
+    });
+  } catch (error) {
+    material.destroy();
+    effect.destroy();
+    throw error;
+  }
+  material.setProperty('airMaskTexture', texture);
+  material.setProperty('airMaskParams', new Vec4(options.channel === 'red' ? 1 : 0, options.mode === 'threshold' ? 1 : 0, (_options$threshold4 = options.threshold) !== null && _options$threshold4 !== void 0 ? _options$threshold4 : 0.1, options.inverted ? 1 : 0));
+  let disposed = false,
+    frame = sprite.spriteFrame;
+  const update = () => {
+    if (disposed) throw new Error('AIR_E_SPRITE_MASK_DISPOSED');
+    if (!sprite.isValid || !sprite.spriteFrame) throw new Error('AIR_E_SPRITE_MASK_FRAME');
+    if (frame !== sprite.spriteFrame) {
+      var _frame;
+      (_frame = frame) == null ? void 0 : _frame.off(SpriteFrameEvent.UV_UPDATED, update);
+      frame = sprite.spriteFrame;
+      frame.on(SpriteFrameEvent.UV_UPDATED, update);
+    }
+    const uv = frame.uv;
+    const ox = uv[4],
+      oy = uv[5],
+      ux = uv[6] - ox,
+      uy = uv[7] - oy,
+      vx = uv[0] - ox,
+      vy = uv[1] - oy;
+    const determinant = ux * vy - uy * vx;
+    if (!Number.isFinite(determinant) || determinant === 0) throw new Error('AIR_E_SPRITE_MASK_UV');
+    material.setProperty('airMaskRow0', new Vec4(vy / determinant, -vx / determinant, (vx * oy - vy * ox) / determinant, 0));
+    material.setProperty('airMaskRow1', new Vec4(-uy / determinant, ux / determinant, (uy * ox - ux * oy) / determinant, 0));
+  };
+  try {
+    update();
+  } catch (error) {
+    material.destroy();
+    effect.destroy();
+    throw error;
+  }
+  texture.addRef();
+  frame.on(SpriteFrameEvent.UV_UPDATED, update);
+  sprite.customMaterial = material;
+  return {
+    material,
+    update,
+    dispose() {
+      var _frame2;
+      if (disposed) return;
+      disposed = true;
+      (_frame2 = frame) == null ? void 0 : _frame2.off(SpriteFrameEvent.UV_UPDATED, update);
+      if (sprite.isValid && sprite.customMaterial === material) sprite.customMaterial = null;
+      material.destroy();
+      effect.destroy();
+      texture.decRef(false);
+    }
+  };
+}
 
 class SceneStack {
   constructor(scene, options = {}) {
@@ -154975,7 +155763,7 @@ class WebGL2PipelineState extends PipelineState {
         bs.isIndepend = bsInfo.isIndepend;
       }
       if (bsInfo.blendColor !== undefined) {
-        bs.blendColor = bsInfo.blendColor;
+        Object.assign(bs.blendColor, bsInfo.blendColor);
       }
     }
     Object.assign(this._rs, info.rasterizerState);
@@ -154993,9 +155781,9 @@ class WebGL2PipelineState extends PipelineState {
       glPrimitive: WebGLPrimitives[info.primitive],
       gpuShader: info.shader.gpuShader,
       gpuPipelineLayout: info.pipelineLayout.getGpuPipelineLayout(),
-      rs: info.rasterizerState,
-      dss: info.depthStencilState,
-      bs: info.blendState,
+      rs: this._rs,
+      dss: this._dss,
+      bs: this._bs,
       gpuRenderPass: info.renderPass.getGpuRenderPass(),
       dynamicStates
     };
@@ -160783,5 +161571,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { AIR_BUILD_DATE, AIR_BUILD_NUMBER, AIR_REVISION, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirRenderTarget, AirTransmissionCapture, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirRenderTarget, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirAnimationControllers, inspectAirDirectionalLights, inspectAirGeometry, inspectAirMaterial, inspectAirMeshMaterial, instantiate, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, parseAtlasText, parseFnt, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
+export { AIR_BUILD_DATE, AIR_BUILD_NUMBER, AIR_REVISION, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirRenderTarget, AirTransmissionCapture, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, airGraphicsCommandsToSvg, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachAirSpriteMask, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirDOMOverlay, createAirRenderTarget, createAirTextureSprite, createAirUIBlendScope, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, drawAirGraphics, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirAnimationControllers, inspectAirDirectionalLights, inspectAirGeometry, inspectAirMaterial, inspectAirMeshMaterial, instantiate, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, parseAtlasText, parseFnt, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rasterizeAirGraphics, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirGraphicsCommands, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
 //# sourceMappingURL=cocosair.module.js.map

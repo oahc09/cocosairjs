@@ -2,6 +2,7 @@ const path = require('node:path');
 const fs = require('node:fs');
 const esbuild = require('esbuild');
 exports.buildBootstrapEntry = async (outDir) => {
+    await require('./html-source-entry.cjs').buildHTMLSourceEntry(outDir);
     const root = path.resolve(__dirname, '../..');
     const result = await esbuild.build({ entryPoints: [path.join(root, 'src/air/safe-bootstrap.ts')],
         outfile: path.join(outDir, 'bootstrap.js'), bundle: true, format: 'esm', platform: 'browser',
