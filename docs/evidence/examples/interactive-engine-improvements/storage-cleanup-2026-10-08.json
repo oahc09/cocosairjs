@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-08",
+  "request": "Remove low-value or redundant evidence to reduce disk use",
+  "browserRunsAdded": 0,
+  "originalCommit": "5a967c7",
+  "changes": [
+    {
+      "action": "compact-json-whitespace",
+      "path": "docs/evidence/examples/interactive-engine-improvements/color-compare-s2.json",
+      "beforeBytes": 65274427,
+      "beforeSha256": "ef36b026c2aa9426d4cadc680460592d9caa3d92a014600c3f4e1dfefd4f47f0",
+      "afterBytes": 10204203,
+      "afterSha256": "4904fc036fdc4790914f13d4ce90c64d54cb1c2a5cd7db4baf7ca35254936d91",
+      "observationsUnchanged": true
+    },
+    {
+      "action": "delete-redundant-raw-copy",
+      "path": "docs/evidence/examples/interactive-engine-improvements/color-compare-s2-raw.json",
+      "bytes": 61340556,
+      "sha256": "916f06a2d4da8ebbe54839f041686faafa688ab27179d47aa40d5686d53d187b",
+      "observationsEqualAfterArtifactPathMigration": true,
+      "retainedIn": "docs/evidence/examples/interactive-engine-improvements/color-compare-s2.json"
+    },
+    {
+      "action": "replace-historical-failed-readbacks-with-summary",
+      "path": "docs/evidence/examples/interactive-engine-improvements/color-compare-s1-failed-raw.json",
+      "bytes": 61339981,
+      "sha256": "33bf53080e3b4a6bbddba555faf25323fa463f478d0a47edbc5e0d9c9a0cb9df",
+      "replacement": "docs/evidence/examples/interactive-engine-improvements/color-compare-s1-failed-summary.json",
+      "replacementBytes": 42324,
+      "fullArraysRecoverableFromCommit": "5a967c7"
+    }
+  ],
+  "retained": [
+    "All current color comparison RGBA values and 15 PNG screenshots",
+    "Current validation thresholds and PASS/FAIL/NOT_RUN results",
+    "Historical failure errors, state, readback hashes and console log",
+    "Package tarball and SDK chunks referenced by installed-package verifier"
+  ],
+  "verification": {
+    "observationsDeepEqualToOriginalCommit": true,
+    "baselineScopePassed": true,
+    "mutationsRejected": 10,
+    "pngsVerified": 15,
+    "docRefs": {
+      "ok": true,
+      "unresolvedCount": 0
+    },
+    "browserRunsAdded": 0
+  }
+}

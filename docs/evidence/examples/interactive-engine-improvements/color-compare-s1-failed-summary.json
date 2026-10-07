@@ -1,0 +1,1513 @@
+{
+  "schemaVersion": "ier-color-compare-failed-summary/1",
+  "executionChannel": "Lead",
+  "sourceStatus": "recreated",
+  "subset": true,
+  "completed": false,
+  "startedAt": "2026-10-07T23:12:22.340Z",
+  "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-color-compare-browser.cjs --out=output/interactive-engine-improvements/lead-color-compare-s1.json",
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "design": {
+    "targetSize": [
+      256,
+      256
+    ],
+    "colorChannelTolerance": 2,
+    "clipEdgeChangedPixelBudget": 256,
+    "alphaCenter": [
+      128,
+      115,
+      0
+    ],
+    "referenceComparison": "NOT_RUN"
+  },
+  "fingerprints": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6631057,
+      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+    },
+    {
+      "path": "test/fixtures/interactive-color-compare/index.html",
+      "bytes": 390,
+      "sha256": "de6e3c3e7d2343c6ea3047d9551deccb0ab9cd018e064d23e7c287bfccc4340a"
+    },
+    {
+      "path": "test/fixtures/interactive-color-compare/main.ts",
+      "bytes": 5292,
+      "sha256": "1d771f00414ea84b3e67eeae135b1638c5f4149b58cb4a8f92d3ffcd94d9818e"
+    },
+    {
+      "path": "examples/water-multipass/scene.effect.json",
+      "bytes": 6987,
+      "sha256": "66fb116f476d2c960d3b59d64585bbb29dfbc8400f362e3fed8c950df54150b3"
+    },
+    {
+      "path": "tools/verify/interactive-color-compare-browser.cjs",
+      "bytes": 5706,
+      "sha256": "a6c2d853d019382fe63ccdc0f90b70ef024659eb07d10dfb2d45a1db30fe9520"
+    },
+    {
+      "path": "tools/verify/interactive-color-compare.tsconfig.json",
+      "bytes": 302,
+      "sha256": "bb2e6f2d628a0bc31dcd8fddbd03bb7f93c3be8069145212be97bfa315c8abc7"
+    },
+    {
+      "path": "tools/verify/browser-engines.cjs",
+      "bytes": 2159,
+      "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+    },
+    {
+      "path": "tools/verify/competitive-example-server.cjs",
+      "bytes": 1923,
+      "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+    }
+  ],
+  "rows": [
+    {
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "states": [
+        {
+          "mode": "plain",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/chromium-plain.png",
+            "bytes": 1945,
+            "sha256": "2721ca4a74dc339f9456c508cd94f6c3fdf0395031c1ac884087f37003285aca"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "2dc434729e289b2a77cbee7b68209f2896b38d05367a49de92ab365792ecc681",
+            "center": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "redPixels": 13536,
+            "greenPixels": 0,
+            "mixedPixels": 0
+          }
+        },
+        {
+          "mode": "oblique",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            13.742447658394916,
+            0,
+            0,
+            0,
+            5.122734297518476,
+            -1,
+            0,
+            0,
+            21.521304860445447,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/chromium-oblique.png",
+            "bytes": 1922,
+            "sha256": "77f19bd66fe0e62d09ac12d4150f9135e16f5aaeeb80abd1980a91341cb9077e"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "ff935626558ad3e1739c122a4e171cac7b8d5593f6327092c29f09c160c08058",
+            "center": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "redPixels": 4948,
+            "greenPixels": 0,
+            "mixedPixels": 0
+          }
+        },
+        {
+          "mode": "discard",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/chromium-discard.png",
+            "bytes": 1928,
+            "sha256": "8f4058765dba2554a8f4ee7451156347fd9ab5089b1b5e56c321e378f3880542"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "fc8bb42eb8fecb383279e5a8653f56c9688ef3ab9f668192ea4a25f11f97b973",
+            "center": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "redPixels": 7310,
+            "greenPixels": 0,
+            "mixedPixels": 0
+          }
+        },
+        {
+          "mode": "alpha-base",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/chromium-alpha-base.png",
+            "bytes": 6238,
+            "sha256": "593b7390b1c772ad769f2e71cdae7051187d6e1226e796e62db108545b9a236c"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "4f8150404d342e269b9421d686c68c1f49ef56c73ad0fe6136217eecc16c7873",
+            "center": [
+              127,
+              115,
+              0,
+              127
+            ],
+            "redPixels": 0,
+            "greenPixels": 8398,
+            "mixedPixels": 4528
+          }
+        },
+        {
+          "mode": "alpha-instance",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/chromium-alpha-instance.png",
+            "bytes": 6238,
+            "sha256": "593b7390b1c772ad769f2e71cdae7051187d6e1226e796e62db108545b9a236c"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "4f8150404d342e269b9421d686c68c1f49ef56c73ad0fe6136217eecc16c7873",
+            "center": [
+              127,
+              115,
+              0,
+              127
+            ],
+            "redPixels": 0,
+            "greenPixels": 8398,
+            "mixedPixels": 4528
+          }
+        }
+      ],
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "release": {
+        "samePromise": true,
+        "receipt": {
+          "refs": [
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            }
+          ],
+          "released": true
+        }
+      },
+      "validation": {
+        "pass": false,
+        "errors": [
+          "runtime/state coverage"
+        ]
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "155.0",
+      "states": [
+        {
+          "mode": "plain",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/firefox-plain.png",
+            "bytes": 3397,
+            "sha256": "e50e95cfbbeeadfda9318bf11abaeec53b1ef45005c92d1b0d9024328dea431b"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "2dc434729e289b2a77cbee7b68209f2896b38d05367a49de92ab365792ecc681",
+            "center": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "redPixels": 13536,
+            "greenPixels": 0,
+            "mixedPixels": 0
+          }
+        },
+        {
+          "mode": "oblique",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            13.742447658394916,
+            0,
+            0,
+            0,
+            5.122734297518476,
+            -1,
+            0,
+            0,
+            21.521304860445447,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/firefox-oblique.png",
+            "bytes": 2611,
+            "sha256": "ab94e501f3978a3a6fe7934e30a9487af790a3c4a1e9081d9406fad6a8528615"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "ff935626558ad3e1739c122a4e171cac7b8d5593f6327092c29f09c160c08058",
+            "center": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "redPixels": 4948,
+            "greenPixels": 0,
+            "mixedPixels": 0
+          }
+        },
+        {
+          "mode": "discard",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/firefox-discard.png",
+            "bytes": 2822,
+            "sha256": "850bd862428a7200883b1a93d594cdf49b45fa74a7df0a4eaf25e23b63f5ccf8"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "fc8bb42eb8fecb383279e5a8653f56c9688ef3ab9f668192ea4a25f11f97b973",
+            "center": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "redPixels": 7310,
+            "greenPixels": 0,
+            "mixedPixels": 0
+          }
+        },
+        {
+          "mode": "alpha-base",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/firefox-alpha-base.png",
+            "bytes": 8560,
+            "sha256": "394b23918361326bdd885edaf663da99dcd01e2f15cf52caa9e2fd75ae2627ac"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "4f8150404d342e269b9421d686c68c1f49ef56c73ad0fe6136217eecc16c7873",
+            "center": [
+              127,
+              115,
+              0,
+              127
+            ],
+            "redPixels": 0,
+            "greenPixels": 8398,
+            "mixedPixels": 4528
+          }
+        },
+        {
+          "mode": "alpha-instance",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/firefox-alpha-instance.png",
+            "bytes": 8560,
+            "sha256": "394b23918361326bdd885edaf663da99dcd01e2f15cf52caa9e2fd75ae2627ac"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "4f8150404d342e269b9421d686c68c1f49ef56c73ad0fe6136217eecc16c7873",
+            "center": [
+              127,
+              115,
+              0,
+              127
+            ],
+            "redPixels": 0,
+            "greenPixels": 8398,
+            "mixedPixels": 4528
+          }
+        }
+      ],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "release": {
+        "samePromise": true,
+        "receipt": {
+          "refs": [
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            }
+          ],
+          "released": true
+        }
+      },
+      "validation": {
+        "pass": false,
+        "errors": [
+          "oblique/discard differ beyond frozen 256 edge-pixel budget",
+          "native blend/depth state",
+          "native blend/depth state",
+          "compositor target missing alpha-base",
+          "compositor target missing alpha-instance"
+        ],
+        "clipping": {
+          "changed": 2362,
+          "max": 255
+        }
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "states": [
+        {
+          "mode": "plain",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/webkit-plain.png",
+            "bytes": 2597,
+            "sha256": "b44179fc890a0473cf516ff53a4e8c854ddca7d991a967b18791176b43e63065"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "2dc434729e289b2a77cbee7b68209f2896b38d05367a49de92ab365792ecc681",
+            "center": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "redPixels": 13536,
+            "greenPixels": 0,
+            "mixedPixels": 0
+          }
+        },
+        {
+          "mode": "oblique",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            13.742447658394916,
+            0,
+            0,
+            0,
+            5.122734297518476,
+            -1,
+            0,
+            0,
+            21.521304860445447,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/webkit-oblique.png",
+            "bytes": 2547,
+            "sha256": "1ace312a87cab3ad72eff261f80047b7a622377033a161375dc146138e594c6e"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "ff935626558ad3e1739c122a4e171cac7b8d5593f6327092c29f09c160c08058",
+            "center": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "redPixels": 4948,
+            "greenPixels": 0,
+            "mixedPixels": 0
+          }
+        },
+        {
+          "mode": "discard",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/webkit-discard.png",
+            "bytes": 2561,
+            "sha256": "b21754b0828123acba7ed310a42abef5ad1d2ae06edc63b94d935244006309ed"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "fc8bb42eb8fecb383279e5a8653f56c9688ef3ab9f668192ea4a25f11f97b973",
+            "center": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "redPixels": 7310,
+            "greenPixels": 0,
+            "mixedPixels": 0
+          }
+        },
+        {
+          "mode": "alpha-base",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/webkit-alpha-base.png",
+            "bytes": 6887,
+            "sha256": "db00053f73d5d5d0e945e43d2cd46e61f248b0d263b6995edb7318d1661ae28b"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "4f8150404d342e269b9421d686c68c1f49ef56c73ad0fe6136217eecc16c7873",
+            "center": [
+              127,
+              115,
+              0,
+              127
+            ],
+            "redPixels": 0,
+            "greenPixels": 8398,
+            "mixedPixels": 4528
+          }
+        },
+        {
+          "mode": "alpha-instance",
+          "material": [
+            {
+              "index": 0,
+              "program": "air-ier-color-compare|edd971240b38b489",
+              "propertyIndex": 0,
+              "priority": 128,
+              "phase": 16,
+              "stage": 100,
+              "depthTest": true,
+              "depthWrite": false,
+              "depthFunc": 1,
+              "cullMode": 0,
+              "blendTargets": [
+                {
+                  "blend": true,
+                  "blendSrc": 2,
+                  "blendDst": 4,
+                  "blendEq": 0,
+                  "blendSrcAlpha": 1,
+                  "blendDstAlpha": 0,
+                  "blendAlphaEq": 0,
+                  "blendColorMask": 15
+                }
+              ],
+              "textures": [
+                {
+                  "name": "causticMap",
+                  "binding": 1,
+                  "index": 0,
+                  "bound": true,
+                  "format": {
+                    "format": 35,
+                    "name": "RGBA8",
+                    "srgb": false,
+                    "depth": false
+                  },
+                  "width": 2,
+                  "height": 2,
+                  "mipLevels": 1,
+                  "comparison": 7
+                }
+              ]
+            }
+          ],
+          "projection": [
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            2.414213562373095,
+            0,
+            0,
+            0,
+            0,
+            -1.0040080160320641,
+            -1,
+            0,
+            0,
+            -0.2004008016032064,
+            0
+          ],
+          "png": {
+            "path": "output/interactive-engine-improvements/lead-color-compare-s1-artifacts/webkit-alpha-instance.png",
+            "bytes": 6887,
+            "sha256": "db00053f73d5d5d0e945e43d2cd46e61f248b0d263b6995edb7318d1661ae28b"
+          },
+          "gpuReadbackSummary": {
+            "width": 256,
+            "height": 256,
+            "channels": 4,
+            "byteCount": 262144,
+            "sha256": "4f8150404d342e269b9421d686c68c1f49ef56c73ad0fe6136217eecc16c7873",
+            "center": [
+              127,
+              115,
+              0,
+              127
+            ],
+            "redPixels": 0,
+            "greenPixels": 8398,
+            "mixedPixels": 4528
+          }
+        }
+      ],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "release": {
+        "samePromise": true,
+        "receipt": {
+          "refs": [
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            },
+            {
+              "before": 1,
+              "after": 0
+            }
+          ],
+          "released": true
+        }
+      },
+      "validation": {
+        "pass": false,
+        "errors": [
+          "oblique/discard differ beyond frozen 256 edge-pixel budget",
+          "native blend/depth state",
+          "native blend/depth state",
+          "compositor target missing alpha-base",
+          "compositor target missing alpha-instance"
+        ],
+        "clipping": {
+          "changed": 2362,
+          "max": 255
+        }
+      }
+    }
+  ],
+  "endedAt": "2026-10-07T23:12:38.432Z",
+  "scopePassed": false,
+  "exitCode": 1,
+  "summaryOnly": true,
+  "source": {
+    "path": "docs/evidence/examples/interactive-engine-improvements/color-compare-s1-failed-raw.json",
+    "bytes": 61339981,
+    "sha256": "33bf53080e3b4a6bbddba555faf25323fa463f478d0a47edbc5e0d9c9a0cb9df",
+    "recoverFromCommit": "5a967c7"
+  },
+  "retention": "Historical failed attempt only. Full numeric RGBA arrays omitted; execution, errors, native state and derived readback summaries retained. Original raw bytes can be recovered from the recorded Git commit. This summary cannot substitute for a current validation report."
+}

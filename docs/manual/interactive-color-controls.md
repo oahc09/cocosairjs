@@ -4,7 +4,7 @@
 
 [Water当前复验](../evidence/examples/interactive-engine-improvements/water-runtime-s1.json)三引擎各39项通过。现有例已经使用AirRenderTarget，并非本批才从旧render-window迁移：RGBA16F/4x resolve、独立反射/折射/深度/焦散、三世界点线性深度、上下标记裁剪、固定状态相同PNG、透明fin source-over和depth-off负例、真实pointer/rain与目标resize/释放重建均实测。不能沿用Oct5旧缺口作为当前结论，历史记录未覆写。
 
-[独立裁剪与透明对照](../evidence/examples/interactive-engine-improvements/color-compare-s2.json)用固定相机、256² RGBA8捕获、时间与无纹理色块；仅复用既有编译JSON绑定声明，在局部例改写GLSL3片段，不改SDK内置effect。原生calculateObliqueMat与片段world-space discard留相同半平面，三浏览器图像逐字节相同，changedPixels=0。近裁剪法线必须把相机放在被排除一侧；首轮法线相反导致远裁剪多截2362像素，失败报告保留，未放宽预先256 edge-pixel预算。
+[独立裁剪与透明对照](../evidence/examples/interactive-engine-improvements/color-compare-s2.json)用固定相机、256² RGBA8捕获、时间与无纹理色块；仅复用既有编译JSON绑定声明，在局部例改写GLSL3片段，不改SDK内置effect。原生calculateObliqueMat与片段world-space discard留相同半平面，三浏览器图像逐字节相同，changedPixels=0。近裁剪法线必须把相机放在被排除一侧；首轮法线相反导致远裁剪多截2362像素，[失败诊断摘要](../evidence/examples/interactive-engine-improvements/color-compare-s1-failed-summary.json)与日志保留，完整旧数组可从提交 `5a967c7` 恢复，未放宽预先256 edge-pixel预算。
 
 透明圆形阴影两路径分别为base `Material.initialize({states})`和renderer `getMaterialInstance().overridePipelineStates`。读取原生blendTargets=true、depthWrite=false，256²颜色结果相同；中心约(127,115,0)为红色半透明覆盖绿色背景，周围仍绿，软边可见，不是实心红圆。RGBA alpha合成也记录，不将RGB正确推断alpha预乘合同正确。原始捕获和compositor PNG分开保存；Lead人工查看了Chromium阴影、裁剪和安装时间轴截图。
 

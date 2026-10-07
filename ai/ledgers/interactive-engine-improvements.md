@@ -169,7 +169,7 @@ Orca Worker 因 429/1310 每周/月额度耗尽中止，服务提示 2026-10-11 
 
 - 复用现有Water已迁移的AirRenderTarget；三引擎各39检查，共117通过，三条实际子进程exit0。固定状态、独立通道/深度、fin透明与depth-off负例、pointer/rain、resize和释放重建均实测。[规范报告](../../docs/evidence/examples/interactive-engine-improvements/water-runtime-s1.json)附三个原报告/原日志及截图。原Oct5/私有Water参考未取得，不能沿用历史缺口或冒称原参考匹配。
 - 增量局部fixture比较相同半平面的原生oblique矩阵与world-space discard，以及base初始化/instance override两条圆形透明阴影路径。[S2](../../docs/evidence/examples/interactive-engine-improvements/color-compare-s2.json)三引擎15状态/15PNG通过，两裁剪图逐字节同色，三透明center=(127,115,0)，base/instance结果相同、blend=true/depthWrite=false。人工看了CH阴影和裁剪PNG。固定预算未提高。
-- S1错误法线使原生far-plane多裁2362像素；inspector数组被误读作对象且首CH favicon404。保留失败raw/log，修正配方法线使camera在排除侧，字段访问/favicon/目标颜色识别；不改SDK。独立10种篡改全拒，8条算术合同测试通过。局部shader仅GLSL3验证，不声明其他后端。
+- S1错误法线使原生far-plane多裁2362像素；inspector数组被误读作对象且首CH favicon404。采集时保留失败raw/log，修正配方法线使camera在排除侧，字段访问/favicon/目标颜色识别；不改SDK。独立10种篡改全拒，8条算术合同测试通过。局部shader仅GLSL3验证，不声明其他后端。2026-10-08 按用户要求清理后，旧 raw 替换为失败诊断摘要与原字节 SHA；日志保留，完整旧数组可从 `5a967c7` 恢复。
 
 ## IER-07/08 S4 时间轴受限归档（Lead，2026-10-08）
 

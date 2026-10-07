@@ -40,4 +40,6 @@ Container S6（Lead）：[报告](container-s6.json)63状态48 PASS/15 WebKit活
 [性能试跑](performance-pilot-s1.json)36个5秒窗口采集完整但LIMITED，首窗口并发PNG审计影响明确保留；实体设备与3×60秒验收NOT_RUN。[实际包消费](kit-consumer-s2.json)15入口类型/运行/终态通过，60PNG有5 WK活布局失败，完整exit1。raw字节、tarball、SDK分块、日志及审计在盘，规范报告只迁移artifact路径，不将历史错误改写成成功。原资料缺失、实体设备及完整12项/release仍未达。
 
 
-最终本机集成：[121套1080测试、1076通过/4旧失败](final-test-inventory-s1.log)，[11份报告101输入无漂移](final-current-input-review-s1.json)，[归档后独立复算](final-archive-validation-s1.json)保留两WK WebAudio NOT_RUN/五安装PNG失败而非伪造全绿；[tarball实际字节](kit-consumer-s2-tarball-audit.json)与来源/安装一致。完整12项与release未通过。工具CLI和写行为见tools/README；用户当前未授权Git提交。
+最终本机集成：[121套1080测试、1076通过/4旧失败](final-test-inventory-s1.log)，[11份报告101输入无漂移](final-current-input-review-s1.json)，[归档后独立复算](final-archive-validation-s1.json)保留两WK WebAudio NOT_RUN/五安装PNG失败而非伪造全绿；[tarball实际字节](kit-consumer-s2-tarball-audit.json)与来源/安装一致。完整12项与release未通过。工具CLI和写行为见tools/README；本机实现已提交于 `5a967c7`。
+
+2026-10-08 按用户要求清理体积：[清理记录](storage-cleanup-2026-10-08.json)保留删除前的 SHA256、字节数和恢复提交。颜色 S2 的完整像素数组、15 PNG、输入身份及判定不变，JSON 改为紧凑格式；重复 raw 副本删除。S1 失败记录改为[诊断摘要](color-compare-s1-failed-summary.json)，保留错误、原生状态、读回摘要及日志，不再保存完整旧像素数组，也不能用摘要重新裁定像素通过。原始文件可从 `5a967c7` 恢复；其他报告的 raw、安装 tarball 及验证器所需分块仍保留。
