@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-07T07:24:21.765Z",
-  "revision": "36cabc9",
+  "generatedAt": "2026-10-07T23:17:19.101Z",
+  "revision": "1228a50",
   "examples": [
     {
       "dir": "anim-position",
@@ -4943,6 +4943,392 @@
         "verified": 20,
         "attested": 0,
         "units": 20
+      }
+    },
+    {
+      "dir": "interactive-container",
+      "id": "interactive-container",
+      "version": "1.0.0",
+      "title": "Container readiness and hidden recovery",
+      "category": "integration",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "将DOM非零、原生布局、相机、提交和真实PNG分别验收",
+        "points": [
+          "隐藏时不导入SDK",
+          "仅父CSS布局变化与有效framebuffer保留",
+          "冷加载标签代次与旧输入取消",
+          "无SDK WebGL2环境对照"
+        ]
+      },
+      "effect": {
+        "functional": "Run/Report/Compare、父class布局、隐藏恢复和释放；SDK布局不由应用windowSize写入。",
+        "visual": "就绪后红色原生标记可见；失败截图保持失败。"
+      },
+      "api": {
+        "primary": [
+          "createAirApp"
+        ],
+        "supporting": [],
+        "claims": [
+          "createAirApp"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "input"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "container-marker",
+            "camera"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "显示、窄/宽父布局、隐藏恢复、快速标签切换和释放",
+            "expected": "对应最新布局与导航结果；旧输入取消；实际PNG及引用单独核对"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      }
+    },
+    {
+      "dir": "interactive-geometry",
+      "id": "interactive-geometry",
+      "version": "1.0.0",
+      "title": "Dynamic mesh and pointer projection",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "用真实指针生成切平面，分别检查上传顶点、屏幕投影和可见像素",
+        "points": [
+          "静态 indices 与动态 indices16/32 的区别",
+          "positions-only 更新后通知 renderer",
+          "不同 DPR、相机、容器偏移与取消代次",
+          "先解绑借用 renderer，再归还自有引用"
+        ]
+      },
+      "effect": {
+        "functional": "mesh、cut、ribbon 三入口；Reset 与 Escape 推进代次，释放后控件禁用。",
+        "visual": "mesh 显示蓝色静态面与运动橙色动态面；cut 显示红切线、黄轨迹与青色刀刃；ribbon 显示运动青色波带。"
+      },
+      "api": {
+        "primary": [
+          "utils.MeshUtils.createDynamicMesh"
+        ],
+        "supporting": [
+          "Mesh.updateSubMesh",
+          "Camera.screenPointToRay",
+          "MeshRenderer.onGeometryChanged"
+        ],
+        "claims": [
+          "utils.MeshUtils.createDynamicMesh",
+          "Mesh.updateSubMesh",
+          "Camera.screenPointToRay",
+          "MeshRenderer.onGeometryChanged"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "mesh"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "static-quad",
+            "dynamic-quad"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "切换 URL mode，拖动 cut 画布，Reset、Escape、释放",
+            "expected": "对象随输入变化；旧 pointerup 不切割；释放后控件禁用"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      }
+    },
+    {
+      "dir": "interactive-input",
+      "id": "interactive-input",
+      "version": "1.0.0",
+      "title": "Canvas, HTML and native scrolling",
+      "category": "interaction",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "观察一次真实输入的事件、模型、提交与可见反馈，明确 Canvas/HTML/文档的所有权",
+        "points": [
+          "稳定 Text 节点与原生键盘 click",
+          "DOM ActionInput 与 session 取消",
+          "原生竖向滚动和横向 rail 的独立责任",
+          "相同 DOM 的无 SDK 对照"
+        ]
+      },
+      "effect": {
+        "functional": "按钮、Canvas drag、range、Reset、模式切换及 release；标准 HTML 键盘访问。",
+        "visual": "红色标记随模型位移；事件与布局轨迹同步显示。"
+      },
+      "api": {
+        "primary": [
+          "createActionInput"
+        ],
+        "supporting": [
+          "createActionState",
+          "createSessionGate"
+        ],
+        "claims": [
+          "createActionInput",
+          "createActionState",
+          "createSessionGate"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "input"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "activation-marker",
+            "camera"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "标准 mouse/touch/keyboard click、Canvas drag、横向 rail 与竖向滚动、Reset、模式切换及 release",
+            "expected": "一动作一模型变化及可见反馈；旧接触被代次取消；释放归还自有引用"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      }
+    },
+    {
+      "dir": "interactive-multipass",
+      "id": "interactive-multipass",
+      "version": "1.0.0",
+      "title": "Capture and mip sampling",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "比较相机离屏采样与原生 gfx 逐级 mip 采样，正确处理目标重建和资源退役",
+        "points": [
+          "RGBA8/16F 与 1x/4x 分配及 resolve",
+          "set 1 描述符、std140 和真实 mip 数据",
+          "原生时钟与定步验证分开",
+          "重置先解绑并归还旧资产"
+        ]
+      },
+      "effect": {
+        "functional": "默认 capture 路线支持暂停、恢复、重置、缩放和释放；?mode=native 提供 mip LOD 切换。释放后控件禁用。",
+        "visual": "capture 显示红绿色块及蓝色标记；native 显示红绿蓝黄棋盘，LOD+ 后变为蓝黄紫青。"
+      },
+      "api": {
+        "primary": [
+          "createAirRenderTarget"
+        ],
+        "supporting": [
+          "Material.initialize",
+          "gfx.CommandBuffer.draw"
+        ],
+        "claims": [
+          "createAirRenderTarget",
+          "Material.initialize",
+          "gfx.CommandBuffer.draw"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "source-red",
+            "source-green",
+            "capture-camera",
+            "display-camera",
+            "display-quad"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "暂停、恢复、重置、缩放、释放；native 路线切换 LOD",
+            "expected": "暂停时帧数冻结，恢复前进；重置资产数稳定，LOD 切换改变实际色块；释放后控件禁用"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      }
+    },
+    {
+      "dir": "interactive-timeline",
+      "id": "interactive-timeline",
+      "version": "1.0.0",
+      "title": "Cancelable motion and audio clock",
+      "category": "integration",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "分别观测18组原生pose收敛、会话取消、真实音频激活和可见截图",
+        "points": [
+          "Stage标签不代替pose收敛",
+          "Pause/Seek/Replay与终态",
+          "实际section offsets和499本地终点",
+          "WebAudio主时钟与12落点观察区间"
+        ]
+      },
+      "effect": {
+        "functional": "原生/定步模式分离；可信控制取消旧代次；原WebAudio缺失保持NOT_RUN。",
+        "visual": "18红色组部件与12绿色音频落点，来自新编写配方。"
+      },
+      "api": {
+        "primary": [
+          "createSessionScope"
+        ],
+        "supporting": [],
+        "claims": [
+          "createSessionScope"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "input"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "18-teaching-groups",
+            "12-audio-cues",
+            "camera"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "选择目标、暂停/继续、Reset/Back/Replay、Seek、Mute和释放",
+            "expected": "最新会话控制原生对象；音频source/origin语义保持；refs归零"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
       }
     },
     {
@@ -19455,7 +19841,8 @@
     ],
     "interaction": [
       "input",
-      "orbit-controls"
+      "orbit-controls",
+      "interactive-input"
     ],
     "devtools": [
       "automation"
@@ -19612,7 +19999,9 @@
       "sprite-mask-blend",
       "dom-overlay-texture",
       "html-texture-experimental",
-      "k0-r2-porting-contracts"
+      "k0-r2-porting-contracts",
+      "interactive-multipass",
+      "interactive-geometry"
     ],
     "shader": [
       "shader-custom-gradient",
@@ -19637,6 +20026,10 @@
     ],
     "particles": [
       "starfield-galaxy"
+    ],
+    "integration": [
+      "interactive-container",
+      "interactive-timeline"
     ]
   }
 }

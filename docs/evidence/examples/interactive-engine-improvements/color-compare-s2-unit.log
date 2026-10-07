@@ -1,0 +1,16 @@
+PASS test/smoke/interactive-color-compare.test.ts
+  frozen RGBA8 color comparison (synthetic arithmetic, not browser proof)
+    √ identical capture has zero difference (64 ms)
+    √ two-channel-byte tolerance does not erase larger differences (64 ms)
+    √ rejects invalid raw value NaN (28 ms)
+    √ rejects invalid raw value Infinity (19 ms)
+    √ rejects invalid raw value -1 (20 ms)
+    √ rejects invalid raw value 256 (18 ms)
+    √ rejects invalid raw value 1.5 (22 ms)
+    √ truncated capture cannot compare as equal
+
+Test Suites: 1 passed, 1 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        2.298 s
+Ran all test suites matching /test\\smoke\\interactive-color-compare.test.ts/i.

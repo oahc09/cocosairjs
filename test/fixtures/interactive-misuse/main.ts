@@ -1,0 +1,27 @@
+import * as cc from 'cocosair';
+import {prepareEffectForRegistration} from '../../../tools/debug/effect-layout.js';
+// This fixture never changes the SDK, catches explicit negative calls and never draws.
+const app=await cc.createAirApp({canvas:'#GameCanvas'}),scene=new cc.Scene('diagnostic-correct'),rows:Record<string,unknown>[]=[],owned:(cc.Mesh|cc.Material)[]=[];
+const hold=<T extends cc.Mesh|cc.Material>(a:T):T=>{a.addRef();owned.push(a);return a};
+function observe(fn:()=>unknown):Record<string,unknown>{try{return {result:'RETURNED',value:fn()}}catch(error){return {result:'THREW',name:(error as Error).name,message:String(error)}}}
+const geometry={positions:[0,0,0,1,0,0,0,1,0],indices:[0,1,2]};
+const wrongFactory=observe(()=>{const wrong=cc.Mesh as unknown as {createMesh:(v:unknown)=>cc.Mesh};return wrong.createMesh(geometry)}),mesh=hold(cc.utils.createMesh(geometry));
+rows.push({id:'mesh-factory',responsibility:'consumer-call',location:'Mesh.createMesh',wrong:wrongFactory,correct:{entry:'utils.createMesh',indexCount:mesh.readIndices(0)?.length,vertexCount:mesh.struct.vertexBundles[0].view.count},next:'Use utils.createMesh for static IGeometry, or utils.MeshUtils.createDynamicMesh after startup'});
+const wrongScene=new cc.Scene('wrong-component-child'),component=new cc.MeshRenderer();const wrongChild=observe(()=>wrongScene.addChild(component as unknown as cc.Node));
+const node=new cc.Node('correct-component-host');scene.addChild(node);const renderer=node.addComponent(cc.MeshRenderer);renderer.mesh=mesh;
+rows.push({id:'component-child',responsibility:'consumer-type',location:'Scene.addChild(Component)',wrong:wrongChild,correct:{componentNode:renderer.node===node,parent:node.parent===scene},next:'Scene.addChild accepts Node. Attach components with node.addComponent. Scene itself is a Node; its addComponent API is not categorically forbidden'});
+const material=hold(new cc.Material());material.initialize({effectName:'builtin-unlit'});renderer.setSharedMaterial(material,0);
+const baseBefore=cc.inspectAirMaterial(material);material.overridePipelineStates({depthStencilState:{depthWrite:false}});const baseAfter=cc.inspectAirMaterial(material);
+const corrected=hold(new cc.Material());corrected.initialize({effectName:'builtin-unlit',states:{depthStencilState:{depthWrite:false}}});renderer.setSharedMaterial(corrected,0);const instance=renderer.getMaterialInstance(0)!;instance.overridePipelineStates({blendState:{targets:[{blend:true}]}});
+rows.push({id:'base-instance',responsibility:'consumer-material',location:'Material.overridePipelineStates pass 0',wrong:{before:baseBefore,after:baseAfter,diagnostic:{code:'CONSUMER_BASE_OVERRIDE_NOOP',severity:'warning',location:'Material.overridePipelineStates pass 0',basis:'Native depthWrite unchanged after requested false; consumer assertion, not a published SDK code'}},correct:{base:cc.inspectAirMaterial(corrected),instance:cc.inspectAirMaterial(instance)},next:'Set base states in initialize; use MaterialInstance for runtime overrides'});
+const spec=await(await fetch('../../fixtures/effect-layout/spec.json')).json();
+// The generated fixture is served as JSON by the collector; the source spec is only an identity reference.
+const json=await(await fetch('./compiled-effect.json')).json(),before=JSON.stringify(json);const good=prepareEffectForRegistration(json),bad=JSON.parse(before);bad.shaders[0].samplerTextures[0].binding=0;
+rows.push({id:'binding',responsibility:'consumer-effect',location:'shader0/material-set sampler binding0',wrong:observe(()=>prepareEffectForRegistration(bad)),correct:{bindings:good.bindings,unchanged:JSON.stringify(json)===before,sourceName:spec.name},next:'Use opt-in effect-layout preflight for compiled JSON; GPU/null texture fallback remains a separate observation'});
+const callable={...json,factory:()=>new cc.EffectAsset()},wrongClone=observe(()=>prepareEffectForRegistration(callable));
+rows.push({id:'function-clone',responsibility:'optional-tool-input',location:'$.factory',wrong:wrongClone,correct:{callablePreserved:typeof callable.factory==='function',jsonOnlyAccepted:good.effect.name===json.name},next:'Keep callable constructors outside compiled JSON. Do not JSON-clone a live EffectAsset; create an asset and copy verified JSON shader/technique data explicitly'});
+const inspectBefore={refs:owned.map(a=>a.refCount),mesh:Array.from(mesh.readAttribute(0,cc.gfx.AttributeName.ATTR_POSITION)!),draws:cc.director.getTotalFrames(),passes:JSON.stringify(cc.inspectAirMaterial(corrected))};
+for(let i=0;i<20;i++){cc.inspectAirMaterial(corrected);cc.inspectAirMeshMaterial(mesh,corrected);cc.inspectAirGeometry(mesh,node,corrected)}
+const inspectAfter={refs:owned.map(a=>a.refCount),mesh:Array.from(mesh.readAttribute(0,cc.gfx.AttributeName.ATTR_POSITION)!),draws:cc.director.getTotalFrames(),passes:JSON.stringify(cc.inspectAirMaterial(corrected))};
+const diagnostics=cc.inspectAirMeshMaterial(mesh,corrected);
+(window as unknown as Record<string,unknown>).__misuse={rows,inspectBefore,inspectAfter,scope:{materialSetOnly:true,geometry:'sampled-local-triangle-winding',reflection:diagnostics.passes.map(p=>p.reflection),pixelAcceptance:'NOT_RUN: inspector health never substitutes visible PNG'},release:async()=>{renderer.mesh=null;renderer.setSharedMaterial(null,0);node.removeFromParent();node.destroy();const refs=owned.map(a=>{const before=a.refCount;a.decRef();return {before,after:a.refCount}});wrongScene.destroy();scene.destroy();await app.close?.();return {refs}}};

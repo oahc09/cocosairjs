@@ -1,0 +1,3 @@
+chromium {"pass":false,"errors":["runtime/state coverage"]}
+firefox {"pass":false,"errors":["oblique/discard differ beyond frozen 256 edge-pixel budget","native blend/depth state","native blend/depth state","compositor target missing alpha-base","compositor target missing alpha-instance"],"clipping":{"changed":2362,"max":255}}
+webkit {"pass":false,"errors":["oblique/discard differ beyond frozen 256 edge-pixel budget","native blend/depth state","native blend/depth state","compositor target missing alpha-base","compositor target missing alpha-instance"],"clipping":{"changed":2362,"max":255}}

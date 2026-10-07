@@ -1,0 +1,28 @@
+{
+  "ok": false,
+  "mode": "update",
+  "extraJestArgs": [
+    "--runInBand"
+  ],
+  "manifest": "docs/test-inventory.json",
+  "totals": {
+    "suites": 121,
+    "tests": 1080,
+    "passed": 1076,
+    "failed": 4
+  },
+  "observedTotals": {
+    "suites": 121,
+    "tests": 1080,
+    "passed": 1076,
+    "failed": 4
+  },
+  "failures": [
+    "test not passed (failed): test/smoke/smoke-29-examples-spec.test.ts :: V1.1 — Example Specification 门禁 §15 全部 example.json 达到 frozen 且规格零问题",
+    "test not passed (failed): test/smoke/smoke-29-examples-spec.test.ts :: V1.1 — Example Specification 门禁 §11/§12 证据链符合性零 fail（spec-compliance-audit）",
+    "test not passed (failed): test/smoke/smoke-29-examples-spec.test.ts :: V1.1 — Example Specification 门禁 §23 files.json 只保留 Gallery 字段，规格实现细节不外溢",
+    "test not passed (failed): test/smoke/smoke-30-v12-regression.test.ts :: smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 产物绑定：矩阵记录的 bundle 与 d.ts 哈希就是当期构建产物",
+    "jest reported 4 failed test(s) / success=false"
+  ],
+  "output": "docs/test-inventory.json"
+}

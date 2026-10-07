@@ -1,0 +1,84 @@
+FAIL test/smoke/interactive-diagnostics.test.ts (5.139 s)
+  IER-10 opt-in effect JSON misuse diagnosis
+    × pure compiled JSON keeps input and source unchanged (9 ms)
+    × function at root cannot silently disappear during JSON clone (2 ms)
+    × function at nested cannot silently disappear during JSON clone (1 ms)
+    × cyclic compiled input gets a located preflight error rather than native stringify exception (1 ms)
+
+  ● IER-10 opt-in effect JSON misuse diagnosis › pure compiled JSON keeps input and source unchanged
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 3
+    Received length: 6
+    Received array:  [{"binding": 0, "kind": "block", "name": "Constants", "set": 1, "shader": "air-port-two-textures|c33348769120c79a"}, {"binding": 1, "kind": "sampler", "name": "mapA", "set": 1, "shader": "air-port-two-textures|c33348769120c79a"}, {"binding": 2, "kind": "sampler", "name": "mapB", "set": 1, "shader": "air-port-two-textures|c33348769120c79a"}, {"binding": 0, "kind": "block", "name": "CCGlobal", "set": 0, "shader": "air-port-two-textures|c33348769120c79a"}, {"binding": 1, "kind": "block", "name": "CCCamera", "set": 0, "shader": "air-port-two-textures|c33348769120c79a"}, {"binding": 0, "kind": "block", "name": "CCLocal", "set": 2, "shader": "air-port-two-textures|c33348769120c79a"}]
+
+       7 | beforeAll(()=>{const dir=mkdtempSync(join(tmpdir(),'ier-diagnostic-'));try{const out=join(dir,'effect.json');execFileSync(process.execPath,['tools/build/effect-json.mjs','test/fixtures/effect-layout/spec.json',out]);source=JSON.parse(readFileSync(out,'utf8'))}finally{rmSync(dir,{recursive:true,force:true})}});
+       8 | describe('IER-10 opt-in effect JSON misuse diagnosis',()=>{
+    >  9 |  test('pure compiled JSON keeps input and source unchanged',()=>{const before=JSON.stringify(source);expect(prepareEffectForRegistration(source).bindings).toHaveLength(3);expect(JSON.stringify(source)).toBe(before)});
+         |                                                                                                                                                            ^
+      10 |  test.each(['root','nested'])('function at %s cannot silently disappear during JSON clone',level=>{const value=JSON.parse(JSON.stringify(source)),fn=()=>42;if(level==='root')value.factory=fn;else value.shaders[0].factory=fn;let actual:any;try{prepareEffectForRegistration(value)}catch(e){actual=e}expect(actual).toBeInstanceOf(AirEffectLayoutError);expect(actual.issues[0].code).toBe('NON_JSON_FUNCTION');expect(actual.issues[0].resource).toContain('factory');expect(level==='root'?value.factory:value.shaders[0].factory).toBe(fn)});
+      11 |  test('cyclic compiled input gets a located preflight error rather than native stringify exception',()=>{const value=JSON.parse(JSON.stringify(source));value.self=value;let actual:any;try{prepareEffectForRegistration(value)}catch(e){actual=e}expect(actual).toBeInstanceOf(AirEffectLayoutError);expect(actual.issues[0].code).toBe('NON_JSON_CYCLE');expect(actual.issues[0].resource).toBe('$.self')});
+      12 | });
+
+      at Object.<anonymous> (test/smoke/interactive-diagnostics.test.ts:9:156)
+
+  ● IER-10 opt-in effect JSON misuse diagnosis › function at root cannot silently disappear during JSON clone
+
+    expect(received).toBeInstanceOf(expected)
+
+    Expected constructor: AirEffectLayoutError
+
+    Received value has no prototype
+    Received value: undefined
+
+       8 | describe('IER-10 opt-in effect JSON misuse diagnosis',()=>{
+       9 |  test('pure compiled JSON keeps input and source unchanged',()=>{const before=JSON.stringify(source);expect(prepareEffectForRegistration(source).bindings).toHaveLength(3);expect(JSON.stringify(source)).toBe(before)});
+    > 10 |  test.each(['root','nested'])('function at %s cannot silently disappear during JSON clone',level=>{const value=JSON.parse(JSON.stringify(source)),fn=()=>42;if(level==='root')value.factory=fn;else value.shaders[0].factory=fn;let actual:any;try{prepareEffectForRegistration(value)}catch(e){actual=e}expect(actual).toBeInstanceOf(AirEffectLayoutError);expect(actual.issues[0].code).toBe('NON_JSON_FUNCTION');expect(actual.issues[0].resource).toContain('factory');expect(level==='root'?value.factory:value.shaders[0].factory).toBe(fn)});
+         |                                                                                                                                                                                                                                                                                                                         ^
+      11 |  test('cyclic compiled input gets a located preflight error rather than native stringify exception',()=>{const value=JSON.parse(JSON.stringify(source));value.self=value;let actual:any;try{prepareEffectForRegistration(value)}catch(e){actual=e}expect(actual).toBeInstanceOf(AirEffectLayoutError);expect(actual.issues[0].code).toBe('NON_JSON_CYCLE');expect(actual.issues[0].resource).toBe('$.self')});
+      12 | });
+      13 |
+
+      at test/smoke/interactive-diagnostics.test.ts:10:313
+
+  ● IER-10 opt-in effect JSON misuse diagnosis › function at nested cannot silently disappear during JSON clone
+
+    expect(received).toBeInstanceOf(expected)
+
+    Expected constructor: AirEffectLayoutError
+
+    Received value has no prototype
+    Received value: undefined
+
+       8 | describe('IER-10 opt-in effect JSON misuse diagnosis',()=>{
+       9 |  test('pure compiled JSON keeps input and source unchanged',()=>{const before=JSON.stringify(source);expect(prepareEffectForRegistration(source).bindings).toHaveLength(3);expect(JSON.stringify(source)).toBe(before)});
+    > 10 |  test.each(['root','nested'])('function at %s cannot silently disappear during JSON clone',level=>{const value=JSON.parse(JSON.stringify(source)),fn=()=>42;if(level==='root')value.factory=fn;else value.shaders[0].factory=fn;let actual:any;try{prepareEffectForRegistration(value)}catch(e){actual=e}expect(actual).toBeInstanceOf(AirEffectLayoutError);expect(actual.issues[0].code).toBe('NON_JSON_FUNCTION');expect(actual.issues[0].resource).toContain('factory');expect(level==='root'?value.factory:value.shaders[0].factory).toBe(fn)});
+         |                                                                                                                                                                                                                                                                                                                         ^
+      11 |  test('cyclic compiled input gets a located preflight error rather than native stringify exception',()=>{const value=JSON.parse(JSON.stringify(source));value.self=value;let actual:any;try{prepareEffectForRegistration(value)}catch(e){actual=e}expect(actual).toBeInstanceOf(AirEffectLayoutError);expect(actual.issues[0].code).toBe('NON_JSON_CYCLE');expect(actual.issues[0].resource).toBe('$.self')});
+      12 | });
+      13 |
+
+      at test/smoke/interactive-diagnostics.test.ts:10:313
+
+  ● IER-10 opt-in effect JSON misuse diagnosis › cyclic compiled input gets a located preflight error rather than native stringify exception
+
+    expect(received).toBeInstanceOf(expected)
+
+    Expected constructor: AirEffectLayoutError
+    Received constructor: TypeError
+
+       9 |  test('pure compiled JSON keeps input and source unchanged',()=>{const before=JSON.stringify(source);expect(prepareEffectForRegistration(source).bindings).toHaveLength(3);expect(JSON.stringify(source)).toBe(before)});
+      10 |  test.each(['root','nested'])('function at %s cannot silently disappear during JSON clone',level=>{const value=JSON.parse(JSON.stringify(source)),fn=()=>42;if(level==='root')value.factory=fn;else value.shaders[0].factory=fn;let actual:any;try{prepareEffectForRegistration(value)}catch(e){actual=e}expect(actual).toBeInstanceOf(AirEffectLayoutError);expect(actual.issues[0].code).toBe('NON_JSON_FUNCTION');expect(actual.issues[0].resource).toContain('factory');expect(level==='root'?value.factory:value.shaders[0].factory).toBe(fn)});
+    > 11 |  test('cyclic compiled input gets a located preflight error rather than native stringify exception',()=>{const value=JSON.parse(JSON.stringify(source));value.self=value;let actual:any;try{prepareEffectForRegistration(value)}catch(e){actual=e}expect(actual).toBeInstanceOf(AirEffectLayoutError);expect(actual.issues[0].code).toBe('NON_JSON_CYCLE');expect(actual.issues[0].resource).toBe('$.self')});
+         |                                                                                                                                                                                                                                                                  ^
+      12 | });
+      13 |
+
+      at Object.<anonymous> (test/smoke/interactive-diagnostics.test.ts:11:258)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 4 total
+Snapshots:   0 total
+Time:        6.369 s
+Ran all test suites matching /test\\smoke\\interactive-diagnostics.test.ts/i.

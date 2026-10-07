@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "ier-timeline-audit/1",
+  "baseline": {
+    "scopePassed": false,
+    "errors": [
+      "webkit/idle: webkit WebAudio NOT_RUN: This installed WebKit browser exposes neither AudioContext nor webkitAudioContext; no HTMLAudio clock substitution",
+      "webkit/cpu-6ms-per-40ms: webkit WebAudio NOT_RUN: This installed WebKit browser exposes neither AudioContext nor webkitAudioContext; no HTMLAudio clock substitution"
+    ]
+  },
+  "tests": [
+    {
+      "kind": "assembly",
+      "name": "labelOnly",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "missingPart",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "draw",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "pose",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "late",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "range",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "retired",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "refs",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "trusted",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "nanFrame",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "png",
+      "rejected": true
+    },
+    {
+      "kind": "assembly",
+      "name": "camera",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "cueRemoved",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "activation",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "observer",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "png",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "origin",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "mute",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "nanClock",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "clock",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "retired",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "release",
+      "rejected": true
+    },
+    {
+      "kind": "audio",
+      "name": "staleCue",
+      "rejected": true
+    },
+    {
+      "kind": "scroll",
+      "name": "offset",
+      "rejected": true
+    },
+    {
+      "kind": "scroll",
+      "name": "end",
+      "rejected": true
+    },
+    {
+      "kind": "scroll",
+      "name": "release",
+      "rejected": true
+    },
+    {
+      "kind": "report",
+      "name": "missingEngine",
+      "rejected": true
+    },
+    {
+      "kind": "report",
+      "name": "duplicate",
+      "rejected": true
+    },
+    {
+      "kind": "report",
+      "name": "identity",
+      "rejected": true
+    },
+    {
+      "kind": "report",
+      "name": "pageError",
+      "rejected": true
+    },
+    {
+      "kind": "report",
+      "name": "reference",
+      "rejected": true
+    }
+  ],
+  "ok": true,
+  "browserRunsAdded": 0
+}

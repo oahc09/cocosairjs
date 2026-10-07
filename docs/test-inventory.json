@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T07:28:50.642Z",
+  "generatedAt": "2026-10-07T23:21:45.493Z",
   "suites": [
     {
       "file": "test/smoke/air-dom-texture-blend.test.ts",
@@ -284,6 +284,315 @@
         "native fog, TRS and controller contracts invalid local/world TRS is rejected before poisoning transforms or emitting change events",
         "native fog, TRS and controller contracts readonly controller inspection resolves actual shared targets across distinct roots",
         "native fog, TRS and controller contracts valid scale and degree rotation affect actual transformed coordinates"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-color-compare.test.ts",
+      "tests": [
+        "frozen RGBA8 color comparison (synthetic arithmetic, not browser proof) identical capture has zero difference",
+        "frozen RGBA8 color comparison (synthetic arithmetic, not browser proof) rejects invalid raw value -1",
+        "frozen RGBA8 color comparison (synthetic arithmetic, not browser proof) rejects invalid raw value 1.5",
+        "frozen RGBA8 color comparison (synthetic arithmetic, not browser proof) rejects invalid raw value 256",
+        "frozen RGBA8 color comparison (synthetic arithmetic, not browser proof) rejects invalid raw value Infinity",
+        "frozen RGBA8 color comparison (synthetic arithmetic, not browser proof) rejects invalid raw value NaN",
+        "frozen RGBA8 color comparison (synthetic arithmetic, not browser proof) truncated capture cannot compare as equal",
+        "frozen RGBA8 color comparison (synthetic arithmetic, not browser proof) two-channel-byte tolerance does not erase larger differences"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-container.test.ts",
+      "tests": [
+        "IER-06 independent container readiness accepts a complete positive-layout/submit/PNG fixture",
+        "IER-06 independent container readiness changing pose without moving pixels is rejected",
+        "IER-06 independent container readiness hash-correct blank cannot prove recovered visibility",
+        "IER-06 independent container readiness hash-correct cropped PNG cannot pass the frozen viewport",
+        "IER-06 independent container readiness malformed reports return rejection rather than throwing",
+        "IER-06 independent container readiness rejects PNG hash drift",
+        "IER-06 independent container readiness rejects borrowed reference claim",
+        "IER-06 independent container readiness rejects hidden startup",
+        "IER-06 independent container readiness rejects late draw",
+        "IER-06 independent container readiness rejects missing PNG",
+        "IER-06 independent container readiness rejects no submitted layout",
+        "IER-06 independent container readiness rejects nonfinite DPR",
+        "IER-06 independent container readiness rejects not initialized",
+        "IER-06 independent container readiness rejects old sizing workaround",
+        "IER-06 independent container readiness rejects stale camera",
+        "IER-06 independent container readiness rejects stale framebuffer",
+        "IER-06 independent container readiness rejects wrong DPR"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-diagnostics.test.ts",
+      "tests": [
+        "IER-10 opt-in effect JSON misuse diagnosis cyclic compiled input gets a located preflight error rather than native stringify exception",
+        "IER-10 opt-in effect JSON misuse diagnosis function at nested cannot silently disappear during JSON clone",
+        "IER-10 opt-in effect JSON misuse diagnosis function at root cannot silently disappear during JSON clone",
+        "IER-10 opt-in effect JSON misuse diagnosis pure compiled JSON keeps input and source unchanged"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-geometry-review.test.ts",
+      "tests": [
+        "IER-04 independent geometry review accepts legal geometry before testing rejected updates",
+        "IER-04 independent geometry review collinear rays cannot determine a unique cut plane",
+        "IER-04 independent geometry review invalid geometry returns a structured rejection without throwing",
+        "IER-04 independent geometry review rejects invalid capacity -1",
+        "IER-04 independent geometry review rejects invalid capacity 1.5",
+        "IER-04 independent geometry review rejects invalid capacity Infinity",
+        "IER-04 independent geometry review rejects invalid capacity NaN",
+        "IER-04 independent geometry review rejects invalid index -1 before an SDK call",
+        "IER-04 independent geometry review rejects invalid index 0.5 before an SDK call",
+        "IER-04 independent geometry review rejects invalid index Infinity before an SDK call",
+        "IER-04 independent geometry review rejects invalid index NaN before an SDK call",
+        "IER-04 independent geometry review rejects non-finite UV coordinates",
+        "IER-04 independent geometry review rejects simultaneous 16-bit and 32-bit indices",
+        "IER-04 raw projection evidence a broad cut quad must not substitute its centerline for cut vertices",
+        "IER-04 raw projection evidence finite aligned uploads are accepted before malformed inputs",
+        "IER-04 raw projection evidence rejects a non-finite camera matrix",
+        "IER-04 raw projection evidence rejects non-finite uploaded vertex Infinity",
+        "IER-04 raw projection evidence rejects non-finite uploaded vertex NaN"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-geometry.test.ts",
+      "tests": [
+        "IER-04 acceptance: synthetic full-plan fixture validates clean every case PNG matches the frozen cut oracle",
+        "IER-04 acceptance: synthetic full-plan fixture validates clean fixture fingerprints are real disk identities",
+        "IER-04 acceptance: synthetic full-plan fixture validates clean full matrix validates (37 rows per browser, synthetic fixture)",
+        "IER-04 plan and oracle contracts cut oracle region follows the gesture, not a fixed screen band",
+        "IER-04 plan and oracle contracts every engine covers the full T1 matrix (baseline + live resize + offset)",
+        "IER-04 plan and oracle contracts the frozen budget is 0.15 CSS px (design target, not a historical claim)",
+        "IER-04 tamper rejections (memory clones) 1) cut upload displaced beyond the frozen 0.15 px budget rejected",
+        "IER-04 tamper rejections (memory clones) 10) stale measurement (after first step) rejected",
+        "IER-04 tamper rejections (memory clones) 11) input SHA drift rejected",
+        "IER-04 tamper rejections (memory clones) 12) black PNG rejected by pixel recomputation",
+        "IER-04 tamper rejections (memory clones) 13) ribbon identical before/after with zero centroid rejected",
+        "IER-04 tamper rejections (memory clones) 14) lifecycle stale-release contract failure rejected",
+        "IER-04 tamper rejections (memory clones) 15) page error injection rejected",
+        "IER-04 tamper rejections (memory clones) 2) blade upload offset beyond its own budget rejected (raw recomputation)",
+        "IER-04 tamper rejections (memory clones) 3) untrusted input cannot pass as real pointer",
+        "IER-04 tamper rejections (memory clones) 4) target miss rejected",
+        "IER-04 tamper rejections (memory clones) 5) projection identity mismatch with the row plan rejected",
+        "IER-04 tamper rejections (memory clones) 6) missing plan row rejected",
+        "IER-04 tamper rejections (memory clones) 7) duplicate plan row rejected",
+        "IER-04 tamper rejections (memory clones) 8) NOT_RUN case cannot count as tested",
+        "IER-04 tamper rejections (memory clones) 9) future input sequence rejected (exact equality)",
+        "Lead closure gates: raw correlation and native controls native normal-mode baseline accepts visible synthetic fixture",
+        "Lead closure gates: raw correlation and native controls rejects future measurement independently of self-reported error scalars",
+        "Lead closure gates: raw correlation and native controls rejects late session independently of self-reported error scalars",
+        "Lead closure gates: raw correlation and native controls rejects missing raw events independently of self-reported error scalars",
+        "Lead closure gates: raw correlation and native controls rejects missing world intersections independently of self-reported error scalars",
+        "Lead closure gates: raw correlation and native controls rejects normal listener not detached",
+        "Lead closure gates: raw correlation and native controls rejects normal missing mode",
+        "Lead closure gates: raw correlation and native controls rejects normal pacer did not advance",
+        "Lead closure gates: raw correlation and native controls rejects normal reset resource accumulation",
+        "Lead closure gates: raw correlation and native controls rejects normal unreleased refs",
+        "Lead closure gates: raw correlation and native controls rejects normal untrusted controls",
+        "Lead closure gates: raw correlation and native controls rejects wrong client coordinates independently of self-reported error scalars"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-improvement-baseline.test.ts",
+      "tests": [
+        "IER-00 baseline: file presence is not executed evidence applyExecutionReport: only identity-bound passing suites upgrade to tested-passed",
+        "IER-00 baseline: file presence is not executed evidence builtFrom uses source-map sampling, not HEAD speculation",
+        "IER-00 baseline: file presence is not executed evidence createSessionGate maps to action-input suites (not scene-release)",
+        "IER-00 baseline: file presence is not executed evidence currentIdentity reads disk for CLI verification",
+        "IER-00 baseline: file presence is not executed evidence dedup table: 12 IER rows mapped to the 10 recommendations with concrete reuse",
+        "IER-00 baseline: file presence is not executed evidence default buildBaseline never emits tested-passed",
+        "IER-00 baseline: file presence is not executed evidence exact 64-digit historical task-doc SHA recorded honestly",
+        "IER-00 baseline: file presence is not executed evidence export detection is export-statement based, not arbitrary bundle text",
+        "IER-00 baseline: file presence is not executed evidence identity reuses candidate snapshot: HEAD/branch/dirty/group digests",
+        "IER-00 baseline: file presence is not executed evidence min/map/bootstrap/npm/html-source artifact identities provided",
+        "IER-00 baseline: file presence is not executed evidence missing evidence stays explicit, never fabricated",
+        "IER-00 baseline: file presence is not executed evidence section 1.2 additions inventoried: prefilter, releaseScene, sessionScope",
+        "IER-00 baseline: file presence is not executed evidence verifyBaseline: current-matching report passes; any drift rejected",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate PASS gate requires browser/viewport/dpr/events/execution/fingerprints/PNG/oracle",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate PNG integrity: missing path, SHA tamper, bytes tamper, truncated all rejected",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate SYNTHETIC cannot masquerade as REAL_BROWSER",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate acceptance positive: real decodable PNG + oracle recomputation (SYNTHETIC contract, LIMITED)",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate enums: result/method/sourceStatus all enforced",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate evaluateVisibility recomputes from real pixels; fake counters cannot pass",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate fidelity separated from function: unobserved/recreated reference rules",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate field contract documented honestly: 22 original + method + execution = 24 required",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate fully UNKNOWN SYNTHETIC record with NOT_RUN is valid",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate identity drift: sdk/app/harness known mismatch rejected regardless of result",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate invalid structures fail without crashing (no TypeError)",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate null observations rejected; explicit UNKNOWN accepted for NOT_RUN",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate stale reports rejected by selectedRun/selectedCase",
+        "IER-01 evidence: honest NOT_RUN and strict PASS gate typed field table enforced: NaN/Infinity/negative dpr always rejected"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-improvement-browser.test.ts",
+      "tests": [
+        "IER independent analytic projection and pixel rejection actual pixel loop computes hit count and centroid",
+        "IER independent analytic projection and pixel rejection an occluded image cannot pass because the model changed",
+        "IER independent analytic projection and pixel rejection centroid rejects a visible object in the wrong position",
+        "IER independent analytic projection and pixel rejection fractional pixel region is rejected rather than bitwise rounded",
+        "IER independent analytic projection and pixel rejection invalid tolerance -1 cannot bypass the oracle",
+        "IER independent analytic projection and pixel rejection invalid tolerance NaN cannot bypass the oracle",
+        "IER independent analytic projection and pixel rejection malformed reports/cases give a failure receipt",
+        "IER independent analytic projection and pixel rejection non-finite expected centroid Infinity is rejected",
+        "IER independent analytic projection and pixel rejection non-finite expected centroid NaN is rejected",
+        "IER independent analytic projection and pixel rejection orthographic target projection scales with screenshot DPR"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-improvement-review.test.ts",
+      "tests": [
+        "IER baseline must distinguish file presence from executed evidence changing an existing capability label cannot invent a passing execution",
+        "IER baseline must distinguish file presence from executed evidence existing suite names cannot establish a tested-passed capability without execution evidence",
+        "IER baseline must distinguish file presence from executed evidence flat SDK identity cannot contradict the correctly hashed artifact table",
+        "IER baseline must distinguish file presence from executed evidence historical module identity is the exact user-provided 64 digit SHA",
+        "IER baseline must distinguish file presence from executed evidence prefilter and session release capabilities from section 1.2 are inventoried",
+        "IER evidence rejects the reviewed false PASS cases arbitrary result cannot pass a contract validator",
+        "IER evidence rejects the reviewed false PASS cases hashing a PNG prefix does not prove it is a decodable screenshot",
+        "IER evidence rejects the reviewed false PASS cases invalid DPR -1 is rejected rather than treated as an observation",
+        "IER evidence rejects the reviewed false PASS cases invalid DPR Infinity is rejected rather than treated as an observation",
+        "IER evidence rejects the reviewed false PASS cases invalid DPR NaN is rejected rather than treated as an observation",
+        "IER evidence rejects the reviewed false PASS cases known NULL observation is rejected; UNKNOWN must be explicit",
+        "IER evidence rejects the reviewed false PASS cases known app commit drift is rejected independently of SDK drift",
+        "IER evidence rejects the reviewed false PASS cases known harness SHA drift is rejected",
+        "IER evidence rejects the reviewed false PASS cases observed does not turn unknown fingerprints and missing PNG into PASS",
+        "IER evidence rejects the reviewed false PASS cases unknown viewport/clock/events cannot establish visible PASS even if a screenshot path exists"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-input.test.ts",
+      "tests": [
+        "IER-05 independent model/frame/PNG contract accepts a visible legal false control fixture",
+        "IER-05 independent model/frame/PNG contract accepts a visible legal true control fixture",
+        "IER-05 independent model/frame/PNG contract bad/null reports return rejection",
+        "IER-05 independent model/frame/PNG contract missing retirement/fresh stages cannot pass",
+        "IER-05 independent model/frame/PNG contract mobile mouse cannot count as touch",
+        "IER-05 independent model/frame/PNG contract rejects PNG SHA drift",
+        "IER-05 independent model/frame/PNG contract rejects a hash-correct black PNG",
+        "IER-05 independent model/frame/PNG contract rejects changed generation",
+        "IER-05 independent model/frame/PNG contract rejects detached mesh",
+        "IER-05 independent model/frame/PNG contract rejects double activation",
+        "IER-05 independent model/frame/PNG contract rejects duplicate click",
+        "IER-05 independent model/frame/PNG contract rejects frozen frame",
+        "IER-05 independent model/frame/PNG contract rejects future submission",
+        "IER-05 independent model/frame/PNG contract rejects honest NOT_RUN is not PASS",
+        "IER-05 independent model/frame/PNG contract rejects late submission",
+        "IER-05 independent model/frame/PNG contract rejects missing draw timestamp",
+        "IER-05 independent model/frame/PNG contract rejects mouse relabelled as touch",
+        "IER-05 independent model/frame/PNG contract rejects no model activation",
+        "IER-05 independent model/frame/PNG contract rejects no visible model update",
+        "IER-05 independent model/frame/PNG contract rejects nonfinite DPR",
+        "IER-05 independent model/frame/PNG contract rejects remaining contact",
+        "IER-05 independent model/frame/PNG contract rejects untrusted event",
+        "IER-05 independent model/frame/PNG contract rejects viewport/PNG size mismatch",
+        "IER-05 independent model/frame/PNG contract rejects wrong native pose",
+        "IER-05 independent model/frame/PNG contract self-reported completion cannot replace missing rows",
+        "IER-05 independent model/frame/PNG contract unknown supplementary cases are rejected"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-kit.test.ts",
+      "tests": [
+        "installed recipe focused acceptance (synthetic PNG contract only) accepts real decode and corresponding model/reset/ownership receipts",
+        "installed recipe focused acceptance (synthetic PNG contract only) cannot use page label pixels outside the canvas as visible geometry",
+        "installed recipe focused acceptance (synthetic PNG contract only) rejects missing-state mutation without trusting self-reported PASS",
+        "installed recipe focused acceptance (synthetic PNG contract only) rejects model mutation without trusting self-reported PASS",
+        "installed recipe focused acceptance (synthetic PNG contract only) rejects png mutation without trusting self-reported PASS",
+        "installed recipe focused acceptance (synthetic PNG contract only) rejects refs mutation without trusting self-reported PASS",
+        "installed recipe focused acceptance (synthetic PNG contract only) rejects trust-path mutation without trusting self-reported PASS"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-multipass-review.test.ts",
+      "tests": [
+        "IER-02 Lead review: refuse false coverage and self-reported flags GL zero cannot prove a std140 failure even when correctedOk is true",
+        "IER-02 Lead review: refuse false coverage and self-reported flags NO_ERROR is not a failing duplicate-binding observation",
+        "IER-02 Lead review: refuse false coverage and self-reported flags four duplicates do not cover the four format/sample combinations",
+        "IER-02 Lead review: refuse false coverage and self-reported flags four skipped matrix allocations cannot pass the measured matrix",
+        "IER-02 Lead review: refuse false coverage and self-reported flags native lifecycle must inspect the per-round destruction observations",
+        "IER-02 Lead review: refuse false coverage and self-reported flags reported effective 4x must agree with the observed GL allocation",
+        "IER-02 Lead review: refuse false coverage and self-reported flags resized flag cannot override a non-advancing generation"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-multipass.test.ts",
+      "tests": [
+        "IER-02 pixel helper contracts classify matches the frozen mip palette",
+        "IER-02 pixel helper contracts oracleFor uses frozen css, not self-reported sizes",
+        "IER-02 pixel helper contracts regions derive from frozen geometry, scaled by DPR",
+        "IER-02 synthetic-fixture acceptance (contract only, not browser evidence) every fixture PNG satisfies the frozen oracle (pixels recomputed)",
+        "IER-02 synthetic-fixture acceptance (contract only, not browser evidence) fixture uses real disk fingerprints (input closure)",
+        "IER-02 synthetic-fixture acceptance (contract only, not browser evidence) normal-mode control section validates",
+        "IER-02 synthetic-fixture acceptance (contract only, not browser evidence) the full 15x3 fixture with real-oracle-matching PNGs validates clean",
+        "IER-02 tamper rejections (memory clones) 1) PNG deleted from disk -> case rejected",
+        "IER-02 tamper rejections (memory clones) 10) page/console error injection rejected",
+        "IER-02 tamper rejections (memory clones) 11) caseId set mismatch rejected",
+        "IER-02 tamper rejections (memory clones) 12) input/frame sequence regression rejected",
+        "IER-02 tamper rejections (memory clones) 13) declared identity (engine/dpr/format/samples) mismatch rejected",
+        "IER-02 tamper rejections (memory clones) 14) matrix NOT_RUN combo cannot pass the measured matrix",
+        "IER-02 tamper rejections (memory clones) 15) normal-mode control failures rejected",
+        "IER-02 tamper rejections (memory clones) 2) black PNG cannot pass the pixel oracle",
+        "IER-02 tamper rejections (memory clones) 3) stale generation (resize claims no advance)",
+        "IER-02 tamper rejections (memory clones) 4) wrong glSamples for requested 4x rejected",
+        "IER-02 tamper rejections (memory clones) 5) unreleased refs rejected",
+        "IER-02 tamper rejections (memory clones) 6) source SHA drift rejected at both report and case level",
+        "IER-02 tamper rejections (memory clones) 7) missing row breaks plan coverage",
+        "IER-02 tamper rejections (memory clones) 8) NaN / Infinity injection rejected",
+        "IER-02 tamper rejections (memory clones) 9) FAIL result cannot pass the gate"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-performance.test.ts",
+      "tests": [
+        "local performance raw-statistics contract invalid sample set is rejected: [-1]",
+        "local performance raw-statistics contract invalid sample set is rejected: [Infinity]",
+        "local performance raw-statistics contract invalid sample set is rejected: [NaN]",
+        "local performance raw-statistics contract invalid sample set is rejected: []",
+        "local performance raw-statistics contract large outlier remains in worst and mean rather than being silently removed",
+        "local performance raw-statistics contract one sample has one exact value at each percentile",
+        "local performance raw-statistics contract percentiles use documented sorted lower-order statistic without mutating samples"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-timeline-evidence.test.ts",
+      "tests": [
+        "IER-07/08 independent evidence validation actual 18 poses, camera and visible pixels are accepted",
+        "IER-07/08 independent evidence validation hash-correct black screenshot cannot compensate native pose",
+        "IER-07/08 independent evidence validation intermediate state must still differ from target even when label already changed",
+        "IER-07/08 independent evidence validation malformed report is rejected without throwing",
+        "IER-07/08 independent evidence validation pose error includes native scale and camera",
+        "IER-07/08 independent evidence validation rejects NaN frame",
+        "IER-07/08 independent evidence validation rejects PNG drift",
+        "IER-07/08 independent evidence validation rejects camera not at target",
+        "IER-07/08 independent evidence validation rejects clock swap",
+        "IER-07/08 independent evidence validation rejects future sequence",
+        "IER-07/08 independent evidence validation rejects label without convergence",
+        "IER-07/08 independent evidence validation rejects missing part",
+        "IER-07/08 independent evidence validation rejects no draw",
+        "IER-07/08 independent evidence validation rejects no timestamp",
+        "IER-07/08 independent evidence validation rejects nonfinite pose",
+        "IER-07/08 independent evidence validation rejects wrong viewport"
+      ]
+    },
+    {
+      "file": "test/smoke/interactive-timeline.test.ts",
+      "tests": [
+        "IER-07/08 local timeline contract a label changing before the next frame does not establish convergence",
+        "IER-07/08 local timeline contract cue boundary neither duplicates nor omits activation",
+        "IER-07/08 local timeline contract each audio cue has a unique increasing target within a new 16.2s track",
+        "IER-07/08 local timeline contract huge frame gaps are clamped rather than overshooting",
+        "IER-07/08 local timeline contract missing part cannot claim full convergence",
+        "IER-07/08 local timeline contract morph convergence includes scale rather than only center position",
+        "IER-07/08 local timeline contract motion converges by actual position/scale error, not stage name",
+        "IER-07/08 local timeline contract nonfinite native pose is rejected",
+        "IER-07/08 local timeline contract one delayed frame can activate multiple elapsed cues in order",
+        "IER-07/08 local timeline contract rejects invalid time delta -1",
+        "IER-07/08 local timeline contract rejects invalid time delta Infinity",
+        "IER-07/08 local timeline contract rejects invalid time delta NaN",
+        "IER-07/08 local timeline contract reverse scroll reaches the initial section again",
+        "IER-07/08 local timeline contract seek backwards is a new session operation, not forward cue dispatch",
+        "IER-07/08 local timeline contract short and long screens use actual document end",
+        "IER-07/08 local timeline contract the teaching assembly has 18 groups and the local range ends at 499",
+        "IER-07/08 local timeline contract zero logical step preserves every native pose component"
       ]
     },
     {
@@ -1379,9 +1688,9 @@
     }
   ],
   "totals": {
-    "suites": 106,
-    "tests": 846,
-    "passed": 842,
+    "suites": 121,
+    "tests": 1080,
+    "passed": 1076,
     "failed": 4
   }
 }

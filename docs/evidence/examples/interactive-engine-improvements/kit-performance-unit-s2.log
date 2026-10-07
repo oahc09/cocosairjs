@@ -1,0 +1,8 @@
+PASS test/smoke/interactive-kit.test.ts
+PASS test/smoke/interactive-performance.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       14 passed, 14 total
+Snapshots:   0 total
+Time:        2.157 s
+Ran all test suites matching /test\\smoke\\interactive-kit.test.ts|test\\smoke\\interactive-performance.test.ts/i.

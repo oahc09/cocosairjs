@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>IER-02 · Multipass &amp; Mip</title>
+    <link rel="icon" href="data:," />
+    <script type="importmap">{"imports":{"cocosair":"/build/cocosair.module.js"}}</script>
+    <style>
+        html, body { margin: 0; padding: 0; background: #0b0d12; color: #cfd6e4;
+            font: 13px/1.5 system-ui, sans-serif; }
+        #stage { width: 640px; margin: 0; }
+        #GameCanvas { width: 640px; height: 400px; display: block; background: #10131a;
+            border: 1px solid #232a38; }
+        #controls { display: flex; gap: 8px; margin-top: 8px; }
+        button { flex: 1; padding: 6px 0; background: #1b2230; color: #e6ebf5; border: 1px solid #2c3648; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #243048; }
+        #status { margin-top: 8px; color: #8fa0bd; text-align: center; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div id="stage">
+        <canvas id="GameCanvas"></canvas>
+        <div id="controls">
+            <button id="pause">Pause</button>
+            <button id="resume">Resume</button>
+            <button id="reset">Reset</button>
+            <button id="resize">Resize</button>
+            <button id="lod" class="hidden">Mip&nbsp;LOD+</button>
+            <button id="release">Release</button>
+        </div>
+        <div id="status">loading…</div>
+    </div>
+    <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

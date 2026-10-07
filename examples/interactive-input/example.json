@@ -1,0 +1,112 @@
+{
+  "id": "interactive-input",
+  "version": "1.0.0",
+  "title": "Canvas, HTML and native scrolling",
+  "category": "interaction",
+  "status": "draft",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "观察一次真实输入的事件、模型、提交与可见反馈，明确 Canvas/HTML/文档的所有权",
+    "points": [
+      "稳定 Text 节点与原生键盘 click",
+      "DOM ActionInput 与 session 取消",
+      "原生竖向滚动和横向 rail 的独立责任",
+      "相同 DOM 的无 SDK 对照"
+    ]
+  },
+  "effect": {
+    "functional": "按钮、Canvas drag、range、Reset、模式切换及 release；标准 HTML 键盘访问。",
+    "visual": "红色标记随模型位移；事件与布局轨迹同步显示。"
+  },
+  "api": {
+    "primary": [
+      "createActionInput"
+    ],
+    "supporting": [
+      "createActionState",
+      "createSessionGate"
+    ],
+    "claims": [
+      "createActionInput",
+      "createActionState",
+      "createSessionGate"
+    ],
+    "forbiddenShortcut": [
+      "mobile mouse 冒充 touch",
+      "计数代替 PNG",
+      "兼容 click 全局抑制窗",
+      "合成 cancel 冒称可信事件"
+    ],
+    "evidence": [
+      {
+        "api": "createActionInput",
+        "source": "src/main.ts",
+        "sourceLocation": "L81",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createActionState",
+        "source": "src/main.ts",
+        "sourceLocation": "L77",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createSessionGate",
+        "source": "src/main.ts",
+        "sourceLocation": "L76",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": [
+    "rendering",
+    "input"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "activation-marker",
+        "camera"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "标准 mouse/touch/keyboard click、Canvas drag、横向 rail 与竖向滚动、Reset、模式切换及 release",
+        "expected": "一动作一模型变化及可见反馈；旧接触被代次取消；释放归还自有引用"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创程序化色块与 DOM；无原云端素材；仓库 MIT 许可证"
+  }
+}

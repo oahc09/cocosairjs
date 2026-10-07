@@ -1,0 +1,38 @@
+[
+  {
+    "type": "timeEnd",
+    "text": "Init Base: 1.633056640625 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init Infrastructure: 65.01904296875 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init SubSystem: 9.679931640625 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init Project: 5.112060546875 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "InitScene: 0.14892578125 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "AttachPersist: 0.010009765625 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "AutoRelease: 0.205078125 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Destroy: 0.307861328125 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Activate: 11.071044921875 ms"
+  }
+]

@@ -1,0 +1,93 @@
+{
+  "method": "READ_ONLY_TARBALL_BYTES",
+  "executionChannel": "Lead",
+  "checks": [
+    {
+      "path": "interactive-multipass/index.html",
+      "bytes": 1493,
+      "pass": true
+    },
+    {
+      "path": "interactive-multipass/src/effects.generated.ts",
+      "bytes": 12532,
+      "pass": true
+    },
+    {
+      "path": "interactive-multipass/src/main.ts",
+      "bytes": 59839,
+      "pass": true
+    },
+    {
+      "path": "interactive-geometry/index.html",
+      "bytes": 1567,
+      "pass": true
+    },
+    {
+      "path": "interactive-geometry/src/geometry-contract.ts",
+      "bytes": 13465,
+      "pass": true
+    },
+    {
+      "path": "interactive-geometry/src/main.ts",
+      "bytes": 51538,
+      "pass": true
+    },
+    {
+      "path": "interactive-input/index.html",
+      "bytes": 2791,
+      "pass": true
+    },
+    {
+      "path": "interactive-input/src/main.ts",
+      "bytes": 14084,
+      "pass": true
+    },
+    {
+      "path": "interactive-container/index.html",
+      "bytes": 1945,
+      "pass": true
+    },
+    {
+      "path": "interactive-container/src/main.ts",
+      "bytes": 7519,
+      "pass": true
+    },
+    {
+      "path": "interactive-container/src/control.ts",
+      "bytes": 1941,
+      "pass": true
+    },
+    {
+      "path": "interactive-timeline/index.html",
+      "bytes": 2556,
+      "pass": true
+    },
+    {
+      "path": "interactive-timeline/src/timeline-contract.ts",
+      "bytes": 2521,
+      "pass": true
+    },
+    {
+      "path": "interactive-timeline/src/main.ts",
+      "bytes": 16222,
+      "pass": true
+    },
+    {
+      "path": "interactive-timeline/assets/original-16s.wav",
+      "bytes": 259244,
+      "pass": true
+    },
+    {
+      "path": "interactive-timeline/assets/LICENSE.md",
+      "bytes": 309,
+      "pass": true
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "pass": true
+    }
+  ],
+  "exactManifest": true,
+  "ok": true,
+  "browserRunsAdded": 0
+}

@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "interactive-consumer-kit/1",
+  "authoring": "examples/<id>",
+  "sourceStatus": "recreated",
+  "subset": true,
+  "completed": false,
+  "ids": [
+    "interactive-multipass",
+    "interactive-geometry",
+    "interactive-input",
+    "interactive-container",
+    "interactive-timeline"
+  ],
+  "sdk": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6631057,
+      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303518,
+      "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6631013,
+      "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+    }
+  ],
+  "sources": [
+    {
+      "path": "examples/interactive-multipass/index.html",
+      "kitPath": "interactive-multipass/index.html",
+      "bytes": 1493,
+      "sha256": "68df6e08451bc412b39f8f156aa807fa8fc52f3052b68b0a1cf3bd8524c44f3d"
+    },
+    {
+      "path": "examples/interactive-multipass/src/effects.generated.ts",
+      "kitPath": "interactive-multipass/src/effects.generated.ts",
+      "bytes": 12532,
+      "sha256": "d0df6d6739f498bc83d64705ef55bfdd1eb417f3a0e810829fa65e8f43d8d31f"
+    },
+    {
+      "path": "examples/interactive-multipass/src/main.ts",
+      "kitPath": "interactive-multipass/src/main.ts",
+      "bytes": 59839,
+      "sha256": "77973f96b9969cceadbc0a7aaf8654e976906b9d934bd6d9f63a3a04004cda20"
+    },
+    {
+      "path": "examples/interactive-geometry/index.html",
+      "kitPath": "interactive-geometry/index.html",
+      "bytes": 1567,
+      "sha256": "f4874b792127c7c84e6524ca33cd335b9d0ef6c35a2b4d230e31b362c1080ffb"
+    },
+    {
+      "path": "examples/interactive-geometry/src/geometry-contract.ts",
+      "kitPath": "interactive-geometry/src/geometry-contract.ts",
+      "bytes": 13465,
+      "sha256": "d1f88bf4da8e0d40c8d20df5ba46eaf40d17bac3e1b084c7dd5fe845744e49d1"
+    },
+    {
+      "path": "examples/interactive-geometry/src/main.ts",
+      "kitPath": "interactive-geometry/src/main.ts",
+      "bytes": 51538,
+      "sha256": "9500356274f94b2e43445fe529169faf2f7f5bffd713f816f503500dce3bed65"
+    },
+    {
+      "path": "examples/interactive-input/index.html",
+      "kitPath": "interactive-input/index.html",
+      "bytes": 2791,
+      "sha256": "1283dae3cd389a2361fa6a9e07693e39b14ba1d245809d41531e719c9a08581e"
+    },
+    {
+      "path": "examples/interactive-input/src/main.ts",
+      "kitPath": "interactive-input/src/main.ts",
+      "bytes": 14084,
+      "sha256": "017ee59e2803a5b71fd328b50db259b8818683a602aa42c366a7535bcf8295a7"
+    },
+    {
+      "path": "examples/interactive-container/index.html",
+      "kitPath": "interactive-container/index.html",
+      "bytes": 1945,
+      "sha256": "3a4a25434577c5fd9c08fee1fcba9f5f19afb10ff631aaf6055af81ee263c577"
+    },
+    {
+      "path": "examples/interactive-container/src/main.ts",
+      "kitPath": "interactive-container/src/main.ts",
+      "bytes": 7519,
+      "sha256": "2f8265a864a26553ae15319ca512933a548b0b33a968bbb72d43a62ff613ce9b"
+    },
+    {
+      "path": "examples/interactive-container/src/control.ts",
+      "kitPath": "interactive-container/src/control.ts",
+      "bytes": 1941,
+      "sha256": "9d758a0af18fbc03c4ea5f0e3f23013aab4e8a700749dc3857ffa8d218a29e58"
+    },
+    {
+      "path": "examples/interactive-timeline/index.html",
+      "kitPath": "interactive-timeline/index.html",
+      "bytes": 2556,
+      "sha256": "da322b29323979a130428338d905426210212083a5c98cba20fb7c57f70cc617"
+    },
+    {
+      "path": "examples/interactive-timeline/src/timeline-contract.ts",
+      "kitPath": "interactive-timeline/src/timeline-contract.ts",
+      "bytes": 2521,
+      "sha256": "87af0749be33ea704a7bb9ff6336702dc366ac6148e959eea60a7b9c6b31a265"
+    },
+    {
+      "path": "examples/interactive-timeline/src/main.ts",
+      "kitPath": "interactive-timeline/src/main.ts",
+      "bytes": 16222,
+      "sha256": "fe171549e7242124954a5d55b4fbdc4e27bc8ee72faa2d0c4dad77f645fd2df9"
+    },
+    {
+      "path": "examples/interactive-timeline/assets/original-16s.wav",
+      "kitPath": "interactive-timeline/assets/original-16s.wav",
+      "bytes": 259244,
+      "sha256": "bdd03f0eb535c30ec69c892e996788222585b3c386c7517cf7d4242304975b39"
+    },
+    {
+      "path": "examples/interactive-timeline/assets/LICENSE.md",
+      "kitPath": "interactive-timeline/assets/LICENSE.md",
+      "bytes": 309,
+      "sha256": "047af8b1e49a044af1a9ac94aedcb8c89a6898ee780ec10a64331aa10bf2f8e3"
+    }
+  ],
+  "limitations": [
+    "No original Puzzle50/soft/audio reference comparison",
+    "WebKit live-resize compositor and WebAudio capability limits are retained",
+    "Target physical-device and performance budgets are NOT_RUN",
+    "No new public runtime API or automatic install"
+  ]
+}

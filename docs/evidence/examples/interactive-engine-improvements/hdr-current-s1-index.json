@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "ier-hdr-reuse/1",
+  "method": "REAL_BROWSER_EXISTING_COLLECTOR",
+  "scope": "Existing HDR/one-decode/offline-GGX example only",
+  "subset": true,
+  "completed": false,
+  "startedAt": "2026-10-07T12:21:02.572Z",
+  "endedAt": "2026-10-07T12:21:26.450Z",
+  "command": "node examples/hdr-color-pipeline/verify.cjs",
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "observedExitCode": 0,
+  "sdkModuleSha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d",
+  "sourceDirectory": "output/hdr-color-pipeline/attempt-1791375662544",
+  "rows": [
+    {
+      "engine": "chromium",
+      "status": "PASS",
+      "checks": 15,
+      "browserVersion": "149.0.7827.55",
+      "started": "2026-10-07T12:21:02.572Z",
+      "finished": "2026-10-07T12:21:08.266Z",
+      "rawReport": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/chromium.json"
+    },
+    {
+      "engine": "firefox",
+      "status": "PASS",
+      "checks": 15,
+      "browserVersion": "155.0",
+      "started": "2026-10-07T12:21:08.651Z",
+      "finished": "2026-10-07T12:21:15.994Z",
+      "rawReport": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/firefox.json"
+    },
+    {
+      "engine": "webkit",
+      "status": "PASS",
+      "checks": 15,
+      "browserVersion": "26.6",
+      "started": "2026-10-07T12:21:16.448Z",
+      "finished": "2026-10-07T12:21:26.450Z",
+      "rawReport": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/webkit.json"
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/chromium-initial.png",
+      "bytes": 97346,
+      "sha256": "c9b1d4541f11360348b030c14838582cce22152e426bb62d7abcf066f510925a"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/chromium-exposure.png",
+      "bytes": 95697,
+      "sha256": "a705078ce65756c5f9c9ab7c889c016bee175ab26d80b25fae9df1a07374b7e1"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/chromium-no-tonemap.png",
+      "bytes": 95553,
+      "sha256": "b37b8b7b5dd9bea27c93237aab1fbd9075f9cb6818fe82fa927c056593601675"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/chromium-unfiltered.png",
+      "bytes": 95004,
+      "sha256": "9470764da2ab15b9a9b529fcd6d5ec22ccc7d61f13a3b1ccbcec29e6f28da5da"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/chromium-reset.png",
+      "bytes": 97346,
+      "sha256": "c9b1d4541f11360348b030c14838582cce22152e426bb62d7abcf066f510925a"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/chromium-reloaded.png",
+      "bytes": 97346,
+      "sha256": "c9b1d4541f11360348b030c14838582cce22152e426bb62d7abcf066f510925a"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/chromium.json",
+      "bytes": 12952,
+      "sha256": "808d048a81be64991aa7d447987068da3940ae741958324b1f2754c1b12b7ca6"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/firefox-initial.png",
+      "bytes": 135063,
+      "sha256": "0eea57601990aa2b41e9e308181e14dbf79e95ed96ca5a8e7f7f58b0c3997f16"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/firefox-exposure.png",
+      "bytes": 132718,
+      "sha256": "6ef883cfdf4104ec5e1d366a8572ecb05388a4ab0f515bb6cfe053a13fc6d753"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/firefox-no-tonemap.png",
+      "bytes": 131726,
+      "sha256": "6c729fa58870782ccdc4c075e90575910b545a5990eabae035e45945b1355e50"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/firefox-unfiltered.png",
+      "bytes": 131344,
+      "sha256": "ee84d457d0b455b4b61f5388ef517186a6de01cb46f7bd848f880f3637af7f4b"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/firefox-reset.png",
+      "bytes": 135063,
+      "sha256": "0eea57601990aa2b41e9e308181e14dbf79e95ed96ca5a8e7f7f58b0c3997f16"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/firefox-reloaded.png",
+      "bytes": 135063,
+      "sha256": "0eea57601990aa2b41e9e308181e14dbf79e95ed96ca5a8e7f7f58b0c3997f16"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/firefox.json",
+      "bytes": 12938,
+      "sha256": "c38cf3276f46f2216c7654f865dbef30ce17601e9a122c2be00199df68bddb81"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/webkit-initial.png",
+      "bytes": 102624,
+      "sha256": "545f7f7913926087a8499088cf086f38df7833aaed649843ec3369b946f7bdb4"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/webkit-exposure.png",
+      "bytes": 100680,
+      "sha256": "df9950ffc2bc4daa5b79ff7075c6dec9177b0acfd985f3f0c387ae80b11934ce"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/webkit-no-tonemap.png",
+      "bytes": 100176,
+      "sha256": "671f84b07908e9bd34699488a1459597331ef278adc7f4e2261e7e53155df23b"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/webkit-unfiltered.png",
+      "bytes": 100371,
+      "sha256": "147278eb36fd3147945d5f73590af57130261db15404b938d7c91926deef2336"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/webkit-reset.png",
+      "bytes": 102624,
+      "sha256": "545f7f7913926087a8499088cf086f38df7833aaed649843ec3369b946f7bdb4"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/webkit-reloaded.png",
+      "bytes": 102624,
+      "sha256": "545f7f7913926087a8499088cf086f38df7833aaed649843ec3369b946f7bdb4"
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/hdr-current-s1/webkit.json",
+      "bytes": 12929,
+      "sha256": "e0bb850ead2c4dde7021b7c3cd1593b91abe0828333cef299864db65d2c8fd79"
+    }
+  ],
+  "limitations": [
+    "This rerun does not verify the unavailable Water project, transparent composition and oblique-clipping comparison additions.",
+    "The source collector covers 15 checks per browser; these are not twelve-work-package or full-release acceptance."
+  ]
+}

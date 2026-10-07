@@ -1,0 +1,42 @@
+[
+  {
+    "type": "timeEnd",
+    "text": "Init Base: 0.986083984375 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init Infrastructure: 22.51806640625 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init SubSystem: 3.43994140625 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init Project: 1.803955078125 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "InitScene: 0.06494140625 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "AttachPersist: 0.0029296875 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "AutoRelease: 0.080078125 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Destroy: 0.125 ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Activate: 1.276123046875 ms"
+  },
+  {
+    "type": "log",
+    "text": "[interactive-multipass] route=native test=true neg=false fmt=rgba8 samples=1"
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "baseline": {
+    "scopePassed": true,
+    "errors": []
+  },
+  "tests": [
+    {
+      "name": "allBlack",
+      "rejected": true
+    },
+    {
+      "name": "clip",
+      "rejected": true
+    },
+    {
+      "name": "alpha",
+      "rejected": true
+    },
+    {
+      "name": "blend",
+      "rejected": true
+    },
+    {
+      "name": "depth",
+      "rejected": true
+    },
+    {
+      "name": "refs",
+      "rejected": true
+    },
+    {
+      "name": "matrix",
+      "rejected": true
+    },
+    {
+      "name": "png",
+      "rejected": true
+    },
+    {
+      "name": "nan",
+      "rejected": true
+    },
+    {
+      "name": "errors",
+      "rejected": true
+    }
+  ],
+  "browserRunsAdded": 0,
+  "ok": true
+}

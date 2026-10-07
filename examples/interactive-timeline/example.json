@@ -1,0 +1,96 @@
+{
+  "id": "interactive-timeline",
+  "version": "1.0.0",
+  "title": "Cancelable motion and audio clock",
+  "category": "integration",
+  "status": "draft",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "分别观测18组原生pose收敛、会话取消、真实音频激活和可见截图",
+    "points": [
+      "Stage标签不代替pose收敛",
+      "Pause/Seek/Replay与终态",
+      "实际section offsets和499本地终点",
+      "WebAudio主时钟与12落点观察区间"
+    ]
+  },
+  "effect": {
+    "functional": "原生/定步模式分离；可信控制取消旧代次；原WebAudio缺失保持NOT_RUN。",
+    "visual": "18红色组部件与12绿色音频落点，来自新编写配方。"
+  },
+  "api": {
+    "primary": [
+      "createSessionScope"
+    ],
+    "supporting": [],
+    "claims": [
+      "createSessionScope"
+    ],
+    "forbiddenShortcut": [
+      "标签冒充pose",
+      "AFTER_DRAW冒充物理显示",
+      "StepClock补偿实时音频",
+      "新音轨冒充原约59秒素材"
+    ],
+    "evidence": [
+      {
+        "api": "createSessionScope",
+        "source": "src/main.ts",
+        "sourceLocation": "L4",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": [
+    "rendering",
+    "input"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "18-teaching-groups",
+        "12-audio-cues",
+        "camera"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "选择目标、暂停/继续、Reset/Back/Replay、Seek、Mute和释放",
+        "expected": "最新会话控制原生对象；音频source/origin语义保持；refs归零"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创程序音轨与程序几何；仓库MIT；assets/LICENSE.md列生成方法"
+  }
+}

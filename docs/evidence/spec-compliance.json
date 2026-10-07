@@ -1,9 +1,21 @@
 {
-  "measuredAt": "2026-10-04T09:40:10.688Z",
+  "measuredAt": "2026-10-07T23:17:40.834Z",
   "tool": "tools/examples/spec-compliance-audit.cjs",
   "spec": "ai/example-spec-execution.md",
-  "total": 159,
+  "total": 172,
   "examples": [
+    {
+      "id": "dom-overlay-texture",
+      "status": "draft",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S25-LIFECYCLE",
+          "severity": "fail",
+          "detail": "§25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）"
+        }
+      ]
+    },
     {
       "id": "gltf-draco",
       "status": "stable",
@@ -13,6 +25,180 @@
           "rule": "S25-LIFECYCLE",
           "severity": "warn",
           "detail": "§25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract"
+        }
+      ]
+    },
+    {
+      "id": "graphics-svg-paints",
+      "status": "draft",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S25-LIFECYCLE",
+          "severity": "fail",
+          "detail": "§25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）"
+        }
+      ]
+    },
+    {
+      "id": "hdr-color-pipeline",
+      "status": "draft",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S15-ASSET-BIND",
+          "severity": "fail",
+          "detail": "§15：assets/LICENSE.md（1105B，assets/ 未声明边车）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+        },
+        {
+          "rule": "S15-ASSET-BIND",
+          "severity": "fail",
+          "detail": "§15：assets/environment.bin（32760B，声明资产）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+        },
+        {
+          "rule": "S15-ASSET-BIND",
+          "severity": "fail",
+          "detail": "§15：assets/environment.json（2339B，声明资产）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+        },
+        {
+          "rule": "S15-ASSET-BIND",
+          "severity": "fail",
+          "detail": "§15：assets/ggx-prefiltered.bin（32760B，声明资产）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+        }
+      ]
+    },
+    {
+      "id": "html-texture-experimental",
+      "status": "draft",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S25-LIFECYCLE",
+          "severity": "fail",
+          "detail": "§25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）"
+        }
+      ]
+    },
+    {
+      "id": "interactive-container",
+      "status": "draft",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S25-LIFECYCLE-IMPL",
+          "severity": "fail",
+          "detail": "§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点"
+        }
+      ]
+    },
+    {
+      "id": "interactive-geometry",
+      "status": "draft",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S25-LIFECYCLE-IMPL",
+          "severity": "fail",
+          "detail": "§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点"
+        }
+      ]
+    },
+    {
+      "id": "interactive-input",
+      "status": "draft",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S25-LIFECYCLE-IMPL",
+          "severity": "fail",
+          "detail": "§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点"
+        }
+      ]
+    },
+    {
+      "id": "interactive-multipass",
+      "status": "draft",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S25-LIFECYCLE-IMPL",
+          "severity": "fail",
+          "detail": "§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点"
+        }
+      ]
+    },
+    {
+      "id": "interactive-timeline",
+      "status": "draft",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S25-LIFECYCLE-IMPL",
+          "severity": "fail",
+          "detail": "§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点"
+        },
+        {
+          "rule": "S15-ASSET-BIND",
+          "severity": "fail",
+          "detail": "§15：assets/LICENSE.md（309B，assets/ 未声明边车）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+        },
+        {
+          "rule": "S15-ASSET-BIND",
+          "severity": "fail",
+          "detail": "§15：assets/original-16s.wav（259244B，assets/ 未声明边车）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+        }
+      ]
+    },
+    {
+      "id": "responsive-board-recipes",
+      "status": "draft",
+      "findings": [
+        {
+          "rule": "S5-GOAL-SCOPE",
+          "severity": "fail",
+          "detail": "api.primary=0（§5 要求 1~3）"
+        },
+        {
+          "rule": "S6-EFFECT",
+          "severity": "fail",
+          "detail": "§6：effect.functional / effect.visual 必须同时定义"
+        },
+        {
+          "rule": "S9-READY",
+          "severity": "fail",
+          "detail": "§9：ready.validators 未定义"
+        },
+        {
+          "rule": "S10-VALIDATION",
+          "severity": "fail",
+          "detail": "§10：validation.functional 为空（至少 readyValidator + functionalValidators）"
+        },
+        {
+          "rule": "S19-GALLERY",
+          "severity": "fail",
+          "detail": "§19：Gallery 需 What you'll learn（learning.points 为空）"
+        },
+        {
+          "rule": "S20-GALLERY",
+          "severity": "fail",
+          "detail": "§20：Gallery 需 APIs Used（api.claims 为空）"
+        },
+        {
+          "rule": "S21-GALLERY",
+          "severity": "fail",
+          "detail": "§21：Gallery 需 Expected Result"
+        }
+      ]
+    },
+    {
+      "id": "sprite-mask-blend",
+      "status": "draft",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S25-LIFECYCLE",
+          "severity": "fail",
+          "detail": "§25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）"
         }
       ]
     },
@@ -31,20 +217,160 @@
   ],
   "globalFindings": [],
   "summary": {
-    "examples": 159,
-    "withFindings": 2,
-    "fail": 0,
+    "examples": 172,
+    "withFindings": 13,
+    "fail": 22,
     "warn": 2,
     "byRule": {
-      "S25-LIFECYCLE": 1,
-      "S6-EFFECT": 1
+      "S25-LIFECYCLE": 5,
+      "S15-ASSET-BIND": 6,
+      "S25-LIFECYCLE-IMPL": 5,
+      "S5-GOAL-SCOPE": 1,
+      "S6-EFFECT": 2,
+      "S9-READY": 1,
+      "S10-VALIDATION": 1,
+      "S19-GALLERY": 1,
+      "S20-GALLERY": 1,
+      "S21-GALLERY": 1
     },
     "findings": [
+      {
+        "example": "dom-overlay-texture",
+        "rule": "S25-LIFECYCLE",
+        "severity": "fail",
+        "detail": "§25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）"
+      },
       {
         "example": "gltf-draco",
         "rule": "S25-LIFECYCLE",
         "severity": "warn",
         "detail": "§25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract"
+      },
+      {
+        "example": "graphics-svg-paints",
+        "rule": "S25-LIFECYCLE",
+        "severity": "fail",
+        "detail": "§25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）"
+      },
+      {
+        "example": "hdr-color-pipeline",
+        "rule": "S15-ASSET-BIND",
+        "severity": "fail",
+        "detail": "§15：assets/LICENSE.md（1105B，assets/ 未声明边车）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+      },
+      {
+        "example": "hdr-color-pipeline",
+        "rule": "S15-ASSET-BIND",
+        "severity": "fail",
+        "detail": "§15：assets/environment.bin（32760B，声明资产）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+      },
+      {
+        "example": "hdr-color-pipeline",
+        "rule": "S15-ASSET-BIND",
+        "severity": "fail",
+        "detail": "§15：assets/environment.json（2339B，声明资产）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+      },
+      {
+        "example": "hdr-color-pipeline",
+        "rule": "S15-ASSET-BIND",
+        "severity": "fail",
+        "detail": "§15：assets/ggx-prefiltered.bin（32760B，声明资产）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+      },
+      {
+        "example": "html-texture-experimental",
+        "rule": "S25-LIFECYCLE",
+        "severity": "fail",
+        "detail": "§25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）"
+      },
+      {
+        "example": "interactive-container",
+        "rule": "S25-LIFECYCLE-IMPL",
+        "severity": "fail",
+        "detail": "§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点"
+      },
+      {
+        "example": "interactive-geometry",
+        "rule": "S25-LIFECYCLE-IMPL",
+        "severity": "fail",
+        "detail": "§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点"
+      },
+      {
+        "example": "interactive-input",
+        "rule": "S25-LIFECYCLE-IMPL",
+        "severity": "fail",
+        "detail": "§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点"
+      },
+      {
+        "example": "interactive-multipass",
+        "rule": "S25-LIFECYCLE-IMPL",
+        "severity": "fail",
+        "detail": "§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点"
+      },
+      {
+        "example": "interactive-timeline",
+        "rule": "S25-LIFECYCLE-IMPL",
+        "severity": "fail",
+        "detail": "§25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点"
+      },
+      {
+        "example": "interactive-timeline",
+        "rule": "S15-ASSET-BIND",
+        "severity": "fail",
+        "detail": "§15：assets/LICENSE.md（309B，assets/ 未声明边车）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+      },
+      {
+        "example": "interactive-timeline",
+        "rule": "S15-ASSET-BIND",
+        "severity": "fail",
+        "detail": "§15：assets/original-16s.wav（259244B，assets/ 未声明边车）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）"
+      },
+      {
+        "example": "responsive-board-recipes",
+        "rule": "S5-GOAL-SCOPE",
+        "severity": "fail",
+        "detail": "api.primary=0（§5 要求 1~3）"
+      },
+      {
+        "example": "responsive-board-recipes",
+        "rule": "S6-EFFECT",
+        "severity": "fail",
+        "detail": "§6：effect.functional / effect.visual 必须同时定义"
+      },
+      {
+        "example": "responsive-board-recipes",
+        "rule": "S9-READY",
+        "severity": "fail",
+        "detail": "§9：ready.validators 未定义"
+      },
+      {
+        "example": "responsive-board-recipes",
+        "rule": "S10-VALIDATION",
+        "severity": "fail",
+        "detail": "§10：validation.functional 为空（至少 readyValidator + functionalValidators）"
+      },
+      {
+        "example": "responsive-board-recipes",
+        "rule": "S19-GALLERY",
+        "severity": "fail",
+        "detail": "§19：Gallery 需 What you'll learn（learning.points 为空）"
+      },
+      {
+        "example": "responsive-board-recipes",
+        "rule": "S20-GALLERY",
+        "severity": "fail",
+        "detail": "§20：Gallery 需 APIs Used（api.claims 为空）"
+      },
+      {
+        "example": "responsive-board-recipes",
+        "rule": "S21-GALLERY",
+        "severity": "fail",
+        "detail": "§21：Gallery 需 Expected Result"
+      },
+      {
+        "example": "sprite-mask-blend",
+        "rule": "S25-LIFECYCLE",
+        "severity": "fail",
+        "detail": "§25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）"
       },
       {
         "example": "starfield-galaxy",

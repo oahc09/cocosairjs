@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>原生输入到画面证据</title>
+    <script type="importmap">{"imports":{"cocosair":"/build/cocosair.module.js"}}</script>
+    <style>
+        html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font:14px system-ui}
+        #GameCanvas{display:block;width:100%;height:100%;touch-action:none}
+        #cover{position:fixed;inset:0;background:#000;pointer-events:none;z-index:4;display:none}
+        #controls{position:fixed;left:8px;top:8px;z-index:5;display:flex;gap:6px}
+        button{padding:6px 10px}#status{position:fixed;bottom:8px;left:8px;z-index:5}
+    </style>
+</head>
+<body>
+    <canvas id="GameCanvas" width="512" height="384" tabindex="0"></canvas>
+    <div id="cover" aria-hidden="true"></div>
+    <div id="controls"><button id="reset">重置</button><button id="occlude">遮挡／恢复</button><button id="release">释放</button></div>
+    <output id="status">加载中；点击画布或按 D 移动红色网格。</output>
+    <script type="module" src="./main.ts"></script>
+</body>
+</html>

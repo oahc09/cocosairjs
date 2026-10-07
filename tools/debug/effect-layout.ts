@@ -53,6 +53,22 @@ function clean(source: string): string {
 export function prepareEffectForRegistration<T extends AirEffectLayoutJson>(
     input: T,
 ): { effect: T; bindings: readonly { shader: string; name: string; kind: string; set: number; binding: number }[] } {
+    // This helper accepts compiled JSON, not a live EffectAsset with callable fields.
+    // Inspect before cloning so JSON.stringify cannot silently erase those fields.
+    const ancestors = new Set<object>();
+    function checkJson(value: unknown, location: string): void {
+        const reject = (code: string): never => {
+            throw new AirEffectLayoutError([{ shader: '', resource: location, code,
+                message: 'Expected compiled effect JSON; preserve live callable resources outside this preflight' }]);
+        };
+        if (typeof value === 'function') reject('NON_JSON_FUNCTION');
+        if (!value || typeof value !== 'object') return;
+        if (ancestors.has(value)) reject('NON_JSON_CYCLE');
+        ancestors.add(value);
+        for (const [key, member] of Object.entries(value)) checkJson(member, `${location}.${key}`);
+        ancestors.delete(value);
+    }
+    checkJson(input, '$');
     const effect: T = JSON.parse(JSON.stringify(input));
     const issues: AirEffectLayoutIssue[] = [],
         bindings: { shader: string; name: string; kind: string; set: number; binding: number }[] = [];

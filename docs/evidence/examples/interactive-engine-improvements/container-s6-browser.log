@@ -1,0 +1,75 @@
+chromium 1 initial-run {"ok":true,"errors":[],"pixels":2304,"centroidError":0.15625}
+chromium 1 narrow-class {"ok":true,"errors":[],"pixels":1444,"centroidError":0.15625}
+chromium 1 wide-class {"ok":true,"errors":[],"pixels":2500,"centroidError":0.15625}
+chromium 1 recovered {"ok":true,"errors":[],"pixels":2500,"centroidError":0.15625}
+chromium 1 final-tab {"ok":true,"errors":[],"pixels":2500,"centroidError":0.15625}
+chromium 1 fresh-input {"ok":true,"errors":[],"pixels":1444,"centroidError":0.15625}
+chromium 1.25 initial-run {"ok":true,"errors":[],"pixels":3540,"centroidError":0.35624999999998863}
+chromium 1.25 narrow-class {"ok":true,"errors":[],"pixels":2399,"centroidError":0.4009583621630781}
+chromium 1.25 wide-class {"ok":true,"errors":[],"pixels":4032,"centroidError":0.35624999999998863}
+chromium 1.25 recovered {"ok":true,"errors":[],"pixels":4032,"centroidError":0.35624999999998863}
+chromium 1.25 final-tab {"ok":true,"errors":[],"pixels":4032,"centroidError":0.35624999999998863}
+chromium 1.25 fresh-input {"ok":true,"errors":[],"pixels":2399,"centroidError":0.4009583621630781}
+chromium 2 initial-run {"ok":true,"errors":[],"pixels":9216,"centroidError":0.15625}
+chromium 2 narrow-class {"ok":true,"errors":[],"pixels":6084,"centroidError":0.15625}
+chromium 2 wide-class {"ok":true,"errors":[],"pixels":10404,"centroidError":0.15625}
+chromium 2 recovered {"ok":true,"errors":[],"pixels":10404,"centroidError":0.15625}
+chromium 2 final-tab {"ok":true,"errors":[],"pixels":10404,"centroidError":0.15625}
+chromium 2 fresh-input {"ok":true,"errors":[],"pixels":6084,"centroidError":0.15625}
+firefox 1 initial-run {"ok":true,"errors":[],"pixels":2304,"centroidError":0.133331298828125}
+firefox 1 narrow-class {"ok":true,"errors":[],"pixels":1444,"centroidError":0.133331298828125}
+firefox 1 wide-class {"ok":true,"errors":[],"pixels":2500,"centroidError":0.133331298828125}
+firefox 1 recovered {"ok":true,"errors":[],"pixels":2500,"centroidError":0.133331298828125}
+firefox 1 final-tab {"ok":true,"errors":[],"pixels":2500,"centroidError":0.133331298828125}
+firefox 1 fresh-input {"ok":true,"errors":[],"pixels":1444,"centroidError":0.133331298828125}
+firefox 1.25 initial-run {"ok":true,"errors":[],"pixels":3540,"centroidError":0.33333129882811363}
+firefox 1.25 narrow-class {"ok":true,"errors":[],"pixels":2352,"centroidError":0.38872838175059027}
+firefox 1.25 wide-class {"ok":true,"errors":[],"pixels":4032,"centroidError":0.33333129882811363}
+firefox 1.25 recovered {"ok":true,"errors":[],"pixels":4032,"centroidError":0.33333129882811363}
+firefox 1.25 final-tab {"ok":true,"errors":[],"pixels":4032,"centroidError":0.33333129882811363}
+firefox 1.25 fresh-input {"ok":true,"errors":[],"pixels":2352,"centroidError":0.38872838175059027}
+firefox 2 initial-run {"ok":true,"errors":[],"pixels":9216,"centroidError":0.133331298828125}
+firefox 2 narrow-class {"ok":true,"errors":[],"pixels":6084,"centroidError":0.133331298828125}
+firefox 2 wide-class {"ok":true,"errors":[],"pixels":10404,"centroidError":0.133331298828125}
+firefox 2 recovered {"ok":true,"errors":[],"pixels":10404,"centroidError":0.133331298828125}
+firefox 2 final-tab {"ok":true,"errors":[],"pixels":10404,"centroidError":0.133331298828125}
+firefox 2 fresh-input {"ok":true,"errors":[],"pixels":6084,"centroidError":0.133331298828125}
+webkit 1 initial-run {"ok":true,"errors":[],"pixels":2304,"centroidError":0.15625}
+webkit 1 narrow-class {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 1 wide-class {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 1 recovered {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 1 final-tab {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 1 fresh-input {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 1.25 initial-run {"ok":true,"errors":[],"pixels":3481,"centroidError":0.03125}
+webkit 1.25 narrow-class {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 1.25 wide-class {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 1.25 recovered {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 1.25 final-tab {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 1.25 fresh-input {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 2 initial-run {"ok":true,"errors":[],"pixels":9216,"centroidError":0.15625}
+webkit 2 narrow-class {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 2 wide-class {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 2 recovered {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 2 final-tab {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+webkit 2 fresh-input {"ok":false,"errors":["compositor target missing/misplaced"],"pixels":0,"centroidError":null}
+{
+  "valid": false,
+  "scopePassed": false,
+  "errors": [
+    "webkit/1/narrow-class: compositor target missing/misplaced",
+    "webkit/1/wide-class: compositor target missing/misplaced",
+    "webkit/1/recovered: compositor target missing/misplaced",
+    "webkit/1/final-tab: compositor target missing/misplaced",
+    "webkit/1/fresh-input: compositor target missing/misplaced",
+    "webkit/1.25/narrow-class: compositor target missing/misplaced",
+    "webkit/1.25/wide-class: compositor target missing/misplaced",
+    "webkit/1.25/recovered: compositor target missing/misplaced",
+    "webkit/1.25/final-tab: compositor target missing/misplaced",
+    "webkit/1.25/fresh-input: compositor target missing/misplaced",
+    "webkit/2/narrow-class: compositor target missing/misplaced",
+    "webkit/2/wide-class: compositor target missing/misplaced",
+    "webkit/2/recovered: compositor target missing/misplaced",
+    "webkit/2/final-tab: compositor target missing/misplaced",
+    "webkit/2/fresh-input: compositor target missing/misplaced"
+  ]
+}

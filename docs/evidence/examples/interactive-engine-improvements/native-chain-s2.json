@@ -1,0 +1,3507 @@
+{
+  "schemaVersion": "ier-native-browser/1",
+  "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "startedAt": "2026-10-07T12:19:36.786Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs",
+    "--browser=all",
+    "--out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "subset": true,
+  "completed": false,
+  "captureMethod": "Native step receipt, then two browser requestAnimationFrame callbacks without advancing the engine, then full compositor screenshot",
+  "fingerprints": {
+    "build/cocosair.module.js": {
+      "path": "build/cocosair.module.js",
+      "bytes": 6631057,
+      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+    },
+    "build/cocosair.module.d.ts": {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303518,
+      "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+    },
+    "test/fixtures/interactive-evidence/main.ts": {
+      "path": "test/fixtures/interactive-evidence/main.ts",
+      "bytes": 5934,
+      "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+    },
+    "test/fixtures/interactive-evidence/index.html": {
+      "path": "test/fixtures/interactive-evidence/index.html",
+      "bytes": 1203,
+      "sha256": "cbba48e7276e7b8231b69f11d2c55dfd6fffa9ca505948168c32dda6e55ae18c"
+    },
+    "tools/verify/interactive-improvement-browser.cjs": {
+      "path": "tools/verify/interactive-improvement-browser.cjs",
+      "bytes": 13564,
+      "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+    },
+    "tools/verify/interactive-improvement-evidence.cjs": {
+      "path": "tools/verify/interactive-improvement-evidence.cjs",
+      "bytes": 23553,
+      "sha256": "67a14b3e07b8709be36e1cd20e7d8f24eaba146cc371439ac03338cdebdbc062"
+    },
+    "tools/verify/interactive-improvement-browser.tsconfig.json": {
+      "path": "tools/verify/interactive-improvement-browser.tsconfig.json",
+      "bytes": 352,
+      "sha256": "a2dad2588dec519dbf04bfadb59eb127c2b6535c5f0bf9d76921ecd2625fcdac"
+    },
+    "tools/verify/browser-engines.cjs": {
+      "path": "tools/verify/browser-engines.cjs",
+      "bytes": 2159,
+      "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+    },
+    "tools/verify/competitive-example-server.cjs": {
+      "path": "tools/verify/competitive-example-server.cjs",
+      "bytes": 1923,
+      "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+    }
+  },
+  "rows": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "dpr": 1,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "cases": [
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "baseline",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "chromium 149.0.7827.55",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 1,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:40.104Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 1,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 2,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 1,
+            "timestamp": "2026-10-07T12:19:40.115Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/chromium-dpr1-baseline.png",
+          "pngSha256": "5949b8b06168bdfc407c1898732cf08f2f220fe2b70cd9751a0cc995b69e1a92",
+          "pngBytes": 6873,
+          "observationTimestamp": "2026-10-07T12:19:40.192Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:40.192Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "moved",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "chromium 149.0.7827.55",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 2,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:19:40.425Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              }
+            ],
+            "receivedSequence": 2,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 3,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 2,
+            "timestamp": "2026-10-07T12:19:40.429Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/chromium-dpr1-moved.png",
+          "pngSha256": "3dd5f8975b5501b8f3c9774759537dc9ad79ba5a6650c49d5878fd9aa7a869ba",
+          "pngBytes": 6741,
+          "observationTimestamp": "2026-10-07T12:19:40.491Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:40.491Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "reset",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "chromium 149.0.7827.55",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 3,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:40.579Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 3,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 4,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 3,
+            "timestamp": "2026-10-07T12:19:40.585Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/chromium-dpr1-reset.png",
+          "pngSha256": "dacb1804be15c353b3460606e65ddc23b4e176fc863de0f3901c92e5fdcad772",
+          "pngBytes": 6919,
+          "observationTimestamp": "2026-10-07T12:19:40.654Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:40.654Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "occluded",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "chromium 149.0.7827.55",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 5,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:19:40.736Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              }
+            ],
+            "receivedSequence": 5,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 5,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 5,
+            "timestamp": "2026-10-07T12:19:40.741Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/chromium-dpr1-occluded.png",
+          "pngSha256": "5279a7b581dc6cecee3c8bb040952bf9ff168180b2d4c070aa1f17302c33bc72",
+          "pngBytes": 6725,
+          "observationTimestamp": "2026-10-07T12:19:40.800Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "FAIL",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:40.800Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "restored",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "chromium 149.0.7827.55",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 6,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 110,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:40.862Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 6,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 6,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 6,
+            "timestamp": "2026-10-07T12:19:40.868Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/chromium-dpr1-restored.png",
+          "pngSha256": "3457bc139b11ac6aef5cdfdad392ca7f1e04a51c80a728db026a81e4b14569de",
+          "pngBytes": 6980,
+          "observationTimestamp": "2026-10-07T12:19:40.948Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:40.948Z"
+          }
+        }
+      ],
+      "clock": {
+        "method": "STEP_CLOCK",
+        "stepping": true,
+        "stepped": 6,
+        "enginePaused": true
+      },
+      "lastValidation": {
+        "ok": true,
+        "errors": [],
+        "visibility": {
+          "ok": true,
+          "hits": 7396,
+          "minPixels": 500,
+          "centroid": [
+            351.5,
+            191.5
+          ]
+        },
+        "candidatePassAccepted": true,
+        "candidatePassFailures": []
+      },
+      "cleanup": {
+        "released": true,
+        "attached": false,
+        "refs": [
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          }
+        ],
+        "ownedNodeDetached": true,
+        "meshBound": false,
+        "materialBound": false,
+        "observedAt": "BEFORE_APP_CLOSE",
+        "rendererInvalidAfterClose": true,
+        "releaseIdentity": true
+      },
+      "releaseIdentity": true,
+      "postReleaseError": "RECIPE_DISPOSED"
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "dpr": 2,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "cases": [
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "baseline",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "chromium 149.0.7827.55",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 1,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:42.284Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 1,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 2,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 1,
+            "timestamp": "2026-10-07T12:19:42.292Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/chromium-dpr2-baseline.png",
+          "pngSha256": "d7a4f68a132456337464b65c49ef24c7c5b029d0f90035717b4381a92b3c0d4f",
+          "pngBytes": 23890,
+          "observationTimestamp": "2026-10-07T12:19:42.396Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:42.396Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "moved",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "chromium 149.0.7827.55",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 2,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:19:42.465Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              }
+            ],
+            "receivedSequence": 2,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 3,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 2,
+            "timestamp": "2026-10-07T12:19:42.470Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/chromium-dpr2-moved.png",
+          "pngSha256": "505d343c1de8a910470c55ea67ded06c3d048350dacc3fbb6a52bfffa4693eff",
+          "pngBytes": 23881,
+          "observationTimestamp": "2026-10-07T12:19:42.578Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:42.578Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "reset",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "chromium 149.0.7827.55",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 3,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:42.729Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 3,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 4,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 3,
+            "timestamp": "2026-10-07T12:19:42.734Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/chromium-dpr2-reset.png",
+          "pngSha256": "375ed462a0d9eac0235f6abbd5ba8bb93d13b49f2dabb88ee82a134c3e1c0d34",
+          "pngBytes": 24079,
+          "observationTimestamp": "2026-10-07T12:19:42.838Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:42.838Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "occluded",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "chromium 149.0.7827.55",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 5,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:19:42.927Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              }
+            ],
+            "receivedSequence": 5,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 5,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 5,
+            "timestamp": "2026-10-07T12:19:42.931Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/chromium-dpr2-occluded.png",
+          "pngSha256": "469229578bb55c11ea94dcf16b0e1a60032cf31fb8ce7a3249af38c4e0974e03",
+          "pngBytes": 24358,
+          "observationTimestamp": "2026-10-07T12:19:43.024Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "FAIL",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:43.024Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "restored",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "chromium 149.0.7827.55",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 6,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 110,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:43.116Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 6,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 6,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 6,
+            "timestamp": "2026-10-07T12:19:43.122Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/chromium-dpr2-restored.png",
+          "pngSha256": "5531d769c90494b7f7cc851f90a85a501c14080503c8eb78b1680640cf22da8d",
+          "pngBytes": 24519,
+          "observationTimestamp": "2026-10-07T12:19:43.230Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:43.230Z"
+          }
+        }
+      ],
+      "clock": {
+        "method": "STEP_CLOCK",
+        "stepping": true,
+        "stepped": 6,
+        "enginePaused": true
+      },
+      "lastValidation": {
+        "ok": true,
+        "errors": [],
+        "visibility": {
+          "ok": true,
+          "hits": 29584,
+          "minPixels": 2000,
+          "centroid": [
+            703.5,
+            383.5
+          ]
+        },
+        "candidatePassAccepted": true,
+        "candidatePassFailures": []
+      },
+      "cleanup": {
+        "released": true,
+        "attached": false,
+        "refs": [
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          }
+        ],
+        "ownedNodeDetached": true,
+        "meshBound": false,
+        "materialBound": false,
+        "observedAt": "BEFORE_APP_CLOSE",
+        "rendererInvalidAfterClose": true,
+        "releaseIdentity": true
+      },
+      "releaseIdentity": true,
+      "postReleaseError": "RECIPE_DISPOSED"
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "dpr": 1,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "cases": [
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "baseline",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "firefox 155.0",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 1,
+            "isTrusted": true,
+            "pointerId": 0,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:49.082Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 1,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 2,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 1,
+            "timestamp": "2026-10-07T12:19:49.090Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/firefox-dpr1-baseline.png",
+          "pngSha256": "0d7d953b594c7cfcc4e05976da0f453dee2a55e43657ef439aedb8002c7cb0d8",
+          "pngBytes": 7032,
+          "observationTimestamp": "2026-10-07T12:19:49.141Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:49.141Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "moved",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "firefox 155.0",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 2,
+            "isTrusted": true,
+            "pointerId": 0,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:19:49.193Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 0
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 0
+                }
+              }
+            ],
+            "receivedSequence": 2,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 3,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 2,
+            "timestamp": "2026-10-07T12:19:49.198Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/firefox-dpr1-moved.png",
+          "pngSha256": "e0a0e8c22bf69264a913933f2d654af4203aa3884169cfa2de149d39b5767306",
+          "pngBytes": 6661,
+          "observationTimestamp": "2026-10-07T12:19:49.238Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:49.238Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "reset",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "firefox 155.0",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 3,
+            "isTrusted": true,
+            "pointerId": 0,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:49.325Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 3,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 4,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 3,
+            "timestamp": "2026-10-07T12:19:49.331Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/firefox-dpr1-reset.png",
+          "pngSha256": "462a4e609a194465bd51659d1a0b7c369ffdb62c35a2b455a39f527bf680295a",
+          "pngBytes": 7032,
+          "observationTimestamp": "2026-10-07T12:19:49.370Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:49.370Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "occluded",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "firefox 155.0",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 5,
+            "isTrusted": true,
+            "pointerId": 0,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:19:49.457Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 0
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 0
+                }
+              }
+            ],
+            "receivedSequence": 5,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 5,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 5,
+            "timestamp": "2026-10-07T12:19:49.460Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/firefox-dpr1-occluded.png",
+          "pngSha256": "fb03892b16efa67199bef4928bf34f6a7671ddecb5be3cbf5918626cfe8d0141",
+          "pngBytes": 6128,
+          "observationTimestamp": "2026-10-07T12:19:49.508Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "FAIL",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:49.508Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "restored",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "firefox 155.0",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 6,
+            "isTrusted": true,
+            "pointerId": 0,
+            "physicalCode": null,
+            "clientX": 109,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:49.574Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 6,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 6,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 6,
+            "timestamp": "2026-10-07T12:19:49.580Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/firefox-dpr1-restored.png",
+          "pngSha256": "68fab7487a84f6f5c04ed3ef517b0510b60706ee0ff6bb76925481aab9eef05d",
+          "pngBytes": 7122,
+          "observationTimestamp": "2026-10-07T12:19:49.619Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:49.619Z"
+          }
+        }
+      ],
+      "clock": {
+        "method": "STEP_CLOCK",
+        "stepping": true,
+        "stepped": 6,
+        "enginePaused": true
+      },
+      "lastValidation": {
+        "ok": true,
+        "errors": [],
+        "visibility": {
+          "ok": true,
+          "hits": 7396,
+          "minPixels": 500,
+          "centroid": [
+            351.5,
+            191.5
+          ]
+        },
+        "candidatePassAccepted": true,
+        "candidatePassFailures": []
+      },
+      "cleanup": {
+        "released": true,
+        "attached": false,
+        "refs": [
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          }
+        ],
+        "ownedNodeDetached": true,
+        "meshBound": false,
+        "materialBound": false,
+        "observedAt": "BEFORE_APP_CLOSE",
+        "rendererInvalidAfterClose": true,
+        "releaseIdentity": true
+      },
+      "releaseIdentity": true,
+      "postReleaseError": "RECIPE_DISPOSED"
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "dpr": 2,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "cases": [
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "baseline",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "firefox 155.0",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 1,
+            "isTrusted": true,
+            "pointerId": 0,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:50.497Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 1,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 2,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 1,
+            "timestamp": "2026-10-07T12:19:50.503Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/firefox-dpr2-baseline.png",
+          "pngSha256": "a6fce5974476d90f3a0c5d4107046d887561ef8165ac6198e0af6514af6eb394",
+          "pngBytes": 19796,
+          "observationTimestamp": "2026-10-07T12:19:50.569Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:50.569Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "moved",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "firefox 155.0",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 2,
+            "isTrusted": true,
+            "pointerId": 0,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:19:50.705Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 0
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 0
+                }
+              }
+            ],
+            "receivedSequence": 2,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 3,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 2,
+            "timestamp": "2026-10-07T12:19:50.710Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/firefox-dpr2-moved.png",
+          "pngSha256": "56762fdd91e68140ba4edc55f083cdfc7f56f711eea5e14cc0e5121cfba2aba6",
+          "pngBytes": 19317,
+          "observationTimestamp": "2026-10-07T12:19:50.765Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:50.765Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "reset",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "firefox 155.0",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 3,
+            "isTrusted": true,
+            "pointerId": 0,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:50.876Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 3,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 4,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 3,
+            "timestamp": "2026-10-07T12:19:50.881Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/firefox-dpr2-reset.png",
+          "pngSha256": "30b79d1bd6349e774854a74e60be041b5dbe8f758f993945c30396ddbb8dc960",
+          "pngBytes": 19870,
+          "observationTimestamp": "2026-10-07T12:19:50.930Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:50.930Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "occluded",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "firefox 155.0",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 5,
+            "isTrusted": true,
+            "pointerId": 0,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:19:51.040Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 0
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 0
+                }
+              }
+            ],
+            "receivedSequence": 5,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 5,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 5,
+            "timestamp": "2026-10-07T12:19:51.044Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/firefox-dpr2-occluded.png",
+          "pngSha256": "938ca6042a7b863fe3625d266a85272e8c9dc6ac8d88411043fe1a6b1b1db4f4",
+          "pngBytes": 18219,
+          "observationTimestamp": "2026-10-07T12:19:51.094Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "FAIL",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:51.094Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "restored",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "firefox 155.0",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 6,
+            "isTrusted": true,
+            "pointerId": 0,
+            "physicalCode": null,
+            "clientX": 109,
+            "clientY": 24,
+            "timestamp": "2026-10-07T12:19:51.191Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 6,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 6,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 6,
+            "timestamp": "2026-10-07T12:19:51.196Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/firefox-dpr2-restored.png",
+          "pngSha256": "ce924e17d3e9c548a2c9679b220b361f4b70d31a2e443287f86018c571233374",
+          "pngBytes": 20311,
+          "observationTimestamp": "2026-10-07T12:19:51.247Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:51.247Z"
+          }
+        }
+      ],
+      "clock": {
+        "method": "STEP_CLOCK",
+        "stepping": true,
+        "stepped": 6,
+        "enginePaused": true
+      },
+      "lastValidation": {
+        "ok": true,
+        "errors": [],
+        "visibility": {
+          "ok": true,
+          "hits": 29584,
+          "minPixels": 2000,
+          "centroid": [
+            703.5,
+            383.5
+          ]
+        },
+        "candidatePassAccepted": true,
+        "candidatePassFailures": []
+      },
+      "cleanup": {
+        "released": true,
+        "attached": false,
+        "refs": [
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          }
+        ],
+        "ownedNodeDetached": true,
+        "meshBound": false,
+        "materialBound": false,
+        "observedAt": "BEFORE_APP_CLOSE",
+        "rendererInvalidAfterClose": true,
+        "releaseIdentity": true
+      },
+      "releaseIdentity": true,
+      "postReleaseError": "RECIPE_DISPOSED"
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "dpr": 1,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "cases": [
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "baseline",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "webkit 26.6",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 1,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 23,
+            "timestamp": "2026-10-07T12:19:59.876Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 1,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 2,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 1,
+            "timestamp": "2026-10-07T12:19:59.891Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/webkit-dpr1-baseline.png",
+          "pngSha256": "b3a271d08a4ec3131e859eac7d86fc763b45585892071c6e1a1ccb7a6718298c",
+          "pngBytes": 5088,
+          "observationTimestamp": "2026-10-07T12:19:59.948Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:19:59.948Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "moved",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "webkit 26.6",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 2,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:20:00.013Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              }
+            ],
+            "receivedSequence": 2,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 3,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 2,
+            "timestamp": "2026-10-07T12:20:00.023Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/webkit-dpr1-moved.png",
+          "pngSha256": "ae5232b45227ea525e8092cd1692f7b1401510ddc022916172328e67a8b735d3",
+          "pngBytes": 5041,
+          "observationTimestamp": "2026-10-07T12:20:00.079Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:20:00.079Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "reset",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "webkit 26.6",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 3,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 23,
+            "timestamp": "2026-10-07T12:20:00.259Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 3,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 4,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 3,
+            "timestamp": "2026-10-07T12:20:00.273Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/webkit-dpr1-reset.png",
+          "pngSha256": "8cfecb5ae3364773184a54c4b9099f927764ff5142c93d3a370a9c3edbcefdcd",
+          "pngBytes": 5031,
+          "observationTimestamp": "2026-10-07T12:20:00.332Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:20:00.332Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "occluded",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "webkit 26.6",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 5,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:20:00.525Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              }
+            ],
+            "receivedSequence": 5,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 5,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 5,
+            "timestamp": "2026-10-07T12:20:00.534Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/webkit-dpr1-occluded.png",
+          "pngSha256": "5e7fb31dbffe84655ba323289253677b0e8206aae9de3875b0aba70bba518586",
+          "pngBytes": 4978,
+          "observationTimestamp": "2026-10-07T12:20:00.590Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "FAIL",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:20:00.590Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "restored",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "webkit 26.6",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 1,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 6,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 108,
+            "clientY": 23,
+            "timestamp": "2026-10-07T12:20:00.767Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 6,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 512,
+              "height": 384
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 1
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 6,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 6,
+            "timestamp": "2026-10-07T12:20:00.777Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/webkit-dpr1-restored.png",
+          "pngSha256": "6ed9743ca2fa478dbe1995297bed234d2af81fd35be4486eb1ef87b733ceea85",
+          "pngBytes": 5189,
+          "observationTimestamp": "2026-10-07T12:20:00.829Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:20:00.829Z"
+          }
+        }
+      ],
+      "clock": {
+        "method": "STEP_CLOCK",
+        "stepping": true,
+        "stepped": 6,
+        "enginePaused": true
+      },
+      "lastValidation": {
+        "ok": true,
+        "errors": [],
+        "visibility": {
+          "ok": true,
+          "hits": 7396,
+          "minPixels": 500,
+          "centroid": [
+            351.5,
+            191.5
+          ]
+        },
+        "candidatePassAccepted": true,
+        "candidatePassFailures": []
+      },
+      "cleanup": {
+        "released": true,
+        "attached": false,
+        "refs": [
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          }
+        ],
+        "ownedNodeDetached": true,
+        "meshBound": false,
+        "materialBound": false,
+        "observedAt": "BEFORE_APP_CLOSE",
+        "rendererInvalidAfterClose": true,
+        "releaseIdentity": true
+      },
+      "releaseIdentity": true,
+      "postReleaseError": "RECIPE_DISPOSED"
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "dpr": 2,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "cases": [
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "baseline",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "webkit 26.6",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 1,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 23,
+            "timestamp": "2026-10-07T12:20:04.781Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 1,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 2,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 1,
+            "timestamp": "2026-10-07T12:20:04.796Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/webkit-dpr2-baseline.png",
+          "pngSha256": "7e4e04237283faec77d430b5abba16742311e9a271c3864b36e1fa5870f369fa",
+          "pngBytes": 16056,
+          "observationTimestamp": "2026-10-07T12:20:04.889Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:20:04.889Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "moved",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "webkit 26.6",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 2,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:20:04.965Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              }
+            ],
+            "receivedSequence": 2,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 3,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 2,
+            "timestamp": "2026-10-07T12:20:04.973Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/webkit-dpr2-moved.png",
+          "pngSha256": "65e11a3becfac08d9053e84752d49c8c344510ad92c1c3214a1593f84c4c602d",
+          "pngBytes": 15724,
+          "observationTimestamp": "2026-10-07T12:20:05.080Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:20:05.080Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "reset",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "webkit 26.6",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 3,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 33,
+            "clientY": 23,
+            "timestamp": "2026-10-07T12:20:05.285Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": -1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 3,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 4,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 3,
+            "timestamp": "2026-10-07T12:20:05.298Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/webkit-dpr2-reset.png",
+          "pngSha256": "e59fa4b0c86ac0a09700e7ddceb0d94d05a3c8f6bc1000d944d2b2e53eaa388a",
+          "pngBytes": 16202,
+          "observationTimestamp": "2026-10-07T12:20:05.398Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:20:05.398Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "occluded",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "webkit 26.6",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "pointerdown",
+            "sequence": 5,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 400,
+            "clientY": 280,
+            "timestamp": "2026-10-07T12:20:05.631Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [
+              {
+                "action": "move",
+                "kind": "press",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              },
+              {
+                "action": "move",
+                "kind": "release",
+                "source": {
+                  "backend": "dom",
+                  "pointerId": 1
+                }
+              }
+            ],
+            "receivedSequence": 5,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 5,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 5,
+            "timestamp": "2026-10-07T12:20:05.640Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/webkit-dpr2-occluded.png",
+          "pngSha256": "3b2d4503fee026742b8581b4bf5242400439214a87c240fe4fa697f57a73a492",
+          "pngBytes": 15603,
+          "observationTimestamp": "2026-10-07T12:20:05.742Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "FAIL",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:20:05.742Z"
+          }
+        },
+        {
+          "schemaVersion": "ier-evidence/2",
+          "runId": "ier-b11a09b8-4fa6-4425-8c49-b211f9a47558",
+          "caseId": "restored",
+          "appFingerprint": {
+            "path": "test/fixtures/interactive-evidence/main.ts",
+            "bytes": 5934,
+            "sha256": "0ebd1c4fe79ca0529a74a9ce46aa407e1b0d1d0a40510cb0afba0744f922d03e"
+          },
+          "sdkFingerprint": {
+            "path": "build/cocosair.module.js",
+            "bytes": 6631057,
+            "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+          },
+          "harnessFingerprint": {
+            "path": "tools/verify/interactive-improvement-browser.cjs",
+            "bytes": 13564,
+            "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+          },
+          "browser": "webkit 26.6",
+          "viewport": {
+            "width": 512,
+            "height": 384
+          },
+          "dpr": 2,
+          "inputMethod": "PLAYWRIGHT_PROTOCOL_POINTER",
+          "seed": 0,
+          "receivedEvent": {
+            "type": "click",
+            "sequence": 6,
+            "isTrusted": true,
+            "pointerId": 1,
+            "physicalCode": null,
+            "clientX": 108,
+            "clientY": 23,
+            "timestamp": "2026-10-07T12:20:05.958Z"
+          },
+          "modelState": {
+            "targetName": "visible-native-target",
+            "x": 1,
+            "y": 0,
+            "held": false,
+            "transitions": [],
+            "receivedSequence": 6,
+            "rendererMeshBound": true
+          },
+          "layoutReceipt": {
+            "css": {
+              "width": 512,
+              "height": 384
+            },
+            "backing": {
+              "width": 1024,
+              "height": 768
+            },
+            "viewport": {
+              "width": 512,
+              "height": 384
+            },
+            "dpr": 2
+          },
+          "submittedFrame": {
+            "event": "AFTER_DRAW",
+            "step": 6,
+            "dt": 0.016666666666666666,
+            "afterDraw": true,
+            "inputSequence": 6,
+            "timestamp": "2026-10-07T12:20:05.969Z"
+          },
+          "pngPath": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2-artifacts/webkit-dpr2-restored.png",
+          "pngSha256": "a137920c67f3a4792cf1ab875ca779729e7fe945d280b2701c990ebf9c7e6eb4",
+          "pngBytes": 16315,
+          "observationTimestamp": "2026-10-07T12:20:06.060Z",
+          "sourceStatus": "recreated",
+          "comparisonDimensions": [
+            "interaction",
+            "geometry"
+          ],
+          "limitations": [
+            "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+            "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+            "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+          ],
+          "referenceComparison": {
+            "result": "NOT_RUN",
+            "reason": "External source not observed"
+          },
+          "result": "PASS",
+          "method": "STEP_CLOCK",
+          "execution": {
+            "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-browser.cjs --browser=all --out=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+            "cwd": "E:\\AIProMax\\github\\cocosair.js",
+            "exitCode": 0,
+            "startedAt": "2026-10-07T12:19:36.786Z",
+            "endedAt": "2026-10-07T12:20:06.060Z"
+          }
+        }
+      ],
+      "clock": {
+        "method": "STEP_CLOCK",
+        "stepping": true,
+        "stepped": 6,
+        "enginePaused": true
+      },
+      "lastValidation": {
+        "ok": true,
+        "errors": [],
+        "visibility": {
+          "ok": true,
+          "hits": 29584,
+          "minPixels": 2000,
+          "centroid": [
+            703.5,
+            383.5
+          ]
+        },
+        "candidatePassAccepted": true,
+        "candidatePassFailures": []
+      },
+      "cleanup": {
+        "released": true,
+        "attached": false,
+        "refs": [
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          }
+        ],
+        "ownedNodeDetached": true,
+        "meshBound": false,
+        "materialBound": false,
+        "observedAt": "BEFORE_APP_CLOSE",
+        "rendererInvalidAfterClose": true,
+        "releaseIdentity": true
+      },
+      "releaseIdentity": true,
+      "postReleaseError": "RECIPE_DISPOSED"
+    }
+  ],
+  "limitations": [
+    "Independent generated native fixture; original 11/16/23/Water/soft/Puzzle assets unavailable.",
+    "AFTER_DRAW proves submission; compositor PNG observation is not a physical display timestamp.",
+    "Protocol pointer input does not certify a physical touch device. GPU timing and memory unavailable."
+  ],
+  "endedAt": "2026-10-07T12:20:06.261Z",
+  "validation": {
+    "ok": true,
+    "errors": []
+  },
+  "scopePassed": true,
+  "exitCode": 0
+}

@@ -1,0 +1,664 @@
+{
+  "schemaVersion": "ier-baseline/2",
+  "generatedAt": "2026-10-07T12:35:28.923Z",
+  "appCommit": "1228a50de0fb13308a9783b65429e96caf4d5404",
+  "git": {
+    "head": "1228a50de0fb13308a9783b65429e96caf4d5404",
+    "branch": "main",
+    "dirty": [
+      " M ai/README.md",
+      " M docs/evidence/spec-compliance.json",
+      " M docs/test-inventory.json",
+      " M tools/README.md",
+      "?? ai/ledgers/interactive-engine-improvements.md",
+      "?? ai/plans/interactive-engine-improvements.md",
+      "?? build/build.zip",
+      "?? docs/evidence/examples/interactive-engine-improvements/",
+      "?? docs/manual/interactive-evidence-chain.md",
+      "?? docs/reference/interactive-improvement-baseline.md",
+      "?? docs/reference/interactive-improvement-evidence.md",
+      "?? test/fixtures/interactive-evidence/",
+      "?? test/smoke/interactive-improvement-baseline.test.ts",
+      "?? test/smoke/interactive-improvement-browser.test.ts",
+      "?? test/smoke/interactive-improvement-review.test.ts",
+      "?? tools/verify/interactive-improvement-baseline.cjs",
+      "?? tools/verify/interactive-improvement-browser.cjs",
+      "?? tools/verify/interactive-improvement-browser.tsconfig.json",
+      "?? tools/verify/interactive-improvement-evidence-audit.cjs",
+      "?? tools/verify/interactive-improvement-evidence.cjs"
+    ],
+    "dirtyDigest": "37eb0bd7256e0afc0bfc6690e080e8ebc57a59221739ace6c221d858e9d0a75a"
+  },
+  "airIdentityInputs": {
+    "digest": "ae1a007f383af7ff2fa38804cd1c39e9b5309f624c63966fd8e2c84514a50f7c",
+    "airFeatures": {
+      "declared": null,
+      "source": "unset(default-build-set)"
+    },
+    "airOutDir": {
+      "declared": null,
+      "resolved": null,
+      "source": "unset(repo-build/)"
+    }
+  },
+  "groupDigests": {
+    "source": "8d8ec7d3c2c0359715d7529ae4115c44488ac9af151d3ecc6a77406606322a4d",
+    "config": "d5cc1e224ba6d4cd3716507743de768f92841e68448154ad30d0990cf4fb3b8a",
+    "runner": "36993ad3ab9040e06eb58a6f387f44b818e9d2fdc25aed31d2e270c82e9a1170",
+    "contracts": "ae2324474c14cbe195c19b845ec2bfcf1e1e5fc69a81ff258a4c32dc598fe69f",
+    "artifacts": "7e2504cf90167dac51b41e374cc3255019daefe59dfe5792df702c01a51b90e3"
+  },
+  "candidateSnapshotId": "c0935bd3ca3640d3d499d661be2572fe4a0f6cbaf5ccb2d20252dcda3e5ae42a",
+  "sdkModuleSha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d",
+  "sdkTypesSha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee",
+  "npmModuleSha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036",
+  "artifactIdentity": {
+    "build/cocosair.module.js": {
+      "present": true,
+      "bytes": 6631057,
+      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+    },
+    "build/cocosair.module.js.map": {
+      "present": true,
+      "bytes": 20318600,
+      "sha256": "b9a6183d745ae774288c2d7963364a6fa9d87297f1a399b2421aa6d1e3a246f0"
+    },
+    "build/cocosair.module.min.js": {
+      "present": true,
+      "bytes": 3703206,
+      "sha256": "8e56fbd5a5b754252838204ff1c204223aadd7c401bd1615c2008e808b5fe05c"
+    },
+    "build/cocosair.module.min.js.map": {
+      "present": true,
+      "bytes": 16707399,
+      "sha256": "42a43a8245b1e366b5efb839d150deda41a9fdf494917f7ac67ea16fe10d6374"
+    },
+    "build/cocosair.module.d.ts": {
+      "present": true,
+      "bytes": 3303518,
+      "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+    },
+    "build/bootstrap.js": {
+      "present": true,
+      "bytes": 8518,
+      "sha256": "57b2dfc7f7b5d29d43b7d9619274c1879f6f37223c7ae2685c0d2619707aef8f"
+    },
+    "build/bootstrap.js.map": {
+      "present": true,
+      "bytes": 16392,
+      "sha256": "83744c5a4c3691fb3d6d881433c3faa875955e1fd55a66e7336bcbb3c9ded7d0"
+    },
+    "build/bootstrap.d.ts": {
+      "present": true,
+      "bytes": 213,
+      "sha256": "3fd56ec33a68ed72b488d01c95439c4c7b3c7fde2275724b5f37670248bc12c2"
+    },
+    "build/html-source.js": {
+      "present": true,
+      "bytes": 5700,
+      "sha256": "5b7cb2a1c6a80cae9f0ec48282dfb42516e85480cdb72a0abce37073e37cb005"
+    },
+    "build/html-source.d.ts": {
+      "present": true,
+      "bytes": 1328,
+      "sha256": "758885c886dd6f2ad744d9698358e86de39bd58dfc029f055c19cef57a26c96a"
+    },
+    "build/npm/cocosair.module.js": {
+      "present": true,
+      "bytes": 6631013,
+      "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+    },
+    "build/npm/cocosair.module.min.js": {
+      "present": true,
+      "bytes": 3703158,
+      "sha256": "8e29adb99aff5b906d60fd9dbd95edb8752954cf795d19c97c87b3cb0b0976ad"
+    },
+    "build/npm/bootstrap.js": {
+      "present": true,
+      "bytes": 8480,
+      "sha256": "8f5a29d1d2459b303394d0fed5f300f25b44bd391eea1924ffbaeab531ff1785"
+    },
+    "build/npm/html-source.js": {
+      "present": true,
+      "bytes": 5660,
+      "sha256": "308922fb63cd751b647d7e81d1a32032baf9285014f6e9fdddb66e7a6cf8df31"
+    }
+  },
+  "harnessIdentity": {
+    "tools/verify/interactive-improvement-baseline.cjs": {
+      "bytes": 26043,
+      "sha256": "40d781b73972d9bb2ee2e2aa84b9a63d49dcb8ba14e320b3ec6882f09096afd0"
+    },
+    "tools/verify/interactive-improvement-evidence.cjs": {
+      "bytes": 23553,
+      "sha256": "67a14b3e07b8709be36e1cd20e7d8f24eaba146cc371439ac03338cdebdbc062"
+    },
+    "tools/verify/interactive-improvement-browser.cjs": {
+      "bytes": 13564,
+      "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+    },
+    "tools/verify/interactive-improvement-evidence-audit.cjs": {
+      "bytes": 3924,
+      "sha256": "521998849d92472dd9e97248f2256d4add22495613061980c964120037a51203"
+    }
+  },
+  "builtFrom": [
+    {
+      "bundle": "build/cocosair.module.js",
+      "status": "verified-sampled",
+      "sampled": 6,
+      "stale": [],
+      "missingFromMap": []
+    },
+    {
+      "bundle": "build/cocosair.module.min.js",
+      "status": "verified-sampled",
+      "sampled": 6,
+      "stale": [],
+      "missingFromMap": []
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "createAirRenderTarget",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/render-dx-target-options.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "AirRenderTarget",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/render-dx-target-options.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "resolveAirTextureFormat",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/render-dx-color-contract.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "validateAirTextureColorContract",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/render-dx-color-contract.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "validateAirPrefilteredEnvironment",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": false,
+      "testFiles": [],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "bindAirPrefilteredEnvironment",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": false,
+      "testFiles": [],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "inspectAirMaterial",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/render-dx-material-diagnostics.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "inspectAirMeshMaterial",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/engine-contract-inspection.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "inspectAirGeometry",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/engine-contract-inspection.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "createActionState",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/port-gap-action-state.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "createActionInput",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/port-gap-action-input-dom.test.ts",
+        "test/smoke/port-gap-action-input-native.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "createSessionGate",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/port-gap-action-input-dom.test.ts",
+        "test/smoke/port-gap-action-input-native.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "createSessionScope (sessionScope)",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/port-gap-session-scope.test.ts",
+        "test/smoke/port-gap-action-scope-integration.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "releaseScene",
+      "status": "member-declared",
+      "detection": {
+        "kind": "member",
+        "inTopLevelExports": false,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/port-gap-scene-release.test.ts",
+        "test/smoke/port-gap-initial-session-ownership.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "createStepClock",
+      "status": "exported-verified",
+      "detection": {
+        "kind": "top-level",
+        "inTopLevelExports": true,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": false,
+      "testFiles": [],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "utils.MeshUtils.createDynamicMesh",
+      "status": "member-declared",
+      "detection": {
+        "kind": "member",
+        "inTopLevelExports": false,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/engine-contract-mesh.test.ts",
+        "test/smoke/k0-r2-native-contracts.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "mesh.updateSubMesh",
+      "status": "member-declared",
+      "detection": {
+        "kind": "member",
+        "inTopLevelExports": false,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/engine-contract-mesh.test.ts",
+        "test/smoke/k0-r2-native-contracts.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "Camera.calculateObliqueMat",
+      "status": "member-declared",
+      "detection": {
+        "kind": "member",
+        "inTopLevelExports": false,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": false,
+      "testFiles": [],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "screenMode / container",
+      "status": "member-declared",
+      "detection": {
+        "kind": "member",
+        "inTopLevelExports": false,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/responsive-host-layout.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    },
+    {
+      "name": "pixelRatioCap",
+      "status": "member-declared",
+      "detection": {
+        "kind": "member",
+        "inTopLevelExports": false,
+        "inDts": true,
+        "bundleImpl": true
+      },
+      "testAvailable": true,
+      "testFiles": [
+        "test/smoke/responsive-host-layout.test.ts"
+      ],
+      "testExecution": "NOT_RUN",
+      "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+    }
+  ],
+  "dedupTable": [
+    {
+      "ier": "IER-00",
+      "original": "ENG-00",
+      "recommendation": "E3+历史去重",
+      "action": "reuse",
+      "reuse": [
+        "tools/verify/port-gap-candidate-snapshot.cjs",
+        "tools/verify/port-gap-evidence-schema.cjs",
+        "docs/example-api-inventory.json",
+        "docs/api-coverage-report.json"
+      ],
+      "note": "身份/能力清单由本工具承担；不再新建证据平台",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-01",
+      "original": "ENG-01",
+      "recommendation": "E3",
+      "action": "reuse",
+      "reuse": [
+        "tools/verify/port-gap-evidence-schema.cjs",
+        "tools/verify/k0-r2-examples.cjs",
+        "docs/reference/port-gap-evidence-schema.md"
+      ],
+      "note": "本批已补输入→画面最小合同；真实浏览器采集由 Lead 后续执行",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-02",
+      "original": "ENG-02",
+      "recommendation": "A1",
+      "action": "add-tests",
+      "reuse": [
+        "test/smoke/render-dx-target-options.test.ts",
+        "docs/manual/examples/manual-render-targets",
+        "src/air/rendering"
+      ],
+      "note": "复用 AirRenderTarget 与 HDR capture→sample 路径；补独立低层 gfx/mip、绑定负控和生命周期验收",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-03",
+      "original": "ENG-03",
+      "recommendation": "A2",
+      "action": "needs-rerun",
+      "reuse": [
+        "test/smoke/render-dx-color-contract.test.ts",
+        "examples/hdr-color-pipeline"
+      ],
+      "note": "旧 HDR 报告 72f37ee6… 身份不符当前 3a448f02…，不可继承 PASS，需当前 SHA 重跑",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-04",
+      "original": "ENG-04",
+      "recommendation": "B1",
+      "action": "add-tests",
+      "reuse": [
+        "test/smoke/k0-r2-native-contracts.test.ts",
+        "test/smoke/engine-contract-mesh.test.ts",
+        "test/smoke/responsive-host-layout.test.ts",
+        "examples/k0-r2-porting-contracts"
+      ],
+      "note": "动态网格合同已有；calculateObliqueMat 无专测，仅补用例",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-05",
+      "original": "ENG-05",
+      "recommendation": "C1",
+      "action": "add-tests",
+      "reuse": [
+        "test/smoke/port-gap-action-input-dom.test.ts",
+        "test/smoke/port-gap-action-input-native.test.ts",
+        "tools/debug/input-inspector.ts"
+      ],
+      "note": "输入栈已有 DOM/native 测试；缺 Canvas/HTML 混合页回归示例",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-06",
+      "original": "ENG-06",
+      "recommendation": "C2",
+      "action": "missing-materials",
+      "reuse": [
+        "test/smoke/responsive-host-layout.test.ts",
+        "examples/responsive-board-recipes"
+      ],
+      "note": "通用容器路径可验；Puzzle50 Oct5 反例材料未取得，只能做通用回归",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-07",
+      "original": "ENG-07",
+      "recommendation": "D1",
+      "action": "add-tests",
+      "reuse": [
+        "src/air/session-scope.ts",
+        "examples/tween-basic",
+        "test/smoke/port-gap-session-scope.test.ts"
+      ],
+      "note": "单时钟暂停/恢复模式已有；缺形变/相机/滚动时间轴取消专测",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-08",
+      "original": "ENG-08",
+      "recommendation": "D1",
+      "action": "add-tests",
+      "reuse": [
+        "test/smoke/port-gap-audio-service.test.ts",
+        "src/air/audio-service.ts"
+      ],
+      "note": "AudioService 已有实现与单测；缺 12 落点/Seek/Mute 音画观测组合",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-09",
+      "original": "ENG-09",
+      "recommendation": "D2",
+      "action": "needs-rerun",
+      "reuse": [
+        "tools/benchmark",
+        "test/smoke/smoke-24-benchmark-harness.test.ts"
+      ],
+      "note": "benchmark 工具已有；设备/质量预算未冻结，实体设备缺失保持待验",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-10",
+      "original": "ENG-10",
+      "recommendation": "E1",
+      "action": "add-tests",
+      "reuse": [
+        "tools/debug/input-inspector.ts",
+        "src/air/action-input.ts",
+        "docs/reference/k0-r2-native-contracts.md"
+      ],
+      "note": "错误码/inspector 已有；缺五类误用正反例归集",
+      "reusePathsExist": true
+    },
+    {
+      "ier": "IER-11",
+      "original": "ENG-11",
+      "recommendation": "E2",
+      "action": "needs-rerun",
+      "reuse": [
+        "npm run verify:consumer",
+        "npm run verify:tarball-consumer",
+        "examples/files.json"
+      ],
+      "note": "消费级验证工具已有；随 IER-02+ 示例完成后成批验收",
+      "reusePathsExist": true
+    }
+  ],
+  "historicalDedup": {
+    "taskDocModuleSha256": "f6836f6060ed00e4bd67f71056e1d15a9c9522fcfdd5ed67292387fad4085372",
+    "currentModuleDiffers": true,
+    "note": "任务书 Oct6 模块 f6836f60… 与当前模块不同→任务书存在性确认不可继承为当前 PASS；若未来相同，仅说明字节一致，仍不等于行为验收"
+  },
+  "missingEvidence": [
+    {
+      "item": "原 21 项原始 JSON（含 17 evidence/dom-repro-report.json）",
+      "status": "MISSING",
+      "reason": "云端目录在只读评估时不可读"
+    },
+    {
+      "item": "Puzzle50 Oct6 resize 原反例回归",
+      "status": "NOT_RUN",
+      "reason": "原始反例材料未取得"
+    },
+    {
+      "item": "两个私有 Site 入口 HTTP 状态",
+      "status": "UNKNOWN",
+      "reason": "只读评估时无法由工具读取"
+    },
+    {
+      "item": "原任务 1.4 节历史事实",
+      "status": "TASK_DOC_REFERENCE",
+      "reason": "标注任务书引用，未独立核验"
+    }
+  ]
+}

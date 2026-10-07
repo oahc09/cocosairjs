@@ -1,0 +1,11 @@
+PASS test/smoke/interactive-diagnostics.test.ts (5.628 s)
+PASS test/smoke/interactive-timeline-evidence.test.ts (26.732 s)
+PASS test/smoke/interactive-timeline.test.ts
+PASS test/smoke/port-gap-effect-layout.test.ts
+PASS test/smoke/render-dx-depth-layout.test.ts
+
+Test Suites: 5 passed, 5 total
+Tests:       46 passed, 46 total
+Snapshots:   0 total
+Time:        35.216 s, estimated 38 s
+Ran all test suites matching /test\\smoke\\interactive-diagnostics.test.ts|test\\smoke\\port-gap-effect-layout.test.ts|test\\smoke\\render-dx-depth-layout.test.ts|test\\smoke\\interactive-timeline.test.ts|test\\smoke\\interactive-timeline-evidence.test.ts/i.

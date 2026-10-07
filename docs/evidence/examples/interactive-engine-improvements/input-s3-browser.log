@@ -1,0 +1,269 @@
+chromium sdk keyboard {"ok":true,"errors":[]}
+chromium sdk rewrite {"ok":true,"errors":[]}
+chromium sdk hover {"ok":true,"errors":[]}
+chromium sdk leave {"ok":true,"errors":[]}
+chromium sdk reset {"ok":true,"errors":[]}
+chromium sdk mode {"ok":true,"errors":[]}
+chromium sdk resize {"ok":true,"errors":[]}
+chromium sdk range-cancel {"ok":true,"errors":[]}
+chromium sdk wheel {"ok":true,"errors":[]}
+chromium sdk multitouch {"ok":true,"errors":[]}
+chromium sdk cancel {"ok":true,"errors":[]}
+chromium sdk button-cancel {"ok":true,"errors":[]}
+chromium sdk touch-scroll {"ok":true,"errors":[]}
+chromium sdk operations 80 notRun 2
+chromium html keyboard {"ok":true,"errors":[]}
+chromium html rewrite {"ok":true,"errors":[]}
+chromium html hover {"ok":true,"errors":[]}
+chromium html leave {"ok":true,"errors":[]}
+chromium html reset {"ok":true,"errors":[]}
+chromium html mode {"ok":true,"errors":[]}
+chromium html resize {"ok":true,"errors":[]}
+chromium html range-cancel {"ok":true,"errors":[]}
+chromium html wheel {"ok":true,"errors":[]}
+chromium html multitouch {"ok":true,"errors":[]}
+chromium html cancel {"ok":true,"errors":[]}
+chromium html button-cancel {"ok":true,"errors":[]}
+chromium html touch-scroll {"ok":true,"errors":[]}
+chromium html operations 80 notRun 2
+firefox sdk keyboard {"ok":true,"errors":[]}
+firefox sdk rewrite {"ok":true,"errors":[]}
+firefox sdk hover {"ok":true,"errors":[]}
+firefox sdk leave {"ok":true,"errors":[]}
+firefox sdk reset {"ok":true,"errors":[]}
+firefox sdk mode {"ok":true,"errors":[]}
+firefox sdk resize {"ok":true,"errors":[]}
+firefox sdk range-cancel {"ok":true,"errors":[]}
+firefox sdk wheel {"ok":true,"errors":[]}
+firefox sdk operations 60 notRun 7
+firefox html keyboard {"ok":true,"errors":[]}
+firefox html rewrite {"ok":true,"errors":[]}
+firefox html hover {"ok":true,"errors":[]}
+firefox html leave {"ok":true,"errors":[]}
+firefox html reset {"ok":true,"errors":[]}
+firefox html mode {"ok":true,"errors":[]}
+firefox html resize {"ok":true,"errors":[]}
+firefox html range-cancel {"ok":true,"errors":[]}
+firefox html wheel {"ok":true,"errors":[]}
+firefox html operations 60 notRun 7
+webkit sdk keyboard {"ok":true,"errors":[]}
+webkit sdk rewrite {"ok":true,"errors":[]}
+webkit sdk hover {"ok":true,"errors":[]}
+webkit sdk leave {"ok":true,"errors":[]}
+webkit sdk reset {"ok":true,"errors":[]}
+webkit sdk mode {"ok":true,"errors":[]}
+webkit sdk resize {"ok":true,"errors":[]}
+webkit sdk range-cancel {"ok":true,"errors":[]}
+webkit sdk wheel {"ok":true,"errors":[]}
+webkit sdk operations 60 notRun 7
+webkit html keyboard {"ok":true,"errors":[]}
+webkit html rewrite {"ok":true,"errors":[]}
+webkit html hover {"ok":true,"errors":[]}
+webkit html leave {"ok":true,"errors":[]}
+webkit html reset {"ok":true,"errors":[]}
+webkit html mode {"ok":true,"errors":[]}
+webkit html resize {"ok":true,"errors":[]}
+webkit html range-cancel {"ok":true,"errors":[]}
+webkit html wheel {"ok":true,"errors":[]}
+webkit html operations 60 notRun 7
+{
+  "valid": false,
+  "scopePassed": false,
+  "errors": [
+    "browser/isolation/errors chromium/false"
+  ],
+  "notRun": [
+    {
+      "caseId": "blur",
+      "reason": "Headless foreground transition did not expose a real blur event",
+      "engine": "chromium",
+      "control": false
+    },
+    {
+      "caseId": "hidden",
+      "reason": "Headless foreground transition did not expose a real hidden event",
+      "engine": "chromium",
+      "control": false
+    },
+    {
+      "caseId": "blur",
+      "reason": "Headless foreground transition did not expose a real blur event",
+      "engine": "chromium",
+      "control": true
+    },
+    {
+      "caseId": "hidden",
+      "reason": "Headless foreground transition did not expose a real hidden event",
+      "engine": "chromium",
+      "control": true
+    },
+    {
+      "caseId": "canvas-touch-drag-20",
+      "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "firefox",
+      "control": false
+    },
+    {
+      "caseId": "multitouch",
+      "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "firefox",
+      "control": false
+    },
+    {
+      "caseId": "cancel",
+      "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "firefox",
+      "control": false
+    },
+    {
+      "caseId": "button-cancel",
+      "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "firefox",
+      "control": false
+    },
+    {
+      "caseId": "touch-scroll",
+      "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "firefox",
+      "control": false
+    },
+    {
+      "caseId": "blur",
+      "reason": "Headless foreground transition did not expose a real blur event",
+      "engine": "firefox",
+      "control": false
+    },
+    {
+      "caseId": "hidden",
+      "reason": "Headless foreground transition did not expose a real hidden event",
+      "engine": "firefox",
+      "control": false
+    },
+    {
+      "caseId": "canvas-touch-drag-20",
+      "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "firefox",
+      "control": true
+    },
+    {
+      "caseId": "multitouch",
+      "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "firefox",
+      "control": true
+    },
+    {
+      "caseId": "cancel",
+      "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "firefox",
+      "control": true
+    },
+    {
+      "caseId": "button-cancel",
+      "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "firefox",
+      "control": true
+    },
+    {
+      "caseId": "touch-scroll",
+      "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "firefox",
+      "control": true
+    },
+    {
+      "caseId": "blur",
+      "reason": "Headless foreground transition did not expose a real blur event",
+      "engine": "firefox",
+      "control": true
+    },
+    {
+      "caseId": "hidden",
+      "reason": "Headless foreground transition did not expose a real hidden event",
+      "engine": "firefox",
+      "control": true
+    },
+    {
+      "caseId": "canvas-touch-drag-20",
+      "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "webkit",
+      "control": false
+    },
+    {
+      "caseId": "multitouch",
+      "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "webkit",
+      "control": false
+    },
+    {
+      "caseId": "cancel",
+      "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "webkit",
+      "control": false
+    },
+    {
+      "caseId": "button-cancel",
+      "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "webkit",
+      "control": false
+    },
+    {
+      "caseId": "touch-scroll",
+      "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "webkit",
+      "control": false
+    },
+    {
+      "caseId": "blur",
+      "reason": "Headless foreground transition did not expose a real blur event",
+      "engine": "webkit",
+      "control": false
+    },
+    {
+      "caseId": "hidden",
+      "reason": "Headless foreground transition did not expose a real hidden event",
+      "engine": "webkit",
+      "control": false
+    },
+    {
+      "caseId": "canvas-touch-drag-20",
+      "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "webkit",
+      "control": true
+    },
+    {
+      "caseId": "multitouch",
+      "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "webkit",
+      "control": true
+    },
+    {
+      "caseId": "cancel",
+      "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "webkit",
+      "control": true
+    },
+    {
+      "caseId": "button-cancel",
+      "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "webkit",
+      "control": true
+    },
+    {
+      "caseId": "touch-scroll",
+      "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+      "engine": "webkit",
+      "control": true
+    },
+    {
+      "caseId": "blur",
+      "reason": "Headless foreground transition did not expose a real blur event",
+      "engine": "webkit",
+      "control": true
+    },
+    {
+      "caseId": "hidden",
+      "reason": "Headless foreground transition did not expose a real hidden event",
+      "engine": "webkit",
+      "control": true
+    }
+  ]
+}

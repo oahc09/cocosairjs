@@ -1,0 +1,24 @@
+
+> cocosair.js@1.0.0 prepack
+> node tools/build/prepare-package.cjs
+
+[package] cocosair.module.js -> build\npm/cocosair.module.js (source map omitted)
+[package] cocosair.module.min.js -> build\npm/cocosair.module.min.js (source map omitted)
+[package] bootstrap.js -> build\npm/bootstrap.js (source map omitted)
+[package] html-source.js -> build\npm/html-source.js (source map omitted)
+chromium interactive-multipass RUNTIME_SMOKE_PASS
+chromium interactive-geometry RUNTIME_SMOKE_PASS
+chromium interactive-input RUNTIME_SMOKE_PASS
+chromium interactive-container RUNTIME_SMOKE_PASS
+chromium interactive-timeline RUNTIME_SMOKE_PASS
+firefox interactive-multipass RUNTIME_SMOKE_PASS
+firefox interactive-geometry RUNTIME_SMOKE_PASS
+firefox interactive-input RUNTIME_SMOKE_PASS
+firefox interactive-container RUNTIME_SMOKE_PASS
+firefox interactive-timeline RUNTIME_SMOKE_PASS
+webkit interactive-multipass RUNTIME_SMOKE_PASS
+webkit interactive-geometry RUNTIME_SMOKE_PASS
+webkit interactive-input RUNTIME_SMOKE_PASS
+webkit interactive-container RUNTIME_SMOKE_PASS
+webkit interactive-timeline RUNTIME_SMOKE_PASS
+{"scopePassed":false,"rows":15,"defaultUnchanged":true}

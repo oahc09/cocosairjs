@@ -1,0 +1,120 @@
+{
+  "id": "interactive-geometry",
+  "version": "1.0.0",
+  "title": "Dynamic mesh and pointer projection",
+  "category": "rendering",
+  "status": "draft",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "用真实指针生成切平面，分别检查上传顶点、屏幕投影和可见像素",
+    "points": [
+      "静态 indices 与动态 indices16/32 的区别",
+      "positions-only 更新后通知 renderer",
+      "不同 DPR、相机、容器偏移与取消代次",
+      "先解绑借用 renderer，再归还自有引用"
+    ]
+  },
+  "effect": {
+    "functional": "mesh、cut、ribbon 三入口；Reset 与 Escape 推进代次，释放后控件禁用。",
+    "visual": "mesh 显示蓝色静态面与运动橙色动态面；cut 显示红切线、黄轨迹与青色刀刃；ribbon 显示运动青色波带。"
+  },
+  "api": {
+    "primary": [
+      "utils.MeshUtils.createDynamicMesh"
+    ],
+    "supporting": [
+      "Mesh.updateSubMesh",
+      "Camera.screenPointToRay",
+      "MeshRenderer.onGeometryChanged"
+    ],
+    "claims": [
+      "utils.MeshUtils.createDynamicMesh",
+      "Mesh.updateSubMesh",
+      "Camera.screenPointToRay",
+      "MeshRenderer.onGeometryChanged"
+    ],
+    "forbiddenShortcut": [
+      "理论交点代替上传顶点误差",
+      "旧代次 pointerup 切割",
+      "放宽 0.15 CSS px 预算",
+      "用计数布尔代替 PNG"
+    ],
+    "evidence": [
+      {
+        "api": "utils.MeshUtils.createDynamicMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L155",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Mesh.updateSubMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L383",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera.screenPointToRay",
+        "source": "src/main.ts",
+        "sourceLocation": "L322",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer.onGeometryChanged",
+        "source": "src/main.ts",
+        "sourceLocation": "L176",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": [
+    "rendering",
+    "mesh"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "static-quad",
+        "dynamic-quad"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "切换 URL mode，拖动 cut 画布，Reset、Escape、释放",
+        "expected": "对象随输入变化；旧 pointerup 不切割；释放后控件禁用"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创程序化平板、波带和色块，仓库 MIT 许可证；未分发原 soft/Water 素材"
+  }
+}

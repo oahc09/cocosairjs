@@ -1,0 +1,101 @@
+PASS test/smoke/interactive-timeline-evidence.test.ts (11.097 s)
+PASS test/smoke/interactive-timeline.test.ts
+FAIL test/smoke/interactive-kit.test.ts
+  ● installed recipe focused acceptance (synthetic PNG contract only) › rejects model mutation without trusting self-reported PASS
+
+    ReferenceError: structuredClone is not defined
+
+       6 |  afterAll(()=>fs.rmSync(dir,{recursive:true,force:true}));
+       7 |  test('accepts real decode and corresponding model/reset/ownership receipts',()=>expect(checkRow(row)).toEqual({pass:true,errors:[]}));
+    >  8 |  test.each(['model','refs','trust-path','png','missing-state'])('rejects %s mutation without trusting self-reported PASS',name=>{const c=structuredClone(row);if(name==='model')c.states[1].snapshot.activations=0;if(name==='refs')c.release.receipt.refs[0].after=1;if(name==='trust-path')c.fallbackRequests.push('/build/module.js');if(name==='png')c.states[0].png.sha256='0'.repeat(64);if(name==='missing-state')c.states.pop();expect(checkRow(c).pass).toBe(false);});
+         |                                                                                                                                          ^
+       9 |  test('cannot use page label pixels outside the canvas as visible geometry',()=>{const bytes=fs.readFileSync(row.states[0].png.path);expect(visiblePixels(bytes,{left:20,top:20,width:16,height:16})).toBe(0);expect(()=>visiblePixels(bytes,{left:0,top:0,width:NaN,height:16})).toThrow('invalid canvas rect');});
+      10 | });
+      11 |
+
+      at test/smoke/interactive-kit.test.ts:8:138
+
+  ● installed recipe focused acceptance (synthetic PNG contract only) › rejects refs mutation without trusting self-reported PASS
+
+    ReferenceError: structuredClone is not defined
+
+       6 |  afterAll(()=>fs.rmSync(dir,{recursive:true,force:true}));
+       7 |  test('accepts real decode and corresponding model/reset/ownership receipts',()=>expect(checkRow(row)).toEqual({pass:true,errors:[]}));
+    >  8 |  test.each(['model','refs','trust-path','png','missing-state'])('rejects %s mutation without trusting self-reported PASS',name=>{const c=structuredClone(row);if(name==='model')c.states[1].snapshot.activations=0;if(name==='refs')c.release.receipt.refs[0].after=1;if(name==='trust-path')c.fallbackRequests.push('/build/module.js');if(name==='png')c.states[0].png.sha256='0'.repeat(64);if(name==='missing-state')c.states.pop();expect(checkRow(c).pass).toBe(false);});
+         |                                                                                                                                          ^
+       9 |  test('cannot use page label pixels outside the canvas as visible geometry',()=>{const bytes=fs.readFileSync(row.states[0].png.path);expect(visiblePixels(bytes,{left:20,top:20,width:16,height:16})).toBe(0);expect(()=>visiblePixels(bytes,{left:0,top:0,width:NaN,height:16})).toThrow('invalid canvas rect');});
+      10 | });
+      11 |
+
+      at test/smoke/interactive-kit.test.ts:8:138
+
+  ● installed recipe focused acceptance (synthetic PNG contract only) › rejects trust-path mutation without trusting self-reported PASS
+
+    ReferenceError: structuredClone is not defined
+
+       6 |  afterAll(()=>fs.rmSync(dir,{recursive:true,force:true}));
+       7 |  test('accepts real decode and corresponding model/reset/ownership receipts',()=>expect(checkRow(row)).toEqual({pass:true,errors:[]}));
+    >  8 |  test.each(['model','refs','trust-path','png','missing-state'])('rejects %s mutation without trusting self-reported PASS',name=>{const c=structuredClone(row);if(name==='model')c.states[1].snapshot.activations=0;if(name==='refs')c.release.receipt.refs[0].after=1;if(name==='trust-path')c.fallbackRequests.push('/build/module.js');if(name==='png')c.states[0].png.sha256='0'.repeat(64);if(name==='missing-state')c.states.pop();expect(checkRow(c).pass).toBe(false);});
+         |                                                                                                                                          ^
+       9 |  test('cannot use page label pixels outside the canvas as visible geometry',()=>{const bytes=fs.readFileSync(row.states[0].png.path);expect(visiblePixels(bytes,{left:20,top:20,width:16,height:16})).toBe(0);expect(()=>visiblePixels(bytes,{left:0,top:0,width:NaN,height:16})).toThrow('invalid canvas rect');});
+      10 | });
+      11 |
+
+      at test/smoke/interactive-kit.test.ts:8:138
+
+  ● installed recipe focused acceptance (synthetic PNG contract only) › rejects png mutation without trusting self-reported PASS
+
+    ReferenceError: structuredClone is not defined
+
+       6 |  afterAll(()=>fs.rmSync(dir,{recursive:true,force:true}));
+       7 |  test('accepts real decode and corresponding model/reset/ownership receipts',()=>expect(checkRow(row)).toEqual({pass:true,errors:[]}));
+    >  8 |  test.each(['model','refs','trust-path','png','missing-state'])('rejects %s mutation without trusting self-reported PASS',name=>{const c=structuredClone(row);if(name==='model')c.states[1].snapshot.activations=0;if(name==='refs')c.release.receipt.refs[0].after=1;if(name==='trust-path')c.fallbackRequests.push('/build/module.js');if(name==='png')c.states[0].png.sha256='0'.repeat(64);if(name==='missing-state')c.states.pop();expect(checkRow(c).pass).toBe(false);});
+         |                                                                                                                                          ^
+       9 |  test('cannot use page label pixels outside the canvas as visible geometry',()=>{const bytes=fs.readFileSync(row.states[0].png.path);expect(visiblePixels(bytes,{left:20,top:20,width:16,height:16})).toBe(0);expect(()=>visiblePixels(bytes,{left:0,top:0,width:NaN,height:16})).toThrow('invalid canvas rect');});
+      10 | });
+      11 |
+
+      at test/smoke/interactive-kit.test.ts:8:138
+
+  ● installed recipe focused acceptance (synthetic PNG contract only) › rejects missing-state mutation without trusting self-reported PASS
+
+    ReferenceError: structuredClone is not defined
+
+       6 |  afterAll(()=>fs.rmSync(dir,{recursive:true,force:true}));
+       7 |  test('accepts real decode and corresponding model/reset/ownership receipts',()=>expect(checkRow(row)).toEqual({pass:true,errors:[]}));
+    >  8 |  test.each(['model','refs','trust-path','png','missing-state'])('rejects %s mutation without trusting self-reported PASS',name=>{const c=structuredClone(row);if(name==='model')c.states[1].snapshot.activations=0;if(name==='refs')c.release.receipt.refs[0].after=1;if(name==='trust-path')c.fallbackRequests.push('/build/module.js');if(name==='png')c.states[0].png.sha256='0'.repeat(64);if(name==='missing-state')c.states.pop();expect(checkRow(c).pass).toBe(false);});
+         |                                                                                                                                          ^
+       9 |  test('cannot use page label pixels outside the canvas as visible geometry',()=>{const bytes=fs.readFileSync(row.states[0].png.path);expect(visiblePixels(bytes,{left:20,top:20,width:16,height:16})).toBe(0);expect(()=>visiblePixels(bytes,{left:0,top:0,width:NaN,height:16})).toThrow('invalid canvas rect');});
+      10 | });
+      11 |
+
+      at test/smoke/interactive-kit.test.ts:8:138
+
+FAIL test/smoke/interactive-performance.test.ts
+  ● local performance raw-statistics contract › invalid sample set is rejected: %p
+
+    expect(received).toThrow(expected)
+
+    Expected substring: "finite nonnegative"
+    Received message:   "values.some is not a function"
+
+          4 | const ROOT=path.resolve(__dirname,'../..');
+          5 | const DESIGN=Object.freeze({engine:'chromium',warmupMs:1000,windowMs:5000,repetitions:3,dprs:[1,2],workloads:['idle','target-switch-500ms','audio'],screenshots:[false,true],screenshotPeriodMs:1000,reason:'Short local pilot to establish attribution and tooling overhead while target hardware/budget are unavailable; does not replace recommended 3x60s device acceptance'});
+        > 6 | function stats(values){if(!values.length||values.some(v=>!Number.isFinite(v)||v<0))throw Error('finite nonnegative raw samples required');const sorted=[...values].sort((a,b)=>a-b),p=q=>sorted[Math.min(sorted.length-1,Math.floor((sorted.length-1)*q))];return {count:values.length,p50:p(.5),p95:p(.95),p99:p(.99),worst:sorted.at(-1),mean:values.reduce((a,b)=>a+b,0)/values.length};}
+            |                                                  ^
+          7 | const fp=p=>{const b=fs.readFileSync(path.resolve(ROOT,p));return {path:p,bytes:b.length,sha256:crypto.createHash('sha256').update(b).digest('hex')}};
+          8 | async function click(page,id){const r=await page.locator(id).evaluate(el=>{const b=el.getBoundingClientRect();return {x:b.left+b.width/2,y:b.top+b.height/2,disabled:el.disabled}});if(r.disabled)throw Error('disabled '+id);await page.mouse.click(r.x,r.y)}
+          9 | async function main(){const out=process.argv.find(x=>x.startsWith('--out='))?.slice(6);if(!out||fs.existsSync(out))throw Error('explicit new --out required');const artifacts=path.resolve(out.replace(/\.json$/,'')+'-artifacts');fs.mkdirSync(artifacts,{recursive:true});const report={schemaVersion:'ier-performance-pilot/1',result:'LIMITED',subset:true,completed:false,executionChannel:'Lead',startedAt:new Date().toISOString(),command:process.argv.join(' '),cwd:ROOT,design:DESIGN,budget:{result:'NOT_RUN',device:'NOT_PROVIDED',frameTimeBudget:'NOT_PROVIDED',visibleQualityBudget:'NOT_PROVIDED',droppedFrames:'UNKNOWN: no deadline budget, no assumed 60fps'},fingerprints:['build/cocosair.module.js','build/cocosair.module.d.ts','examples/interactive-timeline/index.html','examples/interactive-timeline/src/main.ts','examples/interactive-timeline/src/timeline-contract.ts','examples/interactive-timeline/assets/original-16s.wav','tools/verify/interactive-performance.cjs','tools/verify/browser-engines.cjs','tools/verify/competitive-example-server.cjs'].map(fp),rows:[],limitations:['Software/local browser pilot is not physical-device evidence','CPU update and draw markers measure callback intervals, not isolated engine CPU time or GPU execution','GPU timer unavailable: no timer query inserted around engine rendering','Host process load and compositor are not OS-isolated','Per-window screenshots sampled once per second; visual validity comes from independent timeline evidence, not mean frame time']};
+
+      at stats (tools/verify/interactive-performance.cjs:6:50)
+      at test/smoke/interactive-performance.test.ts:5:97
+      at Object.<anonymous> (node_modules/@jest/expect/node_modules/expect/build/toThrowMatchers.js:83:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/@jest/expect/node_modules/expect/build/index.js:342:21)
+      at test/smoke/interactive-performance.test.ts:5:112
+      at test/smoke/interactive-performance.test.ts:5:112
+
+Test Suites: 2 failed, 2 passed, 4 total
+Tests:       6 failed, 41 passed, 47 total
+Snapshots:   0 total
+Time:        11.965 s, estimated 28 s
+Ran all test suites matching /test\\smoke\\interactive-timeline.test.ts|test\\smoke\\interactive-timeline-evidence.test.ts|test\\smoke\\interactive-performance.test.ts|test\\smoke\\interactive-kit.test.ts/i.

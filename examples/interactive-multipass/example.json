@@ -1,0 +1,37 @@
+{
+  "id": "interactive-multipass",
+  "version": "1.0.0",
+  "title": "Capture and mip sampling",
+  "category": "rendering",
+  "status": "draft",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "比较相机离屏采样与原生 gfx 逐级 mip 采样，正确处理目标重建和资源退役",
+    "points": ["RGBA8/16F 与 1x/4x 分配及 resolve", "set 1 描述符、std140 和真实 mip 数据", "原生时钟与定步验证分开", "重置先解绑并归还旧资产"]
+  },
+  "effect": {
+    "functional": "默认 capture 路线支持暂停、恢复、重置、缩放和释放；?mode=native 提供 mip LOD 切换。释放后控件禁用。",
+    "visual": "capture 显示红绿色块及蓝色标记；native 显示红绿蓝黄棋盘，LOD+ 后变为蓝黄紫青。"
+  },
+  "api": {
+    "primary": ["createAirRenderTarget"],
+    "supporting": ["Material.initialize", "gfx.CommandBuffer.draw"],
+    "claims": ["createAirRenderTarget", "Material.initialize", "gfx.CommandBuffer.draw"],
+    "forbiddenShortcut": ["用未采样的 mip 层声明冒充像素证据", "把静态 binding 检测说成运行时 GL 拒绝", "仅清空 owned 数组而不归还引用", "把内存计数当作物理 GPU 测量"],
+    "evidence": [
+      {"api": "createAirRenderTarget", "source": "src/main.ts", "sourceLocation": "L161", "validator": "visible-frame"},
+      {"api": "Material.initialize", "source": "src/main.ts", "sourceLocation": "L114", "validator": "visible-frame"},
+      {"api": "gfx.CommandBuffer.draw", "source": "src/main.ts", "sourceLocation": "L595", "validator": "visible-frame"}
+    ]
+  },
+  "capabilities": ["rendering", "material"],
+  "assets": [],
+  "scene": {"expectedGraph": {"nodes": ["source-red", "source-green", "capture-camera", "display-camera", "display-quad"]}},
+  "interaction": {"steps": [{"action": "暂停、恢复、重置、缩放、释放；native 路线切换 LOD", "expected": "暂停时帧数冻结，恢复前进；重置资产数稳定，LOD 切换改变实际色块；释放后控件禁用"}]},
+  "ready": {"validators": ["scene-ready"]},
+  "validation": {"functional": ["node-exists", "no-runtime-error"], "interaction": ["frame-diff"], "visual": ["visible-frame"], "lifecycle": ["resource-released"], "capability": []},
+  "coverage": {"benchmarkRefs": [], "recipeRefs": []},
+  "screenshot": {},
+  "license": {"assets": "原创程序化色块与棋盘 mip；示例和 GLSL 使用仓库 MIT 许可证，无外部模型或纹理"}
+}

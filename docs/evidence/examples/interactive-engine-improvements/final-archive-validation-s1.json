@@ -1,0 +1,47 @@
+{
+  "executionChannel": "Lead",
+  "startedAt": "2026-10-07T23:18:07.242Z",
+  "browserRunsAdded": 0,
+  "rows": [
+    {
+      "name": "timeline-s4",
+      "validation": {
+        "scopePassed": false,
+        "errors": [
+          "webkit/idle: webkit WebAudio NOT_RUN: This installed WebKit browser exposes neither AudioContext nor webkitAudioContext; no HTMLAudio clock substitution",
+          "webkit/cpu-6ms-per-40ms: webkit WebAudio NOT_RUN: This installed WebKit browser exposes neither AudioContext nor webkitAudioContext; no HTMLAudio clock substitution"
+        ]
+      }
+    },
+    {
+      "name": "kit-consumer-s2",
+      "validation": {
+        "scopePassed": false,
+        "errors": [
+          "webkit/interactive-multipass: PNG target missing resize",
+          "webkit/interactive-geometry: PNG target missing resize",
+          "webkit/interactive-container: PNG target missing input",
+          "webkit/interactive-container: PNG target missing reset",
+          "webkit/interactive-container: PNG target missing resize"
+        ]
+      }
+    },
+    {
+      "name": "performance-pilot-s1",
+      "validation": {
+        "measurementValid": true,
+        "result": "LIMITED",
+        "deviceAcceptance": "NOT_RUN",
+        "errors": []
+      }
+    },
+    {
+      "name": "color-compare-s2",
+      "validation": {
+        "scopePassed": true,
+        "errors": []
+      }
+    }
+  ],
+  "endedAt": "2026-10-07T23:18:12.787Z"
+}

@@ -141,3 +141,39 @@ CB21 成本复测使用 [benchmark/prepare-cost-retest.mjs](benchmark/prepare-co
 `node tools/verify/port-gap-browser-evidence.cjs --input=<raw.json> --log=<raw.log> --gate=EG3 --type=BROWSER_RENDER_PASS --exit-code=<observed> --out=<new.json>`：只读核对已执行原始报告及当前指纹，并以新文件写PG34规范化结果，不启动浏览器。六配方保留浏览器/配方行、截图和具体未达原因；仅未达范围的非零退出保持NOT_RUN，不伪造FAIL或完整PASS。`node tools/verify/port-gap-browser-evidence.test.cjs`用已有实际记录的内存副本做合同回归，仅写并清理自有系统临时目录，不采浏览器证据。
 
 - `node tools/verify/k0-r2-examples.cjs --browser=all --out=<new.json>`：正式 K0 R2 合同示例与动态批处理、glTF 蒙皮、手册线条示例的三浏览器限定验收。真实按钮控制、PNG 颜色/变化、暂停与重置、默认蒙皮材质和实例循环、引用归还、移动视口；写显式新 JSON 和相邻截图，关闭临时服务器与浏览器。使用当前 bundle，不构建/安装 SDK，不发布。`node node_modules/typescript/bin/tsc -p tools/verify/k0-r2-examples.tsconfig.json` 对这四份源码做独立严格 noEmit 检查（JS 共用 helper 不启用 checkJs）。
+
+- `node tools/verify/interactive-improvement-baseline.cjs --out=<new.json>` / `--verify=<report.json>`：复用 candidate snapshot 记录当前 SDK/声明、Git/AIR/源码/runner/合同/产物身份、导出与历史任务去重；默认不把测试文件存在记成执行通过。out 仅写显式新路径；verify 只读并拒绝漂移。source-map 是规范化后的六源抽样，不证明所有源码对应。
+- `node tools/verify/interactive-improvement-evidence.cjs --verify=<records.json>`：只读证据合同校验，解码 PNG；PASS 还需要调用方冻结的像素 oracle 和当前 app/sdk/harness SHA。通用 CLI 不推断像素预期，实际浏览器报告使用下一条专用验证入口；NOT_RUN 合规不等于功能通过。
+- `node tools/verify/interactive-improvement-browser.cjs --browser=all --out=<new.json>` / `--verify=<report.json>`：独立原生 fixture 的输入→对象→提交→compositor PNG 三浏览器/DPR1/2 回归，包含遮挡负例、重置与释放；写显式新 JSON 和相邻 `-artifacts/` PNG/log，关闭自有服务/浏览器。不 build/install，不覆盖历史。verify 模式只读并重新计算 PNG 与当前指纹。`node node_modules/typescript/bin/tsc -p tools/verify/interactive-improvement-browser.tsconfig.json` 独立严格 noEmit 检查夹具。
+- `node tools/verify/interactive-improvement-evidence-audit.cjs --report=<actual.json> --out=<new.json>`：只读实际原生报告，并在内存克隆中植入身份、事件、PNG、提交、遮挡与清理篡改；仅写显式新审计 JSON，不启动浏览器。观测边界见[输入到画面示范](../docs/manual/interactive-evidence-chain.md)。
+- `node tools/verify/interactive-multipass-browser.cjs --browser=all --out=<new.json>` / `--verify=<report.json>`：相机 capture 与 gfx/mip 两路线的三浏览器/DPR1/2 采集，加测普通模式控件、重置循环、格式/MSAA 分配矩阵与负例。采集写新 JSON 和相邻 `-artifacts/` PNG/log；verify 只读复算当前指纹和像素。不会 build/install，native MSAA 采样保持 NOT_RUN，静态 binding 检测单独披露。`node node_modules/typescript/bin/tsc -p examples/interactive-multipass/tsconfig.json` 检查例的 SDK 声明消费。
+- `node tools/verify/interactive-multipass-audit.cjs --report=<actual.json> [--out=<new.json>]`：Lead 独立读取实际报告，在内存中做 16 种身份、覆盖、事件/帧与清理篡改；没有 out 则只打印，显式 out 以 wx 写新文件，不启动浏览器。说明见[多 Pass 与 Mip](../docs/manual/interactive-multipass.md)。
+
+### 动态几何与投影增量验证
+
+- `node tools/verify/interactive-geometry-browser.cjs --browser=all --out=<new.json>`：采集透视/正交、DPR、相机、同页活resize与容器偏移111行，附雨线、静态/动态网格、取消/十轮reset和普通原生模式控件。写显式新JSON与相邻 `-artifacts/` PNG，关闭自有服务器/浏览器；不build/install、不覆盖旧结果。`--verify=<report.json>`只读复算当前指纹、实际上传/输入与PNG；存在受限FAIL时退出1。
+- `node tools/verify/interactive-geometry-audit.cjs --report=<actual.json> [--out=<new.json>]`：内存克隆篡改审计，无out只读打印，显式out以wx写新JSON，不启动浏览器。结构合规与完整scope通过分别记录。
+- `node node_modules/typescript/bin/tsc -p examples/interactive-geometry/tsconfig.json`：独立严格noEmit声明消费检查。范围与WebKit呈现对照见[动态Mesh手册](../docs/manual/interactive-geometry.md)。
+
+
+### 互动输入与容器回归（IER-05/06）
+
+- `node tools/verify/interactive-input-browser.cjs --out=<new.json>`：只读服务现有SDK，启动三浏览器的SDK/普通HTML两路径，采集可信点击/触摸、取消、滚动、提交和PNG；写显式报告及相邻-artifacts，已有路径拒绝覆盖。`--verify=<report.json>`只读重算身份、事件、模型/pose与PNG。NOT_RUN或已记录诊断不会变为完整PASS。
+- `node tools/verify/interactive-input-audit.cjs --report=<report.json> --out=<new.json>`：不运行浏览器，按实际成功子项及基线新增错误验证篡改拒绝；只写显式新路径。完整基线失败保持失败。参见[混合输入说明](../docs/manual/interactive-input.md)。
+- `node tools/verify/interactive-container-browser.cjs --out=<new.json>`：当前container启动/隐藏/父class布局/代次和无SDK WebGL2对照；只读服务现有bundle，不构建、不写screen.windowSize，写显式报告及PNG。`--verify=<report.json>`只读检查。原Puzzle50材料缺失仍NOT_RUN，不冒称原反例已关闭。
+
+- `node tools/verify/interactive-container-audit.cjs --report=<report.json> --out=<new.json>`：只读复算真实成功子项并验证24种篡改拒绝；保留基线15受限失败，不运行浏览器。写显式新报告。参见[容器说明](../docs/manual/interactive-container.md)。
+
+- `node tools/verify/interactive-timeline-browser.cjs --out=<new.json>`：服务既有SDK，采集原生/定步形变、实际section滚动、WebAudio空闲/压力12落点和释放，写显式JSON/PNG；`--verify=`只读检查。WebAudio缺失保持NOT_RUN。
+- `node tools/verify/interactive-timeline-audit.cjs --report=<report.json> --out=<new.json>`：不启动浏览器，在实际成功子项上复算和篡改审计；仅写新路径，完整范围受限保持受限。
+- `node tools/verify/interactive-misuse-browser.cjs --out=<new.json>`：五类实际消费负例、原生状态、只读inspector与清理；临时生成effect JSON后清理，显式报告。`--verify=`只读。详见[误用诊断](../docs/manual/interactive-diagnostics.md)，不代表像素健康。
+
+
+### 当前颜色、性能与包内示例（IER-03/09/11）
+
+- `node tools/verify/interactive-water-browser.cjs --out=<new.json>`：只读服务既有SDK，异步逐引擎运行现有Water实际runtime验证（非shader-only）；写显式JSON及相邻原报告/log/PNG，不build/install，结束关闭服务。
+- `node tools/verify/interactive-color-compare-browser.cjs --out=<new.json>`：固定RGBA8目标比较原生oblique/discard及base/instance透明阴影，写新JSON/15PNG，关闭服务/浏览器；strict noEmit用interactive-color-compare.tsconfig.json。`interactive-color-compare-audit.cjs --report=<report.json> --out=<new.json>`只读身份/PNG/原始颜色并做10种篡改，写新审计，见[颜色对照](../docs/manual/interactive-color-controls.md)。
+- `node tools/verify/interactive-performance.cjs --out=<new.json>`：冻结36个5秒本机窗口，真实raw帧回调/CPU markers/工具成本，写新JSON及截图；result LIMITED，不是3×60秒实体设备验收。`interactive-performance-audit.cjs --report=<report.json> --out=<new.json>`只读重算/身份/释放及篡改，写新审计，见[性能边界](../docs/manual/interactive-performance.md)。
+- `node tools/examples/interactive-kit.cjs --write`刷新manual中的生成副本；`--check`只读逐字节比对，不改权威examples。`node tools/verify/interactive-kit-consumer.cjs --out=<new.json>`执行本地pack/prepack、临时offline install/已安装类型/esbuild与三浏览器普通路径，写tarball/chunks/JSON/60PNG后关闭并清理临时消费目录，不下载依赖或发布。`--verify=<report.json>`只读原始模型、PNG和身份。`interactive-kit-audit.cjs --report=<report.json> --out=<new.json>`只读实际行并做15种篡改，写新审计。详见[实际安装示例](../docs/manual/interactive-consumer-kit.md)。
+
+时间轴采集与音频/滚动边界见[时间轴手册](../docs/manual/interactive-timeline.md)。完整范围失败/NOT_RUN不会因只读审计通过变成PASS。

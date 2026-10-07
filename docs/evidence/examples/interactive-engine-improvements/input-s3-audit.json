@@ -1,0 +1,329 @@
+{
+  "schemaVersion": "ier-input-audit/1",
+  "baseline": {
+    "valid": false,
+    "scopePassed": false,
+    "errors": [
+      "browser/isolation/errors chromium/false"
+    ],
+    "notRun": [
+      {
+        "caseId": "blur",
+        "reason": "Headless foreground transition did not expose a real blur event",
+        "engine": "chromium",
+        "control": false
+      },
+      {
+        "caseId": "hidden",
+        "reason": "Headless foreground transition did not expose a real hidden event",
+        "engine": "chromium",
+        "control": false
+      },
+      {
+        "caseId": "blur",
+        "reason": "Headless foreground transition did not expose a real blur event",
+        "engine": "chromium",
+        "control": true
+      },
+      {
+        "caseId": "hidden",
+        "reason": "Headless foreground transition did not expose a real hidden event",
+        "engine": "chromium",
+        "control": true
+      },
+      {
+        "caseId": "canvas-touch-drag-20",
+        "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "firefox",
+        "control": false
+      },
+      {
+        "caseId": "multitouch",
+        "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "firefox",
+        "control": false
+      },
+      {
+        "caseId": "cancel",
+        "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "firefox",
+        "control": false
+      },
+      {
+        "caseId": "button-cancel",
+        "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "firefox",
+        "control": false
+      },
+      {
+        "caseId": "touch-scroll",
+        "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "firefox",
+        "control": false
+      },
+      {
+        "caseId": "blur",
+        "reason": "Headless foreground transition did not expose a real blur event",
+        "engine": "firefox",
+        "control": false
+      },
+      {
+        "caseId": "hidden",
+        "reason": "Headless foreground transition did not expose a real hidden event",
+        "engine": "firefox",
+        "control": false
+      },
+      {
+        "caseId": "canvas-touch-drag-20",
+        "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "firefox",
+        "control": true
+      },
+      {
+        "caseId": "multitouch",
+        "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "firefox",
+        "control": true
+      },
+      {
+        "caseId": "cancel",
+        "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "firefox",
+        "control": true
+      },
+      {
+        "caseId": "button-cancel",
+        "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "firefox",
+        "control": true
+      },
+      {
+        "caseId": "touch-scroll",
+        "reason": "Playwright firefox has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "firefox",
+        "control": true
+      },
+      {
+        "caseId": "blur",
+        "reason": "Headless foreground transition did not expose a real blur event",
+        "engine": "firefox",
+        "control": true
+      },
+      {
+        "caseId": "hidden",
+        "reason": "Headless foreground transition did not expose a real hidden event",
+        "engine": "firefox",
+        "control": true
+      },
+      {
+        "caseId": "canvas-touch-drag-20",
+        "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "webkit",
+        "control": false
+      },
+      {
+        "caseId": "multitouch",
+        "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "webkit",
+        "control": false
+      },
+      {
+        "caseId": "cancel",
+        "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "webkit",
+        "control": false
+      },
+      {
+        "caseId": "button-cancel",
+        "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "webkit",
+        "control": false
+      },
+      {
+        "caseId": "touch-scroll",
+        "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "webkit",
+        "control": false
+      },
+      {
+        "caseId": "blur",
+        "reason": "Headless foreground transition did not expose a real blur event",
+        "engine": "webkit",
+        "control": false
+      },
+      {
+        "caseId": "hidden",
+        "reason": "Headless foreground transition did not expose a real hidden event",
+        "engine": "webkit",
+        "control": false
+      },
+      {
+        "caseId": "canvas-touch-drag-20",
+        "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "webkit",
+        "control": true
+      },
+      {
+        "caseId": "multitouch",
+        "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "webkit",
+        "control": true
+      },
+      {
+        "caseId": "cancel",
+        "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "webkit",
+        "control": true
+      },
+      {
+        "caseId": "button-cancel",
+        "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "webkit",
+        "control": true
+      },
+      {
+        "caseId": "touch-scroll",
+        "reason": "Playwright webkit has touch tap; no supported multi-contact move/cancel protocol in this collector",
+        "engine": "webkit",
+        "control": true
+      },
+      {
+        "caseId": "blur",
+        "reason": "Headless foreground transition did not expose a real blur event",
+        "engine": "webkit",
+        "control": true
+      },
+      {
+        "caseId": "hidden",
+        "reason": "Headless foreground transition did not expose a real hidden event",
+        "engine": "webkit",
+        "control": true
+      }
+    ]
+  },
+  "acceptedMeasuredOperation": true,
+  "acceptedSupplementaryCases": 8,
+  "browserRunsAdded": 0,
+  "tests": [
+    {
+      "name": "double",
+      "rejected": true
+    },
+    {
+      "name": "untrusted",
+      "rejected": true
+    },
+    {
+      "name": "touchAlias",
+      "rejected": true
+    },
+    {
+      "name": "missingSubmission",
+      "rejected": true
+    },
+    {
+      "name": "late",
+      "rejected": true
+    },
+    {
+      "name": "future",
+      "rejected": true
+    },
+    {
+      "name": "frame",
+      "rejected": true
+    },
+    {
+      "name": "pose",
+      "rejected": true
+    },
+    {
+      "name": "hiddenMesh",
+      "rejected": true
+    },
+    {
+      "name": "pngSha",
+      "rejected": true
+    },
+    {
+      "name": "pngMissing",
+      "rejected": true
+    },
+    {
+      "name": "nan",
+      "rejected": true
+    },
+    {
+      "name": "notRun",
+      "rejected": true
+    },
+    {
+      "name": "contact",
+      "rejected": true
+    },
+    {
+      "name": "generation",
+      "rejected": true
+    },
+    {
+      "name": "keyboard",
+      "rejected": true
+    },
+    {
+      "name": "rewrite",
+      "rejected": true
+    },
+    {
+      "name": "hover",
+      "rejected": true
+    },
+    {
+      "name": "reset",
+      "rejected": true
+    },
+    {
+      "name": "range-cancel",
+      "rejected": true
+    },
+    {
+      "name": "wheel",
+      "rejected": true
+    },
+    {
+      "name": "multitouch",
+      "rejected": true
+    },
+    {
+      "name": "cancel",
+      "rejected": true
+    },
+    {
+      "name": "missingRow",
+      "rejected": true
+    },
+    {
+      "name": "missingAction",
+      "rejected": true
+    },
+    {
+      "name": "lostNotRun",
+      "rejected": true
+    },
+    {
+      "name": "leakedReference",
+      "rejected": true
+    },
+    {
+      "name": "sdkInHtml",
+      "rejected": true
+    },
+    {
+      "name": "sourceDrift",
+      "rejected": true
+    }
+  ],
+  "ok": true,
+  "limitations": [
+    "Baseline full scope remains false: PAL warnings and NOT_RUN are preserved, not compensated by mutation rejection"
+  ]
+}

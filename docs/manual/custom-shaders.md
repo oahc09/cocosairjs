@@ -225,3 +225,5 @@ PSO key 已包含 pass hash，而 pass hash 含 primitive，因此 POINT 与 LIN
 instancing、附加光照、阴影、反射和自定义管线可能创建或复用不同 IA，不能仅在普通 render queue 临时改图元。
 如后续实现 mesh 自动协调，需要统一传递 IA 图元、纳入 PSO key、明确显式 pass 覆盖优先级，
 并覆盖实例化 IA、子网格替换及全部绘制队列。点/线的 shadow shader 仍须由业务提供兼容版本。
+
+可选effect-layout输入必须为编译后的纯JSON。克隆前拒绝函数字段（issue `NON_JSON_FUNCTION`，含resource路径）与祖先循环（`NON_JSON_CYCLE`），保留`AIR_E_EFFECT_LAYOUT`总错误码；不要把带callable的活EffectAsset交给JSON预检。详见[误用诊断](interactive-diagnostics.md)。

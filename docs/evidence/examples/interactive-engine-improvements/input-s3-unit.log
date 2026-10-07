@@ -1,0 +1,34 @@
+PASS test/smoke/interactive-input.test.ts
+  IER-05 independent model/frame/PNG contract
+    √ accepts a visible legal false control fixture (78 ms)
+    √ accepts a visible legal true control fixture (73 ms)
+    √ rejects double activation (71 ms)
+    √ rejects no model activation (70 ms)
+    √ rejects no visible model update (72 ms)
+    √ rejects untrusted event (72 ms)
+    √ rejects mouse relabelled as touch (70 ms)
+    √ rejects duplicate click (71 ms)
+    √ rejects late submission (72 ms)
+    √ rejects future submission (71 ms)
+    √ rejects missing draw timestamp (70 ms)
+    √ rejects frozen frame (71 ms)
+    √ rejects wrong native pose (71 ms)
+    √ rejects detached mesh (72 ms)
+    √ rejects PNG SHA drift (71 ms)
+    √ rejects nonfinite DPR (68 ms)
+    √ rejects remaining contact (72 ms)
+    √ rejects changed generation (71 ms)
+    √ rejects honest NOT_RUN is not PASS (70 ms)
+    √ rejects a hash-correct black PNG (137 ms)
+    √ rejects viewport/PNG size mismatch (67 ms)
+    √ mobile mouse cannot count as touch (71 ms)
+    √ unknown supplementary cases are rejected
+    √ missing retirement/fresh stages cannot pass
+    √ self-reported completion cannot replace missing rows (1 ms)
+    √ bad/null reports return rejection
+
+Test Suites: 1 passed, 1 total
+Tests:       26 passed, 26 total
+Snapshots:   0 total
+Time:        3.658 s, estimated 4 s
+Ran all test suites matching /test\\smoke\\interactive-input.test.ts/i.

@@ -1,0 +1,96 @@
+{
+  "executionChannel": "Lead",
+  "method": "REAL_BROWSER_NATIVE_WEBGL2_CONTROL",
+  "results": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "before": {
+        "width": 640,
+        "height": 400,
+        "center": [
+          255,
+          0,
+          0,
+          255
+        ]
+      },
+      "after": {
+        "width": 480,
+        "height": 320,
+        "center": [
+          255,
+          0,
+          0,
+          255
+        ]
+      },
+      "gpu": {
+        "center": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "error": 0,
+        "lost": false,
+        "url": "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      },
+      "promoted": {
+        "width": 480,
+        "height": 320,
+        "center": [
+          255,
+          0,
+          0,
+          255
+        ]
+      }
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "before": {
+        "width": 640,
+        "height": 400,
+        "center": [
+          255,
+          0,
+          0,
+          255
+        ]
+      },
+      "after": {
+        "width": 480,
+        "height": 320,
+        "center": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      "gpu": {
+        "center": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "error": 0,
+        "lost": false,
+        "url": "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      },
+      "promoted": {
+        "width": 480,
+        "height": 320,
+        "center": [
+          255,
+          255,
+          255,
+          255
+        ]
+      }
+    }
+  ]
+}

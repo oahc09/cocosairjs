@@ -1,0 +1,1 @@
+{"compilerOptions":{"target":"ES2022","module":"ESNext","moduleResolution":"Node","strict":true,"noEmit":true,"skipLibCheck":true,"lib":["ES2022","DOM"],"baseUrl":"../..","paths":{"cocosair":["build/cocosair.module.d.ts"]},"types":[]},"files":["../../test/fixtures/interactive-color-compare/main.ts"]}

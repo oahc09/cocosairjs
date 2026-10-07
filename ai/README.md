@@ -32,6 +32,7 @@
 | 渲染目标、颜色与多通道 DX | — | [定向实施与验收](ledgers/rendering-contracts.md) |
 | 响应式宿主、输入与棋盘配方 | — | [修复与验收](ledgers/responsive-host-remediation.md) |
 | 原生网格、TRS 与渲染合同 | — | [ENG-01–09](ledgers/engine-contract-hardening.md) |
+| 互动引擎示例、诊断与验收补齐 | [IER-00～11 计划](plans/interactive-engine-improvements.md) | [执行台账](ledgers/interactive-engine-improvements.md) |
 
 ## 专项提示词
 

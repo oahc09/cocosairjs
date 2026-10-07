@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "ier-multipass-audit/1",
+  "executionChannel": "Lead",
+  "reportPath": "E:\\AIProMax\\github\\cocosair.js\\docs\\evidence\\examples\\interactive-engine-improvements\\multipass-s3.json",
+  "reportSha256": "9f5fea3b5b798117ca860633802a3e7d875c1c5fe482d613d01776790184b3b5",
+  "auditedAt": "2026-10-07T15:41:50.882Z",
+  "baseline": {
+    "ok": true,
+    "errors": []
+  },
+  "results": [
+    {
+      "name": "NOT_RUN-case",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture/capture-baseline: result NOT_RUN is not a tested PASS"
+      ]
+    },
+    {
+      "name": "wrong-browser",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture/capture-baseline: browser \"firefox 0.0\" != row \"chromium 149.0.7827.55\""
+      ]
+    },
+    {
+      "name": "wrong-format",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture/capture-baseline: colorFormat rgba16f != rgba8"
+      ]
+    },
+    {
+      "name": "future-input",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture/capture-baseline: inputSequence 99999 != event sequence 1"
+      ]
+    },
+    {
+      "name": "missing-draw",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture/capture-baseline: submittedFrame.afterDraw !== true"
+      ]
+    },
+    {
+      "name": "skip-required-full-checks",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture: full=false contradicts frozen plan (true)"
+      ]
+    },
+    {
+      "name": "normal-error",
+      "rejected": true,
+      "errors": [
+        "normal/chromium/capture: normal error: unexpected failure after capture"
+      ]
+    },
+    {
+      "name": "normal-untrusted",
+      "rejected": true,
+      "errors": [
+        "normal/chromium/capture: receivedEvents raw array missing/empty"
+      ]
+    },
+    {
+      "name": "all-matrix-skipped",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture: matrix combo rgba8/1 NOT_RUN cannot pass the measured matrix gate",
+        "chromium/1/capture: matrix combo rgba8/4 NOT_RUN cannot pass the measured matrix gate",
+        "chromium/1/capture: matrix combo rgba16f/1 NOT_RUN cannot pass the measured matrix gate",
+        "chromium/1/capture: matrix combo rgba16f/4 NOT_RUN cannot pass the measured matrix gate"
+      ]
+    },
+    {
+      "name": "duplicate-matrix",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture: matrix combos are not the exact set rgba8/rgba16f x 1/4: rgba8/1,rgba8/1,rgba8/1,rgba8/1"
+      ]
+    },
+    {
+      "name": "delete-reset",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture: caseIds capture-baseline,capture-resized != capture-baseline,capture-resized,capture-reset",
+        "case total 44 != 45"
+      ]
+    },
+    {
+      "name": "zero-std140-error",
+      "rejected": true,
+      "errors": [
+        "chromium/1/native: negative std140-layout: wrongGlError must be a real 0x501/0x502 and okGlError 0"
+      ]
+    },
+    {
+      "name": "nonadvancing-generation",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture: round 0: generationAfterResize 1 <= create 1",
+        "chromium/1/capture: round 1: generationAfterResize 1 <= create 1",
+        "chromium/1/capture: round 2: generationAfterResize 1 <= create 1",
+        "chromium/1/capture: round 3: generationAfterResize 1 <= create 1",
+        "chromium/1/capture: round 4: generationAfterResize 1 <= create 1",
+        "chromium/1/capture: round 5: generationAfterResize 1 <= create 1",
+        "chromium/1/capture: round 6: generationAfterResize 1 <= create 1",
+        "chromium/1/capture: round 7: generationAfterResize 1 <= create 1",
+        "chromium/1/capture: round 8: generationAfterResize 1 <= create 1",
+        "chromium/1/capture: round 9: generationAfterResize 1 <= create 1"
+      ]
+    },
+    {
+      "name": "undestroyed-native",
+      "rejected": true,
+      "errors": [
+        "chromium/1/native: round 0: per-round destruction not observed (freed bytes)",
+        "chromium/1/native: round 1: per-round destruction not observed (freed bytes)",
+        "chromium/1/native: round 2: per-round destruction not observed (freed bytes)",
+        "chromium/1/native: round 3: per-round destruction not observed (freed bytes)",
+        "chromium/1/native: round 4: per-round destruction not observed (freed bytes)",
+        "chromium/1/native: round 5: per-round destruction not observed (freed bytes)",
+        "chromium/1/native: round 6: per-round destruction not observed (freed bytes)",
+        "chromium/1/native: round 7: per-round destruction not observed (freed bytes)",
+        "chromium/1/native: round 8: per-round destruction not observed (freed bytes)",
+        "chromium/1/native: round 9: per-round destruction not observed (freed bytes)"
+      ]
+    },
+    {
+      "name": "page-error",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture: browser errors [\"unexpected\"][]"
+      ]
+    },
+    {
+      "name": "ref-retained",
+      "rejected": true,
+      "errors": [
+        "chromium/1/capture: owned refs not paired 1->0"
+      ]
+    }
+  ],
+  "rejected": 16,
+  "total": 16,
+  "browserRunsAdded": 0,
+  "ok": true
+}

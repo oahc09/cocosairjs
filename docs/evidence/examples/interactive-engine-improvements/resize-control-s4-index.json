@@ -1,0 +1,48 @@
+{
+  "executionChannel": "Lead",
+  "method": "REAL_BROWSER_NATIVE_WEBGL2_CONTROL",
+  "containsSDK": false,
+  "rawReport": "resize-control-s4-raw.json",
+  "files": [
+    {
+      "path": "resize-control-s4-raw.json",
+      "sha256": "d47a687fc424090be5d3d898e03eb26b9ba4398d178d10de8011caf219e0bb29",
+      "bytes": 1626
+    },
+    {
+      "path": "resize-control-s4-source.txt",
+      "sha256": "4d2b2b3b56c0162f9b8a586249c805f3e4a181cda3e5977e7f3dcb62b1606834",
+      "bytes": 2174
+    },
+    {
+      "path": "resize-control-s4-chromium-before.png",
+      "sha256": "4d896353cbdc0e14b2066ec2816244f58323557b6e31b8c37312f1d7d76fc6b9",
+      "bytes": 1602
+    },
+    {
+      "path": "resize-control-s4-chromium-after.png",
+      "sha256": "c1e56192fd5bccf062a651c8beb368e2529ab76a6c6995f7e7d6719561179f23",
+      "bytes": 1181
+    },
+    {
+      "path": "resize-control-s4-chromium-promoted.png",
+      "sha256": "c1e56192fd5bccf062a651c8beb368e2529ab76a6c6995f7e7d6719561179f23",
+      "bytes": 1181
+    },
+    {
+      "path": "resize-control-s4-webkit-before.png",
+      "sha256": "b33271626735a5861641e4a33126c78049e622e841b0f0261c9e671db0ecb788",
+      "bytes": 2225
+    },
+    {
+      "path": "resize-control-s4-webkit-after.png",
+      "sha256": "135cdeced0f5d56ba6f940f34e76d909444681e7393e335a5a81b2ce2a811884",
+      "bytes": 1617
+    },
+    {
+      "path": "resize-control-s4-webkit-promoted.png",
+      "sha256": "135cdeced0f5d56ba6f940f34e76d909444681e7393e335a5a81b2ce2a811884",
+      "bytes": 1617
+    }
+  ]
+}

@@ -1,0 +1,1445 @@
+{
+  "schemaVersion": "ier-misuse/1",
+  "subset": true,
+  "completed": false,
+  "executionChannel": "Lead",
+  "startedAt": "2026-10-07T22:49:07.111Z",
+  "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-misuse-browser.cjs --out=output/interactive-engine-improvements/lead-misuse-browser-s3.json",
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "fingerprints": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6631057,
+      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303518,
+      "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+    },
+    {
+      "path": "tools/debug/effect-layout.ts",
+      "bytes": 17180,
+      "sha256": "c3985a0eb4bfcaec59e82a3b699f5253cfc254b008806b50268a432c8bce499b"
+    },
+    {
+      "path": "test/fixtures/interactive-misuse/index.html",
+      "bytes": 269,
+      "sha256": "4e447aec44af6323784a2b8769d70535516e4605a6d1654e0d9f5a39fd87e282"
+    },
+    {
+      "path": "test/fixtures/interactive-misuse/main.ts",
+      "bytes": 5530,
+      "sha256": "a7b40e5b122d9fd17b9044669b4356c8243cf3a84e4a2274e5f02882255643e2"
+    },
+    {
+      "path": "test/fixtures/effect-layout/spec.json",
+      "bytes": 686,
+      "sha256": "a82dcca97701ac8829a941075423dedc55e034393202a8d8ff4f021c1969f4a1"
+    },
+    {
+      "path": "tools/build/effect-json.mjs",
+      "bytes": 10548,
+      "sha256": "9d090611aa72f3a8017677e5d8c4848e4c0ce9126acb95bfbbec6c53d25f0c16"
+    },
+    {
+      "path": "tools/verify/interactive-misuse-browser.cjs",
+      "bytes": 5818,
+      "sha256": "8110d4270339bd91dfabaffe9437f603e468d02bed3ba1103cfbd4ce2bc6b9a9"
+    },
+    {
+      "path": "tools/verify/interactive-misuse-browser.tsconfig.json",
+      "bytes": 314,
+      "sha256": "b7225a8b4e8392fca4a10d464f5ca72f5f19488ab49fb153a1b8b5ffbe725754"
+    },
+    {
+      "path": "tools/verify/browser-engines.cjs",
+      "bytes": 2159,
+      "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+    },
+    {
+      "path": "tools/verify/competitive-example-server.cjs",
+      "bytes": 1923,
+      "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+    }
+  ],
+  "rows": [
+    {
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "pageErrors": [],
+      "console": [
+        {
+          "type": "timeEnd",
+          "text": "Init Base: 1.708984375 ms"
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Infrastructure: 68.577880859375 ms"
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init SubSystem: 9.178955078125 ms"
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Project: 5.475830078125 ms"
+        }
+      ],
+      "observation": {
+        "rows": [
+          {
+            "id": "mesh-factory",
+            "responsibility": "consumer-call",
+            "location": "Mesh.createMesh",
+            "wrong": {
+              "result": "THREW",
+              "name": "TypeError",
+              "message": "TypeError: wrong.createMesh is not a function"
+            },
+            "correct": {
+              "entry": "utils.createMesh",
+              "indexCount": 3,
+              "vertexCount": 3
+            },
+            "next": "Use utils.createMesh for static IGeometry, or utils.MeshUtils.createDynamicMesh after startup"
+          },
+          {
+            "id": "component-child",
+            "responsibility": "consumer-type",
+            "location": "Scene.addChild(Component)",
+            "wrong": {
+              "result": "THREW",
+              "name": "TypeError",
+              "message": "TypeError: child.setParent is not a function"
+            },
+            "correct": {
+              "componentNode": true,
+              "parent": true
+            },
+            "next": "Scene.addChild accepts Node. Attach components with node.addComponent. Scene itself is a Node; its addComponent API is not categorically forbidden"
+          },
+          {
+            "id": "base-instance",
+            "responsibility": "consumer-material",
+            "location": "Material.overridePipelineStates pass 0",
+            "wrong": {
+              "before": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "after": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "diagnostic": {
+                "code": "CONSUMER_BASE_OVERRIDE_NOOP",
+                "severity": "warning",
+                "location": "Material.overridePipelineStates pass 0",
+                "basis": "Native depthWrite unchanged after requested false; consumer assertion, not a published SDK code"
+              }
+            },
+            "correct": {
+              "base": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": false,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "instance": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": false,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": true,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ]
+            },
+            "next": "Set base states in initialize; use MaterialInstance for runtime overrides"
+          },
+          {
+            "id": "binding",
+            "responsibility": "consumer-effect",
+            "location": "shader0/material-set sampler binding0",
+            "wrong": {
+              "result": "THREW",
+              "name": "AirEffectLayoutError",
+              "message": "AirEffectLayoutError: [AIR_E_EFFECT_LAYOUT] BINDING_COLLISION: Constants and mapA share 1:0; REFLECTION_MISMATCH: GLSL layout differs from reflection"
+            },
+            "correct": {
+              "bindings": [
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "Constants",
+                  "kind": "block",
+                  "set": 1,
+                  "binding": 0
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "mapA",
+                  "kind": "sampler",
+                  "set": 1,
+                  "binding": 1
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "mapB",
+                  "kind": "sampler",
+                  "set": 1,
+                  "binding": 2
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "CCGlobal",
+                  "kind": "block",
+                  "set": 0,
+                  "binding": 0
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "CCCamera",
+                  "kind": "block",
+                  "set": 0,
+                  "binding": 1
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "CCLocal",
+                  "kind": "block",
+                  "set": 2,
+                  "binding": 0
+                }
+              ],
+              "unchanged": true,
+              "sourceName": "air-port-two-textures"
+            },
+            "next": "Use opt-in effect-layout preflight for compiled JSON; GPU/null texture fallback remains a separate observation"
+          },
+          {
+            "id": "function-clone",
+            "responsibility": "optional-tool-input",
+            "location": "$.factory",
+            "wrong": {
+              "result": "THREW",
+              "name": "AirEffectLayoutError",
+              "message": "AirEffectLayoutError: [AIR_E_EFFECT_LAYOUT] NON_JSON_FUNCTION: Expected compiled effect JSON; preserve live callable resources outside this preflight"
+            },
+            "correct": {
+              "callablePreserved": true,
+              "jsonOnlyAccepted": true
+            },
+            "next": "Keep callable constructors outside compiled JSON. Do not JSON-clone a live EffectAsset; create an asset and copy verified JSON shader/technique data explicitly"
+          }
+        ],
+        "inspectBefore": {
+          "refs": [
+            1,
+            1,
+            1
+          ],
+          "mesh": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "draws": 0,
+          "passes": "[{\"index\":0,\"program\":\"unlit|unlit-vs:vert|unlit-fs:frag\",\"propertyIndex\":0,\"priority\":128,\"phase\":16,\"stage\":100,\"depthTest\":true,\"depthWrite\":false,\"depthFunc\":1,\"cullMode\":2,\"blendTargets\":[{\"blend\":false,\"blendSrc\":1,\"blendDst\":0,\"blendEq\":0,\"blendSrcAlpha\":1,\"blendDstAlpha\":0,\"blendAlphaEq\":0,\"blendColorMask\":15}],\"textures\":[{\"name\":\"mainTexture\",\"binding\":2,\"index\":0,\"bound\":true,\"format\":{\"format\":35,\"name\":\"RGBA8\",\"srgb\":false,\"depth\":false},\"width\":2,\"height\":2,\"mipLevels\":1,\"comparison\":7}]}]"
+        },
+        "inspectAfter": {
+          "refs": [
+            1,
+            1,
+            1
+          ],
+          "mesh": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "draws": 0,
+          "passes": "[{\"index\":0,\"program\":\"unlit|unlit-vs:vert|unlit-fs:frag\",\"propertyIndex\":0,\"priority\":128,\"phase\":16,\"stage\":100,\"depthTest\":true,\"depthWrite\":false,\"depthFunc\":1,\"cullMode\":2,\"blendTargets\":[{\"blend\":false,\"blendSrc\":1,\"blendDst\":0,\"blendEq\":0,\"blendSrcAlpha\":1,\"blendDstAlpha\":0,\"blendAlphaEq\":0,\"blendColorMask\":15}],\"textures\":[{\"name\":\"mainTexture\",\"binding\":2,\"index\":0,\"bound\":true,\"format\":{\"format\":35,\"name\":\"RGBA8\",\"srgb\":false,\"depth\":false},\"width\":2,\"height\":2,\"mipLevels\":1,\"comparison\":7}]}]"
+        },
+        "scope": {
+          "materialSetOnly": true,
+          "geometry": "sampled-local-triangle-winding",
+          "reflection": [
+            "unavailable"
+          ],
+          "pixelAcceptance": "NOT_RUN: inspector health never substitutes visible PNG"
+        }
+      },
+      "release": {
+        "refs": [
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          }
+        ]
+      },
+      "consoleGroups": [
+        {
+          "type": "timeEnd",
+          "text": "Init Base: 1.708984375 ms",
+          "count": 1
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Infrastructure: 68.577880859375 ms",
+          "count": 1
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init SubSystem: 9.178955078125 ms",
+          "count": 1
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Project: 5.475830078125 ms",
+          "count": 1
+        }
+      ],
+      "validation": {
+        "pass": true,
+        "errors": []
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "155.0",
+      "pageErrors": [],
+      "console": [
+        {
+          "type": "timeEnd",
+          "text": "Init Base"
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Infrastructure"
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init SubSystem"
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Project"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"An AudioContext was prevented from starting automatically. It must be created or resumed after a user gesture on the page.\" {file: \"http://127.0.0.1:60881/build/cocosair.module.js\" line: 135198}]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\" {file: \"http://127.0.0.1:60881/build/cocosair.module.js\" line: 156303}]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+        }
+      ],
+      "observation": {
+        "rows": [
+          {
+            "id": "mesh-factory",
+            "responsibility": "consumer-call",
+            "location": "Mesh.createMesh",
+            "wrong": {
+              "result": "THREW",
+              "name": "TypeError",
+              "message": "TypeError: wrong.createMesh is not a function"
+            },
+            "correct": {
+              "entry": "utils.createMesh",
+              "indexCount": 3,
+              "vertexCount": 3
+            },
+            "next": "Use utils.createMesh for static IGeometry, or utils.MeshUtils.createDynamicMesh after startup"
+          },
+          {
+            "id": "component-child",
+            "responsibility": "consumer-type",
+            "location": "Scene.addChild(Component)",
+            "wrong": {
+              "result": "THREW",
+              "name": "TypeError",
+              "message": "TypeError: child.setParent is not a function"
+            },
+            "correct": {
+              "componentNode": true,
+              "parent": true
+            },
+            "next": "Scene.addChild accepts Node. Attach components with node.addComponent. Scene itself is a Node; its addComponent API is not categorically forbidden"
+          },
+          {
+            "id": "base-instance",
+            "responsibility": "consumer-material",
+            "location": "Material.overridePipelineStates pass 0",
+            "wrong": {
+              "before": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "after": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "diagnostic": {
+                "code": "CONSUMER_BASE_OVERRIDE_NOOP",
+                "severity": "warning",
+                "location": "Material.overridePipelineStates pass 0",
+                "basis": "Native depthWrite unchanged after requested false; consumer assertion, not a published SDK code"
+              }
+            },
+            "correct": {
+              "base": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": false,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "instance": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": false,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": true,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ]
+            },
+            "next": "Set base states in initialize; use MaterialInstance for runtime overrides"
+          },
+          {
+            "id": "binding",
+            "responsibility": "consumer-effect",
+            "location": "shader0/material-set sampler binding0",
+            "wrong": {
+              "result": "THREW",
+              "name": "AirEffectLayoutError",
+              "message": "AirEffectLayoutError: [AIR_E_EFFECT_LAYOUT] BINDING_COLLISION: Constants and mapA share 1:0; REFLECTION_MISMATCH: GLSL layout differs from reflection"
+            },
+            "correct": {
+              "bindings": [
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "Constants",
+                  "kind": "block",
+                  "set": 1,
+                  "binding": 0
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "mapA",
+                  "kind": "sampler",
+                  "set": 1,
+                  "binding": 1
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "mapB",
+                  "kind": "sampler",
+                  "set": 1,
+                  "binding": 2
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "CCGlobal",
+                  "kind": "block",
+                  "set": 0,
+                  "binding": 0
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "CCCamera",
+                  "kind": "block",
+                  "set": 0,
+                  "binding": 1
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "CCLocal",
+                  "kind": "block",
+                  "set": 2,
+                  "binding": 0
+                }
+              ],
+              "unchanged": true,
+              "sourceName": "air-port-two-textures"
+            },
+            "next": "Use opt-in effect-layout preflight for compiled JSON; GPU/null texture fallback remains a separate observation"
+          },
+          {
+            "id": "function-clone",
+            "responsibility": "optional-tool-input",
+            "location": "$.factory",
+            "wrong": {
+              "result": "THREW",
+              "name": "AirEffectLayoutError",
+              "message": "AirEffectLayoutError: [AIR_E_EFFECT_LAYOUT] NON_JSON_FUNCTION: Expected compiled effect JSON; preserve live callable resources outside this preflight"
+            },
+            "correct": {
+              "callablePreserved": true,
+              "jsonOnlyAccepted": true
+            },
+            "next": "Keep callable constructors outside compiled JSON. Do not JSON-clone a live EffectAsset; create an asset and copy verified JSON shader/technique data explicitly"
+          }
+        ],
+        "inspectBefore": {
+          "refs": [
+            1,
+            1,
+            1
+          ],
+          "mesh": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "draws": 0,
+          "passes": "[{\"index\":0,\"program\":\"unlit|unlit-vs:vert|unlit-fs:frag\",\"propertyIndex\":0,\"priority\":128,\"phase\":16,\"stage\":100,\"depthTest\":true,\"depthWrite\":false,\"depthFunc\":1,\"cullMode\":2,\"blendTargets\":[{\"blend\":false,\"blendSrc\":1,\"blendDst\":0,\"blendEq\":0,\"blendSrcAlpha\":1,\"blendDstAlpha\":0,\"blendAlphaEq\":0,\"blendColorMask\":15}],\"textures\":[{\"name\":\"mainTexture\",\"binding\":2,\"index\":0,\"bound\":true,\"format\":{\"format\":35,\"name\":\"RGBA8\",\"srgb\":false,\"depth\":false},\"width\":2,\"height\":2,\"mipLevels\":1,\"comparison\":7}]}]"
+        },
+        "inspectAfter": {
+          "refs": [
+            1,
+            1,
+            1
+          ],
+          "mesh": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "draws": 0,
+          "passes": "[{\"index\":0,\"program\":\"unlit|unlit-vs:vert|unlit-fs:frag\",\"propertyIndex\":0,\"priority\":128,\"phase\":16,\"stage\":100,\"depthTest\":true,\"depthWrite\":false,\"depthFunc\":1,\"cullMode\":2,\"blendTargets\":[{\"blend\":false,\"blendSrc\":1,\"blendDst\":0,\"blendEq\":0,\"blendSrcAlpha\":1,\"blendDstAlpha\":0,\"blendAlphaEq\":0,\"blendColorMask\":15}],\"textures\":[{\"name\":\"mainTexture\",\"binding\":2,\"index\":0,\"bound\":true,\"format\":{\"format\":35,\"name\":\"RGBA8\",\"srgb\":false,\"depth\":false},\"width\":2,\"height\":2,\"mipLevels\":1,\"comparison\":7}]}]"
+        },
+        "scope": {
+          "materialSetOnly": true,
+          "geometry": "sampled-local-triangle-winding",
+          "reflection": [
+            "unavailable"
+          ],
+          "pixelAcceptance": "NOT_RUN: inspector health never substitutes visible PNG"
+        }
+      },
+      "release": {
+        "refs": [
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          }
+        ]
+      },
+      "consoleGroups": [
+        {
+          "type": "timeEnd",
+          "text": "Init Base",
+          "count": 1
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Infrastructure",
+          "count": 1
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init SubSystem",
+          "count": 1
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Project",
+          "count": 1
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"An AudioContext was prevented from starting automatically. It must be created or resumed after a user gesture on the page.\" {file: \"http://127.0.0.1:60881/build/cocosair.module.js\" line: 135198}]",
+          "count": 1
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\" {file: \"http://127.0.0.1:60881/build/cocosair.module.js\" line: 156303}]",
+          "count": 1
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]",
+          "count": 4
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]",
+          "count": 4
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]",
+          "count": 4
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]",
+          "count": 4
+        },
+        {
+          "type": "warning",
+          "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]",
+          "count": 4
+        }
+      ],
+      "validation": {
+        "pass": true,
+        "errors": []
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6",
+      "pageErrors": [],
+      "console": [
+        {
+          "type": "timeEnd",
+          "text": "Init Base: 2.251ms"
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Infrastructure: 542.305ms"
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init SubSystem: 9.640ms"
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Project: 9.702ms"
+        }
+      ],
+      "observation": {
+        "rows": [
+          {
+            "id": "mesh-factory",
+            "responsibility": "consumer-call",
+            "location": "Mesh.createMesh",
+            "wrong": {
+              "result": "THREW",
+              "name": "TypeError",
+              "message": "TypeError: wrong.createMesh is not a function. (In 'wrong.createMesh(geometry)', 'wrong.createMesh' is undefined)"
+            },
+            "correct": {
+              "entry": "utils.createMesh",
+              "indexCount": 3,
+              "vertexCount": 3
+            },
+            "next": "Use utils.createMesh for static IGeometry, or utils.MeshUtils.createDynamicMesh after startup"
+          },
+          {
+            "id": "component-child",
+            "responsibility": "consumer-type",
+            "location": "Scene.addChild(Component)",
+            "wrong": {
+              "result": "THREW",
+              "name": "TypeError",
+              "message": "TypeError: child.setParent is not a function. (In 'child.setParent(this)', 'child.setParent' is undefined)"
+            },
+            "correct": {
+              "componentNode": true,
+              "parent": true
+            },
+            "next": "Scene.addChild accepts Node. Attach components with node.addComponent. Scene itself is a Node; its addComponent API is not categorically forbidden"
+          },
+          {
+            "id": "base-instance",
+            "responsibility": "consumer-material",
+            "location": "Material.overridePipelineStates pass 0",
+            "wrong": {
+              "before": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "after": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "diagnostic": {
+                "code": "CONSUMER_BASE_OVERRIDE_NOOP",
+                "severity": "warning",
+                "location": "Material.overridePipelineStates pass 0",
+                "basis": "Native depthWrite unchanged after requested false; consumer assertion, not a published SDK code"
+              }
+            },
+            "correct": {
+              "base": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": false,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": false,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ],
+              "instance": [
+                {
+                  "index": 0,
+                  "program": "unlit|unlit-vs:vert|unlit-fs:frag",
+                  "propertyIndex": 0,
+                  "priority": 128,
+                  "phase": 16,
+                  "stage": 100,
+                  "depthTest": true,
+                  "depthWrite": false,
+                  "depthFunc": 1,
+                  "cullMode": 2,
+                  "blendTargets": [
+                    {
+                      "blend": true,
+                      "blendSrc": 1,
+                      "blendDst": 0,
+                      "blendEq": 0,
+                      "blendSrcAlpha": 1,
+                      "blendDstAlpha": 0,
+                      "blendAlphaEq": 0,
+                      "blendColorMask": 15
+                    }
+                  ],
+                  "textures": [
+                    {
+                      "name": "mainTexture",
+                      "binding": 2,
+                      "index": 0,
+                      "bound": true,
+                      "format": {
+                        "format": 35,
+                        "name": "RGBA8",
+                        "srgb": false,
+                        "depth": false
+                      },
+                      "width": 2,
+                      "height": 2,
+                      "mipLevels": 1,
+                      "comparison": 7
+                    }
+                  ]
+                }
+              ]
+            },
+            "next": "Set base states in initialize; use MaterialInstance for runtime overrides"
+          },
+          {
+            "id": "binding",
+            "responsibility": "consumer-effect",
+            "location": "shader0/material-set sampler binding0",
+            "wrong": {
+              "result": "THREW",
+              "name": "AirEffectLayoutError",
+              "message": "AirEffectLayoutError: [AIR_E_EFFECT_LAYOUT] BINDING_COLLISION: Constants and mapA share 1:0; REFLECTION_MISMATCH: GLSL layout differs from reflection"
+            },
+            "correct": {
+              "bindings": [
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "Constants",
+                  "kind": "block",
+                  "set": 1,
+                  "binding": 0
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "mapA",
+                  "kind": "sampler",
+                  "set": 1,
+                  "binding": 1
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "mapB",
+                  "kind": "sampler",
+                  "set": 1,
+                  "binding": 2
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "CCGlobal",
+                  "kind": "block",
+                  "set": 0,
+                  "binding": 0
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "CCCamera",
+                  "kind": "block",
+                  "set": 0,
+                  "binding": 1
+                },
+                {
+                  "shader": "air-port-two-textures|c33348769120c79a",
+                  "name": "CCLocal",
+                  "kind": "block",
+                  "set": 2,
+                  "binding": 0
+                }
+              ],
+              "unchanged": true,
+              "sourceName": "air-port-two-textures"
+            },
+            "next": "Use opt-in effect-layout preflight for compiled JSON; GPU/null texture fallback remains a separate observation"
+          },
+          {
+            "id": "function-clone",
+            "responsibility": "optional-tool-input",
+            "location": "$.factory",
+            "wrong": {
+              "result": "THREW",
+              "name": "AirEffectLayoutError",
+              "message": "AirEffectLayoutError: [AIR_E_EFFECT_LAYOUT] NON_JSON_FUNCTION: Expected compiled effect JSON; preserve live callable resources outside this preflight"
+            },
+            "correct": {
+              "callablePreserved": true,
+              "jsonOnlyAccepted": true
+            },
+            "next": "Keep callable constructors outside compiled JSON. Do not JSON-clone a live EffectAsset; create an asset and copy verified JSON shader/technique data explicitly"
+          }
+        ],
+        "inspectBefore": {
+          "refs": [
+            1,
+            1,
+            1
+          ],
+          "mesh": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "draws": 0,
+          "passes": "[{\"index\":0,\"program\":\"unlit|unlit-vs:vert|unlit-fs:frag\",\"propertyIndex\":0,\"priority\":128,\"phase\":16,\"stage\":100,\"depthTest\":true,\"depthWrite\":false,\"depthFunc\":1,\"cullMode\":2,\"blendTargets\":[{\"blend\":false,\"blendSrc\":1,\"blendDst\":0,\"blendEq\":0,\"blendSrcAlpha\":1,\"blendDstAlpha\":0,\"blendAlphaEq\":0,\"blendColorMask\":15}],\"textures\":[{\"name\":\"mainTexture\",\"binding\":2,\"index\":0,\"bound\":true,\"format\":{\"format\":35,\"name\":\"RGBA8\",\"srgb\":false,\"depth\":false},\"width\":2,\"height\":2,\"mipLevels\":1,\"comparison\":7}]}]"
+        },
+        "inspectAfter": {
+          "refs": [
+            1,
+            1,
+            1
+          ],
+          "mesh": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "draws": 0,
+          "passes": "[{\"index\":0,\"program\":\"unlit|unlit-vs:vert|unlit-fs:frag\",\"propertyIndex\":0,\"priority\":128,\"phase\":16,\"stage\":100,\"depthTest\":true,\"depthWrite\":false,\"depthFunc\":1,\"cullMode\":2,\"blendTargets\":[{\"blend\":false,\"blendSrc\":1,\"blendDst\":0,\"blendEq\":0,\"blendSrcAlpha\":1,\"blendDstAlpha\":0,\"blendAlphaEq\":0,\"blendColorMask\":15}],\"textures\":[{\"name\":\"mainTexture\",\"binding\":2,\"index\":0,\"bound\":true,\"format\":{\"format\":35,\"name\":\"RGBA8\",\"srgb\":false,\"depth\":false},\"width\":2,\"height\":2,\"mipLevels\":1,\"comparison\":7}]}]"
+        },
+        "scope": {
+          "materialSetOnly": true,
+          "geometry": "sampled-local-triangle-winding",
+          "reflection": [
+            "unavailable"
+          ],
+          "pixelAcceptance": "NOT_RUN: inspector health never substitutes visible PNG"
+        }
+      },
+      "release": {
+        "refs": [
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          },
+          {
+            "before": 1,
+            "after": 0
+          }
+        ]
+      },
+      "consoleGroups": [
+        {
+          "type": "timeEnd",
+          "text": "Init Base: 2.251ms",
+          "count": 1
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Infrastructure: 542.305ms",
+          "count": 1
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init SubSystem: 9.640ms",
+          "count": 1
+        },
+        {
+          "type": "timeEnd",
+          "text": "Init Project: 9.702ms",
+          "count": 1
+        }
+      ],
+      "validation": {
+        "pass": true,
+        "errors": []
+      }
+    }
+  ],
+  "limitations": [
+    "No drawing/pixel or complete shader coverage claim",
+    "Optional modules not requested here; absence of warning is not missing capability success",
+    "Console aggregation is report-only and preserves every original message",
+    "Function is an explicit consumer field; no claim that SDK builtins contain unsupported callable JSON"
+  ],
+  "endedAt": "2026-10-07T22:49:20.807Z",
+  "validation": {
+    "scopePassed": true,
+    "errors": []
+  },
+  "exitCode": 0
+}

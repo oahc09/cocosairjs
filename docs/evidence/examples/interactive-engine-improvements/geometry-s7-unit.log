@@ -1,0 +1,8 @@
+PASS test/smoke/interactive-geometry.test.ts (59.661 s)
+PASS test/smoke/interactive-geometry-review.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       51 passed, 51 total
+Snapshots:   0 total
+Time:        60.491 s, estimated 103 s
+Ran all test suites matching /test\\smoke\\interactive-geometry.test.ts|test\\smoke\\interactive-geometry-review.test.ts/i.

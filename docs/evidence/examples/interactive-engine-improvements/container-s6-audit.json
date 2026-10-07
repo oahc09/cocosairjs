@@ -1,0 +1,668 @@
+{
+  "schemaVersion": "ier-container-audit/1",
+  "baseline": {
+    "valid": false,
+    "scopePassed": false,
+    "errors": [
+      "webkit/1/narrow-class: compositor target missing/misplaced",
+      "webkit/1/wide-class: compositor target missing/misplaced",
+      "webkit/1/recovered: compositor target missing/misplaced",
+      "webkit/1/final-tab: compositor target missing/misplaced",
+      "webkit/1/fresh-input: compositor target missing/misplaced",
+      "webkit/1.25/narrow-class: compositor target missing/misplaced",
+      "webkit/1.25/wide-class: compositor target missing/misplaced",
+      "webkit/1.25/recovered: compositor target missing/misplaced",
+      "webkit/1.25/final-tab: compositor target missing/misplaced",
+      "webkit/1.25/fresh-input: compositor target missing/misplaced",
+      "webkit/2/narrow-class: compositor target missing/misplaced",
+      "webkit/2/wide-class: compositor target missing/misplaced",
+      "webkit/2/recovered: compositor target missing/misplaced",
+      "webkit/2/final-tab: compositor target missing/misplaced",
+      "webkit/2/fresh-input: compositor target missing/misplaced"
+    ]
+  },
+  "tests": [
+    {
+      "name": "zeroSize",
+      "rejected": true
+    },
+    {
+      "name": "notReady",
+      "rejected": true
+    },
+    {
+      "name": "buffer",
+      "rejected": true
+    },
+    {
+      "name": "camera",
+      "rejected": true
+    },
+    {
+      "name": "submitted",
+      "rejected": true
+    },
+    {
+      "name": "inlineWorkaround",
+      "rejected": true
+    },
+    {
+      "name": "wrongDpr",
+      "rejected": true
+    },
+    {
+      "name": "pose",
+      "rejected": true
+    },
+    {
+      "name": "png",
+      "rejected": true
+    },
+    {
+      "name": "missingPng",
+      "rejected": true
+    },
+    {
+      "name": "reference",
+      "rejected": true
+    },
+    {
+      "name": "gpuZero",
+      "rejected": true
+    },
+    {
+      "name": "containsSDK",
+      "rejected": true
+    },
+    {
+      "name": "glError",
+      "rejected": true
+    },
+    {
+      "name": "contextLost",
+      "rejected": true
+    },
+    {
+      "name": "controlPng",
+      "rejected": true
+    },
+    {
+      "name": "missingRow",
+      "rejected": true
+    },
+    {
+      "name": "missingState",
+      "rejected": true
+    },
+    {
+      "name": "sourceDrift",
+      "rejected": true
+    },
+    {
+      "name": "coldMissing",
+      "rejected": true
+    },
+    {
+      "name": "releaseRef",
+      "rejected": true
+    },
+    {
+      "name": "releaseObserver",
+      "rejected": true
+    },
+    {
+      "name": "sdkInControl",
+      "rejected": true
+    },
+    {
+      "name": "staleNavigation",
+      "rejected": true
+    }
+  ],
+  "browserRunsAdded": 0,
+  "acceptedStates": 48,
+  "failedStates": 15,
+  "controlObservations": [
+    {
+      "engine": "chromium",
+      "dpr": 1,
+      "name": "initial-run",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "chromium",
+      "dpr": 1,
+      "name": "narrow-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "chromium",
+      "dpr": 1,
+      "name": "wide-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "chromium",
+      "dpr": 1.25,
+      "name": "initial-run",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "chromium",
+      "dpr": 1.25,
+      "name": "narrow-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "chromium",
+      "dpr": 1.25,
+      "name": "wide-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "chromium",
+      "dpr": 2,
+      "name": "initial-run",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "chromium",
+      "dpr": 2,
+      "name": "narrow-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "chromium",
+      "dpr": 2,
+      "name": "wide-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "firefox",
+      "dpr": 1,
+      "name": "initial-run",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "firefox",
+      "dpr": 1,
+      "name": "narrow-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "firefox",
+      "dpr": 1,
+      "name": "wide-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "firefox",
+      "dpr": 1.25,
+      "name": "initial-run",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "firefox",
+      "dpr": 1.25,
+      "name": "narrow-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "firefox",
+      "dpr": 1.25,
+      "name": "wide-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "firefox",
+      "dpr": 2,
+      "name": "initial-run",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "firefox",
+      "dpr": 2,
+      "name": "narrow-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "firefox",
+      "dpr": 2,
+      "name": "wide-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "webkit",
+      "dpr": 1,
+      "name": "initial-run",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "webkit",
+      "dpr": 1,
+      "name": "narrow-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        17,
+        28,
+        44,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": false
+    },
+    {
+      "engine": "webkit",
+      "dpr": 1,
+      "name": "wide-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        17,
+        28,
+        44,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": false
+    },
+    {
+      "engine": "webkit",
+      "dpr": 1.25,
+      "name": "initial-run",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "webkit",
+      "dpr": 1.25,
+      "name": "narrow-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        17,
+        28,
+        44,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": false
+    },
+    {
+      "engine": "webkit",
+      "dpr": 1.25,
+      "name": "wide-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        17,
+        28,
+        44,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": false
+    },
+    {
+      "engine": "webkit",
+      "dpr": 2,
+      "name": "initial-run",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": true
+    },
+    {
+      "engine": "webkit",
+      "dpr": 2,
+      "name": "narrow-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        17,
+        28,
+        44,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": false
+    },
+    {
+      "engine": "webkit",
+      "dpr": 2,
+      "name": "wide-class",
+      "valid": true,
+      "errors": [],
+      "pngCenter": [
+        17,
+        28,
+        44,
+        255
+      ],
+      "gpuCenter": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "compositorVisible": false
+    }
+  ],
+  "ok": true
+}

@@ -1,0 +1,371 @@
+{
+  "schemaVersion": "ier-geometry-audit/1",
+  "executionChannel": "Lead",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-geometry-audit.cjs",
+    "--report=docs/evidence/examples/interactive-engine-improvements/geometry-s7.json",
+    "--out=docs/evidence/examples/interactive-engine-improvements/geometry-s7-audit-final.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "report": {
+    "path": "docs/evidence/examples/interactive-engine-improvements/geometry-s7.json",
+    "bytes": 1600573,
+    "sha256": "7ef4769b921161dd58ed119228faf8cc07df5dab5af4623c4d6c3137b30967ef"
+  },
+  "ok": true,
+  "baseline": {
+    "scopePassed": false,
+    "validRecordedObservations": true,
+    "errors": [
+      "webkit/resized/persp/default/1: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/persp/low/1: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/persp/oblique/1: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/persp/default/1.25: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/persp/low/1.25: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/persp/oblique/1.25: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/persp/default/2: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/persp/low/2: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/persp/oblique/2: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/ortho/default/1: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/ortho/low/1: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/ortho/oblique/1: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/ortho/default/1.25: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/ortho/low/1.25: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/ortho/oblique/1.25: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/ortho/default/2: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/ortho/low/2: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)",
+      "webkit/resized/ortho/oblique/2: honest FAIL recorded (WebKit live canvas resize: live-resize compositor screenshot does not present the scene (native WebGL2 control reproduces it); environment presentation limitation; independent native WebGL2 control recorded separately)"
+    ]
+  },
+  "acceptedActualCases": 111,
+  "acceptedNormalRoutes": 9,
+  "rejectedMutations": 30,
+  "mutations": [
+    {
+      "name": "missing-raw-input",
+      "rejected": true,
+      "errors": [
+        "exact down/up raw events required"
+      ]
+    },
+    {
+      "name": "untrusted-raw",
+      "rejected": true,
+      "errors": [
+        "raw pointer types/trust"
+      ]
+    },
+    {
+      "name": "client-css-mismatch",
+      "rejected": true,
+      "errors": [
+        "raw client to CSS correlation"
+      ]
+    },
+    {
+      "name": "late-session",
+      "rejected": true,
+      "errors": [
+        "raw input session"
+      ]
+    },
+    {
+      "name": "future-measurement",
+      "rejected": true,
+      "errors": [
+        "raw pre-step measurement"
+      ]
+    },
+    {
+      "name": "uploaded-NaN",
+      "rejected": true,
+      "errors": [
+        "recomputation: cut upload malformed/non-finite"
+      ]
+    },
+    {
+      "name": "camera-infinite",
+      "rejected": true,
+      "errors": [
+        "recomputation: camera matrix non-finite"
+      ]
+    },
+    {
+      "name": "cut-displaced",
+      "rejected": true,
+      "errors": [
+        "PASS claimed but recomputed errors over budget: cut=90.15217654477524,90.12774702113104 stroke=7.925497121013644e-7,6.466963191214854e-7 blade=6.246948062634887e-7 drift=2.5421149729252077e-13"
+      ]
+    },
+    {
+      "name": "missing-world-hits",
+      "rejected": true,
+      "errors": [
+        "recomputation: worldHits projection degenerate"
+      ]
+    },
+    {
+      "name": "PNG-identity",
+      "rejected": true,
+      "errors": [
+        "basic evidence: PNG SHA drift: recorded=eeeeeeee actual=a1ba50c0"
+      ]
+    },
+    {
+      "name": "wrong-browser",
+      "rejected": true,
+      "errors": [
+        "browser \"unknown 0\" != \"chromium 149.0.7827.55\""
+      ]
+    },
+    {
+      "name": "NOT_RUN-is-not-measured",
+      "rejected": true,
+      "errors": [
+        "result NOT_RUN must be PASS or an honest FAIL"
+      ]
+    },
+    {
+      "name": "step-without-draw",
+      "rejected": true,
+      "errors": [
+        "step receipt mismatch"
+      ]
+    },
+    {
+      "name": "wrong-input-frame",
+      "rejected": true,
+      "errors": [
+        "inputSequence != event sequence"
+      ]
+    },
+    {
+      "name": "hidden-by-blocked-flag",
+      "rejected": true,
+      "errors": [
+        "blocked rows must carry an honest FAIL result"
+      ]
+    },
+    {
+      "name": "normal-empty-events",
+      "rejected": true,
+      "errors": [
+        "normal/chromium/mesh: trusted reset missing",
+        "normal/chromium/mesh: trusted escape missing",
+        "normal/chromium/mesh: trusted release missing"
+      ]
+    },
+    {
+      "name": "normal-stopped-clock",
+      "rejected": true,
+      "errors": [
+        "normal/chromium/mesh: native frame progression missing"
+      ]
+    },
+    {
+      "name": "normal-reset-leak",
+      "rejected": true,
+      "errors": [
+        "normal/chromium/mesh: reset/session ownership changed"
+      ]
+    },
+    {
+      "name": "normal-refs-inflated",
+      "rejected": true,
+      "errors": [
+        "normal/chromium/mesh: terminal cleanup incomplete"
+      ]
+    },
+    {
+      "name": "normal-listeners-not-removed",
+      "rejected": true,
+      "errors": [
+        "normal/chromium/mesh: terminal cleanup incomplete"
+      ]
+    },
+    {
+      "name": "normal-non-idempotent",
+      "rejected": true,
+      "errors": [
+        "normal/chromium/mesh: terminal cleanup incomplete"
+      ]
+    },
+    {
+      "name": "normal-missing-PNG",
+      "rejected": true,
+      "errors": [
+        "normal/chromium/mesh: PNG unavailable ENOENT: no such file or directory, open 'E:\\missing-ier-geometry.png'"
+      ]
+    },
+    {
+      "name": "normal-missing-route",
+      "rejected": true,
+      "errors": [
+        "exact normal-mode coverage required"
+      ]
+    },
+    {
+      "name": "normal-error",
+      "rejected": true,
+      "errors": [
+        "normal/chromium/mesh: browser errors"
+      ]
+    },
+    {
+      "name": "duplicate-matrix-row",
+      "rejected": true,
+      "errors": [
+        "exact matrix coverage required"
+      ]
+    },
+    {
+      "name": "SDK-drift",
+      "rejected": true,
+      "errors": [
+        "input drift build/cocosair.module.js",
+        "chromium/cut/persp/default/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/persp/default/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/persp/low/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/persp/low/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/persp/oblique/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/persp/oblique/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/persp/default/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/persp/default/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/persp/low/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/persp/low/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/persp/oblique/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/persp/oblique/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/persp/default/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/persp/default/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/persp/low/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/persp/low/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/persp/oblique/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/persp/oblique/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/ortho/default/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/ortho/default/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/ortho/low/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/ortho/low/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/ortho/oblique/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/ortho/oblique/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/ortho/default/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/ortho/default/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/ortho/low/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/ortho/low/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/ortho/oblique/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/ortho/oblique/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/ortho/default/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/ortho/default/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/ortho/low/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/ortho/low/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/cut/ortho/oblique/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/resized/ortho/oblique/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "chromium/offset/persp/default/1/cut-offset: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/persp/default/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/persp/default/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/persp/low/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/persp/low/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/persp/oblique/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/persp/oblique/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/persp/default/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/persp/default/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/persp/low/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/persp/low/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/persp/oblique/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/persp/oblique/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/persp/default/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/persp/default/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/persp/low/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/persp/low/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/persp/oblique/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/persp/oblique/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/ortho/default/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/ortho/default/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/ortho/low/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/ortho/low/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/ortho/oblique/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/ortho/oblique/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/ortho/default/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/ortho/default/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/ortho/low/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/ortho/low/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/ortho/oblique/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/ortho/oblique/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/ortho/default/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/ortho/default/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/ortho/low/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/ortho/low/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/cut/ortho/oblique/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/resized/ortho/oblique/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "firefox/offset/persp/default/1/cut-offset: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/persp/default/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/persp/default/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/persp/low/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/persp/low/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/persp/oblique/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/persp/oblique/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/persp/default/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/persp/default/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/persp/low/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/persp/low/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/persp/oblique/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/persp/oblique/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/persp/default/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/persp/default/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/persp/low/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/persp/low/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/persp/oblique/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/persp/oblique/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/ortho/default/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/ortho/default/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/ortho/low/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/ortho/low/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/ortho/oblique/1/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/ortho/oblique/1/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/ortho/default/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/ortho/default/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/ortho/low/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/ortho/low/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/ortho/oblique/1.25/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/ortho/oblique/1.25/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/ortho/default/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/ortho/default/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/ortho/low/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/ortho/low/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/cut/ortho/oblique/2/cut-baseline: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/resized/ortho/oblique/2/cut-resized: basic evidence: SDK drift: evidence=3a448f02 current=00000000",
+        "webkit/offset/persp/default/1/cut-offset: basic evidence: SDK drift: evidence=3a448f02 current=00000000"
+      ]
+    },
+    {
+      "name": "ribbon-no-motion",
+      "rejected": true,
+      "errors": [
+        "ribbon/chromium: decoded centroid delta 0.00 < 0.5",
+        "ribbon/chromium: reported centroid 0.8017923664908585 != decoded 0.00"
+      ]
+    },
+    {
+      "name": "ribbon-missing-coverage",
+      "rejected": true,
+      "errors": [
+        "ribbons/webkit: expected 2 unique rows, got 1"
+      ]
+    },
+    {
+      "name": "reset-old-ref-inflated",
+      "rejected": true,
+      "errors": [
+        "lifecycle/chromium: actual retiring/retained references required"
+      ]
+    },
+    {
+      "name": "lifecycle-non-idempotent",
+      "rejected": true,
+      "errors": [
+        "lifecycle/chromium: release contract failed"
+      ]
+    }
+  ],
+  "browserRunsAdded": 0
+}

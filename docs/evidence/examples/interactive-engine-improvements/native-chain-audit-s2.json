@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "ier-evidence-audit/1",
+  "method": "REAL_REPORT_CLONES",
+  "actual": {
+    "ok": true,
+    "errors": []
+  },
+  "browserRunsAdded": 0,
+  "mutations": [
+    {
+      "name": "unknown-SDK",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: pixel PASS gate"
+      ]
+    },
+    {
+      "name": "app-drift",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: pixel PASS gate"
+      ]
+    },
+    {
+      "name": "harness-drift",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: pixel PASS gate"
+      ]
+    },
+    {
+      "name": "PNG-drift",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: pixel PASS gate"
+      ]
+    },
+    {
+      "name": "missing-PNG",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: pixel PASS gate"
+      ]
+    },
+    {
+      "name": "unknown-event",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: trusted received event,input/model/frame correlation,observation order,pixel PASS gate"
+      ]
+    },
+    {
+      "name": "untrusted-event",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: trusted received event"
+      ]
+    },
+    {
+      "name": "wrong-native-pose",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: native target pose"
+      ]
+    },
+    {
+      "name": "late-run",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: pixel PASS gate"
+      ]
+    },
+    {
+      "name": "missing-frame",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: native frame receipt,pixel PASS gate"
+      ]
+    },
+    {
+      "name": "before-submission",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: observation order"
+      ]
+    },
+    {
+      "name": "nonzero-exit",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: pixel PASS gate"
+      ]
+    },
+    {
+      "name": "unknown-clock-range",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: pixel PASS gate"
+      ]
+    },
+    {
+      "name": "occluded-PASS",
+      "rejected": true,
+      "errors": [
+        "chromium/1/occluded: occlusion must record a visibility failure"
+      ]
+    },
+    {
+      "name": "stale-positions-in-PNG",
+      "rejected": true,
+      "errors": [
+        "chromium/1/moved: pixel PASS gate"
+      ]
+    },
+    {
+      "name": "resource-ref-inflated",
+      "rejected": true,
+      "errors": [
+        "owned release"
+      ]
+    },
+    {
+      "name": "input-still-attached",
+      "rejected": true,
+      "errors": [
+        "owned release"
+      ]
+    },
+    {
+      "name": "missing-engine",
+      "rejected": true,
+      "errors": [
+        "engine/DPR coverage"
+      ]
+    },
+    {
+      "name": "missing-frozen-pixel-oracle",
+      "rejected": true,
+      "errors": [
+        "PASS gate unmet: frozen context.visibilityOracle"
+      ]
+    }
+  ],
+  "ok": true,
+  "limitations": [
+    "In-memory corruption checks of actual captured data; no additional browser execution."
+  ],
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\interactive-improvement-evidence-audit.cjs",
+    "--report=docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+    "--out=docs/evidence/examples/interactive-engine-improvements/native-chain-audit-s2.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "observedAt": "2026-10-07T12:21:27.715Z",
+  "inputs": {
+    "report": {
+      "path": "docs/evidence/examples/interactive-engine-improvements/native-chain-s2.json",
+      "sha256": "ef634d22d29f9f215a62a9f0fb91e90daee802d3ef75c76fdd499dd6a8dcd8ff"
+    },
+    "audit": {
+      "path": "tools/verify/interactive-improvement-evidence-audit.cjs",
+      "sha256": "521998849d92472dd9e97248f2256d4add22495613061980c964120037a51203"
+    }
+  }
+}

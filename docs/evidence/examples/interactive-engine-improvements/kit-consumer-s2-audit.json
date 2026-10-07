@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "ier-kit-audit/1",
+  "baseline": {
+    "scopePassed": false,
+    "errors": [
+      "webkit/interactive-multipass: PNG target missing resize",
+      "webkit/interactive-geometry: PNG target missing resize",
+      "webkit/interactive-container: PNG target missing input",
+      "webkit/interactive-container: PNG target missing reset",
+      "webkit/interactive-container: PNG target missing resize"
+    ]
+  },
+  "tests": [
+    {
+      "id": "interactive-multipass",
+      "name": "reset",
+      "rejected": true
+    },
+    {
+      "id": "interactive-multipass",
+      "name": "trust",
+      "rejected": true
+    },
+    {
+      "id": "interactive-multipass",
+      "name": "terminal",
+      "rejected": true
+    },
+    {
+      "id": "interactive-geometry",
+      "name": "session",
+      "rejected": true
+    },
+    {
+      "id": "interactive-geometry",
+      "name": "refs",
+      "rejected": true
+    },
+    {
+      "id": "interactive-input",
+      "name": "activation",
+      "rejected": true
+    },
+    {
+      "id": "interactive-input",
+      "name": "pose",
+      "rejected": true
+    },
+    {
+      "id": "interactive-container",
+      "name": "notReady",
+      "rejected": true
+    },
+    {
+      "id": "interactive-container",
+      "name": "layout",
+      "rejected": true
+    },
+    {
+      "id": "interactive-timeline",
+      "name": "motion",
+      "rejected": true
+    },
+    {
+      "id": "interactive-timeline",
+      "name": "retire",
+      "rejected": true
+    },
+    {
+      "id": "interactive-input",
+      "name": "png",
+      "rejected": true
+    },
+    {
+      "id": "interactive-input",
+      "name": "errors",
+      "rejected": true
+    },
+    {
+      "id": "interactive-input",
+      "name": "fallback",
+      "rejected": true
+    },
+    {
+      "id": "interactive-input",
+      "name": "samePromise",
+      "rejected": true
+    }
+  ],
+  "ok": true,
+  "browserRunsAdded": 0
+}

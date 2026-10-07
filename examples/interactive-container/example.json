@@ -1,0 +1,95 @@
+{
+  "id": "interactive-container",
+  "version": "1.0.0",
+  "title": "Container readiness and hidden recovery",
+  "category": "integration",
+  "status": "draft",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "将DOM非零、原生布局、相机、提交和真实PNG分别验收",
+    "points": [
+      "隐藏时不导入SDK",
+      "仅父CSS布局变化与有效framebuffer保留",
+      "冷加载标签代次与旧输入取消",
+      "无SDK WebGL2环境对照"
+    ]
+  },
+  "effect": {
+    "functional": "Run/Report/Compare、父class布局、隐藏恢复和释放；SDK布局不由应用windowSize写入。",
+    "visual": "就绪后红色原生标记可见；失败截图保持失败。"
+  },
+  "api": {
+    "primary": [
+      "createAirApp"
+    ],
+    "supporting": [],
+    "claims": [
+      "createAirApp"
+    ],
+    "forbiddenShortcut": [
+      "windowSize应用补丁",
+      "协议返回当作resize已观察",
+      "readPixels冒充compositor",
+      "新例冒称Puzzle50原反例"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L18",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "capabilities": [
+    "rendering",
+    "input"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "container-marker",
+        "camera"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "显示、窄/宽父布局、隐藏恢复、快速标签切换和释放",
+        "expected": "对应最新布局与导航结果；旧输入取消；实际PNG及引用单独核对"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创程序化色块与无SDK WebGL2对照；仓库MIT"
+  }
+}

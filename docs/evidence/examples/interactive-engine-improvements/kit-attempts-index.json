@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "ier-attempt-index/1",
+  "attempts": [
+    {
+      "path": "output/interactive-engine-improvements/lead-kit-consumer-s1.json",
+      "sha256": "ade57c4d3ae3690fb32140359644734c7d2949b9222aa0e35cdf99dbb815218e",
+      "bytes": 412096,
+      "exitCode": 1,
+      "scopePassed": false,
+      "error": null,
+      "validation": null
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+[
+  {
+    "type": "timeEnd",
+    "text": "Init Base"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init Infrastructure"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init SubSystem"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init Project"
+  },
+  {
+    "type": "timeEnd",
+    "text": "InitScene"
+  },
+  {
+    "type": "timeEnd",
+    "text": "AttachPersist"
+  },
+  {
+    "type": "timeEnd",
+    "text": "AutoRelease"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Destroy"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Activate"
+  },
+  {
+    "type": "log",
+    "text": "[interactive-multipass] route=capture test=true neg=false fmt=rgba16f samples=4"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"An AudioContext was prevented from starting automatically. It must be created or resumed after a user gesture on the page.\" {file: \"http://127.0.0.1:50228/build/cocosair.module.js\" line: 135198}]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\" {file: \"http://127.0.0.1:50228/build/cocosair.module.js\" line: 156303}]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_X level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_X level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_POSITIVE_Y level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Y level 0 is incurring lazy initialization.\"]"
+  },
+  {
+    "type": "warning",
+    "text": "[JavaScript Warning: \"WebGL warning: generateMipmap: Tex image TEXTURE_CUBE_MAP_NEGATIVE_Z level 0 is incurring lazy initialization.\"]"
+  }
+]

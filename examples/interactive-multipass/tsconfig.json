@@ -1,0 +1,4 @@
+{
+  "extends": "../../tools/verify/interactive-multipass-browser.tsconfig.json",
+  "include": ["src/main.ts"]
+}

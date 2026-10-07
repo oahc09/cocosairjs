@@ -1,0 +1,493 @@
+{
+  "executionChannel": "Lead",
+  "method": "CURRENT_RECORDED_INPUTS_ONLY",
+  "browserRunsAdded": 0,
+  "rows": [
+    {
+      "name": "native-chain-s2",
+      "verified": 9,
+      "matches": [
+        {
+          "path": "build/cocosair.module.js",
+          "match": true
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "match": true
+        },
+        {
+          "path": "test/fixtures/interactive-evidence/main.ts",
+          "match": true
+        },
+        {
+          "path": "test/fixtures/interactive-evidence/index.html",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-improvement-browser.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-improvement-evidence.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-improvement-browser.tsconfig.json",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    },
+    {
+      "name": "multipass-s3",
+      "verified": 15,
+      "matches": [
+        {
+          "path": "build/cocosair.module.js",
+          "match": true
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-multipass/src/main.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-multipass/index.html",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-multipass/src/effects.generated.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-multipass/generate-effects.mjs",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-multipass/shaders/source.vert.glsl",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-multipass/shaders/source.frag.glsl",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-multipass/shaders/display.vert.glsl",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-multipass/shaders/display.frag.glsl",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-multipass-browser.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-improvement-evidence.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-multipass-browser.tsconfig.json",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    },
+    {
+      "name": "geometry-s7",
+      "verified": 10,
+      "matches": [
+        {
+          "path": "build/cocosair.module.js",
+          "match": true
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-geometry/src/main.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-geometry/src/geometry-contract.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-geometry/index.html",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-geometry-browser.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-improvement-evidence.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-geometry-browser.tsconfig.json",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    },
+    {
+      "name": "input-s3",
+      "verified": 8,
+      "matches": [
+        {
+          "path": "build/cocosair.module.js",
+          "match": true
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-input/index.html",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-input/src/main.ts",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-input-browser.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-input-browser.tsconfig.json",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    },
+    {
+      "name": "container-s6",
+      "verified": 10,
+      "matches": [
+        {
+          "path": "build/cocosair.module.js",
+          "match": true
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "match": true
+        },
+        {
+          "path": "build/bootstrap.js",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-container/index.html",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-container/src/main.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-container/src/control.ts",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-container-browser.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-container-browser.tsconfig.json",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    },
+    {
+      "name": "timeline-s4",
+      "verified": 10,
+      "matches": [
+        {
+          "path": "build/cocosair.module.js",
+          "match": true
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-timeline/index.html",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-timeline/src/main.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-timeline/src/timeline-contract.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-timeline/assets/original-16s.wav",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-timeline-browser.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-timeline-browser.tsconfig.json",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    },
+    {
+      "name": "misuse-s3",
+      "verified": 11,
+      "matches": [
+        {
+          "path": "build/cocosair.module.js",
+          "match": true
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "match": true
+        },
+        {
+          "path": "tools/debug/effect-layout.ts",
+          "match": true
+        },
+        {
+          "path": "test/fixtures/interactive-misuse/index.html",
+          "match": true
+        },
+        {
+          "path": "test/fixtures/interactive-misuse/main.ts",
+          "match": true
+        },
+        {
+          "path": "test/fixtures/effect-layout/spec.json",
+          "match": true
+        },
+        {
+          "path": "tools/build/effect-json.mjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-misuse-browser.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-misuse-browser.tsconfig.json",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    },
+    {
+      "name": "performance-pilot-s1",
+      "verified": 9,
+      "matches": [
+        {
+          "path": "build/cocosair.module.js",
+          "match": true
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-timeline/index.html",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-timeline/src/main.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-timeline/src/timeline-contract.ts",
+          "match": true
+        },
+        {
+          "path": "examples/interactive-timeline/assets/original-16s.wav",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-performance.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    },
+    {
+      "name": "kit-consumer-s2",
+      "verified": 5,
+      "matches": [
+        {
+          "path": "tools/verify/interactive-kit-consumer.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-kit-evidence.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/examples/interactive-kit.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        },
+        {
+          "path": "package.json",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    },
+    {
+      "name": "water-runtime-s1",
+      "verified": 6,
+      "matches": [
+        {
+          "path": "build/cocosair.module.js",
+          "match": true
+        },
+        {
+          "path": "examples/water-multipass/src/main.ts",
+          "match": true
+        },
+        {
+          "path": "examples/water-multipass/verify-browser.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-water-browser.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    },
+    {
+      "name": "color-compare-s2",
+      "verified": 8,
+      "matches": [
+        {
+          "path": "build/cocosair.module.js",
+          "match": true
+        },
+        {
+          "path": "test/fixtures/interactive-color-compare/index.html",
+          "match": true
+        },
+        {
+          "path": "test/fixtures/interactive-color-compare/main.ts",
+          "match": true
+        },
+        {
+          "path": "examples/water-multipass/scene.effect.json",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-color-compare-browser.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/interactive-color-compare.tsconfig.json",
+          "match": true
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "match": true
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "match": true
+        }
+      ],
+      "unrecognizedIdentityEntries": 0
+    }
+  ],
+  "ok": true,
+  "limitations": [
+    "Input identity review does not re-run browser behavior or upgrade partial/NOT_RUN scopes",
+    "Nonstandard recorded identity entries disclosed, not treated as verified"
+  ]
+}

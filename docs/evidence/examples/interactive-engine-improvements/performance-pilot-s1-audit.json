@@ -1,0 +1,44 @@
+{
+  "baseline": {
+    "measurementValid": true,
+    "result": "LIMITED",
+    "deviceAcceptance": "NOT_RUN",
+    "errors": []
+  },
+  "tests": [
+    {
+      "name": "statistics",
+      "rejected": true
+    },
+    {
+      "name": "nan",
+      "rejected": true
+    },
+    {
+      "name": "frame",
+      "rejected": true
+    },
+    {
+      "name": "missing",
+      "rejected": true
+    },
+    {
+      "name": "duplicate",
+      "rejected": true
+    },
+    {
+      "name": "device",
+      "rejected": true
+    },
+    {
+      "name": "identity",
+      "rejected": true
+    },
+    {
+      "name": "refs",
+      "rejected": true
+    }
+  ],
+  "browserRunsAdded": 0,
+  "ok": true
+}

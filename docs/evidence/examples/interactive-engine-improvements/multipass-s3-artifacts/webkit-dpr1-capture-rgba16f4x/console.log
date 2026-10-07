@@ -1,0 +1,42 @@
+[
+  {
+    "type": "timeEnd",
+    "text": "Init Base: 0.781ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init Infrastructure: 17.980ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init SubSystem: 3.022ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Init Project: 2.850ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "InitScene: 0.056ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "AttachPersist: 0.009ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "AutoRelease: 0.147ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Destroy: 0.354ms"
+  },
+  {
+    "type": "timeEnd",
+    "text": "Activate: 5.481ms"
+  },
+  {
+    "type": "log",
+    "text": "[interactive-multipass] route=capture test=true neg=false fmt=rgba16f samples=4"
+  }
+]
