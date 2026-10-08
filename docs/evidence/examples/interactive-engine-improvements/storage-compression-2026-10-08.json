@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "evidence-storage-compression/1",
+  "date": "2026-10-08",
+  "method": "LOSSLESS_GZIP_AND_JSON_WHITESPACE_COMPACTION",
+  "parentCommit": "d5c8733",
+  "browserRunsAdded": 0,
+  "compressedFiles": [
+    {
+      "originalPath": "docs/evidence/examples/interactive-engine-improvements/multipass-s3-raw.json",
+      "path": "docs/evidence/examples/interactive-engine-improvements/multipass-s3-raw.json.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 411101,
+      "uncompressedSha256": "feb9d22a987e41227f8c8e0aefd3163d1b7ddfb49f5ac8f091ebd01129c4d9b4",
+      "bytes": 26476,
+      "sha256": "d61ed0973f6c71941c41be99c0fbecfd8ba7aa2df0f602cbd5d663e22518dddc"
+    },
+    {
+      "originalPath": "docs/evidence/examples/interactive-engine-improvements/geometry-s7-raw.json",
+      "path": "docs/evidence/examples/interactive-engine-improvements/geometry-s7-raw.json.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 1599822,
+      "uncompressedSha256": "d29273280d2649b3563817989dc7cccf17e235c0092417717b3c00064ed7c82b",
+      "bytes": 99661,
+      "sha256": "d14a244cd88315c62cc551eb238a1968a01bc8b8757eed0cbcfa940d17572f55"
+    },
+    {
+      "originalPath": "docs/evidence/examples/interactive-engine-improvements/geometry-s6-failed-raw.json",
+      "path": "docs/evidence/examples/interactive-engine-improvements/geometry-s6-failed-raw.json.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 1562427,
+      "uncompressedSha256": "0452fdea0b316d0defbcc192612e6c1ae910eaf7e2b38c69feccf28f6cc41056",
+      "bytes": 98473,
+      "sha256": "56e4659892a779e99c70396bb6266d28591bcc8dc1e5a148c716e6033376e55e"
+    },
+    {
+      "originalPath": "docs/evidence/examples/interactive-engine-improvements/container-s6-raw.json",
+      "path": "docs/evidence/examples/interactive-engine-improvements/container-s6-raw.json.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 1087920,
+      "uncompressedSha256": "7269b0502ea7370c4fae0bb8bab5182ea8e93bcc7f1a5ecca0758a34e2f341a7",
+      "bytes": 40890,
+      "sha256": "2ec142f015f37c06ee5e7bfdbfd3ea730322c7a7b48ed36121eccb4ab834eade"
+    },
+    {
+      "originalPath": "docs/evidence/examples/interactive-engine-improvements/timeline-s4-raw.json",
+      "path": "docs/evidence/examples/interactive-engine-improvements/timeline-s4-raw.json.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 6036035,
+      "uncompressedSha256": "31615feb6905f7adaf7612a36d43b4d3cc0430f47a19f220b17eb86c2b7809b6",
+      "bytes": 144149,
+      "sha256": "c09e281d30534bb7f755cad0304137cd154e6da015d0bd05863ccaad39f8ee54"
+    },
+    {
+      "originalPath": "docs/evidence/examples/interactive-engine-improvements/performance-pilot-s1-raw.json",
+      "path": "docs/evidence/examples/interactive-engine-improvements/performance-pilot-s1-raw.json.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 3245878,
+      "uncompressedSha256": "2f8664979a099675fd3f4b97731075245ee11dbf48b4d35f995fe52994b24b19",
+      "bytes": 198947,
+      "sha256": "0f56c609bf3c346f27ec9843fb4d70788709e0fe91e8eb7b5acd077c60693f2b"
+    },
+    {
+      "originalPath": "docs/evidence/examples/interactive-engine-improvements/kit-consumer-s2-raw.json",
+      "path": "docs/evidence/examples/interactive-engine-improvements/kit-consumer-s2-raw.json.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 425574,
+      "uncompressedSha256": "190ef28187d64730a99f5c8a0aed5abcdf6890b6a81271350fe1a874182fca0b",
+      "bytes": 27467,
+      "sha256": "5a3e22c9103d53731cd1a4d000a285fe492a1e7c981902297a69f0a967d1b68c"
+    },
+    {
+      "originalPath": "docs/evidence/examples/interactive-engine-improvements/water-runtime-s1-raw.json",
+      "path": "docs/evidence/examples/interactive-engine-improvements/water-runtime-s1-raw.json.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 115959,
+      "uncompressedSha256": "00fe732ab3c9cbc8a92a6799d0c1e493e4efeede71206f773b9139a64aa4405a",
+      "bytes": 13351,
+      "sha256": "102d2bf0722871e7ed448a1d8749675c486624f03f984701f67aa4e6e7b82e47"
+    },
+    {
+      "originalPath": "docs/evidence/examples/interactive-engine-improvements/color-compare-s2.json",
+      "path": "docs/evidence/examples/interactive-engine-improvements/color-compare-s2.json.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 10204203,
+      "uncompressedSha256": "4904fc036fdc4790914f13d4ce90c64d54cb1c2a5cd7db4baf7ca35254936d91",
+      "bytes": 69343,
+      "sha256": "5ae810b2436377162e7cbd740bb90b0d43d6e859e2bba05e43857cd91a9fed69"
+    }
+  ],
+  "compactedFiles": [
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/geometry-s7.json",
+      "beforeBytes": 1600573,
+      "beforeSha256": "7ef4769b921161dd58ed119228faf8cc07df5dab5af4623c4d6c3137b30967ef",
+      "bytes": 741880,
+      "sha256": "5e3cdefd0f065af93efe9d2faaef7fa63d331a4adffca392ab1fcb7a3dcfacbd",
+      "onlyWhitespaceAndArchiveLocatorChanged": true
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/input-s3.json",
+      "beforeBytes": 3696760,
+      "beforeSha256": "271c920f869f2687dfe2c8dc57b2d4bc6cfd9ef49ac52f6f9af9e897cefb6e09",
+      "bytes": 1714004,
+      "sha256": "572c8cdd22318f54c3a82d5ce363a725940b200163b8fdd03ecba8d4ae754dd6",
+      "onlyWhitespaceAndArchiveLocatorChanged": true
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/container-s6.json",
+      "beforeBytes": 1088572,
+      "beforeSha256": "62471a3d9a5eb81baf6d0473510a8f14eb3eb6f561eb68b339522889450d4043",
+      "bytes": 484082,
+      "sha256": "b4df9ce175a508ab9e36ec5c65912a9e9f90a1247f7569ab5943003e4c4f2adc",
+      "onlyWhitespaceAndArchiveLocatorChanged": true
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/timeline-s4.json",
+      "beforeBytes": 6285306,
+      "beforeSha256": "5d78af5edb7452c97de2e7218fac36ed184bf7b6e94986a3302e576aa6d43517",
+      "bytes": 1896042,
+      "sha256": "1780a5ed3a836d6e66d97315d954446812e1ffe99b2b576959726074ab50db31",
+      "onlyWhitespaceAndArchiveLocatorChanged": true
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/performance-pilot-s1.json",
+      "beforeBytes": 3372590,
+      "beforeSha256": "f08891fb6bfbbd6fb2cf13cb8a2a8c1cb7f56028d6a4ef39aec9a59740eb1b78",
+      "bytes": 1745537,
+      "sha256": "7fe37e3b7cf9184a98ba9b40a4b65220878cc11a1eb49eed94f84e8ff54a0931",
+      "onlyWhitespaceAndArchiveLocatorChanged": true
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/kit-consumer-s2.json",
+      "beforeBytes": 440838,
+      "beforeSha256": "6e212d49e45e812fa330c996a3b7453c68543311581467a0b4b4f717a1a400e7",
+      "bytes": 199301,
+      "sha256": "61e162e71aebbd27e1f2aada5898813bd56f1b1528ae2fc6bf9095a35cb6b444",
+      "onlyWhitespaceAndArchiveLocatorChanged": true
+    },
+    {
+      "path": "docs/evidence/examples/interactive-engine-improvements/water-runtime-s1.json",
+      "beforeBytes": 120032,
+      "beforeSha256": "b214f063c9bb31905947b75a19d52b1625ad397441e164451fc674be48a85eab",
+      "bytes": 61945,
+      "sha256": "255e17cd13c71cc966e9e9f91749ebeb793b203272cda5fae77da80015eac7d1",
+      "onlyWhitespaceAndArchiveLocatorChanged": true
+    }
+  ],
+  "compressedPayloadsMatchOriginalBytes": true,
+  "canonicalObservationsUnchanged": true,
+  "notes": [
+    "Compressed SHA256 describes stored .gz bytes; uncompressed SHA256 describes original bytes after gunzip.",
+    "Raw numeric values, errors, execution fields, PNGs, tarball and SDK chunks preserved.",
+    "Source and browser collectors unchanged; color audit CLI additionally accepts .json.gz."
+  ],
+  "originalCopiesRemoved": true,
+  "verification": {
+    "compressedArchivesRoundTripToOriginalGitBytes": 9,
+    "compactedReportsPreserveObservations": 7,
+    "colorBaselineScopePassed": true,
+    "colorMutationsRejected": 10,
+    "gzipReaderChecks": 4,
+    "colorContractTestsPassed": 8,
+    "docRefsUnresolved": 0,
+    "browserRunsAdded": 0
+  }
+}

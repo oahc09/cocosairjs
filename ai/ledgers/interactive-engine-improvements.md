@@ -68,7 +68,7 @@ Lead 独立复核仍不接受资源收口：Chromium 真浏览器连续调用 re
 - Orca Worker 在新 closure 报告中实际采集三浏览器×五行×三个状态，共 45 定步 PNG；普通模式两个入口各三浏览器可见状态，另有 6 PNG。三浏览器 pageErrors/consoleErrors=0。15 份输入指纹含四个 GLSL 与严格编译配置。
 - Lead 只读 `--verify` exit=0、独立解码/核对 45 PNG SHA+bytes，抽看 native 普通模式棋盘；重复重置退役源码已归还并移出 owned 数组。
 - Lead 真浏览器另验 Chromium 十轮 reset：owned 恒 8，旧八引用 1→0；350ms 后 bufferSize=7138776、textureSize=1051184，与重置前相等，最终当前八引用全部归零、rendererValidAfterClose=false。同步 retiredValidity 仍 true 是调度时点事实，不改写为已经销毁。实际记录在 `output/interactive-engine-improvements/lead-multipass-reset-s3.json`。
-- [正式归档](../../docs/evidence/examples/interactive-engine-improvements/multipass-s3.json)只重映射 PNG 路径，记录原报告 SHA；[原报告](../../docs/evidence/examples/interactive-engine-improvements/multipass-s3-raw.json)原字节保留。Lead [独立审计](../../docs/evidence/examples/interactive-engine-improvements/multipass-s3-audit.json)基线通过，16/16 篡改全部拒，exit=0，browserRunsAdded=0。
+- [正式归档](../../docs/evidence/examples/interactive-engine-improvements/multipass-s3.json)只重映射 PNG 路径，记录原报告 SHA；[原报告](../../docs/evidence/examples/interactive-engine-improvements/multipass-s3-raw.json.gz)原字节保留。Lead [独立审计](../../docs/evidence/examples/interactive-engine-improvements/multipass-s3-audit.json)基线通过，16/16 篡改全部拒，exit=0，browserRunsAdded=0。
 - Lead 实际运行四套合同：71/71 PASS；严格例 tsconfig noEmit exit=0。Gallery 新规格经独立临时目录 strict 检查 1 frozen/0 issues；已生成清单，展示状态 draft，不自动升级通用 Gallery/API coverage 门禁。
 - 本批未修改 SDK/抽取源码、未安装、构建、提交或推送。两静态负例和运行时未拒绝行为分别披露。native MSAA采样 NOT_RUN；原云端参考未取得，sourceStatus=recreated，未称完整 IER-02/全12项或发布通过。
 - 正式库存更新实际 exit=1：111 suites / 927 tests / 923 passed / 4 failed，两个新增 multipass suite 29 条已登记。四个失败仍为既有 smoke-29 三项规格/证据/Gallery 与 smoke-30 旧矩阵指纹；不因本批通过宣称全局门禁通过。日志 `output/interactive-engine-improvements/lead-s4-inventory.log`；文档引用校验无新断链。
@@ -114,8 +114,8 @@ Orca Worker 因 429/1310 每周/月额度耗尽中止，服务提示 2026-10-11 
 - Lead 修正覆盖层：用 pass 顺序/深度状态分层，实际测量顶点保持 z=0；目标平板与切平面真实求交，逐 Float32 切面顶点独立投影。装饰宽 overlay 单独披露，不替代误差值。保留 ribbon 正面绕序与真实截图运动。
 - Reset 用旧对象身份读取四 mesh 1→0，六保留资产 1→1；三引擎各十轮 owned 恒 10。所有模式释放都先解绑借用 renderer，归还当前自有引用，再关闭 app；DOM/AFTER_DRAW 监听配对移除，普通模式 Reset 不再创建无用 scratch mesh。
 - Lead 真实无 SDK WebGL2 对照：Chromium resize 前后红色 PNG，WebKit resize 后 compositor 白色但 readPixels 红、glError=0/contextLost=false。对照[原始记录与文件身份](../../docs/evidence/examples/interactive-engine-improvements/resize-control-s4-index.json)及 raw/source/六 PNG 在盘。说明呈现问题可在无 SDK 条件复现，未据此修改核心。
-- S6 重新采集被校验器拒绝：原始指针事件漏存 session，Escape 冒泡阶段未收到导致三 lifecycle 超时；WebKit 的全白画面被非清屏计数误判成成功。修正原始事件字段、使用捕获阶段监听 Escape、按目标颜色检测空白。S6 的[失败原报告](../../docs/evidence/examples/interactive-engine-improvements/geometry-s6-failed-raw.json)和日志保留，不能因后续修正继承 PASS。
-- S7 [规范报告](../../docs/evidence/examples/interactive-engine-improvements/geometry-s7.json)/[原字节报告](../../docs/evidence/examples/interactive-engine-improvements/geometry-s7-raw.json)，Lead 实际 `--browser=all` exit=1：Chromium 37 PASS、Firefox 37 PASS、WebKit 19 PASS/18 live-resize FAIL。只读复算没有其他合同错误；scopePassed=false/subset=true/completed=false，141 PNG 归档。此前日志中的初步 PASS 状态不替代 PNG 最终校验。
+- S6 重新采集被校验器拒绝：原始指针事件漏存 session，Escape 冒泡阶段未收到导致三 lifecycle 超时；WebKit 的全白画面被非清屏计数误判成成功。修正原始事件字段、使用捕获阶段监听 Escape、按目标颜色检测空白。S6 的[失败原报告](../../docs/evidence/examples/interactive-engine-improvements/geometry-s6-failed-raw.json.gz)和日志保留，不能因后续修正继承 PASS。
+- S7 [规范报告](../../docs/evidence/examples/interactive-engine-improvements/geometry-s7.json)/[原字节报告](../../docs/evidence/examples/interactive-engine-improvements/geometry-s7-raw.json.gz)，Lead 实际 `--browser=all` exit=1：Chromium 37 PASS、Firefox 37 PASS、WebKit 19 PASS/18 live-resize FAIL。只读复算没有其他合同错误；scopePassed=false/subset=true/completed=false，141 PNG 归档。此前日志中的初步 PASS 状态不替代 PNG 最终校验。
 - 原始上传数据独立复算全部111行：cutMax=0.037658186 CSS px，strokeMax=0.000003823，bladeMax=0.000000668，均低于冻结预算；这不能补偿 18 个不可见 PNG。雨线6/6实际像素运动，网格3/3蓝/橙双路径与动态 bounds/运动，生命周期3/3真实 Reset/捕获 Escape/已收 resize 取消和后续新手势；普通 native-pacer入口9/9实际帧前进、可信控件、三次Reset资产恒定和终态清理。
 - 生产纯函数/投影及工具合同两套 51/51 PASS，严格示例 tsconfig 和 `npm run typecheck` exit=0。[聚焦原日志](../../docs/evidence/examples/interactive-engine-improvements/geometry-s7-unit.log)保留。合成 PNG 合同测试与真实浏览器报告分开。
 - Gallery 规格经独立临时目录 strict 校验 1 frozen/0 issues；展示状态 draft，清单169例。首次规格行号不匹配的报告保留；本批不升级通用 API coverage/release 门禁。
@@ -168,7 +168,7 @@ Orca Worker 因 429/1310 每周/月额度耗尽中止，服务提示 2026-10-11 
 ## IER-03 当前Water与颜色对照（Lead，2026-10-08）
 
 - 复用现有Water已迁移的AirRenderTarget；三引擎各39检查，共117通过，三条实际子进程exit0。固定状态、独立通道/深度、fin透明与depth-off负例、pointer/rain、resize和释放重建均实测。[规范报告](../../docs/evidence/examples/interactive-engine-improvements/water-runtime-s1.json)附三个原报告/原日志及截图。原Oct5/私有Water参考未取得，不能沿用历史缺口或冒称原参考匹配。
-- 增量局部fixture比较相同半平面的原生oblique矩阵与world-space discard，以及base初始化/instance override两条圆形透明阴影路径。[S2](../../docs/evidence/examples/interactive-engine-improvements/color-compare-s2.json)三引擎15状态/15PNG通过，两裁剪图逐字节同色，三透明center=(127,115,0)，base/instance结果相同、blend=true/depthWrite=false。人工看了CH阴影和裁剪PNG。固定预算未提高。
+- 增量局部fixture比较相同半平面的原生oblique矩阵与world-space discard，以及base初始化/instance override两条圆形透明阴影路径。[S2](../../docs/evidence/examples/interactive-engine-improvements/color-compare-s2.json.gz)三引擎15状态/15PNG通过，两裁剪图逐字节同色，三透明center=(127,115,0)，base/instance结果相同、blend=true/depthWrite=false。人工看了CH阴影和裁剪PNG。固定预算未提高。
 - S1错误法线使原生far-plane多裁2362像素；inspector数组被误读作对象且首CH favicon404。采集时保留失败raw/log，修正配方法线使camera在排除侧，字段访问/favicon/目标颜色识别；不改SDK。独立10种篡改全拒，8条算术合同测试通过。局部shader仅GLSL3验证，不声明其他后端。2026-10-08 按用户要求清理后，旧 raw 替换为失败诊断摘要与原字节 SHA；日志保留，完整旧数组可从 `5a967c7` 恢复。
 
 ## IER-07/08 S4 时间轴受限归档（Lead，2026-10-08）

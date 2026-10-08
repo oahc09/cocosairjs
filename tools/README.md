@@ -172,7 +172,7 @@ CB21 成本复测使用 [benchmark/prepare-cost-retest.mjs](benchmark/prepare-co
 ### 当前颜色、性能与包内示例（IER-03/09/11）
 
 - `node tools/verify/interactive-water-browser.cjs --out=<new.json>`：只读服务既有SDK，异步逐引擎运行现有Water实际runtime验证（非shader-only）；写显式JSON及相邻原报告/log/PNG，不build/install，结束关闭服务。
-- `node tools/verify/interactive-color-compare-browser.cjs --out=<new.json>`：固定RGBA8目标比较原生oblique/discard及base/instance透明阴影，写新JSON/15PNG，关闭服务/浏览器；strict noEmit用interactive-color-compare.tsconfig.json。`interactive-color-compare-audit.cjs --report=<report.json> --out=<new.json>`只读身份/PNG/原始颜色并做10种篡改，写新审计，见[颜色对照](../docs/manual/interactive-color-controls.md)。
+- `node tools/verify/interactive-color-compare-browser.cjs --out=<new.json>`：固定RGBA8目标比较原生oblique/discard及base/instance透明阴影，写新JSON/15PNG，关闭服务/浏览器；strict noEmit用interactive-color-compare.tsconfig.json。`interactive-color-compare-audit.cjs --report=<report.json或report.json.gz> --out=<new.json>`自动解压 gzip，只读身份/PNG/原始颜色并做10种篡改，写新审计，见[颜色对照](../docs/manual/interactive-color-controls.md)。
 - `node tools/verify/interactive-performance.cjs --out=<new.json>`：冻结36个5秒本机窗口，真实raw帧回调/CPU markers/工具成本，写新JSON及截图；result LIMITED，不是3×60秒实体设备验收。`interactive-performance-audit.cjs --report=<report.json> --out=<new.json>`只读重算/身份/释放及篡改，写新审计，见[性能边界](../docs/manual/interactive-performance.md)。
 - `node tools/examples/interactive-kit.cjs --write`刷新manual中的生成副本；`--check`只读逐字节比对，不改权威examples。`node tools/verify/interactive-kit-consumer.cjs --out=<new.json>`执行本地pack/prepack、临时offline install/已安装类型/esbuild与三浏览器普通路径，写tarball/chunks/JSON/60PNG后关闭并清理临时消费目录，不下载依赖或发布。`--verify=<report.json>`只读原始模型、PNG和身份。`interactive-kit-audit.cjs --report=<report.json> --out=<new.json>`只读实际行并做15种篡改，写新审计。详见[实际安装示例](../docs/manual/interactive-consumer-kit.md)。
 
