@@ -2,6 +2,7 @@
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8" />
+        <link rel="icon" href="data:," />
         <title>Aligning HTML Elements to 3D — HTML 元素对齐 3D（docs/manual/align-html-elements-to-3d.md）</title>
         <style>
             html,
@@ -40,7 +41,10 @@
                 background: rgba(10, 16, 26, 0.78);
                 padding: 6px 10px;
                 border-radius: 4px;
-                white-space: pre;
+                white-space: pre-wrap;
+                max-width: calc(100% - 24px);
+                box-sizing: border-box;
+                overflow-wrap: anywhere;
             }
             .tag {
                 position: absolute;

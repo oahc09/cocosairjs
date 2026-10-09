@@ -23,7 +23,11 @@ import {
     Color,
     utils,
     primitives,
+    director,
+    Director,
+    screen as screenEvents,
 } from 'cocosair';
+import { canvasToClientPoint } from '../../../../examples/shared/canvas-coordinates.js';
 
 const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
@@ -38,6 +42,14 @@ cameraNode.lookAt(new Vec3(0, 0.8, 0));
 const camera = cameraNode.addComponent(Camera);
 camera.projection = Camera.ProjectionType.PERSPECTIVE;
 camera.fov = 45;
+function fitAnchorOrbit(): void {
+    // Preserve the baseline horizontal coverage when portrait gets narrower.
+    const aspect = canvas.width / canvas.height;
+    camera.fov = (2 * Math.atan(Math.tan((45 * Math.PI) / 360) / Math.min(1, aspect)) * 180) / Math.PI;
+}
+fitAnchorOrbit();
+screenEvents.on('window-resize', fitAnchorOrbit);
+screenEvents.on('canvas-resize', fitAnchorOrbit);
 camera.near = 0.1;
 camera.far = 100;
 camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
@@ -120,34 +132,60 @@ class Aligner extends Component {
 
     update(dt: number): void {
         this._t = (this._t || 0) + dt;
-        const camPos = cameraNode.position;
-        const lines: string[] = [
-            'align html: camera.worldToScreen(world) → CSS px (left-bottom origin → flip y)',
-            `blocker at (0, 0.8, 0) half ${BLOCK_HALF}; occlusion = ray cam→anchor slab-hits blocker`,
-        ];
-        anchors.forEach((a, i) => {
+        anchors.forEach((a) => {
             const ang = this._t * 0.7 + a.phase;
             a.node.setPosition(new Vec3(Math.sin(ang) * 3.4, 0.8 + Math.sin(ang * 2.0) * 0.5, Math.cos(ang) * 3.4));
-            camera.worldToScreen(a.node.position, screenPos);
-            // worldToScreen 是左下角原点，CSS 是左上角 → 翻 y
-            const cssTop = window.innerHeight - screenPos.y;
-            a.el.style.left = `${screenPos.x.toFixed(1)}px`;
-            a.el.style.top = `${cssTop.toFixed(1)}px`;
-            // 遮挡判定：从相机朝锚点发射线，若先命中中心立方体则藏标签
-            Vec3.subtract(toAnchor, a.node.position, camPos);
-            const dist = Vec3.distance(camPos, a.node.position);
-            Vec3.normalize(toAnchor, toAnchor);
-            const tHit = rayHitsAABB(camPos, toAnchor, blockCenter, BLOCK_HALF);
-            const occluded = tHit >= 0 && tHit < dist - 0.2;
-            a.el.style.opacity = occluded ? '0' : '1';
-            lines.push(
-                `${a.label}: screen=(${screenPos.x.toFixed(0)}, ${cssTop.toFixed(0)}) dist=${dist.toFixed(1)} occluded=${occluded}`,
-            );
         });
-        info.textContent = lines.join('\n');
     }
 }
+
+// Projection follows the renderer's matrix/resize update, not Component.update.
+function updateLabels(): void {
+    const camPos = cameraNode.position;
+    const lines: string[] = [
+        'align html: camera.worldToScreen(world) → CSS px (left-bottom origin → flip y)',
+        `blocker at (0, 0.8, 0) half ${BLOCK_HALF}; occlusion = ray cam→anchor slab-hits blocker`,
+    ];
+    anchors.forEach((a) => {
+        camera.worldToScreen(a.node.worldPosition, screenPos);
+        // Drawing-buffer pixels are not CSS pixels. Apply actual canvas scale,
+        // flip y, then convert client coordinates into the tag's containing block.
+        const client = canvasToClientPoint(canvas, screenPos.x, screenPos.y);
+        if (!client) {
+            a.el.style.opacity = '0';
+            return;
+        }
+        const parent = a.el.offsetParent as HTMLElement;
+        const origin = parent.getBoundingClientRect();
+        const cssLeft = client.x - origin.left - parent.clientLeft + parent.scrollLeft;
+        const cssTop = client.y - origin.top - parent.clientTop + parent.scrollTop;
+        a.el.style.left = `${cssLeft.toFixed(1)}px`;
+        a.el.style.top = `${cssTop.toFixed(1)}px`;
+        // 遮挡判定：从相机朝锚点发射线，若先命中中心立方体则藏标签
+        Vec3.subtract(toAnchor, a.node.position, camPos);
+        const dist = Vec3.distance(camPos, a.node.position);
+        Vec3.normalize(toAnchor, toAnchor);
+        const tHit = rayHitsAABB(camPos, toAnchor, blockCenter, BLOCK_HALF);
+        const occluded = tHit >= 0 && tHit < dist - 0.2;
+        a.el.style.opacity = occluded ? '0' : '1';
+        lines.push(
+            `${a.label}: css=(${cssLeft.toFixed(0)}, ${cssTop.toFixed(0)}) dist=${dist.toFixed(1)} occluded=${occluded}`,
+        );
+    });
+    info.textContent = lines.join('\n');
+}
+
 const aligner = cameraNode.addComponent(Aligner);
+director.on(Director.EVENT_AFTER_DRAW, updateLabels);
+window.addEventListener(
+    'pagehide',
+    () => {
+        director.off(Director.EVENT_AFTER_DRAW, updateLabels);
+        screenEvents.off('window-resize', fitAnchorOrbit);
+        screenEvents.off('canvas-resize', fitAnchorOrbit);
+    },
+    { once: true },
+);
 
 window.__airApp = app;
 window.__inspect = { camera, anchors, blocker, aligner };

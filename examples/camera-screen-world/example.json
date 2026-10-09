@@ -32,23 +32,20 @@
   ],
   "capabilities": [],
   "learning": {
-    "goal": "掌握 Camera 的屏幕↔世界换算族：立方体中心的 worldToScreen 投影、同一点的 screenToWorld 往返一致性、screenPointToRay 的方向语义，以及 resize/setFixedSize 的视口行为。",
+    "goal": "正确完成相机投影、深度换算后的反投影、DOM 射线拾取，以及横竖屏正交完整取景。",
     "points": [
-      "worldToScreen(cube 中心) 与 screenToWorld 往返：反投影点的 x/y 分量回到同一屏幕坐标（z 轴按深度另计）",
-      "screenPointToRay：屏幕中心射线方向与相机前向一致（朝向 -Z 族符号核对）",
-      "resize 后相机仍可出图（视口适配内部处理），probe 以 cameraUp 哨兵确认执行路径无异常"
+      "公开 Camera 组件接口输入在前、out 在后；相机矩阵初始化后投影，原始世界点保持不变。",
+      "透视投影 z 先转 near→far 线性比例，再反投影；用 roundTripError 校验世界坐标往返误差。",
+      "DOM 点击用实际 canvas/backing 比例并翻转 Y，resize/DPR 变化后继续正确射线拾取。",
+      "正交投影使用取景半高；portrait 的 6×4 区域角点必须落在 framebuffer 范围内。"
     ]
   },
   "effect": {
-    "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
-    "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 130,200,140）、方向光、透视相机。"
+    "functional": "场景绘制后更新相机投影、完整世界坐标往返误差及射线读数；window.__probe() 暴露 ready/worldUnchanged/roundTripError/lastPick。浮点值按容差验证。",
+    "visual": "深蓝背景中有中央立方体和四个边角标记；按钮切换透视/正交，竖屏正交保留完整 6×4 范围。"
   },
   "api": {
-    "primary": [
-      "Camera.worldToScreen",
-      "Camera.screenToWorld",
-      "Camera.screenPointToRay"
-    ],
+    "primary": ["Camera.worldToScreen", "Camera.screenToWorld", "Camera.screenPointToRay"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -88,167 +85,154 @@
       "Camera.screenToWorld",
       "Camera.screenPointToRay"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L24"
+        "sourceLocation": "L28"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L32"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L31"
+        "sourceLocation": "L35"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L33"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L43"
+        "sourceLocation": "L47"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L31"
+        "sourceLocation": "L35"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L44"
+        "sourceLocation": "L48"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L38"
+        "sourceLocation": "L42"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L37"
+        "sourceLocation": "L41"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L33"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L50"
+        "sourceLocation": "L54"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L52"
+        "sourceLocation": "L56"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L53"
+        "sourceLocation": "L57"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L54"
+        "sourceLocation": "L58"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L51"
+        "sourceLocation": "L55"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L51"
+        "sourceLocation": "L55"
       },
       {
         "api": "Camera.worldToScreen",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L77"
+        "sourceLocation": "L116"
       },
       {
         "api": "Camera.screenToWorld",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L81"
+        "sourceLocation": "L122"
       },
       {
         "api": "Camera.screenPointToRay",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L84"
+        "sourceLocation": "L123"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],

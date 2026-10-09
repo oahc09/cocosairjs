@@ -26,19 +26,27 @@ AIR 做这件事靠相机组件自带的 **`camera.worldToScreen(worldPos, out?)
 ## 2. 示例拆解 + 两个踩坑
 
 布局：相机 (0, 3.2, 9.5) 俯视原点；中心一颗 2.2 大立方体作遮挡体；橙/青两颗 0.55 锚点立方体
-绕圈轨道（相位差 π）、上下起伏。每帧对每个锚点做三件事：投影摆标签、射线判遮挡、覆盖层打印读数。
+绕圈轨道（相位差 π）、上下起伏。Component.update 只更新轨道节点；Director.EVENT_AFTER_DRAW 在渲染相机完成矩阵与 resize 更新后，统一投影摆标签、射线判遮挡并打印读数。这样标签不会在 resize 后使用旧相机矩阵。竖屏还会扩大垂直 fov，保留基准水平覆盖范围，避免轨道锚点被裁出画面；信息面板随窄屏换行。
 
 ```js
-            camera.worldToScreen(a.node.position, screenPos);
-            // worldToScreen 是左下角原点，CSS 是左上角 → 翻 y
-            const cssTop = window.innerHeight - screenPos.y;
-            a.el.style.left = `${screenPos.x.toFixed(1)}px`;
-            a.el.style.top = `${cssTop.toFixed(1)}px`;
+        camera.worldToScreen(a.node.worldPosition, screenPos);
+        // Drawing-buffer pixels are not CSS pixels. Apply actual canvas scale,
+        // flip y, then convert client coordinates into the tag's containing block.
+        const client = canvasToClientPoint(canvas, screenPos.x, screenPos.y);
+        if (!client) {
+            a.el.style.opacity = '0';
+            return;
+        }
+        const parent = a.el.offsetParent as HTMLElement;
+        const origin = parent.getBoundingClientRect();
+        const cssLeft = client.x - origin.left - parent.clientLeft + parent.scrollLeft;
+        const cssTop = client.y - origin.top - parent.clientTop + parent.scrollTop;
+        a.el.style.left = `${cssLeft.toFixed(1)}px`;
+        a.el.style.top = `${cssTop.toFixed(1)}px`;
 ```
 
 **踩坑 1（坐标系）**：`worldToScreen` 与 `screenPointToRay` 一样是**左下角原点、y 向上**
-（d.ts 21403/21418 注释 + 探针实测），而 CSS `top` 是左上角原点、y 向下——不翻 `innerHeight - y`
-标签会上下镜像。这与 [picking](picking.md) §2 是同一对坐标系，方向相反（一个进一个出）。
+而 DOM client 坐标是左上原点的 CSS 像素。先按画布实际矩形与 backing size 做逆比例换算并翻 Y，再转换到标签 offsetParent 的局部 CSS 坐标。不能直接使用 `innerHeight - y`：DPR 大于 1、画布偏移或 CSS 缩放时都会错位。这里使用的 [canvasToClientPoint](../../examples/shared/canvas-coordinates.ts) 与原始 DOM 指针转入相机的 clientToCanvasPoint 互为逆变换；限无旋转、无边框的画布布局。
 
 **踩坑 2（Vec3 静态方法语义）**：`Vec3.normalize(out, a)` 返回的是 **out 向量**，不是长度。
 首版示例写 `const dist = Vec3.normalize(toAnchor, toAnchor)` 后 `dist.toFixed(...)`，
@@ -46,13 +54,13 @@ AIR 做这件事靠相机组件自带的 **`camera.worldToScreen(worldPos, out?)
 长度要单独取：
 
 ```js
-            // 遮挡判定：从相机朝锚点发射线，若先命中中心立方体则藏标签
-            Vec3.subtract(toAnchor, a.node.position, camPos);
-            const dist = Vec3.distance(camPos, a.node.position);
-            Vec3.normalize(toAnchor, toAnchor);
-            const tHit = rayHitsAABB(camPos, toAnchor, blockCenter, BLOCK_HALF);
-            const occluded = tHit >= 0 && tHit < dist - 0.2;
-            a.el.style.opacity = occluded ? '0' : '1';
+        // 遮挡判定：从相机朝锚点发射线，若先命中中心立方体则藏标签
+        Vec3.subtract(toAnchor, a.node.position, camPos);
+        const dist = Vec3.distance(camPos, a.node.position);
+        Vec3.normalize(toAnchor, toAnchor);
+        const tHit = rayHitsAABB(camPos, toAnchor, blockCenter, BLOCK_HALF);
+        const occluded = tHit >= 0 && tHit < dist - 0.2;
+        a.el.style.opacity = occluded ? '0' : '1';
 ```
 
 `rayHitsAABB` 是 [picking](picking.md) §2 的同款 slab 相交函数（逐字见示例附录）。
@@ -64,7 +72,7 @@ AIR 做这件事靠相机组件自带的 **`camera.worldToScreen(worldPos, out?)
 ## 3. 实测读数
 
 验证器 4/4：`app-contract / visible-frame / no-runtime-error / frame-diff` 全 PASS（3.5s，子集运行 partial；
-本例在 `ANIMATED` 集合，轨道运动本身即持续变化源）。截图 `docs/evidence/examples/manual-align-html.png`
+本例在 `ANIMATED` 集合，轨道运动本身即持续变化源）。以下为既有验证记录，不代表本次 DPI 修复已完成全部手册验收。截图 `docs/evidence/examples/manual-align-html.png`
 是 canvas 位图（验证器经 `EVENT_AFTER_DRAW` 读帧缓冲），**不含 DOM 层**——标签对齐用整页截图单独取证：
 
 - 常态帧：`ORANGE: screen=(534, 239) dist=9.5 occluded=false`，`TEAL: screen=(139, 216) dist=11.1`，
@@ -81,7 +89,7 @@ AIR 做这件事靠相机组件自带的 **`camera.worldToScreen(worldPos, out?)
 ## 4. 实践备忘
 
 - **一步投影**：`worldToScreen` 直接给像素坐标，但输出是左下角原点（CSS 是左上角），
-  每帧 `innerHeight - y` 的翻转这一步省不掉。
+  每帧用实际画布矩形换算 CSS 尺寸并翻转 Y，不能直接用屏幕高度减 framebuffer 坐标。
 - **遮挡检测**：引擎不暴露射线求交 API，沿用本篇姊妹技术——应用层 slab 射线
   （见 [picking](picking.md)）。锚点若换任意网格，这里同样只能 AABB 近似或挂物理体。
 - **无引擎托管 DOM 层**：AIR 没有"DOM 层渲染器"类，也不需要——每帧写 `style.left/top`
@@ -107,6 +115,7 @@ DOM 层对齐/遮挡读数见 §3。`manual-doc-consistency` 结果见台账行�
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8" />
+        <link rel="icon" href="data:," />
         <title>Aligning HTML Elements to 3D — HTML 元素对齐 3D（docs/manual/align-html-elements-to-3d.md）</title>
         <style>
             html,
@@ -145,7 +154,10 @@ DOM 层对齐/遮挡读数见 §3。`manual-doc-consistency` 结果见台账行�
                 background: rgba(10, 16, 26, 0.78);
                 padding: 6px 10px;
                 border-radius: 4px;
-                white-space: pre;
+                white-space: pre-wrap;
+                max-width: calc(100% - 24px);
+                box-sizing: border-box;
+                overflow-wrap: anywhere;
             }
             .tag {
                 position: absolute;
@@ -218,7 +230,11 @@ import {
     Color,
     utils,
     primitives,
+    director,
+    Director,
+    screen as screenEvents,
 } from 'cocosair';
+import { canvasToClientPoint } from '../../../../examples/shared/canvas-coordinates.js';
 
 const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
@@ -233,6 +249,14 @@ cameraNode.lookAt(new Vec3(0, 0.8, 0));
 const camera = cameraNode.addComponent(Camera);
 camera.projection = Camera.ProjectionType.PERSPECTIVE;
 camera.fov = 45;
+function fitAnchorOrbit(): void {
+    // Preserve the baseline horizontal coverage when portrait gets narrower.
+    const aspect = canvas.width / canvas.height;
+    camera.fov = (2 * Math.atan(Math.tan((45 * Math.PI) / 360) / Math.min(1, aspect)) * 180) / Math.PI;
+}
+fitAnchorOrbit();
+screenEvents.on('window-resize', fitAnchorOrbit);
+screenEvents.on('canvas-resize', fitAnchorOrbit);
 camera.near = 0.1;
 camera.far = 100;
 camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
@@ -315,34 +339,60 @@ class Aligner extends Component {
 
     update(dt: number): void {
         this._t = (this._t || 0) + dt;
-        const camPos = cameraNode.position;
-        const lines: string[] = [
-            'align html: camera.worldToScreen(world) → CSS px (left-bottom origin → flip y)',
-            `blocker at (0, 0.8, 0) half ${BLOCK_HALF}; occlusion = ray cam→anchor slab-hits blocker`,
-        ];
-        anchors.forEach((a, i) => {
+        anchors.forEach((a) => {
             const ang = this._t * 0.7 + a.phase;
             a.node.setPosition(new Vec3(Math.sin(ang) * 3.4, 0.8 + Math.sin(ang * 2.0) * 0.5, Math.cos(ang) * 3.4));
-            camera.worldToScreen(a.node.position, screenPos);
-            // worldToScreen 是左下角原点，CSS 是左上角 → 翻 y
-            const cssTop = window.innerHeight - screenPos.y;
-            a.el.style.left = `${screenPos.x.toFixed(1)}px`;
-            a.el.style.top = `${cssTop.toFixed(1)}px`;
-            // 遮挡判定：从相机朝锚点发射线，若先命中中心立方体则藏标签
-            Vec3.subtract(toAnchor, a.node.position, camPos);
-            const dist = Vec3.distance(camPos, a.node.position);
-            Vec3.normalize(toAnchor, toAnchor);
-            const tHit = rayHitsAABB(camPos, toAnchor, blockCenter, BLOCK_HALF);
-            const occluded = tHit >= 0 && tHit < dist - 0.2;
-            a.el.style.opacity = occluded ? '0' : '1';
-            lines.push(
-                `${a.label}: screen=(${screenPos.x.toFixed(0)}, ${cssTop.toFixed(0)}) dist=${dist.toFixed(1)} occluded=${occluded}`,
-            );
         });
-        info.textContent = lines.join('\n');
     }
 }
+
+// Projection follows the renderer's matrix/resize update, not Component.update.
+function updateLabels(): void {
+    const camPos = cameraNode.position;
+    const lines: string[] = [
+        'align html: camera.worldToScreen(world) → CSS px (left-bottom origin → flip y)',
+        `blocker at (0, 0.8, 0) half ${BLOCK_HALF}; occlusion = ray cam→anchor slab-hits blocker`,
+    ];
+    anchors.forEach((a) => {
+        camera.worldToScreen(a.node.worldPosition, screenPos);
+        // Drawing-buffer pixels are not CSS pixels. Apply actual canvas scale,
+        // flip y, then convert client coordinates into the tag's containing block.
+        const client = canvasToClientPoint(canvas, screenPos.x, screenPos.y);
+        if (!client) {
+            a.el.style.opacity = '0';
+            return;
+        }
+        const parent = a.el.offsetParent as HTMLElement;
+        const origin = parent.getBoundingClientRect();
+        const cssLeft = client.x - origin.left - parent.clientLeft + parent.scrollLeft;
+        const cssTop = client.y - origin.top - parent.clientTop + parent.scrollTop;
+        a.el.style.left = `${cssLeft.toFixed(1)}px`;
+        a.el.style.top = `${cssTop.toFixed(1)}px`;
+        // 遮挡判定：从相机朝锚点发射线，若先命中中心立方体则藏标签
+        Vec3.subtract(toAnchor, a.node.position, camPos);
+        const dist = Vec3.distance(camPos, a.node.position);
+        Vec3.normalize(toAnchor, toAnchor);
+        const tHit = rayHitsAABB(camPos, toAnchor, blockCenter, BLOCK_HALF);
+        const occluded = tHit >= 0 && tHit < dist - 0.2;
+        a.el.style.opacity = occluded ? '0' : '1';
+        lines.push(
+            `${a.label}: css=(${cssLeft.toFixed(0)}, ${cssTop.toFixed(0)}) dist=${dist.toFixed(1)} occluded=${occluded}`,
+        );
+    });
+    info.textContent = lines.join('\n');
+}
+
 const aligner = cameraNode.addComponent(Aligner);
+director.on(Director.EVENT_AFTER_DRAW, updateLabels);
+window.addEventListener(
+    'pagehide',
+    () => {
+        director.off(Director.EVENT_AFTER_DRAW, updateLabels);
+        screenEvents.off('window-resize', fitAnchorOrbit);
+        screenEvents.off('canvas-resize', fitAnchorOrbit);
+    },
+    { once: true },
+);
 
 window.__airApp = app;
 window.__inspect = { camera, anchors, blocker, aligner };

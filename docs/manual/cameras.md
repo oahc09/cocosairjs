@@ -44,6 +44,14 @@ camera.visibility = Layers.Enum.DEFAULT;
 
 正交相机默认 `orthoWidth = 0`，半宽由半高乘窗口宽高比决定；设置有限正数可独立指定取景半宽，恢复 `0` 即回到自动模式。负数或非有限值抛 `AIR_E_ORTHO_WIDTH`，保留原值。透视投影不使用这个参数。屏幕对齐的原生 `Canvas` 自动维护 UI 相机的两个半轴；设计分辨率在横竖屏、DPR 与输入坐标中的用法见[设计视口与控制方向](design-viewport-and-controls.md)。
 
+### 横竖屏完整取景
+
+默认全画布视口、相机对齐场景平面时，要容纳宽 `W`、高 `H` 的区域，可以设 `camera.orthoWidth = 0`，并使用 `camera.orthoHeight = Math.max(H / 2, W / (2 * aspect))`。这里 `aspect = canvas.width / canvas.height`；局部视口应使用该视口的实际宽高比。在 resize 后重算，竖屏会扩大半高以保留完整宽度。固定 `orthoHeight` 只保证纵向范围，不保证竖屏仍容纳场景两端。
+
+投影、反投影与拾取的可运行用法见 [camera-screen-world](../../examples/camera-screen-world/)。组件接口的输入在前、可选 out 在后；不要与 `camera.camera` 上 out 在前的渲染相机接口混用。场景启动并更新相机矩阵后再采样。透视投影的 `worldToScreen().z` 是非线性深度，传给 `screenToWorld()` 前要转换为 near→far 的线性比例，该示例包含完整往返误差检查。
+
+示例中的按钮可切换正交/透视，四个边角标记展示竖屏裁剪和正交适配差异。使用现有 SDK 的专项检查：`node tools/verify/input-camera-examples.cjs --out=output/input-camera-check.json`。它记录三浏览器与 DPR 1/2/3 的几何、DOM 和输入断言，不代表全仓验收或页面合成验证。
+
 ## 2. 位置与朝向：lookAt 每帧都要重算
 
 相机看向目标用 `node.lookAt(target)`。一旦相机移动，朝向不会自动跟随，必须再调一次——

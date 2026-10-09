@@ -76,6 +76,12 @@ input.requestFocus();              // 仅 Start/Resume 显式调用
 
 ## 生命周期与错误
 
+暂停和退回菜单时用 `gate.deactivate('pause')` 或 `gate.deactivate('menu')`，立即清空输入并停止准入；只调用 `reset('pause')` 会清空当前按键，但不会阻止后续按键再次进入。恢复或重开时 `gate.activate()` 开启新代次，再显式 `requestFocus()`。失焦/隐藏只负责清空输入，不会自动暂停应用模型。
+
+固定步长由业务模拟维护：每步使用 `1 / 60` 秒，暂停时不积累待追赶时间；重开要同时清空 accumulator、实体、冷却、目标和计分。动作适配器不替应用重置这些状态。原生动画、tween 或引擎计时器若也要冻结，应同步控制 `game.pause()/resume()`，而不是只停止模型移动。
+
+状态同步不要覆盖节点的固有尺寸：保留创建时的基础 scale，动画比例乘在基础 scale 上。程序化网格游戏不使用 Spine 时，未部署 Spine 资产的提示不阻塞该游戏；需要 Spine 的项目仍须按[资产来源说明](../notes/spine-asset-sourcing.md)部署真实运行时。
+
 - `attach()`/`detach()` 幂等；`detach()` 只做结构解绑并保留 reducer 状态。
 - **`dispose()` 是终态**：reset('dispose') + detach + 解绑 gate 订阅；dispose 后再 `attach()` 抛 `AIR_E_DISPOSED`（不可重入安装、不泄漏监听），`reset()`/`requestFocus()` 为文档化 no-op。需要重新使用就创建新适配器。
 - 稳定错误码：`AIR_E_INVALID_SOURCE`（source 身份不合法）、`AIR_E_INVALID_VALUE`（非有限数值）、`AIR_E_UNKNOWN_ACTION`（未声明动作名）、`AIR_E_DISPOSED`（dispose 后 attach）。

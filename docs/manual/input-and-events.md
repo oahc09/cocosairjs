@@ -23,7 +23,11 @@
 
 ## DOM 传播、滚轮与坐标合同
 
-DOM 事件传播与引擎 `input`/节点派发是两条不同的路径。Web PAL 在 canvas 的鼠标、触摸和 wheel 处理器中调用 `stopPropagation()`，阻止原生事件继续向父 DOM/window 冒泡；canvas 事件还会调用 `preventDefault()`，避免浏览器滚动等默认行为。它不阻止已执行的 window 捕获监听器，也不等同于节点的 `propagationStopped`。默认 DOM 传播策略保持不变。
+DOM 事件传播与引擎 `input`/节点派发是两条不同的路径。Web PAL 在 canvas 的鼠标、触摸、wheel 和键盘处理器中调用 `stopPropagation()`，阻止原生事件继续向父 DOM/window 冒泡；canvas 事件还会调用 `preventDefault()`，避免浏览器滚动等默认行为。它不阻止已执行的 window 捕获监听器，也不等同于节点的 `propagationStopped`。默认 DOM 传播策略保持不变。
+
+键盘推荐使用 `input.on(Input.EventType.KEY_DOWN/KEY_UP, ...)`；业务确实需要原始 DOM 键盘事件时，应使用捕获阶段，不能依赖 window 冒泡监听。已有 [createActionInput](input-action-state.md) 的 DOM 后端会处理捕获、编辑控件过滤和失焦清理，不必再安装第二套监听。
+
+按键集合必须在 canvas/window 失焦、页面隐藏和退出场景时清空，否则按住移动键后切到菜单，KEY_UP 可能在别处发生，恢复后会继续移动。[Input 示例](../../examples/input/) 演示原生按键通道与失焦清理；暂停、重开和会话切换的动作清理见[输入动作状态](input-action-state.md)。
 
 相机缩放优先只订阅一个引擎通道：
 
@@ -57,6 +61,8 @@ window.addEventListener('wheel', captureWheel, { capture: true, passive: false }
 这两个缩放实现是替代方案，不要同时启用。鼠标按下/移动/抬起还会生成 `TOUCH_*`；同一旋转操作选择 `MOUSE_*` 或 `TOUCH_*` 一路，后者可以同时接鼠标与触摸。`input` 的触摸事件会受 UI 命中吞噬规则影响，不能假定覆盖按钮的相机控制器仍能收到全局触摸。
 
 `getLocation()` 返回 canvas 左下角原点的设备坐标；`getUILocation()` 再按视口与设计分辨率换算为 UI 坐标。UI 节点局部坐标继续使用 `UITransform.convertToNodeSpaceAR()`。`getLocation(out)` 的合法出参为当前 SDK 的 `Vec2` 实例或省略参数，鼠标、触摸与无触点事件都保持这一合同并复用合法 out。普通对象、数组、`null` 等非法出参会抛 `TypeError`，`code` 为 `AIR_E_INPUT_LOCATION_OUT`，包含调用方法与期望类型。不要用设备坐标直接移动 UI 节点。
+
+原始 DOM `clientX/clientY` 是相对浏览器视口、左上原点的 CSS 像素。传入相机前，要减画布偏移、按实际 `canvas.width / rect.width` 与 `canvas.height / rect.height` 换算，再翻转 Y；不要直接乘浏览器 DPR，因为有效 DPR 可能被限制，CSS 尺寸也可能变化。引擎 `getLocation()` 已做输入换算，不要重复乘比例或翻转。普通无旋转、无边框的屏幕画布换算可复用[示例辅助函数](../../examples/shared/canvas-coordinates.ts)；离屏相机应改用其目标尺寸和业务定义的显示区域映射。
 
 ## 输入监听器异常与释放
 

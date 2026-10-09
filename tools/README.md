@@ -1,5 +1,7 @@
 # Cocos AIR 工具
 
+`node tools/verify/input-camera-examples.cjs --out=<new.json>`：只读运行现有 SDK，以三浏览器 × DPR 1/2/3 检查相机投影/深度往返、DOM 射线拾取、正交横竖屏完整取景、HTML 标签偏移缩放和输入失焦清理。要求外部 Playwright 与已有浏览器；拒绝覆盖报告，写显式 JSON 及相邻 `-artifacts/` 页面截图，不构建或重采历史矩阵。resize 先由原生 pacer 处理，断言时暂停并单步，避免双时钟；像素合成/present 不是本工具的通过结论。
+
 `node tools/verify/engine-contract-browser.cjs --out=<new.json>`：要求当前开发 bundle 与可用 Playwright 浏览器，以原生 PNG/读回验证 ENG-01–09 的实际更新、颜色、剔除、雾与诊断。只写显式新 JSON 和相邻截图，拒绝覆盖；--browser=<engine> 为子集。不构建、下载、发布；不证明页面合成或显示器 present。详见[合同手册](../docs/manual/engine-contract-hardening.md)。
 
 ## 响应式宿主与棋盘配方

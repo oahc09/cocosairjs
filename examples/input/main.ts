@@ -14,6 +14,7 @@ import {
     Scene,
     Node,
     MeshRenderer,
+    Material,
     Component,
     input,
     Input,
@@ -65,12 +66,13 @@ cube.layer = Layers.Enum.DEFAULT;
 scene.addChild(cube);
 const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-renderer.material = builtinResMgr.get('builtin-standard-material');
+renderer.material = builtinResMgr.get<Material>('builtin-standard-material');
 cube.addComponent(KeyboardMover);
 frameObject(camera, cube); // 相机取景：目标居中（§21 Expected Result）
 
 // ---- 键盘：WASD 平移（KEY_DOWN/KEY_UP 维护按键集合，避免依赖重复 keydown 频率）----
 input.on(Input.EventType.KEY_DOWN, (event) => {
+    if (document.hidden || document.activeElement !== app.canvas) return;
     keys.add(event.keyCode);
 });
 input.on(Input.EventType.KEY_UP, (event) => {
@@ -87,6 +89,23 @@ input.on(Input.EventType.MOUSE_WHEEL, (event) => {
 // ---- 拖拽（触摸或鼠标按下后移动）旋转方块 ----
 let dragging = false;
 let last: Vec2 = new Vec2();
+function clearInputState(): void {
+    keys.clear();
+    dragging = false;
+}
+// Native KEY_UP requires canvas focus. Clear held input when focus leaves it,
+// when the window loses focus, or when the page becomes hidden.
+app.canvas.addEventListener('blur', clearInputState);
+window.addEventListener('blur', clearInputState);
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearInputState();
+});
+window.addEventListener('pagehide', clearInputState, { once: true });
+(window as any).__inputProbe = () => ({
+    heldKeys: keys.size,
+    dragging,
+    position: { x: cube.position.x, y: cube.position.y, z: cube.position.z },
+});
 const rotateBy = (delta: Vec2): void => {
     cube.setRotationFromEuler(cube.eulerAngles.x + delta.y * 0.5, cube.eulerAngles.y + delta.x * 0.5, 0);
 };
