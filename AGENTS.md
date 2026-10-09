@@ -60,6 +60,16 @@ npm run dev
 | `npm run format` | Use Prettier to format the examples, manual examples, selected tools, and workflow documents explicitly listed in `package.json`, respecting `.prettierignore`. | **Rewrites** matching source files and documents in place; does not format the entire repository. Upstream `src/` is excluded, and embedded Markdown code is preserved according to the existing configuration. |
 | `npm run format:check` | Check formatting over the same scope as `format`. | Outputs results and an exit code; does not rewrite files or generate report files. |
 
+### Mandatory formatting requirements
+
+- Use the repository's installed Prettier and the rules in [.prettierrc.json](.prettierrc.json), [.editorconfig](.editorconfig), and [.prettierignore](.prettierignore). These files are authoritative; do not introduce a competing style or change the configuration to accommodate unformatted code.
+- TypeScript and JavaScript use 4 spaces, no tabs, single quotes, semicolons, trailing commas where supported, spaces inside object braces, parentheses around arrow parameters, and a 120-character print width. Files use UTF-8, LF line endings, and a final newline. Apply the configured overrides for JSON, Markdown, and YAML; print width is a formatter setting, not a reason to manually break string literals or shader source.
+- Format every new or edited file within the configured scope before delivery. This includes all eligible TypeScript files under `examples/` and `docs/manual/examples/`, shared example helpers, and AIR-owned generated TypeScript that is not ignored. Generators producing these TypeScript files must emit compliant output or run Prettier as their final generation step.
+- For a focused change, run `npx prettier --write <explicit-file-paths>` and then `npx prettier --check <same-file-paths>`. To check all example TypeScript, use `npx prettier --check "examples/**/*.ts"`. Use `npm run format:check` for the complete configured formatting gate before preparing a PR or release; it is also enforced by CI. Report failures and their scope accurately rather than claiming that a focused check passed the complete gate.
+- Respect the ignore rules and the explicit tool list in `package.json`. Do not run a repository-wide formatter, reformat extracted `src/` files, third-party assets, license originals, generated inventories, or evidence records. Do not add ignore entries or `prettier-ignore` comments solely to bypass the formatting gate.
+- Check the target files and their existing changes before formatting. Limit writes to the authorized scope, preserve concurrent work, and keep formatting-only changes free of API, algorithm, shader, resource-ownership, or behavior changes. Review the resulting diff and verify that formatting checks pass.
+- Format source before collecting evidence that records source fingerprints. Formatting changes source bytes even when behavior is unchanged; retain historical reports and do not relabel evidence with stale fingerprints as current PASS. If current evidence is required, regenerate it through its collector after formatting.
+
 ### Builds and the upstream baseline
 
 | Command | Purpose | Main outputs and write behavior |

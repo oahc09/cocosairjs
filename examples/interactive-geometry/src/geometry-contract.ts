@@ -5,9 +5,19 @@
  * before any SDK call.
  */
 
-export interface Vec3Like { x: number; y: number; z: number }
-export interface RayLike { origin: Vec3Like; direction: Vec3Like }
-export interface PlaneLike { point: Vec3Like; normal: Vec3Like }
+export interface Vec3Like {
+    x: number;
+    y: number;
+    z: number;
+}
+export interface RayLike {
+    origin: Vec3Like;
+    direction: Vec3Like;
+}
+export interface PlaneLike {
+    point: Vec3Like;
+    normal: Vec3Like;
+}
 
 export interface GeometryUpdate {
     positions: Float32Array | number[];
@@ -16,13 +26,16 @@ export interface GeometryUpdate {
     indices16?: Uint16Array | number[];
     indices32?: Uint32Array | number[];
 }
-export interface MeshCapacity { maxSubMeshVertices: number; maxSubMeshIndices: number }
+export interface MeshCapacity {
+    maxSubMeshVertices: number;
+    maxSubMeshIndices: number;
+}
 
-function isFiniteNumber (value: unknown): value is number {
+function isFiniteNumber(value: unknown): value is number {
     return typeof value === 'number' && Number.isFinite(value);
 }
 /** Accepts plain arrays AND typed arrays (the SDK consumes Float32Array/Uint16Array). */
-function numericArray (value: unknown): value is ArrayLike<number> {
+function numericArray(value: unknown): value is ArrayLike<number> {
     if (!value || typeof value !== 'object') return false;
     const length = (value as { length?: unknown }).length;
     if (!Number.isInteger(length) || (length as number) < 0) return false;
@@ -33,7 +46,7 @@ function numericArray (value: unknown): value is ArrayLike<number> {
 
 /** Preflight for dynamic mesh updates: reject before any SDK call (example-side guard,
  *  not a claim that the SDK itself is transactional). Total: never throws. */
-export function validateGeometryUpdate (geometry: unknown, capacity: unknown): { ok: boolean; errors: string[] } {
+export function validateGeometryUpdate(geometry: unknown, capacity: unknown): { ok: boolean; errors: string[] } {
     const errors: string[] = [];
     if (!geometry || typeof geometry !== 'object' || Array.isArray(geometry)) {
         return { ok: false, errors: ['geometry must be a non-null object'] };
@@ -67,7 +80,8 @@ export function validateGeometryUpdate (geometry: unknown, capacity: unknown): {
     }
     if (data.uvs !== undefined) {
         if (!numericArray(data.uvs)) errors.push('uvs must be finite');
-        else if (data.uvs.length !== vertexCount * 2) errors.push(`uvs length ${data.uvs.length} != 2 per vertex (${vertexCount * 2})`);
+        else if (data.uvs.length !== vertexCount * 2)
+            errors.push(`uvs length ${data.uvs.length} != 2 per vertex (${vertexCount * 2})`);
     }
     if (data.indices16 !== undefined && data.indices32 !== undefined) {
         errors.push('indices16 and indices32 are mutually exclusive (one index stream per update)');
@@ -83,8 +97,14 @@ export function validateGeometryUpdate (geometry: unknown, capacity: unknown): {
                     errors.push(`indices[${i}]=${indices[i]} must be a non-negative safe integer`);
                     break;
                 }
-                if (indices[i] >= vertexCount) { errors.push(`indices[${i}]=${indices[i]} >= vertex count ${vertexCount}`); break; }
-                if (is16 && indices[i] > 0xffff) { errors.push(`indices[${i}]=${indices[i]} exceeds the 16-bit range`); break; }
+                if (indices[i] >= vertexCount) {
+                    errors.push(`indices[${i}]=${indices[i]} >= vertex count ${vertexCount}`);
+                    break;
+                }
+                if (is16 && indices[i] > 0xffff) {
+                    errors.push(`indices[${i}]=${indices[i]} exceeds the 16-bit range`);
+                    break;
+                }
             }
             if (indices.length > (cap.maxSubMeshIndices as number)) {
                 errors.push(`indices ${indices.length} exceed capacity ${String(cap.maxSubMeshIndices)}`);
@@ -95,14 +115,22 @@ export function validateGeometryUpdate (geometry: unknown, capacity: unknown): {
 }
 
 /** client (browser event) → canvas-relative CSS px; the live rect is provided by the caller. */
-export function clientToCanvasCss (clientX: number, clientY: number, rect: { left: number; top: number }): { x: number; y: number } {
+export function clientToCanvasCss(
+    clientX: number,
+    clientY: number,
+    rect: { left: number; top: number },
+): { x: number; y: number } {
     return { x: clientX - rect.left, y: clientY - rect.top };
 }
 
 /** CSS px → camera screen px. The camera viewport rect is expressed in backing pixels;
  *  a full-canvas viewport makes camera screen px == canvas backing px. */
-export function cssToScreen (css: { x: number; y: number }, backing: { width: number; height: number },
-    cssSize: { width: number; height: number }, viewportPx: { x: number; y: number; width: number; height: number }): { x: number; y: number } {
+export function cssToScreen(
+    css: { x: number; y: number },
+    backing: { width: number; height: number },
+    cssSize: { width: number; height: number },
+    viewportPx: { x: number; y: number; width: number; height: number },
+): { x: number; y: number } {
     const scaleX = viewportPx.width / cssSize.width;
     const scaleY = viewportPx.height / cssSize.height;
     return { x: viewportPx.x + css.x * scaleX, y: viewportPx.y + css.y * scaleY };
@@ -112,8 +140,11 @@ export function cssToScreen (css: { x: number; y: number }, backing: { width: nu
  *  rays are parallel. Both cases produce the plane that contains both rays — never a
  *  fixed-height plane with vertical extrapolation. Collinear/skew/degenerate rays are
  *  rejected explicitly (no arbitrary fallback plane). */
-export function planeFromRays (ray1: RayLike, ray2: RayLike): PlaneLike | { error: string } {
-    for (const [name, ray] of [['ray1', ray1], ['ray2', ray2]] as const) {
+export function planeFromRays(ray1: RayLike, ray2: RayLike): PlaneLike | { error: string } {
+    for (const [name, ray] of [
+        ['ray1', ray1],
+        ['ray2', ray2],
+    ] as const) {
         if (!ray || typeof ray !== 'object') return { error: `${name} missing` };
         for (const part of ['origin', 'direction'] as const) {
             const v = (ray as unknown as Record<string, unknown>)[part] as Vec3Like | undefined;
@@ -121,7 +152,8 @@ export function planeFromRays (ray1: RayLike, ray2: RayLike): PlaneLike | { erro
         }
         if (length(ray.direction) < 1e-9) return { error: `${name}.direction is a zero vector` };
     }
-    const d1 = normalize(ray1.direction); const d2 = normalize(ray2.direction);
+    const d1 = normalize(ray1.direction);
+    const d2 = normalize(ray2.direction);
     const delta = sub(ray2.origin, ray1.origin);
     // Coplanarity of two lines: the triple product (d1 × d2) · (o2 - o1) must vanish;
     // skew lines admit NO plane containing both — reject instead of picking a fallback.
@@ -130,7 +162,8 @@ export function planeFromRays (ray1: RayLike, ray2: RayLike): PlaneLike | { erro
     if (Math.abs(coplanarity) > 1e-7) return { error: 'skew rays admit no common plane (triple product non-zero)' };
     if (length(normalCandidate) < 1e-9) {
         if (length(delta) < 1e-9) return { error: 'degenerate: rays are collinear through the same point' };
-        if (length(cross(d1, delta)) < 1e-9) return { error: 'degenerate: rays are collinear (infinitely many planes contain the line)' };
+        if (length(cross(d1, delta)) < 1e-9)
+            return { error: 'degenerate: rays are collinear (infinitely many planes contain the line)' };
         // Parallel distinct rays: the plane contains BOTH lines, so its normal is
         // perpendicular to the direction AND to the offset between the origins.
         const normal = cross(d1, delta);
@@ -141,8 +174,12 @@ export function planeFromRays (ray1: RayLike, ray2: RayLike): PlaneLike | { erro
 }
 
 /** Plane ∩ segment: exact intersection point or null (used for the real cut-surface edges). */
-export function planeSegmentIntersection (planePoint: Vec3Like, planeNormal: Vec3Like,
-    a: Vec3Like, b: Vec3Like): Vec3Like | null {
+export function planeSegmentIntersection(
+    planePoint: Vec3Like,
+    planeNormal: Vec3Like,
+    a: Vec3Like,
+    b: Vec3Like,
+): Vec3Like | null {
     const ab = sub(b, a);
     const denom = dot(planeNormal, ab);
     if (Math.abs(denom) < 1e-9) return null;
@@ -152,7 +189,7 @@ export function planeSegmentIntersection (planePoint: Vec3Like, planeNormal: Vec
 }
 
 /** Ray ∩ plane, null when parallel or behind the ray. */
-export function rayPlaneIntersect (ray: RayLike, plane: PlaneLike): Vec3Like | null {
+export function rayPlaneIntersect(ray: RayLike, plane: PlaneLike): Vec3Like | null {
     const denom = dot(plane.normal, ray.direction);
     if (Math.abs(denom) < 1e-9) return null;
     const t = dot(sub(plane.point, ray.origin), plane.normal) / denom;
@@ -165,15 +202,24 @@ export function rayPlaneIntersect (ray: RayLike, plane: PlaneLike): Vec3Like | n
 export const CUT_VERTEX_ERROR_BUDGET_CSS_PX = 0.15;
 
 /** Projected error of a world point against the raw received CSS input, in CSS px. */
-export function projectionErrorCssPx (worldPoint: Vec3Like, inputCss: { x: number; y: number },
-    projectWorldToCss: (world: Vec3Like) => { x: number; y: number }): number {
+export function projectionErrorCssPx(
+    worldPoint: Vec3Like,
+    inputCss: { x: number; y: number },
+    projectWorldToCss: (world: Vec3Like) => { x: number; y: number },
+): number {
     const projected = projectWorldToCss(worldPoint);
     return Math.hypot(projected.x - inputCss.x, projected.y - inputCss.y);
 }
 
 /** Point-in-quad containment for the "same gesture hits the target" check. */
-export function pointInQuad (point: Vec3Like, quadCenter: Vec3Like, quadNormal: Vec3Like, quadUp: Vec3Like,
-    halfWidth: number, halfHeight: number): boolean {
+export function pointInQuad(
+    point: Vec3Like,
+    quadCenter: Vec3Like,
+    quadNormal: Vec3Like,
+    quadUp: Vec3Like,
+    halfWidth: number,
+    halfHeight: number,
+): boolean {
     const local = sub(point, quadCenter);
     const u = dot(local, quadUp);
     const right = normalize(cross(quadUp, quadNormal));
@@ -182,24 +228,35 @@ export function pointInQuad (point: Vec3Like, quadCenter: Vec3Like, quadNormal: 
 }
 
 /** Blade phase expectation: the blade center at phase p sits at lerp(w1, w2, p). */
-export function bladeExpectedCenter (w1: Vec3Like, w2: Vec3Like, phase: number): Vec3Like {
+export function bladeExpectedCenter(w1: Vec3Like, w2: Vec3Like, phase: number): Vec3Like {
     return add(scale(w1, 1 - phase), scale(w2, phase));
 }
 
 /** Perpendicular distance to the infinite LINE through a-b: cut-plane boundary vertices lie
  *  ON the extended knife line (the plane cuts the whole slab), so the honest metric is the
  *  line distance, not the clamped segment distance. */
-export function pointToLineDistanceCssPx (point: { x: number; y: number }, a: { x: number; y: number }, b: { x: number; y: number }): number {
-    const abx = b.x - a.x, aby = b.y - a.y;
+export function pointToLineDistanceCssPx(
+    point: { x: number; y: number },
+    a: { x: number; y: number },
+    b: { x: number; y: number },
+): number {
+    const abx = b.x - a.x,
+        aby = b.y - a.y;
     const len = Math.hypot(abx, aby);
     if (len === 0) return Math.hypot(point.x - a.x, point.y - a.y);
     return Math.abs((point.x - a.x) * aby - (point.y - a.y) * abx) / len;
 }
 
 /** Perpendicular distance from a point to a 2D segment: parameterization-free. */
-export function pointToSegmentDistanceCssPx (point: { x: number; y: number }, a: { x: number; y: number }, b: { x: number; y: number }): number {
-    const abx = b.x - a.x, aby = b.y - a.y;
-    const apx = point.x - a.x, apy = point.y - a.y;
+export function pointToSegmentDistanceCssPx(
+    point: { x: number; y: number },
+    a: { x: number; y: number },
+    b: { x: number; y: number },
+): number {
+    const abx = b.x - a.x,
+        aby = b.y - a.y;
+    const apx = point.x - a.x,
+        apy = point.y - a.y;
     const len2 = abx * abx + aby * aby;
     if (len2 === 0) return Math.hypot(apx, apy);
     const t = Math.max(0, Math.min(1, (apx * abx + apy * aby) / len2));
@@ -208,17 +265,24 @@ export function pointToSegmentDistanceCssPx (point: { x: number; y: number }, a:
 
 /** Center-line endpoints of an uploaded thin quad (v0..v3, two edges): the measurement
  *  source for stroke/cut/blade is the ACTUAL uploaded Float32 data, not theory. */
-export function thinQuadCenterLine (positions: ArrayLike<number>): [{ x: number; y: number; z: number }, { x: number; y: number; z: number }] {
+export function thinQuadCenterLine(
+    positions: ArrayLike<number>,
+): [{ x: number; y: number; z: number }, { x: number; y: number; z: number }] {
     const at = (i: number) => ({ x: positions[i * 3], y: positions[i * 3 + 1], z: positions[i * 3 + 2] });
-    const a = at(0), b = at(1), c = at(2), d = at(3);
-    return [{ x: (a.x + c.x) / 2, y: (a.y + c.y) / 2, z: (a.z + c.z) / 2 },
-        { x: (b.x + d.x) / 2, y: (b.y + d.y) / 2, z: (b.z + d.z) / 2 }];
+    const a = at(0),
+        b = at(1),
+        c = at(2),
+        d = at(3);
+    return [
+        { x: (a.x + c.x) / 2, y: (a.y + c.y) / 2, z: (a.z + c.z) / 2 },
+        { x: (b.x + d.x) / 2, y: (b.y + d.y) / 2, z: (b.z + d.z) / 2 },
+    ];
 }
 
 /** Ribbon vertex strip in screen space: a moving band across the canvas. */
-export function ribbonVertices (time: number, width: number, count: number): number[] {
+export function ribbonVertices(time: number, width: number, count: number): number[] {
     const out: number[] = [];
-    const x0 = -1 + (time * 0.12) % 2.4 - 0.2;
+    const x0 = -1 + ((time * 0.12) % 2.4) - 0.2;
     for (let i = 0; i < count; i++) {
         const t = i / (count - 1);
         out.push(x0 + t * 1.6, 0.55 + Math.sin(t * 6 + time * 2) * 0.08, 0);
@@ -231,12 +295,25 @@ export function ribbonVertices (time: number, width: number, count: number): num
 }
 
 // ── minimal vector helpers (no engine dependency) ──
-export function sub (a: Vec3Like, b: Vec3Like): Vec3Like { return { x: a.x - b.x, y: a.y - b.y, z: a.z - b.z }; }
-export function add (a: Vec3Like, b: Vec3Like): Vec3Like { return { x: a.x + b.x, y: a.y + b.y, z: a.z + b.z }; }
-export function scale (a: Vec3Like, s: number): Vec3Like { return { x: a.x * s, y: a.y * s, z: a.z * s }; }
-export function dot (a: Vec3Like, b: Vec3Like): number { return a.x * b.x + a.y * b.y + a.z * b.z; }
-export function length (a: Vec3Like): number { return Math.hypot(a.x, a.y, a.z); }
-export function normalize (a: Vec3Like): Vec3Like { const l = length(a) || 1; return { x: a.x / l, y: a.y / l, z: a.z / l }; }
-export function cross (a: Vec3Like, b: Vec3Like): Vec3Like {
+export function sub(a: Vec3Like, b: Vec3Like): Vec3Like {
+    return { x: a.x - b.x, y: a.y - b.y, z: a.z - b.z };
+}
+export function add(a: Vec3Like, b: Vec3Like): Vec3Like {
+    return { x: a.x + b.x, y: a.y + b.y, z: a.z + b.z };
+}
+export function scale(a: Vec3Like, s: number): Vec3Like {
+    return { x: a.x * s, y: a.y * s, z: a.z * s };
+}
+export function dot(a: Vec3Like, b: Vec3Like): number {
+    return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+export function length(a: Vec3Like): number {
+    return Math.hypot(a.x, a.y, a.z);
+}
+export function normalize(a: Vec3Like): Vec3Like {
+    const l = length(a) || 1;
+    return { x: a.x / l, y: a.y / l, z: a.z / l };
+}
+export function cross(a: Vec3Like, b: Vec3Like): Vec3Like {
     return { x: a.y * b.z - a.z * b.y, y: a.z * b.x - a.x * b.z, z: a.x * b.y - a.y * b.x };
 }

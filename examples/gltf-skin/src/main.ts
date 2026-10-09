@@ -69,11 +69,19 @@ async function acquire(): Promise<{ name: string; ref: object }[]> {
     frameObject(camera, instance.root);
 
     // 复用加载器创建的 Animation 组件播放蒙皮动画（默认 glTF 材质渲染）
-    var animation = (instance && instance.root.getComponent(Animation)) || (instance && instance.root.getComponentInChildren(Animation)) || null;
+    var animation =
+        (instance && instance.root.getComponent(Animation)) ||
+        (instance && instance.root.getComponentInChildren(Animation)) ||
+        null;
     if (animation && animation.clips.length > 0) {
         var firstClip = animation.clips[0];
         if (firstClip) animation.play(firstClip.name);
-        console.log('[gltf-skin] playing clip:', firstClip ? firstClip.name : '(none)', '| skins:', asset ? asset.skeletons.length : 0);
+        console.log(
+            '[gltf-skin] playing clip:',
+            firstClip ? firstClip.name : '(none)',
+            '| skins:',
+            asset ? asset.skeletons.length : 0,
+        );
     } else {
         console.log('[gltf-skin] no animation clip; skins:', asset ? asset.skeletons.length : 0);
     }

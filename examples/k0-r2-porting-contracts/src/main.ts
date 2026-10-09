@@ -62,7 +62,9 @@ const ownedNodes: Node[] = [];
 const releaseHistory: Array<{ name: string; beforeRefCount: number; afterRefCount: number }> = [];
 let subscribed = false;
 const errors: string[] = [];
-window.addEventListener('error', (e) => { errors.push(String(e.message)); });
+window.addEventListener('error', (e) => {
+    errors.push(String(e.message));
+});
 
 function track<T extends Lease['ref']>(name: string, ref: T): T {
     ref.addRef();
@@ -79,20 +81,30 @@ function releaseAll(): void {
     for (const n of ownedNodes) {
         if (!n.isValid) continue;
         const mr = n.getComponent(MeshRenderer);
-        if (mr) { mr.mesh = null; mr.setSharedMaterial(null as never, 0); }
+        if (mr) {
+            mr.mesh = null;
+            mr.setSharedMaterial(null as never, 0);
+        }
         const bb = n.getComponent(Billboard);
         if (bb) bb.texture = null;
     }
     // 退出场景并销毁节点
     for (const n of ownedNodes) {
-        if (n.isValid) { n.removeFromParent(); n.destroy(); }
+        if (n.isValid) {
+            n.removeFromParent();
+            n.destroy();
+        }
     }
     ownedNodes.length = 0;
     // 归还自有资产
     for (const lease of ownedAssets) {
         lease.ref.decRef();
         lease.afterRefCount = lease.ref.refCount;
-        releaseHistory.push({ name: lease.name, beforeRefCount: lease.beforeRefCount, afterRefCount: lease.afterRefCount });
+        releaseHistory.push({
+            name: lease.name,
+            beforeRefCount: lease.beforeRefCount,
+            afterRefCount: lease.afterRefCount,
+        });
         lease.ref.destroy();
     }
     ownedAssets.length = 0;
@@ -104,11 +116,19 @@ function releaseAll(): void {
 function buildVertexColor(): void {
     const node = makeNode('vertex');
     const renderer = node.addComponent(MeshRenderer);
-    const mesh = track('mesh', utils.MeshUtils.createDynamicMesh(0, {
-        positions: new Float32Array([-1, -1, 0, 1, -1, 0, -1, 1, 0, 1, 1, 0]),
-        colors: new Float32Array([1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1]),
-        indices16: new Uint16Array([0, 1, 2, 1, 3, 2]),
-    }, undefined, { maxSubMeshes: 1, maxSubMeshVertices: 4, maxSubMeshIndices: 6 }));
+    const mesh = track(
+        'mesh',
+        utils.MeshUtils.createDynamicMesh(
+            0,
+            {
+                positions: new Float32Array([-1, -1, 0, 1, -1, 0, -1, 1, 0, 1, 1, 0]),
+                colors: new Float32Array([1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1]),
+                indices16: new Uint16Array([0, 1, 2, 1, 3, 2]),
+            },
+            undefined,
+            { maxSubMeshes: 1, maxSubMeshVertices: 4, maxSubMeshIndices: 6 },
+        ),
+    );
     renderer.mesh = mesh;
     const material = track('material', new Material());
     material.initialize({ effectName: 'builtin-unlit', defines: { USE_VERTEX_COLOR: true } });
@@ -120,7 +140,10 @@ function buildBlend(): void {
     // 背景 z=0（无混合）
     const bgNode = makeNode('bg');
     const bgR = bgNode.addComponent(MeshRenderer);
-    bgR.mesh = track('bgMesh', utils.createMesh({ positions: [-1.5, -1, 0, 1.5, -1, 0, -1.5, 1, 0, 1.5, 1, 0], indices: [0, 1, 2, 1, 3, 2] }));
+    bgR.mesh = track(
+        'bgMesh',
+        utils.createMesh({ positions: [-1.5, -1, 0, 1.5, -1, 0, -1.5, 1, 0, 1.5, 1, 0], indices: [0, 1, 2, 1, 3, 2] }),
+    );
     const bgM = track('bgMaterial', new Material());
     bgM.initialize({ effectName: 'builtin-unlit' });
     bgM.setProperty('mainColor', new Color(0, 200, 0, 255));
@@ -129,12 +152,22 @@ function buildBlend(): void {
     // alpha 混合 z=0.1
     const aNode = makeNode('alpha');
     const aR = aNode.addComponent(MeshRenderer);
-    aR.mesh = track('alphaMesh', utils.createMesh({ positions: [-0.8, -0.8, 0.1, 0.2, -0.8, 0.1, -0.8, 0.8, 0.1, 0.2, 0.8, 0.1], indices: [0, 1, 2, 1, 3, 2] }));
+    aR.mesh = track(
+        'alphaMesh',
+        utils.createMesh({
+            positions: [-0.8, -0.8, 0.1, 0.2, -0.8, 0.1, -0.8, 0.8, 0.1, 0.2, 0.8, 0.1],
+            indices: [0, 1, 2, 1, 3, 2],
+        }),
+    );
     const aM = track('alphaMaterial', new Material());
     aM.initialize({
         effectName: 'builtin-unlit',
         states: {
-            blendState: { targets: [{ blend: true, blendSrc: gfx.BlendFactor.SRC_ALPHA, blendDst: gfx.BlendFactor.ONE_MINUS_SRC_ALPHA }] },
+            blendState: {
+                targets: [
+                    { blend: true, blendSrc: gfx.BlendFactor.SRC_ALPHA, blendDst: gfx.BlendFactor.ONE_MINUS_SRC_ALPHA },
+                ],
+            },
             depthStencilState: { depthWrite: false },
         },
     });
@@ -144,12 +177,20 @@ function buildBlend(): void {
     // additive z=0.2
     const adNode = makeNode('add');
     const adR = adNode.addComponent(MeshRenderer);
-    adR.mesh = track('addMesh', utils.createMesh({ positions: [-0.2, -0.8, 0.2, 0.8, -0.8, 0.2, -0.2, 0.8, 0.2, 0.8, 0.8, 0.2], indices: [0, 1, 2, 1, 3, 2] }));
+    adR.mesh = track(
+        'addMesh',
+        utils.createMesh({
+            positions: [-0.2, -0.8, 0.2, 0.8, -0.8, 0.2, -0.2, 0.8, 0.2, 0.8, 0.8, 0.2],
+            indices: [0, 1, 2, 1, 3, 2],
+        }),
+    );
     const adM = track('addMaterial', new Material());
     adM.initialize({
         effectName: 'builtin-unlit',
         states: {
-            blendState: { targets: [{ blend: true, blendSrc: gfx.BlendFactor.SRC_ALPHA, blendDst: gfx.BlendFactor.ONE }] },
+            blendState: {
+                targets: [{ blend: true, blendSrc: gfx.BlendFactor.SRC_ALPHA, blendDst: gfx.BlendFactor.ONE }],
+            },
             depthStencilState: { depthWrite: false },
         },
     });
@@ -168,10 +209,18 @@ function buildDynamicMesh(): void {
     const node = makeNode('dyn');
     dynamicRenderer = node.addComponent(MeshRenderer);
     dynamicBase = new Float32Array([-1, -1, 0, 1, -1, 0, -1, 1, 0, 1, 1, 0]);
-    dynamicMesh = track('dynMesh', utils.MeshUtils.createDynamicMesh(0, {
-        positions: dynamicBase.slice(),
-        indices16: new Uint16Array([0, 1, 2, 1, 3, 2]),
-    }, undefined, DYN_CAPS));
+    dynamicMesh = track(
+        'dynMesh',
+        utils.MeshUtils.createDynamicMesh(
+            0,
+            {
+                positions: dynamicBase.slice(),
+                indices16: new Uint16Array([0, 1, 2, 1, 3, 2]),
+            },
+            undefined,
+            DYN_CAPS,
+        ),
+    );
     dynamicRenderer.mesh = dynamicMesh;
     const material = track('dynMaterial', new Material());
     material.initialize({ effectName: 'builtin-unlit' });
@@ -224,12 +273,23 @@ function switchMode(mode: Mode): void {
     dynamicUpdateCount = 0;
     currentMode = mode;
     switch (mode) {
-        case 'vertex-color': buildVertexColor(); break;
-        case 'blend': buildBlend(); break;
-        case 'dynamic-mesh': buildDynamicMesh(); break;
-        case 'billboard': buildBillboard(); break;
+        case 'vertex-color':
+            buildVertexColor();
+            break;
+        case 'blend':
+            buildBlend();
+            break;
+        case 'dynamic-mesh':
+            buildDynamicMesh();
+            break;
+        case 'billboard':
+            buildBillboard();
+            break;
     }
-    if (!subscribed) { director.on(Director.EVENT_BEFORE_UPDATE, onBeforeUpdate); subscribed = true; }
+    if (!subscribed) {
+        director.on(Director.EVENT_BEFORE_UPDATE, onBeforeUpdate);
+        subscribed = true;
+    }
     updateButtons();
     updateStatus();
 }
@@ -248,16 +308,24 @@ buttons.forEach((btn) => {
 const btnPause = document.querySelector<HTMLButtonElement>('#btn-pause')!;
 const btnReset = document.querySelector<HTMLButtonElement>('#btn-reset')!;
 const btnRelease = document.querySelector<HTMLButtonElement>('#btn-release')!;
-btnPause.addEventListener('click', () => {
-    paused = !paused;
-    btnPause.textContent = paused ? '恢复' : '暂停';
-    updateStatus();
-}, { signal: uiAbort.signal });
+btnPause.addEventListener(
+    'click',
+    () => {
+        paused = !paused;
+        btnPause.textContent = paused ? '恢复' : '暂停';
+        updateStatus();
+    },
+    { signal: uiAbort.signal },
+);
 btnReset.addEventListener('click', () => switchMode(currentMode), { signal: uiAbort.signal });
-btnRelease.addEventListener('click', () => {
-    releaseAll();
-    updateStatus();
-}, { signal: uiAbort.signal });
+btnRelease.addEventListener(
+    'click',
+    () => {
+        releaseAll();
+        updateStatus();
+    },
+    { signal: uiAbort.signal },
+);
 
 function updateButtons(): void {
     buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.mode === currentMode));
@@ -265,7 +333,9 @@ function updateButtons(): void {
 function updateStatus(): void {
     const el = document.querySelector('#status');
     if (!el) return;
-    const assetInfo = ownedAssets.map((a) => `${a.name}:${a.ref.refCount}${a.afterRefCount !== null ? `→${a.afterRefCount}` : ''}`).join(' ');
+    const assetInfo = ownedAssets
+        .map((a) => `${a.name}:${a.ref.refCount}${a.afterRefCount !== null ? `→${a.afterRefCount}` : ''}`)
+        .join(' ');
     el.textContent = `模式: ${currentMode} | 暂停动画: ${paused} | 已释放: ${released} | 更新: ${dynamicUpdateCount} | 资产: ${assetInfo || '（已释放）'}`;
 }
 
@@ -280,20 +350,43 @@ window.addEventListener('pagehide', onPageHide, { once: true });
 
 // ── __k0Example 只读观测（快照冻结，errors 拷贝）──
 (window as unknown as Record<string, unknown>).__k0Example = {
-    get mode(): Mode { return currentMode; },
-    get paused(): boolean { return paused; },
-    get released(): boolean { return released; },
-    get subscribed(): boolean { return subscribed; },
-    get ownedNodeCount(): number { return ownedNodes.length; },
-    get dynamicUpdateCount(): number { return dynamicUpdateCount; },
-    get ownedAssetCount(): number { return ownedAssets.length; },
+    get mode(): Mode {
+        return currentMode;
+    },
+    get paused(): boolean {
+        return paused;
+    },
+    get released(): boolean {
+        return released;
+    },
+    get subscribed(): boolean {
+        return subscribed;
+    },
+    get ownedNodeCount(): number {
+        return ownedNodes.length;
+    },
+    get dynamicUpdateCount(): number {
+        return dynamicUpdateCount;
+    },
+    get ownedAssetCount(): number {
+        return ownedAssets.length;
+    },
     get ownedAssets(): Array<{ name: string; beforeRefCount: number; afterRefCount: number | null; isValid: boolean }> {
-        return ownedAssets.map((a) => Object.freeze({ name: a.name, beforeRefCount: a.beforeRefCount, afterRefCount: a.afterRefCount, isValid: a.ref.isValid }));
+        return ownedAssets.map((a) =>
+            Object.freeze({
+                name: a.name,
+                beforeRefCount: a.beforeRefCount,
+                afterRefCount: a.afterRefCount,
+                isValid: a.ref.isValid,
+            }),
+        );
     },
     get releasedAssets(): Array<{ name: string; beforeRefCount: number; afterRefCount: number | null }> {
         return releaseHistory.map((a) => Object.freeze({ ...a }));
     },
-    get errors(): readonly string[] { return Object.freeze([...errors]); },
+    get errors(): readonly string[] {
+        return Object.freeze([...errors]);
+    },
 };
 
 // 初始化
@@ -303,7 +396,13 @@ console.log('[k0-r2] ready');
 // Gallery validators use the same ownership and recreation paths as the buttons.
 installAssetLifecycle({
     label: 'k0-r2-porting-contracts',
-    hold: () => [...ownedAssets.map(a => ({ name: a.name, ref: a.ref })), ...ownedNodes.map(n => ({ name: n.name, ref: n }))],
+    hold: () => [
+        ...ownedAssets.map((a) => ({ name: a.name, ref: a.ref })),
+        ...ownedNodes.map((n) => ({ name: n.name, ref: n })),
+    ],
     release: releaseAll,
-    reacquire: async () => { switchMode(currentMode); return ownedAssets.map(a => ({ name: a.name, ref: a.ref })); },
+    reacquire: async () => {
+        switchMode(currentMode);
+        return ownedAssets.map((a) => ({ name: a.name, ref: a.ref }));
+    },
 });

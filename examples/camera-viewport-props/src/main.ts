@@ -179,7 +179,11 @@ requestAnimationFrame(async () => {
     cameraCheck('Camera.orthoWidth.explicit', camera.orthoWidth === 1.75 && renderCamera.orthoWidth === 1.75);
     for (const invalid of [-1, NaN, Infinity]) {
         let rejected = false;
-        try { camera.orthoWidth = invalid; } catch { rejected = true; }
+        try {
+            camera.orthoWidth = invalid;
+        } catch {
+            rejected = true;
+        }
         cameraCheck('Camera.orthoWidth.invalid:' + String(invalid), rejected && camera.orthoWidth === 1.75);
     }
     camera.orthoWidth = 0;
