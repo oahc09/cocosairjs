@@ -79,9 +79,9 @@ async function main() {
             for (const required of [
                 'build/npm/html-source.js',
                 'build/html-source.d.ts',
-                'skills/air-code-first/SKILL.md',
-                'skills/air-graphics-and-dom/SKILL.md',
-                'skills/air-verification/SKILL.md',
+                'skills/cocosair/SKILL.md',
+                'skills/cocosair-graphics-and-dom/SKILL.md',
+                'skills/cocosair-verification/SKILL.md',
                 'docs/manual/graphics-and-dom.md',
             ])
                 assert(files.includes(required), required);
