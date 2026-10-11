@@ -1,0 +1,83 @@
+Derived from docs/webgl2-only.md, src/air/app-config.ts (as of 2026-10-08)
+
+Error shape: `airError(code, message)` returns `Error` whose message is `[<code>] <message>` and which carries a `code` property (`src/air/app-config.ts:32-34`). Match `error.code`, not message text. `createAirApp` never throws synchronously; both entries convert validation failures into a rejected Promise (`src/air/bootstrap.ts:124`, `src/air/safe-bootstrap.ts:22`).
+
+## Validation and admission codes
+
+Thrown by `normalizeAirOptions` before any engine work, so nothing is initialized and the existing runtime keeps running (`src/air/app-config.ts:43-112`).
+
+| Code | Throw site | Trigger | What to do |
+|---|---|---|---|
+| `AIR_E_APP_OPTIONS` | `app-config.ts:44` | argument missing or not an object | pass an options object; `canvas` is required |
+| `AIR_E_PHYSICS_BACKEND` | `app-config.ts:46` | `physics` other than `'builtin'` / `'cannon'` | use one of the two; other backends need an `AIR_FEATURES` variant build |
+| `AIR_E_DIAGNOSTIC_MODE` | `app-config.ts:47` | `diagnostics` other than `'errors'` / `'warnings'` | pick one of the two |
+| `AIR_E_CANVAS` | `app-config.ts:49`, `:54`, `:57` | no browser `document` or `HTMLCanvasElement`; selector string with invalid syntax; selector matched nothing or matched a non-canvas element | create the canvas first, or fix the selector; there is no Canvas2D or offscreen substitute |
+| `AIR_E_CANVAS_CONFLICT` | `app-config.ts:61` | the page already holds another element with id `GameCanvas` and it is not the passed canvas | pass that element, or rename or remove the impostor |
+| `AIR_E_RENDER_MODE` | `app-config.ts:64` | `renderMode` not one of the integers 0..3 | omit it (defaults to 0) or use 3 for engine tests; `4` (`WEBGPU`) is not accepted; `1` (`CANVAS`) passes the gate yet starts no device (see the `16337` row below) |
+| `AIR_E_PIXEL_RATIO_CAP` | `app-config.ts:69` | `pixelRatioCap` not a finite positive number (`0`, `NaN`, negatives, non-numbers) | use a positive finite number; 2 is the default |
+| `AIR_E_DESIGN_RESOLUTION` | `app-config.ts:74` | `width` or `height` not finite positive, or `policy` outside the integer set 0..4 | supply a real design size and one of `EXACT_FIT` 0, `NO_BORDER` 1, `SHOW_ALL` 2, `FIXED_HEIGHT` 3, `FIXED_WIDTH` 4 |
+| `AIR_E_SCREEN_MODE` | `app-config.ts:78` | `screenMode` other than `'window'` / `'container'` | use one of the two, or omit it to keep native settings |
+| `AIR_E_CONTAINER` | `app-config.ts:81`, `:86`, `:92` | `container` without `screenMode: 'container'`; container selector with invalid syntax; resolved container is missing, is `body` or `documentElement`, does not contain the canvas, or is the canvas | give an existing non-body ancestor of the canvas and pair it with `screenMode: 'container'` |
+| `AIR_E_CONTAINER_CONFLICT` | `app-config.ts:96`, `:100`, `:135` | an existing `GameDiv` or `Cocos3dGameContainer` does not wrap this canvas inside the chosen container | reuse one structure per canvas; a second app cannot borrow the first one's wrappers |
+| `AIR_E_CONTEXT_OPTIONS` | `app-config.ts:106` | `contextLoss` not an object, or `autoPause` not boolean, or `reload` / `onEvent` not functions | pass only those three optional fields with those types |
+| `AIR_E_SCREEN_CONFIG_CONFLICT` | `app-config.ts:39` (called at `bootstrap.ts:130`) | an explicit `screenMode` disagrees with an already-set native `screen.exactFitScreen` | configure through one channel only; `AirAppOptions.screenMode` writes `overrideSettings.screen.exactFitScreen` itself (`bootstrap.ts:153`) |
+| `AIR_E_CONTAINER_SIZE` | `app-config.ts:144` | container mode with zero `clientWidth` or `clientHeight` at startup | show the host (non-`display: none`, laid out) before calling `createAirApp` |
+
+## Per-document admission codes
+
+State is `globalThis[Symbol.for('cocosair.bootstrap.v1')]` (`src/air/app-config.ts:16-30`); checks run in `admitAirOptions` (`:149-157`).
+
+| Code | Throw site | Trigger | What to do |
+|---|---|---|---|
+| `AIR_E_APP_CLOSED` | `app-config.ts:151`, and `app.ts:136` when `run()` is called on a closing handle | the registry status is `closed`; `close()` sets it only when this handle is the registry's app (`app.ts:202-203`) | reload the whole page; the engine singletons cannot be rebuilt in place |
+| `AIR_E_APP_RELOAD_REQUIRED` | `app-config.ts:152` | status `failed`, set when import or `game.init` rejected after admission started (`bootstrap.ts:122`, `safe-bootstrap.ts:20`) | fix the cause and reload; a half-initialized runtime is not retried |
+| `AIR_E_APP_CONFLICT` | `app-config.ts:154` | an app already owns a different normalized option set; `equalAirOptions` compares canvas identity, `renderMode`, `physics`, `diagnostics`, `pixelRatioCap`, `screenMode`, container identity, the three design-resolution numbers, `contextLoss.autoPause`, and callback identity of `reload` / `onEvent` (`:114-121`) | reuse the returned app, pass the identical options (a repeat shares the init Promise), or reload |
+
+## Import-order codes (eager main entry only)
+
+Checked in `createAirApp` of `src/air/bootstrap.ts:110-117`; `cocosair.js/bootstrap` sets both globals before importing the engine and therefore never raises them (`src/air/safe-bootstrap.ts:13-15`).
+
+| Literal | Throw site | Trigger | What to do |
+|---|---|---|---|
+| `AIR_E_PIXEL_RATIO_IMPORT_ORDER` | `bootstrap.ts:112` | the PAL is already evaluated and `screenAdapter.devicePixelRatio` differs by more than `1e-9` from `min(devicePixelRatio, requested cap)` | set `globalThis.__CCDPR_CAP__` before importing the engine, or switch to `cocosair.js/bootstrap` |
+| `AIR_E_CANVAS_IMPORT_ORDER` | `bootstrap.ts:116` | `globalThis.__CC_CANVAS__` is already bound to a different canvas than the requested one | reload and bind the intended canvas before the import, or use `cocosair.js/bootstrap` |
+| `[cocosair] GameCanvas or __CC_CANVAS__ must exist before importing the engine.` | `src/pal/screen-adapter/web/screen-adapter.js:300-301` | the engine module evaluated with no `#GameCanvas` and no override; no `code` property, thrown during import, before `createAirApp` exists | put the canvas in the document before the import, or import `cocosair.js/bootstrap` first |
+| `[cocosair] custom canvas must be assigned to globalThis.__CC_CANVAS__ before importing the engine` | `bootstrap.ts:52-53` | requested canvas has another id and `__CC_CANVAS__` is not that element; no `code` property | assign the element to `__CC_CANVAS__` before the engine import, or use the safe entry |
+| `[cocosair] createAirApp: page already contains another element with id "GameCanvas" ...` | `bootstrap.ts:45-49` | defensive branch: `normalizeAirOptions` already raises `AIR_E_CANVAS_CONFLICT` for the same condition (`app-config.ts:59-62`), so this literal is not reachable through `createAirApp` | treat it as `AIR_E_CANVAS_CONFLICT` |
+
+## Rendering and device failure
+
+| Literal | Throw site | Trigger | What to do |
+|---|---|---|---|
+| `WEBGL2_REQUIRED` | `src/cocos/gfx/device-manager.ts:180-186`, message `[cocosair] WebGL 2 is required; WebGL 1 is unsupported.`, original failure kept on `error.cause` | no `globalThis.WebGL2RenderingContext`, no registered `WebGL2Device`, or synchronous device initialization failed; the UC browser override forces the non-WebGL 2 path (`:157-161`) | surface the failure: there is no WebGL 1, Canvas or WebGPU fallback and the non-rendering `EmptyDevice` is never substituted (`docs/webgl2-only.md:3-8`); `renderMode: 3` is the only HEADLESS route |
+| engine error id `3820` for an unsupported render mode | `device-manager.ts:237-239` | `_determineRenderType` cannot map the mode; unreachable through `createAirApp`, which validates 0..3 first (`app-config.ts:63-65`) | only relevant when driving `game.init` directly |
+| engine error id `16337` (logged through `errorID`, not thrown) | `device-manager.ts:194-199` | `renderMode: 1` (`CANVAS`) passes AIR validation but matches no device branch in `DeviceManager.init`; `init` returns `false` and the `game.init` chain discards the result without checking it (`src/cocos/game/game.ts:786-788`) | do not use `renderMode: 1`; it is accepted-but-inert, and no evidence of a rendered result exists (path read from source on 2026-10-08) |
+
+## Scene lifecycle codes
+
+All from `AirAppImpl` methods (`src/air/app.ts:135-197`).
+
+| Code | Throw site | Trigger | What to do |
+|---|---|---|---|
+| `AIR_E_SCENE` | `app.ts:139` | argument is not a native `Scene` instance, or `scene.isValid` is false | pass `new Scene('...')` or a live scene from `getScene()`; `Node` and Prefab-like values are rejected |
+| `AIR_E_SCENE_RELEASING` | `app.ts:137` | `run()` during an in-flight `releaseScene()` | await the release Promise you already hold, then run |
+| `AIR_E_SCENE_RELEASE_FAILED` | `app.ts:138` | the previous release reported failures or pending cleanup | resolve the ownership failure named in `receipt.failures` / `receipt.pending` and reload; a timeout is not completion |
+| `AIR_E_SCENE_RELEASE_REQUIRED` | `app.ts:141-143` | replacing a running scene with a different one while the current scope still owns cleanup callbacks (`ownedCount > 0`); re-running the *current* scene returns as a silent no-op at `app.ts:140`, which is checked before this gate | `await app.releaseScene!()` first, then `run(newScene)`; direct replacement is only for scenes with no registered cleanup |
+
+## Session and cleanup codes
+
+From `src/air/session-scope.ts:41-71`; details in `references/session-scope.md`.
+
+| Code | Throw site | Trigger | What to do |
+|---|---|---|---|
+| `AIR_E_SESSION_CLOSED` | `session-scope.ts:42` (`activate`), `:51` (`own`) | the scope was disposed; `releaseScene()` disposes the current scope (`src/air/app.ts:174`) but the rotation to a fresh scope happens only in the next replacing `run()` (`app.ts:146-149`), so `app.session` keeps rejecting until then | create or take the current `app.session`; do not reuse a retired scope |
+| `AIR_E_CLEANUP_CALLBACK` | `session-scope.ts:52` | `own()` argument is not a function | register a zero-argument function; the return value is ignored |
+| `AIR_E_CLEANUP_TIMEOUT` | `session-scope.ts:70` | `dispose({ timeoutMs })` outside `(0, 5000]` or not finite; delivered as a rejected Promise, not a synchronous throw | pass a value in range or omit it for the 5000 ms default |
+
+## Non-coded throws worth knowing
+
+The three un-coded physics-backend failures (the warn-only no-backend case, the unregistered backend id throw, and the late-selection throw in `src/air/physics-backend.ts:46-62`) are owned by the `cocosair-physics` row of the [cocosair](../../cocosair/SKILL.md) router; read that row instead of retrying here.
+
+| Literal | Throw site | Trigger | What to do |
+|---|---|---|---|
+| `TypeError: [AIR_E_DIAGNOSTIC_MODE] diagnostics must be errors or warnings` | `src/air/diagnostics.ts:25-27` | `createAirDiagnostics` called directly with a bad mode; the text is message-only and has no `code` property | validate through `AirAppOptions.diagnostics` instead |

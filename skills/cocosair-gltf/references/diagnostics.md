@@ -1,0 +1,77 @@
+Derived from `src/air/assets/gltf/diagnostics.ts`, `src/air/assets/gltf/index.ts`, `src/air/assets/gltf/extension-registry.ts`, `src/air/assets/gltf/loader.ts`, `src/air/assets/gltf/parser-context.ts`, `src/air/assets/gltf/schema.ts`, `src/air/assets/gltf/asset.ts`, `src/air/assets/gltf/progress.ts`, `src/air/assets/gltf/support.ts`, `src/air/assets/gltf/nodes.ts`, `src/air/assets/gltf/extensions/`, `src/air/assets/gltf/decoder/ktx2.ts`, `src/air/assets/gltf/decoder/draco.ts`, `src/air/assets/gltf/decoder/meshopt.ts`, `src/air/assets/gltf/extensions/geometry/draco.ts`, `src/air/assets/gltf/extensions/geometry/meshopt.ts`, `src/air/assets/gltf/extensions/texture/basisu.ts`, `src/air/assets/gltf/extensions/texture/image-formats.ts`, `src/air/assets/gltf/extensions/material/emissive-strength.ts`, `src/air/assets/gltf/extensions/material/specular.ts`, `src/air/assets/gltf/extensions/scene/lights.ts`, `docs/gltf/gltf-runtime.md`, `examples/gltf-draco/src/main.ts`, `docs/evidence/examples-verified.json`, `build/cocosair.module.js`, `build/cocosair.module.d.ts` (as of 2026-10-09).
+
+## Five codes
+
+`GLTFErrorCode` is a closed union of exactly five string literals, declared in this order: `GLTF_EXTENSION_UNSUPPORTED`, `GLTF_DECODER_MISSING`, `GLTF_DEVICE_UNSUPPORTED`, `GLTF_EXTENSION_INVALID`, `GLTF_DECODE_FAILED` (`src/air/assets/gltf/diagnostics.ts:2-3`). Throw-site counts below were recomputed by grep over the gltf source tree recursively; support-status mapping lives in `skills/cocosair-gltf/references/extensions-matrix.md` and decoder injection in `skills/cocosair-gltf/references/decoders.md`.
+
+| Code | Meaning | Direct throws | Representative sites | Browser-proven? |
+| --- | --- | --- | --- | --- |
+| `GLTF_EXTENSION_INVALID` | per-extension JSON shape/range validation | 39, all inside `src/air/assets/gltf/extensions/` (17 files across material/, texture/, geometry/, scene/) | `src/air/assets/gltf/extensions/material/emissive-strength.ts:23` (`emissiveStrength must be finite and >= 1`), `src/air/assets/gltf/extensions/material/specular.ts:31` (`specularFactor must be [0,2]`) | no |
+| `GLTF_DECODE_FAILED` | decoder/geometry/texture decode failure | 17: 5 in `src/air/assets/gltf/decoder/draco.ts` (`:74`, `:172`), 5 in `src/air/assets/gltf/decoder/ktx2.ts` (`:111`, `:116-117`), 3 in extensions/texture/basisu.ts, 2 each in extensions/geometry/{meshopt,draco}.ts | KTX2 ceiling: `src/air/assets/gltf/decoder/ktx2.ts:116-117` (`ktx2: dimensions WxH exceed the 16384 ceiling`; `MAX_KTX2_DIMENSION = 16384` at `:26`) | no |
+| `GLTF_DECODER_MISSING` | required decoder/transcoder absent or unusable | 6 | `src/air/assets/gltf/decoder/ktx2.ts:99` (`Basis transcoder module lacks initializeBasis/KTX2File`), `src/air/assets/gltf/decoder/meshopt.ts:45`, `src/air/assets/gltf/extensions/geometry/draco.ts:76`, `:80`, `src/air/assets/gltf/extensions/geometry/meshopt.ts:81`, `src/air/assets/gltf/extensions/texture/basisu.ts:52` | yes, refusal path only (see below) |
+| `GLTF_EXTENSION_UNSUPPORTED` | required extension has no handler or `fallback` status | 1 direct: `src/air/assets/gltf/extension-registry.ts:112`; plus two indirect paths: `SUPPORT_CODES.fallback` (`:55-59`) and the `?? 'GLTF_EXTENSION_UNSUPPORTED'` default (`:119`) | same | no |
+| `GLTF_DEVICE_UNSUPPORTED` | required extension needs a device capability the browser lacks | 1 direct: `src/air/assets/gltf/extensions/texture/image-formats.ts:89-90` (webp/avif required but undecodable); plus indirect via `SUPPORT_CODES['device-dependent']` (`src/air/assets/gltf/extension-registry.ts:57`) | same | no |
+
+Required/optional split: an extension listed in `extensionsRequired` throws with the mapped code (`src/air/assets/gltf/extension-registry.ts:118-121`); the same condition on an optional extension only warns (`:122`). Decoder-missing follows the same rule inside handlers: required Draco throws (`src/air/assets/gltf/extensions/geometry/draco.ts:75-77`), optional Draco without core fallback attributes still throws (`:79-81`), optional with fallback warns (`:83`).
+
+## What a GLTFError looks like when caught
+
+`GLTFError extends Error` with `readonly code: GLTFErrorCode` and `readonly extension?: string` (`src/air/assets/gltf/diagnostics.ts:6-8`). The constructor calls `super` with the message prefixed by `[glTF] ` and sets `this.name = 'GLTFError'` (`:10-11`). The prefix is not a discriminator: `schema.ts` and the registry throw plain `Error`s that also start with `[glTF] `. `code` is the only reliable discriminator (`instanceof GLTFError` works too, unless two copies of the bundle are loaded). Extension-driven throws pass the extension name as the third argument, so `error.extension` is set for all five codes' extension sites (e.g. `src/air/assets/gltf/extension-registry.ts:112`, `src/air/assets/gltf/extensions/geometry/draco.ts:76-77`).
+
+```js
+import { GLTFError, GLTFLoader } from 'cocosair';
+try {
+    const asset = await new GLTFLoader().parseAsync(bytes, './assets/');
+} catch (error) {
+    if (error instanceof GLTFError) {
+        console.error(error.code, error.extension ?? '-', error.message); // stable, machine-readable
+    } else if (error instanceof DOMException && error.name === 'AbortError') {
+        // cancelled load, not a defect
+    } else if (error?.code === 'AIR_E_GLTF_ANIMATION_OPTIONS') {
+        // TypeError from setAnimationLoop on a live instance, not from loading
+    } else {
+        throw error; // plain [glTF] Error from schema.ts or the registry: no code field
+    }
+}
+```
+
+## Failures that are not GLTFError
+
+| Type | Throw site | Trigger |
+| --- | --- | --- |
+| plain `Error` | `src/air/assets/gltf/extension-registry.ts:86` (`[glTF] duplicate extension handler: NAME`) and `:93` (`[glTF] extension NAME requires unregistered extension DEP`) | host mis-registered factories; fires in `createHandlers` while wiring a parse (`src/air/assets/gltf/loader.ts:127`), independent of document content |
+| `DOMException` `'AbortError'` | `src/air/assets/gltf/loader.ts:117` (signal already aborted at entry) and `src/air/assets/gltf/parser-context.ts:84-85` (`throwIfAborted`, identical message `glTF load aborted`) | cancellation; checkpoints at `loader.ts:125`, `:131`, `:140`, `:180`, per buffer (`parser-context.ts:148`), per bufferView (`:181`, via `resolveBufferViews` called from `loadBuffers` at `:170`), per primitive (`:203`). In-flight `fetch` also carries the signal (`parser-context.ts:131`), so a network abort rejects with fetch's own `AbortError` |
+| tagged `TypeError` | `src/air/assets/gltf/asset.ts:177-179`: `Object.assign(new TypeError(...), { code: 'AIR_E_GLTF_ANIMATION_OPTIONS', clipName })`, message prefixed `[AIR_E_GLTF_ANIMATION_OPTIONS] ` | `setAnimationLoop` misuse on an instance (`:176-190`): disposed instance or invalid root (`:180`); non-boolean `loop` or non-string `clipName` (`:181-183`); unknown clip name, message lists available clips (`:185`); selected native animation state removed (`:188`). The `AIR_E_*` convention is AIR-wide, not glTF: `catch (e instanceof GLTFError)` never sees it |
+| plain `Error` from `schema.ts` | `check(condition, message)` throws a plain `Error` with the message prefixed `[glTF] ` and no code (`src/air/assets/gltf/schema.ts:55-57`); `item(array, index, label)` routes through `check` with `LABEL: invalid index N` (`:58-61`); `integer(value, label)` with `LABEL: expected non-negative integer` (`:62-65`) | every structural rule: GLB container checks (`src/air/assets/gltf/parser-context.ts:18-40`), 16M decoded-component limit (`:237`), accessor bounds/alignment (`:247`, `:253-256`), skin node must reference a mesh (`src/air/assets/gltf/asset.ts:129`, `src/air/assets/gltf/loader.ts:175`), JOINTS_0 range (`asset.ts:136-137`), morph weight count/finiteness (`asset.ts:149`), node mesh/skin cross-checks (`loader.ts:172-177`) |
+
+Callers therefore see three shapes from one `parseAsync` rejection surface: `GLTFError` (has `code`), plain `Error` with `[glTF] ` prefix (no `code`), and `DOMException` (`name === 'AbortError'`). The `AIR_E_GLTF_ANIMATION_OPTIONS` `TypeError` only escapes `instantiate()`-returned instances, never the loader.
+
+## Two report shapes
+
+`GLTFExtensionReportEntry { name: string; required: boolean; status: string; reason?: string }` (`src/air/assets/gltf/diagnostics.ts:15-20`) declares `status` as a plain `string`, while `GLTFExtensionSupport.status` is the closed `GLTFExtensionStatus` union of five literals (`src/air/assets/gltf/support.ts:2`, `:4-8`). They are not interchangeable: only union values map onto error codes through `SUPPORT_CODES` (`src/air/assets/gltf/extension-registry.ts:55-59`), and an arbitrary report string maps to nothing. `GLTFExtensionReportEntry` is currently declaration-only - it is re-exported as a type (`src/air/assets/gltf/index.ts:12`) but no runtime code in `src/` constructs one.
+
+## Progress phases
+
+`GLTFLoadProgress.phase` is `'container' | 'dependencies' | 'decode' | 'textures' | 'objects'` with `loaded`, `total` and optional `url` (`src/air/assets/gltf/progress.ts:4-9`); `GLTFLoaderOptions` carries `signal?`, the three decoder slots and `onProgress?` (`:11-17`). Emission points:
+
+| Phase | Where | Notes |
+| --- | --- | --- |
+| `container` | `src/air/assets/gltf/loader.ts:132`, `report('container', 1, 1)` | after `validateRequired` and handler `validate` pass |
+| `dependencies` | only inside `loadBuffers`: `src/air/assets/gltf/parser-context.ts:159` (placeholder buffer) and `:168` (loaded buffer), `i + 1` of buffer count | never emitted by the `parseAsync` report closure; comes from the parser context's own `report` (`:87-89`), which passes no `url` |
+| `decode` | summary at `src/air/assets/gltf/loader.ts:139` (loaded = total = accessor count after accessor validation), then incremental per primitive at `src/air/assets/gltf/parser-context.ts:210` inside `resolvePrimitives` | two emitters, one phase name |
+| `textures` | `src/air/assets/gltf/loader.ts:152` (loaded = total = texture count) | fires even when no texture needed decoding |
+| `objects` | `src/air/assets/gltf/loader.ts:179`, `(1, 1)` | after animations, before the final abort check |
+
+`url` is populated only when the `data` argument was a string (`src/air/assets/gltf/loader.ts:120-121`). `total` for `decode`/`textures` is `json.accessors?.length || 0` / `json.textures?.length || 0` (`:139`, `:152`), so a `loaded === total === 0` callback is a document with no accessors/textures, not a stall. `onProgress` is advisory: it is invoked synchronously through optional chaining (`loader.ts:121`, `parser-context.ts:88`) and nothing awaits it, but every emission sits inside `parseAsync`'s try block (`loader.ts:124-183`), so a throwing callback propagates through the teardown catch and fails the load.
+
+## Warnings
+
+`warn(message)` is a second diagnostic channel: it pushes onto `context.warnings` and calls `console.warn` with the `[glTF] ` prefix (`src/air/assets/gltf/parser-context.ts:90`); `GLTFAsset.warnings` exposes the list read-only after the fact (`src/air/assets/gltf/asset.ts:62`). Optional-extension problems warn instead of throwing: a non-`supported` optional extension (`src/air/assets/gltf/extension-registry.ts:122`), a used-but-unhandled optional extension during buffer load (`src/air/assets/gltf/parser-context.ts:140-143`), decoder-missing core fallbacks (`src/air/assets/gltf/extensions/geometry/draco.ts:83`, `src/air/assets/gltf/extensions/geometry/meshopt.ts:83`, `src/air/assets/gltf/extensions/texture/basisu.ts:55`, `src/air/assets/gltf/extensions/texture/image-formats.ts:92`), cameras kept as descriptions without instantiation (`src/air/assets/gltf/nodes.ts:16`), and `KHR_lights_punctual` `innerConeAngle` retained as metadata with no engine plateau input (`src/air/assets/gltf/extensions/scene/lights.ts:117`). The last two match the prose in `docs/gltf/gltf-runtime.md:60`, `:104`. Fully silent case: an unknown optional extension hits `continue` with neither warning nor error (`src/air/assets/gltf/extension-registry.ts:114`).
+
+## Failure containment
+
+A failed parse leaves nothing behind: the `parseAsync` catch runs `context.dispose(); asset.destroy(); throw error;` (`src/air/assets/gltf/loader.ts:183`), and `dispose` drains the LIFO cleanup stack, releases decoded buffers and disposes handlers, swallowing only cleanup-side errors as `console.warn` (`src/air/assets/gltf/parser-context.ts:111-121`). A failed `instantiate` destroys the partially built root node and rethrows (`src/air/assets/gltf/asset.ts:195`). Through `loadAsync`, the registered factory additionally removes `${url}@native` from both the `files` and `parsed` caches on failure (`src/air/assets/gltf/loader.ts:200-206`), so a transient error is not cached permanently. `examples/gltf-draco/src/main.ts:67-77` demonstrates the contained refusal: parse without a decoder, catch, assert the stable `GLTF_DECODER_MISSING` code, keep running - no crash, no leaked instance.
+
+## What the evidence covers
+
+`GLTFError` is in the runtime export block of `build/cocosair.module.js` (single `export { ... }`, currently `:161574`) and declared in `build/cocosair.module.d.ts:56980-56981`, but `docs/evidence/examples-verified.json` (file-level `measuredAt` 2026-10-04T05:52:32.537Z, top-level `candidateFingerprint` 2f089f6ce25eaccd) gives it zero `apiProof` bindings: no example asserts against the class through the instrumentation mechanism. The `GLTF_DECODER_MISSING` path is nonetheless browser-exercised by `gltf-draco` (entry `:16810`, `result: PASS`; validators scene-ready, node-exists, asset-loaded with `assets/draco.glb=1292B` and 1 path proven fetched, transform-equals, no-runtime-error, capability-status `KHR_draco_mesh_compression=decoder-required` at `:17140`), and the entry has no `visible-frame` validator - consistent with nothing from the GLB ever rendering. `GLTF_EXTENSION_UNSUPPORTED`, `GLTF_DEVICE_UNSUPPORTED`, `GLTF_EXTENSION_INVALID` and `GLTF_DECODE_FAILED` have no browser evidence at all; their behavior is established only by source and smoke tests. Raw collector runs land under `output/`, which is gitignored (`.gitignore:16`) and outside the npm `files` list, so a glTF diagnostic claim is durable only when it points at `docs/evidence/examples-verified.json` or at the source.

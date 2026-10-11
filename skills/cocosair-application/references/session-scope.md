@@ -1,0 +1,57 @@
+Derived from docs/manual/safe-startup-and-release.md, src/air/session-scope.ts (as of 2026-10-08)
+
+`createSessionScope()` is exported from the main entry (`src/air/index.ts:12`; declared under the same symbol name in the generated `build/cocosair.module.d.ts`, currently :55689 - numbers there shift on the next `npm run build:dts`) and every `AirAppImpl` owns one, reachable as `app.session` (`src/air/app.ts:105`, `:117`, `:122`). The scope is a cooperative cleanup registry; it cannot preempt a blocking synchronous callback (`src/air/session-scope.ts:27`).
+
+## Members
+
+| Member | Signature | Rule | Source |
+|---|---|---|---|
+| `generation` | `number` | starts at `0`, incremented by each `activate()` | `:29`, `:41-44` |
+| `active` | `boolean` | `true` only between `activate()` and `deactivate()` / `dispose()` | `:29`, `:41-45`, `:72` |
+| `deactivateReason` | `string \| null` | last `deactivate(value)` argument, or `'dispose'`; cleared by `activate()` | `:29`, `:43-45`, `:72` |
+| `ownedCount` | `number` | number of registered callbacks (`callbacks.size`); drives the `AIR_E_SCENE_RELEASE_REQUIRED` gate in `run()` | `:40`; `src/air/app.ts:141-143` |
+| `activate()` | `=> number` | throws `AIR_E_SESSION_CLOSED` once disposed; otherwise `generation++`, `active = true`, `reason = null`, observers notified, returns the new generation | `:41-44` |
+| `deactivate(reason?)` | `=> void` | default reason string `'deactivate'`; idempotent, allowed after disposal | `:45` |
+| `token()` | `=> { generation, isCurrent() }` | frozen snapshot; `isCurrent()` is `!disposal && active && capturedGeneration === generation` | `:46-49` |
+| `own(cleanup, label?)` | `=> () => void` | throws `AIR_E_SESSION_CLOSED` after disposal and `AIR_E_CLEANUP_CALLBACK` when `cleanup` is not a function; stores it under label `` `${label}#${id}` `` with `label` default `'cleanup'`; **the returned function only deletes the registration and never runs the cleanup** | `:50-55` |
+| `onChange(cb)` | `=> () => void` | after disposal returns a no-op unsubscribe; the same original `cb` may be registered repeatedly and each wrapper is tracked | `:56-61` |
+| `offChange(cb)` | `=> void` | removes every wrapper stored for that original callback (the form used when no unsubscribe was kept) | `:62-65` |
+| `dispose(options?)` | `=> Promise<AirCleanupReceipt>` | terminal; repeat calls return the identical Promise (`:66-67`), including reentry from an observer | `:66-89` |
+
+Observer exceptions are caught and cannot change session state (`:34-37`, `:155` of `context-health.ts` behaves the same way).
+
+## Timeout contract
+
+| Input | Result | Source |
+|---|---|---|
+| `dispose()` | deadline `5000` ms | `:68` |
+| `dispose({ timeoutMs: n })` | accepted only when `Number.isFinite(n) && n > 0 && n <= 5000` | `:69` |
+| `timeoutMs: 0`, negative, `NaN`, `Infinity`, or above `5000` | returns a **rejected Promise** with `code: 'AIR_E_CLEANUP_TIMEOUT'` and message `timeoutMs must be finite and in (0, 5000].` - it is not a synchronous throw, so `await` it or attach `catch` | `:69-71` |
+
+Mechanics: disposal clears the registry, schedules every callback on a microtask, and races the aggregate against one timer (`:73-81`). A callback still open when the timer wins stays in `pending`; the receipt is a frozen snapshot and is never revised when the late promise finally settles (`test/smoke/port-gap-session-scope.test.ts:27-34`). Failures are collected per label into `failures: { label, message }[]` and never converted into success (`:79-85`).
+
+`status` is `'failed'` when `pending.length || failures.length`, otherwise `'released'` (`:83`). After `dispose()`, `listeners` and `subscriptions` are cleared (`:87`), so no further notifications arrive.
+
+## How AirApp drives the scope
+
+| Moment | Scope action | Source |
+|---|---|---|
+| app construction | `createSessionScope()` created, generation `0`, inactive | `src/air/app.ts:117` |
+| first `run(scene)` | no rotation, so ownership registered before the first run belongs to the first scene; `activate()` makes generation `1` current | `src/air/app.ts:144-150`; `test/smoke/port-gap-initial-session-ownership.test.ts:3-19` |
+| later `run(newScene)` with `ownedCount > 0` | throws `AIR_E_SCENE_RELEASE_REQUIRED` instead of silently dropping callbacks | `src/air/app.ts:141-143` |
+| later `run(newScene)` with no ownership | `deactivate('replaced')` plus a fire-and-forget `dispose()`, then a fresh scope is created and activated | `src/air/app.ts:146-150` |
+| `releaseScene()` | synchronously `deactivate('release')` plus `game.pause()` and `_needsResume` armed (`src/air/app.ts:195`); then, inside the release microtask installed at `:173-174`, `dispose()` of the current scope (`:174`), native scene release (`:176`) and the AIR asset-release flush (`:180`) | `src/air/app.ts:169-197` |
+| `close()` | `deactivate('close')`, `game.pause()`, then the release chain plus health and diagnostics teardown | `src/air/app.ts:199-210` |
+
+`director` keeps the running scene, so `getScene()` is `null` before the first `run()` and again after a successful release, not in between (`src/air/app.ts:162-167`, receipt path at `:171-184`).
+
+## Ownership rules to keep
+
+- Check `token.isCurrent()` before attaching an async result to a scene; release ownership yourself when the generation is stale (`docs/manual/safe-startup-and-release.md:31-41`).
+- `own()` returns a transfer-of-responsibility handle, not a disposer: unregistering means something else must run that cleanup, and a lost callback leaks it silently.
+- Shared assets go through refcounting or an asset bank and the callback releases only the reference this feature took; destroy directly only a `Mesh` or `Material` this code exclusively owns (`docs/manual/safe-startup-and-release.md:45`).
+- A pending cleanup label is not a completed one: `releaseScene()` reports `failed` and the next `run()` throws `AIR_E_SCENE_RELEASE_FAILED` (`src/air/app.ts:138`, `:184-185`).
+
+## Evidence status
+
+`createSessionScope` is a source export and part of the default bundle aggregate (`src/exports/air.ts` re-exports `../air`, `src/air/index.ts:12`). Node-side regression coverage lives in `test/smoke/port-gap-session-scope.test.ts`, `test/smoke/port-gap-initial-session-ownership.test.ts` and `test/smoke/port-gap-scene-release.test.ts` (jsdom, no GPU); the three-browser lifecycle probe `tools/verify/air-bootstrap-browser.cjs` asserts the release and close codes but its newest stored report (`output/playwright/air-bootstrap-s10-unified.json`, 2026-10-04) declares `completed: false` on a subset scope against bundle sha prefix `de4e0472e8a9cf86`, which is not the current `3a448f029369ac02`.

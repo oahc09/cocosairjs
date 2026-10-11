@@ -1,0 +1,79 @@
+Derived from `build/gltf-decoders/MANIFEST.md`, `build/gltf-decoders/meshopt/index.js`, `build/gltf-decoders/draco/draco3d.js`, `build/gltf-decoders/package.json`, `build/gltf-decoders`, `src/air/assets/gltf/decoder/types.ts`, `src/air/assets/gltf/decoder/meshopt.ts`, `src/air/assets/gltf/decoder/ktx2.ts`, `src/air/assets/gltf/decoder/draco.ts`, `src/air/assets/gltf/extensions/geometry/draco.ts`, `src/air/assets/gltf/loader.ts`, `examples/gltf-meshopt/src/main.ts`, `examples/gltf-draco/src/main.ts`, `examples/gltf-loader-registry/src/main.ts`, `examples/gltf-catalog/capabilities.json`, `tools/verify/decoder-audit.cjs`, `tools/fixtures/gen-geometry-fixtures.cjs`, `tools/dev/dev-server.cjs`, `tools/verify/serve-gltf.cjs`, `tools/verify/prepare-static.cjs`, `docs/gltf/gltf-decoder-deployment.md`, `docs/gltf/gltf-runtime.md`, `docs/evidence/examples-verified.json` (as of 2026-10-09).
+
+## Decoders are not in the bundle
+
+Draco, meshopt and KTX2/Basis decoders are never bundled into `cocosair.module.js`; they ship as standalone files under build/gltf-decoders/, are included verbatim by `npm pack` through the package `files` field, and are injected by the application through the provider API (`build/gltf-decoders/MANIFEST.md:3-5`, `package.json:46-47`). The audit gate enforces the exclusion: `tools/verify/decoder-audit.cjs` cross-checks every shipped file against manifest bytes and sha256 (`:49-53`), requires a per-directory LICENSE.md (`:62-63`), and fails if the main or minified bundle contains WASM magic bytes or decoder file names (`:10`, `:77`). It runs as `npm run verify:decoders` (`package.json:73`), is known as gate G5-build, and exits 1 on any drift (`build/gltf-decoders/MANIFEST.md:16-19`).
+
+Runtime consequence of a missing provider: a required compression extension throws `GLTFError` with code `GLTF_DECODER_MISSING` and the whole asset is rejected (`src/air/assets/gltf/extensions/geometry/draco.ts:75-77`); an optional extension falls back to the primitive's core accessors with a recorded warning (`:83-84`), unless there is no core fallback data, which also raises `GLTF_DECODER_MISSING` (`:79-81`). `getExtensionSupport()` reports `decoder-required` with reason "configure a decoder with setDRACODecoder()" when no decoder is set (`:66`). Nothing is implicitly initialized: with no compressed/transcoded extensions in use, no injection happens, no WASM loads, and no worker is created (`docs/gltf/gltf-decoder-deployment.md:41`).
+
+## Shipped artifact inventory
+
+Authority for versions, licenses, hashes and decision records is `build/gltf-decoders/MANIFEST.md` (`docs/gltf/gltf-decoder-deployment.md:13-24`). Byte counts below were recomputed from disk and match the manifest.
+
+| File | Bytes | Role |
+| --- | --- | --- |
+| meshopt/meshopt_decoder.cjs | 29400 | runtime decoder, CommonJS (`build/gltf-decoders/MANIFEST.md:30`) |
+| meshopt/meshopt_decoder.mjs | 29059 | runtime decoder, ESM with wasm inlined (`:31`, `examples/gltf-meshopt/src/main.ts:70`) |
+| meshopt/meshopt_encoder.js / .mjs | 24348 each | fixture generation only, never runtime (`:32-33`, `:24-26`; generator `tools/fixtures/gen-geometry-fixtures.cjs:15`) |
+| meshopt/index.js | 199 | barrel entry, unusable as shipped (see below) (`:34`) |
+| draco/draco3d.js | 246 | CommonJS entry requiring ./draco_encoder_nodejs and ./draco_decoder_nodejs (`build/gltf-decoders/draco/draco3d.js:5-6`) |
+| draco/draco_decoder_nodejs.js + draco_decoder.wasm | 58763 + 285948 | Node decode path covering the smoke suite and Node consumers (`build/gltf-decoders/MANIFEST.md:53-54`) |
+| draco/draco_encoder_nodejs.js + draco_encoder.wasm | 49007 + 370188 | fixture generation only, never runtime decode (`:55-56`, `tools/fixtures/gen-geometry-fixtures.cjs:218-219`) |
+| basis/basis_transcoder.js + .wasm | 62337 + 499935 | KTX2 transcoder, three r168 build; the same module handles KTX2 zstd (`:59-68`) |
+| package.json | 25 | `{"type":"commonjs"}` local packaging metadata keeping vendored CommonJS decoders loadable inside the ESM build directory; not a decoder binary (`:79-86`) |
+
+Versions and licenses: meshoptimizer 1.2.0 MIT (`build/gltf-decoders/MANIFEST.md:22`); draco3d 1.5.7 Apache-2.0, license text vendored because the npm package ships none (`:37-41`); Basis Universal transcoder from three r168 examples/jsm/libs/basis/, Apache-2.0 (`:59-63`). Each directory carries its own LICENSE.md (`:35`, `:57`, `:69`). The manifest names two fixture-generation consumers of the encoders (`build/gltf-decoders/MANIFEST.md:24-26`); of those, only `tools/fixtures/gen-geometry-fixtures.cjs` exists on disk today, and the first name in that sentence resolves to no file - a stale manifest reference.
+
+## Injection API
+
+Three setters on `GLTFLoader` are the only application-side entry (`docs/gltf/gltf-decoder-deployment.md:26`): `setDRACODecoder`, `setMeshoptDecoder`, `setKTX2Transcoder` each spread-merge into the instance options, accept `null` (normalized to `undefined`), and return `this` for chaining (`src/air/assets/gltf/loader.ts:82-90`). `configureGLTFLoaderDefaults(options)` sets process-wide fallbacks; instance options take precedence via the merge order `{ ...globalDefaults, ...this.options }` (`src/air/assets/gltf/loader.ts:43-47`, `:96`).
+
+Three factories wrap vendor modules into the loader contracts (`src/air/assets/gltf/decoder/types.ts`):
+
+| Factory | Behavior |
+| --- | --- |
+| `createMeshoptDecoder(module, workers?)` (`src/air/assets/gltf/decoder/meshopt.ts:30`) | awaits `module.ready` when present and calls `module.useWorkers(workers)` only when both exist (`:31-32`); the loader never creates workers itself (`:27-28`) |
+| `createDracoDecoder(provider)` (`src/air/assets/gltf/decoder/draco.ts:52`) | accepts a ready module or a factory, resolved lazily on the first Draco primitive (`:39`, `:56-59`); every Draco temporary is destroyed after extraction (`:4`) |
+| `createKTX2Transcoder(factory)` (`src/air/assets/gltf/decoder/ktx2.ts:94`) | lazy `getModule` validates the module and throws `GLTFError('GLTF_DECODER_MISSING', 'Basis transcoder module lacks initializeBasis/KTX2File')` on failure, then calls `initializeBasis()` (`:96-103`) |
+
+Two availability predicates: `isMeshoptAvailable(module)` = `!!module && module.supported !== false && (typeof module.decodeGltfBufferAsync === 'function' || typeof module.decodeGltfBuffer === 'function')` (`src/air/assets/gltf/decoder/meshopt.ts:21-24`); `isKTX2Available(module)` = `!!module && typeof module.initializeBasis === 'function' && typeof module.KTX2File === 'function'` (`src/air/assets/gltf/decoder/ktx2.ts:90-92`).
+
+Three decoder interfaces (`src/air/assets/gltf/decoder/types.ts`): `GLTFDracoDecoder { decodePrimitive(data, attributes, document?), dispose? }` (`:39-42`) with `DracoAttributeInfo { semantic, id }` (`:37`); `GLTFMeshoptDecoder { decodeGltfBufferAsync(count, byteStride, source, mode, filter), dispose? }` (`:44-53`) documenting the official meshoptimizer argument order in place - mode is `ATTRIBUTES|TRIANGLES|INDICES`, filter is `NONE|OCTAHEDRAL|QUATERNION|EXPONENTIAL` (`:46-48`); `GLTFKTX2Transcoder { transcode(data, supportedFormats?), dispose? }` (`:55-60`). Providers manage their own workers/WASM and must release them in `dispose()` (`:1-5`).
+
+## Loading a decoder module in a browser
+
+The working pattern from `examples/gltf-meshopt/src/main.ts:71-77` builds the URL by string concatenation specifically so bundlers cannot statically resolve it, then injects:
+
+```ts
+var decoderUrl = '/build/gltf-decoders' + '/meshopt/meshopt_decoder.mjs';
+var decoderModule = await import(/* @vite-ignore */ decoderUrl);
+var decoder = createMeshoptDecoder(decoderModule.MeshoptDecoder);
+var configured = new GLTFLoader();
+configured.setMeshoptDecoder(decoder);
+```
+
+The engine makes zero path assumptions about decoders; any URL layout works (`docs/gltf/gltf-decoder-deployment.md:63-64`). Serving requirements: `tools/verify/serve-gltf.cjs:7-8` maps `.js`/`.mjs`/`.cjs` to `text/javascript` and `.wasm` to `application/wasm`; the dev server MIME table maps `.js`/`.mjs` to `text/javascript` and `.wasm` to `application/wasm` (`tools/dev/dev-server.cjs:156-170`) but carries no `.cjs` key, even though the manifest credits both servers with all three script extensions (`build/gltf-decoders/MANIFEST.md:71-77`). ESM `import` and `WebAssembly.instantiateStreaming` hard-fail on wrong MIME, cross-origin delivery needs `Access-Control-Allow-Origin`, and this version has no worker integration - draco/meshopt run on the main thread and any worker pool is an application-side asset (`docs/gltf/gltf-decoder-deployment.md:45-56`). Offline static staging copies build/gltf-decoders next to the bundle (`tools/verify/prepare-static.cjs:35`), and nested deployment layouts are regression-covered (`docs/gltf/gltf-decoder-deployment.md:61-66`).
+
+## The meshopt barrel is unusable
+
+`build/gltf-decoders/meshopt/index.js` (199 bytes, hash-listed at `build/gltf-decoders/MANIFEST.md:34`) re-exports five modules (`build/gltf-decoders/meshopt/index.js:1-5`). Three of the targets - meshopt_simplifier.js, meshopt_clusterizer.js, meshopt_tangents.js - are absent from the shipped directory, so any ESM import of the barrel fails at resolution. The audit gate does not catch this: `tools/verify/decoder-audit.cjs` checks manifest bytes and hashes, license coverage and bundle exclusion (`:4-11`), then packs, unpacks and `require`s the meshopt decoder entry from the unpacked tree (`:12-15`, `:114`) - it requires `meshopt_decoder.cjs` directly, never imports `index.js`, and contains zero references to the three missing file names. Workaround, used by the meshopt example: import the decoder module file directly (`examples/gltf-meshopt/src/main.ts:71-72`).
+
+## Draco: Node build shipped, browser build injected
+
+The manifest ruling (`build/gltf-decoders/MANIFEST.md:43-48`): `draco3dgltf@1.5.7` contains only the Node build; Google distributes the browser wrapper exclusively through GitHub releases, which offers no hash-pinned npm provenance. Consistent with the standing rule that the engine never embeds decoders, web applications inject their own browser Draco assets via `setDRACODecoder(...)`, while the offline-loadable Node build shipped here covers the smoke suite and Node consumers. The manifest states this is "a deliberate trade-off, not an outstanding task" - do not file it as a bug. The deployment doc records the same boundary: the shipped `draco3d.js` and `draco_decoder_nodejs.js` are CommonJS/Node entries, not usable directly as a browser `<script>` or ESM dynamic-import factory, and apps needing forward Draco decode must obtain a compatible browser decoder and inject its factory into `createDracoDecoder()` (`docs/gltf/gltf-decoder-deployment.md:6-11`).
+
+`examples/gltf-draco/src/main.ts` therefore demonstrates the refusal path deliberately (`:2-9`): query `getExtensionSupport()` for `KHR_draco_mesh_compression` (`:56-58`), load assets/draco.glb with no decoder (`:67-69`), assert the stable code `GLTF_DECODER_MISSING` with no crash and no leaked instance (`:72-77`), and print the host integration recipe `loader.setDRACODecoder(createDracoDecoder(() => draco3d.createDecoderModule({})))` as panel text (`:79-82`).
+
+## KTX2 ceiling and target formats
+
+`MAX_KTX2_DIMENSION = 16384` (`src/air/assets/gltf/decoder/ktx2.ts:26`) is enforced before transcoding so a hostile archive cannot request terabyte-sized output buffers; exceeding it throws `GLTFError('GLTF_DECODE_FAILED', ...)` naming the ceiling (`:114-118`). Only single-face, non-array images are supported (`:119-121`). `KTX2TargetFormat` enumerates 10 logical targets decoupled from any single engine/wasm enum: `BC7_SRGB`, `BC7`, `ETC2_SRGB8_ALPHA8`, `ETC2_RGBA8`, `ETC2_SRGB8`, `ETC2_RGB8`, `ASTC_4x4_SRGB`, `ASTC_4x4`, `RGBA8_SRGB`, `RGBA8` (`src/air/assets/gltf/decoder/types.ts:34`). `transcode(data, supportedFormats?)` chooses among the caller's device-priority list and always appends `RGBA8` as the documented last resort (`src/air/assets/gltf/decoder/types.ts:56-58`, `src/air/assets/gltf/decoder/ktx2.ts:125-128`); without an explicit list it uses ranked defaults per Basis flavor (`:55-56`, `:127`). Raw transcoded output carries the sentinel `KTX2_RAW_MIME = 'image/ktx2-decoded'` (`src/air/assets/gltf/decoder/types.ts:31`) and then requires `width`/`height`/`format`, with `compressed` and per-mip `mipmapLevelDataSize` (`:19-27`).
+
+## What is actually verified
+
+From `docs/evidence/examples-verified.json` (file-level `measuredAt` 2026-10-04T05:52:32.537Z `:2`, `candidateFingerprint` 2f089f6ce25eaccd `:7`):
+
+- Meshopt: real browser-proven decode. `gltf-meshopt` PASS (`:17814`) with assets/meshopt-khr.glb=1728B proven fetched (`:18408`), `visible-frame litRatio=0.1606` (`:18428`), `resource-released held=3 leaked=0 reloaded=true` (`:18433`), and capability status `decoder-required` for both meshopt extension names (`:18423`). `createMeshoptDecoder` (`:18197`) and `isMeshoptAvailable` (`:18248`) each carry a `capability-status` validator binding.
+- Draco: no forward decode proven anywhere. `gltf-draco` PASS (`:16810`) exercises only the refusal path - validators are scene-ready, node-exists, asset-loaded (assets/draco.glb=1292B, `:17125`), transform-equals, no-runtime-error, and capability-status `KHR_draco_mesh_compression=decoder-required` (`:17140`); there is no `visible-frame` validator in the entry. `docs/gltf/gltf-runtime.md:91-93` records the Draco verification level as smoke and states bundled-browser decoding must not be treated as accepted.
+- KTX2/Basis: no transcode proven anywhere. No example imports the basis transcoder; the only `basis_transcoder` hit under examples/ is the metadata string at `examples/gltf-catalog/capabilities.json:275`. The mock draco/ktx2 probes in `examples/gltf-meshopt/src/main.ts:80-104` exercise factory construction and handler capability contracts and explicitly do not claim a real decode (`:80-81`).
+- Setter evidence is thin: `GLTFLoader.setDRACODecoder` (`docs/evidence/examples-verified.json:17398`) and `GLTFLoader.setKTX2Transcoder` (`:17415`) carry only `no-runtime-error` bindings, and their strongest exercised call passes `null` through an `as any` cast (`examples/gltf-loader-registry/src/main.ts:105`, `:113`).
+- The offline gate proves packaging, not pixels: `verify:decoders` does two-way manifest reconciliation, license coverage, zero-embedding checks and `npm pack` -> unpack -> `require` of the meshopt decoder with hash re-verification (`docs/gltf/gltf-decoder-deployment.md:68-75`); the doc itself states it does not prove browser Draco forward decode (`:11`). Raw collector runs land under `output/`, which is gitignored (`.gitignore:16`) and outside the npm `files` list, so a decoder claim is durable only when it points at `build/gltf-decoders/MANIFEST.md` or at `docs/evidence/examples-verified.json`.

@@ -1,0 +1,33 @@
+Derived from `src/cocos/web-view/web-view.ts`, `src/cocos/web-view/web-view-enums.ts`, `src/cocos/web-view/web-view-impl-web.ts`, `src/cocos/web-view/web-view-impl.ts`, `examples/webview-basic/main.js`, `docs/manual/audio-video-webview.md`, `docs/notes/webview-notes.md`, `build/cocosair.module.js` (as of 2026-10-10).
+
+## WebView on a browser is an iframe overlay
+
+`WebView` (`src/cocos/web-view/web-view.ts:48`) requires `UITransform` (`:46`); the web impl creates `div#webview-wrapper > iframe#webview` and appends it to `game.container` (`src/cocos/web-view/web-view-impl-web.ts:71-94`), so page pixels never enter the WebGL frame buffer and canvas screenshots will not contain them (`docs/notes/webview-notes.md:10-15`, `:80-82`). Position comes from a CSS `matrix()` written every frame in `update -> syncMatrix` (`src/cocos/web-view/web-view.ts:215-219`, `src/cocos/web-view/web-view-impl-web.ts:138-197`). `WebView` is on the bundle export list (`build/cocosair.module.js`, currently :161574). Honest browser limits: there is no input-passthrough switch - the engine does no hit-test shielding, and a click landing inside the iframe reaches the page only, with the engine and canvas receiving nothing (`docs/notes/webview-notes.md:10-21`); `enabled = false` merely sets the wrapper to `visibility: hidden` (`src/cocos/web-view/web-view-impl-web.ts:104-114`), which is also the only documented way to return clicks to the engine (`docs/notes/webview-notes.md:20-21`).
+
+## Surface
+
+| Member | Line | Contract |
+| --- | --- | --- |
+| `url` get/set | src/cocos/web-view/web-view.ts:71-79 | setter calls `loadURL` immediately when the impl exists (`:74-79`) |
+| `webviewEvents` | :91 | serialized `EventHandler` list, fired alongside node events |
+| `nativeWebView` | :99-101 | the raw `HTMLIFrameElement` or null |
+| `state` | :109-112 | last event name tracked by the impl, `none` before `__preload` |
+| `evaluateJS(str)` | :162-166 | runs `contentWindow.eval` (impl :116-128) |
+| `setJavascriptInterfaceScheme` / `setOnJSCallback` | :126-149 | warn "The platform does not support" on Web (impl :130-136) |
+| `EventType` | :58 | `none, loading, loaded, error` (`src/cocos/web-view/web-view-enums.ts:25-46`) |
+
+## Mount order contract
+
+The default `_url` is `https://cocos.com` (`src/cocos/web-view/web-view.ts:50`) and `__preload` unconditionally calls `loadURL(this._url)` (`:168-179`); because a fresh `Node` is active, `addComponent` plus `addChild` into an active parent fires `__preload` on the spot and hits the external site first (`docs/notes/webview-notes.md:37-43`). The prescribed order - create the node with `active = false`, `addComponent(WebView)`, set `url`, register `Node.on` listeners and `webviewEvents`, then `addChild`, then `active = true` - was measured to produce `stateBeforeActivate 'none'` and zero external requests (`docs/notes/webview-notes.md:45-48`, example implementation notes at `examples/webview-basic/main.js:36-41`). Listeners registered after `addChild` miss the already-emitted `loading` event (`docs/notes/webview-notes.md:50-51`).
+
+## Events and the 404-sniffing error branch
+
+`_bindDomEvent` listens to the iframe `load` event, dispatches `loaded`, then sniffs `contentDocument.body.innerHTML.includes('404')` and dispatches `error` when the body text mentions 404 (`src/cocos/web-view/web-view-impl-web.ts:45-58`) - a same-origin HTTP-200 page whose text contains "404" deterministically triggers `error` (`docs/notes/webview-notes.md:23-31`). Consequences: `error` is not a network-failure signal, and cross-origin pages cannot be sniffed at all. Node events and the `webviewEvents` handler list both fire (`src/cocos/web-view/web-view.ts:181-194`), and `state` only updates for events registered in `componentEventList` during `__preload` - `loading`, `loaded`, `error` - so the state sequence itself proves the callback chain (`docs/notes/webview-notes.md:53-59`). The `error` listener receives a double-wrapped rest-args array (`src/cocos/web-view/web-view.ts:191-194`, `docs/notes/webview-notes.md:60-65`).
+
+## evaluateJS
+
+`evaluateJS` delegates to `win.eval(str)` on the iframe's `contentWindow` (`src/cocos/web-view/web-view-impl-web.ts:116-128`) - same-origin pages only; cross-domain resolution is the integrator's job (`src/cocos/web-view/web-view.ts:152-158`). Success is normally read back from the page side (title, a global, or `dataset`, `docs/notes/webview-notes.md:84-90`). The failure path has a double side effect: the catch dispatches an `error` event - rewriting `state` to `error` - and also logs a real `console.error` (`src/cocos/web-view/web-view-impl-web.ts:120-126`), which is why the reference example deliberately never triggers it (`examples/webview-basic/main.js:24`, `docs/manual/audio-video-webview.md:98`); measured three-engine behavior is identical: state flips to `error`, one new console error, nothing thrown to the caller (`docs/notes/webview-notes.md:92-100`).
+
+## Geometry timing and teardown evidence
+
+Wrapper CSS is written by the first `syncMatrix`, so reading geometry right after mount returns the iframe's intrinsic 300x154 box instead of the node rect - poll `wrapper.style.width` to the target size and wait two more frames before any hit or center assertion (`docs/notes/webview-notes.md:67-77`). For leak counting, `removeWebView` only detaches the wrapper when it is actually still a child of `game.container` (`src/cocos/web-view/web-view-impl-web.ts:96-102`), so the number of `#webview-wrapper` nodes in the DOM is the real leak counter, and after destruction `nativeWebView` must read null (`docs/manual/audio-video-webview.md:86-89`). The impl's internal `_loaded` flag is never set true on this module - loaded semantics ride entirely on `state` and events (`docs/notes/webview-notes.md:112-120`).

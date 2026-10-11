@@ -1,0 +1,62 @@
+Derived from `src/cocos/animation/animation-component.ts`, `src/cocos/animation/animation-state.ts`, `src/cocos/animation/animation-clip.ts`, `src/cocos/animation/types.ts`, `src/cocos/animation/playable.ts`, `src/cocos/animation/index.ts`, `src/cocos/animation/animation.ts`, `src/cocos/animation/tracks/track.ts`, `src/cocos/animation/target-path.ts`, `src/cc.config.json`, `tools/build/build.cjs`, `build/cocosair.module.js`, `docs/manual/animation-system.md`, `docs/notes/pose-graph-notes.md` (as of 2026-10-10).
+
+## The Animation component
+
+`class Animation extends Eventify(Component)` (`src/cocos/animation/animation-component.ts:52`), decorated `@ccclass('cc.Animation')` (`:47`) and `@executionOrder(99)` (`:49`). It is re-exported under the alias `AnimationComponent` (`:513`). The 99 matters for ordering: the glTF `GLTFAnimationPolicy` sits at 100, one past it, so its `onLoad` runs after the native rebuild (see `skills/cocosair-gltf/references/loader-api.md`).
+
+| Member | Signature and behavior | Line |
+| --- | --- | --- |
+| `clips` | getter/setter; the setter clears cross-fade, drops states of removed automatic clips, calls `createState` for new ones, and nulls `_defaultClip` if it is no longer present | `src/cocos/animation/animation-component.ts:63`, `:67`, `:84-91` |
+| `defaultClip` | getter/setter; the setter auto-pushes the clip into `_clips` and creates its state if absent | `:105`, `:109`, `:114-117` |
+| `playOnLoad` | public field, default `false` | `:133` |
+| `play(name?)` | returns `void`; early-returns with no name and no default clip, else `crossFade(name, 0)` | `:209`, `:212-215`, `:218` |
+| `crossFade(name, duration=0.3)` | returns `void`; delegates to the internal cross-fade controller | `:229-235` |
+| `pause()` / `resume()` / `stop()` | all return `void`, all delegate to the cross-fade controller | `:243`, `:253`, `:263` |
+| `getState(name)` | declared `AnimationState` but the body ends `return state \|\| null`, so a missing name yields `null` and the declared type omits `\| null` | `:275-281` |
+| `createState(clip, name?)` | calls `removeState(name)` first, then builds and returns the state | `:294-299` |
+| `removeState(name)` | stops the state and deletes it from the name map | `:308-315` |
+| `addClip(clip, name?)` | pushes the clip if absent, returns `createState(clip, name)` | `:326-331` |
+| `removeClip(clip, force?)` | refuses to remove a playing/default clip unless `force`; with `force` on the default clip it nulls `_defaultClip` | `:345-371`, `:356-357` |
+| `on` / `once` / `off` | event wiring; each special-cases `AnimationStateEventType.LASTFRAME` to sync last-frame event delivery | `:401-407`, `:409-415`, `:431-436` |
+
+Lifecycle: `onLoad()` reassigns `this.clips = this._clips` (`:170`); `start()` cross-fades the default clip only when `playOnLoad && !this._hasBeenPlayed && _defaultClip` (`:179-183`); `onEnable()` resumes the cross-fade (`:185`), `onDisable()` pauses it (`:189`), `onDestroy()` stops it (`:193`). The practical consequence: calling `play()` yourself before `app.run(scene)` is undone by the activation flow, so play from a component `start()` (`docs/manual/animation-system.md:78`).
+
+## AnimationState and the wrapMode reset
+
+`class AnimationState extends Playable` (`src/cocos/animation/animation-state.ts:85`). It does NOT override `play`/`stop`/`pause`/`resume`/`isPlaying`/`isPaused`; those come from `Playable` (`src/cocos/animation/playable.ts:33`, `:42`, `:62`, `:80`, `:94`, `:105`). Its own public additions include `setTime(time)` (`src/cocos/animation/animation-state.ts:472`) and the plain field `time = 0.0` (`:232`).
+
+The `wrapMode` setter is the trap (`:119-132`): it assigns `this.time = 0` (`:123`) and sets `repeatCount` to `Infinity` when the value carries the Loop mask, otherwise `1` (`:125-129`). The doc comment states plainly that a dynamic wrapMode change resets time and repeatCount (`:109`, `:112`). `speed` (`:218`, `:222`, backing `_speed = 1.0` at `:280`) and `repeatCount` (`:147`, `:151`, default `_repeatCount = 1` at `:284`, `_wrapMode = WrapMode.Normal` at `:283`) are separate. `initialize` copies `clip.speed` into `_speed` (`:357`) and pushes `clip.wrapMode` through the setter (`:358`). So: configure wrap before first play or when you intend to restart, and never per frame.
+
+## WrapMode is a numeric bitmask, reachable only as AnimationClip.WrapMode
+
+The enum is declared in `src/cocos/animation/types.ts:30-67` and registered with `ccenum(WrapMode)` (`:67`). Values alias `geometry.WrapModeMask`: `Default=0`, `Normal=1`, `Loop=2`, `ShouldWrap=4`, `Clamp=8`, `PingPong=22`, `Reverse=36`, plus `LoopReverse=Loop|Reverse` (`:54`) and `PingPongReverse=PingPong|Reverse` (`:64`). These are numbers, not strings. `AnimationClip.WrapMode` is a static alias of this enum (`src/cocos/animation/animation-clip.ts:104`); there is no top-level `WrapMode` export, so `AnimationClip.WrapMode.Loop` is the only public route.
+
+## AnimationClip, code-first constructible
+
+`@ccclass('cc.AnimationClip') class AnimationClip extends Asset` (`src/cocos/animation/animation-clip.ts:102-103`). `constructor(name?)` calls `super(name)` (`:158-160`); `name` itself is inherited from `Asset`. Defaults: `sample = 60` (`:134`), `speed = 1` (`:141`), `wrapMode = AnimationWrapMode.Normal` (`:148`). `duration` is a getter/setter pair (`:166`, `:170`).
+
+| Member | Returns / does | Line |
+| --- | --- | --- |
+| `tracksCount` | getter, `this._tracks.length` | `src/cocos/animation/animation-clip.ts:180-182` |
+| `tracks` | getter, an `Iterable<Track>` | `:190-192` |
+| `getTrack(index)` | the `Track` at that index | `:298` |
+| `addTrack(track)` | appends and returns the new index | `:310` |
+| `removeTrack(index)` | removes the track at that index | `:323` |
+| `clearTracks()` | empties the track list | `:333` |
+| `events` / `hasEvents()` | event list getter/setter; `hasEvents()` is `this.events.length !== 0` | `:207`, `:211`, `:623-625` |
+| `range()` | min/max span across tracks | `:277-287` |
+| `createWithSpriteFrames(frames, sample)` | static sprite-frame clip builder | `:115-126` |
+
+The minimal code-first skeleton (byte-identical to the manual) is `new AnimationClip()`, set `name`/`duration`/`wrapMode`, build one `animation.VectorTrack`, assign its `path` from `new animation.TrackPath().toProperty('position')`, fill `track.channels()[n].curve.assignSorted([[t, v], ...])`, then `clip.addTrack(track)` (`docs/manual/animation-system.md:40-79`).
+
+## Track classes live only under the animation namespace
+
+`src/cocos/animation/index.ts` re-exports the namespace: `import * as animation from './animation'` (`:25`) and `export { animation }` (`:38`). Its only other top-level exports are `./animation-curve` (`:27`), `AnimationClip` (`:28`), `./animation-manager` (`:29`), `AnimationState` (`:30-32`), `Animation`/`AnimationComponent` (`:33-36`), `./transform-utils` (`:37`) and the `ILerpable` type (`:39`). No track class is exported top-level.
+
+The track classes are exported from `src/cocos/animation/animation.ts:35-41`: `Track`, `TrackPath`, `RealTrack`, `VectorTrack`, `QuatTrack`, `ColorTrack`, `SizeTrack`, `ObjectTrack` (plus `./target-path` at `:30` and `./marionette/runtime-exports` at `:42`, the latter stubbed empty in the default build). In the built bundle they are frozen into one namespace object, `var animation = Object.freeze({ ColorTrack, ..., ObjectTrack, QuatTrack, RealTrack, SizeTrack, Track, TrackPath, ..., VectorTrack, ... })` (`build/cocosair.module.js`, currently `:57866-57889`). The single runtime `export { ... }` block (`build/cocosair.module.js`, currently `:161574`) contains `animation` but contains none of `VectorTrack`, `TrackPath`, `QuatTrack`, `RealTrack`, `ObjectTrack`, `SizeTrack`, `ColorTrack`. Consumer route: `import { animation } from 'cocosair'` then `new animation.VectorTrack()` / `new animation.TrackPath()` (`docs/manual/animation-system.md:289`, `:390-391`).
+
+`TrackPath` builders (`src/cocos/animation/tracks/track.ts:61`): `toProperty(name)` pushes a string segment (`:76-79`), `toElement(index)` pushes a numeric index (`:87-90`), `toHierarchy(nodePath)` pushes a `HierarchyPath` (`:98-101`), `toComponent(ctorOrName)` pushes a `ComponentPath` and accepts a constructor or a class-name string (`:109-113`). `toCustomized` is `@internal` (`:118`); `append` (`:129`) and the `length` getter (`:66`) are the remaining surface. `HierarchyPath` and `ComponentPath` are defined in `src/cocos/animation/target-path.ts:74` and `:100`.
+
+## Marionette and pose graph are not published
+
+`marionette` and `procedural-animation` are declared feature units with empty module lists and intrinsic flags `MARIONETTE` / `PROCEDURAL_ANIMATION` (`src/cc.config.json:59-64`, `:65-70`). When those flags are off, virtual-module overrides redirect `cocos/animation/marionette/runtime-exports.ts` to `index-empty.ts` (`:437-443`) and the pose-graph `runtime-exports.ts` to `runtime-exports-empty.ts` (`:444-450`). The default `AIR_FEATURES` array in `tools/build/build.cjs:24-44` includes `animation`, `skeletal-animation` and `tween` but NOT `marionette` or `procedural-animation`; the array is overridable through the `AIR_FEATURES` env (`:48`). `AnimationGraph` is absent from the export block (`build/cocosair.module.js`, currently `:161574`); the three `AnimationGraph` string hits in the bundle are the internal method name `createEvaluatorForAnimationGraph`, not an exported symbol. Measured release-bundle counts are `PoseGraph=0`, `PROCEDURAL_ANIMATION=0`, `MARIONETTE=0` (`docs/notes/pose-graph-notes.md:9-25`). Enabling the units would add roughly 339,301 bytes (+5.58%) (`docs/notes/pose-graph-notes.md:120-134`), and an owner ruling keeps them out of the default release with pose-graph unpublished (`:141-155`). Treat any pose-graph or state-machine claim as unreachable from the default build.

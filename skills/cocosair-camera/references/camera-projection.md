@@ -1,0 +1,96 @@
+Derived from src/cocos/misc/camera-component.ts, src/cocos/render-scene/scene/camera.ts, src/cocos/core/math/mat4.ts, src/cocos/core/math/vec3.ts, src/cocos/gfx/base/define.ts, src/cocos/gfx/webgpu/webgpu-device.ts, src/cocos/rendering/custom/define.ts, src/cocos/rendering/custom/web-pipeline-types.ts, src/cocos/rendering/pipeline-ubo.ts, src/air/utils/frame-object.ts, src/air/utils/index.ts, src/exports/air.ts, build/cocosair.module.d.ts, examples/camera-ortho/src/main.ts, docs/manual/cameras.md (as of 2026-10-09)
+
+## Component projection fields: defaults and setter behavior (src/cocos/misc/camera-component.ts)
+
+Every setter below mirrors onto the render-scene camera only while it exists (`if (this._camera)`); before `onLoad` (`:605` -> `_createCamera` `:712`) the value is held in the serializable field and pushed on creation (`:726-743`).
+
+| Field | Default | Declared range/guard | Setter line | Scene-camera target | Unit note |
+|---|---|---|---|---|---|
+| `projection` | `ProjectionType.PERSPECTIVE` (`:144`) | enum | `:317` | `projectionType` (`camera.ts:665`, sets `_isProjDirty`) | - |
+| `fov` | `45` (`:148`) | `@range([1, 180, 1])` `:353` | `:359` | `fov = toRadian(val)` (`camera.ts:719`) | component DEGREES, scene camera RADIANS (`camera.ts:847` default `toRadian(45)`) |
+| `fovAxis` | `FOVAxis.VERTICAL` (`:150`) | enum | `:336` | `fovAxis` (`camera.ts:707`) | see switching rule below |
+| `orthoHeight` | `10` (`:152`) | `@rangeMin(1e-6)` `:372` | `:378` | `orthoHeight` (`camera.ts:685`) | world units, vertical HALF-height |
+| `orthoWidth` | `0` (`:154`) | throws `AIR_E_ORTHO_WIDTH` `:387` | `:385` | `orthoWidth` (`camera.ts:695`, same throw `:697`) | world units, horizontal HALF-width; 0 = automatic |
+| `near` | `1` (`:156`) | `@rangeMin(0)` `:398` | `:404` | `nearClip` (`camera.ts:731`) | world units, both projections |
+| `far` | `1000` (`:158`) | `@rangeMin(this._near + 0.001)` `:414-416` | `:422` | `farClip` (`camera.ts:743`) | world units, both projections |
+| `clearColor` | `new Color('#333333')` (`:160`) | - | `:269` | `clearColor` (`camera.ts:629`) | - |
+| `clearFlags` | `ClearFlag.SOLID_COLOR` (`:166`) | enum | `:253` | `clearFlag` (scene default `ClearFlagBit.NONE`, `camera.ts:873`) | bitmask, see below |
+| `clearDepth` / `clearStencil` | `1` / `0` (`:162, :164`) | - | `:286` / `:301` | `clearDepth` `clearStencil` | - |
+| `rect` | `new Rect(0, 0, 1, 1)` (`:168`) | normalized | `:485` | `setViewportInOrientedSpace(val)` (`camera.ts:1115`) | x/y/width/height in [0,1] |
+| `screenScale` | `1` (`:176`) | - | `:551` | `screenScale` public field (`camera.ts:830`) | currently write-only: nothing in the render pipeline reads `camera.screenScale`; the only writes to that field are the component mirror (`camera-component.ts:553`) and `camera.ts:938`, which resets it to `1` on every `initialize`, so a pre-activation component value is discarded. The pipeline uniform `cc_screenScale` is fed from `sceneData.shadingScale` (`src/cocos/rendering/custom/define.ts:393`), not from the camera |
+| `visibility` | `CAMERA_DEFAULT_MASK` (`:178`) | layer bitmask | `:235` | `visibility` (`camera.ts:486`) | see cocosair-scene-graph `references/layers.md` |
+| `aperture`/`shutter`/`iso` | `F16_0`/`D125`/`ISO100` (`:170-174`) | enums | `:438, :454, :470` | same names (`camera.ts:547, :568, :589`) | drive `exposure`, see exposure table |
+
+Enum values (`src/cocos/render-scene/scene/camera.ts`, exposed on the component via `Enum()` at `camera-component.ts:49-53`): `CameraProjection.ORTHO = 0`, `PERSPECTIVE = 1` (`:58-68`) - note the enum member is `ORTHO`, not `ORTHOGRAPHIC` (also called out in `docs/manual/cameras.md`). `CameraFOVAxis.VERTICAL = 0`, `HORIZONTAL = 1` (`:41-51`). `CameraType.DEFAULT = -1`, `LEFT_EYE = 0`, `RIGHT_EYE = 1`, `MAIN = 2` (`:245-269`). `TrackingType.NO_TRACKING = 0`, `POSITION_AND_ROTATION = 1`, `POSITION = 2`, `ROTATION = 3` (`:275-296`). `CameraUsage.EDITOR = 0` .. `GAME = 100` (`:302-328`, internal marker).
+
+## ClearFlag (src/cocos/misc/camera-component.ts:59-80)
+
+| Member | Expression | Resolves to | Effect |
+|---|---|---|---|
+| `SKYBOX` | `SkyBoxFlagValue.VALUE \| ClearFlagBit.DEPTH_STENCIL` | `8 \| 6 = 14` (`SkyBoxFlagValue.VALUE = ClearFlagBit.STENCIL << 1`, `camera.ts:395`; `ClearFlagBit` values `gfx/base/define.ts:694-701`) | clear with `SceneGlobals.skybox`, also clears depth+stencil |
+| `SOLID_COLOR` | `ClearFlagBit.ALL` | `7` (COLOR 1 + DEPTH 2 + STENCIL 4) | clear color+depth+stencil with `clearColor` |
+| `DEPTH_ONLY` | `ClearFlagBit.DEPTH_STENCIL` | `6` | keep the color buffer, clear depth+stencil; the standard overlay pass |
+| `DONT_CLEAR` | `ClearFlagBit.NONE` | `0` | clear nothing; multi-camera accumulation |
+
+## fovAxis switching (src/cocos/misc/camera-component.ts:336-343)
+
+Setting `fovAxis` rescales the stored `fov` NUMBER linearly by the aspect (`camera-component.ts:341`): entering `VERTICAL` multiplies (`this.fov = this._fov * this._camera.aspect`), entering `HORIZONTAL` divides (`this.fov = this._fov / this._camera.aspect`). The ratio is applied to the angle, not to its tangent, so it does NOT keep the covered extent: on a 2:1 window, switching a `fov = 45` `VERTICAL` camera to `HORIZONTAL` stores `22.5`, which makes the horizontal half-angle `11.25` degrees and the vertical one `atan(tan(11.25 deg) / 2) = 5.7` degrees instead of the previous `22.5`. Treat it as an approximation and set `fov` explicitly after switching. Both conversions sit inside the setter's own `if (this._camera)` guard (`:339-342`), so before the render camera exists there is no throw and no conversion either: `_fovAxis` changes, the `fov` number stays as typed, and `_createCamera` then pushes the unconverted pair (`:727-728`). Net effect - switching the axis before activation reinterprets the same number against the other axis, so set `fovAxis` first or set it after the camera is active. `fovAxis` is only meaningful for PERSPECTIVE (the `@visible` guard body reads `this._projection === ProjectionType.PERSPECTIVE`, `:329`). The projection matrix takes `isFOVY = (fovAxis === VERTICAL)` (`camera.ts:1072` -> `Mat4.perspective` 6th argument, `mat4.ts:1173`).
+
+## Projection matrix construction (src/cocos/render-scene/scene/camera.ts update(), :1026)
+
+The projection rebuilds only when `_isProjDirty` or the surface orientation changed (`:1057`).
+
+| Projection | Call | Arguments actually passed |
+|---|---|---|
+| PERSPECTIVE | `Mat4.perspective` (`mat4.ts:1173`, call at `camera.ts:1066-1076`) | `fov` (radians), `aspect`, `nearClip`, `farClip`, `isFOVY = fovAxis === VERTICAL`, `clipSpaceMinZ = device.capabilities.clipSpaceMinZ` (`:1073`), `projectionSignY = clipSpaceSignY` (`:1059`), surface orientation |
+| ORTHO | `Mat4.ortho` (`mat4.ts:1219`, call at `camera.ts:1081-1092`) | half-extents `-x, x, -y, y` with `y = orthoHeight` and `x = this._orthoWidth \|\| this._orthoHeight * this._aspect` (`:1079`), then `nearClip`, `farClip`, `clipSpaceMinZ` (`:1089`), `projectionSignY`, orientation |
+
+`aspect` is `(width * viewport.width) / (height * viewport.height)` and is recomputed on resize (`camera.ts:989`); with a 90/270 surface orientation it is inverted (`camera.ts:908`).
+
+## orthoWidth and AIR_E_ORTHO_WIDTH
+
+`orthoWidth = 0` (default) selects the automatic half-width `orthoHeight * aspect` (`camera.ts:1079`); a positive value fixes the horizontal half-extent independently of aspect; PERSPECTIVE ignores it entirely. Both entry points validate identically and throw before mutating, so the old value survives:
+
+- component: `typeof val !== 'number' || !Number.isFinite(val) || val < 0` -> `Error` with `code: 'AIR_E_ORTHO_WIDTH'`, message `AIR_E_ORTHO_WIDTH: finite non-negative half-width required; zero selects automatic aspect.` (`camera-component.ts:385-391`)
+- scene camera: same predicate and message (`camera.ts:695-699`)
+
+Example values from `examples/camera-ortho/src/main.ts`: `camera.orthoHeight = 2.2` (`:46`) with runtime toggling between `ProjectionType.ORTHO` and `PERSPECTIVE` (`:81-84`).
+
+## Exposure (aperture / shutter / ISO)
+
+Component defaults `Aperture.F16_0`, `Shutter.D125`, `ISO.ISO100` (`camera-component.ts:170-174`); scene camera identical enum defaults as field declarations (`camera.ts:864, :866, :868`), whose resolved values `_apertureValue = FSTOPS[aperture]`, `_shutterValue = SHUTTERS[shutter]`, `_isoValue = ISOS[iso]` are assigned in the constructor (`camera.ts:887-889`, reads `camera.ts:549, :570, :591`, tables `:330-333`). `FSTOPS` is the 23-entry f-number ladder `[1.8, 2.0, 2.2, 2.5, 2.8, 3.2, 3.5, 4.0, 4.5, 5.0, 5.6, 6.3, 7.1, 8.0, 9.0, 10.0, 11.0, 13.0, 14.0, 16.0, 18.0, 20.0, 22.0]`; `CameraAperture.F1_8 = 0` .. `F22_0 = 22` (`camera.ts:80-168`), so the default `F16_0` (ordinal 19) resolves to `16.0`. `SHUTTERS = [1.0, 1/2, 1/4, 1/8, 1/15, 1/30, 1/60, 1/125, 1/250, 1/500, 1/1000, 1/2000, 1/4000]` with `CameraShutter.D1 = 0` .. `D4000 = 12` (`camera.ts:190-238`), so `D125` (ordinal 7) resolves to `1/125`. `ISOS = [100, 200, 400, 800]` with `CameraISO.ISO100 = 0` (`camera.ts:175-180`).
+
+Formula (`camera.ts:1430-1436`): `ev100 = log2(apertureValue^2 / shutterValue * 100 / isoValue)`, then `exposure = 0.833333 / 2^ev100`; every aperture/shutter/ISO write recomputes it (`camera.ts:550, :571, :592`). Separately, the engine exposes a fixed reference constant `Camera.standardExposureValue = 1.0 / 38400.0` on the render-scene `Camera` class, not on the exported component (`camera.ts:413`), used as the `cc_exposure` uniform's normalization term. Consumers of `camera.exposure`: the `cc_exposure` pipeline uniform (`src/cocos/rendering/custom/define.ts:394`, `web-pipeline-types.ts:94`), sky/ambient scaling (`web-pipeline-types.ts:120, :134`) and light luminance (`web-pipeline-types.ts:686, :719`).
+
+## frameObject (src/air/utils/frame-object.ts)
+
+```ts
+export function frameObject (camera: Camera, target: Node, fallbackDistance = 6): void  // :35, DEFAULT_DISTANCE = 6 at :14
+```
+
+| Input state | Behavior | Line |
+|---|---|---|
+| `target` (or descendants) has `MeshRenderer` with `model` | merges `model.worldBounds` (after `updateWorldBound()`) of self + `getComponentsInChildren(MeshRenderer)` into one AABB | `:88-93`, `:104-108` |
+| model missing / empty box (pre-activation, skinned before first frame) | falls back to `AABB.fromPoints(mesh.struct.minPosition, maxPosition)` transformed by `node.worldMatrix`; skipping it would silently center on the node origin (often ground level) | `:97-101` |
+| no bounds at all | `distance = fallbackDistance`, center = `target.worldPosition` | `:38, :59` |
+| radius | `max(halfExtents.length(), 1e-3)` | `:43` |
+| fov used | `(camera.fov > 0 ? camera.fov : 45)` degrees -> radians; aspect from `camera.camera.aspect`, sanitized to a finite positive else `1` (`camera.camera` is null before activation, so the helper reads `1` - `:44`) | `:42, :44-45` |
+| half-field clamp | `halfFov = min(fov/2, PI/2 - 1e-3)`, so a `fov` near 180 is silently clamped instead of producing an infinite/NaN distance | `:46` |
+| second axis | `atan(tan(halfFov) * (fovAxis === HORIZONTAL ? 1/aspect : aspect))` - respects `fovAxis` | `:47-48` |
+| distance (perspective) | `fit = radius / sin(min(halfFov, otherHalfFov))`; `distance = max(fit * 1.15, 0.5)`; then `distance = max(distance, camera.near + radius * 1.15)` | `:49, :54-55` |
+| distance (ORTHO) | also sets `camera.orthoHeight = radius * 1.15 / min(1, aspect)` (moving does not zoom an ortho camera) | `:50-52` |
+| far plane | `camera.far = max(camera.far, distance + radius * 1.15)` (never shrinks) | `:56` |
+| placement | along the EXISTING view axis (`camNode.worldPosition - center`, degenerate -> `(0,0,1)`), then `setWorldPosition(center + dir * distance)` + `lookAt(center)` | `:63-73` |
+
+Parent transforms are respected because all reads/writes are world-space (`worldPosition`, `setWorldPosition`, `lookAt`). Export chain: `src/air/utils/index.ts` -> `src/air/index.ts` -> `src/exports/air.ts` (`export * from '../air'`); declaration in `build/cocosair.module.d.ts` (`export function frameObject(camera: Camera, target: Node, fallbackDistance?: number): void;` currently :56816). Not present in `build/bootstrap.d.ts` or `build/html-source.d.ts`.
+
+## Oblique near clip plane and clip-space minZ
+
+`camera.camera.calculateObliqueMat(viewSpacePlane: Vec4)` (`camera.ts:1389`): plane in VIEW space, normal facing the camera. Steps:
+
+1. Validate: all four components finite and `hypot(x, y, z) >= 1e-8`, else `TypeError('[AIR_E_CLIP_PLANE] supply a finite nonzero view-space plane')` (`:1390-1392`).
+2. Rebuild the ordinary projection first (`_isProjDirty = true; update(true)`, `:1396-1397`) so per-frame clipping does not compound the previous frame's modified near plane.
+3. Intersect the plane with the far clip point `(sign(x), sign(y), 1, 1)` (`:1398-1399`); `denominator = dot(viewSpacePlane, viewFar)` must be finite with `|denominator| >= 1e-8`, else `RangeError('[AIR_E_CLIP_PLANE] plane is degenerate against the projection')` (`:1402-1404`).
+4. `scale = 2.0 / denominator`, rewrite the projection's third ROW (`m02/m06/m10/m14`, `:1411-1414`) - in this `mNN` naming the second digit is the row, so these four entries are column 0..3 at row 2 (`mat4.ts:107, :109` document `m00`/`m02` as "column 0, row 0"/"column 0, row 2") and they are exactly the coefficients `Vec3.transformMat4` uses to build `out.z` (`src/cocos/core/math/vec3.ts:481`); recompute `_matProjInv`, `_matViewProj`, `_matViewProjInv` and the frustum (`camera.ts:1415-1418`).
+
+`getClipSpaceMinz()` returns `device.capabilities.clipSpaceMinZ` (`camera.ts:1421-1422`). Base WebGL/GL capabilities default: `clipSpaceMinZ = -1`, `screenSpaceSignY = 1`, `clipSpaceSignY = 1` (`src/cocos/gfx/base/define.ts:774-776`); the WebGPU device sets `clipSpaceMinZ = 0` and `screenSpaceSignY = -1` (`src/cocos/gfx/webgpu/webgpu-device.ts:544-545`) and never assigns `clipSpaceSignY`, so that one stays at the base default `1`. WebGPU is not a shipped AIR target: WebGL 2 is the only rendering target this runtime builds for, and a non-WebGL-2 context rejects startup with `WEBGL2_REQUIRED` (`docs/webgl2-only.md`); no claim in this file is browser-verified against the current candidate. minZ enters the projection only as the `minClipZ` argument of `Mat4.perspective` (`mat4.ts:1175`, used at `:1194`/`:1198`) and of `Mat4.ortho` (`mat4.ts:1221`, used at `:1243`/`:1247`), fed from `device.capabilities.clipSpaceMinZ` at `camera.ts:1073`/`:1089`. Separately, `getClipSpaceMinz()` itself has exactly two readers, both UBO writers that pack it next to `nearClip`/`farClip` (`src/cocos/rendering/custom/web-pipeline-types.ts:151`, `src/cocos/rendering/pipeline-ubo.ts:198`); there is no separate per-material clip-range input in this runtime.

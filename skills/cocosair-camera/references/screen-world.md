@@ -1,0 +1,81 @@
+Derived from src/cocos/misc/camera-component.ts, src/cocos/render-scene/scene/camera.ts, src/cocos/scene-graph/node.ts, src/cocos/input/types/event/event-mouse.ts, src/pal/input/web/mouse-input.js, src/pal/screen-adapter/web/screen-adapter.js, src/cocos/gfx/base/define.ts, examples/camera-screen-world/src/main.ts, examples/render-composite/src/main.ts, examples/interactive-container/src/main.ts, docs/evidence/examples-verified.json, docs/manual/cameras.md, docs/manual/design-viewport-and-controls.md (as of 2026-10-09)
+
+## Conversion API: two surfaces, two argument orders
+
+The user-facing surface is the `Camera` COMPONENT: input first, optional `out` last, returns `out` (`src/cocos/misc/camera-component.ts`). The render-scene camera it wraps uses the OPPOSITE order (`out` first) (`src/cocos/render-scene/scene/camera.ts`). Copying upstream docs or internal examples onto the component silently computes the wrong thing (see `SKILL.md` Common Mistakes).
+
+| Purpose | Component (use this) | Line | Wrapped scene camera | Line |
+|---|---|---|---|---|
+| screen point -> ray | `camera.screenPointToRay(x, y, out?)` (`out` else `geometry.Ray.create()`) | `:641-645` | `screenPointToRay(out, x, y)` | `camera.ts:1243` |
+| world -> screen | `camera.worldToScreen(worldPos, out?)` (`out` else `new Vec3()`) | `:654-658` | `worldToScreen(out, worldPos)` | `camera.ts:1336` |
+| screen -> world | `camera.screenToWorld(screenPos, out?)` | `:667-671` | `screenToWorld(out, screenPos)` | `camera.ts:1282` |
+| world -> UI-node local | `camera.convertToUINode(wpos, uiNode, out?)` | `:687-707` | (built on `worldToScreen` + `UITransform.convertToNodeSpaceAR`) | - |
+| world matrix -> screen matrix | - (not on the component) | - | `worldMatrixToScreen(out, worldMatrix, width, height)` | `camera.ts:1369` |
+
+Two silent-failure modes:
+
+- All four component methods no-op when the render camera does not exist yet (`if (this._camera)`): before `onLoad` (`camera-component.ts:605`) they return `out` UNCHANGED - whatever the caller passed in - and `convertToUINode` returns its fresh `out` at `:691`. No throw, no partial write, so an early call looks like "everything is at 0".
+- `camera.screenToWorld(screenPos)` with NO `out` allocates one pre-filled with the camera node's world position (`:668` -> `node.getWorldPosition()`, which copies into a NEW `Vec3` when called without an argument - `src/cocos/scene-graph/node.ts:2666-2672`), so the camera node's stored position is NOT mutated. The real cost is one allocation per call plus a stale starting value: when the render camera is missing that copied position is what you get back, and when it exists the value is fully overwritten. Pass an explicit `out` to allocate once and reuse it.
+
+## Coordinate space of "screen"
+
+| Property | Value | Evidence |
+|---|---|---|
+| Origin / axes | LEFT-BOTTOM of the camera's framebuffer rect, x right, y up | doc comments `camera-component.ts:634, :648, :661`; mouse path already y-flips: `canvasRect.y + canvasRect.height - clientY` (`mouse-input.js:72`) |
+| Unit | PHYSICAL framebuffer pixels, not CSS pixels | every conversion divides through `this.width`/`this.height` (`camera.ts:1246-1247, :1283-1284, :1346-1347`) |
+| `camera.width`/`camera.height` | swapchain/window pixel size, read through the `width`/`height` GETTERS (`camera.ts:509, :517` - there is no public setter); the fields are written by `resize` (`_width`/`_height` `:987-988`; called from `changeTargetWindow` `:1220-1221`, which swaps w/h when the orientation is 90/270) | Documented read: `docs/manual/cameras.md:302` tells you to read `camera.camera.width/height/aspect` for the render window size. Code that does it: `examples/render-composite/src/main.ts:216-220` (`const renderCamera = camera.camera`, then `renderCamera.width/height/aspect`); `examples/interactive-container/src/main.ts:38` snapshots `camera.camera.width/height`. `examples/camera-screen-world/src/main.ts` does NOT read them |
+| Effective DPR | `min(window.devicePixelRatio ?? 1, cap)` where cap = `window.__CCDPR_CAP__` if finite and > 0 else `2` | `src/pal/screen-adapter/web/screen-adapter.js:78-81` |
+| Framebuffer size | `round(cssWidth * effDPR) x round(cssHeight * effDPR)` | `screen-adapter.js:83-89` (`windowSize`) |
+| Viewport awareness | conversions map through the camera's `_orientedViewport` (`cx/cy/cw/ch = viewport * width/height`), so `rect`-subscreen cameras convert correctly within their own rect | `camera.ts:1248-1251, :1285-1288, :1348-1351`; y-rotation rules `:1115-1154` |
+| WebGL caps used | `clipSpaceSignY = 1`, `screenSpaceSignY = 1` (both base defaults); the WebGPU device only overrides `clipSpaceMinZ = 0` and `screenSpaceSignY = -1`, never `clipSpaceSignY`, so it keeps the base `1` (`webgpu-device.ts:544-545`, not a shipped AIR target) | `src/cocos/gfx/base/define.ts:774-776` |
+
+Input plumbing: `EventMouse.getLocation()` returns `_x/_y` already in physical left-bottom pixels (`src/cocos/input/types/event/event-mouse.ts:204-208`; producer `mouse-input.js:68-76` multiplies CSS offsets by `screenAdapter.devicePixelRatio`). `getLocationInView()` re-flips y against the DESIGN height (`event-mouse.ts:215-220`) and `getUILocation()` applies `_convertToUISpace` (`event-mouse.ts:229-236`) - neither is the raw screen space the camera conversions expect; do not re-scale them by DPR (see `docs/manual/design-viewport-and-controls.md`).
+
+## Depth (z) semantics
+
+The two directions use DIFFERENT depth conventions; only the ray direction agrees between them.
+
+| Direction | Formula | Line |
+|---|---|---|
+| `worldToScreen` out.z | clip z in [-1,1] -> `out.z = out.z * 0.5 + 0.5`, so screen `z` is a NORMALIZED [0,1] depth (0 = near plane, 1 = far plane) that is PROJECTIVE in between - not proportional to world distance | `camera.ts:1355` |
+| `screenToWorld` PERSPECTIVE | reconstructs that pixel's far-plane point at NDC `z = 1.0` (`:1294-1299`, inverse-transformed at `:1305`), then lerps from the camera node's world position (`:1308`) toward it with ratio `lerp(nearClip / farClip, 1, screenPos.z)` - so the incoming `z` is read as a LINEAR near->far fraction: `0` lands on the near plane, `1` on the far plane | `:1294-1310` (`lerp` at `:1310`) |
+| `screenToWorld` ORTHO | feeds `screenPos.z * 2 - 1` as NDC z before the inverse transform; ortho depth is already linear, so this direction is self-consistent | `:1312-1323` (`:1316`) |
+| `screenPointToRay` | NDC z is `1` for PERSPECTIVE - that pixel's FAR-plane point, used only to define the direction, with the ray origin set to the camera's world position (`Ray.fromPoints`, `:1266-1267`). For ORTHO it is `-1`, which is the NEAR-plane point, and that point becomes the ray ORIGIN (`:1262`); the direction is the node's rotated `Vec3.FORWARD` (`:1269`) | `:1256, :1262-1270` |
+
+Do NOT feed the projected `z` back into `screenToWorld` and expect the original point: it is re-read as a linear fraction, so the returned point slides along the same view ray toward the far plane, and its XY slides with it. With `near = 0.1`, `far = 1000`, a point at view depth 5 projects to `z ~= 0.98`; passing 0.98 straight back returns roughly 980 units out on that ray (XY scaled by the same ~196x), not 5. The endpoints are the only values that agree by themselves.
+
+To convert between the conventions, use the arithmetic the repository asserts in `examples/render-composite/src/main.ts:232-239` (round-trip tolerance `0.01` world units, asserted at `:238`). Formula fragment, not runnable code - names mapped to the source: `zOut` is the `z` `worldToScreen` wrote (`out.z` at `:234`), `near`/`far` are `camera.near`/`camera.far` (`:234`), `depth` is the true distance along the view axis (`:234`), `zIn` is the fraction to pass back as `screenPos.z` (the example inlines it at `:235`):
+
+```js
+const zOut = screen.z;                                   // what worldToScreen produced
+const depth = (near * far) / (far - zOut * (far - near)); // true depth along the view axis
+const zIn = (depth - near) / (far - near);                // what screenToWorld expects
+```
+
+For picking, skip the arithmetic: use `screenPointToRay(x, y)` and intersect that ray.
+
+## convertToUINode (camera-component.ts:687-707)
+
+Steps from the source (`_temp_vec3_1` is the module-level scratch `Vec3`, `camera-component.ts:47`): `worldToScreen(wpos, _temp_vec3_1)` (`:693`), then recenter against the FULL camera size (`xoffset = _temp_vec3_1.x - this._camera.width * 0.5`, `yoffset = _temp_vec3_1.y - this._camera.height * 0.5`, `:697-698`), divide by `view.getScaleX()/getScaleY()` and add half the design size (`cclegacy.view.getVisibleSize()` read at `:696`, applied at `:699-700`), finally `UITransform.convertToNodeSpaceAR(_temp_vec3_1, out)` only when the node has a `cc.UITransform` (`:694`, `:702-704`) - without one, `out` comes back UNWRITTEN. It depends on the legacy `cclegacy.view` design-resolution state; in a pure Code First app without a Canvas/UI tree it has nothing to anchor to - keep world/`screenToWorld` math for 3D picking.
+
+## Example transcript (correct component order)
+
+```js
+// pointer -> world pick ray on camera click
+input.on(Input.EventType.MOUSE_DOWN, (e) => {
+    const p = e.getLocation();                       // physical px, left-bottom origin, already DPR-scaled
+    const ray = camera.screenPointToRay(p.x, p.y, new geometry.Ray());
+    // ray.o = camera world position (perspective), ray.d = normalized direction
+});
+
+// world -> screen HUD anchor
+const sp = camera.worldToScreen(target.worldPosition, new Vec3()); // sp.z in [0,1]
+```
+
+Note: `examples/camera-screen-world/src/main.ts:77` and `:81` call the COMPONENT methods (`camera` is the component, added at `:31`) with the SCENE-camera `out`-first order - `camera.worldToScreen(screen, world)` passes the zeroed `screen` as the world position and writes the result into `world`, so `screen` stays `0, 0` and the probe reads (`:78-79`, `:82`) are degenerate. A live instance of the order confusion; the component order is `worldToScreen(worldPos, out?)`. Do not transcribe those two lines.
+
+## Capability layers
+
+- Source export: all five conversion methods exist on the component and scene camera in `src/cocos`.
+- Default-bundle reachable: `Camera`, `Vec3`, `geometry.Ray` resolve by symbol name in `build/cocosair.module.d.ts` (component conversions currently :25175-:25191; scene-camera out-first forms currently :8992-:9008; `Camera` class currently :24943).
+- Browser-verified: none of the round-trip values in this file are browser-verified against the current candidate. The `camera-screen-world` Gallery probe passed historically - `docs/evidence/examples-verified.json:7513-7517` records its `id`, `result: PASS` and `candidateFingerprint 2f089f6ce25eaccd` (at `:7517`), and the file's single `measuredAt` is `2026-10-04T05:52:32.537Z` at `:2` - which is not current-candidate evidence, and its two conversion calls are in the wrong order anyway (see the note above). Treat the numeric behavior in this file as formulas read from source, not measured output.

@@ -1,0 +1,83 @@
+Derived from `src/air/assets/atlas/atlas-parser.ts`, `src/air/assets/atlas/atlas-factory.ts`, `src/air/assets/atlas/atlas-loader.ts`, `src/air/assets/asset-bank.ts`, `src/air/index.ts`, `src/cocos/2d/assets/sprite-frame.ts`, `src/cocos/2d/assets/sprite-atlas.ts`, `src/cocos/2d/components/sprite.ts`, `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts`, `docs/manual/atlas-loading.md`, `docs/manual/texture-source-orientation.md`, `test/smoke/port-gap-atlas.test.ts`, `tools/verify/air-atlas-browser-review.cjs`, `docs/evidence/examples-verified.json`, `docs/evidence/port-gap/eg3-installed-atlas-s11.json`, `build/cocosair.module.js` (as of 2026-10-09).
+
+## What parseAtlasText accepts
+
+`parseAtlasText(text)` (`src/air/assets/atlas/atlas-parser.ts:143`) parses libGDX TexturePacker **text** atlases (`.atlas`/`.pack`) into a frozen data document and allocates no engine object. Line kinds are decided by shape, not indentation: a field line matches `^\s*([A-Za-z]\w*)\s*:\s?(.*?)\s*$` (`:115`), every other non-blank line is a name line (`:278`). A name line opens a new page when the immediately following non-blank line begins with `size:`, otherwise it is a region of the current page (`:280-285`); the lookahead only ever examines that single next line (`:281-283`). Name lines containing `:` are rejected (`:279`).
+
+Two write-side dialects are accepted and told apart by field names:
+
+| Dialect | Position plus size | Trim | Cross-dialect mixing rejected at |
+| --- | --- | --- | --- |
+| legacy | `xy: x,y` + `size: w,h` (`src/air/assets/atlas/atlas-parser.ts:220-227`) | `orig: w,h` + `offset: left,bottom` (`:233-240`) | `:221`, `:225`, `:229` |
+| compact | `bounds: x,y,w,h` (`:228-232`) | `offsets: left,bottom,origW,origH` (`:241-244`) | `:234`, `:238`, `:242` |
+
+Page keys are `size`, `format`, `filter`, `filt`, `repeat`, `pma` (`:113`); region keys are `rotate`, `xy`, `size`, `orig`, `offset`, `index`, `bounds`, `offsets` (`:114`). `filter` and `filt` are equivalent spellings but cannot both appear (`:264`). Unknown keys throw instead of being ignored (`:213`, `:254`). Creator `.plist` atlases are not this parser's input; the engine `SpriteAtlas` is a deserialized frame container queried by `getSpriteFrame(key)` (`src/cocos/2d/assets/sprite-atlas.ts:84`) and carries no text parser.
+
+## Returned `AirAtlasDocument`
+
+| Member | Value | Source |
+| --- | --- | --- |
+| `pages[i].file/pageIndex/width/height` | page name line, ordinal, parsed `size:` pair | `src/air/assets/atlas/atlas-parser.ts:37-46`, `:257-260`, `:298-312` |
+| `pages[i].format/filter/repeat/pma` | optional strings/boolean, parsed only | `:41-45`, `:261-271` |
+| `regions[i].name/index/pageIndex` | name line; `index` defaults to -1, `>= 0` marks an animation frame (`:246-248`); page ordinal | `:49-53`, `:292` |
+| `regions[i].rotate` | `0` or `90` only (`true` equals `90`) | `:34`, `:216-219` |
+| `regions[i].xy` | packed position on the page, **top-left origin** | `:55-56`, `:220-223`, `:231` |
+| `regions[i].packed` | on-page footprint, width and height swapped when `rotate` is 90 | `:57-58`, `:171-173`, `:320-322` |
+| `regions[i].logical` | unrotated trimmed size | `:59-60`, `:224-232` |
+| `regions[i].original` | pre-trim size, defaults to `logical` | `:61-62`, `:183` |
+| `regions[i].offset` | trim distances from the original's left and bottom edges, default `0,0` | `:63-64`, `:178` |
+| `getRegion(name)` | the `index === -1` region; a lone indexed region is returned; two or more indexed entries give `undefined` | `:339-343` |
+| `getRegions(name)` | every entry for the name, sorted by `index` ascending, frozen copy | `:334`, `:344-346` |
+
+The document, both arrays, each region and each nested geometry object are `Object.freeze`d (`:302`, `:314-326`, `:336-347`).
+
+## rect.y semantics: top origin, no flip
+
+`parseAtlasText` documents `xy` as the packed position with top-left origin (`src/air/assets/atlas/atlas-parser.ts:55-56`), and the factory assigns it straight through: `frame.rect = new Rect(region.xy.x, region.xy.y, region.logical.width, region.logical.height)` (`src/air/assets/atlas/atlas-factory.ts:46`). The module header states that this direct top-origin take replaced an earlier page-bottom-origin conversion that was wrong (`src/air/assets/atlas/atlas-factory.ts:7-9`, `:44-45`), and `docs/manual/atlas-loading.md:35` records the same ruling. The engine side consumes `rect` as UV with `t = rect.y / texh` for both branches (`src/cocos/2d/assets/sprite-frame.ts:1038`, `:1088`), which pairs with the documented upload orientation "Sprite visual top edge is v=0" for HTML image sources (`docs/manual/texture-source-orientation.md:9`). Rotation is not baked into `rect`: the frame keeps the logical size, gets `rotated = true` (`src/air/assets/atlas/atlas-factory.ts:43`), and the native UV math takes the right and bottom edges as `rect.x + rect.height` and `rect.y + rect.width` (`src/cocos/2d/assets/sprite-frame.ts:1036-1039`). Trim translation (`src/air/assets/atlas/atlas-factory.ts:48-51`): `offset.x = left + logicalW/2 - originalW/2`, `offset.y = bottom + logicalH/2 - originalH/2`, with `originalSize` from `original` (`:47`).
+
+## Malformed input: throws versus silent handling
+
+| Code | Trigger | Message source |
+| --- | --- | --- |
+| `AIR_E_ATLAS_FORMAT` | non-string or blank input | `src/air/assets/atlas/atlas-parser.ts:144-146` |
+| `AIR_E_ATLAS_FORMAT` | no page block; page without `size`; field before any name line; name containing `:`; unknown or duplicate key; `filter` with `filt`; cross-dialect mixing | `:297`, `:300`, `:274`, `:279`, `:213`, `:214`, `:254`, `:255`, `:264`, `:221-242` |
+| `AIR_E_ATLAS_DATA` | pair or quad arity; value not a non-negative safe integer; `index` below -1; `pma` not `true`/`false`; region without position or size; `original` smaller than `logical` | `:102`, `:108`, `:95`, `:247`, `:269`, `:165`, `:170`, `:185` |
+| `AIR_E_ATLAS_ROTATION` | `rotate` other than `false`, `true`, `90` | `:219` |
+| `AIR_E_ATLAS_BOUNDS` | packed footprint leaving the page rect | `:174-175` |
+| `AIR_E_ATLAS_DUPLICATE` | repeated `name` plus `index` | `:187-188` |
+| `AIR_E_ATLAS_PAGE` | region fields before any page block, or before a page whose `size` is still missing | `:162-163`, `:291` |
+
+Silently handled, not errors: blank lines dropped (`:149`), tabs replaced by four spaces (`:148`), leading BOM stripped and CRLF accepted (`:147`). Parsed but never applied: page `format`, `filter`/`filt`, `repeat` and `pma`; `createAtlasSpriteFrame` reads only `page.width`/`page.height` plus region geometry (`src/air/assets/atlas/atlas-factory.ts:32-52`), so filtering, wrapping and premultiplied alpha stay caller-side on `Texture2D` (`docs/manual/atlas-loading.md:13`, `:38`).
+
+## createAtlasHandle ownership
+
+`createAtlasHandle(document, pageTextures)` (`src/air/assets/atlas/atlas-factory.ts:69`) rejects a page-count mismatch with `AIR_E_ATLAS_PAGE_TEXTURE` and the message `expected N page textures, got M` (`:70-71`); per region it also rejects a missing or non-`Texture2D` page (`:35-36`) and a texture whose dimensions differ from the declared page (`:38-39`). If any region fails, frames built so far are destroyed and nothing is returned (`:85-88`). On success the handle takes exactly one `addRef()` per page texture (`:89`) and one per produced frame (`:90`); `getFrame(name, index = -1)` keys on the bare name for plain regions and on `name` plus `index` otherwise (`:80`, `:97-99`), `getFrames(name)` returns a frozen list (`:100-102`). `dispose()` is idempotent (`:104`) and refuses while any frame still has an extra holder: the guard is `frame.refCount > 1`, raising `AIR_E_ATLAS_IN_USE` with `frame "x" still has extra owners; detach sprites / release extra owners before dispose` (`:106-107`); only after the guard passes are frames and textures `decRef()`d (`:111-112`), and no external holder is force-released.
+
+## loadAtlas pipeline and abort semantics
+
+`loadAtlas(url, options)` (`src/air/assets/atlas/atlas-loader.ts:63`) options (`:31-40`):
+
+| Option | Required | Effect |
+| --- | --- | --- |
+| `bank` | yes | `AssetBank` used for both text and page subscriptions (`:33`) |
+| `signal` | no | subscriber-side cancellation only (`:35`) |
+| `baseURL` | no | absolute base for relative page URLs, else the atlas URL, then `document.baseURI` (`:37`, `:82-84`, `:137-139`) |
+| `pageExt` | only for suffix-less page files | a suffix-less page without it is rejected (`:52-54`) |
+
+Steps: `bank.load(url, { ext: 'atlas', signal })` (`:75`), `TextAsset` type guard (`:77`), `parseAtlasText` (`:78`), abort check (`:79`), base URL resolution with `AIR_E_ATLAS_BASE_URL` on failure (`:86`), per-page extension from the file suffix (`:42-60`), concurrent page loads indexed by `pageIndex` so completion order cannot reorder `textures` (`:89`, `:96-107`), `Promise.allSettled` convergence through a locally declared shim (`:92-95`), the first rejection rethrown only after every page settled (`:109-113`), then `createAtlasHandle` (`:117`). Auto path is PNG only: a `.jpg`/`.ktx` style suffix, a suffix-less page without `pageExt`, and an explicit non-png `pageExt` each throw `AIR_E_ATLAS_PAGE_FORMAT` (`:48`, `:53`, `:57`); other formats must be loaded by the caller and passed to `createAtlasHandle`. A page URL that yields no `ImageAsset` throws `AIR_E_ATLAS_PAGE_TEXTURE` (`:102`), as does any unbuilt slot (`:114-115`). On any failure the intermediate `Texture2D` objects are destroyed and the taken subscriptions released (`:129-132`, release bookkeeping `:66-73`), so no half-built handle escapes; the returned wrapper's `dispose()` runs the inner `dispose()` first and only then releases the bank subscriptions, keeping them retryable when the in-use guard throws (`:124-127`).
+
+`AIR_E_ABORTED: atlas subscription was cancelled` is raised at two checkpoints in this loader, after the text resolves (`src/air/assets/atlas/atlas-loader.ts:79`) and after each page resolves (`:101`). It is subscriber-side only: `AssetBank.underlyingCancelSupported` is the literal `false` (`src/air/assets/asset-bank.ts:148`), and the bank itself rejects already-aborted subscriptions before starting work (`src/air/assets/asset-bank.ts:182-183`) or while joining an in-flight record (`src/air/assets/asset-bank.ts:320`). Late network results for a cancelled page are treated as unowned and rolled back by the paths above. Frames are ordinary engine `SpriteFrame` objects, so `Sprite` and `Label` consume them with no adapter, and `Sprite`'s `spriteFrame` setter (`src/cocos/2d/components/sprite.ts:207-218`) plus its `_applySpriteFrame` (`:691`) never call `addRef()` or `decRef()`: binding a frame is an untracked hold, so the caller must `addRef()` before binding and `decRef()` after unbinding (`docs/manual/atlas-loading.md:42`), which is what the handle's `refCount > 1` guard catches (`src/air/assets/atlas/atlas-factory.ts:106`). Atlas frames remain `packable` by default (`src/cocos/2d/assets/sprite-frame.ts:625`), so `dynamicAtlasManager` may re-copy their sub-rectangles; see `skills/cocosair-performance/references/dynamic-atlas.md` for the acceptance gates (`src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:183-198`).
+
+## Bundle face, evidence, and manual drift
+
+`parseAtlasText`, `createAtlasHandle`, `createAtlasSpriteFrame`, `loadAtlas`, `SpriteFrame`, `Texture2D` and `SpriteAtlas` each resolve by symbol name in the single `export { ... }` block of `build/cocosair.module.js` (currently :161574); the AIR side is re-exported at `src/air/index.ts:33-35`.
+
+`docs/evidence/examples-verified.json` (file-level `measuredAt` 2026-10-04T05:52:32.537Z, top-level `candidateFingerprint` 2f089f6ce25eaccd) has **no** `results[]` entry that loads a libGDX atlas. The nearest id, `ui-asset-loading` (`result: PASS`, own `candidateFingerprint` 2f089f6ce25eaccd), exercises `AssetManager` JSON manifest loading; its `validatorResults` are `scene-ready`, `node-exists`, `asset-loaded`, `transform-equals`, `no-runtime-error`, `visible-frame`, `interaction:frame-diff` and `resource-released`, and its only visual probe is the luminance ratio `litRatio=0.9998`. It is not atlas evidence.
+
+Atlas pixels are proven by the collector `tools/verify/air-atlas-browser-review.cjs`, which asserts exact RGBA tuples per region: upright plain region (`:42`), 90 degree packed region (`:43`), trim placement (`:44`), indexed frames from the second page (`:45`), compact `offsets` case (`:46`), page sizes and index count (`:47`), zero runtime errors (`:49`), the `AIR_E_ATLAS_IN_USE` guard followed by a released receipt, empty bank and returned references (`:50-52`), and it fails if the installed run silently used the workspace engine (`:48`). Jest-level positive and negative cases: `test/smoke/port-gap-atlas.test.ts`.
+
+Only one of those runs has a tracked record: `docs/evidence/port-gap/eg3-installed-atlas-s11.json` (schema `port-gap-evidence/1`, gate `EG3`, `execution.status: PASS`, `execution.command` = the collector with `--installed`, `scope.subset: true`, `scope.completed: false`, `measuredCases` 3 of 3, `skippedCases` 0, limitation `GPU allocation measurements unavailable`). The raw JSON it certifies is written to `output/playwright/air-atlas-s11-order-fixed.json` (startedAt 2026-10-04T05:05:51.395Z, chromium 149.0.7827.55 / firefox 155.0 / webkit 26.6 all `status: PASS`), and `output/` is gitignored (`.gitignore:16`) and excluded from the npm `files` list, so that file is a regenerable artifact rather than durable evidence; re-run the recorded command to recreate it. The earlier workspace run `output/playwright/air-atlas-s6-top-origin.json` (startedAt 2026-10-04T02:45:16.454Z, same three engines all `PASS`, also `subset: true` and `completed: false`) carries the extra limitation `Review source bridge; public exports and installed-consumer atlas API not covered` and has no tracked port-gap record at all.
+
+On currency: the recorded source hashes still match the files today (parser `b0f9285b53d72624`, factory `1c99fc08fdfaca75`, loader `86c3d2d813a75f3b`), while the recorded bundle hashes (`88766acbd11e9230` for the workspace run, `de4e0472e8a9cf86` for the installed run) differ from the current `build/cocosair.module.js` (`3a448f029369ac02`), so both runs predate the newest bundle build and any atlas conclusion that matters should be re-collected rather than quoted.
+
+`docs/manual/atlas-loading.md` matches source on the top-origin ruling (`:35`), the trim formula (`:36`), the page-size guard (`:37`), the no-automatic-addRef rule for `Sprite` (`:42`) and the PNG-only auto path (`:57`). One statement is stale: the option JSDoc still promises a `pageExt` default of `'png'` (`src/air/assets/atlas/atlas-loader.ts:38`) while the guard requires an explicit value (`:52-54`) as the manual states (`docs/manual/atlas-loading.md:53`). `docs/manual/atlas-loading.md:65` defers public-export and entry wiring to the integration flow; that wiring is already present, since `src/air/index.ts:33-35` re-exports all three modules.

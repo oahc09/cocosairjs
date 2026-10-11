@@ -1,0 +1,86 @@
+Derived from docs/manual/safe-startup-and-release.md, src/air/app-config.ts, src/air/bootstrap.ts, src/air/safe-bootstrap.ts, src/air/app.ts, src/air/diagnostics.ts, src/cocos/gfx/device-manager.ts, src/cocos/game/game.ts, src/cocos/ui/view.ts, src/pal/screen-adapter/web/screen-adapter.js (as of 2026-10-08)
+
+All values below are read from the code that enforces them. `createAirApp` runs `normalizeAirOptions` before touching the engine (`src/air/bootstrap.ts:106-108`, `src/air/safe-bootstrap.ts:6-8`), so a rejected option never starts a partial runtime. Line numbers into generated files (`build/cocosair.module.d.ts`, `build/bootstrap.d.ts`) are not stable across `npm run build:dts` or runtime builds; the declared symbol name is the anchor and any number quoted here is only "currently".
+
+## AirAppOptions
+
+| Option | Declared type | Default | Accepted values | Effect and enforcement | Source |
+|---|---|---|---|---|---|
+| `canvas` | `HTMLCanvasElement \| string` | required | selector resolved by `document.querySelector`, or an element | non-canvas or unmatched selector -> `AIR_E_CANVAS`; another element already holding id `GameCanvas` -> `AIR_E_CANVAS_CONFLICT`; requires a browser `document` and `HTMLCanvasElement` -> `AIR_E_CANVAS` | `src/air/app-config.ts:48-62`, `src/air/app.ts:64` |
+| `renderMode` | `number` | `0` | integers `0`, `1`, `2`, `3` only | forwarded to `game.init` as `overrideSettings.rendering.renderMode`; anything else -> `AIR_E_RENDER_MODE`; the engine value `4` (`WEBGPU`) is rejected at the AIR surface; `1` (`CANVAS`) passes validation but starts no device (see Enum value lists) | `src/air/app-config.ts:63-65`, `:108`; `src/air/bootstrap.ts:152`; `src/air/app.ts:66` |
+| `physics` | `'builtin' \| 'cannon'` | `'builtin'` | those two strings | selector re-registered on `Game.EVENT_PRE_SUBSYSTEM_INIT` before the physics world exists; other -> `AIR_E_PHYSICS_BACKEND` | `src/air/app-config.ts:45-46`; `src/air/bootstrap.ts:141-142`; `src/air/physics-backend.ts:41-66`; `src/air/app.ts:72` |
+| `diagnostics` | `'errors' \| 'warnings'` | `'errors'` | those two strings | maps to `DebugMode.WARN` / `DebugMode.ERROR`; `errors` drops engine warnings from the bounded channel; other -> `AIR_E_DIAGNOSTIC_MODE` | `src/air/app-config.ts:45-47`; `src/air/bootstrap.ts:135`, `:150`; `src/air/diagnostics.ts:24-50`; `src/air/app.ts:79` |
+| `pixelRatioCap` | `number` | `2`, or `globalThis.__CCDPR_CAP__` when finite and greater than 0 | finite positive number; `0` is rejected, not a disable switch | effective DPR `min(devicePixelRatio, cap)`; written back to `__CCDPR_CAP__`; invalid -> `AIR_E_PIXEL_RATIO_CAP`; stale PAL density on the eager entry -> `AIR_E_PIXEL_RATIO_IMPORT_ORDER` | `src/air/app-config.ts:66-70`, `:108`; `src/air/bootstrap.ts:110-118`; `src/pal/screen-adapter/web/screen-adapter.js:78-81`; `src/air/app.ts:81` |
+| `screenMode` | `'window' \| 'container'` | `undefined` (native screen settings preserved) | those two strings | `window` -> `overrideSettings.screen.exactFitScreen = true`; `container` -> `false`; contradicts a pre-set native `exactFitScreen` -> `AIR_E_SCREEN_CONFIG_CONFLICT`; other -> `AIR_E_SCREEN_MODE` | `src/air/app-config.ts:37-41`, `:77-79`; `src/air/bootstrap.ts:129-130`, `:153`; `src/air/app.ts:83` |
+| `container` | `HTMLElement \| string` | with `screenMode: 'container'` and no value: `#GameDiv`, else `canvas.parentElement` | existing `HTMLElement` that contains the canvas and is neither `body` nor `documentElement` | requires `screenMode: 'container'` -> `AIR_E_CONTAINER`; selector that does not match an element -> `AIR_E_CONTAINER`; wrapper mis-nesting -> `AIR_E_CONTAINER_CONFLICT`; zero client width or height -> `AIR_E_CONTAINER_SIZE` | `src/air/app-config.ts:80-102`, `:124-147`; `src/air/app.ts:85` |
+| `designResolution` | `{ width: number; height: number; policy: number }` | `undefined` | finite positive `width` and `height`; `policy` integer `0..4` | applied after `game.init` and before the first `run()` through `view.setDesignResolutionSize(width, height, policy)`; otherwise -> `AIR_E_DESIGN_RESOLUTION` | `src/air/app-config.ts:71-75`; `src/air/bootstrap.ts:155-157`; `src/air/app.ts:87` |
+| `contextLoss` | `AirContextLossOptions` | `{ autoPause: true }` | object; optional `autoPause: boolean`, `reload: () => void`, `onEvent: (snapshot) => void` | wrong shape -> `AIR_E_CONTEXT_OPTIONS`; `reload` and `onEvent` are compared by function identity during admission | `src/air/app-config.ts:76`, `:103-107`, `:111`, `:120`; `src/air/app.ts:77` |
+
+Normalized defaults: `renderMode: options.renderMode ?? 0` and `contextLoss.autoPause ?? true` appear in the frozen return of `normalizeAirOptions` (`src/air/app-config.ts:108-111`); `physics ?? 'builtin'` and `diagnostics ?? 'errors'` are resolved earlier at `:45`, and the `pixelRatioCap` fallback (`__CCDPR_CAP__` when finite and greater than 0, else 2) at `:66-67`. The returned object is frozen.
+
+## Enum value lists
+
+`renderMode` is `LegacyRenderMode` (`src/cocos/gfx/device-manager.ts:42-78`): `AUTO = 0`, `CANVAS = 1`, `WEBGL = 2`, `HEADLESS = 3`, `WEBGPU = 4`. AIR admits 0..3 only. `AUTO` and `WEBGL` both reach the WebGL 2 device branch (`:176-187`); `HEADLESS` reaches `EmptyDevice` and renders nothing visible (`:189-192`); `gfx-empty` is in the default feature list (`tools/build/build.cjs:26`), `gfx-webgpu` is not. `CANVAS = 1` is the trap: it passes AIR validation (`src/air/app-config.ts:63-65`) and maps to `RenderType.CANVAS` with `supportRender = true` (`device-manager.ts:223-225`), but `DeviceManager.init` has device branches only for WEBGL/WEBGPU (`:153`) and HEADLESS (`:189`), so `_gfxDevice` stays unset, `init` logs engine `errorID(16337)` and returns `false` (`:194-199`), and the `game.init` promise chain discards that falsy result without checking it (`src/cocos/game/game.ts:786-788`). `renderMode: 1` is therefore accepted-but-inert, not a supported Canvas renderer; this is the code path as read on disk, with no evidence of a rendered result.
+
+`designResolution.policy` is the native `ResolutionPolicy` integer set (`src/cocos/ui/view.ts:953-995`, exported from the main entry as the declared symbol `ResolutionPolicy` in the generated `build/cocosair.module.d.ts`, currently :42426): `EXACT_FIT = 0`, `NO_BORDER = 1`, `SHOW_ALL = 2`, `FIXED_HEIGHT = 3`, `FIXED_WIDTH = 4`, `UNKNOWN = 5`. AIR admits 0..4; `5` and non-integers -> `AIR_E_DESIGN_RESOLUTION`.
+
+Trap: the engine's own settings-driven path applies `designResolution.policy || ResolutionPolicy.FIXED_HEIGHT`, so a policy `0` arriving through `settings` screen data becomes `FIXED_HEIGHT` (`src/cocos/ui/view.ts:120-129`). `AirAppOptions.designResolution` does not take that path; it calls `setDesignResolutionSize` with the number unchanged (`src/air/bootstrap.ts:155-157`).
+
+## Startup order
+
+Inside `initializeAirApp` (`src/air/bootstrap.ts:127-170`), in this sequence: `validateAirScreenMode` (`:129-130`) -> `ensureCanvasDOM` (`:131`) -> context-health attach `attachContextHealth` (`:134`) -> diagnostics channel `createAirDiagnostics` (`:135`) -> physics selector armed on `Game.EVENT_PRE_SUBSYSTEM_INIT` (`:141-142`) -> `game.init` (`:149-154`) -> `view.setDesignResolutionSize` when configured (`:155-157`) -> the handle returns and the caller's first `run()` executes. A `game.init` rejection destroys the PAL layout observer, context health and diagnostics before rethrowing (`:159-163`).
+
+DPR honesty: on the eager main entry the PAL has already fixed its density, so a requested cap that differs from `screenAdapter.devicePixelRatio` by more than `1e-9` rejects `AIR_E_PIXEL_RATIO_IMPORT_ORDER` (`src/air/bootstrap.ts:110-113`); a canvas already bound to `__CC_CANVAS__` that differs rejects `AIR_E_CANVAS_IMPORT_ORDER` (`:115-117`). The drawing buffer itself is sized `round((hostFrame.clientWidth ?? window.innerWidth) * min(devicePixelRatio, cap))` and the same for height (`:82-90`; the cap formula matches `src/pal/screen-adapter/web/screen-adapter.js:78-81`).
+
+## Canvas DOM preparation
+
+`ensureCanvasDOM` (`src/air/bootstrap.ts:40-91`), in order:
+
+1. `prepareAirContainer` runs first and only acts in container mode (`src/air/app-config.ts:124-147`).
+2. Canvas id other than `GameCanvas` with a different element holding that id -> plain `[cocosair] createAirApp: page already contains another element with id "GameCanvas" ...` error (unreachable through `createAirApp`, which throws `AIR_E_CANVAS_CONFLICT` earlier in `normalizeAirOptions`).
+3. Canvas id other than `GameCanvas` and `globalThis.__CC_CANVAS__ !== canvas` -> plain `[cocosair] custom canvas must be assigned to globalThis.__CC_CANVAS__ before importing the engine` (no `code` property).
+4. `tabIndex` set to `0` only when it is currently negative (`:57`).
+5. The `#GameDiv` > `#Cocos3dGameContainer` wrappers and the reset stylesheet are injected only when `document.body` exists and the canvas has no parent element (`:58-76`); in a real browser the PAL constructor has already wrapped a missing frame/container during the engine import (`src/pal/screen-adapter/web/screen-adapter.js:303-316`), so an attached-canvas page like `examples/starter/index.html` never reaches this branch or loads its stylesheet; an already-attached canvas keeps its structure untouched, and the passed canvas id is never rewritten.
+6. Drawing buffer set to `round((hostFrame.clientWidth ?? window.innerWidth) * min(devicePixelRatio, cap))` and the same for height (`:82-90`).
+
+## Single-runtime admission
+
+Registry: `globalThis[Symbol.for('cocosair.bootstrap.v1')]` with `status: 'idle' | 'initializing' | 'ready' | 'failed' | 'closed'` plus `options`, `loadPromise`, `initPromise`, `app`, `failure` (`src/air/app-config.ts:16-30`).
+
+`admitAirOptions` (`src/air/app-config.ts:149-157`): `closed` -> `AIR_E_APP_CLOSED`; `failed` -> `AIR_E_APP_RELOAD_REQUIRED`; existing `options` not equal to the new ones -> `AIR_E_APP_CONFLICT`; otherwise the caller reuses the in-flight promise (`src/air/bootstrap.ts:109`, `src/air/safe-bootstrap.ts:9-10`).
+
+`equalAirOptions` (`src/air/app-config.ts:114-121`) compares every field with strict `===`: element identity for `canvas` and `container`, function identity for `contextLoss.reload` and `contextLoss.onEvent`, and plain value equality for `renderMode`, `physics`, `diagnostics`, `pixelRatioCap`, `screenMode`, `contextLoss.autoPause` and the three `designResolution` numbers (per field, not by object identity). Consequences: omitted values equal explicit defaults (normalization fills them first), so repeat calls share one app; two different inline callbacks - the usual way to trip this - or two different canvas elements with the same id count as a conflict, so pass a stable options object across calls. `test/smoke/port-gap-bootstrap-singleton.test.ts:3-34` locks the shared-promise, conflict and no-side-effect behavior, and an invalid second call leaves the running scene intact.
+
+## Lifecycle members
+
+| Member | Declaration | Behaviour | Source |
+|---|---|---|---|
+| `run(scene)` | `run(scene: Scene): void` | gates in order: closed, release in flight, prior release failed, invalid scene, same-scene no-op, owned-callbacks; then rotates the scope for later runs, `director.runSceneImmediate(scene)`, `game.run()` on the first scene or `game.resume()` when a release armed it | `src/air/app.ts:135-159` |
+| `getScene()` | `getScene(): Scene \| null` | delegates to `director.getScene()`; `null` before the first `run()` | `src/air/app.ts:161-167` |
+| `releaseScene?()` | optional on the interface, always present on `AirAppImpl` | synchronously (`src/air/app.ts:195`): `scope.deactivate('release')`, `game.pause()`, arms `_needsResume`; only then, in the microtask installed at `:173-174`, the release body runs: `scope.dispose()` (`:174`), `director._releaseSceneImmediate()` (`:176`), await cleanup, `releaseManager._flushAirReleaseQueue()` plus `CCObject._deferredDestroy()` (`:180`); concurrent calls share one promise | `src/air/app.ts:169-197` |
+| `close?()` | optional on the interface | destroys the PAL layout observer, marks the registry `closed` when this app owns it, awaits `releaseScene()`, destroys context health and diagnostics | `src/air/app.ts:199-210` (`:201` layout observer, `:204-207` release plus teardown) |
+| `session` | `readonly session?: AirSessionScope` | current scope; a new one is created on each replacing `run()` | `src/air/app.ts:105`, `:117`, `:122`, `:146-149` |
+| `contextHealth` | `readonly contextHealth: AirContextHealth` | attached before `game.init` | `src/air/app.ts:97`; `src/air/bootstrap.ts:134` |
+| `diagnostics` | `readonly diagnostics?: AirDiagnostics` | bounded channel: at most 80 distinct entries, the least-recently-seen evicted first (`src/air/diagnostics.ts:40-42`), each message truncated to 600 characters (`:33`); code-level bounds read from the current source, no browser evidence attached. `snapshot()`, `onMessage()`, `clear()`, `destroy()`. Ownership note: the `rc-*` request surface over this channel belongs to the future `cocosair-agent-session` skill (no such skill directory exists in this repo yet) | `src/air/app.ts:99`; `src/air/diagnostics.ts:14-70` |
+
+## ReleaseReceipt fields
+
+`AirSceneReleaseReceipt` extends `AirCleanupReceipt` (`src/air/app.ts:20-24`, built at `:184-191`).
+
+| Field | Value | Notes |
+|---|---|---|
+| `status` | `'released' \| 'failed'` | `failed` whenever `pending` or `failures` is non-empty |
+| `scene` | `string \| null` | released scene `uuid`, `null` when nothing was running |
+| `completed` | `readonly string[]` | cleanup labels that finished, format `label#id` |
+| `pending` | `readonly string[]` | cleanup labels still open at the deadline, plus `native-scene-destruction` when the scene survived |
+| `failures` | `readonly { label, message }[]` | `native-asset-destruction`, `native-scene-destruction` and per-callback labels |
+| `retained` | frozen list | always `runtime`, `scheduler`, `builtin-resources`, `shared-asset-caches`, plus `persist-node:<id>` per retained node |
+| `measurements.gpuMemory` | `'unavailable'` | always; the `reason` string states that WebGL offers no portable allocation measure and scene destruction is not proof of zero leaks |
+
+`run()` after a failed release throws `AIR_E_SCENE_RELEASE_FAILED` until the page reloads (`src/air/app.ts:138`).
+
+## Public surface and evidence status
+
+Source export and default-bundle reachability: `createAirApp`, `AirApp`, `AirAppOptions`, `AirAppImpl`, `attachContextHealth`, `createSessionScope` and `ResolutionPolicy` all appear as declared symbols in the main-entry declaration and in the built bundle export list. `build/cocosair.module.d.ts` is generated by `npm run build:dts` and its line numbers shift on the next rebuild with no gate checking them, so the symbols are the anchor - currently `ResolutionPolicy` :42426, `createSessionScope` :55689, `AirAppOptions` :55815, `AirApp` :55846 (with `run(scene: Scene): void` :55857), `AirAppImpl` :55870, `createAirApp` :55902, `attachContextHealth` :55934. The separate bootstrap entry is thinner: `build/bootstrap.d.ts`, emitted as three fixed lines by `tools/build/bootstrap-entry.cjs:17-20`, re-exports only the `AirApp` and `AirAppOptions` types (line 2 currently) and declares only `createAirApp` (line 3 currently); those numbers are stable only while that emitter is unchanged.
+
+Browser evidence for these contracts is bundle-pinned and older than the current candidate: `output/playwright/air-bootstrap-s10-unified.json` (measured 2026-10-04, `completed: false`, subset scope) is fingerprinted against bundle sha prefix `de4e0472e8a9cf86`, while the current `build/cocosair.module.js` hashes to `3a448f029369ac02`. Do not write "verified" about any contract in this skill without re-running the gate.

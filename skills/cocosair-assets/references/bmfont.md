@@ -1,0 +1,80 @@
+Derived from `src/air/assets/bmfont.ts`, `src/air/assets/asset-bank.ts`, `src/air/index.ts`, `src/cocos/2d/assets/bitmap-font.ts`, `src/cocos/2d/assets/font.ts`, `src/cocos/2d/components/label.ts`, `src/cocos/2d/assembler/label/index.ts`, `src/cocos/2d/assembler/label/bmfontUtils.ts`, `src/cocos/2d/assembler/label/text-processing.ts`, `docs/manual/bitmap-font-loading.md`, `docs/manual/creating-text.md`, `test/fixtures/bmfont/font.fnt`, `tools/verify/air-bmfont-browser.cjs`, `test/smoke/port-gap-bmfont.test.ts`, `docs/evidence/examples-verified.json`, `build/cocosair.module.js` (as of 2026-10-09).
+
+## What parseFnt accepts
+
+`parseFnt(text)` (`src/air/assets/bmfont.ts:36`) handles the BMFont **text** dialect only. Input that is not a string, that starts with `<` after optional whitespace, or that starts with `BMF` throws `AIR_E_FNT_FORMAT: expected BMFont text, not XML/binary` (`:37`), so XML and binary `.fnt` are rejected rather than half-parsed. A leading BOM is stripped and CRLF is accepted (`:39`). Each line must begin with a record token matching `^\s*(\w+)\s+(.*)$` (`:41`) drawn from `info`, `common`, `page`, `chars`, `char`, `kernings`, `kerning` (`:42`); any other token throws `unsupported record: ...` (`:43`). Fields are parsed as `key=value` with optional quoting (`:46`), quoted values are unescaped (`:50`), and stray text between fields, duplicate keys, or a trailing fragment throw (`:49`, `:53`). Exactly one each of `info`, `common`, `page` and `chars` is required; a missing or repeated record throws `exactly one <name> record required` (`:56-59`, `:60`).
+
+Fields actually read, and the guard on each:
+
+| Record.field | Rule | Source |
+| --- | --- | --- |
+| `info size` | integer in -65535..65535, non-zero; `fontSize = Math.abs(size)` | `src/air/assets/bmfont.ts:61-62`, `:89` |
+| `common pages` | must equal 1 | `:63` |
+| `common packed` | if present, must be 0, else `AIR_E_FNT_PACKED` | `:64` |
+| `common lineHeight` | integer >= 1, becomes `commonHeight` | `:89` |
+| `common base` | integer >= 0 | `:90` |
+| `common scaleW` / `scaleH` | integer >= 1 | `:66` |
+| `page id` | must equal 0 | `:63` |
+| `page file` | non-empty, becomes `atlasName` | `:65`, `:90` |
+| `chars count` | must equal the number of `char` records, and at least one | `:69` |
+| `char id` | 0..65535, unique per font | `:71-72` |
+| `char page` | must be 0 | `:73` |
+| `char x y width height` | non-negative integers, `x + width <= scaleW`, `y + height <= scaleH` | `:74-75` |
+| `char xoffset yoffset xadvance` | integers in -65535..65535 | `:77-78` |
+| `kernings count` | when the record exists, must equal the number of `kerning` records | `:81` |
+| `kerning first second` | both must exist in the glyph table; stored under a key packing `first` into the high 16 bits with `second` (`:85`); a repeated pair throws | `:82-87` |
+| `kerning amount` | integer in -65535..65535 | `:87` |
+
+Everything else is parsed into the record map and then never read: `info face/charset/padding/smooth/aa/spacing`, `char chnl`, and any additional attribute on `common` or `page` (`:45-54`); the repository fixture carries exactly those ignored attributes (`test/fixtures/bmfont/font.fnt:1`, `:5`). Every numeric guard above fails through one helper whose message is `<name> must be an integer in [min, max]` (`src/air/assets/bmfont.ts:28-34`) under `AIR_E_FNT_DATA`.
+
+Returned `AirFntData` (`src/air/assets/bmfont.ts:14-24`, constructed frozen at `:89-92`): `fontSize` (absolute `info size`), `commonHeight` (`common lineHeight`), `base`, `scaleW`, `scaleH`, `atlasName` (`page file`), `pages` (a one-element list typed `{ id: 0; file }`), `fontDefDictionary` keyed by character code string with `{ rect: { x, y, width, height }, xOffset, yOffset, xAdvance }` (`:8-13`, `:76-78`), and `kerningDict` keyed by the packed pair.
+
+## createBitmapFont and the single-page constraint
+
+`createBitmapFont(data, page)` (`src/air/assets/bmfont.ts:104`) takes exactly one `SpriteFrame` and validates it as a full page: not rotated, `rect.x === 0`, `rect.y === 0`, `rect.width === data.scaleW`, `rect.height === data.scaleH`, `originalSize` equal to `scaleW`/`scaleH`, `offset` zero, and `texture.width`/`height` equal to `scaleW`/`scaleH` (`:105-109`). Any deviation throws `AIR_E_FNT_PAGE_TEXTURE: a full, unrotated page matching scaleW/scaleH is required` (`:110`), so a trimmed atlas sub-rectangle cannot serve as a font page; `docs/manual/bitmap-font-loading.md:8-9` states the same rule. Multi-page fonts never reach the factory: `parseFnt` requires `pages=1`, `page id=0` and `char page=0` (`src/air/assets/bmfont.ts:63`, `:73`) with `AIR_E_FNT_PAGES`.
+
+On success the handle takes one reference on the page texture and one on the frame (`:112-113`), creates a `BitmapFont`, refs it, then sets `fontSize`, `spriteFrame`, `fntConfig` and calls `onLoaded()` (`:114-116`); a throw inside that initialization unwinds all three references (`:117-120`). `AirBitmapFontHandle` (`:95-101`) exposes `font`, `data`, `disposed` and `dispose()`. `dispose()` is idempotent (`:122`), refuses while `font.refCount > 1` with `AIR_E_FNT_IN_USE: release extra font owners and detach labels before dispose` (`:123`), and otherwise clears the `FontAtlas` texture pointer and the `spriteFrame`, then returns the font, frame and texture references (`:125-126`).
+
+Engine side: `BitmapFont extends Font` (`src/cocos/2d/assets/bitmap-font.ts:121-122`), where `Font` is a plain `Asset` subclass (`src/cocos/2d/assets/font.ts:34-35`). `BitmapFont.onLoaded()` builds a `FontAtlas` over `spriteFrame.texture` (`src/cocos/2d/assets/bitmap-font.ts:162-166`) and converts each `fontDefDictionary` entry into a `FontLetterDefinition` with `u = rect.x`, `v = rect.y`, `w`/`h` from the rect, `offsetX`/`offsetY` from the offsets and `xAdvance` passed through (`:174-189`); a missing `fntConfig` only warns (`:168-172`). The `FontAtlas` setter keeps its own `addRef()` on the texture and releases it when reassigned (`src/cocos/2d/assets/bitmap-font.ts:61-74`), which is why `dispose()` nulls that pointer first.
+
+## Handing the font to Label
+
+`Label.font` is typed `Font | null` (`src/cocos/2d/components/label.ts:459-464`); the setter stores the value, flips `_isSystemFontUsed` and rebuilds render data without taking or returning any reference on the font (`:466-487`, `:472`), so a bound `Label` is invisible to the handle's `refCount > 1` guard and must be detached before `dispose()` (`docs/manual/bitmap-font-loading.md:37`).
+
+Selection and rendering facts proven in source:
+
+- The assembler manager picks the bmfont assembler whenever `comp.font instanceof BitmapFont`, before `cacheMode` is consulted (`src/cocos/2d/assembler/label/index.ts:34-40`); the `letter` assembler is only reachable for a non-BMFont label with `cacheMode === CacheMode.CHAR` (`:39-40`). The `cacheMode` property comment nonetheless claims the mode only supports system fonts (`src/cocos/2d/components/label.ts:489-495`), and the letter/TTF texture cache branches sit in the non-BMFont path (`:1036-1065`), so `cacheMode` is effectively inert for a BMFont label.
+- `_canRender()` returns `false` while a BMFont has no `spriteFrame` or no texture on it (`:998-1008`), and `_applyFontTexture()` binds `this._texture = spriteFrame` for the batcher (`:1042`).
+- Sizing: `style.originFontSize` comes from the parsed config `fontSize` (`src/cocos/2d/assembler/label/bmfontUtils.ts:60`), `_fontScale` is fixed at 1 when a `fntConfig` is present (`src/cocos/2d/assembler/label/text-processing.ts:125-128`), and the drawn scale is `bmfontScale = actualFontSize / (originFontSize * fontScale)` (`:763`), so 0.8/1.0/1.2 sizes reuse the same page instead of resampling (`docs/manual/bitmap-font-loading.md:45`).
+- Kerning: the engine reads `style.fntConfig.kerningDict[(prev << 16) | (key & 0xffff)]` (`src/cocos/2d/assembler/label/text-processing.ts:771`, `:781`), the same key construction `parseFnt` writes (`src/air/assets/bmfont.ts:85`).
+- `spacingX` is documented and shown as BMFont-only (`src/cocos/2d/components/label.ts:334-341`); outline and shadow properties are hidden once the font is a `BitmapFont` (`:603`, `:622`, `:641`, `:657`, `:676`), matching `docs/manual/creating-text.md:39`, which attributes outline and shadow to `LabelOutline` / `LabelShadow`.
+- Glyph rect coordinates stay in top-left texture space; `parseFnt` copies `char x/y` unchanged (`src/air/assets/bmfont.ts:74-76`) and the contract is stated at `docs/manual/bitmap-font-loading.md:43`.
+
+## loadBitmapFont
+
+`loadBitmapFont(url, options)` (`src/air/assets/bmfont.ts:132`); options are `{ bank, signal?, baseURL? }` (`:130`).
+
+| Step | Behaviour | Source |
+| --- | --- | --- |
+| text | `bank.load(url, { ext: 'fnt', signal })`, then `instanceof TextAsset` or `AIR_E_FNT_FORMAT` | `:140-141` |
+| parse | `parseFnt(text.text)` | `:142` |
+| page URL | `baseURL` if given, else `new URL(url, document.baseURI)`; `page.file` resolved against it; failure throws `AIR_E_FNT_BASE_URL` | `:143-146` |
+| format | URL must end in `.png` optionally followed by `?`/`#`, else `AIR_E_FNT_PAGE_TEXTURE` | `:147` |
+| page load | `bank.load(pageURL, { ext: 'png', signal })` | `:148` |
+| abort | after the page resolves, `signal.aborted` throws `AIR_E_ABORTED: font subscription was cancelled` | `:149` |
+| page asset | `instanceof ImageAsset` or `AIR_E_FNT_PAGE_TEXTURE` | `:150` |
+| assemble | a fresh `Texture2D` plus a bare full-page `SpriteFrame`, then `createBitmapFont` | `:151-153` |
+| dispose | inner `dispose()` first, then `bank.release` for the `fnt` and `png` subscriptions | `:135-138`, `:154` |
+| failure | the unowned frame and texture are destroyed and already-taken subscriptions released before rethrow | `:155-157` |
+
+`signal` is subscriber-side only: `AssetBank.underlyingCancelSupported` is the literal `false` (`src/air/assets/asset-bank.ts:148`) and the bank raises its own `AIR_E_ABORTED` before starting or while joining a load (`src/air/assets/asset-bank.ts:182-183`, `:320`), which `loadBitmapFont` surfaces unchanged; `docs/manual/bitmap-font-loading.md:31` words the same limit. Error surface overall: `AIR_E_FNT_FORMAT`, `AIR_E_FNT_DATA`, `AIR_E_FNT_PAGES`, `AIR_E_FNT_PACKED`, `AIR_E_FNT_PAGE_TEXTURE`, `AIR_E_FNT_BASE_URL`, `AIR_E_FNT_IN_USE` (`src/air/assets/bmfont.ts:31`, `:37`, `:43`, `:49`, `:53`, `:57`, `:63-65`, `:69`, `:72-75`, `:81-87`, `:110`, `:123`, `:146`), listed at `docs/manual/bitmap-font-loading.md:47-48`.
+
+## Bundle face, evidence, and the stale manual line
+
+`parseFnt`, `createBitmapFont`, `loadBitmapFont`, `BitmapFont`, `Font`, `Label`, `CacheMode`, `SpriteFrame` and `Texture2D` each resolve by symbol name in the single `export { ... }` block of `build/cocosair.module.js` (currently :161574); the AIR functions are re-exported at `src/air/index.ts:32`.
+
+`docs/evidence/examples-verified.json` (file-level `measuredAt` 2026-10-04T05:52:32.537Z, top-level `candidateFingerprint` 2f089f6ce25eaccd) has **no** `results[]` entry that binds a bitmap font, and no example source under `examples/` calls `parseFnt`, `createBitmapFont` or `loadBitmapFont`. `ui-components` covers `Label` and `ui-asset-loading` covers `AssetManager` JSON; no `results[]` entry in that file assigns a `BitmapFont` to a `Label`, so none of them is BMFont evidence.
+
+The browser proof is a collector run, not tracked repository evidence. `tools/verify/air-bmfont-browser.cjs` asserts pixel bounds rather than only the absence of errors: the unkerned gap must equal `12 * scale` within 1 px (`:36`), the kerned gap `8 * scale` (`:37`), and the inked glyph box `8 * scale` by `12 * scale` (`:38-39`) across three `fontSize` arms; then `release.bankSize === 0`, `disposed === true`, receipt `released` and an empty console-error list (`:43-44`), with candidate drift rejected (`:50`), and it requires `--out=<new.json>` (`:8`). Four of its runs are dated 2026-10-03: `air-bmfont-s4-initial.json` (17:50:19Z) and `air-bmfont-s4-scope.json` (17:51:22Z) record `scopePassed: false` with all three engines `status: FAIL`; `air-bmfont-s4-kerning.json` (17:53:03Z) and `air-bmfont-s4-prepared-session.json` (18:01:40Z, chromium 149.0.7827.55 / firefox 155.0 / webkit 26.6 all `status: PASS`) pass. All four are `subset: true` and `completed: false`. Read that as a one-off: those JSON files live under `output/playwright/`, which `.gitignore:16` excludes and the npm `files` list omits, and the tracked port-gap evidence tree holds no BMFont record, so the only way to re-obtain the result is `node tools/verify/air-bmfont-browser.cjs --out=<new.json>` against a current bundle. The recorded `src/air/assets/bmfont.ts` hash (`7320f06f0fd10759`) still matches the file today; the recorded bundle hashes (`d27ed817`, `0252e4d1`, `9eb2db1d`) do not match the current `build/cocosair.module.js` (`3a448f029369ac02`), so the passing runs predate the newest bundle build. Jest-level coverage: `test/smoke/port-gap-bmfont.test.ts`.
+
+Stale statement to correct when quoting: `docs/manual/creating-text.md:38-39` says `Label` renders with system fonts because AIR has no font asset pipeline. That is true only of the Creator font asset workflow; the runtime BMFont path is shipped and reachable (`src/air/assets/bmfont.ts:36`, `:104`, `:132`; `src/air/index.ts:32`; assembler switch at `src/cocos/2d/assembler/label/index.ts:37-38`) and is documented as delivered at `docs/manual/bitmap-font-loading.md:1-5`.

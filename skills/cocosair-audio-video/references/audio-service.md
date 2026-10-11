@@ -1,0 +1,44 @@
+Derived from `src/air/audio-service.ts`, `src/air/index.ts`, `src/cocos/audio/audio-source.ts`, `src/cocos/audio/audio-clip.ts`, `src/cocos/audio/audio-manager.ts`, `src/pal/audio/web/player-web.js`, `src/pal/audio/web/player-dom.js`, `test/fixtures/audio-service/main.ts`, `test/smoke/port-gap-audio-service.test.ts`, `examples/audio-basic/main.js`, `docs/manual/audio-video-webview.md`, `docs/notes/audio-notes.md`, `build/cocosair.module.js` (as of 2026-10-10).
+
+## The full AudioService surface
+
+`AudioService` is AIR-original code layered on native `AudioSource` (`src/air/audio-service.ts:42-46`), re-exported through `src/air/index.ts:27` and present in the bundle export block (`build/cocosair.module.js`, currently :161574, alongside `AudioSource`, `AudioClip`, `AudioPCMDataView`, `AudioSource as AudioSourceComponent`). Constructor: `new AudioService(scene, options?)` (`src/air/audio-service.ts:59-64`); every BGM id gets one persistent `Node` + `AudioSource` created lazily with `playOnAwake = false` (`:80-94`), and the node name `AudioService/BGM/<id>` is observation only, not a public contract (`:5`, `docs/manual/audio-video-webview.md:62`).
+
+Verified method surface (line numbers from `src/air/audio-service.ts`):
+
+| Member | Line | Contract |
+| --- | --- | --- |
+| `load(id, url)` | :67 | `assetManager.loadRemote` (`:71`), caches by id, re-register overwrites (`:68-69`, `:76`) |
+| `playBgm(id, loop=true)` | :108 | throws for an unloaded id (`:110`), pauses all other channels (`:111-113`), records `bgmId` |
+| `pauseBgm()` | :120 | pauses the current channel, head preserved |
+| `resumeBgm()` | :145 | continues from the preserved `currentTime` (`:104-106`); no-op when music disabled or no id |
+| `stopBgm()` | :126 | stops and writes `currentTime = 0`, keeps the id so `resumeBgm` restarts from zero; no-op without a channel |
+| `setBgmVolume(v)` | :132 | applies to existing and future channels (`:139`); rejects non-finite or outside [0,1] with `RangeError` code `AIR_E_AUDIO_VOLUME` (`:133-136`), no partial state change |
+| `bgmVolume` getter | :142 | the stored channel volume |
+| `playSfx(id, volume=1)` | :155 | transient node per fire, single-shot (`:160-167`) |
+| `setMusicEnabled(on)` | :185 | disabling pauses the current BGM (`:187`) |
+| `setSfxEnabled(on)` | :191 | independent of the music switch |
+| `bgmState()` | :199 | `BgmState \| null` snapshot (`:23-32`) |
+| `dispose()` | :207 | stops and destroys all BGM and SFX nodes, clears clips, nulls `bgmId` (`:207-221`) |
+| `bgmId` / `musicEnabled` / `sfxEnabled` / `sfxActive` | :97-:101 | getters; `sfxActive` counts in-flight voices |
+| `sfxDropped` | :57 | public counter of overflow drops |
+
+## The SFX voice cap and sfxDropped
+
+`maxSfxVoices` is an `AudioServiceOptions` field defaulting to 5 (`src/air/audio-service.ts:35-38`, `:61`); a non-integer or value below 1 throws at construction (`:62`). On overflow, `playSfx` increments the public counter `sfxDropped` and returns without queueing (`:159`) - drops are observable, never silent. A voice frees its slot via `AudioSource.EventType.ENDED` (`:175`) plus a bounded fallback timer `max(1000, clip.duration*1000+5000)` ms, because a browser autoplay rejection may never emit `ENDED` (`:177-179`). Release stops the source and destroys its node (`:169-174`). A disabled sfx switch or an unknown clip id returns before the cap check (`:156-158`).
+
+## Playback evidence discipline
+
+The file header states the rule verbatim in intent: `playing=true` alone does not prove the clock advances; assert the measured `currentTime` (`src/air/audio-service.ts:6-8`). `bgmState()` exposes exactly that: `{ id, playing, currentTime, loop, volume }` with `currentTime` read through from the native player (`:199-204`, `src/cocos/audio/audio-source.ts:498-500`). An unlocked-but-rejected play shows honestly as a head stuck at 0 (`src/air/audio-service.ts:10-12`). Stop confirmation is asynchronous: the call returns before the browser backend finishes, so a zero head is confirmed by reading `currentTime` afterwards, not by the return (`docs/manual/audio-video-webview.md:62`). For the raw component, `AudioSource` emits `started`/`ended` on its node (`src/cocos/audio/audio-source.ts:36-39`, `:69`; emission at `:165-167` and `:380-381`), and `examples/audio-basic/main.js:376-383` records unlock latency by waiting on the real state.
+
+## Gesture unlock and autoplay policy
+
+On Web the first audible play needs a user gesture. PAL installs capture-phase `touchend`/`mouseup` listeners on the canvas and resumes the AudioContext once (`src/pal/audio/web/player-web.js:88-111`); the DOM-audio backend uses the same gesture listeners (`src/pal/audio/web/player-dom.js:46-54`). `AudioSource.play()` documents the two legal paths - play inside a `TOUCH_END`/`MOUSE_UP` callback, or call play and let the engine replay at the next gesture (`src/cocos/audio/audio-source.ts:351-364`) - and while the clip is still loading, play/pause/stop/seek operations are queued and flushed when the player arrives (`:367-370`, `:454-471`). The measured AIR-side reading: pre-gesture `play()` enters the operation queue and `AudioPlayer.maxAudioChannel` is 24 (`docs/notes/audio-notes.md:51`). The manual restates both routes and warns that DOM audio may require a fresh gesture for later resume or track changes (`docs/manual/audio-video-webview.md:9-14`, `:62`). The example gates its whole sequence behind `Node.EventType.TOUCH_START` with a one-shot latch so a second click cannot double the event counters (`examples/audio-basic/main.js:499-508`).
+
+## Relationship to AudioClip, playOneShot and channels
+
+`AudioService.load` produces an `AudioClip` (`src/cocos/audio/audio-clip.ts`) whose `_nativeAsset` backs per-source `AudioPlayer` creation (`src/cocos/audio/audio-source.ts:121-160`); two sources sharing one clip get independent players and share only the decoded buffer (`docs/notes/audio-notes.md:50`). `AudioService` never calls `playOneShot` (`src/cocos/audio/audio-source.ts:430-452`) - each SFX fire is its own `AudioSource` node instead (`src/air/audio-service.ts:160-167`) - and exposes no seek; per-clip seeking goes through the raw component (`src/cocos/audio/audio-source.ts:480-490`). Background mute switching on disable is engine-level: `AudioSource.onDisable` pauses unless the root node is persistent (`src/cocos/audio/audio-source.ts:261-267`).
+
+## Test and fixture entry points
+
+The service has a smoke test (`test/smoke/port-gap-audio-service.test.ts`) and a runnable fixture (`test/fixtures/audio-service/main.ts`); both track the contract that `stopBgm` zeroes the head, `resumeBgm` continues from the pause point, and overflow bumps `sfxDropped`. Import it from the package root - it is on the bundle export list - and construct it after `createAirApp` with the running scene.
