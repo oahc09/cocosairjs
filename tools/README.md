@@ -1,5 +1,7 @@
 # Cocos AIR 工具
 
+`tools/verify/example-spec-browser.cjs` 的隔离工作区支持 DOM iterable 类型、bootstrap 边车、`.js` 指向 TypeScript 源文件及本示例参数/recipe 的路径迁移。规格可用 `bench.startupButtonText` 声明实际启动按钮、`bench.viewport` 声明视口；`bench.apiVariants` 的 `query`、`nodes`、`steps` 声明额外模式，`steps[].drag` 为两个归一化画布坐标。每个模式独立运行全部非 API 检查并保留原始证据，只有真实执行的 API 才能汇总为已执行，截图按模式分别保存。调试入口可从真实 `createAirApp()` 返回值获取；跟踪保留其 Promise 与延迟启动行为。`--ids` 仍是子集，不晋级规格或标记完整门禁通过。
+
 `node tools/verify/input-camera-examples.cjs --out=<new.json>`：只读运行现有 SDK，以三浏览器 × DPR 1/2/3 检查相机投影/深度往返、DOM 射线拾取、正交横竖屏完整取景、HTML 标签偏移缩放和输入失焦清理。要求外部 Playwright 与已有浏览器；拒绝覆盖报告，写显式 JSON 及相邻 `-artifacts/` 页面截图，不构建或重采历史矩阵。resize 先由原生 pacer 处理，断言时暂停并单步，避免双时钟；像素合成/present 不是本工具的通过结论。
 
 `node tools/verify/engine-contract-browser.cjs --out=<new.json>`：要求当前开发 bundle 与可用 Playwright 浏览器，以原生 PNG/读回验证 ENG-01–09 的实际更新、颜色、剔除、雾与诊断。只写显式新 JSON 和相邻截图，拒绝覆盖；--browser=<engine> 为子集。不构建、下载、发布；不证明页面合成或显示器 present。详见[合同手册](../docs/manual/engine-contract-hardening.md)。
@@ -56,6 +58,34 @@ PAL 的运行时来源固定在 `vendor/pal-source/` 的公开 MIT 快照；
 | 蒙皮首帧与变换          | `node tools/verify/air-skinning-browser.cjs --out=output/playwright/<new-report>.json`            | 三浏览器实时/烘焙模式、暂停dt=0首帧、非对称网格SMR/root/ancestor缩放和bounds/像素。需当前bundle、可解析Playwright及匹配浏览器。写新报告/截图，完整范围及未测项由报告列明。 |
 
 ## 程序化场景与独立验收工具
+
+WebGL2 图形合同：`node tools/verify/webgl2-gfx-contracts.cjs --browser=all --out=<new.json>` 使用现有 SDK 和 public gfx 验证格式能力、sampler、depth bias、整数 clear/attribute、分层附件及读回。必须指定未存在的报告路径；写相邻截图及原始数值，自动关闭自有服务和浏览器，不构建、安装或下载。可用 `--playwright=<existing-module-path>` 指定已有工具；`--sdk=<bundle-relative-path>`、`--cases=<comma-separated-case-ids>`、`--variant=<name>` 选择明确候选/子集/撤销控制，子集不等于九项完整验收。合同与支持边界见 [WebGL2 gfx 合同](../docs/reference/webgl2-gfx-contracts.md)，执行及证据见 [专项台账](../ai/ledgers/webgl2-gfx-contract-remediation.md)。
+
+逐机制负控：`node tools/verify/webgl2-gfx-controls.cjs --prefix=<new-prefix>` 从现有开发 bundle 生成隔离副本和 manifest，写入 `output/webgl2-gfx-contracts/variants/`，拒绝覆盖，不修改共享 SDK 或源码。使用上述 collector 的 `--control-manifest=<manifest.json>`、`--sdk=<variant.js>`、`--variant=<name>` 和指定 `--cases=` 采集对应反例；负控的预期失败独立记录，不等于正常候选通过。
+
+普通 GPU 回归：`node tools/verify/webgl2-gfx-regressions.cjs --browser=all --out=<new.json>` 使用现有 SDK 验证原生实时蒙皮、MSAA resolve、resize 后读回→绘制→blit 与释放，支持 `--playwright=<existing-module-path>`。写显式新 JSON 和相邻截图，关闭自有浏览器与服务，不构建、安装或下载。截图是明确标注的 public GPU 读回预览，不代表直接 compositor 验收。
+
+非默认状态恢复补证：`node tools/verify/webgl2-gfx-state-restoration.cjs --browser=all --out=<new.json>` 在独立夹具中检查 PACK/PBO、不同 READ/DRAW framebuffer 的成功、整体预检失败及 `GL_BEFORE` 执行失败恢复，并继续 public gfx 绘制/读回。raw GL 写操作仅用于明确标注的外部状态 setup/fault injection/释放，原九项夹具约束不变。支持 `--playwright=<existing-module-path>`、`--sdk=/build/<bundle.js>`；`--negative-control=omit-pack-pbo-finally --sdk=/output/webgl2-gfx-contracts/variants/<new.js>` 从现有开发 bundle 生成单机制撤销副本及 manifest，拒绝覆盖，不改共享 SDK，检出预期负控失败。写显式新报告和相邻截图，关闭自有服务/浏览器，不构建、安装或下载。
+
+实际屏幕呈现：`node tools/verify/webgl2-gfx-presentation.cjs --browser=all --out=<new.json>` 通过原生 pacer 绘制屏幕 Canvas，分别核对初始、两次 resize 的实际页面 PNG 像素和独立 GPU 对照。支持 `--playwright=<existing-module-path>` 与 `--webkit-compositor=default|accelerated`；后者仅在 Windows WebKit 排除 Playwright 默认 `--disable-accelerated-compositing` 参数，完整记录启动条件，不修改共享 launcher 或主机配置。写新 JSON、实际截图及单列诊断导出后关闭自有资源。条件 profile 通过不表示默认环境已修复。
+
+Shader 吸收基线：`node tools/verify/shaders-runtime-preflight.cjs --out=<new.json>` 使用现有 SDK，在 Chromium、Firefox、WebKit 的 720p、1080p 和移动 DPR 2 配置中验证单 Canvas 原生空场景启动、定步与关闭；写显式新报告，自动关闭浏览器和临时服务，不构建或安装。扩展发现不是 GPU 时间测量，空场景通过不是效果 Engine Gate。参数及独立 Engine/Agent 证据合同见 [effect-contract.md](../docs/effects/effect-contract.md)；`node tools/verify/shaders-effect-contract.cjs --selftest` 只验证合成合同，不启动浏览器。
+
+Wave 1 当前状态和十三项交付见 [wave1-performance-followup-delivery.md](../docs/effects/wave1-performance-followup-delivery.md)，最初冻结交付保留于 [wave1-delivery.md](../docs/effects/wave1-delivery.md)。历史只读入口为 `shaders-noise-dissolve-precision-closure.cjs --verify=output/shaders-absorption/e01-engine-precision-final.json`、`shaders-thin-film-summary.cjs --verify=docs/evidence/shaders-absorption/e02-thin-film-summary.json`、`shaders-sparkle-final.cjs --verify=docs/evidence/shaders-absorption/e06-final-summary.json`（均以 `node tools/verify/` 为命令前缀）。需要可解析pngjs的tooling/NODE_PATH，不启动浏览器或写报告；历史报告若输入指纹已漂移会被拒绝，exit0仅证明证据/分类一致，三个效果整体仍BLOCKED，不等于Wave或Agent Gate通过。E01 summary工具仅支持显式新路径生成，不支持--verify。
+
+Sparkle补充性能采集：`node tools/verify/shaders-sparkle-environment-performance.cjs --phase=performance --browser=all --authorization=<Lead串行窗口标识> --out=<new.json>` 通过真实HTTP隔离代理与导航后DPR核对，按原生帧执行30帧预热和60帧稳态，写显式新报告及相邻`-artifacts/`内9份raw JSON；保留失败并关闭页面、浏览器和服务，不构建/安装。`--verify=<report.json>` 独立重算当前输入、原始计时、清理及raw SHA/行绑定，只读且不启动浏览器。当前范围与环境限制见 [环境补充记录](../docs/effects/wave1-environment-followup.md)；Performance通过不解除WebKit活resize或Wave阻塞。
+
+Noise Dissolve的补充入口为 `node tools/verify/shaders-noise-dissolve-environment-performance.cjs --phase=performance --browser=all --authorization=<Lead串行窗口标识> --out=<new.json>`；复用相同真实隔离环境，调用原例子30/60帧计时，写新报告及相邻9份raw文件。`--verify=<report.json>`只读核对源/SDK/工具身份、原始数组映射、释放、raw SHA与行绑定。CPU原始数组由例子内部汇总，不能宣称独立逐调用trace；该范围同样不解除Runtime/Wave阻塞。两工具均拒绝覆盖已有报告/产物。
+
+`node tools/verify/shaders-resize-diagnostic.cjs --out=<new.json>` 独立采集单Cocos Canvas的builtin-unlit、同坐标GPU/Canvas导出/页面PNG及CSS/body底色对照；写显式新JSON和相邻PNG，关闭自有服务/浏览器，不build/install。最后canvas-reinsert阶段因布局改变为无效尝试，不能用于判断恢复；采集exit0不代表compositor或效果Runtime PASS。
+
+Wave 1 原生效果的独立采集入口如下，均需现有 SDK、可解析的 Playwright/pngjs 和匹配浏览器。新报告和相邻原始输出只写显式新路径，不覆盖失败尝试；采集结束关闭自有浏览器与服务，不构建或安装 SDK。
+
+- `node tools/verify/shaders-noise-dissolve.cjs --browser=all --out=<new.json>`：gradient noise、输入 Alpha、端点、普通控件、同页 resize 和百轮实例。性能仅在其他自有浏览器及测试停止的串行窗口启用 `--performance-authorized`。
+- `node tools/verify/shaders-thin-film-browser.cjs --browser=all --phase=functional --out=<new.json>`：SDF 虹彩、未混合线性 RGBA、页面 PNG、边界及百轮退役；`--phase=performance` 在单独串行窗口采集三个分辨率配置。
+- `node tools/verify/shaders-sparkle-browser.cjs --phase=functional --out=<new.json>`：双网格星芒、线性亮度、结构变体、背景混合、可信控件及资源；`node tools/verify/shaders-sparkle-performance.cjs --authorization=<quiet-window-reference> --out=<new.json>` 单独采集三浏览器性能。
+
+各效果的 `--verify=<report.json>` 及独立 oracle 只读复算身份、数值、PNG 和范围。scoped 验证命令的实际 exit 0 只表示已采证子项通过独立复核；报告另存原采集命令及其实际退出码，不能改写失败采集为成功。WebKit 同页 resize 呈现未达保持 `INFRA_FAILURE/BLOCKED`，不能用 GPU 读回、Canvas 导出或新页面替代。当前状态与复跑说明见[效果索引](../docs/effects/README.md)。
 
 纹理行序与UV对照：`node tools/verify/air-texture-uv-basis.cjs --out=output/playwright/<new-report>.json` 使用当前bundle和三浏览器，对照同一Canvas、原始顶优先字节及共享copyCanvasRows在原生Sprite与旋转+90X的plane上的真实像素，并复用原DOM纹理检查上传间状态污染。写指定新JSON及同名`-artifacts/`截图，不重建bundle，不代表所有glTF/纹理源已验。
 
@@ -157,7 +187,6 @@ CB21 成本复测使用 [benchmark/prepare-cost-retest.mjs](benchmark/prepare-co
 - `node tools/verify/interactive-geometry-audit.cjs --report=<actual.json> [--out=<new.json>]`：内存克隆篡改审计，无out只读打印，显式out以wx写新JSON，不启动浏览器。结构合规与完整scope通过分别记录。
 - `node node_modules/typescript/bin/tsc -p examples/interactive-geometry/tsconfig.json`：独立严格noEmit声明消费检查。范围与WebKit呈现对照见[动态Mesh手册](../docs/manual/interactive-geometry.md)。
 
-
 ### 互动输入与容器回归（IER-05/06）
 
 - `node tools/verify/interactive-input-browser.cjs --out=<new.json>`：只读服务现有SDK，启动三浏览器的SDK/普通HTML两路径，采集可信点击/触摸、取消、滚动、提交和PNG；写显式报告及相邻-artifacts，已有路径拒绝覆盖。`--verify=<report.json>`只读重算身份、事件、模型/pose与PNG。NOT_RUN或已记录诊断不会变为完整PASS。
@@ -170,7 +199,6 @@ CB21 成本复测使用 [benchmark/prepare-cost-retest.mjs](benchmark/prepare-co
 - `node tools/verify/interactive-timeline-audit.cjs --report=<report.json> --out=<new.json>`：不启动浏览器，在实际成功子项上复算和篡改审计；仅写新路径，完整范围受限保持受限。
 - `node tools/verify/interactive-misuse-browser.cjs --out=<new.json>`：五类实际消费负例、原生状态、只读inspector与清理；临时生成effect JSON后清理，显式报告。`--verify=`只读。详见[误用诊断](../docs/manual/interactive-diagnostics.md)，不代表像素健康。
 
-
 ### 当前颜色、性能与包内示例（IER-03/09/11）
 
 - `node tools/verify/interactive-water-browser.cjs --out=<new.json>`：只读服务既有SDK，异步逐引擎运行现有Water实际runtime验证（非shader-only）；写显式JSON及相邻原报告/log/PNG，不build/install，结束关闭服务。
@@ -179,3 +207,41 @@ CB21 成本复测使用 [benchmark/prepare-cost-retest.mjs](benchmark/prepare-co
 - `node tools/examples/interactive-kit.cjs --write`刷新manual中的生成副本；`--check`只读逐字节比对，不改权威examples。`node tools/verify/interactive-kit-consumer.cjs --out=<new.json>`执行本地pack/prepack、临时offline install/已安装类型/esbuild与三浏览器普通路径，写tarball/chunks/JSON/60PNG后关闭并清理临时消费目录，不下载依赖或发布。`--verify=<report.json>`只读原始模型、PNG和身份。`interactive-kit-audit.cjs --report=<report.json> --out=<new.json>`只读实际行并做15种篡改，写新审计。详见[实际安装示例](../docs/manual/interactive-consumer-kit.md)。
 
 时间轴采集与音频/滚动边界见[时间轴手册](../docs/manual/interactive-timeline.md)。完整范围失败/NOT_RUN不会因只读审计通过变成PASS。
+
+### Shader Wave 1 当前 Gate 与 Gallery
+
+- `node tools/verify/shaders-wave1-gate.cjs --bindings=<paths.json> --out=<new.json>`：读取三效果功能/性能及 Gallery 七份原始报告，复算数值/PNG/当前指纹、实际 OS 回执与非重叠窗口，写显式新汇总；不启动浏览器、构建或安装。`--verify=<gate.json>`只读重算当前身份，漂移拒绝。当前 [R20/R21 Gate](../docs/evidence/shaders-absorption/wave1-r21-current-gate.json) 已 PASS，Agent Gate 仍 NOT_RUN。
+- `node tools/verify/shaders-gallery-lifecycle.cjs --out=<new.json>`：三例×三浏览器×step/native 的真实退役重建、终态与 PNG 验证，写新JSON和相邻 artifacts；关闭自有页面/浏览器/服务器。`--verify=<report.json>`只读重算18精确tuple、SHA/尺寸/PNG差异和资源清理。
+- `shaders-browser-launch.cjs` 是 scoped 启动选项纯 helper：仅 Windows WebKit 排除 Playwright 默认禁用合成加速参数。`shaders-browser-environment.cjs` 提供真实 HTTP 隔离代理及导航后 DPR 修复，不改主机设置。
+
+实际执行渠道、性能范围、失败保留与限制见[当前十三项交付](../docs/effects/wave1-resize-gallery-closure-delivery.md)。历史 BLOCKED/LIMITED 描述以各批次身份解释，不再作为当前裁定。
+
+### Shader Wave 2 独立门禁
+
+`NODE_PATH=output/playwright/tooling/node_modules node tools/verify/shaders-wave2-gate.cjs --verify=<effect-gate.json>` 只读核对单效果的六维状态、原始功能/性能报告、SHA/bytes、外层 OS 回执和冻结输入，并要求页面/控制台错误数组明确存在且为空；缺失数组不能当作无错误。重复三个 `--verify` 则验证精确 E03/E04/E05 覆盖，少一例拒绝。纯导出可用于内存篡改测试，不启动浏览器、不构建、不安装、不写报告。
+
+E03/E04/E05 当前六维子集全部PASS，完整Wave2 Engine Gate通过；Agent Gate仍NOT_RUN。`--verify-wave=docs/evidence/shaders-absorption/wave2-current-gate.json`只读重算三叶级Gate、Wave1前置、当前verifier指纹、实际范围计数和Wave/项目/Agent状态；不写报告、不启动浏览器。原始采集仍走各 `shaders-<effect>-browser.cjs --phase=functional|performance --browser=all --out=<new.json>`，写新报告和截图；性能还需 `--authorization=<Lead token>` 且串行安静窗口。见[Wave2十三项交付](../docs/effects/wave2-validation-delivery.md)。
+
+### Shader Wave 3 独立门禁
+
+`node tools/verify/shaders-wave3-gate.cjs --verify=<effect-gate.json>`只读核对单例原始报告/OS/指纹与六维；重复三个`--verify`要求精确E07/E08/E09覆盖，缺项不能解锁Wave4。`--verify-wave=<wave.json>`另外复核Wave2前置与范围状态；当前尚无通过的Wave3汇总。均不启动浏览器、构建、安装或写报告，PNG复核需同一NODE_PATH工具环境。
+
+E07性能采集按`shaders-liquid-metal-browser.cjs --phase=performance --browser=all --authorization=<token> --out=<new.json>`串行执行18窗口（三profile×两quality×三引擎），写新报告与日志；`--verify=<raw.json>`只读。汇总门禁额外核对真实参数状态和完整可信动作，详见[Liquid Metal交付](../docs/effects/liquid-metal-validation-delivery.md)。
+
+E08 `shaders-cursor-trail-browser.cjs --phase=functional --browser=all --out=<new.json>`写新JSON、构建日志和截图，检查CPU host replay、真实鼠标/协议触摸、参数、同页resize及100轮退役；`--phase=performance --authorization=<token>`改为9个串行活轨迹窗口（每稳态帧64 texel/512字节）。`--verify=<raw.json>`只读。`shaders-cursor-trail-gate.cjs --verify=docs/evidence/shaders-absorption/e08-cursor-trail-current-gate-r2.json`额外检查OS/冻结身份、37类真实报告审计、计数与实际原生pass/draw；不启动浏览器、不写报告。详见[Cursor Trail十三项交付](../docs/effects/cursor-trail-validation-delivery.md)。E09和完整Wave3当前状态见独立汇总交付。
+
+E09 `shaders-glass-browser.cjs --phase=functional --browser=all --out=<new.json>`写新JSON/构建日志/截图；`--phase=performance --authorization=<token>`运行9个串行原生双遍毛玻璃窗口（blur8/aberration0.5），写实际时钟、pass/draw和释放证据；`--verify=<raw.json>`只读。`shaders-glass-gate.cjs --verify=docs/evidence/shaders-absorption/e09-glass-current-gate.json`只读重算OS/身份/计数/35类审计及六维，不启动浏览器。`shaders-wave3-closure.cjs --verify=docs/evidence/shaders-absorption/wave3-current-gate.json`额外绑定当前三个叶级、Wave2前置、141 PNG计数和性能窗口不重叠；不写报告、不推进后续Wave或Agent Gate。见[Glass交付](../docs/effects/glass-validation-delivery.md)和[Wave3交付](../docs/effects/wave3-validation-delivery.md)。
+
+### Shader Wave4 组合
+
+C02 `shaders-film-neon-browser.cjs --phase=functional --browser=all --out=<new.json>`写新JSON、strict/bundle日志和48张截图；`--phase=performance --authorization=<token>`运行九个串行原生单遍窗口，写实际workload/环境/时钟/释放；`--verify=<raw.json>`只读。`shaders-film-neon-gate.cjs --verify=docs/evidence/shaders-absorption/c02-film-neon-current-gate.json`只读复算OS/冻结输入/当前指纹/六维范围/44类真实审计/共享中心SDF，不启动浏览器、不写报告。C02声明子集PASS不解锁Wave5；完整Wave4和Agent仍NOT_RUN，见[Film+Neon交付](../docs/effects/film-neon-validation-delivery.md)。
+
+C01 `shaders-laser-card-browser.cjs --phase=functional --browser=all --out=<new.json>`写新JSON、strict/bundle日志及48张截图，检查三段原生组合、实际纹素warp、DPR、可信控件、同页resize及100轮七引用退役。`--phase=performance --authorization=<token>`串行运行九窗口，DPR修复后先在计时外同步两RT；计时窗口要求每帧至少三次原生pass和三次GL draw、readPixels=0。`--verify=<raw.json>`只读。`shaders-laser-card-gate.cjs --verify=docs/evidence/shaders-absorption/c01-laser-card-current-gate.json`只读复算自然OS退出、38输入+11参考、六维、56类真实审计、3→2旁路及原始性能数据；不启动浏览器、不写报告。见[Laser Card十三项交付](../docs/effects/laser-card-validation-delivery.md)。C01/C02子集通过，C03/C04和完整Wave4/Agent仍待验。
+
+C03 `shaders-glass-trail-browser.cjs --phase=functional --browser=all --out=<new.json>`写新JSON、strict/bundle日志和48 PNG，验证完整Trail→RGBA8 RT→Glass链、可信Pointer、完整512字节上传回放、变体/诊断材质退役与resize；`--phase=performance --authorization=<token>`串行采集九个独立诊断窗口，逐帧绑定实际dt/参数/会话/原生上传和双pass/draw，禁止计时内readPixels。`--verify=<raw.json>`只读复算输入/参考/PNG与原始账本。`shaders-glass-trail-gate.cjs --verify=docs/evidence/shaders-absorption/c03-glass-trail-current-gate.json`另核对自然OS退出、阶段不重叠、当前冻结身份、真实报告篡改审计、六维计数及性能重算，不写报告或运行浏览器。见[Glass Trail十三项交付](../docs/effects/glass-trail-validation-delivery.md)。C03叶级收口不解锁Wave5；完整Wave4、独立Gallery与Agent仍待验，旧SDK证据不继承当前身份PASS。
+
+C04 `shaders-input-dissolve-browser.cjs --phase=functional --browser=all --out=<new.json>`写新 JSON、strict/bundle 日志和相邻 artifacts，冻结三路线合计81视觉/90边界/21非法/300资源/9活resize/90PNG；`--phase=performance --authorization=<token>`串行采集三引擎×三profile×三输入路线的27窗口，使用真实HTTP隔离、DPR修复与完整时钟校准。两模式写新文件，已有路径拒绝覆盖，关闭自有页面/浏览器/代理/服务器，不构建SDK或安装依赖。`--verify=<raw.json>`只读重算完整输入/参考、PNG、原始观测与性能；`shaders-input-dissolve-gate.cjs --verify=docs/evidence/shaders-absorption/c04-input-dissolve-current-gate.json`另核对自然OS退出、冻结身份、阶段不重叠、实际44类篡改审计、引用配对与性能统计，不写报告或运行浏览器。PNG需要相同NODE_PATH工具环境。见[C04十三项交付](../docs/effects/input-dissolve-validation-delivery.md)。
+
+2026-10-11 C01/C02随后完成当前SDK重采，C03因源码/元数据漂移也完整重采，当前叶级只读路径分别为 `c01-laser-card-current-sdk-gate.json`、`c02-film-neon-current-sdk-gate.json`、`c03-glass-trail-current-sdk-gate.json` 与原C04路径。旧文件保持历史身份，没有覆写。
+
+`node tools/verify/shaders-wave4-gate.cjs --verify=docs/evidence/shaders-absorption/wave4-current-gate.json`只读重算四叶级Gate、当前SDK一致性、实际总范围与前置Wave3当前校验，不启动浏览器、不构建、不安装、不写报告。`ok=true/exit=0`表示汇总诚实合规，不能代替其status：当前四组合PASS/完整Wave4 BLOCKED/nextWaveEligible=false，前置源码/SDK证据需刷新。Agent/独立Gallery仍NOT_RUN，见[Wave4十三项交付](../docs/effects/wave4-validation-delivery.md)。

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Cancelable motion and audio clock",
   "category": "integration",
-  "status": "draft",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -37,7 +37,7 @@
       {
         "api": "createSessionScope",
         "source": "src/main.ts",
-        "sourceLocation": "L4",
+        "sourceLocation": "L18",
         "validator": "visible-frame"
       }
     ]
@@ -59,8 +59,9 @@
   "interaction": {
     "steps": [
       {
-        "action": "选择目标、暂停/继续、Reset/Back/Replay、Seek、Mute和释放",
-        "expected": "最新会话控制原生对象；音频source/origin语义保持；refs归零"
+        "action": "点击 音频模式 切换",
+        "buttonText": "音频模式",
+        "expected": "部件编组切换为音频提示节点布局，画面组成变化"
       }
     ]
   },
@@ -92,5 +93,13 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序音轨与程序几何；仓库MIT；assets/LICENSE.md列生成方法"
+  },
+  "promotion": {
+    "spec": "a927b1a35391",
+    "source": "cb766ea5e1fc8460",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 1,
+    "attested": 0,
+    "units": 1
   }
 }

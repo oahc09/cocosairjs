@@ -1,0 +1,221 @@
+{
+  "id": "shader-neon",
+  "title": "Neon 霓虹管",
+  "description": "SDF 管体、半圆截面照明、热核与双层指数外晕的独立原生实现。",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "createAirRenderTarget",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "MeshRenderer",
+    "utils.createMesh"
+  ],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "原生 SDF Neon：分层独立 oracle、逆边 smoothstep 显式化、透明底直读与生命周期",
+    "points": [
+      "中心+四向 SDF stencil 与 cornerSmoothing 场混合",
+      "rim band 管体 + Blinn-Phong 半圆截面 + 热核 + 双指数外晕",
+      "straight linear RGBA 与一次 OETF 预览、透明底 rgba8 RT 直读",
+      "远端 glowR*1.5+softPx+smoothEPS 硬零截断"
+    ]
+  },
+  "assets": [],
+  "license": {
+    "assets": "纯解析 SDF，无外部素材；参考 Neon MIT 通知束见 LICENSE.reference.txt，独立实现见 UPSTREAM.md"
+  },
+  "api": {
+    "primary": [
+      "EffectAsset",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Camera",
+      "Node",
+      "utils.createMesh",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Camera",
+      "Node"
+    ],
+    "forbiddenShortcut": [
+      "shaders runtime/TypeGPU/额外canvas",
+      "独立RAF/第二模拟时钟",
+      "截图相似替代分层数值oracle",
+      "不透明黑底替代透明底alpha验证"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L31",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L215",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L564",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L92",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L109",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L143",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L132",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L95",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L38",
+        "validator": "node-exists"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L35",
+        "validator": "node-exists"
+      }
+    ],
+    "evidenceStatus": "sourceLocation 由 findSymbolLine 语义核对可执行行；浏览器 runtime 证据 NOT_RUN，待 Lead 采集。"
+  },
+  "effect": {
+    "functional": "20 参数 update（shape 结构重建/其余 uniform）、暂停/继续/重置/释放，单 native pacer",
+    "visual": "core/tube/glow 分层独立可控、straight linear RGBA、一次 OETF、透明底远端精确零",
+    "limitations": [
+      "仅 circle/rounded-box 两个解析 SDF 形状，不支持上游 SDF 贴图与 volumetric 路径",
+      "Windows WebKit 采集器需 shader-scoped accelerated-compositing 启动项",
+      "性能窗口须 Lead 串行授权；Agent Gate NOT_RUN",
+      "Gallery 生命周期桥接已实现，浏览器证据 RESOLVED_NOT_RUN"
+    ]
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "改变滑块/形状下拉",
+        "expected": "uniform 同步或 shape 跨值变体重建"
+      },
+      {
+        "action": "暂停/继续/重置/释放",
+        "expected": "时钟冻结/前进、退役引用归零、释放后按钮禁用"
+      },
+      {
+        "action": "执行示例 linearProbe 读回探针",
+        "probe": "__neon.linearProbe",
+        "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__neon.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__neon.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "native-camera",
+        "owned-neon-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "Default startup scene plus __neon.ready; Gallery validators declared, not yet executed."
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "分层数值 oracle 与透明底 RT 直读由 tools/verify/shaders-neon-browser.cjs 采集；本声明不是浏览器 PASS。"
+  },
+  "promotion": {
+    "spec": "8f59f6314924",
+    "source": "5e9447d56076c0f6",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 10,
+    "attested": 0,
+    "units": 10
+  }
+}

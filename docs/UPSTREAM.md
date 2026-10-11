@@ -6,6 +6,8 @@
 
 ## 基线标识
 
+2026-10-11 WebGL2 图形合同：WGL-01～09 在原生 gfx 内修正 half-float/integer 过滤能力、comparison/anisotropy sampler 与 LOD 销毁、depth bias 启用及 factor/units 顺序、整数外部格式/clear/attribute，以及 mip/layer 附件与保持原生位宽布局的读回。RGB10A2UI 的 FormatInfo 修正为实际四字节 packed word；上传复用现有 internal/type 映射。view 读回相对 base mip/layer，单附件选择 base 而非 layered rendering。恢复 READ/DRAW、PACK/PBO 状态并明确拒绝不支持的格式/范围；默认 ALWAYS 普通采样及现有 hash 保持，规范化 anisotropy 封顶16。冻结上游基线不变；实施与 GPU 验收范围见 [专项台账](../ai/ledgers/webgl2-gfx-contract-remediation.md)，本段不声明完整发布通过。
+
 2026-10-06 AIR 构建身份：新增 `AIR_BUILD_DATE: string`（北京时间 yyyyMMddHHmm）与 `AIR_BUILD_NUMBER: number`。ESM/min/System 编译从 1 开始计数，成功输出后更新 tools/build/build-number.json；build:all 的 dev/min 分别占一个序号，声明/打包不计数。计数状态保存在生成目录之外。源码默认 unbuilt/1；SOURCE_DATE_EPOCH 仅固定时间。增量缓存刷新日期与序号，不改变 AIR_VERSION/AIR_REVISION 或上游版本。
 
 2026-10-06 ESM 构建告警：PAL 生成器将装饰器 helper 中必为 undefined 的顶层 this 回退读取去掉，保留本地实现；DragonBones 的同类 __extends 通过 `tools/build/esm-helpers.cjs` 在 Rollup 内存转换中处理，保留原始 npm 字节与源映射，不修改依赖或过滤警告。glTF 的基础 effect 提取为 `standard-effect.ts`，解除 material 与 physical-effect 的循环导入，保留原导出路径和着色器逻辑。

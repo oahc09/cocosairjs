@@ -1,0 +1,71 @@
+# 当前 SDK 证据链刷新：固定十三项交付
+
+## 1. Goal
+
+2026-10-11：将九个母效果与四个组合的证据绑定到当前源码、示例规格和 SDK，再按 Wave1→Wave2→Wave3→Wave4 顺序验证前置链。当前刷新尚在执行，Wave5 未启动；不以历史 PASS 或采集器退出码替代当前 Gate。
+
+## 2. Upstream references
+
+上游仍固定为 `shader-effects-inc/shaders@dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a`。参考源码、下载回执、许可通知与独立 oracle 沿用各效果的真实闭包，未执行上游 runtime、TypeGPU 或额外渲染 Canvas。
+
+## 3. CocosAirJS APIs used
+
+此次刷新不新增引擎 API。效果仍使用原生 Scene、Node、Camera、MeshRenderer、Material、EffectAsset、Texture2D、createAirRenderTarget 和 createStepClock。新增 reset 采集 helper 属于验证工具，不进入 runtime。
+
+## 4. Implementation details
+
+执行渠道：Lead 负责串行真实采集、生产门禁和汇总；Orca Worker 小三修复 reset 采样时序，并对新驱动做独立只读审查。
+
+普通模式 reset 的页面 handler 同步归零后，原生 pacer 可能在 Playwright 下一次 evaluate 前推进时间。新增一次性 click listener 在真实页面 handler 后立即记录 snapshot，严格 `time === 0` 的合同保持不变。随后 E03/E04/E05 三种浏览器的真实功能采集均通过；后续元数据变化另行使这些报告的身份失效。
+
+[当前 SDK 链校验器](../../tools/verify/shaders-current-sdk-wave-chain.cjs) 重新调用叶级生产 validator，核对真实 OS 回执、冻结身份、源码与参考指纹、截图、原始报告篡改审计，以及前置 Wave 的当前路径。Wave3 递归验证当前 Wave2，Wave2 验证当前 Wave1。
+
+[Wave4 当前 SDK 校验器](../../tools/verify/shaders-current-sdk-wave4-gate.cjs) 将四个组合的真实叶级验证与当前 Wave3 链关联。历史 BLOCKED 汇总保留，新的 Gate 使用独立路径。
+
+## 5. Tests performed
+
+Lead 四套聚焦合同真实通过：110/110，包括链校验器 59、当前 SDK Wave4 23、既有 Wave4 状态隔离 19、reset 采集 9。这些是 NODE_CONTRACT，不能充当浏览器像素或性能证据。
+
+后续 E08 计数回归新增一例：链校验器的作用域必须与独立 Cursor Trail `scopeOf` 完全一致，包含可信指针与触摸两项。链套件真实 60/60 通过，聚焦 Prettier 检查通过；未重跑其余三个已通过套件。
+
+Orca Worker 的只读审查实际完成 10 个文件语法检查与小型 require 核对，未发现确定性接线错误；零写入、零浏览器、零性能、零构建、零 Jest。Lead 的测试与采集结果不归为 Worker 执行。
+
+## 6. Screenshots / visual evidence
+
+Wave1 初次当前 SDK 刷新曾由生产门禁接受：705 个实测案例、18 个独立 Gallery 生命周期条目。六份效果报告当前仍通过自身指纹校验；Gallery 规格闭包随后改变，须重新采集。
+
+Wave2 r2 功能采集三效果、三浏览器均自然退出 0，并通过当时的生产检查。2026-10-11 09:24:28 UTC 的并发规格晋级改变了三个 `example.json`，后续汇总拒收；不将这批截图重标为当前 PASS。
+
+## 7. Performance evidence
+
+Wave2 r2 的 27 个性能配置在采集时全部通过，三个性能子进程自然退出 0，SDK 指纹不变。随后的规格闭包失效同样要求完整重采。
+
+新的性能采集等待外部示例验收与 Jest 结束，按冻结配置逐窗口串行运行；不能把同时进行其他验收的窗口当成独占性能基准。GPU timestamp 不可用、物理 GPU 内存不可用和 CPU 插桩开销沿用实际披露。
+
+## 8. Resource/lifecycle evidence
+
+每效果原有资源、引用、RT 独立 detach/dispose、终态与幂等合同不变。Wave1 的 Gallery 18 条独立运行态证据需随示例规格重新冻结；Wave2–Wave4 的独立 Gallery 和 Agent Gate 保持 NOT_RUN。
+
+## 9. API DX gaps
+
+本轮无新增确证 ENGINE_BUG。reset 往返时序属于 AGENT_FAILURE。并发全库验收晋级修改规格导致身份失效，是共享工作区的证据采集协调问题，不能解释为 shader 算法或 SDK 回归。
+
+## 10. Workarounds
+
+刷新驱动保留并发产生的示例规格，不回退、不锁文件、不终止外部进程。先等待规格写入结束且连续稳定 60 秒，再冻结输入；各阶段核对元数据摘要，发生漂移即停止。所有新报告、日志、OS 和冻结文件使用 `wx`，失败尝试保留。
+
+## 11. Proposed engine changes
+
+本轮不修改引擎或重建 SDK。当前 module/dts/npm 分别为 `69127f39…`、`5b67a560…`、`b7771393…`，来自独立 WebGL2 gfx 修复。
+
+## 12. Validation status
+
+截至 2026-10-11 11:01 UTC：新的 Wave1 r2、Wave2 r2 已实际通过；Wave3 六个采集子进程均自然退出 0、生产 `validateFiles` 通过。汇总在 E08 叶级检查失败：通用计数器漏了 `trustedPointerCases` 与 `trustedTouchCases`，并非实际行数不足。Wave3 汇总文件当时尚未生成，Wave4 未启动，master 自然退出 1，失败日志保留。
+
+Lead 已修复计数器并启动独立 r3 恢复队列。校验器源指纹因此变化：以当前生产验证重新核对 Wave2 既有原始报告和叶级 Gate，生成新的 `wave2-current-sdk-r3-gate.json`，保留原 r2 汇总；Wave3 绑定此 r3 前置，复用经重验通过的六份原始报告、生成其 r2 汇总。已有审计再次执行变异并比对，已有文件不覆盖。之后完整刷新四组合，再生成 Wave4 r2 当前链。恢复队列终态仍待验收，不能提前声称全链 PASS。
+
+未 stage、commit、push、部署或重写全库库存。外部全库验收结果由其原执行渠道交付，本刷新不代宣其完成状态。
+
+## 13. Known limitations / next step
+
+当前下一步为完成 Wave3 汇总恢复及四组合真实刷新。完整 Wave4 Gate PASS 后才进入 Wave5 公共能力、同源文档与两个 UV/Pass Fusion 实测 Pilot。实体设备、长时、多标签页、Agent Benchmark 和整个项目完成度仍未验收。

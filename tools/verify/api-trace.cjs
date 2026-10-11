@@ -250,6 +250,10 @@ function generateTraceModule(exportNames, units, realUrl) {
   };
   T.instrumentResult = (value, name) => {
     if (value && typeof value.then === 'function') {
+      if (name === 'createAirApp') {
+        // Observe the real result without replacing its promise or requiring example globals.
+        value.then((app) => { T.app = app; }, () => {});
+      }
       if (name === 'GLTFLoader.parseAsync') { return value.then((result) => T.instrumentReturnedInstance(result)); }
       return value;
     }

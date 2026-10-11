@@ -1,0 +1,135 @@
+{
+  "schema": "webgl2-gfx-convergence-worker2/1",
+  "measuredAt": "2026-10-11T11:00:18.599Z",
+  "channel": "orca worker developer (second session; first session interrupted by 429/1308 quota)",
+  "scope": "Shader mode/interaction collection gaps + full current examples-verified evidence + full test-inventory gate",
+  "shaderGapDiagnosis": {
+    "probes": [
+      {
+        "path": "output/webgl2-gfx-contracts/worker2-shader-probe-a.json",
+        "result": "3/7 PASS; sparkle 404 parameters.json + no AirApp; emboss frame-diff + createStepClock; neon/thin-film createAirRenderTarget+createStepClock"
+      },
+      {
+        "path": "output/webgl2-gfx-contracts/worker2-shader-probe-b.json",
+        "result": "0/8 PASS; api-executed createStepClock/createAirRenderTarget across shader wave family; input-dissolve node-exists literal 'c04-dissolve-*'; liquid-metal owned node mismatch"
+      },
+      {
+        "path": "output/webgl2-gfx-contracts/worker2-shader-probe-c.json",
+        "result": "abandoned design: test=1 apiVariants freeze the page (no continuous AFTER_DRAW) → 'no rendered frame'; attempt preserved"
+      },
+      {
+        "path": "output/webgl2-gfx-contracts/worker2-shader-probe-d.json",
+        "result": "neon/glass-trail PASS on default page probe contract; emboss/glass/cursor-trail frame-diff still static"
+      },
+      {
+        "path": "output/webgl2-gfx-contracts/worker2-shader-probe-e.json",
+        "result": "set() with partial params silently no-ops (full-set validation); sparkle linearRead needs pixel-space points"
+      },
+      {
+        "path": "output/webgl2-gfx-contracts/worker2-shader-probe-f.json",
+        "result": "emboss/glass/sparkle PASS; cursor-trail frame-diff remaining"
+      },
+      {
+        "path": "output/webgl2-gfx-contracts/worker2-shader-probe-g.json",
+        "result": "cursor-trail radius 6 out of range [0.5..2] → silent validate reject; FAIL preserved"
+      },
+      {
+        "path": "output/webgl2-gfx-contracts/worker2-shader-probe-h.json",
+        "result": "trail dies inside 800ms settle; collector drag captured only post-settle; FAIL preserved"
+      },
+      {
+        "path": "output/webgl2-gfx-contracts/worker2-shader-probe-i.json",
+        "result": "cursor-trail PASS after immediate-frame drag capture"
+      },
+      {
+        "path": "output/webgl2-gfx-contracts/worker2-shader-probe-j.json",
+        "result": "input-dissolve + noise-dissolve PASS after full-param set step and real select switch"
+      }
+    ],
+    "rootCauses": [
+      "createStepClock/createAirRenderTarget only execute in example-internal diagnostic paths (linearProbe/coreProbe) or the lazily created step clock inside probe.step(); never on plain load",
+      "shader frame-diff failures: static default visuals + steps without real drivers; partial parameter sets silently rejected by full-set validators; transient trails die inside the fixed 800ms post-drag settle",
+      "shader-sparkle fetched parameters.json via absolute /examples/... path (workspace 404 → no AirApp); it also lacked the family resumePacer contract",
+      "shader-liquid-metal created owned nodes named owned-holographic-* (copy-paste) while its spec declared owned-liquid-metal-1",
+      "shader-input-dissolve expectedGraph carried a literal 'c04-dissolve-*' node (no wildcard support in node-exists)"
+    ]
+  },
+  "collectorChanges": [
+    "tools/verify/example-spec-browser.cjs: interaction:probe step type — executes the example's own public test contract (window.__x.linearProbe/.step/.set/.resumePacer) in-page; missing/throwing ⇒ FAIL; probe steps do not capture frames because the contract may legitimately sit inside a step-clock pause window",
+    "tools/verify/example-spec-browser.cjs: interaction:drag now also captures an immediate post-drag frame in addition to the settled frame — short-lived but real input effects (aging trails) were previously provable only inside the settle gap"
+  ],
+  "exampleChanges": {
+    "specs": [
+      "12 shader example.json: probe steps on the DEFAULT native-pacer page (set/full-params, linearProbe/coreProbe, step 1/30, resumePacer/settleNative); emboss/glass/glass-trail/input-dissolve real '重置' button steps; cursor-trail real drag; noise-dissolve real #input select switch",
+      "abandoned test=1 apiVariants (paused pages produce no continuous AFTER_DRAW; attempts c preserved); bench.apiVariants mechanism itself remains for non-paused variants",
+      "input-dissolve expectedGraph 'c04-dissolve-*' → 'c04-dissolve-1'"
+    ],
+    "sources": [
+      "examples/shader-sparkle/src/main.ts: parameters.json fetch → sibling-relative pattern; added family-consistent resumePacer() to __sparkle",
+      "examples/shader-liquid-metal/src/main.ts: owned node name owned-holographic-* → owned-liquid-metal-* (matches its spec; nothing else referenced the old name)",
+      "13 shader main.ts: for..of over NodeList → Array.from (collector tsc program typecheck TS2488)"
+    ]
+  },
+  "canonicalEvidence": {
+    "firstFullRun": {
+      "log": "output/webgl2-gfx-contracts/worker2-full-collector.log",
+      "result": "178/180 PASS, completed=false (input-dissolve + noise-dissolve frame-diff); preserved as history"
+    },
+    "finalFullRun": {
+      "log": "output/webgl2-gfx-contracts/worker2-full-collector2.log",
+      "evidence": "docs/evidence/examples-verified.json",
+      "result": "180/180 PASS, completed=true, 2 promoted / 0 demoted, measuredAt 2026-10-11T09:46:07.634Z",
+      "preRunInputShas": "output/webgl2-gfx-contracts/worker2-fullrun2-input-shas.json",
+      "postRunDrift": "only examples/files.json (producer promotion writeback: +2 promoted this run; cumulative vs HEAD includes lead-session promotions and 13 new shader entries)"
+    },
+    "backups": [
+      "output/webgl2-gfx-contracts/worker2-examples-png-before/ (216 canonical screenshots before overwrite)",
+      "output/webgl2-gfx-contracts/worker2-examples-verified-before.json (interrupted 180-row completed=false report)"
+    ]
+  },
+  "audit": {
+    "result": "0 fail / 2 warn (starfield-galaxy visual-length warn; gltf-draco decoder-unavailable warn — both non-blocking)",
+    "evidence": "docs/evidence/spec-compliance.json"
+  },
+  "smokeFocused": {
+    "suites": [
+      "test/smoke/smoke-29-examples-spec.test.ts",
+      "test/smoke/smoke-30-v12-regression.test.ts"
+    ],
+    "result": "46/46 PASS — original five failing assertions green"
+  },
+  "fullInventoryGate": {
+    "checkRun1": {
+      "log": "output/webgl2-gfx-contracts/worker2-full-inventory.log",
+      "result": "Jest 178 suites / 2771 tests / 2771 PASS / 0 FAIL; gate exit 1 solely for manifest drift (manifest 174 with 4 absolute-path entries vs disk 178 with 8 wave-4 suites from the concurrent shader session)"
+    },
+    "updateRun": {
+      "log": "output/webgl2-gfx-contracts/worker2-inventory-update.log",
+      "result": "--update from a real full Jest run: docs/test-inventory.json regenerated 178 suites / 2771 tests / 2771 PASS / 0 FAIL, generatedAt 2026-10-11T10:25:25.502Z, absolute-path entries normalized to 0"
+    },
+    "finalCheckRun": {
+      "log": "output/webgl2-gfx-contracts/worker2-full-inventory-final.log",
+      "result": "ok=true — 178 suites / 2771 tests / 2771 PASS / 0 failed, failures=[] (confirmed against the regenerated manifest)"
+    }
+  },
+  "fingerprints": {
+    "tools/verify/example-spec-browser.cjs": "6372676da53f0f98",
+    "build/cocosair.module.js": "69127f39bd9a2a0a",
+    "build/cocosair.module.d.ts": "5b67a5608b25e766",
+    "examples/files.json": "59da8df3c0773015",
+    "docs/evidence/examples-verified.json": "39e89c7c2bc6ed23",
+    "docs/evidence/spec-compliance.json": "26cb85eae458e5e0",
+    "docs/evidence/spec-validation.json": "64dac24381566b6c",
+    "docs/test-inventory.json": "7510e0b720623e3a",
+    "tools/verify/test-inventory.cjs": "32dfd3af032db2ca"
+  },
+  "residual": [
+    "Windows WebKit default-configuration resize compositor FAIL remains out of scope (presentation-20261011-default-webkit-b.json stays FAIL)",
+    "legacy 195-file format:check and manual-sync FAIL 3 / WARN 7 backlogs remain out of scope",
+    "concurrent shader session added wave-4 suites during collection; registered from the real 18:06-18:25 full run; re-drift possible if that session continues writing",
+    "starfield-galaxy S6-EFFECT warn (visual description shorter than 16 chars) and gltf-draco decoder-unavailable warn remain non-blocking",
+    "collector probe steps and immediate drag capture are additive verification paths; they do not bypass any assertion (missing/throwing probes FAIL)"
+  ],
+  "currentFullGatePassed": "true (output/webgl2-gfx-contracts/worker2-full-inventory-final.log)",
+  "releaseReady": false
+}

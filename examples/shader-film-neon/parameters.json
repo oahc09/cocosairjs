@@ -1,0 +1,216 @@
+{
+  "schemaVersion": "shaders-effect-contract/1",
+  "name": "filmNeon",
+  "version": "1.0.0",
+  "params": {
+    "shape": {
+      "type": "string",
+      "defaultValue": "circle",
+      "enum": ["circle", "rounded-box"],
+      "updateMode": "structure",
+      "description": "Shared analytic 2D SDF shape for both layers. sphere3D/SDF textures/shape JSON NOT_SUPPORTED."
+    },
+    "filmEnabled": {
+      "type": "string",
+      "defaultValue": "on",
+      "enum": ["on", "off"],
+      "updateMode": "uniform",
+      "description": "Thin-film layer enable. 'off' is a REAL identity: the layer's straight RGBA is exactly (0,0,0,0), so the composite equals the neon layer alone."
+    },
+    "neonEnabled": {
+      "type": "string",
+      "defaultValue": "on",
+      "enum": ["on", "off"],
+      "updateMode": "uniform",
+      "description": "Neon edge layer enable. 'off' is a REAL identity: the composite equals the thin-film layer alone."
+    },
+    "rimWidth": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0.1,
+      "max": 2,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Thin-film rim width (film0.x of the parent effect; ×0.1 in the shader)."
+    },
+    "edgeSoftness": {
+      "type": "number",
+      "defaultValue": 0.3,
+      "min": 0.001,
+      "max": 2,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Thin-film edge softness (film0.y of the parent effect)."
+    },
+    "thickness": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Thin-film optical thickness (film0.z)."
+    },
+    "dispersion": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Thin-film directional dispersion (film0.w)."
+    },
+    "saturation": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Thin-film spectrum saturation (film1.y)."
+    },
+    "phase": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 6.283185307179586,
+      "step": 0.01,
+      "unit": "radian",
+      "updateMode": "uniform",
+      "description": "Thin-film phase offset (film1.x)."
+    },
+    "opacity": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Thin-film opacity (film1.w); alpha = rim × opacity."
+    },
+    "tubeColor": {
+      "type": "string",
+      "defaultValue": "#00ddff",
+      "updateMode": "uniform",
+      "description": "Neon tube color (sRGB hex, decoded to linear)."
+    },
+    "secondaryColor": {
+      "type": "string",
+      "defaultValue": "#ff00aa",
+      "updateMode": "uniform",
+      "description": "Neon secondary color for two-tone diffuse shading (sRGB hex)."
+    },
+    "glowColor": {
+      "type": "string",
+      "defaultValue": "#00ddff",
+      "updateMode": "uniform",
+      "description": "Neon glow color (sRGB hex)."
+    },
+    "secondaryBlend": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Neon two-tone blend (neon0.z of the parent effect)."
+    },
+    "tubeThickness": {
+      "type": "number",
+      "defaultValue": 0.03,
+      "min": 0,
+      "max": 0.08,
+      "step": 0.001,
+      "unit": "field unit",
+      "updateMode": "uniform",
+      "description": "Neon tube thickness (neon0.w of the parent effect)."
+    },
+    "intensity": {
+      "type": "number",
+      "defaultValue": 1.15,
+      "min": 0,
+      "max": 3,
+      "step": 0.01,
+      "unit": "linear gain",
+      "updateMode": "uniform",
+      "description": "Neon master intensity (neon1.x)."
+    },
+    "hotCoreIntensity": {
+      "type": "number",
+      "defaultValue": 0.85,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Neon hot core intensity (neon1.y)."
+    },
+    "glowIntensity": {
+      "type": "number",
+      "defaultValue": 1.2,
+      "min": 0,
+      "max": 4,
+      "step": 0.01,
+      "unit": "linear gain",
+      "updateMode": "uniform",
+      "description": "Neon outer glow intensity (neon1.z)."
+    },
+    "glowRadius": {
+      "type": "number",
+      "defaultValue": 0.12,
+      "min": 0,
+      "max": 0.4,
+      "step": 0.001,
+      "unit": "field unit",
+      "updateMode": "uniform",
+      "description": "Neon glow radius (neon1.w)."
+    },
+    "lightAngle": {
+      "type": "number",
+      "defaultValue": 135,
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "unit": "degree",
+      "updateMode": "uniform",
+      "description": "Neon light angle (neon2.x; the film's directional angle uses the same shared value × its own contract)."
+    },
+    "specularIntensity": {
+      "type": "number",
+      "defaultValue": 0.6,
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "unit": "linear gain",
+      "updateMode": "uniform",
+      "description": "Neon specular intensity (neon2.y)."
+    },
+    "specularSize": {
+      "type": "number",
+      "defaultValue": 0.35,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Neon specular tightness (neon2.z)."
+    },
+    "cornerSmoothing": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Neon stencil smoothing (neon2.w)."
+    }
+  }
+}

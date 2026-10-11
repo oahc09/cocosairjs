@@ -24,7 +24,7 @@
 
 import { nextPow2 } from '../../core';
 import {
-    Address, DescriptorType, BufferUsage, Filter, Format, MemoryUsage, SampleCount, UniformInputAttachment,
+    Address, ComparisonFunc, DescriptorType, BufferUsage, Filter, Format, MemoryUsage, SampleCount, UniformInputAttachment,
     ShaderStageFlagBit, TextureFlags, TextureType, TextureUsage, Type, DynamicStateFlagBit, DrawInfo, Attribute,
     ColorAttachment, DepthStencilAttachment, UniformBlock, UniformSamplerTexture, DescriptorSetLayoutBinding,
 } from '../base/define';
@@ -170,6 +170,8 @@ export interface IWebGL2GPUTextureView {
     format: Format;
     baseLevel: number;
     levelCount: number;
+    baseLayer: number;
+    layerCount: number;
 }
 
 /** @mangle */
@@ -184,6 +186,7 @@ export interface IWebGL2GPUFramebuffer {
     gpuColorViews: IWebGL2GPUTextureView[];
     gpuDepthStencilView: IWebGL2GPUTextureView | null;
     glFramebuffer: WebGLFramebuffer | null;
+    glAttachments?: (WebGLTexture | WebGLRenderbuffer | null)[];
     isOffscreen: boolean;
     width: number;
     height: number;
@@ -199,6 +202,8 @@ export interface IWebGL2GPUSampler {
     addressU: Address;
     addressV: Address;
     addressW: Address;
+    cmpFunc: ComparisonFunc;
+    maxAnisotropy: number;
 
     glMinFilter: GLenum;
     glMagFilter: GLenum;

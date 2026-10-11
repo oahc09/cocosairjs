@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Batching: shared",
   "category": "performance",
-  "status": "validated",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -90,5 +90,13 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序化网格，无第三方资产"
+  },
+  "promotion": {
+    "spec": "bf06f0da3626",
+    "source": "d656c500fa90594b",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 2,
+    "attested": 0,
+    "units": 2
   }
 }

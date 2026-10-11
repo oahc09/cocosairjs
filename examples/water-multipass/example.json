@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Multipass Water: Reflection, Refraction, Depth and Caustics",
   "category": "rendering",
-  "status": "draft",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -21,9 +21,20 @@
     "visual": "固定斜视相机观察沙色池底、橙色岸上标记、青色水下标记与木栈桥。密集真实水面网格产生波纹、Fresnel反射、折射吸收及岸线泡沫；半透明鱼鳍、水花和可开雨滴处于正确深度顺序。"
   },
   "api": {
-    "primary": ["createAirApp", "utils.createMesh", "Material.initialize"],
-    "supporting": ["Camera"],
-    "claims": ["createAirApp", "utils.createMesh", "Material.initialize", "Camera"],
+    "primary": [
+      "createAirApp",
+      "utils.createMesh",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "Camera"
+    ],
+    "claims": [
+      "createAirApp",
+      "utils.createMesh",
+      "Material.initialize",
+      "Camera"
+    ],
     "forbiddenShortcut": [
       "Three.js runtime",
       "DOM图片代替3D水面",
@@ -58,7 +69,9 @@
       }
     ]
   },
-  "capabilities": ["rendering"],
+  "capabilities": [
+    "rendering"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
@@ -83,13 +96,24 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -99,5 +123,13 @@
   "screenshot": {},
   "license": {
     "assets": "Original procedural meshes and GLSL, MIT. No downloaded textures or model assets."
+  },
+  "promotion": {
+    "spec": "a4aad142f1b9",
+    "source": "557a2bb5a5aced08",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 4,
+    "attested": 0,
+    "units": 4
   }
 }

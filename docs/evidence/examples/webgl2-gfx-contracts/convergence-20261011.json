@@ -1,0 +1,90 @@
+{
+  "schema": "webgl2-gfx-convergence/1",
+  "measuredAt": "2026-10-11T07:55:05.922Z",
+  "channels": {
+    "orcaWorker": "developer interrupted: 429 / 1308; not a completed delegated result",
+    "lead": "direct implementation and execution"
+  },
+  "originalFullInventory": {
+    "ok": false,
+    "mode": "check",
+    "extraJestArgs": [
+      "--runInBand"
+    ],
+    "manifest": "docs/test-inventory.json",
+    "totals": {
+      "suites": 173,
+      "tests": 2660,
+      "passed": 2654,
+      "failed": 6
+    },
+    "observedTotals": {
+      "suites": 173,
+      "tests": 2660,
+      "passed": 2654,
+      "failed": 6
+    },
+    "failures": [
+      "test not passed (failed): test/smoke/smoke-30-v12-regression.test.ts :: smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 产物绑定：矩阵记录的 bundle 与 d.ts 哈希就是当期构建产物",
+      "test not passed (failed): test/smoke/smoke-30-v12-regression.test.ts :: smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 每张截图仍在盘且与记录逐字节一致；断言全部为真",
+      "test not passed (failed): test/smoke/smoke-29-examples-spec.test.ts :: V1.1 — Example Specification 门禁 §15 全部 example.json 达到 frozen 且规格零问题",
+      "test not passed (failed): test/smoke/smoke-29-examples-spec.test.ts :: V1.1 — Example Specification 门禁 §12 apiEvidence 行号无漂移（spec-evidence --check）",
+      "test not passed (failed): test/smoke/smoke-29-examples-spec.test.ts :: V1.1 — Example Specification 门禁 §11/§12 证据链符合性零 fail（spec-compliance-audit）",
+      "test not passed (failed): test/smoke/smoke-28-benchmark-regression.test.ts :: real benchmark toolchain rejects invalid types, survives cleanup hangs and parses recipes",
+      "jest reported 6 failed test(s) / success=false",
+      "suite set drifted from docs/test-inventory.json (manifest 170, on disk 173); regenerate with --update only when intentional"
+    ],
+    "output": null
+  },
+  "latestTargeted": {
+    "tests": 47,
+    "passed": 46,
+    "failed": 1,
+    "failures": [
+      {
+        "file": "E:\\AIProMax\\github\\cocosair.js\\test\\smoke\\smoke-29-examples-spec.test.ts",
+        "title": "V1.1 — Example Specification 门禁 §11/§12 证据链符合性零 fail（spec-compliance-audit）"
+      }
+    ]
+  },
+  "registered": {
+    "suites": 174,
+    "tests": 2661,
+    "passed": 2660,
+    "failed": 1
+  },
+  "registrationScope": "incremental observed titles; totals combine the complete 173-suite run with later targeted corrections and new-suite results; generatedAt preserved; not a fresh full-gate PASS",
+  "gpu": {
+    "matrixRecords": 78,
+    "engines": 3,
+    "completed": true,
+    "sdk": "dev22",
+    "focusedExamples": 6,
+    "focusedSubset": true,
+    "focusedCompleted": false
+  },
+  "remaining": [
+    "complete current example/spec evidence chain",
+    "Windows WebKit default compositor resize condition",
+    "existing formatting and manual-sync gates"
+  ],
+  "currentFullGatePassed": false,
+  "releaseReady": false,
+  "fingerprints": {
+    "output/webgl2-gfx-contracts/lead-full-inventory-a.log": "151a463cd6f3e3dc5d35bbc8df6b1deea68cd0865114206a862a8ecc84d4fb65",
+    "output/webgl2-gfx-contracts/lead-convergence-smoke28-30-final.json": "1e039de973b476bf70e6db4f8255c7f689c0d7a4a66361b57273090f0072e431",
+    "output/webgl2-gfx-contracts/lead-convergence-glass-full-b.json": "80c6b47bc82ffcfdd54d357bdcd83070ef91380873c00ad7b7223e76ba082cc3",
+    "output/webgl2-gfx-contracts/lead-new-suites-a.json": "ddecf23059d7cb83c954bf808d7c17e38b2e96456dfa364ac1d96ad655df97cf",
+    "output/webgl2-gfx-contracts/lead-spec-focused-final-c.json": "11b3f8ddb7c10440f6702d65c2ecb9951c0ddb37ef51365b4f32a0b283d869b3",
+    "output/webgl2-gfx-contracts/lead-app-trace-identity.json": "2cc83e63a6de25a5f6b77146b866e375ac201cf5c6c7ad040c1b7a7c4b6b7b3f",
+    "docs/evidence/browser-matrix/browser-matrix.json": "8ee1f292cb5757cf348744f669616a4d2147ea8c3a06689c233a7a2da29538f9",
+    "docs/test-inventory.json": "64154dde9b9aa353ae48b50212efbe9b4883d4ba2715a8c37cf049c2fe5204db",
+    "tools/benchmark/runner/browser-runtime.cjs": "e9e873bbff1272e0975982d2a816cfffc47e9522bfd022b2a8db58ddb228d172",
+    "tools/verify/example-spec-browser.cjs": "23e4613fc126bd9f916656824b801b418f7241aa52fcde570928f1613f2dee8c",
+    "tools/verify/api-trace.cjs": "896034829cd173f03af70cfc0c8303ed61a3b74f1592500974d4fa01dbc806e7",
+    "tools/verify/benchmark-regression.cjs": "2c2faa3fc6d16480b7c843b68fc693c5227e5cdf234e3bac2be633b8c9aed76f",
+    "build/cocosair.module.js": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc",
+    "build/cocosair.module.min.js": "779c288e647c17f63a08fee5c2b9a9ec50a96c70909e34c2e3b20d9ab661a90a",
+    "build/cocosair.module.d.ts": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+  }
+}

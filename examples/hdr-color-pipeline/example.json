@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Color and Radiance: sRGB, HDR and Offline GGX",
   "category": "rendering",
-  "status": "draft",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -21,10 +21,24 @@
     "visual": "三组非对称色块、浮点与夹断的暖色HDR亮斑、四个不同粗糙度的彩色环境金属反射球"
   },
   "api": {
-    "primary": ["Material.setProperty"],
-    "supporting": ["TextureCube", "Camera"],
-    "claims": ["Material.setProperty", "TextureCube", "Camera"],
-    "forbiddenShortcut": ["普通mipmap冒充GGX", "运行期Three.js依赖", "固定亮度补偿", "只检查uniform不读回实际HDR值"],
+    "primary": [
+      "Material.setProperty"
+    ],
+    "supporting": [
+      "TextureCube",
+      "Camera"
+    ],
+    "claims": [
+      "Material.setProperty",
+      "TextureCube",
+      "Camera"
+    ],
+    "forbiddenShortcut": [
+      "普通mipmap冒充GGX",
+      "运行期Three.js依赖",
+      "固定亮度补偿",
+      "只检查uniform不读回实际HDR值"
+    ],
     "evidence": [
       {
         "api": "Material.setProperty",
@@ -46,8 +60,15 @@
       }
     ]
   },
-  "capabilities": ["rendering", "material"],
-  "assets": ["assets/environment.json", "assets/environment.bin", "assets/ggx-prefiltered.bin"],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "assets": [
+    "assets/environment.json",
+    "assets/environment.bin",
+    "assets/ggx-prefiltered.bin"
+  ],
   "scene": {
     "expectedGraph": {
       "nodes": [
@@ -73,13 +94,24 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -89,5 +121,13 @@
   "screenshot": {},
   "license": {
     "assets": "Original generated analytic environment and GGX-convolved pixels, CC0-1.0; original source and GLSL MIT. See assets/LICENSE.md."
+  },
+  "promotion": {
+    "spec": "ac8301fccfc7",
+    "source": "a4ed304b7a97750c",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 3,
+    "attested": 0,
+    "units": 3
   }
 }

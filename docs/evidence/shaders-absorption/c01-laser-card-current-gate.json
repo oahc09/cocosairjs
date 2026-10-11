@@ -1,0 +1,1148 @@
+{
+  "schemaVersion": "c01-laser-card-current-gate/1",
+  "task": "Wave4/C01",
+  "evaluatedAt": "2026-10-10T07:09:24.380Z",
+  "executionChannels": {
+    "initialImplementation": "Orca Worker",
+    "quotaInterruptedCompletionAlgorithmCorrectionIndependentReviewAndCollection": "Lead"
+  },
+  "status": "PASS",
+  "scope": "local Holographic→Emboss→Sparkle native three-stage composition, two RGBA8 intermediate targets, full mother algorithms, analytic circle/rounded-box",
+  "subset": true,
+  "completed": false,
+  "wave4Gate": "NOT_RUN",
+  "agentGate": "NOT_RUN",
+  "gates": {
+    "Build": {
+      "status": "PASS",
+      "strictTypecheckAndBundle": [
+        {
+          "command": "node node_modules/typescript/bin/tsc -p tools/verify/shaders-laser-card.tsconfig.json",
+          "exitCode": 0,
+          "raw": {
+            "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/build.log",
+            "bytes": 105,
+            "sha256": "771f7015de5e0dc650033e14e89357dae601c25a91fb5da95bc4a19e042255b6"
+          },
+          "bundleBytes": 89613
+        },
+        {
+          "command": "node node_modules/typescript/bin/tsc -p tools/verify/shaders-laser-card.tsconfig.json",
+          "exitCode": 0,
+          "raw": {
+            "path": "output/shaders-absorption/lead-w4-c01-performance-all-attempt2-artifacts/build.log",
+            "bytes": 105,
+            "sha256": "771f7015de5e0dc650033e14e89357dae601c25a91fb5da95bc4a19e042255b6"
+          },
+          "bundleBytes": 89613
+        }
+      ]
+    },
+    "Runtime": {
+      "status": "PASS",
+      "engines": 3,
+      "trustedControls": 3,
+      "liveResize": 3,
+      "nativeRenderPassesPerFrame": 3,
+      "embossBypassPasses": 2
+    },
+    "Visual": {
+      "status": "PASS",
+      "standardCases": 39,
+      "transparentLinearProbes": 39,
+      "byteTolerance": 2,
+      "screenshots": [
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-default-dpr1.png",
+          "bytes": 80070,
+          "sha256": "b0d493cf45383095b282e4442cd4c1f57f8d83a92085c7f1bef81e81c18fd591"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-box-dpr1.png",
+          "bytes": 60296,
+          "sha256": "e1992fbc753a92e45282a201ca9671c49b32b0f328ddf6ad7613fe34a729245b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-holo-off-dpr1.png",
+          "bytes": 13988,
+          "sha256": "81f80c421337fd526c7a1a31cd5f4f67de2373bc04262601ff4f7d96c94fcd18"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-emboss-off-dpr1.png",
+          "bytes": 83315,
+          "sha256": "4bfc7a79dcfa8c1f6a927b700d54b80640c35388070908aa71e373de3f8630d8"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-sparkle-off-dpr1.png",
+          "bytes": 80078,
+          "sha256": "813aadccf1a3cdc6eaca0e8bbecc32b3f5b98ed8ae589de30894caf5311a993d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-all-off-dpr1.png",
+          "bytes": 1764,
+          "sha256": "ba5bd994c70a29b9261bac1bd5ed70d0cb87600c54aa860e88025253f3bf59e4"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-deep-emboss-dpr1.png",
+          "bytes": 80055,
+          "sha256": "63fc92a612efea005f1bf5e1a3acdc700a0974d919c18f9ba0b4398787646fe2"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-bright-sparkle-dpr1.png",
+          "bytes": 80597,
+          "sha256": "7c56841ed89886208ec8f7b3f223fa35d414cc637cd0e56886235d49f089b9af"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-holo-saturated-dpr1.png",
+          "bytes": 80908,
+          "sha256": "a5dfb79fa38d2c7fb07f2ae1c75dd4ec6bdbc692d380b44e233af3238a2f060d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-high-threshold-dpr1.png",
+          "bytes": 80075,
+          "sha256": "142f1f359e4da1db793516092170d5e556c8cd7aea79c37d2102667ce9790477"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-background-light-dpr1.png",
+          "bytes": 79014,
+          "sha256": "95da704710d1e0ee66e350871e1793dedce23efce253bfa06808db1b6f2c88f0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-default-dpr2.png",
+          "bytes": 276164,
+          "sha256": "692331d82b62b8518a5a4efd8ab7422f793c3566445d902e5e1fe4a84f263fb9"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-box-dpr2.png",
+          "bytes": 210227,
+          "sha256": "a88ff05dca3a967c7f34133d8ed0f6a3049cc3bfbd1bc47488bb54afc6e808b3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-temporal-a.png",
+          "bytes": 80070,
+          "sha256": "b0d493cf45383095b282e4442cd4c1f57f8d83a92085c7f1bef81e81c18fd591"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-temporal-b.png",
+          "bytes": 80134,
+          "sha256": "e08d949fc2cb7797eae91ae677c478a8e376ab9078eb2f727d88874c8e275c8e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/chromium-live-resize.png",
+          "bytes": 52910,
+          "sha256": "62350b24f22cf7e2bfae1c70a3f8327bc0eeeb88ead93c4cf71b736a214ee926"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-default-dpr1.png",
+          "bytes": 92279,
+          "sha256": "be7ed1905a109fd9d79f1caf1d80fd0e8970f5c3535aa4d650e7f793bd2ae7b7"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-box-dpr1.png",
+          "bytes": 69559,
+          "sha256": "6bdf4c233ee7b48fd16dde1dd04c5adcd50712bdd6f4db55442fd5ae14e6865c"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-holo-off-dpr1.png",
+          "bytes": 25401,
+          "sha256": "47cc99f4eaf3f5679099d966d8c62675278f2c668a9cde350f5fc24a87535391"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-emboss-off-dpr1.png",
+          "bytes": 95344,
+          "sha256": "baea25028458fbe855e2887aee1256d82f1105f35757c3c271a6136c0f25dbce"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-sparkle-off-dpr1.png",
+          "bytes": 92138,
+          "sha256": "83d66f05392fba9ed19c2ed59ea794bab15cbfa6f78a2871b88770cb7bfb272b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-all-off-dpr1.png",
+          "bytes": 7229,
+          "sha256": "32978fd25c7314d42e2758230d8930eea00686f25b73ddcf93028deabc08ef41"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-deep-emboss-dpr1.png",
+          "bytes": 91444,
+          "sha256": "daee763c5f08182a1b03850ede1841dc5ea233ae015ee81619829d7d02e532ea"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-bright-sparkle-dpr1.png",
+          "bytes": 92823,
+          "sha256": "040a8ed0557ab2d09ebb5ab0fbca3c69476e739d4ca84bff8dd836bd3d800336"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-holo-saturated-dpr1.png",
+          "bytes": 93055,
+          "sha256": "91d474054abaa917fec6f48b25097c1bb7da709995fda2960e1189033ff833ab"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-high-threshold-dpr1.png",
+          "bytes": 92269,
+          "sha256": "df179fbb79871a25275ae9ef27b27a1a1b5689573185086a53c1b36d1d4a6b74"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-background-light-dpr1.png",
+          "bytes": 90497,
+          "sha256": "e5da7c5283690d9b00abdd3e82ff8df48cde0c52d6f877d411f7de017b5dec2f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-default-dpr2.png",
+          "bytes": 325311,
+          "sha256": "ff6b7b60241d46d7ca676348e97466e894bf37302ed3da02c9fb442b9ca4540e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-box-dpr2.png",
+          "bytes": 248432,
+          "sha256": "e027c66425a43b8bb57bf077f86922c4b6aa02358aadada59209e4b9de6aded6"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-temporal-a.png",
+          "bytes": 92279,
+          "sha256": "be7ed1905a109fd9d79f1caf1d80fd0e8970f5c3535aa4d650e7f793bd2ae7b7"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-temporal-b.png",
+          "bytes": 92033,
+          "sha256": "5043ae4dc495911ce39ab93b55b3dcf71d315c7247c748bae7d43f0b8dafe9c6"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/firefox-live-resize.png",
+          "bytes": 61564,
+          "sha256": "36f58aef5b089f3f731d6e9b52592306b4d8bc880c735ac1ccaa23d06bc44f1c"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-default-dpr1.png",
+          "bytes": 89413,
+          "sha256": "dac6e2039277eed63daac68211c4a111c6a21bf3352f4e30fa421c57c0d9d87d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-box-dpr1.png",
+          "bytes": 67034,
+          "sha256": "439f10329c13893bad0266030c9d99b4e97e98b79cbe334f0db1068250352e47"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-holo-off-dpr1.png",
+          "bytes": 15073,
+          "sha256": "13c68757818dbfa76be30ac3eef740e579b480c47d94cf231bd5b6b4776aafbd"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-emboss-off-dpr1.png",
+          "bytes": 92630,
+          "sha256": "4ff0e45536eb13fdf942572c6600749dc53668592df69f32fabf6324c604fd3a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-sparkle-off-dpr1.png",
+          "bytes": 89404,
+          "sha256": "882d20e890135327d6d80c2be6c2090e164f8a7ebe6b6a5201e03eb3ed739d56"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-all-off-dpr1.png",
+          "bytes": 2399,
+          "sha256": "4d281a8ef25dc5c11b7b3b0a647d3ae1d26d59c53492eaaf35b577b6fee1f170"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-deep-emboss-dpr1.png",
+          "bytes": 88984,
+          "sha256": "5e46d622c34bbecf366d2b60da3f367f3d453c884664c7f4daceafb3712ba7c7"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-bright-sparkle-dpr1.png",
+          "bytes": 89962,
+          "sha256": "4b7cc7e734058e7401eea8fc032c7014e8fea1cfc73f67f66297941c890df6fa"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-holo-saturated-dpr1.png",
+          "bytes": 90230,
+          "sha256": "ffff588d209460593c4da2d5ea3120206a0d45d6dc6906394684a51e7346ac11"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-high-threshold-dpr1.png",
+          "bytes": 89411,
+          "sha256": "9f500148347cebe72e8b4fd3d0dd9adb33aaacaa8fcac0e14b6e805c69b5d3f3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-background-light-dpr1.png",
+          "bytes": 88239,
+          "sha256": "ce6d30a5d892cef340764031c70138d314f323d73c32e9f32da37317842ec477"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-default-dpr2.png",
+          "bytes": 308190,
+          "sha256": "f0fa9ade5164db86da4d0086f0ad8efcd25b0082560b316b20e8ee87f22b8388"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-box-dpr2.png",
+          "bytes": 232739,
+          "sha256": "ac70c6e947dbc30b70744b6ff4f1153c82af40882474a9f52923458d2e64a2ca"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-temporal-a.png",
+          "bytes": 89413,
+          "sha256": "dac6e2039277eed63daac68211c4a111c6a21bf3352f4e30fa421c57c0d9d87d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-temporal-b.png",
+          "bytes": 89314,
+          "sha256": "54c59389df85cc487bab90e689eb815c57316db75cb16785ccac1d327421ec1e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-artifacts/webkit-live-resize.png",
+          "bytes": 59304,
+          "sha256": "b51d52c6732ff0b2dd276dad1b7dadd0d399677ea382d73c5f5c54a506d882bb"
+        }
+      ]
+    },
+    "Boundary": {
+      "status": "PASS",
+      "parameterCases": 294,
+      "malformedAtomicRejections": 18
+    },
+    "Resource": {
+      "status": "PASS",
+      "cycles": 300,
+      "ownedKinds": [
+        "mesh",
+        "holoMaterial",
+        "embossMaterial",
+        "sparkleMaterial",
+        "holoEffect",
+        "embossEffect",
+        "sparkleEffect"
+      ],
+      "pairedReferencesPerCycle": 7,
+      "physicalGpuMemory": "unavailable"
+    },
+    "Performance": {
+      "status": "PASS",
+      "profileCases": 9,
+      "measurements": [
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "holoEnabled": "on",
+            "embossEnabled": "on",
+            "sparkleEnabled": "on",
+            "holoRoughness": 0.25,
+            "holoCrinkle": 0.5,
+            "holoSparkle": 0.4,
+            "holoFoilScale": 1.5,
+            "holoSaturation": 0.75,
+            "holoHueShift": 0,
+            "embossDepth": -0.5,
+            "embossLightAngle": 260,
+            "embossShadowIntensity": 0.3,
+            "sparkleSize": 70,
+            "sparkleIntensity": 0.45,
+            "sparkleThreshold": 0.2,
+            "sparkleRayLength": 5,
+            "sparkleColorize": 0.35,
+            "time": 0.25,
+            "sparkleSeed": 0
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.09500002861022949,
+          "cpuGfxEnvelopeP50Ms": 0.0700000524520874,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.65499997138977,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 329,
+            "millisecondsP50": 1.746944
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999995231628418,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "holoEnabled": "on",
+            "embossEnabled": "on",
+            "sparkleEnabled": "on",
+            "holoRoughness": 0.25,
+            "holoCrinkle": 0.5,
+            "holoSparkle": 0.4,
+            "holoFoilScale": 1.5,
+            "holoSaturation": 0.75,
+            "holoHueShift": 0,
+            "embossDepth": -0.5,
+            "embossLightAngle": 260,
+            "embossShadowIntensity": 0.3,
+            "sparkleSize": 70,
+            "sparkleIntensity": 0.45,
+            "sparkleThreshold": 0.2,
+            "sparkleRayLength": 5,
+            "sparkleColorize": 0.35,
+            "time": 0.25,
+            "sparkleSeed": 0
+          },
+          "steadyFrames": 315,
+          "cpuUpdateP50Ms": 0.09000003337860107,
+          "cpuGfxEnvelopeP50Ms": 0.07500004768371582,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.68999993801117,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 315,
+            "millisecondsP50": 3.889152
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999995231628418,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "params": {
+            "shape": "circle",
+            "holoEnabled": "on",
+            "embossEnabled": "on",
+            "sparkleEnabled": "on",
+            "holoRoughness": 0.25,
+            "holoCrinkle": 0.5,
+            "holoSparkle": 0.4,
+            "holoFoilScale": 1.5,
+            "holoSaturation": 0.75,
+            "holoHueShift": 0,
+            "embossDepth": -0.5,
+            "embossLightAngle": 260,
+            "embossShadowIntensity": 0.3,
+            "sparkleSize": 70,
+            "sparkleIntensity": 0.45,
+            "sparkleThreshold": 0.2,
+            "sparkleRayLength": 5,
+            "sparkleColorize": 0.35,
+            "time": 0.25,
+            "sparkleSeed": 0
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.08500003814697266,
+          "cpuGfxEnvelopeP50Ms": 0.0700000524520874,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.679999947547913,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 329,
+            "millisecondsP50": 4.302848
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999995231628418,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "holoEnabled": "on",
+            "embossEnabled": "on",
+            "sparkleEnabled": "on",
+            "holoRoughness": 0.25,
+            "holoCrinkle": 0.5,
+            "holoSparkle": 0.4,
+            "holoFoilScale": 1.5,
+            "holoSaturation": 0.75,
+            "holoHueShift": 0,
+            "embossDepth": -0.5,
+            "embossLightAngle": 260,
+            "embossShadowIntensity": 0.3,
+            "sparkleSize": 70,
+            "sparkleIntensity": 0.45,
+            "sparkleThreshold": 0.2,
+            "sparkleRayLength": 5,
+            "sparkleColorize": 0.35,
+            "time": 0.25,
+            "sparkleSeed": 0
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.0999999999994543,
+          "cpuGfxEnvelopeP50Ms": 0.09999999999990905,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.679999999999836,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "holoEnabled": "on",
+            "embossEnabled": "on",
+            "sparkleEnabled": "on",
+            "holoRoughness": 0.25,
+            "holoCrinkle": 0.5,
+            "holoSparkle": 0.4,
+            "holoFoilScale": 1.5,
+            "holoSaturation": 0.75,
+            "holoHueShift": 0,
+            "embossDepth": -0.5,
+            "embossLightAngle": 260,
+            "embossShadowIntensity": 0.3,
+            "sparkleSize": 70,
+            "sparkleIntensity": 0.45,
+            "sparkleThreshold": 0.2,
+            "sparkleRayLength": 5,
+            "sparkleColorize": 0.35,
+            "time": 0.25,
+            "sparkleSeed": 0
+          },
+          "steadyFrames": 324,
+          "cpuUpdateP50Ms": 0.0999999999994543,
+          "cpuGfxEnvelopeP50Ms": 0.11999999999807187,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.699999999999818,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "params": {
+            "shape": "circle",
+            "holoEnabled": "on",
+            "embossEnabled": "on",
+            "sparkleEnabled": "on",
+            "holoRoughness": 0.25,
+            "holoCrinkle": 0.5,
+            "holoSparkle": 0.4,
+            "holoFoilScale": 1.5,
+            "holoSaturation": 0.75,
+            "holoHueShift": 0,
+            "embossDepth": -0.5,
+            "embossLightAngle": 260,
+            "embossShadowIntensity": 0.3,
+            "sparkleSize": 70,
+            "sparkleIntensity": 0.45,
+            "sparkleThreshold": 0.2,
+            "sparkleRayLength": 5,
+            "sparkleColorize": 0.35,
+            "time": 0.25,
+            "sparkleSeed": 0
+          },
+          "steadyFrames": 328,
+          "cpuUpdateP50Ms": 0.09999999999990905,
+          "cpuGfxEnvelopeP50Ms": 0.09999999999990905,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.659999999999854,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "holoEnabled": "on",
+            "embossEnabled": "on",
+            "sparkleEnabled": "on",
+            "holoRoughness": 0.25,
+            "holoCrinkle": 0.5,
+            "holoSparkle": 0.4,
+            "holoFoilScale": 1.5,
+            "holoSaturation": 0.75,
+            "holoHueShift": 0,
+            "embossDepth": -0.5,
+            "embossLightAngle": 260,
+            "embossShadowIntensity": 0.3,
+            "sparkleSize": 70,
+            "sparkleIntensity": 0.45,
+            "sparkleThreshold": 0.2,
+            "sparkleRayLength": 5,
+            "sparkleColorize": 0.35,
+            "time": 0.25,
+            "sparkleSeed": 0
+          },
+          "steadyFrames": 204,
+          "cpuUpdateP50Ms": 0.07999999999992724,
+          "cpuGfxEnvelopeP50Ms": 0.08000000000174623,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 19.640000000001237,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "holoEnabled": "on",
+            "embossEnabled": "on",
+            "sparkleEnabled": "on",
+            "holoRoughness": 0.25,
+            "holoCrinkle": 0.5,
+            "holoSparkle": 0.4,
+            "holoFoilScale": 1.5,
+            "holoSaturation": 0.75,
+            "holoHueShift": 0,
+            "embossDepth": -0.5,
+            "embossLightAngle": 260,
+            "embossShadowIntensity": 0.3,
+            "sparkleSize": 70,
+            "sparkleIntensity": 0.45,
+            "sparkleThreshold": 0.2,
+            "sparkleRayLength": 5,
+            "sparkleColorize": 0.35,
+            "time": 0.25,
+            "sparkleSeed": 0
+          },
+          "steadyFrames": 209,
+          "cpuUpdateP50Ms": 0.0999999999994543,
+          "cpuGfxEnvelopeP50Ms": 0.1000000000003638,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 19.5,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "params": {
+            "shape": "circle",
+            "holoEnabled": "on",
+            "embossEnabled": "on",
+            "sparkleEnabled": "on",
+            "holoRoughness": 0.25,
+            "holoCrinkle": 0.5,
+            "holoSparkle": 0.4,
+            "holoFoilScale": 1.5,
+            "holoSaturation": 0.75,
+            "holoHueShift": 0,
+            "embossDepth": -0.5,
+            "embossLightAngle": 260,
+            "embossShadowIntensity": 0.3,
+            "sparkleSize": 70,
+            "sparkleIntensity": 0.45,
+            "sparkleThreshold": 0.2,
+            "sparkleRayLength": 5,
+            "sparkleColorize": 0.35,
+            "time": 0.25,
+            "sparkleSeed": 0
+          },
+          "steadyFrames": 220,
+          "cpuUpdateP50Ms": 0.07999999999992724,
+          "cpuGfxEnvelopeP50Ms": 0.09999999999854481,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 18.780000000000655,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        }
+      ]
+    }
+  },
+  "counts": {
+    "engines": 3,
+    "dimensionRows": 18,
+    "visualCases": 39,
+    "boundaryCases": 294,
+    "malformedAtomicRejections": 18,
+    "resourceCycles": 300,
+    "liveResize": 3,
+    "screenshots": 48,
+    "performanceProfiles": 9
+  },
+  "bindings": [
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2.json",
+        "bytes": 10586823,
+        "sha256": "8aec51aabeadc6c8f8b8e47c5404c165af20f2d3b7f72380995a1c3ed9b000a2"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-os.json",
+        "bytes": 611,
+        "sha256": "b258b19dee406229a54fbd880f66d774b54f28afb11c191850b5524f9d09e88f"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2.log",
+        "bytes": 2589,
+        "sha256": "ce2cb1d94b5e05c77237a94ac6d72dbe3606d6bc689ccbaffb50e84e1edb9891"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt2-frozen.json",
+        "bytes": 9215,
+        "sha256": "e5200966a8230226a7f3cc6fbd30599b026cba27788d89da967d096c77ad23ed"
+      }
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c01-performance-all-attempt2.json",
+        "bytes": 13761859,
+        "sha256": "f0ff1d2eb8ce4bb1898e60200d5e75bab710e69e0a463525c4aaabaaea923db9"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c01-performance-all-attempt2-os.json",
+        "bytes": 669,
+        "sha256": "08016c1a3f8108a13e081561188834acb5fe50395a7f1dad904286411e770d55"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c01-performance-all-attempt2.log",
+        "bytes": 109,
+        "sha256": "093823cac0ed3cf14ff6fd75a37dae4f7fd59c19d0434c3ac2c31f7405d129b0"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w4-c01-performance-all-attempt2-frozen.json",
+        "bytes": 9215,
+        "sha256": "e5200966a8230226a7f3cc6fbd30599b026cba27788d89da967d096c77ad23ed"
+      }
+    }
+  ],
+  "validatorInputs": {
+    "inputs": [
+      {
+        "path": "examples/shader-laser-card/src/main.ts",
+        "bytes": 31813,
+        "sha256": "0cdf442ed9f92b391e3798a55b0da063502d269f9ba19062346be22f7648ea6b"
+      },
+      {
+        "path": "examples/shader-laser-card/src/parameters.ts",
+        "bytes": 2406,
+        "sha256": "125a1d8e9aa1e527f52e177c109f58ab11968ffed47f7e6f1c379d82577c0536"
+      },
+      {
+        "path": "examples/shader-laser-card/src/holo_stage.frag",
+        "bytes": 9216,
+        "sha256": "6d5cb036b55ac2addc1ac11ffe9745980f2fabc205cfcbd504ffd65e864db57c"
+      },
+      {
+        "path": "examples/shader-laser-card/src/emboss_stage.frag",
+        "bytes": 4589,
+        "sha256": "89042fe9559c677d0e0b01ae7ea2a1d23d01ccab38f55fb38fe455792c3cf5a3"
+      },
+      {
+        "path": "examples/shader-laser-card/src/sparkle_stage.frag",
+        "bytes": 4759,
+        "sha256": "a98ea0b1b9156bcbd6a83ad9ff70f1a923f5b2496a06455e78e3500e369823ff"
+      },
+      {
+        "path": "examples/shader-laser-card/src/effect.generated.ts",
+        "bytes": 55227,
+        "sha256": "282bfab65d2f958e6ea7edc009661ca06cb6a661a7fe59d60a5ba05836e32963"
+      },
+      {
+        "path": "examples/shader-laser-card/parameters.json",
+        "bytes": 5241,
+        "sha256": "989e66d8bfcbe6e4d08f705d887dc50d47f4017181288e6600f9ec233456f034"
+      },
+      {
+        "path": "examples/shader-laser-card/index.html",
+        "bytes": 1969,
+        "sha256": "6823245c55ea43dd2afc1f916b50bdb476df4843b9e128578ccee4746d5e90ad"
+      },
+      {
+        "path": "examples/shader-laser-card/generate-effect.cjs",
+        "bytes": 4203,
+        "sha256": "6d078f5b11ba8b6931dab18f52bd2bbf3df9307af28d26e2a174098bc1e093a6"
+      },
+      {
+        "path": "examples/shader-laser-card/example.json",
+        "bytes": 4506,
+        "sha256": "ef74edecaca342aed21e80b8d144192cdeae08d617e145ca657e3391625038ee"
+      },
+      {
+        "path": "examples/shader-laser-card/README.md",
+        "bytes": 2019,
+        "sha256": "0951feb0b9c1cc948fab276e2cfc20059e773092e7c0677e142582e78548b589"
+      },
+      {
+        "path": "examples/shader-laser-card/UPSTREAM.md",
+        "bytes": 3863,
+        "sha256": "0fb440739a19bd84f35f8947aa7b2a988c93e8654c2da2c5fbaac512b658b0f0"
+      },
+      {
+        "path": "examples/shader-laser-card/LICENSE.reference.txt",
+        "bytes": 14046,
+        "sha256": "2a98b03e714cfe43624ef3656d986edf0a71728f8363603253db691db41b9cce"
+      },
+      {
+        "path": "examples/shared/shader-blocks.js",
+        "bytes": 8627,
+        "sha256": "31e9577ae7f99a740f3053550435c78278b644c466397f6b2588c3404e4b22ab"
+      },
+      {
+        "path": "tools/verify/shaders-laser-card-oracle.cjs",
+        "bytes": 19338,
+        "sha256": "70b68dfaad14ed90b5acb8213effc8c7eb3b738fa8c9775a662503bf0f3ce028"
+      },
+      {
+        "path": "tools/verify/shaders-laser-card-browser.cjs",
+        "bytes": 90840,
+        "sha256": "5e5e3f6834ad7c1d9678fc65c1257d2f616f35a743b3e671ad749b44d0947e7c"
+      },
+      {
+        "path": "tools/verify/shaders-laser-card.tsconfig.json",
+        "bytes": 422,
+        "sha256": "16b2874265eedc115beb46c59ce498781a653b942667042643346bb51ee15de3"
+      },
+      {
+        "path": "tools/verify/shaders-laser-card-performance.cjs",
+        "bytes": 9695,
+        "sha256": "8e1a70924c85b88dac7b733ae36efc9dea60216c3a7e34c7a7b9b862d2ba392b"
+      },
+      {
+        "path": "tools/verify/shaders-browser-environment.cjs",
+        "bytes": 10656,
+        "sha256": "bc39fdb9222b9b95a5b8d7217462d7c79ab488d23417d465e2aab0fee4e35337"
+      },
+      {
+        "path": "tools/verify/shaders-browser-launch.cjs",
+        "bytes": 2797,
+        "sha256": "3e5a4bc54834f9688994b446346ac58aca10c1936e88a1f932531fb75c81fc87"
+      },
+      {
+        "path": "tools/verify/browser-engines.cjs",
+        "bytes": 2159,
+        "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+      },
+      {
+        "path": "tools/verify/competitive-example-server.cjs",
+        "bytes": 1923,
+        "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+      },
+      {
+        "path": "tools/verify/shaders-effect-contract.cjs",
+        "bytes": 37563,
+        "sha256": "e1eb1a21b1167ab7d5dab8d7cf21fa214a44b23efa9d62f83a75d08d3d7c2ab3"
+      },
+      {
+        "path": "tools/verify/shaders-holographic-oracle.cjs",
+        "bytes": 19929,
+        "sha256": "9d172e8fe8d3c9366310a2055b716a59895215e38f4a58454d5ceedf8bf0c3b4"
+      },
+      {
+        "path": "tools/verify/shaders-emboss-oracle.cjs",
+        "bytes": 18482,
+        "sha256": "004054d92de8f05559a8130d6aff58ef7e8569048ae3213803a0f79371c5c68e"
+      },
+      {
+        "path": "tools/verify/shaders-sparkle-oracle.cjs",
+        "bytes": 8353,
+        "sha256": "d75253ada0db8e0896b335e1de0ef18f9af187367b4343ca5d581dce71037f3e"
+      },
+      {
+        "path": "examples/shader-holographic/parameters.json",
+        "bytes": 3624,
+        "sha256": "96b9a0111e500aeb42b482995eb76b34f78a72b278ecafa0d55050ca38de97b6"
+      },
+      {
+        "path": "examples/shader-emboss/parameters.json",
+        "bytes": 2410,
+        "sha256": "b5acc5ff6cb3b16f02e9bbe3b504a5b716ac3ded45cd5b328052066c2bd4287d"
+      },
+      {
+        "path": "examples/shader-sparkle/parameters.json",
+        "bytes": 2522,
+        "sha256": "0d2f874bf2ec038aef2a30942f33b1451999c6fb71f02f4b374d8b905f5ac83b"
+      },
+      {
+        "path": "tools/verify/shaders-api-evidence.cjs",
+        "bytes": 1405,
+        "sha256": "e751578131b4376680f934b29a4be070248ffa8f66fd3364201dab368cc1951b"
+      },
+      {
+        "path": "tools/examples/spec-evidence.cjs",
+        "bytes": 12179,
+        "sha256": "ea41d909ead5f9397301cf0758f1894b7d35b8f8af6d84cdb94031ac1d0f846e"
+      },
+      {
+        "path": "docs/example-api-inventory.json",
+        "bytes": 2248439,
+        "sha256": "7e0ab0222058fcfc50c7545c9c9c4a47915d1e408b8f449638fd77721fc2763a"
+      },
+      {
+        "path": "examples/shared/shader-lifecycle.ts",
+        "bytes": 10021,
+        "sha256": "6b28d2b0afea13e947ee371ba5dcef7d3d91f6ab847a0a79d51cf1e7982cd4d9"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.js",
+        "bytes": 5595,
+        "sha256": "c2bc01e8c73ab866f11194fc802bb8ce464b3738bfecf8d30cf5967907e5e346"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.d.ts",
+        "bytes": 1045,
+        "sha256": "34d5cc8469ea05a17f7cee6bf287d0c473cb0daaf50adfd6c49454fb68ef19cb"
+      },
+      {
+        "path": "build/cocosair.module.js",
+        "bytes": 6631057,
+        "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+      },
+      {
+        "path": "build/cocosair.module.d.ts",
+        "bytes": 3303518,
+        "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+      },
+      {
+        "path": "build/npm/cocosair.module.js",
+        "bytes": 6631013,
+        "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+      }
+    ],
+    "reference": {
+      "repo": "shader-effects-inc/shaders",
+      "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/shaders/Holographic/index.ts",
+          "bytes": 12754,
+          "sha256": "ee3a8ea07a4deac78cc95dd6c777d5baf4439d909b0d6c93499f6a53c23dd647"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/shaders/Emboss/index.ts",
+          "bytes": 5113,
+          "sha256": "ff31f6250a9abebfeca5e1bfb87ffebbc8517f8dd2d747de833821be5e3fa5df"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/shaders/Sparkle/index.ts",
+          "bytes": 7442,
+          "sha256": "fb020021af52451c20facd7602c23c539e51be9f7201561691ba987749c3e676"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/effects/emboss.ts",
+          "bytes": 10984,
+          "sha256": "f93f0de4d86dab9272f95ac600ef5fa7e0f212e6e4f61b7f81187fc32ad25df7"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/std/paint/materials.ts",
+          "bytes": 57681,
+          "sha256": "7cb6e03cf96c26cd71ad9442002d2f642d301770e62ec08fbcfe33e86a359782"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/noise.ts",
+          "bytes": 36383,
+          "sha256": "5817311eff374e9849aa4c0ea58a826c69e0f27696815dea109f395e7aad4cd4"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/lighting.ts",
+          "bytes": 11133,
+          "sha256": "e90a6b5f8aedc978bec5bcda4529493a35cb68212be8fc4628e2abdedec3daaf"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w2-e03-upstream-kit-index.ts",
+          "bytes": 4503,
+          "sha256": "049bc788e295a187c85d7197295aba9886c58209ea70584e4fe6d5d9a7dd0ef3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w2-e03-upstream-kit-fetch.json",
+          "bytes": 479,
+          "sha256": "8087c16470bbc75c60dc0b104945fc3b3772681bf9f5871eb2c64a2f8be54c06"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w2-e03-upstream-materialParts.ts",
+          "bytes": 10518,
+          "sha256": "e812166513e6a6a7eb00df5682760bf5fb8275471172ccf7ef512f7fff08f719"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w2-e03-upstream-materialParts-fetch.json",
+          "bytes": 492,
+          "sha256": "081453a3aa72f47be51291a0c7e6339dafc50713fc5d0c5bb73f1f96e58137d5"
+        }
+      ]
+    }
+  },
+  "verifier": {
+    "path": "tools/verify/shaders-laser-card-gate.cjs",
+    "bytes": 11815,
+    "sha256": "20134894e4d94cb7fba3c2274101aab72b2a018b0edac1ba74452af4645a64f6"
+  },
+  "audit": {
+    "path": "docs/evidence/shaders-absorption/c01-laser-card-actual-audit.json",
+    "bytes": 172931,
+    "sha256": "2380b1046234003c7f82304caff854c3e389c0d97208ca1552e885075157803d"
+  },
+  "historicalAttempts": [
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c01-functional-chromium-attempt1.json",
+        "bytes": 3542503,
+        "sha256": "6ed2a8d6016262a5a2f24312aeb3b3c9bb80f6bf1b78a47713bff604404770c0"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c01-functional-chromium-attempt1-os.json",
+        "bytes": 631,
+        "sha256": "b0f62cd1ebe68dbd65e1f29e728e3578849023dbb55d3e4b11d49432b8ef8ec5"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c01-functional-chromium-attempt1.log",
+        "bytes": 953,
+        "sha256": "98a677ab298eebe5d032ce7d2d11c539d1c7e57238ba1cc5b028b55b69747d80"
+      },
+      "historicalExitCode": 0,
+      "reason": "Historical measured subset; shader/validator closure subsequently changed, not current identity"
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt1.json",
+        "bytes": 10586794,
+        "sha256": "f35461aef985c0e853fe0be1805e2eb5207320bc7cbee6b5055737b2d42d4564"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt1-os.json",
+        "bytes": 611,
+        "sha256": "032c77c33e12528f8f22ac7b2019616a2318fbe15a61b6c55ef3d19b3d5b4e3f"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c01-functional-all-attempt1.log",
+        "bytes": 2589,
+        "sha256": "2e1674362f9a0e28000f9a8645c6b3fcddad2b2012f5e3396f47f4cc20cc4b81"
+      },
+      "historicalExitCode": 0,
+      "reason": "Historical measured subset; shader/validator closure subsequently changed, not current identity"
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c01-performance-all-attempt1.json",
+        "bytes": 13799295,
+        "sha256": "536b4509468a9e493cdac8e9258f7935be19555aefc7d8e6b9a6643c2701c3f6"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c01-performance-all-attempt1-os.json",
+        "bytes": 669,
+        "sha256": "5c94d6a15b0baad4327afcb7345da267b998a06419beb9e2df9970f79f08f9ee"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c01-performance-all-attempt1.log",
+        "bytes": 265,
+        "sha256": "98f15a5d9e93754149a36b9ff81ab6da663ae21e313b3fe0b2819eab89124d58"
+      },
+      "historicalExitCode": 1,
+      "reason": "Historical failed real collection; unchanged"
+    }
+  ],
+  "limitations": [
+    "Local composition, not an upstream Laser Card preset",
+    "Shared analytic circle/rounded-box; no SDF asset platform",
+    "Both intermediate RGBA8 targets quantize premultiplied values; nearest/clamp follows actual backing",
+    "Emboss bypass skips its camera; both targets remain allocated until retirement",
+    "Holo off supplies gray64/96 checker; Sparkle off retains final display pass",
+    "Physical mobile hardware/long-run/multitab/Agent/independent Gallery NOT_RUN",
+    "GPU physical memory unavailable; no fabricated timestamp when unsupported",
+    "C03/C04 and complete Wave4 still pending"
+  ]
+}

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-07T23:17:19.101Z",
-  "revision": "1228a50",
+  "generatedAt": "2026-10-11T11:02:08.147Z",
+  "revision": "a870ff3",
   "examples": [
     {
       "dir": "anim-position",
@@ -194,7 +194,7 @@
       "promotion": {
         "spec": "113419aed33a",
         "source": "9630b2703491c62c",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 68,
         "attested": 0,
         "units": 68
@@ -289,7 +289,7 @@
       "promotion": {
         "spec": "87b16f3be7f8",
         "source": "e354b22cadf41979",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -369,7 +369,7 @@
       "promotion": {
         "spec": "1e59c272e2e2",
         "source": "396a4df04dfb0493",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -507,7 +507,7 @@
       "promotion": {
         "spec": "f5eba590706f",
         "source": "0373eaa5b4d394e0",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -602,7 +602,7 @@
       "version": "1.0.0",
       "title": "Batching: dynamic",
       "category": "performance",
-      "status": "validated",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -663,6 +663,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "82009221c157",
+        "source": "028688f552ab4dc8",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
       }
     },
     {
@@ -671,7 +679,7 @@
       "version": "1.0.0",
       "title": "Batching: merged",
       "category": "performance",
-      "status": "validated",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -730,6 +738,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "f0ec78b8b28f",
+        "source": "1d10a4e0ce03cc76",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 2,
+        "attested": 0,
+        "units": 2
       }
     },
     {
@@ -738,7 +754,7 @@
       "version": "1.0.0",
       "title": "Batching: shared",
       "category": "performance",
-      "status": "validated",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -797,6 +813,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "bf06f0da3626",
+        "source": "d656c500fa90594b",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 2,
+        "attested": 0,
+        "units": 2
       }
     },
     {
@@ -897,7 +921,7 @@
       "promotion": {
         "spec": "247bafa0cca7",
         "source": "cc42645c22e9dab1",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -985,7 +1009,7 @@
       "promotion": {
         "spec": "c4a1c45f2260",
         "source": "a6e9df1cec851de8",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -1092,7 +1116,7 @@
       "promotion": {
         "spec": "d314861ea3a2",
         "source": "0af7f6b33b45bf6e",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 13,
         "attested": 0,
         "units": 13
@@ -1294,7 +1318,7 @@
       "promotion": {
         "spec": "b615901b7e17",
         "source": "eff5486133ed2729",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 117,
         "attested": 0,
         "units": 117
@@ -1397,7 +1421,7 @@
       "promotion": {
         "spec": "466cfd2b2403",
         "source": "ef1843dfdc0ab7c7",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1496,7 +1520,7 @@
       "promotion": {
         "spec": "e428c783e31d",
         "source": "7fec7450acdbcb31",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1603,7 +1627,7 @@
       "promotion": {
         "spec": "91aa75cbfdff",
         "source": "376aa633d7649377",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1619,16 +1643,17 @@
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
-        "goal": "掌握 Camera 的屏幕↔世界换算族：立方体中心的 worldToScreen 投影、同一点的 screenToWorld 往返一致性、screenPointToRay 的方向语义，以及 resize/setFixedSize 的视口行为。",
+        "goal": "正确完成相机投影、深度换算后的反投影、DOM 射线拾取，以及横竖屏正交完整取景。",
         "points": [
-          "worldToScreen(cube 中心) 与 screenToWorld 往返：反投影点的 x/y 分量回到同一屏幕坐标（z 轴按深度另计）",
-          "screenPointToRay：屏幕中心射线方向与相机前向一致（朝向 -Z 族符号核对）",
-          "resize 后相机仍可出图（视口适配内部处理），probe 以 cameraUp 哨兵确认执行路径无异常"
+          "公开 Camera 组件接口输入在前、out 在后；相机矩阵初始化后投影，原始世界点保持不变。",
+          "透视投影 z 先转 near→far 线性比例，再反投影；用 roundTripError 校验世界坐标往返误差。",
+          "DOM 点击用实际 canvas/backing 比例并翻转 Y，resize/DPR 变化后继续正确射线拾取。",
+          "正交投影使用取景半高；portrait 的 6×4 区域角点必须落在 framebuffer 范围内。"
         ]
       },
       "effect": {
-        "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
-        "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 130,200,140）、方向光、透视相机。"
+        "functional": "场景绘制后更新相机投影、完整世界坐标往返误差及射线读数；window.__probe() 暴露 ready/worldUnchanged/roundTripError/lastPick。浮点值按容差验证。",
+        "visual": "深蓝背景中有中央立方体和四个边角标记；按钮切换透视/正交，竖屏正交保留完整 6×4 范围。"
       },
       "api": {
         "primary": [
@@ -1707,9 +1732,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "98df9ed498e9",
-        "source": "04ea132be64e31c5",
-        "candidate": "2f089f6ce25eaccd",
+        "spec": "7c8ed23455ae",
+        "source": "8ff725b365aaae2f",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -1812,7 +1837,7 @@
       "promotion": {
         "spec": "7aed442e9832",
         "source": "1c0678748c512bc0",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -1983,9 +2008,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "baba5dbfd187",
-        "source": "ad016b8ffdafe73e",
-        "candidate": "2f089f6ce25eaccd",
+        "spec": "a326405c616f",
+        "source": "57978adce068771d",
+        "candidate": "24fcbd038ef9869c",
         "verified": 55,
         "attested": 0,
         "units": 55
@@ -2081,7 +2106,7 @@
       "promotion": {
         "spec": "2a7c20e0f736",
         "source": "03c8ddb152ddb068",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -2213,7 +2238,7 @@
       "promotion": {
         "spec": "a7f63fc705a1",
         "source": "097992b17ba74405",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -2317,7 +2342,7 @@
       "promotion": {
         "spec": "47b4bae22ade",
         "source": "1103976d73d8af6a",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -2427,7 +2452,7 @@
       "promotion": {
         "spec": "f8dbf91bb42e",
         "source": "441178b88666598b",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 18,
         "attested": 8,
         "units": 26
@@ -2548,7 +2573,7 @@
       "promotion": {
         "spec": "5224b3c3a036",
         "source": "01feed613351fe17",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -2650,7 +2675,7 @@
       "promotion": {
         "spec": "455a02a48175",
         "source": "aa06a11253115b53",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -2662,7 +2687,7 @@
       "version": "1.0.0",
       "title": "DOM · 场景同步与纹理锚点",
       "category": "rendering",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -2703,9 +2728,9 @@
       "interaction": {
         "steps": [
           {
-            "action": "点击 移动 / 旋转",
-            "buttonText": "移动 / 旋转",
-            "expected": "实际场景或模式更新；定向 __exampleProbe 断言验证结果"
+            "action": "点击 纹理 Resize",
+            "buttonText": "纹理 Resize",
+            "expected": "纹理重置为 4×4 并上传新数据后，展示面尺寸与 GPU 像素同步更新"
           }
         ]
       },
@@ -2725,8 +2750,18 @@
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "4c56c78d8a52",
+        "source": "766d792a51a314a4",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 2,
+        "attested": 0,
+        "units": 2
       }
     },
     {
@@ -2999,7 +3034,7 @@
       "promotion": {
         "spec": "8a974b0bce33",
         "source": "13925128ed9b6d46",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 93,
         "attested": 5,
         "units": 98
@@ -3075,7 +3110,7 @@
       "promotion": {
         "spec": "3df77202051c",
         "source": "51df70ec4c85d46b",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -3176,7 +3211,7 @@
       "promotion": {
         "spec": "8a2ff6deb160",
         "source": "b0be88070c417d9b",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 2,
         "attested": 0,
         "units": 2
@@ -3254,7 +3289,7 @@
       "promotion": {
         "spec": "be1e9a74c2ca",
         "source": "3cd5ff4cd6abb130",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -3376,7 +3411,7 @@
       "promotion": {
         "spec": "c3c81d03e1e2",
         "source": "180b2cc46b5dc471",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -3470,7 +3505,7 @@
       "promotion": {
         "spec": "bad5fe27a560",
         "source": "77c2ebc0212d3f0b",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -3635,7 +3670,7 @@
       "promotion": {
         "spec": "bb6d696ee3ad",
         "source": "ac4363ed87df4174",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -3731,7 +3766,7 @@
       "promotion": {
         "spec": "c40482afd5b5",
         "source": "3a80645a70f5b245",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -3850,7 +3885,7 @@
       "promotion": {
         "spec": "410987ea135f",
         "source": "213a22d7c2c3ca48",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 29,
         "attested": 0,
         "units": 29
@@ -3984,7 +4019,7 @@
       "promotion": {
         "spec": "0065082f5534",
         "source": "7e2ac80d6bed00b5",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 26,
         "attested": 4,
         "units": 30
@@ -4085,7 +4120,7 @@
       "promotion": {
         "spec": "814bab1c8d9b",
         "source": "ab283e4fbf2cabc8",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -4097,7 +4132,7 @@
       "version": "1.0.0",
       "title": "glTF Skin",
       "category": "gltf",
-      "status": "validated",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -4180,6 +4215,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "258a34080cbb",
+        "source": "a5ca2316c2c79165",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 19,
+        "attested": 0,
+        "units": 19
       }
     },
     {
@@ -4289,9 +4332,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "bd41e69c873e",
-        "source": "333f4b776d1851df",
-        "candidate": "2f089f6ce25eaccd",
+        "spec": "633e34bc9127",
+        "source": "8211e97d651e8024",
+        "candidate": "24fcbd038ef9869c",
         "verified": 18,
         "attested": 2,
         "units": 20
@@ -4303,7 +4346,7 @@
       "version": "1.0.0",
       "title": "Graphics · SVG 与富填充",
       "category": "rendering",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -4371,8 +4414,18 @@
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "0f371203c6f5",
+        "source": "13c203f9784fb7ec",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 4,
+        "attested": 0,
+        "units": 4
       }
     },
     {
@@ -4381,7 +4434,7 @@
       "version": "1.0.0",
       "title": "Color and Radiance: sRGB, HDR and Offline GGX",
       "category": "rendering",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -4460,6 +4513,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "ac8301fccfc7",
+        "source": "a4ed304b7a97750c",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
       }
     },
     {
@@ -4550,7 +4611,7 @@
       "promotion": {
         "spec": "1eec40a9fdad",
         "source": "037467dd34348936",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -4562,7 +4623,7 @@
       "version": "1.0.0",
       "title": "HTML · 实时纹理与快照",
       "category": "rendering",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -4615,8 +4676,18 @@
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "533471c42d45",
+        "source": "f9bcee417e395ab7",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 2,
+        "attested": 0,
+        "units": 2
       }
     },
     {
@@ -4713,9 +4784,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "aeed6a7d4db8",
-        "source": "37642ffb95c12375",
-        "candidate": "2f089f6ce25eaccd",
+        "spec": "f8e73280f4a9",
+        "source": "ba898b069fca9274",
+        "candidate": "24fcbd038ef9869c",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -4832,7 +4903,7 @@
       "promotion": {
         "spec": "1eaac15002c1",
         "source": "31b545ce974e0261",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -4939,7 +5010,7 @@
       "promotion": {
         "spec": "e5337b3cc8f9",
         "source": "286de09ae2f442c2",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -4951,9 +5022,12 @@
       "version": "1.0.0",
       "title": "Container readiness and hidden recovery",
       "category": "integration",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
+      "bench": {
+        "startupButtonText": "Run"
+      },
       "learning": {
         "goal": "将DOM非零、原生布局、相机、提交和真实PNG分别验收",
         "points": [
@@ -4993,6 +5067,11 @@
           {
             "action": "显示、窄/宽父布局、隐藏恢复、快速标签切换和释放",
             "expected": "对应最新布局与导航结果；旧输入取消；实际PNG及引用单独核对"
+          },
+          {
+            "action": "点击窄布局改变父容器",
+            "buttonText": "窄布局",
+            "expected": "原生容器尺寸变化后红色标记仍呈现，捕获帧尺寸随布局变化"
           }
         ]
       },
@@ -5016,6 +5095,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "1fb0b5ce03ce",
+        "source": "5c5e53a5b2c98609",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 1,
+        "attested": 0,
+        "units": 1
       }
     },
     {
@@ -5024,9 +5111,43 @@
       "version": "1.0.0",
       "title": "Dynamic mesh and pointer projection",
       "category": "rendering",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
+      "bench": {
+        "viewport": {
+          "width": 720,
+          "height": 560
+        },
+        "apiVariants": [
+          {
+            "query": "mode=cut",
+            "nodes": [
+              "target-slab",
+              "input-stroke",
+              "cut-surface",
+              "animated-blade",
+              "cut-render-overlay"
+            ],
+            "steps": [
+              {
+                "action": "拖动刀线穿过目标",
+                "drag": [
+                  [
+                    0.2,
+                    0.35
+                  ],
+                  [
+                    0.8,
+                    0.65
+                  ]
+                ],
+                "expected": "真实指针经相机射线映射产生动态切割几何及画面变化"
+              }
+            ]
+          }
+        ]
+      },
       "learning": {
         "goal": "用真实指针生成切平面，分别检查上传顶点、屏幕投影和可见像素",
         "points": [
@@ -5096,6 +5217,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "6a4291275fd7",
+        "source": "452c99711e0afae5",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 4,
+        "attested": 0,
+        "units": 4
       }
     },
     {
@@ -5104,7 +5233,7 @@
       "version": "1.0.0",
       "title": "Canvas, HTML and native scrolling",
       "category": "interaction",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -5174,6 +5303,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "7417defd36b5",
+        "source": "763d9b2146b7fb30",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
       }
     },
     {
@@ -5182,9 +5319,15 @@
       "version": "1.0.0",
       "title": "Capture and mip sampling",
       "category": "rendering",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
+      "bench": {
+        "viewport": {
+          "width": 720,
+          "height": 560
+        }
+      },
       "learning": {
         "goal": "比较相机离屏采样与原生 gfx 逐级 mip 采样，正确处理目标重建和资源退役",
         "points": [
@@ -5230,8 +5373,9 @@
       "interaction": {
         "steps": [
           {
-            "action": "暂停、恢复、重置、缩放、释放；native 路线切换 LOD",
-            "expected": "暂停时帧数冻结，恢复前进；重置资产数稳定，LOD 切换改变实际色块；释放后控件禁用"
+            "action": "点击 Resize 活缩放",
+            "buttonText": "Resize",
+            "expected": "活 resize 触发 RT/画布重建，画面几何与像素同步变化"
           }
         ]
       },
@@ -5255,6 +5399,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "01803626c5c7",
+        "source": "45aabc300e76f85c",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 2,
+        "attested": 1,
+        "units": 3
       }
     },
     {
@@ -5263,7 +5415,7 @@
       "version": "1.0.0",
       "title": "Cancelable motion and audio clock",
       "category": "integration",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -5304,8 +5456,9 @@
       "interaction": {
         "steps": [
           {
-            "action": "选择目标、暂停/继续、Reset/Back/Replay、Seek、Mute和释放",
-            "expected": "最新会话控制原生对象；音频source/origin语义保持；refs归零"
+            "action": "点击 音频模式 切换",
+            "buttonText": "音频模式",
+            "expected": "部件编组切换为音频提示节点布局，画面组成变化"
           }
         ]
       },
@@ -5329,6 +5482,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "a927b1a35391",
+        "source": "cb766ea5e1fc8460",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 1,
+        "attested": 0,
+        "units": 1
       }
     },
     {
@@ -5337,7 +5498,7 @@
       "version": "1.0.0",
       "title": "Mesh and material porting contracts",
       "category": "rendering",
-      "status": "validated",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -5386,6 +5547,11 @@
           {
             "action": "切换动态网格并暂停、恢复、重置、释放",
             "expected": "暂停期间图像和计数不变，恢复继续更新，释放后没有自有节点和引用"
+          },
+          {
+            "action": "点击动态网格切换模式",
+            "buttonText": "动态网格",
+            "expected": "原生动态网格更新与 onGeometryChanged 提交改变画面"
           }
         ]
       },
@@ -5409,6 +5575,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "4aa8c488c8f2",
+        "source": "7bfa74f88738a66e",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 5,
+        "attested": 0,
+        "units": 5
       }
     },
     {
@@ -5521,7 +5695,7 @@
       "promotion": {
         "spec": "e22465e2753e",
         "source": "171eaa9512f3bb0e",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 26,
         "attested": 0,
         "units": 26
@@ -5627,7 +5801,7 @@
       "promotion": {
         "spec": "2f25b8264944",
         "source": "0eb2fcf420ce8b42",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -5734,7 +5908,7 @@
       "promotion": {
         "spec": "ea400d8377c2",
         "source": "44280f19ae58d54e",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -5843,7 +6017,7 @@
       "promotion": {
         "spec": "e8dffc14e4ae",
         "source": "b2706d215970847c",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -5992,7 +6166,7 @@
       "promotion": {
         "spec": "c42cdd481052",
         "source": "b03352118c34029e",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 45,
         "attested": 0,
         "units": 45
@@ -6134,7 +6308,7 @@
       "promotion": {
         "spec": "516c502017cf",
         "source": "0de72aa96c0cbf42",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -6244,7 +6418,7 @@
       "promotion": {
         "spec": "691785c7d88e",
         "source": "ccc6fc2c4637ea1e",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -6335,7 +6509,7 @@
       "promotion": {
         "spec": "3dc08a803d09",
         "source": "77978071ea70ce35",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -6429,7 +6603,7 @@
       "promotion": {
         "spec": "d332c2a0874b",
         "source": "1c35d1d3e8c24f0e",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -6535,7 +6709,7 @@
       "promotion": {
         "spec": "03d09d051045",
         "source": "8c2c756a8e99932b",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -6660,7 +6834,7 @@
       "promotion": {
         "spec": "bb797e169f9a",
         "source": "485715f20cfa3290",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -6762,7 +6936,7 @@
       "promotion": {
         "spec": "3551d7ace883",
         "source": "7add401a7a5e9dd7",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -6853,7 +7027,7 @@
       "promotion": {
         "spec": "57a35450dc95",
         "source": "7517caefdbe8802f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -6962,7 +7136,7 @@
       "promotion": {
         "spec": "fc9bfe4f1c26",
         "source": "20f11d26e9b06084",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -7101,7 +7275,7 @@
       "promotion": {
         "spec": "0dac7344c814",
         "source": "3185e7f6fe4b2b48",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 36,
         "attested": 0,
         "units": 36
@@ -7208,7 +7382,7 @@
       "promotion": {
         "spec": "a60808cc9b2d",
         "source": "4a090376a6375b36",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -7313,7 +7487,7 @@
       "promotion": {
         "spec": "f2bd11247de3",
         "source": "8d183eb8d031b279",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -7422,7 +7596,7 @@
       "promotion": {
         "spec": "4e2e445e2a98",
         "source": "ce052ed83cc90a95",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -7604,7 +7778,7 @@
       "promotion": {
         "spec": "89ecaa27ffdb",
         "source": "a51f6d658d115a46",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 62,
         "attested": 0,
         "units": 62
@@ -7708,7 +7882,7 @@
       "promotion": {
         "spec": "203f4f311c0b",
         "source": "fd979e704b0fa6c1",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -7809,7 +7983,7 @@
       "promotion": {
         "spec": "abe438ba1222",
         "source": "f83475ba04b23763",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -7915,7 +8089,7 @@
       "promotion": {
         "spec": "f7a11b7992de",
         "source": "8a562381af5876cb",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -8092,7 +8266,7 @@
       "promotion": {
         "spec": "4aa1b0553603",
         "source": "b46ab04ed8c9b2e2",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 61,
         "attested": 0,
         "units": 61
@@ -8205,7 +8379,7 @@
       "promotion": {
         "spec": "c0d42af29914",
         "source": "16bbc63646599b56",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -8321,7 +8495,7 @@
       "promotion": {
         "spec": "11d86aca4ffd",
         "source": "b910e492ab3c99fd",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -8428,7 +8602,7 @@
       "promotion": {
         "spec": "414e57637b2f",
         "source": "23ff32f2b04abb5a",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -8652,7 +8826,7 @@
       "promotion": {
         "spec": "6cf98c815458",
         "source": "c4d2a3f10503ceb9",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 85,
         "attested": 0,
         "units": 85
@@ -8760,7 +8934,7 @@
       "promotion": {
         "spec": "679348ba6ca7",
         "source": "c7aaaf8d7e935e74",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -8876,7 +9050,7 @@
       "promotion": {
         "spec": "3a33e8470406",
         "source": "b0d669079a3e27a3",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -9052,7 +9226,7 @@
       "promotion": {
         "spec": "31ad85d68ae2",
         "source": "0b9d615d0b38693d",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 57,
         "attested": 0,
         "units": 57
@@ -9159,7 +9333,7 @@
       "promotion": {
         "spec": "eb9e9de757e9",
         "source": "a51696c718c2af5c",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -9268,7 +9442,7 @@
       "promotion": {
         "spec": "ba5cfcc9eb5b",
         "source": "a8aa732d8837e6c8",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -9386,7 +9560,7 @@
       "promotion": {
         "spec": "ffa5adffa8a9",
         "source": "4cbb6eb95ec9b214",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -9487,7 +9661,7 @@
       "promotion": {
         "spec": "79c65346c480",
         "source": "cfd361f0e1369cc3",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -9618,7 +9792,7 @@
       "promotion": {
         "spec": "aa2c9c573424",
         "source": "8d1360c7ffb96155",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 35,
         "attested": 0,
         "units": 35
@@ -9740,7 +9914,7 @@
       "promotion": {
         "spec": "027f9c6f22cf",
         "source": "7c55d767a20d0caa",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 35,
         "attested": 0,
         "units": 35
@@ -9895,7 +10069,7 @@
       "promotion": {
         "spec": "55b98a111bc1",
         "source": "860768f3941d7dff",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 47,
         "attested": 0,
         "units": 47
@@ -10017,7 +10191,7 @@
       "promotion": {
         "spec": "1c0010ce0740",
         "source": "cd75dcb9b3c7a69f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 32,
         "attested": 0,
         "units": 32
@@ -10124,7 +10298,7 @@
       "promotion": {
         "spec": "8fb0300091bb",
         "source": "ac2ad052249e06af",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -10318,7 +10492,7 @@
       "promotion": {
         "spec": "2924ef8c463d",
         "source": "2e6dbc83e69176ef",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 69,
         "attested": 0,
         "units": 69
@@ -10423,7 +10597,7 @@
       "promotion": {
         "spec": "df85dd1e8123",
         "source": "1e97ac75f2a9f38f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -10537,7 +10711,7 @@
       "promotion": {
         "spec": "070df733f068",
         "source": "f5ad1388893fcc15",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 29,
         "attested": 0,
         "units": 29
@@ -10649,7 +10823,7 @@
       "promotion": {
         "spec": "5e9a56f9e4d6",
         "source": "7d9357f712fd6afd",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 27,
         "attested": 0,
         "units": 27
@@ -10749,7 +10923,7 @@
       "promotion": {
         "spec": "359302f37ee8",
         "source": "bfb3b149c978500f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -10856,7 +11030,7 @@
       "promotion": {
         "spec": "42ac85f4d283",
         "source": "888e4f69808a0c53",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -11000,7 +11174,7 @@
       "promotion": {
         "spec": "30f3848c9bf2",
         "source": "7391fe4bff75816e",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 44,
         "attested": 0,
         "units": 44
@@ -11106,7 +11280,7 @@
       "promotion": {
         "spec": "09efb0d2382c",
         "source": "ba28a0e1f5ed04ad",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -11221,7 +11395,7 @@
       "promotion": {
         "spec": "103676084a48",
         "source": "1721c45a5d158484",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -11419,7 +11593,7 @@
       "promotion": {
         "spec": "5708a65d0f42",
         "source": "02d565acd823bc68",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 70,
         "attested": 0,
         "units": 70
@@ -11519,7 +11693,7 @@
       "promotion": {
         "spec": "39e4aa1ca1b9",
         "source": "476470486c6d0c4f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -11730,7 +11904,7 @@
       "promotion": {
         "spec": "b143498dced9",
         "source": "8fa976235c18bda7",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 76,
         "attested": 0,
         "units": 76
@@ -11837,7 +12011,7 @@
       "promotion": {
         "spec": "8d3ecabd9775",
         "source": "f63c8c756aa249fa",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -11952,7 +12126,7 @@
       "promotion": {
         "spec": "aba2d336dced",
         "source": "0aba272be450bb84",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -12059,7 +12233,7 @@
       "promotion": {
         "spec": "7331fcb3f758",
         "source": "27a3e28361542221",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -12154,7 +12328,7 @@
       "promotion": {
         "spec": "facc0dffdcae",
         "source": "368e3df77b65f7b7",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -12290,7 +12464,7 @@
       "promotion": {
         "spec": "83e8aa4de17a",
         "source": "22ad5db42f3d1a3a",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -12395,7 +12569,7 @@
       "promotion": {
         "spec": "d84e10888320",
         "source": "e269d7b6ad864d3d",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -12490,7 +12664,7 @@
       "promotion": {
         "spec": "5b954574f669",
         "source": "e5951aeb106da7e3",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -12586,7 +12760,7 @@
       "promotion": {
         "spec": "2a0473dbdd79",
         "source": "c58257e3098e3e82",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -12691,7 +12865,7 @@
       "promotion": {
         "spec": "ea18270871e1",
         "source": "013fd4d57716343e",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -12786,7 +12960,7 @@
       "promotion": {
         "spec": "5e1972835b36",
         "source": "f5b889e8a655bb9c",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -12880,7 +13054,7 @@
       "promotion": {
         "spec": "4ada25082207",
         "source": "10bae6c176697a46",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -13044,7 +13218,7 @@
       "promotion": {
         "spec": "5921a5fa608c",
         "source": "d9b62d4d799956ec",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 50,
         "attested": 0,
         "units": 50
@@ -13182,7 +13356,7 @@
       "promotion": {
         "spec": "1e712e56bb86",
         "source": "a6f36b8c7acce1c3",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 45,
         "attested": 0,
         "units": 45
@@ -13275,7 +13449,7 @@
       "promotion": {
         "spec": "f8d0a833da2d",
         "source": "1804d7a50f05df91",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -13369,7 +13543,7 @@
       "promotion": {
         "spec": "1600f4b3bd82",
         "source": "5a3ed945031356f0",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -13479,7 +13653,7 @@
       "promotion": {
         "spec": "f434218d7b1e",
         "source": "04d21d6a2f961c24",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -13584,7 +13758,7 @@
       "promotion": {
         "spec": "1e951dea23af",
         "source": "143ddfb3b88e6fa4",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -13702,7 +13876,7 @@
       "promotion": {
         "spec": "349a6cfe97c5",
         "source": "e7104fac7b11ed58",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -13903,7 +14077,7 @@
       "promotion": {
         "spec": "9cad82ae2901",
         "source": "6647945ed1133b9b",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 81,
         "attested": 0,
         "units": 81
@@ -14008,7 +14182,7 @@
       "promotion": {
         "spec": "d86a708ca70d",
         "source": "76793cbeacb700ba",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -14104,7 +14278,7 @@
       "promotion": {
         "spec": "adcedee647c1",
         "source": "58438f35cfba2029",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -14205,7 +14379,7 @@
       "promotion": {
         "spec": "4b30e4fbe723",
         "source": "734a03c5b92dfce8",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -14277,7 +14451,7 @@
       "promotion": {
         "spec": "5f5dce1baf01",
         "source": "57a546012fee3bed",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 2,
         "attested": 0,
         "units": 2
@@ -14424,7 +14598,7 @@
       "promotion": {
         "spec": "b0aac0b89ee8",
         "source": "fc10897d37d4d02b",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 11,
         "units": 34
@@ -14555,7 +14729,7 @@
       "promotion": {
         "spec": "2992f3827c45",
         "source": "0c29ffa9f366c5cf",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 33,
         "attested": 3,
         "units": 36
@@ -14694,7 +14868,7 @@
       "promotion": {
         "spec": "1146afbe7bfc",
         "source": "651f615374c33ffe",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 30,
         "attested": 3,
         "units": 33
@@ -14878,7 +15052,7 @@
       "promotion": {
         "spec": "c8e36fab4e52",
         "source": "5a37fd3d3300ace6",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 63,
         "attested": 6,
         "units": 69
@@ -15003,7 +15177,7 @@
       "promotion": {
         "spec": "3ff3f3d53ed9",
         "source": "6f5ec74fcc298655",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 30,
         "attested": 1,
         "units": 31
@@ -15138,7 +15312,7 @@
       "promotion": {
         "spec": "58000f69e95e",
         "source": "4753b596e6ba21cb",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 41,
         "attested": 0,
         "units": 41
@@ -15216,7 +15390,7 @@
       "promotion": {
         "spec": "937a7a051d1f",
         "source": "464c7ed802269cad",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -15322,7 +15496,7 @@
       "promotion": {
         "spec": "50bc153ddb1c",
         "source": "0fda4c96ce7a51a5",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -15426,7 +15600,7 @@
       "promotion": {
         "spec": "e76a8b021e50",
         "source": "047accd37ce78909",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -15531,7 +15705,7 @@
       "promotion": {
         "spec": "924c2a4ebd0a",
         "source": "5f322ef65443e136",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -15682,7 +15856,7 @@
       "promotion": {
         "spec": "e568b27b4292",
         "source": "ce8c2f3d46c24e7f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 41,
         "attested": 0,
         "units": 41
@@ -15781,7 +15955,7 @@
       "promotion": {
         "spec": "7452de8c11ca",
         "source": "86784386074fa41c",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -16278,7 +16452,7 @@
       "promotion": {
         "spec": "2722e26e69ef",
         "source": "387281ea52cc532e",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 31,
         "attested": 1,
         "units": 32
@@ -16289,7 +16463,118 @@
       "id": "responsive-board-recipes",
       "title": "Responsive board recipes",
       "category": "ui",
-      "status": "draft"
+      "status": "stable",
+      "specStatus": "frozen",
+      "bench": {
+        "viewport": {
+          "width": 1000,
+          "height": 1100
+        }
+      },
+      "learning": {
+        "goal": "响应式容器布局下的棋盘重排、单行标签、原生输入边沿与视觉缓存四项配方",
+        "points": [
+          "screenMode container 绑定 #host，容器尺寸变化驱动画布重排",
+          "labelNode SHRINK + enableWrapText:false 单行收缩，多行对照保留折行",
+          "createActionState/createActionInput 原生键盘边沿（Space/2/9 只计 press）与 session.own 退订",
+          "createVisualGate 视觉缓存：快照未变时不重绘棋盘 Graphics"
+        ]
+      },
+      "effect": {
+        "functional": "点击选格高亮、Space/2/9 边沿 drop、4×4/10×20/16×16 重建、Pause/Restart/Flag 与容器 resize 重排",
+        "visual": "480² 棋盘网格中选中格呈绿色脉冲（visiblePulse），状态行显示 hits/drops/flags，右列单行标签不换行"
+      },
+      "api": {
+        "primary": [
+          "createActionInput",
+          "labelNode",
+          "Label"
+        ],
+        "supporting": [
+          "createAirApp",
+          "createUICanvas",
+          "createActionState",
+          "Input",
+          "Node",
+          "UITransform",
+          "createStepClock"
+        ],
+        "claims": [
+          "createAirApp",
+          "createUICanvas",
+          "labelNode",
+          "Label",
+          "createActionState",
+          "createActionInput",
+          "Input",
+          "Node",
+          "UITransform",
+          "createStepClock"
+        ]
+      },
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "TranslatedScaledGroup",
+            "Board",
+            "Status",
+            "SingleRight",
+            "SingleLong",
+            "MultiText",
+            "Driver"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击棋盘格",
+            "expected": "选中格短暂高亮，hits 计数增加"
+          },
+          {
+            "action": "按 Space / 2 / 9",
+            "expected": "drop 只在按下边沿计一次（press transitions）"
+          },
+          {
+            "action": "切换 4×4 / 10×20 / 16×16 或点击 Pause/Restart/Flag",
+            "expected": "棋盘按新尺寸重建、暂停冻结 tick、Flag 计数刷新"
+          },
+          {
+            "action": "切换16×16棋盘",
+            "selectId": "board",
+            "optionValue": "16,16",
+            "expected": "棋盘实际重建并产生持续可见的网格变化"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "Driver 组件挂载并首帧 render 后即绪"
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "a9a463d9ddd6",
+        "source": "9068fd8c2befd738",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 10,
+        "attested": 0,
+        "units": 10
+      }
     },
     {
       "dir": "runtime-asset-release",
@@ -16378,7 +16663,7 @@
       "promotion": {
         "spec": "f628bd4d35b5",
         "source": "4a9f2c0d68b5473f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -16483,7 +16768,7 @@
       "promotion": {
         "spec": "6e068a897412",
         "source": "da38bbe3d694f92f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -16596,7 +16881,7 @@
       "promotion": {
         "spec": "a9702becc446",
         "source": "ea8fcfd16e2050b1",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 19,
         "attested": 10,
         "units": 29
@@ -16721,7 +17006,7 @@
       "promotion": {
         "spec": "72ed9b905b71",
         "source": "99edfa6fc0060f0f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -16841,10 +17126,160 @@
       "promotion": {
         "spec": "df4aafe4741e",
         "source": "fd48cef4ffe8c97f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 32,
         "attested": 0,
         "units": 32
+      }
+    },
+    {
+      "dir": "shader-cursor-trail",
+      "id": "shader-cursor-trail",
+      "version": "1.0.0",
+      "title": "Cursor Trail 光标轨迹",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "CPU 轨迹 → 64×1 RGBA16F → 原生材质单通道",
+        "points": [
+          "独立 host replay 与 GPU pixel oracle",
+          "年龄/速度宽度/Chaikin relax/三段 Bézier",
+          "真实鼠标、活 resize、配对释放"
+        ]
+      },
+      "effect": {
+        "galleryLifecycle": "RESOLVED_NOT_RUN",
+        "limitations": [
+          "仅线性两个颜色端点，无 stops 或其它空间",
+          "真实鼠标与诊断脚本分别记录；实体触屏与长时未测",
+          "GPU 物理显存 unavailable"
+        ],
+        "functional": "滑块 update（半径/寿命/衰减/柔边 uniform）、暂停/继续/重置/释放、Escape 清轨迹，单 native pacer",
+        "visual": "CPU 63 点+头副本上传 512 字节半精度 64×1 数据纹理、三段 Bézier 子弦扫描、速度响应柔边轨迹"
+      },
+      "api": {
+        "primary": [
+          "Texture2D",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Texture2D"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Texture2D"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material",
+        "input"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "native-camera",
+            "owned-cursor-trail-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "真实参数更新 radius/length（延长轨迹寿命）",
+            "probe": "__trail.set",
+            "probeArgs": [
+              {
+                "colorA": "#00aaff",
+                "colorB": "#ff00aa",
+                "radius": 2,
+                "length": 2,
+                "shrink": 1,
+                "softness": 0
+              }
+            ],
+            "expected": "公开参数合同真实更新 uniform，画面立即变化"
+          },
+          {
+            "action": "拖动鼠标绘制轨迹",
+            "drag": [
+              [
+                0.3,
+                0.4
+              ],
+              [
+                0.7,
+                0.6
+              ]
+            ],
+            "expected": "速度响应轨迹跟随真实指针生长"
+          },
+          {
+            "action": "执行示例 linearProbe 读回探针",
+            "probe": "__trail.linearProbe",
+            "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__trail.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__trail.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "__trail.ready"
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "5a70d2a55949",
+        "source": "5634bc47e0491360",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 9,
+        "attested": 0,
+        "units": 9
       }
     },
     {
@@ -16970,7 +17405,7 @@
       "promotion": {
         "spec": "b433fdcd5f3f",
         "source": "4cab0849e36df44f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -17090,10 +17525,1547 @@
       "promotion": {
         "spec": "7cada7a1d2e8",
         "source": "d5ef856a78549703",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 31,
         "attested": 0,
         "units": 31
+      }
+    },
+    {
+      "dir": "shader-emboss",
+      "id": "shader-emboss",
+      "version": "1.0.0",
+      "title": "Emboss 浮雕",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "原生 RTT 浮雕：预乘逆转、signed 高度光照、两 tap 阴影与 UV warp 的独立 oracle",
+        "points": [
+          "双相机单场景：子相机 256² RTT + bindColor 采样绑定",
+          "signed depth 凹/凸/零直通与 lz=0.7 边缘光",
+          "预乘→alpha 安全 unpremultiply→straight RGBA 单次合成",
+          "隐藏 RGB/半透明/透明三区 alpha 覆盖计划"
+        ]
+      },
+      "effect": {
+        "functional": "8 参数 update（shape 结构重建/其余 uniform）、暂停/继续/重置/释放，单 native pacer",
+        "visual": "signed 凹凸、depth0/形状外精确直通、预乘逆转 straight RGBA、透明底 RT 直读",
+        "limitations": [
+          "仅 circle/rounded-box 两个解析 SDF；SDF 贴图/volumetric/shape JSON 平台 NOT_SUPPORTED",
+          "Windows WebKit 采集器需 shader-scoped accelerated-compositing 启动项",
+          "性能窗口须 Lead 串行授权（--authorization）；Agent Gate NOT_RUN",
+          "Gallery 生命周期桥接已实现，浏览器证据 RESOLVED_NOT_RUN"
+        ]
+      },
+      "api": {
+        "primary": [
+          "EffectAsset",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Camera",
+          "Node",
+          "utils.createMesh",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Camera",
+          "Node"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "child-source-camera",
+            "native-camera",
+            "owned-emboss-child-1",
+            "owned-emboss-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击 重置",
+            "buttonText": "重置",
+            "expected": "时间与参数回到初始值，画面跳变到初始帧"
+          },
+          {
+            "action": "真实参数更新 scale",
+            "probe": "__emboss.set",
+            "probeArgs": [
+              {
+                "shape": "circle",
+                "scale": 1.8,
+                "rotation": 0,
+                "depth": -0.5,
+                "lightAngle": 260,
+                "lightIntensity": 0.6,
+                "shadowIntensity": 0.3,
+                "sourceKind": "standard"
+              }
+            ],
+            "expected": "公开参数合同真实更新 uniform，画面立即变化"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__emboss.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__emboss.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "Default startup scene plus __emboss.ready; Gallery validators declared, not yet executed."
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "aa6124af339f",
+        "source": "2ad33443613c3ad2",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 10,
+        "attested": 0,
+        "units": 10
+      }
+    },
+    {
+      "dir": "shader-film-neon",
+      "id": "shader-film-neon",
+      "version": "1.0.0",
+      "title": "Film+Neon 彩边霓虹 Logo",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "原生单通道双层组合：Neon over ThinFilm、预乘 source-over、一次 OETF、层开关真 identity",
+        "points": [
+          "两路径各自保留 E02 coverage/E04 stencil 数值差异",
+          "预乘 source-over + alpha 安全逆预乘",
+          "filmEnabled/neonEnabled 真 identity（全零 RGBA）",
+          "层参数互不污染"
+        ]
+      },
+      "effect": {
+        "functional": "23 参数 update（shape 结构重建/其余 uniform）、层开关 identity、暂停/继续/重置/释放",
+        "visual": "Neon over ThinFilm 预乘 source-over、一次 OETF、透明底 RT 直读、两像素外精确零",
+        "limitations": [
+          "本地组合设计，非上游 Logo 预设",
+          "仅 circle/rounded-box 共享解析 SDF",
+          "Windows WebKit 需 shader-scoped 启动项",
+          "性能窗口须 Lead 串行授权；Agent Gate NOT_RUN",
+          "Gallery 生命周期桥接已实现，浏览器证据 RESOLVED_NOT_RUN"
+        ]
+      },
+      "api": {
+        "primary": [
+          "EffectAsset",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Camera",
+          "Node",
+          "utils.createMesh",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Camera",
+          "Node"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "native-camera",
+            "owned-film-neon-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "改变滑块/形状/颜色/层开关",
+            "expected": "uniform 同步或 shape 重建；层开关真 identity"
+          },
+          {
+            "action": "暂停/继续/重置/释放",
+            "expected": "时钟冻结/前进、三引用退役归零、释放后按钮禁用"
+          },
+          {
+            "action": "执行示例 linearProbe 读回探针",
+            "probe": "__filmneon.linearProbe",
+            "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__filmneon.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__filmneon.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "Default startup scene plus __filmneon.ready; Gallery validators declared, not yet executed."
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "0511f4496f87",
+        "source": "cf3b46fa6ee333a1",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 10,
+        "attested": 0,
+        "units": 10
+      }
+    },
+    {
+      "dir": "shader-glass",
+      "id": "shader-glass",
+      "version": "1.0.0",
+      "title": "Glass 原生玻璃",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "RenderTexture折射、alpha-safe逆预乘与原生两Pass",
+        "points": [
+          "固定来源独立数值与像素校验",
+          "9/27 tap Vogel模糊与色散变体",
+          "sampler/detach/dispose独立释放"
+        ]
+      },
+      "effect": {
+        "galleryLifecycle": "RESOLVED_NOT_RUN",
+        "limitations": [
+          "仅解析circle/rounded-box、固定中心与白色高光",
+          "Vogel片元fallback，非Gaussian compute prepass",
+          "固定256² RGBA8/NEAREST子RT",
+          "Gaussian compute/实体设备/长时/Agent Gate未验；六维状态见独立交付"
+        ],
+        "functional": "19 参数 update（shape 跨值变体重建/其余 uniform）、来源切换、暂停/继续/重置/释放",
+        "visual": "256² 预乘子 RT 图案、解析平板折射与九点 Vogel fallback 模糊（色散 27 点）、一次 OETF、透明底直读"
+      },
+      "api": {
+        "primary": [
+          "EffectAsset",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Camera",
+          "Node",
+          "utils.createMesh",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Camera",
+          "Node"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "child-source-camera",
+            "native-camera",
+            "owned-glass-child-1",
+            "owned-glass-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击 重置",
+            "buttonText": "重置",
+            "expected": "时间与参数回到初始值，画面跳变到初始帧"
+          },
+          {
+            "action": "真实参数更新 scale",
+            "probe": "__glass.set",
+            "probeArgs": [
+              {
+                "shape": "circle",
+                "scale": 1.8,
+                "rotation": 0,
+                "refraction": 1,
+                "thickness": 0.5,
+                "blur": 0,
+                "aberration": 0.5,
+                "innerZoom": 1,
+                "edgeSoftness": 0.1,
+                "lightAngle": 300,
+                "highlight": 0.05,
+                "highlightSoftness": 0.5,
+                "fresnel": 0.2,
+                "fresnelSoftness": 0.5,
+                "tintIntensity": 0,
+                "tintPreserveLuminosity": 1,
+                "tintColor": "#ffffff",
+                "cutout": "none",
+                "sourceKind": "standard"
+              }
+            ],
+            "expected": "公开参数合同真实更新 uniform，画面立即变化"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__glass.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__glass.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "Default startup scene plus __glass.ready; Gallery validators declared, not yet executed."
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "7b6c87587774",
+        "source": "953812a8830331bd",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 10,
+        "attested": 0,
+        "units": 10
+      }
+    },
+    {
+      "dir": "shader-glass-trail",
+      "id": "shader-glass-trail",
+      "version": "1.0.0",
+      "title": "Glass Trail 互动玻璃",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "双段原生：Trail→RT→Glass→screen，单次上传，一次 OETF",
+        "points": [
+          "Trail premultiplied rgba8 RT",
+          "Glass 读实际内容折射/blur/aberration",
+          "层开关 identity",
+          "参数命名空间 trail*/glass*"
+        ]
+      },
+      "effect": {
+        "functional": "19 参数、层开关 identity、双 pass",
+        "visual": "premultiplied RT 链、一次 OETF、两像素外零",
+        "limitations": [
+          "本地组合设计",
+          "仅 circle/rounded-box",
+          "Agent NOT_RUN"
+        ]
+      },
+      "api": {
+        "primary": [
+          "EffectAsset",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Camera",
+          "Node",
+          "utils.createMesh",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Camera",
+          "Node"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "trail-camera",
+            "main-camera",
+            "c03-trail-1",
+            "c03-glass-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击 重置",
+            "buttonText": "重置",
+            "expected": "时间与参数回到初始值，画面跳变到初始帧"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__glasstrail.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__glasstrail.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "__glasstrail.ready"
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "e6368aa5f054",
+        "source": "99914ea1f7562a49",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 10,
+        "attested": 0,
+        "units": 10
+      }
+    },
+    {
+      "dir": "shader-holographic",
+      "id": "shader-holographic",
+      "version": "1.0.0",
+      "title": "Holographic 全息箔",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "原生单通道全息箔：MaterialX perlin 独立重写、皱褶法线与分层 oracle",
+        "points": [
+          "lookup3 u32 格点散列 + quintic + 8 梯度的 mx_noise_float 复算",
+          "前向 stencil 0.008 + dome 法线 + 0.02 皱褶差分",
+          "精确 1/3 相位余弦色谱与固定 300° 主光折叠常数",
+          "两像素 guard 精确零与透明底 RT 直读"
+        ]
+      },
+      "effect": {
+        "functional": "13 参数 update（shape 结构重建/其余 uniform）、暂停/继续/重置/释放，单 native pacer",
+        "visual": "分层 noise/normal/hue/light/flake/grain、straight linear RGBA、一次 OETF、两像素外精确零",
+        "limitations": [
+          "仅 circle/rounded-box 两个解析 SDF；sphere3D/volumetric/SDF 贴图/shape JSON 平台 NOT_SUPPORTED",
+          "silhouette 宽度按 std 文档语义实现（kit 主体不在只读缓存，已声明）",
+          "Windows WebKit 采集器需 shader-scoped accelerated-compositing 启动项",
+          "性能窗口须 Lead 串行授权（--authorization）；Agent Gate NOT_RUN",
+          "Gallery 生命周期桥接已实现，浏览器证据 RESOLVED_NOT_RUN"
+        ]
+      },
+      "api": {
+        "primary": [
+          "EffectAsset",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Camera",
+          "Node",
+          "utils.createMesh",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Camera",
+          "Node"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "native-camera",
+            "owned-holographic-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "改变滑块/形状下拉/seed",
+            "expected": "uniform 同步或 shape 跨值变体重建；seed 偏移噪声域"
+          },
+          {
+            "action": "暂停/继续/重置/释放",
+            "expected": "时钟冻结/前进、三引用退役归零、释放后按钮禁用"
+          },
+          {
+            "action": "执行示例 linearProbe 读回探针",
+            "probe": "__holographic.linearProbe",
+            "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__holographic.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__holographic.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "Default startup scene plus __holographic.ready; Gallery validators declared, not yet executed."
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "83c37e26d60a",
+        "source": "f67a1904c8e6c2b1",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 10,
+        "attested": 0,
+        "units": 10
+      }
+    },
+    {
+      "dir": "shader-input-dissolve",
+      "id": "shader-input-dissolve",
+      "version": "1.0.0",
+      "title": "Input Dissolve 任意输入溶解",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "NoiseDissolve 母算法 + 三路线任意输入；progress 0=identity 1=transparent；一次 OETF",
+        "points": [
+          "三路线 source：PNG 纹理 / 程序着色器 / 真实场景 RT",
+          "显式 rgba8 存储+安全逆预乘",
+          "reveal 掩码只缩放 alpha",
+          "路线 pass 合同：image 1 / procedural+rendered 2"
+        ]
+      },
+      "effect": {
+        "functional": "8 参数+3路线+层开关",
+        "visual": "18 视觉案例+DPR2；端点精确",
+        "limitations": [
+          "本地组合设计",
+          "零浏览器运行时未验证"
+        ]
+      },
+      "api": {
+        "primary": [
+          "EffectAsset",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Camera",
+          "Node",
+          "utils.createMesh",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Camera",
+          "Node"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "content-camera",
+            "main-camera",
+            "c04-dissolve-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "点击 重置",
+            "buttonText": "重置",
+            "expected": "时间与参数回到初始值，画面跳变到初始帧"
+          },
+          {
+            "action": "执行示例 linearProbe 读回探针",
+            "probe": "__inputdissolve.linearProbe",
+            "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+          },
+          {
+            "action": "真实参数更新 progress（完全溶解）",
+            "probe": "__inputdissolve.set",
+            "probeArgs": [
+              {
+                "route": "image",
+                "progress": 0.9,
+                "scale": 3,
+                "softness": 0.25,
+                "seed": 0,
+                "invert": "off",
+                "dissolveEnabled": "on",
+                "time": 0
+              }
+            ],
+            "expected": "公开参数合同真实更新 uniform，溶解进度可见变化"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__inputdissolve.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__inputdissolve.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "__inputdissolve.ready"
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "861b2ebfc6d8",
+        "source": "b2b514ac3a2e7a2c",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 10,
+        "attested": 0,
+        "units": 10
+      }
+    },
+    {
+      "dir": "shader-laser-card",
+      "id": "shader-laser-card",
+      "version": "1.0.0",
+      "title": "Laser Card 镭射卡片",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "三段原生组合链：预乘 RT 传递、安全逆预乘、实际内容采样、一次 OETF",
+        "points": [
+          "三相机三 pass 两 RT 同 Scene",
+          "Sparkle 读 Emboss 实际内容（亮度+颜色门控）",
+          "层开关真 identity（中性输入/RT copy/display copy）",
+          "参数命名空间隔离 holo*/emboss*/sparkle*"
+        ]
+      },
+      "effect": {
+        "functional": "20 参数 update（shape 结构重建/其余 uniform）、层开关 identity、三 pass 可观测",
+        "visual": "三段 straight→premul RT→unpremul→一次 OETF、Sparkle 读实际内容、中间不 OETF",
+        "limitations": [
+          "本地组合设计，不称上游预设",
+          "仅 circle/rounded-box 共享 SDF",
+          "中间 RT 跟随 backing/DPR",
+          "Agent Gate NOT_RUN"
+        ]
+      },
+      "api": {
+        "primary": [
+          "EffectAsset",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Camera",
+          "Node",
+          "utils.createMesh",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Camera",
+          "Node"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "holo-camera",
+            "emboss-camera",
+            "main-camera",
+            "c01-holo-1",
+            "c01-emboss-1",
+            "c01-sparkle-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "改变滑块/层开关",
+            "expected": "uniform 同步或 shape 重建；层开关 identity"
+          },
+          {
+            "action": "暂停/继续/重置/释放",
+            "expected": "时钟冻结/前进、7 引用退役归零"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__laser.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__laser.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "__laser.ready"
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "77f871a9a0e2",
+        "source": "a161f758b3a1cc88",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 10,
+        "attested": 0,
+        "units": 10
+      }
+    },
+    {
+      "dir": "shader-liquid-metal",
+      "id": "shader-liquid-metal",
+      "version": "1.0.0",
+      "title": "Liquid Metal 液态金属",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "原生单通道液态金属：流动浮雕替代噪声、程序影棚反射与质量档位成本差",
+        "points": [
+          "flowWarp 域扭曲 + mx perlin 中心差分（Fi-hash 替代声明）",
+          "bevelSin 倒角轮廓与倾斜场梯度法线",
+          "三柔光灯影棚 + 透视镜像 + sharpGlint",
+          "quality low/high 真实 studio 求值数差（1→2）"
+        ]
+      },
+      "effect": {
+        "functional": "17 参数 update（shape 结构重建/其余 uniform）、暂停/继续/重置/释放，单 native pacer",
+        "visual": "分层 stencil/silhouette/normal/relief/reflection/studio/spec/ramp、quality 真实成本差、两像素外精确零",
+        "limitations": [
+          "仅 circle/rounded-box；sphere3D/volumetric/SDF 贴图/shape JSON 平台 NOT_SUPPORTED",
+          "浮雕噪声为 mx perlin 替代（Fi-hash 许可未明），同类非等价",
+          "Windows WebKit 采集器需 shader-scoped accelerated-compositing 启动项",
+          "性能窗口须 Lead 串行授权（--authorization）；Agent Gate NOT_RUN",
+          "Gallery 生命周期桥接已实现，浏览器证据 RESOLVED_NOT_RUN"
+        ]
+      },
+      "api": {
+        "primary": [
+          "EffectAsset",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Camera",
+          "Node",
+          "utils.createMesh",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Camera",
+          "Node"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "native-camera",
+            "owned-liquid-metal-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "改变滑块/形状/质量下拉",
+            "expected": "uniform 同步或 shape 跨值变体重建；quality 切换 studio 求值数"
+          },
+          {
+            "action": "暂停/继续/重置/释放",
+            "expected": "时钟冻结/前进、三引用退役归零、释放后按钮禁用"
+          },
+          {
+            "action": "执行示例 linearProbe 读回探针",
+            "probe": "__liquid.linearProbe",
+            "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__liquid.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__liquid.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "Default startup scene plus __liquid.ready; Gallery validators declared, not yet executed."
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "9147fe82635b",
+        "source": "8695e54b9086d945",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 10,
+        "attested": 0,
+        "units": 10
+      }
+    },
+    {
+      "dir": "shader-neon",
+      "id": "shader-neon",
+      "version": "1.0.0",
+      "title": "Neon 霓虹管",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "原生 SDF Neon：分层独立 oracle、逆边 smoothstep 显式化、透明底直读与生命周期",
+        "points": [
+          "中心+四向 SDF stencil 与 cornerSmoothing 场混合",
+          "rim band 管体 + Blinn-Phong 半圆截面 + 热核 + 双指数外晕",
+          "straight linear RGBA 与一次 OETF 预览、透明底 rgba8 RT 直读",
+          "远端 glowR*1.5+softPx+smoothEPS 硬零截断"
+        ]
+      },
+      "effect": {
+        "functional": "20 参数 update（shape 结构重建/其余 uniform）、暂停/继续/重置/释放，单 native pacer",
+        "visual": "core/tube/glow 分层独立可控、straight linear RGBA、一次 OETF、透明底远端精确零",
+        "limitations": [
+          "仅 circle/rounded-box 两个解析 SDF 形状，不支持上游 SDF 贴图与 volumetric 路径",
+          "Windows WebKit 采集器需 shader-scoped accelerated-compositing 启动项",
+          "性能窗口须 Lead 串行授权；Agent Gate NOT_RUN",
+          "Gallery 生命周期桥接已实现，浏览器证据 RESOLVED_NOT_RUN"
+        ]
+      },
+      "api": {
+        "primary": [
+          "EffectAsset",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Camera",
+          "Node",
+          "utils.createMesh",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Camera",
+          "Node"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "native-camera",
+            "owned-neon-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "改变滑块/形状下拉",
+            "expected": "uniform 同步或 shape 跨值变体重建"
+          },
+          {
+            "action": "暂停/继续/重置/释放",
+            "expected": "时钟冻结/前进、退役引用归零、释放后按钮禁用"
+          },
+          {
+            "action": "执行示例 linearProbe 读回探针",
+            "probe": "__neon.linearProbe",
+            "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__neon.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__neon.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "Default startup scene plus __neon.ready; Gallery validators declared, not yet executed."
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "8f59f6314924",
+        "source": "5e9447d56076c0f6",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 10,
+        "attested": 0,
+        "units": 10
+      }
+    },
+    {
+      "dir": "shader-noise-dissolve",
+      "id": "shader-noise-dissolve",
+      "version": "1.0.0",
+      "title": "Noise Dissolve",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "用原生材质实现连续 seed 的 Perlin fBM 溶解并对照独立 CPU oracle",
+        "points": [
+          "三 octave gradient noise",
+          "aspect/UV/alpha 合同",
+          "同页呈现和 GPU 读回分别采证",
+          "先解绑再逐项归还资源"
+        ]
+      },
+      "effect": {
+        "functional": "五参数uniform更新、连续seed、暂停/恢复/重置/销毁/重建；仅单一原生pacer",
+        "visual": "RGB保持、alpha被Perlin fBM coverage消去；棋盘含零与半透明输入"
+      },
+      "api": {
+        "primary": [
+          "Material.initialize",
+          "EffectAsset"
+        ],
+        "supporting": [
+          "Texture2D",
+          "MeshRenderer",
+          "utils.createMesh",
+          "createStepClock",
+          "createAirApp",
+          "Material.setProperty"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "Texture2D",
+          "MeshRenderer",
+          "utils.createMesh"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Camera",
+            "CheckerBackground",
+            "Dissolve-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "切换输入源下拉为不透明色块",
+            "selectId": "input",
+            "optionValue": "opaque",
+            "expected": "上传不透明输入后画面组成真实变化"
+          },
+          {
+            "action": "改变progress/scale/softness/连续seed/invert",
+            "expected": "直接更新uniform、不更换实例；端点可见/完全消失"
+          },
+          {
+            "action": "暂停/恢复/重置/销毁/重建",
+            "expected": "帧冻结/前进；reset归还旧资源；destroy后可recreate"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "b52811104524",
+        "source": "70eb47b6f16fe75e",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 8,
+        "attested": 0,
+        "units": 8
+      }
+    },
+    {
+      "dir": "shader-sparkle",
+      "id": "shader-sparkle",
+      "version": "1.0.0",
+      "title": "Sparkle 星芒",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "原生双网格 Sparkle：独立数学 oracle、RGBA 组合、生命周期及测量精度",
+        "points": [
+          "sqrt(alpha-weighted linear Rec709) 门控",
+          "CSS px 星芒和 DPR 合同",
+          "同页 PNG 与 native float RT 分开采证",
+          "100 同 app 实例与 app 级 EffectAsset 退役"
+        ]
+      },
+      "effect": {
+        "functional": "八参数update、expand跨0真实变体重建、暂停/继续/重置/释放，单nativepacer",
+        "visual": "有界双抖动网格、线性associated RGBA、OETF预览适配",
+        "limitations": [
+          "Windows WebKit collector requires the shader-scoped accelerated-compositing launch option",
+          "Performance uses observed HTTP COOP/COEP isolation and navigation DPR repair",
+          "Agent Gate NOT_RUN",
+          "独立hash非上游字节等价",
+          "Gallery lifecycle bridge implemented; current Wave 1 gate binds dedicated real-browser retire/reacquire evidence."
+        ]
+      },
+      "api": {
+        "primary": [
+          "EffectAsset",
+          "Material.initialize"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Texture2D",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "Texture2D",
+          "utils.createMesh"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "native-camera",
+            "owned-sparkle-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "改变八个滑块",
+            "expected": "uniform或expand跨0实例/变体重建"
+          },
+          {
+            "action": "暂停/继续/重置/释放",
+            "expected": "模拟时钟冻结/前进，退役引用归零，释放后按钮禁用"
+          },
+          {
+            "action": "执行示例 linearRead 读回探针",
+            "probe": "__sparkle.linearRead",
+            "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行",
+            "probeArgs": [
+              [
+                {
+                  "x": 100,
+                  "y": 100
+                },
+                {
+                  "x": 200,
+                  "y": 150
+                }
+              ]
+            ]
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__sparkle.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__sparkle.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "Default startup scene plus __sparkle.ready; Gallery validators are declared, not yet executed as a Gallery benchmark."
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "3f86371c53fb",
+        "source": "15ad35d573908023",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 9,
+        "attested": 0,
+        "units": 9
+      }
+    },
+    {
+      "dir": "shader-thin-film",
+      "id": "shader-thin-film",
+      "version": "1.0.0",
+      "title": "Native Thin Film",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "使用原生 EffectAsset、SDF 梯度与线性 straight RGBA 构建内侧虹彩",
+        "points": [
+          "cosine phase 周期",
+          "解析梯度与 fwidth AA 分工",
+          "线性核心和显示 OETF 分开",
+          "100 实例自有资产归还"
+        ]
+      },
+      "effect": {
+        "functional": "十参数、暂停、恢复、重置和释放；单一原生帧循环",
+        "visual": "circle 或 rounded-box 的透明内侧虹彩"
+      },
+      "api": {
+        "primary": [
+          "Material.initialize",
+          "EffectAsset.onLoaded",
+          "MeshRenderer.mesh"
+        ],
+        "supporting": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget"
+        ],
+        "claims": [
+          "Material.initialize",
+          "EffectAsset.onLoaded",
+          "MeshRenderer.mesh",
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "native-camera",
+            "owned-film-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "选择 shape、phase 或 opacity",
+            "expected": "更新原生材质，shape 重建；alpha0 露出背景"
+          },
+          {
+            "action": "执行示例 coreProbe 读回探针",
+            "probe": "__thinFilm.coreProbe",
+            "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+          },
+          {
+            "action": "单步推进示例步进时钟",
+            "probe": "__thinFilm.step",
+            "probeArgs": [
+              0.0333
+            ],
+            "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+          },
+          {
+            "action": "恢复原生 pacer",
+            "probe": "__thinFilm.resumePacer",
+            "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "518d13357d29",
+        "source": "a005a4421efd24c4",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 6,
+        "attested": 0,
+        "units": 6
       }
     },
     {
@@ -17263,7 +19235,7 @@
       "promotion": {
         "spec": "01fa4e3a9f64",
         "source": "a454e3685141457c",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 54,
         "attested": 0,
         "units": 54
@@ -17275,7 +19247,7 @@
       "version": "1.0.0",
       "title": "Sprite · 遮罩通道与粒子混合",
       "category": "rendering",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -17323,9 +19295,9 @@
       "interaction": {
         "steps": [
           {
-            "action": "点击 Alpha 软遮罩",
-            "buttonText": "Alpha 软遮罩",
-            "expected": "实际场景或模式更新；定向 __exampleProbe 断言验证结果"
+            "action": "点击 Alpha 阈值",
+            "buttonText": "Alpha 阈值",
+            "expected": "软遮罩切换为阈值判定后，遮罩边缘像素立即变为二值"
           }
         ]
       },
@@ -17345,8 +19317,18 @@
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "89466a671182",
+        "source": "3da17ccaff4ae63a",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 4,
+        "attested": 0,
+        "units": 4
       }
     },
     {
@@ -17435,7 +19417,7 @@
       "promotion": {
         "spec": "5a055cbc312f",
         "source": "71fe39e265d47e5f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 2,
         "attested": 0,
         "units": 2
@@ -17523,7 +19505,7 @@
       "promotion": {
         "spec": "42f31ac5e836",
         "source": "b5961af8e31f5651",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 9,
         "attested": 0,
         "units": 9
@@ -17627,7 +19609,7 @@
       "promotion": {
         "spec": "55ff2f5976e3",
         "source": "b3419d3d54e6f20e",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -17747,7 +19729,7 @@
       "promotion": {
         "spec": "b73eafe44754",
         "source": "ff2b442ea1080e8f",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 27,
         "attested": 0,
         "units": 27
@@ -17858,7 +19840,7 @@
       "promotion": {
         "spec": "67d84f00e67a",
         "source": "3ec71c4754dfb103",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -17991,7 +19973,7 @@
       "promotion": {
         "spec": "5ef4ad7124a9",
         "source": "fa9820ec157d7c34",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 40,
         "attested": 0,
         "units": 40
@@ -18109,7 +20091,7 @@
       "promotion": {
         "spec": "94f1a97e35bc",
         "source": "5d1037188542fa8c",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -18216,7 +20198,7 @@
       "promotion": {
         "spec": "bfa4c738187b",
         "source": "6512223704e49e45",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -18390,7 +20372,7 @@
       "promotion": {
         "spec": "7cc79446c2a9",
         "source": "9b9f778541adc13a",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 48,
         "attested": 0,
         "units": 48
@@ -18486,7 +20468,7 @@
       "promotion": {
         "spec": "80b0c3becc83",
         "source": "1a37f130b093f25a",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -18646,7 +20628,7 @@
       "promotion": {
         "spec": "4f2be6f5dca5",
         "source": "ab152be635b54e0b",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 59,
         "attested": 0,
         "units": 59
@@ -18751,7 +20733,7 @@
       "promotion": {
         "spec": "fb73abcb354f",
         "source": "59231c951d6a22fd",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -18873,7 +20855,7 @@
       "promotion": {
         "spec": "ac1d1fe9483f",
         "source": "cbda0eef993792c8",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 29,
         "attested": 1,
         "units": 30
@@ -19127,7 +21109,7 @@
       "promotion": {
         "spec": "9784ade4e206",
         "source": "b6ae4901f3c74129",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 96,
         "attested": 0,
         "units": 96
@@ -19289,7 +21271,7 @@
       "promotion": {
         "spec": "e56f7afefc3a",
         "source": "0044e517969554d1",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 49,
         "attested": 0,
         "units": 49
@@ -19393,7 +21375,7 @@
       "promotion": {
         "spec": "a8faeac6500a",
         "source": "b4fadffb071fd409",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -19545,7 +21527,7 @@
       "promotion": {
         "spec": "131f1ec448fd",
         "source": "6bf9e6f3199f8aa6",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 29,
         "attested": 7,
         "units": 36
@@ -19557,7 +21539,7 @@
       "version": "1.0.0",
       "title": "Multipass Water: Reflection, Refraction, Depth and Caustics",
       "category": "rendering",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -19635,6 +21617,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "a4aad142f1b9",
+        "source": "557a2bb5a5aced08",
+        "candidate": "24fcbd038ef9869c",
+        "verified": 4,
+        "attested": 0,
+        "units": 4
       }
     },
     {
@@ -19779,7 +21769,7 @@
       "promotion": {
         "spec": "293bf690ec0f",
         "source": "dba2e31f1d56561a",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "24fcbd038ef9869c",
         "verified": 31,
         "attested": 5,
         "units": 36
@@ -20001,7 +21991,20 @@
       "html-texture-experimental",
       "k0-r2-porting-contracts",
       "interactive-multipass",
-      "interactive-geometry"
+      "interactive-geometry",
+      "shader-noise-dissolve",
+      "shader-thin-film",
+      "shader-sparkle",
+      "shader-neon",
+      "shader-emboss",
+      "shader-holographic",
+      "shader-liquid-metal",
+      "shader-cursor-trail",
+      "shader-glass",
+      "shader-film-neon",
+      "shader-laser-card",
+      "shader-glass-trail",
+      "shader-input-dissolve"
     ],
     "shader": [
       "shader-custom-gradient",

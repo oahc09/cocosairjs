@@ -1,0 +1,1126 @@
+{
+  "schemaVersion": "e09-glass-current-gate/1",
+  "task": "Wave3/E09",
+  "evaluatedAt": "2026-10-10T03:59:32.157Z",
+  "executionChannels": {
+    "implementationIndependentReviewAndCollection": "Lead"
+  },
+  "status": "PASS",
+  "scope": "analytic circle/rounded-box Glass helper plus native Vogel fragment fallback; not Gaussian compute",
+  "subset": true,
+  "completed": false,
+  "wave3Gate": "NOT_RUN",
+  "agentGate": "NOT_RUN",
+  "gates": {
+    "Build": {
+      "status": "PASS",
+      "strictTypecheckAndBundle": [
+        {
+          "command": "node node_modules/typescript/bin/tsc -p tools/verify/shaders-glass.tsconfig.json",
+          "exitCode": 0,
+          "raw": {
+            "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/build.log",
+            "bytes": 100,
+            "sha256": "8fdc354b6e459b7122cb56e32725587311e2c5afb11479393ddf6ffa0eec2ee3"
+          },
+          "bundleBytes": 58526
+        },
+        {
+          "command": "node node_modules/typescript/bin/tsc -p tools/verify/shaders-glass.tsconfig.json",
+          "exitCode": 0,
+          "raw": {
+            "path": "output/shaders-absorption/lead-w3-e09-performance-attempt1-artifacts/build.log",
+            "bytes": 100,
+            "sha256": "8fdc354b6e459b7122cb56e32725587311e2c5afb11479393ddf6ffa0eec2ee3"
+          },
+          "bundleBytes": 58526
+        }
+      ]
+    },
+    "Runtime": {
+      "status": "PASS",
+      "engines": 3,
+      "trustedControls": 3,
+      "liveResize": 3,
+      "nativeRenderPassesPerFrame": 2
+    },
+    "Visual": {
+      "status": "PASS",
+      "screenshotCases": 45,
+      "transparentLinearProbes": 45,
+      "byteTolerance": 2,
+      "screenshots": [
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-default-dpr1.png",
+          "bytes": 14540,
+          "sha256": "51877739e8bb7a7266db0d6af8b32375a67ac9fe5fdd562a0eb102e152da5469"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-box-dpr1.png",
+          "bytes": 5298,
+          "sha256": "b6048cd04f6fc1cef0971faee2dcad3a50b8a3f6f3527a279841b07c9f1136fd"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-refraction-zero-dpr1.png",
+          "bytes": 13061,
+          "sha256": "c9da1ec23bc0f92da47723a28b5328c5da5bfd5e1400e8319874e8c386adf38e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-blur-vogel-dpr1.png",
+          "bytes": 21846,
+          "sha256": "e22d4b83d1d442241bc9bbdc2a9aca2e7354e92b6790985a97c271506b06195f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-blur-no-aberration-dpr1.png",
+          "bytes": 19772,
+          "sha256": "9676506df78d6194a32b855e554b6468b903c6b3b09cf4ed1f646a2dbb5902df"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-aberration-zero-dpr1.png",
+          "bytes": 14173,
+          "sha256": "9954dbb4f2db5ce7f444a38f94af7b4b117ebc9199d148773c6b87cdcd2530d1"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-inner-zoom-dpr1.png",
+          "bytes": 13913,
+          "sha256": "2e2bd2acaf14dbe6ed34bce0a3a000da9210cd964b244acc47bd249ab0ff197f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-cutout-dpr1.png",
+          "bytes": 14615,
+          "sha256": "3b15444c4b10c84c6e84f8e15c6b74433cbdfc7dd35a56927a94f98f955c22b2"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-highlight-zero-dpr1.png",
+          "bytes": 14117,
+          "sha256": "46fa33c0adb397d6f9c4fc9134308b062802d45e3cebefeccbfefdbb7e5d53b7"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-fresnel-zero-dpr1.png",
+          "bytes": 9382,
+          "sha256": "4fd4e00f359a579f161aa8d3fad57fdc5422fe75cafdd489ff923ececb793a35"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-tint-red-dpr1.png",
+          "bytes": 14773,
+          "sha256": "115ac8412e814aa9464f05c36d2dd1f7925a37d7137846bca8a69b352b3acd66"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-blank-source-dpr1.png",
+          "bytes": 2268,
+          "sha256": "13eb31be062d244003bd5ccf07e98f7313305c56c0435d0e6abe5018c28a9859"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-background-light-dpr1.png",
+          "bytes": 14364,
+          "sha256": "34295c3e652239c8ffe62613cf7df5dfff5294c2cdef1a23460fbe2ac12158b2"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-default-dpr2.png",
+          "bytes": 37073,
+          "sha256": "2093abe105bd6fbcff2913f46829014a549399f7c04de637c5d14899045806e2"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-box-dpr2.png",
+          "bytes": 11825,
+          "sha256": "c93720c7b3cf58e848687bcacf374c2601d2c74571632ee9c5fb5d10a725fe63"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/chromium-live-resize.png",
+          "bytes": 10914,
+          "sha256": "9e87ca023d189329b9d317f3ab799085fbed8c6a7f13f9689d31b22d0a5fa7b3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-default-dpr1.png",
+          "bytes": 25702,
+          "sha256": "15c55d7c76abdc15d3403155a87e48456c8c2340bfeb2e87e1719c9479b2fa29"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-box-dpr1.png",
+          "bytes": 13891,
+          "sha256": "6bd4a471b32b25fbd44bbc1678c07f2533570cff95818186456cd62a5ecd6745"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-refraction-zero-dpr1.png",
+          "bytes": 24318,
+          "sha256": "69d5bd8644f1b921277fd4ac90150a6c892d308e3445c5cc98635bc32bc78a8c"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-blur-vogel-dpr1.png",
+          "bytes": 33753,
+          "sha256": "645fbc97b169cb0f1cbd0f8f10c92e87f4574ad823caa54065de95e8ab9d5322"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-blur-no-aberration-dpr1.png",
+          "bytes": 30323,
+          "sha256": "2db55a2fc5170b7096c2eda19b05e8c550b84f5d83c4ed58ae5e2821dab97f06"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-aberration-zero-dpr1.png",
+          "bytes": 25210,
+          "sha256": "d69583e46b4556f038c451e87b47a1393a8c165f687c503a858e9ae3690b6a90"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-inner-zoom-dpr1.png",
+          "bytes": 24454,
+          "sha256": "e6d23376ecb7cbaf08c062a148c436adbd45844bb0e4545ef5ebef726ad526f1"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-cutout-dpr1.png",
+          "bytes": 20103,
+          "sha256": "a61aa235bdc4c49fe13de1bcf870d24d3dc20b90b7bfc1e52cc4ca058378613d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-highlight-zero-dpr1.png",
+          "bytes": 24808,
+          "sha256": "d4eacccbe829220e4b73a8a7c0304c2fc16276c711d1d03a1c62c647b7edbbf9"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-fresnel-zero-dpr1.png",
+          "bytes": 19561,
+          "sha256": "b7650355630b1d4ba223560524f2ab9f881650f1ca26ed9ce39b7a66f990199e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-tint-red-dpr1.png",
+          "bytes": 25456,
+          "sha256": "761aa32da5267066f1542f90347f2414fbe8b89afa7dd997c6bb545d7dc84e1d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-blank-source-dpr1.png",
+          "bytes": 2499,
+          "sha256": "0ad909dd9c1d2b5ac4e1ed17c2a4297891b86367b2bd9fa70107b2d4dd9bf14a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-background-light-dpr1.png",
+          "bytes": 25437,
+          "sha256": "61929ac4b39d5275f2ed2d14dea2b0e8eb942015c3b74ffdaf346ac017745daf"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-default-dpr2.png",
+          "bytes": 79409,
+          "sha256": "7ac2d0babb9c51deb9b0b8374b40e2bdcb8fce47eb4f3a71a4917f89643e4909"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-box-dpr2.png",
+          "bytes": 45998,
+          "sha256": "254ca07aafa01e6235dfabc69498c80601de51cfc8d7eb629754c13dc9051e32"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/firefox-live-resize.png",
+          "bytes": 19566,
+          "sha256": "c0e2d8861f13fb19cae51d0a89b563db31f54162d5e8fc04498f8c7e95c56e34"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-default-dpr1.png",
+          "bytes": 16517,
+          "sha256": "12dada186c6056889c230c32caadc806975de1d209f433751dfc9d721c065f59"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-box-dpr1.png",
+          "bytes": 6116,
+          "sha256": "64afdaa851c355ce489a37031ad224c7cbf90ff631dc8c6a942c2bac638b6634"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-refraction-zero-dpr1.png",
+          "bytes": 14820,
+          "sha256": "604ef2648dbc79316a9e6d297099621bf3c531fee1383faf1df9c07f351cf0ea"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-blur-vogel-dpr1.png",
+          "bytes": 24745,
+          "sha256": "31d020640e7941cd4d573cef9f42845fe393af87ab47f66ac72e0e83dd30c904"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-blur-no-aberration-dpr1.png",
+          "bytes": 21808,
+          "sha256": "96a6f960513552cc5324532f0570977e3a52043269130ed261422085dab5ce30"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-aberration-zero-dpr1.png",
+          "bytes": 16043,
+          "sha256": "6befacaa51d6f9a3ec32b0517e4e21b611a11f5a3670ae3b807f9c0869666309"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-inner-zoom-dpr1.png",
+          "bytes": 15756,
+          "sha256": "931faf8ce385fdace1eb8764f7c52eaa54be83d40010188e0550e20773886314"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-cutout-dpr1.png",
+          "bytes": 16754,
+          "sha256": "95cf5867f1b96e3b9368f11095fc8c83cbed4d979902be8620296a6d18910f1f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-highlight-zero-dpr1.png",
+          "bytes": 15988,
+          "sha256": "f1e6d9ec1fac7348d3da5d7ba96fca8948b0591b2dde49523900001084cec5a1"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-fresnel-zero-dpr1.png",
+          "bytes": 10371,
+          "sha256": "6a78575ae7de5fb1f73a31e46bf44c8dae947f33959884ba72b0962cce3d3f03"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-tint-red-dpr1.png",
+          "bytes": 16467,
+          "sha256": "77edd0100a9adc48ae80c265cfc19fb629338cf7781823533df779d60ca0eaab"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-blank-source-dpr1.png",
+          "bytes": 2859,
+          "sha256": "431db648a6bac50fda80df074c8c028fdaee2cbb7348fbe6fbef30eb3505744f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-background-light-dpr1.png",
+          "bytes": 16306,
+          "sha256": "7463faf7d124c1417f793696a7fb0f102d70f3082a8006c4a8b191c5ebc493aa"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-default-dpr2.png",
+          "bytes": 42324,
+          "sha256": "eeb7273396d20752a9a27a7c95ff43f42304c653c44beec46b50055d529fd5f0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-box-dpr2.png",
+          "bytes": 14042,
+          "sha256": "89f6dcdb84899a60eb749937af45276ac651095cc20f2e2a5b826f3cdf55654b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-artifacts/webkit-live-resize.png",
+          "bytes": 12353,
+          "sha256": "f05972fe35e71ae047de83faea1d32621d9008d5bca0452facdd97495dcb6b14"
+        }
+      ]
+    },
+    "Boundary": {
+      "status": "PASS",
+      "parameterCases": 294,
+      "malformedAtomicRejections": 18
+    },
+    "Resource": {
+      "status": "PASS",
+      "cycles": 300,
+      "ownedKinds": [
+        "mesh",
+        "material",
+        "effect",
+        "childMesh",
+        "childMaterial",
+        "childEffect"
+      ],
+      "pairedReferencesPerCycle": 6,
+      "physicalGpuMemory": "unavailable"
+    },
+    "Performance": {
+      "status": "PASS",
+      "profileCases": 9,
+      "frozenBlur": 8,
+      "frozenAberration": 0.5,
+      "taps": 27,
+      "measurements": [
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "refraction": 1,
+            "thickness": 0.5,
+            "blur": 8,
+            "aberration": 0.5,
+            "innerZoom": 1,
+            "edgeSoftness": 0.1,
+            "lightAngle": 300,
+            "highlight": 0.05,
+            "highlightSoftness": 0.5,
+            "fresnel": 0.2,
+            "fresnelSoftness": 0.5,
+            "tintIntensity": 0,
+            "tintPreserveLuminosity": 1,
+            "tintColor": "#ffffff",
+            "cutout": "none",
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 328,
+          "cpuUpdateP50Ms": 0.07999992370605469,
+          "cpuGfxEnvelopeP50Ms": 0.0700000524520874,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.649999976158142,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 328,
+            "millisecondsP50": 0.664576
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999995231628418,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "refraction": 1,
+            "thickness": 0.5,
+            "blur": 8,
+            "aberration": 0.5,
+            "innerZoom": 1,
+            "edgeSoftness": 0.1,
+            "lightAngle": 300,
+            "highlight": 0.05,
+            "highlightSoftness": 0.5,
+            "fresnel": 0.2,
+            "fresnelSoftness": 0.5,
+            "tintIntensity": 0,
+            "tintPreserveLuminosity": 1,
+            "tintColor": "#ffffff",
+            "cutout": "none",
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 311,
+          "cpuUpdateP50Ms": 0.07500004768371582,
+          "cpuGfxEnvelopeP50Ms": 0.07499992847442627,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.670000076293945,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 311,
+            "millisecondsP50": 2.30912
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999995231628418,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "refraction": 1,
+            "thickness": 0.5,
+            "blur": 8,
+            "aberration": 0.5,
+            "innerZoom": 1,
+            "edgeSoftness": 0.1,
+            "lightAngle": 300,
+            "highlight": 0.05,
+            "highlightSoftness": 0.5,
+            "fresnel": 0.2,
+            "fresnelSoftness": 0.5,
+            "tintIntensity": 0,
+            "tintPreserveLuminosity": 1,
+            "tintColor": "#ffffff",
+            "cutout": "none",
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 316,
+          "cpuUpdateP50Ms": 0.07499992847442627,
+          "cpuGfxEnvelopeP50Ms": 0.0700000524520874,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.700000047683716,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 316,
+            "millisecondsP50": 1.174528
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999995231628418,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "refraction": 1,
+            "thickness": 0.5,
+            "blur": 8,
+            "aberration": 0.5,
+            "innerZoom": 1,
+            "edgeSoftness": 0.1,
+            "lightAngle": 300,
+            "highlight": 0.05,
+            "highlightSoftness": 0.5,
+            "fresnel": 0.2,
+            "fresnelSoftness": 0.5,
+            "tintIntensity": 0,
+            "tintPreserveLuminosity": 1,
+            "tintColor": "#ffffff",
+            "cutout": "none",
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.0999999999994543,
+          "cpuGfxEnvelopeP50Ms": 0.0999999999994543,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.6400000000001,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "refraction": 1,
+            "thickness": 0.5,
+            "blur": 8,
+            "aberration": 0.5,
+            "innerZoom": 1,
+            "edgeSoftness": 0.1,
+            "lightAngle": 300,
+            "highlight": 0.05,
+            "highlightSoftness": 0.5,
+            "fresnel": 0.2,
+            "fresnelSoftness": 0.5,
+            "tintIntensity": 0,
+            "tintPreserveLuminosity": 1,
+            "tintColor": "#ffffff",
+            "cutout": "none",
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.09999999999990905,
+          "cpuGfxEnvelopeP50Ms": 0.1000000000003638,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.679999999999836,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "refraction": 1,
+            "thickness": 0.5,
+            "blur": 8,
+            "aberration": 0.5,
+            "innerZoom": 1,
+            "edgeSoftness": 0.1,
+            "lightAngle": 300,
+            "highlight": 0.05,
+            "highlightSoftness": 0.5,
+            "fresnel": 0.2,
+            "fresnelSoftness": 0.5,
+            "tintIntensity": 0,
+            "tintPreserveLuminosity": 1,
+            "tintColor": "#ffffff",
+            "cutout": "none",
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 328,
+          "cpuUpdateP50Ms": 0.09999999999990905,
+          "cpuGfxEnvelopeP50Ms": 0.09999999999990905,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.659999999999854,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "refraction": 1,
+            "thickness": 0.5,
+            "blur": 8,
+            "aberration": 0.5,
+            "innerZoom": 1,
+            "edgeSoftness": 0.1,
+            "lightAngle": 300,
+            "highlight": 0.05,
+            "highlightSoftness": 0.5,
+            "fresnel": 0.2,
+            "fresnelSoftness": 0.5,
+            "tintIntensity": 0,
+            "tintPreserveLuminosity": 1,
+            "tintColor": "#ffffff",
+            "cutout": "none",
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 207,
+          "cpuUpdateP50Ms": 0.06000000000130967,
+          "cpuGfxEnvelopeP50Ms": 0.0999999999994543,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 18.68000000000029,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "refraction": 1,
+            "thickness": 0.5,
+            "blur": 8,
+            "aberration": 0.5,
+            "innerZoom": 1,
+            "edgeSoftness": 0.1,
+            "lightAngle": 300,
+            "highlight": 0.05,
+            "highlightSoftness": 0.5,
+            "fresnel": 0.2,
+            "fresnelSoftness": 0.5,
+            "tintIntensity": 0,
+            "tintPreserveLuminosity": 1,
+            "tintColor": "#ffffff",
+            "cutout": "none",
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 202,
+          "cpuUpdateP50Ms": 0.06000000000040018,
+          "cpuGfxEnvelopeP50Ms": 0.07999999999992724,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 20.220000000001164,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "refraction": 1,
+            "thickness": 0.5,
+            "blur": 8,
+            "aberration": 0.5,
+            "innerZoom": 1,
+            "edgeSoftness": 0.1,
+            "lightAngle": 300,
+            "highlight": 0.05,
+            "highlightSoftness": 0.5,
+            "fresnel": 0.2,
+            "fresnelSoftness": 0.5,
+            "tintIntensity": 0,
+            "tintPreserveLuminosity": 1,
+            "tintColor": "#ffffff",
+            "cutout": "none",
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 205,
+          "cpuUpdateP50Ms": 0.06000000000130967,
+          "cpuGfxEnvelopeP50Ms": 0.08000000000174623,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 19.479999999999563,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        }
+      ]
+    }
+  },
+  "counts": {
+    "engines": 3,
+    "dimensionRows": 18,
+    "visualCases": 45,
+    "boundaryCases": 294,
+    "malformedAtomicRejections": 18,
+    "resourceCycles": 300,
+    "liveResize": 3,
+    "screenshots": 48,
+    "performanceProfiles": 9
+  },
+  "bindings": [
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4.json",
+        "bytes": 10048731,
+        "sha256": "72c888f9bda31cae77a9c78c5ba7a719e241e5a9722d447527e04affc0323e96"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-os.json",
+        "bytes": 594,
+        "sha256": "99eb66806ade96613c107ae5c97c9305a2072cce1dabd3385c3c9e35cdef1264"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4.log",
+        "bytes": 3002,
+        "sha256": "e55250799e830764b8bc37792ebc9f788062e6a280cf5e30ca7f1d33a0903fba"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4-frozen.json",
+        "bytes": 7124,
+        "sha256": "689f1d2e20c1a51af1cbbd4de93c8a74c6d5343f9475873304096de3596fdea1"
+      },
+      "execution": {
+        "startedAt": "2026-10-10T03:56:03.783Z",
+        "endedAt": "2026-10-10T03:56:49.483Z",
+        "command": [
+          "D:\\Program Files\\nodejs\\node.exe",
+          "tools/verify/shaders-glass-browser.cjs",
+          "--phase=functional",
+          "--browser=all",
+          "--out=output/shaders-absorption/lead-w3-e09-functional-attempt4.json"
+        ],
+        "cwd": "E:\\AIProMax\\github\\cocosair.js",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "output": "output/shaders-absorption/lead-w3-e09-functional-attempt4.json",
+        "log": "output/shaders-absorption/lead-w3-e09-functional-attempt4.log",
+        "inputsUnchanged": true
+      }
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e09-performance-attempt1.json",
+        "bytes": 10450272,
+        "sha256": "a7997e4a3d814354186528d36a3b9ed89f771a41546dcea37ba2f949b8cd0422"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e09-performance-attempt1-os.json",
+        "bytes": 648,
+        "sha256": "e4772f38fcc4d7039d35e1eb6b2f67591596f94bffc3d8ac55472e76a1bf55a6"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e09-performance-attempt1.log",
+        "bytes": 105,
+        "sha256": "f457dc2488637fa5103271ffb13acd770667bb25eec564902b7afc933ce8940f"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w3-e09-performance-attempt1-frozen.json",
+        "bytes": 7124,
+        "sha256": "689f1d2e20c1a51af1cbbd4de93c8a74c6d5343f9475873304096de3596fdea1"
+      },
+      "execution": {
+        "startedAt": "2026-10-10T03:56:53.380Z",
+        "endedAt": "2026-10-10T03:58:25.698Z",
+        "command": [
+          "D:\\Program Files\\nodejs\\node.exe",
+          "tools/verify/shaders-glass-browser.cjs",
+          "--phase=performance",
+          "--authorization=LEAD-W3-E09-PERF1-20261010",
+          "--browser=all",
+          "--out=output/shaders-absorption/lead-w3-e09-performance-attempt1.json"
+        ],
+        "cwd": "E:\\AIProMax\\github\\cocosair.js",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "output": "output/shaders-absorption/lead-w3-e09-performance-attempt1.json",
+        "log": "output/shaders-absorption/lead-w3-e09-performance-attempt1.log",
+        "inputsUnchanged": true
+      }
+    }
+  ],
+  "validatorInputs": {
+    "inputs": [
+      {
+        "path": "tools/verify/shaders-api-evidence.cjs",
+        "bytes": 1405,
+        "sha256": "e751578131b4376680f934b29a4be070248ffa8f66fd3364201dab368cc1951b"
+      },
+      {
+        "path": "tools/examples/spec-evidence.cjs",
+        "bytes": 12179,
+        "sha256": "ea41d909ead5f9397301cf0758f1894b7d35b8f8af6d84cdb94031ac1d0f846e"
+      },
+      {
+        "path": "docs/example-api-inventory.json",
+        "bytes": 2248439,
+        "sha256": "7e0ab0222058fcfc50c7545c9c9c4a47915d1e408b8f449638fd77721fc2763a"
+      },
+      {
+        "path": "examples/shader-glass/src/main.ts",
+        "bytes": 32468,
+        "sha256": "d5f8480fa4eaa9fc3257791c6a7f58ceea9fba38c478e5733ae06314e3a00572"
+      },
+      {
+        "path": "examples/shader-glass/src/parameters.ts",
+        "bytes": 2660,
+        "sha256": "a99c3d5ffc01ca43980ee410ba8d3c3c4b19269ee357df6f519d984cadab40bc"
+      },
+      {
+        "path": "examples/shader-glass/src/child-rt-release.ts",
+        "bytes": 2000,
+        "sha256": "3d4a46fed18e11670c9724bee91c433098681aaa94912eea93ccf17ac8483b36"
+      },
+      {
+        "path": "examples/shader-glass/src/glass.frag",
+        "bytes": 4230,
+        "sha256": "9e006fd4561bf46ba02de9f55024003726ca0e43795283954e3204190a17b69e"
+      },
+      {
+        "path": "examples/shader-glass/src/pattern.frag",
+        "bytes": 1349,
+        "sha256": "64f0d3e979b956243cac1be4af3eecf4dff5415b16dba2e85e11282e3c1a055b"
+      },
+      {
+        "path": "examples/shader-glass/src/effect.generated.ts",
+        "bytes": 23270,
+        "sha256": "eaa8b243b007c7893f39793174f08a30ab5d5ff6594cc96d7a20ada433f01a2b"
+      },
+      {
+        "path": "examples/shader-glass/parameters.json",
+        "bytes": 4365,
+        "sha256": "73cfe844363b574e3d818a07c4be016698aa4eba37779d83aa24017d86f79a03"
+      },
+      {
+        "path": "examples/shader-glass/index.html",
+        "bytes": 1960,
+        "sha256": "332027bf8b5afc796a4659313d3d01658a9e91931afc0e0a54ccccca2b061901"
+      },
+      {
+        "path": "examples/shader-glass/generate-effect.cjs",
+        "bytes": 3536,
+        "sha256": "ea047f84be3a3e48597098b7c76e57b2ae36600ed2737de8efa61c8342c38b84"
+      },
+      {
+        "path": "examples/shader-glass/example.json",
+        "bytes": 4484,
+        "sha256": "5b8db3871cc061d1fadc89f8bca3f9c520bc651efd3ba4987fdd61bd057b26c2"
+      },
+      {
+        "path": "examples/shader-glass/files.json",
+        "bytes": 325,
+        "sha256": "007e06b1d31dac9580807690ce90c8ab88183b855d6202a2c8061b3a8d19076e"
+      },
+      {
+        "path": "examples/shader-glass/README.md",
+        "bytes": 1412,
+        "sha256": "2b87933c21a35f06ef155acf5500dbdb0836c9ffa4301c44b2ebe36844c95c99"
+      },
+      {
+        "path": "examples/shader-glass/UPSTREAM.md",
+        "bytes": 1391,
+        "sha256": "64d549ced2a22581383a7ea1bca8786c0a20f7fb2151632d5a271d2503a29736"
+      },
+      {
+        "path": "examples/shader-glass/LICENSE.reference.txt",
+        "bytes": 14046,
+        "sha256": "2a98b03e714cfe43624ef3656d986edf0a71728f8363603253db691db41b9cce"
+      },
+      {
+        "path": "examples/shared/shader-blocks.js",
+        "bytes": 8627,
+        "sha256": "31e9577ae7f99a740f3053550435c78278b644c466397f6b2588c3404e4b22ab"
+      },
+      {
+        "path": "tools/verify/shaders-glass-oracle.cjs",
+        "bytes": 19366,
+        "sha256": "bf8bc6d73a94c4718d7429b7d069e4ad973a445dbc59d4f592be01e34a1de5aa"
+      },
+      {
+        "path": "tools/verify/shaders-glass-browser.cjs",
+        "bytes": 59694,
+        "sha256": "d067bf94c54fac762592f7281e15ee3499d996733f880c0d0a65f6634a64e157"
+      },
+      {
+        "path": "tools/verify/shaders-glass.tsconfig.json",
+        "bytes": 412,
+        "sha256": "a3a372351ac070d3446647b096e056539ba3543ddee17e2b7738466e737ac965"
+      },
+      {
+        "path": "tools/verify/shaders-glass-performance.cjs",
+        "bytes": 2414,
+        "sha256": "cb1cf9f30cb229906acddaf67d248748ae7c7882345f41820305524780c940ee"
+      },
+      {
+        "path": "tools/verify/shaders-emboss-performance.cjs",
+        "bytes": 5782,
+        "sha256": "d5f0491ef13ae93d45efec6f71ed0bdcae541d98c42cb037e49b2b0996fdf6fd"
+      },
+      {
+        "path": "tools/verify/shaders-browser-environment.cjs",
+        "bytes": 10656,
+        "sha256": "bc39fdb9222b9b95a5b8d7217462d7c79ab488d23417d465e2aab0fee4e35337"
+      },
+      {
+        "path": "tools/verify/shaders-browser-launch.cjs",
+        "bytes": 2797,
+        "sha256": "3e5a4bc54834f9688994b446346ac58aca10c1936e88a1f932531fb75c81fc87"
+      },
+      {
+        "path": "tools/verify/browser-engines.cjs",
+        "bytes": 2159,
+        "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+      },
+      {
+        "path": "tools/verify/competitive-example-server.cjs",
+        "bytes": 1923,
+        "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+      },
+      {
+        "path": "tools/verify/shaders-effect-contract.cjs",
+        "bytes": 37563,
+        "sha256": "e1eb1a21b1167ab7d5dab8d7cf21fa214a44b23efa9d62f83a75d08d3d7c2ab3"
+      },
+      {
+        "path": "examples/shared/shader-lifecycle.ts",
+        "bytes": 10021,
+        "sha256": "6b28d2b0afea13e947ee371ba5dcef7d3d91f6ab847a0a79d51cf1e7982cd4d9"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.js",
+        "bytes": 5595,
+        "sha256": "c2bc01e8c73ab866f11194fc802bb8ce464b3738bfecf8d30cf5967907e5e346"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.d.ts",
+        "bytes": 1045,
+        "sha256": "34d5cc8469ea05a17f7cee6bf287d0c473cb0daaf50adfd6c49454fb68ef19cb"
+      },
+      {
+        "path": "build/cocosair.module.js",
+        "bytes": 6631057,
+        "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+      },
+      {
+        "path": "build/cocosair.module.d.ts",
+        "bytes": 3303518,
+        "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+      },
+      {
+        "path": "build/npm/cocosair.module.js",
+        "bytes": 6631013,
+        "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+      }
+    ],
+    "reference": {
+      "repo": "shader-effects-inc/shaders",
+      "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/shaders/Glass/index.ts",
+          "bytes": 12136,
+          "sha256": "964f8b456050a05e5a3dc278c5c40b5d6c880d02889e11d7b203d1d2a63afc45"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/effects/glass.ts",
+          "bytes": 22432,
+          "sha256": "180cb03fa58712632cb4cd6a12257543a0b2a0713647694e9029c49180c69acf"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/blur.ts",
+          "bytes": 99303,
+          "sha256": "341117aeba293c0d7c097cc14e94c59cf5accf481c10fe166380d3ad9013f694"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/blend.ts",
+          "bytes": 12933,
+          "sha256": "0c5156d535da07f04aef5b9b5b063ed6e5607e5c8822a98708eb86d4ece1a538"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/std/paint/materials.ts",
+          "bytes": 57681,
+          "sha256": "7cb6e03cf96c26cd71ad9442002d2f642d301770e62ec08fbcfe33e86a359782"
+        }
+      ]
+    }
+  },
+  "verifier": {
+    "path": "tools/verify/shaders-glass-gate.cjs",
+    "bytes": 4860,
+    "sha256": "0a0e32a04c0d321b11a16d0d4b4268d376c7566a773b8ab5169f8e70053f19a7"
+  },
+  "audit": {
+    "path": "docs/evidence/shaders-absorption/e09-glass-actual-audit.json",
+    "bytes": 55750,
+    "sha256": "c63a9a44cad0ab563ad5b52dc6701fbb529103b50c4ac280b1450eed224cbfdb"
+  },
+  "historicalAttempts": [
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt1.json",
+        "bytes": 3359917,
+        "sha256": "001c552ebbac2e8ff8960d0e85f6d988f94820910b9d8db59155322a7bffc5b1"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt1-os.json",
+        "bytes": 599,
+        "sha256": "68dcd0688623f344d581bef59e0c21620bec968b376a419f6f43d5056734ae1d"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt1.log",
+        "bytes": 1085,
+        "sha256": "823f0763e92be425b5d127199e58056af5412d3495e7e0d8efb9693cffdc0ea8"
+      },
+      "historicalExitCode": 0,
+      "reason": "Preserved real PASS collection; source metadata/validator closure evolved before final frozen capture, not current identity"
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt2.json",
+        "bytes": 10048278,
+        "sha256": "1047a2bf3f1cc971f98db5941d45a6111bcaf67aa326d18566fceceb21ef49f3"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt2-os.json",
+        "bytes": 594,
+        "sha256": "8e316808eda9da89bd5915a9741a8bde60486e14c7711d651ba4ee3423b7acaa"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt2.log",
+        "bytes": 3002,
+        "sha256": "fdbd9078615e0ebeff89a01816d50be9ee9b1497827385ea8c50747b88042b79"
+      },
+      "historicalExitCode": 0,
+      "reason": "Preserved real PASS collection; source metadata/validator closure evolved before final frozen capture, not current identity"
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt3.json",
+        "bytes": 10048979,
+        "sha256": "51db32ab2750566a46ffd04319aa208d612f40d2ca40c5fb8839d4dd061756f8"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt3-os.json",
+        "bytes": 594,
+        "sha256": "995516ebfed85352d2604ad5ca8022ad7669b7d7ed6fa2fc23cc6b75614c7b39"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e09-functional-attempt3.log",
+        "bytes": 3002,
+        "sha256": "6c88b17583097e650109e41e0f5d8a80ab6b66682ea12e274eddc0361f023740"
+      },
+      "historicalExitCode": 0,
+      "reason": "Preserved real PASS collection; source metadata/validator closure evolved before final frozen capture, not current identity"
+    }
+  ],
+  "limitations": [
+    "Analytic shapes with fixed centre/white highlights only",
+    "Explicit Vogel fallback, no Gaussian compute prepass, bilinear source or upstream platform",
+    "Fixed 256x256 RGBA8 NEAREST child source is a local fixture",
+    "Preview is encoded RGBA8 blend, not physically linear composition",
+    "Performance windows use native pacer and real 27-tap frosted state, not physical mobile hardware",
+    "GPU physical memory unavailable; FF/WK GPU timestamps unavailable",
+    "Independent Gallery harness/physical device/long-run/multitab/Agent Gate NOT_RUN",
+    "Leaf does not establish complete Wave3 or Wave4"
+  ]
+}

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Mesh and material porting contracts",
   "category": "rendering",
-  "status": "validated",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -46,31 +46,31 @@
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
-        "sourceLocation": "L114",
+        "sourceLocation": "L134",
         "validator": "visible-frame"
       },
       {
         "api": "Mesh.updateSubMesh",
         "source": "src/main.ts",
-        "sourceLocation": "L189",
+        "sourceLocation": "L238",
         "validator": "frame-diff"
       },
       {
         "api": "Billboard",
         "source": "src/main.ts",
-        "sourceLocation": "L83",
+        "sourceLocation": "L88",
         "validator": "visible-frame"
       },
       {
         "api": "utils.MeshUtils.createDynamicMesh",
         "source": "src/main.ts",
-        "sourceLocation": "L107",
+        "sourceLocation": "L121",
         "validator": "visible-frame"
       },
       {
         "api": "MeshRenderer.onGeometryChanged",
         "source": "src/main.ts",
-        "sourceLocation": "L190",
+        "sourceLocation": "L239",
         "validator": "frame-diff"
       }
     ]
@@ -91,6 +91,11 @@
       {
         "action": "切换动态网格并暂停、恢复、重置、释放",
         "expected": "暂停期间图像和计数不变，恢复继续更新，释放后没有自有节点和引用"
+      },
+      {
+        "action": "点击动态网格切换模式",
+        "buttonText": "动态网格",
+        "expected": "原生动态网格更新与 onGeometryChanged 提交改变画面"
       }
     ]
   },
@@ -122,5 +127,13 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序化网格与 2×2 纹理，无外部资产"
+  },
+  "promotion": {
+    "spec": "4aa8c488c8f2",
+    "source": "7bfa74f88738a66e",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 5,
+    "attested": 0,
+    "units": 5
   }
 }

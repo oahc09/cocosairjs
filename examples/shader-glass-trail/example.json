@@ -1,0 +1,214 @@
+{
+  "id": "shader-glass-trail",
+  "title": "Glass Trail 互动玻璃",
+  "description": "Cursor Trail 渲染到中间 RT，Glass 从实际内容折射/模糊/色散，一次 OETF。",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "createAirRenderTarget",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "MeshRenderer",
+    "utils.createMesh"
+  ],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "双段原生：Trail→RT→Glass→screen，单次上传，一次 OETF",
+    "points": [
+      "Trail premultiplied rgba8 RT",
+      "Glass 读实际内容折射/blur/aberration",
+      "层开关 identity",
+      "参数命名空间 trail*/glass*"
+    ]
+  },
+  "assets": [],
+  "license": {
+    "assets": "纯程序化；参考 MIT 通知束见 LICENSE.reference.txt"
+  },
+  "api": {
+    "primary": [
+      "EffectAsset",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Camera",
+      "Node",
+      "utils.createMesh",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Camera",
+      "Node"
+    ],
+    "forbiddenShortcut": [
+      "shaders runtime/TypeGPU/额外canvas",
+      "独立RAF",
+      "固定白图替代实际trail",
+      "双OETF"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L35",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L623",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L174",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L186",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L193",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L1102",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L231",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L159",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L46",
+        "validator": "node-exists"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L43",
+        "validator": "node-exists"
+      }
+    ],
+    "evidenceStatus": "findSymbolLine 核对；浏览器 runtime NOT_RUN"
+  },
+  "effect": {
+    "functional": "19 参数、层开关 identity、双 pass",
+    "visual": "premultiplied RT 链、一次 OETF、两像素外零",
+    "limitations": [
+      "本地组合设计",
+      "仅 circle/rounded-box",
+      "Agent NOT_RUN"
+    ]
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击 重置",
+        "buttonText": "重置",
+        "expected": "时间与参数回到初始值，画面跳变到初始帧"
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__glasstrail.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__glasstrail.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "trail-camera",
+        "main-camera",
+        "c03-trail-1",
+        "c03-glass-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "__glasstrail.ready"
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "组合 oracle 由 tools/verify/shaders-glass-trail-browser.cjs 采集"
+  },
+  "promotion": {
+    "spec": "e6368aa5f054",
+    "source": "99914ea1f7562a49",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 10,
+    "attested": 0,
+    "units": 10
+  }
+}

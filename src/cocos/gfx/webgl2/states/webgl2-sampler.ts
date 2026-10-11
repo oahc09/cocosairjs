@@ -22,7 +22,7 @@
  THE SOFTWARE.
 */
 
-import { SamplerInfo } from '../../base/define';
+import { ComparisonFunc, SamplerInfo } from '../../base/define';
 import { Sampler } from '../../base/states/sampler';
 import { WebGLConstants } from '../../gl-constants';
 import { WebGL2CmdFuncDestroySampler, WebGL2CmdFuncPrepareSamplerInfo } from '../webgl2-commands';
@@ -42,13 +42,15 @@ export class WebGL2Sampler extends Sampler {
         super(info, hash);
 
         this._gpuSampler = {
-            glSamplers: new Map<number, WebGL2Sampler>(),
+            glSamplers: new Map<number, WebGLSampler>(),
             minFilter: this._info.minFilter,
             magFilter: this._info.magFilter,
             mipFilter: this._info.mipFilter,
             addressU: this._info.addressU,
             addressV: this._info.addressV,
             addressW: this._info.addressW,
+            cmpFunc: this._info.cmpFunc,
+            maxAnisotropy: this._info.maxAnisotropy,
 
             glMinFilter: 0,
             glMagFilter: 0,
@@ -70,6 +72,16 @@ export class WebGL2Sampler extends Sampler {
                         glSamplerParameteri(glSampler, WebGLConstants.TEXTURE_WRAP_S, this.glWrapS);
                         glSamplerParameteri(glSampler, WebGLConstants.TEXTURE_WRAP_T, this.glWrapT);
                         glSamplerParameteri(glSampler, WebGLConstants.TEXTURE_WRAP_R, this.glWrapR);
+                        // ALWAYS is the existing ordinary-sampling sentinel, not an explicit shadow comparison.
+                        glSamplerParameteri(glSampler, WebGLConstants.TEXTURE_COMPARE_MODE,
+                            this.cmpFunc === ComparisonFunc.ALWAYS ? WebGLConstants.NONE : WebGLConstants.COMPARE_REF_TO_TEXTURE);
+                        glSamplerParameteri(glSampler, WebGLConstants.TEXTURE_COMPARE_FUNC,
+                            [WebGLConstants.NEVER, WebGLConstants.LESS, WebGLConstants.EQUAL, WebGLConstants.LEQUAL,
+                                WebGLConstants.GREATER, WebGLConstants.NOTEQUAL, WebGLConstants.GEQUAL, WebGLConstants.ALWAYS][this.cmpFunc]);
+                        const extension = device.extensions.EXT_texture_filter_anisotropic;
+                        if (extension) {
+                            glSamplerParameterf(glSampler, extension.TEXTURE_MAX_ANISOTROPY_EXT, Math.max(1, this.maxAnisotropy));
+                        }
                         glSamplerParameterf(glSampler, WebGLConstants.TEXTURE_MIN_LOD, minLod);
                         glSamplerParameterf(glSampler, WebGLConstants.TEXTURE_MAX_LOD, maxLod);
                     }

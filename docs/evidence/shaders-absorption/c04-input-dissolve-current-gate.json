@@ -1,0 +1,2045 @@
+{
+  "schemaVersion": "c04-input-dissolve-current-gate/1",
+  "task": "Wave4/C04",
+  "createdAt": "2026-10-11T07:57:36.962Z",
+  "status": "PASS",
+  "subset": true,
+  "completed": false,
+  "wave4Gate": "NOT_RUN",
+  "agentGate": "NOT_RUN",
+  "counts": {
+    "engines": 3,
+    "dimensionRows": 18,
+    "visualCases": 81,
+    "boundaryCases": 90,
+    "malformedAtomicRejections": 21,
+    "resourceCycles": 300,
+    "liveResize": 9,
+    "screenshots": 90,
+    "performanceProfiles": 27
+  },
+  "bindings": [
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7.json",
+        "bytes": 6056708,
+        "sha256": "59b7ee66708a840b4e130fe31de4f1fe8e7dfeba27b9564fdeb7655ec90b56cc"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-os.json",
+        "bytes": 615,
+        "sha256": "43a22e92bd86ab0037cbcedd92bf9cb9df495b85d7da7791d3951f56acb2c88f"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7.log",
+        "bytes": 112,
+        "sha256": "78c89b2513b3844bbf3a3d621f5f6d6ea40ebb07167c40600b66f6fd4ddb3d4f"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-frozen.json",
+        "bytes": 6155,
+        "sha256": "14eda8c4fabe5faa819e9bd0ac1592e7b5a4ece6db734f4536de701b216bcc83"
+      }
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c04-performance-all-attempt1.json",
+        "bytes": 31752714,
+        "sha256": "720d961321b066aa4878dbfbcfb2b6679cbce6157de83006429d7917cd1e319e"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c04-performance-all-attempt1-os.json",
+        "bytes": 673,
+        "sha256": "ed49bd7396a1b2e8b8289a76f5800258d7cc4ebe12f4d44fa4ac6fef413c09c3"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c04-performance-all-attempt1.log",
+        "bytes": 113,
+        "sha256": "a67bd3ed6c1ebd6d144457ee47ea2172f73e7cf5a96c2e717384dc17099efd45"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w4-c04-performance-all-attempt1-frozen.json",
+        "bytes": 6155,
+        "sha256": "14eda8c4fabe5faa819e9bd0ac1592e7b5a4ece6db734f4536de701b216bcc83"
+      }
+    }
+  ],
+  "validatorInputs": {
+    "inputs": [
+      {
+        "path": "examples/shader-input-dissolve/src/main.ts",
+        "bytes": 41858,
+        "sha256": "dd9bcc5708c252a462a587286ad0133e17238f1a400d4d293062a9e2d19ba738"
+      },
+      {
+        "path": "examples/shader-input-dissolve/src/parameters.ts",
+        "bytes": 2748,
+        "sha256": "c55c39ed447caa74d73f0d040c690549cb65f5ba8d4748375e4f60bd6d7ee3ae"
+      },
+      {
+        "path": "examples/shader-input-dissolve/src/image-source.ts",
+        "bytes": 3835,
+        "sha256": "8bcedca3198ef86da8527f3002f127f4d937f5d501accb6ba159e131f0873c55"
+      },
+      {
+        "path": "examples/shader-input-dissolve/src/effect.generated.ts",
+        "bytes": 24227,
+        "sha256": "2ef4891254ce33a08582bd3fdfab49ad47f0364728b5c1c706f25c02d537a74c"
+      },
+      {
+        "path": "examples/shader-input-dissolve/src/dissolve.frag",
+        "bytes": 4484,
+        "sha256": "f5c74bf2112637e2278271a1769802072a8e4e2ee1f51594b42d6d9a4fa58328"
+      },
+      {
+        "path": "examples/shader-input-dissolve/src/content.frag",
+        "bytes": 1767,
+        "sha256": "1bd2c6257f619e147716da8c3d217a9b4925e24b83eb9d2c39d5090e203e9c62"
+      },
+      {
+        "path": "examples/shader-input-dissolve/parameters.json",
+        "bytes": 1531,
+        "sha256": "ac67687d6296d479366b5e0d03472e9276a3481fed398ceacbb23526b4b85273"
+      },
+      {
+        "path": "examples/shader-input-dissolve/index.html",
+        "bytes": 1973,
+        "sha256": "bf8710c175de0ec4512d12805d354dbecf62c9c7069dea8611e234566d2904e4"
+      },
+      {
+        "path": "examples/shader-input-dissolve/generate-effect.cjs",
+        "bytes": 3640,
+        "sha256": "d7806a18785bb8203674a6ccb86d4e21c6580c54b301337a093b2ac7050f1ee0"
+      },
+      {
+        "path": "examples/shader-input-dissolve/example.json",
+        "bytes": 4226,
+        "sha256": "bdc9fd637bb76f38c125cede50eec608998c7ed51140cbfa3dd218f7eddeedb8"
+      },
+      {
+        "path": "examples/shader-input-dissolve/assets/input-pattern.png",
+        "bytes": 622,
+        "sha256": "fc05970c1c23e90016cb02c2d3b041b9be8f296a151ecac7d704330c174ba797"
+      },
+      {
+        "path": "examples/shared/shader-blocks.js",
+        "bytes": 8627,
+        "sha256": "31e9577ae7f99a740f3053550435c78278b644c466397f6b2588c3404e4b22ab"
+      },
+      {
+        "path": "tools/verify/shaders-input-dissolve-oracle.cjs",
+        "bytes": 17275,
+        "sha256": "063fa17af5526353b6a19258c2a28e9fd571cbe0e88dc76b60e95e7d1face685"
+      },
+      {
+        "path": "tools/verify/shaders-input-dissolve-browser.cjs",
+        "bytes": 62683,
+        "sha256": "1fb2bad1b547bf6bc22d023fc14a16289a1cf977a849c0d67402c3074ab73afb"
+      },
+      {
+        "path": "tools/verify/shaders-input-dissolve-performance.cjs",
+        "bytes": 14633,
+        "sha256": "a50dfc3ac2dd7b24c8c2ee1fac3f29977bb30ef83681c6acc1ae1d2e1e85bcd6"
+      },
+      {
+        "path": "tools/verify/shaders-input-dissolve.tsconfig.json",
+        "bytes": 442,
+        "sha256": "27bc72899a697c346b83dd51f6fbedd9a1bc2675ef58a7632c24a3f1d792d713"
+      },
+      {
+        "path": "tools/verify/shaders-browser-environment.cjs",
+        "bytes": 10656,
+        "sha256": "bc39fdb9222b9b95a5b8d7217462d7c79ab488d23417d465e2aab0fee4e35337"
+      },
+      {
+        "path": "tools/verify/shaders-browser-launch.cjs",
+        "bytes": 2797,
+        "sha256": "3e5a4bc54834f9688994b446346ac58aca10c1936e88a1f932531fb75c81fc87"
+      },
+      {
+        "path": "tools/verify/browser-engines.cjs",
+        "bytes": 2159,
+        "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+      },
+      {
+        "path": "tools/verify/competitive-example-server.cjs",
+        "bytes": 1923,
+        "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+      },
+      {
+        "path": "tools/verify/shaders-api-evidence.cjs",
+        "bytes": 1405,
+        "sha256": "e751578131b4376680f934b29a4be070248ffa8f66fd3364201dab368cc1951b"
+      },
+      {
+        "path": "tools/verify/shaders-effect-contract.cjs",
+        "bytes": 37563,
+        "sha256": "e1eb1a21b1167ab7d5dab8d7cf21fa214a44b23efa9d62f83a75d08d3d7c2ab3"
+      },
+      {
+        "path": "tools/examples/spec-evidence.cjs",
+        "bytes": 12179,
+        "sha256": "ea41d909ead5f9397301cf0758f1894b7d35b8f8af6d84cdb94031ac1d0f846e"
+      },
+      {
+        "path": "docs/example-api-inventory.json",
+        "bytes": 2248439,
+        "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+      },
+      {
+        "path": "examples/shared/shader-lifecycle.ts",
+        "bytes": 10021,
+        "sha256": "6b28d2b0afea13e947ee371ba5dcef7d3d91f6ab847a0a79d51cf1e7982cd4d9"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.js",
+        "bytes": 5595,
+        "sha256": "c2bc01e8c73ab866f11194fc802bb8ce464b3738bfecf8d30cf5967907e5e346"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.d.ts",
+        "bytes": 1045,
+        "sha256": "34d5cc8469ea05a17f7cee6bf287d0c473cb0daaf50adfd6c49454fb68ef19cb"
+      },
+      {
+        "path": "build/cocosair.module.js",
+        "bytes": 6649186,
+        "sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc"
+      },
+      {
+        "path": "build/cocosair.module.d.ts",
+        "bytes": 3303581,
+        "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+      },
+      {
+        "path": "build/npm/cocosair.module.js",
+        "bytes": 6649142,
+        "sha256": "b7771393b2de0dcc84422b07f4df0703a63d609b3ea8443907cee2f4f4182ab9"
+      }
+    ],
+    "reference": {
+      "repo": "shader-effects-inc/shaders",
+      "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/shaders/NoiseDissolve/index.ts",
+          "bytes": 2474,
+          "sha256": "62d834b345677b1b4b6046d784e254a75e517beb6a5eb53e0b583ea1c9d4a83f"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/std/effects/reveal.ts",
+          "bytes": 11235,
+          "sha256": "665852eca6336c3d793d94dd682d47f776b1a9d2767ac7072949195d561d9eb7"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/std/paint/materials.ts",
+          "bytes": 57681,
+          "sha256": "7cb6e03cf96c26cd71ad9442002d2f642d301770e62ec08fbcfe33e86a359782"
+        }
+      ]
+    }
+  },
+  "verifier": {
+    "path": "tools/verify/shaders-input-dissolve-gate.cjs",
+    "bytes": 11391,
+    "sha256": "0be444e84d6299b7175507ec57e9160b5b548c0e2ef5c45febb2cb02a93bcd73"
+  },
+  "audit": {
+    "path": "docs/evidence/shaders-absorption/c04-input-dissolve-actual-audit.json",
+    "bytes": 64222,
+    "sha256": "0f7a52bcad922dcfa4d563081c648359650aba6d323ef868a81dba970fb9c9bf"
+  },
+  "gates": {
+    "Build": {
+      "status": "PASS",
+      "strictTypecheckAndBundle": [
+        {
+          "command": "node node_modules/typescript/bin/tsc -p tools/verify/shaders-input-dissolve.tsconfig.json",
+          "exitCode": 0,
+          "raw": {
+            "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/build.log",
+            "bytes": 109,
+            "sha256": "d4ca50a96b464cb37cfa7f4814d0a7e4ba5d02be0abce96695d2e386fd803710"
+          },
+          "bundleBytes": 67879
+        },
+        {
+          "command": "node node_modules/typescript/bin/tsc -p tools/verify/shaders-input-dissolve.tsconfig.json",
+          "exitCode": 0,
+          "raw": {
+            "path": "output/shaders-absorption/lead-w4-c04-performance-all-attempt1-artifacts/build.log",
+            "bytes": 109,
+            "sha256": "d4ca50a96b464cb37cfa7f4814d0a7e4ba5d02be0abce96695d2e386fd803710"
+          },
+          "bundleBytes": 67879
+        }
+      ]
+    },
+    "Runtime": {
+      "status": "PASS",
+      "nativeRenderPassesByRoute": {
+        "image": 1,
+        "procedural": 2,
+        "rendered": 2
+      }
+    },
+    "Visual": {
+      "status": "PASS",
+      "standardCases": 81,
+      "transparentLinearProbes": 81,
+      "byteTolerance": 2,
+      "screenshots": [
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-default-dpr1.png",
+          "bytes": 74468,
+          "sha256": "4b0af057a2a8da781b3afe44ba15c189bda928e70b012e6b78a6595dd15072a5"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-progress0-dpr1.png",
+          "bytes": 1850,
+          "sha256": "4d49d9c78136a1a4467c91197c71f1116588c3e80053c87c82b5c8096f79f027"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-progress1-dpr1.png",
+          "bytes": 1605,
+          "sha256": "939e15bf7dcc7155853ca6b1126c1ed2e26f50c5d96673fe20509d00658228b0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-invert-dpr1.png",
+          "bytes": 49771,
+          "sha256": "f34a501fced271efbf0e645f10a7301b6e1548d8a0d30483f210088c76cd8438"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-softness0-dpr1.png",
+          "bytes": 5369,
+          "sha256": "87f12cde2e21ec48f581a4ba50d5ac681bf6eaf559b01bf2f8cfee67bf9dbaae"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-disabled-dpr1.png",
+          "bytes": 1850,
+          "sha256": "4d49d9c78136a1a4467c91197c71f1116588c3e80053c87c82b5c8096f79f027"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-seed42-dpr1.png",
+          "bytes": 75371,
+          "sha256": "b9b8c1d9e613aa0933ef5cce42679302a6875e4f36cfa5ff12155d0af05334a5"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-scale10-dpr1.png",
+          "bytes": 116735,
+          "sha256": "1e554caead4ca6f709cf45675da27fb231ea147addf070e913d7906d3dd470ae"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-procedural-default-dpr1.png",
+          "bytes": 122362,
+          "sha256": "57eeec575b843c0b8f3e8a8cc01cfd1febb2fe851152226a8ddb6aa925cc30b1"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-procedural-progress0-dpr1.png",
+          "bytes": 4113,
+          "sha256": "9ad1b8026b339b961722b3c6be8241d61510696a81fa3dd45e9999e21bfd07db"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-procedural-progress1-dpr1.png",
+          "bytes": 1605,
+          "sha256": "939e15bf7dcc7155853ca6b1126c1ed2e26f50c5d96673fe20509d00658228b0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-procedural-invert-dpr1.png",
+          "bytes": 94737,
+          "sha256": "70b67bf4b74ff2a6ce08dc6bb51e5367d08de5b5c134bbc9f3e064e04e2767cc"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-procedural-softness0-dpr1.png",
+          "bytes": 11085,
+          "sha256": "1330afacd62961926ab13bd24fc6360693ba8f3e6cdf7ce968f517e2b00a4b93"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-procedural-disabled-dpr1.png",
+          "bytes": 4113,
+          "sha256": "9ad1b8026b339b961722b3c6be8241d61510696a81fa3dd45e9999e21bfd07db"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-rendered-default-dpr1.png",
+          "bytes": 87338,
+          "sha256": "4f3de84779bf450a1b394aacf9f676a4a8adc0a91dae33688c99f6bae4d7f223"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-rendered-progress0-dpr1.png",
+          "bytes": 1632,
+          "sha256": "569bcbd90c308b6599b1e4700acb610e0696a910071d1509386cdfa7e60a66ed"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-rendered-progress1-dpr1.png",
+          "bytes": 1605,
+          "sha256": "939e15bf7dcc7155853ca6b1126c1ed2e26f50c5d96673fe20509d00658228b0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-rendered-invert-dpr1.png",
+          "bytes": 64584,
+          "sha256": "796fd37996dfcaf075fe7a538673711d69b1fd91ea135d3aa199e981c86df9e7"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-rendered-softness0-dpr1.png",
+          "bytes": 4692,
+          "sha256": "86b1018b0f37e4bda0f5fbed884eaf7eb5e28373d72e8cade3368ac6f49a92f6"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-rendered-disabled-dpr1.png",
+          "bytes": 1632,
+          "sha256": "569bcbd90c308b6599b1e4700acb610e0696a910071d1509386cdfa7e60a66ed"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-background-light-dpr1.png",
+          "bytes": 57489,
+          "sha256": "df3e8764a2afa1b012f6208e371b33b2855851413548066a0e03060890d2ab67"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-default-dpr2.png",
+          "bytes": 198377,
+          "sha256": "dff9f18f9024146e27aff772ed36a01808d7df69773a56c3862fcfb26c0b2234"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-progress0-dpr2.png",
+          "bytes": 5006,
+          "sha256": "31a29a34ecdb2829a734fc6810783486e6e7300e6c4abea1ba7098b1dedb1503"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-procedural-default-dpr2.png",
+          "bytes": 354109,
+          "sha256": "a4bd1ee72bd5b842b5847e647db0b9614d13e9b5dda8d393207fb0b3d84e1ba0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-procedural-disabled-dpr2.png",
+          "bytes": 8748,
+          "sha256": "706be5afa6a8f323919a2ceaf729ed9a1f98148f2e11ef52ffc312d2a7c7aa31"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-rendered-default-dpr2.png",
+          "bytes": 239560,
+          "sha256": "3e0563990fc8fe57b55d23f7bdd3bc149a3782902a1b53883fa5e84aae9c2ebd"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-rendered-progress1-dpr2.png",
+          "bytes": 4717,
+          "sha256": "48cc72545477f89b1d71c12f6712ec256a902f3c7cae35d3a76a8ab6d0e04ef0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-image-live-resize.png",
+          "bytes": 52020,
+          "sha256": "4b89da9de74a7e7c7f6ce40b71be8b9dab5a81e6f55e68f4ce981cf55bc188d0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-procedural-live-resize.png",
+          "bytes": 81341,
+          "sha256": "67be24a752e9c16c6fbc75cf8e8519a8081de70cfc09f63b8bee7f7d1e38434d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/chromium-rendered-live-resize.png",
+          "bytes": 60600,
+          "sha256": "eb46988f90cbbc0a993e55f0025f02e5935917387ad3ca3ffda0c03930fb133a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-default-dpr1.png",
+          "bytes": 95960,
+          "sha256": "bb78e0261cbf9a07aeee0a63fcf216d0de1b7142cd49083cef1492c3c2c57270"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-progress0-dpr1.png",
+          "bytes": 6120,
+          "sha256": "5e0d367c74fa5708143673b204022940241ee6f197836b509ce6af185001fd8d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-progress1-dpr1.png",
+          "bytes": 1885,
+          "sha256": "f39f5347c2afaeb95305f4310fda947fc683c20de00804c1d22d62158ed9625b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-invert-dpr1.png",
+          "bytes": 65836,
+          "sha256": "df740ca1a8e352b701e5c68a976d4351ac47c8e35ed4898ae04123b05c779fbd"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-softness0-dpr1.png",
+          "bytes": 9862,
+          "sha256": "fe5733b8c19266d43786514e4acefbacc61fdf8e3ef38a6833413c67d64b729d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-disabled-dpr1.png",
+          "bytes": 6120,
+          "sha256": "5e0d367c74fa5708143673b204022940241ee6f197836b509ce6af185001fd8d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-seed42-dpr1.png",
+          "bytes": 97303,
+          "sha256": "983a46b7ddcf213f72922acb1a5e2bede12c6ff60f3d4e040a995989d63f9012"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-scale10-dpr1.png",
+          "bytes": 147264,
+          "sha256": "8d7cd44ab84b71d312381c45a28d256fbd0d3e3033ae8ae134fdb4fcee0ba27e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-procedural-default-dpr1.png",
+          "bytes": 145932,
+          "sha256": "526a6bf545d0dbab80bb4f4769e339db95d2be37b2719375491a26507bcaaab4"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-procedural-progress0-dpr1.png",
+          "bytes": 10895,
+          "sha256": "fbce472db096c5a7eb9e08cdb24f33bff401507e2278f5521df042baaee4e8a1"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-procedural-progress1-dpr1.png",
+          "bytes": 1885,
+          "sha256": "f39f5347c2afaeb95305f4310fda947fc683c20de00804c1d22d62158ed9625b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-procedural-invert-dpr1.png",
+          "bytes": 115633,
+          "sha256": "5660c35aa9839c78768ddbd255a1f8de1a095fd7de789ffcf1b834c48272c863"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-procedural-softness0-dpr1.png",
+          "bytes": 16877,
+          "sha256": "fb31d52a3f123d64237f5d15e1599b59d10d382e94be1efc3d66ad3151824550"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-procedural-disabled-dpr1.png",
+          "bytes": 10895,
+          "sha256": "fbce472db096c5a7eb9e08cdb24f33bff401507e2278f5521df042baaee4e8a1"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-rendered-default-dpr1.png",
+          "bytes": 109085,
+          "sha256": "0b490d4436107936ded879f06fb99bf51697db76b0310c853a8650fe8ba484b3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-rendered-progress0-dpr1.png",
+          "bytes": 4508,
+          "sha256": "869b947521237abdd483da4852c708e3b2021af5f1bab833e5b9ac0da3e2ab39"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-rendered-progress1-dpr1.png",
+          "bytes": 1885,
+          "sha256": "f39f5347c2afaeb95305f4310fda947fc683c20de00804c1d22d62158ed9625b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-rendered-invert-dpr1.png",
+          "bytes": 81195,
+          "sha256": "f1d7a56c05dd1299d4f58f7c4a777241491adf5cbb9ac3a52b5127c8963de049"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-rendered-softness0-dpr1.png",
+          "bytes": 8045,
+          "sha256": "fb9ff271c15f9e404df68125011f7b1a9ec4f1e71ae4aa3f6fb8cef335684c0e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-rendered-disabled-dpr1.png",
+          "bytes": 4508,
+          "sha256": "869b947521237abdd483da4852c708e3b2021af5f1bab833e5b9ac0da3e2ab39"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-background-light-dpr1.png",
+          "bytes": 78206,
+          "sha256": "8d0144cb7268be32645bccf5d6a938ff3c01516def436e266686698893afa9b2"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-default-dpr2.png",
+          "bytes": 278231,
+          "sha256": "86b1de38012af7cd467c7fbc73caea67d865cc75e4afa8080db5d68afe8c3fdb"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-progress0-dpr2.png",
+          "bytes": 16856,
+          "sha256": "77d625b6486d1f8ebad346d627dac5c4c8161195094c38441ae140d6b6471519"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-procedural-default-dpr2.png",
+          "bytes": 446783,
+          "sha256": "50316fce4eb6b3abbb2c7f334726e575aa32767273b9e24673dc0def6da73484"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-procedural-disabled-dpr2.png",
+          "bytes": 23595,
+          "sha256": "0d5d6309abecf2d58a6bd3c65ac7c8d39e9c5d70e295b609794059b0f837e585"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-rendered-default-dpr2.png",
+          "bytes": 325979,
+          "sha256": "9115c467bd5d8d4d49325b02bb13947ffb74675315de0abf8e1b55b5e07d30c7"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-rendered-progress1-dpr2.png",
+          "bytes": 5786,
+          "sha256": "1d1d1e94277a2ff3cccc3373e5cc7b3d174b5b680dab5d74bc47eb366895d6df"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-image-live-resize.png",
+          "bytes": 66169,
+          "sha256": "a5c006449e38384f72b75792d50ac99f5f469f747a9501ba469d5b5aa6a669cc"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-procedural-live-resize.png",
+          "bytes": 95786,
+          "sha256": "76f31608df84392c4fcd8b1e8f03c6d3f2b473d7295c2b83b2145f0e8987a7a5"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/firefox-rendered-live-resize.png",
+          "bytes": 74109,
+          "sha256": "774d7650eaeaaa9d8487a983dd00d828ff82f72b93efc4e41bcca89c83d68114"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-default-dpr1.png",
+          "bytes": 81269,
+          "sha256": "697240d317e1787a75f85f7c405980d60d0c8e1e271ba966b2f74b4a195be3c8"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-progress0-dpr1.png",
+          "bytes": 2429,
+          "sha256": "bb20747ee39974d30a4fd092864dfe5b988a4515fc6d381c1eb3f2f61aabcc8e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-progress1-dpr1.png",
+          "bytes": 2229,
+          "sha256": "bf8f74b8eedefe0a66e2eeb251ff702734ad98709982ce3294095b550ee7539d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-invert-dpr1.png",
+          "bytes": 54660,
+          "sha256": "0f44d8289f206f21355220ed75d7e1b291bfd0ea2f290e172afe5ce03b42ed8d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-softness0-dpr1.png",
+          "bytes": 6006,
+          "sha256": "390662da41024f9818c9329dca15c9ce05df658bab10758ea022c0a3b525e944"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-disabled-dpr1.png",
+          "bytes": 2429,
+          "sha256": "bb20747ee39974d30a4fd092864dfe5b988a4515fc6d381c1eb3f2f61aabcc8e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-seed42-dpr1.png",
+          "bytes": 82486,
+          "sha256": "4abc56619964f71b1459d3e0f8dc40a89cdd7e5622745fbc268f2a6235b8d2b3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-scale10-dpr1.png",
+          "bytes": 128050,
+          "sha256": "2c9da5d2aa910976f1b98fbe411b7bb5fd9a5eabe5884547701224d9b1b4551e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-procedural-default-dpr1.png",
+          "bytes": 135040,
+          "sha256": "25af5decf26753f616a2421f2dbb6daab9c0f531400603a8e1f5e77ec8c30bfe"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-procedural-progress0-dpr1.png",
+          "bytes": 5280,
+          "sha256": "3c2c11ddfb5f9392477b4c9f08384b218bddf3e220a194a514a8f9e3428c3fc4"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-procedural-progress1-dpr1.png",
+          "bytes": 2229,
+          "sha256": "bf8f74b8eedefe0a66e2eeb251ff702734ad98709982ce3294095b550ee7539d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-procedural-invert-dpr1.png",
+          "bytes": 104997,
+          "sha256": "83f342f9d4c9ba6c7b21159aa0e96172ec1755d80cb6a31cfbaddbb39451aaf0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-procedural-softness0-dpr1.png",
+          "bytes": 12220,
+          "sha256": "4050adc896ec5ccb512b9f2eabaa658123ea098ba5f9e476598ec5ce12de69f3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-procedural-disabled-dpr1.png",
+          "bytes": 5280,
+          "sha256": "3c2c11ddfb5f9392477b4c9f08384b218bddf3e220a194a514a8f9e3428c3fc4"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-rendered-default-dpr1.png",
+          "bytes": 95666,
+          "sha256": "377f86119e2fe1fe47479f4e46911fd609103be54ef74b5cc040202cae090659"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-rendered-progress0-dpr1.png",
+          "bytes": 2257,
+          "sha256": "5cef8dc15d62028eaa4593ddf79a360f6008d348929a2c190cabe8543d437767"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-rendered-progress1-dpr1.png",
+          "bytes": 2229,
+          "sha256": "bf8f74b8eedefe0a66e2eeb251ff702734ad98709982ce3294095b550ee7539d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-rendered-invert-dpr1.png",
+          "bytes": 70798,
+          "sha256": "a2528e7ae05ebf70a4db1f5e4d9ba98d8ad4e94443480eb6114beab1d0c236be"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-rendered-softness0-dpr1.png",
+          "bytes": 5293,
+          "sha256": "40a0ff6dd8186849d5a1da0b0bbb131006a4656cf18121c34e19b972f6c3e397"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-rendered-disabled-dpr1.png",
+          "bytes": 2257,
+          "sha256": "5cef8dc15d62028eaa4593ddf79a360f6008d348929a2c190cabe8543d437767"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-background-light-dpr1.png",
+          "bytes": 61719,
+          "sha256": "17274998f8ff80943807444b9cf26f6ae45ddad39c5d77970fe5014408b9cb33"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-default-dpr2.png",
+          "bytes": 211407,
+          "sha256": "8629c8d97bd42d19d9a7de4cd33ea171e80f5e44254e2f82ef316f43d602a475"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-progress0-dpr2.png",
+          "bytes": 6431,
+          "sha256": "91d09f4fbed7a27cc6403679899a6a925e698d5d011d75c29cecdfae471ce871"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-procedural-default-dpr2.png",
+          "bytes": 382301,
+          "sha256": "c1c2bfbca999431c996d03e8e670505094cfa5384fcfce9876a2df238a3d2c6d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-procedural-disabled-dpr2.png",
+          "bytes": 9941,
+          "sha256": "669f036f6a2c245cb61f3212f62949d6a60d73f0a9982ba42f57ab27ddbcb808"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-rendered-default-dpr2.png",
+          "bytes": 254226,
+          "sha256": "f6ad2e9e25144b986bd5d7b38a2cd79208ef2568bbaae78dc44022e1e192e6ce"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-rendered-progress1-dpr2.png",
+          "bytes": 6179,
+          "sha256": "ad45d52820b241b487899966d7d3c3f6a37a4c92bcfe5e6d5169edd478c8f497"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-image-live-resize.png",
+          "bytes": 56802,
+          "sha256": "6cdc18982365623a79ddbf11bffd0e9d884a269a3f79c0828aaa59cfe4530d0a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-procedural-live-resize.png",
+          "bytes": 89731,
+          "sha256": "18cac4d39b68726cc3db1a889ae14231b6f9d7d91a0ca92fff3a70827ca16d04"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt7-artifacts/webkit-rendered-live-resize.png",
+          "bytes": 66220,
+          "sha256": "f95c645e598eb8c73dcca68763392a35394d475b3948705f6dcdefb1c5477462"
+        }
+      ]
+    },
+    "Boundary": {
+      "status": "PASS",
+      "parameterCases": 90,
+      "malformedAtomicRejections": 21
+    },
+    "Resource": {
+      "status": "PASS",
+      "cycles": 300,
+      "pairedReferences": 1995,
+      "ownedKindsByRoute": {
+        "image": [
+          "mesh",
+          "material0",
+          "effect0",
+          "effect1",
+          "sourceTexture"
+        ],
+        "procedural": [
+          "mesh",
+          "material0",
+          "material1",
+          "effect0",
+          "effect1"
+        ],
+        "rendered": [
+          "mesh",
+          "slabMesh0",
+          "slabMesh1",
+          "slabMesh2",
+          "material0",
+          "material1",
+          "material2",
+          "material3",
+          "effect0",
+          "effect1"
+        ]
+      }
+    },
+    "Performance": {
+      "status": "PASS",
+      "profileCases": 27,
+      "measurements": [
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "route": "image",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.644999999552965,
+              "p95": 17.3899999987334
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.2850000001490116,
+              "p95": 0.42500000074505806
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.0800000000745058,
+              "p95": 0.13499999977648258
+            },
+            "gpuMs": {
+              "available": true,
+              "count": 330,
+              "p50": 1.058816,
+              "p95": 2.422784
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "route": "procedural",
+          "steadyFrames": 329,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 329,
+              "p50": 16.66499999910593,
+              "p95": 17.529999999329448
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.32499999925494194,
+              "p95": 0.5600000005215406
+            },
+            "updateMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.08499999903142452,
+              "p95": 0.14000000059604645
+            },
+            "gpuMs": {
+              "available": true,
+              "count": 329,
+              "p50": 1.86368,
+              "p95": 3.193856
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "route": "rendered",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.675000000745058,
+              "p95": 17.584999999031425
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.3300000000745058,
+              "p95": 0.5800000000745058
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.06499999947845936,
+              "p95": 0.10999999940395355
+            },
+            "gpuMs": {
+              "available": true,
+              "count": 330,
+              "p50": 2.378752,
+              "p95": 3.119104
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "route": "image",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.68999999947846,
+              "p95": 17.59999999962747
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.2850000001490116,
+              "p95": 0.40499999932944775
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.0800000000745058,
+              "p95": 0.125
+            },
+            "gpuMs": {
+              "available": true,
+              "count": 330,
+              "p50": 3.247104,
+              "p95": 5.772288
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "route": "procedural",
+          "steadyFrames": 329,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 329,
+              "p50": 16.640000000596046,
+              "p95": 17.899999998509884
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.31499999947845936,
+              "p95": 0.5299999993294477
+            },
+            "updateMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.07000000029802322,
+              "p95": 0.125
+            },
+            "gpuMs": {
+              "available": true,
+              "count": 329,
+              "p50": 3.584,
+              "p95": 5.92896
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "route": "rendered",
+          "steadyFrames": 269,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 269,
+              "p50": 16.830000000074506,
+              "p95": 33.18500000052154
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 269,
+              "p50": 0.3500000014901161,
+              "p95": 0.5650000013411045
+            },
+            "updateMs": {
+              "available": true,
+              "count": 269,
+              "p50": 0.07000000029802322,
+              "p95": 0.10999999940395355
+            },
+            "gpuMs": {
+              "available": true,
+              "count": 269,
+              "p50": 3.372032,
+              "p95": 5.538816
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "route": "image",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.665000000968575,
+              "p95": 17.77500000037253
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.2900000009685755,
+              "p95": 0.4100000001490116
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.0800000000745058,
+              "p95": 0.125
+            },
+            "gpuMs": {
+              "available": true,
+              "count": 330,
+              "p50": 2.736128,
+              "p95": 3.990528
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "route": "procedural",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.66499999910593,
+              "p95": 17.480000000447035
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.3349999990314245,
+              "p95": 0.5549999997019768
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.07000000029802322,
+              "p95": 0.11500000022351742
+            },
+            "gpuMs": {
+              "available": true,
+              "count": 330,
+              "p50": 2.957312,
+              "p95": 4.125696
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "route": "rendered",
+          "steadyFrames": 329,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 329,
+              "p50": 16.644999999552965,
+              "p95": 17.299999998882413
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.3349999990314245,
+              "p95": 0.5750000011175871
+            },
+            "updateMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.07499999925494194,
+              "p95": 0.12999999895691872
+            },
+            "gpuMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.851968,
+              "p95": 2.70848
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "route": "image",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.679999999999836,
+              "p95": 17.299999999999727
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.4399999999995998,
+              "p95": 0.6199999999998909
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.13999999999987267,
+              "p95": 0.2199999999997999
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "route": "procedural",
+          "steadyFrames": 328,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 328,
+              "p50": 16.68000000000029,
+              "p95": 17.340000000000146
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 328,
+              "p50": 0.4800000000000182,
+              "p95": 0.819999999999709
+            },
+            "updateMs": {
+              "available": true,
+              "count": 328,
+              "p50": 0.11999999999989086,
+              "p95": 0.22000000000002728
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "route": "rendered",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.679999999999836,
+              "p95": 17.340000000000146
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.5,
+              "p95": 0.8599999999996726
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.11999999999989086,
+              "p95": 0.1999999999998181
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "route": "image",
+          "steadyFrames": 329,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 329,
+              "p50": 16.659999999999854,
+              "p95": 17.31999999999971
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.4600000000000364,
+              "p95": 0.6400000000003274
+            },
+            "updateMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.13999999999987267,
+              "p95": 0.23999999999978172
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "route": "procedural",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.67999999999938,
+              "p95": 17.279999999999745
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.5799999999999272,
+              "p95": 0.900000000000091
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.11999999999989086,
+              "p95": 0.22000000000025466
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "route": "rendered",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.68000000000029,
+              "p95": 17.340000000000146
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.5799999999999272,
+              "p95": 0.9600000000000364
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.11999999999989086,
+              "p95": 0.2199999999997999
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "route": "image",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.640000000000327,
+              "p95": 17.299999999999727
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.38000000000010914,
+              "p95": 0.5
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.11999999999989086,
+              "p95": 0.1999999999998181
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "route": "procedural",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.679999999999836,
+              "p95": 17.23999999999978
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.4600000000000364,
+              "p95": 0.8000000000001819
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.1000000000003638,
+              "p95": 0.2199999999997999
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "route": "rendered",
+          "steadyFrames": 330,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 330,
+              "p50": 16.67999999999938,
+              "p95": 17.23999999999978
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.42000000000007276,
+              "p95": 0.6399999999998727
+            },
+            "updateMs": {
+              "available": true,
+              "count": 330,
+              "p50": 0.09999999999990905,
+              "p95": 0.1799999999998363
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "route": "image",
+          "steadyFrames": 329,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 329,
+              "p50": 16.579999999999927,
+              "p95": 18.44000000000051
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.23999999999978172,
+              "p95": 0.38000000000010914
+            },
+            "updateMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.05999999999949068,
+              "p95": 0.12000000000080036
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "route": "procedural",
+          "steadyFrames": 325,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 325,
+              "p50": 16.67999999999938,
+              "p95": 18.88000000000102
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 325,
+              "p50": 0.23999999999978172,
+              "p95": 0.42000000000007276
+            },
+            "updateMs": {
+              "available": true,
+              "count": 325,
+              "p50": 0.06000000000130967,
+              "p95": 1.4200000000000728
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "route": "rendered",
+          "steadyFrames": 305,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 305,
+              "p50": 16.719999999999345,
+              "p95": 32.1200000000008
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 305,
+              "p50": 0.27999999999883585,
+              "p95": 0.7000000000007276
+            },
+            "updateMs": {
+              "available": true,
+              "count": 305,
+              "p50": 0.07999999999992724,
+              "p95": 0.15999999999985448
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "route": "image",
+          "steadyFrames": 328,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 328,
+              "p50": 16.659999999999854,
+              "p95": 18.400000000000546
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 328,
+              "p50": 0.21999999999934516,
+              "p95": 0.3999999999996362
+            },
+            "updateMs": {
+              "available": true,
+              "count": 328,
+              "p50": 0.05999999999949068,
+              "p95": 0.1000000000003638
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "route": "procedural",
+          "steadyFrames": 327,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 327,
+              "p50": 16.520000000000437,
+              "p95": 18.88000000000102
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 327,
+              "p50": 0.23999999999978172,
+              "p95": 0.47999999999956344
+            },
+            "updateMs": {
+              "available": true,
+              "count": 327,
+              "p50": 0.05999999999949068,
+              "p95": 0.41999999999916326
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "route": "rendered",
+          "steadyFrames": 328,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 328,
+              "p50": 16.600000000000364,
+              "p95": 18.81999999999971
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 328,
+              "p50": 0.2400000000016007,
+              "p95": 0.48000000000047294
+            },
+            "updateMs": {
+              "available": true,
+              "count": 328,
+              "p50": 0.07999999999992724,
+              "p95": 1.8400000000001455
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "route": "image",
+          "steadyFrames": 327,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 327,
+              "p50": 16.700000000000728,
+              "p95": 18.399999999999636
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 327,
+              "p50": 0.22000000000025466,
+              "p95": 0.38000000000010914
+            },
+            "updateMs": {
+              "available": true,
+              "count": 327,
+              "p50": 0.05999999999949068,
+              "p95": 0.12000000000080036
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "route": "procedural",
+          "steadyFrames": 329,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 329,
+              "p50": 16.659999999999854,
+              "p95": 18.55999999999949
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.22000000000025466,
+              "p95": 0.38000000000010914
+            },
+            "updateMs": {
+              "available": true,
+              "count": 329,
+              "p50": 0.05999999999949068,
+              "p95": 0.18000000000029104
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "route": "rendered",
+          "steadyFrames": 259,
+          "statistics": {
+            "intervalMs": {
+              "available": true,
+              "count": 259,
+              "p50": 17.06000000000131,
+              "p95": 33.86000000000058
+            },
+            "renderEnvelopeMs": {
+              "available": true,
+              "count": 259,
+              "p50": 0.27999999999974534,
+              "p95": 0.4600000000009459
+            },
+            "updateMs": {
+              "available": true,
+              "count": 259,
+              "p50": 0.07999999999992724,
+              "p95": 0.24000000000069122
+            },
+            "gpuMs": {
+              "available": false,
+              "count": 0,
+              "p50": null,
+              "p95": null
+            }
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        }
+      ]
+    }
+  },
+  "historicalAttempts": [
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt2.json",
+        "bytes": 5522178,
+        "sha256": "ecd3fc25cc25b3fecd41594e0b3331b8d442745da8b35fe3faec2abb842d3280"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt2-os.json",
+        "bytes": 615,
+        "sha256": "cd583fe8c9454db7f73c32ad102d8bcf9d4086025eeb58d61b27e4159563489c"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt2.log",
+        "bytes": 112,
+        "sha256": "7249935b693f1bbfd80b42fecf5d1801250bdad06594fb143e61e75e5aaa44ec"
+      }
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt3.json",
+        "bytes": 6005726,
+        "sha256": "bd50141f3e6e1e616282d8afa94290668fd306b10d7183b2ecb171fc79f55407"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt3-os.json",
+        "bytes": 615,
+        "sha256": "f9b9c12894acbecbbdfd36e0ede9f6ace87af6ea81f9d48d7c1571c2f282822b"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt3.log",
+        "bytes": 112,
+        "sha256": "7c83d7ce63d8789ef71742845230c25993e11d887a9f0b5cdfabe16839b39778"
+      }
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt4.json",
+        "bytes": 6005841,
+        "sha256": "d856eecc823d8e83e4df9dcaa1b3a6adbb614bb20a26e39ef0879c139ee16f64"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt4-os.json",
+        "bytes": 615,
+        "sha256": "08590b23e00e7c449761fb6c9ac761310fb23ed0a60b102ff5ff875a8752e4ba"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt4.log",
+        "bytes": 112,
+        "sha256": "b4a4b318c8978cf47dac643e39096b6abac4334f93ac8c888aba9b1e40ba740a"
+      }
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt5.json",
+        "bytes": 6005830,
+        "sha256": "f786ec41759235c5dfc1a151f4338b21e745564cb1bcb5d7354864c0abf3e829"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt5-os.json",
+        "bytes": 615,
+        "sha256": "a5bec81b2981b12839f0a76033e5cd2ff0d8ca358dc262bbb3ef7b7403dde570"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt5.log",
+        "bytes": 112,
+        "sha256": "4ab37614eba845e320f12b63bd17e8ab2a17ae58f544679e8f392d8ee2c5ea99"
+      }
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt6.json",
+        "bytes": 6060202,
+        "sha256": "d48280ab410f2b5cf9ae0ac24b03b34a742db97689a71c36741b02d8b8e8c888"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt6-os.json",
+        "bytes": 615,
+        "sha256": "123b0ba5eb96c607e851d34d7f6e191f5db83a3a68ce0c93b71eeed0618b7b07"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w4-c04-functional-all-attempt6.log",
+        "bytes": 452,
+        "sha256": "44c2edb6e09ceca92f4e22e16484a74485e71f9c2809e59c19a8d56e17d11c57"
+      }
+    }
+  ],
+  "limitations": [
+    "Independent Gallery/Agent NOT_RUN",
+    "instrumented CPU envelope, not uninstrumented benchmark",
+    "mobile profile is emulated, not physical iPhone",
+    "physical GPU memory unavailable",
+    "prior SDK Wave1-3/C01/C02 cannot inherit current identity PASS"
+  ]
+}

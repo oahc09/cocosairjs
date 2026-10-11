@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "e01-scoped-capture-validation/1",
+  "purpose": "VALIDATION_OF_REAL_BROWSER_CAPTURE",
+  "engine": "firefox",
+  "gate": "Performance",
+  "caseIds": [
+    "720p",
+    "1080p",
+    "mobile-dpr"
+  ],
+  "measuredCases": 3,
+  "browserRunsAdded": 0,
+  "pass": true,
+  "errors": [],
+  "capture": {
+    "path": "output/shaders-absorption/e01-engine-attempt7.json",
+    "bytes": 3783094,
+    "sha256": "1a1d3c5d1e8c931a60553e03a1a48d60740b078ca55b2f2795992754d89aa121"
+  },
+  "verifier": {
+    "path": "tools/verify/shaders-noise-dissolve-scoped-gate.cjs",
+    "bytes": 4856,
+    "sha256": "b4f546b68f96bd24dc4099f3e68d6880242ed80c76163929b6935cee29f3fcb8"
+  },
+  "execution": {
+    "command": "\"D:\\Program Files\\nodejs\\node.exe\" E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\shaders-noise-dissolve-scoped-gate.cjs --report=output/shaders-absorption/e01-engine-attempt7.json --engine=firefox --gate=Performance --case-ids=720p,1080p,mobile-dpr --out=docs/evidence/shaders-absorption/e01-engine-scoped-validations/firefox-performance.json",
+    "argv": [
+      "D:\\Program Files\\nodejs\\node.exe",
+      "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\shaders-noise-dissolve-scoped-gate.cjs",
+      "--report=output/shaders-absorption/e01-engine-attempt7.json",
+      "--engine=firefox",
+      "--gate=Performance",
+      "--case-ids=720p,1080p,mobile-dpr",
+      "--out=docs/evidence/shaders-absorption/e01-engine-scoped-validations/firefox-performance.json"
+    ],
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-09T00:57:32.617Z",
+    "endedAt": "2026-10-09T00:57:33.549Z",
+    "exitCode": 0
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "shaders-wave1-readonly-audit/1",
+  "executionChannel": "Lead",
+  "method": "READ_ONLY_PRODUCTION_VALIDATORS",
+  "observedAt": "2026-10-09T22:56:41.579Z",
+  "baselineAccepted": true,
+  "browserRunsAdded": 0,
+  "mutations": 7,
+  "allRejected": true,
+  "checks": [
+    {
+      "name": "agentGate",
+      "rejected": true,
+      "errors": [
+        "project/Agent scope"
+      ]
+    },
+    {
+      "name": "projectCompleted",
+      "rejected": true,
+      "errors": [
+        "project/Agent scope"
+      ]
+    },
+    {
+      "name": "caseCount",
+      "rejected": true,
+      "errors": [
+        "derived coverage mismatch"
+      ]
+    },
+    {
+      "name": "galleryCount",
+      "rejected": true,
+      "errors": [
+        "derived coverage mismatch"
+      ]
+    },
+    {
+      "name": "missingOS",
+      "rejected": true,
+      "errors": [
+        "seven OS execution receipts required",
+        "derived Wave status mismatch"
+      ]
+    },
+    {
+      "name": "reportSHA",
+      "rejected": true,
+      "errors": [
+        "gallery: SHA/bytes drift",
+        "derived Wave status mismatch",
+        "derived coverage mismatch"
+      ]
+    },
+    {
+      "name": "checkerSHA",
+      "rejected": true,
+      "errors": [
+        "validator drift: tools/verify/shaders-wave1-gate.cjs",
+        "derived Wave status mismatch"
+      ]
+    }
+  ],
+  "gate": {
+    "path": "docs/evidence/shaders-absorption/wave1-r21-current-gate.json",
+    "bytes": 15020,
+    "sha256": "fed2e0b9d1172d5f4c7b53e14a5f75fa5922dde6a535c828576d709d6d466be0"
+  },
+  "previousRuntimeAudit": {
+    "path": "output/shaders-absorption/lead-w1-r20-current-audit-attempt2.json",
+    "bytes": 3902,
+    "sha256": "a3fa188f6e04cbcb3688989a76bfca0499b761f938f7df1c4690799deaf2951a"
+  }
+}

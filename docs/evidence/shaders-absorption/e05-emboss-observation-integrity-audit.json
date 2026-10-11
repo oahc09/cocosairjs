@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "wave2-observation-integrity/1",
+  "executionChannel": "Lead",
+  "baselineAccepted": true,
+  "browserRunsAdded": 0,
+  "rows": [
+    {
+      "phase": "functional",
+      "mutation": "missing-pageErrors",
+      "collectorAccepted": true,
+      "rejectedByWave2Gate": true,
+      "errors": [
+        "functional/chromium: pageErrors: explicit observed array required"
+      ]
+    },
+    {
+      "phase": "functional",
+      "mutation": "missing-consoleErrors",
+      "collectorAccepted": true,
+      "rejectedByWave2Gate": true,
+      "errors": [
+        "functional/chromium: consoleErrors: explicit observed array required"
+      ]
+    },
+    {
+      "phase": "performance",
+      "mutation": "missing-pageErrors",
+      "collectorAccepted": true,
+      "rejectedByWave2Gate": true,
+      "errors": [
+        "performance/chromium: pageErrors: explicit observed array required"
+      ]
+    },
+    {
+      "phase": "performance",
+      "mutation": "missing-consoleErrors",
+      "collectorAccepted": true,
+      "rejectedByWave2Gate": true,
+      "errors": [
+        "performance/chromium: consoleErrors: explicit observed array required"
+      ]
+    }
+  ]
+}

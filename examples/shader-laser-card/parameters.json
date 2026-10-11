@@ -1,0 +1,195 @@
+{
+  "schemaVersion": "shaders-effect-contract/1",
+  "name": "laserCard",
+  "version": "1.0.0",
+  "params": {
+    "shape": {
+      "type": "string",
+      "defaultValue": "circle",
+      "enum": ["circle", "rounded-box"],
+      "updateMode": "structure",
+      "description": "Shared analytic SDF shape for all three stages."
+    },
+    "holoEnabled": {
+      "type": "string",
+      "defaultValue": "on",
+      "enum": ["on", "off"],
+      "updateMode": "uniform",
+      "description": "Holographic stage enable. off = neutral card input (deterministic checker pattern)."
+    },
+    "embossEnabled": {
+      "type": "string",
+      "defaultValue": "on",
+      "enum": ["on", "off"],
+      "updateMode": "uniform",
+      "description": "Emboss stage enable. off = holographic output passthrough (bypass emboss RT)."
+    },
+    "sparkleEnabled": {
+      "type": "string",
+      "defaultValue": "on",
+      "enum": ["on", "off"],
+      "updateMode": "uniform",
+      "description": "Sparkle stage enable. off = emboss output direct to screen (display copy pass still runs)."
+    },
+    "holoRoughness": {
+      "type": "number",
+      "defaultValue": 0.25,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Holographic matte grain (E03 roughness)."
+    },
+    "holoCrinkle": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Holographic wrinkle strength (E03 crinkle)."
+    },
+    "holoSparkle": {
+      "type": "number",
+      "defaultValue": 0.4,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Holographic glitter (E03 sparkle — note: distinct from the C01 Sparkle stage)."
+    },
+    "holoFoilScale": {
+      "type": "number",
+      "defaultValue": 1.5,
+      "min": 0.3,
+      "max": 6,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Holographic iridescent patch scale (E03 foilScale)."
+    },
+    "holoSaturation": {
+      "type": "number",
+      "defaultValue": 0.75,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Holographic spectral saturation."
+    },
+    "holoHueShift": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "unit": "degree",
+      "updateMode": "uniform",
+      "description": "Holographic hue rotation."
+    },
+    "embossDepth": {
+      "type": "number",
+      "defaultValue": -0.5,
+      "min": -1,
+      "max": 1,
+      "step": 0.01,
+      "unit": "signed",
+      "updateMode": "uniform",
+      "description": "Emboss relief depth (E05 depth). negative=inset, positive=raised."
+    },
+    "embossLightAngle": {
+      "type": "number",
+      "defaultValue": 260,
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "unit": "degree",
+      "updateMode": "uniform",
+      "description": "Emboss light angle for edge lighting."
+    },
+    "embossShadowIntensity": {
+      "type": "number",
+      "defaultValue": 0.3,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Emboss cast shadow darkness."
+    },
+    "sparkleSize": {
+      "type": "number",
+      "defaultValue": 70,
+      "min": 10,
+      "max": 200,
+      "step": 1,
+      "unit": "CSS px",
+      "updateMode": "uniform",
+      "description": "Sparkle grid spacing (E06 size)."
+    },
+    "sparkleIntensity": {
+      "type": "number",
+      "defaultValue": 0.45,
+      "min": 0,
+      "max": 20,
+      "step": 0.1,
+      "unit": "linear gain",
+      "updateMode": "uniform",
+      "description": "Sparkle star gain (E06 intensity)."
+    },
+    "sparkleThreshold": {
+      "type": "number",
+      "defaultValue": 0.2,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "linear",
+      "updateMode": "uniform",
+      "description": "Sparkle luminance gating threshold (E06 threshold)."
+    },
+    "sparkleRayLength": {
+      "type": "number",
+      "defaultValue": 5,
+      "min": 0.1,
+      "max": 20,
+      "step": 0.1,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Sparkle ray length (E06 rayLength)."
+    },
+    "sparkleColorize": {
+      "type": "number",
+      "defaultValue": 0.35,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Sparkle source-color mixing (E06 colorize)."
+    },
+    "time": {
+      "type": "number",
+      "defaultValue": 0.25,
+      "min": 0,
+      "max": 60,
+      "step": 0.01,
+      "unit": "second",
+      "updateMode": "uniform",
+      "description": "Shared animation time. Read-only via setTime API; included in schema for oracle."
+    },
+    "sparkleSeed": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 8,
+      "step": 0.01,
+      "unit": "offset",
+      "updateMode": "uniform",
+      "description": "Sparkle seed offset (E06 seed). Different values produce different star patterns."
+    }
+  }
+}

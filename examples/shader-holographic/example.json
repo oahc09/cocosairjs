@@ -1,0 +1,222 @@
+{
+  "id": "shader-holographic",
+  "title": "Holographic 全息箔",
+  "description": "MaterialX perlin、皱褶法线、精确三分之一相位色谱与固定主光的独立单通道实现。",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "createAirRenderTarget",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "MeshRenderer",
+    "utils.createMesh"
+  ],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "原生单通道全息箔：MaterialX perlin 独立重写、皱褶法线与分层 oracle",
+    "points": [
+      "lookup3 u32 格点散列 + quintic + 8 梯度的 mx_noise_float 复算",
+      "前向 stencil 0.008 + dome 法线 + 0.02 皱褶差分",
+      "精确 1/3 相位余弦色谱与固定 300° 主光折叠常数",
+      "两像素 guard 精确零与透明底 RT 直读"
+    ]
+  },
+  "assets": [],
+  "license": {
+    "assets": "纯程序化图案，无外部素材；参考 MIT+MaterialX 通知束见 LICENSE.reference.txt，独立实现见 UPSTREAM.md"
+  },
+  "api": {
+    "primary": [
+      "EffectAsset",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Camera",
+      "Node",
+      "utils.createMesh",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Camera",
+      "Node"
+    ],
+    "forbiddenShortcut": [
+      "shaders runtime/TypeGPU/额外canvas",
+      "独立RAF/第二模拟时钟",
+      "Fi-hash 噪声替代 MaterialX perlin",
+      "截图相似替代分层数值oracle"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L31",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L206",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L557",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L92",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L109",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L140",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L132",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L95",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L38",
+        "validator": "node-exists"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L35",
+        "validator": "node-exists"
+      }
+    ],
+    "evidenceStatus": "sourceLocation 由生产 findSymbolLine 核对可执行行；浏览器 runtime 证据 NOT_RUN，待 Lead 采集。"
+  },
+  "effect": {
+    "functional": "13 参数 update（shape 结构重建/其余 uniform）、暂停/继续/重置/释放，单 native pacer",
+    "visual": "分层 noise/normal/hue/light/flake/grain、straight linear RGBA、一次 OETF、两像素外精确零",
+    "limitations": [
+      "仅 circle/rounded-box 两个解析 SDF；sphere3D/volumetric/SDF 贴图/shape JSON 平台 NOT_SUPPORTED",
+      "silhouette 宽度按 std 文档语义实现（kit 主体不在只读缓存，已声明）",
+      "Windows WebKit 采集器需 shader-scoped accelerated-compositing 启动项",
+      "性能窗口须 Lead 串行授权（--authorization）；Agent Gate NOT_RUN",
+      "Gallery 生命周期桥接已实现，浏览器证据 RESOLVED_NOT_RUN"
+    ]
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "改变滑块/形状下拉/seed",
+        "expected": "uniform 同步或 shape 跨值变体重建；seed 偏移噪声域"
+      },
+      {
+        "action": "暂停/继续/重置/释放",
+        "expected": "时钟冻结/前进、三引用退役归零、释放后按钮禁用"
+      },
+      {
+        "action": "执行示例 linearProbe 读回探针",
+        "probe": "__holographic.linearProbe",
+        "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__holographic.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__holographic.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "native-camera",
+        "owned-holographic-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "Default startup scene plus __holographic.ready; Gallery validators declared, not yet executed."
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "分层数值 oracle 与透明底 RT 直读由 tools/verify/shaders-holographic-browser.cjs 采集；本声明不是浏览器 PASS。"
+  },
+  "promotion": {
+    "spec": "83c37e26d60a",
+    "source": "f67a1904c8e6c2b1",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 10,
+    "attested": 0,
+    "units": 10
+  }
+}

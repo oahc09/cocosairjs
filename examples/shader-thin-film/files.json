@@ -1,0 +1,13 @@
+{
+  "files": [
+    "index.html",
+    "src/main.ts",
+    "src/parameters.ts",
+    "src/effect.generated.ts",
+    "parameters.json",
+    "README.md",
+    "UPSTREAM.md",
+    "UPSTREAM.json",
+    "LICENSE.txt"
+  ]
+}

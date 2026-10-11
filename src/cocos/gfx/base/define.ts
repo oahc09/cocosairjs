@@ -2174,7 +2174,7 @@ export const FormatInfos = Object.freeze([
     createFormatInfo('RGB5A1', 2, 4, FormatType.UNORM, true),
     createFormatInfo('RGBA4', 2, 4, FormatType.UNORM, true),
     createFormatInfo('RGB10A2', 2, 4, FormatType.UNORM, true),
-    createFormatInfo('RGB10A2UI', 2, 4, FormatType.UINT, true),
+    createFormatInfo('RGB10A2UI', 4, 4, FormatType.UINT, true),
     createFormatInfo('RGB9E5', 2, 4, FormatType.FLOAT, true),
 
     createFormatInfo('DEPTH', 4, 1, FormatType.FLOAT, false, true),
@@ -2445,6 +2445,7 @@ export function GetTypeSize (type: Type): number {
 }
 
 export function getTypedArrayConstructor (info: FormatInfo): TypedArrayConstructor {
+    if (info === FormatInfos[Format.RGB10A2UI]) return Uint32Array;
     if (info.isCompressed) {
         return Uint8Array;
     }

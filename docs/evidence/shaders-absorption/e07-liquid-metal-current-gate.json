@@ -1,0 +1,2197 @@
+{
+  "schemaVersion": "e07-liquid-metal-current-gate/1",
+  "task": "Wave3/E07",
+  "evaluatedAt": "2026-10-10T02:30:20.354Z",
+  "executionChannels": {
+    "implementation": "Orca Worker 小三",
+    "independentReviewAndCollection": "Lead"
+  },
+  "status": "PASS",
+  "scope": "circle/rounded-box analytic implementation and frozen six-dimension contract",
+  "subset": true,
+  "completed": false,
+  "wave3Gate": "NOT_RUN",
+  "agentGate": "NOT_RUN",
+  "gates": {
+    "Build": {
+      "status": "PASS",
+      "strictTypecheckAndBundle": [
+        {
+          "command": "node node_modules/typescript/bin/tsc -p tools/verify/shaders-liquid-metal.tsconfig.json",
+          "exitCode": 0,
+          "raw": {
+            "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/build.log",
+            "bytes": 107,
+            "sha256": "c26964bbca7ae4225fff7d985940691e5997881a9513672ddfca86b5638e103c"
+          },
+          "bundleBytes": 56508
+        },
+        {
+          "command": "node node_modules/typescript/bin/tsc -p tools/verify/shaders-liquid-metal.tsconfig.json",
+          "exitCode": 0,
+          "raw": {
+            "path": "output/shaders-absorption/lead-w3-e07-performance-attempt1-artifacts/build.log",
+            "bytes": 107,
+            "sha256": "c26964bbca7ae4225fff7d985940691e5997881a9513672ddfca86b5638e103c"
+          },
+          "bundleBytes": 56508
+        }
+      ],
+      "engines": 3
+    },
+    "Runtime": {
+      "status": "PASS",
+      "engines": 3,
+      "trustedControls": [
+        "parameter",
+        "pause",
+        "resume",
+        "reset",
+        "release"
+      ],
+      "liveResize": 3,
+      "terminalAndRecreate": 3
+    },
+    "Visual": {
+      "status": "PASS",
+      "screenshotCases": 39,
+      "transparentLinearProbes": 39,
+      "byteTolerance": 2,
+      "temporalCases": 3,
+      "temporalProbes": 6,
+      "screenshots": [
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-default-dpr1.png",
+          "bytes": 74158,
+          "sha256": "70b7e0a874af1b5b64c0b346da7cbab69af423d79b71ae7bbf3b110effcdc151"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-box-dpr1.png",
+          "bytes": 54160,
+          "sha256": "80ea6ebb86c97184e35f4fe8666acb09c69bd78039978c4ce7f0a17d8bb465ee"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-turbulence-zero-dpr1.png",
+          "bytes": 23940,
+          "sha256": "f89f16880b2d91b716adba1667605eb2108eed014177d7eccb6948b3334bcc14"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-warp-zero-dpr1.png",
+          "bytes": 71920,
+          "sha256": "ec01f71420f366866be49019932a243dbf940a4ba5462fcf6afab673fafa4a18"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-quality-low-dpr1.png",
+          "bytes": 68686,
+          "sha256": "a5c8203d0d9072b7d5e9eff5c04702225c08184587f80eaa2d66c077b41d667b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-dispersion-zero-dpr1.png",
+          "bytes": 68686,
+          "sha256": "a5c8203d0d9072b7d5e9eff5c04702225c08184587f80eaa2d66c077b41d667b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-env-rotation-90-dpr1.png",
+          "bytes": 69038,
+          "sha256": "a8f08b0451c98ee0b609406d09f0c4f0862ac16b38d16a7ba41f0fd8e0ad6b94"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-machined-bevel-dpr1.png",
+          "bytes": 70510,
+          "sha256": "39587585a48468fc70db507cf6a63602166e5f1a6b20e6f528dfd9bee68b561c"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-wide-bevel-dpr1.png",
+          "bytes": 60328,
+          "sha256": "5e63c432401a24e6251e2fe6d870d481213edcdaf62dfaa650b1a5fc68d97c87"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-seed-2-dpr1.png",
+          "bytes": 73400,
+          "sha256": "8118b68d45840605d5963c994a71de21ae38b7d074152cea690e69355488490a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-background-light-dpr1.png",
+          "bytes": 74285,
+          "sha256": "080e516e31b2875dabe4ce3eec8b9e01a6551d4f3b073acbf53e0fb1acc1e307"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-default-dpr2.png",
+          "bytes": 212265,
+          "sha256": "5ae2fae1ab5205a1585be507864ffa4e59fd7f77a4c7e00695b7a8278027289c"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-box-dpr2.png",
+          "bytes": 156199,
+          "sha256": "b49ada04822af9039dc70beb94e9c9de17b3d4dba5551c03fe7986e54fd8865a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-live-resize.png",
+          "bytes": 51267,
+          "sha256": "9dedda12aeefb61dd5cbfbfb21e870dce4178a05714bee1677bcf77878128eed"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-temporal-a.png",
+          "bytes": 74158,
+          "sha256": "70b7e0a874af1b5b64c0b346da7cbab69af423d79b71ae7bbf3b110effcdc151"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/chromium-temporal-b.png",
+          "bytes": 74158,
+          "sha256": "067feb0c03e06227cdd9b9db2eb4efa92e11fc04a0a0666ecef60e062a81629a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-default-dpr1.png",
+          "bytes": 91368,
+          "sha256": "235d63e4114a661cc4229776f09faab007735694a54d85775ced4bbc82e26075"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-box-dpr1.png",
+          "bytes": 68296,
+          "sha256": "3c619eb6c663b07de9b1e81b0a2dcd2c3a52da5fe054c45ff6519c387ed7be94"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-turbulence-zero-dpr1.png",
+          "bytes": 29611,
+          "sha256": "64090a0586e53533ddd42dd2dfc3a284eb5b4a3daf4fffbf3af9dc56015b3424"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-warp-zero-dpr1.png",
+          "bytes": 84579,
+          "sha256": "ed525e289dd9e9adaeb67c11db8f59bceae5223b49a0243704bd0e846d074c72"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-quality-low-dpr1.png",
+          "bytes": 80325,
+          "sha256": "fccb9ea152b1656be661eb4b78670abb1db5a5f742b5a1447ddbac72a197ec37"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-dispersion-zero-dpr1.png",
+          "bytes": 80325,
+          "sha256": "fccb9ea152b1656be661eb4b78670abb1db5a5f742b5a1447ddbac72a197ec37"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-env-rotation-90-dpr1.png",
+          "bytes": 86794,
+          "sha256": "66fa82d375f66c11a046a418016315a142e55c7f1d75b1b18771d15b965f85cc"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-machined-bevel-dpr1.png",
+          "bytes": 86998,
+          "sha256": "1fb0dddefc94ba674c0e8767cff7045b943b8d33817c79a9a7295f7b18c5a25e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-wide-bevel-dpr1.png",
+          "bytes": 75272,
+          "sha256": "136b9ac23ced86d2118d4270e5ff1f7f6210c71e551aefd0ea7aa05f3d47a4cb"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-seed-2-dpr1.png",
+          "bytes": 87416,
+          "sha256": "c2ef86eedc2c8e2736b03fa49428f0759c97dcb304f0b18afe6c07d9b2f8113d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-background-light-dpr1.png",
+          "bytes": 91650,
+          "sha256": "5216e547cbfff1de625c4dd410b04c40cf7842bb63c0488856ccd3c6da3314fd"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-default-dpr2.png",
+          "bytes": 275551,
+          "sha256": "72ee233bbd8ab2436d74846ab132c731cbde2d5758a1c391430737f1ef4adaae"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-box-dpr2.png",
+          "bytes": 204964,
+          "sha256": "4c6f5bf15fe765cf08f0fb2de08c1540a3e4f38d3d07811651d5f2976a7277f7"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-live-resize.png",
+          "bytes": 62197,
+          "sha256": "75ea191f0ea63a8d163487ee6ec63913fce47871336518a72d36b7ee171f215d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-temporal-a.png",
+          "bytes": 91368,
+          "sha256": "235d63e4114a661cc4229776f09faab007735694a54d85775ced4bbc82e26075"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/firefox-temporal-b.png",
+          "bytes": 91397,
+          "sha256": "a4670347b81d303a7ad3bf99a0032a81aa7ac585c92c2fd4276c4e7ca804d5df"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-default-dpr1.png",
+          "bytes": 83551,
+          "sha256": "9cd7c8d9dccfb9ebaa76ab77dca9fef10656fdaad18f5c07df69dae947560ef9"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-box-dpr1.png",
+          "bytes": 61462,
+          "sha256": "9802fa7cf4f122191fd568daebfc7d8cf3cc6d2ed4d9b18c689c87c3aa0ef28d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-turbulence-zero-dpr1.png",
+          "bytes": 27442,
+          "sha256": "9cfa87b1ee1a87230016620a55f1f67b393792ea14b1210b1401f677c829632d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-warp-zero-dpr1.png",
+          "bytes": 81545,
+          "sha256": "bb8422daee81b85d4f479f0377740bf4be020c8f9df2d911976be9b1beac95cc"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-quality-low-dpr1.png",
+          "bytes": 74242,
+          "sha256": "b24d463f60a855787561448df3739bdbb1d14c143e5cb3c21fe1929d463485ed"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-dispersion-zero-dpr1.png",
+          "bytes": 74242,
+          "sha256": "b24d463f60a855787561448df3739bdbb1d14c143e5cb3c21fe1929d463485ed"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-env-rotation-90-dpr1.png",
+          "bytes": 77772,
+          "sha256": "286927d3710be4484b1f8873e22410c7b8604db18203f15b31cd31d949d4e7b1"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-machined-bevel-dpr1.png",
+          "bytes": 79374,
+          "sha256": "ccfb25de902c637d9618052ebbfe10679bdd3f08c27e5e397064f352a193b159"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-wide-bevel-dpr1.png",
+          "bytes": 68122,
+          "sha256": "998368223fe72eb3c77f161defbd3221d9fe069b02ccf4798cfaff4c6c914af1"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-seed-2-dpr1.png",
+          "bytes": 82618,
+          "sha256": "c081a76a9b65e9bccfac06a1c65f1469bfc240ddc1dc58a9623bccb633b0a66a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-background-light-dpr1.png",
+          "bytes": 83768,
+          "sha256": "d5f3bf126243fbbae727f047e147c1f4b2ac161800f5756d98ce795059d2227e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-default-dpr2.png",
+          "bytes": 240793,
+          "sha256": "7190d8bde1e4c454886f7929937bb776145a30370e04ce96096ec297603f7b46"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-box-dpr2.png",
+          "bytes": 176745,
+          "sha256": "1de55ec3464abbfe4c0cd7ae39c7317707d79f1663f624ec6c7fd44ac6042371"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-live-resize.png",
+          "bytes": 57439,
+          "sha256": "062b4c22687831dfe04817b72466925f51a13f6c81ada490d44433ce0b672ebd"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-temporal-a.png",
+          "bytes": 83551,
+          "sha256": "9cd7c8d9dccfb9ebaa76ab77dca9fef10656fdaad18f5c07df69dae947560ef9"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-artifacts/webkit-temporal-b.png",
+          "bytes": 83472,
+          "sha256": "41b04be4b3ed2c9e44ff2161be686c292f987ef3ac6dbf8bced3b177bffd26ae"
+        }
+      ]
+    },
+    "Boundary": {
+      "status": "PASS",
+      "parameterCases": 282,
+      "malformedAtomicRejections": 18
+    },
+    "Resource": {
+      "status": "PASS",
+      "cycles": 300,
+      "ownedKinds": [
+        "mesh",
+        "material",
+        "effect"
+      ],
+      "pairedReferencesPerCycle": 3,
+      "physicalGpuMemory": "unavailable"
+    },
+    "Performance": {
+      "status": "PASS",
+      "profileCases": 18,
+      "measurements": [
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "quality": "high",
+          "requested": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1,
+            "backing": {
+              "width": 1280,
+              "height": 720
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.06500005722045898,
+          "cpuGfxEnvelopeP50Ms": 0.04500007629394531,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.6599999666214,
+          "gpuTimestamp": {
+            "status": "measured",
+            "sampleCount": 329,
+            "millisecondsP50": 0.477184
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.004999995231628418,
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 189,
+              "zero": 140
+            },
+            "queue": {
+              "total": 329,
+              "positive": 88,
+              "zero": 241
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "quality": "low",
+          "requested": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1,
+            "backing": {
+              "width": 1280,
+              "height": 720
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.060000061988830566,
+          "cpuGfxEnvelopeP50Ms": 0.04500007629394531,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.65499997138977,
+          "gpuTimestamp": {
+            "status": "measured",
+            "sampleCount": 329,
+            "millisecondsP50": 0.538624
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.004999995231628418,
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 178,
+              "zero": 151
+            },
+            "queue": {
+              "total": 329,
+              "positive": 92,
+              "zero": 237
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "quality": "high",
+          "requested": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1920,
+            "height": 1080,
+            "dpr": 1,
+            "backing": {
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 328,
+          "cpuUpdateP50Ms": 0.06499993801116943,
+          "cpuGfxEnvelopeP50Ms": 0.04500007629394531,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.68499994277954,
+          "gpuTimestamp": {
+            "status": "measured",
+            "sampleCount": 328,
+            "millisecondsP50": 1.527808
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.004999995231628418,
+          "positiveSamples": {
+            "update": {
+              "total": 328,
+              "positive": 328,
+              "zero": 0
+            },
+            "command": {
+              "total": 328,
+              "positive": 328,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 328,
+              "positive": 188,
+              "zero": 140
+            },
+            "queue": {
+              "total": 328,
+              "positive": 106,
+              "zero": 222
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "quality": "low",
+          "requested": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1920,
+            "height": 1080,
+            "dpr": 1,
+            "backing": {
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.06499993801116943,
+          "cpuGfxEnvelopeP50Ms": 0.04500007629394531,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.639999985694885,
+          "gpuTimestamp": {
+            "status": "measured",
+            "sampleCount": 329,
+            "millisecondsP50": 1.4336
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.004999995231628418,
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 173,
+              "zero": 156
+            },
+            "queue": {
+              "total": 329,
+              "positive": 97,
+              "zero": 232
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "quality": "high",
+          "requested": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "observed": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2,
+            "backing": {
+              "width": 780,
+              "height": 1688
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.059999942779541016,
+          "cpuGfxEnvelopeP50Ms": 0.04499995708465576,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.640000104904175,
+          "gpuTimestamp": {
+            "status": "measured",
+            "sampleCount": 329,
+            "millisecondsP50": 1.685504
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.004999995231628418,
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 176,
+              "zero": 153
+            },
+            "queue": {
+              "total": 329,
+              "positive": 122,
+              "zero": 207
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "quality": "low",
+          "requested": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "observed": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2,
+            "backing": {
+              "width": 780,
+              "height": 1688
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.059999942779541016,
+          "cpuGfxEnvelopeP50Ms": 0.04499995708465576,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.6599999666214,
+          "gpuTimestamp": {
+            "status": "measured",
+            "sampleCount": 329,
+            "millisecondsP50": 1.6384
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.004999995231628418,
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 165,
+              "zero": 164
+            },
+            "queue": {
+              "total": 329,
+              "positive": 81,
+              "zero": 248
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "quality": "high",
+          "requested": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1,
+            "backing": {
+              "width": 1280,
+              "height": 720
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.07999999999992724,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999949068,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.67999999999938,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.01999999999998181,
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 29,
+              "zero": 300
+            },
+            "queue": {
+              "total": 329,
+              "positive": 46,
+              "zero": 283
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "quality": "low",
+          "requested": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1,
+            "backing": {
+              "width": 1280,
+              "height": 720
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 328,
+          "cpuUpdateP50Ms": 0.07999999999992724,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999949068,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.680000000000064,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.01999999999998181,
+          "positiveSamples": {
+            "update": {
+              "total": 328,
+              "positive": 328,
+              "zero": 0
+            },
+            "command": {
+              "total": 328,
+              "positive": 328,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 328,
+              "positive": 36,
+              "zero": 292
+            },
+            "queue": {
+              "total": 328,
+              "positive": 47,
+              "zero": 281
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "quality": "high",
+          "requested": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1920,
+            "height": 1080,
+            "dpr": 1,
+            "backing": {
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.07999999999992724,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999994543,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.700000000000045,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.01999999999998181,
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 34,
+              "zero": 295
+            },
+            "queue": {
+              "total": 329,
+              "positive": 42,
+              "zero": 287
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "quality": "low",
+          "requested": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1920,
+            "height": 1080,
+            "dpr": 1,
+            "backing": {
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 326,
+          "cpuUpdateP50Ms": 0.07999999999992724,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999994543,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.660000000000764,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.01999999999998181,
+          "positiveSamples": {
+            "update": {
+              "total": 326,
+              "positive": 326,
+              "zero": 0
+            },
+            "command": {
+              "total": 326,
+              "positive": 325,
+              "zero": 1
+            },
+            "dispatch": {
+              "total": 326,
+              "positive": 34,
+              "zero": 292
+            },
+            "queue": {
+              "total": 326,
+              "positive": 56,
+              "zero": 270
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "quality": "high",
+          "requested": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "observed": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2,
+            "backing": {
+              "width": 780,
+              "height": 1688
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.0999999999994543,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999994543,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.66000000000031,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.01999999999998181,
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 28,
+              "zero": 301
+            },
+            "queue": {
+              "total": 329,
+              "positive": 57,
+              "zero": 272
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "quality": "low",
+          "requested": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "observed": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2,
+            "backing": {
+              "width": 780,
+              "height": 1688
+            }
+          },
+          "device": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+            "vendor": "Google Inc. (NVIDIA)"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.08000000000015461,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999994543,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.660000000000764,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.01999999999998181,
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 31,
+              "zero": 298
+            },
+            "queue": {
+              "total": 329,
+              "positive": 51,
+              "zero": 278
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "quality": "high",
+          "requested": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1,
+            "backing": {
+              "width": 1280,
+              "height": 720
+            }
+          },
+          "device": {
+            "renderer": "Apple GPU",
+            "vendor": "Apple Inc."
+          },
+          "steadyFrames": 202,
+          "cpuUpdateP50Ms": 0.05999999999949068,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999949068,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 19.3799999999992,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.019999999999527063,
+          "positiveSamples": {
+            "update": {
+              "total": 202,
+              "positive": 202,
+              "zero": 0
+            },
+            "command": {
+              "total": 202,
+              "positive": 199,
+              "zero": 3
+            },
+            "dispatch": {
+              "total": 202,
+              "positive": 58,
+              "zero": 144
+            },
+            "queue": {
+              "total": 202,
+              "positive": 14,
+              "zero": 188
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "quality": "low",
+          "requested": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1,
+            "backing": {
+              "width": 1280,
+              "height": 720
+            }
+          },
+          "device": {
+            "renderer": "Apple GPU",
+            "vendor": "Apple Inc."
+          },
+          "steadyFrames": 218,
+          "cpuUpdateP50Ms": 0.05999999999949068,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999949068,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 18.579999999999927,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.019999999999527063,
+          "positiveSamples": {
+            "update": {
+              "total": 218,
+              "positive": 218,
+              "zero": 0
+            },
+            "command": {
+              "total": 218,
+              "positive": 212,
+              "zero": 6
+            },
+            "dispatch": {
+              "total": 218,
+              "positive": 61,
+              "zero": 157
+            },
+            "queue": {
+              "total": 218,
+              "positive": 14,
+              "zero": 204
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "quality": "high",
+          "requested": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1920,
+            "height": 1080,
+            "dpr": 1,
+            "backing": {
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "device": {
+            "renderer": "Apple GPU",
+            "vendor": "Apple Inc."
+          },
+          "steadyFrames": 210,
+          "cpuUpdateP50Ms": 0.05999999999949068,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999949068,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 18.93999999999869,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.019999999999527063,
+          "positiveSamples": {
+            "update": {
+              "total": 210,
+              "positive": 210,
+              "zero": 0
+            },
+            "command": {
+              "total": 210,
+              "positive": 207,
+              "zero": 3
+            },
+            "dispatch": {
+              "total": 210,
+              "positive": 50,
+              "zero": 160
+            },
+            "queue": {
+              "total": 210,
+              "positive": 16,
+              "zero": 194
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "quality": "low",
+          "requested": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1920,
+            "height": 1080,
+            "dpr": 1,
+            "backing": {
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "device": {
+            "renderer": "Apple GPU",
+            "vendor": "Apple Inc."
+          },
+          "steadyFrames": 219,
+          "cpuUpdateP50Ms": 0.05999999999949068,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999949068,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 18.88000000000011,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.019999999999527063,
+          "positiveSamples": {
+            "update": {
+              "total": 219,
+              "positive": 219,
+              "zero": 0
+            },
+            "command": {
+              "total": 219,
+              "positive": 218,
+              "zero": 1
+            },
+            "dispatch": {
+              "total": 219,
+              "positive": 61,
+              "zero": 158
+            },
+            "queue": {
+              "total": 219,
+              "positive": 20,
+              "zero": 199
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "quality": "high",
+          "requested": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "observed": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2,
+            "backing": {
+              "width": 780,
+              "height": 1688
+            }
+          },
+          "device": {
+            "renderer": "Apple GPU",
+            "vendor": "Apple Inc."
+          },
+          "steadyFrames": 204,
+          "cpuUpdateP50Ms": 0.05999999999949068,
+          "cpuGfxEnvelopeP50Ms": 0.040000000000873115,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 19.399999999999636,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.019999999999527063,
+          "positiveSamples": {
+            "update": {
+              "total": 204,
+              "positive": 204,
+              "zero": 0
+            },
+            "command": {
+              "total": 204,
+              "positive": 203,
+              "zero": 1
+            },
+            "dispatch": {
+              "total": 204,
+              "positive": 46,
+              "zero": 158
+            },
+            "queue": {
+              "total": 204,
+              "positive": 14,
+              "zero": 190
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "quality": "low",
+          "requested": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "observed": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2,
+            "backing": {
+              "width": 780,
+              "height": 1688
+            }
+          },
+          "device": {
+            "renderer": "Apple GPU",
+            "vendor": "Apple Inc."
+          },
+          "steadyFrames": 204,
+          "cpuUpdateP50Ms": 0.05999999999949068,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999949068,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 19.55999999999949,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "sampleCount": 0,
+            "millisecondsP50": null
+          },
+          "drawCalls": {
+            "minimum": 1,
+            "maximum": 1
+          },
+          "materialPasses": 1,
+          "nativeRenderPassCount": {
+            "minimum": 1
+          },
+          "glObjects": {
+            "textures": 15,
+            "buffers": 51,
+            "scope": "all native GL objects in the single Cocos context since pre-import prototype instrumentation"
+          },
+          "engineAccounting": {
+            "textureBytes": 27184,
+            "bufferBytes": 7137700,
+            "physicalGpuMemory": "unavailable"
+          },
+          "timerResolutionMs": 0.019999999999527063,
+          "positiveSamples": {
+            "update": {
+              "total": 204,
+              "positive": 204,
+              "zero": 0
+            },
+            "command": {
+              "total": 204,
+              "positive": 203,
+              "zero": 1
+            },
+            "dispatch": {
+              "total": 204,
+              "positive": 64,
+              "zero": 140
+            },
+            "queue": {
+              "total": 204,
+              "positive": 17,
+              "zero": 187
+            }
+          },
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "single-pass shape effect: one native render pass per frame"
+          }
+        }
+      ]
+    }
+  },
+  "bindings": [
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2.json",
+        "bytes": 8203177,
+        "sha256": "6909580c35c68476b0156e7a85ff1a9d949600fd98195faf424ff6e86e8e60d3"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-os.json",
+        "bytes": 632,
+        "sha256": "81dbedbc0877fd06e2721741d77b90575f22b836552ff5c5f4a0edf7bc766cbd"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2.log",
+        "bytes": 2603,
+        "sha256": "ff6b27e9f7c48447a3a306825bce6cd11f0d379b696e67eb570a05da158fb493"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2-frozen.json",
+        "bytes": 6646,
+        "sha256": "8e323569013d86dcf703970a386b3b424f3721e99b2a27baed9740b6a00fb75a"
+      },
+      "execution": {
+        "executionChannel": "Lead",
+        "command": [
+          "D:\\Program Files\\nodejs\\node.exe",
+          "tools/verify/shaders-liquid-metal-browser.cjs",
+          "--phase=functional",
+          "--browser=all",
+          "--out=output/shaders-absorption/lead-w3-e07-functional-attempt2.json"
+        ],
+        "cwd": "E:\\AIProMax\\github\\cocosair.js",
+        "startedAt": "2026-10-10T02:23:59.782Z",
+        "endedAt": "2026-10-10T02:24:45.105Z",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "output": "output/shaders-absorption/lead-w3-e07-functional-attempt2.json",
+        "log": "output/shaders-absorption/lead-w3-e07-functional-attempt2.log",
+        "inputsUnchanged": true
+      }
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e07-performance-attempt1.json",
+        "bytes": 13775982,
+        "sha256": "f6c57834984018f4b191caab2c0600af6c5de849efa1157a14c78e96bb329037"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e07-performance-attempt1-os.json",
+        "bytes": 685,
+        "sha256": "1412850acb262c7afd53793e6246bda40d9eeda20a7d7c49143ec454732a5d65"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e07-performance-attempt1.log",
+        "bytes": 105,
+        "sha256": "5685187798d5cd110a15cefdeb9b33533a5b4ba12189ab4f8f7f5489696f996a"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w3-e07-performance-attempt1-frozen.json",
+        "bytes": 6646,
+        "sha256": "8e323569013d86dcf703970a386b3b424f3721e99b2a27baed9740b6a00fb75a"
+      },
+      "execution": {
+        "executionChannel": "Lead",
+        "command": [
+          "D:\\Program Files\\nodejs\\node.exe",
+          "tools/verify/shaders-liquid-metal-browser.cjs",
+          "--phase=performance",
+          "--authorization=LEAD-W3-E07-PERF-20261010",
+          "--browser=all",
+          "--out=output/shaders-absorption/lead-w3-e07-performance-attempt1.json"
+        ],
+        "cwd": "E:\\AIProMax\\github\\cocosair.js",
+        "startedAt": "2026-10-10T02:24:55.077Z",
+        "endedAt": "2026-10-10T02:27:53.264Z",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "output": "output/shaders-absorption/lead-w3-e07-performance-attempt1.json",
+        "log": "output/shaders-absorption/lead-w3-e07-performance-attempt1.log",
+        "inputsUnchanged": true
+      }
+    }
+  ],
+  "validatorInputs": {
+    "inputs": [
+      {
+        "path": "examples/shader-liquid-metal/src/main.ts",
+        "bytes": 26606,
+        "sha256": "0de95c6ae001a7e928307ae23416c22a28876767086e4a75ed8a9f79cbc84d59"
+      },
+      {
+        "path": "examples/shader-liquid-metal/src/parameters.ts",
+        "bytes": 2455,
+        "sha256": "e707a0d3f15715db08dd7dc3096f0e68a3a45f273371a01a54237c791d4a49c4"
+      },
+      {
+        "path": "examples/shader-liquid-metal/src/liquid.frag",
+        "bytes": 9641,
+        "sha256": "db44c6410532ccadf69c5b15abb926084b3ba9dc0f4ccbc38f5345f0990c19a8"
+      },
+      {
+        "path": "examples/shader-liquid-metal/src/effect.generated.ts",
+        "bytes": 25796,
+        "sha256": "bf81d454baae8a031879fb75d5f0e847df64b1417f2b2a04feefd350cace95db"
+      },
+      {
+        "path": "examples/shader-liquid-metal/parameters.json",
+        "bytes": 4933,
+        "sha256": "0958a01d47495eb254658a3778bc01c10ca0a7e02322b1e973d647da2c3bb4d0"
+      },
+      {
+        "path": "examples/shader-liquid-metal/index.html",
+        "bytes": 1986,
+        "sha256": "5e4d432d831d2e7041bc6e2ff02801fd737b70b169352a573b10dddae4f480bd"
+      },
+      {
+        "path": "examples/shader-liquid-metal/generate-effect.cjs",
+        "bytes": 2897,
+        "sha256": "2b10c401f4d7fed6625e26d67e70d46170e05434dcf684d375bf5a944299f3b5"
+      },
+      {
+        "path": "examples/shader-liquid-metal/example.json",
+        "bytes": 4863,
+        "sha256": "5207bc58f9d85ef580bef160daace7d537cee2949e6a60eb0b49b05cb7686822"
+      },
+      {
+        "path": "examples/shader-liquid-metal/README.md",
+        "bytes": 2404,
+        "sha256": "f07e25b92c34ffe57b04fa4d18da45029439d45d115525653c98c9ce1b5412c4"
+      },
+      {
+        "path": "examples/shader-liquid-metal/UPSTREAM.md",
+        "bytes": 5410,
+        "sha256": "e830687b213d7ec95e6a907e671f91f23ce7ed15395beb9dd3cc5976fd349923"
+      },
+      {
+        "path": "examples/shader-liquid-metal/LICENSE.reference.txt",
+        "bytes": 14046,
+        "sha256": "2a98b03e714cfe43624ef3656d986edf0a71728f8363603253db691db41b9cce"
+      },
+      {
+        "path": "examples/shared/shader-blocks.js",
+        "bytes": 8627,
+        "sha256": "31e9577ae7f99a740f3053550435c78278b644c466397f6b2588c3404e4b22ab"
+      },
+      {
+        "path": "tools/verify/shaders-liquid-metal-oracle.cjs",
+        "bytes": 20584,
+        "sha256": "513dcc8d4d9805b27ec53d61420abefc442721e6c7b4b206e1ab53180312ca26"
+      },
+      {
+        "path": "tools/verify/shaders-liquid-metal-browser.cjs",
+        "bytes": 77811,
+        "sha256": "905064e6ba97e688f565930e72bca68d2d58c41d71d1542ecd026748006d01b6"
+      },
+      {
+        "path": "tools/verify/shaders-liquid-metal.tsconfig.json",
+        "bytes": 426,
+        "sha256": "4112fe3c6e6f39d52ab7664010e4c37afd91e5759b9dd8fb9f34a53377bc7a1c"
+      },
+      {
+        "path": "tools/verify/shaders-liquid-metal-performance.cjs",
+        "bytes": 5791,
+        "sha256": "9f55e1c6bf756eea3891cbe453664647a55bb371c229267eca2dde84472d0c4b"
+      },
+      {
+        "path": "tools/verify/shaders-browser-environment.cjs",
+        "bytes": 10656,
+        "sha256": "bc39fdb9222b9b95a5b8d7217462d7c79ab488d23417d465e2aab0fee4e35337"
+      },
+      {
+        "path": "tools/verify/shaders-browser-launch.cjs",
+        "bytes": 2797,
+        "sha256": "3e5a4bc54834f9688994b446346ac58aca10c1936e88a1f932531fb75c81fc87"
+      },
+      {
+        "path": "tools/verify/browser-engines.cjs",
+        "bytes": 2159,
+        "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+      },
+      {
+        "path": "tools/verify/competitive-example-server.cjs",
+        "bytes": 1923,
+        "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+      },
+      {
+        "path": "tools/verify/shaders-effect-contract.cjs",
+        "bytes": 37563,
+        "sha256": "e1eb1a21b1167ab7d5dab8d7cf21fa214a44b23efa9d62f83a75d08d3d7c2ab3"
+      },
+      {
+        "path": "examples/shared/shader-lifecycle.ts",
+        "bytes": 10021,
+        "sha256": "6b28d2b0afea13e947ee371ba5dcef7d3d91f6ab847a0a79d51cf1e7982cd4d9"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.js",
+        "bytes": 5595,
+        "sha256": "c2bc01e8c73ab866f11194fc802bb8ce464b3738bfecf8d30cf5967907e5e346"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.d.ts",
+        "bytes": 1045,
+        "sha256": "34d5cc8469ea05a17f7cee6bf287d0c473cb0daaf50adfd6c49454fb68ef19cb"
+      },
+      {
+        "path": "build/cocosair.module.js",
+        "bytes": 6631057,
+        "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+      },
+      {
+        "path": "build/cocosair.module.d.ts",
+        "bytes": 3303518,
+        "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+      },
+      {
+        "path": "build/npm/cocosair.module.js",
+        "bytes": 6631013,
+        "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+      }
+    ],
+    "reference": {
+      "repo": "shader-effects-inc/shaders",
+      "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/shaders/LiquidMetal/index.ts",
+          "bytes": 13723,
+          "sha256": "6af799e9654a0504cb19d038e925af9adaa8ad3c613baea368565a12fa3277b0"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/std/paint/materials.ts",
+          "bytes": 57681,
+          "sha256": "7cb6e03cf96c26cd71ad9442002d2f642d301770e62ec08fbcfe33e86a359782"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/noise.ts",
+          "bytes": 36383,
+          "sha256": "5817311eff374e9849aa4c0ea58a826c69e0f27696815dea109f395e7aad4cd4"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/lighting.ts",
+          "bytes": 11133,
+          "sha256": "e90a6b5f8aedc978bec5bcda4529493a35cb68212be8fc4628e2abdedec3daaf"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w2-e03-upstream-materialParts.ts",
+          "bytes": 10518,
+          "sha256": "e812166513e6a6a7eb00df5682760bf5fb8275471172ccf7ef512f7fff08f719"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w2-e03-upstream-materialParts-fetch.json",
+          "bytes": 492,
+          "sha256": "081453a3aa72f47be51291a0c7e6339dafc50713fc5d0c5bb73f1f96e58137d5"
+        },
+        {
+          "path": "output/shaders-absorption/worker-w3-e07-upstream-bevel.ts",
+          "bytes": 1386,
+          "sha256": "8edd2b2bf8896f8931a55d230747ec168befb7f3f011987f549d4f465e004736"
+        },
+        {
+          "path": "output/shaders-absorption/worker-w3-e07-upstream-bevel-fetch.json",
+          "bytes": 444,
+          "sha256": "3e7cf5344a92c6cdd54aad5cdeb7ea526bc94d347455b7490d0446918ff2eb89"
+        }
+      ]
+    }
+  },
+  "verifier": {
+    "path": "tools/verify/shaders-wave3-gate.cjs",
+    "bytes": 15634,
+    "sha256": "82e495237921e90fde4eda3c9040c9a7376edb23a1c7404021c9792c38c52411"
+  },
+  "audit": {
+    "path": "docs/evidence/shaders-absorption/e07-liquid-metal-actual-audit.json",
+    "bytes": 65606,
+    "sha256": "7e422d4f3dccfb68c34fd3fbb5af3c3627f0d55362585ec99c60d5d6f1781d6a"
+  },
+  "historicalAttempts": [
+    {
+      "status": "FAIL",
+      "classification": "AGENT_FAILURE",
+      "reason": "Incorrect GLSL linear ramp constants and missing dual-quality measurement contract",
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e07-functional-attempt1.json",
+        "bytes": 2827648,
+        "sha256": "cd627887751f60e29b2dfe4480e39ae5e991e50ec0a4a3a5f60dd5e178258ea7"
+      },
+      "receipt": {
+        "path": "output/shaders-absorption/lead-w3-e07-functional-attempt1-os.json",
+        "bytes": 637,
+        "sha256": "4fc9181098229c9c016e6ab14bec5123df8235b807eae48fc644cf6ea72a59b1"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e07-functional-attempt1.log",
+        "bytes": 4062,
+        "sha256": "fe56470abb37f70e5e72f0209d64e1f94f26655f1b53573d84dc65058deaab56"
+      },
+      "compensation": {
+        "path": "output/shaders-absorption/lead-w3-e07-functional-attempt2.json",
+        "bytes": 8203177,
+        "sha256": "6909580c35c68476b0156e7a85ff1a9d949600fd98195faf424ff6e86e8e60d3"
+      }
+    }
+  ],
+  "limitations": [
+    "Only two analytic shapes, not upstream volumetric/SDF texture platform",
+    "Preview blends encoded RGBA8 fragment values; does not claim physically linear compositing",
+    "Desktop mobile profile is emulated, not physical iPhone evidence",
+    "Windows WebKit uses shader-scoped accelerated-compositing launch option",
+    "GPU memory is unavailable; engine counters and native GL object counts have separate scopes",
+    "Performance is diagnostic, not a cross-browser hardware ranking",
+    "Gallery lifecycle hook is implemented; this gate proves example-native cycles, not a separate Gallery harness run",
+    "Leaf gate does not establish full Wave3; consult independent aggregate. Agent Gate remains NOT_RUN",
+    "Time is absolute clock multiplied by current speed; unlike upstream integrated speed when speed changes",
+    "MaterialX Perlin substitutes upstream Fi-hash relief: same class, not equivalent; no TypeGPU or upstream runtime",
+    "Quality is a uniform branch rather than upstream build-time device specialization; both tiers measured, no guaranteed speed ordering"
+  ]
+}

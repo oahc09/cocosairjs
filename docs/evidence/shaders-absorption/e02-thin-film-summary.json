@@ -1,0 +1,1052 @@
+{
+  "schemaVersion": "e02-thin-film-summary/1",
+  "task": "Wave1/E02",
+  "executionChannel": "native subagent",
+  "status": "BLOCKED",
+  "completed": false,
+  "subset": true,
+  "engineGate": "BLOCKED",
+  "agentGate": "NOT_RUN",
+  "upstreamCommit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+  "validator": {
+    "path": "tools/verify/shaders-thin-film-summary.cjs",
+    "bytes": 7926,
+    "sha256": "6128d561bb063207e3d80fd866e2314c8c4d0bd9e89548be659f7ff798fd5681"
+  },
+  "engines": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "status": "PASS",
+      "completed": true,
+      "subset": false,
+      "gates": {
+        "Build": {
+          "status": "PASS",
+          "declared": 3,
+          "measured": 3,
+          "skipped": 0
+        },
+        "Runtime": {
+          "status": "PASS",
+          "declared": 7,
+          "measured": 7,
+          "skipped": 0
+        },
+        "Visual": {
+          "status": "PASS",
+          "declared": 9,
+          "measured": 9,
+          "skipped": 0
+        },
+        "Boundary": {
+          "status": "PASS",
+          "declared": 56,
+          "measured": 56,
+          "skipped": 0
+        },
+        "Resource": {
+          "status": "PASS",
+          "declared": 1,
+          "measured": 1,
+          "skipped": 0
+        },
+        "Performance": {
+          "status": "PASS",
+          "declared": 3,
+          "measured": 3,
+          "skipped": 0
+        }
+      },
+      "report": {
+        "path": "output/shaders-absorption/e02-engine-chromium-final.json",
+        "bytes": 5418798,
+        "sha256": "1f9f197564f060bf0bf0753f34d2d6c975b55bfee38ff77444a1a5c60e27ee7d"
+      },
+      "rawInputs": {
+        "functional": {
+          "path": "output/shaders-absorption/e02-final-functional-chromium.json",
+          "bytes": 1408887,
+          "sha256": "83cb8124cfe75243b793f0a7dcba6531eaa50524ad7700c5b789bd1e3cd52ea8"
+        },
+        "performance": {
+          "path": "output/shaders-absorption/e02-final-performance.json",
+          "bytes": 7082408,
+          "sha256": "319668a1e6f80107bcfe31ffd15180a4ee3c41a82a6ac9838a7848d9e54ef23f"
+        }
+      },
+      "collectionExits": {
+        "functional": 0,
+        "performance": 1
+      },
+      "issues": [],
+      "performanceProfiles": [
+        {
+          "requested": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1,
+            "backing": {
+              "width": 1280,
+              "height": 720
+            }
+          },
+          "status": "PASS",
+          "reasons": [],
+          "steadyFrames": 329,
+          "warmupFrames": 30,
+          "afterDrawIntervalP50Ms": 16.669999957084656,
+          "precision": {
+            "crossOriginIsolated": true,
+            "minimumPositiveDeltaMs": 0.004999995231628418,
+            "clock": "performance.now wall-clock quantization",
+            "zeroMeaning": "Zero observed durations are below observable timer precision, not zero cost"
+          },
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 181,
+              "zero": 148
+            },
+            "queue": {
+              "total": 329,
+              "positive": 93,
+              "zero": 236
+            }
+          },
+          "gpuTimestamp": {
+            "status": "measured",
+            "steadySamples": 329,
+            "millisecondsP50": 0.187392
+          },
+          "window": {
+            "start": 2,
+            "end": 360,
+            "startedAtMs": 761.7400000095367,
+            "endedAtMs": 6771.800000011921,
+            "durationMs": 5981.819999992847
+          },
+          "readPixelsDuringWindow": 0,
+          "isolation": {
+            "crossOriginIsolated": true,
+            "responseCOOP": "same-origin",
+            "responseCOEP": "require-corp"
+          }
+        },
+        {
+          "requested": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1920,
+            "height": 1080,
+            "dpr": 1,
+            "backing": {
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "status": "PASS",
+          "reasons": [],
+          "steadyFrames": 330,
+          "warmupFrames": 30,
+          "afterDrawIntervalP50Ms": 16.664999961853027,
+          "precision": {
+            "crossOriginIsolated": true,
+            "minimumPositiveDeltaMs": 0.004999995231628418,
+            "clock": "performance.now wall-clock quantization",
+            "zeroMeaning": "Zero observed durations are below observable timer precision, not zero cost"
+          },
+          "positiveSamples": {
+            "update": {
+              "total": 330,
+              "positive": 330,
+              "zero": 0
+            },
+            "command": {
+              "total": 330,
+              "positive": 330,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 330,
+              "positive": 172,
+              "zero": 158
+            },
+            "queue": {
+              "total": 330,
+              "positive": 103,
+              "zero": 227
+            }
+          },
+          "gpuTimestamp": {
+            "status": "measured",
+            "steadySamples": 330,
+            "millisecondsP50": 1.324032
+          },
+          "window": {
+            "start": 2,
+            "end": 361,
+            "startedAtMs": 657.3649999499321,
+            "endedAtMs": 6687.799999952316,
+            "durationMs": 5998.360000014305
+          },
+          "readPixelsDuringWindow": 0,
+          "isolation": {
+            "crossOriginIsolated": true,
+            "responseCOOP": "same-origin",
+            "responseCOEP": "require-corp"
+          }
+        },
+        {
+          "requested": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "observed": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2,
+            "backing": {
+              "width": 780,
+              "height": 1688
+            }
+          },
+          "status": "PASS",
+          "reasons": [],
+          "steadyFrames": 328,
+          "warmupFrames": 30,
+          "afterDrawIntervalP50Ms": 16.65499997138977,
+          "precision": {
+            "crossOriginIsolated": true,
+            "minimumPositiveDeltaMs": 0.004999995231628418,
+            "clock": "performance.now wall-clock quantization",
+            "zeroMeaning": "Zero observed durations are below observable timer precision, not zero cost"
+          },
+          "positiveSamples": {
+            "update": {
+              "total": 328,
+              "positive": 328,
+              "zero": 0
+            },
+            "command": {
+              "total": 328,
+              "positive": 328,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 328,
+              "positive": 182,
+              "zero": 146
+            },
+            "queue": {
+              "total": 328,
+              "positive": 99,
+              "zero": 229
+            }
+          },
+          "gpuTimestamp": {
+            "status": "measured",
+            "steadySamples": 328,
+            "millisecondsP50": 0.70144
+          },
+          "window": {
+            "start": 2,
+            "end": 359,
+            "startedAtMs": 631,
+            "endedAtMs": 6637.790000021458,
+            "durationMs": 5964.334999978542
+          },
+          "readPixelsDuringWindow": 0,
+          "isolation": {
+            "crossOriginIsolated": true,
+            "responseCOOP": "same-origin",
+            "responseCOEP": "require-corp"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "status": "BLOCKED",
+      "completed": false,
+      "subset": true,
+      "gates": {
+        "Build": {
+          "status": "PASS",
+          "declared": 3,
+          "measured": 3,
+          "skipped": 0
+        },
+        "Runtime": {
+          "status": "PASS",
+          "declared": 7,
+          "measured": 7,
+          "skipped": 0
+        },
+        "Visual": {
+          "status": "PASS",
+          "declared": 9,
+          "measured": 9,
+          "skipped": 0
+        },
+        "Boundary": {
+          "status": "PASS",
+          "declared": 56,
+          "measured": 56,
+          "skipped": 0
+        },
+        "Resource": {
+          "status": "PASS",
+          "declared": 1,
+          "measured": 1,
+          "skipped": 0
+        },
+        "Performance": {
+          "status": "LIMITED",
+          "declared": 3,
+          "measured": 0,
+          "skipped": 3
+        }
+      },
+      "report": {
+        "path": "output/shaders-absorption/e02-engine-firefox-final.json",
+        "bytes": 4634673,
+        "sha256": "d6038b3f2f848c9145cea5057e862ef897edf1ed1ced8a57b7ee56d053203f4e"
+      },
+      "rawInputs": {
+        "functional": {
+          "path": "output/shaders-absorption/e02-final-functional-firefox.json",
+          "bytes": 1408954,
+          "sha256": "f1380a35dc0b80a355177df7037e075e56b0465dde5664b957100dcd7261b4a3"
+        },
+        "performance": {
+          "path": "output/shaders-absorption/e02-final-performance.json",
+          "bytes": 7082408,
+          "sha256": "319668a1e6f80107bcfe31ffd15180a4ee3c41a82a6ac9838a7848d9e54ef23f"
+        }
+      },
+      "collectionExits": {
+        "functional": 0,
+        "performance": 1
+      },
+      "issues": [
+        {
+          "classification": "INFRA_FAILURE",
+          "reason": "Requested performance scope or observable timer precision not met; requested and observed viewport/DPR/backing retained without substitution",
+          "details": [
+            "actual viewport/DPR/backing"
+          ]
+        }
+      ],
+      "performanceProfiles": [
+        {
+          "requested": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1,
+            "backing": {
+              "width": 1280,
+              "height": 720
+            }
+          },
+          "status": "PASS",
+          "reasons": [],
+          "steadyFrames": 328,
+          "warmupFrames": 30,
+          "afterDrawIntervalP50Ms": 16.679999999999836,
+          "precision": {
+            "crossOriginIsolated": true,
+            "minimumPositiveDeltaMs": 0.01999999999998181,
+            "clock": "performance.now wall-clock quantization",
+            "zeroMeaning": "Zero observed durations are below observable timer precision, not zero cost"
+          },
+          "positiveSamples": {
+            "update": {
+              "total": 328,
+              "positive": 328,
+              "zero": 0
+            },
+            "command": {
+              "total": 328,
+              "positive": 328,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 328,
+              "positive": 34,
+              "zero": 294
+            },
+            "queue": {
+              "total": 328,
+              "positive": 50,
+              "zero": 278
+            }
+          },
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "steadySamples": 0,
+            "millisecondsP50": null
+          },
+          "window": {
+            "start": 2,
+            "end": 359,
+            "startedAtMs": 825.08,
+            "endedAtMs": 6832.48,
+            "durationMs": 5965.68
+          },
+          "readPixelsDuringWindow": 0,
+          "isolation": {
+            "crossOriginIsolated": true,
+            "responseCOOP": "same-origin",
+            "responseCOEP": "require-corp"
+          }
+        },
+        {
+          "requested": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1920,
+            "height": 1080,
+            "dpr": 1,
+            "backing": {
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "status": "PASS",
+          "reasons": [],
+          "steadyFrames": 328,
+          "warmupFrames": 30,
+          "afterDrawIntervalP50Ms": 16.659999999999854,
+          "precision": {
+            "crossOriginIsolated": true,
+            "minimumPositiveDeltaMs": 0.01999999999998181,
+            "clock": "performance.now wall-clock quantization",
+            "zeroMeaning": "Zero observed durations are below observable timer precision, not zero cost"
+          },
+          "positiveSamples": {
+            "update": {
+              "total": 328,
+              "positive": 328,
+              "zero": 0
+            },
+            "command": {
+              "total": 328,
+              "positive": 328,
+              "zero": 0
+            },
+            "dispatch": {
+              "total": 328,
+              "positive": 42,
+              "zero": 286
+            },
+            "queue": {
+              "total": 328,
+              "positive": 66,
+              "zero": 262
+            }
+          },
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "steadySamples": 0,
+            "millisecondsP50": null
+          },
+          "window": {
+            "start": 2,
+            "end": 359,
+            "startedAtMs": 570.04,
+            "endedAtMs": 6578.36,
+            "durationMs": 5963.54
+          },
+          "readPixelsDuringWindow": 0,
+          "isolation": {
+            "crossOriginIsolated": true,
+            "responseCOOP": "same-origin",
+            "responseCOEP": "require-corp"
+          }
+        },
+        {
+          "requested": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "observed": {
+            "width": 390,
+            "height": 844,
+            "dpr": 1,
+            "backing": {
+              "width": 390,
+              "height": 844
+            }
+          },
+          "status": "LIMITED",
+          "reasons": [
+            "actual viewport/DPR/backing"
+          ],
+          "steadyFrames": 329,
+          "warmupFrames": 30,
+          "afterDrawIntervalP50Ms": 16.659999999999854,
+          "precision": {
+            "crossOriginIsolated": true,
+            "minimumPositiveDeltaMs": 0.01999999999998181,
+            "clock": "performance.now wall-clock quantization",
+            "zeroMeaning": "Zero observed durations are below observable timer precision, not zero cost"
+          },
+          "positiveSamples": {
+            "update": {
+              "total": 329,
+              "positive": 329,
+              "zero": 0
+            },
+            "command": {
+              "total": 329,
+              "positive": 328,
+              "zero": 1
+            },
+            "dispatch": {
+              "total": 329,
+              "positive": 37,
+              "zero": 292
+            },
+            "queue": {
+              "total": 329,
+              "positive": 51,
+              "zero": 278
+            }
+          },
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "steadySamples": 0,
+            "millisecondsP50": null
+          },
+          "window": {
+            "start": 2,
+            "end": 360,
+            "startedAtMs": 568.86,
+            "endedAtMs": 6585.02,
+            "durationMs": 5982.2
+          },
+          "readPixelsDuringWindow": 0,
+          "isolation": {
+            "crossOriginIsolated": true,
+            "responseCOOP": "same-origin",
+            "responseCOEP": "require-corp"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "status": "BLOCKED",
+      "completed": false,
+      "subset": true,
+      "gates": {
+        "Build": {
+          "status": "PASS",
+          "declared": 3,
+          "measured": 3,
+          "skipped": 0
+        },
+        "Runtime": {
+          "status": "BLOCKED",
+          "declared": 7,
+          "measured": 0,
+          "skipped": 7
+        },
+        "Visual": {
+          "status": "PASS",
+          "declared": 9,
+          "measured": 9,
+          "skipped": 0
+        },
+        "Boundary": {
+          "status": "PASS",
+          "declared": 56,
+          "measured": 56,
+          "skipped": 0
+        },
+        "Resource": {
+          "status": "PASS",
+          "declared": 1,
+          "measured": 1,
+          "skipped": 0
+        },
+        "Performance": {
+          "status": "PASS",
+          "declared": 3,
+          "measured": 3,
+          "skipped": 0
+        }
+      },
+      "report": {
+        "path": "output/shaders-absorption/e02-engine-webkit-final.json",
+        "bytes": 4348589,
+        "sha256": "cb99e97320b5e3c84e3839dcf4c1b78beb85977f688edf54de239c29fac8c654"
+      },
+      "rawInputs": {
+        "functional": {
+          "path": "output/shaders-absorption/e02-final-functional-webkit.json",
+          "bytes": 1415154,
+          "sha256": "2466dd62dee9675415182943bade434fa1ced1ecac8deebcf935885c0ed6422b"
+        },
+        "performance": {
+          "path": "output/shaders-absorption/e02-final-performance.json",
+          "bytes": 7082408,
+          "sha256": "319668a1e6f80107bcfe31ffd15180a4ee3c41a82a6ac9838a7848d9e54ef23f"
+        }
+      },
+      "collectionExits": {
+        "functional": 1,
+        "performance": 1
+      },
+      "issues": [
+        {
+          "classification": "INFRA_FAILURE",
+          "reason": "Live-resize canvas compositor limitation; actual scoped and collection failures retained",
+          "details": [
+            {
+              "x": 144,
+              "y": 160,
+              "maxError": 35,
+              "actual": [
+                16,
+                32,
+                48,
+                255
+              ],
+              "expected": [
+                14,
+                67,
+                73,
+                255
+              ]
+            },
+            {
+              "x": 147,
+              "y": 160,
+              "maxError": 156,
+              "actual": [
+                16,
+                32,
+                48,
+                255
+              ],
+              "expected": [
+                80,
+                188,
+                127,
+                255
+              ]
+            },
+            {
+              "x": 153,
+              "y": 160,
+              "maxError": 70,
+              "actual": [
+                16,
+                32,
+                48,
+                255
+              ],
+              "expected": [
+                86,
+                100,
+                27,
+                255
+              ]
+            },
+            {
+              "x": 163,
+              "y": 160,
+              "maxError": 13,
+              "actual": [
+                16,
+                32,
+                48,
+                255
+              ],
+              "expected": [
+                29,
+                28,
+                54,
+                255
+              ]
+            },
+            {
+              "x": 329,
+              "y": 160,
+              "maxError": 112,
+              "actual": [
+                16,
+                32,
+                48,
+                255
+              ],
+              "expected": [
+                83,
+                144,
+                81,
+                255
+              ]
+            },
+            {
+              "x": 240,
+              "y": 248,
+              "maxError": 103,
+              "actual": [
+                16,
+                32,
+                48,
+                255
+              ],
+              "expected": [
+                119,
+                36,
+                112,
+                255
+              ]
+            },
+            {
+              "x": 310,
+              "y": 209,
+              "maxError": 72,
+              "actual": [
+                16,
+                32,
+                48,
+                255
+              ],
+              "expected": [
+                45,
+                104,
+                80,
+                255
+              ]
+            },
+            {
+              "x": 169,
+              "y": 209,
+              "maxError": 70,
+              "actual": [
+                16,
+                32,
+                48,
+                255
+              ],
+              "expected": [
+                86,
+                93,
+                25,
+                255
+              ]
+            },
+            {
+              "x": 310,
+              "y": 110,
+              "maxError": 68,
+              "actual": [
+                16,
+                32,
+                48,
+                255
+              ],
+              "expected": [
+                78,
+                100,
+                40,
+                255
+              ]
+            }
+          ]
+        }
+      ],
+      "performanceProfiles": [
+        {
+          "requested": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1,
+            "backing": {
+              "width": 1280,
+              "height": 720
+            }
+          },
+          "status": "PASS",
+          "reasons": [],
+          "steadyFrames": 328,
+          "warmupFrames": 30,
+          "afterDrawIntervalP50Ms": 16,
+          "precision": {
+            "crossOriginIsolated": true,
+            "minimumPositiveDeltaMs": 1,
+            "clock": "performance.now wall-clock quantization",
+            "zeroMeaning": "Zero observed durations are below observable timer precision, not zero cost"
+          },
+          "positiveSamples": {
+            "update": {
+              "total": 328,
+              "positive": 37,
+              "zero": 291
+            },
+            "command": {
+              "total": 328,
+              "positive": 20,
+              "zero": 308
+            },
+            "dispatch": {
+              "total": 328,
+              "positive": 2,
+              "zero": 326
+            },
+            "queue": {
+              "total": 328,
+              "positive": 0,
+              "zero": 328
+            }
+          },
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "steadySamples": 0,
+            "millisecondsP50": null
+          },
+          "window": {
+            "start": 2,
+            "end": 359,
+            "startedAtMs": 509,
+            "endedAtMs": 6526,
+            "durationMs": 5987
+          },
+          "readPixelsDuringWindow": 0,
+          "isolation": {
+            "crossOriginIsolated": true,
+            "responseCOOP": "same-origin",
+            "responseCOEP": "require-corp"
+          }
+        },
+        {
+          "requested": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "observed": {
+            "width": 1920,
+            "height": 1080,
+            "dpr": 1,
+            "backing": {
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "status": "PASS",
+          "reasons": [],
+          "steadyFrames": 282,
+          "warmupFrames": 30,
+          "afterDrawIntervalP50Ms": 19,
+          "precision": {
+            "crossOriginIsolated": true,
+            "minimumPositiveDeltaMs": 1,
+            "clock": "performance.now wall-clock quantization",
+            "zeroMeaning": "Zero observed durations are below observable timer precision, not zero cost"
+          },
+          "positiveSamples": {
+            "update": {
+              "total": 282,
+              "positive": 35,
+              "zero": 247
+            },
+            "command": {
+              "total": 282,
+              "positive": 25,
+              "zero": 257
+            },
+            "dispatch": {
+              "total": 282,
+              "positive": 1,
+              "zero": 281
+            },
+            "queue": {
+              "total": 282,
+              "positive": 0,
+              "zero": 282
+            }
+          },
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "steadySamples": 0,
+            "millisecondsP50": null
+          },
+          "window": {
+            "start": 2,
+            "end": 313,
+            "startedAtMs": 314,
+            "endedAtMs": 6330,
+            "durationMs": 5958
+          },
+          "readPixelsDuringWindow": 0,
+          "isolation": {
+            "crossOriginIsolated": true,
+            "responseCOOP": "same-origin",
+            "responseCOEP": "require-corp"
+          }
+        },
+        {
+          "requested": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "observed": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2,
+            "backing": {
+              "width": 780,
+              "height": 1688
+            }
+          },
+          "status": "PASS",
+          "reasons": [],
+          "steadyFrames": 326,
+          "warmupFrames": 30,
+          "afterDrawIntervalP50Ms": 14,
+          "precision": {
+            "crossOriginIsolated": true,
+            "minimumPositiveDeltaMs": 1,
+            "clock": "performance.now wall-clock quantization",
+            "zeroMeaning": "Zero observed durations are below observable timer precision, not zero cost"
+          },
+          "positiveSamples": {
+            "update": {
+              "total": 326,
+              "positive": 26,
+              "zero": 300
+            },
+            "command": {
+              "total": 326,
+              "positive": 29,
+              "zero": 297
+            },
+            "dispatch": {
+              "total": 326,
+              "positive": 2,
+              "zero": 324
+            },
+            "queue": {
+              "total": 326,
+              "positive": 0,
+              "zero": 326
+            }
+          },
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "steadySamples": 0,
+            "millisecondsP50": null
+          },
+          "window": {
+            "start": 2,
+            "end": 357,
+            "startedAtMs": 315,
+            "endedAtMs": 6331,
+            "durationMs": 5953
+          },
+          "readPixelsDuringWindow": 0,
+          "isolation": {
+            "crossOriginIsolated": true,
+            "responseCOOP": "same-origin",
+            "responseCOEP": "require-corp"
+          }
+        }
+      ]
+    }
+  ],
+  "audit": {
+    "report": {
+      "path": "output/shaders-absorption/e02-final-output-audit.json",
+      "bytes": 9913,
+      "sha256": "97fbfeccd75cb40fe2ff6a54fd987b1bc8fc2cad5d680ab39d5c80eb9e506d05"
+    },
+    "acceptedActualReports": 3,
+    "rejectedMutations": 72,
+    "ok": true,
+    "browserRunsAdded": 0
+  },
+  "limitations": [
+    "WebKit 26.6 same-page live-resize PNG exposes body while native framebuffer readback remains correct: Runtime BLOCKED; no GL/export compensation.",
+    "Firefox mobile profile explicitly requested DPR2 but observed DPR1/backing390x844: scope unmet, Performance LIMITED, no substitution of requested state.",
+    "CPU zero samples mean below the observed timer precision, not zero cost; Queue.submit is bookkeeping, not GPU command submission.",
+    "Performance window ran sequential browsers/profiles with agent token; operating-system/background load was not isolated.",
+    "Full data is in output/; schema-valid/scoped verifier exit0 is not an all-browser Engine Gate or Agent Gate PASS.",
+    "Display path OETF plus display-space straight-alpha blend is distinct from the linear-straight RGBA core; not a physical interference model."
+  ],
+  "execution": {
+    "purpose": "READ_ONLY_REAL_CAPTURE_SUMMARY",
+    "command": "D:\\Program Files\\nodejs\\node.exe E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\shaders-thin-film-summary.cjs --reports=output/shaders-absorption/e02-engine-chromium-final.json,output/shaders-absorption/e02-engine-firefox-final.json,output/shaders-absorption/e02-engine-webkit-final.json --audit=output/shaders-absorption/e02-final-output-audit.json --out=docs/evidence/shaders-absorption/e02-thin-film-summary.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-09T01:10:13.478Z",
+    "endedAt": "2026-10-09T01:10:13.676Z",
+    "exitCode": 0
+  }
+}

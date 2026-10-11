@@ -32,7 +32,10 @@
 | 渲染目标、颜色与多通道 DX | — | [定向实施与验收](ledgers/rendering-contracts.md) |
 | 响应式宿主、输入与棋盘配方 | — | [修复与验收](ledgers/responsive-host-remediation.md) |
 | 原生网格、TRS 与渲染合同 | — | [ENG-01–09](ledgers/engine-contract-hardening.md) |
+| WebGL2 图形能力、整数与分层读回 | [九项核心修复任务书](plans/webgl2-gfx-contract-remediation.md) | — |
 | 互动引擎示例、诊断与验收补齐 | [IER-00～11 计划](plans/interactive-engine-improvements.md) | [执行台账](ledgers/interactive-engine-improvements.md) |
+| Agent Skills 套件铺开 | [计划](plans/agent-skills-suite.md)、[实现步骤](plans/agent-skills-suite-steps.md) | — |
+| Shader 效果算法借鉴与原生能力验证 | [计划](plans/shaders-absorption-task-plan.md) | [执行台账](ledgers/shaders-absorption.md) |
 
 ## 专项提示词
 

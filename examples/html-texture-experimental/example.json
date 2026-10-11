@@ -3,55 +3,81 @@
   "version": "1.0.0",
   "title": "HTML · 实时纹理与快照",
   "category": "rendering",
-  "status": "draft",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
     "goal": "实验浏览器将表单上传为原生纹理；普通浏览器明确显示不支持。",
-    "points": ["实时 HTML", "不可变快照", "改变 DOM 颜色"]
+    "points": [
+      "实时 HTML",
+      "不可变快照",
+      "改变 DOM 颜色"
+    ]
   },
   "effect": {
     "functional": "实验浏览器将表单上传为原生纹理；普通浏览器明确显示不支持。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
     "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
   },
   "api": {
-    "primary": ["Texture2D", "createAirTextureSprite"],
+    "primary": [
+      "Texture2D",
+      "createAirTextureSprite"
+    ],
     "supporting": [],
-    "claims": ["Texture2D", "createAirTextureSprite"],
-    "forbiddenShortcut": ["用 DOM 图片代替原生 GPU 渲染", "将未支持的实验能力记录为已支持"],
+    "claims": [
+      "Texture2D",
+      "createAirTextureSprite"
+    ],
+    "forbiddenShortcut": [
+      "用 DOM 图片代替原生 GPU 渲染",
+      "将未支持的实验能力记录为已支持"
+    ],
     "evidence": [
       {
         "api": "Texture2D",
         "source": "src/main.ts",
-        "sourceLocation": "L9",
+        "sourceLocation": "L10",
         "validator": "visible-frame"
       },
       {
         "api": "createAirTextureSprite",
         "source": "src/main.ts",
-        "sourceLocation": "L8",
+        "sourceLocation": "L9",
         "validator": "visible-frame"
       }
     ]
   },
-  "capabilities": ["rendering"],
+  "capabilities": [
+    "rendering"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["HTML texture surface"]
+      "nodes": [
+        "HTML texture surface"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -63,5 +89,13 @@
     "assets": "Original procedural textures, geometry and DOM; MIT. No third-party downloaded assets."
   },
   "experimentalEntry": "cocosair.js/html-source",
-  "supportBoundary": "Normal browsers may report HTML UNSUPPORTED; only an experimental browser can validate live textures."
+  "supportBoundary": "Normal browsers may report HTML UNSUPPORTED; only an experimental browser can validate live textures.",
+  "promotion": {
+    "spec": "533471c42d45",
+    "source": "f9bcee417e395ab7",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 2,
+    "attested": 0,
+    "units": 2
+  }
 }

@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "shaders-effect-contract/1",
+  "name": "emboss",
+  "version": "1.0.0",
+  "params": {
+    "shape": {
+      "type": "string",
+      "defaultValue": "circle",
+      "enum": ["circle", "rounded-box"],
+      "updateMode": "structure",
+      "description": "Analytic 2D SDF shape: circle or rounded box. Switching recompiles the effect variant."
+    },
+    "scale": {
+      "type": "number",
+      "defaultValue": 1.0,
+      "min": 0.4,
+      "max": 2.0,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Uniform shape scale in the rotated field space."
+    },
+    "rotation": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "unit": "degree",
+      "updateMode": "uniform",
+      "description": "Rigid in-plane rotation of the field; zero is identity."
+    },
+    "depth": {
+      "type": "number",
+      "defaultValue": -0.5,
+      "min": -1,
+      "max": 1,
+      "step": 0.01,
+      "unit": "signed relief",
+      "updateMode": "uniform",
+      "description": "Signed relief depth; negative is inset (debossed), positive is raised (embossed). Zero is an exact child passthrough including alpha."
+    },
+    "lightAngle": {
+      "type": "number",
+      "defaultValue": 260,
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "unit": "degree",
+      "updateMode": "uniform",
+      "description": "Directional light azimuth for edge lighting and the cast-shadow trace; the z component stays fixed at 0.7."
+    },
+    "lightIntensity": {
+      "type": "number",
+      "defaultValue": 0.6,
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "unit": "linear gain",
+      "updateMode": "uniform",
+      "description": "Strength of directional edge highlights and shadows; zero removes edge lighting entirely."
+    },
+    "shadowIntensity": {
+      "type": "number",
+      "defaultValue": 0.3,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Darkness of the relief cast shadow; zero removes the shadow layer."
+    },
+    "sourceKind": {
+      "type": "string",
+      "defaultValue": "standard",
+      "enum": ["standard", "blank"],
+      "updateMode": "uniform",
+      "description": "Deterministic child source pattern; blank renders a fully transparent child (alpha-0 NaN guard)."
+    }
+  }
+}

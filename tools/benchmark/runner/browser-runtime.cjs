@@ -20,11 +20,12 @@ const DEBUG_BUNDLE_CACHE = new Map();
 const BENCH_PRELUDE = `(async function(){
   const cc = await import('/build/cocosair.module.js');
   const deadline = Date.now() + 30000;
-  while (!window.__airApp && Date.now() < deadline) { await new Promise(r => setTimeout(r, 50)); }
-  if (!window.__airApp) { throw new Error('window.__airApp not set by main.ts (benchmark contract)'); }
+  while (!window.__airApp && !window.__apiTrace?.app && Date.now() < deadline) { await new Promise(r => setTimeout(r, 50)); }
+  const app = window.__airApp || window.__apiTrace?.app;
+  if (!app) { throw new Error('no real AirApp observed from the example (benchmark contract)'); }
   const { createAgentSession } = await import('/__debug/agent-session.js');
-  const sceneNow = window.__airApp.getScene ? window.__airApp.getScene() : null;
-  const session = createAgentSession({ app: window.__airApp, writableScenes: sceneNow ? [sceneNow] : [] });
+  const sceneNow = app.getScene ? app.getScene() : null;
+  const session = createAgentSession({ app, writableScenes: sceneNow ? [sceneNow] : [] });
   const canvas = document.getElementById('GameCanvas');
   window.__benchSession = {
     inspectScene: () => session.inspectScene(),
@@ -121,7 +122,7 @@ class BrowserRuntime {
         target: 'es2022',
         platform: 'browser',
         loader: { '.ts': 'ts' },
-        external: ['cocosair'],
+        external: ['cocosair', 'cocosair-bootstrap', '/build/bootstrap.js', '/output/responsive-host/baseline/cocosair.module.js'],
         sourcemap: false,
         logLevel: 'silent',
       });
@@ -139,9 +140,12 @@ class BrowserRuntime {
       moduleResolution: ts.ModuleResolutionKind.NodeJs, strict: false,
       noImplicitAny: false, strictNullChecks: false,
       noEmit: true, skipLibCheck: true, skipDefaultLibCheck: true, types: [],
-      lib: ['lib.es2022.d.ts', 'lib.dom.d.ts'],
+      lib: ['lib.es2022.d.ts', 'lib.dom.d.ts', 'lib.dom.iterable.d.ts'],
       baseUrl: workspace.paths.workspace,
-      paths: { cocosair: [path.join(this.REPO, 'build/cocosair.module.d.ts')] },
+      paths: {
+        cocosair: [path.join(this.REPO, 'build/cocosair.module.d.ts')],
+        'cocosair-bootstrap': [path.join(this.REPO, 'build/bootstrap.d.ts')],
+      },
     };
     // 注入 bench 合同的全局声明（__airApp/__benchSession），不写入 workspace。
     const host = ts.createCompilerHost(options, /* setParentNodes */ false);
@@ -213,6 +217,9 @@ class BrowserRuntime {
         }
         let rel = p === '/' ? 'index.html' : p.replace(/^\/+/, '');
         let file = path.join(workspaceDir, rel);
+        if (!fs.existsSync(file) && /\.js$/.test(file) && fs.existsSync(file.replace(/\.js$/, '.ts'))) {
+          file = file.replace(/\.js$/, '.ts');
+        }
         if (!fs.existsSync(file) && !path.extname(rel)) { file = path.join(workspaceDir, rel, 'index.html'); }
         if (!fs.existsSync(file) || !file.startsWith(workspaceDir)) { console.error('[bench-404]', p, file); res.writeHead(404); res.end('not found'); return; }
         if (file === this.compiledEntry.path) { res.writeHead(200, { 'Content-Type': MIME['.js'] }); res.end(this.compiledEntry.code); return; }
@@ -248,7 +255,12 @@ class BrowserRuntime {
     // 页面错误可见性（dev server Task 13 同语义）：诊断 Benchmark 页面加载失败
     this.page.on('console', (m) => { if (m.type() === 'error') { console.error('[bench-page]', m.text().slice(0, 300)); } });
     this.page.on('pageerror', (e) => { this.pageErrors.push({ seq: this.pageErrors.length + 1, category: 'window-error', message: String(e).slice(0, 1000) }); });
-    await this.page.goto(`http://127.0.0.1:${this.port}/index.html`, { waitUntil: 'load', timeout: 30000 });
+    const query = workspace.entryQuery ? '?' + new URLSearchParams(workspace.entryQuery).toString() : '';
+    await this.page.goto(`http://127.0.0.1:${this.port}/index.html${query}`, { waitUntil: 'load', timeout: 30000 });
+    // Some applications intentionally defer engine startup until a real user action.
+    if (workspace.startupButtonText) {
+      await this.page.getByRole('button', { name: workspace.startupButtonText, exact: true }).click();
+    }
     await this.page.waitForFunction(() => window.__benchReady === true || !!window.__benchError, undefined, { timeout: 45000 });
     const benchError = await this.page.evaluate(() => window.__benchError || null);
     if (benchError) { throw new Error(`bench prelude failed: ${benchError.slice(0, 300)}`); }

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Neon 霓虹管 · Cocos AIR</title>
+        <link rel="icon" href="data:," />
+        <style>
+            html,
+            body {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #000;
+            }
+            canvas {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            aside {
+                position: fixed;
+                right: 10px;
+                top: 10px;
+                background: #101824e8;
+                padding: 12px;
+                color: white;
+                font: 13px system-ui;
+                max-height: 85vh;
+                overflow: auto;
+            }
+            label {
+                display: flex;
+                justify-content: space-between;
+                margin: 6px;
+            }
+            input,
+            select {
+                width: 110px;
+            }
+            button {
+                margin: 3px;
+            }
+            .test aside {
+                display: none;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <canvas id="GameCanvas"></canvas>
+        <aside>
+            <strong>E04 霓虹管 · 原生 SDF</strong>
+            <div id="parameters"></div>
+            <button id="pause">暂停</button><button id="resume">继续</button><button id="reset">重置</button
+            ><button id="release">释放</button>
+            <p id="status">单一原生时钟 · 中心+四向 SDF 采样</p>
+        </aside>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

@@ -1,0 +1,220 @@
+{
+  "id": "shader-laser-card",
+  "title": "Laser Card 镭射卡片",
+  "description": "Holographic + Emboss + Sparkle 三段原生组合，双中间 RT，一次 OETF。",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "createAirRenderTarget",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "MeshRenderer",
+    "utils.createMesh"
+  ],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "三段原生组合链：预乘 RT 传递、安全逆预乘、实际内容采样、一次 OETF",
+    "points": [
+      "三相机三 pass 两 RT 同 Scene",
+      "Sparkle 读 Emboss 实际内容（亮度+颜色门控）",
+      "层开关真 identity（中性输入/RT copy/display copy）",
+      "参数命名空间隔离 holo*/emboss*/sparkle*"
+    ]
+  },
+  "assets": [],
+  "license": {
+    "assets": "纯程序化，无外部素材；参考 MIT 通知束见 LICENSE.reference.txt"
+  },
+  "api": {
+    "primary": [
+      "EffectAsset",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Camera",
+      "Node",
+      "utils.createMesh",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Camera",
+      "Node"
+    ],
+    "forbiddenShortcut": [
+      "shaders runtime/TypeGPU/额外canvas",
+      "独立RAF/第二模拟时钟",
+      "固定纹理替代实际组合内容",
+      "双OETF"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L31",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L382",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L115",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L107",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L139",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L214",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L171",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L90",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L40",
+        "validator": "node-exists"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L37",
+        "validator": "node-exists"
+      }
+    ],
+    "evidenceStatus": "sourceLocation 由生产 findSymbolLine 核对；浏览器 runtime 证据 NOT_RUN。"
+  },
+  "effect": {
+    "functional": "20 参数 update（shape 结构重建/其余 uniform）、层开关 identity、三 pass 可观测",
+    "visual": "三段 straight→premul RT→unpremul→一次 OETF、Sparkle 读实际内容、中间不 OETF",
+    "limitations": [
+      "本地组合设计，不称上游预设",
+      "仅 circle/rounded-box 共享 SDF",
+      "中间 RT 跟随 backing/DPR",
+      "Agent Gate NOT_RUN"
+    ]
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "改变滑块/层开关",
+        "expected": "uniform 同步或 shape 重建；层开关 identity"
+      },
+      {
+        "action": "暂停/继续/重置/释放",
+        "expected": "时钟冻结/前进、7 引用退役归零"
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__laser.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__laser.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "holo-camera",
+        "emboss-camera",
+        "main-camera",
+        "c01-holo-1",
+        "c01-emboss-1",
+        "c01-sparkle-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "__laser.ready"
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "组合 oracle 由 tools/verify/shaders-laser-card-browser.cjs 采集"
+  },
+  "promotion": {
+    "spec": "77f871a9a0e2",
+    "source": "a161f758b3a1cc88",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 10,
+    "attested": 0,
+    "units": 10
+  }
+}

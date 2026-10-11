@@ -270,7 +270,7 @@
             "expect": "unset",
             "provenance": {
               "source": "src/air/assets/gltf/material.ts",
-              "line": 347,
+              "line": 255,
               "text": "导入器把 baseColorFactor 写入 albedo，不写 mainColor（审计 F-71）；此处反向断言，防\"属性名取错也绿灯\""
             }
           }
@@ -301,9 +301,9 @@
     }
   },
   "promotion": {
-    "spec": "bd41e69c873e",
-    "source": "333f4b776d1851df",
-    "candidate": "2f089f6ce25eaccd",
+    "spec": "633e34bc9127",
+    "source": "8211e97d651e8024",
+    "candidate": "24fcbd038ef9869c",
     "verified": 18,
     "attested": 2,
     "units": 20

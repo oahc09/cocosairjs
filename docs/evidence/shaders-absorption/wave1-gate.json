@@ -1,0 +1,554 @@
+{
+  "schemaVersion": "shaders-wave-gate/1",
+  "wave": 1,
+  "status": "BLOCKED",
+  "engineGate": "BLOCKED",
+  "agentGate": "NOT_RUN",
+  "completed": false,
+  "subset": true,
+  "executionChannel": "Lead",
+  "upstreamCommit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+  "execution": {
+    "command": "node output/shaders-absorption/lead-wave1-integration.cjs",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "startedAt": "2026-10-09T01:21:03.757Z",
+    "endedAt": "2026-10-09T01:21:16.921Z",
+    "exitCode": 0,
+    "purpose": "READ_ONLY_EVIDENCE_INTEGRATION",
+    "browserRunsAdded": 0
+  },
+  "validationMeaning": "Evidence consistency accepted; this exit0 does not compensate original collection exit1 or pass the Wave Gate.",
+  "effects": [
+    {
+      "id": "E01",
+      "executionChannel": "native subagent shader_wave0_upstream",
+      "status": "BLOCKED",
+      "summary": {
+        "path": "docs/evidence/shaders-absorption/e01-summary.json",
+        "bytes": 13983,
+        "sha256": "105211ccbf00cf5d315e163d6f9a16cb1deaa9dcc1b668a4a6b8474eacb6c5fb"
+      },
+      "engines": [
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "status": "PASS",
+          "gates": {
+            "Build": "PASS",
+            "Runtime": "PASS",
+            "Visual": "PASS",
+            "Boundary": "PASS",
+            "Resource": "PASS",
+            "Performance": "PASS"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "status": "LIMITED",
+          "gates": {
+            "Build": "PASS",
+            "Runtime": "PASS",
+            "Visual": "PASS",
+            "Boundary": "PASS",
+            "Resource": "PASS",
+            "Performance": "LIMITED"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "status": "BLOCKED",
+          "gates": {
+            "Build": "PASS",
+            "Runtime": "BLOCKED",
+            "Visual": "PASS",
+            "Boundary": "PASS",
+            "Resource": "PASS",
+            "Performance": "LIMITED"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E02",
+      "executionChannel": "native subagent shader_wave0_contract",
+      "status": "BLOCKED",
+      "summary": {
+        "path": "docs/evidence/shaders-absorption/e02-thin-film-summary.json",
+        "bytes": 29220,
+        "sha256": "7d8b4808241caa2daf362afff4a12107ebefb0ba0ef280242726416dcefd39c2"
+      },
+      "engines": [
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "status": "PASS",
+          "gates": {
+            "Build": "PASS",
+            "Runtime": "PASS",
+            "Visual": "PASS",
+            "Boundary": "PASS",
+            "Resource": "PASS",
+            "Performance": "PASS"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "status": "BLOCKED",
+          "gates": {
+            "Build": "PASS",
+            "Runtime": "PASS",
+            "Visual": "PASS",
+            "Boundary": "PASS",
+            "Resource": "PASS",
+            "Performance": "LIMITED"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "status": "BLOCKED",
+          "gates": {
+            "Build": "PASS",
+            "Runtime": "BLOCKED",
+            "Visual": "PASS",
+            "Boundary": "PASS",
+            "Resource": "PASS",
+            "Performance": "PASS"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E06",
+      "executionChannel": "native subagent shader_wave0_capabilities",
+      "status": "BLOCKED",
+      "summary": {
+        "path": "docs/evidence/shaders-absorption/e06-final-summary.json",
+        "bytes": 13691,
+        "sha256": "68e091ce08107f2d1b26af1e8990dbf76a98d6ab804bc5032e2a19cbf1bf38d7"
+      },
+      "engines": [
+        {
+          "browser": "chromium",
+          "status": "PASS",
+          "gates": {
+            "Build": "PASS",
+            "Runtime": "PASS",
+            "Visual": "PASS",
+            "Boundary": "PASS",
+            "Resource": "PASS",
+            "Performance": "PASS"
+          }
+        },
+        {
+          "browser": "firefox",
+          "status": "PASS",
+          "gates": {
+            "Build": "PASS",
+            "Runtime": "PASS",
+            "Visual": "PASS",
+            "Boundary": "PASS",
+            "Resource": "PASS",
+            "Performance": "PASS"
+          }
+        },
+        {
+          "browser": "webkit",
+          "status": "BLOCKED",
+          "gates": {
+            "Build": "PASS",
+            "Runtime": "BLOCKED",
+            "Visual": "PASS",
+            "Boundary": "PASS",
+            "Resource": "PASS",
+            "Performance": "NOT_RUN"
+          }
+        }
+      ]
+    }
+  ],
+  "leadIndependentValidation": {
+    "checks": [
+      {
+        "id": "E01",
+        "purpose": "READ_ONLY_VALIDATION_OF_REAL_BROWSER_CAPTURE",
+        "result": {
+          "ok": true,
+          "errors": [],
+          "scopePassed": false,
+          "browserRunsAdded": 0
+        }
+      },
+      {
+        "id": "E02",
+        "purpose": "READ_ONLY_VALIDATION_OF_REAL_BROWSER_CAPTURE",
+        "result": {
+          "ok": true,
+          "errors": [],
+          "effectStatus": "BLOCKED",
+          "agentGate": "NOT_RUN",
+          "measured": 227,
+          "skipped": 10
+        }
+      },
+      {
+        "id": "E06",
+        "purpose": "READ_ONLY_VALIDATION_OF_REAL_BROWSER_CAPTURE",
+        "result": {
+          "ok": true,
+          "scopePassed": false,
+          "rows": [
+            {
+              "browser": "chromium",
+              "status": "PASS",
+              "gates": {
+                "Build": "PASS",
+                "Runtime": "PASS",
+                "Visual": "PASS",
+                "Boundary": "PASS",
+                "Resource": "PASS",
+                "Performance": "PASS"
+              }
+            },
+            {
+              "browser": "firefox",
+              "status": "PASS",
+              "gates": {
+                "Build": "PASS",
+                "Runtime": "PASS",
+                "Visual": "PASS",
+                "Boundary": "PASS",
+                "Resource": "PASS",
+                "Performance": "PASS"
+              }
+            },
+            {
+              "browser": "webkit",
+              "status": "BLOCKED",
+              "gates": {
+                "Build": "PASS",
+                "Runtime": "BLOCKED",
+                "Visual": "PASS",
+                "Boundary": "PASS",
+                "Resource": "PASS",
+                "Performance": "NOT_RUN"
+              }
+            }
+          ],
+          "errors": []
+        }
+      }
+    ],
+    "mutations": [
+      {
+        "id": "E01",
+        "name": "promote-precision",
+        "rejected": true,
+        "errors": [
+          {
+            "engine": "firefox",
+            "rule": "GATE_RESULT",
+            "path": "$.gates.Performance",
+            "message": "PASS requires every required case to be PASS"
+          },
+          "Precision classification/capture drift: firefox"
+        ]
+      },
+      {
+        "id": "E01",
+        "name": "hide-collection-exit",
+        "rejected": true,
+        "errors": [
+          "Actual aggregate collector command/exit1 must remain explicit"
+        ]
+      },
+      {
+        "id": "E01",
+        "name": "raw-report-sha-drift",
+        "rejected": true,
+        "errors": [
+          "Scoped lineage invalid: Linked file drift: output/shaders-absorption/e01-engine-attempt7.json"
+        ]
+      },
+      {
+        "id": "E02",
+        "name": "false-completion",
+        "rejected": true,
+        "errors": [
+          "summary independently reduced values/status/fixed identity mismatch"
+        ]
+      },
+      {
+        "id": "E02",
+        "name": "promote-firefox-performance",
+        "rejected": true,
+        "errors": [
+          "summary independently reduced values/status/fixed identity mismatch"
+        ]
+      },
+      {
+        "id": "E02",
+        "name": "report-sha-drift",
+        "rejected": true,
+        "errors": [
+          "normalized report SHA drift",
+          "actual clone audit binding",
+          "summary independently reduced values/status/fixed identity mismatch"
+        ]
+      },
+      {
+        "id": "E06",
+        "name": "false-completion",
+        "rejected": true,
+        "errors": [
+          "FALSE_GLOBAL_COMPLETION"
+        ]
+      },
+      {
+        "id": "E06",
+        "name": "promote-webkit-runtime",
+        "rejected": true,
+        "errors": [
+          "SUMMARY_GATE_DRIFT"
+        ]
+      },
+      {
+        "id": "E06",
+        "name": "bound-report-sha-drift",
+        "rejected": true,
+        "errors": [
+          "BINDING_DRIFT engine"
+        ]
+      }
+    ],
+    "rejectedMutations": 9,
+    "e01SummaryMatchesRealProducer": true
+  },
+  "identity": {
+    "sdk": [
+      {
+        "path": "build/cocosair.module.js",
+        "bytes": 6631057,
+        "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+      },
+      {
+        "path": "build/cocosair.module.d.ts",
+        "bytes": 3303518,
+        "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+      },
+      {
+        "path": "build/npm/cocosair.module.js",
+        "bytes": 6631013,
+        "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+      }
+    ],
+    "sourcePackageTrackedDiff": "",
+    "head": "1cb71bf98d009a84095203796231a3b894701307"
+  },
+  "inventory": {
+    "current": {
+      "suites": 125,
+      "tests": 1191,
+      "passed": 1187,
+      "failed": 4
+    },
+    "previousHead": {
+      "suites": 121,
+      "tests": 1080,
+      "passed": 1076,
+      "failed": 4
+    },
+    "newSuites": [
+      {
+        "file": "test/smoke/shaders-effect-contract.test.ts",
+        "tests": 30
+      },
+      {
+        "file": "test/smoke/shaders-noise-dissolve.test.ts",
+        "tests": 19
+      },
+      {
+        "file": "test/smoke/shaders-sparkle.test.ts",
+        "tests": 31
+      },
+      {
+        "file": "test/smoke/shaders-thin-film.test.ts",
+        "tests": 31
+      }
+    ],
+    "inventoryCommandObservedExitCode": 1,
+    "allNew111TestsPassed": true,
+    "fullRepositoryPassed": false
+  },
+  "gallery": {
+    "rows": [
+      {
+        "id": "shader-noise-dissolve",
+        "issues": [],
+        "status": "draft",
+        "genericGalleryLifecycle": "NOT_RUN",
+        "issueClass": "EXAMPLE_GAP"
+      },
+      {
+        "id": "shader-thin-film",
+        "issues": [],
+        "status": "draft",
+        "genericGalleryLifecycle": "NOT_RUN",
+        "issueClass": "EXAMPLE_GAP"
+      },
+      {
+        "id": "shader-sparkle",
+        "issues": [],
+        "status": "draft",
+        "genericGalleryLifecycle": "NOT_RUN",
+        "issueClass": "EXAMPLE_GAP"
+      }
+    ],
+    "specCommandObservedExitCode": 1,
+    "unrelatedStructuralIssues": [
+      {
+        "id": "gltf-viewer",
+        "specStatus": "frozen",
+        "issues": [
+          "出处行不存在：src/air/assets/gltf/material.ts:L347"
+        ]
+      },
+      {
+        "id": "responsive-board-recipes",
+        "specStatus": "missing",
+        "issues": [
+          "bad specStatus undefined",
+          "learning required",
+          "effect required",
+          "api required",
+          "scene.expectedGraph.nodes required",
+          "interaction.steps must be array",
+          "validation.interaction must be array",
+          "ready.validators must be array >= 1",
+          "validation.functional must be array",
+          "validation.interaction must be array",
+          "validation.visual must be array",
+          "validation.lifecycle must be array",
+          "validation.capability must be array",
+          "assets must be array",
+          "coverage.benchmarkRefs must be array",
+          "coverage.recipeRefs must be array",
+          "screenshot object required",
+          "license object required"
+        ]
+      }
+    ]
+  },
+  "blockers": [
+    {
+      "classification": "INFRA_FAILURE",
+      "scope": "E01/E02/E06 WebKit live resize",
+      "reason": "Native GPU/canvas export correct; compositor PNG shows body. Lead builtin control corroborates; no confirmed SDK error line."
+    },
+    {
+      "classification": "INFRA_FAILURE",
+      "scope": "E01 Firefox 3 profiles + WebKit1080p/mobile",
+      "reason": "60 required CPU draw-dispatch intervals all quantized0; resolution NOT_RECORDED. No zero-cost claim."
+    },
+    {
+      "classification": "INFRA_FAILURE",
+      "scope": "E02 Firefox mobile",
+      "reason": "requested DPR2/backing780x1688; actual DPR1/backing390x844. Frozen scope not relaxed."
+    },
+    {
+      "classification": "INFRA_FAILURE",
+      "scope": "E06 WebKit mobile",
+      "reason": "CPU draw-dispatch below actual1ms timer precision; LIMITED."
+    }
+  ],
+  "nextWaves": {
+    "2": "NOT_RUN",
+    "3": "NOT_RUN",
+    "4": "NOT_RUN",
+    "5": "NOT_RUN",
+    "6": "NOT_RUN",
+    "7": "NOT_RUN"
+  },
+  "bindings": [
+    {
+      "path": "docs/evidence/shaders-absorption/wave0-gate.json",
+      "bytes": 3855,
+      "sha256": "e37c77021f0c00e8b46d01b1b8a46f50f5f9fe7dd99126544939f5d7d5b61587"
+    },
+    {
+      "path": "output/shaders-absorption/lead-wave1-resize-layer-diagnostic-attempt1.json",
+      "bytes": 47381,
+      "sha256": "1cb6162ec340f1728d54333edc9efaf4555d9876844ecbb39c86d7245300e328"
+    },
+    {
+      "path": "tools/verify/shaders-resize-diagnostic.cjs",
+      "bytes": 8624,
+      "sha256": "18a36306db2ef4166e1cfe7f0047bb1ac1a6eda75335c9cc1ee1f60d9b4ee012"
+    },
+    {
+      "path": "output/shaders-absorption/lead-wave1-spec-final.json",
+      "bytes": 17442,
+      "sha256": "dd28533e39604231ccc9f062e607ae2e7bb2f683210a5caf1fbda55841427896"
+    },
+    {
+      "path": "output/shaders-absorption/lead-wave1-spec-compliance-attempt1.json",
+      "bytes": 31729,
+      "sha256": "1dd426b03b1e0ff34cff93a3969fc0d1acd998717f8ba513ff7da29eedc13e49"
+    },
+    {
+      "path": "docs/test-inventory.json",
+      "bytes": 157642,
+      "sha256": "c7def74b55ee1762e3ba1242efa3037f32670afd061d68d96e7885362b90bf3c"
+    },
+    {
+      "path": "examples/files.json",
+      "bytes": 683947,
+      "sha256": "8ff7105f7d22cde3f61f75d2889f945b1e8d364a4766880454d895b954689470"
+    },
+    {
+      "path": "docs/effects/wave1-delivery.md",
+      "bytes": 7217,
+      "sha256": "4640eeee3f5264fdc4e1503cb7c057d23786b49f7faafa77e9e0a1001f95fc7f"
+    },
+    {
+      "path": "docs/effects/wave1-findings.md",
+      "bytes": 4005,
+      "sha256": "73f6fd83f008047c900d81ee7f044057428a1c6e12c613bd89971b06b266da6f"
+    },
+    {
+      "path": "docs/effects/measurement-methods.md",
+      "bytes": 3505,
+      "sha256": "e955e8f5fa9ff606b21896698b176cdbbe81f23d547fb85b4b8b988950b9af88"
+    },
+    {
+      "path": "output/shaders-absorption/lead-wave1-integration.cjs",
+      "bytes": 9444,
+      "sha256": "2d5101140eb518cc312c2f72a8458d79f8357d9e915cedc160e1d68bdeabf3ec"
+    },
+    {
+      "path": "examples/shader-noise-dissolve/example.json",
+      "bytes": 4737,
+      "sha256": "46281506bea965e1acdc80eb4a6e6cba7137d4b2be21480af131c20c6b03b890"
+    },
+    {
+      "path": "examples/shader-thin-film/example.json",
+      "bytes": 3256,
+      "sha256": "9258e3c73b8db85a51ff82aae5457cd35674df319ffe1463d4957e6ddcb64137"
+    },
+    {
+      "path": "examples/shader-sparkle/example.json",
+      "bytes": 5095,
+      "sha256": "dd65444eb2ae48c2266d23f294a5139cc2372bac5aa1048037844d88b06f14a4"
+    }
+  ],
+  "limitations": [
+    "Headless desktop with mobile viewport/DPR emulation; no physical devices",
+    "GPU physical memory unavailable; allocation estimates only",
+    "Generic Gallery lifecycle not implemented; separate native Resource evidence retained",
+    "No independent Agent Gate or public helper extraction",
+    "Full plan not complete; no Wave2 advance; no commits/push/deploy"
+  ]
+}

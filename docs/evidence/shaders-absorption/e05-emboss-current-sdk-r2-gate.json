@@ -1,0 +1,1071 @@
+{
+  "schemaVersion": "e05-emboss-current-gate/1",
+  "task": "Wave2/E05",
+  "evaluatedAt": "2026-10-11T10:04:42.204Z",
+  "executionChannels": {
+    "implementation": "Orca Worker 小三",
+    "independentReviewAndCollection": "Lead"
+  },
+  "status": "PASS",
+  "scope": "circle/rounded-box analytic implementation and frozen six-dimension contract",
+  "subset": true,
+  "completed": false,
+  "wave2Gate": "NOT_RUN",
+  "agentGate": "NOT_RUN",
+  "gates": {
+    "Build": {
+      "status": "PASS",
+      "engines": 3,
+      "strictTypecheckAndBundle": [
+        {
+          "command": "node node_modules/typescript/bin/tsc -p tools/verify/shaders-emboss.tsconfig.json",
+          "exitCode": 0,
+          "raw": {
+            "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/build.log",
+            "bytes": 101,
+            "sha256": "168e74ec5a4d28fb4c2357935dbd75728f01a4aa394367311ce3ddaecb66d5f2"
+          },
+          "bundleBytes": 58091
+        },
+        {
+          "command": "node node_modules/typescript/bin/tsc -p tools/verify/shaders-emboss.tsconfig.json",
+          "exitCode": 0,
+          "raw": {
+            "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-performance-artifacts/build.log",
+            "bytes": 101,
+            "sha256": "168e74ec5a4d28fb4c2357935dbd75728f01a4aa394367311ce3ddaecb66d5f2"
+          },
+          "bundleBytes": 58091
+        }
+      ]
+    },
+    "Runtime": {
+      "status": "PASS",
+      "engines": 3,
+      "trustedControls": [
+        "parameter",
+        "pause",
+        "resume",
+        "reset",
+        "release"
+      ],
+      "liveResize": 3,
+      "terminalAndRecreate": 3
+    },
+    "Visual": {
+      "status": "PASS",
+      "screenshotCases": 39,
+      "transparentLinearProbes": 39,
+      "byteTolerance": 2,
+      "screenshots": [
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-default-dpr1.png",
+          "bytes": 13496,
+          "sha256": "c94f2a20268a36750855555654e41bfe51a829ecc7c25c5573609df40e7de03f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-box-dpr1.png",
+          "bytes": 5085,
+          "sha256": "b0f7f38698ee603c9a9ae3fc32bf7fb5597d7ae809a6fc26229eab5604b6d210"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-raised-dpr1.png",
+          "bytes": 13774,
+          "sha256": "a627a76d82dc51c8afb7326280bc2faedb49a1179e9643c49052db482d905b2b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-depth-zero-dpr1.png",
+          "bytes": 2749,
+          "sha256": "9797e63b0489dce2d5a86510c263dea53aeaf3412bc14868df6b5af43fadbb6b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-light-90-dpr1.png",
+          "bytes": 13106,
+          "sha256": "13037b07025971a9508f8b661a60d63050effb16835f39f3451262f9ac6a04d9"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-light-270-dpr1.png",
+          "bytes": 13445,
+          "sha256": "a5d8255540750f1d5d88aa22db8d4702691055b25a594ffdb294cb597be16790"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-light-zero-dpr1.png",
+          "bytes": 10446,
+          "sha256": "1b862d89431fca160df1cadfc7abeab76c41ea990e000720c3a91472c608bca5"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-shadow-zero-dpr1.png",
+          "bytes": 5621,
+          "sha256": "9e4eb065381988f67a6198033fe9d7f2f59afc34a6e439bb12c172ad86794173"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-blank-source-dpr1.png",
+          "bytes": 1606,
+          "sha256": "1a7369c8cf7eeb70f487d1876d2bcc9049747327f55391c4da0e1c0e2179b823"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-scale-150-dpr1.png",
+          "bytes": 20719,
+          "sha256": "06d549fe6b1d4430243ddbf159e265e4c96bd09bdda1ebb4788a2368b2567e40"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-background-light-dpr1.png",
+          "bytes": 13633,
+          "sha256": "7c67260836863c7631f07488b558e274d1d90540cd6a509cc9bee8fcb54845ea"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-default-dpr2.png",
+          "bytes": 34966,
+          "sha256": "c71845cdf24d109f97ff1bab1f323e605be467987159d6e956f046a6ebd3e80c"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-box-dpr2.png",
+          "bytes": 11673,
+          "sha256": "590b911305bda2727b2ea3b84eabb32e25284e452d866a56883c764ccba51d6a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/chromium-live-resize.png",
+          "bytes": 10129,
+          "sha256": "1a65ec7b7c45443e4cd6c508a02cf252d70fefd7c8f9842d29eb51b2c1292dd4"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-default-dpr1.png",
+          "bytes": 24380,
+          "sha256": "f654be2a38aaf132842eeb9e536eef4e771b54c797474c0671778ef80b9657c3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-box-dpr1.png",
+          "bytes": 13888,
+          "sha256": "7d8ea61c520a367dfa416c5afe09045ed48eb020bbaef7a4493901744cf0da94"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-raised-dpr1.png",
+          "bytes": 25321,
+          "sha256": "42d4e1458f51bcb69c3a72b3ecc06059c4f8c9345c4eca6936a8f235eee5f334"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-depth-zero-dpr1.png",
+          "bytes": 10555,
+          "sha256": "d717d8d375722e767956779c9a1ad824cc31f31cea276810571534fe23cbd963"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-light-90-dpr1.png",
+          "bytes": 24283,
+          "sha256": "42fd24bc7019b9c507b456bed0a4106c35f65cb567f48722a65b219d079fd9bb"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-light-270-dpr1.png",
+          "bytes": 24328,
+          "sha256": "4d8539454c8e09d384f51cb33d7ae757676fb409f4a5bd91211c5ec963865425"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-light-zero-dpr1.png",
+          "bytes": 21087,
+          "sha256": "bbb2555d80c4f990f40a4e29e3174fc3c3fc2c3dd224573aa93fdea63913f35c"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-shadow-zero-dpr1.png",
+          "bytes": 14219,
+          "sha256": "67263cf00d977d84767eeeb9b80c72f79f717f74d3b4f4e43c8fec28ef4f41e1"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-blank-source-dpr1.png",
+          "bytes": 1886,
+          "sha256": "53539a5d5df954209d61805b9f3df8b8a37562d1e806d2e090b2050142cdbe7e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-scale-150-dpr1.png",
+          "bytes": 33419,
+          "sha256": "1483f20ce107bea86be8e721312bd21b6924860777dc2f06514ce63914093862"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-background-light-dpr1.png",
+          "bytes": 24599,
+          "sha256": "c430370ff867cdc44bc9c203e9856dce3776d265d20c6247ce7f8676a3c4dabb"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-default-dpr2.png",
+          "bytes": 77330,
+          "sha256": "eefef06d0b0a07d0500f4aeadee11963caaed33ca75946f6a5c4750c782a904d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-box-dpr2.png",
+          "bytes": 46191,
+          "sha256": "ae94b09d1ec87549166f86201336fe2e50ccb543a48245401622f7d5605fa33a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/firefox-live-resize.png",
+          "bytes": 18552,
+          "sha256": "2e45e9bd842cf5080802331f0ec5516aae9bee1069844375ec78a22ddd44bed0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-default-dpr1.png",
+          "bytes": 15126,
+          "sha256": "c2578d76287aeb5c1936a2ab85e23ecc89a72292b374a862f868cf317658db6e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-box-dpr1.png",
+          "bytes": 5870,
+          "sha256": "3a3433fa9dc42435ad7d4608c46f14721c17f522e8f98704fb2a87e10a69b469"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-raised-dpr1.png",
+          "bytes": 15359,
+          "sha256": "f0b1f946ade4a2d597713303259d79ff2f2184e8e674a428f6817ad5e74f1082"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-depth-zero-dpr1.png",
+          "bytes": 3305,
+          "sha256": "4ad095c04dedd6905a57b2ba0c1135c94f0fd9e1755df7864b5ed1427b49226b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-light-90-dpr1.png",
+          "bytes": 14682,
+          "sha256": "a612ecab5131645e2a04302e641d5b5e769205e5bd45a9a64a26a1544b152e5f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-light-270-dpr1.png",
+          "bytes": 15005,
+          "sha256": "02709402734928512a7e9d9aa10fbbdd24b21ca226e40dac9bbf5c36ed95180b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-light-zero-dpr1.png",
+          "bytes": 11779,
+          "sha256": "1bfc9afe2f0f3a079b23d481ced2a5264d554a4eb6eef7a56166a2eb441099b3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-shadow-zero-dpr1.png",
+          "bytes": 6409,
+          "sha256": "69b953b04957e5257f0d624c7d7bd88a47a4b586e9cb177ab363c830abeaf156"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-blank-source-dpr1.png",
+          "bytes": 2229,
+          "sha256": "60dbd1b5674e3dcbb76d38dff4195d7b253d798cd85a0ddf85d0d45a8551f54f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-scale-150-dpr1.png",
+          "bytes": 23092,
+          "sha256": "bc661b13fce23a07ef2ba530c2eb67b127322bc3348006138ecefda906c3d36d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-background-light-dpr1.png",
+          "bytes": 15219,
+          "sha256": "e651cb4baa44972e533861053188443a21f85418ac5dba1d16464c6411b08672"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-default-dpr2.png",
+          "bytes": 39116,
+          "sha256": "d121248e69e2b5b6d70926f62aafc94a865070b2166b51c9c7926d7f6e227fec"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-box-dpr2.png",
+          "bytes": 13806,
+          "sha256": "080a9b2d6b87403928b2028c69ddee67a7b3184c48feccffde54c621964708f4"
+        },
+        {
+          "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-artifacts/webkit-live-resize.png",
+          "bytes": 11332,
+          "sha256": "d426032b34896731d6b2e4634b2cda72113ce0b714dbeea8109009cb82a0a8c0"
+        }
+      ]
+    },
+    "Boundary": {
+      "status": "PASS",
+      "parameterCases": 120,
+      "malformedAtomicRejections": 18
+    },
+    "Resource": {
+      "status": "PASS",
+      "cycles": 300,
+      "physicalGpuMemory": "unavailable"
+    },
+    "Performance": {
+      "status": "PASS",
+      "profileCases": 9,
+      "measurements": [
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "depth": -0.5,
+            "lightAngle": 260,
+            "lightIntensity": 0.6,
+            "shadowIntensity": 0.3,
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.06500000134110451,
+          "cpuGfxEnvelopeP50Ms": 0.08999999985098839,
+          "cpuGlDrawDispatchP50Ms": 0.004999998956918716,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.66000000014901,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 329,
+            "millisecondsP50": 0.254976
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable",
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "child RTT pass and emboss pass are both native render passes in every timed frame"
+          }
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "depth": -0.5,
+            "lightAngle": 260,
+            "lightIntensity": 0.6,
+            "shadowIntensity": 0.3,
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.07000000029802322,
+          "cpuGfxEnvelopeP50Ms": 0.09999999403953552,
+          "cpuGlDrawDispatchP50Ms": 0.004999998956918716,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.66500000283122,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 329,
+            "millisecondsP50": 2.144256
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable",
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "child RTT pass and emboss pass are both native render passes in every timed frame"
+          }
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "depth": -0.5,
+            "lightAngle": 260,
+            "lightIntensity": 0.6,
+            "shadowIntensity": 0.3,
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.06499999761581421,
+          "cpuGfxEnvelopeP50Ms": 0.08999999985098839,
+          "cpuGlDrawDispatchP50Ms": 0.004999998956918716,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.66999999806285,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 329,
+            "millisecondsP50": 0.674816
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999998956918716,
+          "physicalGpuMemory": "unavailable",
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "child RTT pass and emboss pass are both native render passes in every timed frame"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "depth": -0.5,
+            "lightAngle": 260,
+            "lightIntensity": 0.6,
+            "shadowIntensity": 0.3,
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.07999999999992724,
+          "cpuGfxEnvelopeP50Ms": 0.1000000000003638,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.659999999999854,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable",
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "child RTT pass and emboss pass are both native render passes in every timed frame"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "depth": -0.5,
+            "lightAngle": 260,
+            "lightIntensity": 0.6,
+            "shadowIntensity": 0.3,
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.09999999999990905,
+          "cpuGfxEnvelopeP50Ms": 0.11999999999989086,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.679999999999836,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable",
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "child RTT pass and emboss pass are both native render passes in every timed frame"
+          }
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "depth": -0.5,
+            "lightAngle": 260,
+            "lightIntensity": 0.6,
+            "shadowIntensity": 0.3,
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 328,
+          "cpuUpdateP50Ms": 0.10000000000013642,
+          "cpuGfxEnvelopeP50Ms": 0.11999999999989086,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.659999999999854,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable",
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "child RTT pass and emboss pass are both native render passes in every timed frame"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "depth": -0.5,
+            "lightAngle": 260,
+            "lightIntensity": 0.6,
+            "shadowIntensity": 0.3,
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 327,
+          "cpuUpdateP50Ms": 0.040000000000873115,
+          "cpuGfxEnvelopeP50Ms": 0.1000000000003638,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.67999999999938,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable",
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "child RTT pass and emboss pass are both native render passes in every timed frame"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "depth": -0.5,
+            "lightAngle": 260,
+            "lightIntensity": 0.6,
+            "shadowIntensity": 0.3,
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 326,
+          "cpuUpdateP50Ms": 0.040000000000873115,
+          "cpuGfxEnvelopeP50Ms": 0.0999999999994543,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.600000000000364,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable",
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "child RTT pass and emboss pass are both native render passes in every timed frame"
+          }
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "params": {
+            "shape": "circle",
+            "scale": 1,
+            "rotation": 0,
+            "depth": -0.5,
+            "lightAngle": 260,
+            "lightIntensity": 0.6,
+            "shadowIntensity": 0.3,
+            "sourceKind": "standard"
+          },
+          "steadyFrames": 327,
+          "cpuUpdateP50Ms": 0.040000000000873115,
+          "cpuGfxEnvelopeP50Ms": 0.1000000000003638,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.640000000000327,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable",
+          "methods": {
+            "commands": "CPU native gfx method wall envelope; includes immediate GL dispatch, not pure encoding",
+            "draws": "CPU actual GL draw dispatch only, same Cocos context",
+            "queue": "CPU statistics bookkeeping, not GPU command submission",
+            "frames": "native AFTER_DRAW callback interval, not monitor presentation",
+            "gpu": "TOOL_DIAGNOSTIC same-context native BEFORE_DRAW/AFTER_DRAW TIME_ELAPSED_EXT",
+            "passes": "child RTT pass and emboss pass are both native render passes in every timed frame"
+          }
+        }
+      ]
+    }
+  },
+  "bindings": [
+    {
+      "phase": "functional",
+      "report": {
+        "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional.json",
+        "bytes": 5340177,
+        "sha256": "d0dc99c2dce56fbb67b21606cf85bf7002ab5a4736f18bd6dfba561e3c14dffb"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-os.json",
+        "bytes": 614,
+        "sha256": "1910ca40c903c7d32b1d20a85317c38271732a8e9d2dba4181ef6f21b0e930ce"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional.log",
+        "bytes": 2549,
+        "sha256": "527068832656c5bbc27b14345a8c07027557bed6f407a5b16c0e1f9809fe5153"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional-driver-frozen.json",
+        "bytes": 6299,
+        "sha256": "d8400f82fffe79f26b8767e5f06d7fe518e19c9302009f25ff5846bc9ec51cb0"
+      },
+      "execution": {
+        "startedAt": "2026-10-11T09:49:38.931Z",
+        "endedAt": "2026-10-11T09:50:16.487Z",
+        "command": [
+          "D:\\Program Files\\nodejs\\node.exe",
+          "tools/verify/shaders-emboss-browser.cjs",
+          "--phase=functional",
+          "--browser=all",
+          "--out=output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional.json"
+        ],
+        "cwd": "E:\\AIProMax\\github\\cocosair.js",
+        "output": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional.json",
+        "log": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional.log",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "inputsUnchanged": true
+      }
+    },
+    {
+      "phase": "performance",
+      "report": {
+        "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-performance.json",
+        "bytes": 11590941,
+        "sha256": "004cab6cee96f766e8eaddc3c6f21db476b70d6d151773c6c9dfa94974e60a69"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-performance-os.json",
+        "bytes": 677,
+        "sha256": "2599432a27cd44c3ac7d4b43a08a18f8c7a8997df208bff6ff2a0e597c2b89cf"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-performance.log",
+        "bytes": 111,
+        "sha256": "3e9d7bd7b402fc06f0e06c38f6be444c0a6c95b6d59be1422a5fcec67817e8f7"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-performance-driver-frozen.json",
+        "bytes": 6299,
+        "sha256": "d8400f82fffe79f26b8767e5f06d7fe518e19c9302009f25ff5846bc9ec51cb0"
+      },
+      "execution": {
+        "startedAt": "2026-10-11T10:02:21.081Z",
+        "endedAt": "2026-10-11T10:03:51.726Z",
+        "command": [
+          "D:\\Program Files\\nodejs\\node.exe",
+          "tools/verify/shaders-emboss-browser.cjs",
+          "--phase=performance",
+          "--browser=all",
+          "--out=output/shaders-absorption/lead-current-sdk-w2-r3-e05-performance.json",
+          "--authorization=LEAD-CURRENT-SDK-W2-20261011-SERIAL"
+        ],
+        "cwd": "E:\\AIProMax\\github\\cocosair.js",
+        "output": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-performance.json",
+        "log": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-performance.log",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "inputsUnchanged": true
+      }
+    }
+  ],
+  "validatorInputs": {
+    "inputs": [
+      {
+        "path": "examples/shader-emboss/src/main.ts",
+        "bytes": 31373,
+        "sha256": "4ffa9d203381562f4b351fe5f6bfe760a6f4c3c350efea53a9e4f04536f68675"
+      },
+      {
+        "path": "examples/shader-emboss/src/parameters.ts",
+        "bytes": 2225,
+        "sha256": "342251deb88a313c74af7cefd4e223f0e3df795d2fd848b52b00b5e77b86fc72"
+      },
+      {
+        "path": "examples/shader-emboss/src/emboss.frag",
+        "bytes": 4743,
+        "sha256": "9ba15a3eed55650820fc09cd9ba7a744360a68f0446117cfbbf5a618beaf58e1"
+      },
+      {
+        "path": "examples/shader-emboss/src/pattern.frag",
+        "bytes": 1350,
+        "sha256": "64dee1e1131d9fe8534a65a179e1772427dbfd775fe10789db1311f6b20f9e39"
+      },
+      {
+        "path": "examples/shader-emboss/src/effect.generated.ts",
+        "bytes": 23802,
+        "sha256": "6c3d3682466feb9af8ba8541fe4ec5ebf82040073ab30fa6a2e3ee71e419b9d6"
+      },
+      {
+        "path": "examples/shader-emboss/parameters.json",
+        "bytes": 2410,
+        "sha256": "b5acc5ff6cb3b16f02e9bbe3b504a5b716ac3ded45cd5b328052066c2bd4287d"
+      },
+      {
+        "path": "examples/shader-emboss/index.html",
+        "bytes": 1961,
+        "sha256": "d45c0bc2a2038385bb0eb0b282fcee029297bfff659a0ee658a0f3a45c146fbd"
+      },
+      {
+        "path": "examples/shader-emboss/generate-effect.cjs",
+        "bytes": 3555,
+        "sha256": "567d5de055d69ba48c9a2bea765d92cc85a26aad0f377f4a3c4afacffd2725fa"
+      },
+      {
+        "path": "examples/shader-emboss/example.json",
+        "bytes": 6463,
+        "sha256": "e6c4c1e2579ea03338e1fc1f5f33ab95240338566b94863731baaffda799f56d"
+      },
+      {
+        "path": "examples/shader-emboss/README.md",
+        "bytes": 3019,
+        "sha256": "4fb0cffaa6e9ba552cc3b6ff79005bc42d81ccc47d56b8654d6447ac75403057"
+      },
+      {
+        "path": "examples/shader-emboss/UPSTREAM.md",
+        "bytes": 3428,
+        "sha256": "d01bdbfa6d4864e92545b3605af6781a1a8ac3782c1e5179922e3cbdf3bd4550"
+      },
+      {
+        "path": "examples/shader-emboss/LICENSE.reference.txt",
+        "bytes": 14046,
+        "sha256": "2a98b03e714cfe43624ef3656d986edf0a71728f8363603253db691db41b9cce"
+      },
+      {
+        "path": "examples/shared/shader-blocks.js",
+        "bytes": 8627,
+        "sha256": "31e9577ae7f99a740f3053550435c78278b644c466397f6b2588c3404e4b22ab"
+      },
+      {
+        "path": "tools/verify/shaders-emboss-oracle.cjs",
+        "bytes": 18482,
+        "sha256": "004054d92de8f05559a8130d6aff58ef7e8569048ae3213803a0f79371c5c68e"
+      },
+      {
+        "path": "tools/verify/shaders-emboss-browser.cjs",
+        "bytes": 59181,
+        "sha256": "379102e2133880a32e8abf3b53586a8132c1ae39be6f515a6ed0da3776ca3d41"
+      },
+      {
+        "path": "tools/verify/shaders-native-reset-capture.cjs",
+        "bytes": 2706,
+        "sha256": "cf68f9371858f12f181119e8d0856e24092dda984b3002da42f30d972531b17e"
+      },
+      {
+        "path": "tools/verify/shaders-emboss.tsconfig.json",
+        "bytes": 414,
+        "sha256": "a13c936bdadafc174bd0a71dba4f74c92626283bb629feec89c0eb2e66c9b42e"
+      },
+      {
+        "path": "tools/verify/shaders-emboss-performance.cjs",
+        "bytes": 5782,
+        "sha256": "d5f0491ef13ae93d45efec6f71ed0bdcae541d98c42cb037e49b2b0996fdf6fd"
+      },
+      {
+        "path": "tools/verify/shaders-browser-environment.cjs",
+        "bytes": 10656,
+        "sha256": "bc39fdb9222b9b95a5b8d7217462d7c79ab488d23417d465e2aab0fee4e35337"
+      },
+      {
+        "path": "tools/verify/shaders-browser-launch.cjs",
+        "bytes": 2797,
+        "sha256": "3e5a4bc54834f9688994b446346ac58aca10c1936e88a1f932531fb75c81fc87"
+      },
+      {
+        "path": "tools/verify/browser-engines.cjs",
+        "bytes": 2159,
+        "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+      },
+      {
+        "path": "tools/verify/competitive-example-server.cjs",
+        "bytes": 1923,
+        "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+      },
+      {
+        "path": "tools/verify/shaders-effect-contract.cjs",
+        "bytes": 37563,
+        "sha256": "e1eb1a21b1167ab7d5dab8d7cf21fa214a44b23efa9d62f83a75d08d3d7c2ab3"
+      },
+      {
+        "path": "examples/shared/shader-lifecycle.ts",
+        "bytes": 10021,
+        "sha256": "6b28d2b0afea13e947ee371ba5dcef7d3d91f6ab847a0a79d51cf1e7982cd4d9"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.js",
+        "bytes": 5595,
+        "sha256": "c2bc01e8c73ab866f11194fc802bb8ce464b3738bfecf8d30cf5967907e5e346"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.d.ts",
+        "bytes": 1045,
+        "sha256": "34d5cc8469ea05a17f7cee6bf287d0c473cb0daaf50adfd6c49454fb68ef19cb"
+      },
+      {
+        "path": "build/cocosair.module.js",
+        "bytes": 6649186,
+        "sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc"
+      },
+      {
+        "path": "build/cocosair.module.d.ts",
+        "bytes": 3303581,
+        "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+      },
+      {
+        "path": "build/npm/cocosair.module.js",
+        "bytes": 6649142,
+        "sha256": "b7771393b2de0dcc84422b07f4df0703a63d609b3ea8443907cee2f4f4182ab9"
+      }
+    ],
+    "reference": {
+      "repo": "shader-effects-inc/shaders",
+      "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/shaders/Emboss/index.ts",
+          "bytes": 5113,
+          "sha256": "ff31f6250a9abebfeca5e1bfb87ffebbc8517f8dd2d747de833821be5e3fa5df"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/effects/emboss.ts",
+          "bytes": 10984,
+          "sha256": "f93f0de4d86dab9272f95ac600ef5fa7e0f212e6e4f61b7f81187fc32ad25df7"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/effects/glass.ts",
+          "bytes": 22432,
+          "sha256": "180cb03fa58712632cb4cd6a12257543a0b2a0713647694e9029c49180c69acf"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/blend.ts",
+          "bytes": 12933,
+          "sha256": "0c5156d535da07f04aef5b9b5b063ed6e5607e5c8822a98708eb86d4ece1a538"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/std/paint/materials.ts",
+          "bytes": 57681,
+          "sha256": "7cb6e03cf96c26cd71ad9442002d2f642d301770e62ec08fbcfe33e86a359782"
+        }
+      ]
+    }
+  },
+  "audit": {
+    "path": "docs/evidence/shaders-absorption/e05-emboss-current-sdk-r2-actual-audit.json",
+    "bytes": 45126,
+    "sha256": "655b701a85cf83c378f7ee8969f21afdf280a5dd48225a6188d2e546fc85f12e"
+  },
+  "historicalAttempts": [
+    {
+      "status": "FAIL",
+      "classification": "AGENT_FAILURE",
+      "report": {
+        "path": "output/shaders-absorption/lead-w2-e05-functional-attempt1.json",
+        "bytes": 1798769,
+        "sha256": "1b85bab84b93c828a963a3b096255bc2e272a8a8ff3c9472ce39a0d491ecc1ee"
+      },
+      "receipt": {
+        "path": "output/shaders-absorption/lead-w2-e05-functional-attempt1-os.json",
+        "bytes": 631,
+        "sha256": "9077d8529f9fa9dcfad89ae75d26357883ce7560cc591108008a220dda2171e4"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w2-e05-functional-attempt1.log",
+        "bytes": 1105,
+        "sha256": "3efffb02b84befb93a448e9ac19103cecaf81158e9f9714019f15f10c621c92c"
+      },
+      "compensation": {
+        "path": "output/shaders-absorption/lead-w2-e05-functional-attempt2.json",
+        "bytes": 5339530,
+        "sha256": "0cae0d4c7e67bec4564d693a8cff1849a4dc02602dbe7e77464b190e57059a4a"
+      }
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w2-e05-functional-attempt2.json",
+        "bytes": 5339530,
+        "sha256": "0cae0d4c7e67bec4564d693a8cff1849a4dc02602dbe7e77464b190e57059a4a"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w2-e05-functional-attempt2-os.json",
+        "bytes": 626,
+        "sha256": "19d2fc785f1586b74532dc5f448ed72352da55485e73d6836ce548f33c550410"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w2-e05-functional-attempt2.log",
+        "bytes": 2543,
+        "sha256": "521e8140a328a5b6ee44173d16747483f76cc864f37ee52fccccd20e21b0167e"
+      },
+      "reason": "Previous SDK frozen subset; historical, not current PASS"
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w2-e05-performance-attempt1.json",
+        "bytes": 10184142,
+        "sha256": "9b24c0b3fe0ef62d1bba93de73bdcddaf9eb8f773b48482774a17398ec03c331"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w2-e05-performance-attempt1-os.json",
+        "bytes": 679,
+        "sha256": "ac2f770f0d857cdbf2a88302db73d07a5309b59e5682f7343b6dfdfacd37a8cb"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w2-e05-performance-attempt1.log",
+        "bytes": 105,
+        "sha256": "33c8725e22ab6b20d5372ca0dd064f737159e122b63b214afd95b2706b028958"
+      },
+      "reason": "Previous SDK frozen subset; historical, not current PASS"
+    }
+  ],
+  "limitations": [
+    "Only two analytic shapes, not upstream volumetric/SDF texture platform",
+    "Child native RTT stores premultiplied RGBA8; safe unpremultiply precedes straight lighting. Preview blends encoded RGBA8; not physically linear compositing",
+    "Desktop mobile profile is emulated, not physical iPhone evidence",
+    "Windows WebKit uses shader-scoped accelerated-compositing launch option",
+    "GPU memory is unavailable; engine counters and native GL object counts have separate scopes",
+    "Performance is diagnostic, not a cross-browser hardware ranking",
+    "Gallery lifecycle hook is implemented; this gate proves example-native cycles, not a separate Gallery harness run",
+    "Full Wave2 and independent Agent Gate remain NOT_RUN"
+  ],
+  "refresh": {
+    "executionChannel": "Lead",
+    "reason": "Current SDK recollection and native-reset observation timing correction",
+    "historicalGate": {
+      "path": "docs/evidence/shaders-absorption/e05-emboss-current-gate.json",
+      "bytes": 50056,
+      "sha256": "8968fa0aa553825dc1d7c50f99eb94589529ac02233d2cd3f7821622f2cdf275"
+    }
+  },
+  "counts": {
+    "engines": 3,
+    "dimensionRows": 18,
+    "visualCases": 39,
+    "boundaryCases": 120,
+    "malformedAtomicRejections": 18,
+    "resourceCycles": 300,
+    "liveResize": 3,
+    "screenshots": 42,
+    "performanceProfiles": 9
+  },
+  "sdk": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303581,
+      "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6649142,
+      "sha256": "b7771393b2de0dcc84422b07f4df0703a63d609b3ea8443907cee2f4f4182ab9"
+    }
+  ],
+  "verifier": {
+    "path": "tools/verify/shaders-wave2-gate.cjs",
+    "bytes": 10705,
+    "sha256": "55a05f922f150ffa86e1d54ab13462de3aac31ae508eec8750aac42e74a2a6e1"
+  }
+}

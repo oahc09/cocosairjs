@@ -1,0 +1,117 @@
+{
+  "schemaVersion": "shaders-wave-gate/1",
+  "wave": 0,
+  "status": "PASS",
+  "recordedAt": "2026-10-09T00:15:15.994Z",
+  "executionChannel": "Lead",
+  "baselineOnly": true,
+  "effectEngineGates": "NOT_RUN",
+  "agentGate": "NOT_RUN",
+  "components": [
+    {
+      "id": "provenance",
+      "executionChannel": "native subagent shader_wave0_upstream",
+      "status": "PASS",
+      "originalFiles": 59,
+      "ancestorSnapshots": 5,
+      "directFiHashDerivation": "BLOCKED_IN_THIS_PLAN",
+      "allowedRoutes": [
+        "MaterialX/OSL with retained notices",
+        "independent algorithm with disclosed differences"
+      ]
+    },
+    {
+      "id": "contract",
+      "executionChannel": "native subagent shader_wave0_contract + Lead focused verification",
+      "status": "PASS",
+      "jestTests": 30,
+      "nodeSelftests": 8,
+      "leadIndependentSyntheticChecks": 10,
+      "syntheticOnly": true
+    },
+    {
+      "id": "capabilities",
+      "executionChannel": "native subagent shader_wave0_capabilities",
+      "status": "PASS",
+      "artifactAndSourceInputs": 42,
+      "currentIdentityRecheckedBy": "Lead",
+      "sourceMapEmbeddedMatches": {
+        "dev": 905,
+        "min": 905
+      },
+      "limitation": "Static declarations/embedded source identity are not effect verification."
+    },
+    {
+      "id": "runtimePreflight",
+      "executionChannel": "Lead",
+      "status": "PASS",
+      "actualRows": 9,
+      "path": "docs/evidence/shaders-absorption/wave0-runtime-preflight.json",
+      "effectProof": false
+    }
+  ],
+  "identities": [
+    {
+      "path": "docs/effects/upstream-index.md",
+      "bytes": 26792,
+      "sha256": "16e25b1fcf1b7ac9c033d1f8aba1b01db6fd56605911aec47da8ead9ed9b653e"
+    },
+    {
+      "path": "docs/effects/upstream-reference.json",
+      "bytes": 69695,
+      "sha256": "6c0888e7dd135bc62b9abbb6fc25ad39251f62f5b1b52078500e591b3f8076b8"
+    },
+    {
+      "path": "docs/effects/upstream-LICENSE.txt",
+      "bytes": 14046,
+      "sha256": "2a98b03e714cfe43624ef3656d986edf0a71728f8363603253db691db41b9cce"
+    },
+    {
+      "path": "docs/effects/effect-contract.md",
+      "bytes": 12148,
+      "sha256": "d90cead38e129085246b01c4241f21ea4481dddfcb4342393736f6c9445ddde4"
+    },
+    {
+      "path": "tools/verify/shaders-effect-contract.cjs",
+      "bytes": 37563,
+      "sha256": "e1eb1a21b1167ab7d5dab8d7cf21fa214a44b23efa9d62f83a75d08d3d7c2ab3"
+    },
+    {
+      "path": "tools/verify/shaders-effect-contract.d.ts",
+      "bytes": 4544,
+      "sha256": "f85f926c61ff5aa0e334869f69fe083e77b08b75cc72b4067894726662ecd2df"
+    },
+    {
+      "path": "test/smoke/shaders-effect-contract.test.ts",
+      "bytes": 19787,
+      "sha256": "2af710069973409d4e073641696d4a2299f1e24abd9ffb67ee8558a0518ed22e"
+    },
+    {
+      "path": "docs/effects/capability-baseline.md",
+      "bytes": 44979,
+      "sha256": "4ae05cd83d9565288a01c8f70e63e909f4786895290c7a4784b378b7f2044352"
+    },
+    {
+      "path": "docs/effects/capability-baseline.json",
+      "bytes": 92451,
+      "sha256": "37db323894378935ff29f6d15443f2d7066378ba4fa3828eea73389728c39159"
+    },
+    {
+      "path": "tools/verify/shaders-runtime-preflight.cjs",
+      "bytes": 7614,
+      "sha256": "d5dd0519616cd2aad0653c44db494139b1cb3be7f94ed2d0e5ad0edf89373b6c"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/wave0-runtime-preflight.json",
+      "bytes": 17838,
+      "sha256": "758ceffc39809de9e7c27aeaa70dfb550faa1eddc26a354ebdb4a34860bd669b"
+    }
+  ],
+  "limitations": [
+    "No upstream runtime or TypeGPU executed or embedded.",
+    "Wave0 PASS authorizes Wave1 implementation only; all nine effect six-dimensional gates remain NOT_RUN.",
+    "Fi-hash direct derivation excluded; notices required for MaterialX/OSL derivation.",
+    "Agent Benchmark not run, no isolated Agent success claim."
+  ],
+  "nextWave": 1
+}

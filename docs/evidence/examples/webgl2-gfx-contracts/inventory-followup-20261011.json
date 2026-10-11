@@ -1,0 +1,1783 @@
+{
+  "schema": "webgl2-gfx-test-inventory-followup/1",
+  "measuredAt": "2026-10-11T05:04:15.818Z",
+  "scope": "Real per-suite/batch Jest diagnostic execution with bounded retries; not a PASS from the original test-inventory entry",
+  "completedDiagnosticAttempts": true,
+  "passed": false,
+  "releaseReady": false,
+  "totals": {
+    "discovered": 170,
+    "completedSuites": 169,
+    "passedSuites": 167,
+    "failedSuites": 2,
+    "unresolvedSuites": 1,
+    "tests": 2463,
+    "passed": 2458,
+    "failed": 5,
+    "pending": 0
+  },
+  "rawAggregate": {
+    "file": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/aggregate.json",
+    "sha256": "05fa8066df96e24db81d73b5c956f764abb372e20b88d0fbda140cf086b18a4c"
+  },
+  "manifest": {
+    "file": "docs/test-inventory.json",
+    "sha256": "c1e0136590b8110ff9edc6c33f0f3250657e2bd40ef8399eacaad975e2cc36b2",
+    "registered": 169,
+    "preservedGeneratedAt": "2026-10-10T04:08:22.761Z",
+    "titleDrift": []
+  },
+  "suites": [
+    {
+      "file": "test/smoke/shaders-film-neon-acceptance.test.ts",
+      "currentSha256": "a001461039f74d3c1e2de9ce9a9a7093c582d8ae6394588903e9e7cbc6e961d4",
+      "observedSourceSha256": "a001461039f74d3c1e2de9ce9a9a7093c582d8ae6394588903e9e7cbc6e961d4",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 40,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/shaders-film-neon-acceptance-cached.json",
+      "reportSha256": "42a9187c53f61f18cdcde5b17a33280252ee920cad3168f8f498fb513b1c4a22"
+    },
+    {
+      "file": "test/smoke/shaders-film-neon-review.test.ts",
+      "currentSha256": "3faeabfe36d6c5fbf9802e1d4419122ba20519d803682cb1eda74921e5c4e149",
+      "observedSourceSha256": "3faeabfe36d6c5fbf9802e1d4419122ba20519d803682cb1eda74921e5c4e149",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 44,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/shaders-film-neon-review.json",
+      "reportSha256": "0f205f531f8dc642a45ca9f3a23f84403b95c01232db87704e6803471bf6b381"
+    },
+    {
+      "file": "test/smoke/shaders-film-neon.test.ts",
+      "currentSha256": "1e46cfb12bbfb7f30d9ce77ee78dcd869375f626aa3fc9b67e0c5c06697635e5",
+      "observedSourceSha256": "1e46cfb12bbfb7f30d9ce77ee78dcd869375f626aa3fc9b67e0c5c06697635e5",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 47,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/shaders-film-neon.json",
+      "reportSha256": "91e6212c6ab5f6869a77bcdba79b88e0ff0eb5836b2128465e76d743252863f6"
+    },
+    {
+      "file": "test/smoke/shaders-glass-trail-acceptance.test.ts",
+      "currentSha256": "d9db8f7dfdbdb3794b388523b81772f33d7a8dccbe5f69c5f727c7b47ec080db",
+      "observedSourceSha256": "d9db8f7dfdbdb3794b388523b81772f33d7a8dccbe5f69c5f727c7b47ec080db",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 33,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/shaders-glass-trail-acceptance.json",
+      "reportSha256": "3ef470d308ea99953f63ac6a1aa27857cff13c3e3f73be61b6ed02624dbf475f"
+    },
+    {
+      "file": "test/smoke/shaders-glass-trail-contract-review.test.ts",
+      "currentSha256": "95ec6087957f26c1ee883f4f7c770bacd46d5b399b83e2886c125760d6f036b7",
+      "observedSourceSha256": "95ec6087957f26c1ee883f4f7c770bacd46d5b399b83e2886c125760d6f036b7",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/shaders-glass-trail-contract-review.json",
+      "reportSha256": "4d54643ab5b91594fb7b10bd81c38f8d7c1dfefd14c81615143abd86f297f2f1"
+    },
+    {
+      "file": "test/smoke/shaders-glass-trail-full-report.test.ts",
+      "currentSha256": "18931fd17690fdd4cc8d975c0e73df5427e3600801f82be23d1e6fcb281a3fb6",
+      "observedSourceSha256": "3b0b4dd06d39f30737dedeb73bb4e1bb1900bcafe31488f40d7be2d21bab48a5",
+      "currentExecutionIdentityMatches": false,
+      "status": "UNKNOWN_CURRENT",
+      "tests": null,
+      "report": null,
+      "reportSha256": null
+    },
+    {
+      "file": "test/smoke/shaders-glass-trail-review.test.ts",
+      "currentSha256": "c57a30cc6264d4c399825f47a42c00d7153f854c18c08de1f559aea9300c13c3",
+      "observedSourceSha256": "c57a30cc6264d4c399825f47a42c00d7153f854c18c08de1f559aea9300c13c3",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 6,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/shaders-glass-trail-review.json",
+      "reportSha256": "710dbdddb067c3978c883e8c9cc568972ff4ee4370deed32261ce5ad233bc21b"
+    },
+    {
+      "file": "test/smoke/shaders-glass-trail.test.ts",
+      "currentSha256": "0f06f99f17e26f737b32be5d88f3db5d4cef234770d12c64002a768ff2e353cb",
+      "observedSourceSha256": "0f06f99f17e26f737b32be5d88f3db5d4cef234770d12c64002a768ff2e353cb",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 10,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/shaders-glass-trail.json",
+      "reportSha256": "5479c3a733d03b0105c7ab0a3b434f92fdfe3a3fa10ade6db97817abaf912cea"
+    },
+    {
+      "file": "test/smoke/shaders-laser-card-acceptance.test.ts",
+      "currentSha256": "950cbc8224faec5289435f3d5aad2bf2a20b52f4b38f132cc283fab443e6289b",
+      "observedSourceSha256": "950cbc8224faec5289435f3d5aad2bf2a20b52f4b38f132cc283fab443e6289b",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 51,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/shaders-laser-card-acceptance-cached.json",
+      "reportSha256": "91b9515c2cbec7cccde95d5a3ba3ebb34e5af14c32954fa7531736765e07a3a2"
+    },
+    {
+      "file": "test/smoke/shaders-laser-card-review.test.ts",
+      "currentSha256": "c752ac8f727a0888b3b3a77261e7db3ddd6920ac6ae26ff0448c0d068ba98f95",
+      "observedSourceSha256": "c752ac8f727a0888b3b3a77261e7db3ddd6920ac6ae26ff0448c0d068ba98f95",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 28,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/shaders-laser-card-review.json",
+      "reportSha256": "d5d26ddf8157d0e0aa6627ea404290835a1879fa484a650d10b5de06e0b48ed1"
+    },
+    {
+      "file": "test/smoke/shaders-laser-card.test.ts",
+      "currentSha256": "cce39bb9f4484099105170e1ca5c44765749a12019bb8de8cab78a6fd2eab7e7",
+      "observedSourceSha256": "cce39bb9f4484099105170e1ca5c44765749a12019bb8de8cab78a6fd2eab7e7",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 26,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/shaders-laser-card.json",
+      "reportSha256": "5d02d4c750b8e4671de569d2ed2331d6937735df70730020b778b70c611603aa"
+    },
+    {
+      "file": "test/smoke/air-dom-texture-blend.test.ts",
+      "currentSha256": "4ded89f959aba2443c568f1d00227afb6574560e342c4e13576467afa725aa72",
+      "observedSourceSha256": "4ded89f959aba2443c568f1d00227afb6574560e342c4e13576467afa725aa72",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/air-dom-texture-blend.json",
+      "reportSha256": "3a942d2f81e102c4e62c2149dedb15416ef503165a2d2f992ccea5131755a9b2"
+    },
+    {
+      "file": "test/smoke/air-graphics-commands.test.ts",
+      "currentSha256": "30505b993c1aa621e0ed6f70619c8370e99a49d036635c8e973613e27d67cdcf",
+      "observedSourceSha256": "30505b993c1aa621e0ed6f70619c8370e99a49d036635c8e973613e27d67cdcf",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 9,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/air-graphics-commands.json",
+      "reportSha256": "36b3bebc3309820b11fdb52ba11dbbf7a3cf1ead5b1d1f71349236150a52e273"
+    },
+    {
+      "file": "test/smoke/air-html-source.test.ts",
+      "currentSha256": "b900f9c854b89aa9ad218171cded90ce274c47f567b358916043cdcf7c544dcf",
+      "observedSourceSha256": "b900f9c854b89aa9ad218171cded90ce274c47f567b358916043cdcf7c544dcf",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 2,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/air-pipeline-snapshot.test.ts",
+      "currentSha256": "f2a065a0fac14aff8b23a0c896e0efa487236298ac0cb98a96b7625a28934601",
+      "observedSourceSha256": "f2a065a0fac14aff8b23a0c896e0efa487236298ac0cb98a96b7625a28934601",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 1,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-api-tail.test.ts",
+      "currentSha256": "31355937d12530cda55bde839aa867bae86a2e23a7ef1aa5ef32603301c6aaa3",
+      "observedSourceSha256": "31355937d12530cda55bde839aa867bae86a2e23a7ef1aa5ef32603301c6aaa3",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-asset-lifecycle-contract.test.ts",
+      "currentSha256": "d2c26af79b772fdaf0bd37578dfe8d3fd58cd597f22a1de50b31a6bc605dee3b",
+      "observedSourceSha256": "d2c26af79b772fdaf0bd37578dfe8d3fd58cd597f22a1de50b31a6bc605dee3b",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-batching-gate.test.ts",
+      "currentSha256": "25ccc1bec3fade83cd26f0b281809b9a20de46f6d7c82150890e9132df477845",
+      "observedSourceSha256": "25ccc1bec3fade83cd26f0b281809b9a20de46f6d7c82150890e9132df477845",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 14,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-black-hole-state.test.ts",
+      "currentSha256": "84e1d06119d962035a82d605551121f33959ddceabefb0978444cacf5f3e1a9f",
+      "observedSourceSha256": "84e1d06119d962035a82d605551121f33959ddceabefb0978444cacf5f3e1a9f",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-bootstrap-contract.test.ts",
+      "currentSha256": "25bdad9ff5e8a7c8b13689530fe02cd7fbfecb29f885a46d440c755bee1096ab",
+      "observedSourceSha256": "25bdad9ff5e8a7c8b13689530fe02cd7fbfecb29f885a46d440c755bee1096ab",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 2,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-capability-evidence.test.ts",
+      "currentSha256": "9d882447be64b78646f52a132f17fcbb53c1c9f2fe10ddc9493f455e6cf3d619",
+      "observedSourceSha256": "9d882447be64b78646f52a132f17fcbb53c1c9f2fe10ddc9493f455e6cf3d619",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 4,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-early-effect.test.ts",
+      "currentSha256": "c42c340bc1e438837d10ba5dd838f621b80faf5b7e76f464e6a74109a58532c8",
+      "observedSourceSha256": "c42c340bc1e438837d10ba5dd838f621b80faf5b7e76f464e6a74109a58532c8",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-effect-generator.test.ts",
+      "currentSha256": "45814d58019338aab72f52a147c57c3d2facbba669ba6b584b4ccadc4aeb1390",
+      "observedSourceSha256": "45814d58019338aab72f52a147c57c3d2facbba669ba6b584b4ccadc4aeb1390",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 8,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-gltf-animation-contract.test.ts",
+      "currentSha256": "f542f74ee0f9a9e4b75032092303c154d6823499623a557f49080627f472dc40",
+      "observedSourceSha256": "f542f74ee0f9a9e4b75032092303c154d6823499623a557f49080627f472dc40",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-input-contract.test.ts",
+      "currentSha256": "26ba66f894b969f7cb6f289158ebb695b9858da57c639cea28215d16f0c7bfd4",
+      "observedSourceSha256": "26ba66f894b969f7cb6f289158ebb695b9858da57c639cea28215d16f0c7bfd4",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 12,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-01.json",
+      "reportSha256": "d65dbe0ec8cf420a63dd1711d7c7a9e32d78b4c748bd26adf681522890fde217"
+    },
+    {
+      "file": "test/smoke/competitive-loopback-browser-env.test.ts",
+      "currentSha256": "1b021f193b20a5aba2839efae185a4da3382e70d2666dc2f6e1e95df0d7fa1b1",
+      "observedSourceSha256": "1b021f193b20a5aba2839efae185a4da3382e70d2666dc2f6e1e95df0d7fa1b1",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/competitive-matrix-probe.test.ts",
+      "currentSha256": "3aa58ec2117c4dfdb7d8db258bdab8a963b0be5c6b28b672c44372d11e310e3e",
+      "observedSourceSha256": "3aa58ec2117c4dfdb7d8db258bdab8a963b0be5c6b28b672c44372d11e310e3e",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/competitive-orbit-controls.test.ts",
+      "currentSha256": "5a6eba684c39f38c770489d452a2cd645063d0076facbf65b1c39c6c9029d731",
+      "observedSourceSha256": "5a6eba684c39f38c770489d452a2cd645063d0076facbf65b1c39c6c9029d731",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 4,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/competitive-point-topology.test.ts",
+      "currentSha256": "a4f082972814e57f10f09d193c207e9c8e989501ae8e26d932353cd704d9cc59",
+      "observedSourceSha256": "a4f082972814e57f10f09d193c207e9c8e989501ae8e26d932353cd704d9cc59",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 6,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/competitive-probe-ranges.test.ts",
+      "currentSha256": "3e9c382778adfdd29d6cf6b03101045cb6e8972a797dbce02dcb7486057e3e9d",
+      "observedSourceSha256": "3e9c382778adfdd29d6cf6b03101045cb6e8972a797dbce02dcb7486057e3e9d",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 22,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/competitive-source-closure.test.ts",
+      "currentSha256": "98b980184cc0a84dfdfe64d8be586cc3e74834b2b5ae1c82e0cd771b2badcb06",
+      "observedSourceSha256": "98b980184cc0a84dfdfe64d8be586cc3e74834b2b5ae1c82e0cd771b2badcb06",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 2,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/competitive-uniform-contract.test.ts",
+      "currentSha256": "6d3cc8eb3e75f41b2fde32a7cef595f5a63f458dc248e81e5be18069f26ff624",
+      "observedSourceSha256": "6d3cc8eb3e75f41b2fde32a7cef595f5a63f458dc248e81e5be18069f26ff624",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 21,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/competitive-unlit-fog.test.ts",
+      "currentSha256": "850d720ec62eed96f103d62d116baf551c9c75408e6e703ee6f199b020ff7417",
+      "observedSourceSha256": "850d720ec62eed96f103d62d116baf551c9c75408e6e703ee6f199b020ff7417",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/engine-contract-inspection.test.ts",
+      "currentSha256": "44d7822fa8208532afcc496322ae9546cc0696b92c117dab42d4f4ac1f640920",
+      "observedSourceSha256": "44d7822fa8208532afcc496322ae9546cc0696b92c117dab42d4f4ac1f640920",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 4,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/engine-contract-mesh.test.ts",
+      "currentSha256": "5761def1b64bb596d85cf2b44a80ea9467ce8acccb00bd3c105f5a2165e0ed08",
+      "observedSourceSha256": "5761def1b64bb596d85cf2b44a80ea9467ce8acccb00bd3c105f5a2165e0ed08",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/engine-contract-state.test.ts",
+      "currentSha256": "b2ff567b1612c6ecf94be9bfa7b49fe325696f2bcf7819e73d5067c1549c7c6c",
+      "observedSourceSha256": "b2ff567b1612c6ecf94be9bfa7b49fe325696f2bcf7819e73d5067c1549c7c6c",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/interactive-color-compare.test.ts",
+      "currentSha256": "fa19d5f4b3f75dae155afe87bef0280329c2540a866ed97501e35665a82e61db",
+      "observedSourceSha256": "fa19d5f4b3f75dae155afe87bef0280329c2540a866ed97501e35665a82e61db",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 8,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-02.json",
+      "reportSha256": "3c6b02a4329b8481c7f7248bdcb58d2d0922b6b8f53a712e23c05c20b72cc923"
+    },
+    {
+      "file": "test/smoke/interactive-container.test.ts",
+      "currentSha256": "373df1a7fedd773e3730ca6f36f5c0e6f63ac32ac78ea6f06ef937b4e84d8fe0",
+      "observedSourceSha256": "373df1a7fedd773e3730ca6f36f5c0e6f63ac32ac78ea6f06ef937b4e84d8fe0",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 17,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-container.json",
+      "reportSha256": "89ec498ab92a8c4d1d61c5802438bc57e2f70879b7e4423e63f0f2278c58b6fd"
+    },
+    {
+      "file": "test/smoke/interactive-diagnostics.test.ts",
+      "currentSha256": "fd85781146483a6ac5982398bf3d7bb5d6d0cd7e01e7ca623f28cb2493838c63",
+      "observedSourceSha256": "fd85781146483a6ac5982398bf3d7bb5d6d0cd7e01e7ca623f28cb2493838c63",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 4,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-diagnostics.json",
+      "reportSha256": "4b248df26056377d58b56bd9f83c12577b9a3a3c7e31cc5abebbaee8b4220294"
+    },
+    {
+      "file": "test/smoke/interactive-geometry-review.test.ts",
+      "currentSha256": "2b5bf369f09b5ee6ce76e615437e4e0bc5abdaff74b758bb1022c21a3988a1ff",
+      "observedSourceSha256": "2b5bf369f09b5ee6ce76e615437e4e0bc5abdaff74b758bb1022c21a3988a1ff",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 18,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-geometry-review.json",
+      "reportSha256": "4788f2d0763297399592a59a47a64786f0d3b34ac163ba7b9818066dbf296e58"
+    },
+    {
+      "file": "test/smoke/interactive-geometry.test.ts",
+      "currentSha256": "fbb289a3d6382c46c08b68f99c1dde5dc62a4873d44f612647cdbe60d812d8e9",
+      "observedSourceSha256": "fbb289a3d6382c46c08b68f99c1dde5dc62a4873d44f612647cdbe60d812d8e9",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 33,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-geometry.json",
+      "reportSha256": "e1cb7f161b6d9716ce12ea0aa5589b63dafaa9a074d41247706fa92e94222b8d"
+    },
+    {
+      "file": "test/smoke/interactive-improvement-baseline.test.ts",
+      "currentSha256": "a993bf6522b99ebeef746e8262e725439d604c485443df7630bbede9f6776e38",
+      "observedSourceSha256": "a993bf6522b99ebeef746e8262e725439d604c485443df7630bbede9f6776e38",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 27,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-improvement-baseline.json",
+      "reportSha256": "e0dc39891c3fbe94d8541444adecdbbbc212951cade5b2cbd3a45d2bb962523c"
+    },
+    {
+      "file": "test/smoke/interactive-improvement-browser.test.ts",
+      "currentSha256": "5ed380e690020dfb188dd9e2426c0b2bd044b2bf941687b2610a3b08fd8f7c57",
+      "observedSourceSha256": "5ed380e690020dfb188dd9e2426c0b2bd044b2bf941687b2610a3b08fd8f7c57",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 10,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-improvement-browser.json",
+      "reportSha256": "b001d3f7520a249d0a33a3eb09b9cb40eba50ef3c8070b877c4b73a574224c75"
+    },
+    {
+      "file": "test/smoke/interactive-improvement-review.test.ts",
+      "currentSha256": "ab4afc0e12a7ca94fd695d7869198779a48c0489fd7a7347879ab1f8dd4d6c3d",
+      "observedSourceSha256": "ab4afc0e12a7ca94fd695d7869198779a48c0489fd7a7347879ab1f8dd4d6c3d",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 15,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-improvement-review.json",
+      "reportSha256": "4b2417f31e0e1dfcd8eb9e83022a9cfbe56bd3f07efa1b839f0806ac2fca69ec"
+    },
+    {
+      "file": "test/smoke/interactive-input.test.ts",
+      "currentSha256": "6f5e5b99b939fa8dcfa540b9811d7a37daa7b27553a96649626b31361cd386bc",
+      "observedSourceSha256": "6f5e5b99b939fa8dcfa540b9811d7a37daa7b27553a96649626b31361cd386bc",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 26,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-input.json",
+      "reportSha256": "3a199431b156fbc6d032fe5d9ae4af924b5e40b6d3de02153afcfd256889191c"
+    },
+    {
+      "file": "test/smoke/interactive-kit.test.ts",
+      "currentSha256": "6930716dad41410373b9e3c533266718397f09ff3b66570bc69f4ae5b0a697ae",
+      "observedSourceSha256": "6930716dad41410373b9e3c533266718397f09ff3b66570bc69f4ae5b0a697ae",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-kit.json",
+      "reportSha256": "ac6289933a1a8dcd936f66959430a75de7925e026bc26a5d4e75607a1c0d1e7a"
+    },
+    {
+      "file": "test/smoke/interactive-multipass-review.test.ts",
+      "currentSha256": "a47b29cb4fd19c822a6d7f9d4e6264ad02cc829912f7ae02487000734a9f80fe",
+      "observedSourceSha256": "a47b29cb4fd19c822a6d7f9d4e6264ad02cc829912f7ae02487000734a9f80fe",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-multipass-review.json",
+      "reportSha256": "1dd39ffb0650a72388b5c63a16336383198ed9d8377ad7de2744c26d7b90cc36"
+    },
+    {
+      "file": "test/smoke/interactive-multipass.test.ts",
+      "currentSha256": "2219da3ff4f70c2841c966336df2a525e016ff0307fba2e9b40d71068ac4d83d",
+      "observedSourceSha256": "2219da3ff4f70c2841c966336df2a525e016ff0307fba2e9b40d71068ac4d83d",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 22,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/interactive-multipass-long-budget.json",
+      "reportSha256": "b41ff58c350293917a364b15bafbbbd71e76d3258a5b3bee8bda1cfcdd808e80"
+    },
+    {
+      "file": "test/smoke/interactive-performance.test.ts",
+      "currentSha256": "fec093f1dd482fc0446cecb79c393e75cfb061a08467439bbea652475d03b4a7",
+      "observedSourceSha256": "fec093f1dd482fc0446cecb79c393e75cfb061a08467439bbea652475d03b4a7",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-03-retry-interactive-performance.json",
+      "reportSha256": "94e3cbfac6bb94e9fbabbc644db8ead9cd8b9eb72fef8461eefc2482f2cb30ec"
+    },
+    {
+      "file": "test/smoke/interactive-timeline-evidence.test.ts",
+      "currentSha256": "23a815ae6d3dd2df203f8110403be4a6d0169f590121d6fab79996e45231a1af",
+      "observedSourceSha256": "23a815ae6d3dd2df203f8110403be4a6d0169f590121d6fab79996e45231a1af",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 16,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/interactive-timeline.test.ts",
+      "currentSha256": "20b957494e28454074b873a013f8fd6decc9a4501b437d9e25137786e7e88cac",
+      "observedSourceSha256": "20b957494e28454074b873a013f8fd6decc9a4501b437d9e25137786e7e88cac",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 17,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/k0-r2-examples.test.ts",
+      "currentSha256": "f0f8e4fe9649b404ba8d36c0192f99403b1eab56039fb0abf5b49a341e5e39b7",
+      "observedSourceSha256": "f0f8e4fe9649b404ba8d36c0192f99403b1eab56039fb0abf5b49a341e5e39b7",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 9,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/k0-r2-native-contracts.test.ts",
+      "currentSha256": "3f9c4dc9c781a3abcce3766a76b01243587f4187370f7f957a1355a66f78b251",
+      "observedSourceSha256": "3f9c4dc9c781a3abcce3766a76b01243587f4187370f7f957a1355a66f78b251",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 8,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/port-gap-action-input-dom.test.ts",
+      "currentSha256": "7feae1cc831fd83de674c3884edadabc86b3678e68458eb843499f55f4aca8fc",
+      "observedSourceSha256": "7feae1cc831fd83de674c3884edadabc86b3678e68458eb843499f55f4aca8fc",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 16,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/port-gap-action-input-native.test.ts",
+      "currentSha256": "f712592a83f60e50c7d2b95623dfe87496d3f95cc1271ff6becdf49c911f35ad",
+      "observedSourceSha256": "f712592a83f60e50c7d2b95623dfe87496d3f95cc1271ff6becdf49c911f35ad",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 9,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/port-gap-action-inspector.test.ts",
+      "currentSha256": "6c1d8fe2f65bf3f14eff2c23c86542b071d6a9910f547bcc01e7768eba94b8c9",
+      "observedSourceSha256": "6c1d8fe2f65bf3f14eff2c23c86542b071d6a9910f547bcc01e7768eba94b8c9",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/port-gap-action-multi-touch.test.ts",
+      "currentSha256": "13af4c8681cad835cdd7824346c1392e68d6156cc9e9a9f928c25561ab4f292d",
+      "observedSourceSha256": "13af4c8681cad835cdd7824346c1392e68d6156cc9e9a9f928c25561ab4f292d",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 1,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/port-gap-action-scope-integration.test.ts",
+      "currentSha256": "5331f5d23767ab4f364be785dd2dc13db907aed77cffbb476e35b1ac7442514f",
+      "observedSourceSha256": "5331f5d23767ab4f364be785dd2dc13db907aed77cffbb476e35b1ac7442514f",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 1,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/port-gap-action-source-ownership.test.ts",
+      "currentSha256": "3b4b798c8fb3bf2ecd9f0946cd361414260f3ba3ccb2af100513ff4092e73660",
+      "observedSourceSha256": "3b4b798c8fb3bf2ecd9f0946cd361414260f3ba3ccb2af100513ff4092e73660",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 2,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/port-gap-action-state.test.ts",
+      "currentSha256": "3b8f7733677cb0ae0f997e55354cbbc4afdb3041b820261fc25898f2c9fbaa7f",
+      "observedSourceSha256": "3b8f7733677cb0ae0f997e55354cbbc4afdb3041b820261fc25898f2c9fbaa7f",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 24,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/port-gap-asset-bank-races.test.ts",
+      "currentSha256": "43636b68ecef88aed1e1bb61cde64af9b94ebb8d565ba86fbf9c1722949ff10f",
+      "observedSourceSha256": "43636b68ecef88aed1e1bb61cde64af9b94ebb8d565ba86fbf9c1722949ff10f",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 8,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-04.json",
+      "reportSha256": "0158fe9e785cfea3aa6fd1093c53d6c3b485ff6f7ab03ac4bc2d14dc0ec2c82b"
+    },
+    {
+      "file": "test/smoke/port-gap-asset-bank.test.ts",
+      "currentSha256": "65ac67ebaf9f160c341ed741d42533e759f1c340f7b1e9161d36d7b1ae45312b",
+      "observedSourceSha256": "65ac67ebaf9f160c341ed741d42533e759f1c340f7b1e9161d36d7b1ae45312b",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 24,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-atlas-review.test.ts",
+      "currentSha256": "ae43db762274ade1173e437d8b94fd82020829108a6f37db8a0b84887675668f",
+      "observedSourceSha256": "ae43db762274ade1173e437d8b94fd82020829108a6f37db8a0b84887675668f",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 6,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-atlas.test.ts",
+      "currentSha256": "4e1aca89b701a199881bd5f978addbd456f93418e6e83b2d83d443c79ec1f1cd",
+      "observedSourceSha256": "4e1aca89b701a199881bd5f978addbd456f93418e6e83b2d83d443c79ec1f1cd",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 27,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-audio-service.test.ts",
+      "currentSha256": "4c1763bf197608407209c24edb1fa469d7f253c4c2d7d67fb40b80e390e7c656",
+      "observedSourceSha256": "4c1763bf197608407209c24edb1fa469d7f253c4c2d7d67fb40b80e390e7c656",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 1,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-bmfont.test.ts",
+      "currentSha256": "26b2ebb5028fa9157997ad8650797fccfb4e0d320a7e886bed9dd3d515fddf9e",
+      "observedSourceSha256": "26b2ebb5028fa9157997ad8650797fccfb4e0d320a7e886bed9dd3d515fddf9e",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 17,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-bootstrap-config.test.ts",
+      "currentSha256": "dab334090900426fdfccb7500ec3f221a27c1a5ad60000e30b6ba829fdcc3fb8",
+      "observedSourceSha256": "dab334090900426fdfccb7500ec3f221a27c1a5ad60000e30b6ba829fdcc3fb8",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-bootstrap-singleton.test.ts",
+      "currentSha256": "49d70d0dd54159520b1e94e8a7799c46710fe09def927d1e07389ea4b0302d60",
+      "observedSourceSha256": "49d70d0dd54159520b1e94e8a7799c46710fe09def927d1e07389ea4b0302d60",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-browser-evidence.test.ts",
+      "currentSha256": "4971e4eb96175ef7fb1ff29ad8ded5051e54a135cfc0079eafe48086c879c182",
+      "observedSourceSha256": "4971e4eb96175ef7fb1ff29ad8ded5051e54a135cfc0079eafe48086c879c182",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-diagnostics.test.ts",
+      "currentSha256": "c83e8b27591e74fc39c8c650b09bb24249b9db2ea31fd883fff11e0c5e87f144",
+      "observedSourceSha256": "c83e8b27591e74fc39c8c650b09bb24249b9db2ea31fd883fff11e0c5e87f144",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-effect-layout.test.ts",
+      "currentSha256": "98999ad5f2388bbee0dc283d2819fb4982ea48a2babebd37b13c91d06f530bc2",
+      "observedSourceSha256": "98999ad5f2388bbee0dc283d2819fb4982ea48a2babebd37b13c91d06f530bc2",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 8,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-evidence-tooling.test.ts",
+      "currentSha256": "14fe8e6911dd03a7121ffdfb8391744662e1f817a83e3087fa2ddbb208663ca1",
+      "observedSourceSha256": "14fe8e6911dd03a7121ffdfb8391744662e1f817a83e3087fa2ddbb208663ca1",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 29,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-initial-session-ownership.test.ts",
+      "currentSha256": "28c123561e344d536c499495fb5e7c4898bf3c769870a5747ac72a3278994952",
+      "observedSourceSha256": "28c123561e344d536c499495fb5e7c4898bf3c769870a5747ac72a3278994952",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 1,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-05.json",
+      "reportSha256": "1281618d5e8f099e27b70c81ef32db8c21591fed6c7203445cccd43e5631f323"
+    },
+    {
+      "file": "test/smoke/port-gap-input-inspector-boundaries.test.ts",
+      "currentSha256": "fb28e25a426157cbd94e8fa8089e1b956f4a09dfd5c28f9139650defbc5ea226",
+      "observedSourceSha256": "fb28e25a426157cbd94e8fa8089e1b956f4a09dfd5c28f9139650defbc5ea226",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 2,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-orthographic-width.test.ts",
+      "currentSha256": "706f36f977661f47364ecd76b9f4089c3ca4de86b0de48686fc0d265dae0ac69",
+      "observedSourceSha256": "706f36f977661f47364ecd76b9f4089c3ca4de86b0de48686fc0d265dae0ac69",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 6,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-primitive-descriptor.test.ts",
+      "currentSha256": "7979ec85c605dc8a8be77e87ea3cc81d5cec0e30870854ecde5b69f74216b425",
+      "observedSourceSha256": "7979ec85c605dc8a8be77e87ea3cc81d5cec0e30870854ecde5b69f74216b425",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 22,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-recipes.test.ts",
+      "currentSha256": "ea66b1b298b718cf692c269b0a92a257df77c1cf812b0426bfa9abdca852f289",
+      "observedSourceSha256": "ea66b1b298b718cf692c269b0a92a257df77c1cf812b0426bfa9abdca852f289",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 10,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-render-visibility.test.ts",
+      "currentSha256": "a8d95a40feaf513d83ccf128fea1327256a34957bb581b31f38bd4775c269f31",
+      "observedSourceSha256": "a8d95a40feaf513d83ccf128fea1327256a34957bb581b31f38bd4775c269f31",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 2,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-scene-release.test.ts",
+      "currentSha256": "8ab529d7975a9076b08cbfa1fd822c269a98465bc518f31e1366cbe7b9734280",
+      "observedSourceSha256": "8ab529d7975a9076b08cbfa1fd822c269a98465bc518f31e1366cbe7b9734280",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 6,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-session-scope.test.ts",
+      "currentSha256": "a56ad5b6e40e78ad3ec0d793ace9ef35e003be93b67311d46b0a837828d61730",
+      "observedSourceSha256": "a56ad5b6e40e78ad3ec0d793ace9ef35e003be93b67311d46b0a837828d61730",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-skeletal-mode-switch.test.ts",
+      "currentSha256": "2def1afbf4af3624df505fddc90477995a17702eaac9fb9664f545d764c819fb",
+      "observedSourceSha256": "2def1afbf4af3624df505fddc90477995a17702eaac9fb9664f545d764c819fb",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 2,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-skinning-cache.test.ts",
+      "currentSha256": "50ac0a0d1ee556af497a985aa40fffdcd13e7d03037205a6dce6859aaa84b5fc",
+      "observedSourceSha256": "50ac0a0d1ee556af497a985aa40fffdcd13e7d03037205a6dce6859aaa84b5fc",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 11,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-skinning-capacity.test.ts",
+      "currentSha256": "1c44833f16309374c2d9ef7c077baf52c03ecb4df5399064c91927448ceb0c45",
+      "observedSourceSha256": "1c44833f16309374c2d9ef7c077baf52c03ecb4df5399064c91927448ceb0c45",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-skinning-inspector.test.ts",
+      "currentSha256": "13e334da324c67197fa694d218b6a3dc9b12e1c181dd8cb5c0eb2d9dffe052e6",
+      "observedSourceSha256": "13e334da324c67197fa694d218b6a3dc9b12e1c181dd8cb5c0eb2d9dffe052e6",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-skinning-lifecycle.test.ts",
+      "currentSha256": "040f18a14ec6b62575adeaf7e045635872bf570d77901e363466b903781384a4",
+      "observedSourceSha256": "040f18a14ec6b62575adeaf7e045635872bf570d77901e363466b903781384a4",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 52,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-06.json",
+      "reportSha256": "cfec6828738ca9dbf21d5ddb6d4ed6e27b211eb219bb6bcdcd3a0c4c38dcbfbf"
+    },
+    {
+      "file": "test/smoke/port-gap-skinning-live-assignment.test.ts",
+      "currentSha256": "5784d7a24a505768e763823c34448ce3cb5f8c4649bd8ec4844764e81ddf618c",
+      "observedSourceSha256": "5784d7a24a505768e763823c34448ce3cb5f8c4649bd8ec4844764e81ddf618c",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 6,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/port-gap-test-input.test.ts",
+      "currentSha256": "731d70b2d656a00e6efadc0cc85bb9f5ee9e536e0609908dcb5fbd62f959014c",
+      "observedSourceSha256": "731d70b2d656a00e6efadc0cc85bb9f5ee9e536e0609908dcb5fbd62f959014c",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/port-gap-texture-orientation.test.ts",
+      "currentSha256": "7530f63a5025d7ca9a05d7482871f5ee95f1dce583130f9d176c919b47848a1d",
+      "observedSourceSha256": "7530f63a5025d7ca9a05d7482871f5ee95f1dce583130f9d176c919b47848a1d",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 6,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/port-gap-tiled-objects.test.ts",
+      "currentSha256": "862a0bb0726587c482dc5fe78b0459d9f31fb9ebacc68f377394e0f0a10791eb",
+      "observedSourceSha256": "862a0bb0726587c482dc5fe78b0459d9f31fb9ebacc68f377394e0f0a10791eb",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 4,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/port-gap-ui-mesh.test.ts",
+      "currentSha256": "8f693b4f0529551fda128957fa03f82918dab8522e5c8a382c0da3b0c4edf28f",
+      "observedSourceSha256": "8f693b4f0529551fda128957fa03f82918dab8522e5c8a382c0da3b0c4edf28f",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 11,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/render-dx-color-contract.test.ts",
+      "currentSha256": "96ceaa680000355fc5f2f31536d93890306865ee3eb4e693993b17df1b3e555a",
+      "observedSourceSha256": "96ceaa680000355fc5f2f31536d93890306865ee3eb4e693993b17df1b3e555a",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 4,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/render-dx-depth-layout.test.ts",
+      "currentSha256": "2b7f87e25f3dd59ae80775798dd404e50a079da774b0d3cc8c7677fa79f9897e",
+      "observedSourceSha256": "2b7f87e25f3dd59ae80775798dd404e50a079da774b0d3cc8c7677fa79f9897e",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/render-dx-material-diagnostics.test.ts",
+      "currentSha256": "9dcad979c9f3d2bb2f0f33eab1cd8f3568b2b12c2fe7510dc954283be4c2ae3e",
+      "observedSourceSha256": "9dcad979c9f3d2bb2f0f33eab1cd8f3568b2b12c2fe7510dc954283be4c2ae3e",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 1,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/render-dx-native-attachments.test.ts",
+      "currentSha256": "2588a74d18129b291fddaf40bde4741ef69c745d8b6192c6de4d7b2f0e0b1d4e",
+      "observedSourceSha256": "2588a74d18129b291fddaf40bde4741ef69c745d8b6192c6de4d7b2f0e0b1d4e",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/render-dx-render-queue.test.ts",
+      "currentSha256": "81fb934d3c1d71707c6fa078482cd34c237fdbeb5436f032e2ddb6531135154b",
+      "observedSourceSha256": "81fb934d3c1d71707c6fa078482cd34c237fdbeb5436f032e2ddb6531135154b",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/render-dx-target-options.test.ts",
+      "currentSha256": "30a81581950a539912a431f3c166ce901bc8a5fba3eb4e2050d68b65626fa17e",
+      "observedSourceSha256": "30a81581950a539912a431f3c166ce901bc8a5fba3eb4e2050d68b65626fa17e",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 8,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/responsive-host-layout.test.ts",
+      "currentSha256": "fa064016ea242bf3b286212b5daf9a1136f1a7e47da6c22931ba8298c37f0f58",
+      "observedSourceSha256": "fa064016ea242bf3b286212b5daf9a1136f1a7e47da6c22931ba8298c37f0f58",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 8,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-07.json",
+      "reportSha256": "c1058af64e5ee3399a87fc0442e377f85abfd8eef8b4a6f1a11f97e00acf25ab"
+    },
+    {
+      "file": "test/smoke/responsive-host-recipes.test.ts",
+      "currentSha256": "7f1baa471bdc22213641d6e5bc87ce2db813f084b0134faced295be879568066",
+      "observedSourceSha256": "7f1baa471bdc22213641d6e5bc87ce2db813f084b0134faced295be879568066",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/screen-orientation-contract.test.ts",
+      "currentSha256": "9856fe364715e332d9a7088bb4b06c2c02d831a40a162c457492c36c64f75ba0",
+      "observedSourceSha256": "9856fe364715e332d9a7088bb4b06c2c02d831a40a162c457492c36c64f75ba0",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/shaders-api-evidence.test.ts",
+      "currentSha256": "84bc997e72ceef6d25974262493654616825f59c6d5509698d19949a3c8e8e13",
+      "observedSourceSha256": "84bc997e72ceef6d25974262493654616825f59c6d5509698d19949a3c8e8e13",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 16,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/shaders-browser-environment-review.test.ts",
+      "currentSha256": "93c042bdbdd8b9bd2924439ea350d4236b958f8f4bc52098f6e0ae04ef5e2211",
+      "observedSourceSha256": "93c042bdbdd8b9bd2924439ea350d4236b958f8f4bc52098f6e0ae04ef5e2211",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 16,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/shaders-browser-environment.test.ts",
+      "currentSha256": "50755967b20fc7bb5767cad08ac5a45b9e197e260d359f717df1659c9366bab6",
+      "observedSourceSha256": "50755967b20fc7bb5767cad08ac5a45b9e197e260d359f717df1659c9366bab6",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 11,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/shaders-browser-launch.test.ts",
+      "currentSha256": "e33c1c40aa959bddb26747327ed6fb454c70727fe4ff1776786fa4b8a27247ac",
+      "observedSourceSha256": "e33c1c40aa959bddb26747327ed6fb454c70727fe4ff1776786fa4b8a27247ac",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 12,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/launch-sdk-invariant-jest.json",
+      "reportSha256": "bfac58e807906c6cd667ae76a32d422b6fba952b21c134706cf978091f2ae0b0"
+    },
+    {
+      "file": "test/smoke/shaders-cursor-trail-review.test.ts",
+      "currentSha256": "4d1fe49ed8e270dd2657e288686dfa39d74973d24a0cf97b35ef72328a83f057",
+      "observedSourceSha256": "4d1fe49ed8e270dd2657e288686dfa39d74973d24a0cf97b35ef72328a83f057",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 44,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/shaders-cursor-trail.test.ts",
+      "currentSha256": "1e7f30284e9d251a36354aeea3604422100be7b7acb7301446777d0f9bffb979",
+      "observedSourceSha256": "1e7f30284e9d251a36354aeea3604422100be7b7acb7301446777d0f9bffb979",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 36,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/shaders-effect-contract.test.ts",
+      "currentSha256": "2af710069973409d4e073641696d4a2299f1e24abd9ffb67ee8558a0518ed22e",
+      "observedSourceSha256": "2af710069973409d4e073641696d4a2299f1e24abd9ffb67ee8558a0518ed22e",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 30,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/shaders-emboss-acceptance.test.ts",
+      "currentSha256": "68181af3c5f6c0747acbf3a7dc05a144d954585d36fb0dfeb873b1e3a185f637",
+      "observedSourceSha256": "68181af3c5f6c0747acbf3a7dc05a144d954585d36fb0dfeb873b1e3a185f637",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 44,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/shaders-emboss-release.test.ts",
+      "currentSha256": "e60147f410d7b1e762f268618ec98c2c5744103bc36e2685a6b3805f20f4ba36",
+      "observedSourceSha256": "e60147f410d7b1e762f268618ec98c2c5744103bc36e2685a6b3805f20f4ba36",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/shaders-emboss.test.ts",
+      "currentSha256": "2826262d09e04393e0a4ee7d9ee579a2f17553334d7330f72bff398a056a07ff",
+      "observedSourceSha256": "2826262d09e04393e0a4ee7d9ee579a2f17553334d7330f72bff398a056a07ff",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 60,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-08.json",
+      "reportSha256": "496903a335af6c6c2dcb9cf87846b1ee1e999162f8e8aed9cf31592a0bcef3f7"
+    },
+    {
+      "file": "test/smoke/shaders-gallery-lifecycle-review.test.ts",
+      "currentSha256": "22fbe69a344d95d7047b84c3a8f158f2d553d6c8af4a667f33bca01a8300c2e1",
+      "observedSourceSha256": "22fbe69a344d95d7047b84c3a8f158f2d553d6c8af4a667f33bca01a8300c2e1",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 16,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-gallery-lifecycle-validator.test.ts",
+      "currentSha256": "48d29f6772f5393c3e1ba8028cfbe89a90c7d19c89c804c895d4ee30b4bc78c9",
+      "observedSourceSha256": "48d29f6772f5393c3e1ba8028cfbe89a90c7d19c89c804c895d4ee30b4bc78c9",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 23,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-gallery-lifecycle.test.ts",
+      "currentSha256": "33a66a0f5bdf10de8db7d5014558a7f0c6b18217bcb089aeeade6802245689cd",
+      "observedSourceSha256": "33a66a0f5bdf10de8db7d5014558a7f0c6b18217bcb089aeeade6802245689cd",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 23,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-glass-acceptance.test.ts",
+      "currentSha256": "07214bb0b2284924b6b79a5413d4751a91d839723fbfc1a1394fd76c3cccd921",
+      "observedSourceSha256": "07214bb0b2284924b6b79a5413d4751a91d839723fbfc1a1394fd76c3cccd921",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 44,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-glass-performance.test.ts",
+      "currentSha256": "722a54c5679df6f2021955780ea7b4bbcf27f013505ea56fb6d8d4e707afa81a",
+      "observedSourceSha256": "722a54c5679df6f2021955780ea7b4bbcf27f013505ea56fb6d8d4e707afa81a",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 17,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-glass.test.ts",
+      "currentSha256": "8d596a2da3535f71ec3e1c27f3a12443e50cbccc96eb29b40ff967f88da57476",
+      "observedSourceSha256": "8d596a2da3535f71ec3e1c27f3a12443e50cbccc96eb29b40ff967f88da57476",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 31,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-holographic-acceptance.test.ts",
+      "currentSha256": "4a3bfa3168b19e9cc80721409a5f436a7ef7c5d13bcc22dd14801116c4fb92a9",
+      "observedSourceSha256": "4a3bfa3168b19e9cc80721409a5f436a7ef7c5d13bcc22dd14801116c4fb92a9",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 43,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-holographic-review.test.ts",
+      "currentSha256": "9b6273e57dbb5fa86c4c14feefa91c5c6df1667d7501b99921800567f082c340",
+      "observedSourceSha256": "9b6273e57dbb5fa86c4c14feefa91c5c6df1667d7501b99921800567f082c340",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 2,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-holographic.test.ts",
+      "currentSha256": "99f66dacc26fb90ae5743732eff4ef992651556eae854c31a06e8a94ce8e607a",
+      "observedSourceSha256": "99f66dacc26fb90ae5743732eff4ef992651556eae854c31a06e8a94ce8e607a",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 65,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-liquid-metal-acceptance.test.ts",
+      "currentSha256": "8170e8dfe0bd9abfbab7f13e6035e5c84590a9d18b1970db15cd752302cc5158",
+      "observedSourceSha256": "8170e8dfe0bd9abfbab7f13e6035e5c84590a9d18b1970db15cd752302cc5158",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 28,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-liquid-metal-review.test.ts",
+      "currentSha256": "36d98c266c977869c56feceeac57d11f16118fe3bd94b89ae8a0e4e5ae6deddd",
+      "observedSourceSha256": "36d98c266c977869c56feceeac57d11f16118fe3bd94b89ae8a0e4e5ae6deddd",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-liquid-metal.test.ts",
+      "currentSha256": "0ba0838685f13b115699939ea4da9cb1bc305e58256d8ad0d0791d99b7912b24",
+      "observedSourceSha256": "0ba0838685f13b115699939ea4da9cb1bc305e58256d8ad0d0791d99b7912b24",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 50,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-09.json",
+      "reportSha256": "409470668f13d454862999c651e2b17bfaa41a1e8030a7c66d1bce2cf841c4d3"
+    },
+    {
+      "file": "test/smoke/shaders-neon-acceptance.test.ts",
+      "currentSha256": "4c835edd7c0f94e60dbc394ddcc9e43ce5aad74382c132f561e74b345eb7f8ae",
+      "observedSourceSha256": "4c835edd7c0f94e60dbc394ddcc9e43ce5aad74382c132f561e74b345eb7f8ae",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 46,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-neon-review.test.ts",
+      "currentSha256": "f10807b69937af426010dc15d3a11ed349437f2cb3a505cbf54e315a45a495eb",
+      "observedSourceSha256": "f10807b69937af426010dc15d3a11ed349437f2cb3a505cbf54e315a45a495eb",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 15,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-neon.test.ts",
+      "currentSha256": "370a56a14d62a80229ea11379349dbf7116afcaea3111e4dadeb3405a0d5dc13",
+      "observedSourceSha256": "370a56a14d62a80229ea11379349dbf7116afcaea3111e4dadeb3405a0d5dc13",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 52,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-noise-dissolve-environment-performance.test.ts",
+      "currentSha256": "7ba9a3442452193d420d0c453f4d4ae2dc9b49173ff399228b96482bc45295c6",
+      "observedSourceSha256": "7ba9a3442452193d420d0c453f4d4ae2dc9b49173ff399228b96482bc45295c6",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 32,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-noise-dissolve.test.ts",
+      "currentSha256": "8cb64a4a44f76120f837a769edda0ec83985ffece9e35e7395fa00d984f2bdce",
+      "observedSourceSha256": "8cb64a4a44f76120f837a769edda0ec83985ffece9e35e7395fa00d984f2bdce",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 19,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-sparkle-environment-performance-review.test.ts",
+      "currentSha256": "c20ed20d75d1b988a459e7477b7a5448bf6aafba6295b5d90709448cc430bb35",
+      "observedSourceSha256": "c20ed20d75d1b988a459e7477b7a5448bf6aafba6295b5d90709448cc430bb35",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 30,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-sparkle-environment-performance.test.ts",
+      "currentSha256": "28ef379c7d5ae0203f8aa6c31537b70a6902ae2661f5f6be95efe7068d17b2ee",
+      "observedSourceSha256": "28ef379c7d5ae0203f8aa6c31537b70a6902ae2661f5f6be95efe7068d17b2ee",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 47,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-sparkle.test.ts",
+      "currentSha256": "2ff4cb532472cf54e8f921bde831480196828808f32c4a4b79ef4bbb5a69f836",
+      "observedSourceSha256": "2ff4cb532472cf54e8f921bde831480196828808f32c4a4b79ef4bbb5a69f836",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 31,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-thin-film-environment-review.test.ts",
+      "currentSha256": "9b2765b65185202bd5db015e7e1cedee993a920109779dfeed74cda7087aceca",
+      "observedSourceSha256": "9b2765b65185202bd5db015e7e1cedee993a920109779dfeed74cda7087aceca",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 11,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-thin-film.test.ts",
+      "currentSha256": "3169dcbe0016c0196fc49c83018e271ae07cf26a1c763b151c66addff7ce2504",
+      "observedSourceSha256": "3169dcbe0016c0196fc49c83018e271ae07cf26a1c763b151c66addff7ce2504",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 31,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-wave1-gate.test.ts",
+      "currentSha256": "e3e13d2d52c124c546414d51bbf0813b38244d692d7b6ae4a56d18b533cacf8a",
+      "observedSourceSha256": "e3e13d2d52c124c546414d51bbf0813b38244d692d7b6ae4a56d18b533cacf8a",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 16,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-wave2-gate.test.ts",
+      "currentSha256": "020e7a54a95b7da4bb8ddad71ebf4f8ae13b1abd057adf81946d8597107b7e36",
+      "observedSourceSha256": "020e7a54a95b7da4bb8ddad71ebf4f8ae13b1abd057adf81946d8597107b7e36",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 26,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-10.json",
+      "reportSha256": "d50145c77cdbe390a249a86218cc196934e9d63581ebcd4b52a0bd06564f9877"
+    },
+    {
+      "file": "test/smoke/shaders-wave3-gate.test.ts",
+      "currentSha256": "92bc819b532adbf9f30fb18c0791d927c23c2e3257081c507c74d4840b448300",
+      "observedSourceSha256": "92bc819b532adbf9f30fb18c0791d927c23c2e3257081c507c74d4840b448300",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 33,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-01-bootstrap.test.ts",
+      "currentSha256": "0a8d18ab5968e52299d8ea02e94e3584b7721e1dd1f9659a614b407ca256f59b",
+      "observedSourceSha256": "0a8d18ab5968e52299d8ea02e94e3584b7721e1dd1f9659a614b407ca256f59b",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-02-scene.test.ts",
+      "currentSha256": "b4a680d7dc56d27a9a2ae19a077c30ad5aefef7c94a37a481176994d2f1b1362",
+      "observedSourceSha256": "b4a680d7dc56d27a9a2ae19a077c30ad5aefef7c94a37a481176994d2f1b1362",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 1,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-03-runtime-asset.test.ts",
+      "currentSha256": "e696cbbab4ce309f88f11e2d10494d796c53923d9412cfc5dd839e03e238694b",
+      "observedSourceSha256": "e696cbbab4ce309f88f11e2d10494d796c53923d9412cfc5dd839e03e238694b",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 4,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-04-skinning.test.ts",
+      "currentSha256": "833ad2a317f93137234241ebed833d03284c48dd1d19d22fd7dcaed60dc7d736",
+      "observedSourceSha256": "833ad2a317f93137234241ebed833d03284c48dd1d19d22fd7dcaed60dc7d736",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 1,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-05-promise-asset-helper.test.ts",
+      "currentSha256": "d321169b786de235dc57f0a48ba780c67fafd26c39c7e9ba5e7d8033178ac683",
+      "observedSourceSha256": "d321169b786de235dc57f0a48ba780c67fafd26c39c7e9ba5e7d8033178ac683",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-06-skeleton-utils.test.ts",
+      "currentSha256": "0c6286d15d5dd43f6b3ca68dd0c48fa1bb1dfd86bfa54609577842b61ae24e89",
+      "observedSourceSha256": "0c6286d15d5dd43f6b3ca68dd0c48fa1bb1dfd86bfa54609577842b61ae24e89",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 4,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-07-gltf.test.ts",
+      "currentSha256": "cdc1808a530b14d4a742651195dbedbeb85be97d7aabf4ecbc89b170601ec5b3",
+      "observedSourceSha256": "cdc1808a530b14d4a742651195dbedbeb85be97d7aabf4ecbc89b170601ec5b3",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 16,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-08-frame-object.test.ts",
+      "currentSha256": "6fd7fc4d7cdf5caf06d2b71b7b440edb12da903de4d69d6254599add110fa2ea",
+      "observedSourceSha256": "6fd7fc4d7cdf5caf06d2b71b7b440edb12da903de4d69d6254599add110fa2ea",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 4,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-09-runtime-inspection.test.ts",
+      "currentSha256": "41187af244b38adcb00ef78cd7a31a3a9fbec4e936b159d73402d4ee7d67599b",
+      "observedSourceSha256": "41187af244b38adcb00ef78cd7a31a3a9fbec4e936b159d73402d4ee7d67599b",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-10-gltf-registry.test.ts",
+      "currentSha256": "83b0cdd23384aab39a4ae2139ac00b1617a00a67ff9d285ed8538a1fba6d3aaa",
+      "observedSourceSha256": "83b0cdd23384aab39a4ae2139ac00b1617a00a67ff9d285ed8538a1fba6d3aaa",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 9,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-11-gltf-geometry.test.ts",
+      "currentSha256": "6f0efb25fbc374293016be849704bb351142ad6332a6ecfe547f17374a6434a0",
+      "observedSourceSha256": "6f0efb25fbc374293016be849704bb351142ad6332a6ecfe547f17374a6434a0",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 19,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-11.json",
+      "reportSha256": "8f967f62994a58a5e16fee32f4b5d6f367c30820fac0a2f61a9e3acff591d2ad"
+    },
+    {
+      "file": "test/smoke/smoke-12-gltf-scene.test.ts",
+      "currentSha256": "0c785f87f580aac35f4f0481366549b2c7a6995491097547ea6b5f0097bf9136",
+      "observedSourceSha256": "0c785f87f580aac35f4f0481366549b2c7a6995491097547ea6b5f0097bf9136",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-13-gltf-image-formats.test.ts",
+      "currentSha256": "7ef7cef6ba21cb4de9430b7f1e31c34744900c01c68bae6527f23fe39605d12a",
+      "observedSourceSha256": "7ef7cef6ba21cb4de9430b7f1e31c34744900c01c68bae6527f23fe39605d12a",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 10,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-14-gltf-ktx2.test.ts",
+      "currentSha256": "89a27aba6e55e3ee05d455cdfd00cbaeb391f8cbdd4caf648edfd8b88a797a0c",
+      "observedSourceSha256": "89a27aba6e55e3ee05d455cdfd00cbaeb391f8cbdd4caf648edfd8b88a797a0c",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 11,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-15-gltf-physical.test.ts",
+      "currentSha256": "aef82dc7bcaef4b05291ed451df4d5e98c78454b6588eef353329303d82ae5d7",
+      "observedSourceSha256": "aef82dc7bcaef4b05291ed451df4d5e98c78454b6588eef353329303d82ae5d7",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 8,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-16-gltf-clearcoat.test.ts",
+      "currentSha256": "7a85ef068f9c7501da676190ba4381ddc5c667c61634aa9a66fb073d7c38461c",
+      "observedSourceSha256": "7a85ef068f9c7501da676190ba4381ddc5c667c61634aa9a66fb073d7c38461c",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 6,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-17-gltf-anisotropy.test.ts",
+      "currentSha256": "e274d590fdd5a961d96b2998691cda23fd06723a6a72abc055b7ac17330d87ac",
+      "observedSourceSha256": "e274d590fdd5a961d96b2998691cda23fd06723a6a72abc055b7ac17330d87ac",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-18-gltf-iridescence.test.ts",
+      "currentSha256": "203241c0d671ee096975b91e3332a8bc8abecd2a04456388808d64403a41e2b5",
+      "observedSourceSha256": "203241c0d671ee096975b91e3332a8bc8abecd2a04456388808d64403a41e2b5",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-19-gltf-bump.test.ts",
+      "currentSha256": "d4ff9414e5e4a9863305e63b78b9ff820ef881e34e13a246562d715d3bf59517",
+      "observedSourceSha256": "d4ff9414e5e4a9863305e63b78b9ff820ef881e34e13a246562d715d3bf59517",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-20-gltf-transmission.test.ts",
+      "currentSha256": "0a9553995768cb0d6303b553a324d183ea0c30359b69bce691963a466be30423",
+      "observedSourceSha256": "0a9553995768cb0d6303b553a324d183ea0c30359b69bce691963a466be30423",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 5,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-21-gltf-review-regression.test.ts",
+      "currentSha256": "b74824e7f2da103ad46ca3d268ede9510433b965be2a5a77b606acbba8612821",
+      "observedSourceSha256": "b74824e7f2da103ad46ca3d268ede9510433b965be2a5a77b606acbba8612821",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 11,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-22-agent-session.test.ts",
+      "currentSha256": "1f6f48e59514baab53338b459877096e7235ccd6c22f1e0adca987e8a82b82de",
+      "observedSourceSha256": "1f6f48e59514baab53338b459877096e7235ccd6c22f1e0adca987e8a82b82de",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 24,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-23-debug-isolation.test.ts",
+      "currentSha256": "7a412df82f5d2a094ede6d62ae20b02f7d4e729fd87a9a1bb5d7ec463168c990",
+      "observedSourceSha256": "7a412df82f5d2a094ede6d62ae20b02f7d4e729fd87a9a1bb5d7ec463168c990",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 3,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-12.json",
+      "reportSha256": "2de101cb73528c5e6aaa3c72e35b430bc4eb1a54a3d3c860bcb5ae02182b53aa"
+    },
+    {
+      "file": "test/smoke/smoke-24-benchmark-harness.test.ts",
+      "currentSha256": "ca4663ee570d19c17e86cd01e2534c14927a69c86e1b47bddeda781d36fbe634",
+      "observedSourceSha256": "ca4663ee570d19c17e86cd01e2534c14927a69c86e1b47bddeda781d36fbe634",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 14,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/smoke-25-benchmark-tracks.test.ts",
+      "currentSha256": "4e85952845d43b0dda63e6f539a14948787907e4a5a712b5d53937910a479d21",
+      "observedSourceSha256": "4e85952845d43b0dda63e6f539a14948787907e4a5a712b5d53937910a479d21",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 10,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/smoke-26-g1-attribution.test.ts",
+      "currentSha256": "9d12c1c4bd97fff5d3b5b8750aa3cbee87652de062fd298598f3b3269492bdad",
+      "observedSourceSha256": "9d12c1c4bd97fff5d3b5b8750aa3cbee87652de062fd298598f3b3269492bdad",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 9,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/smoke-27-recipes-distribution.test.ts",
+      "currentSha256": "ca8bc52d4f133eaa604f6dd167f16178fbe6c466b8cf3fc1dc5c1adddbb6022c",
+      "observedSourceSha256": "ca8bc52d4f133eaa604f6dd167f16178fbe6c466b8cf3fc1dc5c1adddbb6022c",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 7,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/smoke-28-benchmark-regression.test.ts",
+      "currentSha256": "b1ff502478805626676ad14c1f51275e72d8d02578dcee8707cdbc90145bbf19",
+      "observedSourceSha256": "b1ff502478805626676ad14c1f51275e72d8d02578dcee8707cdbc90145bbf19",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 1,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/smoke-29-examples-spec.test.ts",
+      "currentSha256": "092a7492983765247171def332cd8bfb0716e3d4f5e98bfcbad25f3eaabfe644",
+      "observedSourceSha256": "092a7492983765247171def332cd8bfb0716e3d4f5e98bfcbad25f3eaabfe644",
+      "currentExecutionIdentityMatches": true,
+      "status": "failed",
+      "tests": 6,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/smoke-30-v12-regression.test.ts",
+      "currentSha256": "fd24c88622200d872cc8e1f1dd25776959b0129537fedb07eef0d201722ad3de",
+      "observedSourceSha256": "fd24c88622200d872cc8e1f1dd25776959b0129537fedb07eef0d201722ad3de",
+      "currentExecutionIdentityMatches": true,
+      "status": "failed",
+      "tests": 40,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/smoke-31-pose-graph.test.ts",
+      "currentSha256": "90fb48055f23e26419b7431fbed296b3766d5fd1cac73a3bec0a399d7a11fd80",
+      "observedSourceSha256": "90fb48055f23e26419b7431fbed296b3766d5fd1cac73a3bec0a399d7a11fd80",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 8,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/smoke-32-wasm-fallback.test.ts",
+      "currentSha256": "6d9d333b398a9c96b296a2f6e25dc590eae7c5c43ce98b67c50eba5ab5b86b00",
+      "observedSourceSha256": "6d9d333b398a9c96b296a2f6e25dc590eae7c5c43ce98b67c50eba5ab5b86b00",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 6,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/smoke-33-label-shadow.test.ts",
+      "currentSha256": "5cbdcc5933cde1fce20fbd648730b1a4743dedcd761f9966dcd1c76c6087f4f4",
+      "observedSourceSha256": "5cbdcc5933cde1fce20fbd648730b1a4743dedcd761f9966dcd1c76c6087f4f4",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 4,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/webgl2-gfx-command-contracts.test.ts",
+      "currentSha256": "c9ca11b7733e5b94c6b7055840e9b2b2c5fc10d5d870d343687dc2634fa92ec8",
+      "observedSourceSha256": "c9ca11b7733e5b94c6b7055840e9b2b2c5fc10d5d870d343687dc2634fa92ec8",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 13,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/webgl2-gfx-texture-contracts.test.ts",
+      "currentSha256": "12a3fadbc3ff0a651d93bfc0d1ce473c0984b1e3f06022f6b4fafc8998aa7412",
+      "observedSourceSha256": "12a3fadbc3ff0a651d93bfc0d1ce473c0984b1e3f06022f6b4fafc8998aa7412",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 39,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "reportSha256": "25b29f6bbdee2db2d5f3c4666f94f5def45c9e89cf0da018c3d1c4d030dd1b77"
+    },
+    {
+      "file": "test/smoke/webgl2-sampler-contract.test.ts",
+      "currentSha256": "4568f4bc142b1502bf450dced1527d3ad435fde8e7c7725b08bd37de67dd1cab",
+      "observedSourceSha256": "4568f4bc142b1502bf450dced1527d3ad435fde8e7c7725b08bd37de67dd1cab",
+      "currentExecutionIdentityMatches": true,
+      "status": "passed",
+      "tests": 31,
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-14.json",
+      "reportSha256": "589c0cf41815cf0e053dbcf99448029bf0f514ec906ee8d642d1f6f8971dd8f6"
+    }
+  ],
+  "failures": [
+    {
+      "file": "test/smoke/smoke-29-examples-spec.test.ts",
+      "title": "V1.1 — Example Specification 门禁 §15 全部 example.json 达到 frozen 且规格零问题",
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "failureMessages": [
+        "Error: expect(received).toContain(expected) // indexOf\n\nExpected substring: \"183 examples\"\nReceived string:    \"[camera-viewport-props] evidence drift: Camera.convertToUINode @ src/main.ts claimed L193 but symbol at L197\n[gltf-skin] evidence drift: Animation @ src/main.ts claimed L72 but symbol at L73\n[gltf-skin] evidence drift: Animation.play @ src/main.ts claimed L75 but symbol at L78\n[gltf-skin] evidence drift: GLTFAsset.destroy @ src/main.ts claimed L95 but symbol at L103\n[gltf-viewer] 出处行不存在：src/air/assets/gltf/material.ts:L347\n[interactive-container] evidence drift: createAirApp @ src/main.ts claimed L18 but symbol at L87\n[interactive-geometry] evidence drift: utils.MeshUtils.createDynamicMesh @ src/main.ts claimed L155 but symbol at L219\n[interactive-geometry] evidence drift: Mesh.updateSubMesh @ src/main.ts claimed L383 but symbol at L629\n[interactive-geometry] evidence drift: Camera.screenPointToRay @ src/main.ts claimed L322 but symbol at L525\n[interactive-geometry] evidence drift: MeshRenderer.onGeometryChanged @ src/main.ts claimed L176 but symbol at L250\n[interactive-input] evidence drift: createActionInput @ src/main.ts claimed L81 but symbol at L157\n[interactive-input] evidence drift: createActionState @ src/main.ts claimed L77 but symbol at L146\n[interactive-input] evidence drift: createSessionGate @ src/main.ts claimed L76 but symbol at L144\n[interactive-multipass] evidence drift: createAirRenderTarget @ src/main.ts claimed L161 but symbol at L213\n[interactive-multipass] evidence drift: Material.initialize @ src/main.ts claimed L114 but symbol at L159\n[interactive-multipass] evidence drift: gfx.CommandBuffer.draw @ src/main.ts claimed L595 but symbol at L832\n[interactive-timeline] evidence drift: createSessionScope @ src/main.ts claimed L4 but symbol at L18\n[k0-r2-porting-contracts] evidence drift: Material.initialize @ src/main.ts claimed L114 but symbol at L134\n[k0-r2-porting-contracts] evidence drift: Mesh.updateSubMesh @ src/main.ts claimed L189 but symbol at L238\n[k0-r2-porting-contracts] evidence drift: Billboard @ src/main.ts claimed L83 but symbol at L88\n[k0-r2-porting-contracts] evidence drift: utils.MeshUtils.createDynamicMesh @ src/main.ts claimed L107 but symbol at L121\n[k0-r2-porting-contracts] evidence drift: MeshRenderer.onGeometryChanged @ src/main.ts claimed L190 but symbol at L239\n[responsive-board-recipes] bad specStatus undefined\n[responsive-board-recipes] learning required\n[responsive-board-recipes] effect required\n[responsive-board-recipes] api required\n[responsive-board-recipes] scene.expectedGraph.nodes required\n[responsive-board-recipes] interaction.steps must be array\n[responsive-board-recipes] validation.interaction must be array\n[responsive-board-recipes] ready.validators must be array >= 1\n[responsive-board-recipes] validation.functional must be array\n[responsive-board-recipes] validation.interaction must be array\n[responsive-board-recipes] validation.visual must be array\n[responsive-board-recipes] validation.lifecycle must be array\n[responsive-board-recipes] validation.capability must be array\n[responsive-board-recipes] assets must be array\n[responsive-board-recipes] coverage.benchmarkRefs must be array\n[responsive-board-recipes] coverage.recipeRefs must be array\n[responsive-board-recipes] screenshot object required\n[responsive-board-recipes] license object required\n[shader-cursor-trail] effect.functional required\n[shader-cursor-trail] effect.visual required\n[shader-cursor-trail] interaction.steps must be array\n[shader-cursor-trail] interaction.steps and validation.interaction must be both set or both empty\n[shader-emboss] api.claims must include unit \\\"Camera\\\"\n[shader-emboss] api.claims must include unit \\\"Node\\\"\n[shader-film-neon] api.claims must include unit \\\"Camera\\\"\n[shader-film-neon] api.claims must include unit \\\"Node\\\"\n[shader-glass] effect.functional required\n[shader-glass] effect.visual required\n[shader-glass] api.claims must include unit \\\"Camera\\\"\n[shader-glass] api.claims must include unit \\\"Node\\\"\n[shader-glass-trail] api.claims must include unit \\\"Camera\\\"\n[shader-glass-trail] api.claims must include unit \\\"Node\\\"\n[shader-holographic] api.claims must include unit \\\"Camera\\\"\n[shader-holographic] api.claims must include unit \\\"Node\\\"\n[shader-laser-card] api.claims must include unit \\\"Camera\\\"\n[shader-laser-card] api.claims must include unit \\\"Node\\\"\n[shader-liquid-metal] api.claims must include unit \\\"Camera\\\"\n[shader-liquid-metal] api.claims must include unit \\\"Node\\\"\n[shader-neon] api.claims must include unit \\\"Camera\\\"\n[shader-neon] api.claims must include unit \\\"Node\\\"\n[spec-validate] [F-132] 184 examples / 62 issue(s) ⇒ 本轮判定红，拒绝覆写 docs\\\\evidence\\\\spec-validation.json（红态报告请显式 --out=<非正典路径>）\n\"\n    at Object.<anonymous> (E:\\AIProMax\\github\\cocosair.js\\test\\smoke\\smoke-29-examples-spec.test.ts:63:31)\n    at Promise.then.completed (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\utils.js:333:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\utils.js:259:10)\n    at _callCircusTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:277:40)\n    at _runTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:209:3)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:97:9)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:91:9)\n    at run (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:31:3)\n    at runAndTransformResultsToJestFormat (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\legacy-code-todo-rewrite\\jestAdapterInit.js:135:21)\n    at jestAdapter (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\legacy-code-todo-rewrite\\jestAdapter.js:92:19)\n    at runTestInternal (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-runner\\build\\runTest.js:411:16)\n    at runTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-runner\\build\\runTest.js:499:34)"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-29-examples-spec.test.ts",
+      "title": "V1.1 — Example Specification 门禁 §12 apiEvidence 行号无漂移（spec-evidence --check）",
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "failureMessages": [
+        "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n    at Object.<anonymous> (E:\\AIProMax\\github\\cocosair.js\\test\\smoke\\smoke-29-examples-spec.test.ts:70:31)\n    at Promise.then.completed (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\utils.js:333:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\utils.js:259:10)\n    at _callCircusTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:277:40)\n    at _runTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:209:3)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:97:9)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:91:9)\n    at run (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:31:3)\n    at runAndTransformResultsToJestFormat (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\legacy-code-todo-rewrite\\jestAdapterInit.js:135:21)\n    at jestAdapter (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\legacy-code-todo-rewrite\\jestAdapter.js:92:19)\n    at runTestInternal (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-runner\\build\\runTest.js:411:16)\n    at runTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-runner\\build\\runTest.js:499:34)"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-29-examples-spec.test.ts",
+      "title": "V1.1 — Example Specification 门禁 §11/§12 证据链符合性零 fail（spec-compliance-audit）",
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "failureMessages": [
+        "Error: expect(received).toContain(expected) // indexOf\n\nExpected substring: \"0 fail\"\nReceived string:    \"[FAIL] camera-screen-world S11-STALE-EVIDENCE: §11：证据 specFingerprint 98df9ed498e9 ≠ 当前 example.json 7c8ed23455ae（陈旧证据冒充当期通过）\n[FAIL] camera-viewport-props S12-LINE: §12：evidence \\\"Camera.convertToUINode\\\" @ src/main.ts:L193 与实际代码行 L197 不符（注释/import 或已漂移）\n[FAIL] dom-overlay-texture S25-LIFECYCLE: §25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）\n[WARN] gltf-draco S25-LIFECYCLE: §25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract\n[FAIL] gltf-skin S12-LINE: §12：evidence \\\"Animation\\\" @ src/main.ts:L72 与实际代码行 L73 不符（注释/import 或已漂移）\n[FAIL] gltf-skin S12-LINE: §12：evidence \\\"Animation.play\\\" @ src/main.ts:L75 与实际代码行 L78 不符（注释/import 或已漂移）\n[FAIL] gltf-skin S12-LINE: §12：evidence \\\"GLTFAsset.destroy\\\" @ src/main.ts:L95 与实际代码行 L103 不符（注释/import 或已漂移）\n[FAIL] graphics-svg-paints S25-LIFECYCLE: §25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）\n[FAIL] hdr-color-pipeline S15-ASSET-BIND: §15：assets/LICENSE.md（1105B，assets/ 未声明边车）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）\n[FAIL] hdr-color-pipeline S15-ASSET-BIND: §15：assets/environment.bin（32760B，声明资产）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）\n[FAIL] hdr-color-pipeline S15-ASSET-BIND: §15：assets/environment.json（2339B，声明资产）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）\n[FAIL] hdr-color-pipeline S15-ASSET-BIND: §15：assets/ggx-prefiltered.bin（32760B，声明资产）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）\n[FAIL] html-texture-experimental S25-LIFECYCLE: §25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）\n[FAIL] input S11-STALE-EVIDENCE: §11：证据 specFingerprint aeed6a7d4db8 ≠ 当前 example.json f8e73280f4a9（陈旧证据冒充当期通过）\n[FAIL] interactive-container S25-LIFECYCLE-IMPL: §25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点\n[FAIL] interactive-container S12-LINE: §12：evidence \\\"createAirApp\\\" @ src/main.ts:L18 与实际代码行 L87 不符（注释/import 或已漂移）\n[FAIL] interactive-geometry S25-LIFECYCLE-IMPL: §25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点\n[FAIL] interactive-geometry S12-LINE: §12：evidence \\\"utils.MeshUtils.createDynamicMesh\\\" @ src/main.ts:L155 与实际代码行 L219 不符（注释/import 或已漂移）\n[FAIL] interactive-geometry S12-LINE: §12：evidence \\\"Mesh.updateSubMesh\\\" @ src/main.ts:L383 与实际代码行 L629 不符（注释/import 或已漂移）\n[FAIL] interactive-geometry S12-LINE: §12：evidence \\\"Camera.screenPointToRay\\\" @ src/main.ts:L322 与实际代码行 L525 不符（注释/import 或已漂移）\n[FAIL] interactive-geometry S12-LINE: §12：evidence \\\"MeshRenderer.onGeometryChanged\\\" @ src/main.ts:L176 与实际代码行 L250 不符（注释/import 或已漂移）\n[FAIL] interactive-input S25-LIFECYCLE-IMPL: §25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点\n[FAIL] interactive-input S12-LINE: §12：evidence \\\"createActionInput\\\" @ src/main.ts:L81 与实际代码行 L157 不符（注释/import 或已漂移）\n[FAIL] interactive-input S12-LINE: §12：evidence \\\"createActionState\\\" @ src/main.ts:L77 与实际代码行 L146 不符（注释/import 或已漂移）\n[FAIL] interactive-input S12-LINE: §12：evidence \\\"createSessionGate\\\" @ src/main.ts:L76 与实际代码行 L144 不符（注释/import 或已漂移）\n[FAIL] interactive-multipass S25-LIFECYCLE-IMPL: §25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点\n[FAIL] interactive-multipass S12-LINE: §12：evidence \\\"createAirRenderTarget\\\" @ src/main.ts:L161 与实际代码行 L213 不符（注释/import 或已漂移）\n[FAIL] interactive-multipass S12-LINE: §12：evidence \\\"Material.initialize\\\" @ src/main.ts:L114 与实际代码行 L159 不符（注释/import 或已漂移）\n[FAIL] interactive-multipass S12-LINE: §12：evidence \\\"gfx.CommandBuffer.draw\\\" @ src/main.ts:L595 与实际代码行 L832 不符（注释/import 或已漂移）\n[FAIL] interactive-timeline S25-LIFECYCLE-IMPL: §25：validation.lifecycle 声明了 resource-released，但示例源码中没有 __lifecycle() 合同安装点\n[FAIL] interactive-timeline S12-LINE: §12：evidence \\\"createSessionScope\\\" @ src/main.ts:L4 与实际代码行 L18 不符（注释/import 或已漂移）\n[FAIL] interactive-timeline S15-ASSET-BIND: §15：assets/LICENSE.md（309B，assets/ 未声明边车）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）\n[FAIL] interactive-timeline S15-ASSET-BIND: §15：assets/original-16s.wav（259244B，assets/ 未声明边车）在当期证据中无内容哈希 → 资产被替换/清空时离线不可检（取证工具需记录 assetDigests 并重跑）\n[FAIL] k0-r2-porting-contracts S12-LINE: §12：evidence \\\"Material.initialize\\\" @ src/main.ts:L114 与实际代码行 L134 不符（注释/import 或已漂移）\n[FAIL] k0-r2-porting-contracts S12-LINE: §12：evidence \\\"Mesh.updateSubMesh\\\" @ src/main.ts:L189 与实际代码行 L238 不符（注释/import 或已漂移）\n[FAIL] k0-r2-porting-contracts S12-LINE: §12：evidence \\\"Billboard\\\" @ src/main.ts:L83 与实际代码行 L88 不符（注释/import 或已漂移）\n[FAIL] k0-r2-porting-contracts S12-LINE: §12：evidence \\\"utils.MeshUtils.createDynamicMesh\\\" @ src/main.ts:L107 与实际代码行 L121 不符（注释/import 或已漂移）\n[FAIL] k0-r2-porting-contracts S12-LINE: §12：evidence \\\"MeshRenderer.onGeometryChanged\\\" @ src/main.ts:L190 与实际代码行 L239 不符（注释/import 或已漂移）\n[FAIL] responsive-board-recipes S5-GOAL-SCOPE: api.primary=0（§5 要求 1~3）\n[FAIL] responsive-board-recipes S6-EFFECT: §6：effect.functional / effect.visual 必须同时定义\n[FAIL] responsive-board-recipes S9-READY: §9：ready.validators 未定义\n[FAIL] responsive-board-recipes S10-VALIDATION: §10：validation.functional 为空（至少 readyValidator + functionalValidators）\n[FAIL] responsive-board-recipes S19-GALLERY: §19：Gallery 需 What you'll learn（learning.points 为空）\n[FAIL] responsive-board-recipes S20-GALLERY: §20：Gallery 需 APIs Used（api.claims 为空）\n[FAIL] responsive-board-recipes S21-GALLERY: §21：Gallery 需 Expected Result\n[FAIL] shader-cursor-trail S6-EFFECT: §6：effect.functional / effect.visual 必须同时定义\n[FAIL] shader-cursor-trail S8-INTERACTION: §8：interaction.steps 与 validation.interaction 必须成对（否则交互无法自动验收）\n[FAIL] shader-cursor-trail S15-FREEZE: §15：specStatus=frozen 但 effect 未完成\n[FAIL] shader-cursor-trail S21-GALLERY: §21：Gallery 需 Expected Result\n[FAIL] shader-glass S6-EFFECT: §6：effect.functional / effect.visual 必须同时定义\n[FAIL] shader-glass S15-FREEZE: §15：specStatus=frozen 但 effect 未完成\n[FAIL] shader-glass S21-GALLERY: §21：Gallery 需 Expected Result\n[FAIL] shader-glass-trail S23-MANIFEST: §23：未出现在 examples/files.json（Gallery 不可见）\n[FAIL] sprite-mask-blend S25-LIFECYCLE: §25：资源 Example 要求 Lifecycle Contract 100%，本示例 validation.lifecycle 为空（未声明 resource-released / __lifecycle() 合同）\n[WARN] starfield-galaxy S6-EFFECT: §6：effect.visual 过短，无法据此判定\\\"应该做成什么样\\\"（\\\"暖白核球、蓝色旋臂与深黑宇宙\\\"）\n[spec-compliance] 184 examples: 53 fail / 2 warn → docs\\\\evidence\\\\spec-compliance.json\n\"\n    at Object.<anonymous> (E:\\AIProMax\\github\\cocosair.js\\test\\smoke\\smoke-29-examples-spec.test.ts:78:31)\n    at Promise.then.completed (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\utils.js:333:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\utils.js:259:10)\n    at _callCircusTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:277:40)\n    at _runTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:209:3)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:97:9)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:91:9)\n    at run (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:31:3)\n    at runAndTransformResultsToJestFormat (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\legacy-code-todo-rewrite\\jestAdapterInit.js:135:21)\n    at jestAdapter (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\legacy-code-todo-rewrite\\jestAdapter.js:92:19)\n    at runTestInternal (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-runner\\build\\runTest.js:411:16)\n    at runTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-runner\\build\\runTest.js:499:34)"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-29-examples-spec.test.ts",
+      "title": "V1.1 — Example Specification 门禁 §23 files.json 只保留 Gallery 字段，规格实现细节不外溢",
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "failureMessages": [
+        "Error: expect(received).toBeTruthy()\n\nReceived: undefined\n    at Object.<anonymous> (E:\\AIProMax\\github\\cocosair.js\\test\\smoke\\smoke-29-examples-spec.test.ts:89:33)\n    at Promise.then.completed (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\utils.js:333:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\utils.js:259:10)\n    at _callCircusTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:277:40)\n    at _runTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:209:3)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:97:9)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:91:9)\n    at run (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:31:3)\n    at runAndTransformResultsToJestFormat (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\legacy-code-todo-rewrite\\jestAdapterInit.js:135:21)\n    at jestAdapter (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\legacy-code-todo-rewrite\\jestAdapter.js:92:19)\n    at runTestInternal (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-runner\\build\\runTest.js:411:16)\n    at runTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-runner\\build\\runTest.js:499:34)"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-30-v12-regression.test.ts",
+      "title": "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币 产物绑定：矩阵记录的 bundle 与 d.ts 哈希就是当期构建产物",
+      "report": "output/webgl2-gfx-contracts/inventory-diagnostic-20261011/batch-13.json",
+      "failureMessages": [
+        "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"69127f39bd9a2a0a\"\nReceived: \"de4e0472e8a9cf86\"\n    at Object.<anonymous> (E:\\AIProMax\\github\\cocosair.js\\test\\smoke\\smoke-30-v12-regression.test.ts:509:43)\n    at Promise.then.completed (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\utils.js:333:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\utils.js:259:10)\n    at _callCircusTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:277:40)\n    at _runTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:209:3)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:97:9)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:91:9)\n    at _runTestsForDescribeBlock (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:91:9)\n    at run (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\run.js:31:3)\n    at runAndTransformResultsToJestFormat (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\legacy-code-todo-rewrite\\jestAdapterInit.js:135:21)\n    at jestAdapter (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-config\\node_modules\\jest-circus\\build\\legacy-code-todo-rewrite\\jestAdapter.js:92:19)\n    at runTestInternal (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-runner\\build\\runTest.js:411:16)\n    at runTest (E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest-runner\\build\\runTest.js:499:34)"
+      ]
+    }
+  ],
+  "supplementalGpuIntegration": "docs/evidence/examples/webgl2-gfx-contracts/supplemental-integration-20261011.json",
+  "boundaries": [
+    "169 completed suites have observed execution source SHA equal to current source SHA and observed test titles equal to registered titles",
+    "Film/neon and laser/card fixture caching preserves every production validator call and mutation; their 40 and 51 tests pass",
+    "Launch helper invariant compares complete current SDK hashes before/after module import and option calls; 12 tests pass",
+    "Full-report source was concurrently modified and its 300-second diagnostic attempt did not finish; no static or partial title registration",
+    "The five failures concern examples specification/evidence/Gallery consistency and an old browser-matrix bundle identity; historical evidence was not relabeled",
+    "Specification audit side effect was archived and the original bytes restored after comparison; SDK build counter remains 23"
+  ]
+}

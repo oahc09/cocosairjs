@@ -1,0 +1,1 @@
+{"compilerOptions":{"target":"ES2022","module":"ESNext","moduleResolution":"node","strict":true,"noEmit":true,"skipLibCheck":true,"lib":["ES2022","DOM","DOM.Iterable"],"baseUrl":"../..","paths":{"cocosair":["build/cocosair.module.d.ts"]}},"include":["../../examples/shader-sparkle/src/**/*.ts"]}

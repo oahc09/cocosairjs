@@ -116,7 +116,23 @@ function prepareWorkspace (example, workspace, spec, options = {}) {
     if (!fs.existsSync(file)) { continue; }
     const depth = path.relative(workspace, path.dirname(file)).split(path.sep).filter(Boolean).length;
     const code = fs.readFileSync(file, 'utf8');
-    const fixed = code.replace(/(\.\.\/)+shared\//g, './' + '../'.repeat(depth) + 'shared/');
+    let fixed = code.replace(/(\.\.\/)+shared\//g, './' + '../'.repeat(depth) + 'shared/');
+    // Document-relative fetches back into the original example now resolve at the workspace root.
+    fixed = fixed.replace(/fetch\((['"])\.\.\/([\w-]+)\//g, (match, quote, dir) =>
+      dir === example.dir ? 'fetch(' + quote + './' : match);
+    // Preserve repository recipe imports when relocating an example to an isolated workspace.
+    fixed = fixed.replace(/(\.\.\/)+tools\/recipes\/([\w.-]+)/g, (specifier, parents, name) => {
+      const requested = path.join(REPO, 'tools', 'recipes', name);
+      const source = fs.existsSync(requested) ? requested : requested.replace(/\.js$/, '.ts');
+      const target = path.join(workspace, 'tools', 'recipes', path.basename(source));
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.copyFileSync(source, target);
+      const declaration = requested.replace(/\.js$/, '.d.ts');
+      if (fs.existsSync(declaration)) {
+        fs.copyFileSync(declaration, path.join(path.dirname(target), path.basename(declaration)));
+      }
+      return './' + '../'.repeat(depth) + 'tools/recipes/' + name;
+    });
     if (fixed !== code) { fs.writeFileSync(file, fixed); }
   }
   let html = fs.readFileSync(path.join(workspace, 'index.html'), 'utf8');
@@ -127,13 +143,22 @@ function prepareWorkspace (example, workspace, spec, options = {}) {
       // 与其产出一份"看起来没执行"的假证据，不如拒绝插桩并让门禁显式失败。
       throw new Error(`trace-bypass: 源码直连 /build/cocosair.module.js (${bypass.join(', ')})，逐 API 证据不可信`);
     }
-    const tracedHtml = html.replace('"/build/cocosair.module.js"', `"./${apiTrace.TRACE_FILE_NAME}"`);
+    let tracedHtml = html.replace('"/build/cocosair.module.js"', `"./${apiTrace.TRACE_FILE_NAME}"`);
     if (tracedHtml === html) {
       throw new Error('trace-importmap-rewrite-failed: index.html 没有 "/build/cocosair.module.js" importmap 项，插桩未生效');
     }
-    fs.writeFileSync(path.join(workspace, 'index.html'), tracedHtml);
     const units = apiTrace.claimedUnits([example], () => spec);
-    return { html: tracedHtml, units, trace: apiTrace.writeTraceWorkspace(workspace, units) };
+    const trace = apiTrace.writeTraceWorkspace(workspace, units);
+    if (tracedHtml.includes('"/build/bootstrap.js"')) {
+      // Keep bootstrap lazy: initialize the trace only after the real safe startup completed.
+      const bootstrapTrace = `export * from '/build/bootstrap.js';\nimport { createAirApp as start } from '/build/bootstrap.js';\nexport function createAirApp(...args) {\n  const promise = start(...args);\n  promise.then(async () => {\n    await import('./${apiTrace.TRACE_FILE_NAME}');\n    window.__apiTrace.hit('createAirApp');\n  }, () => {}).catch((error) => console.error('[bootstrap-trace]', error));\n  return promise;\n}\n`;
+      fs.writeFileSync(path.join(workspace, 'bootstrap.traced.js'), bootstrapTrace);
+      tracedHtml = tracedHtml.replace('"/build/bootstrap.js"', '"./bootstrap.traced.js"');
+      trace.bootstrap = { name: 'bootstrap.traced.js', bytes: Buffer.byteLength(bootstrapTrace),
+        hash: require('crypto').createHash('sha256').update(bootstrapTrace).digest('hex') };
+    }
+    fs.writeFileSync(path.join(workspace, 'index.html'), tracedHtml);
+    return { html: tracedHtml, units, trace };
   }
   return { html, trace: null };
 }
@@ -517,7 +542,43 @@ async function runInteractionChecks (example, runtime, spec, beforeCaptureArg) {
       ? `切换「${switched.why}」加载完成 lit=${shot.litRatio.toFixed(4)} differs=${pngDiffers(beforeCapture, shot)}`
       : `${switched.why} 切换后 15s 内未完成加载`));
   }
-  // 逐点击捕获：任一中间帧与初始帧不同即证明真实输入产生了状态变化（切换奇偶性鲁棒）
+  // 逐点击捕获：任一中间帧与初始帧不同即证明真实输入产生了状态变化（切换奇偶性鲁棒）。
+  // 拖动后同时取「立即帧」与「沉淀帧」：短生命周期效果（如轨迹老化 <1s）只在立即帧可见，
+  // 只看沉淀帧会把真实交互误判为无变化。
+  for (const step of steps.filter((s) => s && s.drag)) {
+    const [from, to] = step.drag;
+    await runtime.page.mouse.move(box.x + box.width * from[0], box.y + box.height * from[1]);
+    await runtime.page.mouse.down();
+    await runtime.page.mouse.move(box.x + box.width * to[0], box.y + box.height * to[1], { steps: 8 });
+    await runtime.page.mouse.up();
+    const immediate = await capture(runtime).catch(() => null);
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    after = await capture(runtime);
+    if ((immediate && pngDiffers(beforeCapture, immediate)) || pngDiffers(beforeCapture, after)) { changed = true; }
+    results.push(check('interaction:drag', true, 'real pointer drag completed'));
+  }
+  // 声明了 probe 的步骤必须真实执行示例自有的测试合同（如 __neon.linearProbe / __trail.step）：
+  // 函数在页面内真实运行（真实 GPU 渲染/读回/时钟步进/恢复 pacer），不存在或抛错即 FAIL，绝不静默跳过。
+  // 注意：探针可能处于 step-clock 暂停窗口（下一次 AFTER_DRAW 不再触发），因此探针步骤自身不取帧，
+  // 帧差仍由按钮/select/drag/点击序列的真实捕获判定。
+  for (const step of steps.filter((s) => s && s.probe)) {
+    const called = await runtime.page.evaluate(async (arg) => {
+      let target = window;
+      for (const part of String(arg.probe).split('.')) {
+        target = target && target[part];
+      }
+      if (typeof target !== 'function') { return { ok: false, why: `window.${arg.probe} 不是可执行函数` }; }
+      try {
+        const out = await target(...(arg.args || []));
+        return { ok: true, why: typeof out === 'object' && out !== null ? 'executed' : `executed → ${String(out).slice(0, 60)}` };
+      } catch (error) {
+        return { ok: false, why: `threw: ${String((error && error.message) || error).slice(0, 120)}` };
+      }
+    }, { probe: String(step.probe), args: step.probeArgs || [] });
+    results.push(check('interaction:probe', called.ok, called.ok
+      ? `执行「${step.probe}」${called.why}`
+      : `window.${step.probe} 执行失败：${called.why}`));
+  }
   for (let i = 0; i < clicks; i++) {
     await runtime.page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
     await new Promise((resolve) => setTimeout(resolve, 800));
@@ -661,12 +722,14 @@ async function verifyUiShell (example, workspace, html, specArg) {
 }
 
 async function verifyApp (example, workspace, html, spec, prepared) {
-  const runtime = new BrowserRuntime({ esbuild, repo: REPO, browserType: BROWSER, browserLaunch: BROWSER_LAUNCH });
+  const runtime = new BrowserRuntime({ esbuild, repo: REPO, browserType: BROWSER, browserLaunch: BROWSER_LAUNCH,
+    ...(spec.bench && spec.bench.viewport ? { viewport: spec.bench.viewport } : {}) });
   try {
     if (!html.includes('__bench-prelude')) {
       fs.writeFileSync(path.join(workspace, 'index.html'), html.replace('</body>', '<script src="/__bench-prelude.js"></script></body>'));
     }
-    const channel = await runtime.start({ paths: { workspace } });
+    const channel = await runtime.start({ paths: { workspace }, startupButtonText: spec.bench && spec.bench.startupButtonText,
+      entryQuery: spec.bench && spec.bench.entryQuery });
     await new Promise((resolve) => setTimeout(resolve, SETTLE_MS));
 
     // 页面自报就绪门（r53）：暴露 __trialProbe 的示例以 probe.ready 为功能读回前置
@@ -758,7 +821,8 @@ async function verifyApp (example, workspace, html, spec, prepared) {
     if (!finalCapture) {
       try { finalCapture = await capture(runtime); } catch (e) { /* 取帧失败时下面以 bytes=0 记录为 FAIL 依据 */ }
     }
-    const artifact = finalCapture ? await saveArtifact(example.id, finalCapture.png) : { path: `docs/evidence/examples/${example.id}.png`, bytes: 0 };
+    const artifactId = example.id + (spec.bench && spec.bench.artifactSuffix || '');
+    const artifact = finalCapture ? await saveArtifact(artifactId, finalCapture.png) : { path: `docs/evidence/examples/${artifactId}.png`, bytes: 0 };
     if (artifact.bytes === 0) { all.push(check('screenshot-current', false, 'no frame captured this run (§11 Screenshot Current)')); }
     const exampleDir = path.join(REPO, 'examples', example.dir);
     const failed = all.filter((r) => r.state !== 'PASS');
@@ -799,7 +863,31 @@ function verifyOne (example) {
     const spec = JSON.parse(fs.readFileSync(path.join(REPO, 'examples', example.dir, 'example.json'), 'utf8'));
     const isShell = example.bench && example.bench.mode === 'ui-shell';
     const prepared = prepareWorkspace(example, workspace, spec, { trace: TRACE_ON && !isShell });
-    return isShell ? verifyUiShell(example, workspace, prepared.html, spec) : verifyApp(example, workspace, prepared.html, spec, prepared);
+    if (isShell) { return verifyUiShell(example, workspace, prepared.html, spec); }
+    const primary = await verifyApp(example, workspace, prepared.html, spec, prepared);
+    const variants = [];
+    for (const variant of spec.bench && spec.bench.apiVariants || []) {
+      const variantSpec = { ...spec, scene: { ...spec.scene, expectedGraph: { nodes: variant.nodes } },
+        interaction: { steps: variant.steps }, bench: { ...spec.bench, entryQuery: variant.query,
+          artifactSuffix: '-mode-' + (variants.length + 1) } };
+      variants.push(await verifyApp(example, workspace, prepared.html, variantSpec, prepared));
+    }
+    if (!variants.length) { return primary; }
+    // Every mode retains its complete checks and proof. Only actual executions across these modes
+    // can satisfy an API claim; all non-API assertions from every mode must still pass.
+    const rows = [primary, ...variants];
+    const proof = primary.apiProof.map((p) => rows.flatMap((r) => r.apiProof)
+      .find((q) => q.api === p.api && q.state === 'executed') || p);
+    const checks = rows.flatMap((r, index) => r.validatorResults
+      .filter((v) => v.validatorId !== 'api-executed')
+      .map((v) => ({ ...v, mode: index })));
+    const missing = proof.filter((p) => p.state === 'not-observed');
+    checks.push(check('api-executed', missing.length === 0, missing.length
+      ? 'never executed in any mode: ' + missing.map((p) => p.api).join(',') : 'all claims executed in validated modes'));
+    const failed = checks.filter((v) => v.state !== 'PASS');
+    return { ...primary, result: failed.length ? 'FAIL' : 'PASS', apiProof: proof,
+      validatorResults: checks, errors: failed.map((v) => `${v.validatorId}: ${v.detail}`),
+      modeEvidence: rows.map((r, index) => ({ ...r, query: index ? spec.bench.apiVariants[index - 1].query : '' })) };
   })();
   let timeoutHandle;
   const timer = new Promise((_, reject) => {

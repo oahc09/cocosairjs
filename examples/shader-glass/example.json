@@ -1,0 +1,243 @@
+{
+  "id": "shader-glass",
+  "title": "Glass 原生玻璃",
+  "description": "原生双相机RTT与解析Glass/Vogel片元路线",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "createAirRenderTarget",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "MeshRenderer",
+    "utils.createMesh"
+  ],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "RenderTexture折射、alpha-safe逆预乘与原生两Pass",
+    "points": [
+      "固定来源独立数值与像素校验",
+      "9/27 tap Vogel模糊与色散变体",
+      "sampler/detach/dispose独立释放"
+    ]
+  },
+  "assets": [],
+  "license": {
+    "assets": "纯确定性图案，无外部素材；参考 Glass MIT 通知束见 LICENSE.reference.txt，独立实现见 UPSTREAM.md"
+  },
+  "api": {
+    "primary": [
+      "EffectAsset",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Camera",
+      "Node",
+      "utils.createMesh",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Camera",
+      "Node"
+    ],
+    "forbiddenShortcut": [
+      "shaders runtime/TypeGPU/额外canvas",
+      "独立RAF/第二模拟时钟",
+      "黑底掩盖double-premultiply",
+      "截图相似替代预乘逆转数值证明"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L32",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L337",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L155",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L135",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L140",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L225",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L152",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L120",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L45",
+        "validator": "node-exists"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L42",
+        "validator": "node-exists"
+      }
+    ],
+    "evidenceStatus": "生产执行行与声明validator由采集器校验；实际运行结论见独立Gate，不由元数据自证。"
+  },
+  "effect": {
+    "galleryLifecycle": "RESOLVED_NOT_RUN",
+    "limitations": [
+      "仅解析circle/rounded-box、固定中心与白色高光",
+      "Vogel片元fallback，非Gaussian compute prepass",
+      "固定256² RGBA8/NEAREST子RT",
+      "Gaussian compute/实体设备/长时/Agent Gate未验；六维状态见独立交付"
+    ],
+    "functional": "19 参数 update（shape 跨值变体重建/其余 uniform）、来源切换、暂停/继续/重置/释放",
+    "visual": "256² 预乘子 RT 图案、解析平板折射与九点 Vogel fallback 模糊（色散 27 点）、一次 OETF、透明底直读"
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击 重置",
+        "buttonText": "重置",
+        "expected": "时间与参数回到初始值，画面跳变到初始帧"
+      },
+      {
+        "action": "真实参数更新 scale",
+        "probe": "__glass.set",
+        "probeArgs": [
+          {
+            "shape": "circle",
+            "scale": 1.8,
+            "rotation": 0,
+            "refraction": 1,
+            "thickness": 0.5,
+            "blur": 0,
+            "aberration": 0.5,
+            "innerZoom": 1,
+            "edgeSoftness": 0.1,
+            "lightAngle": 300,
+            "highlight": 0.05,
+            "highlightSoftness": 0.5,
+            "fresnel": 0.2,
+            "fresnelSoftness": 0.5,
+            "tintIntensity": 0,
+            "tintPreserveLuminosity": 1,
+            "tintColor": "#ffffff",
+            "cutout": "none",
+            "sourceKind": "standard"
+          }
+        ],
+        "expected": "公开参数合同真实更新 uniform，画面立即变化"
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__glass.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__glass.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "child-source-camera",
+        "native-camera",
+        "owned-glass-child-1",
+        "owned-glass-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "Default startup scene plus __glass.ready; Gallery validators declared, not yet executed."
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "预乘逆转与透明底直读由 tools/verify/shaders-glass-browser.cjs 采集；本声明不是浏览器 PASS。"
+  },
+  "promotion": {
+    "spec": "7b6c87587774",
+    "source": "953812a8830331bd",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 10,
+    "attested": 0,
+    "units": 10
+  }
+}

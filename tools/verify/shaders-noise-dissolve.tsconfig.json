@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "lib": [
+      "DOM",
+      "ES2022",
+      "DOM.Iterable"
+    ],
+    "baseUrl": "../..",
+    "paths": {
+      "cocosair": [
+        "build/cocosair.module.d.ts"
+      ]
+    }
+  },
+  "include": [
+    "../../examples/shader-noise-dissolve/src/*.ts"
+  ]
+}

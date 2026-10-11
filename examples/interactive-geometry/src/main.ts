@@ -67,6 +67,8 @@ const status = document.querySelector<HTMLElement>('#status')!;
 if (OFFSET) document.getElementById('stage')!.classList.add('offset');
 
 const app = await createAirApp({ canvas });
+// 浏览器矩阵/规格门禁的 bench 合同：会话探针从 window.__airApp 接入运行时。
+(window as unknown as Record<string, unknown>).__airApp = app;
 const scene = new Scene(`interactive-geometry-${MODE}`);
 const clock = createStepClock();
 
@@ -1269,6 +1271,69 @@ if (MODE === 'mesh') createMeshMode();
 else if (MODE === 'cut') createCutMode();
 else createRibbonMode();
 await app.run(scene);
+
+// §25 Lifecycle Contract（资源粒度、惰性）：仅 __lifecycle() 调用时才执行一轮
+// 当前模式全部自有 mesh/material 的 退役（解绑+decRef+销毁，含路由节点）→ 泄漏核对 →
+// 重新执行当前模式创建路径并重注册帧回调。终态 release()（含 app.close）不受影响。
+{
+    const { installAssetLifecycle } = await import('../../shared/asset-lifecycle.js');
+    const namedOwned = () =>
+        ownedAssets().map((asset, index) => ({
+            name: (ownedMeshes.includes(asset as Mesh) ? 'geo-mesh-' : 'geo-material-') + index,
+            ref: asset,
+        }));
+    installAssetLifecycle({
+        label: 'interactive-geometry',
+        hold: () => (released || releasePromise ? [] : namedOwned()),
+        release: () => {
+            if (meshTicker) director.off(Director.EVENT_AFTER_DRAW, meshTicker);
+            director.off(Director.EVENT_AFTER_DRAW, advanceBlade);
+            director.off(Director.EVENT_AFTER_DRAW, tickRibbon);
+            const bound: MeshRenderer[] = [];
+            for (const [mesh, renderer] of [
+                [strokeMesh, strokeRenderer],
+                [cutMesh, cutRenderer],
+                [bladeMesh, bladeRenderer],
+                [cutRenderMesh, cutRenderRenderer],
+            ] as [Mesh | null, MeshRenderer | null][]) {
+                if (mesh && renderer) bound.push(renderer);
+            }
+            for (const node of routeNodes) {
+                const renderer = node.getComponent(MeshRenderer);
+                if (renderer && !bound.includes(renderer)) bound.push(renderer);
+            }
+            for (const renderer of bound) {
+                renderer.mesh = null;
+                renderer.setSharedMaterial(null, 0);
+            }
+            for (const asset of [...ownedMeshes, ...ownedMaterials]) {
+                asset.decRef();
+                asset.destroy();
+            }
+            ownedMeshes.splice(0);
+            ownedMaterials.splice(0);
+            for (const node of routeNodes.splice(0)) {
+                node.removeFromParent();
+                node.destroy();
+            }
+            strokeMesh = null;
+            cutMesh = null;
+            bladeMesh = null;
+            cutRenderMesh = null;
+            strokeRenderer = null;
+            cutRenderer = null;
+            bladeRenderer = null;
+            cutRenderRenderer = null;
+        },
+        reacquire: async () => {
+            if (MODE === 'mesh') createMeshMode();
+            else if (MODE === 'cut') createCutMode();
+            else createRibbonMode();
+            await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+            return namedOwned();
+        },
+    });
+}
 
 if (TEST) {
     game.pause();

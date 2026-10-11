@@ -1,0 +1,161 @@
+{
+  "id": "shader-thin-film",
+  "version": "1.0.0",
+  "title": "Native Thin Film",
+  "category": "rendering",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "使用原生 EffectAsset、SDF 梯度与线性 straight RGBA 构建内侧虹彩",
+    "points": [
+      "cosine phase 周期",
+      "解析梯度与 fwidth AA 分工",
+      "线性核心和显示 OETF 分开",
+      "100 实例自有资产归还"
+    ]
+  },
+  "effect": {
+    "functional": "十参数、暂停、恢复、重置和释放；单一原生帧循环",
+    "visual": "circle 或 rounded-box 的透明内侧虹彩"
+  },
+  "api": {
+    "primary": [
+      "Material.initialize",
+      "EffectAsset.onLoaded",
+      "MeshRenderer.mesh"
+    ],
+    "supporting": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "claims": [
+      "Material.initialize",
+      "EffectAsset.onLoaded",
+      "MeshRenderer.mesh",
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "evidence": [
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L106",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset.onLoaded",
+        "source": "src/main.ts",
+        "sourceLocation": "L94",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer.mesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L132",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L31",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L195",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L536",
+        "validator": "visible-frame"
+      }
+    ],
+    "forbiddenShortcut": [
+      "不得嵌入上游 shaders runtime、TypeGPU 或额外渲染 canvas",
+      "不得以截图相似替代 SDF/梯度/颜色/alpha 独立数值验证",
+      "不得以 readPixels 或 canvas 导出补偿 live resize compositor PNG 未达",
+      "不得把引擎字节计数或 Queue.submit bookkeeping 当作 GPU 物理成本"
+    ]
+  },
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "native-camera",
+        "owned-film-1"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "选择 shape、phase 或 opacity",
+        "expected": "更新原生材质，shape 重建；alpha0 露出背景"
+      },
+      {
+        "action": "执行示例 coreProbe 读回探针",
+        "probe": "__thinFilm.coreProbe",
+        "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__thinFilm.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__thinFilm.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "Shader Effects Inc MIT 数学借鉴；本地解析程序化几何，无外部图像"
+  },
+  "promotion": {
+    "spec": "518d13357d29",
+    "source": "a005a4421efd24c4",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 6,
+    "attested": 0,
+    "units": 6
+  }
+}

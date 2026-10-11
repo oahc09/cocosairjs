@@ -83,8 +83,11 @@ async function boot(): Promise<void> {
     const r = host.getBoundingClientRect();
     if (r.width <= 0 || r.height <= 0) throw Error('STARTUP_CONTAINER_NOT_READY');
     // Safe bootstrap binds native wrappers and density before the deferred runtime import.
-    const safe = await import('cocosair-bootstrap');
+    // 说明符保持运行期解析（index.html importmap）：规格门禁的 bundle 阶段不静态解析边车包。
+    const bootstrapSpecifier = 'cocosair-bootstrap';
+    const safe = (await import(bootstrapSpecifier)) as typeof import('cocosair-bootstrap');
     app = await safe.createAirApp({ canvas, screenMode: 'container', container: host });
+    (window as unknown as Record<string, unknown>).__airApp = app;
     if (disposed) throw Error('CONTAINER_DISPOSED');
     cc = await import('cocosair');
     if (disposed) throw Error('CONTAINER_DISPOSED');
@@ -120,6 +123,59 @@ async function boot(): Promise<void> {
     cc.director.on(cc.Director.EVENT_BEFORE_UPDATE, update);
     cc.director.on(cc.Director.EVENT_AFTER_DRAW, afterDraw);
     await app.run(scene);
+    // §25 Lifecycle Contract（资源粒度、惰性）：仅 __lifecycle() 调用时才执行一轮
+    // container marker mesh/material 的 真实释放 → 泄漏核对 → 重建并重新绑定。
+    // 终态 release()（CONTAINER_DISPOSED/app.close 语义）与会话 gate 生命周期不受影响。
+    {
+        const { installAssetLifecycle } = await import('../../shared/asset-lifecycle.js');
+        const ccNS = cc!;
+        const holdList = () =>
+            disposed || !mesh || !material
+                ? []
+                : [
+                      { name: 'container-mesh', ref: mesh },
+                      { name: 'container-material', ref: material },
+                  ];
+        installAssetLifecycle({
+            label: 'interactive-container',
+            hold: holdList,
+            release: () => {
+                const ownedMesh = mesh,
+                    ownedMaterial = material,
+                    bound = renderer;
+                if (!ownedMesh || !ownedMaterial || !bound) return;
+                mesh = null;
+                material = null;
+                bound.mesh = null;
+                bound.setSharedMaterial(null, 0);
+                ownedMesh.decRef();
+                ownedMaterial.decRef();
+                ownedMesh.destroy();
+                ownedMaterial.destroy();
+            },
+            reacquire: async () => {
+                const nextMesh = ccNS.utils.createMesh({
+                    positions: [-0.3, -0.3, 0, 0.3, -0.3, 0, -0.3, 0.3, 0, 0.3, 0.3, 0],
+                    indices: [0, 1, 2, 1, 3, 2],
+                });
+                nextMesh.addRef();
+                const nextMaterial = new ccNS.Material();
+                nextMaterial.initialize({ effectName: 'builtin-unlit' });
+                nextMaterial.setProperty('mainColor', new ccNS.Color(240, 65, 65, 255));
+                nextMaterial.addRef();
+                mesh = nextMesh;
+                material = nextMaterial;
+                if (renderer) {
+                    renderer.mesh = nextMesh;
+                    renderer.setSharedMaterial(nextMaterial, 0);
+                }
+                return [
+                    { name: 'container-mesh', ref: nextMesh },
+                    { name: 'container-material', ref: nextMaterial },
+                ];
+            },
+        });
+    }
 }
 async function select(tab: string, e?: Event): Promise<void> {
     if (disposed) throw Error('CONTAINER_DISPOSED');

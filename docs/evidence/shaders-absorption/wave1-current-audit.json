@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "shaders-wave1-readonly-audit/1",
+  "executionChannel": "Lead",
+  "baselineAccepted": true,
+  "allRejected": true,
+  "checkedMutations": 19,
+  "browserRunsAdded": 0,
+  "raw": {
+    "path": "output/shaders-absorption/lead-w1-r20-current-audit-attempt2.json",
+    "bytes": 3902,
+    "sha256": "a3fa188f6e04cbcb3688989a76bfca0499b761f938f7df1c4690799deaf2951a"
+  },
+  "gate": {
+    "path": "docs/evidence/shaders-absorption/wave1-current-gate.json",
+    "bytes": 15016,
+    "sha256": "c7722ee06a4c2dd55b0a2f3ca68288995fc3fb723503b9f4f9a9af8e978e0b51"
+  },
+  "failedAttempt": "output/shaders-absorption/lead-w1-r20-current-audit-attempt1-failure.json"
+}

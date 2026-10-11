@@ -1,0 +1,835 @@
+{
+  "schemaVersion": "shaders-wave3/1",
+  "task": "Wave3",
+  "evaluatedAt": "2026-10-11T11:18:12.872Z",
+  "executionChannels": {
+    "implementation": "Orca Worker with Lead review",
+    "refreshCollectionAndAggregation": "Lead"
+  },
+  "status": "PASS",
+  "waveCompleted": true,
+  "nextWaveEligible": true,
+  "projectCompleted": false,
+  "completed": false,
+  "agentGate": "NOT_RUN",
+  "independentGalleryGate": "NOT_RUN",
+  "subset": true,
+  "effects": [
+    {
+      "path": "docs/evidence/shaders-absorption/e07-liquid-metal-current-sdk-r2-gate.json",
+      "bytes": 65727,
+      "sha256": "8e8668ce73f79ece229e6ef22792b0f9e65bf98396794822abd12d14cc8033fa"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e08-cursor-trail-current-sdk-r2-gate.json",
+      "bytes": 49163,
+      "sha256": "0b6487a1e7cb28d5f19756818822b1da75371a719504be2938d6fec52d8ee310"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e09-glass-current-sdk-r2-gate.json",
+      "bytes": 50459,
+      "sha256": "2a0034b6952fc49c3352efb6879ab2bae487fe52e80a9976755f27576bd77c18"
+    }
+  ],
+  "previousWave": {
+    "path": "docs/evidence/shaders-absorption/wave2-current-sdk-r3-gate.json",
+    "bytes": 3819,
+    "sha256": "b164a30284189b117f0708c2710a5dee080a79c75eaeab9e7db100b6e48c6121"
+  },
+  "verifier": {
+    "path": "tools/verify/shaders-wave3-gate.cjs",
+    "bytes": 15634,
+    "sha256": "82e495237921e90fde4eda3c9040c9a7376edb23a1c7404021c9792c38c52411"
+  },
+  "scope": {
+    "effectCount": 3,
+    "dimensionRows": 54,
+    "measuredDimensions": 54,
+    "skippedDimensions": 0,
+    "visualCases": 120,
+    "boundaryCases": 660,
+    "malformedAtomicRejections": 54,
+    "resourceCycles": 900,
+    "liveResizeCases": 9,
+    "performanceProfiles": 36
+  },
+  "sdk": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303581,
+      "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6649142,
+      "sha256": "b7771393b2de0dcc84422b07f4df0703a63d609b3ea8443907cee2f4f4182ab9"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-default-dpr1.png",
+      "bytes": 74158,
+      "sha256": "70b7e0a874af1b5b64c0b346da7cbab69af423d79b71ae7bbf3b110effcdc151"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-box-dpr1.png",
+      "bytes": 54160,
+      "sha256": "80ea6ebb86c97184e35f4fe8666acb09c69bd78039978c4ce7f0a17d8bb465ee"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-turbulence-zero-dpr1.png",
+      "bytes": 23940,
+      "sha256": "f89f16880b2d91b716adba1667605eb2108eed014177d7eccb6948b3334bcc14"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-warp-zero-dpr1.png",
+      "bytes": 71920,
+      "sha256": "ec01f71420f366866be49019932a243dbf940a4ba5462fcf6afab673fafa4a18"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-quality-low-dpr1.png",
+      "bytes": 68686,
+      "sha256": "a5c8203d0d9072b7d5e9eff5c04702225c08184587f80eaa2d66c077b41d667b"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-dispersion-zero-dpr1.png",
+      "bytes": 68686,
+      "sha256": "a5c8203d0d9072b7d5e9eff5c04702225c08184587f80eaa2d66c077b41d667b"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-env-rotation-90-dpr1.png",
+      "bytes": 69038,
+      "sha256": "a8f08b0451c98ee0b609406d09f0c4f0862ac16b38d16a7ba41f0fd8e0ad6b94"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-machined-bevel-dpr1.png",
+      "bytes": 70510,
+      "sha256": "39587585a48468fc70db507cf6a63602166e5f1a6b20e6f528dfd9bee68b561c"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-wide-bevel-dpr1.png",
+      "bytes": 60328,
+      "sha256": "5e63c432401a24e6251e2fe6d870d481213edcdaf62dfaa650b1a5fc68d97c87"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-seed-2-dpr1.png",
+      "bytes": 73400,
+      "sha256": "8118b68d45840605d5963c994a71de21ae38b7d074152cea690e69355488490a"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-background-light-dpr1.png",
+      "bytes": 74285,
+      "sha256": "080e516e31b2875dabe4ce3eec8b9e01a6551d4f3b073acbf53e0fb1acc1e307"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-default-dpr2.png",
+      "bytes": 212265,
+      "sha256": "5ae2fae1ab5205a1585be507864ffa4e59fd7f77a4c7e00695b7a8278027289c"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-box-dpr2.png",
+      "bytes": 156199,
+      "sha256": "b49ada04822af9039dc70beb94e9c9de17b3d4dba5551c03fe7986e54fd8865a"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-live-resize.png",
+      "bytes": 51270,
+      "sha256": "7f1883d04506ca7bdc95dc7eb835f9a43eb9f15158114f254b62b8c686fe4dda"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-temporal-a.png",
+      "bytes": 74158,
+      "sha256": "70b7e0a874af1b5b64c0b346da7cbab69af423d79b71ae7bbf3b110effcdc151"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/chromium-temporal-b.png",
+      "bytes": 74158,
+      "sha256": "067feb0c03e06227cdd9b9db2eb4efa92e11fc04a0a0666ecef60e062a81629a"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-default-dpr1.png",
+      "bytes": 91368,
+      "sha256": "235d63e4114a661cc4229776f09faab007735694a54d85775ced4bbc82e26075"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-box-dpr1.png",
+      "bytes": 68296,
+      "sha256": "3c619eb6c663b07de9b1e81b0a2dcd2c3a52da5fe054c45ff6519c387ed7be94"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-turbulence-zero-dpr1.png",
+      "bytes": 29611,
+      "sha256": "64090a0586e53533ddd42dd2dfc3a284eb5b4a3daf4fffbf3af9dc56015b3424"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-warp-zero-dpr1.png",
+      "bytes": 84579,
+      "sha256": "ed525e289dd9e9adaeb67c11db8f59bceae5223b49a0243704bd0e846d074c72"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-quality-low-dpr1.png",
+      "bytes": 80325,
+      "sha256": "fccb9ea152b1656be661eb4b78670abb1db5a5f742b5a1447ddbac72a197ec37"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-dispersion-zero-dpr1.png",
+      "bytes": 80325,
+      "sha256": "fccb9ea152b1656be661eb4b78670abb1db5a5f742b5a1447ddbac72a197ec37"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-env-rotation-90-dpr1.png",
+      "bytes": 86794,
+      "sha256": "66fa82d375f66c11a046a418016315a142e55c7f1d75b1b18771d15b965f85cc"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-machined-bevel-dpr1.png",
+      "bytes": 86998,
+      "sha256": "1fb0dddefc94ba674c0e8767cff7045b943b8d33817c79a9a7295f7b18c5a25e"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-wide-bevel-dpr1.png",
+      "bytes": 75272,
+      "sha256": "136b9ac23ced86d2118d4270e5ff1f7f6210c71e551aefd0ea7aa05f3d47a4cb"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-seed-2-dpr1.png",
+      "bytes": 87416,
+      "sha256": "c2ef86eedc2c8e2736b03fa49428f0759c97dcb304f0b18afe6c07d9b2f8113d"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-background-light-dpr1.png",
+      "bytes": 91650,
+      "sha256": "5216e547cbfff1de625c4dd410b04c40cf7842bb63c0488856ccd3c6da3314fd"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-default-dpr2.png",
+      "bytes": 275551,
+      "sha256": "72ee233bbd8ab2436d74846ab132c731cbde2d5758a1c391430737f1ef4adaae"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-box-dpr2.png",
+      "bytes": 204964,
+      "sha256": "4c6f5bf15fe765cf08f0fb2de08c1540a3e4f38d3d07811651d5f2976a7277f7"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-live-resize.png",
+      "bytes": 62197,
+      "sha256": "75ea191f0ea63a8d163487ee6ec63913fce47871336518a72d36b7ee171f215d"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-temporal-a.png",
+      "bytes": 91368,
+      "sha256": "235d63e4114a661cc4229776f09faab007735694a54d85775ced4bbc82e26075"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/firefox-temporal-b.png",
+      "bytes": 91397,
+      "sha256": "a4670347b81d303a7ad3bf99a0032a81aa7ac585c92c2fd4276c4e7ca804d5df"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-default-dpr1.png",
+      "bytes": 83551,
+      "sha256": "9cd7c8d9dccfb9ebaa76ab77dca9fef10656fdaad18f5c07df69dae947560ef9"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-box-dpr1.png",
+      "bytes": 61462,
+      "sha256": "9802fa7cf4f122191fd568daebfc7d8cf3cc6d2ed4d9b18c689c87c3aa0ef28d"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-turbulence-zero-dpr1.png",
+      "bytes": 27442,
+      "sha256": "9cfa87b1ee1a87230016620a55f1f67b393792ea14b1210b1401f677c829632d"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-warp-zero-dpr1.png",
+      "bytes": 81545,
+      "sha256": "bb8422daee81b85d4f479f0377740bf4be020c8f9df2d911976be9b1beac95cc"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-quality-low-dpr1.png",
+      "bytes": 74242,
+      "sha256": "b24d463f60a855787561448df3739bdbb1d14c143e5cb3c21fe1929d463485ed"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-dispersion-zero-dpr1.png",
+      "bytes": 74242,
+      "sha256": "b24d463f60a855787561448df3739bdbb1d14c143e5cb3c21fe1929d463485ed"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-env-rotation-90-dpr1.png",
+      "bytes": 77772,
+      "sha256": "286927d3710be4484b1f8873e22410c7b8604db18203f15b31cd31d949d4e7b1"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-machined-bevel-dpr1.png",
+      "bytes": 79374,
+      "sha256": "ccfb25de902c637d9618052ebbfe10679bdd3f08c27e5e397064f352a193b159"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-wide-bevel-dpr1.png",
+      "bytes": 68122,
+      "sha256": "998368223fe72eb3c77f161defbd3221d9fe069b02ccf4798cfaff4c6c914af1"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-seed-2-dpr1.png",
+      "bytes": 82618,
+      "sha256": "c081a76a9b65e9bccfac06a1c65f1469bfc240ddc1dc58a9623bccb633b0a66a"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-background-light-dpr1.png",
+      "bytes": 83768,
+      "sha256": "d5f3bf126243fbbae727f047e147c1f4b2ac161800f5756d98ce795059d2227e"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-default-dpr2.png",
+      "bytes": 240793,
+      "sha256": "7190d8bde1e4c454886f7929937bb776145a30370e04ce96096ec297603f7b46"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-box-dpr2.png",
+      "bytes": 176745,
+      "sha256": "1de55ec3464abbfe4c0cd7ae39c7317707d79f1663f624ec6c7fd44ac6042371"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-live-resize.png",
+      "bytes": 57439,
+      "sha256": "062b4c22687831dfe04817b72466925f51a13f6c81ada490d44433ce0b672ebd"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-temporal-a.png",
+      "bytes": 83551,
+      "sha256": "9cd7c8d9dccfb9ebaa76ab77dca9fef10656fdaad18f5c07df69dae947560ef9"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e07-functional-artifacts/webkit-temporal-b.png",
+      "bytes": 83472,
+      "sha256": "41b04be4b3ed2c9e44ff2161be686c292f987ef3ac6dbf8bced3b177bffd26ae"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-line-dpr1.png",
+      "bytes": 7729,
+      "sha256": "0c5c9d01516f046e0f4417a2e7069b94178f76a03de61c7f01a379c888005124"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-corner-dpr1.png",
+      "bytes": 8328,
+      "sha256": "6ce60193ef4e8a58f82292877aa803ea26a9f0dcc23568d1db8e01872bcde8fd"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-crossing-dpr1.png",
+      "bytes": 28735,
+      "sha256": "8f815284ad0542c3b0e4d31777289053f9260001445a6c2fb45a2b5d33400e42"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-fast-dpr1.png",
+      "bytes": 7546,
+      "sha256": "788e92f65539661805a77fe319ca01df6d51cc3def0962be78d6ced7aa87ed20"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-slow-dpr1.png",
+      "bytes": 6989,
+      "sha256": "c511fce5ca94e47a675ffc0d17aff6eee28d2f9570367d9f16aafb2232fdf694"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-soft-dpr1.png",
+      "bytes": 15125,
+      "sha256": "e3c76ce24683e8f4a2381e7223dfce3d31447e52893ba76e0b75b69cfd1e4337"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-shrink-zero-dpr1.png",
+      "bytes": 8083,
+      "sha256": "5b680f10003f0086eb56f9454b9d52bc9b409a4d37e5301f4050470b329119c6"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-aged-dpr1.png",
+      "bytes": 6055,
+      "sha256": "d133b00b964523d929d1e0d7899fd72005a4dea506a0aee48435658d437c747e"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-expired-dpr1.png",
+      "bytes": 1605,
+      "sha256": "939e15bf7dcc7155853ca6b1126c1ed2e26f50c5d96673fe20509d00658228b0"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-wide-dpr1.png",
+      "bytes": 19684,
+      "sha256": "370e8841207eb45b29ddd3f56552f15adcd86f05238be42cb6363343dc550592"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-line-dpr2.png",
+      "bytes": 18318,
+      "sha256": "8384327d0fc0eef8e9a85676841be10a7a209ea8ed1e7712ba42726e38a1db9e"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-corner-dpr2.png",
+      "bytes": 20697,
+      "sha256": "010af84edc82bdb23dc5b93d2ec7d4073026bf5c717695708e3fb75d5ca879ce"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-trusted-pointer.png",
+      "bytes": 6770,
+      "sha256": "0766017ba7a48b499c6e6aa36377b14159c7dd58c0b14ac8dcb86d9b91b58d7f"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-trusted-touch-dpr2.png",
+      "bytes": 29759,
+      "sha256": "21c2242b528e6a0a8d79c3011bb8a37ac60469ac9891fc0b50a089452ea156bd"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/chromium-live-resize.png",
+      "bytes": 5422,
+      "sha256": "a932fb0cc4f02d77d6c3a9e4c8d9ff6d31695d1e315e89f7eb7e4a3f7307d6e6"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-line-dpr1.png",
+      "bytes": 10792,
+      "sha256": "b68b7f6f6131cf47771e9e5e6481ae346c21e6eb70493a6fe92f1d57df6bcb4e"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-corner-dpr1.png",
+      "bytes": 10785,
+      "sha256": "62677282d5f42858eadb5545b3a24581c057148bd11569807299fd09a3463b36"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-crossing-dpr1.png",
+      "bytes": 35552,
+      "sha256": "6ae99da19afe0ed1156533ef6b2e977267468182671e2f3116205ed15d469703"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-fast-dpr1.png",
+      "bytes": 11088,
+      "sha256": "06238cade5eadcada9ca1142a564d11aebadfd8d1decad0f0691090cfaf3da62"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-slow-dpr1.png",
+      "bytes": 9149,
+      "sha256": "beeb8e0a3714b604ce74f4cafaacc3cff51c1e3fcbbff682897be1884bd0afb7"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-soft-dpr1.png",
+      "bytes": 18194,
+      "sha256": "2327b10c8cfeba9a62736c83acf1fc0cc6f179d5da4c04bbb37161b57ecd4280"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-shrink-zero-dpr1.png",
+      "bytes": 12125,
+      "sha256": "9c978ba3ce51a1738f09a11440b83e006438b2de73db9bfde272acd507e835bf"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-aged-dpr1.png",
+      "bytes": 8623,
+      "sha256": "61aa8dad479904f280ac75cac28192e033d7528f25ccea75eb01683df174df41"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-expired-dpr1.png",
+      "bytes": 1885,
+      "sha256": "f39f5347c2afaeb95305f4310fda947fc683c20de00804c1d22d62158ed9625b"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-wide-dpr1.png",
+      "bytes": 31431,
+      "sha256": "69bb51370ac541df8bd86025e90616f0f0575010004569efe44e9439136126c5"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-line-dpr2.png",
+      "bytes": 31249,
+      "sha256": "bd9aa672cd86a9c14f5ba3c6d987010827cd8c0596f35bc64439edd425afc9c3"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-corner-dpr2.png",
+      "bytes": 27609,
+      "sha256": "9386c8ed36b570a5e875f7052a6516d669b59e8fbb785a9a3c0db430e01e78b9"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-trusted-pointer.png",
+      "bytes": 11106,
+      "sha256": "d6e94973aea49041a28e403876afe7fde04c501c8b35587eb631d4aa14cf9c1b"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-trusted-touch-dpr2.png",
+      "bytes": 48526,
+      "sha256": "98a88affbb0506f946e71ad0412001f98e9639c4a563faea94de7e3e412aa44f"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/firefox-live-resize.png",
+      "bytes": 7056,
+      "sha256": "53bbf70626a908d738f25dbb93ccd19fad8ec77966665aff5ea8f0037137e7bd"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-line-dpr1.png",
+      "bytes": 9029,
+      "sha256": "d70cc3f208c08dc9b48f3a50c3933a7180cee6f6d44843eff7b1e8b1ac2aada8"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-corner-dpr1.png",
+      "bytes": 9598,
+      "sha256": "169b82a7de4902bf79db732a0589543822f45bd81b7451f5d30fcac667f350c8"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-crossing-dpr1.png",
+      "bytes": 31092,
+      "sha256": "5343692d55e1af9a687fa06946b3e02d7d01c229342ac0df7fe4b6947f723194"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-fast-dpr1.png",
+      "bytes": 8327,
+      "sha256": "08cc634238e5e44ba4ea5d2cb7451c36ba18cd2c975a3281223d556b197377d0"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-slow-dpr1.png",
+      "bytes": 7925,
+      "sha256": "c56ac4afad47f785dc5feb3fa678f5954dae76667de363f070e617db34a62bb5"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-soft-dpr1.png",
+      "bytes": 17130,
+      "sha256": "1c34f6572a033cac43aacfb0a60d0f5791841820c1f7c2e36c6c474b1768c3d3"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-shrink-zero-dpr1.png",
+      "bytes": 8974,
+      "sha256": "6e136f6538f9b4582f0839dfd5cb425a871ec58fa40e6d302ed52fc547312cac"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-aged-dpr1.png",
+      "bytes": 6848,
+      "sha256": "df643c35f35ddc611c6e98988ebd1fc215415bbf5abf4d0b66aaa5901c3d4389"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-expired-dpr1.png",
+      "bytes": 2229,
+      "sha256": "bf8f74b8eedefe0a66e2eeb251ff702734ad98709982ce3294095b550ee7539d"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-wide-dpr1.png",
+      "bytes": 20758,
+      "sha256": "40f3211e0344e89ea0ab39848b40267126beca3d86d8618c25c5d27e4c3bbfe7"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-line-dpr2.png",
+      "bytes": 20225,
+      "sha256": "feb2e7031a17568eb1266659668483fc65370336145de999d62796f715524f8a"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-corner-dpr2.png",
+      "bytes": 23102,
+      "sha256": "918cca81544089d9afbf70337987cadd96dc3a1eb93070890860bb0254c12c90"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-trusted-pointer.png",
+      "bytes": 7864,
+      "sha256": "66df36f34f129d9995e83de5e90e44a0eccd5009e5b967acdb4251f454d0ec30"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-trusted-touch-dpr2.png",
+      "bytes": 32269,
+      "sha256": "e978a6a870812a0960c650c5d1c1db6004a99db5fb01f6b01921c37c5569202f"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e08-functional-artifacts/webkit-live-resize.png",
+      "bytes": 6373,
+      "sha256": "ed3d51fc41744ebb6173c2f14a2364edc3f7d6b5c9e0d0c641c7d9b0d73d357c"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-default-dpr1.png",
+      "bytes": 14540,
+      "sha256": "51877739e8bb7a7266db0d6af8b32375a67ac9fe5fdd562a0eb102e152da5469"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-box-dpr1.png",
+      "bytes": 5298,
+      "sha256": "b6048cd04f6fc1cef0971faee2dcad3a50b8a3f6f3527a279841b07c9f1136fd"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-refraction-zero-dpr1.png",
+      "bytes": 13061,
+      "sha256": "c9da1ec23bc0f92da47723a28b5328c5da5bfd5e1400e8319874e8c386adf38e"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-blur-vogel-dpr1.png",
+      "bytes": 21846,
+      "sha256": "e22d4b83d1d442241bc9bbdc2a9aca2e7354e92b6790985a97c271506b06195f"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-blur-no-aberration-dpr1.png",
+      "bytes": 19772,
+      "sha256": "9676506df78d6194a32b855e554b6468b903c6b3b09cf4ed1f646a2dbb5902df"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-aberration-zero-dpr1.png",
+      "bytes": 14173,
+      "sha256": "9954dbb4f2db5ce7f444a38f94af7b4b117ebc9199d148773c6b87cdcd2530d1"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-inner-zoom-dpr1.png",
+      "bytes": 13913,
+      "sha256": "2e2bd2acaf14dbe6ed34bce0a3a000da9210cd964b244acc47bd249ab0ff197f"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-cutout-dpr1.png",
+      "bytes": 14615,
+      "sha256": "3b15444c4b10c84c6e84f8e15c6b74433cbdfc7dd35a56927a94f98f955c22b2"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-highlight-zero-dpr1.png",
+      "bytes": 14117,
+      "sha256": "46fa33c0adb397d6f9c4fc9134308b062802d45e3cebefeccbfefdbb7e5d53b7"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-fresnel-zero-dpr1.png",
+      "bytes": 9382,
+      "sha256": "4fd4e00f359a579f161aa8d3fad57fdc5422fe75cafdd489ff923ececb793a35"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-tint-red-dpr1.png",
+      "bytes": 14773,
+      "sha256": "115ac8412e814aa9464f05c36d2dd1f7925a37d7137846bca8a69b352b3acd66"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-blank-source-dpr1.png",
+      "bytes": 2268,
+      "sha256": "13eb31be062d244003bd5ccf07e98f7313305c56c0435d0e6abe5018c28a9859"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-background-light-dpr1.png",
+      "bytes": 14364,
+      "sha256": "34295c3e652239c8ffe62613cf7df5dfff5294c2cdef1a23460fbe2ac12158b2"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-default-dpr2.png",
+      "bytes": 37073,
+      "sha256": "2093abe105bd6fbcff2913f46829014a549399f7c04de637c5d14899045806e2"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-box-dpr2.png",
+      "bytes": 11825,
+      "sha256": "c93720c7b3cf58e848687bcacf374c2601d2c74571632ee9c5fb5d10a725fe63"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/chromium-live-resize.png",
+      "bytes": 10914,
+      "sha256": "9e87ca023d189329b9d317f3ab799085fbed8c6a7f13f9689d31b22d0a5fa7b3"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-default-dpr1.png",
+      "bytes": 25702,
+      "sha256": "15c55d7c76abdc15d3403155a87e48456c8c2340bfeb2e87e1719c9479b2fa29"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-box-dpr1.png",
+      "bytes": 13891,
+      "sha256": "6bd4a471b32b25fbd44bbc1678c07f2533570cff95818186456cd62a5ecd6745"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-refraction-zero-dpr1.png",
+      "bytes": 24318,
+      "sha256": "69d5bd8644f1b921277fd4ac90150a6c892d308e3445c5cc98635bc32bc78a8c"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-blur-vogel-dpr1.png",
+      "bytes": 33753,
+      "sha256": "645fbc97b169cb0f1cbd0f8f10c92e87f4574ad823caa54065de95e8ab9d5322"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-blur-no-aberration-dpr1.png",
+      "bytes": 30323,
+      "sha256": "2db55a2fc5170b7096c2eda19b05e8c550b84f5d83c4ed58ae5e2821dab97f06"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-aberration-zero-dpr1.png",
+      "bytes": 25210,
+      "sha256": "d69583e46b4556f038c451e87b47a1393a8c165f687c503a858e9ae3690b6a90"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-inner-zoom-dpr1.png",
+      "bytes": 24454,
+      "sha256": "e6d23376ecb7cbaf08c062a148c436adbd45844bb0e4545ef5ebef726ad526f1"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-cutout-dpr1.png",
+      "bytes": 20103,
+      "sha256": "a61aa235bdc4c49fe13de1bcf870d24d3dc20b90b7bfc1e52cc4ca058378613d"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-highlight-zero-dpr1.png",
+      "bytes": 24808,
+      "sha256": "d4eacccbe829220e4b73a8a7c0304c2fc16276c711d1d03a1c62c647b7edbbf9"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-fresnel-zero-dpr1.png",
+      "bytes": 19561,
+      "sha256": "b7650355630b1d4ba223560524f2ab9f881650f1ca26ed9ce39b7a66f990199e"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-tint-red-dpr1.png",
+      "bytes": 25456,
+      "sha256": "761aa32da5267066f1542f90347f2414fbe8b89afa7dd997c6bb545d7dc84e1d"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-blank-source-dpr1.png",
+      "bytes": 2499,
+      "sha256": "0ad909dd9c1d2b5ac4e1ed17c2a4297891b86367b2bd9fa70107b2d4dd9bf14a"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-background-light-dpr1.png",
+      "bytes": 25437,
+      "sha256": "61929ac4b39d5275f2ed2d14dea2b0e8eb942015c3b74ffdaf346ac017745daf"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-default-dpr2.png",
+      "bytes": 79409,
+      "sha256": "7ac2d0babb9c51deb9b0b8374b40e2bdcb8fce47eb4f3a71a4917f89643e4909"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-box-dpr2.png",
+      "bytes": 45998,
+      "sha256": "254ca07aafa01e6235dfabc69498c80601de51cfc8d7eb629754c13dc9051e32"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/firefox-live-resize.png",
+      "bytes": 19566,
+      "sha256": "c0e2d8861f13fb19cae51d0a89b563db31f54162d5e8fc04498f8c7e95c56e34"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-default-dpr1.png",
+      "bytes": 16517,
+      "sha256": "12dada186c6056889c230c32caadc806975de1d209f433751dfc9d721c065f59"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-box-dpr1.png",
+      "bytes": 6116,
+      "sha256": "64afdaa851c355ce489a37031ad224c7cbf90ff631dc8c6a942c2bac638b6634"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-refraction-zero-dpr1.png",
+      "bytes": 14820,
+      "sha256": "604ef2648dbc79316a9e6d297099621bf3c531fee1383faf1df9c07f351cf0ea"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-blur-vogel-dpr1.png",
+      "bytes": 24745,
+      "sha256": "31d020640e7941cd4d573cef9f42845fe393af87ab47f66ac72e0e83dd30c904"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-blur-no-aberration-dpr1.png",
+      "bytes": 21808,
+      "sha256": "96a6f960513552cc5324532f0570977e3a52043269130ed261422085dab5ce30"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-aberration-zero-dpr1.png",
+      "bytes": 16043,
+      "sha256": "6befacaa51d6f9a3ec32b0517e4e21b611a11f5a3670ae3b807f9c0869666309"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-inner-zoom-dpr1.png",
+      "bytes": 15756,
+      "sha256": "931faf8ce385fdace1eb8764f7c52eaa54be83d40010188e0550e20773886314"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-cutout-dpr1.png",
+      "bytes": 16754,
+      "sha256": "95cf5867f1b96e3b9368f11095fc8c83cbed4d979902be8620296a6d18910f1f"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-highlight-zero-dpr1.png",
+      "bytes": 15988,
+      "sha256": "f1e6d9ec1fac7348d3da5d7ba96fca8948b0591b2dde49523900001084cec5a1"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-fresnel-zero-dpr1.png",
+      "bytes": 10371,
+      "sha256": "6a78575ae7de5fb1f73a31e46bf44c8dae947f33959884ba72b0962cce3d3f03"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-tint-red-dpr1.png",
+      "bytes": 16467,
+      "sha256": "77edd0100a9adc48ae80c265cfc19fb629338cf7781823533df779d60ca0eaab"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-blank-source-dpr1.png",
+      "bytes": 2859,
+      "sha256": "431db648a6bac50fda80df074c8c028fdaee2cbb7348fbe6fbef30eb3505744f"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-background-light-dpr1.png",
+      "bytes": 16306,
+      "sha256": "7463faf7d124c1417f793696a7fb0f102d70f3082a8006c4a8b191c5ebc493aa"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-default-dpr2.png",
+      "bytes": 42324,
+      "sha256": "eeb7273396d20752a9a27a7c95ff43f42304c653c44beec46b50055d529fd5f0"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-box-dpr2.png",
+      "bytes": 14042,
+      "sha256": "89f6dcdb84899a60eb749937af45276ac651095cc20f2e2a5b826f3cdf55654b"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w3-r1-e09-functional-artifacts/webkit-live-resize.png",
+      "bytes": 12353,
+      "sha256": "f05972fe35e71ae047de83faea1d32621d9008d5bca0452facdd97495dcb6b14"
+    }
+  ],
+  "screenshotCount": 141,
+  "actualAuditBindings": [
+    {
+      "path": "docs/evidence/shaders-absorption/e07-liquid-metal-current-sdk-r2-actual-audit.json",
+      "bytes": 65628,
+      "sha256": "68199791641540c188a7e6ff75f65e7d585b89c081b8d26a1d508cf4ecb9a7de"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e08-cursor-trail-current-sdk-r2-actual-audit.json",
+      "bytes": 46720,
+      "sha256": "a0bead065c208b00bacce86bd5da9152689a9cf884c4106f229c2ab03906db94"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e09-glass-current-sdk-r2-actual-audit.json",
+      "bytes": 55779,
+      "sha256": "da08c613a05e10c8baf6f291676fb90d55fdc651244447c70051f0354f2451ec"
+    }
+  ],
+  "closureInputs": [
+    {
+      "path": "tools/verify/shaders-current-sdk-wave-chain.cjs",
+      "bytes": 17077,
+      "sha256": "4dcd34d021f4e03388f8deeefd78a108dc1853f00bc4c88847cce3a96cae9edd"
+    },
+    {
+      "path": "tools/verify/shaders-wave1-gate.cjs",
+      "bytes": 12804,
+      "sha256": "83f913994cdb8feaea44503969a1a52f4a5d620f08c1ffeb849f83a0ec56df73"
+    },
+    {
+      "path": "tools/verify/shaders-wave2-gate.cjs",
+      "bytes": 10705,
+      "sha256": "55a05f922f150ffa86e1d54ab13462de3aac31ae508eec8750aac42e74a2a6e1"
+    },
+    {
+      "path": "tools/verify/shaders-wave3-gate.cjs",
+      "bytes": 15634,
+      "sha256": "82e495237921e90fde4eda3c9040c9a7376edb23a1c7404021c9792c38c52411"
+    },
+    {
+      "path": "tools/verify/shaders-cursor-trail-gate.cjs",
+      "bytes": 8693,
+      "sha256": "cca7a20cfe50193e6d43d2ae2aec3d79069b4a4a6e82e8768442ab853d76d96d"
+    },
+    {
+      "path": "tools/verify/shaders-glass-gate.cjs",
+      "bytes": 4860,
+      "sha256": "0a0e32a04c0d321b11a16d0d4b4268d376c7566a773b8ab5169f8e70053f19a7"
+    }
+  ],
+  "limitations": [
+    "Frozen native analytic subset; not release readiness or upstream platform completeness",
+    "Independent Gallery/Agent/physical device/long-run/multitab gates remain NOT_RUN",
+    "Historical evidence remains unchanged; current source and SDK verified independently"
+  ]
+}

@@ -1,0 +1,909 @@
+{
+  "schemaVersion": "shaders-wave1-performance-followup/1",
+  "effect": "E02",
+  "executionChannel": "Orca Worker",
+  "reviewChannel": "Lead",
+  "reviewedAt": "2026-10-09T07:52:21.578Z",
+  "scope": {
+    "gate": "Performance",
+    "profiles": 9,
+    "measured": 9,
+    "skipped": 0
+  },
+  "performanceStatus": "PASS",
+  "effectStatus": "BLOCKED",
+  "waveStatus": "BLOCKED",
+  "agentGate": "NOT_RUN",
+  "subset": true,
+  "completed": false,
+  "rawReport": {
+    "path": "output/shaders-absorption/worker-w1-r5-e02-perf.json",
+    "bytes": 7198529,
+    "sha256": "866e3b18597944c977579997ca76d3c901da7d9db43c9b4aca093470c068fc3d"
+  },
+  "driver": {
+    "path": "output/shaders-absorption/worker-w1-r5-driver.json",
+    "bytes": 3264,
+    "sha256": "f3c6959f40c3134da1eb6f7390d329a01a70ad6be8d85618e7634e9cac5be601"
+  },
+  "rawLog": {
+    "path": "output/shaders-absorption/worker-w1-r5-raw.log",
+    "bytes": 488,
+    "sha256": "0d324bf26bcaaf8d98e9ba38d68f3674f1fd76b4c04d50865d4d7216320b2f6e"
+  },
+  "verifyLog": {
+    "path": "output/shaders-absorption/worker-w1-r5-verify.log",
+    "bytes": 24,
+    "sha256": "262a0828df0ea4e61afdc0f0e34538376e5d6de950a8f3079645c37568f489f4"
+  },
+  "collectorInputs": [
+    {
+      "path": "examples/shader-thin-film/src/main.ts",
+      "bytes": 17744,
+      "sha256": "aaad39f5c8cc28f0236c7534ff1c2b6a29420a10c428c8b66021e78147bd84df"
+    },
+    {
+      "path": "examples/shader-thin-film/src/parameters.ts",
+      "bytes": 1626,
+      "sha256": "0278e382e51604461caf4dab160dc130f0d7ff2ee0768e3f7e149fb168ae379b"
+    },
+    {
+      "path": "examples/shader-thin-film/src/film.frag",
+      "bytes": 1948,
+      "sha256": "a931f5ee6a2b237658043481d4d7c9332b2f8829b8f202a81da94efa08cf52ae"
+    },
+    {
+      "path": "examples/shader-thin-film/src/effect.generated.ts",
+      "bytes": 8538,
+      "sha256": "c26e267a4a0d335c88212f18860f037ecd93e28481f49feeec90ca5792ed0bd7"
+    },
+    {
+      "path": "examples/shader-thin-film/parameters.json",
+      "bytes": 2140,
+      "sha256": "3dbdcec85142c858c599902d842a45fd2ff4b575749880b4b57a8ddcb7d29cb7"
+    },
+    {
+      "path": "examples/shader-thin-film/index.html",
+      "bytes": 1027,
+      "sha256": "cc2a1f015cbcc03a47f2e0da94a284bd5ce5690aed8fa82b502d8d2215d576e7"
+    },
+    {
+      "path": "examples/shader-thin-film/generate-effect.cjs",
+      "bytes": 1793,
+      "sha256": "bfe44e305623128e35037285f3c7dfdd740abcabb9dbb15ae9a38c941b16feba"
+    },
+    {
+      "path": "examples/shared/shader-blocks.js",
+      "bytes": 8627,
+      "sha256": "31e9577ae7f99a740f3053550435c78278b644c466397f6b2588c3404e4b22ab"
+    },
+    {
+      "path": "tools/verify/shaders-thin-film-oracle.cjs",
+      "bytes": 6591,
+      "sha256": "1635b6ff2f3dbf49f4cb8b18a09e39b06d4bd71789f46f108d57fa0db5995a93"
+    },
+    {
+      "path": "tools/verify/shaders-thin-film-browser.cjs",
+      "bytes": 22074,
+      "sha256": "1716cdc7236dded3c5ec0297268093d2d67d866ef0f4a68cd328516ec79dc953"
+    },
+    {
+      "path": "tools/verify/shaders-thin-film.tsconfig.json",
+      "bytes": 348,
+      "sha256": "58759061254b2ef67b5283fb67eb287291f68cdbb16be8878f2252ba3feb2a3a"
+    },
+    {
+      "path": "tools/verify/shaders-thin-film-performance.cjs",
+      "bytes": 3682,
+      "sha256": "566aabbdaecf566dcba6593203367ce3fe606330f8f6aab3e58be2c28fe80a6c"
+    },
+    {
+      "path": "tools/verify/shaders-browser-environment.cjs",
+      "bytes": 10656,
+      "sha256": "bc39fdb9222b9b95a5b8d7217462d7c79ab488d23417d465e2aab0fee4e35337"
+    },
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6631057,
+      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303518,
+      "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+    }
+  ],
+  "baseline": {
+    "ok": true,
+    "errors": []
+  },
+  "audit": {
+    "count": 17,
+    "rejected": 17,
+    "browserRunsAdded": 0
+  },
+  "osExitCode": 0,
+  "signal": null,
+  "walltimeMs": 90874,
+  "inputsCurrent": true,
+  "cleanup": {
+    "proxyClosed": true,
+    "serverClosed": true,
+    "errors": []
+  },
+  "percentileMethod": "nearest rank; CPU draw dispatch is not GPU elapsed; native frame intervals are not compositor presentation",
+  "rows": [
+    {
+      "browser": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "profile": {
+        "id": "720p",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "dpr": 1
+      },
+      "framesTotal": 358,
+      "warmupFrames": 30,
+      "steadyFrames": 328,
+      "steadyDurationSeconds": 5.466290000021457,
+      "environment": {
+        "id": "after-viewport-repair",
+        "dpr": 1,
+        "coi": true,
+        "css": {
+          "w": 1280,
+          "h": 720
+        },
+        "backing": {
+          "w": 1280,
+          "h": 720
+        }
+      },
+      "clockMinimumMs": 0.004999995231628418,
+      "clockSamples": 504,
+      "cpuUpdateP50Ms": 0.06499999761581421,
+      "cpuEncodingP50Ms": 0.04500001668930054,
+      "cpuDrawDispatchP50Ms": 0.004999995231628418,
+      "queueBookkeepingP50Ms": 0,
+      "frameIntervalP50Ms": 16.64000004529953,
+      "release": {
+        "retirement": {
+          "id": 1,
+          "idempotent": false,
+          "rendererUnbound": true,
+          "nodeRemoved": true,
+          "refs": [
+            {
+              "kind": "mesh",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "material",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "effect",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            }
+          ]
+        },
+        "receipt": {
+          "status": "released",
+          "scene": "Node.535",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "listenerAdds": 3,
+        "listenerRemoves": 3,
+        "sceneCleared": true
+      },
+      "pageClosed": true
+    },
+    {
+      "browser": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "profile": {
+        "id": "1080p",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "dpr": 1
+      },
+      "framesTotal": 359,
+      "warmupFrames": 30,
+      "steadyFrames": 329,
+      "steadyDurationSeconds": 5.4835200000405315,
+      "environment": {
+        "id": "after-viewport-repair",
+        "dpr": 1,
+        "coi": true,
+        "css": {
+          "w": 1920,
+          "h": 1080
+        },
+        "backing": {
+          "w": 1920,
+          "h": 1080
+        }
+      },
+      "clockMinimumMs": 0.004999995231628418,
+      "clockSamples": 535,
+      "cpuUpdateP50Ms": 0.06000000238418579,
+      "cpuEncodingP50Ms": 0.04500001668930054,
+      "cpuDrawDispatchP50Ms": 0.004999995231628418,
+      "queueBookkeepingP50Ms": 0,
+      "frameIntervalP50Ms": 16.6700000166893,
+      "release": {
+        "retirement": {
+          "id": 1,
+          "idempotent": false,
+          "rendererUnbound": true,
+          "nodeRemoved": true,
+          "refs": [
+            {
+              "kind": "mesh",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "material",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "effect",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            }
+          ]
+        },
+        "receipt": {
+          "status": "released",
+          "scene": "Node.717",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "listenerAdds": 3,
+        "listenerRemoves": 3,
+        "sceneCleared": true
+      },
+      "pageClosed": true
+    },
+    {
+      "browser": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "profile": {
+        "id": "mobile-dpr",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dpr": 2
+      },
+      "framesTotal": 358,
+      "warmupFrames": 30,
+      "steadyFrames": 328,
+      "steadyDurationSeconds": 5.465979999959469,
+      "environment": {
+        "id": "after-viewport-repair",
+        "dpr": 2,
+        "coi": true,
+        "css": {
+          "w": 390,
+          "h": 844
+        },
+        "backing": {
+          "w": 780,
+          "h": 1688
+        }
+      },
+      "clockMinimumMs": 0.004999995231628418,
+      "clockSamples": 539,
+      "cpuUpdateP50Ms": 0.06000000238418579,
+      "cpuEncodingP50Ms": 0.04500001668930054,
+      "cpuDrawDispatchP50Ms": 0.004999995231628418,
+      "queueBookkeepingP50Ms": 0,
+      "frameIntervalP50Ms": 16.625,
+      "release": {
+        "retirement": {
+          "id": 1,
+          "idempotent": false,
+          "rendererUnbound": true,
+          "nodeRemoved": true,
+          "refs": [
+            {
+              "kind": "mesh",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "material",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "effect",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            }
+          ]
+        },
+        "receipt": {
+          "status": "released",
+          "scene": "Node.736",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "listenerAdds": 3,
+        "listenerRemoves": 3,
+        "sceneCleared": true
+      },
+      "pageClosed": true
+    },
+    {
+      "browser": "firefox",
+      "browserVersion": "155.0",
+      "profile": {
+        "id": "720p",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "dpr": 1
+      },
+      "framesTotal": 358,
+      "warmupFrames": 30,
+      "steadyFrames": 328,
+      "steadyDurationSeconds": 5.465979999999999,
+      "environment": {
+        "id": "after-viewport-repair",
+        "dpr": 1,
+        "coi": true,
+        "css": {
+          "w": 1280,
+          "h": 720
+        },
+        "backing": {
+          "w": 1280,
+          "h": 720
+        }
+      },
+      "clockMinimumMs": 0.01999999999998181,
+      "clockSamples": 62,
+      "cpuUpdateP50Ms": 0.06000000000040018,
+      "cpuEncodingP50Ms": 0.040000000000873115,
+      "cpuDrawDispatchP50Ms": 0,
+      "queueBookkeepingP50Ms": 0,
+      "frameIntervalP50Ms": 16.659999999999854,
+      "release": {
+        "retirement": {
+          "id": 1,
+          "idempotent": false,
+          "rendererUnbound": true,
+          "nodeRemoved": true,
+          "refs": [
+            {
+              "kind": "mesh",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "material",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "effect",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            }
+          ]
+        },
+        "receipt": {
+          "status": "released",
+          "scene": "Node.535",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "listenerAdds": 3,
+        "listenerRemoves": 3,
+        "sceneCleared": true
+      },
+      "pageClosed": true
+    },
+    {
+      "browser": "firefox",
+      "browserVersion": "155.0",
+      "profile": {
+        "id": "1080p",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "dpr": 1
+      },
+      "framesTotal": 358,
+      "warmupFrames": 30,
+      "steadyFrames": 328,
+      "steadyDurationSeconds": 5.46678,
+      "environment": {
+        "id": "after-viewport-repair",
+        "dpr": 1,
+        "coi": true,
+        "css": {
+          "w": 1920,
+          "h": 1080
+        },
+        "backing": {
+          "w": 1920,
+          "h": 1080
+        }
+      },
+      "clockMinimumMs": 0.01999999999998181,
+      "clockSamples": 57,
+      "cpuUpdateP50Ms": 0.07999999999992724,
+      "cpuEncodingP50Ms": 0.05999999999994543,
+      "cpuDrawDispatchP50Ms": 0,
+      "queueBookkeepingP50Ms": 0,
+      "frameIntervalP50Ms": 16.67999999999938,
+      "release": {
+        "retirement": {
+          "id": 1,
+          "idempotent": false,
+          "rendererUnbound": true,
+          "nodeRemoved": true,
+          "refs": [
+            {
+              "kind": "mesh",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "material",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "effect",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            }
+          ]
+        },
+        "receipt": {
+          "status": "released",
+          "scene": "Node.502",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "listenerAdds": 3,
+        "listenerRemoves": 3,
+        "sceneCleared": true
+      },
+      "pageClosed": true
+    },
+    {
+      "browser": "firefox",
+      "browserVersion": "155.0",
+      "profile": {
+        "id": "mobile-dpr",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dpr": 2
+      },
+      "framesTotal": 310,
+      "warmupFrames": 30,
+      "steadyFrames": 280,
+      "steadyDurationSeconds": 5.39968,
+      "environment": {
+        "id": "after-viewport-repair",
+        "dpr": 2,
+        "coi": true,
+        "css": {
+          "w": 390,
+          "h": 844
+        },
+        "backing": {
+          "w": 780,
+          "h": 1688
+        }
+      },
+      "clockMinimumMs": 0.01999999999998181,
+      "clockSamples": 59,
+      "cpuUpdateP50Ms": 0.09999999999990905,
+      "cpuEncodingP50Ms": 0.05999999999994543,
+      "cpuDrawDispatchP50Ms": 0,
+      "queueBookkeepingP50Ms": 0,
+      "frameIntervalP50Ms": 16.779999999999745,
+      "release": {
+        "retirement": {
+          "id": 1,
+          "idempotent": false,
+          "rendererUnbound": true,
+          "nodeRemoved": true,
+          "refs": [
+            {
+              "kind": "mesh",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "material",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "effect",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            }
+          ]
+        },
+        "receipt": {
+          "status": "released",
+          "scene": "Node.365",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "listenerAdds": 3,
+        "listenerRemoves": 3,
+        "sceneCleared": true
+      },
+      "pageClosed": true
+    },
+    {
+      "browser": "webkit",
+      "browserVersion": "26.6",
+      "profile": {
+        "id": "720p",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "dpr": 1
+      },
+      "framesTotal": 358,
+      "warmupFrames": 30,
+      "steadyFrames": 328,
+      "steadyDurationSeconds": 5.483499999999999,
+      "environment": {
+        "id": "after-viewport-repair",
+        "dpr": 1,
+        "coi": true,
+        "css": {
+          "w": 1280,
+          "h": 720
+        },
+        "backing": {
+          "w": 1280,
+          "h": 720
+        }
+      },
+      "clockMinimumMs": 0.019999999999527063,
+      "clockSamples": 126,
+      "cpuUpdateP50Ms": 0.06000000000040018,
+      "cpuEncodingP50Ms": 0.07999999999992724,
+      "cpuDrawDispatchP50Ms": 0,
+      "queueBookkeepingP50Ms": 0,
+      "frameIntervalP50Ms": 16.11999999999989,
+      "release": {
+        "retirement": {
+          "id": 1,
+          "idempotent": false,
+          "rendererUnbound": true,
+          "nodeRemoved": true,
+          "refs": [
+            {
+              "kind": "mesh",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "material",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "effect",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            }
+          ]
+        },
+        "receipt": {
+          "status": "released",
+          "scene": "Node.376",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "listenerAdds": 3,
+        "listenerRemoves": 3,
+        "sceneCleared": true
+      },
+      "pageClosed": true
+    },
+    {
+      "browser": "webkit",
+      "browserVersion": "26.6",
+      "profile": {
+        "id": "1080p",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "dpr": 1
+      },
+      "framesTotal": 318,
+      "warmupFrames": 30,
+      "steadyFrames": 288,
+      "steadyDurationSeconds": 5.384640000000001,
+      "environment": {
+        "id": "after-viewport-repair",
+        "dpr": 1,
+        "coi": true,
+        "css": {
+          "w": 1920,
+          "h": 1080
+        },
+        "backing": {
+          "w": 1920,
+          "h": 1080
+        }
+      },
+      "clockMinimumMs": 0.019999999999527063,
+      "clockSamples": 113,
+      "cpuUpdateP50Ms": 0.06000000000130967,
+      "cpuEncodingP50Ms": 0.07999999999992724,
+      "cpuDrawDispatchP50Ms": 0,
+      "queueBookkeepingP50Ms": 0,
+      "frameIntervalP50Ms": 18.32000000000062,
+      "release": {
+        "retirement": {
+          "id": 1,
+          "idempotent": false,
+          "rendererUnbound": true,
+          "nodeRemoved": true,
+          "refs": [
+            {
+              "kind": "mesh",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "material",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "effect",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            }
+          ]
+        },
+        "receipt": {
+          "status": "released",
+          "scene": "Node.642",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "listenerAdds": 3,
+        "listenerRemoves": 3,
+        "sceneCleared": true
+      },
+      "pageClosed": true
+    },
+    {
+      "browser": "webkit",
+      "browserVersion": "26.6",
+      "profile": {
+        "id": "mobile-dpr",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dpr": 2
+      },
+      "framesTotal": 356,
+      "warmupFrames": 30,
+      "steadyFrames": 326,
+      "steadyDurationSeconds": 5.4785200000000005,
+      "environment": {
+        "id": "after-viewport-repair",
+        "dpr": 2,
+        "coi": true,
+        "css": {
+          "w": 390,
+          "h": 844
+        },
+        "backing": {
+          "w": 780,
+          "h": 1688
+        }
+      },
+      "clockMinimumMs": 0.019999999999527063,
+      "clockSamples": 109,
+      "cpuUpdateP50Ms": 0.06000000000040018,
+      "cpuEncodingP50Ms": 0.07999999999992724,
+      "cpuDrawDispatchP50Ms": 0,
+      "queueBookkeepingP50Ms": 0,
+      "frameIntervalP50Ms": 14.159999999999854,
+      "release": {
+        "retirement": {
+          "id": 1,
+          "idempotent": false,
+          "rendererUnbound": true,
+          "nodeRemoved": true,
+          "refs": [
+            {
+              "kind": "mesh",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "material",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            },
+            {
+              "kind": "effect",
+              "before": 1,
+              "after": 0,
+              "uuid": ""
+            }
+          ]
+        },
+        "receipt": {
+          "status": "released",
+          "scene": "Node.353",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "listenerAdds": 3,
+        "listenerRemoves": 3,
+        "sceneCleared": true
+      },
+      "pageClosed": true
+    }
+  ],
+  "limitations": [
+    "WebKit live-resize compositor remains blocked; not a complete Engine/Wave/Agent Gate",
+    "HTTP-isolated diagnostic measurement, not ordinary nonisolated-page acceptance",
+    "Viewport simulation, not a physical mobile-device run",
+    "GPU physical memory unavailable",
+    "Historical failed and drifted attempts preserved; deleted R4 accidental attempt remains MISSING"
+  ]
+}

@@ -1,0 +1,735 @@
+{
+  "schema": "webgl2-gfx-remediation-integration/1",
+  "measuredAt": "2026-10-10T17:07:28.636Z",
+  "scope": "Nine core contract repairs, directed dev/min public-gfx GPU suite, eleven isolated causal controls, and ordinary GPU regressions",
+  "completed": true,
+  "directedGpuPassed": true,
+  "currentFingerprintsVerified": true,
+  "releaseReady": false,
+  "builds": {
+    "development": 22,
+    "minified": 23
+  },
+  "reports": [
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/final-20261011-dev22-attempt2.json",
+      "sha256": "3f65d9f06ff702de6481d07b8215eca7f8c1a6f116b574569b12032b28cfa188",
+      "kind": "positive",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS",
+          "cases": 139,
+          "failedCases": []
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS",
+          "cases": 139,
+          "failedCases": []
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS",
+          "cases": 139,
+          "failedCases": []
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/final-20261011-min23-attempt2.json",
+      "sha256": "fb560e8e4815cb2d95a5055c0aca8ce486a6a0f0535b13981cb85405bab4d8f2",
+      "kind": "positive",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS",
+          "cases": 139,
+          "failedCases": []
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS",
+          "cases": 139,
+          "failedCases": []
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS",
+          "cases": 139,
+          "failedCases": []
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/regressions-candidate-20261011-b.json",
+      "sha256": "c329803dbc43a80e64acfe09ee67ec6c1e83365778a6aa09f224a5aab43fde9f",
+      "kind": "positive",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS",
+          "cases": 2,
+          "failedCases": []
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS",
+          "cases": 2,
+          "failedCases": []
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS",
+          "cases": 2,
+          "failedCases": []
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-base-attempt2.json",
+      "sha256": "5b931f0277aebc764105a45d382313abb6a3ea7c7d01a00259361e945565bd26",
+      "kind": "positive",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS",
+          "cases": 139,
+          "failedCases": []
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS",
+          "cases": 139,
+          "failedCases": []
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS",
+          "cases": 139,
+          "failedCases": []
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-half-float-capability-attempt2.json",
+      "sha256": "447b8441b0e41ac8ac2363feb897ca0e4082f58a38f174f9eaca8a8d763ee183",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 4,
+          "failedCases": [
+            "WGL-01/half-float-linear-capability",
+            "WGL-01/AirRenderTarget-explicit-hdr-linear"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 4,
+          "failedCases": [
+            "WGL-01/half-float-linear-capability",
+            "WGL-01/AirRenderTarget-explicit-hdr-linear"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 4,
+          "failedCases": [
+            "WGL-01/half-float-linear-capability",
+            "WGL-01/AirRenderTarget-explicit-hdr-linear"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-comparison-mode-attempt2.json",
+      "sha256": "6e345f2aa8aa042cdd92e89bc4df5e62f1ed753840e50eb048de9e3af9de8f39",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 6,
+          "failedCases": [
+            "WGL-02/less-comparison-real-sampler-state",
+            "WGL-02/less-white",
+            "WGL-02/less-equal-black",
+            "WGL-02/greater-black",
+            "WGL-02/never-black",
+            "WGL-02/comparison-sampler-destroy-and-cache-recreate"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 6,
+          "failedCases": [
+            "WGL-02/less-comparison-real-sampler-state",
+            "WGL-02/less-white",
+            "WGL-02/less-equal-black",
+            "WGL-02/greater-black",
+            "WGL-02/never-black",
+            "WGL-02/comparison-sampler-destroy-and-cache-recreate"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 6,
+          "failedCases": [
+            "WGL-02/less-comparison-real-sampler-state",
+            "WGL-02/less-white",
+            "WGL-02/less-equal-black",
+            "WGL-02/greater-black",
+            "WGL-02/never-black",
+            "WGL-02/comparison-sampler-destroy-and-cache-recreate"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-anisotropy-parameter-attempt2.json",
+      "sha256": "7e44ba2b19ee66179cfedcb76a4d86cf69191ea70e413c22f7985194f3eaa827",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 9,
+          "failedCases": [
+            "WGL-03/anisotropy-four-real-sampler-state",
+            "WGL-03/anisotropy-16",
+            "WGL-03/anisotropy-1000"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 9,
+          "failedCases": [
+            "WGL-03/anisotropy-four-real-sampler-state",
+            "WGL-03/anisotropy-16",
+            "WGL-03/anisotropy-1000"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 9,
+          "failedCases": [
+            "WGL-03/anisotropy-four-real-sampler-state",
+            "WGL-03/anisotropy-16",
+            "WGL-03/anisotropy-1000"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-bias-enable-attempt2.json",
+      "sha256": "7ba5b5b7d75b559c16bfb3becc9bbcdd97fdee51885d36ca0282061b64708195",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 13,
+          "failedCases": [
+            "WGL-04/static-state",
+            "WGL-04/dynamic-state",
+            "WGL-04/constant-plane-static",
+            "WGL-04/constant-plane-dynamic",
+            "WGL-04/slope-tilted-static",
+            "WGL-04/slope-tilted-dynamic"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 13,
+          "failedCases": [
+            "WGL-04/static-state",
+            "WGL-04/dynamic-state",
+            "WGL-04/constant-plane-static",
+            "WGL-04/constant-plane-dynamic",
+            "WGL-04/slope-tilted-static",
+            "WGL-04/slope-tilted-dynamic"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 13,
+          "failedCases": [
+            "WGL-04/static-state",
+            "WGL-04/dynamic-state",
+            "WGL-04/constant-plane-static",
+            "WGL-04/constant-plane-dynamic",
+            "WGL-04/slope-tilted-static",
+            "WGL-04/slope-tilted-dynamic"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-bias-static-order-attempt2.json",
+      "sha256": "6c9fac365fa27a795af4117308844ec84c128daabc4960a5cf482fb4419fd01a",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 13,
+          "failedCases": [
+            "WGL-04/static-state",
+            "WGL-04/constant-plane-static",
+            "WGL-04/slope-plane-static"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 13,
+          "failedCases": [
+            "WGL-04/static-state",
+            "WGL-04/constant-plane-static",
+            "WGL-04/slope-plane-static"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 13,
+          "failedCases": [
+            "WGL-04/static-state",
+            "WGL-04/constant-plane-static",
+            "WGL-04/slope-plane-static"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-bias-dynamic-order-attempt2.json",
+      "sha256": "ba81039bf320c1fec63a072d8e083c82a98a69a3f65a4004ba49b76855e9ad28",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 13,
+          "failedCases": [
+            "WGL-04/dynamic-state",
+            "WGL-04/constant-plane-dynamic",
+            "WGL-04/slope-plane-dynamic"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 13,
+          "failedCases": [
+            "WGL-04/dynamic-state",
+            "WGL-04/constant-plane-dynamic",
+            "WGL-04/slope-plane-dynamic"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 13,
+          "failedCases": [
+            "WGL-04/dynamic-state",
+            "WGL-04/constant-plane-dynamic",
+            "WGL-04/slope-plane-dynamic"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-integer-external-format-attempt2.json",
+      "sha256": "f940b4059a421b946779e34538cec40957c6e5ea6e0c7144a31c869abed9c379",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 39,
+          "failedCases": [
+            "WGL-05/integer-upload-and-native-integer-sampling",
+            "WGL-05/integer-upload-u8",
+            "WGL-05/integer-upload-i8",
+            "WGL-05/integer-upload-u16",
+            "WGL-05/integer-upload-i16",
+            "WGL-05/integer-upload-i32",
+            "WGL-05/R8UI-channel-width-sample",
+            "WGL-05/RG8UI-channel-width-sample",
+            "WGL-05/RGB8UI-channel-width-sample",
+            "WGL-05/RGBA8UI-channel-width-sample",
+            "WGL-05/R8I-channel-width-sample",
+            "WGL-05/RG8I-channel-width-sample",
+            "WGL-05/RGB8I-channel-width-sample",
+            "WGL-05/RGBA8I-channel-width-sample",
+            "WGL-05/R16UI-channel-width-sample",
+            "WGL-05/RG16UI-channel-width-sample",
+            "WGL-05/RGB16UI-channel-width-sample",
+            "WGL-05/RGBA16UI-channel-width-sample",
+            "WGL-05/R16I-channel-width-sample",
+            "WGL-05/RG16I-channel-width-sample",
+            "WGL-05/RGB16I-channel-width-sample",
+            "WGL-05/RGBA16I-channel-width-sample",
+            "WGL-05/R32UI-channel-width-sample",
+            "WGL-05/RG32UI-channel-width-sample",
+            "WGL-05/RGB32UI-channel-width-sample",
+            "WGL-05/RGBA32UI-channel-width-sample",
+            "WGL-05/R32I-channel-width-sample",
+            "WGL-05/RG32I-channel-width-sample",
+            "WGL-05/RGB32I-channel-width-sample",
+            "WGL-05/RGBA32I-channel-width-sample",
+            "WGL-05/RGB10A2UI-packed-upload-native-sample",
+            "WGL-05/integer-linear-filter-rejected-without-gl-error"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 39,
+          "failedCases": [
+            "WGL-05/integer-upload-and-native-integer-sampling",
+            "WGL-05/integer-upload-u8",
+            "WGL-05/integer-upload-i8",
+            "WGL-05/integer-upload-u16",
+            "WGL-05/integer-upload-i16",
+            "WGL-05/integer-upload-i32",
+            "WGL-05/R8UI-channel-width-sample",
+            "WGL-05/RG8UI-channel-width-sample",
+            "WGL-05/RGB8UI-channel-width-sample",
+            "WGL-05/RGBA8UI-channel-width-sample",
+            "WGL-05/R8I-channel-width-sample",
+            "WGL-05/RG8I-channel-width-sample",
+            "WGL-05/RGB8I-channel-width-sample",
+            "WGL-05/RGBA8I-channel-width-sample",
+            "WGL-05/R16UI-channel-width-sample",
+            "WGL-05/RG16UI-channel-width-sample",
+            "WGL-05/RGB16UI-channel-width-sample",
+            "WGL-05/RGBA16UI-channel-width-sample",
+            "WGL-05/R16I-channel-width-sample",
+            "WGL-05/RG16I-channel-width-sample",
+            "WGL-05/RGB16I-channel-width-sample",
+            "WGL-05/RGBA16I-channel-width-sample",
+            "WGL-05/R32UI-channel-width-sample",
+            "WGL-05/RG32UI-channel-width-sample",
+            "WGL-05/RGB32UI-channel-width-sample",
+            "WGL-05/RGBA32UI-channel-width-sample",
+            "WGL-05/R32I-channel-width-sample",
+            "WGL-05/RG32I-channel-width-sample",
+            "WGL-05/RGB32I-channel-width-sample",
+            "WGL-05/RGBA32I-channel-width-sample",
+            "WGL-05/RGB10A2UI-packed-upload-native-sample",
+            "WGL-05/integer-linear-filter-rejected-without-gl-error"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 39,
+          "failedCases": [
+            "WGL-05/integer-upload-and-native-integer-sampling",
+            "WGL-05/integer-upload-u8",
+            "WGL-05/integer-upload-i8",
+            "WGL-05/integer-upload-u16",
+            "WGL-05/integer-upload-i16",
+            "WGL-05/integer-upload-i32",
+            "WGL-05/R8UI-channel-width-sample",
+            "WGL-05/RG8UI-channel-width-sample",
+            "WGL-05/RGB8UI-channel-width-sample",
+            "WGL-05/RGBA8UI-channel-width-sample",
+            "WGL-05/R8I-channel-width-sample",
+            "WGL-05/RG8I-channel-width-sample",
+            "WGL-05/RGB8I-channel-width-sample",
+            "WGL-05/RGBA8I-channel-width-sample",
+            "WGL-05/R16UI-channel-width-sample",
+            "WGL-05/RG16UI-channel-width-sample",
+            "WGL-05/RGB16UI-channel-width-sample",
+            "WGL-05/RGBA16UI-channel-width-sample",
+            "WGL-05/R16I-channel-width-sample",
+            "WGL-05/RG16I-channel-width-sample",
+            "WGL-05/RGB16I-channel-width-sample",
+            "WGL-05/RGBA16I-channel-width-sample",
+            "WGL-05/R32UI-channel-width-sample",
+            "WGL-05/RG32UI-channel-width-sample",
+            "WGL-05/RGB32UI-channel-width-sample",
+            "WGL-05/RGBA32UI-channel-width-sample",
+            "WGL-05/R32I-channel-width-sample",
+            "WGL-05/RG32I-channel-width-sample",
+            "WGL-05/RGB32I-channel-width-sample",
+            "WGL-05/RGBA32I-channel-width-sample",
+            "WGL-05/RGB10A2UI-packed-upload-native-sample",
+            "WGL-05/integer-linear-filter-rejected-without-gl-error"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-integer-clear-attempt2.json",
+      "sha256": "0bbb198613e136206308ebbe20bf504100813c2ace547644979541c8130691f3",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 8,
+          "failedCases": [
+            "WGL-06/integer-clear-only-no-covering-draw",
+            "WGL-06/signed-integer-clear-only",
+            "WGL-06/mixed-mrt-clear-native-readback"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 8,
+          "failedCases": [
+            "WGL-06/integer-clear-only-no-covering-draw",
+            "WGL-06/signed-integer-clear-only",
+            "WGL-06/mixed-mrt-clear-native-readback"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 8,
+          "failedCases": [
+            "WGL-06/integer-clear-only-no-covering-draw",
+            "WGL-06/signed-integer-clear-only",
+            "WGL-06/mixed-mrt-clear-native-readback"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-integer-attribute-attempt2.json",
+      "sha256": "bb44378c241f2e0b3c9a8c4c5bd3f17344c4f266ca02a3abcb12216db071023e",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 15,
+          "failedCases": [
+            "WGL-07/uint-attribute-native-output",
+            "WGL-07/vao-u32",
+            "WGL-07/vao-i32",
+            "WGL-07/vao-u8",
+            "WGL-07/vao-i16",
+            "WGL-07/vao-interleaved",
+            "WGL-07/vao-instanced",
+            "WGL-07/non-vao-u32",
+            "WGL-07/non-vao-i32",
+            "WGL-07/non-vao-u8",
+            "WGL-07/non-vao-i16",
+            "WGL-07/non-vao-interleaved",
+            "WGL-07/non-vao-instanced"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 15,
+          "failedCases": [
+            "WGL-07/uint-attribute-native-output",
+            "WGL-07/vao-u32",
+            "WGL-07/vao-i32",
+            "WGL-07/vao-u8",
+            "WGL-07/vao-i16",
+            "WGL-07/vao-interleaved",
+            "WGL-07/vao-instanced",
+            "WGL-07/non-vao-u32",
+            "WGL-07/non-vao-i32",
+            "WGL-07/non-vao-u8",
+            "WGL-07/non-vao-i16",
+            "WGL-07/non-vao-interleaved",
+            "WGL-07/non-vao-instanced"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 15,
+          "failedCases": [
+            "WGL-07/uint-attribute-native-output",
+            "WGL-07/vao-u32",
+            "WGL-07/vao-i32",
+            "WGL-07/vao-u8",
+            "WGL-07/vao-i16",
+            "WGL-07/vao-interleaved",
+            "WGL-07/vao-instanced",
+            "WGL-07/non-vao-u32",
+            "WGL-07/non-vao-i32",
+            "WGL-07/non-vao-u8",
+            "WGL-07/non-vao-i16",
+            "WGL-07/non-vao-interleaved",
+            "WGL-07/non-vao-instanced"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-attachment-layer-attempt2.json",
+      "sha256": "dff2c3f39d66b647881fcb6bdb9b1fca1101dc3d948b87e02bb1776381a1e092",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 17,
+          "failedCases": [
+            "WGL-08/array-attachment-view-nonzero-layer",
+            "WGL-08/array-attachment-layer1-render-sample-layer1",
+            "WGL-08/3d-slice1-render-and-sample",
+            "WGL-08/array-mip1-layer1-render-and-sample",
+            "WGL-08/depth-array-layer1-clear-and-ordinary-sample",
+            "WGL-08/multi-layer-attachment-selects-base-only"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 17,
+          "failedCases": [
+            "WGL-08/array-attachment-view-nonzero-layer",
+            "WGL-08/array-attachment-layer1-render-sample-layer1",
+            "WGL-08/3d-slice1-render-and-sample",
+            "WGL-08/array-mip1-layer1-render-and-sample",
+            "WGL-08/depth-array-layer1-clear-and-ordinary-sample",
+            "WGL-08/multi-layer-attachment-selects-base-only"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 17,
+          "failedCases": [
+            "WGL-08/array-attachment-view-nonzero-layer",
+            "WGL-08/array-attachment-layer1-render-sample-layer1",
+            "WGL-08/3d-slice1-render-and-sample",
+            "WGL-08/array-mip1-layer1-render-and-sample",
+            "WGL-08/depth-array-layer1-clear-and-ordinary-sample",
+            "WGL-08/multi-layer-attachment-selects-base-only"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/control-20261011-readback-offset-attempt2.json",
+      "sha256": "0406793bc988047dfe118be223e0798f117680b2712c7566aba22b01f76a23bf",
+      "kind": "expected-mechanism-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 26,
+          "failedCases": [
+            "WGL-09/readback-byte-offset-and-row-layout",
+            "WGL-09/typed-array-byteOffset-plus-buffOffset",
+            "WGL-09/two-layer-two-row-stride-and-layer-pitch"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 26,
+          "failedCases": [
+            "WGL-09/readback-byte-offset-and-row-layout",
+            "WGL-09/typed-array-byteOffset-plus-buffOffset",
+            "WGL-09/two-layer-two-row-stride-and-layer-pitch"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 26,
+          "failedCases": [
+            "WGL-09/readback-byte-offset-and-row-layout",
+            "WGL-09/typed-array-byteOffset-plus-buffOffset",
+            "WGL-09/two-layer-two-row-stride-and-layer-pitch"
+          ]
+        }
+      ]
+    }
+  ],
+  "sourceTests": {
+    "file": "output/webgl2-gfx-contracts/final-jest.json",
+    "sha256": "25f1b534f6a159024ec09401bdf8bd14a00ddabb4b3e41e2b2aae273151d07d4",
+    "suites": 3,
+    "passed": 83,
+    "skipped": 0
+  },
+  "checks": {
+    "buildAll": "PASS",
+    "consumer": "PASS",
+    "typecheck": "PASS",
+    "webOnly": "PASS",
+    "fileMap": "PASS",
+    "licenses": "PASS",
+    "palSource": "PASS",
+    "docRefs": "PASS",
+    "focusedFormatting": "PASS",
+    "diffWhitespace": "PASS"
+  },
+  "limitations": [
+    "Nondefault PACK/PBO GPU injection NOT_RUN; covered by source function regressions",
+    "Direct compositor presentation after Windows WebKit resize NOT_RUN; readback preview is explicitly labeled",
+    "Whole test-inventory attempt did not finish and was terminated after about thirteen minutes",
+    "Test discovery has eleven pre-existing parallel Shader suites missing from the shared registry; all three new suites are discovered and registered",
+    "Existing complete formatting gate has 195 failures; existing manual sync has 3 failures and 7 warnings",
+    "Dirty shared worktree and historical global evidence prevent a release-readiness claim"
+  ]
+}

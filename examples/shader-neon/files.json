@@ -1,0 +1,14 @@
+{
+  "files": [
+    "index.html",
+    "src/main.ts",
+    "src/parameters.ts",
+    "src/effect.generated.ts",
+    "src/neon.frag",
+    "parameters.json",
+    "generate-effect.cjs",
+    "README.md",
+    "UPSTREAM.md",
+    "LICENSE.reference.txt"
+  ]
+}

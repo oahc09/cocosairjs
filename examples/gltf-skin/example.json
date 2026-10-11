@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "glTF Skin",
   "category": "gltf",
-  "status": "validated",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -87,13 +87,13 @@
         "api": "Animation",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L72"
+        "sourceLocation": "L73"
       },
       {
         "api": "Animation.play",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L75"
+        "sourceLocation": "L78"
       },
       {
         "api": "Layers",
@@ -159,7 +159,7 @@
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L95"
+        "sourceLocation": "L103"
       },
       {
         "api": "isValid",
@@ -262,5 +262,13 @@
         "line": "L69"
       }
     }
+  },
+  "promotion": {
+    "spec": "258a34080cbb",
+    "source": "a5ca2316c2c79165",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 19,
+    "attested": 0,
+    "units": 19
   }
 }

@@ -27,6 +27,8 @@ let checks=0;
     }
     fs.writeFileSync(entry,'import { Node } from "cocosair"; const n: Node = new Node("test"); export { n };');
     assert.equal((await runtime.build(workspace)).success,true); checks++;
+    fs.writeFileSync(entry,'import { createAirApp } from "cocosair-bootstrap"; const buttons = [...document.querySelectorAll<HTMLButtonElement>("button")]; export { createAirApp, buttons };');
+    assert.equal((await runtime.build(workspace)).success,true); checks++;
     const base={trialResult:'VALID',engineResult:'PASS',agentResult:'PASS',repairs:0,firstSubmissionCompilePass:true,failureDomain:'NONE',policyDenials:[]};
     const metrics=aggregate([{...base,benchmarkType:'source-create'},{...base,benchmarkType:'runtime-control',firstSubmissionCompilePass:false},{...base,benchmarkType:'source-repair',contractualUnsupported:true},{...base,benchmarkType:'source-create',agentResult:'NOT_EVALUATED'}]);
     assert.equal(metrics.eligibleTrials,2); assert.equal(metrics.eligibleTypeBTrials,1); assert.equal(metrics.firstCompileSuccessRate,1); checks++;

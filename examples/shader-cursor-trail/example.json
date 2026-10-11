@@ -1,0 +1,237 @@
+{
+  "id": "shader-cursor-trail",
+  "title": "Cursor Trail 光标轨迹",
+  "description": "CPU 轨迹、半精度数据纹理与 Bézier 胶囊链扫描。",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "createAirRenderTarget",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "MeshRenderer",
+    "utils.createMesh",
+    "Texture2D"
+  ],
+  "capabilities": [
+    "rendering",
+    "material",
+    "input"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "CPU 轨迹 → 64×1 RGBA16F → 原生材质单通道",
+    "points": [
+      "独立 host replay 与 GPU pixel oracle",
+      "年龄/速度宽度/Chaikin relax/三段 Bézier",
+      "真实鼠标、活 resize、配对释放"
+    ]
+  },
+  "assets": [],
+  "license": {
+    "assets": "程序化轨迹；MIT 来源见 UPSTREAM.md 与 LICENSE.reference.txt"
+  },
+  "api": {
+    "primary": [
+      "Texture2D",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Texture2D"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Texture2D"
+    ],
+    "forbiddenShortcut": [
+      "shaders runtime/TypeGPU/额外 canvas",
+      "截图相似替代数值 oracle"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L33",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L347",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L738",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L99",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L120",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L163",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L142",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L102",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Texture2D",
+        "source": "src/main.ts",
+        "sourceLocation": "L112",
+        "validator": "visible-frame"
+      }
+    ],
+    "evidenceStatus": "生产 findSymbolLine 核对执行行；运行态采集为独立记录"
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "native-camera",
+        "owned-cursor-trail-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "__trail.ready"
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "独立 CPU 与透明 RT 双证据，不凭图片存在声称完成"
+  },
+  "effect": {
+    "galleryLifecycle": "RESOLVED_NOT_RUN",
+    "limitations": [
+      "仅线性两个颜色端点，无 stops 或其它空间",
+      "真实鼠标与诊断脚本分别记录；实体触屏与长时未测",
+      "GPU 物理显存 unavailable"
+    ],
+    "functional": "滑块 update（半径/寿命/衰减/柔边 uniform）、暂停/继续/重置/释放、Escape 清轨迹，单 native pacer",
+    "visual": "CPU 63 点+头副本上传 512 字节半精度 64×1 数据纹理、三段 Bézier 子弦扫描、速度响应柔边轨迹"
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "真实参数更新 radius/length（延长轨迹寿命）",
+        "probe": "__trail.set",
+        "probeArgs": [
+          {
+            "colorA": "#00aaff",
+            "colorB": "#ff00aa",
+            "radius": 2,
+            "length": 2,
+            "shrink": 1,
+            "softness": 0
+          }
+        ],
+        "expected": "公开参数合同真实更新 uniform，画面立即变化"
+      },
+      {
+        "action": "拖动鼠标绘制轨迹",
+        "drag": [
+          [
+            0.3,
+            0.4
+          ],
+          [
+            0.7,
+            0.6
+          ]
+        ],
+        "expected": "速度响应轨迹跟随真实指针生长"
+      },
+      {
+        "action": "执行示例 linearProbe 读回探针",
+        "probe": "__trail.linearProbe",
+        "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__trail.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__trail.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "promotion": {
+    "spec": "5a70d2a55949",
+    "source": "5634bc47e0491360",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 9,
+    "attested": 0,
+    "units": 9
+  }
+}

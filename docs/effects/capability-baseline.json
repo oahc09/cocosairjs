@@ -1,0 +1,2033 @@
+{
+  "schemaVersion": "shaders-absorption-capability-baseline/1",
+  "task": "Wave0-C",
+  "executionChannel": "native subagent",
+  "capturedAt": "2026-10-09T00:08:26.640Z",
+  "method": "SOURCE_SDK_AND_SOURCEMAP_REVIEW",
+  "identity": {
+    "schemaVersion": "shader-capability-identity/1",
+    "capturedAt": "2026-10-09T00:03:00.679Z",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "git": {
+      "head": "1cb71bf98d009a84095203796231a3b894701307",
+      "branch": "main",
+      "dirty": [
+        " M ai/README.md",
+        " D skills/air-code-first/SKILL.md",
+        " D skills/air-graphics-and-dom/SKILL.md",
+        " D skills/air-verification/SKILL.md",
+        " M tools/verify/graphics-package.cjs",
+        "?? ai/plans/agent-skills-suite-steps.md",
+        "?? ai/plans/agent-skills-suite.md",
+        "?? ai/plans/shaders-absorption-task-plan.md",
+        "?? skills/cocosair-application/SKILL.md",
+        "?? skills/cocosair-application/references/app-options.md",
+        "?? skills/cocosair-application/references/context-health.md",
+        "?? skills/cocosair-application/references/session-scope.md",
+        "?? skills/cocosair-application/references/startup-errors.md",
+        "?? skills/cocosair-camera/SKILL.md",
+        "?? skills/cocosair-camera/references/camera-projection.md",
+        "?? skills/cocosair-camera/references/multi-camera.md",
+        "?? skills/cocosair-camera/references/screen-world.md",
+        "?? skills/cocosair-graphics-and-dom/SKILL.md",
+        "?? skills/cocosair-materials-effects/SKILL.md",
+        "?? skills/cocosair-materials-effects/references/builtin-effects.md",
+        "?? skills/cocosair-materials-effects/references/custom-glsl.md",
+        "?? skills/cocosair-materials-effects/references/defines.md",
+        "?? skills/cocosair-materials-effects/references/property-types.md",
+        "?? skills/cocosair-math/SKILL.md",
+        "?? skills/cocosair-math/references/easing-random.md",
+        "?? skills/cocosair-math/references/transforms.md",
+        "?? skills/cocosair-math/references/value-types.md",
+        "?? skills/cocosair-project-setup/SKILL.md",
+        "?? skills/cocosair-project-setup/references/entries.md",
+        "?? skills/cocosair-project-setup/references/feature-flags.md",
+        "?? skills/cocosair-project-setup/references/html-shell.md",
+        "?? skills/cocosair-scene-graph/SKILL.md",
+        "?? skills/cocosair-scene-graph/references/layers.md",
+        "?? skills/cocosair-scene-graph/references/node-events.md",
+        "?? skills/cocosair-scene-graph/references/node-ops.md",
+        "?? skills/cocosair-scene-graph/references/scene-globals.md",
+        "?? skills/cocosair-verification/SKILL.md",
+        "?? skills/cocosair/SKILL.md",
+        "?? skills/cocosair/references/skill-index.md"
+      ],
+      "dirtySha256": "912a15fbb899402b9ad38a46ac481213957e453e8ee8922d5dadc73a92b10924"
+    },
+    "artifacts": [
+      {
+        "path": "build/cocosair.module.js",
+        "bytes": 6631057,
+        "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+      },
+      {
+        "path": "build/cocosair.module.min.js",
+        "bytes": 3703206,
+        "sha256": "8e56fbd5a5b754252838204ff1c204223aadd7c401bd1615c2008e808b5fe05c"
+      },
+      {
+        "path": "build/cocosair.module.d.ts",
+        "bytes": 3303518,
+        "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+      },
+      {
+        "path": "build/cocosair.module.js.map",
+        "bytes": 20318600,
+        "sha256": "b9a6183d745ae774288c2d7963364a6fa9d87297f1a399b2421aa6d1e3a246f0"
+      },
+      {
+        "path": "build/cocosair.module.min.js.map",
+        "bytes": 16707399,
+        "sha256": "42a43a8245b1e366b5efb839d150deda41a9fdf494917f7ac67ea16fe10d6374"
+      },
+      {
+        "path": "build/npm/cocosair.module.js",
+        "bytes": 6631013,
+        "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+      },
+      {
+        "path": "build/npm/cocosair.module.min.js",
+        "bytes": 3703158,
+        "sha256": "8e29adb99aff5b906d60fd9dbd95edb8752954cf795d19c97c87b3cb0b0976ad"
+      },
+      {
+        "path": "build/bootstrap.js",
+        "bytes": 8518,
+        "sha256": "57b2dfc7f7b5d29d43b7d9619274c1879f6f37223c7ae2685c0d2619707aef8f"
+      },
+      {
+        "path": "build/bootstrap.d.ts",
+        "bytes": 213,
+        "sha256": "3fd56ec33a68ed72b488d01c95439c4c7b3c7fde2275724b5f37670248bc12c2"
+      },
+      {
+        "path": "package.json",
+        "bytes": 5719,
+        "sha256": "3f5b307611105805504e0f1ff1dedaf9eb6fc5a869ce34ae574d01d917daa8ba"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 405447,
+        "sha256": "2b41ef8617e8a3df05822863e2a4d1590a909c02d1a096e81526ec35694c1c9c"
+      }
+    ],
+    "sourceMapChecks": [
+      {
+        "path": "build/cocosair.module.js.map",
+        "totalSources": 905,
+        "matchingCurrentSrc": 905,
+        "changed": [],
+        "missing": [],
+        "excludedNonSrc": 0,
+        "status": "EMBEDDED_SRC_MATCH",
+        "limitation": "sourcesContent coverage only; not a clean-build or declaration provenance proof; excludes non-src sources and line ending differences"
+      },
+      {
+        "path": "build/cocosair.module.min.js.map",
+        "totalSources": 905,
+        "matchingCurrentSrc": 905,
+        "changed": [],
+        "missing": [],
+        "excludedNonSrc": 0,
+        "status": "EMBEDDED_SRC_MATCH",
+        "limitation": "sourcesContent coverage only; not a clean-build or declaration provenance proof; excludes non-src sources and line ending differences"
+      }
+    ],
+    "exports": [
+      {
+        "name": "EffectAsset",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "Material",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "MaterialInstance",
+        "bundleExport": false,
+        "declarationTextPresent": true,
+        "status": "NAMESPACE_OR_NOT_EXPORTED"
+      },
+      {
+        "name": "MeshRenderer",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "Texture2D",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "RenderTexture",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "AirRenderTarget",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "createAirRenderTarget",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "createStepClock",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "createSessionScope",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "createActionInput",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "createAirApp",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "createAirAppSafe",
+        "bundleExport": false,
+        "declarationTextPresent": false,
+        "status": "NAMESPACE_OR_NOT_EXPORTED"
+      },
+      {
+        "name": "validateAirTextureColorContract",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "utils",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "gfx",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "input",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "Input",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "Director",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "director",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "view",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      },
+      {
+        "name": "screen",
+        "bundleExport": true,
+        "declarationTextPresent": true,
+        "status": "EXPORTED_STATIC"
+      }
+    ],
+    "environment": {
+      "node": "v24.14.0",
+      "playwright": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js",
+      "browserLaunch": "NOT_RUN",
+      "gpuTimestampExtension": "NOT_QUERIED"
+    }
+  },
+  "upstream": {
+    "repo": "shader-effects-inc/shaders",
+    "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+    "sourceIndexOwner": "Wave0-A; exact per-effect file/SHA/semantic bindings incorporated from its retained index",
+    "retrievedByThisTask": false,
+    "sourceIndex": {
+      "path": "docs/effects/upstream-reference.json",
+      "bytes": 62260,
+      "sha256": "53ebbae2f04811dc384768d7573c724beb716b48bff945f7849cc3353ed1e418"
+    }
+  },
+  "capabilities": [
+    {
+      "id": "boot",
+      "api": "createAirApp(options: AirAppOptions): Promise<AirApp>",
+      "source": "src/air/app.ts",
+      "sdk": "createAirApp",
+      "constraints": [
+        "GameCanvas exists before engine module import; safe package entry cocosair.js/bootstrap exposes the same createAirApp name (not createAirAppSafe).",
+        "Await device initialization before creating Material passes, dynamic Mesh, Texture2D uploads or AirRenderTarget.",
+        "AirApp.close is terminal for a handle; same-document runtime reconstruction requires reload. For 100 iterations use effect-instance create/destroy in one running app."
+      ],
+      "docs": "docs/manual/custom-shaders.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "effect",
+      "api": "EffectAsset.onLoaded(): void; static register(asset: EffectAsset): void; static get(name: string): EffectAsset | null; static remove(asset: EffectAsset | string): void; destroy(): boolean",
+      "source": "src/cocos/asset/assets/effect-asset.ts",
+      "sdk": "EffectAsset",
+      "constraints": [
+        "Compile/generate self-contained GLSL3 + engine reflection JSON offline, Object.assign(new EffectAsset(), json), onLoaded(), then Material.initialize({effectAsset}).",
+        "Early onLoaded registers metadata and defers program registration until renderer init; it does not prove shader compilation or pixel output.",
+        "Same effect name overwrites registry; use stable collision-resistant source/definition identities; destroy/unregister only owned assets.",
+        "Use default WebGL2/legacy path for pilots; custom-pipeline descriptors/layout requirements are a separate variant capability, not implicitly supplied by effect-json."
+      ],
+      "docs": "docs/manual/custom-shaders.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "material",
+      "api": "Material.initialize(info: IMaterialInfo): void; setProperty(name: string, val: MaterialPropertyFull | MaterialPropertyFull[], passIdx?: number): void; getProperty(name: string, passIdx?: number): Readonly<MaterialPropertyFull | MaterialPropertyFull[]>; get passes(): Pass[]",
+      "source": "src/cocos/asset/assets/material.ts",
+      "sdk": "Material",
+      "constraints": [
+        "IMaterialInfo: effectAsset?/effectName?, technique?, defines?: MacroRecord|MacroRecord[], states?: PassOverrides|PassOverrides[].",
+        "Set a vec4 parameter via Vec4 (scalar members packed into x/y/z/w); set sampler via Texture2D/TextureBase, not an arbitrary plain object.",
+        "Base Material.recompileShaders and overridePipelineStates only warn. Do not call base reset expecting a rebuilt existing material: initialize warns/returns if passes already exist.",
+        "Renderer.getMaterialInstance(0) returns a native renderer.MaterialInstance; its overrides really call pass.tryCompile/overridePipelineStates. MaterialInstance is NOT a top-level named bundle export.",
+        "Prefer uniform/resource update; if structure changes, deliberately create/copy a new material, bind new, unbind old, then release old. Preserve per-instance parameter isolation."
+      ],
+      "docs": "docs/manual/custom-shaders.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "mesh",
+      "api": "utils.MeshUtils.createMesh(geometry: primitives.IGeometry, out?: Mesh, options?: primitives.ICreateMeshOptions): Mesh; utils.MeshUtils.createDynamicMesh(primitiveIndex: number, geometry: primitives.IDynamicGeometry, out?: Mesh, options?: primitives.ICreateDynamicMeshOptions): Mesh; Mesh.updateSubMesh(primitiveIndex: number, dynamicGeometry: Partial<IDynamicGeometry>): void",
+      "source": "src/cocos/3d/misc/create-mesh.ts",
+      "sdk": "utils",
+      "constraints": [
+        "Static geometry: number[] positions/uvs and indices. Dynamic: Float32Array positions/uvs and Uint16Array indices16 OR Uint32Array indices32.",
+        "Explicit maxSubMeshes/maxSubMeshVertices/maxSubMeshIndices; positions-only update preserves omitted streams/index buffer after native preflight.",
+        "After update call MeshRenderer.onGeometryChanged(); correct front-facing winding/normals/UVs and finite bounds are still application responsibility.",
+        "Fullscreen effect geometry uses native MeshRenderer + orthographic Camera; no alternate renderer/canvas or direct GL draw fallback."
+      ],
+      "docs": "docs/reference/k0-r2-native-contracts.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "renderer",
+      "api": "MeshRenderer.mesh: Mesh | null; setSharedMaterial(material: Material | null, index: number, forceUpdate?: boolean): void; getMaterialInstance(idx: number): renderer.MaterialInstance | null; onGeometryChanged(): void",
+      "source": "src/cocos/3d/framework/mesh-renderer.ts",
+      "sdk": "MeshRenderer",
+      "constraints": [
+        "Shared material shares uniform state; independent instances need independent material/MaterialInstance.",
+        "Unbind mesh/material before destroying nodes/assets; rendering components borrow resources and cannot replace explicit owner/ref tracking."
+      ],
+      "docs": "docs/manual/custom-shaders.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "texture",
+      "api": "Texture2D.reset(info: ITexture2DCreateInfo): void; image: ImageAsset | null; uploadData(source: HTMLCanvasElement | HTMLImageElement | ArrayBufferView | ImageBitmap, level?: number, arrayIndex?: number): void; setFilters(minFilter: TextureFilter, magFilter: TextureFilter): void; setMipFilter(mipFilter: TextureFilter): void",
+      "source": "src/cocos/asset/assets/texture-2d.ts",
+      "sdk": "Texture2D",
+      "constraints": [
+        "UploadData is inherited from SimpleTexture; use actual width/height/format/mip count; prove sampler/filter/UV/row orientation with asymmetric texture.",
+        "Choose rgba8 for images; float data texture only after device getFormatFeatures says sampled/render/filter support. Do not silently substitute formats.",
+        "Texture bytes update for bounded trail/noise data is available, but generator does not author uniform arrays; alternative local native data texture or dynamic mesh must be measured."
+      ],
+      "docs": "docs/manual/texture-source-orientation.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "render-texture",
+      "api": "RenderTexture.initialize(info: IRenderTextureCreateInfo): void; resize(width: number, height: number): void; getGFXTexture(): gfx.Texture | null; readPixels(x?: number, y?: number, width?: number, height?: number, buffer?: Uint8Array): Uint8Array | null; destroy(): boolean",
+      "source": "src/cocos/asset/assets/render-texture.ts",
+      "sdk": "RenderTexture",
+      "constraints": [
+        "Camera.targetTexture chooses native offscreen rendering; raw RenderTexture readPixels is byte-oriented.",
+        "A multipass Material.passes array does not automatically imply an intermediate scene texture, blur ping-pong or dependencies."
+      ],
+      "docs": "docs/manual/interactive-multipass.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "target",
+      "api": "createAirRenderTarget(options: AirRenderTargetOptions): AirRenderTarget; attachCamera(camera: Camera, beforeRender?: () => void): () => void; bindColor(material: Material, property: string, passIdx?: number): () => void; bindDepth(...): () => void; resize(baseWidth: number, baseHeight: number): void; resolve(): void; readColor(region?: {x?:number;y?:number;width?:number;height?:number}): Float32Array | Uint8Array; dispose(): void",
+      "source": "src/air/rendering/render-target.ts",
+      "sdk": "createAirRenderTarget",
+      "constraints": [
+        "width/height are backing pixels before scale (not CSS). Options: colorFormat rgba8|rgba16f|rgba32f|srgb8-alpha8; depthFormat none|depth24-stencil8; samples 1|2|4|8; filter nearest|linear; sampleFallback error|lower.",
+        "Only WebGL2; constructor checks renderable/sampled/filter feature + common color/depth sample support; record requested/effective/actual glSamples rather than claiming requested allocation.",
+        "MSAA resolve after capture camera; info.generation increments on reallocation; bind/unbind closures follow resize and restore prior borrowed bindings.",
+        "Arrange native camera priorities/layers so source capture precedes consumers, excluding Glass from its own source; never sample an attachment being simultaneously rendered to.",
+        "Use two targets for separable blur if measured/needed; identity can skip/disable own cameras, but actual draws/texture use must prove skipping."
+      ],
+      "docs": "docs/manual/interactive-multipass.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "clock",
+      "api": "createStepClock(options?: {frameRate?:number;stepTimeoutMs?:number}): AirStepClock; begin():void; step(dt?:number):Promise<{step:number;dt:number;afterDraw:true}>; end():void",
+      "source": "src/air/step-clock.ts",
+      "sdk": "createStepClock",
+      "constraints": [
+        "begin pauses native game pacer; step checks pause, executes director.tick and waits AFTER_DRAW; no second app RAF or wall-time evolution in deterministic gate.",
+        "Ordinary experience uses native Director update and a single accumulated simulation time. AFTER_DRAW proves submission callback, not GPU completion or compositor presentation.",
+        "Pilot supplies finite positive dt and sequential await (do not infer concurrency validation from this wrapper). Unsubscribe named Director callbacks at release."
+      ],
+      "docs": "docs/manual/interactive-evidence-chain.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "session",
+      "api": "createSessionScope(): AirSessionScope; activate():number; token():{generation:number;isCurrent():boolean}; own(cleanup:()=>void|Promise<void>,label?:string):()=>void; dispose(options?:{timeoutMs?:number}):Promise<AirCleanupReceipt>",
+      "source": "src/air/session-scope.ts",
+      "sdk": "createSessionScope",
+      "constraints": [
+        "Dispose promise is shared, cleanup called at most once, result lists completed/pending/failures; max timeout 5000ms.",
+        "onChange returns unsubscribe; offChange removes a callback; deactivate/generation tokens reject late pointer and asynchronous results.",
+        "Scope is cooperative ownership, not GPU-free measurement or automatic disposal of arbitrary scene assets."
+      ],
+      "docs": "docs/manual/interactive-input.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "input",
+      "api": "input.on/off(Input.EventType, callback, target?); createActionInput(options:{state:AirActionState;backend?:\"native\"|\"dom\";canvas?:HTMLCanvasElement;session?:AirActionSessionGate;preventDefault?:boolean}):AirActionInput",
+      "source": "src/air/action-input.ts",
+      "sdk": "createActionInput",
+      "constraints": [
+        "Choose one native PAL input path OR canvas-local DOM PointerEvent path, never double-subscribe. DOM is input, not a rendering bypass.",
+        "Action adapter is button/axis reducer, not an arbitrary cursor trail coordinate driver; E08 needs real pointer coordinates/getLocation/raw events, rect transform, pointerId, capture/cancel and generation checks.",
+        "Native TOUCH may include mouse emulation; report actual event method/isTrusted/pointer protocol, do not equate synthetic injection with physical touch.",
+        "DOM PointerEvent high-rate/coalesced collection optional and must feature-detect; listener attach/off balanced even pause/reset/destroy."
+      ],
+      "docs": "docs/manual/interactive-input.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "resize",
+      "api": "AirAppOptions.pixelRatioCap?:number; screenMode?:\"window\"|\"container\"; container?:HTMLElement|string; designResolution?:{width:number;height:number;policy:number}; view.setDesignResolutionSize(width:number,height:number,resolutionPolicy:ResolutionPolicy|number):void",
+      "source": "src/air/bootstrap.ts",
+      "sdk": "createAirApp",
+      "constraints": [
+        "DPR cap must be configured before runtime import; safe bootstrap does this. PAL devicePixelRatio is min(browser DPR,cap), default2.",
+        "Freeze CSS rect, effective DPR, actual canvas backing, view viewport/resolutionScale and AirRenderTarget effective dimensions; do not infer one from another.",
+        "Live resize must reallocate offscreen targets from actual backing dimensions and rebind generation; initial mobile size is not live-resize proof."
+      ],
+      "docs": "docs/manual/interactive-container.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "color-alpha",
+      "api": "validateAirTextureColorContract(input:{format?:Format|PixelFormat;usage:\"color\"|\"linear-data\"|\"depth\";decode:\"none\"|\"shader-srgb\"|\"hardware-srgb\"}):Readonly<Required<AirTextureColorContract>>; Material.initialize({states:{blendState,depthStencilState}})",
+      "source": "src/air/rendering/color-contract.ts",
+      "sdk": "validateAirTextureColorContract",
+      "constraints": [
+        "Pure preflight validates declared encoding, never transforms pixels. Builtin CPU SRGBToLinear uses square and LinearToSRGB uses sqrt, not exact IEC transfer.",
+        "Material property metadata linear:true invokes CPU square conversion (scalar value, not array). Custom shader must state exact input/output transfer and avoid double hardware/software decode.",
+        "Freeze straight/premultiplied alpha, choose matching blend factors and disable depthWrite for compositing. Backdrop/transparent edge and RGBA oracle are required; RGB appearance alone insufficient.",
+        "Prefer vec4 color values + explicit declared transfer; do not silently combine Color linear metadata with exact sRGB math and call it equivalent."
+      ],
+      "docs": "docs/manual/interactive-color-controls.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    },
+    {
+      "id": "shader-math",
+      "api": "Engine-native self-contained GLSL3 fragment: dFdx/dFdy/fwidth, texture/textureLod/texelFetch; generated EffectAsset metadata + Material uniform updates",
+      "source": "tools/build/effect-json.mjs",
+      "sdk": "EffectAsset",
+      "constraints": [
+        "WebGL2 shader version selected by program-lib. Derivatives are shader language operations, not named JS API or current effect verification.",
+        "Noise/SDF/color/UV math stays example-local until 2–3 measured consumers justify abstraction. No TypeGPU/runtime embedding.",
+        "Generator supports vec4/mat4 count1 uniforms, sampler2D, vec2/3/4 attributes and float-vector varyings; body main has no declaration/preprocessor/include. GLSL functions inside body source are allowed.",
+        "Large arrays/macros/include/YAML/MRT/compute not supported by constrained generator. Hand-author full native compiled metadata or propose tooling change with real consumer evidence; never fake success with mock compiler."
+      ],
+      "docs": "docs/manual/custom-shaders.md",
+      "status": "SOURCE_AND_SDK_DECLARED",
+      "currentEffectGate": "NOT_RUN"
+    }
+  ],
+  "effects": [
+    {
+      "id": "E01",
+      "name": "Noise Dissolve",
+      "path": "Image/procedural/native-render-layer Texture2D or AirRenderTarget color → native quad Material; local seeded noise + progress threshold + declared alpha/soft edge.",
+      "capabilities": [
+        "effect",
+        "material",
+        "texture",
+        "color-alpha"
+      ],
+      "plannedPasses": "1 effect draw; rendered-layer source may add 1 capture",
+      "oracles": [
+        "progress=0 preserves input (including RGBA), progress=1 obeys declared complete removal; explicit branches avoid edge-only residue.",
+        "Same floating seed/domain offsets (not integerPRNG), frozen input/progress repeats exact field; no time in upstream E01. Independent three-octave Perlin/hash/reveal checkgrid+coverage endpoints; difference from upstreamnoise explicitly declared."
+      ],
+      "implementationStatus": "NOT_RUN",
+      "engineGate": {
+        "build": "NOT_RUN",
+        "runtime": "NOT_RUN",
+        "visual": "NOT_RUN",
+        "boundary": "NOT_RUN",
+        "resource": "NOT_RUN",
+        "performance": "NOT_RUN"
+      },
+      "agentGate": "NOT_RUN",
+      "passCountStatus": "DESIGN_ESTIMATE_NOT_MEASURED",
+      "upstreamReference": {
+        "owner": "native subagent Wave0-A",
+        "index": "docs/effects/upstream-reference.json",
+        "upstream_commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+        "upstream_file": "packages/core/src/shaders/NoiseDissolve/index.ts",
+        "sourceSha256": "62d834b345677b1b4b6046d784e254a75e517beb6a5eb53e0b583ea1c9d4a83f",
+        "license": "MIT",
+        "helpers": [
+          "packages/core/src/std/effects/reveal.ts",
+          "packages/core/src/gpu/kit/reveal.ts",
+          "packages/core/src/gpu/kit/noise.ts"
+        ],
+        "semantic_contract": "progress 0 visible / 1 erased at all softness; seed is floating domain displacement, not integer PRNG; field has no time.",
+        "implementation_differences": "Freeze domain/hash algorithm, alpha representation and UV origin. Explicit noise implementation must identify differences from MaterialX-derived upstream helper; generic sin-hash is not byte-equivalent."
+      }
+    },
+    {
+      "id": "E02",
+      "name": "Thin Film",
+      "path": "Native quad fragment signed distance + derivative antialias + edge gradient/phase rainbow palette; source SDF/raster boundary declared.",
+      "capabilities": [
+        "effect",
+        "material",
+        "shader-math",
+        "color-alpha"
+      ],
+      "plannedPasses": "1 effect draw",
+      "oracles": [
+        "Analytic circle/box sample distances with inside/outside sign and boundary continuous transition across DPR.",
+        "Freeze palette phase/period with independent expected stops; optical-looking color is not proof of physical thin-film interference."
+      ],
+      "implementationStatus": "NOT_RUN",
+      "engineGate": {
+        "build": "NOT_RUN",
+        "runtime": "NOT_RUN",
+        "visual": "NOT_RUN",
+        "boundary": "NOT_RUN",
+        "resource": "NOT_RUN",
+        "performance": "NOT_RUN"
+      },
+      "agentGate": "NOT_RUN",
+      "passCountStatus": "DESIGN_ESTIMATE_NOT_MEASURED",
+      "upstreamReference": {
+        "owner": "native subagent Wave0-A",
+        "index": "docs/effects/upstream-reference.json",
+        "upstream_commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+        "upstream_file": "packages/core/src/shaders/ThinFilm/index.ts",
+        "sourceSha256": "babec2ceac456d86f0bacaa0521c96dc4de686d5e295f1bca983252084cf1bb7",
+        "license": "MIT",
+        "helpers": [
+          "packages/core/src/gpu/kit/effects/thinFilm.ts",
+          "packages/core/src/gpu/kit/effects/glass.ts",
+          "packages/core/src/gpu/kit/lighting.ts",
+          "packages/core/src/std/paint/materials.ts"
+        ],
+        "semantic_contract": "Scale-adjusted SDF; rimWidth has 0.1 scale; degrees lightAngle; rainbow phases 0,0.3333,0.6667; custom mode/colorSpace are structural branches.",
+        "implementation_differences": "Visual iridescence model, not spectral optical thin-film interference. Analytic 2D SDF first is permitted with explicitly narrower shape coverage; derivative fwidth is local AA, not a substitute for normal gradient."
+      }
+    },
+    {
+      "id": "E03",
+      "name": "Holographic",
+      "path": "Native texture/quad shader uses seeded noise finite-gradient normal, viewing/light direction and phase/time color; explicit transfer.",
+      "capabilities": [
+        "effect",
+        "material",
+        "texture",
+        "clock",
+        "color-alpha"
+      ],
+      "plannedPasses": "1 material draw; any upstream neighborhood stage to be justified after source analysis",
+      "oracles": [
+        "Fixed seed/time reconstructs normals/color; central-difference CPU gradients and direction sweep agree.",
+        "Time t / t+dt / pause/resume continuity; exact transfer patch tests, no claim physical rainbow unless derived."
+      ],
+      "implementationStatus": "NOT_RUN",
+      "engineGate": {
+        "build": "NOT_RUN",
+        "runtime": "NOT_RUN",
+        "visual": "NOT_RUN",
+        "boundary": "NOT_RUN",
+        "resource": "NOT_RUN",
+        "performance": "NOT_RUN"
+      },
+      "agentGate": "NOT_RUN",
+      "passCountStatus": "DESIGN_ESTIMATE_NOT_MEASURED",
+      "upstreamReference": {
+        "owner": "native subagent Wave0-A",
+        "index": "docs/effects/upstream-reference.json",
+        "upstream_commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+        "upstream_file": "packages/core/src/shaders/Holographic/index.ts",
+        "sourceSha256": "ee3a8ea07a4deac78cc95dd6c777d5baf4439d909b0d6c93499f6a53c23dd647",
+        "license": "MIT",
+        "helpers": [
+          "packages/core/src/std/paint/materials.ts",
+          "packages/core/src/gpu/kit/noise.ts",
+          "packages/core/src/gpu/kit/lighting.ts"
+        ],
+        "semantic_contract": "Normal stencil 0.008; wrinkle stencil 0.02; hueShift degrees /360; exact thirds palette; accumulated animated time; upstream exposes no seed.",
+        "implementation_differences": "Adding local seed is an extension; fixed time alone reproduces the original fixed-domain noise. Macro surface-locked and screen-stable grain domains must not be conflated. Not a holographic wave simulation."
+      }
+    },
+    {
+      "id": "E04",
+      "name": "Neon",
+      "path": "Native quad SDF analytic tube/core/glow falloff; standard native blend states over known backdrop.",
+      "capabilities": [
+        "effect",
+        "material",
+        "shader-math",
+        "color-alpha"
+      ],
+      "plannedPasses": "1 draw for analytic glow; optional blur adds explicit capture+2 blur draws only if needed",
+      "oracles": [
+        "Independent core/tube/glow toggles and radial profiles; core radius/falloff expected samples and symmetry.",
+        "Straight/premultiplied RGBA composition at transparent boundary, black/white/colored backdrops; off identity."
+      ],
+      "implementationStatus": "NOT_RUN",
+      "engineGate": {
+        "build": "NOT_RUN",
+        "runtime": "NOT_RUN",
+        "visual": "NOT_RUN",
+        "boundary": "NOT_RUN",
+        "resource": "NOT_RUN",
+        "performance": "NOT_RUN"
+      },
+      "agentGate": "NOT_RUN",
+      "passCountStatus": "DESIGN_ESTIMATE_NOT_MEASURED",
+      "upstreamReference": {
+        "owner": "native subagent Wave0-A",
+        "index": "docs/effects/upstream-reference.json",
+        "upstream_commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+        "upstream_file": "packages/core/src/shaders/Neon/index.ts",
+        "sourceSha256": "7ecc741e788bc9000bd062ee4f1b2a042e9fd0cea96059ff6d84138fcb6ac586",
+        "license": "MIT",
+        "helpers": [
+          "packages/core/src/gpu/kit/effects/neon.ts",
+          "packages/core/src/gpu/kit/effects/glass.ts",
+          "packages/core/src/std/paint/materials.ts"
+        ],
+        "semantic_contract": "Center plus cardinal SDF neighbors; core/tube/glow controls separate; glow cutoff forces distant alpha=0; flicker/flow use time.",
+        "implementation_differences": "Implement analytic glow before any extra Bloom pass; report straight/associated color and blend state; reverse-edge smoothstep in source must become ordered-edge explicit inverse in GLSL."
+      }
+    },
+    {
+      "id": "E05",
+      "name": "Emboss",
+      "path": "Native texture sampling height gradient + normal/light dot + parallax-like local UV offset; input-alpha preservation.",
+      "capabilities": [
+        "effect",
+        "material",
+        "texture",
+        "shader-math",
+        "color-alpha"
+      ],
+      "plannedPasses": "1 effect draw (unless source requires intermediate)",
+      "oracles": [
+        "Ramp height: known gradient normal, opposite light direction swaps shading; flat height has zero emboss.",
+        "Symmetric finite differences + sample texel size; transparent input carries declared alpha with no fringe; offset=0 identity."
+      ],
+      "implementationStatus": "NOT_RUN",
+      "engineGate": {
+        "build": "NOT_RUN",
+        "runtime": "NOT_RUN",
+        "visual": "NOT_RUN",
+        "boundary": "NOT_RUN",
+        "resource": "NOT_RUN",
+        "performance": "NOT_RUN"
+      },
+      "agentGate": "NOT_RUN",
+      "passCountStatus": "DESIGN_ESTIMATE_NOT_MEASURED",
+      "upstreamReference": {
+        "owner": "native subagent Wave0-A",
+        "index": "docs/effects/upstream-reference.json",
+        "upstream_commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+        "upstream_file": "packages/core/src/shaders/Emboss/index.ts",
+        "sourceSha256": "ff31f6250a9abebfeca5e1bfb87ffebbc8517f8dd2d747de833821be5e3fa5df",
+        "license": "MIT",
+        "helpers": [
+          "packages/core/src/gpu/kit/effects/emboss.ts",
+          "packages/core/src/gpu/kit/effects/glass.ts",
+          "packages/core/src/gpu/kit/blend.ts",
+          "packages/core/src/std/paint/materials.ts"
+        ],
+        "semantic_contract": "Child RTT is premultiplied; unpremultiply before color math then return straight RGBA; signed depth controls raised/sunken; outside shape passes input through.",
+        "implementation_differences": "No physical displacement geometry claim. Test a known planar/ramp height with reversed light and signed depth, transparent input hidden RGB and no double premultiply."
+      }
+    },
+    {
+      "id": "E06",
+      "name": "Sparkle",
+      "path": "Native quad samples texture luminance/neighborhood; bounded star rays with time/seed; radius units explicitly pixel or CSS.",
+      "capabilities": [
+        "effect",
+        "material",
+        "texture",
+        "clock",
+        "resize",
+        "color-alpha"
+      ],
+      "plannedPasses": "1 bounded sampling draw; any prefilter target separately counted",
+      "oracles": [
+        "Upstream gates alpha-weighted brightest-neighbor luminance using sqrt(linear Rec709 luma), threshold band0.12 (not raw encodedRGB or simplistic hard >= threshold). Independent samples include alpha0 bright color, intensity0 identity, exact band/tie policy, isolated point/ray geometry.",
+        "Equivalent radius in declared units across720p/1080p/DPR; t/seed repeated; threshold maximum extinguishes pattern."
+      ],
+      "implementationStatus": "NOT_RUN",
+      "engineGate": {
+        "build": "NOT_RUN",
+        "runtime": "NOT_RUN",
+        "visual": "NOT_RUN",
+        "boundary": "NOT_RUN",
+        "resource": "NOT_RUN",
+        "performance": "NOT_RUN"
+      },
+      "agentGate": "NOT_RUN",
+      "passCountStatus": "DESIGN_ESTIMATE_NOT_MEASURED",
+      "upstreamReference": {
+        "owner": "native subagent Wave0-A",
+        "index": "docs/effects/upstream-reference.json",
+        "upstream_commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+        "upstream_file": "packages/core/src/shaders/Sparkle/index.ts",
+        "sourceSha256": "fb020021af52451c20facd7602c23c539e51be9f7201561691ba987749c3e676",
+        "license": "MIT",
+        "helpers": [
+          "packages/core/src/std/effects/blurs.ts",
+          "packages/core/src/std/paint/patterns.ts",
+          "packages/core/src/std/paint/light.ts",
+          "packages/core/src/std/motion.ts",
+          "packages/core/src/gpu/kit/colorOps.ts"
+        ],
+        "semantic_contract": "CSS-pixel size/rays/expand; threshold on sqrt(linear luma), band=0.12; Rec709 luma weights; intensity=0 identity; expand crossing zero changes tap topology; seed domain differs per layer.",
+        "implementation_differences": "Do not threshold already gamma-encoded RGB; alpha-zero bright input must not spawn stars. Match DPR in logical coordinates and constrain neighborhoods/edge mode; no global bloom proxy."
+      }
+    },
+    {
+      "id": "E07",
+      "name": "Liquid Metal",
+      "path": "Native quad/material local noise gradients and reflection palette; deterministic animation; local quality variants or bounded loop.",
+      "capabilities": [
+        "effect",
+        "material",
+        "shader-math",
+        "clock",
+        "color-alpha"
+      ],
+      "plannedPasses": "1 material draw; quality sampling/octaves explicitly reported",
+      "oracles": [
+        "Independent CPU gradients/normal sanity finite/unit; fixed seed/time repeat and quality delta measurable.",
+        "Visual reflective material only, not Navier–Stokes simulation; each quality mode compile boundary/cache identity verified."
+      ],
+      "implementationStatus": "NOT_RUN",
+      "engineGate": {
+        "build": "NOT_RUN",
+        "runtime": "NOT_RUN",
+        "visual": "NOT_RUN",
+        "boundary": "NOT_RUN",
+        "resource": "NOT_RUN",
+        "performance": "NOT_RUN"
+      },
+      "agentGate": "NOT_RUN",
+      "passCountStatus": "DESIGN_ESTIMATE_NOT_MEASURED",
+      "upstreamReference": {
+        "owner": "native subagent Wave0-A",
+        "index": "docs/effects/upstream-reference.json",
+        "upstream_commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+        "upstream_file": "packages/core/src/shaders/LiquidMetal/index.ts",
+        "sourceSha256": "6af799e9654a0504cb19d038e925af9adaa8ad3c613baea368565a12fa3277b0",
+        "license": "MIT",
+        "helpers": [
+          "packages/core/src/std/paint/materials.ts",
+          "packages/core/src/gpu/kit/noise.ts",
+          "packages/core/src/gpu/kit/lighting.ts"
+        ],
+        "semantic_contract": "Ripple frequency times2.6; flow time times0.12; desktop chromatic split vs mobile shared evaluation is build-time device branch; upstream exposes no seed.",
+        "implementation_differences": "Visual material, not a fluid simulation. Local explicit quality tiers replace upstream hidden viewport heuristic only as documented divergence; freeze view/reflection/color domains and measure tier cost."
+      }
+    },
+    {
+      "id": "E08",
+      "name": "Cursor Trail",
+      "path": "One real pointer/touch path → bounded CPU ring buffer/curve vertices → native Texture2D data upload or dynamic Mesh → native shader curve-distance alpha.",
+      "capabilities": [
+        "input",
+        "session",
+        "mesh",
+        "texture",
+        "clock",
+        "resize",
+        "color-alpha"
+      ],
+      "plannedPasses": "1 curve draw; bounded data texture max capacity fixed",
+      "oracles": [
+        "Recorded down/move/up/cancel/pointerId → local CSS/backing transform → uploaded positions → independently reconstruct curve distance/coverage.",
+        "Max history enforced, generation invalidates late up; touch+resize+pause+100destroy leaves no listeners/RAF/owneddata; identical logged stream repeated."
+      ],
+      "implementationStatus": "NOT_RUN",
+      "engineGate": {
+        "build": "NOT_RUN",
+        "runtime": "NOT_RUN",
+        "visual": "NOT_RUN",
+        "boundary": "NOT_RUN",
+        "resource": "NOT_RUN",
+        "performance": "NOT_RUN"
+      },
+      "agentGate": "NOT_RUN",
+      "passCountStatus": "DESIGN_ESTIMATE_NOT_MEASURED",
+      "upstreamReference": {
+        "owner": "native subagent Wave0-A",
+        "index": "docs/effects/upstream-reference.json",
+        "upstream_commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+        "upstream_file": "packages/core/src/shaders/CursorTrail/index.ts",
+        "sourceSha256": "1cfdb60b981438b885d6b47c5ee3557f3289669fc12fb07e5000e4c0476c5cb2",
+        "license": "MIT",
+        "helpers": [
+          "packages/core/src/gpu/kit/host/pointer.ts",
+          "packages/core/src/gpu/kit/agents.ts",
+          "packages/core/src/gpu/kit/colorMixing.ts",
+          "packages/core/src/gpu/kit/colorStops.ts"
+        ],
+        "semantic_contract": "MAX_POINTS64 including duplicate head; three Bezier subdivisions; speed dt cap0.1s / age cap0.25s; aspect-correct distance; width signed to encode connectivity; newest-overlap paint logic.",
+        "implementation_differences": "Use Cocos input and director lifecycle; never copy RAF/runtime listeners. Define touch IDs, outside/cancel/resize policy; float32 vs upstream half16 and host smoothing differences affect numerical equivalence."
+      }
+    },
+    {
+      "id": "E09",
+      "name": "Glass",
+      "path": "Native source camera/layer → AirRenderTarget scene texture → native glass shader UV refraction, blur, RGB dispersion/highlight; capture excludes self.",
+      "capabilities": [
+        "target",
+        "render-texture",
+        "material",
+        "renderer",
+        "resize",
+        "color-alpha",
+        "session"
+      ],
+      "plannedPasses": "capture +1 glass consumer; separable blur optionally+2 draws and explicit intermediate RTs",
+      "oracles": [
+        "Checker/color grid: refraction vector/sign, edge-clamp, per-channel dispersion sample positions independently computed; zero parameters identity.",
+        "Real scene updates observed, target generations rebind on resize; no read-write feedback; actual camera/pass/draw count and RT binding audited.",
+        "Blur impulse kernel energy/symmetry, highlightradius controls, overlapalpha backdrops, offscreen/compositor agree."
+      ],
+      "implementationStatus": "NOT_RUN",
+      "engineGate": {
+        "build": "NOT_RUN",
+        "runtime": "NOT_RUN",
+        "visual": "NOT_RUN",
+        "boundary": "NOT_RUN",
+        "resource": "NOT_RUN",
+        "performance": "NOT_RUN"
+      },
+      "agentGate": "NOT_RUN",
+      "passCountStatus": "DESIGN_ESTIMATE_NOT_MEASURED",
+      "upstreamReference": {
+        "owner": "native subagent Wave0-A",
+        "index": "docs/effects/upstream-reference.json",
+        "upstream_commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+        "upstream_file": "packages/core/src/shaders/Glass/index.ts",
+        "sourceSha256": "964f8b456050a05e5a3dc278c5c40b5d6c880d02889e11d7b203d1d2a63afc45",
+        "license": "MIT",
+        "helpers": [
+          "packages/core/src/gpu/kit/effects/glass.ts",
+          "packages/core/src/gpu/kit/blur.ts",
+          "packages/core/src/gpu/kit/blend.ts",
+          "packages/core/src/std/paint/materials.ts"
+        ],
+        "semantic_contract": "requiresRTT and child=true; blur and aberration crossing zero trigger structural recompilation; blur radius=blur*2; RTT samples premultiplied, effect math straight; first-lobe thickness for volumetric mode.",
+        "implementation_differences": "Implement Cocos RenderTexture ownership and Camera passes, not upstream compute runtime. Declare local blur kernel/edge/sample mapping and physical-lens limitations; count actual offscreen/blur/final passes."
+      }
+    }
+  ],
+  "combinations": [
+    {
+      "id": "C01",
+      "effects": [
+        "E03",
+        "E05",
+        "E06"
+      ],
+      "name": "Holographic + Emboss + Sparkle",
+      "plan": "Local namespaced uniforms; reuse one input/height/noise where semantics align. First explicit sequential native RT path establishes correct algorithm; only fuse color/UV math after independent stage tests.",
+      "checks": [
+        "each stage toggled off matches isolated expected output",
+        "light/noise/threshold uniforms do not cross-contaminate",
+        "sparkle luminance computed in documented stage/color space",
+        "capture/RT/draw counts recorded; no repeated same-seed data generation"
+      ],
+      "status": "NOT_RUN",
+      "passFusion": "NOT_RUN",
+      "agentGate": "NOT_RUN"
+    },
+    {
+      "id": "C02",
+      "effects": [
+        "E02",
+        "E04"
+      ],
+      "name": "ThinFilm + Neon",
+      "plan": "Shared declared SDF function or SDF texture; a single native shader is a design candidate, not a proven fusion win.",
+      "checks": [
+        "ThinFilm phase does not change Neon geometry/radius",
+        "shared distance sign/AA boundaries",
+        "edge color and analytic halo alpha separately checked",
+        "compare baseline2draws to candidate1draw only if baseline really needs2"
+      ],
+      "status": "NOT_RUN",
+      "passFusion": "NOT_RUN",
+      "agentGate": "NOT_RUN"
+    },
+    {
+      "id": "C03",
+      "effects": [
+        "E09",
+        "E08"
+      ],
+      "name": "Glass + CursorTrail",
+      "plan": "One pointer ring buffer and one sim clock; source camera includes/excludes trail according to frozen scene graph; consumer uses native source target.",
+      "checks": [
+        "trail not duplicated by capture/self feedback",
+        "pointer coordinate→dispersion/refraction independent oracle",
+        "resize generation/capture binding invalidation",
+        "cancel/dispose does not keep trail/target/event clock alive"
+      ],
+      "status": "NOT_RUN",
+      "passFusion": "NOT_RUN",
+      "agentGate": "NOT_RUN"
+    },
+    {
+      "id": "C04",
+      "effects": [
+        "E01"
+      ],
+      "name": "NoiseDissolve + arbitrary input",
+      "plan": "Same local dissolve fragment receives image Texture2D, procedural content Texture2D and native camera rendered layer AirRenderTarget.texture.",
+      "checks": [
+        "same noise/progress algorithm across3source types",
+        "RGBA and color transfer input distinctions explicitly validated",
+        "renderedlayer refresh/resize observed",
+        "progress0/1 identity/removal exact for all3"
+      ],
+      "status": "NOT_RUN",
+      "passFusion": "NOT_RUN",
+      "agentGate": "NOT_RUN"
+    }
+  ],
+  "measurements": {
+    "status": "METHOD_FROZEN_NOT_MEASURED",
+    "cpuUpdate": {
+      "unit": "ms",
+      "method": "Named Director.EVENT_BEFORE_UPDATE/AFTER_UPDATE performance.now interval + separate effectInstance.update(t,dt) bracketing. Record callback overhead and sample arrays; excludes claiming GPU time."
+    },
+    "cpuEncodingSubmission": {
+      "unit": "ms",
+      "method": "Director.EVENT_BEFORE_DRAW/AFTER_DRAW elapsed CPU interval; label as render traversal/encoding/submission envelope, not pure driver submit. Separately bracket user setProperty/uploadData operations, never gl.finish per frame."
+    },
+    "frameTime": {
+      "unit": "ms",
+      "method": "Consecutive native AFTER_DRAW or RAF presentation callback intervals, exact label recorded. Use native pacer for perf, no step clock or screenshots during steady window. Warmup/duration/repeats/candidate/workload/version/device frozen before acceptance."
+    },
+    "gpuTimestamp": {
+      "status": "NOT_RUN",
+      "extension": "EXT_disjoint_timer_query_webgl2 must be queried on actual device",
+      "publicEnginePath": "No query create/begin/end/results method in current gfx.Device/CommandBuffer declarations; QueryType.TIMESTAMP enum existence is not a usable timer.",
+      "policy": "GPUelapsed via existing-context EXT diagnostic is authorized measurement instrumentation, not a rendering bypass; label TOOL_DIAGNOSTIC and do not claim gfx public API support. Chromium supported extension should be measured in Wave1; Firefox/WebKit current extension unsupported recorded unavailable. No queries executed in Wave0. CPU update/encoding/submission/frame are distinct and never relabeled gpuTime.",
+      "extensionObservationsFromLead": {
+        "chromium": true,
+        "firefox": false,
+        "webkit": false
+      },
+      "independentDiagnostic": {
+        "status": "NOT_RUN_METHOD_ONLY",
+        "label": "TOOL_DIAGNOSTIC_GPU_ELAPSED_EXTENSION",
+        "feasibility": "Chromium supports EXT_disjoint_timer_query_webgl2 in Lead observation. Optional tool can wrap existing native Director BEFORE_DRAW/AFTER_DRAW submission with TIME_ELAPSED_EXT queries on the existing device context (no canvas/no draws/no effect runtime bypass), asynchronously poll query availability after frames; reject GPU_DISJOINT_EXT/nonfinite or overlapping active query; ns→ms. Own/delete only its queries at release and quantify instrumentation overhead. FF/WK do not report extension here; record unavailable rather than force failure.",
+        "limitation": "This instrumentation is separate from native API measurement/support; it does not prove gfx exposes GPUtimer, is not itself an effect implementation, and has not been executed in Wave0."
+      }
+    },
+    "draws": {
+      "method": "After native present use director.root.device.numDrawCalls/numTris/numInstances; reset per-frame by WebGL2Device.present queue.clear. Record before/after baseline, all cameras; material.passes.length only describes material passes, not total pipeline draws."
+    },
+    "passCount": {
+      "method": "Maintain explicit registered camera/order/target/consumer pass receipts, enumerate material passes, capture begin/end events. Distinguish effect draws/renderpasses/MSAAresolve/copy and fullengine total. No universal framepass counter public API found."
+    },
+    "allocations": {
+      "method": "Owner ledger for Texture2D/RenderTexture/Material/Mesh/effect/GFXbuffer instances and refCount; gfx.memoryStatus.textureSize and bufferSize are engine accounting bytes, not liveobject count or physicalGPUmemory."
+    },
+    "vramEstimate": {
+      "unit": "bytes estimate",
+      "method": "Sum declared actual allocation dimensions × format bytes/texel × layers × mip levels; MSAA color/depth+separate resolved texture included; buffers actual byteLength. Label estimate, describe driver alignment/tiling/hidden cache excluded; physical VRAM unavailable."
+    },
+    "statistics": {
+      "method": "Persist every raw sample, p50/p95/p99 via frozen quantile convention + worst, samplesDropped ifany with reason. No guessed60fps/PASS budget; no workload/case rejection on screenshot resemblance."
+    },
+    "viewports": [
+      {
+        "id": "720p",
+        "css": {
+          "width": 1280,
+          "height": 720
+        },
+        "deviceScaleFactor": 1,
+        "expectedBacking": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      {
+        "id": "1080p",
+        "css": {
+          "width": 1920,
+          "height": 1080
+        },
+        "deviceScaleFactor": 1,
+        "expectedBacking": {
+          "width": 1920,
+          "height": 1080
+        }
+      },
+      {
+        "id": "mobile-dpr",
+        "css": {
+          "width": 390,
+          "height": 844
+        },
+        "deviceScaleFactor": 3,
+        "pixelRatioCap": 2,
+        "expectedBacking": {
+          "width": 780,
+          "height": 1688
+        },
+        "limitation": "Browser emulation only; realphoneGPU/perf/physicaltouch NOT_RUN; cap2 recorded. TestDPR3 separately only with explicitcap3 beforeimport and actualallocation check."
+      }
+    ],
+    "viewportPolicy": "Expected backing is a plan, not a fact. Freeze/read canvas and viewport actual size/rt effective dims eachcase, including live resize; maxTextureSize/format capability conditional. Lead preflight may establish existingSDK local startup; not9 effectsEG or deviceperformance.",
+    "cpuEncoding": {
+      "status": "NOT_RUN_METHOD_ONLY",
+      "unit": "ms",
+      "method": "Tool may instrument native CommandBuffer.begin/end/record and Queue.submit calls, preserving original invocation/context and restoring exact wrapper identities. Record distinct raw timing arrays for encoding vs submission when actual backend exposes both. Legacy WebGL2 primary command recording may directly execute GL operations, so report inseparable envelope honestly when this occurs; do not duplicate one array under two labels.",
+      "limitation": "Tool instrumentation does not replace engine command creation/submission and is not a new public SDK profiler API."
+    },
+    "cpuSubmission": {
+      "status": "NOT_RUN_METHOD_ONLY",
+      "unit": "ms",
+      "method": "Separately bracket actual native Queue.submit if present in the effect path; keep command buffer encoding interval separate with exact frame/phase IDs. If submit is merely an empty/control stage while GL executes earlier, disclose backend behavior and preserve time values, not claim GPUwork.",
+      "limitation": "If pilot cannot separate actual encode/submit, use a single render CPU envelope and explicitly mark both unsplit quantities unavailable."
+    }
+  },
+  "resourcePlan": {
+    "status": "NOT_RUN",
+    "cycles": 100,
+    "unit": "Effect-instance cycle inside one initialized native app, not app.close/reinit same document",
+    "sequence": [
+      "freeze warm builtin/cache baseline and registered listeners/nativeclock owners",
+      "create effect/assets with owner addRef(1), instantiate scene/cameras/mesh/material; update + resize + draw + visible raw/PNG check",
+      "pause/resume with oneclock; pending async token retired before release",
+      "detach all own camera/target sampler bindings; remove named input/Director/resize listeners and cancel only self-owned jobs; revoke generation",
+      "unbind renderer.mesh/sharedmaterial; destroy owned nodes/effects, decRef owned assets and dispose targets; do not destroy borrowed builtin/caches",
+      "advance deferred-native destroy/frame when required then record GPUhandles/validity/refCount/memory bytes/registry counts/alllisteners and compare baseline",
+      "recreate new effect instance and obtain a different owner ID; save100percycle rows and after-warmuptrend"
+    ],
+    "acceptance": [
+      "each cycle owns/releases exactassetidentity and refs, cleanupidempotent, no retainedcamera binding",
+      "owner ledger and listeneradd-remove delta0, pendingwork0, nativepacer ownership1 duringrun (0 selfRAF)",
+      "engine-memory accounting returns warmed baseline or retainedcache increase explained peridentity, no unexplainedgrowth slope",
+      "EffectAsset registry entries owned by cycle removed; no stable-name collision destroys borrowedtemplate",
+      "GPU physicalVRAM unavailable remains unavailable; refCount0/isValidfalse alone cannot prove GPUmemory0"
+    ]
+  },
+  "findings": [
+    {
+      "id": "CB01",
+      "classification": "DOC_GAP",
+      "status": "CONFIRMED_SOURCE_CONTRADICTION",
+      "summary": "Custom shader guide states recompileShaders/overridePipelineStates are warn stubs without qualifying base Material; native MaterialInstance overrides implement both.",
+      "sources": [
+        "docs/manual/custom-shaders.md",
+        "src/cocos/asset/assets/material.ts",
+        "src/cocos/render-scene/core/material-instance.ts"
+      ],
+      "next": "Document base vs renderer.getMaterialInstance behavior, then verify actual variant/PSO rendering in an effect pilot. No engine patch proposed atWave0."
+    },
+    {
+      "id": "CB02",
+      "classification": "API_GAP",
+      "status": "CONFIRMED_MEASUREMENT_SURFACE_GAP",
+      "summary": "Native JS measurement surface has no usable GPU timestamp query API or universal renderpass/liveGPUobject counter; QueryType.TIMESTAMP is only enum.",
+      "sources": [
+        "src/cocos/gfx/base/device.ts",
+        "src/cocos/gfx/base/command-buffer.ts",
+        "src/cocos/gfx/base/define.ts",
+        "src/cocos/gfx/webgl2/webgl2-swapchain.ts"
+      ],
+      "next": "GPUtimestamp unavailable until actual extension support and native path authorized; explicit pass/allocation ledger for pilot. Publictiming API proposal requires measured consumers."
+    },
+    {
+      "id": "CB03",
+      "classification": "API_DX",
+      "status": "CONFIRMED_TOOL_LIMITATION_NOT_ENGINE_BUG",
+      "summary": "effect-json constrained authoring supports vec4/mat4/sampler2D only and strips general declarations/macros; large trail uniformarrays, conditionalresources or compute not representable.",
+      "sources": [
+        "tools/build/effect-json.mjs",
+        "tools/debug/effect-layout.ts",
+        "docs/manual/custom-shaders.md"
+      ],
+      "next": "Pack scalar params in vec4; local native texture/mesh for boundedtrail. Hand-authored nativecompiled JSON allowed; do not upgradegenerator/core before2–3effects reveal repeatedneed."
+    },
+    {
+      "id": "CB04",
+      "classification": "API_DX",
+      "status": "CONFIRMED_SEMANTIC_BOUNDARY",
+      "summary": "Current built-in sRGB helpers approximate with square/sqrt; metadata linear conversion and hardware sRGB may differ from exacttransfer used by effectoracle.",
+      "sources": [
+        "src/cocos/rendering/pipeline-funcs.ts",
+        "src/cocos/asset/assets/material.ts",
+        "src/air/rendering/color-contract.ts"
+      ],
+      "next": "Explicittransfer contract and independentpatches; customexactmath ifneeded, no claim these approximations are newly confirmedenginebug."
+    }
+  ],
+  "evidenceReuse": [
+    {
+      "area": "authoring",
+      "tool": "tools/build/effect-json.mjs",
+      "doc": "docs/manual/custom-shaders.md",
+      "toolExists": true,
+      "docExists": true,
+      "inheritedPass": false,
+      "policy": "Reusable producer/method only; recapture currenteffect/currentcandidate; previous success not transferred."
+    },
+    {
+      "area": "layout-preflight",
+      "tool": "tools/debug/effect-layout.ts",
+      "doc": "docs/manual/custom-shaders.md",
+      "toolExists": true,
+      "docExists": true,
+      "inheritedPass": false,
+      "policy": "Reusable producer/method only; recapture currenteffect/currentcandidate; previous success not transferred."
+    },
+    {
+      "area": "multi-pass",
+      "tool": "tools/verify/interactive-multipass-browser.cjs",
+      "doc": "docs/manual/interactive-multipass.md",
+      "toolExists": true,
+      "docExists": true,
+      "inheritedPass": false,
+      "policy": "Reusable producer/method only; recapture currenteffect/currentcandidate; previous success not transferred."
+    },
+    {
+      "area": "geometry",
+      "tool": "tools/verify/interactive-geometry-browser.cjs",
+      "doc": "docs/manual/interactive-geometry.md",
+      "toolExists": true,
+      "docExists": true,
+      "inheritedPass": false,
+      "policy": "Reusable producer/method only; recapture currenteffect/currentcandidate; previous success not transferred."
+    },
+    {
+      "area": "input",
+      "tool": "tools/verify/interactive-input-browser.cjs",
+      "doc": "docs/manual/interactive-input.md",
+      "toolExists": true,
+      "docExists": true,
+      "inheritedPass": false,
+      "policy": "Reusable producer/method only; recapture currenteffect/currentcandidate; previous success not transferred."
+    },
+    {
+      "area": "resize",
+      "tool": "tools/verify/interactive-container-browser.cjs",
+      "doc": "docs/manual/interactive-container.md",
+      "toolExists": true,
+      "docExists": true,
+      "inheritedPass": false,
+      "policy": "Reusable producer/method only; recapture currenteffect/currentcandidate; previous success not transferred."
+    },
+    {
+      "area": "color",
+      "tool": "tools/verify/interactive-color-compare-browser.cjs",
+      "doc": "docs/manual/interactive-color-controls.md",
+      "toolExists": true,
+      "docExists": true,
+      "inheritedPass": false,
+      "policy": "Reusable producer/method only; recapture currenteffect/currentcandidate; previous success not transferred."
+    },
+    {
+      "area": "perf",
+      "tool": "tools/verify/interactive-performance.cjs",
+      "doc": "docs/manual/interactive-performance.md",
+      "toolExists": true,
+      "docExists": true,
+      "inheritedPass": false,
+      "policy": "Reusable producer/method only; recapture currenteffect/currentcandidate; previous success not transferred."
+    },
+    {
+      "area": "native-target consumer",
+      "tool": "tools/verify/interactive-water-browser.cjs",
+      "doc": "docs/manual/interactive-consumer-kit.md",
+      "toolExists": true,
+      "docExists": true,
+      "inheritedPass": false,
+      "policy": "Reusable producer/method only; recapture currenteffect/currentcandidate; previous success not transferred."
+    }
+  ],
+  "declarations": [
+    {
+      "name": "MeshRenderer",
+      "line": 4337,
+      "members": [
+        "static ShadowCastingMode: {\n            \n            OFF: number;\n            \n            ON: number;\n        };",
+        "static ShadowReceivingMode: {\n            \n            OFF: number;\n            \n            ON: number;\n        };",
+        "bakeSettings: __private._cocos_3d_framework_mesh_renderer__ModelBakeSettings;",
+        "get shadowBias(): number;",
+        "set shadowBias(val: number);",
+        "get shadowNormalBias(): number;",
+        "set shadowNormalBias(val: number);",
+        "get shadowCastingMode(): number;",
+        "set shadowCastingMode(val: number);",
+        "get shadowCastingModeForInspector(): boolean;",
+        "set shadowCastingModeForInspector(val: boolean);",
+        "onUpdateReceiveDirLight(visibility: number, forceClose?: boolean): void;",
+        "get receiveShadow(): number;",
+        "set receiveShadow(val: number);",
+        "get receiveShadowForInspector(): boolean;",
+        "set receiveShadowForInspector(val: boolean);",
+        "get mesh(): Mesh | null;",
+        "set mesh(val: Mesh | null);",
+        "get model(): renderer.scene.Model | null;",
+        "get enableMorph(): boolean;",
+        "set enableMorph(value: boolean);",
+        "get isGlobalStandardSkinObject(): boolean;",
+        "set isGlobalStandardSkinObject(val: boolean);",
+        "constructor();",
+        "onLoad(): void;",
+        "onRestore(): void;",
+        "onEnable(): void;",
+        "onDisable(): void;",
+        "onDestroy(): void;",
+        "onGeometryChanged(): void;",
+        "getWeight(subMeshIndex: number, shapeIndex: number): number;",
+        "setWeights(weights: number[], subMeshIndex: number): void;",
+        "setWeight(weight: number, subMeshIndex: number, shapeIndex: number): void;",
+        "setInstancedAttribute(name: string, value: ArrayLike<number>): void;",
+        "updateProbeCubemap(cubeMap: TextureCube | null): void;",
+        "updateProbeBlendCubemap(cubeMap: TextureCube | null): void;",
+        "updateProbePlanarMap(planarMap: gfx.Texture | null): void;",
+        "updateReflectionProbeDataMap(dataMap: Texture2D | null): void;",
+        "updateReflectionProbeId(probeId: number): void;",
+        "updateReflectionProbeBlendId(blendProbeId: number): void;",
+        "updateReflectionProbeBlendWeight(weight: number): void;"
+      ]
+    },
+    {
+      "name": "Device",
+      "line": 7231,
+      "members": [
+        "constructor();",
+        "get gfxAPI(): API;",
+        "get queue(): Queue;",
+        "get commandBuffer(): CommandBuffer;",
+        "get swapchainFormat(): Format;",
+        "get renderer(): string;",
+        "get vendor(): string;",
+        "get numDrawCalls(): number;",
+        "get numInstances(): number;",
+        "get numTris(): number;",
+        "get numDispatches(): number;",
+        "get memoryStatus(): MemoryStatus;",
+        "get capabilities(): DeviceCaps;",
+        "get bindingMappingInfo(): BindingMappingInfo;",
+        "static canvas: HTMLCanvasElement;",
+        "abstract initialize(info: Readonly<DeviceInfo>): boolean | Promise<boolean>;",
+        "abstract destroy(): void;",
+        "abstract acquire(swapchains: Readonly<Swapchain[]>): void;",
+        "abstract present(): void;",
+        "abstract flushCommands(cmdBuffs: Readonly<CommandBuffer[]>): void;",
+        "abstract createCommandBuffer(info: Readonly<CommandBufferInfo>): CommandBuffer;",
+        "abstract createSwapchain(info: Readonly<SwapchainInfo>): Swapchain;",
+        "abstract createBuffer(info: Readonly<BufferInfo> | BufferViewInfo): Buffer;",
+        "abstract createTexture(info: Readonly<TextureInfo> | TextureViewInfo): Texture;",
+        "abstract createDescriptorSet(info: Readonly<DescriptorSetInfo>): DescriptorSet;",
+        "abstract createShader(info: Readonly<ShaderInfo>): Shader;",
+        "abstract createInputAssembler(info: Readonly<InputAssemblerInfo>): InputAssembler;",
+        "abstract createRenderPass(info: Readonly<RenderPassInfo>): RenderPass;",
+        "abstract createFramebuffer(info: Readonly<FramebufferInfo>): Framebuffer;",
+        "abstract createDescriptorSetLayout(info: Readonly<DescriptorSetLayoutInfo>): DescriptorSetLayout;",
+        "abstract createPipelineLayout(info: Readonly<PipelineLayoutInfo>): PipelineLayout;",
+        "abstract createPipelineState(info: Readonly<PipelineStateInfo>): PipelineState;",
+        "abstract createQueue(info: Readonly<QueueInfo>): Queue;",
+        "abstract getSampler(info: Readonly<SamplerInfo>): Sampler;",
+        "abstract getSwapchains(): Readonly<Swapchain[]>;",
+        "abstract getGeneralBarrier(info: Readonly<GeneralBarrierInfo>): GeneralBarrier;",
+        "abstract getTextureBarrier(info: Readonly<TextureBarrierInfo>): TextureBarrier;",
+        "abstract getBufferBarrier(info: Readonly<BufferBarrierInfo>): __private._cocos_gfx_base_states_buffer_barrier__BufferBarrier;",
+        "abstract copyBuffersToTexture(buffers: Readonly<ArrayBufferView[]>, texture: Texture, regions: Readonly<BufferTextureCopy[]>): void;",
+        "abstract copyTextureToBuffers(texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: Readonly<BufferTextureCopy[]>): void;",
+        "abstract copyTexImagesToTexture(texImages: Readonly<TexImageSource[]>, texture: Texture, regions: Readonly<BufferTextureCopy[]>): void;",
+        "hasFeature(feature: Feature): boolean;",
+        "getFormatFeatures(format: Format): FormatFeature;",
+        "enableAutoBarrier(en: boolean): void;",
+        "getMaxSampleCount(format: Format, usage: TextureUsage, flags: TextureFlags): SampleCount;"
+      ]
+    },
+    {
+      "name": "MaterialInstance",
+      "line": 11362,
+      "members": [
+        "get parent(): Material;",
+        "get owner(): Renderer | null;",
+        "constructor(info: IMaterialInstanceInfo);",
+        "recompileShaders(overrides: MacroRecord, passIdx?: number): void;",
+        "overridePipelineStates(overrides: PassOverrides, passIdx?: number): void;",
+        "destroy(): boolean;",
+        "onPassStateChange(dontNotify: boolean): void;"
+      ]
+    },
+    {
+      "name": "Texture2D",
+      "line": 27076,
+      "members": [
+        "constructor(name?: string);",
+        "get mipmaps(): ImageAsset[];",
+        "set mipmaps(value: ImageAsset[]);",
+        "get image(): ImageAsset | null;",
+        "set image(value: ImageAsset | null);",
+        "onLoaded(): void;",
+        "reset(info: __private._cocos_asset_assets_texture_2d__ITexture2DCreateInfo): void;",
+        "create(width: number, height: number, format?: __private._cocos_asset_assets_asset_enum__PixelFormat, mipmapLevel?: number, baseLevel?: number, maxLevel?: number): void;",
+        "toString(): string;",
+        "updateMipmaps(firstLevel?: number, count?: number | undefined): void;",
+        "getHtmlElementObj(): HTMLCanvasElement | HTMLImageElement | null;",
+        "destroy(): boolean;",
+        "description(): string;",
+        "releaseTexture(): void;",
+        "initDefault(uuid?: string): void;",
+        "validate(): boolean;"
+      ]
+    },
+    {
+      "name": "EffectAsset",
+      "line": 27279,
+      "members": [
+        "static register(asset: EffectAsset): void;",
+        "static remove(asset: EffectAsset | string): void;",
+        "static get(name: string): EffectAsset | null;",
+        "static getAll(): Record<string, EffectAsset>;",
+        "techniques: EffectAsset.ITechniqueInfo[];",
+        "shaders: EffectAsset.IShaderInfo[];",
+        "combinations: EffectAsset.IPreCompileInfo[];",
+        "hideInEditor: boolean;",
+        "constructor(name?: string);",
+        "onLoaded(): void;",
+        "destroy(): boolean;",
+        "initDefault(uuid?: string): void;",
+        "validate(): boolean;"
+      ]
+    },
+    {
+      "name": "IMaterialInfo",
+      "line": 27503,
+      "members": [
+        "effectAsset?: EffectAsset | null;",
+        "effectName?: string;",
+        "technique?: number;",
+        "defines?: renderer.MacroRecord | renderer.MacroRecord[];",
+        "states?: renderer.PassOverrides | renderer.PassOverrides[];"
+      ]
+    },
+    {
+      "name": "Material",
+      "line": 27544,
+      "members": [
+        "static getHash(material: Material): number;",
+        "constructor(name?: string);",
+        "get effectAsset(): EffectAsset | null;",
+        "get effectName(): string;",
+        "get technique(): number;",
+        "get passes(): renderer.Pass[];",
+        "get hash(): number;",
+        "get parent(): Material | null;",
+        "get owner(): Renderer | null;",
+        "initialize(info: IMaterialInfo): void;",
+        "reset(info: IMaterialInfo): void;",
+        "destroy(): boolean;",
+        "recompileShaders(overrides: renderer.MacroRecord, passIdx?: number): void;",
+        "overridePipelineStates(overrides: renderer.PassOverrides, passIdx?: number): void;",
+        "onLoaded(): void;",
+        "resetUniforms(clearPasses?: boolean): void;",
+        "setProperty(name: string, val: __private._cocos_asset_assets_material__MaterialPropertyFull | __private._cocos_asset_assets_material__MaterialPropertyFull[], passIdx?: number): void;",
+        "getProperty(name: string, passIdx?: number): Readonly<__private._cocos_asset_assets_material__MaterialPropertyFull | __private._cocos_asset_assets_material__MaterialPropertyFull[]>;",
+        "copy(mat: Material, overrides?: IMaterialInfo): void;",
+        "initDefault(uuid?: string): void;",
+        "validate(): boolean;"
+      ]
+    },
+    {
+      "name": "RenderTexture",
+      "line": 27708,
+      "members": [
+        "constructor(name?: string);",
+        "get window(): renderer.RenderWindow | null;",
+        "initialize(info: __private._cocos_asset_assets_render_texture__IRenderTextureCreateInfo): void;",
+        "reset(info: __private._cocos_asset_assets_render_texture__IRenderTextureCreateInfo): void;",
+        "destroy(): boolean;",
+        "resize(width: number, height: number): void;",
+        "getGFXTexture(): gfx.Texture | null;",
+        "onLoaded(): void;",
+        "initDefault(uuid?: string): void;",
+        "validate(): boolean;",
+        "readPixels(x?: number, y?: number, width?: number, height?: number, buffer?: Uint8Array): Uint8Array | null;"
+      ]
+    },
+    {
+      "name": "IGeometry",
+      "line": 35762,
+      "members": [
+        "positions: number[];",
+        "normals?: number[];",
+        "uvs?: number[];",
+        "tangents?: number[];",
+        "colors?: number[];",
+        "attributes?: gfx.Attribute[];",
+        "customAttributes?: {\n                attr: gfx.Attribute;\n                values: number[];\n            }[];",
+        "boundingRadius?: number;",
+        "minPos?: {\n                x: number;\n                y: number;\n                z: number;\n            };",
+        "maxPos?: {\n                x: number;\n                y: number;\n                z: number;\n            };",
+        "indices?: number[];",
+        "primitiveMode?: gfx.PrimitiveMode;",
+        "doubleSided?: boolean;"
+      ]
+    },
+    {
+      "name": "IDynamicGeometry",
+      "line": 35866,
+      "members": [
+        "positions: Float32Array;",
+        "normals?: Float32Array;",
+        "uvs?: Float32Array;",
+        "tangents?: Float32Array;",
+        "colors?: Float32Array;",
+        "customAttributes?: {\n                attr: gfx.Attribute;\n                values: Float32Array;\n            }[];",
+        "minPos?: {\n                x: number;\n                y: number;\n                z: number;\n            };",
+        "maxPos?: {\n                x: number;\n                y: number;\n                z: number;\n            };",
+        "indices16?: Uint16Array;",
+        "indices32?: Uint32Array;",
+        "primitiveMode?: gfx.PrimitiveMode;",
+        "doubleSided?: boolean;"
+      ]
+    },
+    {
+      "name": "ICreateDynamicMeshOptions",
+      "line": 35970,
+      "members": [
+        "maxSubMeshes: number;",
+        "maxSubMeshVertices: number;",
+        "maxSubMeshIndices: number;"
+      ]
+    },
+    {
+      "name": "AirSessionScope",
+      "line": 55690,
+      "members": [
+        "readonly generation: number;",
+        "readonly active: boolean;",
+        "readonly deactivateReason: string | null;",
+        "readonly ownedCount: number;",
+        "activate(): number;",
+        "deactivate(reason?: string): void;",
+        "token(): AirSessionToken;",
+        "own(cleanup: () => void | Promise<void>, label?: string): () => void;",
+        "onChange(callback: (change: AirSessionChange) => void): () => void;",
+        "offChange(callback: (change: AirSessionChange) => void): void;",
+        "dispose(options?: {\n            timeoutMs?: number;\n        }): Promise<AirCleanupReceipt>;"
+      ]
+    },
+    {
+      "name": "AirAppOptions",
+      "line": 55815,
+      "members": [
+        "canvas: HTMLCanvasElement | string;",
+        "renderMode?: number;",
+        "physics?: \"builtin\" | \"cannon\";",
+        "contextLoss?: AirContextLossOptions;",
+        "diagnostics?: AirDiagnosticMode;",
+        "pixelRatioCap?: number;",
+        "screenMode?: \"window\" | \"container\";",
+        "container?: HTMLElement | string;",
+        "designResolution?: {\n            width: number;\n            height: number;\n            policy: number;\n        };"
+      ]
+    },
+    {
+      "name": "AirStepClock",
+      "line": 56044,
+      "members": [
+        "begin(): void;",
+        "step(dt?: number): Promise<AirStepFrame>;",
+        "end(): void;",
+        "readonly stepping: boolean;",
+        "readonly stepped: number;"
+      ]
+    },
+    {
+      "name": "AirActionInputOptions",
+      "line": 56251,
+      "members": [
+        "readonly state: AirActionState;",
+        "readonly backend?: \"native\" | \"dom\";",
+        "readonly canvas?: HTMLCanvasElement;",
+        "readonly session?: AirActionSessionGate;",
+        "readonly preventDefault?: boolean;"
+      ]
+    },
+    {
+      "name": "AirRenderTargetOptions",
+      "line": 57300,
+      "members": [
+        "name?: string;",
+        "width: number;",
+        "height: number;",
+        "scale?: number;",
+        "colorFormat?: AirTargetColorFormat;",
+        "depthFormat?: \"none\" | \"depth24-stencil8\";",
+        "samples?: 1 | 2 | 4 | 8;",
+        "filter?: \"nearest\" | \"linear\";",
+        "sampleFallback?: \"error\" | \"lower\";"
+      ]
+    },
+    {
+      "name": "AirRenderTargetInfo",
+      "line": 57312,
+      "members": [
+        "readonly requested: Readonly<AirRenderTargetOptions>;",
+        "readonly effective: Readonly<{\n            colorFormat: AirTargetColorFormat;\n            depthFormat: \"none\" | \"depth24-stencil8\";\n            samples: number;\n            filter: \"nearest\" | \"linear\";\n            scale: number;\n        }>;",
+        "readonly width: number;",
+        "readonly height: number;",
+        "readonly samples: number;",
+        "readonly generation: number;",
+        "readonly framebufferComplete: boolean;",
+        "readonly resolveRequired: boolean;",
+        "readonly disposed: boolean;",
+        "readonly supportedSamples: readonly number[];",
+        "readonly glSamples: number;"
+      ]
+    },
+    {
+      "name": "AirRenderTarget",
+      "line": 57332,
+      "members": [
+        "get renderTexture(): RenderTexture;",
+        "readonly texture: __private._cocos_asset_assets_texture_base__TextureBase;",
+        "readonly depthTexture: __private._cocos_asset_assets_texture_base__TextureBase | null;",
+        "constructor(options: AirRenderTargetOptions);",
+        "get info(): Readonly<AirRenderTargetInfo>;",
+        "resize(baseWidth: number, baseHeight: number): void;",
+        "attachCamera(camera: Camera, beforeRender?: () => void): () => void;",
+        "resolve(): void;",
+        "bindColor(material: Material, property: string, passIdx?: number): () => void;",
+        "bindDepth(material: Material, property: string, passIdx?: number): () => void;",
+        "readColor(region?: {\n            x?: number;\n            y?: number;\n            width?: number;\n            height?: number;\n        }): Float32Array | Uint8Array;",
+        "dispose(): void;"
+      ]
+    }
+  ],
+  "sourceInputs": [
+    {
+      "path": "src/air/app.ts",
+      "bytes": 11235,
+      "sha256": "3e52bd4280d9f28a43835494505aa423d06a9e94c3929f4271ac59feb54bf0bd"
+    },
+    {
+      "path": "src/cocos/asset/assets/effect-asset.ts",
+      "bytes": 14201,
+      "sha256": "9ca223dc60396b28fb45461b3545826d38426d485b40b5addd6e46d6b4539236"
+    },
+    {
+      "path": "src/cocos/asset/assets/material.ts",
+      "bytes": 22776,
+      "sha256": "c1708aa798dfc44d382bdc537ec5fc0916843c31ff420682034ef00267a386ad"
+    },
+    {
+      "path": "src/cocos/3d/misc/create-mesh.ts",
+      "bytes": 15409,
+      "sha256": "6202c9759e1e2f6bc0d32f2b4892cad87065d21dd8be25c414a8b373d80c4e40"
+    },
+    {
+      "path": "src/cocos/3d/framework/mesh-renderer.ts",
+      "bytes": 46914,
+      "sha256": "0e90b504656e167fc545db4fdea35e84726173800f03e633e14a7608570a4810"
+    },
+    {
+      "path": "src/cocos/asset/assets/texture-2d.ts",
+      "bytes": 13140,
+      "sha256": "1f1ace0e8694220fafe897e59f3e97c1a68529e6d0b145a16c5ba6641dfbae5a"
+    },
+    {
+      "path": "src/cocos/asset/assets/render-texture.ts",
+      "bytes": 11178,
+      "sha256": "97f0c048214da4fe805b3a858bef80343d372cf6c3341024e7dd87101f43962b"
+    },
+    {
+      "path": "src/air/rendering/render-target.ts",
+      "bytes": 18988,
+      "sha256": "b374dea8c9d8068d7d353b7aa4d34d7ce5a323ec2f2abdbea9a70fcc4b866b96"
+    },
+    {
+      "path": "src/air/step-clock.ts",
+      "bytes": 4367,
+      "sha256": "afee1e035fda6debbd8c59b4574d7af9c3e5cc970646af5ee68c123c6600fd8c"
+    },
+    {
+      "path": "src/air/session-scope.ts",
+      "bytes": 5493,
+      "sha256": "ab90b1c12a29aa9ded5c0d8e720a8bfc73b6694790a28258208647cf42f04171"
+    },
+    {
+      "path": "src/air/action-input.ts",
+      "bytes": 22019,
+      "sha256": "c279eb75c5123fb1a7582c4e650d9a37e34ff6d13bd4d457c51284fc75a33f4d"
+    },
+    {
+      "path": "src/air/bootstrap.ts",
+      "bytes": 9771,
+      "sha256": "138ce13d1185bf0ad01fca2ceae2b94d2bba49cc43094b460cd71fe5307534bd"
+    },
+    {
+      "path": "src/air/rendering/color-contract.ts",
+      "bytes": 8579,
+      "sha256": "94eece036d30bddfaf0e2c774ab62a0d9be6ee11b17881293c1c2d6a2b6f338a"
+    },
+    {
+      "path": "tools/build/effect-json.mjs",
+      "bytes": 10548,
+      "sha256": "9d090611aa72f3a8017677e5d8c4848e4c0ce9126acb95bfbbec6c53d25f0c16"
+    },
+    {
+      "path": "docs/manual/custom-shaders.md",
+      "bytes": 17973,
+      "sha256": "dfc4a1c165400e5fe1523187bfd41f4e3bc74aa26b3d846ecaae9e2ad00908a6"
+    },
+    {
+      "path": "src/cocos/render-scene/core/material-instance.ts",
+      "bytes": 4101,
+      "sha256": "2baf215c4f5161bb8b68a39d7389ca932198af304aca8e64ef9ac5d4fa683ea3"
+    },
+    {
+      "path": "src/cocos/gfx/base/device.ts",
+      "bytes": 17312,
+      "sha256": "e543010d866ca4533506969321a926880b83b2014cb9ab1ea0301df60f1df0de"
+    },
+    {
+      "path": "src/cocos/gfx/base/command-buffer.ts",
+      "bytes": 10349,
+      "sha256": "d924fe7b6bdc0cc74aee95fceb2b7b7e5939cb41a16ed2e2d70f7a3c61967e1f"
+    },
+    {
+      "path": "src/cocos/gfx/base/define.ts",
+      "bytes": 83642,
+      "sha256": "15ffd6c561a6fc1e62bb0942dd345688215c955f1bdb1ac2f9f58a62bd6d0062"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-swapchain.ts",
+      "bytes": 12063,
+      "sha256": "df5ffe57c2cc19088977f9a9b81fce4debf5834f8877e19fc9c05f1309158df8"
+    },
+    {
+      "path": "tools/debug/effect-layout.ts",
+      "bytes": 17180,
+      "sha256": "c3985a0eb4bfcaec59e82a3b699f5253cfc254b008806b50268a432c8bce499b"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-funcs.ts",
+      "bytes": 4155,
+      "sha256": "8e34852feebd45ca44f4854b90a5a240d4f4625303bb34acdf0ec65260a4c285"
+    },
+    {
+      "path": "src/air/safe-bootstrap.ts",
+      "bytes": 1348,
+      "sha256": "943753fd3f50e5f6a5172e27773c6f80454583e380b210334e22a4f745847c0e"
+    },
+    {
+      "path": "src/pal/screen-adapter/web/screen-adapter.js",
+      "bytes": 27747,
+      "sha256": "d9b1c799e62658f1574d564b638af5661af1000e00eeb427fd5e6c4fa801fa05"
+    },
+    {
+      "path": "src/cocos/asset/assets/simple-texture.ts",
+      "bytes": 13511,
+      "sha256": "c8de34caaf65979b96f486d5652a541178b61989411308f5b17879315bdac5a8"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-device.ts",
+      "bytes": 25441,
+      "sha256": "8ed06bf401265f05f1d3d086dd0a692fc4df76935c760607cec96a5650026f6a"
+    },
+    {
+      "path": "src/cocos/asset/assets/texture-base.ts",
+      "bytes": 11866,
+      "sha256": "567d24608772c0a3556be8c80f7788086f834259f4a3a8f5aa1486546d14b474"
+    },
+    {
+      "path": "examples/shared/shader-blocks.js",
+      "bytes": 8627,
+      "sha256": "31e9577ae7f99a740f3053550435c78278b644c466397f6b2588c3404e4b22ab"
+    },
+    {
+      "path": "examples/interactive-multipass/generate-effects.mjs",
+      "bytes": 2222,
+      "sha256": "21c22b9873b4e01df03084a6bcc431524afe138e1e29c847931ab833e4225b53"
+    },
+    {
+      "path": "src/air/rendering/transmission-capture.ts",
+      "bytes": 13199,
+      "sha256": "386db0b87ae6a974232bcaf0917d111a5de5d88dcd0f5cecfa9637e8f44f45d7"
+    },
+    {
+      "path": "src/cocos/render-scene/core/program-lib.ts",
+      "bytes": 26319,
+      "sha256": "d279796a4216cab79779fc0ad1f8964296448626fa54aa8b2fe628e75d4abf07"
+    }
+  ],
+  "gateIsolation": {
+    "engine": {
+      "currentStatus": "NOT_RUN",
+      "newEffectsMeasured": 0,
+      "knownHistoricalEvidenceInherited": 0
+    },
+    "agent": {
+      "currentStatus": "NOT_RUN",
+      "referenceImplementationVisible": false,
+      "policy": "Separatefreshagent uses public docs/examples/types/tools only; no engineprivatefixture/oracle/sourceanswer."
+    }
+  },
+  "runtimePreflight": {
+    "owner": "Lead",
+    "path": "output/shaders-absorption/wave0-runtime-preflight.json",
+    "sha256": "928224e06bed62629f054a9de7a1a21fea7b0a70917dec4fd0965acfa01389ee",
+    "status": "PASS_EXISTING_SDK_ENVIRONMENT_ONLY",
+    "scopePassed": true,
+    "exitCode": 0,
+    "inputsUnchanged": true,
+    "rows": [
+      {
+        "engine": "chromium",
+        "browserVersion": "149.0.7827.55",
+        "profile": {
+          "id": "720p",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "dpr": 1
+        },
+        "status": "PASS",
+        "backing": {
+          "width": 1280,
+          "height": 720
+        },
+        "timerExtensionAvailable": true,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        }
+      },
+      {
+        "engine": "chromium",
+        "browserVersion": "149.0.7827.55",
+        "profile": {
+          "id": "1080p",
+          "viewport": {
+            "width": 1920,
+            "height": 1080
+          },
+          "dpr": 1
+        },
+        "status": "PASS",
+        "backing": {
+          "width": 1920,
+          "height": 1080
+        },
+        "timerExtensionAvailable": true,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        }
+      },
+      {
+        "engine": "chromium",
+        "browserVersion": "149.0.7827.55",
+        "profile": {
+          "id": "mobile-dpr",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "dpr": 2
+        },
+        "status": "PASS",
+        "backing": {
+          "width": 780,
+          "height": 1688
+        },
+        "timerExtensionAvailable": true,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        }
+      },
+      {
+        "engine": "firefox",
+        "browserVersion": "155.0",
+        "profile": {
+          "id": "720p",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "dpr": 1
+        },
+        "status": "PASS",
+        "backing": {
+          "width": 1280,
+          "height": 720
+        },
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        }
+      },
+      {
+        "engine": "firefox",
+        "browserVersion": "155.0",
+        "profile": {
+          "id": "1080p",
+          "viewport": {
+            "width": 1920,
+            "height": 1080
+          },
+          "dpr": 1
+        },
+        "status": "PASS",
+        "backing": {
+          "width": 1920,
+          "height": 1080
+        },
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        }
+      },
+      {
+        "engine": "firefox",
+        "browserVersion": "155.0",
+        "profile": {
+          "id": "mobile-dpr",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "dpr": 2
+        },
+        "status": "PASS",
+        "backing": {
+          "width": 780,
+          "height": 1688
+        },
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        }
+      },
+      {
+        "engine": "webkit",
+        "browserVersion": "26.6",
+        "profile": {
+          "id": "720p",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "dpr": 1
+        },
+        "status": "PASS",
+        "backing": {
+          "width": 1280,
+          "height": 720
+        },
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        }
+      },
+      {
+        "engine": "webkit",
+        "browserVersion": "26.6",
+        "profile": {
+          "id": "1080p",
+          "viewport": {
+            "width": 1920,
+            "height": 1080
+          },
+          "dpr": 1
+        },
+        "status": "PASS",
+        "backing": {
+          "width": 1920,
+          "height": 1080
+        },
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        }
+      },
+      {
+        "engine": "webkit",
+        "browserVersion": "26.6",
+        "profile": {
+          "id": "mobile-dpr",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "dpr": 2
+        },
+        "status": "PASS",
+        "backing": {
+          "width": 780,
+          "height": 1688
+        },
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        }
+      }
+    ],
+    "interpretedAsEffectGate": false,
+    "limitation": "Lead actual browser execution, NOT this subagent. 9 empty scene environment rows are not 9 new effects."
+  },
+  "validation": {
+    "identityStatic": "PASS",
+    "sourceMapEmbeddedClosure": "PASS",
+    "capabilityMapping": "DOCUMENTED_SOURCE_AND_SDK",
+    "effectBuild": "NOT_RUN",
+    "effectRuntime": "NOT_RUN",
+    "effectVisual": "NOT_RUN",
+    "effectBoundary": "NOT_RUN",
+    "resource100Cycles": "NOT_RUN",
+    "performanceMatrix": "NOT_RUN",
+    "agentBenchmark": "NOT_RUN",
+    "wave1Through7": "NOT_RUN",
+    "authoringToolContract": "PASS_NODE_ONLY",
+    "rawOutputs": [
+      "output/shaders-absorption/capability-identity.json",
+      "output/shaders-absorption/capability-authoring-check.json",
+      "output/shaders-absorption/capability-validation.json"
+    ]
+  },
+  "limitations": [
+    "Neither SDK staticexports nor sourcesContent matching proves actual GPUshader compilation/algorithmcorrectness.",
+    "No originaleffects built/rendered in this Wave0 task; no screenshots/performance/runtime numbers fabricated.",
+    "No new enginebug proven. No core/publicAPI patch proposed before measured consumers.",
+    "RawGL drawing/nativebypass is disallowed; diagnostics do not become effectimplementation proof.",
+    "Mobile viewport emulator is not an actual physical device acceptance."
+  ],
+  "validationCommands": [
+    {
+      "command": "node stdin identity review: ESM exports / artifact SHA / dev+min sourceMap current src contents",
+      "exitCode": 0,
+      "result": "2 maps ×905 current src matches, 0 drift/missing; current SDK artifact SHA recorded"
+    },
+    {
+      "command": "node stdin TypeScript.createSourceFile current SDK declaration AST review",
+      "exitCode": 0,
+      "result": "18 named class/interface declaration sets extracted; top-level vs namespace names separated"
+    },
+    {
+      "command": "node output/shaders-absorption/capability-build-baseline.cjs",
+      "exitCode": 0,
+      "result": "14 capabilities +9 effects +4 combinations +31 source inputs; new effects measured=0"
+    },
+    {
+      "command": "node stdin import buildEffectJson + assert constrained metadata/reject scalar,array,preprocessor,unknown declaration",
+      "exitCode": 0,
+      "result": "1 in-memory template accepted/4 unsupported declarations rejected; GPU compilation NOT_RUN"
+    },
+    {
+      "command": "npm run verify:doc-refs",
+      "exitCode": 0,
+      "result": "docs169 / refs1342 / unresolved0"
+    },
+    {
+      "command": "node stdin capability JSON/MD + current artifact/source SHA/link/NOT_RUN integrity assertions",
+      "exitCode": 0,
+      "result": {
+        "schemaVersion": "shaders-capability-validation/1",
+        "command": "node stdin assigned capability JSON/MD integrity check",
+        "executionChannel": "native subagent",
+        "cwd": "E:\\AIProMax\\github\\cocosair.js",
+        "endedAt": "2026-10-09T00:10:42.422Z",
+        "exitCode": 0,
+        "capabilities": 14,
+        "effectsNotRun": 9,
+        "combinationsNotRun": 4,
+        "inputsChecked": 42,
+        "inputDrift": [],
+        "linksChecked": 76,
+        "errors": [],
+        "browserRunsAdded": 0
+      }
+    }
+  ]
+}

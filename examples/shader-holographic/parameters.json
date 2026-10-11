@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "shaders-effect-contract/1",
+  "name": "holographic",
+  "version": "1.0.0",
+  "params": {
+    "shape": {
+      "type": "string",
+      "defaultValue": "circle",
+      "enum": ["circle", "rounded-box"],
+      "updateMode": "structure",
+      "description": "Analytic 2D SDF shape: circle or rounded box. Upstream default sphere3D/volumetric/shape JSON platform NOT_SUPPORTED."
+    },
+    "scale": {
+      "type": "number",
+      "defaultValue": 1.0,
+      "min": 0.4,
+      "max": 2.0,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Uniform shape scale in the rotated field space."
+    },
+    "rotation": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "unit": "degree",
+      "updateMode": "uniform",
+      "description": "Rigid in-plane rotation of the field; 360 is identity."
+    },
+    "hueShift": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "unit": "degree",
+      "updateMode": "uniform",
+      "description": "Rotates the rainbow spectrum across the foil; 360 is the identity period."
+    },
+    "foilScale": {
+      "type": "number",
+      "defaultValue": 1.5,
+      "min": 0.3,
+      "max": 6,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Iridescent patch size — higher means smaller, busier patches."
+    },
+    "saturation": {
+      "type": "number",
+      "defaultValue": 0.75,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Rainbow saturation; 0 is plain silver foil, 1 fully spectral."
+    },
+    "roughness": {
+      "type": "number",
+      "defaultValue": 0.25,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Matte laminate grain; also softens the gloss highlight."
+    },
+    "speed": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Animated-time speed; 0 pauses the spectrum drift."
+    },
+    "crinkle": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Laminate wrinkle strength; 0 leaves the flat dome normal."
+    },
+    "crinkleScale": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0.3,
+      "max": 6,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Wrinkle feature size — higher means smaller, denser wrinkles."
+    },
+    "sparkle": {
+      "type": "number",
+      "defaultValue": 0.4,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Glitter flake density; 0 removes the flake layer."
+    },
+    "edgeSoftness": {
+      "type": "number",
+      "defaultValue": 0.05,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Shape boundary softness; at 0 the edge stays anti-aliased."
+    },
+    "seed": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 8,
+      "step": 0.01,
+      "unit": "offset",
+      "updateMode": "uniform",
+      "description": "Local extension: offsets every noise input coordinate. 0 is the upstream fixed-domain noise."
+    }
+  }
+}

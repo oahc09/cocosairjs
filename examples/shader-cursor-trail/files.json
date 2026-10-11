@@ -1,0 +1,16 @@
+{
+  "files": [
+    "index.html",
+    "src/main.ts",
+    "src/recorder.ts",
+    "src/parameters.ts",
+    "src/trail.frag",
+    "src/effect.generated.ts",
+    "parameters.json",
+    "generate-effect.cjs",
+    "example.json",
+    "README.md",
+    "UPSTREAM.md",
+    "LICENSE.reference.txt"
+  ]
+}

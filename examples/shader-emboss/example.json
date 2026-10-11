@@ -1,0 +1,232 @@
+{
+  "id": "shader-emboss",
+  "title": "Emboss 浮雕",
+  "description": "签名高度、差分法线、双 tap 阴影与原生双相机 RTT 预乘逆转的独立实现。",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "createAirRenderTarget",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "MeshRenderer",
+    "utils.createMesh"
+  ],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "原生 RTT 浮雕：预乘逆转、signed 高度光照、两 tap 阴影与 UV warp 的独立 oracle",
+    "points": [
+      "双相机单场景：子相机 256² RTT + bindColor 采样绑定",
+      "signed depth 凹/凸/零直通与 lz=0.7 边缘光",
+      "预乘→alpha 安全 unpremultiply→straight RGBA 单次合成",
+      "隐藏 RGB/半透明/透明三区 alpha 覆盖计划"
+    ]
+  },
+  "assets": [],
+  "license": {
+    "assets": "纯确定性图案，无外部素材；参考 Emboss MIT 通知束见 LICENSE.reference.txt，独立实现见 UPSTREAM.md"
+  },
+  "api": {
+    "primary": [
+      "EffectAsset",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Camera",
+      "Node",
+      "utils.createMesh",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Camera",
+      "Node"
+    ],
+    "forbiddenShortcut": [
+      "shaders runtime/TypeGPU/额外canvas",
+      "独立RAF/第二模拟时钟",
+      "黑底掩盖double-premultiply",
+      "截图相似替代预乘逆转数值证明"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L32",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L304",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L155",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L135",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L140",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L221",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L152",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L120",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L45",
+        "validator": "node-exists"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L42",
+        "validator": "node-exists"
+      }
+    ],
+    "evidenceStatus": "sourceLocation 由生产 findSymbolLine 核对可执行行；浏览器 runtime 证据 NOT_RUN，待 Lead 采集。"
+  },
+  "effect": {
+    "functional": "8 参数 update（shape 结构重建/其余 uniform）、暂停/继续/重置/释放，单 native pacer",
+    "visual": "signed 凹凸、depth0/形状外精确直通、预乘逆转 straight RGBA、透明底 RT 直读",
+    "limitations": [
+      "仅 circle/rounded-box 两个解析 SDF；SDF 贴图/volumetric/shape JSON 平台 NOT_SUPPORTED",
+      "Windows WebKit 采集器需 shader-scoped accelerated-compositing 启动项",
+      "性能窗口须 Lead 串行授权（--authorization）；Agent Gate NOT_RUN",
+      "Gallery 生命周期桥接已实现，浏览器证据 RESOLVED_NOT_RUN"
+    ]
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击 重置",
+        "buttonText": "重置",
+        "expected": "时间与参数回到初始值，画面跳变到初始帧"
+      },
+      {
+        "action": "真实参数更新 scale",
+        "probe": "__emboss.set",
+        "probeArgs": [
+          {
+            "shape": "circle",
+            "scale": 1.8,
+            "rotation": 0,
+            "depth": -0.5,
+            "lightAngle": 260,
+            "lightIntensity": 0.6,
+            "shadowIntensity": 0.3,
+            "sourceKind": "standard"
+          }
+        ],
+        "expected": "公开参数合同真实更新 uniform，画面立即变化"
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__emboss.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__emboss.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "child-source-camera",
+        "native-camera",
+        "owned-emboss-child-1",
+        "owned-emboss-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "Default startup scene plus __emboss.ready; Gallery validators declared, not yet executed."
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "预乘逆转与透明底直读由 tools/verify/shaders-emboss-browser.cjs 采集；本声明不是浏览器 PASS。"
+  },
+  "promotion": {
+    "spec": "aa6124af339f",
+    "source": "2ad33443613c3ad2",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 10,
+    "attested": 0,
+    "units": 10
+  }
+}

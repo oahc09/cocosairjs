@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Dynamic mesh and pointer projection",
   "category": "rendering",
-  "status": "draft",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -44,25 +44,25 @@
       {
         "api": "utils.MeshUtils.createDynamicMesh",
         "source": "src/main.ts",
-        "sourceLocation": "L155",
+        "sourceLocation": "L221",
         "validator": "visible-frame"
       },
       {
         "api": "Mesh.updateSubMesh",
         "source": "src/main.ts",
-        "sourceLocation": "L383",
+        "sourceLocation": "L631",
         "validator": "visible-frame"
       },
       {
         "api": "Camera.screenPointToRay",
         "source": "src/main.ts",
-        "sourceLocation": "L322",
+        "sourceLocation": "L527",
         "validator": "visible-frame"
       },
       {
         "api": "MeshRenderer.onGeometryChanged",
         "source": "src/main.ts",
-        "sourceLocation": "L176",
+        "sourceLocation": "L252",
         "validator": "visible-frame"
       }
     ]
@@ -116,5 +116,47 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序化平板、波带和色块，仓库 MIT 许可证；未分发原 soft/Water 素材"
+  },
+  "bench": {
+    "viewport": {
+      "width": 720,
+      "height": 560
+    },
+    "apiVariants": [
+      {
+        "query": "mode=cut",
+        "nodes": [
+          "target-slab",
+          "input-stroke",
+          "cut-surface",
+          "animated-blade",
+          "cut-render-overlay"
+        ],
+        "steps": [
+          {
+            "action": "拖动刀线穿过目标",
+            "drag": [
+              [
+                0.2,
+                0.35
+              ],
+              [
+                0.8,
+                0.65
+              ]
+            ],
+            "expected": "真实指针经相机射线映射产生动态切割几何及画面变化"
+          }
+        ]
+      }
+    ]
+  },
+  "promotion": {
+    "spec": "6a4291275fd7",
+    "source": "452c99711e0afae5",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 4,
+    "attested": 0,
+    "units": 4
   }
 }

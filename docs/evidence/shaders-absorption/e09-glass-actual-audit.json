@@ -1,0 +1,1456 @@
+{
+  "schemaVersion": "e09-glass-actual-audit/1",
+  "executionChannel": "Lead",
+  "method": "READ_ONLY_REAL_REPORT_CLONES",
+  "baselinesAccepted": {
+    "functional": true,
+    "performance": true
+  },
+  "inputs": [
+    {
+      "path": "output/shaders-absorption/lead-w3-e09-functional-attempt4.json",
+      "bytes": 10048731,
+      "sha256": "72c888f9bda31cae77a9c78c5ba7a719e241e5a9722d447527e04affc0323e96"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w3-e09-performance-attempt1.json",
+      "bytes": 10450272,
+      "sha256": "a7997e4a3d814354186528d36a3b9ed89f771a41546dcea37ba2f949b8cd0422"
+    }
+  ],
+  "browserRunsAdded": 0,
+  "rejected": 35,
+  "rows": [
+    {
+      "name": "missing-engine",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "actual engine set",
+        "missing engine",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "missing-build-log",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "build log unreadable",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "build-fail",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "build exitCode must be 0",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "page-error",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: runtime errors",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "missing-error-array",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: runtime errors",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "agent-pass-forged",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "agentGate must be NOT_RUN",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "capture-dpr",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0]: tuple default@99 != frozen default@1",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "gpu-whitewash",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 200,
+            "expected": [
+              102,
+              72,
+              54,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 140,
+            "expected": [
+              102,
+              72,
+              54,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 260,
+            "expected": [
+              177,
+              131,
+              100,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 155
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 281,
+            "y": 200,
+            "expected": [
+              177,
+              133,
+              99,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 156
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 80,
+            "expected": [
+              185,
+              140,
+              107,
+              163
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 148
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 320,
+            "expected": [
+              102,
+              72,
+              54,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 200,
+            "y": 200,
+            "expected": [
+              102,
+              76,
+              59,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 196
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 440,
+            "y": 200,
+            "expected": [
+              183,
+              131,
+              100,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 155
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 51,
+            "y": 200,
+            "expected": [
+              91,
+              71,
+              54,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 588,
+            "y": 200,
+            "expected": [
+              189,
+              131,
+              100,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 155
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 32,
+            "expected": [
+              102,
+              72,
+              54,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 368,
+            "expected": [
+              177,
+              131,
+              100,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 155
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 480,
+            "y": 100,
+            "expected": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 255
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 160,
+            "y": 300,
+            "expected": [
+              230,
+              51,
+              128,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 204
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 480,
+            "y": 200,
+            "expected": [
+              108,
+              72,
+              54,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 160,
+            "y": 200,
+            "expected": [
+              96,
+              71,
+              54,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 224,
+            "y": 264,
+            "expected": [
+              195,
+              152,
+              118,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 137
+          }
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "gpu-NaN",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 200,
+            "rule": "malformed-byte-channels",
+            "rgba": [
+              null,
+              72,
+              54,
+              127
+            ]
+          }
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "gpu-frame",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": "probe frame non-negative safe integer"
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "blur-variant-missing",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[3] set: shape switch without rebuild receipt",
+        "chromium:capture[3] set: rebuild retirement refs",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "missing-trusted-pause",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "missing trusted pause",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "untrusted-release",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: untrusted release",
+        "missing trusted release",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "resource-refs9",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:resource:refs-lifecycle-0",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "child-camera-attached",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:resource:child-detach-0",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "child-target-not-disposed",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:resource:child-disposed-0",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "resource-cycle-deleted",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:resource:Missing exact 100 cycles",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "invalid-partial-apply",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:invalid[0]: partial application",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "resize-wrong-backing",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: resize result 480x320",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "resize-presentation",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: resize after background",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "png-fingerprint",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0]: PNG identity drift",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "dpr2-page-leak",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: dpr2 page not closed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "same-instance-recreate",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: recreated instance not distinct",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "server-open",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "owned server not closed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "missing-clock-raw",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "complete clock calibration invalid",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "profile-duplicate",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium: frozen profile set",
+        "chromium:720p:actual viewport/DPR/backing",
+        "chromium:720p:frozen native frosted state",
+        "chromium:720p:frozen native frosted state",
+        "chromium: frozen profile set",
+        "chromium:720p:backing.w 1920 != 1280",
+        "chromium:720p:backing.h 1080 != 720",
+        "chromium:720p:css.w 1920 != viewport 1280",
+        "chromium:720p:css.h 1080 != viewport 720",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "environment-dpr",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium:mobile-dpr:repair DPR 1 != expected 2",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "perf-missing-pass",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium:720p:command missing",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "chromium:720p:missing two native passes",
+        "command below observable resolution",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "perf-missing-draw",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium:720p:dispatch missing",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "chromium:720p:missing two native draw dispatches",
+        "dispatch below observable resolution",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "perf-readback",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium:720p:timed readback",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "perf-state-dpr",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium:720p:frozen native frosted state",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "perf-clear-not-frosted",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium:720p:frozen native frosted state",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "perf-child-unbound",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium:720p:frozen native frosted state",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "perf-release-ref",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "performance owned release not observed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "proxy-open",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "owned HTTP servers not closed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    }
+  ]
+}

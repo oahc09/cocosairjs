@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "shaders-wave2/1",
+  "task": "Wave2",
+  "evaluatedAt": "2026-10-10T01:33:29.612Z",
+  "executionChannels": {
+    "implementation": "Orca Worker 小三",
+    "independentReviewCollectionAndAggregation": "Lead"
+  },
+  "status": "PASS",
+  "waveCompleted": true,
+  "nextWaveEligible": true,
+  "projectCompleted": false,
+  "agentGate": "NOT_RUN",
+  "subset": true,
+  "effects": [
+    {
+      "path": "docs/evidence/shaders-absorption/e03-holographic-current-gate.json",
+      "bytes": 55711,
+      "sha256": "7c6c31986bf1865b79f486ec4fcd550d534d6cf2238f37516d592ff3ccc5535f"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e04-neon-current-gate.json",
+      "bytes": 48871,
+      "sha256": "2a29ee9855bbcf3c3e82f96da7c22f1bf297b80df4a67d4194ef6de04a0dff93"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e05-emboss-current-gate.json",
+      "bytes": 50056,
+      "sha256": "8968fa0aa553825dc1d7c50f99eb94589529ac02233d2cd3f7821622f2cdf275"
+    }
+  ],
+  "previousWave": {
+    "path": "docs/evidence/shaders-absorption/wave1-r21-current-gate.json",
+    "bytes": 15020,
+    "sha256": "fed2e0b9d1172d5f4c7b53e14a5f75fa5922dde6a535c828576d709d6d466be0"
+  },
+  "verifier": {
+    "path": "tools/verify/shaders-wave2-gate.cjs",
+    "bytes": 10705,
+    "sha256": "55a05f922f150ffa86e1d54ab13462de3aac31ae508eec8750aac42e74a2a6e1"
+  },
+  "scope": {
+    "effectCount": 3,
+    "dimensionRows": 54,
+    "measuredDimensions": 54,
+    "skippedDimensions": 0,
+    "visualCases": 117,
+    "boundaryCases": 654,
+    "malformedAtomicRejections": 54,
+    "resourceCycles": 900,
+    "liveResizeCases": 9,
+    "performanceProfiles": 27
+  },
+  "screenshots": 132,
+  "actualAuditBindings": [
+    {
+      "path": "docs/evidence/shaders-absorption/e03-holographic-actual-audit.json",
+      "bytes": 62928,
+      "sha256": "dae5a1e900938f9401ba3357f028340f4ec3c93cf54266a8d0a3146be1d03d5d"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e04-neon-actual-audit.json",
+      "bytes": 17384,
+      "sha256": "6ae0088da416f5825ed4a2f42d169f898eb9c2d8a3bf30083df5118c7e2bd8b7"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e05-emboss-actual-audit.json",
+      "bytes": 45098,
+      "sha256": "715edba1fd1b641b3411d03289cf0e510f1fa7c227771dbae7e96fd0e8fbfff1"
+    }
+  ],
+  "findings": [
+    {
+      "classification": "AGENT_FAILURE",
+      "examples": [
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "description": "Metadata, frame/observations, pixel-oracle colour format and independent detach/presentation contracts were corrected and recollected. Failed attempts remain."
+    },
+    {
+      "classification": "DOC_GAP",
+      "status": "PROPOSAL",
+      "description": "Document exact ownership callbacks and generated shader/uniform metadata; no confirmed SDK defect."
+    },
+    {
+      "classification": "API_DX",
+      "status": "PROPOSAL",
+      "description": "Keep AFTER_DRAW/totalFrames and CPU/GPU/presentation timing scopes explicit; no new runtime API claimed."
+    }
+  ],
+  "limitations": [
+    "Two analytic shapes per effect; not upstream volumetric/SDF texture platform",
+    "Constant-speed temporal equivalence; changing Holographic speed remaps absolute-time phase",
+    "Emulated mobile DPR2 is not physical iPhone evidence",
+    "Windows WebKit uses shader-scoped launch options; no host settings changed",
+    "Physical GPU memory unavailable; native counters and GL objects are separate measurements",
+    "Wave2 example-native resource cycles measured; separate Gallery lifecycle harness NOT_RUN",
+    "Independent public-documents-only Agent Gate reserved for Wave6",
+    "Repository-wide Jest inventory has separate failures and is not a release PASS"
+  ],
+  "delivery": "docs/effects/wave2-validation-delivery.md",
+  "capabilityProposal": "docs/effects/wave2-capability-proposal.md",
+  "audit": {
+    "path": "docs/evidence/shaders-absorption/wave2-actual-audit.json",
+    "bytes": 3128,
+    "sha256": "70595f526e292decf17b03cfcb34d45e5fcf37c8736f3d5a2747bb08cd21b44d"
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "schemaVersion": "shaders-effect-contract/1",
+  "name": "neon",
+  "version": "1.0.0",
+  "params": {
+    "shape": {
+      "type": "string",
+      "defaultValue": "circle",
+      "enum": ["circle", "rounded-box"],
+      "updateMode": "structure",
+      "description": "Analytic 2D SDF shape: circle or rounded box. Switching recompiles the effect variant."
+    },
+    "scale": {
+      "type": "number",
+      "defaultValue": 1.0,
+      "min": 0.4,
+      "max": 2.0,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Uniform shape scale in the rotated field space; field units stay normalized to half canvas height."
+    },
+    "rotation": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "unit": "degree",
+      "updateMode": "uniform",
+      "description": "Rigid in-plane rotation of the field; zero is identity."
+    },
+    "tubeThickness": {
+      "type": "number",
+      "defaultValue": 0.03,
+      "min": 0,
+      "max": 0.08,
+      "step": 0.001,
+      "unit": "field unit",
+      "updateMode": "uniform",
+      "description": "Interior band of the tube measured in signed distance; zero collapses to an anti-aliased filament."
+    },
+    "secondaryBlend": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Blend from mono tube color (0) to two-tone diffuse-lit coloring (1)."
+    },
+    "intensity": {
+      "type": "number",
+      "defaultValue": 1.15,
+      "min": 0,
+      "max": 3,
+      "step": 0.01,
+      "unit": "linear gain",
+      "updateMode": "uniform",
+      "description": "Master linear gain on tube and glow radiance; zero drives emitted color to zero while masks stay defined."
+    },
+    "hotCoreIntensity": {
+      "type": "number",
+      "defaultValue": 0.85,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Hot gas-discharge core strength over the deepest tube interior."
+    },
+    "glowIntensity": {
+      "type": "number",
+      "defaultValue": 1.2,
+      "min": 0,
+      "max": 4,
+      "step": 0.01,
+      "unit": "linear gain",
+      "updateMode": "uniform",
+      "description": "Outer glow gain shared by both exponential layers; zero removes the glow layer entirely."
+    },
+    "glowRadius": {
+      "type": "number",
+      "defaultValue": 0.12,
+      "min": 0,
+      "max": 0.4,
+      "step": 0.001,
+      "unit": "field unit",
+      "updateMode": "uniform",
+      "description": "Falloff scale of the two exponentials; zero is clamped to 0.001 exactly like the reference."
+    },
+    "lightAngle": {
+      "type": "number",
+      "defaultValue": 135,
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "unit": "degree",
+      "updateMode": "uniform",
+      "description": "Directional light azimuth for the semicircular cross-section shading; the z component stays fixed at 0.7."
+    },
+    "specularIntensity": {
+      "type": "number",
+      "defaultValue": 0.6,
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "unit": "linear gain",
+      "updateMode": "uniform",
+      "description": "Blinn-Phong highlight gain added after the diffuse shading."
+    },
+    "specularSize": {
+      "type": "number",
+      "defaultValue": 0.35,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Highlight tightness; shininess is exp2(8 - 7*size) so 0 is broad and 1 is a tight spark."
+    },
+    "cornerSmoothing": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Mix between the raw centre SDF and the 5-tap corner-smoothed average; also widens the stencil radius."
+    },
+    "flickerSpeed": {
+      "type": "number",
+      "defaultValue": 1.5,
+      "min": 0,
+      "max": 8,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Time multiplier feeding the three irrational-ratio flicker sines; zero freezes flicker."
+    },
+    "flickerAmount": {
+      "type": "number",
+      "defaultValue": 0.25,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Dark-time amount; zero holds the lamp fully on at every time."
+    },
+    "flowSpeed": {
+      "type": "number",
+      "defaultValue": 1.2,
+      "min": 0,
+      "max": 8,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Angular sweep speed of the rotating brightness band; zero parks the band."
+    },
+    "flowAmount": {
+      "type": "number",
+      "defaultValue": 0.35,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "How much the angular brightness band modulates the tube; zero disables flow entirely."
+    },
+    "tubeColor": {
+      "type": "string",
+      "defaultValue": "#00ddff",
+      "updateMode": "uniform",
+      "description": "Primary tube color, sRGB hex; decoded to linear before the shading math."
+    },
+    "secondaryColor": {
+      "type": "string",
+      "defaultValue": "#ff00aa",
+      "updateMode": "uniform",
+      "description": "Shadow-side two-tone color, sRGB hex; decoded to linear."
+    },
+    "glowColor": {
+      "type": "string",
+      "defaultValue": "#00ddff",
+      "updateMode": "uniform",
+      "description": "Outer glow color, sRGB hex; decoded to linear."
+    }
+  }
+}

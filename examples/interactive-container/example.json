@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Container readiness and hidden recovery",
   "category": "integration",
-  "status": "draft",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -37,7 +37,7 @@
       {
         "api": "createAirApp",
         "source": "src/main.ts",
-        "sourceLocation": "L18",
+        "sourceLocation": "L89",
         "validator": "visible-frame"
       }
     ]
@@ -60,6 +60,11 @@
       {
         "action": "显示、窄/宽父布局、隐藏恢复、快速标签切换和释放",
         "expected": "对应最新布局与导航结果；旧输入取消；实际PNG及引用单独核对"
+      },
+      {
+        "action": "点击窄布局改变父容器",
+        "buttonText": "窄布局",
+        "expected": "原生容器尺寸变化后红色标记仍呈现，捕获帧尺寸随布局变化"
       }
     ]
   },
@@ -91,5 +96,16 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序化色块与无SDK WebGL2对照；仓库MIT"
+  },
+  "bench": {
+    "startupButtonText": "Run"
+  },
+  "promotion": {
+    "spec": "1fb0b5ce03ce",
+    "source": "5c5e53a5b2c98609",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 1,
+    "attested": 0,
+    "units": 1
   }
 }

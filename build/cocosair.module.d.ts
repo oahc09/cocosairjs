@@ -73058,6 +73058,8 @@
             format: gfx.Format;
             baseLevel: number;
             levelCount: number;
+            baseLayer: number;
+            layerCount: number;
         }
         /** @mangle */
         export class _cocos_gfx_webgl2_webgl2_texture__WebGL2Texture extends gfx.Texture {

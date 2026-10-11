@@ -141,6 +141,7 @@ function htmlFrame(): void {
 if (!control) {
     sdk = await import('cocosair');
     app = await sdk.createAirApp({ canvas, screenMode: 'container', container: host });
+    (window as unknown as Record<string, unknown>).__airApp = app;
     gate = sdk.createSessionGate();
     gate.activate();
     state = sdk.createActionState({
@@ -183,6 +184,59 @@ if (!control) {
     sdk.director.on(sdk.Director.EVENT_BEFORE_UPDATE, update);
     sdk.director.on(sdk.Director.EVENT_AFTER_DRAW, afterDraw);
     await app.run(scene);
+    // §25 Lifecycle Contract（资源粒度、惰性）：仅 __lifecycle() 调用时才执行一轮
+    // activation marker mesh/material 的 真实释放 → 泄漏核对 → 重建并重新绑定。
+    // 终态 release()（含 INPUT_DISPOSED/app.close 语义）与会话 gate 生命周期不受影响。
+    {
+        const { installAssetLifecycle } = await import('../../shared/asset-lifecycle.js');
+        const cc = sdk!;
+        const holdList = () =>
+            disposed || !mesh || !material
+                ? []
+                : [
+                      { name: 'activation-mesh', ref: mesh },
+                      { name: 'activation-material', ref: material },
+                  ];
+        installAssetLifecycle({
+            label: 'interactive-input',
+            hold: holdList,
+            release: () => {
+                const ownedMesh = mesh,
+                    ownedMaterial = material,
+                    bound = renderer;
+                if (!ownedMesh || !ownedMaterial || !bound) return;
+                mesh = null;
+                material = null;
+                bound.mesh = null;
+                bound.setSharedMaterial(null, 0);
+                ownedMesh.decRef();
+                ownedMaterial.decRef();
+                ownedMesh.destroy();
+                ownedMaterial.destroy();
+            },
+            reacquire: async () => {
+                const nextMesh = cc.utils.createMesh({
+                    positions: [-0.25, -0.25, 0, 0.25, -0.25, 0, -0.25, 0.25, 0, 0.25, 0.25, 0],
+                    indices: [0, 1, 2, 1, 3, 2],
+                });
+                nextMesh.addRef();
+                const nextMaterial = new cc.Material();
+                nextMaterial.initialize({ effectName: 'builtin-unlit' });
+                nextMaterial.setProperty('mainColor', new cc.Color(242, 69, 69, 255));
+                nextMaterial.addRef();
+                mesh = nextMesh;
+                material = nextMaterial;
+                if (renderer) {
+                    renderer.mesh = nextMesh;
+                    renderer.setSharedMaterial(nextMaterial, 0);
+                }
+                return [
+                    { name: 'activation-mesh', ref: nextMesh },
+                    { name: 'activation-material', ref: nextMaterial },
+                ];
+            },
+        });
+    }
 } else {
     document.querySelector<HTMLElement>('#html-marker')!.style.display = 'block';
     raf = requestAnimationFrame(htmlFrame);

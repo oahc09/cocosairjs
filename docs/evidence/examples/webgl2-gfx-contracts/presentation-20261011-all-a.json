@@ -1,0 +1,960 @@
+{
+  "schema": "webgl2-gfx-presentation/1",
+  "startedAt": "2026-10-11T04:42:42.134Z",
+  "identity": {
+    "head": "4fdfc096258cd1b6f2aa1d8132edda7be7a27a20",
+    "dirty": "M ai/README.md\n M build/cocosair.module.d.ts\n M build/cocosair.module.js\n M build/cocosair.module.js.map\n M build/cocosair.module.min.js\n M build/cocosair.module.min.js.map\n M docs/UPSTREAM.md\n M docs/example-api-inventory.json\n M docs/manual/webgl-compatibility-check.md\n M docs/test-inventory.json\n M docs/upstream-file-map.json\n M examples/files.json\n D skills/air-code-first/SKILL.md\n D skills/air-graphics-and-dom/SKILL.md\n D skills/air-verification/SKILL.md\n M src/cocos/gfx/base/define.ts\n M src/cocos/gfx/webgl2/states/webgl2-sampler.ts\n M src/cocos/gfx/webgl2/webgl2-commands.ts\n M src/cocos/gfx/webgl2/webgl2-device.ts\n M src/cocos/gfx/webgl2/webgl2-framebuffer.ts\n M src/cocos/gfx/webgl2/webgl2-gpu-objects.ts\n M src/cocos/gfx/webgl2/webgl2-swapchain.ts\n M src/cocos/gfx/webgl2/webgl2-texture.ts\n M tools/README.md\n M tools/build/build-number.json\n M tools/verify/graphics-package.cjs\n M tools/verify/verify-doc-refs.cjs\n?? ai/ledgers/shaders-absorption.md\n?? ai/ledgers/webgl2-gfx-contract-remediation.md\n?? ai/plans/agent-skills-suite-steps.md\n?? ai/plans/agent-skills-suite.md\n?? ai/plans/shaders-absorption-task-plan.md\n?? ai/plans/webgl2-gfx-contract-remediation.md\n?? docs/effects/\n?? docs/evidence/examples/webgl2-gfx-contracts/\n?? docs/evidence/shaders-absorption/\n?? docs/reference/webgl2-gfx-contracts.md\n?? examples/shader-cursor-trail/\n?? examples/shader-emboss/\n?? examples/shader-film-neon/\n?? examples/shader-glass-trail/\n?? examples/shader-glass/\n?? examples/shader-holographic/\n?? examples/shader-laser-card/\n?? examples/shader-liquid-metal/\n?? examples/shader-neon/\n?? examples/shader-noise-dissolve/\n?? examples/shader-sparkle/\n?? examples/shader-thin-film/\n?? examples/shared/asset-lifecycle.d.ts\n?? examples/shared/shader-lifecycle.ts\n?? skills/cocosair-2d-subsystems/\n?? skills/cocosair-agent-session/\n?? skills/cocosair-animation-tween/\n?? skills/cocosair-application/\n?? skills/cocosair-assets/\n?? skills/cocosair-audio-video/\n?? skills/cocosair-camera/\n?? skills/cocosair-gltf/\n?? skills/cocosair-graphics-and-dom/\n?? skills/cocosair-input-action/\n?? skills/cocosair-materials-effects/\n?? skills/cocosair-math/\n?? skills/cocosair-performance/\n?? skills/cocosair-physics/\n?? skills/cocosair-primitives-mesh/\n?? skills/cocosair-project-setup/\n?? skills/cocosair-rendering/\n?? skills/cocosair-scene-graph/\n?? skills/cocosair-skinning-morph/\n?? skills/cocosair-ui-2d/\n?? skills/cocosair-verification/\n?? skills/cocosair/\n?? test/fixtures/shaders-sparkle-performance-contract.cjs\n?? test/smoke/shaders-api-evidence.test.ts\n?? test/smoke/shaders-browser-environment-review.test.ts\n?? test/smoke/shaders-browser-environment.test.ts\n?? test/smoke/shaders-browser-launch.test.ts\n?? test/smoke/shaders-cursor-trail-review.test.ts\n?? test/smoke/shaders-cursor-trail.test.ts\n?? test/smoke/shaders-effect-contract.test.ts\n?? test/smoke/shaders-emboss-acceptance.test.ts\n?? test/smoke/shaders-emboss-release.test.ts\n?? test/smoke/shaders-emboss.test.ts\n?? test/smoke/shaders-film-neon-acceptance.test.ts\n?? test/smoke/shaders-film-neon-review.test.ts\n?? test/smoke/shaders-film-neon.test.ts\n?? test/smoke/shaders-gallery-lifecycle-review.test.ts\n?? test/smoke/shaders-gallery-lifecycle-validator.test.ts\n?? test/smoke/shaders-gallery-lifecycle.test.ts\n?? test/smoke/shaders-glass-acceptance.test.ts\n?? test/smoke/shaders-glass-performance.test.ts\n?? test/smoke/shaders-glass-trail-acceptance.test.ts\n?? test/smoke/shaders-glass-trail-contract-review.test.ts\n?? test/smoke/shaders-glass-trail-full-report.test.ts\n?? test/smoke/shaders-glass-trail-review.test.ts\n?? test/smoke/shaders-glass-trail.test.ts\n?? test/smoke/shaders-glass.test.ts\n?? test/smoke/shaders-holographic-acceptance.test.ts\n?? test/smoke/shaders-holographic-review.test.ts\n?? test/smoke/shaders-holographic.test.ts\n?? test/smoke/shaders-laser-card-acceptance.test.ts\n?? test/smoke/shaders-laser-card-review.test.ts\n?? test/smoke/shaders-laser-card.test.ts\n?? test/smoke/shaders-liquid-metal-acceptance.test.ts\n?? test/smoke/shaders-liquid-metal-review.test.ts\n?? test/smoke/shaders-liquid-metal.test.ts\n?? test/smoke/shaders-neon-acceptance.test.ts\n?? test/smoke/shaders-neon-review.test.ts\n?? test/smoke/shaders-neon.test.ts\n?? test/smoke/shaders-noise-dissolve-environment-performance.test.ts\n?? test/smoke/shaders-noise-dissolve.test.ts\n?? test/smoke/shaders-sparkle-environment-performance-review.test.ts\n?? test/smoke/shaders-sparkle-environment-performance.test.ts\n?? test/smoke/shaders-sparkle.test.ts\n?? test/smoke/shaders-thin-film-environment-review.test.ts\n?? test/smoke/shaders-thin-film.test.ts\n?? test/smoke/shaders-wave1-gate.test.ts\n?? test/smoke/shaders-wave2-gate.test.ts\n?? test/smoke/shaders-wave3-gate.test.ts\n?? test/smoke/webgl2-gfx-command-contracts.test.ts\n?? test/smoke/webgl2-gfx-texture-contracts.test.ts\n?? test/smoke/webgl2-sampler-contract.test.ts\n?? tools/debug/probes/webgl2-gfx-contracts/\n?? tools/debug/probes/webgl2-gfx-presentation/\n?? tools/debug/probes/webgl2-gfx-regressions/\n?? tools/debug/probes/webgl2-gfx-state-restoration/\n?? tools/verify/shaders-api-evidence.cjs\n?? tools/verify/shaders-browser-environment.cjs\n?? tools/verify/shaders-browser-launch.cjs\n?? tools/verify/shaders-cursor-trail-browser.cjs\n?? tools/verify/shaders-cursor-trail-gate.cjs\n?? tools/verify/shaders-cursor-trail-oracle.cjs\n?? tools/verify/shaders-cursor-trail-performance.cjs\n?? tools/verify/shaders-cursor-trail.tsconfig.json\n?? tools/verify/shaders-effect-contract.cjs\n?? tools/verify/shaders-effect-contract.d.ts\n?? tools/verify/shaders-emboss-browser.cjs\n?? tools/verify/shaders-emboss-oracle.cjs\n?? tools/verify/shaders-emboss-performance.cjs\n?? tools/verify/shaders-emboss.tsconfig.json\n?? tools/verify/shaders-film-neon-browser.cjs\n?? tools/verify/shaders-film-neon-gate.cjs\n?? tools/verify/shaders-film-neon-oracle.cjs\n?? tools/verify/shaders-film-neon-performance.cjs\n?? tools/verify/shaders-film-neon.tsconfig.json\n?? tools/verify/shaders-gallery-lifecycle.cjs\n?? tools/verify/shaders-glass-browser.cjs\n?? tools/verify/shaders-glass-gate.cjs\n?? tools/verify/shaders-glass-oracle.cjs\n?? tools/verify/shaders-glass-performance.cjs\n?? tools/verify/shaders-glass-trail-browser.cjs\n?? tools/verify/shaders-glass-trail-oracle.cjs\n?? tools/verify/shaders-glass-trail-performance.cjs\n?? tools/verify/shaders-glass-trail.tsconfig.json\n?? tools/verify/shaders-glass.tsconfig.json\n?? tools/verify/shaders-holographic-browser.cjs\n?? tools/verify/shaders-holographic-oracle.cjs\n?? tools/verify/shaders-holographic-performance.cjs\n?? tools/verify/shaders-holographic.tsconfig.json\n?? tools/verify/shaders-laser-card-browser.cjs\n?? tools/verify/shaders-laser-card-gate.cjs\n?? tools/verify/shaders-laser-card-oracle.cjs\n?? tools/verify/shaders-laser-card-performance.cjs\n?? tools/verify/shaders-laser-card.tsconfig.json\n?? tools/verify/shaders-liquid-metal-browser.cjs\n?? tools/verify/shaders-liquid-metal-oracle.cjs\n?? tools/verify/shaders-liquid-metal-performance.cjs\n?? tools/verify/shaders-liquid-metal.tsconfig.json\n?? tools/verify/shaders-neon-browser.cjs\n?? tools/verify/shaders-neon-oracle.cjs\n?? tools/verify/shaders-neon-performance.cjs\n?? tools/verify/shaders-neon.tsconfig.json\n?? tools/verify/shaders-noise-dissolve-audit.cjs\n?? tools/verify/shaders-noise-dissolve-environment-performance.cjs\n?? tools/verify/shaders-noise-dissolve-normalize-scoped.cjs\n?? tools/verify/shaders-noise-dissolve-normalize.cjs\n?? tools/verify/shaders-noise-dissolve-oracle.cjs\n?? tools/verify/shaders-noise-dissolve-precision-audit.cjs\n?? tools/verify/shaders-noise-dissolve-precision-closure-audit.cjs\n?? tools/verify/shaders-noise-dissolve-precision-closure.cjs\n?? tools/verify/shaders-noise-dissolve-precision.cjs\n?? tools/verify/shaders-noise-dissolve-scoped-audit.cjs\n?? tools/verify/shaders-noise-dissolve-scoped-gate.cjs\n?? tools/verify/shaders-noise-dissolve-summary.cjs\n?? tools/verify/shaders-noise-dissolve.cjs\n?? tools/verify/shaders-noise-dissolve.tsconfig.json\n?? tools/verify/shaders-resize-diagnostic.cjs\n?? tools/verify/shaders-runtime-preflight.cjs\n?? tools/verify/shaders-sparkle-audit.cjs\n?? tools/verify/shaders-sparkle-browser.cjs\n?? tools/verify/shaders-sparkle-environment-performance.cjs\n?? tools/verify/shaders-sparkle-final.cjs\n?? tools/verify/shaders-sparkle-oracle.cjs\n?? tools/verify/shaders-sparkle-performance.cjs\n?? tools/verify/shaders-sparkle-scoped.cjs\n?? tools/verify/shaders-sparkle.tsconfig.json\n?? tools/verify/shaders-thin-film-audit.cjs\n?? tools/verify/shaders-thin-film-browser.cjs\n?? tools/verify/shaders-thin-film-evidence.cjs\n?? tools/verify/shaders-thin-film-oracle.cjs\n?? tools/verify/shaders-thin-film-performance.cjs\n?? tools/verify/shaders-thin-film-summary.cjs\n?? tools/verify/shaders-thin-film.tsconfig.json\n?? tools/verify/shaders-wave1-gate.cjs\n?? tools/verify/shaders-wave2-gate.cjs\n?? tools/verify/shaders-wave3-closure.cjs\n?? tools/verify/shaders-wave3-gate.cjs\n?? tools/verify/webgl2-gfx-contracts.cjs\n?? tools/verify/webgl2-gfx-controls.cjs\n?? tools/verify/webgl2-gfx-presentation.cjs\n?? tools/verify/webgl2-gfx-regressions.cjs\n?? tools/verify/webgl2-gfx-state-restoration.cjs",
+    "node": "v24.14.0",
+    "toolingPath": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js"
+  },
+  "scope": "Native pacer public-gfx default-framebuffer quadrant drawing before/after viewport resize. Actual compositor PNG pixels are asserted independently from offscreen public readback. No raw GL writes, no preview canvas, no release readiness claim.",
+  "fingerprints": {
+    "build/cocosair.module.js": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc",
+    "build/cocosair.module.min.js": "779c288e647c17f63a08fee5c2b9a9ec50a96c70909e34c2e3b20d9ab661a90a",
+    "build/cocosair.module.d.ts": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e",
+    "src/cocos/gfx/webgl2/webgl2-commands.ts": "8d0a93060e2ee32507c48976843145666ad6537e31943a132200bfb2bda38ff5",
+    "src/cocos/gfx/webgl2/webgl2-swapchain.ts": "4fb7a8772032a5802a10874739a497ca7fd89b3902d82f1f8e5de1d77112780e",
+    "src/cocos/render-scene/core/render-window.ts": "1a63bf22d26305d336306a3565fb698d1c4d928a55115c0698e4e6e50008169c",
+    "tools/verify/webgl2-gfx-presentation.cjs": "71b56f12217c5eb35f8b9ac22cd6856d56fb95fb7a757f218e0f943257d09c72",
+    "tools/debug/probes/webgl2-gfx-presentation/main.js": "b644387b961555bfa0c759c3ee2f5845853c1633429af9091493150deaa60bb9",
+    "tools/debug/probes/webgl2-gfx-presentation/index.html": "3d8cde68cca07ac7e7b9ad68cc88abff6f7ea8187712742dd56dddb65da5de75",
+    "tools/verify/competitive-example-server.cjs": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af",
+    "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+    "tools/verify/loopback-browser-env.cjs": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929"
+  },
+  "subset": false,
+  "results": [
+    {
+      "engine": "chromium",
+      "cases": [
+        {
+          "id": "initial-native",
+          "status": "PASS",
+          "checks": {
+            "screenshotPixels": true,
+            "readbackPixels": true,
+            "screenshotSize": true,
+            "canvasSize": true,
+            "drawingBufferSize": true,
+            "windowSize": true,
+            "defaultFramebuffer": true,
+            "continuedNativeFrames": true,
+            "noGLErrors": true
+          },
+          "expected": [
+            [
+              255,
+              0,
+              0,
+              255
+            ],
+            [
+              0,
+              255,
+              0,
+              255
+            ],
+            [
+              0,
+              0,
+              255,
+              255
+            ],
+            [
+              255,
+              255,
+              0,
+              255
+            ]
+          ],
+          "screenshotPixels": [
+            [
+              255,
+              0,
+              0,
+              255
+            ],
+            [
+              0,
+              255,
+              0,
+              255
+            ],
+            [
+              0,
+              0,
+              255,
+              255
+            ],
+            [
+              255,
+              255,
+              0,
+              255
+            ]
+          ],
+          "snapshot": {
+            "frames": 13,
+            "samples": [
+              [
+                255,
+                0,
+                0,
+                255
+              ],
+              [
+                0,
+                255,
+                0,
+                255
+              ],
+              [
+                0,
+                0,
+                255,
+                255
+              ],
+              [
+                255,
+                255,
+                0,
+                255
+              ]
+            ],
+            "canvas": {
+              "width": 640,
+              "height": 400,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 640,
+                "height": 400
+              }
+            },
+            "drawingBuffer": [
+              640,
+              400
+            ],
+            "window": [
+              640,
+              400
+            ],
+            "viewport": [
+              0,
+              0,
+              640,
+              400
+            ],
+            "defaultDrawFramebuffer": true,
+            "errors": []
+          },
+          "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/presentation-20261011-all-a-artifacts/chromium-initial-native.png"
+        },
+        {
+          "id": "resize-native",
+          "status": "PASS",
+          "checks": {
+            "screenshotPixels": true,
+            "readbackPixels": true,
+            "screenshotSize": true,
+            "canvasSize": true,
+            "drawingBufferSize": true,
+            "windowSize": true,
+            "defaultFramebuffer": true,
+            "continuedNativeFrames": true,
+            "noGLErrors": true
+          },
+          "expected": [
+            [
+              255,
+              0,
+              0,
+              255
+            ],
+            [
+              0,
+              255,
+              0,
+              255
+            ],
+            [
+              0,
+              0,
+              255,
+              255
+            ],
+            [
+              255,
+              255,
+              0,
+              255
+            ]
+          ],
+          "screenshotPixels": [
+            [
+              255,
+              0,
+              0,
+              255
+            ],
+            [
+              0,
+              255,
+              0,
+              255
+            ],
+            [
+              0,
+              0,
+              255,
+              255
+            ],
+            [
+              255,
+              255,
+              0,
+              255
+            ]
+          ],
+          "snapshot": {
+            "frames": 30,
+            "samples": [
+              [
+                255,
+                0,
+                0,
+                255
+              ],
+              [
+                0,
+                255,
+                0,
+                255
+              ],
+              [
+                0,
+                0,
+                255,
+                255
+              ],
+              [
+                255,
+                255,
+                0,
+                255
+              ]
+            ],
+            "canvas": {
+              "width": 480,
+              "height": 320,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 480,
+                "height": 320
+              }
+            },
+            "drawingBuffer": [
+              480,
+              320
+            ],
+            "window": [
+              480,
+              320
+            ],
+            "viewport": [
+              0,
+              0,
+              480,
+              320
+            ],
+            "defaultDrawFramebuffer": true,
+            "errors": []
+          },
+          "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/presentation-20261011-all-a-artifacts/chromium-resize-native.png"
+        },
+        {
+          "id": "resize-second-native",
+          "status": "PASS",
+          "checks": {
+            "screenshotPixels": true,
+            "readbackPixels": true,
+            "screenshotSize": true,
+            "canvasSize": true,
+            "drawingBufferSize": true,
+            "windowSize": true,
+            "defaultFramebuffer": true,
+            "continuedNativeFrames": true,
+            "noGLErrors": true
+          },
+          "expected": [
+            [
+              255,
+              0,
+              0,
+              255
+            ],
+            [
+              0,
+              255,
+              0,
+              255
+            ],
+            [
+              0,
+              0,
+              255,
+              255
+            ],
+            [
+              255,
+              255,
+              0,
+              255
+            ]
+          ],
+          "screenshotPixels": [
+            [
+              255,
+              0,
+              0,
+              255
+            ],
+            [
+              0,
+              255,
+              0,
+              255
+            ],
+            [
+              0,
+              0,
+              255,
+              255
+            ],
+            [
+              255,
+              255,
+              0,
+              255
+            ]
+          ],
+          "snapshot": {
+            "frames": 46,
+            "samples": [
+              [
+                255,
+                0,
+                0,
+                255
+              ],
+              [
+                0,
+                255,
+                0,
+                255
+              ],
+              [
+                0,
+                0,
+                255,
+                255
+              ],
+              [
+                255,
+                255,
+                0,
+                255
+              ]
+            ],
+            "canvas": {
+              "width": 720,
+              "height": 360,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 360
+              }
+            },
+            "drawingBuffer": [
+              720,
+              360
+            ],
+            "window": [
+              720,
+              360
+            ],
+            "viewport": [
+              0,
+              0,
+              720,
+              360
+            ],
+            "defaultDrawFramebuffer": true,
+            "errors": []
+          },
+          "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/presentation-20261011-all-a-artifacts/chromium-resize-second-native.png"
+        }
+      ],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "version": "149.0.7827.55",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe",
+      "renderer": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL"
+      },
+      "release": {
+        "resources": {
+          "created": 12,
+          "released": 12
+        },
+        "cleanup": [
+          {
+            "type": "WebGL2PrimaryCommandBuffer",
+            "released": true
+          },
+          {
+            "type": "WebGL2PipelineState",
+            "released": true
+          },
+          {
+            "type": "WebGL2PipelineState",
+            "released": true
+          },
+          {
+            "type": "WebGL2InputAssembler",
+            "released": true
+          },
+          {
+            "type": "WebGL2Buffer",
+            "released": true
+          },
+          {
+            "type": "WebGL2DescriptorSet",
+            "released": true
+          },
+          {
+            "type": "WebGL2PipelineLayout",
+            "released": true
+          },
+          {
+            "type": "WebGL2DescriptorSetLayout",
+            "released": true
+          },
+          {
+            "type": "WebGL2Shader",
+            "released": true
+          },
+          {
+            "type": "WebGL2Framebuffer",
+            "released": true
+          },
+          {
+            "type": "WebGL2RenderPass",
+            "released": true
+          },
+          {
+            "type": "WebGL2Texture",
+            "released": true
+          }
+        ],
+        "appRelease": {
+          "status": "released",
+          "scene": "Node.142",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "errors": []
+      },
+      "status": "PASS"
+    },
+    {
+      "engine": "firefox",
+      "cases": [],
+      "pageErrors": [],
+      "consoleErrors": [
+        "This device does not support WebGL2"
+      ],
+      "version": "155.0",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe",
+      "status": "FAIL",
+      "error": "AssertionError [ERR_ASSERTION]: init@http://127.0.0.1:51928/build/cocosair.module.js:20102:31\ninit/<@http://127.0.0.1:51928/build/cocosair.module.js:47149:28\npromise callback*init@http://127.0.0.1:51928/build/cocosair.module.js:47135:6\ninitializeAirApp@http://127.0.0.1:51928/build/cocosair.module.js:142729:16\ncreateAirApp/state.initPromise<@http://127.0.0.1:51928/build/cocosair.module.js:142703:70\npromise callback*createAirApp@http://127.0.0.1:51928/build/cocosair.module.js:142703:43\n@http://127.0.0.1:51928/tools/debug/probes/webgl2-gfx-presentation/main.js:5:26\n\n    at main (E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgl2-gfx-presentation.cjs:99:17)"
+    },
+    {
+      "engine": "webkit",
+      "cases": [
+        {
+          "id": "initial-native",
+          "status": "PASS",
+          "checks": {
+            "screenshotPixels": true,
+            "readbackPixels": true,
+            "screenshotSize": true,
+            "canvasSize": true,
+            "drawingBufferSize": true,
+            "windowSize": true,
+            "defaultFramebuffer": true,
+            "continuedNativeFrames": true,
+            "noGLErrors": true
+          },
+          "expected": [
+            [
+              255,
+              0,
+              0,
+              255
+            ],
+            [
+              0,
+              255,
+              0,
+              255
+            ],
+            [
+              0,
+              0,
+              255,
+              255
+            ],
+            [
+              255,
+              255,
+              0,
+              255
+            ]
+          ],
+          "screenshotPixels": [
+            [
+              255,
+              0,
+              0,
+              255
+            ],
+            [
+              0,
+              255,
+              0,
+              255
+            ],
+            [
+              0,
+              0,
+              255,
+              255
+            ],
+            [
+              255,
+              255,
+              0,
+              255
+            ]
+          ],
+          "snapshot": {
+            "frames": 14,
+            "samples": [
+              [
+                255,
+                0,
+                0,
+                255
+              ],
+              [
+                0,
+                255,
+                0,
+                255
+              ],
+              [
+                0,
+                0,
+                255,
+                255
+              ],
+              [
+                255,
+                255,
+                0,
+                255
+              ]
+            ],
+            "canvas": {
+              "width": 640,
+              "height": 400,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 640,
+                "height": 400
+              }
+            },
+            "drawingBuffer": [
+              640,
+              400
+            ],
+            "window": [
+              640,
+              400
+            ],
+            "viewport": [
+              0,
+              0,
+              640,
+              400
+            ],
+            "defaultDrawFramebuffer": true,
+            "errors": []
+          },
+          "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/presentation-20261011-all-a-artifacts/webkit-initial-native.png"
+        },
+        {
+          "id": "resize-native",
+          "status": "FAIL",
+          "checks": {
+            "screenshotPixels": false,
+            "readbackPixels": true,
+            "screenshotSize": true,
+            "canvasSize": true,
+            "drawingBufferSize": true,
+            "windowSize": true,
+            "defaultFramebuffer": true,
+            "continuedNativeFrames": true,
+            "noGLErrors": true
+          },
+          "expected": [
+            [
+              255,
+              0,
+              0,
+              255
+            ],
+            [
+              0,
+              255,
+              0,
+              255
+            ],
+            [
+              0,
+              0,
+              255,
+              255
+            ],
+            [
+              255,
+              255,
+              0,
+              255
+            ]
+          ],
+          "screenshotPixels": [
+            [
+              51,
+              51,
+              51,
+              255
+            ],
+            [
+              51,
+              51,
+              51,
+              255
+            ],
+            [
+              51,
+              51,
+              51,
+              255
+            ],
+            [
+              51,
+              51,
+              51,
+              255
+            ]
+          ],
+          "snapshot": {
+            "frames": 31,
+            "samples": [
+              [
+                255,
+                0,
+                0,
+                255
+              ],
+              [
+                0,
+                255,
+                0,
+                255
+              ],
+              [
+                0,
+                0,
+                255,
+                255
+              ],
+              [
+                255,
+                255,
+                0,
+                255
+              ]
+            ],
+            "canvas": {
+              "width": 480,
+              "height": 320,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 480,
+                "height": 320
+              }
+            },
+            "drawingBuffer": [
+              480,
+              320
+            ],
+            "window": [
+              480,
+              320
+            ],
+            "viewport": [
+              0,
+              0,
+              480,
+              320
+            ],
+            "defaultDrawFramebuffer": true,
+            "errors": []
+          },
+          "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/presentation-20261011-all-a-artifacts/webkit-resize-native.png"
+        },
+        {
+          "id": "resize-second-native",
+          "status": "FAIL",
+          "checks": {
+            "screenshotPixels": false,
+            "readbackPixels": true,
+            "screenshotSize": true,
+            "canvasSize": true,
+            "drawingBufferSize": true,
+            "windowSize": true,
+            "defaultFramebuffer": true,
+            "continuedNativeFrames": true,
+            "noGLErrors": true
+          },
+          "expected": [
+            [
+              255,
+              0,
+              0,
+              255
+            ],
+            [
+              0,
+              255,
+              0,
+              255
+            ],
+            [
+              0,
+              0,
+              255,
+              255
+            ],
+            [
+              255,
+              255,
+              0,
+              255
+            ]
+          ],
+          "screenshotPixels": [
+            [
+              51,
+              51,
+              51,
+              255
+            ],
+            [
+              51,
+              51,
+              51,
+              255
+            ],
+            [
+              51,
+              51,
+              51,
+              255
+            ],
+            [
+              51,
+              51,
+              51,
+              255
+            ]
+          ],
+          "snapshot": {
+            "frames": 46,
+            "samples": [
+              [
+                255,
+                0,
+                0,
+                255
+              ],
+              [
+                0,
+                255,
+                0,
+                255
+              ],
+              [
+                0,
+                0,
+                255,
+                255
+              ],
+              [
+                255,
+                255,
+                0,
+                255
+              ]
+            ],
+            "canvas": {
+              "width": 720,
+              "height": 360,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 360
+              }
+            },
+            "drawingBuffer": [
+              720,
+              360
+            ],
+            "window": [
+              720,
+              360
+            ],
+            "viewport": [
+              0,
+              0,
+              720,
+              360
+            ],
+            "defaultDrawFramebuffer": true,
+            "errors": []
+          },
+          "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/presentation-20261011-all-a-artifacts/webkit-resize-second-native.png"
+        }
+      ],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "version": "26.6",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\webkit-2359\\Playwright.exe",
+      "renderer": {
+        "version": "WebGL 2.0",
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL"
+      },
+      "release": {
+        "resources": {
+          "created": 12,
+          "released": 12
+        },
+        "cleanup": [
+          {
+            "type": "WebGL2PrimaryCommandBuffer",
+            "released": true
+          },
+          {
+            "type": "WebGL2PipelineState",
+            "released": true
+          },
+          {
+            "type": "WebGL2PipelineState",
+            "released": true
+          },
+          {
+            "type": "WebGL2InputAssembler",
+            "released": true
+          },
+          {
+            "type": "WebGL2Buffer",
+            "released": true
+          },
+          {
+            "type": "WebGL2DescriptorSet",
+            "released": true
+          },
+          {
+            "type": "WebGL2PipelineLayout",
+            "released": true
+          },
+          {
+            "type": "WebGL2DescriptorSetLayout",
+            "released": true
+          },
+          {
+            "type": "WebGL2Shader",
+            "released": true
+          },
+          {
+            "type": "WebGL2Framebuffer",
+            "released": true
+          },
+          {
+            "type": "WebGL2RenderPass",
+            "released": true
+          },
+          {
+            "type": "WebGL2Texture",
+            "released": true
+          }
+        ],
+        "appRelease": {
+          "status": "released",
+          "scene": "Node.962",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "errors": []
+      },
+      "status": "FAIL"
+    }
+  ],
+  "finishedAt": "2026-10-11T04:43:03.964Z",
+  "drift": [],
+  "completed": false,
+  "passed": false
+}

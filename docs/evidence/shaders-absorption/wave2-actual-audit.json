@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "shaders-wave2-actual-audit/1",
+  "executionChannel": "Lead",
+  "method": "READ_ONLY_REAL_REPORT_CLONES",
+  "baselineAccepted": true,
+  "rejected": 12,
+  "browserRunsAdded": 0,
+  "rows": [
+    {
+      "name": "missing-E03",
+      "rejected": true,
+      "errors": [
+        "three effect fingerprints required"
+      ]
+    },
+    {
+      "name": "duplicate-E04",
+      "rejected": true,
+      "errors": [
+        "exact E03/E04/E05 coverage required",
+        "wave scope count mismatch"
+      ]
+    },
+    {
+      "name": "effect-sha-drift",
+      "rejected": true,
+      "errors": [
+        "wave input fingerprint drift: docs/evidence/shaders-absorption/e03-holographic-current-gate.json"
+      ]
+    },
+    {
+      "name": "previous-wave-sha-drift",
+      "rejected": true,
+      "errors": [
+        "wave input fingerprint drift: docs/evidence/shaders-absorption/wave1-r21-current-gate.json"
+      ]
+    },
+    {
+      "name": "verifier-sha-drift",
+      "rejected": true,
+      "errors": [
+        "wave input fingerprint drift: tools/verify/shaders-wave2-gate.cjs"
+      ]
+    },
+    {
+      "name": "scope-count-underreported",
+      "rejected": true,
+      "errors": [
+        "wave scope count mismatch"
+      ]
+    },
+    {
+      "name": "unmeasured-dimension",
+      "rejected": true,
+      "errors": [
+        "wave scope count mismatch"
+      ]
+    },
+    {
+      "name": "agent-success-forged",
+      "rejected": true,
+      "errors": [
+        "wave/project/Agent status mismatch"
+      ]
+    },
+    {
+      "name": "project-success-forged",
+      "rejected": true,
+      "errors": [
+        "wave/project/Agent status mismatch"
+      ]
+    },
+    {
+      "name": "wave-not-complete",
+      "rejected": true,
+      "errors": [
+        "wave/project/Agent status mismatch"
+      ]
+    },
+    {
+      "name": "wave-status-contradiction",
+      "rejected": true,
+      "errors": [
+        "wave/project/Agent status mismatch"
+      ]
+    },
+    {
+      "name": "next-wave-eligibility-contradiction",
+      "rejected": true,
+      "errors": [
+        "wave/project/Agent status mismatch"
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "path": "docs/evidence/shaders-absorption/e03-holographic-current-gate.json",
+      "bytes": 55711,
+      "sha256": "7c6c31986bf1865b79f486ec4fcd550d534d6cf2238f37516d592ff3ccc5535f"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e04-neon-current-gate.json",
+      "bytes": 48871,
+      "sha256": "2a29ee9855bbcf3c3e82f96da7c22f1bf297b80df4a67d4194ef6de04a0dff93"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e05-emboss-current-gate.json",
+      "bytes": 50056,
+      "sha256": "8968fa0aa553825dc1d7c50f99eb94589529ac02233d2cd3f7821622f2cdf275"
+    }
+  ],
+  "previousWave": {
+    "path": "docs/evidence/shaders-absorption/wave1-r21-current-gate.json",
+    "bytes": 15020,
+    "sha256": "fed2e0b9d1172d5f4c7b53e14a5f75fa5922dde6a535c828576d709d6d466be0"
+  },
+  "verifier": {
+    "path": "tools/verify/shaders-wave2-gate.cjs",
+    "bytes": 10705,
+    "sha256": "55a05f922f150ffa86e1d54ab13462de3aac31ae508eec8750aac42e74a2a6e1"
+  }
+}

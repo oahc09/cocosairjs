@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Batching: dynamic",
   "category": "performance",
-  "status": "validated",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -98,5 +98,13 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序化网格，无第三方资产"
+  },
+  "promotion": {
+    "spec": "82009221c157",
+    "source": "028688f552ab4dc8",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 3,
+    "attested": 0,
+    "units": 3
   }
 }

@@ -56,7 +56,7 @@ import {
     CommandBufferType, DescriptorSetLayoutInfo, DescriptorSetInfo,
     PipelineLayoutInfo, BufferViewInfo, CommandBufferInfo, BufferInfo, FramebufferInfo, InputAssemblerInfo,
     QueueInfo, RenderPassInfo, SamplerInfo, ShaderInfo, TextureInfo, TextureViewInfo, DeviceInfo, GeneralBarrierInfo, TextureBarrierInfo,
-    BufferBarrierInfo, QueueType, API, Feature, BufferTextureCopy, SwapchainInfo, FormatFeature, Format, FormatFeatureBit,
+    BufferBarrierInfo, QueueType, API, Feature, BufferTextureCopy, SwapchainInfo, FormatFeature, Format, FormatFeatureBit, ComparisonFunc,
 } from '../base/define';
 import { WebGL2CmdFuncCopyTextureToBuffers, WebGL2CmdFuncCopyBuffersToTexture, WebGL2CmdFuncCopyTexImagesToTexture } from './webgl2-commands';
 import { GeneralBarrier } from '../base/states/general-barrier';
@@ -331,10 +331,10 @@ export class WebGL2Device extends Device {
         ], tempFeature);
 
         formatFeatures[Format.RGB10A2UI] = FormatFeatureBit.RENDER_TARGET | FormatFeatureBit.STORAGE_TEXTURE
-            | FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.LINEAR_FILTER;
+            | FormatFeatureBit.SAMPLED_TEXTURE;
 
-        tempFeature = FormatFeatureBit.RENDER_TARGET | FormatFeatureBit.SAMPLED_TEXTURE
-            | FormatFeatureBit.STORAGE_TEXTURE | FormatFeatureBit.VERTEX_ATTRIBUTE;
+        tempFeature = FormatFeatureBit.SAMPLED_TEXTURE
+            | FormatFeatureBit.STORAGE_TEXTURE | FormatFeatureBit.LINEAR_FILTER | FormatFeatureBit.VERTEX_ATTRIBUTE;
 
         setFormatFeature(formatFeatures, [
             Format.R16F,
@@ -352,11 +352,8 @@ export class WebGL2Device extends Device {
             Format.RGBA32F,
         ], tempFeature);
 
-        formatFeatures[Format.RGB10A2UI] = FormatFeatureBit.RENDER_TARGET | FormatFeatureBit.STORAGE_TEXTURE
-            | FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.LINEAR_FILTER;
-
         tempFeature = FormatFeatureBit.RENDER_TARGET | FormatFeatureBit.STORAGE_TEXTURE
-            | FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.LINEAR_FILTER | FormatFeatureBit.VERTEX_ATTRIBUTE;
+            | FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.VERTEX_ATTRIBUTE;
 
         setFormatFeature(formatFeatures, [
             Format.R8I,
@@ -373,13 +370,6 @@ export class WebGL2Device extends Device {
             Format.RG32I,
             Format.RG32UI,
 
-            Format.RGB8I,
-            Format.RGB8UI,
-            Format.RGB16I,
-            Format.RGB16UI,
-            Format.RGB32I,
-            Format.RGB32UI,
-
             Format.RGBA8I,
             Format.RGBA8UI,
             Format.RGBA16I,
@@ -387,6 +377,15 @@ export class WebGL2Device extends Device {
             Format.RGBA32I,
             Format.RGBA32UI,
         ], tempFeature);
+
+        setFormatFeature(formatFeatures, [
+            Format.RGB8I,
+            Format.RGB8UI,
+            Format.RGB16I,
+            Format.RGB16UI,
+            Format.RGB32I,
+            Format.RGB32UI,
+        ], tempFeature & ~FormatFeatureBit.RENDER_TARGET);
 
         setTextureExclusive(textureExclusive, [
             Format.R8,
@@ -438,7 +437,10 @@ export class WebGL2Device extends Device {
             ], false);
         }
 
-        if (exts.EXT_color_buffer_half_float) {
+        if (exts.EXT_color_buffer_half_float || exts.EXT_color_buffer_float) {
+            formatFeatures[Format.R16F] |= FormatFeatureBit.RENDER_TARGET;
+            formatFeatures[Format.RG16F] |= FormatFeatureBit.RENDER_TARGET;
+            formatFeatures[Format.RGBA16F] |= FormatFeatureBit.RENDER_TARGET;
             setTextureExclusive(textureExclusive, [
                 Format.R16F,
                 Format.RG16F,
@@ -451,13 +453,6 @@ export class WebGL2Device extends Device {
             formatFeatures[Format.RGBA32F] |= FormatFeatureBit.LINEAR_FILTER;
             formatFeatures[Format.R32F] |= FormatFeatureBit.LINEAR_FILTER;
             formatFeatures[Format.RG32F] |= FormatFeatureBit.LINEAR_FILTER;
-        }
-
-        if (exts.OES_texture_half_float_linear) {
-            formatFeatures[Format.RGB16F] |= FormatFeatureBit.LINEAR_FILTER;
-            formatFeatures[Format.RGBA16F] |= FormatFeatureBit.LINEAR_FILTER;
-            formatFeatures[Format.R16F] |= FormatFeatureBit.LINEAR_FILTER;
-            formatFeatures[Format.RG16F] |= FormatFeatureBit.LINEAR_FILTER;
         }
 
         const compressedFeature: FormatFeature = FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.LINEAR_FILTER;
@@ -616,9 +611,23 @@ export class WebGL2Device extends Device {
     }
 
     public getSampler (info: Readonly<SamplerInfo>): Sampler {
-        const hash = Sampler.computeHash(info);
-        if (!this._samplers.has(hash)) {
-            this._samplers.set(hash, new WebGL2Sampler(info, hash));
+        if (!Number.isInteger(info.maxAnisotropy) || info.maxAnisotropy < 0) {
+            throw new RangeError('WebGL2 sampler maxAnisotropy must be a finite non-negative integer');
+        }
+        if (!Number.isInteger(info.cmpFunc) || info.cmpFunc < ComparisonFunc.NEVER || info.cmpFunc > ComparisonFunc.ALWAYS) {
+            throw new RangeError('WebGL2 sampler cmpFunc must be a ComparisonFunc');
+        }
+        const normalized = new SamplerInfo().copy(info);
+        if (normalized.maxAnisotropy > 0) {
+            const extension = this.extensions.EXT_texture_filter_anisotropic;
+            // Preserve the public five-bit hash/unpack contract rather than aliasing larger requests.
+            const limit = extension ? Math.max(1, Math.floor(this.gl.getParameter(extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT))) : 1;
+            normalized.maxAnisotropy = Math.min(normalized.maxAnisotropy, 16, limit);
+        }
+        const hash = Sampler.computeHash(normalized);
+        const cached = this._samplers.get(hash) as WebGL2Sampler | undefined;
+        if (!cached || !cached.gpuSampler) {
+            this._samplers.set(hash, new WebGL2Sampler(normalized, hash));
         }
         return this._samplers.get(hash)!;
     }
@@ -663,7 +672,7 @@ export class WebGL2Device extends Device {
     public copyTextureToBuffers (texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: Readonly<BufferTextureCopy[]>): void {
         WebGL2CmdFuncCopyTextureToBuffers(
             this,
-            (texture as WebGL2Texture).gpuTexture,
+            (texture as WebGL2Texture).gpuTextureView,
             buffers,
             regions,
         );

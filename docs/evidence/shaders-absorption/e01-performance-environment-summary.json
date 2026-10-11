@@ -1,0 +1,996 @@
+{
+  "schemaVersion": "shaders-environment-performance-summary/1",
+  "effect": "E01 Noise Dissolve",
+  "executionChannel": "Lead",
+  "observedAt": "2026-10-09T08:41:27.836Z",
+  "performanceScope": "PASS",
+  "effectStatus": "BLOCKED",
+  "waveStatus": "BLOCKED",
+  "agentGate": "NOT_RUN",
+  "subset": true,
+  "completed": false,
+  "scope": {
+    "declared": 9,
+    "measured": 9,
+    "skipped": 0
+  },
+  "execution": {
+    "command": "D:\\Program Files\\nodejs\\node.exe tools/verify/shaders-noise-dissolve-environment-performance.cjs --phase=performance --browser=all --authorization=LEAD-W1-R8-E01-20261009 --out=output/shaders-absorption/lead-w1-r8-e01-performance-final.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "exitCode": 0,
+    "signal": null,
+    "walltimeMs": 49446,
+    "inputsUnchanged": true
+  },
+  "sdk": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6631057,
+      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303518,
+      "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+    }
+  ],
+  "npm": {
+    "path": "build/npm/cocosair.module.js",
+    "bytes": 6631013,
+    "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+  },
+  "tool": {
+    "path": "tools/verify/shaders-noise-dissolve-environment-performance.cjs",
+    "bytes": 19501,
+    "sha256": "63a974b93385512dadf8901af6d7c64f378b20fda504bc62deea31d5f3a4a6bb"
+  },
+  "upstreamCommit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "149.0.7827.55",
+      "profile": {
+        "id": "720p",
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.004999995231628418,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.0000299999713897,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.050000011920928955,
+        "p95": 0.10000002384185791,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.2850000262260437,
+        "p95": 0.3799999952316284,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.009999990463256836,
+        "zeroCount": 32
+      },
+      "queueBookkeepingMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.004999995231628418,
+        "zeroCount": 35
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.6599999666214,
+        "p95": 17.240000009536743,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "measured",
+        "milliseconds": {
+          "count": 60,
+          "p50": 0.124928,
+          "p95": 0.129024,
+          "zeroCount": 0
+        }
+      },
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "vramEstimate": {
+        "bytes": 2744,
+        "formula": "Sum of deduplicated owned native gfx Texture.size + Buffer.size; excludes driver, swapchain, shared caches",
+        "method": "estimate"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "backgroundRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "templateRefs": {
+        "before": 1,
+        "after": 0,
+        "registryDetached": true,
+        "validAfterClose": false
+      },
+      "listeners": 0,
+      "instrumentsRestored": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "chromium",
+      "version": "149.0.7827.55",
+      "profile": {
+        "id": "1080p",
+        "width": 1920,
+        "height": 1080,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.004999995231628418,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.0004049999713898,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.050000011920928955,
+        "p95": 0.07999998331069946,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.29499995708465576,
+        "p95": 0.40000003576278687,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0.004999995231628418,
+        "p95": 0.009999990463256836,
+        "zeroCount": 17
+      },
+      "queueBookkeepingMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.004999995231628418,
+        "zeroCount": 32
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.665000021457672,
+        "p95": 17.305000007152557,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "measured",
+        "milliseconds": {
+          "count": 60,
+          "p50": 1.826816,
+          "p95": 5.183488,
+          "zeroCount": 0
+        }
+      },
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "vramEstimate": {
+        "bytes": 2744,
+        "formula": "Sum of deduplicated owned native gfx Texture.size + Buffer.size; excludes driver, swapchain, shared caches",
+        "method": "estimate"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "backgroundRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "templateRefs": {
+        "before": 1,
+        "after": 0,
+        "registryDetached": true,
+        "validAfterClose": false
+      },
+      "listeners": 0,
+      "instrumentsRestored": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "chromium",
+      "version": "149.0.7827.55",
+      "profile": {
+        "id": "mobile-dpr",
+        "width": 390,
+        "height": 844,
+        "dpr": 2
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.004999995231628418,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.0000799999833108,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.050000011920928955,
+        "p95": 0.07999998331069946,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.2749999761581421,
+        "p95": 0.3999999761581421,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0.004999995231628418,
+        "p95": 0.010000050067901611,
+        "zeroCount": 21
+      },
+      "queueBookkeepingMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.004999995231628418,
+        "zeroCount": 35
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.664999961853027,
+        "p95": 17.12999999523163,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "measured",
+        "milliseconds": {
+          "count": 60,
+          "p50": 1.835008,
+          "p95": 3.959808,
+          "zeroCount": 0
+        }
+      },
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "vramEstimate": {
+        "bytes": 2744,
+        "formula": "Sum of deduplicated owned native gfx Texture.size + Buffer.size; excludes driver, swapchain, shared caches",
+        "method": "estimate"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "backgroundRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "templateRefs": {
+        "before": 1,
+        "after": 0,
+        "registryDetached": true,
+        "validAfterClose": false
+      },
+      "listeners": 0,
+      "instrumentsRestored": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "profile": {
+        "id": "720p",
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.01999999999998181,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.0000400000000003,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.05999999999994543,
+        "p95": 0.1999999999998181,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.3000000000001819,
+        "p95": 0.4800000000000182,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.01999999999998181,
+        "zeroCount": 56
+      },
+      "queueBookkeepingMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.01999999999998181,
+        "zeroCount": 50
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.639999999999873,
+        "p95": 16.920000000000073,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable",
+        "reason": "EXT_disjoint_timer_query_webgl2 absent in engine context"
+      },
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "vramEstimate": {
+        "bytes": 2744,
+        "formula": "Sum of deduplicated owned native gfx Texture.size + Buffer.size; excludes driver, swapchain, shared caches",
+        "method": "estimate"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "backgroundRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "templateRefs": {
+        "before": 1,
+        "after": 0,
+        "registryDetached": true,
+        "validAfterClose": false
+      },
+      "listeners": 0,
+      "instrumentsRestored": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "profile": {
+        "id": "1080p",
+        "width": 1920,
+        "height": 1080,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.01999999999998181,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.1829799999999997,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.05999999999994543,
+        "p95": 0.13999999999987267,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.35999999999989996,
+        "p95": 0.5,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.01999999999998181,
+        "zeroCount": 52
+      },
+      "queueBookkeepingMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.01999999999998181,
+        "zeroCount": 54
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.68000000000029,
+        "p95": 33.319999999999936,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable",
+        "reason": "EXT_disjoint_timer_query_webgl2 absent in engine context"
+      },
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "vramEstimate": {
+        "bytes": 2744,
+        "formula": "Sum of deduplicated owned native gfx Texture.size + Buffer.size; excludes driver, swapchain, shared caches",
+        "method": "estimate"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "backgroundRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "templateRefs": {
+        "before": 1,
+        "after": 0,
+        "registryDetached": true,
+        "validAfterClose": false
+      },
+      "listeners": 0,
+      "instrumentsRestored": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "profile": {
+        "id": "mobile-dpr",
+        "width": 390,
+        "height": 844,
+        "dpr": 2
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.01999999999998181,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 0.99998,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.05999999999994543,
+        "p95": 0.18000000000006366,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.2799999999999727,
+        "p95": 0.42000000000007276,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0,
+        "zeroCount": 57
+      },
+      "queueBookkeepingMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.01999999999998181,
+        "zeroCount": 52
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.659999999999854,
+        "p95": 17.059999999999945,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable",
+        "reason": "EXT_disjoint_timer_query_webgl2 absent in engine context"
+      },
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "vramEstimate": {
+        "bytes": 2744,
+        "formula": "Sum of deduplicated owned native gfx Texture.size + Buffer.size; excludes driver, swapchain, shared caches",
+        "method": "estimate"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "backgroundRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "templateRefs": {
+        "before": 1,
+        "after": 0,
+        "registryDetached": true,
+        "validAfterClose": false
+      },
+      "listeners": 0,
+      "instrumentsRestored": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "profile": {
+        "id": "720p",
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.019999999999527063,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.0176999999999998,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.06000000000040018,
+        "p95": 0.15999999999985448,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.32000000000061846,
+        "p95": 0.680000000000291,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.020000000000436557,
+        "zeroCount": 36
+      },
+      "queueBookkeepingMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.020000000000436557,
+        "zeroCount": 47
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.0600000000004,
+        "p95": 25.55999999999949,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable",
+        "reason": "EXT_disjoint_timer_query_webgl2 absent in engine context"
+      },
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "vramEstimate": {
+        "bytes": 2744,
+        "formula": "Sum of deduplicated owned native gfx Texture.size + Buffer.size; excludes driver, swapchain, shared caches",
+        "method": "estimate"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "backgroundRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "templateRefs": {
+        "before": 1,
+        "after": 0,
+        "registryDetached": true,
+        "validAfterClose": false
+      },
+      "listeners": 0,
+      "instrumentsRestored": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "profile": {
+        "id": "1080p",
+        "width": 1920,
+        "height": 1080,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.019999999999527063,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.2596599999999998,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.07999999999992724,
+        "p95": 0.14000000000032742,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.339999999999236,
+        "p95": 1.019999999999527,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.020000000000436557,
+        "zeroCount": 40
+      },
+      "queueBookkeepingMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.020000000000436557,
+        "zeroCount": 55
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 20.019999999999527,
+        "p95": 25.140000000000327,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable",
+        "reason": "EXT_disjoint_timer_query_webgl2 absent in engine context"
+      },
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "vramEstimate": {
+        "bytes": 2744,
+        "formula": "Sum of deduplicated owned native gfx Texture.size + Buffer.size; excludes driver, swapchain, shared caches",
+        "method": "estimate"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "backgroundRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "templateRefs": {
+        "before": 1,
+        "after": 0,
+        "registryDetached": true,
+        "validAfterClose": false
+      },
+      "listeners": 0,
+      "instrumentsRestored": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "profile": {
+        "id": "mobile-dpr",
+        "width": 390,
+        "height": 844,
+        "dpr": 2
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.019999999999527063,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.0761800000000004,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.06000000000040018,
+        "p95": 0.11999999999989086,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.32000000000061846,
+        "p95": 0.6199999999998909,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.020000000000436557,
+        "zeroCount": 34
+      },
+      "queueBookkeepingMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.020000000000436557,
+        "zeroCount": 53
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.220000000000255,
+        "p95": 29.960000000000036,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable",
+        "reason": "EXT_disjoint_timer_query_webgl2 absent in engine context"
+      },
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "vramEstimate": {
+        "bytes": 2744,
+        "formula": "Sum of deduplicated owned native gfx Texture.size + Buffer.size; excludes driver, swapchain, shared caches",
+        "method": "estimate"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "backgroundRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "templateRefs": {
+        "before": 1,
+        "after": 0,
+        "registryDetached": true,
+        "validAfterClose": false
+      },
+      "listeners": 0,
+      "instrumentsRestored": true,
+      "pageClosed": true
+    }
+  ],
+  "cleanup": {
+    "proxyClosed": true,
+    "serverClosed": true,
+    "browsersClosed": true
+  },
+  "audit": {
+    "baselineAccepted": true,
+    "independentRawMappingRows": 9,
+    "rejected": 29,
+    "browserRunsAdded": 0
+  },
+  "evidence": [
+    {
+      "path": "output/shaders-absorption/lead-w1-r8-e01-performance-final.json",
+      "bytes": 854444,
+      "sha256": "827b8be1f545a9c316834fb0e81797e6ad727038ac8fb5b1a475ca20ecbe0e4d"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r8-e01-performance-final-driver.json",
+      "bytes": 23453,
+      "sha256": "a560accdcb77a0ec61697c097621ed1694da3f52ca38835cf682a552532c0cdb"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r8-e01-performance-final-raw.log",
+      "bytes": 142,
+      "sha256": "ec50a17d481a7d179cc3620c95724bc12a99fe6d9e37333c69ccce3ed4e5853f"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r8-e01-performance-final-frozen.json",
+      "bytes": 12042,
+      "sha256": "3a6c9caf92fa4d409f578aee8040442081cd9d21d331e05d60d3194cf37b9495"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r8-e01-audit.json",
+      "bytes": 5980,
+      "sha256": "a8de5689115d319388ef6e9f55af334d2a88a774db690ea7fea9004b2452a931"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r8-e01-audit.cjs",
+      "bytes": 5682,
+      "sha256": "591c7a7e5872e8611521f90bb1c01e981a4eef43f0560fff1752f5f70e8ccb3b"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r8-e01-verify.log",
+      "bytes": 25,
+      "sha256": "c385951575a4345431c0baf53ee5775b0ff0cb0b4e8da14ec7db6984f38f6b71"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r8-e01-contract-tests-attempt2.log",
+      "bytes": 403,
+      "sha256": "ef914699953728fd40ce32a37438c0510c19739ad0010a0592a000f7ad3d3c5d"
+    }
+  ],
+  "historicalAttempts": [
+    {
+      "path": "output/shaders-absorption/lead-w1-r8-e01-contract-tests.log",
+      "reason": "Windows temporary path normalization test mismatch corrected; original failed test log preserved"
+    }
+  ],
+  "limitations": [
+    "Performance acceptance only; WebKit compositor live-resize remains BLOCKED",
+    "Zero-valued CPU samples are below clock quantization, not zero cost; zero count retained",
+    "Existing example supplies aggregated CPU arrays; audit verifies array mapping, not independent per-call instrumentation",
+    "Native update intervals are not compositor presentation",
+    "Firefox/WebKit GPU timestamps unavailable; logical VRAM is not physical resident memory",
+    "Desktop viewport/DPR simulation, not physical mobile hardware; Agent Gate NOT_RUN"
+  ]
+}

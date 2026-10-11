@@ -1,12 +1,13 @@
 import { bootCapabilityLab } from '../../shared/capability-lab.js';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 import { createAirHTMLSource, getAirHTMLSourceSupport } from 'cocosair/html-source';
 
 const lab = await bootCapabilityLab('Experimental HTML texture');
 const { Texture2D, createAirTextureSprite } = lab.cc;
 const support = getAirHTMLSourceSupport(lab.canvas);
-const placeholder = lab.texture(2, 2, [35, 70, 95, 255, 65, 120, 130, 255, 65, 120, 130, 255, 35, 70, 95, 255]);
-const display = createAirTextureSprite(lab.ui, placeholder, { name: 'HTML texture surface', size: [256, 256] });
-const texture = new Texture2D();
+let placeholder = lab.texture(2, 2, [35, 70, 95, 255, 65, 120, 130, 255, 65, 120, 130, 255, 35, 70, 95, 255]);
+let display = createAirTextureSprite(lab.ui, placeholder, { name: 'HTML texture surface', size: [256, 256] });
+let texture = new Texture2D();
 let source: ReturnType<typeof createAirHTMLSource> | null = null,
     element: HTMLDivElement | null = null,
     hits = 0,
@@ -71,6 +72,42 @@ if (support.supported) {
     for (const id of ['live', 'snapshot', 'color']) (document.getElementById(id) as HTMLButtonElement).disabled = true;
     await lab.clock.step();
 }
+// §25 Lifecycle Contract：__lifecycle() 触发一轮 真实释放 → 泄漏核对 → 重建占位纹理/展示面。
+// 重建到首帧占位状态：实验 HTML 源仅在 SUPPORTED 环境挂接，且其挂接不依赖被释放的自有纹理。
+// 生命周期轮次不使用 lab.clock.step()：__lifecycle 在 native pacer 下执行，
+// 手动步进与真实时钟互斥；等待两帧即可让销毁提交与新画面落地。
+const settleFrames = (): Promise<void> =>
+    new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+installAssetLifecycle({
+    label: 'html-texture-experimental',
+    hold: () =>
+        disposed
+            ? []
+            : [
+                  { name: 'placeholder-texture', ref: placeholder },
+                  { name: 'html-texture', ref: texture },
+                  { name: 'html-sprite-node', ref: display.node },
+              ],
+    release: async () => {
+        source?.dispose();
+        element?.remove();
+        display.dispose();
+        texture.destroy();
+        placeholder.destroy();
+        await settleFrames();
+    },
+    reacquire: async () => {
+        placeholder = lab.texture(2, 2, [35, 70, 95, 255, 65, 120, 130, 255, 65, 120, 130, 255, 35, 70, 95, 255]);
+        display = createAirTextureSprite(lab.ui, placeholder, { name: 'HTML texture surface', size: [256, 256] });
+        texture = new Texture2D();
+        await settleFrames();
+        return [
+            { name: 'placeholder-texture', ref: placeholder },
+            { name: 'html-texture', ref: texture },
+            { name: 'html-sprite-node', ref: display.node },
+        ];
+    },
+});
 lab.expose({
     support,
     async redraw() {

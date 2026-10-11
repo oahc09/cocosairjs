@@ -59,6 +59,8 @@ const canvas = document.querySelector<HTMLCanvasElement>('#GameCanvas')!;
 const status = document.querySelector<HTMLElement>('#status')!;
 
 const app = await createAirApp({ canvas });
+// 浏览器矩阵/规格门禁的 bench 合同：会话探针从 window.__airApp 接入运行时。
+(window as unknown as Record<string, unknown>).__airApp = app;
 const scene = new Scene(`interactive-multipass-${MODE}`);
 
 // ── owned assets: addRef at creation, decRef paired in release; renderers only borrow ──
@@ -1542,6 +1544,31 @@ buildEffects();
 if (MODE === 'capture') createCaptureRoute();
 else createNativeRoute();
 await app.run(scene);
+
+// §25 Lifecycle Contract（资源粒度、惰性）：仅 __lifecycle() 调用时才执行一轮
+// 当前 capture 路由自有 mesh/material 的 退役（解绑+decRef→0）→ 泄漏核对 → 重建新路由。
+// 终态 release()（MULTIPASS_DISPOSED/app.close 语义）与 native 路由不受影响。
+if (MODE === 'capture') {
+    const { installAssetLifecycle } = await import('../../shared/asset-lifecycle.js');
+    const namedOwned = () =>
+        ownedAssets().map((asset, index) => ({
+            name: (ownedMeshes.includes(asset as OwnedMesh) ? 'route-mesh-' : 'route-material-') + index,
+            ref: asset,
+        }));
+    installAssetLifecycle({
+        label: 'interactive-multipass',
+        hold: () => (released || releasePromise ? [] : namedOwned()),
+        release: () => {
+            retireCaptureRoute();
+        },
+        reacquire: async () => {
+            createCaptureRoute();
+            // 生命周期轮次在 native pacer 下执行：等待真实帧提交，不做手动步进。
+            await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+            return namedOwned();
+        },
+    });
+}
 
 if (TEST && NEG_PAGE) {
     // Dedicated diagnostics page: negative probes intentionally produce GL errors.

@@ -1,0 +1,37 @@
+{
+  "repository": "https://github.com/shader-effects-inc/shaders",
+  "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+  "license": "MIT",
+  "files": [
+    {
+      "upstreamPath": "packages/core/src/shaders/ThinFilm/index.ts",
+      "path": "output/shaders-absorption/reference/packages/core/src/shaders/ThinFilm/index.ts",
+      "sha256": "babec2ceac456d86f0bacaa0521c96dc4de686d5e295f1bca983252084cf1bb7",
+      "bytes": 8469
+    },
+    {
+      "upstreamPath": "packages/core/src/gpu/kit/effects/thinFilm.ts",
+      "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/effects/thinFilm.ts",
+      "sha256": "a77b923b661a5d1c9b6f17e9c820038ba0810111aaf526191d46d1884861533a",
+      "bytes": 13074
+    },
+    {
+      "upstreamPath": "packages/core/src/gpu/kit/effects/glass.ts",
+      "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/effects/glass.ts",
+      "sha256": "180cb03fa58712632cb4cd6a12257543a0b2a0713647694e9029c49180c69acf",
+      "bytes": 22432
+    },
+    {
+      "upstreamPath": "packages/core/src/gpu/kit/lighting.ts",
+      "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/lighting.ts",
+      "sha256": "e90a6b5f8aedc978bec5bcda4529493a35cb68212be8fc4628e2abdedec3daaf",
+      "bytes": 11133
+    },
+    {
+      "upstreamPath": "packages/core/src/std/paint/materials.ts",
+      "path": "output/shaders-absorption/reference/packages/core/src/std/paint/materials.ts",
+      "sha256": "7cb6e03cf96c26cd71ad9442002d2f642d301770e62ec08fbcfe33e86a359782",
+      "bytes": 57681
+    }
+  ]
+}

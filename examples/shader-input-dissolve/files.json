@@ -1,0 +1,17 @@
+{
+  "files": [
+    "index.html",
+    "src/main.ts",
+    "src/image-source.ts",
+    "src/parameters.ts",
+    "src/effect.generated.ts",
+    "src/dissolve.frag",
+    "src/content.frag",
+    "parameters.json",
+    "generate-effect.cjs",
+    "assets/input-pattern.png",
+    "README.md",
+    "UPSTREAM.md",
+    "THIRD_PARTY_NOTICES.txt"
+  ]
+}

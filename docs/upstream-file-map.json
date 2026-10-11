@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 191,
+    "modifiedCount": 198,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -3563,8 +3563,8 @@
       "airPath": "src/cocos/gfx/base/define.ts",
       "upstreamPath": "cocos/gfx/base/define.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: packed RGB10A2UI uses its actual four-byte word size and Uint32 upload storage (WGL-05)."
     },
     {
       "airPath": "src/cocos/gfx/base/descriptor-set-layout.ts",
@@ -3969,8 +3969,8 @@
       "airPath": "src/cocos/gfx/webgl2/states/webgl2-sampler.ts",
       "upstreamPath": "cocos/gfx/webgl2/states/webgl2-sampler.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: comparison mode/function and normalized anisotropy applied to every owned LOD sampler (WGL-02/03)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-buffer.ts",
@@ -3990,8 +3990,8 @@
       "airPath": "src/cocos/gfx/webgl2/webgl2-commands.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-commands.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: integer external formats/clear/attributes, sampler destruction, depth bias enable/order, selected layer attachments and validated native-layout readback with GL state/resource recovery (WGL-02/04/05/06/07/08/09)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-define.ts",
@@ -4018,22 +4018,22 @@
       "airPath": "src/cocos/gfx/webgl2/webgl2-device.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-device.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: WebGL2 half-float/integer filtering and half-float/RGB integer renderability contracts, sampler validation/cache normalization and view-preserving readback entry (WGL-01/02/03/05/09)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-framebuffer.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-framebuffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: selected-mip attachment dimensions and texture/renderbuffer rebuild tracking (WGL-08)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-gpu-objects.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-gpu-objects.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: preserve texture view mip/layer selection and comparison/anisotropy sampler state (WGL-02/03/08/09)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-input-assembler.ts",
@@ -4096,14 +4096,14 @@
       "upstreamPath": "cocos/gfx/webgl2/webgl2-swapchain.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: getContext 普通分支 preserveDrawingBuffer=true（与 webgl-swapchain 2026-09-12 的既定 AIR 修改对齐——Code First 像素级验收与截图需要。W03 实测该遗漏使 WebGL2 帧外读回恒黑：resize/暂停后 toDataURL/readPixels 无内容；XR 分支保持上游 false）"
+      "reason": "AIR: getContext 普通分支 preserveDrawingBuffer=true（与 webgl-swapchain 2026-09-12 的既定 AIR 修改对齐——Code First 像素级验收与截图需要。W03 实测该遗漏使 WebGL2 帧外读回恒黑：resize/暂停后 toDataURL/readPixels 无内容；XR 分支保持上游 false） AIR: initialize polygon offset disabled, reset bias/framebuffer caches and invalidate pipeline/input identity on initialization (WGL-04)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-texture.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-texture.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: validate and preserve view mip/layer ranges, ownership and resized mip metadata (WGL-08/09)."
     },
     {
       "airPath": "src/cocos/gi/light-probe/auto-placement.ts",

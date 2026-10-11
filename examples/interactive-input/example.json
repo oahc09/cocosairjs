@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Canvas, HTML and native scrolling",
   "category": "interaction",
-  "status": "draft",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -42,19 +42,19 @@
       {
         "api": "createActionInput",
         "source": "src/main.ts",
-        "sourceLocation": "L81",
+        "sourceLocation": "L158",
         "validator": "visible-frame"
       },
       {
         "api": "createActionState",
         "source": "src/main.ts",
-        "sourceLocation": "L77",
+        "sourceLocation": "L147",
         "validator": "visible-frame"
       },
       {
         "api": "createSessionGate",
         "source": "src/main.ts",
-        "sourceLocation": "L76",
+        "sourceLocation": "L145",
         "validator": "visible-frame"
       }
     ]
@@ -108,5 +108,13 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序化色块与 DOM；无原云端素材；仓库 MIT 许可证"
+  },
+  "promotion": {
+    "spec": "7417defd36b5",
+    "source": "763d9b2146b7fb30",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 3,
+    "attested": 0,
+    "units": 3
   }
 }

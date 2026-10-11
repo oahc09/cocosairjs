@@ -1,0 +1,896 @@
+{
+  "schema": "webgl2-gfx-ordinary-regressions/1",
+  "startedAt": "2026-10-10T17:01:16.986Z",
+  "identity": {
+    "head": "4fdfc096258cd1b6f2aa1d8132edda7be7a27a20",
+    "dirty": "M ai/README.md\n M build/cocosair.module.d.ts\n M build/cocosair.module.js\n M build/cocosair.module.js.map\n M build/cocosair.module.min.js\n M build/cocosair.module.min.js.map\n M docs/UPSTREAM.md\n M docs/example-api-inventory.json\n M docs/manual/webgl-compatibility-check.md\n M docs/test-inventory.json\n M docs/upstream-file-map.json\n M examples/files.json\n D skills/air-code-first/SKILL.md\n D skills/air-graphics-and-dom/SKILL.md\n D skills/air-verification/SKILL.md\n M src/cocos/gfx/base/define.ts\n M src/cocos/gfx/webgl2/states/webgl2-sampler.ts\n M src/cocos/gfx/webgl2/webgl2-commands.ts\n M src/cocos/gfx/webgl2/webgl2-device.ts\n M src/cocos/gfx/webgl2/webgl2-framebuffer.ts\n M src/cocos/gfx/webgl2/webgl2-gpu-objects.ts\n M src/cocos/gfx/webgl2/webgl2-swapchain.ts\n M src/cocos/gfx/webgl2/webgl2-texture.ts\n M tools/README.md\n M tools/build/build-number.json\n M tools/verify/graphics-package.cjs\n M tools/verify/verify-doc-refs.cjs\n?? ai/ledgers/shaders-absorption.md\n?? ai/ledgers/webgl2-gfx-contract-remediation.md\n?? ai/plans/agent-skills-suite-steps.md\n?? ai/plans/agent-skills-suite.md\n?? ai/plans/shaders-absorption-task-plan.md\n?? ai/plans/webgl2-gfx-contract-remediation.md\n?? docs/effects/\n?? docs/evidence/examples/webgl2-gfx-contracts/\n?? docs/evidence/shaders-absorption/\n?? docs/reference/webgl2-gfx-contracts.md\n?? examples/shader-cursor-trail/\n?? examples/shader-emboss/\n?? examples/shader-film-neon/\n?? examples/shader-glass-trail/\n?? examples/shader-glass/\n?? examples/shader-holographic/\n?? examples/shader-laser-card/\n?? examples/shader-liquid-metal/\n?? examples/shader-neon/\n?? examples/shader-noise-dissolve/\n?? examples/shader-sparkle/\n?? examples/shader-thin-film/\n?? examples/shared/asset-lifecycle.d.ts\n?? examples/shared/shader-lifecycle.ts\n?? skills/cocosair-2d-subsystems/\n?? skills/cocosair-agent-session/\n?? skills/cocosair-animation-tween/\n?? skills/cocosair-application/\n?? skills/cocosair-assets/\n?? skills/cocosair-audio-video/\n?? skills/cocosair-camera/\n?? skills/cocosair-gltf/\n?? skills/cocosair-graphics-and-dom/\n?? skills/cocosair-input-action/\n?? skills/cocosair-materials-effects/\n?? skills/cocosair-math/\n?? skills/cocosair-performance/\n?? skills/cocosair-physics/\n?? skills/cocosair-primitives-mesh/\n?? skills/cocosair-project-setup/\n?? skills/cocosair-rendering/\n?? skills/cocosair-scene-graph/\n?? skills/cocosair-skinning-morph/\n?? skills/cocosair-ui-2d/\n?? skills/cocosair-verification/\n?? skills/cocosair/\n?? test/fixtures/shaders-sparkle-performance-contract.cjs\n?? test/smoke/shaders-api-evidence.test.ts\n?? test/smoke/shaders-browser-environment-review.test.ts\n?? test/smoke/shaders-browser-environment.test.ts\n?? test/smoke/shaders-browser-launch.test.ts\n?? test/smoke/shaders-cursor-trail-review.test.ts\n?? test/smoke/shaders-cursor-trail.test.ts\n?? test/smoke/shaders-effect-contract.test.ts\n?? test/smoke/shaders-emboss-acceptance.test.ts\n?? test/smoke/shaders-emboss-release.test.ts\n?? test/smoke/shaders-emboss.test.ts\n?? test/smoke/shaders-film-neon-acceptance.test.ts\n?? test/smoke/shaders-film-neon-review.test.ts\n?? test/smoke/shaders-film-neon.test.ts\n?? test/smoke/shaders-gallery-lifecycle-review.test.ts\n?? test/smoke/shaders-gallery-lifecycle-validator.test.ts\n?? test/smoke/shaders-gallery-lifecycle.test.ts\n?? test/smoke/shaders-glass-acceptance.test.ts\n?? test/smoke/shaders-glass-performance.test.ts\n?? test/smoke/shaders-glass-trail-acceptance.test.ts\n?? test/smoke/shaders-glass-trail-contract-review.test.ts\n?? test/smoke/shaders-glass-trail-full-report.test.ts\n?? test/smoke/shaders-glass-trail-review.test.ts\n?? test/smoke/shaders-glass-trail.test.ts\n?? test/smoke/shaders-glass.test.ts\n?? test/smoke/shaders-holographic-acceptance.test.ts\n?? test/smoke/shaders-holographic-review.test.ts\n?? test/smoke/shaders-holographic.test.ts\n?? test/smoke/shaders-laser-card-acceptance.test.ts\n?? test/smoke/shaders-laser-card-review.test.ts\n?? test/smoke/shaders-laser-card.test.ts\n?? test/smoke/shaders-liquid-metal-acceptance.test.ts\n?? test/smoke/shaders-liquid-metal-review.test.ts\n?? test/smoke/shaders-liquid-metal.test.ts\n?? test/smoke/shaders-neon-acceptance.test.ts\n?? test/smoke/shaders-neon-review.test.ts\n?? test/smoke/shaders-neon.test.ts\n?? test/smoke/shaders-noise-dissolve-environment-performance.test.ts\n?? test/smoke/shaders-noise-dissolve.test.ts\n?? test/smoke/shaders-sparkle-environment-performance-review.test.ts\n?? test/smoke/shaders-sparkle-environment-performance.test.ts\n?? test/smoke/shaders-sparkle.test.ts\n?? test/smoke/shaders-thin-film-environment-review.test.ts\n?? test/smoke/shaders-thin-film.test.ts\n?? test/smoke/shaders-wave1-gate.test.ts\n?? test/smoke/shaders-wave2-gate.test.ts\n?? test/smoke/shaders-wave3-gate.test.ts\n?? test/smoke/webgl2-gfx-command-contracts.test.ts\n?? test/smoke/webgl2-gfx-texture-contracts.test.ts\n?? test/smoke/webgl2-sampler-contract.test.ts\n?? tools/debug/probes/webgl2-gfx-contracts/\n?? tools/debug/probes/webgl2-gfx-regressions/\n?? tools/verify/shaders-api-evidence.cjs\n?? tools/verify/shaders-browser-environment.cjs\n?? tools/verify/shaders-browser-launch.cjs\n?? tools/verify/shaders-cursor-trail-browser.cjs\n?? tools/verify/shaders-cursor-trail-gate.cjs\n?? tools/verify/shaders-cursor-trail-oracle.cjs\n?? tools/verify/shaders-cursor-trail-performance.cjs\n?? tools/verify/shaders-cursor-trail.tsconfig.json\n?? tools/verify/shaders-effect-contract.cjs\n?? tools/verify/shaders-effect-contract.d.ts\n?? tools/verify/shaders-emboss-browser.cjs\n?? tools/verify/shaders-emboss-oracle.cjs\n?? tools/verify/shaders-emboss-performance.cjs\n?? tools/verify/shaders-emboss.tsconfig.json\n?? tools/verify/shaders-film-neon-browser.cjs\n?? tools/verify/shaders-film-neon-gate.cjs\n?? tools/verify/shaders-film-neon-oracle.cjs\n?? tools/verify/shaders-film-neon-performance.cjs\n?? tools/verify/shaders-film-neon.tsconfig.json\n?? tools/verify/shaders-gallery-lifecycle.cjs\n?? tools/verify/shaders-glass-browser.cjs\n?? tools/verify/shaders-glass-gate.cjs\n?? tools/verify/shaders-glass-oracle.cjs\n?? tools/verify/shaders-glass-performance.cjs\n?? tools/verify/shaders-glass-trail-browser.cjs\n?? tools/verify/shaders-glass-trail-oracle.cjs\n?? tools/verify/shaders-glass-trail-performance.cjs\n?? tools/verify/shaders-glass-trail.tsconfig.json\n?? tools/verify/shaders-glass.tsconfig.json\n?? tools/verify/shaders-holographic-browser.cjs\n?? tools/verify/shaders-holographic-oracle.cjs\n?? tools/verify/shaders-holographic-performance.cjs\n?? tools/verify/shaders-holographic.tsconfig.json\n?? tools/verify/shaders-laser-card-browser.cjs\n?? tools/verify/shaders-laser-card-gate.cjs\n?? tools/verify/shaders-laser-card-oracle.cjs\n?? tools/verify/shaders-laser-card-performance.cjs\n?? tools/verify/shaders-laser-card.tsconfig.json\n?? tools/verify/shaders-liquid-metal-browser.cjs\n?? tools/verify/shaders-liquid-metal-oracle.cjs\n?? tools/verify/shaders-liquid-metal-performance.cjs\n?? tools/verify/shaders-liquid-metal.tsconfig.json\n?? tools/verify/shaders-neon-browser.cjs\n?? tools/verify/shaders-neon-oracle.cjs\n?? tools/verify/shaders-neon-performance.cjs\n?? tools/verify/shaders-neon.tsconfig.json\n?? tools/verify/shaders-noise-dissolve-audit.cjs\n?? tools/verify/shaders-noise-dissolve-environment-performance.cjs\n?? tools/verify/shaders-noise-dissolve-normalize-scoped.cjs\n?? tools/verify/shaders-noise-dissolve-normalize.cjs\n?? tools/verify/shaders-noise-dissolve-oracle.cjs\n?? tools/verify/shaders-noise-dissolve-precision-audit.cjs\n?? tools/verify/shaders-noise-dissolve-precision-closure-audit.cjs\n?? tools/verify/shaders-noise-dissolve-precision-closure.cjs\n?? tools/verify/shaders-noise-dissolve-precision.cjs\n?? tools/verify/shaders-noise-dissolve-scoped-audit.cjs\n?? tools/verify/shaders-noise-dissolve-scoped-gate.cjs\n?? tools/verify/shaders-noise-dissolve-summary.cjs\n?? tools/verify/shaders-noise-dissolve.cjs\n?? tools/verify/shaders-noise-dissolve.tsconfig.json\n?? tools/verify/shaders-resize-diagnostic.cjs\n?? tools/verify/shaders-runtime-preflight.cjs\n?? tools/verify/shaders-sparkle-audit.cjs\n?? tools/verify/shaders-sparkle-browser.cjs\n?? tools/verify/shaders-sparkle-environment-performance.cjs\n?? tools/verify/shaders-sparkle-final.cjs\n?? tools/verify/shaders-sparkle-oracle.cjs\n?? tools/verify/shaders-sparkle-performance.cjs\n?? tools/verify/shaders-sparkle-scoped.cjs\n?? tools/verify/shaders-sparkle.tsconfig.json\n?? tools/verify/shaders-thin-film-audit.cjs\n?? tools/verify/shaders-thin-film-browser.cjs\n?? tools/verify/shaders-thin-film-evidence.cjs\n?? tools/verify/shaders-thin-film-oracle.cjs\n?? tools/verify/shaders-thin-film-performance.cjs\n?? tools/verify/shaders-thin-film-summary.cjs\n?? tools/verify/shaders-thin-film.tsconfig.json\n?? tools/verify/shaders-wave1-gate.cjs\n?? tools/verify/shaders-wave2-gate.cjs\n?? tools/verify/shaders-wave3-closure.cjs\n?? tools/verify/shaders-wave3-gate.cjs\n?? tools/verify/webgl2-gfx-contracts.cjs\n?? tools/verify/webgl2-gfx-controls.cjs\n?? tools/verify/webgl2-gfx-regressions.cjs",
+    "node": "v24.14.0",
+    "toolingPath": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js",
+    "toolingVersion": "1.63.0"
+  },
+  "fingerprints": {
+    "build/cocosair.module.js": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc",
+    "build/cocosair.module.min.js": "779c288e647c17f63a08fee5c2b9a9ec50a96c70909e34c2e3b20d9ab661a90a",
+    "build/cocosair.module.d.ts": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e",
+    "src/cocos/gfx/webgl2/webgl2-commands.ts": "8d0a93060e2ee32507c48976843145666ad6537e31943a132200bfb2bda38ff5",
+    "src/cocos/gfx/webgl2/webgl2-device.ts": "b3cefa92f46e7b78a2fc8af8b96e1355b8b173b84169ca52fb7a6dd4352681dc",
+    "src/cocos/gfx/webgl2/webgl2-texture.ts": "6b51b3a8c03cfb2127dcff5963583113ef0d0311926dcc4f39384077435fba57",
+    "src/cocos/gfx/webgl2/webgl2-framebuffer.ts": "32ea0195515620562380f89bd0d15c1f3a6137dc7dc79402c77c18ae5fbf2245",
+    "src/cocos/gfx/webgl2/webgl2-gpu-objects.ts": "ab0f3e85457ef185a984108de009b660e18dcb3fc2d696d24d335ef2b49cfd7d",
+    "tools/verify/webgl2-gfx-regressions.cjs": "dd13916ed99e22384bf4d30d83b118b65801d99442e538fef1eb1a547e80d705",
+    "tools/debug/probes/webgl2-gfx-regressions/index.html": "347a7ddab607a2b7856002d540315ed76c3b435af7603975f8dc421d41f02de6",
+    "tools/debug/probes/webgl2-gfx-regressions/main.js": "804f626459d81b364be17cc5a1918bfc59316ff43437570ce4f7dc59605ea6a7",
+    "tools/verify/competitive-example-server.cjs": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af",
+    "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+    "tools/verify/loopback-browser-env.cjs": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929",
+    "ai/plans/webgl2-gfx-contract-remediation.md": "57d3d1d68b2409639751cf02e60d567fc1cc5da0970e1acd9354509c730ca4a3",
+    "examples/gltf-skin/assets/SimpleSkin.gltf": "8d92e9888340eb98e82a65a1f8b037d9a1d9f09e5fd0b6ba6d40fd93700b3239",
+    "examples/gltf-skin/assets/SimpleSkin_geometry.bin": "35f0ca6bc07976c0aadc163d4737758989cfcc9870a99800004c4478fe698b63",
+    "examples/gltf-skin/assets/SimpleSkin_skinningData.bin": "413bc8a8c0da673df767874e6f05f0b00c9261756a08586b9d555bd5535414b5",
+    "examples/gltf-skin/assets/SimpleSkin_inverseBindMatrices.bin": "5844ab221cd2ad367420a248f6387b46e5f8498604427730a37ee96b4d4ec599",
+    "examples/gltf-skin/assets/SimpleSkin_animation.bin": "ff21b1bc3d0abbe53f7665060ec6c22d873b6e85a7669171a2b6b8ae01c39347"
+  },
+  "results": [
+    {
+      "engine": "chromium",
+      "status": "PASS",
+      "version": "149.0.7827.55",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe",
+      "raw": {
+        "ready": true,
+        "results": [
+          {
+            "id": "real-time-native-skinning",
+            "stages": {
+              "preExisting": [],
+              "resource-and-material-creation": [],
+              "rest-draw-and-read": [],
+              "bent-draw-and-read": [],
+              "cleanup": []
+            },
+            "expected": {
+              "camera": {
+                "projection": "orthographic",
+                "center": [
+                  0,
+                  1
+                ],
+                "halfHeight": 2,
+                "target": [
+                  128,
+                  128
+                ]
+              },
+              "worldSamples": [
+                [
+                  0,
+                  1.75
+                ],
+                [
+                  -0.75,
+                  1
+                ]
+              ],
+              "rest": [
+                "red skin",
+                "blue background"
+              ],
+              "bent": [
+                "blue background",
+                "red skin"
+              ],
+              "modelType": "SkinningModel",
+              "pose": "joint 2 rotates 90 degrees about Z; native JOINTS_0 and WEIGHTS_0 deform original mesh"
+            },
+            "actual": {
+              "rest": [
+                [
+                  229,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  255,
+                  255
+                ]
+              ],
+              "bent": [
+                [
+                  0,
+                  0,
+                  255,
+                  255
+                ],
+                [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              ],
+              "modelType": "SkinningModel",
+              "jointRotation": [
+                0,
+                0,
+                0.7071067811865475,
+                0.7071067811865476
+              ]
+            },
+            "cleanup": [
+              {
+                "type": "RenderTexture",
+                "released": true
+              },
+              {
+                "type": "Material",
+                "released": true
+              },
+              {
+                "type": "Object",
+                "released": true
+              },
+              {
+                "type": "GLTFAsset",
+                "released": true
+              }
+            ],
+            "matched": true,
+            "resources": {
+              "created": 4,
+              "released": 4
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "msaa-resolve-resize-readback-draw-blit",
+            "stages": {
+              "preExisting": [],
+              "resource-and-shader-creation": [],
+              "multisample-draw": [],
+              "resolve-and-read": [],
+              "resize-existing-framebuffer-draw-read": [],
+              "read-followed-by-draw-blit-read": [],
+              "cleanup": []
+            },
+            "expected": {
+              "resolved": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "resized": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "afterReadDrawBlit": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "framebufferDimensions": [
+                8,
+                8
+              ]
+            },
+            "actual": {
+              "supportedSamples": [
+                8,
+                4,
+                2,
+                1
+              ],
+              "resolved": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "resized": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "afterReadDrawBlit": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "shader": {
+                "link": true,
+                "log": ""
+              },
+              "framebufferDimensions": [
+                8,
+                8
+              ]
+            },
+            "cleanup": [
+              {
+                "type": "WebGL2Framebuffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2PrimaryCommandBuffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2PipelineState",
+                "released": true
+              },
+              {
+                "type": "WebGL2PipelineState",
+                "released": true
+              },
+              {
+                "type": "WebGL2InputAssembler",
+                "released": true
+              },
+              {
+                "type": "WebGL2Buffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2DescriptorSet",
+                "released": true
+              },
+              {
+                "type": "WebGL2PipelineLayout",
+                "released": true
+              },
+              {
+                "type": "WebGL2DescriptorSetLayout",
+                "released": true
+              },
+              {
+                "type": "WebGL2Shader",
+                "released": true
+              },
+              {
+                "type": "WebGL2Framebuffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2RenderPass",
+                "released": true
+              },
+              {
+                "type": "WebGL2RenderPass",
+                "released": true
+              },
+              {
+                "type": "WebGL2Texture",
+                "released": true
+              },
+              {
+                "type": "WebGL2Texture",
+                "released": true
+              },
+              {
+                "type": "WebGL2Texture",
+                "released": true
+              }
+            ],
+            "matched": true,
+            "resources": {
+              "created": 16,
+              "released": 16
+            },
+            "status": "PASS"
+          }
+        ],
+        "startupErrors": [],
+        "renderer": {
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "vendor": "WebKit",
+          "renderer": "WebKit WebGL"
+        },
+        "appRelease": {
+          "status": "released",
+          "scene": "Node.385",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "finalErrors": []
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/regressions-candidate-20261011-b-artifacts/chromium.png"
+    },
+    {
+      "engine": "firefox",
+      "status": "PASS",
+      "version": "155.0",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe",
+      "raw": {
+        "ready": true,
+        "results": [
+          {
+            "id": "real-time-native-skinning",
+            "stages": {
+              "preExisting": [],
+              "resource-and-material-creation": [],
+              "rest-draw-and-read": [],
+              "bent-draw-and-read": [],
+              "cleanup": []
+            },
+            "expected": {
+              "camera": {
+                "projection": "orthographic",
+                "center": [
+                  0,
+                  1
+                ],
+                "halfHeight": 2,
+                "target": [
+                  128,
+                  128
+                ]
+              },
+              "worldSamples": [
+                [
+                  0,
+                  1.75
+                ],
+                [
+                  -0.75,
+                  1
+                ]
+              ],
+              "rest": [
+                "red skin",
+                "blue background"
+              ],
+              "bent": [
+                "blue background",
+                "red skin"
+              ],
+              "modelType": "SkinningModel",
+              "pose": "joint 2 rotates 90 degrees about Z; native JOINTS_0 and WEIGHTS_0 deform original mesh"
+            },
+            "actual": {
+              "rest": [
+                [
+                  229,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  255,
+                  255
+                ]
+              ],
+              "bent": [
+                [
+                  0,
+                  0,
+                  255,
+                  255
+                ],
+                [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              ],
+              "modelType": "SkinningModel",
+              "jointRotation": [
+                0,
+                0,
+                0.7071067811865476,
+                0.7071067811865476
+              ]
+            },
+            "cleanup": [
+              {
+                "type": "RenderTexture",
+                "released": true
+              },
+              {
+                "type": "Material",
+                "released": true
+              },
+              {
+                "type": "Object",
+                "released": true
+              },
+              {
+                "type": "GLTFAsset",
+                "released": true
+              }
+            ],
+            "matched": true,
+            "resources": {
+              "created": 4,
+              "released": 4
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "msaa-resolve-resize-readback-draw-blit",
+            "stages": {
+              "preExisting": [],
+              "resource-and-shader-creation": [],
+              "multisample-draw": [],
+              "resolve-and-read": [],
+              "resize-existing-framebuffer-draw-read": [],
+              "read-followed-by-draw-blit-read": [],
+              "cleanup": []
+            },
+            "expected": {
+              "resolved": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "resized": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "afterReadDrawBlit": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "framebufferDimensions": [
+                8,
+                8
+              ]
+            },
+            "actual": {
+              "supportedSamples": [
+                8,
+                4,
+                2,
+                1
+              ],
+              "resolved": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "resized": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "afterReadDrawBlit": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "shader": {
+                "link": true,
+                "log": ""
+              },
+              "framebufferDimensions": [
+                8,
+                8
+              ]
+            },
+            "cleanup": [
+              {
+                "type": "WebGL2Framebuffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2PrimaryCommandBuffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2PipelineState",
+                "released": true
+              },
+              {
+                "type": "WebGL2PipelineState",
+                "released": true
+              },
+              {
+                "type": "WebGL2InputAssembler",
+                "released": true
+              },
+              {
+                "type": "WebGL2Buffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2DescriptorSet",
+                "released": true
+              },
+              {
+                "type": "WebGL2PipelineLayout",
+                "released": true
+              },
+              {
+                "type": "WebGL2DescriptorSetLayout",
+                "released": true
+              },
+              {
+                "type": "WebGL2Shader",
+                "released": true
+              },
+              {
+                "type": "WebGL2Framebuffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2RenderPass",
+                "released": true
+              },
+              {
+                "type": "WebGL2RenderPass",
+                "released": true
+              },
+              {
+                "type": "WebGL2Texture",
+                "released": true
+              },
+              {
+                "type": "WebGL2Texture",
+                "released": true
+              },
+              {
+                "type": "WebGL2Texture",
+                "released": true
+              }
+            ],
+            "matched": true,
+            "resources": {
+              "created": 16,
+              "released": 16
+            },
+            "status": "PASS"
+          }
+        ],
+        "startupErrors": [],
+        "renderer": {
+          "version": "WebGL 2.0",
+          "vendor": "Mozilla",
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        "appRelease": {
+          "status": "released",
+          "scene": "Node.306",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "finalErrors": []
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/regressions-candidate-20261011-b-artifacts/firefox.png"
+    },
+    {
+      "engine": "webkit",
+      "status": "PASS",
+      "version": "26.6",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\webkit-2359\\Playwright.exe",
+      "raw": {
+        "ready": true,
+        "results": [
+          {
+            "id": "real-time-native-skinning",
+            "stages": {
+              "preExisting": [],
+              "resource-and-material-creation": [],
+              "rest-draw-and-read": [],
+              "bent-draw-and-read": [],
+              "cleanup": []
+            },
+            "expected": {
+              "camera": {
+                "projection": "orthographic",
+                "center": [
+                  0,
+                  1
+                ],
+                "halfHeight": 2,
+                "target": [
+                  128,
+                  128
+                ]
+              },
+              "worldSamples": [
+                [
+                  0,
+                  1.75
+                ],
+                [
+                  -0.75,
+                  1
+                ]
+              ],
+              "rest": [
+                "red skin",
+                "blue background"
+              ],
+              "bent": [
+                "blue background",
+                "red skin"
+              ],
+              "modelType": "SkinningModel",
+              "pose": "joint 2 rotates 90 degrees about Z; native JOINTS_0 and WEIGHTS_0 deform original mesh"
+            },
+            "actual": {
+              "rest": [
+                [
+                  229,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  0,
+                  0,
+                  255,
+                  255
+                ]
+              ],
+              "bent": [
+                [
+                  0,
+                  0,
+                  255,
+                  255
+                ],
+                [
+                  229,
+                  0,
+                  0,
+                  255
+                ]
+              ],
+              "modelType": "SkinningModel",
+              "jointRotation": [
+                0,
+                0,
+                0.7071067811865476,
+                0.7071067811865476
+              ]
+            },
+            "cleanup": [
+              {
+                "type": "RenderTexture",
+                "released": true
+              },
+              {
+                "type": "Material",
+                "released": true
+              },
+              {
+                "type": "Object",
+                "released": true
+              },
+              {
+                "type": "GLTFAsset",
+                "released": true
+              }
+            ],
+            "matched": true,
+            "resources": {
+              "created": 4,
+              "released": 4
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "msaa-resolve-resize-readback-draw-blit",
+            "stages": {
+              "preExisting": [],
+              "resource-and-shader-creation": [],
+              "multisample-draw": [],
+              "resolve-and-read": [],
+              "resize-existing-framebuffer-draw-read": [],
+              "read-followed-by-draw-blit-read": [],
+              "cleanup": []
+            },
+            "expected": {
+              "resolved": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "resized": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "afterReadDrawBlit": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "framebufferDimensions": [
+                8,
+                8
+              ]
+            },
+            "actual": {
+              "supportedSamples": [
+                8,
+                4,
+                2,
+                1
+              ],
+              "resolved": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "resized": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "afterReadDrawBlit": [
+                0,
+                255,
+                0,
+                255
+              ],
+              "shader": {
+                "link": true,
+                "log": ""
+              },
+              "framebufferDimensions": [
+                8,
+                8
+              ]
+            },
+            "cleanup": [
+              {
+                "type": "WebGL2Framebuffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2PrimaryCommandBuffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2PipelineState",
+                "released": true
+              },
+              {
+                "type": "WebGL2PipelineState",
+                "released": true
+              },
+              {
+                "type": "WebGL2InputAssembler",
+                "released": true
+              },
+              {
+                "type": "WebGL2Buffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2DescriptorSet",
+                "released": true
+              },
+              {
+                "type": "WebGL2PipelineLayout",
+                "released": true
+              },
+              {
+                "type": "WebGL2DescriptorSetLayout",
+                "released": true
+              },
+              {
+                "type": "WebGL2Shader",
+                "released": true
+              },
+              {
+                "type": "WebGL2Framebuffer",
+                "released": true
+              },
+              {
+                "type": "WebGL2RenderPass",
+                "released": true
+              },
+              {
+                "type": "WebGL2RenderPass",
+                "released": true
+              },
+              {
+                "type": "WebGL2Texture",
+                "released": true
+              },
+              {
+                "type": "WebGL2Texture",
+                "released": true
+              },
+              {
+                "type": "WebGL2Texture",
+                "released": true
+              }
+            ],
+            "matched": true,
+            "resources": {
+              "created": 16,
+              "released": 16
+            },
+            "status": "PASS"
+          }
+        ],
+        "startupErrors": [],
+        "renderer": {
+          "version": "WebGL 2.0",
+          "vendor": "WebKit",
+          "renderer": "WebKit WebGL"
+        },
+        "appRelease": {
+          "status": "released",
+          "scene": "Node.836",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          }
+        },
+        "finalErrors": []
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/regressions-candidate-20261011-b-artifacts/webkit.png"
+    }
+  ],
+  "subset": false,
+  "scope": "Two directed ordinary-path GPU regressions: native realtime skinning; RGBA8 MSAA resolve, existing framebuffer resize, read/draw/blit continuation. Not full Gallery or release readiness.",
+  "finishedAt": "2026-10-10T17:01:25.430Z",
+  "drift": [],
+  "completed": true,
+  "passed": true
+}

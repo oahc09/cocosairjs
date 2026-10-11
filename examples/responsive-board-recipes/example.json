@@ -3,6 +3,195 @@
   "title": "Responsive board recipes",
   "category": "ui",
   "description": "Native container resize, single-line labels, input edges and visual cache recipes.",
-  "status": "draft",
-  "entry": "index.html"
+  "status": "stable",
+  "entry": "index.html",
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "响应式容器布局下的棋盘重排、单行标签、原生输入边沿与视觉缓存四项配方",
+    "points": [
+      "screenMode container 绑定 #host，容器尺寸变化驱动画布重排",
+      "labelNode SHRINK + enableWrapText:false 单行收缩，多行对照保留折行",
+      "createActionState/createActionInput 原生键盘边沿（Space/2/9 只计 press）与 session.own 退订",
+      "createVisualGate 视觉缓存：快照未变时不重绘棋盘 Graphics"
+    ]
+  },
+  "effect": {
+    "functional": "点击选格高亮、Space/2/9 边沿 drop、4×4/10×20/16×16 重建、Pause/Restart/Flag 与容器 resize 重排",
+    "visual": "480² 棋盘网格中选中格呈绿色脉冲（visiblePulse），状态行显示 hits/drops/flags，右列单行标签不换行"
+  },
+  "api": {
+    "primary": [
+      "createActionInput",
+      "labelNode",
+      "Label"
+    ],
+    "supporting": [
+      "createAirApp",
+      "createUICanvas",
+      "createActionState",
+      "Input",
+      "Node",
+      "UITransform",
+      "createStepClock"
+    ],
+    "claims": [
+      "createAirApp",
+      "createUICanvas",
+      "labelNode",
+      "Label",
+      "createActionState",
+      "createActionInput",
+      "Input",
+      "Node",
+      "UITransform",
+      "createStepClock"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L20",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "createUICanvas",
+        "source": "src/main.ts",
+        "sourceLocation": "L29",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "labelNode",
+        "source": "src/main.ts",
+        "sourceLocation": "L45",
+        "validator": "node-exists"
+      },
+      {
+        "api": "Label",
+        "source": "src/main.ts",
+        "sourceLocation": "L49",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "createActionState",
+        "source": "src/main.ts",
+        "sourceLocation": "L76",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "createActionInput",
+        "source": "src/main.ts",
+        "sourceLocation": "L87",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Input",
+        "source": "src/main.ts",
+        "sourceLocation": "L96",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L30",
+        "validator": "node-exists"
+      },
+      {
+        "api": "UITransform",
+        "source": "src/main.ts",
+        "sourceLocation": "L40",
+        "validator": "node-exists"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L194",
+        "validator": "no-runtime-error"
+      }
+    ],
+    "forbiddenShortcut": [
+      "绕过 createActionInput 直接监听 keydown 冒充输入边沿",
+      "在 visual gate 快照未变时整帧重绘冒充缓存命中"
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "TranslatedScaledGroup",
+        "Board",
+        "Status",
+        "SingleRight",
+        "SingleLong",
+        "MultiText",
+        "Driver"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击棋盘格",
+        "expected": "选中格短暂高亮，hits 计数增加"
+      },
+      {
+        "action": "按 Space / 2 / 9",
+        "expected": "drop 只在按下边沿计一次（press transitions）"
+      },
+      {
+        "action": "切换 4×4 / 10×20 / 16×16 或点击 Pause/Restart/Flag",
+        "expected": "棋盘按新尺寸重建、暂停冻结 tick、Flag 计数刷新"
+      },
+      {
+        "action": "切换16×16棋盘",
+        "selectId": "board",
+        "optionValue": "16,16",
+        "expected": "棋盘实际重建并产生持续可见的网格变化"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "Driver 组件挂载并首帧 render 后即绪"
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "assets": [],
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "容器 resize 前后棋盘与标签布局对照"
+  },
+  "license": {
+    "assets": "无第三方资产：棋盘与标签运行时程序化生成"
+  },
+  "bench": {
+    "viewport": {
+      "width": 1000,
+      "height": 1100
+    }
+  },
+  "promotion": {
+    "spec": "a9a463d9ddd6",
+    "source": "9068fd8c2befd738",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 10,
+    "attested": 0,
+    "units": 10
+  }
 }

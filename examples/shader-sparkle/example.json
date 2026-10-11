@@ -1,0 +1,226 @@
+{
+  "id": "shader-sparkle",
+  "title": "Sparkle 星芒",
+  "description": "双抖动网格、线性亮度门控、可重现时间与生命周期。",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "createAirRenderTarget",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "MeshRenderer",
+    "Texture2D",
+    "utils.createMesh"
+  ],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "原生双网格 Sparkle：独立数学 oracle、RGBA 组合、生命周期及测量精度",
+    "points": [
+      "sqrt(alpha-weighted linear Rec709) 门控",
+      "CSS px 星芒和 DPR 合同",
+      "同页 PNG 与 native float RT 分开采证",
+      "100 同 app 实例与 app 级 EffectAsset 退役"
+    ]
+  },
+  "assets": [],
+  "license": {
+    "assets": "程序化 RGBA8 输入；参考 Sparkle MIT 通知见 LICENSE.reference.txt，独立 uint hash 非 Fi 派生"
+  },
+  "api": {
+    "primary": [
+      "EffectAsset",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Texture2D",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "Texture2D",
+      "utils.createMesh"
+    ],
+    "forbiddenShortcut": [
+      "shaders runtime/TypeGPU/额外canvas",
+      "独立RAF/第二模拟时钟",
+      "黑背景截图替代核心RGBA",
+      "Queue.submit记账冒称GPU提交"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L29",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L237",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L573",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L45",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L150",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L107",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L172",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Texture2D",
+        "source": "src/main.ts",
+        "sourceLocation": "L144",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L134",
+        "validator": "visible-frame"
+      }
+    ],
+    "evidenceStatus": "Current source bindings; lifecycle bridge implemented and dedicated Gallery runtime evidence verified separately. API/algorithm acceptance belongs to the current Wave 1 gate."
+  },
+  "effect": {
+    "functional": "八参数update、expand跨0真实变体重建、暂停/继续/重置/释放，单nativepacer",
+    "visual": "有界双抖动网格、线性associated RGBA、OETF预览适配",
+    "limitations": [
+      "Windows WebKit collector requires the shader-scoped accelerated-compositing launch option",
+      "Performance uses observed HTTP COOP/COEP isolation and navigation DPR repair",
+      "Agent Gate NOT_RUN",
+      "独立hash非上游字节等价",
+      "Gallery lifecycle bridge implemented; current Wave 1 gate binds dedicated real-browser retire/reacquire evidence."
+    ]
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "改变八个滑块",
+        "expected": "uniform或expand跨0实例/变体重建"
+      },
+      {
+        "action": "暂停/继续/重置/释放",
+        "expected": "模拟时钟冻结/前进，退役引用归零，释放后按钮禁用"
+      },
+      {
+        "action": "执行示例 linearRead 读回探针",
+        "probe": "__sparkle.linearRead",
+        "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行",
+        "probeArgs": [
+          [
+            {
+              "x": 100,
+              "y": 100
+            },
+            {
+              "x": 200,
+              "y": 150
+            }
+          ]
+        ]
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__sparkle.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__sparkle.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "native-camera",
+        "owned-sparkle-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "Default startup scene plus __sparkle.ready; Gallery validators are declared, not yet executed as a Gallery benchmark."
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "Dedicated E06 native RT/compositor captures are SHA-bound in docs/evidence/shaders-absorption/e06-final-summary.json, not Gallery benchmark PASS."
+  },
+  "promotion": {
+    "spec": "3f86371c53fb",
+    "source": "15ad35d573908023",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 9,
+    "attested": 0,
+    "units": 9
+  }
+}

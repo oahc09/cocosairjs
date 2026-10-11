@@ -1,0 +1,200 @@
+{
+  "id": "shader-noise-dissolve",
+  "version": "1.0.0",
+  "title": "Noise Dissolve",
+  "category": "rendering",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "Texture2D",
+    "MeshRenderer",
+    "utils.createMesh"
+  ],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "用原生材质实现连续 seed 的 Perlin fBM 溶解并对照独立 CPU oracle",
+    "points": [
+      "三 octave gradient noise",
+      "aspect/UV/alpha 合同",
+      "同页呈现和 GPU 读回分别采证",
+      "先解绑再逐项归还资源"
+    ]
+  },
+  "assets": [],
+  "license": {
+    "assets": "程序化棋盘；GLSL 数学移植适用 THIRD_PARTY_NOTICES.txt 中 MIT/BSD-3-Clause/Apache-2.0 通知"
+  },
+  "effect": {
+    "functional": "五参数uniform更新、连续seed、暂停/恢复/重置/销毁/重建；仅单一原生pacer",
+    "visual": "RGB保持、alpha被Perlin fBM coverage消去；棋盘含零与半透明输入"
+  },
+  "api": {
+    "primary": [
+      "Material.initialize",
+      "EffectAsset"
+    ],
+    "supporting": [
+      "Texture2D",
+      "MeshRenderer",
+      "utils.createMesh",
+      "createStepClock",
+      "createAirApp",
+      "Material.setProperty"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "Texture2D",
+      "MeshRenderer",
+      "utils.createMesh"
+    ],
+    "forbiddenShortcut": [
+      "上游runtime/TypeGPU/独立canvas",
+      "sin-hash假称Perlin等价",
+      "canvas导出补偿compositor PNG",
+      "用Queue.submit记账冒称GPU命令提交"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L27",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L44",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L41",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L241",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L259",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Texture2D",
+        "source": "src/main.ts",
+        "sourceLocation": "L235",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L224",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L225",
+        "validator": "visible-frame"
+      }
+    ]
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "切换输入源下拉为不透明色块",
+        "selectId": "input",
+        "optionValue": "opaque",
+        "expected": "上传不透明输入后画面组成真实变化"
+      },
+      {
+        "action": "改变progress/scale/softness/连续seed/invert",
+        "expected": "直接更新uniform、不更换实例；端点可见/完全消失"
+      },
+      {
+        "action": "暂停/恢复/重置/销毁/重建",
+        "expected": "帧冻结/前进；reset归还旧资源；destroy后可recreate"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Camera",
+        "CheckerBackground",
+        "Dissolve-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "method": "REAL_BROWSER_COMPOSITOR",
+    "caseId": "display-alpha",
+    "engine": "chromium",
+    "evidence": "output/shaders-absorption/e01-engine-attempt7-artifacts/chromium-display-alpha.png",
+    "report": "docs/evidence/shaders-absorption/e01-summary.json",
+    "viewport": {
+      "width": 384,
+      "height": 256
+    },
+    "dpr": 1,
+    "scope": "One measured screenshot; not full Engine Gate acceptance"
+  },
+  "compatibility": {
+    "classification": "EXAMPLE_GAP",
+    "legacyGalleryLifecycle": "RESOLVED: window.__lifecycle/__lifecycleHold installed via installShaderLifecycle; resource-released declared. Runtime evidence is bound separately in the current Wave 1 gate.",
+    "independentResourceEvidence": "100 instances per same app × 3 browsers; refs and terminal trace bound in e01-summary.json"
+  },
+  "promotion": {
+    "spec": "b52811104524",
+    "source": "70eb47b6f16fe75e",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 8,
+    "attested": 0,
+    "units": 8
+  }
+}

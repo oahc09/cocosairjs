@@ -1,0 +1,36 @@
+{
+  "repository": "https://github.com/shader-effects-inc/shaders",
+  "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+  "license": "MIT + retained Sony/OSL BSD-3-Clause and conservative MaterialX Apache-2.0",
+  "notices": "THIRD_PARTY_NOTICES.txt",
+  "fiHash": "NOT_USED: author-origin permission unresolved",
+  "files": [
+    {
+      "upstreamPath": "packages/core/src/shaders/NoiseDissolve/index.ts",
+      "path": "output/shaders-absorption/reference/packages/core/src/shaders/NoiseDissolve/index.ts",
+      "sha256": "62d834b345677b1b4b6046d784e254a75e517beb6a5eb53e0b583ea1c9d4a83f",
+      "bytes": 2474,
+      "fixedLink": "https://github.com/shader-effects-inc/shaders/blob/dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a/packages/core/src/shaders/NoiseDissolve/index.ts"
+    },
+    {
+      "upstreamPath": "packages/core/src/gpu/kit/reveal.ts",
+      "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/reveal.ts",
+      "sha256": "99392f686bda1ea4c35700bce4183dec3d18f403e68ab68c1e5fdae21bd935e9",
+      "bytes": 12224,
+      "fixedLink": "https://github.com/shader-effects-inc/shaders/blob/dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a/packages/core/src/gpu/kit/reveal.ts"
+    },
+    {
+      "upstreamPath": "packages/core/src/gpu/kit/noise.ts",
+      "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/noise.ts",
+      "sha256": "5817311eff374e9849aa4c0ea58a826c69e0f27696815dea109f395e7aad4cd4",
+      "bytes": 36383,
+      "fixedLink": "https://github.com/shader-effects-inc/shaders/blob/dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a/packages/core/src/gpu/kit/noise.ts"
+    },
+    {
+      "path": "output/shaders-absorption/reference/ancestors/materialx-v1.39.5-mx_noise.glsl",
+      "sha256": "5dfc4ec072be4a43c54e96bffa6f0b6aa8f347b81f20cd4126aead98af43fb92",
+      "bytes": 23236,
+      "note": "MaterialX v1.39.5 comparison version, not asserted historical transplant baseline"
+    }
+  ]
+}

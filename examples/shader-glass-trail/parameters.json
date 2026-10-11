@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "shaders-effect-contract/1",
+  "name": "glassTrail",
+  "version": "1.0.0",
+  "params": {
+    "shape": {
+      "type": "string",
+      "defaultValue": "circle",
+      "enum": ["circle", "rounded-box"],
+      "updateMode": "structure",
+      "description": "Shared Glass SDF shape."
+    },
+    "glassEnabled": {
+      "type": "string",
+      "defaultValue": "on",
+      "enum": ["on", "off"],
+      "updateMode": "uniform",
+      "description": "Glass stage. off = trail passthrough display copy (still one pass)."
+    },
+    "trailEnabled": {
+      "type": "string",
+      "defaultValue": "on",
+      "enum": ["on", "off"],
+      "updateMode": "uniform",
+      "description": "Trail recording and rendering. off = transparent identity child input to Glass."
+    },
+    "trailColorA": {
+      "type": "string",
+      "defaultValue": "#00aaff",
+      "updateMode": "uniform",
+      "description": "Trail fresh color (sRGB hex)."
+    },
+    "trailColorB": {
+      "type": "string",
+      "defaultValue": "#ff00aa",
+      "updateMode": "uniform",
+      "description": "Trail fade color (sRGB hex)."
+    },
+    "trailRadius": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0.5,
+      "max": 2,
+      "step": 0.1,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Trail base radius (E08 radius)."
+    },
+    "trailLength": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "unit": "second",
+      "updateMode": "uniform",
+      "description": "Trail persistence in seconds (E08 length)."
+    },
+    "trailShrink": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Trail taper (E08 shrink)."
+    },
+    "trailSoftness": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Trail edge softness (E08 softness)."
+    },
+    "glassRefraction": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0,
+      "max": 3,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Glass refraction strength (E09 refraction)."
+    },
+    "glassThickness": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Glass thickness (E09 thickness)."
+    },
+    "glassBlur": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "samples",
+      "updateMode": "uniform",
+      "description": "Glass Vogel blur sample count (E09 blur; 0=no blur)."
+    },
+    "glassAberration": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Glass chromatic aberration (E09 aberration)."
+    },
+    "glassInnerZoom": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0.5,
+      "max": 2,
+      "step": 0.01,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Glass inner zoom (E09 innerZoom)."
+    },
+    "glassEdgeSoftness": {
+      "type": "number",
+      "defaultValue": 0.1,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Glass silhouette softness (E09 edgeSoftness)."
+    },
+    "glassLightAngle": {
+      "type": "number",
+      "defaultValue": 300,
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "unit": "degree",
+      "updateMode": "uniform",
+      "description": "Glass highlight light angle (E09 lightAngle)."
+    },
+    "glassHighlight": {
+      "type": "number",
+      "defaultValue": 0.05,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Glass highlight intensity (E09 highlight)."
+    },
+    "glassFresnel": {
+      "type": "number",
+      "defaultValue": 0.2,
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Glass fresnel rim (E09 fresnel)."
+    },
+    "time": {
+      "type": "number",
+      "defaultValue": 0.25,
+      "min": 0,
+      "max": 60,
+      "step": 0.01,
+      "unit": "second",
+      "updateMode": "uniform",
+      "description": "Shared simulation time (read-only via setTime)."
+    }
+  }
+}

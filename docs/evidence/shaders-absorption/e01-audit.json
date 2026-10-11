@@ -1,0 +1,337 @@
+{
+  "ok": true,
+  "baseline": {
+    "ok": true,
+    "errors": [],
+    "scopePassed": false
+  },
+  "mutations": [
+    {
+      "name": "missing-engine",
+      "rejected": true,
+      "errors": [
+        "exact CH/FF/WK required"
+      ]
+    },
+    {
+      "name": "missing-visual-case",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "CASE_SET",
+          "path": "$.gates.Visual",
+          "message": "Exactly one case per frozen scope id required, including skipped cases"
+        }
+      ]
+    },
+    {
+      "name": "duplicate-case",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "CASE_SET",
+          "path": "$.gates.Visual",
+          "message": "Exactly one case per frozen scope id required, including skipped cases"
+        }
+      ]
+    },
+    {
+      "name": "empty-raw-grid",
+      "rejected": true,
+      "errors": [
+        "Invalid report structure: Cannot read properties of undefined (reading 'rgba')"
+      ]
+    },
+    {
+      "name": "all-black-raw",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Visual",
+          "message": "Independent visual oracle rejected data"
+        },
+        "seed reproducibility",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask",
+        "non-monotonic mask"
+      ]
+    },
+    {
+      "name": "wrong-progress",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Visual",
+          "message": "Independent visual oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "nan-seed",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "JSON_FINITE",
+          "path": "$.gates.Visual.cases.2.observation.algorithm.raw.0.parameters.seed",
+          "message": "Numbers must be finite"
+        }
+      ]
+    },
+    {
+      "name": "source-drift",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "FILE_DRIFT",
+          "path": "$.identity.source",
+          "message": "Bytes/hash mismatch: examples/shader-noise-dissolve/index.html"
+        },
+        {
+          "engine": "chromium",
+          "rule": "IDENTITY_MISMATCH",
+          "path": "$.identity",
+          "message": "Recorded identity differs from externally frozen identity"
+        }
+      ]
+    },
+    {
+      "name": "png-sha-drift",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "FILE_DRIFT",
+          "path": "$.gates.Visual.screenshot",
+          "message": "Bytes/hash mismatch: E:/AIProMax/github/cocosair.js/output/shaders-absorption/e01-engine-attempt7-artifacts/chromium-middle.png"
+        }
+      ]
+    },
+    {
+      "name": "missing-png",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "FILE_MISSING",
+          "path": "$.gates.Visual.screenshot",
+          "message": "output/shaders-absorption/e01-not-a-real-file.png: ENOENT"
+        },
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Visual",
+          "message": "Independent visual oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "unreleased-ref",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "RESOURCE_OWNERSHIP",
+          "path": "$.gates.Resource.0",
+          "message": "Native allocation must increase and release exactly its owned refs/count/bytes"
+        },
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Resource",
+          "message": "Independent resource oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "unbound-false",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Resource",
+          "message": "Independent resource oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "resource-cycle-missing",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "RESOURCE_CYCLES",
+          "path": "$.gates.Resource",
+          "message": "At least 100 create/destroy cycles required"
+        }
+      ]
+    },
+    {
+      "name": "effect-registry-retained",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Resource",
+          "message": "Independent resource oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "effect-ref-retained",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Resource",
+          "message": "Independent resource oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "background-ref-retained",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Resource",
+          "message": "Independent resource oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "release-promise-not-same",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Resource",
+          "message": "Independent resource oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "listeners-retained",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Resource",
+          "message": "Independent resource oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "instruments-not-restored",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Resource",
+          "message": "Independent resource oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "wrong-browser",
+      "rejected": true,
+      "errors": [
+        "per-engine identity mismatch"
+      ]
+    },
+    {
+      "name": "pageerror",
+      "rejected": true,
+      "errors": [
+        "engine/page/console errors"
+      ]
+    },
+    {
+      "name": "fake-boundary-rejection",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "BOUNDARY_DATA",
+          "path": "$.gates.Boundary",
+          "message": "Parameter/input/actual/boundary required; invalid must carry real error code"
+        },
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Boundary",
+          "message": "Independent boundary oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "boundary-no-gpu-draw",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Boundary",
+          "message": "Independent boundary oracle rejected data"
+        }
+      ]
+    },
+    {
+      "name": "missing-runtime-stage",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "CASE_SET",
+          "path": "$.gates.Runtime",
+          "message": "Exactly one case per frozen scope id required, including skipped cases"
+        }
+      ]
+    },
+    {
+      "name": "absent-native-compile",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "rule": "ORACLE_REJECTED",
+          "path": "$.gates.Build",
+          "message": "Independent build oracle rejected data"
+        }
+      ]
+    }
+  ],
+  "browserRunsAdded": 0
+}

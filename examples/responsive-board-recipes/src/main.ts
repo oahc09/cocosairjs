@@ -24,6 +24,7 @@ if (query.has('safe')) {
     if (legacy) cc.settings.overrideSettings('screen', 'exactFitScreen', false);
     app = await cc.createAirApp(options);
 }
+(window as unknown as Record<string, unknown>).__airApp = app;
 const scene = new cc.Scene('ResponsiveBoards');
 const ui = cc.createUICanvas(scene, 'UI', { designWidth: 720, designHeight: 720 });
 const group = new cc.Node('TranslatedScaledGroup');

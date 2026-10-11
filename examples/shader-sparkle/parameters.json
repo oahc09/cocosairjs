@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "shaders-effect-contract/1",
+  "name": "sparkle",
+  "version": "1.0.0",
+  "params": {
+    "size": {
+      "type": "number",
+      "defaultValue": 100,
+      "min": 10,
+      "max": 200,
+      "step": 1,
+      "unit": "CSS px",
+      "updateMode": "uniform",
+      "description": "Jittered-grid spacing in CSS pixels; second grid scales by 2/3."
+    },
+    "intensity": {
+      "type": "number",
+      "defaultValue": 10,
+      "min": 0,
+      "max": 20,
+      "step": 0.1,
+      "unit": "linear gain",
+      "updateMode": "uniform",
+      "description": "Additive linear-light star gain; zero is identity of linear associated RGBA, including alpha."
+    },
+    "threshold": {
+      "type": "number",
+      "defaultValue": 0.2,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "sqrt linear Rec709 luma",
+      "updateMode": "uniform",
+      "description": "smoothstep threshold with fixed 0.12 band; alpha weights luma before sqrt."
+    },
+    "expand": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "CSS px",
+      "updateMode": "structure",
+      "description": "Radius of bounded four-tap ring search; crossing zero replaces the native effect instance."
+    },
+    "rayLength": {
+      "type": "number",
+      "defaultValue": 5,
+      "min": 0,
+      "max": 20,
+      "step": 0.1,
+      "unit": "CSS px falloff control",
+      "updateMode": "uniform",
+      "description": "Exponential ray falloff is 0.45/max(rayLength,0.01)."
+    },
+    "colorize": {
+      "type": "number",
+      "defaultValue": 0.45,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "fraction",
+      "updateMode": "uniform",
+      "description": "Blend white sparkle tint with source linear chroma / max(luma,0.001) * 0.6."
+    },
+    "speed": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0,
+      "max": 5,
+      "step": 0.05,
+      "unit": "time multiplier",
+      "updateMode": "uniform",
+      "description": "Rate of the single native update owner; deterministic setTime bypasses time accumulation."
+    },
+    "seed": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "independent hash seed",
+      "updateMode": "uniform",
+      "description": "Seed is quantized to 1/4096 for the independently implemented uint hash; not Fi hash."
+    }
+  }
+}

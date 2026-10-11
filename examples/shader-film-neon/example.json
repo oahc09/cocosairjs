@@ -1,0 +1,222 @@
+{
+  "id": "shader-film-neon",
+  "title": "Film+Neon 彩边霓虹 Logo",
+  "description": "ThinFilm 边缘虹彩与 Neon 霓虹管在同一几何域上的线性 Alpha 组合。",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "createAirRenderTarget",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "MeshRenderer",
+    "utils.createMesh"
+  ],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "原生单通道双层组合：Neon over ThinFilm、预乘 source-over、一次 OETF、层开关真 identity",
+    "points": [
+      "两路径各自保留 E02 coverage/E04 stencil 数值差异",
+      "预乘 source-over + alpha 安全逆预乘",
+      "filmEnabled/neonEnabled 真 identity（全零 RGBA）",
+      "层参数互不污染"
+    ]
+  },
+  "assets": [],
+  "license": {
+    "assets": "纯程序化，无外部素材；参考 MIT 通知束见 LICENSE.reference.txt，独立组合见 UPSTREAM.md"
+  },
+  "api": {
+    "primary": [
+      "EffectAsset",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Camera",
+      "Node",
+      "utils.createMesh",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Camera",
+      "Node"
+    ],
+    "forbiddenShortcut": [
+      "shaders runtime/TypeGPU/额外canvas",
+      "独立RAF/第二模拟时钟",
+      "上游 Logo 预设冒称已有",
+      "双OETF或alpha双乘"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L31",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L218",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L563",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L92",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L106",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L140",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L129",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L95",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L38",
+        "validator": "node-exists"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L35",
+        "validator": "node-exists"
+      }
+    ],
+    "evidenceStatus": "sourceLocation 由生产 findSymbolLine 核对可执行行；浏览器 runtime 证据 NOT_RUN，待 Lead 采集。"
+  },
+  "effect": {
+    "functional": "23 参数 update（shape 结构重建/其余 uniform）、层开关 identity、暂停/继续/重置/释放",
+    "visual": "Neon over ThinFilm 预乘 source-over、一次 OETF、透明底 RT 直读、两像素外精确零",
+    "limitations": [
+      "本地组合设计，非上游 Logo 预设",
+      "仅 circle/rounded-box 共享解析 SDF",
+      "Windows WebKit 需 shader-scoped 启动项",
+      "性能窗口须 Lead 串行授权；Agent Gate NOT_RUN",
+      "Gallery 生命周期桥接已实现，浏览器证据 RESOLVED_NOT_RUN"
+    ]
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "改变滑块/形状/颜色/层开关",
+        "expected": "uniform 同步或 shape 重建；层开关真 identity"
+      },
+      {
+        "action": "暂停/继续/重置/释放",
+        "expected": "时钟冻结/前进、三引用退役归零、释放后按钮禁用"
+      },
+      {
+        "action": "执行示例 linearProbe 读回探针",
+        "probe": "__filmneon.linearProbe",
+        "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__filmneon.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__filmneon.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "native-camera",
+        "owned-film-neon-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "Default startup scene plus __filmneon.ready; Gallery validators declared, not yet executed."
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "组合 oracle 与透明底 RT 直读由 tools/verify/shaders-film-neon-browser.cjs 采集；本声明不是浏览器 PASS。"
+  },
+  "promotion": {
+    "spec": "0511f4496f87",
+    "source": "cf3b46fa6ee333a1",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 10,
+    "attested": 0,
+    "units": 10
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "current-sdk-wave-metadata-audit/1",
+  "executionChannel": "Lead",
+  "method": "REAL_ASSESSMENT_FROZEN_METADATA_REDUCTION",
+  "baselineAccepted": true,
+  "browserRunsAdded": 0,
+  "actualScope": {
+    "effectCount": 3,
+    "dimensionRows": 54,
+    "measuredDimensions": 54,
+    "skippedDimensions": 0,
+    "visualCases": 117,
+    "boundaryCases": 654,
+    "malformedAtomicRejections": 54,
+    "resourceCycles": 900,
+    "liveResizeCases": 9,
+    "performanceProfiles": 27
+  },
+  "rejected": 15,
+  "rows": [
+    {
+      "name": "missing-leaf",
+      "rejected": true,
+      "errors": [
+        "effects: measured mismatch",
+        "exact ordered leaf set"
+      ]
+    },
+    {
+      "name": "duplicate-leaf",
+      "rejected": true,
+      "errors": [
+        "effects: measured mismatch",
+        "exact ordered leaf set"
+      ]
+    },
+    {
+      "name": "leaf-sha-drift",
+      "rejected": true,
+      "errors": [
+        "effects: measured mismatch"
+      ]
+    },
+    {
+      "name": "prior-sha-drift",
+      "rejected": true,
+      "errors": [
+        "previousWave: measured mismatch"
+      ]
+    },
+    {
+      "name": "historical-prior",
+      "rejected": true,
+      "errors": [
+        "previousWave: measured mismatch",
+        "exact current-SDK predecessor required"
+      ]
+    },
+    {
+      "name": "sdk-drift",
+      "rejected": true,
+      "errors": [
+        "sdk: measured mismatch"
+      ]
+    },
+    {
+      "name": "scope-inflated",
+      "rejected": true,
+      "errors": [
+        "scope: measured mismatch"
+      ]
+    },
+    {
+      "name": "scope-skipped",
+      "rejected": true,
+      "errors": [
+        "scope: measured mismatch"
+      ]
+    },
+    {
+      "name": "PNG-scope",
+      "rejected": true,
+      "errors": [
+        "screenshotCount: measured mismatch"
+      ]
+    },
+    {
+      "name": "verifier-drift",
+      "rejected": true,
+      "errors": [
+        "verifier: measured mismatch"
+      ]
+    },
+    {
+      "name": "closure-drift",
+      "rejected": true,
+      "errors": [
+        "closureInputs: measured mismatch"
+      ]
+    },
+    {
+      "name": "agent-PASS",
+      "rejected": true,
+      "errors": [
+        "wave/project/Agent/Gallery isolation"
+      ]
+    },
+    {
+      "name": "Gallery-PASS",
+      "rejected": true,
+      "errors": [
+        "wave/project/Agent/Gallery isolation"
+      ]
+    },
+    {
+      "name": "project-completed",
+      "rejected": true,
+      "errors": [
+        "wave/project/Agent/Gallery isolation"
+      ]
+    },
+    {
+      "name": "false-eligibility",
+      "rejected": true,
+      "errors": [
+        "wave/project/Agent/Gallery isolation"
+      ]
+    }
+  ]
+}

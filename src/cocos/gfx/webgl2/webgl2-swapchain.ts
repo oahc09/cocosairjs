@@ -35,6 +35,7 @@ import { OS } from '../../../pal/system-info/enum-type';
 import { IWebGL2BlitManager } from './webgl2-gpu-objects';
 import { WebGLConstants } from '../gl-constants';
 import { macro } from '../../core/platform/macro';
+import { WebGL2CmdFuncInvalidateState } from './webgl2-commands';
 
 const eventWebGLContextLost = 'webglcontextlost';
 
@@ -51,6 +52,7 @@ function initStates (gl: WebGL2RenderingContext): void {
     gl.enable(WebGLConstants.CULL_FACE);
     gl.cullFace(WebGLConstants.BACK);
     gl.frontFace(WebGLConstants.CCW);
+    gl.disable(WebGLConstants.POLYGON_OFFSET_FILL);
     gl.polygonOffset(0.0, 0.0);
 
     // depth stencil state
@@ -200,6 +202,13 @@ export class WebGL2Swapchain extends Swapchain {
 
         // init states
         initStates(gl);
+        WebGL2CmdFuncInvalidateState();
+        self.stateCache.glFramebuffer = null;
+        self.stateCache.glReadFramebuffer = null;
+        self.stateCache.rs.depthBiasEnabled = false;
+        self.stateCache.rs.depthBias = 0;
+        self.stateCache.rs.depthBiasSlop = 0;
+        self.stateCache.rs.depthBiasClamp = 0;
 
         const colorFmt = Format.RGBA8;
         let depthStencilFmt = Format.DEPTH_STENCIL;

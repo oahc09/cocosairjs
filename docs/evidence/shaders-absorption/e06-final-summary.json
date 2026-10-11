@@ -1,0 +1,421 @@
+{
+  "schemaVersion": "sparkle-final-summary/1",
+  "effect": "E06 Sparkle",
+  "executionChannel": "native subagent",
+  "date": "2026-10-09",
+  "status": "BLOCKED",
+  "completed": false,
+  "subset": true,
+  "agentGate": "NOT_RUN",
+  "rows": [
+    {
+      "browser": "chromium",
+      "status": "PASS",
+      "gates": {
+        "Build": "PASS",
+        "Runtime": "PASS",
+        "Visual": "PASS",
+        "Boundary": "PASS",
+        "Resource": "PASS",
+        "Performance": "PASS"
+      }
+    },
+    {
+      "browser": "firefox",
+      "status": "PASS",
+      "gates": {
+        "Build": "PASS",
+        "Runtime": "PASS",
+        "Visual": "PASS",
+        "Boundary": "PASS",
+        "Resource": "PASS",
+        "Performance": "PASS"
+      }
+    },
+    {
+      "browser": "webkit",
+      "status": "BLOCKED",
+      "gates": {
+        "Build": "PASS",
+        "Runtime": "BLOCKED",
+        "Visual": "PASS",
+        "Boundary": "PASS",
+        "Resource": "PASS",
+        "Performance": "NOT_RUN"
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "id": "engine",
+      "path": "output/shaders-absorption/e06-engine-final-bound.json",
+      "bytes": 2376046,
+      "sha256": "5e0184396e9e246f165a7bb7f21f6360d153b35ed46e967b8d4488ca7229de01"
+    },
+    {
+      "id": "performance-scoped",
+      "path": "output/shaders-absorption/e06-performance-scoped.json",
+      "bytes": 1936128,
+      "sha256": "e3fe9fc144537895bc0901aa96788e498bf00c868f45eeae9ceaed825cff4c14"
+    },
+    {
+      "id": "functional-raw",
+      "path": "output/shaders-absorption/e06-functional-owned-closure.json",
+      "bytes": 6167544,
+      "sha256": "02215258870e34d0c7132881def9f8956d3b8cb9c263ac64dd91a8f9c56b9423"
+    },
+    {
+      "id": "functional-frozen",
+      "path": "output/shaders-absorption/e06-functional-owned-closure-frozen.json",
+      "bytes": 10249,
+      "sha256": "e19a4f4b62486d022ad58d6de143295e79c439a5527dd69f1161db742e912051"
+    },
+    {
+      "id": "performance-raw",
+      "path": "output/shaders-absorption/e06-performance-precision-attempt2.json",
+      "bytes": 1922493,
+      "sha256": "e6c858c7ffe952b9d8e663d88cc39bf23a950b9bd5649eb3657f19a92e118694"
+    },
+    {
+      "id": "performance-frozen",
+      "path": "output/shaders-absorption/e06-performance-precision-attempt2-frozen.json",
+      "bytes": 8017,
+      "sha256": "b5930ea1253f3c44c928ba8a21191c3bd5812dc75d0e32bb45786897ad9390f8"
+    },
+    {
+      "id": "audit",
+      "path": "output/shaders-absorption/e06-final-audit-attempt1.json",
+      "bytes": 2131,
+      "sha256": "d1271714ccfe697febab029526c3a257b9b00a63b8496c7927dee17ff884f1fa"
+    },
+    {
+      "id": "normalization-tool",
+      "path": "tools/verify/shaders-sparkle-final.cjs",
+      "bytes": 3867,
+      "sha256": "f6b4f90bdf492dcb296aa9a4dd674b93b847dd5324403202b635e34e15a3470b"
+    },
+    {
+      "id": "scoped-performance-verifier",
+      "path": "output/shaders-absorption/e06-performance-scope-verifier.cjs",
+      "bytes": 1057,
+      "sha256": "9c145e3ea772265a0a11863a2bcc8d8278aa066ad9328593106da28a7615711f"
+    }
+  ],
+  "counts": {
+    "browserProfiles": 9,
+    "visualCases": 60,
+    "visualAndResizePNGs": 66,
+    "parameterBoundaryCases": 144,
+    "nativeInstanceCycles": 300,
+    "resourceAppOwnedEffectAssets": 6,
+    "auditMutationsRejected": 21,
+    "performancePassRows": 8,
+    "performanceLimitedRows": 1
+  },
+  "performance": [
+    {
+      "browser": "chromium",
+      "profile": "720p",
+      "status": "PASS",
+      "reason": null,
+      "warmup": 30,
+      "steady": 60,
+      "frameMedianMs": 16.62999999523163,
+      "cpuUpdateMeanMs": 0.10941666662693024,
+      "nativeCommandEnvelopeMeanMs": 0.05158333480358124,
+      "glDispatchMeanMs": 0.002500000596046448,
+      "clockPrecision": {
+        "crossOriginIsolated": true,
+        "minimumPositiveIncrementMs": 0.004999995231628418,
+        "calibrationPositiveIncrements": 1000,
+        "method": "Actual consecutive performance.now increments, up to 1000 transitions/50ms, before warmup",
+        "headers": {
+          "coop": "same-origin",
+          "coep": "require-corp"
+        }
+      },
+      "gpu": "measured",
+      "gpuMedianMs": 0.227328,
+      "drawCalls": 1,
+      "fullFramePasses": 1,
+      "materialPasses": 1,
+      "ownedTextureCount": 1,
+      "ownedBufferCount": 3,
+      "vramEstimateBytes": 65676
+    },
+    {
+      "browser": "chromium",
+      "profile": "1080p",
+      "status": "PASS",
+      "reason": null,
+      "warmup": 30,
+      "steady": 60,
+      "frameMedianMs": 16.594999969005585,
+      "cpuUpdateMeanMs": 0.09508333007494608,
+      "nativeCommandEnvelopeMeanMs": 0.046249996622403464,
+      "glDispatchMeanMs": 0.0026666661103566486,
+      "clockPrecision": {
+        "crossOriginIsolated": true,
+        "minimumPositiveIncrementMs": 0.004999995231628418,
+        "calibrationPositiveIncrements": 1000,
+        "method": "Actual consecutive performance.now increments, up to 1000 transitions/50ms, before warmup",
+        "headers": {
+          "coop": "same-origin",
+          "coep": "require-corp"
+        }
+      },
+      "gpu": "measured",
+      "gpuMedianMs": 3.5517440000000002,
+      "drawCalls": 1,
+      "fullFramePasses": 1,
+      "materialPasses": 1,
+      "ownedTextureCount": 1,
+      "ownedBufferCount": 3,
+      "vramEstimateBytes": 65676
+    },
+    {
+      "browser": "chromium",
+      "profile": "mobile-dpr",
+      "status": "PASS",
+      "reason": null,
+      "warmup": 30,
+      "steady": 60,
+      "frameMedianMs": 16.697499990463257,
+      "cpuUpdateMeanMs": 0.11025000015894572,
+      "nativeCommandEnvelopeMeanMs": 0.05383333265781402,
+      "glDispatchMeanMs": 0.0040000011523564655,
+      "clockPrecision": {
+        "crossOriginIsolated": true,
+        "minimumPositiveIncrementMs": 0.004999995231628418,
+        "calibrationPositiveIncrements": 1000,
+        "method": "Actual consecutive performance.now increments, up to 1000 transitions/50ms, before warmup",
+        "headers": {
+          "coop": "same-origin",
+          "coep": "require-corp"
+        }
+      },
+      "gpu": "measured",
+      "gpuMedianMs": 3.26912,
+      "drawCalls": 1,
+      "fullFramePasses": 1,
+      "materialPasses": 1,
+      "ownedTextureCount": 1,
+      "ownedBufferCount": 3,
+      "vramEstimateBytes": 65676
+    },
+    {
+      "browser": "firefox",
+      "profile": "720p",
+      "status": "PASS",
+      "reason": null,
+      "warmup": 30,
+      "steady": 60,
+      "frameMedianMs": 16.670000000000073,
+      "cpuUpdateMeanMs": 0.1416666666666515,
+      "nativeCommandEnvelopeMeanMs": 0.05899999999999939,
+      "glDispatchMeanMs": 0.00166666666667273,
+      "clockPrecision": {
+        "crossOriginIsolated": true,
+        "minimumPositiveIncrementMs": 0.01999999999998181,
+        "calibrationPositiveIncrements": 1000,
+        "method": "Actual consecutive performance.now increments, up to 1000 transitions/50ms, before warmup",
+        "headers": {
+          "coop": "same-origin",
+          "coep": "require-corp"
+        }
+      },
+      "gpu": "unavailable",
+      "gpuMedianMs": null,
+      "drawCalls": 1,
+      "fullFramePasses": 1,
+      "materialPasses": 1,
+      "ownedTextureCount": 1,
+      "ownedBufferCount": 3,
+      "vramEstimateBytes": 65676
+    },
+    {
+      "browser": "firefox",
+      "profile": "1080p",
+      "status": "PASS",
+      "reason": null,
+      "warmup": 30,
+      "steady": 60,
+      "frameMedianMs": 16.709999999999923,
+      "cpuUpdateMeanMs": 0.15466666666667,
+      "nativeCommandEnvelopeMeanMs": 0.06566666666666758,
+      "glDispatchMeanMs": 0.0009999999999990906,
+      "clockPrecision": {
+        "crossOriginIsolated": true,
+        "minimumPositiveIncrementMs": 0.01999999999998181,
+        "calibrationPositiveIncrements": 1000,
+        "method": "Actual consecutive performance.now increments, up to 1000 transitions/50ms, before warmup",
+        "headers": {
+          "coop": "same-origin",
+          "coep": "require-corp"
+        }
+      },
+      "gpu": "unavailable",
+      "gpuMedianMs": null,
+      "drawCalls": 1,
+      "fullFramePasses": 1,
+      "materialPasses": 1,
+      "ownedTextureCount": 1,
+      "ownedBufferCount": 3,
+      "vramEstimateBytes": 65676
+    },
+    {
+      "browser": "firefox",
+      "profile": "mobile-dpr",
+      "status": "PASS",
+      "reason": null,
+      "warmup": 30,
+      "steady": 60,
+      "frameMedianMs": 16.660000000000082,
+      "cpuUpdateMeanMs": 0.12033333333333,
+      "nativeCommandEnvelopeMeanMs": 0.05433333333334834,
+      "glDispatchMeanMs": 0.001999999999998181,
+      "clockPrecision": {
+        "crossOriginIsolated": true,
+        "minimumPositiveIncrementMs": 0.01999999999998181,
+        "calibrationPositiveIncrements": 1000,
+        "method": "Actual consecutive performance.now increments, up to 1000 transitions/50ms, before warmup",
+        "headers": {
+          "coop": "same-origin",
+          "coep": "require-corp"
+        }
+      },
+      "gpu": "unavailable",
+      "gpuMedianMs": null,
+      "drawCalls": 1,
+      "fullFramePasses": 1,
+      "materialPasses": 1,
+      "ownedTextureCount": 1,
+      "ownedBufferCount": 3,
+      "vramEstimateBytes": 65676
+    },
+    {
+      "browser": "webkit",
+      "profile": "720p",
+      "status": "PASS",
+      "reason": null,
+      "warmup": 30,
+      "steady": 60,
+      "frameMedianMs": 16,
+      "cpuUpdateMeanMs": 0.26666666666666666,
+      "nativeCommandEnvelopeMeanMs": 0.05,
+      "glDispatchMeanMs": 0.016666666666666666,
+      "clockPrecision": {
+        "crossOriginIsolated": true,
+        "minimumPositiveIncrementMs": 1,
+        "calibrationPositiveIncrements": 50,
+        "method": "Actual consecutive performance.now increments, up to 1000 transitions/50ms, before warmup",
+        "headers": {
+          "coop": "same-origin",
+          "coep": "require-corp"
+        }
+      },
+      "gpu": "unavailable",
+      "gpuMedianMs": null,
+      "drawCalls": 1,
+      "fullFramePasses": 1,
+      "materialPasses": 1,
+      "ownedTextureCount": 1,
+      "ownedBufferCount": 3,
+      "vramEstimateBytes": 65676
+    },
+    {
+      "browser": "webkit",
+      "profile": "1080p",
+      "status": "PASS",
+      "reason": null,
+      "warmup": 30,
+      "steady": 60,
+      "frameMedianMs": 19,
+      "cpuUpdateMeanMs": 0.13333333333333333,
+      "nativeCommandEnvelopeMeanMs": 0.1,
+      "glDispatchMeanMs": 0.016666666666666666,
+      "clockPrecision": {
+        "crossOriginIsolated": true,
+        "minimumPositiveIncrementMs": 1,
+        "calibrationPositiveIncrements": 50,
+        "method": "Actual consecutive performance.now increments, up to 1000 transitions/50ms, before warmup",
+        "headers": {
+          "coop": "same-origin",
+          "coep": "require-corp"
+        }
+      },
+      "gpu": "unavailable",
+      "gpuMedianMs": null,
+      "drawCalls": 1,
+      "fullFramePasses": 1,
+      "materialPasses": 1,
+      "ownedTextureCount": 1,
+      "ownedBufferCount": 3,
+      "vramEstimateBytes": 65676
+    },
+    {
+      "browser": "webkit",
+      "profile": "mobile-dpr",
+      "status": "LIMITED",
+      "reason": "Actual CPU stages below observed clock precision, not zero cost: cpuSubmissionMs",
+      "warmup": 30,
+      "steady": 60,
+      "frameMedianMs": 16,
+      "cpuUpdateMeanMs": 0.1,
+      "nativeCommandEnvelopeMeanMs": 0.06666666666666667,
+      "glDispatchMeanMs": 0,
+      "clockPrecision": {
+        "crossOriginIsolated": true,
+        "minimumPositiveIncrementMs": 1,
+        "calibrationPositiveIncrements": 49,
+        "method": "Actual consecutive performance.now increments, up to 1000 transitions/50ms, before warmup",
+        "headers": {
+          "coop": "same-origin",
+          "coep": "require-corp"
+        },
+        "belowResolutionStages": [
+          "cpuSubmissionMs"
+        ]
+      },
+      "gpu": "unavailable",
+      "gpuMedianMs": null,
+      "drawCalls": 1,
+      "fullFramePasses": 1,
+      "materialPasses": 1,
+      "ownedTextureCount": 1,
+      "ownedBufferCount": 3,
+      "vramEstimateBytes": 65676
+    }
+  ],
+  "executionProvenance": {
+    "functionalCollectionActualExit": 1,
+    "performanceCollectionActualExit": 1,
+    "performanceScopedValidationPassCount": 8,
+    "purpose": "VALIDATION_OF_REAL_BROWSER_CAPTURE",
+    "browserRunsAddedByNormalization": 0
+  },
+  "limitations": [
+    {
+      "classification": "INFRA_FAILURE",
+      "item": "WebKit same-page compositor PNG after resize shows body despite native GL/floatRT values; independent native/no-SDK controls referenced in docs/effects/wave1-resize-observation.md",
+      "status": "BLOCKED"
+    },
+    {
+      "classification": "INFRA_FAILURE",
+      "item": "WebKit mobile GL-dispatch samples quantized to all 0 at observed 1ms clock resolution even with crossOriginIsolated true; actual raw draw calls retained, not zero cost",
+      "status": "LIMITED"
+    },
+    {
+      "classification": "API_GAP",
+      "item": "Public gfx GPU timestamp interface not present; available Chromium timer measured solely by TOOL_DIAGNOSTIC on native context, FF/WK getExtension null",
+      "status": "DOCUMENTED"
+    },
+    {
+      "classification": "AGENT_FAILURE",
+      "item": "First blend enum/output/readback/diagnostic baseline and NODE_PATH normalization invocation mistakes fixed; historical attempts retained",
+      "status": "CORRECTED"
+    }
+  ],
+  "sourceParity": "Independent uint hash differs; no Fi derivation or whole-upstream byte equivalence claim",
+  "measurementCaveat": "CPU envelope includes actual immediate GL dispatch; queue.submit is bookkeeping; AFTER_DRAW is not present; isolated headers precision environment is separately disclosed; owned gfx bytes/VRAM estimate are not physical resident memory"
+}

@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "shaders-wave2/1",
+  "task": "Wave2",
+  "evaluatedAt": "2026-10-11T10:04:43.016Z",
+  "executionChannels": {
+    "implementation": "Orca Worker with Lead review",
+    "refreshCollectionAndAggregation": "Lead"
+  },
+  "status": "PASS",
+  "waveCompleted": true,
+  "nextWaveEligible": true,
+  "projectCompleted": false,
+  "completed": false,
+  "agentGate": "NOT_RUN",
+  "independentGalleryGate": "NOT_RUN",
+  "subset": true,
+  "effects": [
+    {
+      "path": "docs/evidence/shaders-absorption/e03-holographic-current-sdk-r2-gate.json",
+      "bytes": 49995,
+      "sha256": "463b6d88a52ef65f13d4bbf412da2537cd16dab7d0cd69064f19c4c258a4348d"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e04-neon-current-sdk-r2-gate.json",
+      "bytes": 46511,
+      "sha256": "7e2d1165f4de4e26a29dc4009dc97b383767e82f803a6b78c12c930c710a10a2"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e05-emboss-current-sdk-r2-gate.json",
+      "bytes": 43168,
+      "sha256": "72e21ba167959c1317a07ecf2d589a287d20ccf6cbd78d8f5387c6a2b1c2b69b"
+    }
+  ],
+  "previousWave": {
+    "path": "docs/evidence/shaders-absorption/wave1-current-sdk-r2-gate.json",
+    "bytes": 15265,
+    "sha256": "ac7fdda2e6139aa0ab622dec0944e8d900529501b70676b311b3a07fa87c972f"
+  },
+  "verifier": {
+    "path": "tools/verify/shaders-wave2-gate.cjs",
+    "bytes": 10705,
+    "sha256": "55a05f922f150ffa86e1d54ab13462de3aac31ae508eec8750aac42e74a2a6e1"
+  },
+  "scope": {
+    "effectCount": 3,
+    "dimensionRows": 54,
+    "measuredDimensions": 54,
+    "skippedDimensions": 0,
+    "visualCases": 117,
+    "boundaryCases": 654,
+    "malformedAtomicRejections": 54,
+    "resourceCycles": 900,
+    "liveResizeCases": 9,
+    "performanceProfiles": 27
+  },
+  "sdk": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303581,
+      "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6649142,
+      "sha256": "b7771393b2de0dcc84422b07f4df0703a63d609b3ea8443907cee2f4f4182ab9"
+    }
+  ],
+  "screenshots": 132,
+  "screenshotCount": 132,
+  "actualAuditBindings": [
+    {
+      "path": "docs/evidence/shaders-absorption/e03-holographic-current-sdk-r2-actual-audit.json",
+      "bytes": 62951,
+      "sha256": "92231f6e9908592e14b74dceb0cc2b4b54bbdb238e1b132ac698eb9dd8c76ff3"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e04-neon-current-sdk-r2-actual-audit.json",
+      "bytes": 17414,
+      "sha256": "2fc437902fa62508a1634970223f54e0afb8fa7ee77077b8d4e97f609a6b8baa"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/e05-emboss-current-sdk-r2-actual-audit.json",
+      "bytes": 45126,
+      "sha256": "655b701a85cf83c378f7ee8969f21afdf280a5dd48225a6188d2e546fc85f12e"
+    }
+  ],
+  "closureInputs": [
+    {
+      "path": "tools/verify/shaders-current-sdk-wave-chain.cjs",
+      "bytes": 16878,
+      "sha256": "2e6161118215423bc744bedee52bce901923eb5ea12c4aadae47a333db91a596"
+    },
+    {
+      "path": "tools/verify/shaders-wave1-gate.cjs",
+      "bytes": 12804,
+      "sha256": "83f913994cdb8feaea44503969a1a52f4a5d620f08c1ffeb849f83a0ec56df73"
+    },
+    {
+      "path": "tools/verify/shaders-wave2-gate.cjs",
+      "bytes": 10705,
+      "sha256": "55a05f922f150ffa86e1d54ab13462de3aac31ae508eec8750aac42e74a2a6e1"
+    }
+  ],
+  "limitations": [
+    "Frozen native analytic subset; not release readiness or upstream platform completeness",
+    "Independent Gallery/Agent/physical device/long-run/multitab gates remain NOT_RUN",
+    "Historical evidence remains unchanged; current source and SDK verified independently"
+  ]
+}

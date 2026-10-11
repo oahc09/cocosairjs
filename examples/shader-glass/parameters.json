@@ -1,0 +1,188 @@
+{
+  "schemaVersion": "effect-parameters/1",
+  "name": "Glass",
+  "version": "1.0.0",
+  "params": {
+    "shape": {
+      "type": "string",
+      "defaultValue": "circle",
+      "enum": ["circle", "rounded-box"],
+      "description": "Two analytic shapes; no volumetric/SDF texture platform",
+      "unit": "unitless",
+      "updateMode": "variant-or-uniform"
+    },
+    "scale": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0.1,
+      "max": 3,
+      "unit": "unitless",
+      "description": "scale",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "rotation": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 360,
+      "unit": "degree",
+      "description": "rotation",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "refraction": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0,
+      "max": 2,
+      "unit": "unitless",
+      "description": "refraction",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "thickness": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "unitless",
+      "description": "thickness",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "blur": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 20,
+      "description": "Native nine-tap Vogel fallback, not Gaussian compute prepass",
+      "unit": "unitless",
+      "updateMode": "variant-or-uniform",
+      "step": 0.01
+    },
+    "aberration": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "unitless",
+      "description": "aberration",
+      "updateMode": "variant-or-uniform",
+      "step": 0.01
+    },
+    "innerZoom": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0.5,
+      "max": 3,
+      "unit": "unitless",
+      "description": "innerZoom",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "edgeSoftness": {
+      "type": "number",
+      "defaultValue": 0.1,
+      "min": 0,
+      "max": 1,
+      "unit": "unitless",
+      "description": "edgeSoftness",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "lightAngle": {
+      "type": "number",
+      "defaultValue": 300,
+      "min": 0,
+      "max": 360,
+      "unit": "degree",
+      "description": "lightAngle",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "highlight": {
+      "type": "number",
+      "defaultValue": 0.05,
+      "min": 0,
+      "max": 1,
+      "unit": "unitless",
+      "description": "highlight",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "highlightSoftness": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "unitless",
+      "description": "highlightSoftness",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "fresnel": {
+      "type": "number",
+      "defaultValue": 0.2,
+      "min": 0,
+      "max": 1,
+      "unit": "unitless",
+      "description": "fresnel",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "fresnelSoftness": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "unitless",
+      "description": "fresnelSoftness",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "tintIntensity": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 1,
+      "unit": "unitless",
+      "description": "tintIntensity",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "tintPreserveLuminosity": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0,
+      "max": 1,
+      "description": "Scalar flag: enabled iff > 0.5",
+      "unit": "unitless",
+      "updateMode": "uniform",
+      "step": 0.01
+    },
+    "tintColor": {
+      "type": "string",
+      "defaultValue": "#ffffff",
+      "unit": "hex-rgb",
+      "description": "tintColor",
+      "updateMode": "uniform"
+    },
+    "cutout": {
+      "type": "string",
+      "defaultValue": "none",
+      "enum": ["none", "shape"],
+      "unit": "unitless",
+      "description": "cutout",
+      "updateMode": "uniform"
+    },
+    "sourceKind": {
+      "type": "string",
+      "defaultValue": "standard",
+      "enum": ["standard", "blank"],
+      "unit": "unitless",
+      "description": "sourceKind",
+      "updateMode": "uniform"
+    }
+  }
+}

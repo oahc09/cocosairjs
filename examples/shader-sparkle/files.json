@@ -1,0 +1,14 @@
+{
+  "files": [
+    "index.html",
+    "src/main.ts",
+    "src/parameters.ts",
+    "src/effect.generated.ts",
+    "src/sparkle.frag",
+    "parameters.json",
+    "generate-effects.mjs",
+    "README.md",
+    "UPSTREAM.md",
+    "LICENSE.reference.txt"
+  ]
+}

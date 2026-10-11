@@ -1,4 +1,5 @@
 import { bootCapabilityLab } from '../../shared/capability-lab.js';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 import type { AirGraphicsCommand } from 'cocosair';
 
 const lab = await bootCapabilityLab('Graphics SVG paints');
@@ -21,8 +22,8 @@ const rich: AirGraphicsCommand[] = [
         },
     },
 ];
-const paint = rasterizeAirGraphics(rich, { bounds, resolution: 2 });
-const display = createAirTextureSprite(lab.ui, paint.texture, { name: 'Rich fill', size: [256, 256] });
+let paint = rasterizeAirGraphics(rich, { bounds, resolution: 2 });
+let display = createAirTextureSprite(lab.ui, paint.texture, { name: 'Rich fill', size: [256, 256] });
 const nativeNode = lab.node('Native Graphics'),
     graphics = nativeNode.addComponent(Graphics);
 nativeNode.active = false;
@@ -74,6 +75,39 @@ lab.button('export', () => {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
 await richView();
+// §25 Lifecycle Contract：__lifecycle() 触发一轮 真实释放 → 泄漏核对 → 重新光栅化并挂回场景。
+// nativeNode 的 Graphics 回放不属于被释放的自有纹理资源，保持在场以便验收对照。
+// 生命周期轮次不使用 lab.clock.step()：__lifecycle 在 native pacer 下执行，
+// 手动步进与真实时钟互斥；等待两帧即可让销毁提交与新画面落地。
+const settleFrames = (): Promise<void> =>
+    new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+installAssetLifecycle({
+    label: 'graphics-svg-paints',
+    hold: () =>
+        disposed
+            ? []
+            : [
+                  { name: 'raster-texture', ref: paint.texture },
+                  { name: 'raster-sprite-node', ref: display.node },
+              ],
+    release: async () => {
+        display.dispose();
+        paint.dispose();
+        await settleFrames();
+    },
+    reacquire: async () => {
+        paint = rasterizeAirGraphics(rich, { bounds, resolution: 2 });
+        display = createAirTextureSprite(lab.ui, paint.texture, { name: 'Rich fill', size: [256, 256] });
+        nativeNode.active = false;
+        display.node.active = true;
+        paint.update(rich);
+        await settleFrames();
+        return [
+            { name: 'raster-texture', ref: paint.texture },
+            { name: 'raster-sprite-node', ref: display.node },
+        ];
+    },
+});
 lab.expose({
     async test() {
         if (disposed) throw new Error('example disposed');

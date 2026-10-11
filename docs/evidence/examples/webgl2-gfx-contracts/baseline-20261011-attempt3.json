@@ -1,0 +1,5625 @@
+{
+  "schemaVersion": "webgl2-gfx-contracts/1",
+  "startedAt": "2026-10-10T16:42:44.815Z",
+  "endedAt": "2026-10-10T16:42:53.628Z",
+  "identity": {
+    "head": "4fdfc096258cd1b6f2aa1d8132edda7be7a27a20",
+    "dirty": "M ai/README.md\n M docs/evidence/spec-compliance.json\n M docs/test-inventory.json\n M examples/files.json\n D skills/air-code-first/SKILL.md\n D skills/air-graphics-and-dom/SKILL.md\n D skills/air-verification/SKILL.md\n M src/cocos/gfx/webgl2/states/webgl2-sampler.ts\n M src/cocos/gfx/webgl2/webgl2-commands.ts\n M src/cocos/gfx/webgl2/webgl2-device.ts\n M src/cocos/gfx/webgl2/webgl2-framebuffer.ts\n M src/cocos/gfx/webgl2/webgl2-gpu-objects.ts\n M src/cocos/gfx/webgl2/webgl2-swapchain.ts\n M src/cocos/gfx/webgl2/webgl2-texture.ts\n M tools/README.md\n M tools/verify/graphics-package.cjs\n M tools/verify/verify-doc-refs.cjs\n?? ai/ledgers/shaders-absorption.md\n?? ai/ledgers/webgl2-gfx-contract-remediation.md\n?? ai/plans/agent-skills-suite-steps.md\n?? ai/plans/agent-skills-suite.md\n?? ai/plans/shaders-absorption-task-plan.md\n?? ai/plans/webgl2-gfx-contract-remediation.md\n?? docs/effects/\n?? docs/evidence/examples/webgl2-gfx-contracts/\n?? docs/evidence/shaders-absorption/\n?? examples/shader-cursor-trail/\n?? examples/shader-emboss/\n?? examples/shader-film-neon/\n?? examples/shader-glass-trail/\n?? examples/shader-glass/\n?? examples/shader-holographic/\n?? examples/shader-laser-card/\n?? examples/shader-liquid-metal/\n?? examples/shader-neon/\n?? examples/shader-noise-dissolve/\n?? examples/shader-sparkle/\n?? examples/shader-thin-film/\n?? examples/shared/asset-lifecycle.d.ts\n?? examples/shared/shader-lifecycle.ts\n?? skills/cocosair-2d-subsystems/\n?? skills/cocosair-agent-session/\n?? skills/cocosair-animation-tween/\n?? skills/cocosair-application/\n?? skills/cocosair-assets/\n?? skills/cocosair-audio-video/\n?? skills/cocosair-camera/\n?? skills/cocosair-gltf/\n?? skills/cocosair-graphics-and-dom/\n?? skills/cocosair-input-action/\n?? skills/cocosair-materials-effects/\n?? skills/cocosair-math/\n?? skills/cocosair-performance/\n?? skills/cocosair-physics/\n?? skills/cocosair-primitives-mesh/\n?? skills/cocosair-project-setup/\n?? skills/cocosair-rendering/\n?? skills/cocosair-scene-graph/\n?? skills/cocosair-skinning-morph/\n?? skills/cocosair-ui-2d/\n?? skills/cocosair-verification/\n?? skills/cocosair/\n?? test/fixtures/shaders-sparkle-performance-contract.cjs\n?? test/smoke/shaders-api-evidence.test.ts\n?? test/smoke/shaders-browser-environment-review.test.ts\n?? test/smoke/shaders-browser-environment.test.ts\n?? test/smoke/shaders-browser-launch.test.ts\n?? test/smoke/shaders-cursor-trail-review.test.ts\n?? test/smoke/shaders-cursor-trail.test.ts\n?? test/smoke/shaders-effect-contract.test.ts\n?? test/smoke/shaders-emboss-acceptance.test.ts\n?? test/smoke/shaders-emboss-release.test.ts\n?? test/smoke/shaders-emboss.test.ts\n?? test/smoke/shaders-film-neon-acceptance.test.ts\n?? test/smoke/shaders-film-neon-review.test.ts\n?? test/smoke/shaders-film-neon.test.ts\n?? test/smoke/shaders-gallery-lifecycle-review.test.ts\n?? test/smoke/shaders-gallery-lifecycle-validator.test.ts\n?? test/smoke/shaders-gallery-lifecycle.test.ts\n?? test/smoke/shaders-glass-acceptance.test.ts\n?? test/smoke/shaders-glass-performance.test.ts\n?? test/smoke/shaders-glass-trail-acceptance.test.ts\n?? test/smoke/shaders-glass-trail-contract-review.test.ts\n?? test/smoke/shaders-glass-trail-full-report.test.ts\n?? test/smoke/shaders-glass-trail-review.test.ts\n?? test/smoke/shaders-glass-trail.test.ts\n?? test/smoke/shaders-glass.test.ts\n?? test/smoke/shaders-holographic-acceptance.test.ts\n?? test/smoke/shaders-holographic-review.test.ts\n?? test/smoke/shaders-holographic.test.ts\n?? test/smoke/shaders-laser-card-acceptance.test.ts\n?? test/smoke/shaders-laser-card-review.test.ts\n?? test/smoke/shaders-laser-card.test.ts\n?? test/smoke/shaders-liquid-metal-acceptance.test.ts\n?? test/smoke/shaders-liquid-metal-review.test.ts\n?? test/smoke/shaders-liquid-metal.test.ts\n?? test/smoke/shaders-neon-acceptance.test.ts\n?? test/smoke/shaders-neon-review.test.ts\n?? test/smoke/shaders-neon.test.ts\n?? test/smoke/shaders-noise-dissolve-environment-performance.test.ts\n?? test/smoke/shaders-noise-dissolve.test.ts\n?? test/smoke/shaders-sparkle-environment-performance-review.test.ts\n?? test/smoke/shaders-sparkle-environment-performance.test.ts\n?? test/smoke/shaders-sparkle.test.ts\n?? test/smoke/shaders-thin-film-environment-review.test.ts\n?? test/smoke/shaders-thin-film.test.ts\n?? test/smoke/shaders-wave1-gate.test.ts\n?? test/smoke/shaders-wave2-gate.test.ts\n?? test/smoke/shaders-wave3-gate.test.ts\n?? test/smoke/webgl2-gfx-texture-contracts.test.ts\n?? test/smoke/webgl2-sampler-contract.test.ts\n?? tools/debug/probes/webgl2-gfx-contracts/\n?? tools/verify/shaders-api-evidence.cjs\n?? tools/verify/shaders-browser-environment.cjs\n?? tools/verify/shaders-browser-launch.cjs\n?? tools/verify/shaders-cursor-trail-browser.cjs\n?? tools/verify/shaders-cursor-trail-gate.cjs\n?? tools/verify/shaders-cursor-trail-oracle.cjs\n?? tools/verify/shaders-cursor-trail-performance.cjs\n?? tools/verify/shaders-cursor-trail.tsconfig.json\n?? tools/verify/shaders-effect-contract.cjs\n?? tools/verify/shaders-effect-contract.d.ts\n?? tools/verify/shaders-emboss-browser.cjs\n?? tools/verify/shaders-emboss-oracle.cjs\n?? tools/verify/shaders-emboss-performance.cjs\n?? tools/verify/shaders-emboss.tsconfig.json\n?? tools/verify/shaders-film-neon-browser.cjs\n?? tools/verify/shaders-film-neon-gate.cjs\n?? tools/verify/shaders-film-neon-oracle.cjs\n?? tools/verify/shaders-film-neon-performance.cjs\n?? tools/verify/shaders-film-neon.tsconfig.json\n?? tools/verify/shaders-gallery-lifecycle.cjs\n?? tools/verify/shaders-glass-browser.cjs\n?? tools/verify/shaders-glass-gate.cjs\n?? tools/verify/shaders-glass-oracle.cjs\n?? tools/verify/shaders-glass-performance.cjs\n?? tools/verify/shaders-glass-trail-browser.cjs\n?? tools/verify/shaders-glass-trail-oracle.cjs\n?? tools/verify/shaders-glass-trail-performance.cjs\n?? tools/verify/shaders-glass-trail.tsconfig.json\n?? tools/verify/shaders-glass.tsconfig.json\n?? tools/verify/shaders-holographic-browser.cjs\n?? tools/verify/shaders-holographic-oracle.cjs\n?? tools/verify/shaders-holographic-performance.cjs\n?? tools/verify/shaders-holographic.tsconfig.json\n?? tools/verify/shaders-laser-card-browser.cjs\n?? tools/verify/shaders-laser-card-gate.cjs\n?? tools/verify/shaders-laser-card-oracle.cjs\n?? tools/verify/shaders-laser-card-performance.cjs\n?? tools/verify/shaders-laser-card.tsconfig.json\n?? tools/verify/shaders-liquid-metal-browser.cjs\n?? tools/verify/shaders-liquid-metal-oracle.cjs\n?? tools/verify/shaders-liquid-metal-performance.cjs\n?? tools/verify/shaders-liquid-metal.tsconfig.json\n?? tools/verify/shaders-neon-browser.cjs\n?? tools/verify/shaders-neon-oracle.cjs\n?? tools/verify/shaders-neon-performance.cjs\n?? tools/verify/shaders-neon.tsconfig.json\n?? tools/verify/shaders-noise-dissolve-audit.cjs\n?? tools/verify/shaders-noise-dissolve-environment-performance.cjs\n?? tools/verify/shaders-noise-dissolve-normalize-scoped.cjs\n?? tools/verify/shaders-noise-dissolve-normalize.cjs\n?? tools/verify/shaders-noise-dissolve-oracle.cjs\n?? tools/verify/shaders-noise-dissolve-precision-audit.cjs\n?? tools/verify/shaders-noise-dissolve-precision-closure-audit.cjs\n?? tools/verify/shaders-noise-dissolve-precision-closure.cjs\n?? tools/verify/shaders-noise-dissolve-precision.cjs\n?? tools/verify/shaders-noise-dissolve-scoped-audit.cjs\n?? tools/verify/shaders-noise-dissolve-scoped-gate.cjs\n?? tools/verify/shaders-noise-dissolve-summary.cjs\n?? tools/verify/shaders-noise-dissolve.cjs\n?? tools/verify/shaders-noise-dissolve.tsconfig.json\n?? tools/verify/shaders-resize-diagnostic.cjs\n?? tools/verify/shaders-runtime-preflight.cjs\n?? tools/verify/shaders-sparkle-audit.cjs\n?? tools/verify/shaders-sparkle-browser.cjs\n?? tools/verify/shaders-sparkle-environment-performance.cjs\n?? tools/verify/shaders-sparkle-final.cjs\n?? tools/verify/shaders-sparkle-oracle.cjs\n?? tools/verify/shaders-sparkle-performance.cjs\n?? tools/verify/shaders-sparkle-scoped.cjs\n?? tools/verify/shaders-sparkle.tsconfig.json\n?? tools/verify/shaders-thin-film-audit.cjs\n?? tools/verify/shaders-thin-film-browser.cjs\n?? tools/verify/shaders-thin-film-evidence.cjs\n?? tools/verify/shaders-thin-film-oracle.cjs\n?? tools/verify/shaders-thin-film-performance.cjs\n?? tools/verify/shaders-thin-film-summary.cjs\n?? tools/verify/shaders-thin-film.tsconfig.json\n?? tools/verify/shaders-wave1-gate.cjs\n?? tools/verify/shaders-wave2-gate.cjs\n?? tools/verify/shaders-wave3-closure.cjs\n?? tools/verify/shaders-wave3-gate.cjs\n?? tools/verify/webgl2-gfx-contracts.cjs",
+    "node": "v24.14.0",
+    "toolingPath": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js",
+    "toolingVersion": "1.63.0"
+  },
+  "fingerprints": {
+    "build/cocosair.module.js": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d",
+    "build/cocosair.module.min.js": "8e56fbd5a5b754252838204ff1c204223aadd7c401bd1615c2008e808b5fe05c",
+    "build/cocosair.module.d.ts": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee",
+    "src/cocos/gfx/webgl2/webgl2-device.ts": "0a096626e93fe430731a141d4510b6279a8be620b224cced374a7b79c1c6bfb3",
+    "src/cocos/gfx/webgl2/webgl2-commands.ts": "300a06cf8d5438f72fb4f2605aac3cea1665e7d72f6871cd4966f2905753db0a",
+    "src/cocos/gfx/webgl2/webgl2-texture.ts": "6b51b3a8c03cfb2127dcff5963583113ef0d0311926dcc4f39384077435fba57",
+    "src/cocos/gfx/webgl2/webgl2-gpu-objects.ts": "ca72887c7ead80f128b194f26ee4deee491a188972e0a4fb599f0d612bfd067b",
+    "src/cocos/gfx/webgl2/states/webgl2-sampler.ts": "1b87d0f0dd813dd0051744bd55ea9eeee80a30268f36732f5a4ccbcefb96ef3b",
+    "src/cocos/gfx/base/states/sampler.ts": "a6f37b440ad8ebc8378d4650ea18c70723f666a23e988fff954fe7f3beb5ea1b",
+    "tools/debug/probes/webgl2-gfx-contracts/index.html": "b4601427b9a07ac8749121b3d88e594cc13b17fdbb348dfce286c19cd8e4147c",
+    "tools/debug/probes/webgl2-gfx-contracts/main.js": "ce10547dde98c9ec1620223fd947f5cf76bb500a2b883283774d83a88ae32378",
+    "tools/verify/webgl2-gfx-contracts.cjs": "945d582362b33125c1612b4b198a3bb3defedb41f792111d3d162cb763f27eee",
+    "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+    "tools/verify/competitive-example-server.cjs": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af",
+    "ai/plans/webgl2-gfx-contract-remediation.md": "c87dd81fa5f33f749bff82fa87750890f33773eece57a7fb9a2adbdadff49a62"
+  },
+  "drift": [],
+  "subset": false,
+  "scope": "Minimal public-gfx nine-contract counterexamples; not complete acceptance or release readiness",
+  "completed": true,
+  "passed": false,
+  "results": [
+    {
+      "engine": "chromium",
+      "status": "FAIL",
+      "version": "149.0.7827.55",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe",
+      "options": {
+        "args": [
+          "--use-gl=angle",
+          "--enable-unsafe-swiftshader",
+          "--disable-gpu-sandbox"
+        ]
+      },
+      "raw": {
+        "ready": true,
+        "results": [
+          {
+            "id": "WGL-01",
+            "variant": "half-float-linear-capability",
+            "expected": true,
+            "actual": false,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "less-comparison-real-sampler-state",
+            "expected": [
+              34894,
+              513
+            ],
+            "actual": [
+              0,
+              515
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-four-real-sampler-state",
+            "expected": 4,
+            "actual": 1,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "static-state",
+            "expected": [
+              true,
+              -4,
+              1.25
+            ],
+            "actual": [
+              false,
+              1.25,
+              -4
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "dynamic-state",
+            "expected": [
+              true,
+              -4,
+              1.25
+            ],
+            "actual": [
+              false,
+              1.25,
+              -4
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-and-native-integer-sampling",
+            "expected": [
+              16777217,
+              11,
+              13,
+              17
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-06",
+            "variant": "integer-clear-only-no-covering-draw",
+            "expected": [
+              16777217,
+              2147483649,
+              13,
+              17
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-07",
+            "variant": "uint-attribute-native-output",
+            "expected": [
+              16777217,
+              0,
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-08",
+            "variant": "array-attachment-view-nonzero-layer",
+            "expected": 1,
+            "actual": 0,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "readback-byte-offset-and-row-layout",
+            "expected": [
+              99,
+              99,
+              255,
+              0,
+              0,
+              255,
+              99,
+              99
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255,
+              99,
+              99,
+              99,
+              99
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-01",
+            "variant": "half-float-linear-midpoint",
+            "expected": {
+              "channelRanges": [
+                [
+                  127,
+                  128
+                ],
+                [
+                  127,
+                  128
+                ],
+                [
+                  127,
+                  128
+                ],
+                [
+                  255,
+                  255
+                ]
+              ]
+            },
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-01",
+            "variant": "half-float-point-midpoint",
+            "expected": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "less-white",
+            "expected": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "less-equal-black",
+            "expected": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "greater-black",
+            "expected": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "never-black",
+            "expected": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "REGRESSION",
+            "variant": "ordinary-depth-sampler",
+            "expected": [
+              191,
+              191,
+              191,
+              255
+            ],
+            "actual": [
+              191,
+              191,
+              191,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-0",
+            "expected": 1,
+            "actual": 1,
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-1",
+            "expected": 1,
+            "actual": 1,
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-16",
+            "expected": 16,
+            "actual": 1,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-1000",
+            "expected": 16,
+            "actual": 1,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "enabled-then-disabled",
+            "expected": [
+              false,
+              0,
+              0
+            ],
+            "actual": [
+              false,
+              0,
+              0
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "R8UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RG16UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGBA32UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGBA8I-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RG16I-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGBA32I-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGB10A2UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-u8",
+            "expected": [
+              0,
+              1,
+              255,
+              127
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-i8",
+            "expected": [
+              -128,
+              -1,
+              0,
+              127
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-u16",
+            "expected": [
+              0,
+              1,
+              65535,
+              32767
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-i16",
+            "expected": [
+              -32768,
+              -1,
+              0,
+              32767
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-i32",
+            "expected": [
+              -16777217,
+              -1,
+              0,
+              2147483647
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-06",
+            "variant": "signed-integer-clear-only",
+            "expected": [
+              -16777217,
+              -2147483648,
+              0,
+              2147483647
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-08",
+            "variant": "array-attachment-layer1-render-sample-layer1",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "sentinel-upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 23,
+              "cleanupAttempted": 23,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "capacity-prevalidation-preserves-sentinel",
+            "expected": {
+              "rejected": true,
+              "output": [
+                99,
+                99,
+                99
+              ]
+            },
+            "actual": {
+              "rejected": false,
+              "output": [
+                99,
+                99,
+                99
+              ]
+            },
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "readback-restores-active-public-fbo",
+            "expected": {
+              "framebuffer": true,
+              "read": true,
+              "draw": true
+            },
+            "actual": {
+              "framebuffer": false,
+              "read": false,
+              "draw": false
+            },
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-06",
+            "variant": "mixed-mrt-clear-native-readback",
+            "expected": [
+              [
+                -16777217,
+                -1,
+                0,
+                2147483647
+              ],
+              [
+                16777217,
+                2147483649,
+                0,
+                4294967295
+              ],
+              [
+                255,
+                0,
+                128,
+                255
+              ]
+            ],
+            "actual": [
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                0,
+                127,
+                255
+              ]
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 13,
+              "cleanupAttempted": 13,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "constant-plane-static",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "constant-plane-dynamic",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-plane-static",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-plane-dynamic",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-tilted-static",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-tilted-dynamic",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "disabled-plane-static",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "disabled-plane-dynamic",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "geometry-positive-control-static",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "geometry-positive-control-dynamic",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "array-native-readback-layer0",
+            "expected": [
+              7,
+              11,
+              13,
+              17
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "array-native-readback-layer1",
+            "expected": [
+              19,
+              23,
+              29,
+              31
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "array-two-layer-readback",
+            "expected": [
+              7,
+              11,
+              13,
+              17,
+              19,
+              23,
+              29,
+              31
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "typed-array-byteOffset-plus-buffOffset",
+            "expected": [
+              99,
+              99,
+              99,
+              99,
+              255,
+              0,
+              0,
+              255,
+              99,
+              99
+            ],
+            "actual": [
+              99,
+              99,
+              255,
+              0,
+              0,
+              255,
+              99,
+              99,
+              99,
+              99
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "R8UI-native-output-layout",
+            "expected": [
+              255
+            ],
+            "actual": [
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "RG16I-native-output-layout",
+            "expected": [
+              -32768,
+              32767
+            ],
+            "actual": [
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "RGBA16F-native-output-layout",
+            "expected": [
+              15360,
+              0,
+              14336,
+              15360
+            ],
+            "actual": [
+              15360,
+              0,
+              14336,
+              15360
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "batch-prevalidate-before-any-write",
+            "expected": {
+              "rejected": true,
+              "outputs": [
+                [
+                  99,
+                  99,
+                  99,
+                  99
+                ],
+                [
+                  99,
+                  99,
+                  99
+                ]
+              ]
+            },
+            "actual": {
+              "rejected": false,
+              "outputs": [
+                [
+                  255,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  99,
+                  99,
+                  99
+                ]
+              ]
+            },
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "REGRESSION",
+            "variant": "rgba8-clear-draw-native-pixel",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          }
+        ],
+        "startupErrors": [],
+        "device": "WebGL2Device",
+        "renderer": "WebKit WebGL",
+        "vendor": "WebKit",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "contextAttributes": {
+          "alpha": false,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": false,
+          "preserveDrawingBuffer": true,
+          "stencil": true,
+          "xrCompatible": false
+        },
+        "pausedForAssertions": true,
+        "diagnostics": "Raw GL queries/readPixels only; public gfx applies all writes"
+      },
+      "pageErrors": [],
+      "consoleErrors": [
+        "CopyTextureToBuffers: not supported texture target.",
+        "CopyTextureToBuffers: not supported texture target.",
+        "CopyTextureToBuffers: not supported texture target.",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/baseline-20261011-attempt3-artifacts/chromium.png"
+    },
+    {
+      "engine": "firefox",
+      "status": "FAIL",
+      "version": "155.0",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe",
+      "options": {
+        "args": []
+      },
+      "raw": {
+        "ready": true,
+        "results": [
+          {
+            "id": "WGL-01",
+            "variant": "half-float-linear-capability",
+            "expected": true,
+            "actual": false,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "less-comparison-real-sampler-state",
+            "expected": [
+              34894,
+              513
+            ],
+            "actual": [
+              0,
+              515
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-four-real-sampler-state",
+            "expected": 4,
+            "actual": 1,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "static-state",
+            "expected": [
+              true,
+              -4,
+              1.25
+            ],
+            "actual": [
+              false,
+              1.25,
+              -4
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "dynamic-state",
+            "expected": [
+              true,
+              -4,
+              1.25
+            ],
+            "actual": [
+              false,
+              1.25,
+              -4
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-and-native-integer-sampling",
+            "expected": [
+              16777217,
+              11,
+              13,
+              17
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-06",
+            "variant": "integer-clear-only-no-covering-draw",
+            "expected": [
+              16777217,
+              2147483649,
+              13,
+              17
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-07",
+            "variant": "uint-attribute-native-output",
+            "expected": [
+              16777217,
+              0,
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-08",
+            "variant": "array-attachment-view-nonzero-layer",
+            "expected": 1,
+            "actual": null,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [
+                1280
+              ],
+              "clear": [
+                1286
+              ],
+              "draw": [
+                1286
+              ],
+              "completion": [
+                1282
+              ],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "readback-byte-offset-and-row-layout",
+            "expected": [
+              99,
+              99,
+              255,
+              0,
+              0,
+              255,
+              99,
+              99
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255,
+              99,
+              99,
+              99,
+              99
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-01",
+            "variant": "half-float-linear-midpoint",
+            "expected": {
+              "channelRanges": [
+                [
+                  127,
+                  128
+                ],
+                [
+                  127,
+                  128
+                ],
+                [
+                  127,
+                  128
+                ],
+                [
+                  255,
+                  255
+                ]
+              ]
+            },
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-01",
+            "variant": "half-float-point-midpoint",
+            "expected": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "less-white",
+            "expected": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "less-equal-black",
+            "expected": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "greater-black",
+            "expected": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "never-black",
+            "expected": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "REGRESSION",
+            "variant": "ordinary-depth-sampler",
+            "expected": [
+              191,
+              191,
+              191,
+              255
+            ],
+            "actual": [
+              191,
+              191,
+              191,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-0",
+            "expected": 1,
+            "actual": 1,
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-1",
+            "expected": 1,
+            "actual": 1,
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-16",
+            "expected": 16,
+            "actual": 1,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-1000",
+            "expected": 16,
+            "actual": 1,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "enabled-then-disabled",
+            "expected": [
+              false,
+              0,
+              0
+            ],
+            "actual": [
+              false,
+              0,
+              0
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "R8UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RG16UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGBA32UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGBA8I-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RG16I-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGBA32I-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGB10A2UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-u8",
+            "expected": [
+              0,
+              1,
+              255,
+              127
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-i8",
+            "expected": [
+              -128,
+              -1,
+              0,
+              127
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-u16",
+            "expected": [
+              0,
+              1,
+              65535,
+              32767
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-i16",
+            "expected": [
+              -32768,
+              -1,
+              0,
+              32767
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-i32",
+            "expected": [
+              -16777217,
+              -1,
+              0,
+              2147483647
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-06",
+            "variant": "signed-integer-clear-only",
+            "expected": [
+              -16777217,
+              -2147483648,
+              0,
+              2147483647
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-08",
+            "variant": "array-attachment-layer1-render-sample-layer1",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "sentinel-upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 23,
+              "cleanupAttempted": 23,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "capacity-prevalidation-preserves-sentinel",
+            "expected": {
+              "rejected": true,
+              "output": [
+                99,
+                99,
+                99
+              ]
+            },
+            "actual": {
+              "rejected": false,
+              "output": [
+                99,
+                99,
+                99
+              ]
+            },
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "readback-restores-active-public-fbo",
+            "expected": {
+              "framebuffer": true,
+              "read": true,
+              "draw": true
+            },
+            "actual": {
+              "framebuffer": false,
+              "read": false,
+              "draw": false
+            },
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-06",
+            "variant": "mixed-mrt-clear-native-readback",
+            "expected": [
+              [
+                -16777217,
+                -1,
+                0,
+                2147483647
+              ],
+              [
+                16777217,
+                2147483649,
+                0,
+                4294967295
+              ],
+              [
+                255,
+                0,
+                128,
+                255
+              ]
+            ],
+            "actual": [
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                0,
+                127,
+                255
+              ]
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 13,
+              "cleanupAttempted": 13,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "constant-plane-static",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "constant-plane-dynamic",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-plane-static",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-plane-dynamic",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-tilted-static",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-tilted-dynamic",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "disabled-plane-static",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "disabled-plane-dynamic",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "geometry-positive-control-static",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "geometry-positive-control-dynamic",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "array-native-readback-layer0",
+            "expected": [
+              7,
+              11,
+              13,
+              17
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "array-native-readback-layer1",
+            "expected": [
+              19,
+              23,
+              29,
+              31
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "array-two-layer-readback",
+            "expected": [
+              7,
+              11,
+              13,
+              17,
+              19,
+              23,
+              29,
+              31
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "typed-array-byteOffset-plus-buffOffset",
+            "expected": [
+              99,
+              99,
+              99,
+              99,
+              255,
+              0,
+              0,
+              255,
+              99,
+              99
+            ],
+            "actual": [
+              99,
+              99,
+              255,
+              0,
+              0,
+              255,
+              99,
+              99,
+              99,
+              99
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "R8UI-native-output-layout",
+            "expected": [
+              255
+            ],
+            "actual": [
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "RG16I-native-output-layout",
+            "expected": [
+              -32768,
+              32767
+            ],
+            "actual": [
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "RGBA16F-native-output-layout",
+            "expected": [
+              15360,
+              0,
+              14336,
+              15360
+            ],
+            "actual": [
+              15360,
+              0,
+              14336,
+              15360
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "batch-prevalidate-before-any-write",
+            "expected": {
+              "rejected": true,
+              "outputs": [
+                [
+                  99,
+                  99,
+                  99,
+                  99
+                ],
+                [
+                  99,
+                  99,
+                  99
+                ]
+              ]
+            },
+            "actual": {
+              "rejected": false,
+              "outputs": [
+                [
+                  255,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  99,
+                  99,
+                  99
+                ]
+              ]
+            },
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "REGRESSION",
+            "variant": "rgba8-clear-draw-native-pixel",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          }
+        ],
+        "startupErrors": [],
+        "device": "WebGL2Device",
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+        "vendor": "Mozilla",
+        "version": "WebGL 2.0",
+        "contextAttributes": {
+          "alpha": false,
+          "antialias": false,
+          "depth": true,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": false,
+          "preserveDrawingBuffer": true,
+          "stencil": true
+        },
+        "pausedForAssertions": true,
+        "diagnostics": "Raw GL queries/readPixels only; public gfx applies all writes"
+      },
+      "pageErrors": [],
+      "consoleErrors": [
+        "glCheckFramebufferStatus() - FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT",
+        "glCheckFramebufferStatus() - FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT",
+        "CopyTextureToBuffers: not supported texture target.",
+        "CopyTextureToBuffers: not supported texture target.",
+        "CopyTextureToBuffers: not supported texture target."
+      ],
+      "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/baseline-20261011-attempt3-artifacts/firefox.png"
+    },
+    {
+      "engine": "webkit",
+      "status": "FAIL",
+      "version": "26.6",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\webkit-2359\\Playwright.exe",
+      "options": {
+        "args": []
+      },
+      "raw": {
+        "ready": true,
+        "results": [
+          {
+            "id": "WGL-01",
+            "variant": "half-float-linear-capability",
+            "expected": true,
+            "actual": false,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "less-comparison-real-sampler-state",
+            "expected": [
+              34894,
+              513
+            ],
+            "actual": [
+              0,
+              515
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-four-real-sampler-state",
+            "expected": 4,
+            "actual": 1,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "static-state",
+            "expected": [
+              true,
+              -4,
+              1.25
+            ],
+            "actual": [
+              false,
+              1.25,
+              -4
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "dynamic-state",
+            "expected": [
+              true,
+              -4,
+              1.25
+            ],
+            "actual": [
+              false,
+              1.25,
+              -4
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-and-native-integer-sampling",
+            "expected": [
+              16777217,
+              11,
+              13,
+              17
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-06",
+            "variant": "integer-clear-only-no-covering-draw",
+            "expected": [
+              16777217,
+              2147483649,
+              13,
+              17
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-07",
+            "variant": "uint-attribute-native-output",
+            "expected": [
+              16777217,
+              0,
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-08",
+            "variant": "array-attachment-view-nonzero-layer",
+            "expected": 1,
+            "actual": 0,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [
+                1280
+              ],
+              "clear": [
+                1286
+              ],
+              "draw": [
+                1286
+              ],
+              "completion": [
+                1282
+              ],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "readback-byte-offset-and-row-layout",
+            "expected": [
+              99,
+              99,
+              255,
+              0,
+              0,
+              255,
+              99,
+              99
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255,
+              99,
+              99,
+              99,
+              99
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-01",
+            "variant": "half-float-linear-midpoint",
+            "expected": {
+              "channelRanges": [
+                [
+                  127,
+                  128
+                ],
+                [
+                  127,
+                  128
+                ],
+                [
+                  127,
+                  128
+                ],
+                [
+                  255,
+                  255
+                ]
+              ]
+            },
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-01",
+            "variant": "half-float-point-midpoint",
+            "expected": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "less-white",
+            "expected": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "less-equal-black",
+            "expected": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "greater-black",
+            "expected": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-02",
+            "variant": "never-black",
+            "expected": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [
+                1282
+              ],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "REGRESSION",
+            "variant": "ordinary-depth-sampler",
+            "expected": [
+              191,
+              191,
+              191,
+              255
+            ],
+            "actual": [
+              191,
+              191,
+              191,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "depth-source-clear": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 15,
+              "cleanupAttempted": 15,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-0",
+            "expected": 1,
+            "actual": 1,
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-1",
+            "expected": 1,
+            "actual": 1,
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-16",
+            "expected": 16,
+            "actual": 1,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-03",
+            "variant": "anisotropy-1000",
+            "expected": 16,
+            "actual": 1,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "enabled-then-disabled",
+            "expected": [
+              false,
+              0,
+              0
+            ],
+            "actual": [
+              false,
+              0,
+              0
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "R8UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RG16UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGBA32UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGBA8I-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RG16I-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGBA32I-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "RGB10A2UI-no-linear-capability",
+            "expected": false,
+            "actual": true,
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 0,
+              "cleanupAttempted": 0,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-u8",
+            "expected": [
+              0,
+              1,
+              255,
+              127
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-i8",
+            "expected": [
+              -128,
+              -1,
+              0,
+              127
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-u16",
+            "expected": [
+              0,
+              1,
+              65535,
+              32767
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-i16",
+            "expected": [
+              -32768,
+              -1,
+              0,
+              32767
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-05",
+            "variant": "integer-upload-i32",
+            "expected": [
+              -16777217,
+              -1,
+              0,
+              2147483647
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-06",
+            "variant": "signed-integer-clear-only",
+            "expected": [
+              -16777217,
+              -2147483648,
+              0,
+              2147483647
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-08",
+            "variant": "array-attachment-layer1-render-sample-layer1",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "sentinel-upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 23,
+              "cleanupAttempted": 23,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "capacity-prevalidation-preserves-sentinel",
+            "expected": {
+              "rejected": true,
+              "output": [
+                99,
+                99,
+                99
+              ]
+            },
+            "actual": {
+              "rejected": false,
+              "output": [
+                99,
+                99,
+                99
+              ]
+            },
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "readback-restores-active-public-fbo",
+            "expected": {
+              "framebuffer": true,
+              "read": true,
+              "draw": true
+            },
+            "actual": {
+              "framebuffer": false,
+              "read": false,
+              "draw": false
+            },
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 12,
+              "cleanupAttempted": 12,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-06",
+            "variant": "mixed-mrt-clear-native-readback",
+            "expected": [
+              [
+                -16777217,
+                -1,
+                0,
+                2147483647
+              ],
+              [
+                16777217,
+                2147483649,
+                0,
+                4294967295
+              ],
+              [
+                255,
+                0,
+                128,
+                255
+              ]
+            ],
+            "actual": [
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                255,
+                0,
+                127,
+                255
+              ]
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [
+                1282
+              ],
+              "draw": [],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 13,
+              "cleanupAttempted": 13,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "constant-plane-static",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "constant-plane-dynamic",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-plane-static",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-plane-dynamic",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-tilted-static",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "slope-tilted-dynamic",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "disabled-plane-static",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "disabled-plane-dynamic",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "geometry-positive-control-static",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-04",
+            "variant": "geometry-positive-control-dynamic",
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 22,
+              "cleanupAttempted": 22,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "array-native-readback-layer0",
+            "expected": [
+              7,
+              11,
+              13,
+              17
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "array-native-readback-layer1",
+            "expected": [
+              19,
+              23,
+              29,
+              31
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "array-two-layer-readback",
+            "expected": [
+              7,
+              11,
+              13,
+              17,
+              19,
+              23,
+              29,
+              31
+            ],
+            "actual": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "typed-array-byteOffset-plus-buffOffset",
+            "expected": [
+              99,
+              99,
+              99,
+              99,
+              255,
+              0,
+              0,
+              255,
+              99,
+              99
+            ],
+            "actual": [
+              99,
+              99,
+              255,
+              0,
+              0,
+              255,
+              99,
+              99,
+              99,
+              99
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "R8UI-native-output-layout",
+            "expected": [
+              255
+            ],
+            "actual": [
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "RG16I-native-output-layout",
+            "expected": [
+              -32768,
+              32767
+            ],
+            "actual": [
+              0,
+              0
+            ],
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "upload": [
+                1282
+              ],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "RGBA16F-native-output-layout",
+            "expected": [
+              15360,
+              0,
+              14336,
+              15360
+            ],
+            "actual": [
+              15360,
+              0,
+              14336,
+              15360
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "public-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 1,
+              "cleanupAttempted": 1,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          },
+          {
+            "id": "WGL-09",
+            "variant": "batch-prevalidate-before-any-write",
+            "expected": {
+              "rejected": true,
+              "outputs": [
+                [
+                  99,
+                  99,
+                  99,
+                  99
+                ],
+                [
+                  99,
+                  99,
+                  99
+                ]
+              ]
+            },
+            "actual": {
+              "rejected": false,
+              "outputs": [
+                [
+                  255,
+                  0,
+                  0,
+                  255
+                ],
+                [
+                  99,
+                  99,
+                  99
+                ]
+              ]
+            },
+            "equal": false,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-readback": [
+                1282
+              ],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "FAIL"
+          },
+          {
+            "id": "REGRESSION",
+            "variant": "rgba8-clear-draw-native-pixel",
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "equal": true,
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "diagnostic-native-readPixels": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "resources": {
+              "created": 11,
+              "cleanupAttempted": 11,
+              "samplerOwnership": "device cache"
+            },
+            "status": "PASS"
+          }
+        ],
+        "startupErrors": [],
+        "device": "WebGL2Device",
+        "renderer": "WebKit WebGL",
+        "vendor": "WebKit",
+        "version": "WebGL 2.0",
+        "contextAttributes": {
+          "alpha": false,
+          "antialias": false,
+          "depth": true,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": false,
+          "preserveDrawingBuffer": true,
+          "stencil": true
+        },
+        "pausedForAssertions": true,
+        "diagnostics": "Raw GL queries/readPixels only; public gfx applies all writes"
+      },
+      "pageErrors": [],
+      "consoleErrors": [
+        "glCheckFramebufferStatus() - FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT",
+        "glCheckFramebufferStatus() - FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT",
+        "WebGL: INVALID_OPERATION: readPixels: size too large",
+        "CopyTextureToBuffers: not supported texture target.",
+        "CopyTextureToBuffers: not supported texture target.",
+        "CopyTextureToBuffers: not supported texture target.",
+        "WebGL: INVALID_OPERATION: readPixels: size too large",
+        "WebGL: INVALID_OPERATION: glDrawArrays: Mismatch between texture format and sampler type (signed/unsigned/float/shadow).",
+        "WebGL: INVALID_OPERATION: glTexSubImage2DRobustANGLE: Invalid combination of format, type and internalFormat.",
+        "WebGL: INVALID_OPERATION: glClear: No defined conversion between clear value and attachment format.",
+        "WebGL: INVALID_OPERATION: glClear: No defined conversion between clear value and attachment format.",
+        "WebGL: INVALID_OPERATION: glClear: No defined conversion between clear value and attachment format.",
+        "WebGL: INVALID_OPERATION: glDrawArrays: Vertex shader input type does not match the type of the bound vertex attribute.",
+        "WebGL: INVALID_ENUM: glFramebufferTexture2D: Invalid or unsupported texture target.",
+        "WebGL: INVALID_FRAMEBUFFER_OPERATION: glClear: Framebuffer is incomplete: No attachments and default size is zero.",
+        "WebGL: INVALID_FRAMEBUFFER_OPERATION: glDrawArrays: Framebuffer is incomplete: No attachments and default size is zero.",
+        "WebGL: INVALID_OPERATION: glGetFramebufferAttachmentParameterivRobustANGLE: Invalid parameter name for framebuffer attachment.",
+        "WebGL: INVALID_OPERATION: glDrawArrays: Mismatch between texture format and sampler type (signed/unsigned/float/shadow).",
+        "WebGL: INVALID_OPERATION: glDrawArrays: Mismatch between texture format and sampler type (signed/unsigned/float/shadow).",
+        "WebGL: INVALID_OPERATION: glDrawArrays: Mismatch between texture format and sampler type (signed/unsigned/float/shadow).",
+        "WebGL: INVALID_OPERATION: glDrawArrays: Mismatch between texture format and sampler type (signed/unsigned/float/shadow).",
+        "WebGL: INVALID_OPERATION: glTexSubImage2DRobustANGLE: Invalid combination of format, type and internalFormat.",
+        "WebGL: INVALID_OPERATION: glClear: No defined conversion between clear value and attachment format. (No more validation messages will be reported)"
+      ],
+      "screenshot": "docs/evidence/examples/webgl2-gfx-contracts/baseline-20261011-attempt3-artifacts/webkit.png"
+    }
+  ]
+}

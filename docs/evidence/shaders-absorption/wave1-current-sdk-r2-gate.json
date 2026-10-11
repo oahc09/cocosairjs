@@ -1,0 +1,602 @@
+{
+  "schemaVersion": "shaders-wave1-current-gate/1",
+  "wave": 1,
+  "executionChannel": "Lead",
+  "observedAt": "2026-10-11T09:48:15.441Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\shaders-wave1-gate.cjs",
+    "--bindings=output/shaders-absorption/lead-current-sdk-w1-r4-bindings.json",
+    "--out=docs/evidence/shaders-absorption/wave1-current-sdk-r2-gate.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "verifier": {
+    "path": "tools/verify/shaders-wave1-gate.cjs",
+    "bytes": 12804,
+    "sha256": "83f913994cdb8feaea44503969a1a52f4a5d620f08c1ffeb849f83a0ec56df73"
+  },
+  "validatorInputs": [
+    {
+      "path": "tools/verify/shaders-wave1-gate.cjs",
+      "bytes": 12804,
+      "sha256": "83f913994cdb8feaea44503969a1a52f4a5d620f08c1ffeb849f83a0ec56df73"
+    },
+    {
+      "path": "tools/verify/shaders-noise-dissolve.cjs",
+      "bytes": 45676,
+      "sha256": "197498914e17d297d9df4477f1efcb7bebba25fa297a3ca36d9eb9f381c136f6"
+    },
+    {
+      "path": "tools/verify/shaders-noise-dissolve-oracle.cjs",
+      "bytes": 3697,
+      "sha256": "2cf732baacabf7d75e9a64c7e956c723331384febda71b67273fa07ba2abd0bd"
+    },
+    {
+      "path": "tools/verify/shaders-thin-film-browser.cjs",
+      "bytes": 35543,
+      "sha256": "426a93b4aa18e673e07fe010d681c6c92670ea0561ac7dd6accd0309c5d224e7"
+    },
+    {
+      "path": "tools/verify/shaders-thin-film-evidence.cjs",
+      "bytes": 44383,
+      "sha256": "7dc32b8c0f19d3211ec2fbc88ccac622e8e051a33088d3fda3349b8ee22755d6"
+    },
+    {
+      "path": "tools/verify/shaders-thin-film-oracle.cjs",
+      "bytes": 6591,
+      "sha256": "1635b6ff2f3dbf49f4cb8b18a09e39b06d4bd71789f46f108d57fa0db5995a93"
+    },
+    {
+      "path": "tools/verify/shaders-sparkle-browser.cjs",
+      "bytes": 42283,
+      "sha256": "ce83e518c843c5b3418286d3ee36edff593050d73510437bf96ad14ec89e64e0"
+    },
+    {
+      "path": "tools/verify/shaders-sparkle-oracle.cjs",
+      "bytes": 8353,
+      "sha256": "d75253ada0db8e0896b335e1de0ef18f9af187367b4343ca5d581dce71037f3e"
+    },
+    {
+      "path": "tools/verify/shaders-noise-dissolve-environment-performance.cjs",
+      "bytes": 25947,
+      "sha256": "7f47ab0d74ee6afbfe6822c80bdf756c27b75d3f504f08065d431c3ef34d038e"
+    },
+    {
+      "path": "tools/verify/shaders-sparkle-environment-performance.cjs",
+      "bytes": 37648,
+      "sha256": "2dfab53e0fcddf3b29e35693d8151e4f4a6a001870d7bafdc465df005254662e"
+    },
+    {
+      "path": "tools/verify/shaders-browser-environment.cjs",
+      "bytes": 10656,
+      "sha256": "bc39fdb9222b9b95a5b8d7217462d7c79ab488d23417d465e2aab0fee4e35337"
+    },
+    {
+      "path": "tools/verify/shaders-browser-launch.cjs",
+      "bytes": 2797,
+      "sha256": "3e5a4bc54834f9688994b446346ac58aca10c1936e88a1f932531fb75c81fc87"
+    },
+    {
+      "path": "tools/verify/shaders-gallery-lifecycle.cjs",
+      "bytes": 20135,
+      "sha256": "ba99231a3281a51a58d377e82da6acaca1edce25875fadb4e09138c6e3fdd8c9"
+    },
+    {
+      "path": "tools/verify/shaders-effect-contract.cjs",
+      "bytes": 37563,
+      "sha256": "e1eb1a21b1167ab7d5dab8d7cf21fa214a44b23efa9d62f83a75d08d3d7c2ab3"
+    }
+  ],
+  "bindings": [
+    {
+      "id": "e01-functional",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r1-e01-functional.json",
+      "bytes": 3568397,
+      "sha256": "6b0f9c4709c99a640fa71bc4309759d18ac4c7d0d4b9901708073875bdb73515"
+    },
+    {
+      "id": "e02-functional",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r1-e02-functional.json",
+      "bytes": 4221588,
+      "sha256": "45865ded2de222eccc96040698bb55f7bfa7ae170a232ff403ae169a0d53d3ad"
+    },
+    {
+      "id": "e06-functional",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e06-functional.json",
+      "bytes": 6171448,
+      "sha256": "a0e8ca51ad2c25fd11446b4bbe232c7e7f3b75815703d4f6f1b75013c6009342"
+    },
+    {
+      "id": "e01-performance",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e01-performance.json",
+      "bytes": 864921,
+      "sha256": "fd5eb06b7afc1b8d1eecc2cf5034dc414d780fd3140213ce530ab04b2f2a4bfa"
+    },
+    {
+      "id": "e02-performance",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e02-performance.json",
+      "bytes": 7506027,
+      "sha256": "a85b100771403e035660565c608a099738fd558b82c7541246734826e684a211"
+    },
+    {
+      "id": "e06-performance",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e06-performance.json",
+      "bytes": 2624826,
+      "sha256": "eaaaeab781d35003830fcefd46065e2ffe5e64420b9bcb4b89e806992981d2fc"
+    },
+    {
+      "id": "gallery",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r4-gallery.json",
+      "bytes": 281796,
+      "sha256": "34819d19aaa5dce968484da63b4a3ba2ef03c4d19ae9ea119023e9230d7d9ece"
+    }
+  ],
+  "executions": [
+    {
+      "id": "e01-functional",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r1-e01-functional-os.json",
+      "bytes": 634,
+      "sha256": "a11f8d2f6014bc73a59ef4f7293294a0fb30e4545cb4017df20513021d2c0142",
+      "log": {
+        "path": "output/shaders-absorption/lead-current-sdk-w1-r1-e01-functional.log",
+        "bytes": 147,
+        "sha256": "4eb164f8a499efbd232a24af88070eebde4a7631cffadd42776b47100ee3cc01"
+      }
+    },
+    {
+      "id": "e02-functional",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r1-e02-functional-os.json",
+      "bytes": 643,
+      "sha256": "f132adae3154db90594cca2a1353a26357dd9a9d44826ba272e7da7908dee007",
+      "log": {
+        "path": "output/shaders-absorption/lead-current-sdk-w1-r1-e02-functional.log",
+        "bytes": 1448,
+        "sha256": "d9aee001e541c75708d3ed7acad8e15c8bca6fc5d4d943dbfd065d7da8386624"
+      }
+    },
+    {
+      "id": "e06-functional",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e06-functional-os.json",
+      "bytes": 594,
+      "sha256": "69482fb0fd6ae7b0bde30cd42304e2ebbf9d84cebbd96fec6ca1e42bd6589426",
+      "log": {
+        "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e06-functional.log",
+        "bytes": 659,
+        "sha256": "b3963c0e0c32545d1da1760951db668224caaef41d2ec943181dedf94b625944"
+      }
+    },
+    {
+      "id": "e01-performance",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e01-performance-os.json",
+      "bytes": 728,
+      "sha256": "34e3c964a16301faf049ca1a9c1f931be5b086673a09ada49a8159bb116a23ec",
+      "log": {
+        "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e01-performance.log",
+        "bytes": 148,
+        "sha256": "06cfefd52f85a852a752c744c4dd89606e3d6252144f534aab79b8901d29c50d"
+      }
+    },
+    {
+      "id": "e02-performance",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e02-performance-os.json",
+      "bytes": 707,
+      "sha256": "22ac8a06fa501fc994f6bd9d190d27eafb609ed605d34d79e542f9be8a0ac74d",
+      "log": {
+        "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e02-performance.log",
+        "bytes": 111,
+        "sha256": "4cc1348e334c04c7f5047874a5fb258523e389360b94c5736bdd2d691cda0383"
+      }
+    },
+    {
+      "id": "e06-performance",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e06-performance-os.json",
+      "bytes": 721,
+      "sha256": "77bd15d857a3e5db2dad9cb220a7cf07862d2b235868ba240b9aa8a49fb84643",
+      "log": {
+        "path": "output/shaders-absorption/lead-current-sdk-w1-r2-e06-performance.log",
+        "bytes": 148,
+        "sha256": "d0872ce51c98332d7a1f99f76a0123bdbd102f3ce39b15fd3c9f73ea345207f9"
+      }
+    },
+    {
+      "id": "gallery",
+      "path": "output/shaders-absorption/lead-current-sdk-w1-r4-gallery-os.json",
+      "bytes": 568,
+      "sha256": "66f536f922a6bbd68dd3b5044b232b1ae838f61a7c95564cff3a7130de21a982",
+      "log": {
+        "path": "output/shaders-absorption/lead-current-sdk-w1-r4-gallery.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "ok": true,
+  "errors": [],
+  "rows": [
+    {
+      "effect": "e01",
+      "engine": "chromium",
+      "gate": "Build",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e01",
+      "engine": "chromium",
+      "gate": "Runtime",
+      "status": "PASS",
+      "cases": 7
+    },
+    {
+      "effect": "e01",
+      "engine": "chromium",
+      "gate": "Visual",
+      "status": "PASS",
+      "cases": 12
+    },
+    {
+      "effect": "e01",
+      "engine": "chromium",
+      "gate": "Boundary",
+      "status": "PASS",
+      "cases": 48
+    },
+    {
+      "effect": "e01",
+      "engine": "chromium",
+      "gate": "Resource",
+      "status": "PASS",
+      "cases": 1
+    },
+    {
+      "effect": "e01",
+      "engine": "chromium",
+      "gate": "Performance",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e01",
+      "engine": "firefox",
+      "gate": "Build",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e01",
+      "engine": "firefox",
+      "gate": "Runtime",
+      "status": "PASS",
+      "cases": 7
+    },
+    {
+      "effect": "e01",
+      "engine": "firefox",
+      "gate": "Visual",
+      "status": "PASS",
+      "cases": 12
+    },
+    {
+      "effect": "e01",
+      "engine": "firefox",
+      "gate": "Boundary",
+      "status": "PASS",
+      "cases": 48
+    },
+    {
+      "effect": "e01",
+      "engine": "firefox",
+      "gate": "Resource",
+      "status": "PASS",
+      "cases": 1
+    },
+    {
+      "effect": "e01",
+      "engine": "firefox",
+      "gate": "Performance",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e01",
+      "engine": "webkit",
+      "gate": "Build",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e01",
+      "engine": "webkit",
+      "gate": "Runtime",
+      "status": "PASS",
+      "cases": 7
+    },
+    {
+      "effect": "e01",
+      "engine": "webkit",
+      "gate": "Visual",
+      "status": "PASS",
+      "cases": 12
+    },
+    {
+      "effect": "e01",
+      "engine": "webkit",
+      "gate": "Boundary",
+      "status": "PASS",
+      "cases": 48
+    },
+    {
+      "effect": "e01",
+      "engine": "webkit",
+      "gate": "Resource",
+      "status": "PASS",
+      "cases": 1
+    },
+    {
+      "effect": "e01",
+      "engine": "webkit",
+      "gate": "Performance",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e02",
+      "engine": "chromium",
+      "gate": "Build",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e02",
+      "engine": "chromium",
+      "gate": "Runtime",
+      "status": "PASS",
+      "cases": 7
+    },
+    {
+      "effect": "e02",
+      "engine": "chromium",
+      "gate": "Visual",
+      "status": "PASS",
+      "cases": 9
+    },
+    {
+      "effect": "e02",
+      "engine": "chromium",
+      "gate": "Boundary",
+      "status": "PASS",
+      "cases": 56
+    },
+    {
+      "effect": "e02",
+      "engine": "chromium",
+      "gate": "Resource",
+      "status": "PASS",
+      "cases": 1
+    },
+    {
+      "effect": "e02",
+      "engine": "chromium",
+      "gate": "Performance",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e02",
+      "engine": "firefox",
+      "gate": "Build",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e02",
+      "engine": "firefox",
+      "gate": "Runtime",
+      "status": "PASS",
+      "cases": 7
+    },
+    {
+      "effect": "e02",
+      "engine": "firefox",
+      "gate": "Visual",
+      "status": "PASS",
+      "cases": 9
+    },
+    {
+      "effect": "e02",
+      "engine": "firefox",
+      "gate": "Boundary",
+      "status": "PASS",
+      "cases": 56
+    },
+    {
+      "effect": "e02",
+      "engine": "firefox",
+      "gate": "Resource",
+      "status": "PASS",
+      "cases": 1
+    },
+    {
+      "effect": "e02",
+      "engine": "firefox",
+      "gate": "Performance",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e02",
+      "engine": "webkit",
+      "gate": "Build",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e02",
+      "engine": "webkit",
+      "gate": "Runtime",
+      "status": "PASS",
+      "cases": 7
+    },
+    {
+      "effect": "e02",
+      "engine": "webkit",
+      "gate": "Visual",
+      "status": "PASS",
+      "cases": 9
+    },
+    {
+      "effect": "e02",
+      "engine": "webkit",
+      "gate": "Boundary",
+      "status": "PASS",
+      "cases": 56
+    },
+    {
+      "effect": "e02",
+      "engine": "webkit",
+      "gate": "Resource",
+      "status": "PASS",
+      "cases": 1
+    },
+    {
+      "effect": "e02",
+      "engine": "webkit",
+      "gate": "Performance",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e06",
+      "engine": "chromium",
+      "gate": "Build",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e06",
+      "engine": "chromium",
+      "gate": "Runtime",
+      "status": "PASS",
+      "cases": 7
+    },
+    {
+      "effect": "e06",
+      "engine": "chromium",
+      "gate": "Visual",
+      "status": "PASS",
+      "cases": 20
+    },
+    {
+      "effect": "e06",
+      "engine": "chromium",
+      "gate": "Boundary",
+      "status": "PASS",
+      "cases": 48
+    },
+    {
+      "effect": "e06",
+      "engine": "chromium",
+      "gate": "Resource",
+      "status": "PASS",
+      "cases": 1
+    },
+    {
+      "effect": "e06",
+      "engine": "chromium",
+      "gate": "Performance",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e06",
+      "engine": "firefox",
+      "gate": "Build",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e06",
+      "engine": "firefox",
+      "gate": "Runtime",
+      "status": "PASS",
+      "cases": 7
+    },
+    {
+      "effect": "e06",
+      "engine": "firefox",
+      "gate": "Visual",
+      "status": "PASS",
+      "cases": 20
+    },
+    {
+      "effect": "e06",
+      "engine": "firefox",
+      "gate": "Boundary",
+      "status": "PASS",
+      "cases": 48
+    },
+    {
+      "effect": "e06",
+      "engine": "firefox",
+      "gate": "Resource",
+      "status": "PASS",
+      "cases": 1
+    },
+    {
+      "effect": "e06",
+      "engine": "firefox",
+      "gate": "Performance",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e06",
+      "engine": "webkit",
+      "gate": "Build",
+      "status": "PASS",
+      "cases": 3
+    },
+    {
+      "effect": "e06",
+      "engine": "webkit",
+      "gate": "Runtime",
+      "status": "PASS",
+      "cases": 7
+    },
+    {
+      "effect": "e06",
+      "engine": "webkit",
+      "gate": "Visual",
+      "status": "PASS",
+      "cases": 20
+    },
+    {
+      "effect": "e06",
+      "engine": "webkit",
+      "gate": "Boundary",
+      "status": "PASS",
+      "cases": 48
+    },
+    {
+      "effect": "e06",
+      "engine": "webkit",
+      "gate": "Resource",
+      "status": "PASS",
+      "cases": 1
+    },
+    {
+      "effect": "e06",
+      "engine": "webkit",
+      "gate": "Performance",
+      "status": "PASS",
+      "cases": 3
+    }
+  ],
+  "measuredCases": 705,
+  "galleryRows": 18,
+  "status": "PASS",
+  "waveCompleted": true,
+  "nextWaveEligible": true,
+  "projectCompleted": false,
+  "agentGate": "NOT_RUN"
+}

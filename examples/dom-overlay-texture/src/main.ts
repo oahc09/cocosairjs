@@ -1,13 +1,14 @@
 import { bootCapabilityLab } from '../../shared/capability-lab.js';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 const lab = await bootCapabilityLab('DOM overlay and texture anchors');
 const { createAirTextureSprite, createAirDOMOverlay, UITransform } = lab.cc;
-const texture = lab.texture(2, 2, [240, 210, 90, 255, 80, 210, 190, 255, 190, 90, 210, 255, 80, 130, 230, 255]);
-const display = createAirTextureSprite(lab.ui, texture, { name: 'Anchor preview', size: [180, 180] });
+let texture = lab.texture(2, 2, [240, 210, 90, 255, 80, 210, 190, 255, 190, 90, 210, 255, 80, 130, 230, 255]);
+let display = createAirTextureSprite(lab.ui, texture, { name: 'Anchor preview', size: [180, 180] });
 const target = lab.node('DOM target'),
     element = document.getElementById('live-form') as HTMLDivElement;
 target.setPosition(0, 0, 0);
-const overlay = createAirDOMOverlay({ canvas: lab.canvas, className: 'air-dom-overlay' });
+let overlay = createAirDOMOverlay({ canvas: lab.canvas, className: 'air-dom-overlay' });
 let binding = overlay.attach(element, target, lab.camera, { width: 100, height: 65 });
 let hits = 0,
     disposed = false,
@@ -47,6 +48,40 @@ lab.button('restore', async () => {
     await update();
 });
 await update();
+// §25 Lifecycle Contract：__lifecycle() 触发一轮 真实释放 → 泄漏核对 → 重建纹理/展示面并重挂 DOM 锚点。
+// 生命周期轮次不使用 lab.clock.step()：__lifecycle 在 native pacer 下执行，
+// 手动步进与真实时钟互斥；等待两帧即可让销毁提交与新画面落地。
+const settleFrames = (): Promise<void> =>
+    new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+installAssetLifecycle({
+    label: 'dom-overlay-texture',
+    hold: () =>
+        disposed
+            ? []
+            : [
+                  { name: 'anchor-texture', ref: texture },
+                  { name: 'anchor-sprite-node', ref: display.node },
+              ],
+    release: async () => {
+        binding.dispose();
+        overlay.dispose();
+        display.dispose();
+        texture.destroy();
+        await settleFrames();
+    },
+    reacquire: async () => {
+        texture = lab.texture(2, 2, [240, 210, 90, 255, 80, 210, 190, 255, 190, 90, 210, 255, 80, 130, 230, 255]);
+        display = createAirTextureSprite(lab.ui, texture, { name: 'Anchor preview', size: [180, 180] });
+        overlay = createAirDOMOverlay({ canvas: lab.canvas, className: 'air-dom-overlay' });
+        binding = overlay.attach(element, target, lab.camera, { width: 100, height: 65 });
+        await settleFrames();
+        overlay.update();
+        return [
+            { name: 'anchor-texture', ref: texture },
+            { name: 'anchor-sprite-node', ref: display.node },
+        ];
+    },
+});
 lab.expose({
     async test() {
         if (disposed) throw new Error('example disposed');

@@ -1,0 +1,226 @@
+{
+  "id": "shader-input-dissolve",
+  "title": "Input Dissolve 任意输入溶解",
+  "description": "NoiseDissolve 应用于任意输入：image 真实 PNG / procedural 程序内容 / rendered 场景图层三路线。",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "apiClaims": [],
+  "capabilities": [
+    "rendering",
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "NoiseDissolve 母算法 + 三路线任意输入；progress 0=identity 1=transparent；一次 OETF",
+    "points": [
+      "三路线 source：PNG 纹理 / 程序着色器 / 真实场景 RT",
+      "显式 rgba8 存储+安全逆预乘",
+      "reveal 掩码只缩放 alpha",
+      "路线 pass 合同：image 1 / procedural+rendered 2"
+    ]
+  },
+  "assets": [
+    "assets/input-pattern.png"
+  ],
+  "license": {
+    "assets": "input-pattern.png 为确定性生成；MaterialX/OSL noise 见 THIRD_PARTY_NOTICES.txt"
+  },
+  "api": {
+    "primary": [
+      "EffectAsset",
+      "Material.initialize"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Camera",
+      "Node",
+      "utils.createMesh",
+      "createStepClock",
+      "createAirRenderTarget"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Camera",
+      "Node"
+    ],
+    "forbiddenShortcut": [
+      "额外canvas渲染",
+      "CPU纹理冒充场景",
+      "双OETF"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L34",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L475",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L160",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L151",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L176",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L281",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L222",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L140",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L51",
+        "validator": "node-exists"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L48",
+        "validator": "node-exists"
+      }
+    ],
+    "evidenceStatus": "findSymbolLine 核对；浏览器 runtime NOT_RUN"
+  },
+  "effect": {
+    "functional": "8 参数+3路线+层开关",
+    "visual": "18 视觉案例+DPR2；端点精确",
+    "limitations": [
+      "本地组合设计",
+      "零浏览器运行时未验证"
+    ]
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "点击 重置",
+        "buttonText": "重置",
+        "expected": "时间与参数回到初始值，画面跳变到初始帧"
+      },
+      {
+        "action": "执行示例 linearProbe 读回探针",
+        "probe": "__inputdissolve.linearProbe",
+        "expected": "真实渲染进 RT 并读回固定采样点，createAirRenderTarget 实际执行"
+      },
+      {
+        "action": "真实参数更新 progress（完全溶解）",
+        "probe": "__inputdissolve.set",
+        "probeArgs": [
+          {
+            "route": "image",
+            "progress": 0.9,
+            "scale": 3,
+            "softness": 0.25,
+            "seed": 0,
+            "invert": "off",
+            "dissolveEnabled": "on",
+            "time": 0
+          }
+        ],
+        "expected": "公开参数合同真实更新 uniform，溶解进度可见变化"
+      },
+      {
+        "action": "单步推进示例步进时钟",
+        "probe": "__inputdissolve.step",
+        "probeArgs": [
+          0.0333
+        ],
+        "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
+      },
+      {
+        "action": "恢复原生 pacer",
+        "probe": "__inputdissolve.resumePacer",
+        "expected": "结束步进时钟并恢复原生 pacer，后续帧继续真实渲染"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "content-camera",
+        "main-camera",
+        "c04-dissolve-1"
+      ]
+    }
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ],
+    "note": "__inputdissolve.ready"
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "由 tools/verify/shaders-input-dissolve-browser.cjs 采集"
+  },
+  "promotion": {
+    "spec": "861b2ebfc6d8",
+    "source": "b2b514ac3a2e7a2c",
+    "candidate": "24fcbd038ef9869c",
+    "verified": 10,
+    "attested": 0,
+    "units": 10
+  }
+}

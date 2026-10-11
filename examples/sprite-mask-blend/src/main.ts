@@ -1,10 +1,11 @@
 import { bootCapabilityLab } from '../../shared/capability-lab.js';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 const lab = await bootCapabilityLab('Sprite mask and blend');
 const { createAirTextureSprite, attachAirSpriteMask, createAirUIBlendScope, Color, ParticleSystem2D } = lab.cc;
-const white = lab.texture(1, 1, [255, 255, 255, 255]),
+let white = lab.texture(1, 1, [255, 255, 255, 255]),
     maskTexture = lab.texture(4, 1, [255, 0, 0, 255, 0, 0, 0, 255, 0, 0, 0, 128, 255, 0, 0, 0]);
-const display = createAirTextureSprite(lab.ui, white, { name: 'Masked sprite', size: [256, 256] });
+let display = createAirTextureSprite(lab.ui, white, { name: 'Masked sprite', size: [256, 256] });
 let binding: ReturnType<typeof attachAirSpriteMask> | null = null;
 async function mask(channel: 'red' | 'alpha', mode: 'soft' | 'threshold' = 'soft', inverted = false) {
     binding?.dispose();
@@ -57,6 +58,51 @@ for (const id of ['alpha', 'red', 'threshold', 'invert'])
     });
 await maskView();
 let disposed = false;
+// §25 Lifecycle Contract：__lifecycle() 触发一轮 真实释放 → 泄漏核对 → 重建基础纹理/展示面并重挂遮罩。
+// 粒子节点复用同一展示帧：重建后重新绑定 spriteFrame，避免悬挂旧帧引用。
+// 生命周期轮次不使用 lab.clock.step()：__lifecycle 在 native pacer 下执行，
+// 手动步进与真实时钟互斥；等待两帧即可让销毁提交与新画面落地。
+const settleFrames = (): Promise<void> =>
+    new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+installAssetLifecycle({
+    label: 'sprite-mask-blend',
+    hold: () =>
+        disposed
+            ? []
+            : [
+                  { name: 'white-texture', ref: white },
+                  { name: 'mask-texture', ref: maskTexture },
+                  { name: 'masked-sprite-node', ref: display.node },
+              ],
+    release: async () => {
+        binding?.dispose();
+        display.dispose();
+        maskTexture.destroy();
+        white.destroy();
+        await settleFrames();
+    },
+    reacquire: async () => {
+        white = lab.texture(1, 1, [255, 255, 255, 255]);
+        maskTexture = lab.texture(4, 1, [255, 0, 0, 255, 0, 0, 0, 255, 0, 0, 0, 128, 255, 0, 0, 0]);
+        display = createAirTextureSprite(lab.ui, white, { name: 'Masked sprite', size: [256, 256] });
+        particles.spriteFrame = display.frame;
+        particleNode.active = false;
+        display.node.active = true;
+        lab.camera.clearColor = new Color(0, 0, 0, 255);
+        binding = attachAirSpriteMask(display.sprite, maskTexture, {
+            channel: 'alpha',
+            mode: 'soft',
+            inverted: false,
+            threshold: 0.6,
+        });
+        await settleFrames();
+        return [
+            { name: 'white-texture', ref: white },
+            { name: 'mask-texture', ref: maskTexture },
+            { name: 'masked-sprite-node', ref: display.node },
+        ];
+    },
+});
 lab.expose({
     async test() {
         if (disposed) throw new Error('example disposed');

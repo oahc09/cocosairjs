@@ -519,7 +519,7 @@
         "api": "Camera.convertToUINode",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L193"
+        "sourceLocation": "L197"
       }
     ]
   },
@@ -565,9 +565,9 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "baba5dbfd187",
-    "source": "ad016b8ffdafe73e",
-    "candidate": "2f089f6ce25eaccd",
+    "spec": "a326405c616f",
+    "source": "57978adce068771d",
+    "candidate": "24fcbd038ef9869c",
     "verified": 55,
     "attested": 0,
     "units": 55

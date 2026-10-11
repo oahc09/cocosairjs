@@ -1,0 +1,1298 @@
+{
+  "schemaVersion": "e05-current-sdk-actual-audit/1",
+  "executionChannel": "Lead",
+  "method": "READ_ONLY_REAL_REPORT_STRUCTURED_CLONES",
+  "baselinesAccepted": {
+    "functional": true,
+    "performance": true
+  },
+  "inputs": [
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-functional.json",
+      "bytes": 5340177,
+      "sha256": "d0dc99c2dce56fbb67b21606cf85bf7002ab5a4736f18bd6dfba561e3c14dffb"
+    },
+    {
+      "path": "output/shaders-absorption/lead-current-sdk-w2-r3-e05-performance.json",
+      "bytes": 11590941,
+      "sha256": "004cab6cee96f766e8eaddc3c6f21db476b70d6d151773c6c9dfa94974e60a69"
+    }
+  ],
+  "browserRunsAdded": 0,
+  "rejected": 30,
+  "rows": [
+    {
+      "name": "probe-frame-missing",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": "probe frame non-negative safe integer"
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "probe-time-missing",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": "probe time finite number"
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "negative-frame-pair",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": "GPU receipt frame/time type"
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "capture-dpr-spoof",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0]: tuple default@99 != frozen default@1",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "capture-parameters-spoof",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0]: params not frozen defaults+patch",
+        {
+          "capture": "default",
+          "dpr": 1,
+          "errors": [
+            {
+              "x": 320,
+              "y": 80,
+              "maxError": 26,
+              "actual": [
+                98,
+                87,
+                79,
+                255
+              ],
+              "expected": [
+                123,
+                112,
+                105,
+                255
+              ]
+            },
+            {
+              "x": 320,
+              "y": 320,
+              "maxError": 26,
+              "actual": [
+                102,
+                93,
+                88,
+                255
+              ],
+              "expected": [
+                77,
+                68,
+                62,
+                255
+              ]
+            },
+            {
+              "x": 200,
+              "y": 200,
+              "maxError": 20,
+              "actual": [
+                141,
+                122,
+                107,
+                255
+              ],
+              "expected": [
+                161,
+                139,
+                122,
+                255
+              ]
+            }
+          ]
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 80,
+            "expected": [
+              213,
+              167,
+              135,
+              128
+            ],
+            "actual": [
+              125,
+              93,
+              70,
+              127
+            ],
+            "error": 88
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 320,
+            "expected": [
+              71,
+              50,
+              38,
+              128
+            ],
+            "actual": [
+              139,
+              109,
+              91,
+              127
+            ],
+            "error": 68
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 200,
+            "y": 200,
+            "expected": [
+              90,
+              65,
+              50,
+              255
+            ],
+            "actual": [
+              68,
+              50,
+              38,
+              255
+            ],
+            "error": 22
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 440,
+            "y": 200,
+            "expected": [
+              128,
+              92,
+              70,
+              128
+            ],
+            "actual": [
+              171,
+              123,
+              93,
+              127
+            ],
+            "error": 43
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 368,
+            "expected": [
+              148,
+              109,
+              83,
+              128
+            ],
+            "actual": [
+              179,
+              132,
+              100,
+              127
+            ],
+            "error": 31
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 224,
+            "y": 264,
+            "expected": [
+              175,
+              133,
+              99,
+              255
+            ],
+            "actual": [
+              171,
+              130,
+              97,
+              255
+            ],
+            "error": 4
+          }
+        },
+        "chromium:capture[1] set: before params chain",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "shape-rebuild-missing",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[1] set: shape switch without rebuild receipt",
+        "chromium:capture[1] set: rebuild retirement refs",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "uniform-update-rebuilt",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0] set: uniform update rebuilt (retirement)",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "parameter-chain-broken",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0] set: before params chain",
+        "chromium:capture[0] set: shape switch without rebuild receipt",
+        "chromium:capture[0] set: rebuild retirement refs",
+        "chromium:capture[0] set: shape switch did not rebuild",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "untrusted-release",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: untrusted release",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "resource-ref-inflated",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:resource:refs-lifecycle-0",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "invalid-input-accepted",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:invalid[0]: accepted",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "gpu-all-white",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 200,
+            "expected": [
+              102,
+              72,
+              54,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 140,
+            "expected": [
+              102,
+              72,
+              54,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 260,
+            "expected": [
+              177,
+              131,
+              100,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 155
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 281,
+            "y": 200,
+            "expected": [
+              177,
+              133,
+              99,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 156
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 80,
+            "expected": [
+              124,
+              92,
+              70,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 185
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 320,
+            "expected": [
+              139,
+              109,
+              91,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 164
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 200,
+            "y": 200,
+            "expected": [
+              68,
+              50,
+              38,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 217
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 440,
+            "y": 200,
+            "expected": [
+              169,
+              122,
+              92,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 163
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 51,
+            "y": 200,
+            "expected": [
+              91,
+              71,
+              54,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 588,
+            "y": 200,
+            "expected": [
+              189,
+              131,
+              100,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 155
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 32,
+            "expected": [
+              102,
+              72,
+              54,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 368,
+            "expected": [
+              177,
+              131,
+              100,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 155
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 480,
+            "y": 100,
+            "expected": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 255
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 160,
+            "y": 300,
+            "expected": [
+              230,
+              51,
+              128,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 204
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 480,
+            "y": 200,
+            "expected": [
+              108,
+              72,
+              54,
+              128
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 160,
+            "y": 200,
+            "expected": [
+              96,
+              71,
+              54,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 201
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 224,
+            "y": 264,
+            "expected": [
+              171,
+              130,
+              97,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 158
+          }
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "dpr2-page-not-closed",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: dpr2 page not closed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "server-not-closed",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "owned server not closed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "build-failed",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "build exitCode must be 0",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "agent-pass-forged",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "agentGate must be NOT_RUN",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "null-engine",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "actual engine set",
+        "engine entry object required",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "png-sha-drift",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0]: PNG identity drift",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "clock-raw-missing",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "complete clock calibration invalid",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "profile-duplicate",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium: frozen profile set",
+        "chromium:720p:actual viewport/DPR/backing",
+        "chromium: frozen profile set",
+        "chromium:720p:backing.w 1920 != 1280",
+        "chromium:720p:backing.h 1080 != 720",
+        "chromium:720p:css.w 1920 != viewport 1280",
+        "chromium:720p:css.h 1080 != viewport 720",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "performance-dpr-wrong",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium:mobile-dpr:actual viewport/DPR/backing",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "performance-release-ref",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "performance owned release not observed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "child-detach-cycle-false",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:resource:child-detach-0",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "child-detach-normal-false",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: owned release",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "child-detach-terminal-false",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: terminal child detach",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "resize-background-light-pollution",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: resize before background",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "resize-receipt-background-mismatch",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: resize after gpuReceipt background",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "resize-linear-diagnostic-pollution",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: resize after linearDiagnostic",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "child-detach-performance-false",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "performance owned release not observed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "performance-single-draw-forged",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "chromium:720p:native draw/frame count (two-pass RTT)",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    }
+  ]
+}

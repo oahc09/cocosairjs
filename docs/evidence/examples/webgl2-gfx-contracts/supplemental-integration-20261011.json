@@ -1,0 +1,138 @@
+{
+  "schema": "webgl2-gfx-supplemental-integration/1",
+  "measuredAt": "2026-10-11T04:50:16.385Z",
+  "scope": "Nondefault external PACK/PBO state restoration and actual canvas compositor presentation",
+  "originalIntegration": {
+    "file": "docs/evidence/examples/webgl2-gfx-contracts/integration-20261011.json",
+    "sha256": "3fbc57d1b7f2c1a34eda5537e3764bcab8442a5bc48fcf4974948dc440e058bd",
+    "currentFingerprintsVerified": true
+  },
+  "supplementalCurrentFingerprintsVerified": true,
+  "reports": [
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/state-restoration-20261011-dev22-attempt3.json",
+      "sha256": "d3d61fd0f2d9f990006a0cf2d7e7264afc7da6e1a8a95d09ef0617bff56c954b",
+      "passed": true,
+      "kind": "positive",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS",
+          "cases": 3
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS",
+          "cases": 3
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS",
+          "cases": 3
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/state-restoration-20261011-min23-attempt3.json",
+      "sha256": "5df5ec3ef96597b423eab6f07a19754b2a65f4d5067995c20ebd66a676e48d96",
+      "passed": true,
+      "kind": "positive",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS",
+          "cases": 3
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS",
+          "cases": 3
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS",
+          "cases": 3
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/state-restoration-20261011-negative-pack-pbo-attempt3.json",
+      "sha256": "b5c4d1e1979f94117df9e29210c9a62b636520cd535baf198527867fc36af336",
+      "passed": false,
+      "kind": "expected-causal-failure",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "FAIL",
+          "cases": 3
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "FAIL",
+          "cases": 3
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 3
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/presentation-20261011-accelerated-a.json",
+      "sha256": "2512fec7f94a9521735e643695ca0a56e34fdc578b5c8a85a6bfe9a2a63f6cba",
+      "passed": true,
+      "kind": "positive",
+      "results": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS",
+          "cases": 3
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS",
+          "cases": 3
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS",
+          "cases": 3
+        }
+      ]
+    },
+    {
+      "file": "docs/evidence/examples/webgl2-gfx-contracts/presentation-20261011-default-webkit-b.json",
+      "sha256": "eedee3fcd4f99fa5a102780cd92c9b13f084927efe5cbd0b157d8a598df25026",
+      "passed": false,
+      "kind": "default-environment-limitation",
+      "results": [
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "FAIL",
+          "cases": 3
+        }
+      ]
+    }
+  ],
+  "sourceAndSdkChanged": false,
+  "releaseReady": false,
+  "limitations": [
+    "Injected execution exception covers GL_BEFORE, not all possible post-readPixels exceptions",
+    "Windows WebKit default launcher still fails actual presentation after resize; accelerated compositor profile passes and is explicitly recorded",
+    "Whole repository tests, shared source drift, formatting and manual gates are tracked separately in the ledger"
+  ]
+}

@@ -1,0 +1,392 @@
+{
+  "schemaVersion": "shaders-wave4-current-gate/1",
+  "wave": 4,
+  "createdAt": "2026-10-11T08:26:53.023Z",
+  "executionChannel": "Lead",
+  "effects": [
+    {
+      "id": "C01",
+      "gate": {
+        "path": "docs/evidence/shaders-absorption/c01-laser-card-current-sdk-gate.json",
+        "bytes": 46270,
+        "sha256": "2cbb6d09c33a944b10196eede8215a13494b715dd645b41f3dc57d1c946a0354"
+      },
+      "verifier": {
+        "path": "tools/verify/shaders-laser-card-gate.cjs",
+        "bytes": 11815,
+        "sha256": "20134894e4d94cb7fba3c2274101aab72b2a018b0edac1ba74452af4645a64f6"
+      },
+      "validation": {
+        "ok": true,
+        "errors": []
+      },
+      "counts": {
+        "engines": 3,
+        "dimensionRows": 18,
+        "visualCases": 39,
+        "boundaryCases": 294,
+        "malformedAtomicRejections": 18,
+        "resourceCycles": 300,
+        "liveResize": 3,
+        "screenshots": 48,
+        "performanceProfiles": 9
+      },
+      "sdk": [
+        {
+          "path": "build/cocosair.module.js",
+          "bytes": 6649186,
+          "sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "build/npm/cocosair.module.js",
+          "bytes": 6649142,
+          "sha256": "b7771393b2de0dcc84422b07f4df0703a63d609b3ea8443907cee2f4f4182ab9"
+        }
+      ]
+    },
+    {
+      "id": "C02",
+      "gate": {
+        "path": "docs/evidence/shaders-absorption/c02-film-neon-current-sdk-gate.json",
+        "bytes": 44703,
+        "sha256": "e579627cc9cb87a5145b32e3da6ba49df43eff280a39f43d744ccc9213e7165c"
+      },
+      "verifier": {
+        "path": "tools/verify/shaders-film-neon-gate.cjs",
+        "bytes": 9170,
+        "sha256": "fe9fd44bdf83d3867ec969f29dfd72197e3d4bc06306452be6f486740d0074f6"
+      },
+      "validation": {
+        "ok": true,
+        "errors": []
+      },
+      "counts": {
+        "engines": 3,
+        "dimensionRows": 18,
+        "visualCases": 39,
+        "boundaryCases": 342,
+        "malformedAtomicRejections": 18,
+        "resourceCycles": 300,
+        "liveResize": 3,
+        "screenshots": 48,
+        "performanceProfiles": 9
+      },
+      "sdk": [
+        {
+          "path": "build/cocosair.module.js",
+          "bytes": 6649186,
+          "sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "build/npm/cocosair.module.js",
+          "bytes": 6649142,
+          "sha256": "b7771393b2de0dcc84422b07f4df0703a63d609b3ea8443907cee2f4f4182ab9"
+        }
+      ]
+    },
+    {
+      "id": "C03",
+      "gate": {
+        "path": "docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-gate.json",
+        "bytes": 49592,
+        "sha256": "413886e94a9e6e67905cbe04476d774964ccb2fdf9f2ce880eac620ed74db79a"
+      },
+      "verifier": {
+        "path": "tools/verify/shaders-glass-trail-gate.cjs",
+        "bytes": 11750,
+        "sha256": "b62047781db4bca133cab49d1dbd3271e5b7801edb24d1d6e32e301992ef7937"
+      },
+      "validation": {
+        "ok": true,
+        "errors": []
+      },
+      "counts": {
+        "engines": 3,
+        "dimensionRows": 18,
+        "visualCases": 39,
+        "boundaryCases": 264,
+        "malformedAtomicRejections": 18,
+        "resourceCycles": 300,
+        "liveResize": 3,
+        "screenshots": 48,
+        "performanceProfiles": 9
+      },
+      "sdk": [
+        {
+          "path": "build/cocosair.module.js",
+          "bytes": 6649186,
+          "sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "build/npm/cocosair.module.js",
+          "bytes": 6649142,
+          "sha256": "b7771393b2de0dcc84422b07f4df0703a63d609b3ea8443907cee2f4f4182ab9"
+        }
+      ]
+    },
+    {
+      "id": "C04",
+      "gate": {
+        "path": "docs/evidence/shaders-absorption/c04-input-dissolve-current-gate.json",
+        "bytes": 71646,
+        "sha256": "c1e654c03f7599fcdca7a09f09a22b86d028ab5ae9b09ec14bbad7b8b3472fbf"
+      },
+      "verifier": {
+        "path": "tools/verify/shaders-input-dissolve-gate.cjs",
+        "bytes": 11391,
+        "sha256": "0be444e84d6299b7175507ec57e9160b5b548c0e2ef5c45febb2cb02a93bcd73"
+      },
+      "validation": {
+        "ok": true,
+        "errors": []
+      },
+      "counts": {
+        "engines": 3,
+        "dimensionRows": 18,
+        "visualCases": 81,
+        "boundaryCases": 90,
+        "malformedAtomicRejections": 21,
+        "resourceCycles": 300,
+        "liveResize": 9,
+        "screenshots": 90,
+        "performanceProfiles": 27
+      },
+      "sdk": [
+        {
+          "path": "build/cocosair.module.js",
+          "bytes": 6649186,
+          "sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "build/npm/cocosair.module.js",
+          "bytes": 6649142,
+          "sha256": "b7771393b2de0dcc84422b07f4df0703a63d609b3ea8443907cee2f4f4182ab9"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "engines": 3,
+    "dimensionRows": 72,
+    "visualCases": 198,
+    "boundaryCases": 990,
+    "malformedAtomicRejections": 75,
+    "resourceCycles": 1200,
+    "liveResize": 18,
+    "screenshots": 234,
+    "performanceProfiles": 54,
+    "combinations": 4
+  },
+  "currentSdk": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303581,
+      "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6649142,
+      "sha256": "b7771393b2de0dcc84422b07f4df0703a63d609b3ea8443907cee2f4f4182ab9"
+    }
+  ],
+  "combinationGate": "PASS",
+  "priorWave": {
+    "gate": {
+      "path": "docs/evidence/shaders-absorption/wave3-current-gate.json",
+      "bytes": 35388,
+      "sha256": "c5271ee78ff0ccbd0a609cc93c5ce5acc23b907bb8d59ce518eec541ab54899d"
+    },
+    "verifier": {
+      "path": "tools/verify/shaders-wave3-closure.cjs",
+      "bytes": 3092,
+      "sha256": "1dcf8cbe42b1250426e5cba4bff9270a45f6046d284a8ca0d940df58d7c7f0ca"
+    },
+    "validation": {
+      "ok": false,
+      "errors": [
+        "functional: \"drift:examples/shader-liquid-metal/src/main.ts\"",
+        "functional: \"drift:examples/shader-liquid-metal/example.json\"",
+        "functional: \"drift:build/cocosair.module.js\"",
+        "functional: \"drift:build/cocosair.module.d.ts\"",
+        "functional: \"drift:build/npm/cocosair.module.js\"",
+        "functional: \"input closure\"",
+        "functional: \"scopePassed contradicts recomputed errors\"",
+        "functional: \"exitCode contradicts recomputed verdict\"",
+        "performance: \"drift:examples/shader-liquid-metal/src/main.ts\"",
+        "performance: \"drift:examples/shader-liquid-metal/example.json\"",
+        "performance: \"drift:build/cocosair.module.js\"",
+        "performance: \"drift:build/cocosair.module.d.ts\"",
+        "performance: \"drift:build/npm/cocosair.module.js\"",
+        "performance: \"input closure\"",
+        "performance: \"scopePassed contradicts recomputed errors\"",
+        "performance: \"exitCode contradicts recomputed verdict\"",
+        "functional: \"input/reference identity drift\"",
+        "functional: \"self-reported status contradiction\"",
+        "performance: \"input/reference identity drift\"",
+        "performance: \"self-reported status contradiction\"",
+        "functional: \"drift:docs/example-api-inventory.json\"",
+        "functional: \"drift:examples/shader-glass/src/main.ts\"",
+        "functional: \"drift:examples/shader-glass/example.json\"",
+        "functional: \"drift:build/cocosair.module.js\"",
+        "functional: \"drift:build/cocosair.module.d.ts\"",
+        "functional: \"drift:build/npm/cocosair.module.js\"",
+        "functional: \"input closure\"",
+        "functional: \"scopePassed contradicts recomputed errors\"",
+        "functional: \"exitCode contradicts recomputed verdict\"",
+        "performance: \"drift:docs/example-api-inventory.json\"",
+        "performance: \"drift:examples/shader-glass/src/main.ts\"",
+        "performance: \"drift:examples/shader-glass/example.json\"",
+        "performance: \"drift:build/cocosair.module.js\"",
+        "performance: \"drift:build/cocosair.module.d.ts\"",
+        "performance: \"drift:build/npm/cocosair.module.js\"",
+        "performance: \"input closure\"",
+        "performance: \"scopePassed contradicts recomputed errors\"",
+        "performance: \"exitCode contradicts recomputed verdict\"",
+        "previous Wave: \"functional: \\\"drift:examples/shader-holographic/src/main.ts\\\"\"",
+        "previous Wave: \"functional: \\\"drift:examples/shader-holographic/example.json\\\"\"",
+        "previous Wave: \"functional: \\\"drift:build/cocosair.module.js\\\"\"",
+        "previous Wave: \"functional: \\\"drift:build/cocosair.module.d.ts\\\"\"",
+        "previous Wave: \"functional: \\\"drift:build/npm/cocosair.module.js\\\"\"",
+        "previous Wave: \"functional: \\\"input closure\\\"\"",
+        "previous Wave: \"functional: \\\"scopePassed contradicts recomputed errors\\\"\"",
+        "previous Wave: \"functional: \\\"exitCode contradicts recomputed verdict\\\"\"",
+        "previous Wave: \"performance: \\\"drift:examples/shader-holographic/src/main.ts\\\"\"",
+        "previous Wave: \"performance: \\\"drift:examples/shader-holographic/example.json\\\"\"",
+        "previous Wave: \"performance: \\\"drift:build/cocosair.module.js\\\"\"",
+        "previous Wave: \"performance: \\\"drift:build/cocosair.module.d.ts\\\"\"",
+        "previous Wave: \"performance: \\\"drift:build/npm/cocosair.module.js\\\"\"",
+        "previous Wave: \"performance: \\\"input closure\\\"\"",
+        "previous Wave: \"performance: \\\"scopePassed contradicts recomputed errors\\\"\"",
+        "previous Wave: \"performance: \\\"exitCode contradicts recomputed verdict\\\"\"",
+        "previous Wave: \"functional: \\\"drift:examples/shader-neon/src/main.ts\\\"\"",
+        "previous Wave: \"functional: \\\"drift:examples/shader-neon/example.json\\\"\"",
+        "previous Wave: \"functional: \\\"drift:build/cocosair.module.js\\\"\"",
+        "previous Wave: \"functional: \\\"drift:build/cocosair.module.d.ts\\\"\"",
+        "previous Wave: \"functional: \\\"drift:build/npm/cocosair.module.js\\\"\"",
+        "previous Wave: \"functional: \\\"input closure\\\"\"",
+        "previous Wave: \"functional: \\\"scopePassed contradicts recomputed errors\\\"\"",
+        "previous Wave: \"functional: \\\"exitCode contradicts recomputed verdict\\\"\"",
+        "previous Wave: \"performance: \\\"drift:examples/shader-neon/src/main.ts\\\"\"",
+        "previous Wave: \"performance: \\\"drift:examples/shader-neon/example.json\\\"\"",
+        "previous Wave: \"performance: \\\"drift:build/cocosair.module.js\\\"\"",
+        "previous Wave: \"performance: \\\"drift:build/cocosair.module.d.ts\\\"\"",
+        "previous Wave: \"performance: \\\"drift:build/npm/cocosair.module.js\\\"\"",
+        "previous Wave: \"performance: \\\"input closure\\\"\"",
+        "previous Wave: \"performance: \\\"scopePassed contradicts recomputed errors\\\"\"",
+        "previous Wave: \"performance: \\\"exitCode contradicts recomputed verdict\\\"\"",
+        "previous Wave: \"functional: \\\"drift:examples/shader-emboss/src/main.ts\\\"\"",
+        "previous Wave: \"functional: \\\"drift:examples/shader-emboss/example.json\\\"\"",
+        "previous Wave: \"functional: \\\"drift:build/cocosair.module.js\\\"\"",
+        "previous Wave: \"functional: \\\"drift:build/cocosair.module.d.ts\\\"\"",
+        "previous Wave: \"functional: \\\"drift:build/npm/cocosair.module.js\\\"\"",
+        "previous Wave: \"functional: \\\"input closure\\\"\"",
+        "previous Wave: \"functional: \\\"scopePassed contradicts recomputed errors\\\"\"",
+        "previous Wave: \"functional: \\\"exitCode contradicts recomputed verdict\\\"\"",
+        "previous Wave: \"performance: \\\"drift:examples/shader-emboss/src/main.ts\\\"\"",
+        "previous Wave: \"performance: \\\"drift:examples/shader-emboss/example.json\\\"\"",
+        "previous Wave: \"performance: \\\"drift:build/cocosair.module.js\\\"\"",
+        "previous Wave: \"performance: \\\"drift:build/cocosair.module.d.ts\\\"\"",
+        "previous Wave: \"performance: \\\"drift:build/npm/cocosair.module.js\\\"\"",
+        "previous Wave: \"performance: \\\"input closure\\\"\"",
+        "previous Wave: \"performance: \\\"scopePassed contradicts recomputed errors\\\"\"",
+        "previous Wave: \"performance: \\\"exitCode contradicts recomputed verdict\\\"\"",
+        "previous Wave: \"previous Wave: {\\\"id\\\":\\\"e01-functional\\\",\\\"errors\\\":[{\\\"engine\\\":\\\"chromium\\\",\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.source\\\",\\\"message\\\":\\\"Bytes/hash mismatch: examples/shader-noise-dissolve/src/main.ts\\\"},{\\\"engine\\\":\\\"chromium\\\",\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.js\\\"},{\\\"engine\\\":\\\"chromium\\\",\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.d.ts\\\"},{\\\"engine\\\":\\\"chromium\\\",\\\"rule\\\":\\\"IDENTITY_MISMATCH\\\",\\\"path\\\":\\\"$.identity\\\",\\\"message\\\":\\\"Recorded identity differs from externally frozen identity\\\"},{\\\"engine\\\":\\\"firefox\\\",\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.source\\\",\\\"message\\\":\\\"Bytes/hash mismatch: examples/shader-noise-dissolve/src/main.ts\\\"},{\\\"engine\\\":\\\"firefox\\\",\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.js\\\"},{\\\"engine\\\":\\\"firefox\\\",\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.d.ts\\\"},{\\\"engine\\\":\\\"firefox\\\",\\\"rule\\\":\\\"IDENTITY_MISMATCH\\\",\\\"path\\\":\\\"$.identity\\\",\\\"message\\\":\\\"Recorded identity differs from externally frozen identity\\\"},{\\\"engine\\\":\\\"webkit\\\",\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.source\\\",\\\"message\\\":\\\"Bytes/hash mismatch: examples/shader-noise-dissolve/src/main.ts\\\"},{\\\"engine\\\":\\\"webkit\\\",\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.js\\\"},{\\\"engine\\\":\\\"webkit\\\",\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.d.ts\\\"},{\\\"engine\\\":\\\"webkit\\\",\\\"rule\\\":\\\"IDENTITY_MISMATCH\\\",\\\"path\\\":\\\"$.identity\\\",\\\"message\\\":\\\"Recorded identity differs from externally frozen identity\\\"}]}\"",
+        "previous Wave: \"previous Wave: {\\\"id\\\":\\\"e02-functional\\\",\\\"errors\\\":[\\\"drift:examples/shader-thin-film/src/main.ts\\\",\\\"drift:build/cocosair.module.js\\\",\\\"drift:build/cocosair.module.d.ts\\\"]}\"",
+        "previous Wave: \"previous Wave: {\\\"id\\\":\\\"e06-functional\\\",\\\"errors\\\":[{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.source\\\",\\\"message\\\":\\\"Bytes/hash mismatch: examples/shader-sparkle/src/main.ts\\\",\\\"engine\\\":\\\"chromium\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.js\\\",\\\"engine\\\":\\\"chromium\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.d.ts\\\",\\\"engine\\\":\\\"chromium\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/npm/cocosair.module.js\\\",\\\"engine\\\":\\\"chromium\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.js.map\\\",\\\"engine\\\":\\\"chromium\\\"},{\\\"rule\\\":\\\"IDENTITY_MISMATCH\\\",\\\"path\\\":\\\"$.identity\\\",\\\"message\\\":\\\"Recorded identity differs from externally frozen identity\\\",\\\"engine\\\":\\\"chromium\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.source\\\",\\\"message\\\":\\\"Bytes/hash mismatch: examples/shader-sparkle/src/main.ts\\\",\\\"engine\\\":\\\"firefox\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.js\\\",\\\"engine\\\":\\\"firefox\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.d.ts\\\",\\\"engine\\\":\\\"firefox\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/npm/cocosair.module.js\\\",\\\"engine\\\":\\\"firefox\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.js.map\\\",\\\"engine\\\":\\\"firefox\\\"},{\\\"rule\\\":\\\"IDENTITY_MISMATCH\\\",\\\"path\\\":\\\"$.identity\\\",\\\"message\\\":\\\"Recorded identity differs from externally frozen identity\\\",\\\"engine\\\":\\\"firefox\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.source\\\",\\\"message\\\":\\\"Bytes/hash mismatch: examples/shader-sparkle/src/main.ts\\\",\\\"engine\\\":\\\"webkit\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.js\\\",\\\"engine\\\":\\\"webkit\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.d.ts\\\",\\\"engine\\\":\\\"webkit\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/npm/cocosair.module.js\\\",\\\"engine\\\":\\\"webkit\\\"},{\\\"rule\\\":\\\"FILE_DRIFT\\\",\\\"path\\\":\\\"$.identity.sdk\\\",\\\"message\\\":\\\"Bytes/hash mismatch: build/cocosair.module.js.map\\\",\\\"engine\\\":\\\"webkit\\\"},{\\\"rule\\\":\\\"IDENTITY_MISMATCH\\\",\\\"path\\\":\\\"$.identity\\\",\\\"message\\\":\\\"Recorded identity differs from externally frozen identity\\\",\\\"engine\\\":\\\"webkit\\\"},{\\\"rule\\\":\\\"OUTER_IDENTITY\\\"}]}\"",
+        "previous Wave: \"previous Wave: {\\\"id\\\":\\\"e01-performance\\\",\\\"errors\\\":[\\\"input identity drift/missing\\\",\\\"scopePassed contradiction\\\"]}\"",
+        "previous Wave: \"previous Wave: {\\\"id\\\":\\\"e02-performance\\\",\\\"errors\\\":[\\\"drift:examples/shader-thin-film/src/main.ts\\\",\\\"drift:build/cocosair.module.js\\\",\\\"drift:build/cocosair.module.d.ts\\\"]}\"",
+        "previous Wave: \"previous Wave: {\\\"id\\\":\\\"e06-performance\\\",\\\"errors\\\":[\\\"identity drift\\\",\\\"scopePassed contradicts data validation\\\"]}\"",
+        "previous Wave: \"previous Wave: {\\\"id\\\":\\\"gallery\\\",\\\"errors\\\":[\\\"input drift: build/cocosair.module.js\\\",\\\"input drift: build/cocosair.module.d.ts\\\",\\\"input drift: build/npm/cocosair.module.js\\\",\\\"input drift: build/cocosair.module.js.map\\\",\\\"input drift: examples/shader-noise-dissolve/src/main.ts\\\",\\\"input drift: examples/shader-thin-film/src/main.ts\\\",\\\"input drift: examples/shader-sparkle/src/main.ts\\\"]}\"",
+        "previous Wave: \"previous Wave: \\\"derived Wave status mismatch\\\"\"",
+        "previous Wave: \"previous Wave: \\\"derived coverage mismatch\\\"\"",
+        "previous Wave: \"previous Wave must pass\"",
+        "previous Wave must pass",
+        "input/reference drift",
+        "input/reference drift",
+        "input/reference identity drift",
+        "self-reported status contradiction",
+        "input/reference identity drift",
+        "self-reported status contradiction",
+        "functional: \"drift:docs/example-api-inventory.json\"",
+        "functional: \"drift:examples/shader-glass/src/main.ts\"",
+        "functional: \"drift:examples/shader-glass/example.json\"",
+        "functional: \"drift:build/cocosair.module.js\"",
+        "functional: \"drift:build/cocosair.module.d.ts\"",
+        "functional: \"drift:build/npm/cocosair.module.js\"",
+        "functional: \"input closure\"",
+        "functional: \"scopePassed contradicts recomputed errors\"",
+        "functional: \"exitCode contradicts recomputed verdict\"",
+        "performance: \"drift:docs/example-api-inventory.json\"",
+        "performance: \"drift:examples/shader-glass/src/main.ts\"",
+        "performance: \"drift:examples/shader-glass/example.json\"",
+        "performance: \"drift:build/cocosair.module.js\"",
+        "performance: \"drift:build/cocosair.module.d.ts\"",
+        "performance: \"drift:build/npm/cocosair.module.js\"",
+        "performance: \"input closure\"",
+        "performance: \"scopePassed contradicts recomputed errors\"",
+        "performance: \"exitCode contradicts recomputed verdict\"",
+        "functional: \"drift:docs/example-api-inventory.json\"",
+        "functional: \"drift:examples/shader-glass/src/main.ts\"",
+        "functional: \"drift:examples/shader-glass/example.json\"",
+        "functional: \"drift:build/cocosair.module.js\"",
+        "functional: \"drift:build/cocosair.module.d.ts\"",
+        "functional: \"drift:build/npm/cocosair.module.js\"",
+        "functional: \"input closure\"",
+        "functional: \"scopePassed contradicts recomputed errors\"",
+        "functional: \"exitCode contradicts recomputed verdict\"",
+        "performance: \"drift:docs/example-api-inventory.json\"",
+        "performance: \"drift:examples/shader-glass/src/main.ts\"",
+        "performance: \"drift:examples/shader-glass/example.json\"",
+        "performance: \"drift:build/cocosair.module.js\"",
+        "performance: \"drift:build/cocosair.module.d.ts\"",
+        "performance: \"drift:build/npm/cocosair.module.js\"",
+        "performance: \"input closure\"",
+        "performance: \"scopePassed contradicts recomputed errors\"",
+        "performance: \"exitCode contradicts recomputed verdict\"",
+        "current closure drift"
+      ]
+    }
+  },
+  "status": "BLOCKED",
+  "nextWaveEligible": false,
+  "subset": true,
+  "projectCompleted": false,
+  "agentGate": "NOT_RUN",
+  "independentGalleryGate": "NOT_RUN",
+  "verifier": {
+    "path": "tools/verify/shaders-wave4-gate.cjs",
+    "bytes": 5187,
+    "sha256": "f3877200373d373d21014770673263ed27c5ab046d6dd5d5b13057b98712e7d8"
+  },
+  "limitations": [
+    "Current four-combination engine subset measured PASS",
+    "Prior Wave3 candidate source/SDK drift is not compensated by combination PASS",
+    "Wave5 remains ineligible until prerequisites are refreshed",
+    "Physical mobile/long-run/multitab/uninstrumented benchmark not measured"
+  ]
+}

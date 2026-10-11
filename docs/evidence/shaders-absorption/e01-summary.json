@@ -1,0 +1,480 @@
+{
+  "schemaVersion": "shaders-noise-dissolve-summary/1",
+  "effect": "shader-noise-dissolve",
+  "executionChannel": "native subagent",
+  "sourceStatus": "recreated",
+  "method": "COCOSAIR_NATIVE_REIMPLEMENTATION",
+  "status": "BLOCKED",
+  "completed": false,
+  "subset": true,
+  "engineGate": "BLOCKED",
+  "agentGate": "NOT_RUN",
+  "scope": {
+    "total": 222,
+    "PASS": 216,
+    "LIMITED": 5,
+    "BLOCKED": 1,
+    "FAIL": 0,
+    "NOT_RUN": 0
+  },
+  "engines": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "status": "PASS",
+      "gates": {
+        "Build": "PASS",
+        "Runtime": "PASS",
+        "Visual": "PASS",
+        "Boundary": "PASS",
+        "Resource": "PASS",
+        "Performance": "PASS"
+      }
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "status": "LIMITED",
+      "gates": {
+        "Build": "PASS",
+        "Runtime": "PASS",
+        "Visual": "PASS",
+        "Boundary": "PASS",
+        "Resource": "PASS",
+        "Performance": "LIMITED"
+      }
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "status": "BLOCKED",
+      "gates": {
+        "Build": "PASS",
+        "Runtime": "BLOCKED",
+        "Visual": "PASS",
+        "Boundary": "PASS",
+        "Resource": "PASS",
+        "Performance": "LIMITED"
+      }
+    }
+  ],
+  "performance": [
+    {
+      "engine": "chromium",
+      "profile": "720p",
+      "status": "PASS",
+      "warmup": 30,
+      "steady": 60,
+      "frameIntervalMs": {
+        "p50": 16.7,
+        "p95": 17.2
+      },
+      "gpu": {
+        "status": "measured",
+        "p50Ms": 1.182
+      },
+      "timerResolution": "NOT_RECORDED",
+      "rendererVendor": "NOT_RECORDED",
+      "physicalDevice": false,
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "ownedEstimateBytes": 2744
+    },
+    {
+      "engine": "chromium",
+      "profile": "1080p",
+      "status": "PASS",
+      "warmup": 30,
+      "steady": 60,
+      "frameIntervalMs": {
+        "p50": 16.7,
+        "p95": 17.3
+      },
+      "gpu": {
+        "status": "measured",
+        "p50Ms": 4.397
+      },
+      "timerResolution": "NOT_RECORDED",
+      "rendererVendor": "NOT_RECORDED",
+      "physicalDevice": false,
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "ownedEstimateBytes": 2744
+    },
+    {
+      "engine": "chromium",
+      "profile": "mobile-dpr",
+      "status": "PASS",
+      "warmup": 30,
+      "steady": 60,
+      "frameIntervalMs": {
+        "p50": 16.7,
+        "p95": 17.2
+      },
+      "gpu": {
+        "status": "measured",
+        "p50Ms": 1.781
+      },
+      "timerResolution": "NOT_RECORDED",
+      "rendererVendor": "NOT_RECORDED",
+      "physicalDevice": false,
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "ownedEstimateBytes": 2744
+    },
+    {
+      "engine": "firefox",
+      "profile": "720p",
+      "status": "LIMITED",
+      "warmup": 30,
+      "steady": 60,
+      "frameIntervalMs": {
+        "p50": 17,
+        "p95": 18
+      },
+      "gpu": {
+        "status": "unavailable",
+        "p50Ms": null
+      },
+      "timerResolution": "NOT_RECORDED",
+      "rendererVendor": "NOT_RECORDED",
+      "physicalDevice": false,
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "ownedEstimateBytes": 2744
+    },
+    {
+      "engine": "firefox",
+      "profile": "1080p",
+      "status": "LIMITED",
+      "warmup": 30,
+      "steady": 60,
+      "frameIntervalMs": {
+        "p50": 17,
+        "p95": 17
+      },
+      "gpu": {
+        "status": "unavailable",
+        "p50Ms": null
+      },
+      "timerResolution": "NOT_RECORDED",
+      "rendererVendor": "NOT_RECORDED",
+      "physicalDevice": false,
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "ownedEstimateBytes": 2744
+    },
+    {
+      "engine": "firefox",
+      "profile": "mobile-dpr",
+      "status": "LIMITED",
+      "warmup": 30,
+      "steady": 60,
+      "frameIntervalMs": {
+        "p50": 17,
+        "p95": 17
+      },
+      "gpu": {
+        "status": "unavailable",
+        "p50Ms": null
+      },
+      "timerResolution": "NOT_RECORDED",
+      "rendererVendor": "NOT_RECORDED",
+      "physicalDevice": false,
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "ownedEstimateBytes": 2744
+    },
+    {
+      "engine": "webkit",
+      "profile": "720p",
+      "status": "PASS",
+      "warmup": 30,
+      "steady": 60,
+      "frameIntervalMs": {
+        "p50": 12,
+        "p95": 29
+      },
+      "gpu": {
+        "status": "unavailable",
+        "p50Ms": null
+      },
+      "timerResolution": "NOT_RECORDED",
+      "rendererVendor": "NOT_RECORDED",
+      "physicalDevice": false,
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "ownedEstimateBytes": 2744
+    },
+    {
+      "engine": "webkit",
+      "profile": "1080p",
+      "status": "LIMITED",
+      "warmup": 30,
+      "steady": 60,
+      "frameIntervalMs": {
+        "p50": 19,
+        "p95": 23
+      },
+      "gpu": {
+        "status": "unavailable",
+        "p50Ms": null
+      },
+      "timerResolution": "NOT_RECORDED",
+      "rendererVendor": "NOT_RECORDED",
+      "physicalDevice": false,
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "ownedEstimateBytes": 2744
+    },
+    {
+      "engine": "webkit",
+      "profile": "mobile-dpr",
+      "status": "LIMITED",
+      "warmup": 30,
+      "steady": 60,
+      "frameIntervalMs": {
+        "p50": 15,
+        "p95": 31
+      },
+      "gpu": {
+        "status": "unavailable",
+        "p50Ms": null
+      },
+      "timerResolution": "NOT_RECORDED",
+      "rendererVendor": "NOT_RECORDED",
+      "physicalDevice": false,
+      "drawCalls": 2,
+      "passCount": 2,
+      "textureCount": 2,
+      "bufferCount": 8,
+      "ownedEstimateBytes": 2744
+    }
+  ],
+  "resource": {
+    "appCount": 3,
+    "cyclesPerApp": 100,
+    "effectInstances": 300,
+    "assetsPerInstance": 3,
+    "ownership": "One ref per self-owned Mesh/Material/Texture2D; shared self-owned EffectAsset/background released at app terminal; engine caches borrowed"
+  },
+  "audit": {
+    "acceptedBaseline": true,
+    "rejectedMutations": 47,
+    "totalMutations": 47,
+    "browserRunsAdded": 0
+  },
+  "execution": {
+    "collectionExitCode": 1,
+    "scopedValidationPurpose": "VALIDATION_OF_REAL_BROWSER_CAPTURE",
+    "scopedCommands": 18,
+    "scopedActualExitCodes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notARecapture": true
+  },
+  "bindings": {
+    "finalReport": {
+      "path": "output/shaders-absorption/e01-engine-precision-final.json",
+      "bytes": 4587400,
+      "sha256": "dff26ec6594adb102bc9eab2a5725c498f9606080769da41ac430ddb9b9cf805"
+    },
+    "audit": {
+      "path": "output/shaders-absorption/e01-precision-final-audit.json",
+      "bytes": 14037,
+      "sha256": "bcd043d4ef0836228ba2927c138e0cd6d7c075d67211cfe1fe1fc864f051c460"
+    },
+    "rawCapture": {
+      "path": "output/shaders-absorption/e01-engine-attempt7.json",
+      "bytes": 3783094,
+      "sha256": "1a1d3c5d1e8c931a60553e03a1a48d60740b078ca55b2f2795992754d89aa121"
+    },
+    "hostToolReceipt": {
+      "path": "output/shaders-absorption/e01-attempt7-host-tool-receipt.json",
+      "bytes": 1282,
+      "sha256": "ef2e60c90b73698ae4a62241aa4e02e8c50749bbb34235165cbc3d66ee701ff9"
+    },
+    "leadControl": {
+      "path": "output/shaders-absorption/lead-wave1-resize-layer-diagnostic-attempt1.json",
+      "bytes": 47381,
+      "sha256": "1cb6162ec340f1728d54333edc9efaf4555d9876844ecbb39c86d7245300e328"
+    },
+    "scopedPrevious": {
+      "path": "docs/evidence/shaders-absorption/e01-engine-scoped.json",
+      "bytes": 4582446,
+      "sha256": "fadf25ccf1ad0ca3bbd795c791ab0c158a67114769c6ad747c27b9ee8792eaee"
+    },
+    "precisionTool": {
+      "path": "tools/verify/shaders-noise-dissolve-precision-closure.cjs",
+      "bytes": 5066,
+      "sha256": "ad5ea3b538050ee6e66231dea409d9bccd7ef83327559f2c561048921710f6f1"
+    },
+    "sourceIdentity": {
+      "source": [
+        {
+          "path": "examples/shader-noise-dissolve/index.html",
+          "bytes": 1567,
+          "sha256": "34cdc77aa3a70906e77e3d932a563e9d4d89e132e38883c2096f33f3e463975b"
+        },
+        {
+          "path": "examples/shader-noise-dissolve/src/main.ts",
+          "bytes": 17494,
+          "sha256": "184739ed2021a7a05c692456fa3060d4bc791250253ba20a7d171f43f21970e0"
+        },
+        {
+          "path": "examples/shader-noise-dissolve/src/parameters.ts",
+          "bytes": 2451,
+          "sha256": "818ee14675da07645d3183235521081fb7ec0799088228dd88f6ca8d8ee4e0fc"
+        },
+        {
+          "path": "examples/shader-noise-dissolve/src/noise.frag",
+          "bytes": 2432,
+          "sha256": "22a589963843017c520ccbe43da2c3f86d9492f3e4eed16dd4bec27389127f7a"
+        },
+        {
+          "path": "examples/shader-noise-dissolve/src/effect.generated.ts",
+          "bytes": 11135,
+          "sha256": "0670a4b7cddbca45ac30a58d3c5e21b00381e635e003b0491d4675c3856e22db"
+        },
+        {
+          "path": "examples/shader-noise-dissolve/generate-effects.mjs",
+          "bytes": 1022,
+          "sha256": "e9138b3c541eead998849b4eaaa0fbbe8e8fd5329b3a08a8e28a9dc5ce1bf301"
+        },
+        {
+          "path": "examples/shader-noise-dissolve/THIRD_PARTY_NOTICES.txt",
+          "bytes": 14046,
+          "sha256": "2a98b03e714cfe43624ef3656d986edf0a71728f8363603253db691db41b9cce"
+        }
+      ],
+      "sdk": [
+        {
+          "path": "build/cocosair.module.js",
+          "bytes": 6631057,
+          "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303518,
+          "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+        }
+      ],
+      "runner": [
+        {
+          "path": "tools/verify/shaders-noise-dissolve.cjs",
+          "bytes": 27003,
+          "sha256": "3e9f1f192f200c0f8ce3a1a8a88c0c2c54978aaba1ff53b1976a59e40ea8baf2"
+        },
+        {
+          "path": "tools/verify/shaders-noise-dissolve-oracle.cjs",
+          "bytes": 3697,
+          "sha256": "2cf732baacabf7d75e9a64c7e956c723331384febda71b67273fa07ba2abd0bd"
+        },
+        {
+          "path": "tools/verify/shaders-noise-dissolve.tsconfig.json",
+          "bytes": 429,
+          "sha256": "d61b7d2ab1544f5cbb847e116d10992d6d3b534b56237760f8dd94439e0e9298"
+        },
+        {
+          "path": "tools/verify/shaders-effect-contract.cjs",
+          "bytes": 37563,
+          "sha256": "e1eb1a21b1167ab7d5dab8d7cf21fa214a44b23efa9d62f83a75d08d3d7c2ab3"
+        },
+        {
+          "path": "tools/verify/competitive-example-server.cjs",
+          "bytes": 1923,
+          "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+        },
+        {
+          "path": "tools/verify/browser-engines.cjs",
+          "bytes": 2159,
+          "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+        },
+        {
+          "path": "tools/build/effect-json.mjs",
+          "bytes": 10548,
+          "sha256": "9d090611aa72f3a8017677e5d8c4848e4c0ce9126acb95bfbbec6c53d25f0c16"
+        }
+      ],
+      "reference": {
+        "repo": "https://github.com/shader-effects-inc/shaders",
+        "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+        "license": "MIT + MaterialX/OSL BSD-3-Clause + retained MaterialX Apache-2.0",
+        "files": [
+          {
+            "path": "docs/effects/upstream-reference.json",
+            "bytes": 69695,
+            "sha256": "6c0888e7dd135bc62b9abbb6fc25ad39251f62f5b1b52078500e591b3f8076b8"
+          },
+          {
+            "path": "output/shaders-absorption/reference/packages/core/src/shaders/NoiseDissolve/index.ts",
+            "bytes": 2474,
+            "sha256": "62d834b345677b1b4b6046d784e254a75e517beb6a5eb53e0b583ea1c9d4a83f"
+          },
+          {
+            "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/reveal.ts",
+            "bytes": 12224,
+            "sha256": "99392f686bda1ea4c35700bce4183dec3d18f403e68ab68c1e5fdae21bd935e9"
+          },
+          {
+            "path": "output/shaders-absorption/reference/ancestors/materialx-v1.39.5-mx_noise.glsl",
+            "bytes": 23236,
+            "sha256": "5dfc4ec072be4a43c54e96bffa6f0b6aa8f347b81f20cd4126aead98af43fb92"
+          }
+        ]
+      }
+    },
+    "readonlyCurrentVerdict": {
+      "path": "output/shaders-absorption/e01-readonly-original-verify.json",
+      "bytes": 274,
+      "sha256": "213a6a3f6ff9e35807f3f2c7684efff509f88b70877acb3e661682952975cd1f"
+    },
+    "readonlyCurrentVerdictLog": {
+      "path": "output/shaders-absorption/e01-readonly-original-verify.log",
+      "bytes": 45,
+      "sha256": "1ad26215bc0c6c1fdc171653de3edf1c0b2cb09426065fb9e3317f758144dc49"
+    }
+  },
+  "limitations": [
+    "WebKit live resize compositor disagrees with GPU/canvas export: INFRA_FAILURE/BLOCKED; no export/fresh-page compensation",
+    "Five profiles CPU dispatch below observable precision: LIMITED, not zero cost or proven engine regression",
+    "Headless desktop; mobile viewport/DPR emulation is not a physical phone",
+    "Frame interval is native pacer callback interval, not display present",
+    "Physical GPU memory unavailable; 2744B owned gfx allocation estimate excludes framebuffer/shared engine caches",
+    "Original collector row exit0 metadata corrected by independent actual-exit scoped validation; original aggregate CLI exit1 preserved",
+    "No isolated Agent Gate; no Wave2 advance"
+  ]
+}

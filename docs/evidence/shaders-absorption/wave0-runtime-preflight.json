@@ -1,0 +1,638 @@
+{
+  "schemaVersion": "shaders-wave0-runtime-preflight/1",
+  "method": "REAL_BROWSER_NATIVE_EMPTY_SCENE",
+  "executionChannel": "Lead",
+  "startedAt": "2026-10-09T00:10:10.282Z",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\shaders-runtime-preflight.cjs",
+    "--out=docs/evidence/shaders-absorption/wave0-runtime-preflight.json"
+  ],
+  "cwd": "E:\\AIProMax\\github\\cocosair.js",
+  "subset": true,
+  "completed": false,
+  "effectEngineGates": "NOT_RUN",
+  "agentGate": "NOT_RUN",
+  "fingerprintsBefore": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6631057,
+      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303518,
+      "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6631013,
+      "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+    },
+    {
+      "path": "tools/verify/shaders-runtime-preflight.cjs",
+      "bytes": 7614,
+      "sha256": "d5dd0519616cd2aad0653c44db494139b1cb3be7f94ed2d0e5ad0edf89373b6c"
+    }
+  ],
+  "rows": [
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "profile": {
+        "id": "720p",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "dpr": 1
+      },
+      "startedAt": "2026-10-09T00:10:11.156Z",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "observation": {
+        "sceneIsNative": true,
+        "steppedFrame": {
+          "step": 1,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        "enginePaused": true,
+        "canvasCount": 1,
+        "css": {
+          "width": 1280,
+          "height": 720
+        },
+        "backing": {
+          "width": 1280,
+          "height": 720
+        },
+        "devicePixelRatio": 1,
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "timerExtensionAvailable": true,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        },
+        "close": {
+          "samePromise": true,
+          "receipt": {
+            "status": "released",
+            "scene": "Node.965",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          },
+          "sceneCleared": true
+        }
+      },
+      "status": "PASS",
+      "endedAt": "2026-10-09T00:10:11.825Z"
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "profile": {
+        "id": "1080p",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "dpr": 1
+      },
+      "startedAt": "2026-10-09T00:10:11.960Z",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "observation": {
+        "sceneIsNative": true,
+        "steppedFrame": {
+          "step": 1,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        "enginePaused": true,
+        "canvasCount": 1,
+        "css": {
+          "width": 1920,
+          "height": 1080
+        },
+        "backing": {
+          "width": 1920,
+          "height": 1080
+        },
+        "devicePixelRatio": 1,
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "timerExtensionAvailable": true,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        },
+        "close": {
+          "samePromise": true,
+          "receipt": {
+            "status": "released",
+            "scene": "Node.829",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          },
+          "sceneCleared": true
+        }
+      },
+      "status": "PASS",
+      "endedAt": "2026-10-09T00:10:12.251Z"
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "149.0.7827.55",
+      "profile": {
+        "id": "mobile-dpr",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dpr": 2
+      },
+      "startedAt": "2026-10-09T00:10:12.365Z",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "observation": {
+        "sceneIsNative": true,
+        "steppedFrame": {
+          "step": 1,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        "enginePaused": true,
+        "canvasCount": 1,
+        "css": {
+          "width": 390,
+          "height": 844
+        },
+        "backing": {
+          "width": 780,
+          "height": 1688
+        },
+        "devicePixelRatio": 2,
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "timerExtensionAvailable": true,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        },
+        "close": {
+          "samePromise": true,
+          "receipt": {
+            "status": "released",
+            "scene": "Node.566",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          },
+          "sceneCleared": true
+        }
+      },
+      "status": "PASS",
+      "endedAt": "2026-10-09T00:10:12.649Z"
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "profile": {
+        "id": "720p",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "dpr": 1
+      },
+      "startedAt": "2026-10-09T00:10:14.136Z",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "observation": {
+        "sceneIsNative": true,
+        "steppedFrame": {
+          "step": 1,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        "enginePaused": true,
+        "canvasCount": 1,
+        "css": {
+          "width": 1280,
+          "height": 720
+        },
+        "backing": {
+          "width": 1280,
+          "height": 720
+        },
+        "devicePixelRatio": 1,
+        "webglVersion": "WebGL 2.0",
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        },
+        "close": {
+          "samePromise": true,
+          "receipt": {
+            "status": "released",
+            "scene": "Node.290",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          },
+          "sceneCleared": true
+        }
+      },
+      "status": "PASS",
+      "endedAt": "2026-10-09T00:10:15.517Z"
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "profile": {
+        "id": "1080p",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "dpr": 1
+      },
+      "startedAt": "2026-10-09T00:10:15.706Z",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "observation": {
+        "sceneIsNative": true,
+        "steppedFrame": {
+          "step": 1,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        "enginePaused": true,
+        "canvasCount": 1,
+        "css": {
+          "width": 1920,
+          "height": 1080
+        },
+        "backing": {
+          "width": 1920,
+          "height": 1080
+        },
+        "devicePixelRatio": 1,
+        "webglVersion": "WebGL 2.0",
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        },
+        "close": {
+          "samePromise": true,
+          "receipt": {
+            "status": "released",
+            "scene": "Node.951",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          },
+          "sceneCleared": true
+        }
+      },
+      "status": "PASS",
+      "endedAt": "2026-10-09T00:10:16.124Z"
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "profile": {
+        "id": "mobile-dpr",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dpr": 2
+      },
+      "startedAt": "2026-10-09T00:10:16.318Z",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "observation": {
+        "sceneIsNative": true,
+        "steppedFrame": {
+          "step": 1,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        "enginePaused": true,
+        "canvasCount": 1,
+        "css": {
+          "width": 390,
+          "height": 844
+        },
+        "backing": {
+          "width": 780,
+          "height": 1688
+        },
+        "devicePixelRatio": 2,
+        "webglVersion": "WebGL 2.0",
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        },
+        "close": {
+          "samePromise": true,
+          "receipt": {
+            "status": "released",
+            "scene": "Node.187",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          },
+          "sceneCleared": true
+        }
+      },
+      "status": "PASS",
+      "endedAt": "2026-10-09T00:10:16.739Z"
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "profile": {
+        "id": "720p",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "dpr": 1
+      },
+      "startedAt": "2026-10-09T00:10:17.341Z",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "observation": {
+        "sceneIsNative": true,
+        "steppedFrame": {
+          "step": 1,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        "enginePaused": true,
+        "canvasCount": 1,
+        "css": {
+          "width": 1280,
+          "height": 720
+        },
+        "backing": {
+          "width": 1280,
+          "height": 720
+        },
+        "devicePixelRatio": 1,
+        "webglVersion": "WebGL 2.0",
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        },
+        "close": {
+          "samePromise": true,
+          "receipt": {
+            "status": "released",
+            "scene": "Node.771",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          },
+          "sceneCleared": true
+        }
+      },
+      "status": "PASS",
+      "endedAt": "2026-10-09T00:10:28.390Z"
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "profile": {
+        "id": "1080p",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "dpr": 1
+      },
+      "startedAt": "2026-10-09T00:10:28.535Z",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "observation": {
+        "sceneIsNative": true,
+        "steppedFrame": {
+          "step": 1,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        "enginePaused": true,
+        "canvasCount": 1,
+        "css": {
+          "width": 1920,
+          "height": 1080
+        },
+        "backing": {
+          "width": 1920,
+          "height": 1080
+        },
+        "devicePixelRatio": 1,
+        "webglVersion": "WebGL 2.0",
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        },
+        "close": {
+          "samePromise": true,
+          "receipt": {
+            "status": "released",
+            "scene": "Node.930",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          },
+          "sceneCleared": true
+        }
+      },
+      "status": "PASS",
+      "endedAt": "2026-10-09T00:10:31.785Z"
+    },
+    {
+      "engine": "webkit",
+      "browserVersion": "26.6",
+      "profile": {
+        "id": "mobile-dpr",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dpr": 2
+      },
+      "startedAt": "2026-10-09T00:10:31.927Z",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "observation": {
+        "sceneIsNative": true,
+        "steppedFrame": {
+          "step": 1,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        "enginePaused": true,
+        "canvasCount": 1,
+        "css": {
+          "width": 390,
+          "height": 844
+        },
+        "backing": {
+          "width": 780,
+          "height": 1688
+        },
+        "devicePixelRatio": 2,
+        "webglVersion": "WebGL 2.0",
+        "timerExtensionAvailable": false,
+        "gpuTimestamp": {
+          "status": "NOT_RUN",
+          "reason": "Environment discovery only; no timer query submitted."
+        },
+        "close": {
+          "samePromise": true,
+          "receipt": {
+            "status": "released",
+            "scene": "Node.674",
+            "completed": [],
+            "pending": [],
+            "failures": [],
+            "retained": [
+              "runtime",
+              "scheduler",
+              "builtin-resources",
+              "shared-asset-caches"
+            ],
+            "measurements": {
+              "gpuMemory": "unavailable",
+              "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+            }
+          },
+          "sceneCleared": true
+        }
+      },
+      "status": "PASS",
+      "endedAt": "2026-10-09T00:10:34.968Z"
+    }
+  ],
+  "limitations": [
+    "Headless browser profiles, not physical mobile devices.",
+    "Empty native scene startup only; no effect correctness, shader gate, resource-100 or performance benchmark claimed.",
+    "Timer extension discovery does not constitute a measured GPU timestamp."
+  ],
+  "fingerprintsAfter": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6631057,
+      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303518,
+      "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6631013,
+      "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+    },
+    {
+      "path": "tools/verify/shaders-runtime-preflight.cjs",
+      "bytes": 7614,
+      "sha256": "d5dd0519616cd2aad0653c44db494139b1cb3be7f94ed2d0e5ad0edf89373b6c"
+    }
+  ],
+  "inputsUnchanged": true,
+  "endedAt": "2026-10-09T00:10:35.044Z",
+  "scopePassed": true,
+  "exitCode": 0
+}

@@ -1,0 +1,729 @@
+{
+  "schemaVersion": "e04-neon-actual-audit/1",
+  "executionChannel": "Lead",
+  "method": "READ_ONLY_REAL_REPORT_CLONES",
+  "baselinesAccepted": {
+    "functional": true,
+    "performance": true
+  },
+  "inputs": [
+    {
+      "path": "output/shaders-absorption/lead-w2-e04-functional-attempt3.json",
+      "bytes": 8811403,
+      "sha256": "bb9ff19afa9b8683d23625854702f309c6357175df42d64fb13202d0b11e4b94"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w2-e04-performance-attempt1.json",
+      "bytes": 6687699,
+      "sha256": "94731a41bcc4cafa7f91427f31707cd9e21f717bef566fc749db06c314c6e315"
+    }
+  ],
+  "rejected": 22,
+  "browserRunsAdded": 0,
+  "rows": [
+    {
+      "name": "probe-frame-missing",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": "probe frame non-negative safe integer"
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "probe-time-missing",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": "probe time finite number"
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "negative-frame-pair",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": "probe frame non-negative safe integer"
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": "receipt frame non-negative safe integer"
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "capture-dpr-spoof",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0]: tuple circle-default@99 != frozen circle-default@1",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "capture-parameters-spoof",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0]: params not frozen defaults+patch",
+        {
+          "capture": "circle-default",
+          "dpr": 1,
+          "errors": [
+            {
+              "x": 200,
+              "y": 200,
+              "maxError": 13,
+              "actual": [
+                53,
+                116,
+                139,
+                255
+              ],
+              "expected": [
+                53,
+                104,
+                126,
+                255
+              ]
+            },
+            {
+              "x": 320,
+              "y": 324,
+              "maxError": 64,
+              "actual": [
+                5,
+                67,
+                82,
+                255
+              ],
+              "expected": [
+                8,
+                10,
+                18,
+                255
+              ]
+            }
+          ]
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 176,
+            "y": 200,
+            "expected": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "actual": [
+              0,
+              13,
+              18,
+              9
+            ],
+            "error": 18
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 200,
+            "y": 200,
+            "expected": [
+              17,
+              73,
+              107,
+              177
+            ],
+            "actual": [
+              17,
+              92,
+              135,
+              177
+            ],
+            "error": 28
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 324,
+            "expected": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "actual": [
+              0,
+              118,
+              163,
+              85
+            ],
+            "error": 163
+          }
+        },
+        "chromium:capture[1] set: before params chain",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "shape-rebuild-missing",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[1] set: shape switch without rebuild receipt",
+        "chromium:capture[1] set: rebuild retirement refs",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "uniform-update-rebuilt",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0] set: uniform update rebuilt (retirement)",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "parameter-chain-broken",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0] set: before params chain",
+        "chromium:capture[0] set: shape switch without rebuild receipt",
+        "chromium:capture[0] set: rebuild retirement refs",
+        "chromium:capture[0] set: shape switch did not rebuild",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "untrusted-release",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: untrusted release",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "resource-ref-inflated",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:resource:refs-lifecycle-0",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "invalid-input-accepted",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:invalid[0]: accepted",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "gpu-all-white",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 200,
+            "expected": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 255
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 176,
+            "y": 200,
+            "expected": [
+              0,
+              13,
+              18,
+              9
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 255
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 200,
+            "y": 200,
+            "expected": [
+              17,
+              92,
+              135,
+              177
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 238
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 203,
+            "y": 200,
+            "expected": [
+              21,
+              149,
+              215,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 234
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 212,
+            "y": 200,
+            "expected": [
+              52,
+              69,
+              79,
+              78
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 203
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 435,
+            "y": 200,
+            "expected": [
+              56,
+              48,
+              88,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 207
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 280,
+            "expected": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 255
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 310,
+            "expected": [
+              98,
+              180,
+              230,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 157
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 320,
+            "y": 324,
+            "expected": [
+              0,
+              118,
+              163,
+              85
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 255
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 368,
+            "y": 234,
+            "expected": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 255
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 272,
+            "y": 234,
+            "expected": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 255
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 416,
+            "y": 264,
+            "expected": [
+              55,
+              76,
+              128,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 200
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 224,
+            "y": 136,
+            "expected": [
+              46,
+              119,
+              184,
+              255
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 209
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 560,
+            "y": 200,
+            "expected": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "error": 255
+          }
+        },
+        {
+          "engine": "chromium",
+          "capture": "circle-default",
+          "dpr": 1,
+          "stage": "linear-probe",
+          "error": {
+            "x": 560,
+            "y": 200,
+            "rule": "far-cutout-not-zero",
+            "actual": [
+              255,
+              255,
+              255,
+              255
+            ]
+          }
+        },
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "dpr2-page-not-closed",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium: dpr2 page not closed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "server-not-closed",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "owned server not closed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "build-failed",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "build exitCode must be 0",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "agent-pass-forged",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "agentGate must be NOT_RUN",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "null-engine",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "actual engine set",
+        "engine entry object required",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "png-sha-drift",
+      "phase": "functional",
+      "rejected": true,
+      "errors": [
+        "chromium:capture[0]: PNG identity drift",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "clock-raw-missing",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "complete clock calibration invalid",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "profile-duplicate",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium: frozen profile set",
+        "chromium:720p:actual viewport/DPR/backing",
+        "chromium: frozen profile set",
+        "chromium:720p:backing.w 1920 != 1280",
+        "chromium:720p:backing.h 1080 != 720",
+        "chromium:720p:css.w 1920 != viewport 1280",
+        "chromium:720p:css.h 1080 != viewport 720",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "performance-dpr-wrong",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "chromium:mobile-dpr:actual viewport/DPR/backing",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    },
+    {
+      "name": "performance-release-ref",
+      "phase": "performance",
+      "rejected": true,
+      "errors": [
+        "performance owned release not observed",
+        "scopePassed contradicts recomputed errors",
+        "exitCode contradicts recomputed verdict"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,973 @@
+{
+  "schemaVersion": "e08-cursor-trail-current-gate/1",
+  "task": "Wave3/E08",
+  "evaluatedAt": "2026-10-10T03:29:51.966Z",
+  "executionChannels": {
+    "partialImplementation": "Orca Worker 小三 (quota-limited, no terminal implementation)",
+    "implementationCompletionReviewAndCollection": "Lead"
+  },
+  "status": "PASS",
+  "scope": "63 committed points + linked head; two linear colors; native CPU data-texture renderer",
+  "subset": true,
+  "completed": false,
+  "wave3Gate": "NOT_RUN",
+  "agentGate": "NOT_RUN",
+  "gates": {
+    "Build": {
+      "status": "PASS",
+      "strictTypecheckAndBundle": [
+        {
+          "exitCode": 0,
+          "bundleBytes": 59556,
+          "files": [
+            {
+              "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/strict.log",
+              "bytes": 12,
+              "sha256": "21fefdddd9e88788ddbe4699e83f74a76d6d388dbf5015cc5ece40a0b27d0455"
+            }
+          ]
+        },
+        {
+          "exitCode": 0,
+          "bundleBytes": 59556,
+          "files": [
+            {
+              "path": "output/shaders-absorption/lead-w3-e08-performance-attempt2-artifacts/strict.log",
+              "bytes": 12,
+              "sha256": "21fefdddd9e88788ddbe4699e83f74a76d6d388dbf5015cc5ece40a0b27d0455"
+            }
+          ]
+        }
+      ]
+    },
+    "Runtime": {
+      "status": "PASS",
+      "engines": 3,
+      "trustedMouse": 3,
+      "trustedProtocolTouch": 3,
+      "legacyTouchEvent": "NOT_RUN",
+      "liveResize": 3
+    },
+    "Visual": {
+      "status": "PASS",
+      "screenshotCases": 36,
+      "transparentLinearProbes": 36,
+      "byteTolerance": 2,
+      "screenshots": [
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-line-dpr1.png",
+          "bytes": 7729,
+          "sha256": "0c5c9d01516f046e0f4417a2e7069b94178f76a03de61c7f01a379c888005124"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-corner-dpr1.png",
+          "bytes": 8328,
+          "sha256": "6ce60193ef4e8a58f82292877aa803ea26a9f0dcc23568d1db8e01872bcde8fd"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-crossing-dpr1.png",
+          "bytes": 28735,
+          "sha256": "8f815284ad0542c3b0e4d31777289053f9260001445a6c2fb45a2b5d33400e42"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-fast-dpr1.png",
+          "bytes": 7546,
+          "sha256": "788e92f65539661805a77fe319ca01df6d51cc3def0962be78d6ced7aa87ed20"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-slow-dpr1.png",
+          "bytes": 6989,
+          "sha256": "c511fce5ca94e47a675ffc0d17aff6eee28d2f9570367d9f16aafb2232fdf694"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-soft-dpr1.png",
+          "bytes": 15125,
+          "sha256": "e3c76ce24683e8f4a2381e7223dfce3d31447e52893ba76e0b75b69cfd1e4337"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-shrink-zero-dpr1.png",
+          "bytes": 8083,
+          "sha256": "5b680f10003f0086eb56f9454b9d52bc9b409a4d37e5301f4050470b329119c6"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-aged-dpr1.png",
+          "bytes": 6055,
+          "sha256": "d133b00b964523d929d1e0d7899fd72005a4dea506a0aee48435658d437c747e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-expired-dpr1.png",
+          "bytes": 1605,
+          "sha256": "939e15bf7dcc7155853ca6b1126c1ed2e26f50c5d96673fe20509d00658228b0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-wide-dpr1.png",
+          "bytes": 19684,
+          "sha256": "370e8841207eb45b29ddd3f56552f15adcd86f05238be42cb6363343dc550592"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-line-dpr2.png",
+          "bytes": 18318,
+          "sha256": "8384327d0fc0eef8e9a85676841be10a7a209ea8ed1e7712ba42726e38a1db9e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-corner-dpr2.png",
+          "bytes": 20697,
+          "sha256": "010af84edc82bdb23dc5b93d2ec7d4073026bf5c717695708e3fb75d5ca879ce"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-trusted-pointer.png",
+          "bytes": 6770,
+          "sha256": "0766017ba7a48b499c6e6aa36377b14159c7dd58c0b14ac8dcb86d9b91b58d7f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-trusted-touch-dpr2.png",
+          "bytes": 29759,
+          "sha256": "21c2242b528e6a0a8d79c3011bb8a37ac60469ac9891fc0b50a089452ea156bd"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/chromium-live-resize.png",
+          "bytes": 5422,
+          "sha256": "a932fb0cc4f02d77d6c3a9e4c8d9ff6d31695d1e315e89f7eb7e4a3f7307d6e6"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-line-dpr1.png",
+          "bytes": 10792,
+          "sha256": "b68b7f6f6131cf47771e9e5e6481ae346c21e6eb70493a6fe92f1d57df6bcb4e"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-corner-dpr1.png",
+          "bytes": 10785,
+          "sha256": "62677282d5f42858eadb5545b3a24581c057148bd11569807299fd09a3463b36"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-crossing-dpr1.png",
+          "bytes": 35552,
+          "sha256": "6ae99da19afe0ed1156533ef6b2e977267468182671e2f3116205ed15d469703"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-fast-dpr1.png",
+          "bytes": 11088,
+          "sha256": "06238cade5eadcada9ca1142a564d11aebadfd8d1decad0f0691090cfaf3da62"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-slow-dpr1.png",
+          "bytes": 9149,
+          "sha256": "beeb8e0a3714b604ce74f4cafaacc3cff51c1e3fcbbff682897be1884bd0afb7"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-soft-dpr1.png",
+          "bytes": 18194,
+          "sha256": "2327b10c8cfeba9a62736c83acf1fc0cc6f179d5da4c04bbb37161b57ecd4280"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-shrink-zero-dpr1.png",
+          "bytes": 12125,
+          "sha256": "9c978ba3ce51a1738f09a11440b83e006438b2de73db9bfde272acd507e835bf"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-aged-dpr1.png",
+          "bytes": 8623,
+          "sha256": "61aa8dad479904f280ac75cac28192e033d7528f25ccea75eb01683df174df41"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-expired-dpr1.png",
+          "bytes": 1885,
+          "sha256": "f39f5347c2afaeb95305f4310fda947fc683c20de00804c1d22d62158ed9625b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-wide-dpr1.png",
+          "bytes": 31431,
+          "sha256": "69bb51370ac541df8bd86025e90616f0f0575010004569efe44e9439136126c5"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-line-dpr2.png",
+          "bytes": 31249,
+          "sha256": "bd9aa672cd86a9c14f5ba3c6d987010827cd8c0596f35bc64439edd425afc9c3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-corner-dpr2.png",
+          "bytes": 27609,
+          "sha256": "9386c8ed36b570a5e875f7052a6516d669b59e8fbb785a9a3c0db430e01e78b9"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-trusted-pointer.png",
+          "bytes": 11106,
+          "sha256": "d6e94973aea49041a28e403876afe7fde04c501c8b35587eb631d4aa14cf9c1b"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-trusted-touch-dpr2.png",
+          "bytes": 48526,
+          "sha256": "98a88affbb0506f946e71ad0412001f98e9639c4a563faea94de7e3e412aa44f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/firefox-live-resize.png",
+          "bytes": 7056,
+          "sha256": "53bbf70626a908d738f25dbb93ccd19fad8ec77966665aff5ea8f0037137e7bd"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-line-dpr1.png",
+          "bytes": 9029,
+          "sha256": "d70cc3f208c08dc9b48f3a50c3933a7180cee6f6d44843eff7b1e8b1ac2aada8"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-corner-dpr1.png",
+          "bytes": 9598,
+          "sha256": "169b82a7de4902bf79db732a0589543822f45bd81b7451f5d30fcac667f350c8"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-crossing-dpr1.png",
+          "bytes": 31092,
+          "sha256": "5343692d55e1af9a687fa06946b3e02d7d01c229342ac0df7fe4b6947f723194"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-fast-dpr1.png",
+          "bytes": 8327,
+          "sha256": "08cc634238e5e44ba4ea5d2cb7451c36ba18cd2c975a3281223d556b197377d0"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-slow-dpr1.png",
+          "bytes": 7925,
+          "sha256": "c56ac4afad47f785dc5feb3fa678f5954dae76667de363f070e617db34a62bb5"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-soft-dpr1.png",
+          "bytes": 17130,
+          "sha256": "1c34f6572a033cac43aacfb0a60d0f5791841820c1f7c2e36c6c474b1768c3d3"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-shrink-zero-dpr1.png",
+          "bytes": 8974,
+          "sha256": "6e136f6538f9b4582f0839dfd5cb425a871ec58fa40e6d302ed52fc547312cac"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-aged-dpr1.png",
+          "bytes": 6848,
+          "sha256": "df643c35f35ddc611c6e98988ebd1fc215415bbf5abf4d0b66aaa5901c3d4389"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-expired-dpr1.png",
+          "bytes": 2229,
+          "sha256": "bf8f74b8eedefe0a66e2eeb251ff702734ad98709982ce3294095b550ee7539d"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-wide-dpr1.png",
+          "bytes": 20758,
+          "sha256": "40f3211e0344e89ea0ab39848b40267126beca3d86d8618c25c5d27e4c3bbfe7"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-line-dpr2.png",
+          "bytes": 20225,
+          "sha256": "feb2e7031a17568eb1266659668483fc65370336145de999d62796f715524f8a"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-corner-dpr2.png",
+          "bytes": 23102,
+          "sha256": "918cca81544089d9afbf70337987cadd96dc3a1eb93070890860bb0254c12c90"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-trusted-pointer.png",
+          "bytes": 7864,
+          "sha256": "66df36f34f129d9995e83de5e90e44a0eccd5009e5b967acdb4251f454d0ec30"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-trusted-touch-dpr2.png",
+          "bytes": 32269,
+          "sha256": "e978a6a870812a0960c650c5d1c1db6004a99db5fb01f6b01921c37c5569202f"
+        },
+        {
+          "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-artifacts/webkit-live-resize.png",
+          "bytes": 6373,
+          "sha256": "ed3d51fc41744ebb6173c2f14a2364edc3f7d6b5c9e0d0c641c7d9b0d73d357c"
+        }
+      ]
+    },
+    "Boundary": {
+      "status": "PASS",
+      "parameterCases": 84,
+      "malformedAtomicRejections": 18
+    },
+    "Resource": {
+      "status": "PASS",
+      "cycles": 300,
+      "ownedKinds": [
+        "mesh",
+        "material",
+        "effect",
+        "pointsTexture"
+      ],
+      "pairedReferencesPerCycle": 4,
+      "physicalGpuMemory": "unavailable"
+    },
+    "Performance": {
+      "status": "PASS",
+      "profileCases": 9,
+      "measurements": [
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.28999996185302734,
+          "cpuGfxEnvelopeP50Ms": 0.04499995708465576,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.6599999666214,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 329,
+            "millisecondsP50": 4.443136
+          },
+          "minimumSteadyTexels": 64,
+          "uploadBytes": 512,
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999995231628418,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.29499995708465576,
+          "cpuGfxEnvelopeP50Ms": 0.04499995708465576,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.639999985694885,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 329,
+            "millisecondsP50": 5.431296
+          },
+          "minimumSteadyTexels": 64,
+          "uploadBytes": 512,
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999995231628418,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "chromium",
+          "browserVersion": "149.0.7827.55",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.29499995708465576,
+          "cpuGfxEnvelopeP50Ms": 0.039999961853027344,
+          "cpuGlDrawDispatchP50Ms": 0.004999995231628418,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.65000009536743,
+          "gpuTimestamp": {
+            "status": "measured",
+            "samples": 329,
+            "millisecondsP50": 4.959232
+          },
+          "minimumSteadyTexels": 64,
+          "uploadBytes": 512,
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.004999995231628418,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.38000000000010914,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999949068,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.659999999999854,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "minimumSteadyTexels": 64,
+          "uploadBytes": 512,
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "steadyFrames": 329,
+          "cpuUpdateP50Ms": 0.4400000000005093,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999994543,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.68000000000029,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "minimumSteadyTexels": 64,
+          "uploadBytes": 512,
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "firefox",
+          "browserVersion": "155.0",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "steadyFrames": 328,
+          "cpuUpdateP50Ms": 0.38000000000010914,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999994543,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 16.659999999999854,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "minimumSteadyTexels": 64,
+          "uploadBytes": 512,
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.01999999999998181,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "720p",
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "dpr": 1
+          },
+          "steadyFrames": 204,
+          "cpuUpdateP50Ms": 0.18000000000029104,
+          "cpuGfxEnvelopeP50Ms": 0.06000000000040018,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 19.340000000000146,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "minimumSteadyTexels": 64,
+          "uploadBytes": 512,
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "1080p",
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "dpr": 1
+          },
+          "steadyFrames": 208,
+          "cpuUpdateP50Ms": 0.18000000000029104,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999949068,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 19.26000000000022,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "minimumSteadyTexels": 64,
+          "uploadBytes": 512,
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        },
+        {
+          "engine": "webkit",
+          "browserVersion": "26.6",
+          "profile": {
+            "id": "mobile-dpr",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "dpr": 2
+          },
+          "steadyFrames": 204,
+          "cpuUpdateP50Ms": 0.1999999999998181,
+          "cpuGfxEnvelopeP50Ms": 0.05999999999949068,
+          "cpuGlDrawDispatchP50Ms": 0,
+          "cpuQueueBookkeepingP50Ms": 0,
+          "afterDrawIntervalP50Ms": 19.959999999999127,
+          "gpuTimestamp": {
+            "status": "unavailable",
+            "samples": 0,
+            "millisecondsP50": null
+          },
+          "minimumSteadyTexels": 64,
+          "uploadBytes": 512,
+          "readPixelsDuringWindow": 0,
+          "clockResolutionMs": 0.019999999999527063,
+          "physicalGpuMemory": "unavailable"
+        }
+      ]
+    }
+  },
+  "counts": {
+    "engines": 3,
+    "dimensionRows": 18,
+    "visualCases": 36,
+    "boundaryCases": 84,
+    "malformedAtomicRejections": 18,
+    "resourceCycles": 300,
+    "liveResize": 3,
+    "trustedPointerCases": 3,
+    "trustedTouchCases": 3,
+    "screenshots": 45,
+    "performanceProfiles": 9
+  },
+  "bindings": [
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6.json",
+        "bytes": 79668247,
+        "sha256": "f19b5698752a621b767d81d60f15e1b137b604fa914b0f206c60618ca08342c3"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-os.json",
+        "bytes": 601,
+        "sha256": "6c118fa811da4a620acaf865b16e7f05c7253f0ea3032ba51f8d91466e5c646c"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6.log",
+        "bytes": 33,
+        "sha256": "bafc249c0c2812cc94b54a3788654d870a281a5f5adaab7e968cd3a508ef18ce"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt6-frozen.json",
+        "bytes": 6377,
+        "sha256": "fc76bfd2b9627e82b3f33add6d9a63299094f68130e21c6001b0c402ad133b69"
+      },
+      "execution": {
+        "startedAt": "2026-10-10T03:23:51.024Z",
+        "endedAt": "2026-10-10T03:24:50.961Z",
+        "command": [
+          "D:\\Program Files\\nodejs\\node.exe",
+          "tools/verify/shaders-cursor-trail-browser.cjs",
+          "--phase=functional",
+          "--browser=all",
+          "--out=output/shaders-absorption/lead-w3-e08-functional-attempt6.json"
+        ],
+        "cwd": "E:\\AIProMax\\github\\cocosair.js",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "output": "output/shaders-absorption/lead-w3-e08-functional-attempt6.json",
+        "log": "output/shaders-absorption/lead-w3-e08-functional-attempt6.log",
+        "inputsUnchanged": true
+      }
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e08-performance-attempt2.json",
+        "bytes": 32081626,
+        "sha256": "6ab8601ddd2693945a91adf630cee068406624bb5b9c1c32a4a71d942be83e51"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e08-performance-attempt2-os.json",
+        "bytes": 655,
+        "sha256": "0bb38c92e1ad136014cc115dea60e685a06a07b815e06d55201ce01e49b6b9e9"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e08-performance-attempt2.log",
+        "bytes": 33,
+        "sha256": "bafc249c0c2812cc94b54a3788654d870a281a5f5adaab7e968cd3a508ef18ce"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w3-e08-performance-attempt2-frozen.json",
+        "bytes": 6377,
+        "sha256": "fc76bfd2b9627e82b3f33add6d9a63299094f68130e21c6001b0c402ad133b69"
+      },
+      "execution": {
+        "startedAt": "2026-10-10T03:25:00.614Z",
+        "endedAt": "2026-10-10T03:26:41.219Z",
+        "command": [
+          "D:\\Program Files\\nodejs\\node.exe",
+          "tools/verify/shaders-cursor-trail-browser.cjs",
+          "--phase=performance",
+          "--authorization=LEAD-W3-E08-PERF2-20261010",
+          "--browser=all",
+          "--out=output/shaders-absorption/lead-w3-e08-performance-attempt2.json"
+        ],
+        "cwd": "E:\\AIProMax\\github\\cocosair.js",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "output": "output/shaders-absorption/lead-w3-e08-performance-attempt2.json",
+        "log": "output/shaders-absorption/lead-w3-e08-performance-attempt2.log",
+        "inputsUnchanged": true
+      }
+    }
+  ],
+  "validatorInputs": {
+    "inputs": [
+      {
+        "path": "examples/shader-cursor-trail/index.html",
+        "bytes": 1988,
+        "sha256": "c907b3e69c04b8a1d54243032e0b875d3d6fd0bd7aa7f273d34b5c9bf1f051d4"
+      },
+      {
+        "path": "examples/shader-cursor-trail/parameters.json",
+        "bytes": 1579,
+        "sha256": "f2c2b6bb841cf82d8114ce4291ae806902b7fcdf4d60c056193ce519e2628379"
+      },
+      {
+        "path": "examples/shader-cursor-trail/generate-effect.cjs",
+        "bytes": 2760,
+        "sha256": "5d2f7b757d18e98799feb439adca54b6590744e7c6f7840c704e684936e6f918"
+      },
+      {
+        "path": "examples/shader-cursor-trail/example.json",
+        "bytes": 4180,
+        "sha256": "e54f19136e6c77ad21dde2348c6b95dd2d330397fbf921f1a041251c60f9488c"
+      },
+      {
+        "path": "examples/shader-cursor-trail/files.json",
+        "bytes": 293,
+        "sha256": "a93730a91a678182cc89ef305d6dd5d56cd383032c81d392c54d2f2c0ae2d326"
+      },
+      {
+        "path": "examples/shader-cursor-trail/README.md",
+        "bytes": 2014,
+        "sha256": "4a3d5842adfe88c44f9be594fc8f6afd967117074c46cace9d3e03a008a4b094"
+      },
+      {
+        "path": "examples/shader-cursor-trail/UPSTREAM.md",
+        "bytes": 2910,
+        "sha256": "90bc066f130f0a6f9c30d7f009d7c6a60ea0532059c31f520c319024ef685ccd"
+      },
+      {
+        "path": "examples/shader-cursor-trail/LICENSE.reference.txt",
+        "bytes": 14046,
+        "sha256": "2a98b03e714cfe43624ef3656d986edf0a71728f8363603253db691db41b9cce"
+      },
+      {
+        "path": "examples/shader-cursor-trail/src/main.ts",
+        "bytes": 33354,
+        "sha256": "b01fe04812f2b68b20310ded21c94a10f503923439dbcb14308694b458b20782"
+      },
+      {
+        "path": "examples/shader-cursor-trail/src/recorder.ts",
+        "bytes": 9508,
+        "sha256": "a5cf5e333902941bff50ff2b0ee79a1f155e325491ea00db20cb8aca00eaa61c"
+      },
+      {
+        "path": "examples/shader-cursor-trail/src/parameters.ts",
+        "bytes": 2646,
+        "sha256": "179f8e32ad6c78bcf4cbafdbb6a73e37de4edaa92ef83df7d0a2189c6270d82b"
+      },
+      {
+        "path": "examples/shader-cursor-trail/src/trail.frag",
+        "bytes": 5088,
+        "sha256": "2e8e29c4f1adc2db056ba46fb9f122ab7badda935674536429738f2606079542"
+      },
+      {
+        "path": "examples/shader-cursor-trail/src/effect.generated.ts",
+        "bytes": 16314,
+        "sha256": "90e155eb300ac1ab52c46b2dd0d64b107ffefc50819d62938fc8f6168b04f170"
+      },
+      {
+        "path": "tools/verify/shaders-cursor-trail-browser.cjs",
+        "bytes": 45692,
+        "sha256": "d1b278affbdf689d360b950fa607eac7564d2f8f6b745bc7815b3615b4740ca5"
+      },
+      {
+        "path": "tools/verify/shaders-cursor-trail-oracle.cjs",
+        "bytes": 20891,
+        "sha256": "14a3425ea4bdf27f5678d752a7ca2f937234c373fdf0546f577a3c9ce7758e95"
+      },
+      {
+        "path": "tools/verify/shaders-cursor-trail-performance.cjs",
+        "bytes": 1478,
+        "sha256": "3c4ba43d38af6dd96350c4065d19dfbf28b701a99bc2cabd4bea5e61db665517"
+      },
+      {
+        "path": "tools/verify/shaders-cursor-trail.tsconfig.json",
+        "bytes": 496,
+        "sha256": "011d2f5d639f066d2745527a8f82a4c0a7308dbc4dce50b681c4a98ad7dd6dc6"
+      },
+      {
+        "path": "tools/verify/shaders-liquid-metal-performance.cjs",
+        "bytes": 5791,
+        "sha256": "9f55e1c6bf756eea3891cbe453664647a55bb371c229267eca2dde84472d0c4b"
+      },
+      {
+        "path": "tools/verify/shaders-browser-environment.cjs",
+        "bytes": 10656,
+        "sha256": "bc39fdb9222b9b95a5b8d7217462d7c79ab488d23417d465e2aab0fee4e35337"
+      },
+      {
+        "path": "tools/verify/shaders-browser-launch.cjs",
+        "bytes": 2797,
+        "sha256": "3e5a4bc54834f9688994b446346ac58aca10c1936e88a1f932531fb75c81fc87"
+      },
+      {
+        "path": "tools/verify/browser-engines.cjs",
+        "bytes": 2159,
+        "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+      },
+      {
+        "path": "tools/verify/competitive-example-server.cjs",
+        "bytes": 1923,
+        "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+      },
+      {
+        "path": "examples/shared/shader-blocks.js",
+        "bytes": 8627,
+        "sha256": "31e9577ae7f99a740f3053550435c78278b644c466397f6b2588c3404e4b22ab"
+      },
+      {
+        "path": "examples/shared/shader-lifecycle.ts",
+        "bytes": 10021,
+        "sha256": "6b28d2b0afea13e947ee371ba5dcef7d3d91f6ab847a0a79d51cf1e7982cd4d9"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.js",
+        "bytes": 5595,
+        "sha256": "c2bc01e8c73ab866f11194fc802bb8ce464b3738bfecf8d30cf5967907e5e346"
+      },
+      {
+        "path": "examples/shared/asset-lifecycle.d.ts",
+        "bytes": 1045,
+        "sha256": "34d5cc8469ea05a17f7cee6bf287d0c473cb0daaf50adfd6c49454fb68ef19cb"
+      },
+      {
+        "path": "build/cocosair.module.js",
+        "bytes": 6631057,
+        "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+      },
+      {
+        "path": "build/cocosair.module.d.ts",
+        "bytes": 3303518,
+        "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+      },
+      {
+        "path": "build/npm/cocosair.module.js",
+        "bytes": 6631013,
+        "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+      }
+    ],
+    "reference": {
+      "repo": "shader-effects-inc/shaders",
+      "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/shaders/CursorTrail/index.ts",
+          "bytes": 14413,
+          "sha256": "1cfdb60b981438b885d6b47c5ee3557f3289669fc12fb07e5000e4c0476c5cb2"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/agents.ts",
+          "bytes": 30253,
+          "sha256": "0dc5f7aeb5b50e8848a6dcbc3e55efaaa39f734eb1b490d343fd8114e0166450"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/gpu/kit/host/pointer.ts",
+          "bytes": 13503,
+          "sha256": "bed3a363bd0a368ef38201b8677ea8265dcf111a62929625b961486897cc1af3"
+        },
+        {
+          "path": "output/shaders-absorption/worker-w3-e08-upstream-dataEncoding.ts",
+          "bytes": 1499,
+          "sha256": "36ddb5e8268fbf2d1f1e36cc7f91a6c2f58f60146067a975c505c49894f75f6d"
+        },
+        {
+          "path": "output/shaders-absorption/worker-w3-e08-upstream-dataEncoding-fetch.json",
+          "bytes": 450,
+          "sha256": "2c59438345cf8727e9a8a571a74f4195a90d299883bd7ffbfd5c6888dfce794c"
+        }
+      ]
+    }
+  },
+  "verifier": {
+    "path": "tools/verify/shaders-cursor-trail-gate.cjs",
+    "bytes": 8693,
+    "sha256": "cca7a20cfe50193e6d43d2ae2aec3d79069b4a4a6e82e8768442ab853d76d96d"
+  },
+  "audit": {
+    "path": "docs/evidence/shaders-absorption/e08-cursor-trail-actual-audit.json",
+    "bytes": 46698,
+    "sha256": "49ed64c135c3dcfb15e6c0980254f62f1e7114994fe1e330d9c9976f63b8027b"
+  },
+  "historicalAttempts": [
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt1.json",
+        "bytes": 23837228,
+        "sha256": "c5f4f603f51cc94d112eb707186298a8077f6b2ff9609841c87181e9b7f81a00"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt1-os.json",
+        "bytes": 454,
+        "sha256": "1ea313f7e52f209391cb9005eadbb86f5c4194036ba449467148750c0c506a6c"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt1.log",
+        "bytes": 1229,
+        "sha256": "75c42becf5a68e7add02f3191fef50a80393387e2e818e52a5a1c0a0c35b3c57"
+      },
+      "historicalExitCode": 1,
+      "reason": "AGENT_FAILURE: capture before asynchronous backing resize settled"
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt2.json",
+        "bytes": 71499080,
+        "sha256": "d4bcd5001fe515aa815b7404279ede7119918bbbd4ef6de41779be1410dfe5fe"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt2-os.json",
+        "bytes": 449,
+        "sha256": "aa78ee856155c35fbb7c4fea378024e0ead64612e6ac544d664b1da162bfb146"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt2.log",
+        "bytes": 33,
+        "sha256": "bafc249c0c2812cc94b54a3788654d870a281a5f5adaab7e968cd3a508ef18ce"
+      },
+      "historicalExitCode": 0,
+      "reason": "Historical collection preserved; checker/source closure evolved, not a current proof"
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt3.json",
+        "bytes": 71498961,
+        "sha256": "4da57e1efdc4d2703fb6fadc2bb31c0cdc40329d15a7deed43fb20bdaaeffda3"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt3-os.json",
+        "bytes": 449,
+        "sha256": "d3cb8537be75f3ab028a39dafa9f0ccbfd3ce32044de284d46e348bc87820a96"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt3.log",
+        "bytes": 33,
+        "sha256": "bafc249c0c2812cc94b54a3788654d870a281a5f5adaab7e968cd3a508ef18ce"
+      },
+      "historicalExitCode": 0,
+      "reason": "Historical collection preserved; checker/source closure evolved, not a current proof"
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt4.json",
+        "bytes": 79188724,
+        "sha256": "9f3303047bcec8a3e208f88e19effe9c02f673c8712293003ed1df2232adb189"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt4-os.json",
+        "bytes": 601,
+        "sha256": "0062c2a4924a5c238ab38c5f39d8d89f87e88f2093564a9f7cfde5f28d2da725"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt4.log",
+        "bytes": 33,
+        "sha256": "bafc249c0c2812cc94b54a3788654d870a281a5f5adaab7e968cd3a508ef18ce"
+      },
+      "historicalExitCode": 0,
+      "reason": "Historical collection preserved; checker/source closure evolved, not a current proof"
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt5.json",
+        "bytes": 79668636,
+        "sha256": "1a97aa007204ce78f551b4812c110680785ad52ef17f3210a3e5d9ae5ed67fdc"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt5-os.json",
+        "bytes": 601,
+        "sha256": "a6801c9e357cdcbc76d24a71b4bc98ba89260914468463fdaaf02fd7091dd54d"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e08-functional-attempt5.log",
+        "bytes": 157,
+        "sha256": "1b2a012c49e48d4d5f79cf88e54b3ae6ce625378403495fb3657006069095d71"
+      },
+      "historicalExitCode": 1,
+      "reason": "AGENT_FAILURE: TypeScript event-name typing and mandatory legacy TouchEvent assumption"
+    },
+    {
+      "report": {
+        "path": "output/shaders-absorption/lead-w3-e08-performance-attempt1.json",
+        "bytes": 31964804,
+        "sha256": "f62a45176d44af71d18b204d3302d26adfb9a680ca0688a115f6deab8284d248"
+      },
+      "osReceipt": {
+        "path": "output/shaders-absorption/lead-w3-e08-performance-attempt1-os.json",
+        "bytes": 654,
+        "sha256": "de2929c7036cf7343020f06ba29b61e839adff83080ee94c3e92adef48746da9"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w3-e08-performance-attempt1.log",
+        "bytes": 33,
+        "sha256": "bafc249c0c2812cc94b54a3788654d870a281a5f5adaab7e968cd3a508ef18ce"
+      },
+      "historicalExitCode": 0,
+      "reason": "Historical collection preserved; checker/source closure evolved, not a current proof"
+    }
+  ],
+  "limitations": [
+    "Two linear RGB endpoints only; no multi-stop color-space platform",
+    "Projected three-subchord distance, not exact varying-radius cone SDF",
+    "Exponential depth blend follows executable upstream code, not newest-wins header",
+    "Trusted touch protocol is not a physical touch-device test; legacy TouchEvent receipts absent",
+    "Performance uses explicit diagnostic CPU trace, not trusted human input",
+    "Engine accounting is not physical VRAM; Firefox/WebKit GPU timestamp unavailable",
+    "Independent Gallery harness, long-run/multitab and Agent Gate NOT_RUN",
+    "E09 Glass and complete Wave3 Gate pending; no Wave4 advancement"
+  ]
+}

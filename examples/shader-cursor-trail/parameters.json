@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "shaders-effect-contract/1",
+  "name": "cursorTrail",
+  "version": "1.0.0",
+  "params": {
+    "colorA": {
+      "type": "string",
+      "defaultValue": "#00aaff",
+      "updateMode": "uniform",
+      "description": "Color of fresh trails (sRGB hex, decoded to linear)."
+    },
+    "colorB": {
+      "type": "string",
+      "defaultValue": "#ff00aa",
+      "updateMode": "uniform",
+      "description": "Color trails transition to as they fade (sRGB hex, decoded to linear)."
+    },
+    "radius": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0.5,
+      "max": 2,
+      "step": 0.1,
+      "unit": "multiplier",
+      "updateMode": "uniform",
+      "description": "Base radius of the trail stroke (×0.1 in UV units in the shader)."
+    },
+    "length": {
+      "type": "number",
+      "defaultValue": 0.5,
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "unit": "second",
+      "updateMode": "uniform",
+      "description": "How long the trail persists; age rate = min(dt, 0.25) / max(0.1, length)."
+    },
+    "shrink": {
+      "type": "number",
+      "defaultValue": 1,
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Stroke taper as it fades (0 = no taper, 1 = full taper)."
+    },
+    "softness": {
+      "type": "number",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "unit": "ratio",
+      "updateMode": "uniform",
+      "description": "Edge softness (0 = crisp analytic edge, 1 = very soft)."
+    }
+  }
+}

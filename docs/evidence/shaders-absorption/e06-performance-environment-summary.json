@@ -1,0 +1,930 @@
+{
+  "schemaVersion": "shaders-environment-performance-summary/1",
+  "effect": "E06 Sparkle",
+  "executionChannel": "Lead",
+  "observedAt": "2026-10-09T08:29:08.060Z",
+  "performanceScope": "PASS",
+  "effectStatus": "BLOCKED",
+  "waveStatus": "BLOCKED",
+  "agentGate": "NOT_RUN",
+  "subset": true,
+  "completed": false,
+  "scope": {
+    "declared": 9,
+    "measured": 9,
+    "skipped": 0
+  },
+  "execution": {
+    "command": "D:\\Program Files\\nodejs\\node.exe tools/verify/shaders-sparkle-environment-performance.cjs --phase=performance --browser=all --authorization=LEAD-W1-R7-E06-20261009 --out=output/shaders-absorption/lead-w1-r7-e06-performance-final.json",
+    "cwd": "E:\\AIProMax\\github\\cocosair.js",
+    "exitCode": 0,
+    "signal": null,
+    "walltimeMs": 48229,
+    "inputsUnchanged": true
+  },
+  "inputs": {
+    "source": [
+      {
+        "path": "examples/shader-sparkle/index.html",
+        "bytes": 1075,
+        "sha256": "7e8339352f6ebd8e20a2f60adcf50da4d7f2492520e1aa350e2042412fa6dc80"
+      },
+      {
+        "path": "examples/shader-sparkle/parameters.json",
+        "bytes": 2522,
+        "sha256": "0d2f874bf2ec038aef2a30942f33b1451999c6fb71f02f4b374d8b905f5ac83b"
+      },
+      {
+        "path": "examples/shader-sparkle/src/main.ts",
+        "bytes": 19579,
+        "sha256": "cf1e7da85d7792952182fbc277133eba3646939d8a4bb7a2789d87930536f716"
+      },
+      {
+        "path": "examples/shader-sparkle/src/parameters.ts",
+        "bytes": 1338,
+        "sha256": "b437b4cf336411b7303131b12b9fc9302c7284ce2ef5e5e9e29c40c90eb2a05d"
+      },
+      {
+        "path": "examples/shader-sparkle/src/sparkle.frag",
+        "bytes": 2919,
+        "sha256": "e9e72eafea89eda8f6b1cd1dbd9ebea054bc602f608a2d64de658f22e7e7a4db"
+      },
+      {
+        "path": "examples/shader-sparkle/src/effect.generated.ts",
+        "bytes": 24788,
+        "sha256": "e76c5887a87cd28376711e11d1b8c39a625bc59b9a166386b32e9f42ce5fda9b"
+      },
+      {
+        "path": "examples/shader-sparkle/generate-effects.mjs",
+        "bytes": 1243,
+        "sha256": "f23bd450f625f223d7a2a9248add6c2bd07d7eb11871cd27466f60ebf93671c1"
+      },
+      {
+        "path": "examples/shader-sparkle/UPSTREAM.md",
+        "bytes": 1100,
+        "sha256": "d59a5737069efa6b061c519ae8e7c045e19bfcc1e2efd6e0cbe729a81733dc4b"
+      },
+      {
+        "path": "examples/shader-sparkle/LICENSE.reference.txt",
+        "bytes": 14046,
+        "sha256": "2a98b03e714cfe43624ef3656d986edf0a71728f8363603253db691db41b9cce"
+      }
+    ],
+    "sdk": [
+      {
+        "path": "build/cocosair.module.js",
+        "bytes": 6631057,
+        "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+      },
+      {
+        "path": "build/cocosair.module.d.ts",
+        "bytes": 3303518,
+        "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+      },
+      {
+        "path": "build/npm/cocosair.module.js",
+        "bytes": 6631013,
+        "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+      },
+      {
+        "path": "build/cocosair.module.js.map",
+        "bytes": 20318600,
+        "sha256": "b9a6183d745ae774288c2d7963364a6fa9d87297f1a399b2421aa6d1e3a246f0"
+      }
+    ],
+    "runner": [
+      {
+        "path": "tools/verify/shaders-sparkle-browser.cjs",
+        "bytes": 25281,
+        "sha256": "22956b91ff281b82d18307316883c61ba776ef3df577b05cc21ce7342ac19a2a"
+      },
+      {
+        "path": "tools/verify/shaders-sparkle-oracle.cjs",
+        "bytes": 8353,
+        "sha256": "d75253ada0db8e0896b335e1de0ef18f9af187367b4343ca5d581dce71037f3e"
+      },
+      {
+        "path": "tools/verify/shaders-sparkle-performance.cjs",
+        "bytes": 9008,
+        "sha256": "ac5854e2690fd60b3f880fa8d5eabe4a6f75498e63076e4aef6e44d976f96423"
+      },
+      {
+        "path": "tools/verify/shaders-sparkle-scoped.cjs",
+        "bytes": 2317,
+        "sha256": "90eb7bfb059810498a1b8b80ac3ebfa3e889943e62b663b4317bc0b08a0a9b57"
+      },
+      {
+        "path": "tools/verify/shaders-sparkle.tsconfig.json",
+        "bytes": 295,
+        "sha256": "1582eb4ad3e44ae18845dab03043c8bf90a4ecfdd765c72e1f2de77db798d25f"
+      },
+      {
+        "path": "tools/verify/shaders-effect-contract.cjs",
+        "bytes": 37563,
+        "sha256": "e1eb1a21b1167ab7d5dab8d7cf21fa214a44b23efa9d62f83a75d08d3d7c2ab3"
+      },
+      {
+        "path": "tools/build/effect-json.mjs",
+        "bytes": 10548,
+        "sha256": "9d090611aa72f3a8017677e5d8c4848e4c0ce9126acb95bfbbec6c53d25f0c16"
+      },
+      {
+        "path": "examples/shared/shader-blocks.js",
+        "bytes": 8627,
+        "sha256": "31e9577ae7f99a740f3053550435c78278b644c466397f6b2588c3404e4b22ab"
+      },
+      {
+        "path": "tools/verify/browser-engines.cjs",
+        "bytes": 2159,
+        "sha256": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41"
+      },
+      {
+        "path": "tools/verify/competitive-example-server.cjs",
+        "bytes": 1923,
+        "sha256": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af"
+      },
+      {
+        "path": "tools/verify/shaders-sparkle-environment-performance.cjs",
+        "bytes": 33607,
+        "sha256": "1de2eaa17786e7ff7ede918f3ec49f856a71674ea7bc2c7c6265d566354050ef"
+      },
+      {
+        "path": "tools/verify/shaders-browser-environment.cjs",
+        "bytes": 10656,
+        "sha256": "bc39fdb9222b9b95a5b8d7217462d7c79ab488d23417d465e2aab0fee4e35337"
+      }
+    ],
+    "reference": {
+      "repo": "shader-effects-inc/shaders",
+      "commit": "dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/shaders/Sparkle/index.ts",
+          "bytes": 7442,
+          "sha256": "fb020021af52451c20facd7602c23c539e51be9f7201561691ba987749c3e676"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/std/paint/patterns.ts",
+          "bytes": 54121,
+          "sha256": "5aad6730eb59d5e73de65ffa117884a040fd716abcd5d29ff9b8412be14de2cc"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/std/paint/light.ts",
+          "bytes": 42771,
+          "sha256": "0318bbe0e40390868ca317d33b8bfefab73788fc1941e8ff28f948e5a525ea5c"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/std/motion.ts",
+          "bytes": 8667,
+          "sha256": "6de9d39df5d573ce1c69b3f85927e61439cb5dae9b921b8b208144e40cb6508d"
+        },
+        {
+          "path": "output/shaders-absorption/reference/packages/core/src/std/effects/blurs.ts",
+          "bytes": 84107,
+          "sha256": "b6d43a84520ba98ee85f3a3c63aa2c1e19cfd0ec73dad577ca207994ac0ba545"
+        }
+      ]
+    }
+  },
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "149.0.7827.55",
+      "profile": {
+        "id": "720p",
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.004999995231628418,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.0000699999928475,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.09999996423721313,
+        "p95": 0.17500001192092896,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.0549999475479126,
+        "p95": 0.07500004768371582,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0.004999995231628418,
+        "p95": 0.009999990463256836,
+        "zeroCount": 23
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.644999980926514,
+        "p95": 17.625,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "measured",
+        "milliseconds": {
+          "count": 60,
+          "p50": 0.227328,
+          "p95": 0.2304,
+          "zeroCount": 0
+        }
+      },
+      "drawCalls": 1,
+      "passCount": 1,
+      "textureCount": 1,
+      "bufferCount": 3,
+      "vramEstimate": {
+        "bytes": 65676,
+        "formula": "128*128*RGBA8 + 4*(3+2)*float32 + 6*uint16 + 3*vec4 float32",
+        "method": "analytical owned effect bytes; excludes swapchain, driver and shared caches"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "listeners": {
+        "adds": 3,
+        "removes": 3
+      },
+      "sharedTemplatesReleased": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "chromium",
+      "version": "149.0.7827.55",
+      "profile": {
+        "id": "1080p",
+        "width": 1920,
+        "height": 1080,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.004999995231628418,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 0.9993600000143051,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.0899999737739563,
+        "p95": 0.13999998569488525,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.04499995708465576,
+        "p95": 0.06999999284744263,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.004999995231628418,
+        "zeroCount": 32
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.605000019073486,
+        "p95": 17.305000007152557,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "measured",
+        "milliseconds": {
+          "count": 60,
+          "p50": 3.284992,
+          "p95": 5.305344,
+          "zeroCount": 0
+        }
+      },
+      "drawCalls": 1,
+      "passCount": 1,
+      "textureCount": 1,
+      "bufferCount": 3,
+      "vramEstimate": {
+        "bytes": 65676,
+        "formula": "128*128*RGBA8 + 4*(3+2)*float32 + 6*uint16 + 3*vec4 float32",
+        "method": "analytical owned effect bytes; excludes swapchain, driver and shared caches"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "listeners": {
+        "adds": 3,
+        "removes": 3
+      },
+      "sharedTemplatesReleased": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "chromium",
+      "version": "149.0.7827.55",
+      "profile": {
+        "id": "mobile-dpr",
+        "width": 390,
+        "height": 844,
+        "dpr": 2
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.004999995231628418,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 0.9997850000262261,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.0899999737739563,
+        "p95": 0.1899999976158142,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.04999995231628418,
+        "p95": 0.0750001072883606,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.005000054836273193,
+        "zeroCount": 34
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.60999995470047,
+        "p95": 17.474999964237213,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "measured",
+        "milliseconds": {
+          "count": 60,
+          "p50": 2.92864,
+          "p95": 4.811776,
+          "zeroCount": 0
+        }
+      },
+      "drawCalls": 1,
+      "passCount": 1,
+      "textureCount": 1,
+      "bufferCount": 3,
+      "vramEstimate": {
+        "bytes": 65676,
+        "formula": "128*128*RGBA8 + 4*(3+2)*float32 + 6*uint16 + 3*vec4 float32",
+        "method": "analytical owned effect bytes; excludes swapchain, driver and shared caches"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "listeners": {
+        "adds": 3,
+        "removes": 3
+      },
+      "sharedTemplatesReleased": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "profile": {
+        "id": "720p",
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.01999999999998181,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 0.99994,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.11999999999989086,
+        "p95": 0.1799999999998363,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.05999999999994543,
+        "p95": 0.09999999999990905,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.01999999999998181,
+        "zeroCount": 53
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.640000000000327,
+        "p95": 17.5,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable"
+      },
+      "drawCalls": 1,
+      "passCount": 1,
+      "textureCount": 1,
+      "bufferCount": 3,
+      "vramEstimate": {
+        "bytes": 65676,
+        "formula": "128*128*RGBA8 + 4*(3+2)*float32 + 6*uint16 + 3*vec4 float32",
+        "method": "analytical owned effect bytes; excludes swapchain, driver and shared caches"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "listeners": {
+        "adds": 3,
+        "removes": 3
+      },
+      "sharedTemplatesReleased": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "profile": {
+        "id": "1080p",
+        "width": 1920,
+        "height": 1080,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.01999999999998181,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 0.99974,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.13999999999987267,
+        "p95": 0.20000000000004547,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.05999999999994543,
+        "p95": 0.10000000000013642,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.01999999999998181,
+        "zeroCount": 52
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.6400000000001,
+        "p95": 17.37999999999988,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable"
+      },
+      "drawCalls": 1,
+      "passCount": 1,
+      "textureCount": 1,
+      "bufferCount": 3,
+      "vramEstimate": {
+        "bytes": 65676,
+        "formula": "128*128*RGBA8 + 4*(3+2)*float32 + 6*uint16 + 3*vec4 float32",
+        "method": "analytical owned effect bytes; excludes swapchain, driver and shared caches"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "listeners": {
+        "adds": 3,
+        "removes": 3
+      },
+      "sharedTemplatesReleased": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "profile": {
+        "id": "mobile-dpr",
+        "width": 390,
+        "height": 844,
+        "dpr": 2
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.01999999999998181,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 0.9998599999999999,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.12000000000034561,
+        "p95": 0.20000000000004547,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.05999999999994543,
+        "p95": 0.10000000000013642,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.01999999999998181,
+        "zeroCount": 54
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.639999999999873,
+        "p95": 17.220000000000027,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable"
+      },
+      "drawCalls": 1,
+      "passCount": 1,
+      "textureCount": 1,
+      "bufferCount": 3,
+      "vramEstimate": {
+        "bytes": 65676,
+        "formula": "128*128*RGBA8 + 4*(3+2)*float32 + 6*uint16 + 3*vec4 float32",
+        "method": "analytical owned effect bytes; excludes swapchain, driver and shared caches"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "listeners": {
+        "adds": 3,
+        "removes": 3
+      },
+      "sharedTemplatesReleased": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "profile": {
+        "id": "720p",
+        "width": 1280,
+        "height": 720,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.019999999999527063,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.05208,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.1000000000003638,
+        "p95": 0.27999999999974534,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.07999999999992724,
+        "p95": 0.14000000000032742,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.020000000000436557,
+        "zeroCount": 35
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 16.38000000000011,
+        "p95": 30.26000000000022,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable"
+      },
+      "drawCalls": 1,
+      "passCount": 1,
+      "textureCount": 1,
+      "bufferCount": 3,
+      "vramEstimate": {
+        "bytes": 65676,
+        "formula": "128*128*RGBA8 + 4*(3+2)*float32 + 6*uint16 + 3*vec4 float32",
+        "method": "analytical owned effect bytes; excludes swapchain, driver and shared caches"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "listeners": {
+        "adds": 3,
+        "removes": 3
+      },
+      "sharedTemplatesReleased": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "profile": {
+        "id": "1080p",
+        "width": 1920,
+        "height": 1080,
+        "dpr": 1
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.019999999999527063,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.2166199999999998,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.1000000000003638,
+        "p95": 0.1999999999998181,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.0999999999994543,
+        "p95": 0.17999999999938154,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.020000000000436557,
+        "zeroCount": 37
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 20.279999999999745,
+        "p95": 24.279999999999745,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable"
+      },
+      "drawCalls": 1,
+      "passCount": 1,
+      "textureCount": 1,
+      "bufferCount": 3,
+      "vramEstimate": {
+        "bytes": 65676,
+        "formula": "128*128*RGBA8 + 4*(3+2)*float32 + 6*uint16 + 3*vec4 float32",
+        "method": "analytical owned effect bytes; excludes swapchain, driver and shared caches"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "listeners": {
+        "adds": 3,
+        "removes": 3
+      },
+      "sharedTemplatesReleased": true,
+      "pageClosed": true
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "profile": {
+        "id": "mobile-dpr",
+        "width": 390,
+        "height": 844,
+        "dpr": 2
+      },
+      "coi": true,
+      "clockMinimumPositiveMs": 0.019999999999527063,
+      "clockPositiveCount": 1000,
+      "warmup": 30,
+      "steady": 60,
+      "steadySeconds": 1.03004,
+      "cpuUpdateMs": {
+        "count": 60,
+        "p50": 0.0999999999994543,
+        "p95": 0.18000000000029104,
+        "zeroCount": 0
+      },
+      "cpuEncodingEnvelopeMs": {
+        "count": 60,
+        "p50": 0.07999999999992724,
+        "p95": 0.15999999999985448,
+        "zeroCount": 0
+      },
+      "cpuDrawDispatchMs": {
+        "count": 60,
+        "p50": 0,
+        "p95": 0.020000000000436557,
+        "zeroCount": 38
+      },
+      "frameIntervalMs": {
+        "count": 60,
+        "p50": 15.199999999999818,
+        "p95": 32.80000000000018,
+        "zeroCount": 0
+      },
+      "gpu": {
+        "status": "unavailable"
+      },
+      "drawCalls": 1,
+      "passCount": 1,
+      "textureCount": 1,
+      "bufferCount": 3,
+      "vramEstimate": {
+        "bytes": 65676,
+        "formula": "128*128*RGBA8 + 4*(3+2)*float32 + 6*uint16 + 3*vec4 float32",
+        "method": "analytical owned effect bytes; excludes swapchain, driver and shared caches"
+      },
+      "ownedRefs": [
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        },
+        {
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "listeners": {
+        "adds": 3,
+        "removes": 3
+      },
+      "sharedTemplatesReleased": true,
+      "pageClosed": true
+    }
+  ],
+  "cleanup": {
+    "proxyClosed": true,
+    "serverClosed": true,
+    "browsersClosed": true,
+    "serverCloseAcknowledged": true
+  },
+  "audit": {
+    "baselineAccepted": true,
+    "independentArithmeticRows": 9,
+    "rejected": 32,
+    "browserRunsAdded": 0
+  },
+  "evidence": [
+    {
+      "path": "output/shaders-absorption/lead-w1-r7-e06-performance-final.json",
+      "bytes": 2609860,
+      "sha256": "685ff988c04c531d70d765c5a1b0e69ccdabdef7c1dec1a7e0452475b834bc07"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r7-e06-performance-final-driver.json",
+      "bytes": 12708,
+      "sha256": "495ca68e553a0185c3f717840bb4734299b17ec252fea0f2c321d0c72c89184a"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r7-e06-performance-final-raw.log",
+      "bytes": 142,
+      "sha256": "973c2ea1d880a4fdae513f20058accd4b71901f7e5a8faeadd7c8fbe52b7ab30"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r7-e06-performance-final-frozen.json",
+      "bytes": 6666,
+      "sha256": "26473631549e5fdf25b3c78bdfdf917d08c052d787733a1a4291cf83ae67cc1b"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r7-e06-audit.json",
+      "bytes": 6135,
+      "sha256": "65eeeef28f8bc376063cb4c61f1b8799ac56d64e76b7db1ab3981301e6df10b2"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r7-e06-audit.cjs",
+      "bytes": 6120,
+      "sha256": "8675633da3f685089e909a78387763303470eaf457ee1dce5a97c02ccb93cb03"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r7-e06-final-verify.log",
+      "bytes": 25,
+      "sha256": "c385951575a4345431c0baf53ee5775b0ff0cb0b4e8da14ec7db6984f38f6b71"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r7-gpu-cleanup-tests.log",
+      "bytes": 721,
+      "sha256": "28a951f39921a204fa119526bc69a897894e5fa61683efd60f187491f1e3d3cf"
+    }
+  ],
+  "historicalAttempts": [
+    {
+      "path": "output/shaders-absorption/lead-w1-r7-e06-performance-attempt1.json",
+      "reason": "Captured before additional query-retirement coverage gate; preserved and not claimed current after collector SHA changed"
+    },
+    {
+      "path": "output/shaders-absorption/lead-w1-r6c-focused-attempt1.log",
+      "reason": "Two test-harness failures (structuredClone unavailable; incorrect Jest table binding) corrected in later test run"
+    }
+  ],
+  "limitations": [
+    "WebKit same-page live-resize compositor remains BLOCKED; no Wave advancement",
+    "CPU samples equal to zero are clock-quantized below resolution, not zero cost; zero counts retained",
+    "GPU timestamps unavailable in Firefox/WebKit; no CPU substitute",
+    "Native AFTER_DRAW intervals do not prove compositor presentation",
+    "Mobile is desktop viewport/DPR simulation; physical GPU memory unavailable",
+    "Historical functional/gate artifacts retain original inputs; this is independent Performance scope only"
+  ]
+}

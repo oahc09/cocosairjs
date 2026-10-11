@@ -1,0 +1,1 @@
+{"compilerOptions":{"target":"ES2022","module":"ES2022","moduleResolution":"node","strict":true,"noEmit":true,"skipLibCheck":true,"lib":["ES2022","DOM","DOM.Iterable"],"baseUrl":"../..","paths":{"cocosair":["build/cocosair.module.d.ts"]}},"files":["../../examples/shader-thin-film/src/main.ts","../../examples/shader-thin-film/src/parameters.ts"]}
