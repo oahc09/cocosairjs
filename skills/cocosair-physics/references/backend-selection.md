@@ -17,11 +17,11 @@ Derived from `src/air/physics-backend.ts`, `src/air/app-config.ts`, `src/air/boo
 
 ## Failure modes, exactly
 
-| Condition | Behavior | Citation |
-| --- | --- | --- |
+| Condition                                                           | Behavior                                                             | Citation                           |
+| ------------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------- |
 | Registry empty (source graph or tests, no physics feature imported) | `console.warn` only, engine keeps its tolerated `PHYSICS_NONE` state | `src/air/physics-backend.ts:46-52` |
-| Requested id absent from a non-empty registry | `throw Error` listing registered ids | `src/air/physics-backend.ts:45-57` |
-| Selection after `selector.physicsWorld` exists | `throw Error`, late selection unsupported | `src/air/physics-backend.ts:58-62` |
+| Requested id absent from a non-empty registry                       | `throw Error` listing registered ids                                 | `src/air/physics-backend.ts:45-57` |
+| Selection after `selector.physicsWorld` exists                      | `throw Error`, late selection unsupported                            | `src/air/physics-backend.ts:58-62` |
 
 `PHYSICS_NONE` is a real capability constant on the system class (`src/cocos/physics/framework/physics-system.ts:48-53`). `selector.switchTo` is the post-world path (`src/cocos/physics/framework/physics-selector.ts:145-164`) and is not offered by AIR as a runtime switch (`docs/reference/api-stability.md:52`).
 

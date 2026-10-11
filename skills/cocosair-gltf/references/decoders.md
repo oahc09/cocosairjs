@@ -10,17 +10,17 @@ Runtime consequence of a missing provider: a required compression extension thro
 
 Authority for versions, licenses, hashes and decision records is `build/gltf-decoders/MANIFEST.md` (`docs/gltf/gltf-decoder-deployment.md:13-24`). Byte counts below were recomputed from disk and match the manifest.
 
-| File | Bytes | Role |
-| --- | --- | --- |
-| meshopt/meshopt_decoder.cjs | 29400 | runtime decoder, CommonJS (`build/gltf-decoders/MANIFEST.md:30`) |
-| meshopt/meshopt_decoder.mjs | 29059 | runtime decoder, ESM with wasm inlined (`:31`, `examples/gltf-meshopt/src/main.ts:70`) |
-| meshopt/meshopt_encoder.js / .mjs | 24348 each | fixture generation only, never runtime (`:32-33`, `:24-26`; generator `tools/fixtures/gen-geometry-fixtures.cjs:15`) |
-| meshopt/index.js | 199 | barrel entry, unusable as shipped (see below) (`:34`) |
-| draco/draco3d.js | 246 | CommonJS entry requiring ./draco_encoder_nodejs and ./draco_decoder_nodejs (`build/gltf-decoders/draco/draco3d.js:5-6`) |
-| draco/draco_decoder_nodejs.js + draco_decoder.wasm | 58763 + 285948 | Node decode path covering the smoke suite and Node consumers (`build/gltf-decoders/MANIFEST.md:53-54`) |
-| draco/draco_encoder_nodejs.js + draco_encoder.wasm | 49007 + 370188 | fixture generation only, never runtime decode (`:55-56`, `tools/fixtures/gen-geometry-fixtures.cjs:218-219`) |
-| basis/basis_transcoder.js + .wasm | 62337 + 499935 | KTX2 transcoder, three r168 build; the same module handles KTX2 zstd (`:59-68`) |
-| package.json | 25 | `{"type":"commonjs"}` local packaging metadata keeping vendored CommonJS decoders loadable inside the ESM build directory; not a decoder binary (`:79-86`) |
+| File                                               | Bytes          | Role                                                                                                                                                       |
+| -------------------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| meshopt/meshopt_decoder.cjs                        | 29400          | runtime decoder, CommonJS (`build/gltf-decoders/MANIFEST.md:30`)                                                                                           |
+| meshopt/meshopt_decoder.mjs                        | 29059          | runtime decoder, ESM with wasm inlined (`:31`, `examples/gltf-meshopt/src/main.ts:70`)                                                                     |
+| meshopt/meshopt_encoder.js / .mjs                  | 24348 each     | fixture generation only, never runtime (`:32-33`, `:24-26`; generator `tools/fixtures/gen-geometry-fixtures.cjs:15`)                                       |
+| meshopt/index.js                                   | 199            | barrel entry, unusable as shipped (see below) (`:34`)                                                                                                      |
+| draco/draco3d.js                                   | 246            | CommonJS entry requiring ./draco_encoder_nodejs and ./draco_decoder_nodejs (`build/gltf-decoders/draco/draco3d.js:5-6`)                                    |
+| draco/draco_decoder_nodejs.js + draco_decoder.wasm | 58763 + 285948 | Node decode path covering the smoke suite and Node consumers (`build/gltf-decoders/MANIFEST.md:53-54`)                                                     |
+| draco/draco_encoder_nodejs.js + draco_encoder.wasm | 49007 + 370188 | fixture generation only, never runtime decode (`:55-56`, `tools/fixtures/gen-geometry-fixtures.cjs:218-219`)                                               |
+| basis/basis_transcoder.js + .wasm                  | 62337 + 499935 | KTX2 transcoder, three r168 build; the same module handles KTX2 zstd (`:59-68`)                                                                            |
+| package.json                                       | 25             | `{"type":"commonjs"}` local packaging metadata keeping vendored CommonJS decoders loadable inside the ESM build directory; not a decoder binary (`:79-86`) |
 
 Versions and licenses: meshoptimizer 1.2.0 MIT (`build/gltf-decoders/MANIFEST.md:22`); draco3d 1.5.7 Apache-2.0, license text vendored because the npm package ships none (`:37-41`); Basis Universal transcoder from three r168 examples/jsm/libs/basis/, Apache-2.0 (`:59-63`). Each directory carries its own LICENSE.md (`:35`, `:57`, `:69`). The manifest names two fixture-generation consumers of the encoders (`build/gltf-decoders/MANIFEST.md:24-26`); of those, only `tools/fixtures/gen-geometry-fixtures.cjs` exists on disk today, and the first name in that sentence resolves to no file - a stale manifest reference.
 
@@ -30,11 +30,11 @@ Three setters on `GLTFLoader` are the only application-side entry (`docs/gltf/gl
 
 Three factories wrap vendor modules into the loader contracts (`src/air/assets/gltf/decoder/types.ts`):
 
-| Factory | Behavior |
-| --- | --- |
-| `createMeshoptDecoder(module, workers?)` (`src/air/assets/gltf/decoder/meshopt.ts:30`) | awaits `module.ready` when present and calls `module.useWorkers(workers)` only when both exist (`:31-32`); the loader never creates workers itself (`:27-28`) |
-| `createDracoDecoder(provider)` (`src/air/assets/gltf/decoder/draco.ts:52`) | accepts a ready module or a factory, resolved lazily on the first Draco primitive (`:39`, `:56-59`); every Draco temporary is destroyed after extraction (`:4`) |
-| `createKTX2Transcoder(factory)` (`src/air/assets/gltf/decoder/ktx2.ts:94`) | lazy `getModule` validates the module and throws `GLTFError('GLTF_DECODER_MISSING', 'Basis transcoder module lacks initializeBasis/KTX2File')` on failure, then calls `initializeBasis()` (`:96-103`) |
+| Factory                                                                                | Behavior                                                                                                                                                                                              |
+| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `createMeshoptDecoder(module, workers?)` (`src/air/assets/gltf/decoder/meshopt.ts:30`) | awaits `module.ready` when present and calls `module.useWorkers(workers)` only when both exist (`:31-32`); the loader never creates workers itself (`:27-28`)                                         |
+| `createDracoDecoder(provider)` (`src/air/assets/gltf/decoder/draco.ts:52`)             | accepts a ready module or a factory, resolved lazily on the first Draco primitive (`:39`, `:56-59`); every Draco temporary is destroyed after extraction (`:4`)                                       |
+| `createKTX2Transcoder(factory)` (`src/air/assets/gltf/decoder/ktx2.ts:94`)             | lazy `getModule` validates the module and throws `GLTFError('GLTF_DECODER_MISSING', 'Basis transcoder module lacks initializeBasis/KTX2File')` on failure, then calls `initializeBasis()` (`:96-103`) |
 
 Two availability predicates: `isMeshoptAvailable(module)` = `!!module && module.supported !== false && (typeof module.decodeGltfBufferAsync === 'function' || typeof module.decodeGltfBuffer === 'function')` (`src/air/assets/gltf/decoder/meshopt.ts:21-24`); `isKTX2Available(module)` = `!!module && typeof module.initializeBasis === 'function' && typeof module.KTX2File === 'function'` (`src/air/assets/gltf/decoder/ktx2.ts:90-92`).
 

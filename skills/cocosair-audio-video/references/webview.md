@@ -6,15 +6,15 @@ Derived from `src/cocos/web-view/web-view.ts`, `src/cocos/web-view/web-view-enum
 
 ## Surface
 
-| Member | Line | Contract |
-| --- | --- | --- |
-| `url` get/set | src/cocos/web-view/web-view.ts:71-79 | setter calls `loadURL` immediately when the impl exists (`:74-79`) |
-| `webviewEvents` | :91 | serialized `EventHandler` list, fired alongside node events |
-| `nativeWebView` | :99-101 | the raw `HTMLIFrameElement` or null |
-| `state` | :109-112 | last event name tracked by the impl, `none` before `__preload` |
-| `evaluateJS(str)` | :162-166 | runs `contentWindow.eval` (impl :116-128) |
-| `setJavascriptInterfaceScheme` / `setOnJSCallback` | :126-149 | warn "The platform does not support" on Web (impl :130-136) |
-| `EventType` | :58 | `none, loading, loaded, error` (`src/cocos/web-view/web-view-enums.ts:25-46`) |
+| Member                                             | Line                                 | Contract                                                                      |
+| -------------------------------------------------- | ------------------------------------ | ----------------------------------------------------------------------------- |
+| `url` get/set                                      | src/cocos/web-view/web-view.ts:71-79 | setter calls `loadURL` immediately when the impl exists (`:74-79`)            |
+| `webviewEvents`                                    | :91                                  | serialized `EventHandler` list, fired alongside node events                   |
+| `nativeWebView`                                    | :99-101                              | the raw `HTMLIFrameElement` or null                                           |
+| `state`                                            | :109-112                             | last event name tracked by the impl, `none` before `__preload`                |
+| `evaluateJS(str)`                                  | :162-166                             | runs `contentWindow.eval` (impl :116-128)                                     |
+| `setJavascriptInterfaceScheme` / `setOnJSCallback` | :126-149                             | warn "The platform does not support" on Web (impl :130-136)                   |
+| `EventType`                                        | :58                                  | `none, loading, loaded, error` (`src/cocos/web-view/web-view-enums.ts:25-46`) |
 
 ## Mount order contract
 

@@ -6,17 +6,17 @@ The generators live in the `primitives` namespace object (`src/exports/primitive
 
 ## Namespace surface (9 generators + transforms)
 
-| Generator | Call form | Default scale / axis | Emits | primitiveMode |
-| --- | --- | --- | --- | --- |
-| `box` | `box(options?)` | 1 x 1 x 1, centered at origin | positions, normals, uvs, tangents, indices | TRIANGLE_LIST |
-| `sphere` | `sphere(radius?, opts?)` | radius 0.5, `sphere.ts:46` | positions, normals, uvs, indices | TRIANGLE_LIST |
-| `cylinder` | `cylinder(radiusTop?, radiusBottom?, height?, opts?)` | 0.5 / 0.5 / height 2, `cylinder.ts:55` | positions, normals, uvs, indices | TRIANGLE_LIST |
-| `cone` | `cone(radius?, height?, opts?)` | radius 0.5, height 1, `cone.ts:40-45` | positions, normals, uvs, indices | TRIANGLE_LIST |
-| `plane` | `plane(options?)` | width 10 x length 10, XOZ plane, normal +Y, `plane.ts:63-64` | positions, normals, uvs, indices | TRIANGLE_LIST |
-| `quad` | `quad(options?)` | fixed unit quad, `quad.ts:34` | positions, normals, uvs, indices | TRIANGLE_LIST |
-| `torus` | `torus(radius?, tube?, opts?)` | radius 0.4, tube 0.1, `torus.ts:49-52` | positions, normals, uvs, indices | TRIANGLE_LIST |
-| `capsule` | `capsule(radiusTop?, radiusBottom?, height?, opts?)` | 0.5 / 0.5 / height 2, `capsule.ts:52` | positions, normals, uvs, indices | TRIANGLE_LIST |
-| `circle` | `circle(options?)` | unit radius fixed, XY plane, normal +Z, `circle.ts:85-91` | positions, indices only | TRIANGLE_FAN |
+| Generator  | Call form                                             | Default scale / axis                                         | Emits                                      | primitiveMode |
+| ---------- | ----------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------ | ------------- |
+| `box`      | `box(options?)`                                       | 1 x 1 x 1, centered at origin                                | positions, normals, uvs, tangents, indices | TRIANGLE_LIST |
+| `sphere`   | `sphere(radius?, opts?)`                              | radius 0.5, `sphere.ts:46`                                   | positions, normals, uvs, indices           | TRIANGLE_LIST |
+| `cylinder` | `cylinder(radiusTop?, radiusBottom?, height?, opts?)` | 0.5 / 0.5 / height 2, `cylinder.ts:55`                       | positions, normals, uvs, indices           | TRIANGLE_LIST |
+| `cone`     | `cone(radius?, height?, opts?)`                       | radius 0.5, height 1, `cone.ts:40-45`                        | positions, normals, uvs, indices           | TRIANGLE_LIST |
+| `plane`    | `plane(options?)`                                     | width 10 x length 10, XOZ plane, normal +Y, `plane.ts:63-64` | positions, normals, uvs, indices           | TRIANGLE_LIST |
+| `quad`     | `quad(options?)`                                      | fixed unit quad, `quad.ts:34`                                | positions, normals, uvs, indices           | TRIANGLE_LIST |
+| `torus`    | `torus(radius?, tube?, opts?)`                        | radius 0.4, tube 0.1, `torus.ts:49-52`                       | positions, normals, uvs, indices           | TRIANGLE_LIST |
+| `capsule`  | `capsule(radiusTop?, radiusBottom?, height?, opts?)`  | 0.5 / 0.5 / height 2, `capsule.ts:52`                        | positions, normals, uvs, indices           | TRIANGLE_LIST |
+| `circle`   | `circle(options?)`                                    | unit radius fixed, XY plane, normal +Z, `circle.ts:85-91`    | positions, indices only                    | TRIANGLE_FAN  |
 
 All eight non-circle generators default to TRIANGLE_LIST; `circle.ts:91` sets `primitiveMode: PrimitiveMode.TRIANGLE_FAN` explicitly. `PrimitiveMode` enum is `src/cocos/gfx/base/define.ts:613`; reach a member as `gfx.PrimitiveMode.TRIANGLE_LIST`.
 
@@ -40,11 +40,11 @@ All eight non-circle generators default to TRIANGLE_LIST; `circle.ts:91` sets `p
 
 ## Geometry transforms (`src/cocos/primitive/transform.ts`)
 
-| Function | Signature | Mutation |
-| --- | --- | --- |
-| `translate` | `translate(geometry, { x?, y?, z? })` | adds offset to every position and to `minPos`/`maxPos` (`transform.ts:36-59`), returns the same object |
-| `scale` | `scale(geometry, { x?, y?, z? })` | multiplies positions, bounds and `boundingRadius` (`transform.ts:70-112`); a negative axis swaps that axis's min/max (`transform.ts:99-107`) |
-| `wireframed` | `wireframed(geometry)` | converts a TRIANGLE_LIST (or undefined-mode) geometry into `LINE_LIST` edge indices (`transform.ts:122-153`); leaves any other `primitiveMode` unchanged and returns it as-is (`transform.ts:129-131`) |
+| Function     | Signature                             | Mutation                                                                                                                                                                                               |
+| ------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `translate`  | `translate(geometry, { x?, y?, z? })` | adds offset to every position and to `minPos`/`maxPos` (`transform.ts:36-59`), returns the same object                                                                                                 |
+| `scale`      | `scale(geometry, { x?, y?, z? })`     | multiplies positions, bounds and `boundingRadius` (`transform.ts:70-112`); a negative axis swaps that axis's min/max (`transform.ts:99-107`)                                                           |
+| `wireframed` | `wireframed(geometry)`                | converts a TRIANGLE_LIST (or undefined-mode) geometry into `LINE_LIST` edge indices (`transform.ts:122-153`); leaves any other `primitiveMode` unchanged and returns it as-is (`transform.ts:129-131`) |
 
 `translate`/`scale`/`wireframed` mutate the passed `IGeometry` in place and return it; call them before `utils.createMesh`.
 

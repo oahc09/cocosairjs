@@ -2,24 +2,24 @@ Derived from docs/manual/installation.md, build/README.md, package.json, tools/b
 
 ## Package identity (root package.json)
 
-| Fact | Value | Source |
-| --- | --- | --- |
-| npm name | `cocosair.js` | `package.json:2` |
-| Version | `1.0.0` | `package.json:3` |
-| Root module type | `commonjs` (toolchain only; runtime files are ESM via `build/package.json`) | `package.json:6`, `tools/build/build.cjs:153-157` |
-| `main` / `module` | `build/npm/cocosair.module.js` (source-map-free prepack copy) | `package.json:7-8` |
-| Root `types` | `./build/cocosair.module.d.ts` | `package.json:9` |
-| `engines.node` | `>=18.0.0` | `package.json:59-61` |
-| Package ships the skill suite | `files` list includes `skills/` | `package.json:41` |
-| Build forms | ESM only; `build:min` for the compressed copy, `build:system` for SystemJS; no UMD/CJS, no default export | `docs/manual/installation.md:51`, `src/exports/air.ts` (no `export default` line), `tools/build/build.cjs:110-111` |
+| Fact                          | Value                                                                                                     | Source                                                                                                             |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| npm name                      | `cocosair.js`                                                                                             | `package.json:2`                                                                                                   |
+| Version                       | `1.0.0`                                                                                                   | `package.json:3`                                                                                                   |
+| Root module type              | `commonjs` (toolchain only; runtime files are ESM via `build/package.json`)                               | `package.json:6`, `tools/build/build.cjs:153-157`                                                                  |
+| `main` / `module`             | `build/npm/cocosair.module.js` (source-map-free prepack copy)                                             | `package.json:7-8`                                                                                                 |
+| Root `types`                  | `./build/cocosair.module.d.ts`                                                                            | `package.json:9`                                                                                                   |
+| `engines.node`                | `>=18.0.0`                                                                                                | `package.json:59-61`                                                                                               |
+| Package ships the skill suite | `files` list includes `skills/`                                                                           | `package.json:41`                                                                                                  |
+| Build forms                   | ESM only; `build:min` for the compressed copy, `build:system` for SystemJS; no UMD/CJS, no default export | `docs/manual/installation.md:51`, `src/exports/air.ts` (no `export default` line), `tools/build/build.cjs:110-111` |
 
 ## exports map (package.json:10-28)
 
-| Subpath | `types` | `types@<5.0` (TS < 5.0) | Runtime (`import` / `default`) |
-| --- | --- | --- | --- |
-| `.` | `./build/cocosair.module.d.ts` (`package.json:13`) | `./build/cocosair.legacy.d.ts` (`package.json:12`) | `./build/npm/cocosair.module.js` (`package.json:14-15`) |
-| `./html-source` | `./build/html-source.d.ts` (`package.json:18`) | none - no legacy wrapper for this entry | `./build/npm/html-source.js` (`package.json:19-20`) |
-| `./bootstrap` | `./build/bootstrap.d.ts` (`package.json:24`) | `./build/bootstrap.legacy.d.ts` (`package.json:23`) | `./build/npm/bootstrap.js` (`package.json:25-26`) |
+| Subpath         | `types`                                            | `types@<5.0` (TS < 5.0)                             | Runtime (`import` / `default`)                          |
+| --------------- | -------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------- |
+| `.`             | `./build/cocosair.module.d.ts` (`package.json:13`) | `./build/cocosair.legacy.d.ts` (`package.json:12`)  | `./build/npm/cocosair.module.js` (`package.json:14-15`) |
+| `./html-source` | `./build/html-source.d.ts` (`package.json:18`)     | none - no legacy wrapper for this entry             | `./build/npm/html-source.js` (`package.json:19-20`)     |
+| `./bootstrap`   | `./build/bootstrap.d.ts` (`package.json:24`)       | `./build/bootstrap.legacy.d.ts` (`package.json:23`) | `./build/npm/bootstrap.js` (`package.json:25-26`)       |
 
 Classic (non-node16) resolution picks the legacy main declaration through `typesVersions` (`package.json:29-33`); node16 resolution uses the version-specific `types@<5.0` condition (`docs/manual/typescript-dom-compatibility.md:6-7`). TS >= 5.0 uses the main declaration and its own `lib.dom`; bypassing the package entry to reference `build/cocosair.module.d.ts` directly also bypasses the legacy wrapper (`docs/manual/typescript-dom-compatibility.md:22-25`).
 
@@ -33,14 +33,14 @@ Classic (non-node16) resolution picks the legacy main declaration through `types
 
 ## Artifact ownership (which command writes which file)
 
-| Command | Writes | Source of truth |
-| --- | --- | --- |
-| `npm run build` | `build/cocosair.module.js` + `.map`, `build/bootstrap.js` + `.map` + `.d.ts`, `build/html-source.js` + `.map` + `.d.ts`, and (default build only) `build/package.json` `{"type":"module"}` + `build/gltf-decoders/package.json` `{"type":"commonjs"}` | `tools/build/build.cjs:110-111,148-162`, `tools/build/bootstrap-entry.cjs:4-20`, `tools/build/html-source-entry.cjs:5-9` |
-| `npm run build:min` | `build/cocosair.module.min.js` + `.map`; every `--format esm` run also regenerates `build/bootstrap.js` and `build/html-source.js` (`tools/build/build.cjs:148-150`), and a non-variant run refreshes the two module-format markers (`tools/build/build.cjs:152-162`). It does not update the unminified runtime or `cocosair.module.d.ts` | `tools/build/build.cjs:110,148-162`, `build/README.md:10` |
-| `npm run build:dts` | `build/cocosair.module.d.ts` plus the TS < 5.0 wrappers `build/cocosair.legacy.d.ts` / `build/bootstrap.legacy.d.ts`; independent of `AIR_OUT_DIR` | `build/README.md:11-12,55`, `docs/manual/typescript-dom-compatibility.md:27` |
-| `npm run prepack` (auto by `npm pack`) | Source-map-free copies into `build/npm/` (gitignored); copies only, never compiles | `build/README.md:37-39` |
-| `npm run build:all` | The three builds above in order, then package preparation and an artifact check | `package.json:66` |
-| `npm run build:system` | `build/cc.js` + map (SystemJS; not the npm ESM entry) | `tools/build/build.cjs:110-111`, `build/README.md:15` |
+| Command                                | Writes                                                                                                                                                                                                                                                                                                                                     | Source of truth                                                                                                          |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `npm run build`                        | `build/cocosair.module.js` + `.map`, `build/bootstrap.js` + `.map` + `.d.ts`, `build/html-source.js` + `.map` + `.d.ts`, and (default build only) `build/package.json` `{"type":"module"}` + `build/gltf-decoders/package.json` `{"type":"commonjs"}`                                                                                      | `tools/build/build.cjs:110-111,148-162`, `tools/build/bootstrap-entry.cjs:4-20`, `tools/build/html-source-entry.cjs:5-9` |
+| `npm run build:min`                    | `build/cocosair.module.min.js` + `.map`; every `--format esm` run also regenerates `build/bootstrap.js` and `build/html-source.js` (`tools/build/build.cjs:148-150`), and a non-variant run refreshes the two module-format markers (`tools/build/build.cjs:152-162`). It does not update the unminified runtime or `cocosair.module.d.ts` | `tools/build/build.cjs:110,148-162`, `build/README.md:10`                                                                |
+| `npm run build:dts`                    | `build/cocosair.module.d.ts` plus the TS < 5.0 wrappers `build/cocosair.legacy.d.ts` / `build/bootstrap.legacy.d.ts`; independent of `AIR_OUT_DIR`                                                                                                                                                                                         | `build/README.md:11-12,55`, `docs/manual/typescript-dom-compatibility.md:27`                                             |
+| `npm run prepack` (auto by `npm pack`) | Source-map-free copies into `build/npm/` (gitignored); copies only, never compiles                                                                                                                                                                                                                                                         | `build/README.md:37-39`                                                                                                  |
+| `npm run build:all`                    | The three builds above in order, then package preparation and an artifact check                                                                                                                                                                                                                                                            | `package.json:66`                                                                                                        |
+| `npm run build:system`                 | `build/cc.js` + map (SystemJS; not the npm ESM entry)                                                                                                                                                                                                                                                                                      | `tools/build/build.cjs:110-111`, `build/README.md:15`                                                                    |
 
 Discipline: `build/` is generated - rebuild, never hand-edit (`build/README.md:3`); the tracked bundle is committed to pin gate fingerprints (`build/README.md:3`). The `gltf-decoders/package.json` only declares the module format of existing decoder assets; it downloads nothing (`build/README.md:31`).
 

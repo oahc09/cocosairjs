@@ -5,7 +5,7 @@ description: Route Cocos AIR (cocosair.js) work to the right cocosair-* subsyste
 
 # Cocos AIR skill router
 
-Route every cocosair.js task to exactly one subsystem skill. Load this router first, then the matching skill; answer from the routed skill and the entry declarations, not from memory.
+Choose one primary subsystem for the requested outcome, then load only direct dependencies needed by that task. Reuse this router once loaded; related-skill lists are optional routes, not instructions to load the whole suite. Resolve the working environment before reading source paths or running commands.
 
 ## Quick Start
 
@@ -17,50 +17,60 @@ app.run(new Scene('Main'));
 app.getScene(); // -> Scene | null
 ```
 
-`#GameCanvas` must exist in the DOM before the engine is imported, because the screen adapter initializes at module-import time (startup contract in `README.md` and `AGENTS.md`). Per `build/cocosair.module.d.ts`: `AirAppOptions.canvas` accepts a selector string or an `HTMLCanvasElement`; `createAirApp(options)` returns `Promise<AirApp>`; `run(scene: Scene)` returns void; `getScene()` returns `Scene | null`.
+For a direct main-entry import without a prior bootstrap binding, `#GameCanvas` must already exist in the DOM. For a custom ID, await `cocosair.js/bootstrap` with that canvas before dynamically importing the main entry; bootstrap sets `__CC_CANVAS__` before the screen adapter initializes (startup contract in `README.md` and `AGENTS.md`). Per `build/cocosair.module.d.ts`: `AirAppOptions.canvas` accepts a selector string or an `HTMLCanvasElement`; `createAirApp(options)` returns `Promise<AirApp>`; `run(scene: Scene)` returns void; `getScene()` returns `Scene | null`.
 
 ## Related skills
 
-Follow the first row whose "load when" matches the task language. Each skill lives at `../<skill>/SKILL.md`.
+Choose by the main deliverable or failing behavior, not table order. Skill links below resolve relative to this file. Read [environment.md](references/environment.md) for checkout/package root resolution.
 
 ### Foundations
 
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - load when installing `cocosair.js`, choosing among the main / `cocosair.js/bootstrap` / `cocosair.js/html-source` entries, writing the importmap and page skeleton, consuming TypeScript declarations, or varying `AIR_FEATURES`.
-- [cocosair-application](../cocosair-application/SKILL.md) - load for `createAirApp` options, `run`/`close` and whole-page reload, single-runtime admission, designResolution/screenMode/pixelRatioCap, or WebGL context health.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - load for `Scene`/`Node`/`Component` lifecycle, layers and masks, `find`, node events, `NodePool`, or scene globals.
-- [cocosair-camera](../cocosair-camera/SKILL.md) - load for perspective/ortho switching, `orthoHeight`, multi-camera viewport and priority, `worldToScreen`/`screenToWorld`/`screenPointToRay`, `frameObject`, or the oblique near plane.
-- [cocosair-math](../cocosair-math/SKILL.md) - load for `Vec2`/`Vec3`/`Vec4`, `Mat3`/`Mat4`, `Quat`, `Rect`/`Size`, color conversion, easing, bits and random helpers, or matrix transform semantics.
+- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - Installation, package entries, importmap, TypeScript consumption and variant builds.
+- [cocosair-application](../cocosair-application/SKILL.md) - Bootstrap options, app lifecycle, screen sizing and context health.
+- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - Node/Component lifecycle, parenting, layers, events and scene globals.
+- [cocosair-camera](../cocosair-camera/SKILL.md) - Projection, viewports, coordinate conversion, picking and framing.
+- [cocosair-math](../cocosair-math/SKILL.md) - Vectors, matrices, quaternions, colors, easing and random helpers.
 
 ### Rendering
 
-- [cocosair-materials-effects](../cocosair-materials-effects/SKILL.md) - load for `Material`/`EffectAsset` technique/pass/defines, `setProperty` type matching, `USE_TEXTURE`, the built-in effect and material lists, or hand-written GLSL.
-- [cocosair-rendering](../cocosair-rendering/SKILL.md) - load for light types and photometric units, the legacy-forward single `mainLight` limit, the shadow support matrix, RT/MSAA requested vs effective values, sRGB and prefiltered-environment contracts, UV row orientation, or default-pipeline post-process reachability.
-- [cocosair-primitives-mesh](../cocosair-primitives-mesh/SKILL.md) - load for `Mesh` asset construction, primitive shapes, `createPrimitiveGeometry` parameters and limits, vertex attribute/index read-write, morph bounds, OBJ export, or wireframe.
-- [cocosair-performance](../cocosair-performance/SKILL.md) - load for the batching routes, `batchStaticModel`, dynamic atlas, native instancing, culling, `Profiler`, render-on-demand, or mass-object and mass-animation recipes.
+- [cocosair-materials-effects](../cocosair-materials-effects/SKILL.md) - Effect/pass/defines, property types, USE_TEXTURE and custom GLSL.
+- [cocosair-rendering](../cocosair-rendering/SKILL.md) - Lights, shadows, render targets, MSAA, color and pipeline reachability.
+- [cocosair-primitives-mesh](../cocosair-primitives-mesh/SKILL.md) - Geometry descriptors, Mesh attributes/indices, bounds and wireframe.
+- [cocosair-performance](../cocosair-performance/SKILL.md) - Batching, atlas, instancing, profiling and rendering on demand.
 
 ### Assets
 
-- [cocosair-assets](../cocosair-assets/SKILL.md) - load for `assetManager`, `load`/`loadRemote`, `loadAssetAsync`, `AssetBank` refcounting and `ext` rules, the absent `resources` bundle reality, `Texture2D`/`ImageAsset` construction and mipmap, libGDX atlas, or `parseFnt`/`createBitmapFont`/`loadBitmapFont` bitmap-font parsing and loading up to the unpacked single-page limit.
-- [cocosair-gltf](../cocosair-gltf/SKILL.md) - load for `GLTFLoader`/`GLTFAsset`/`instantiate`, extension factories and `getExtensionSupport()` tiers, draco/meshopt/ktx2 decoder injection and deployment, progress phases, or glTF error codes.
+- [cocosair-assets](../cocosair-assets/SKILL.md) - Remote loading, AssetBank, textures, atlas and bitmap-font loading.
+- [cocosair-gltf](../cocosair-gltf/SKILL.md) - glTF/GLB loading, extensions, decoders, progress and errors.
 
 ### Animation
 
-- [cocosair-animation-tween](../cocosair-animation-tween/SKILL.md) - load for `AnimationClip`/`Animation`, `tween` composition and recycling, `update(dt)` fixed-step discipline, `createStepClock` single-clock rules, or pose-graph availability.
-- [cocosair-skinning-morph](../cocosair-skinning-morph/SKILL.md) - load for `SkinnedMeshRenderer`, `Skeleton.joints` full-path rule, `buildSkeletonTree`, `restoreBindPose`, morph targets and weights, `setUseBakedAnimation`, or CCSkinning binding 3.
+- [cocosair-animation-tween](../cocosair-animation-tween/SKILL.md) - AnimationClip, tween composition, update loops and single step clock.
+- [cocosair-skinning-morph](../cocosair-skinning-morph/SKILL.md) - Skeleton paths, bind pose, skinning, morph weights and baked animation.
 
 ### Content
 
-- [cocosair-ui-2d](../cocosair-ui-2d/SKILL.md) - load for `createUICanvas`, Canvas/Widget/Layout and Button/ScrollView/ProgressBar/Slider/Toggle/EditBox, `Label` system-font rendering and binding an already-loaded bitmap font to `Label` so it renders, `RichText`, or sorting layers.
-- [cocosair-graphics-and-dom](../cocosair-graphics-and-dom/SKILL.md) - load for graphics command replay, SVG serialization, raster fills and limits, pattern transform, sprite mask channels, UI blend scope, texture sprites, `AirUIMesh` limits, DOM overlays, or the experimental `html-source` entry.
-- [cocosair-2d-subsystems](../cocosair-2d-subsystems/SKILL.md) - load for Spine, DragonBones, TiledMap layer and object queries, ParticleSystem2D and plist, or `Billboard`.
-- [cocosair-input-action](../cocosair-input-action/SKILL.md) - load for `input`/`systemEvent`, touch and key codes, `createActionState`/`createActionInput` backends (the `dom` backend requires an explicit canvas), `createSessionGate`, `SceneStack` input interception, or the focus contract.
-- [cocosair-physics](../cocosair-physics/SKILL.md) - load for choosing `physics: 'builtin' | 'cannon'` and its before-`game.init` timing, zero-backend warn-only behavior, 2D Box2D query/integration boundaries, `default-physics-material` seeding, or absent WASM backends.
-- [cocosair-audio-video](../cocosair-audio-video/SKILL.md) - load for `AudioService` BGM/SFX channels and `maxSfxVoices` overflow, judging playback by measured `currentTime` rather than `playing`, `AudioSource` gesture unlock, `VideoPlayer` platform notes, or `WebView` limits.
+- [cocosair-ui-2d](../cocosair-ui-2d/SKILL.md) - Canvas/layout/widgets, Label font binding and sorting.
+- [cocosair-graphics-and-dom](../cocosair-graphics-and-dom/SKILL.md) - Graphics/SVG/raster, masks/blend, texture sprites, UI mesh and DOM/HTML.
+- [cocosair-2d-subsystems](../cocosair-2d-subsystems/SKILL.md) - Spine, DragonBones, TiledMap, particles and Billboard.
+- [cocosair-input-action](../cocosair-input-action/SKILL.md) - Native/DOM input, actions, focus, session gates and SceneStack.
+- [cocosair-physics](../cocosair-physics/SKILL.md) - Builtin/cannon selection, collision versus integration and 2D Box2D.
+- [cocosair-audio-video](../cocosair-audio-video/SKILL.md) - Audio channels, gesture unlock, playback evidence, VideoPlayer and WebView.
 
 ### Operations
 
-- [cocosair-agent-session](../cocosair-agent-session/SKILL.md) - load when driving a live page through `__airApp`, agent/DevTools session observation and controlled writes, the `rc-*` request contracts, or diagnostic caps, truncation and visual-probe regions.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - load when verifying AIR changes, telling write gates from read-only gates, reading evidence fingerprints and subset semantics, or setting up Playwright tooling.
+- [cocosair-agent-session](../cocosair-agent-session/SKILL.md) - Dev-only runtime inspection, scoped writes, capture and diagnostics.
+- [cocosair-verification](../cocosair-verification/SKILL.md) - Focused gates, command writes, per-API evidence and release acceptance.
+
+## Routing across boundaries
+
+- Startup errors -> application; unresolved imports or package entries -> project-setup.
+- Load and animate a glTF model -> gltf primary; add skinning-morph or animation-tween only for the relevant deformation/playback issue.
+- Load a bitmap font -> assets; bind an existing font to Label -> ui-2d.
+- Debug DOM overlay clicks -> graphics-and-dom; add input-action only when focus/action routing is implicated.
+- Implement a visual feature -> its subsystem primary; consult verification for the relevant collector or evidence question, not as a mandatory full gate sequence.
+
+For a broad application, choose the primary skill for the current step and change it as the next concrete step changes. For an unmatched request, inspect the relevant installed declarations/manual chapter; use skill-index search terms to locate an owner. Ask for clarification only when the missing environment or intended behavior affects the result.
 
 ## When to use what
 
@@ -70,7 +80,7 @@ Follow the first row whose "load when" matches the task language. Each skill liv
 
 ## Code First discipline
 
-Read the installed package README and the relevant manual chapter before selecting helpers.
+Read the relevant README/manual chapter from the located package or checkout. Source-only provenance is not an npm dependency; see [environment.md](references/environment.md).
 
 1. Original APIs first: use the engine's `Scene`, `Node`, `Camera`, `Component`, `Material`, `Texture2D` and `Sprite`; AIR helpers compose these objects. Do not invent parallel scene, node or material abstractions.
 2. Browser rendering requires WebGL 2 and nothing else; unsupported contexts reject startup with `WEBGL2_REQUIRED`. WebGL 1, Canvas and WebGPU are not supported renderer fallbacks. HEADLESS tests produce no rendered pixels.
@@ -152,11 +162,14 @@ Docs enumerate the engine surface; bundle reachability and browser verification 
 
 ## No route matched
 
-Read the current `build/cocosair.module.d.ts` for the main-entry surface and the status table in `docs/manual/index.md`. Stay inside the repository; do not introduce URLs or API knowledge from outside it.
+Read the current main-entry declarations and `docs/manual/index.md` from the located package or checkout. Use the bootstrap/HTML declarations for those subpaths. Missing source or sibling skills are environment limitations; use available canonical docs without inventing APIs or a repository root.
 
 ## References
 
-- `references/skill-index.md` - one line per skill: coverage, key classes/functions, canonical doc paths.
+When adding, moving or editing suite references, run `node skills/cocosair/scripts/check-paths.cjs` from the checkout or package root. It checks local Markdown targets and rejects unlinked navigation paths in prose; it does not check source provenance, external URLs, anchors or runtime behavior. The selected scope must exist and contain at least one `SKILL.md`. `--selftest` exercises parsing and scope checks entirely in memory, without disk writes. Neither mode edits skill files or canonical evidence.
+
+- [references/skill-index.md](references/skill-index.md) - search terms and subsystem ownership; read when the short route labels are insufficient.
+- [references/environment.md](references/environment.md) - source-checkout, npm-consumer and copied-host-skill roots and prerequisites.
 
 ## Canonical docs
 

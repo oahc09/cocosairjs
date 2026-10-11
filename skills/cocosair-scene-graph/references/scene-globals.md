@@ -4,28 +4,28 @@ Derived from src/cocos/scene-graph/scene.ts, src/cocos/scene-graph/scene-globals
 
 `Scene extends Node` (scene.ts:45). A scene is a node tree whose root is the `Scene` itself.
 
-| Member | Line | Writable? | Notes |
-|---|---|---|---|
-| `renderScene` get | 50 | readonly | The engine `RenderScene` (internal GPU-side state): exposes `root`, `name`, `cameras`, lights (`mainLight`, directional/sphere/spot/point/rangedDir), `models`, `batches`, `lodGroups` (`src/cocos/render-scene/core/render-scene.ts:73-158`) - NOT ambient/fog/skybox; do not assign |
-| `globals` get | 55 | returns the object | Returns the writable `SceneGlobals` instance `_globals` |
-| `autoReleaseAssets` | 65 | yes, default `false` | Governs whether the old scene's dependencies are auto-released when switching away |
-| `_activate(active)` | 194 | internal | On activation runs node activation and, when not in TEST (`:203`), `this._globals.activate(this)` at :204, binding the config to the `pipelineSceneData` resources and pushing the staged values |
-| `name` | from Node | yes | Used for debugging and switching |
+| Member              | Line      | Writable?            | Notes                                                                                                                                                                                                                                                                                 |
+| ------------------- | --------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `renderScene` get   | 50        | readonly             | The engine `RenderScene` (internal GPU-side state): exposes `root`, `name`, `cameras`, lights (`mainLight`, directional/sphere/spot/point/rangedDir), `models`, `batches`, `lodGroups` (`src/cocos/render-scene/core/render-scene.ts:73-158`) - NOT ambient/fog/skybox; do not assign |
+| `globals` get       | 55        | returns the object   | Returns the writable `SceneGlobals` instance `_globals`                                                                                                                                                                                                                               |
+| `autoReleaseAssets` | 65        | yes, default `false` | Governs whether the old scene's dependencies are auto-released when switching away                                                                                                                                                                                                    |
+| `_activate(active)` | 194       | internal             | On activation runs node activation and, when not in TEST (`:203`), `this._globals.activate(this)` at :204, binding the config to the `pipelineSceneData` resources and pushing the staged values                                                                                      |
+| `name`              | from Node | yes                  | Used for debugging and switching                                                                                                                                                                                                                                                      |
 
 ## SceneGlobals members (src/cocos/scene-graph/scene-globals.ts:1605)
 
 All config sub-objects are writable instances; see the sync paragraph below for when their edits reach the renderer.
 
-| Member | Line | Type | Purpose |
-|---|---|---|---|
-| `ambient` | 1612 | `AmbientInfo` (class :70) | Env lighting: enabled, sky/ground colors, skyIllum |
-| `shadows` | 1619 | `ShadowsInfo` (class :855) | Shadow config |
-| `skybox` | 1639 (get/set over `_skybox` :1624) | `SkyboxInfo` (class :266) | Skybox env map, `envLightingType`, IBL flags, rotation, material |
-| `fog` | 1631 | `FogInfo` (class :629) | Global fog |
-| `octree` | 1652 | `OctreeInfo` (class :1039) | CPU culling octree |
-| `skin` | 1660 | `SkinInfo` (class :1134) | Skin shading |
-| `lightProbeInfo` | 1668 | `LightProbeInfo` (class :1253) | Light probe / GI |
-| `postSettings` | 1676 | `PostSettingsInfo` (class :1210) | Tone mapping etc |
+| Member           | Line                                | Type                             | Purpose                                                          |
+| ---------------- | ----------------------------------- | -------------------------------- | ---------------------------------------------------------------- |
+| `ambient`        | 1612                                | `AmbientInfo` (class :70)        | Env lighting: enabled, sky/ground colors, skyIllum               |
+| `shadows`        | 1619                                | `ShadowsInfo` (class :855)       | Shadow config                                                    |
+| `skybox`         | 1639 (get/set over `_skybox` :1624) | `SkyboxInfo` (class :266)        | Skybox env map, `envLightingType`, IBL flags, rotation, material |
+| `fog`            | 1631                                | `FogInfo` (class :629)           | Global fog                                                       |
+| `octree`         | 1652                                | `OctreeInfo` (class :1039)       | CPU culling octree                                               |
+| `skin`           | 1660                                | `SkinInfo` (class :1134)         | Skin shading                                                     |
+| `lightProbeInfo` | 1668                                | `LightProbeInfo` (class :1253)   | Light probe / GI                                                 |
+| `postSettings`   | 1676                                | `PostSettingsInfo` (class :1210) | Tone mapping etc                                                 |
 
 Read-only vs writable and the two-phase sync. `scene.globals.<x>` are writable config objects. `scene.renderScene` does NOT expose ambient/fog/skybox at all (see the Scene table above). The real sync target is `director.root.pipeline.pipelineSceneData` (`src/cocos/rendering/render-pipeline.ts:229`, `src/cocos/root.ts:129`), whose public resource members `fog`, `ambient`, `skybox`, `shadows`, `octree`, `skin`, `postSettings`, `lightProbes` live at `src/cocos/rendering/pipeline-scene-data.ts:107-115`. Sync has two phases:
 
@@ -38,12 +38,12 @@ Fog ordering contract (api-behavior-contracts.md item 8, fog.ts): `FogType` is `
 
 ## Asset / SceneAsset refcount (src/cocos/asset/assets/asset.ts, scene-asset.ts, release-manager.ts)
 
-| Member | Line | Behavior |
-|---|---|---|
-| `Asset.refCount` get | asset.ts:301 | Current reference count |
-| `Asset.addRef(): Asset` | asset.ts:316 | `_ref++`, prevents auto-recycle; returns the asset |
-| `Asset.decRef(autoRelease = true): Asset` | asset.ts:331 | Decrements only when `_ref > 0` (:332-334); when `autoRelease` is true it QUEUES a release attempt via `releaseManager.tryRelease` (:335-336). It never frees synchronously and does no zero-check itself: the free runs on the next tick (`release-manager.ts:224-229`; TEST returns without scheduling at :225) and `_free` skips the asset while `refCount > 0` unless only circular references remain (`:249-253`); `_flushAirReleaseQueue` (:233) is the engine-internal drain used while the render loop is paused |
-| `SceneAsset` | scene-asset.ts:37 | Thin `Asset` subclass whose `scene: Scene \| null` field (:44) holds the loaded scene; `initDefault` (:50) creates an empty `Scene` |
+| Member                                    | Line              | Behavior                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ----------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Asset.refCount` get                      | asset.ts:301      | Current reference count                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `Asset.addRef(): Asset`                   | asset.ts:316      | `_ref++`, prevents auto-recycle; returns the asset                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `Asset.decRef(autoRelease = true): Asset` | asset.ts:331      | Decrements only when `_ref > 0` (:332-334); when `autoRelease` is true it QUEUES a release attempt via `releaseManager.tryRelease` (:335-336). It never frees synchronously and does no zero-check itself: the free runs on the next tick (`release-manager.ts:224-229`; TEST returns without scheduling at :225) and `_free` skips the asset while `refCount > 0` unless only circular references remain (`:249-253`); `_flushAirReleaseQueue` (:233) is the engine-internal drain used while the render loop is paused |
+| `SceneAsset`                              | scene-asset.ts:37 | Thin `Asset` subclass whose `scene: Scene \| null` field (:44) holds the loaded scene; `initDefault` (:50) creates an empty `Scene`                                                                                                                                                                                                                                                                                                                                                                                      |
 
 `SceneAsset` inherits `addRef`/`decRef` from `Asset`; it is just a scene-owning wrapper. Reference-count rule: `addRef()` for each hold, `decRef()` to match; a mismatch leaks (never released) or double-releases (released while still used).
 

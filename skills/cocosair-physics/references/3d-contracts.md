@@ -30,12 +30,12 @@ Derived from `src/cocos/physics/framework/physics-system.ts`, `src/cocos/physics
 
 Upstream intent: "efficient discrete collision detector, not a full physical simulator" (`src/cocos/physics/cocos/builtin-world.ts:50-55`). Four independent measured proofs of "does not simulate" (`docs/notes/physics-3d-notes.md:17-33`):
 
-| What was done | What reads back |
-| --- | --- |
-| 60 manual steps on a dynamic crate | node position unchanged (`crateDrift 0`) |
-| `getLinearVelocity(out)` after setters and sentinels | `out` never written |
-| mass/useGravity/damping/sleepThreshold assignments | component bookkeeping only |
-| `sharedMaterial` assignment on a collider | shape keeps no material (`setMaterial(v){}` empty) |
+| What was done                                        | What reads back                                    |
+| ---------------------------------------------------- | -------------------------------------------------- |
+| 60 manual steps on a dynamic crate                   | node position unchanged (`crateDrift 0`)           |
+| `getLinearVelocity(out)` after setters and sentinels | `out` never written                                |
+| mass/useGravity/damping/sleepThreshold assignments   | component bookkeeping only                         |
+| `sharedMaterial` assignment on a collider            | shape keeps no material (`setMaterial(v){}` empty) |
 
 - `BuiltInWorld.setGravity` is an empty body (`src/cocos/physics/cocos/builtin-world.ts:125-126`); `syncAfterEvents` only calls `syncSceneToPhysics` (`:198-200`) - there is no physics-to-scene write path; `emitEvents` only emits trigger events (`:202-204`), so `onCollisionEnter/Stay/Exit` never fire under builtin (`docs/notes/physics-3d-notes.md:65`).
 - Real under builtin: mount, `raycast`/`raycastClosest`/`lineStripCast` against OBB/Sphere/Capsule (`docs/notes/physics-3d-notes.md:90-94`), trigger events, group queries.
@@ -44,7 +44,7 @@ Upstream intent: "efficient discrete collision detector, not a full physical sim
 
 ## What cannon inverts
 
-Same page, same 60 steps, cannon variant measurements (`docs/notes/physics-3d-notes.md:373-386`): free fall lands (`dy -4.91`), `setLinearVelocity` writes back, `boundingSphere` follows the node, raycast hits real geometry, `MeshCollider` joins the world body set. Cannon also makes the missing default material fatal without AIR's registration (`references/backend-selection.md`). Both backends ship in the default bundle, so `createAirApp({ physics: 'cannon' })` is a switch, not a build step (`tools/build/build.cjs:41`).
+Same page, same 60 steps, cannon variant measurements (`docs/notes/physics-3d-notes.md:373-386`): free fall lands (`dy -4.91`), `setLinearVelocity` writes back, `boundingSphere` follows the node, raycast hits real geometry, `MeshCollider` joins the world body set. Cannon also makes the missing default material fatal without AIR's registration ([backend-selection.md](backend-selection.md)). Both backends ship in the default bundle, so `createAirApp({ physics: 'cannon' })` is a switch, not a build step (`tools/build/build.cjs:41`).
 
 ## Export reach
 

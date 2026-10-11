@@ -8,20 +8,20 @@ A second activation path exists for projects that carry profiling settings: `ini
 
 The counter set is fixed at `src/cocos/profiler/profiler.ts:74-87`:
 
-| key | label on the overlay | source of the number |
-| --- | --- | --- |
-| `fps` | `Framerate (FPS)` | `counter.frame(now)` at `:581`; `below: 30` (`:75`) is only the overlay's red threshold, not a runtime target |
-| `frame` | `Frame time (ms)` | started in `beforeUpdate`, ended at `:580` |
-| `logic` | `Game Logic (ms)` | BEFORE/AFTER_UPDATE pair registered at `:255-:256` |
-| `physics` | `Physics (ms)` | BEFORE/AFTER_PHYSICS pair `:257-:258` |
-| `render` | `Renderer (ms)` | started at `:558`, ended at `:568` |
-| `present` | `Present (ms)` | started at `:569`, ended at `:582` |
-| `draws` | `Draw call` | `device.numDrawCalls` `:590` |
-| `dispatches` | `Dispatch call` | `device.numDispatches ?? 0` `:592` (a missing value reads as 0) |
-| `instances` | `Instance Count` | `device.numInstances` `:593` |
-| `tricount` | `Triangle` | `device.numTris` `:596` |
-| `textureMemory` | `GFX Texture Mem(M)` | `device.memoryStatus.textureSize / (1024 * 1024)` `:595` |
-| `bufferMemory` | `GFX Buffer Mem(M)` | `device.memoryStatus.bufferSize / (1024 * 1024)` `:594` |
+| key             | label on the overlay | source of the number                                                                                          |
+| --------------- | -------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `fps`           | `Framerate (FPS)`    | `counter.frame(now)` at `:581`; `below: 30` (`:75`) is only the overlay's red threshold, not a runtime target |
+| `frame`         | `Frame time (ms)`    | started in `beforeUpdate`, ended at `:580`                                                                    |
+| `logic`         | `Game Logic (ms)`    | BEFORE/AFTER_UPDATE pair registered at `:255-:256`                                                            |
+| `physics`       | `Physics (ms)`       | BEFORE/AFTER_PHYSICS pair `:257-:258`                                                                         |
+| `render`        | `Renderer (ms)`      | started at `:558`, ended at `:568`                                                                            |
+| `present`       | `Present (ms)`       | started at `:569`, ended at `:582`                                                                            |
+| `draws`         | `Draw call`          | `device.numDrawCalls` `:590`                                                                                  |
+| `dispatches`    | `Dispatch call`      | `device.numDispatches ?? 0` `:592` (a missing value reads as 0)                                               |
+| `instances`     | `Instance Count`     | `device.numInstances` `:593`                                                                                  |
+| `tricount`      | `Triangle`           | `device.numTris` `:596`                                                                                       |
+| `textureMemory` | `GFX Texture Mem(M)` | `device.memoryStatus.textureSize / (1024 * 1024)` `:595`                                                      |
+| `bufferMemory`  | `GFX Buffer Mem(M)`  | `device.memoryStatus.bufferSize / (1024 * 1024)` `:594`                                                       |
 
 Two mechanical consequences: the numbers refresh on a wall-clock gate, because `afterPresent` returns until 500 ms have passed since the last refresh (`:584-:586`, `_average = 500` at `:43`); and the overlay is itself scene geometry - `showStats` builds a 2D canvas plus a `MeshRenderer` and hands that model to the pipeline slot `director.root!.pipeline.profiler` (`:552`), which the custom pipeline renders only when the model exists, is enabled and the current pass carries `showStatistics` (`src/cocos/rendering/custom/executor.ts:1282-1283`; the context flag defaults to false `:1665` and is copied per pass from `pass.showStatistics` `:1954`; slot declared `src/cocos/rendering/custom/pipeline.ts:123`). The texture is 280x280 at 23 px font (`_constants` `:89-95`).
 

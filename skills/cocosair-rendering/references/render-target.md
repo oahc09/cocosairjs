@@ -14,17 +14,17 @@ Format map to GFX (`src/air/rendering/render-target.ts:41`): `rgba8 -> Format.RG
 
 Interface at `src/air/rendering/render-target.ts:15`. Defaults resolved in the constructor (`:97`-`:102`):
 
-| Field | Type | Default | Line | Validation |
-|---|---|---|---|---|
-| `name` | `string?` | none (undefined) | `:16` | allowed key |
-| `width` | `number` (required) | none | `:18` | reference backing pixels, `positive` required |
-| `height` | `number` (required) | none | `:19` | reference backing pixels, `positive` required |
-| `scale` | `number?` | `1` | `:20`, `:101` | finite and positive |
-| `colorFormat` | `AirTargetColorFormat?` | `'rgba8'` | `:21`, `:97` | must be a known key and a renderable sampled format |
-| `depthFormat` | `'none' \| 'depth24-stencil8'?` | `'depth24-stencil8'` | `:22`, `:98` | must be one of the two |
-| `samples` | `1 \| 2 \| 4 \| 8?` | `1` | `:23`, `:102` | must be one of 1,2,4,8 |
-| `filter` | `'nearest' \| 'linear'?` | `'nearest'` | `:24`, `:99` | `linear` requires format LINEAR_FILTER |
-| `sampleFallback` | `'error' \| 'lower'?` | `'error'` | `:25`, `:100` | must be one of the two |
+| Field            | Type                            | Default              | Line          | Validation                                          |
+| ---------------- | ------------------------------- | -------------------- | ------------- | --------------------------------------------------- |
+| `name`           | `string?`                       | none (undefined)     | `:16`         | allowed key                                         |
+| `width`          | `number` (required)             | none                 | `:18`         | reference backing pixels, `positive` required       |
+| `height`         | `number` (required)             | none                 | `:19`         | reference backing pixels, `positive` required       |
+| `scale`          | `number?`                       | `1`                  | `:20`, `:101` | finite and positive                                 |
+| `colorFormat`    | `AirTargetColorFormat?`         | `'rgba8'`            | `:21`, `:97`  | must be a known key and a renderable sampled format |
+| `depthFormat`    | `'none' \| 'depth24-stencil8'?` | `'depth24-stencil8'` | `:22`, `:98`  | must be one of the two                              |
+| `samples`        | `1 \| 2 \| 4 \| 8?`             | `1`                  | `:23`, `:102` | must be one of 1,2,4,8                              |
+| `filter`         | `'nearest' \| 'linear'?`        | `'nearest'`          | `:24`, `:99`  | `linear` requires format LINEAR_FILTER              |
+| `sampleFallback` | `'error' \| 'lower'?`           | `'error'`            | `:25`, `:100` | must be one of the two                              |
 
 Constructor rejects unknown option keys and explicitly-`undefined` enum values (`src/air/rendering/render-target.ts:91`, `:93`).
 
@@ -42,31 +42,31 @@ After allocation, the driver's actual `gl.getParameter(gl.SAMPLES)` is compared;
 
 `src/air/rendering/render-target.ts:27`; produced by the `info` getter (`:138`, frozen `:139`):
 
-| Field | Type | Meaning | Line |
-|---|---|---|---|
-| `requested` | `Readonly<AirRenderTargetOptions>` | the frozen input options (updated width/height on resize) | `:28`, `:121`, `:188` |
-| `effective` | `{ colorFormat, depthFormat, samples, filter, scale }` | resolved/selected values after device negotiation | `:29`, `:122` |
-| `width` | `number` | actual pixel width after scale, `>= 1` | `:30`, `:166` |
-| `height` | `number` | actual pixel height after scale, `>= 1` | `:31`, `:167` |
-| `samples` | `number` | equals `effective.samples` | `:32`, `:140` |
-| `generation` | `number` | incremented on each successful resize | `:33`, `:189` |
-| `framebufferComplete` | `boolean` | `!disposed` | `:34`, `:140` |
-| `resolveRequired` | `boolean` | `effective.samples > 1` | `:35`, `:141` |
-| `disposed` | `boolean` | disposal flag | `:36`, `:141` |
-| `supportedSamples` | `readonly number[]` | device-supported sample set (sorted) | `:37`, `:142` |
-| `glSamples` | `number` | last driver-allocated sample count | `:38`, `:142` |
+| Field                 | Type                                                   | Meaning                                                   | Line                  |
+| --------------------- | ------------------------------------------------------ | --------------------------------------------------------- | --------------------- |
+| `requested`           | `Readonly<AirRenderTargetOptions>`                     | the frozen input options (updated width/height on resize) | `:28`, `:121`, `:188` |
+| `effective`           | `{ colorFormat, depthFormat, samples, filter, scale }` | resolved/selected values after device negotiation         | `:29`, `:122`         |
+| `width`               | `number`                                               | actual pixel width after scale, `>= 1`                    | `:30`, `:166`         |
+| `height`              | `number`                                               | actual pixel height after scale, `>= 1`                   | `:31`, `:167`         |
+| `samples`             | `number`                                               | equals `effective.samples`                                | `:32`, `:140`         |
+| `generation`          | `number`                                               | incremented on each successful resize                     | `:33`, `:189`         |
+| `framebufferComplete` | `boolean`                                              | `!disposed`                                               | `:34`, `:140`         |
+| `resolveRequired`     | `boolean`                                              | `effective.samples > 1`                                   | `:35`, `:141`         |
+| `disposed`            | `boolean`                                              | disposal flag                                             | `:36`, `:141`         |
+| `supportedSamples`    | `readonly number[]`                                    | device-supported sample set (sorted)                      | `:37`, `:142`         |
+| `glSamples`           | `number`                                               | last driver-allocated sample count                        | `:38`, `:142`         |
 
 ## Public methods
 
-| Method | Behavior | Line |
-|---|---|---|
-| `resize(baseWidth, baseHeight)` | reallocate at `floor(dim * scale)`, min 1; bumps `generation`; rebinds cameras and material bindings | `:164` |
-| `attachCamera(camera, beforeRender?)` | sets `camera.targetTexture`, registers pipeline begin/end listeners, returns `detach()` | `:197` |
-| `resolve()` | blits multisample rendering buffer to the resolved output; no-op when `samples === 1` | `:216` |
-| `bindColor(material, property, passIdx?)` | binds `this.texture` to an active `sampler2D`; returns `unbind()` | `:257` |
-| `bindDepth(material, property, passIdx?)` | binds `this.depthTexture`; returns `unbind()` | `:258` |
-| `readColor(region?)` | resolves then `readPixels`; `Float32Array` for float formats, `Uint8Array` otherwise | `:262` |
-| `dispose()` | unbinds, detaches cameras, destroys textures; safe to repeat | `:280` |
+| Method                                    | Behavior                                                                                             | Line   |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------ |
+| `resize(baseWidth, baseHeight)`           | reallocate at `floor(dim * scale)`, min 1; bumps `generation`; rebinds cameras and material bindings | `:164` |
+| `attachCamera(camera, beforeRender?)`     | sets `camera.targetTexture`, registers pipeline begin/end listeners, returns `detach()`              | `:197` |
+| `resolve()`                               | blits multisample rendering buffer to the resolved output; no-op when `samples === 1`                | `:216` |
+| `bindColor(material, property, passIdx?)` | binds `this.texture` to an active `sampler2D`; returns `unbind()`                                    | `:257` |
+| `bindDepth(material, property, passIdx?)` | binds `this.depthTexture`; returns `unbind()`                                                        | `:258` |
+| `readColor(region?)`                      | resolves then `readPixels`; `Float32Array` for float formats, `Uint8Array` otherwise                 | `:262` |
+| `dispose()`                               | unbinds, detaches cameras, destroys textures; safe to repeat                                         | `:280` |
 
 `createAirRenderTarget(options)` returns `new AirRenderTarget(options)` (`src/air/rendering/render-target.ts:290`).
 
@@ -74,29 +74,29 @@ After allocation, the driver's actual `gl.getParameter(gl.SAMPLES)` is compared;
 
 `failure` throws `Error("[<code>] <message>")` and sets `error.code`. Device must be WebGL2 and `director.root.device` present, else the first throw (`:88`).
 
-| Code | Literal message | Trigger | Line |
-|---|---|---|---|
-| `AIR_E_RENDER_TARGET_SIZE` | `<name> must be finite and positive` | `width`/`height`/`scale` not finite positive | `:49` |
-| `AIR_E_RENDER_TARGET_DEVICE` | `await createAirApp(); this target requires WebGL2` | no device or `gfxAPI !== WEBGL2` | `:88` |
-| `AIR_E_RENDER_TARGET_OPTIONS` | `provide target options` | options missing or not an object | `:90` |
-| `AIR_E_RENDER_TARGET_OPTION` | `unknown option <key>; use the explicit colorFormat/depthFormat contract` | option key outside allow-list | `:92` |
-| `AIR_E_RENDER_TARGET_OPTION` | `<key> was explicitly undefined; check the enum/name or omit it to use the default` | enum/scale key present but `undefined` | `:95` |
-| `AIR_E_RENDER_TARGET_FORMAT` | `unknown colorFormat <colorFormat>` | colorFormat not a `formats` key | `:103` |
-| `AIR_E_RENDER_TARGET_OPTION` | `unsupported depthFormat/filter/sampleFallback/samples` | any of these outside allowed literals | `:106` |
-| `AIR_E_RENDER_TARGET_FORMAT` | `<colorFormat> is not a renderable sampled format on this device` | format lacks RENDER_TARGET or SAMPLED_TEXTURE | `:108`, `:109` |
-| `AIR_E_RENDER_TARGET_FILTER` | `<colorFormat> does not support linear filtering` | `filter: 'linear'` without LINEAR_FILTER | `:110`, `:111` |
-| `AIR_E_RENDER_TARGET_SAMPLES` | `<colorFormat>/<depthFormat> cannot use <samples> samples; supported=<list>` | unsupported sample with `sampleFallback: 'error'` | `:120` |
-| `AIR_E_RENDER_TARGET_SAMPLES` | `driver allocated <glSamples> samples instead of <effective.samples>` | driver sample mismatch after init | `:179`, `:180` |
-| `AIR_E_RENDER_TARGET_SIZE` | `scaled dimensions exceed MAX_TEXTURE_SIZE` | scaled width/height above device cap | `:168`, `:169` |
-| `AIR_E_RENDER_TARGET_INCOMPLETE` | `<colorFormat> framebuffer is incomplete` | `checkFramebufferStatus !== FRAMEBUFFER_COMPLETE` | `:156`, `:157` |
-| `AIR_E_RENDER_TARGET_DISPOSED` | `target has been disposed` | any operation after `dispose()` | `:130` |
-| `AIR_E_RENDER_TARGET_DEPTH` | `target has no readable depth attachment` | depth read when attachment missing | `:135` |
-| `AIR_E_RENDER_TARGET_DEPTH` | `request depth24-stencil8 before binding depth` | `bindDepth` when `depthFormat === 'none'` | `:259` |
-| `AIR_E_RENDER_TARGET_CAMERA` | `camera is already attached to this target` | `attachCamera` on an attached camera | `:199` |
-| `AIR_E_RENDER_TARGET_RESOLVE` | `resolve failed with GL error <error>` | `gl.getError()` non-zero after blit | `:231`, `:232` |
-| `AIR_E_RENDER_TARGET_BINDING` | `<material.name>.<property> must be an active sampler2D in the requested pass` | handle missing / not single SAMPLER2D | `:242`, `:244` |
-| `AIR_E_RENDER_TARGET_READ` | `read rectangle must be integral and inside the target` | non-integer or out-of-bounds region | `:265`, `:266` |
-| `AIR_E_RENDER_TARGET_READ` | `color readback failed with GL error <error>` | `gl.getError()` non-zero after readPixels | `:276` |
+| Code                             | Literal message                                                                     | Trigger                                           | Line           |
+| -------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------- | -------------- |
+| `AIR_E_RENDER_TARGET_SIZE`       | `<name> must be finite and positive`                                                | `width`/`height`/`scale` not finite positive      | `:49`          |
+| `AIR_E_RENDER_TARGET_DEVICE`     | `await createAirApp(); this target requires WebGL2`                                 | no device or `gfxAPI !== WEBGL2`                  | `:88`          |
+| `AIR_E_RENDER_TARGET_OPTIONS`    | `provide target options`                                                            | options missing or not an object                  | `:90`          |
+| `AIR_E_RENDER_TARGET_OPTION`     | `unknown option <key>; use the explicit colorFormat/depthFormat contract`           | option key outside allow-list                     | `:92`          |
+| `AIR_E_RENDER_TARGET_OPTION`     | `<key> was explicitly undefined; check the enum/name or omit it to use the default` | enum/scale key present but `undefined`            | `:95`          |
+| `AIR_E_RENDER_TARGET_FORMAT`     | `unknown colorFormat <colorFormat>`                                                 | colorFormat not a `formats` key                   | `:103`         |
+| `AIR_E_RENDER_TARGET_OPTION`     | `unsupported depthFormat/filter/sampleFallback/samples`                             | any of these outside allowed literals             | `:106`         |
+| `AIR_E_RENDER_TARGET_FORMAT`     | `<colorFormat> is not a renderable sampled format on this device`                   | format lacks RENDER_TARGET or SAMPLED_TEXTURE     | `:108`, `:109` |
+| `AIR_E_RENDER_TARGET_FILTER`     | `<colorFormat> does not support linear filtering`                                   | `filter: 'linear'` without LINEAR_FILTER          | `:110`, `:111` |
+| `AIR_E_RENDER_TARGET_SAMPLES`    | `<colorFormat>/<depthFormat> cannot use <samples> samples; supported=<list>`        | unsupported sample with `sampleFallback: 'error'` | `:120`         |
+| `AIR_E_RENDER_TARGET_SAMPLES`    | `driver allocated <glSamples> samples instead of <effective.samples>`               | driver sample mismatch after init                 | `:179`, `:180` |
+| `AIR_E_RENDER_TARGET_SIZE`       | `scaled dimensions exceed MAX_TEXTURE_SIZE`                                         | scaled width/height above device cap              | `:168`, `:169` |
+| `AIR_E_RENDER_TARGET_INCOMPLETE` | `<colorFormat> framebuffer is incomplete`                                           | `checkFramebufferStatus !== FRAMEBUFFER_COMPLETE` | `:156`, `:157` |
+| `AIR_E_RENDER_TARGET_DISPOSED`   | `target has been disposed`                                                          | any operation after `dispose()`                   | `:130`         |
+| `AIR_E_RENDER_TARGET_DEPTH`      | `target has no readable depth attachment`                                           | depth read when attachment missing                | `:135`         |
+| `AIR_E_RENDER_TARGET_DEPTH`      | `request depth24-stencil8 before binding depth`                                     | `bindDepth` when `depthFormat === 'none'`         | `:259`         |
+| `AIR_E_RENDER_TARGET_CAMERA`     | `camera is already attached to this target`                                         | `attachCamera` on an attached camera              | `:199`         |
+| `AIR_E_RENDER_TARGET_RESOLVE`    | `resolve failed with GL error <error>`                                              | `gl.getError()` non-zero after blit               | `:231`, `:232` |
+| `AIR_E_RENDER_TARGET_BINDING`    | `<material.name>.<property> must be an active sampler2D in the requested pass`      | handle missing / not single SAMPLER2D             | `:242`, `:244` |
+| `AIR_E_RENDER_TARGET_READ`       | `read rectangle must be integral and inside the target`                             | non-integer or out-of-bounds region               | `:265`, `:266` |
+| `AIR_E_RENDER_TARGET_READ`       | `color readback failed with GL error <error>`                                       | `gl.getError()` non-zero after readPixels         | `:276`         |
 
 ## Relationship to camera targetTexture
 
@@ -123,15 +123,15 @@ Lifecycle rules:
 
 ## Bundle reachability (single `export { ... }` block of `build/cocosair.module.js`)
 
-| Symbol | Runtime ESM export | Declaration | Evidence |
-|---|---|---|---|
-| `AirRenderTarget` | resolves by symbol name | class declaration, constructor in d.ts currently :57336 | bundle parse + `build/cocosair.module.d.ts` |
-| `createAirRenderTarget` | resolves by symbol name | d.ts currently :57298 | bundle parse |
-| `AirTransmissionCapture` | resolves by symbol name | yes | bundle parse |
-| `TRANSMISSION_LAYER` | resolves by symbol name | yes | bundle parse |
-| `isTransmissionMaterial` | resolves by symbol name | yes | bundle parse |
-| `AirTargetColorFormat` | type-only, not in JS export block | `export type` in d.ts currently :57299 | declarations only |
-| `AirRenderTargetOptions` | type-only, not in JS export block | `export interface` d.ts currently :57300 | declarations only |
-| `AirRenderTargetInfo` | type-only, not in JS export block | `export interface` d.ts currently :57312 | declarations only |
+| Symbol                   | Runtime ESM export                | Declaration                                             | Evidence                                    |
+| ------------------------ | --------------------------------- | ------------------------------------------------------- | ------------------------------------------- |
+| `AirRenderTarget`        | resolves by symbol name           | class declaration, constructor in d.ts currently :57336 | bundle parse + `build/cocosair.module.d.ts` |
+| `createAirRenderTarget`  | resolves by symbol name           | d.ts currently :57298                                   | bundle parse                                |
+| `AirTransmissionCapture` | resolves by symbol name           | yes                                                     | bundle parse                                |
+| `TRANSMISSION_LAYER`     | resolves by symbol name           | yes                                                     | bundle parse                                |
+| `isTransmissionMaterial` | resolves by symbol name           | yes                                                     | bundle parse                                |
+| `AirTargetColorFormat`   | type-only, not in JS export block | `export type` in d.ts currently :57299                  | declarations only                           |
+| `AirRenderTargetOptions` | type-only, not in JS export block | `export interface` d.ts currently :57300                | declarations only                           |
+| `AirRenderTargetInfo`    | type-only, not in JS export block | `export interface` d.ts currently :57312                | declarations only                           |
 
 "Resolves by symbol name" is a bundle/declaration lookup, not browser verification. The browser contract evidence for format/MSAA/depth/resize cases is `tools/verify/rendering-contracts.cjs` scoped and recorded per its own candidate fingerprint (`docs/manual/rendering-contracts.md:34`, `:49`).

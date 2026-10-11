@@ -32,11 +32,11 @@ The dom backend needs a canvas as its pointer target and throws `AIR_E_INVALID_S
 
 ## Lifecycle
 
-| Call | Effect | Source |
-| --- | --- | --- |
-| `attach()` | installs backend + `blur`/`visibilitychange` listeners; idempotent; throws `AIR_E_DISPOSED` after dispose | `src/air/action-input.ts:127-128`, `:356-374`, `:286-289`, `:312-321` |
-| `detach()` | removes listeners exactly; keeps reducer state; idempotent | `src/air/action-input.ts:129-130`, `:376-393` |
-| `reset(reason)` | forwards to the reducer; no-op after dispose | `src/air/action-input.ts:133-134`, `:401-404` |
-| `dispose()` | terminal: `reset('dispose')` + `detach()` + gate unbind; re-`attach` is impossible | `src/air/action-input.ts:135-136`, `:406-412` |
+| Call            | Effect                                                                                                    | Source                                                                |
+| --------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `attach()`      | installs backend + `blur`/`visibilitychange` listeners; idempotent; throws `AIR_E_DISPOSED` after dispose | `src/air/action-input.ts:127-128`, `:356-374`, `:286-289`, `:312-321` |
+| `detach()`      | removes listeners exactly; keeps reducer state; idempotent                                                | `src/air/action-input.ts:129-130`, `:376-393`                         |
+| `reset(reason)` | forwards to the reducer; no-op after dispose                                                              | `src/air/action-input.ts:133-134`, `:401-404`                         |
+| `dispose()`     | terminal: `reset('dispose')` + `detach()` + gate unbind; re-`attach` is impossible                        | `src/air/action-input.ts:135-136`, `:406-412`                         |
 
 `detach` is structural unbinding only and leaves held state intact; only `dispose` clears it via `reset('dispose')` (`src/air/action-input.ts:26`, `:406-411`). `reset` on either the state or the adapter never removes listeners - that is what `detach` is for (`src/air/action-state.ts:165-171`).

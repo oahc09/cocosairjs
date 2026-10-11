@@ -8,13 +8,13 @@ Derived from `src/air/step-clock.ts`, `tools/debug/probes/step-clock-probe/main.
 
 `createStepClock(options?)` (`src/air/step-clock.ts:62`) reads `frameRate = options.frameRate ?? 60` (`:63`) and `stepTimeoutMs = options.stepTimeoutMs ?? 2000` (`:64`), and closes over `stepping = false` and `stepped = 0` (`:65-66`). It returns an `AirStepClock` object literal (`:77-108`) with two getters and three methods:
 
-| Member | Behavior | Line |
-| --- | --- | --- |
-| `stepping` (getter) | whether `begin()` has run and `end()` has not | `src/air/step-clock.ts:78` |
-| `stepped` (getter) | count of completed steps since `begin()` | `:79` |
-| `begin()` | idempotent: returns if already stepping, else `game.pause()` and set `stepping = true` | `:80-84` |
-| `step(dt = 1/frameRate)` | asserts paused, ticks one frame, resolves on AFTER_DRAW | `:85-102` |
-| `end()` | idempotent: returns if not stepping, else clear the flag and `game.resume()` | `:103-107` |
+| Member                   | Behavior                                                                               | Line                       |
+| ------------------------ | -------------------------------------------------------------------------------------- | -------------------------- |
+| `stepping` (getter)      | whether `begin()` has run and `end()` has not                                          | `src/air/step-clock.ts:78` |
+| `stepped` (getter)       | count of completed steps since `begin()`                                               | `:79`                      |
+| `begin()`                | idempotent: returns if already stepping, else `game.pause()` and set `stepping = true` | `:80-84`                   |
+| `step(dt = 1/frameRate)` | asserts paused, ticks one frame, resolves on AFTER_DRAW                                | `:85-102`                  |
+| `end()`                  | idempotent: returns if not stepping, else clear the flag and `game.resume()`           | `:103-107`                 |
 
 `step()` is the guarded path. It first calls `assertPaused()` (`:86`), which reads the private `game._paused` and throws an `Error` whose message contains "dual clock" when the real clock is running (`:68-75`). It captures `index = stepped + 1` (`:87`), then returns a Promise that arms a `setTimeout(stepTimeoutMs)` which removes the draw listener and rejects with `no AFTER_DRAW within <n>ms` (`:89-92`), registers a one-shot `Director.EVENT_AFTER_DRAW` listener that clears the timer, sets `stepped = index` and resolves `{ step: index, dt, afterDraw: true }` (`:93-98`), and finally calls `director.tick(dt)` (`:99-100`). The timeout rejecting rather than silently resolving is deliberate (`:54-55`). `begin()`/`end()` map directly to `game.pause()`/`game.resume()`, which stop and restart the real pacer (rAF, render, business clock and audio) (`:6-11`).
 

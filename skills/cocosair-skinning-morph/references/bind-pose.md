@@ -28,15 +28,15 @@ The helper is a convenience over the native asset, not a replacement: `Skeleton`
 
 `src/air/utils/restore-bind-pose.ts:30-57` walks the joints and writes node transforms:
 
-| Step | Line | Detail |
-| --- | --- | --- |
-| depth ordering | `:33-36` | `joints.map((path, index) => ...)` then `.sort()` over the copy, so ancestors restore first |
-| skip missing | `:37-40` | no bindpose or no node for a path is skipped silently, so the helper works on partial rigs |
-| world back-computation | `:43` | `Mat4.invert(m4_world, bindpose)` |
-| local against parent | `:45-51` | `inverse(parent.worldMatrix) * world`, or the world matrix itself when the joint has no parent |
-| apply | `:52-55` | `Mat4.toSRT` then `setPosition`, `setRotation`, `setScale` |
+| Step                   | Line     | Detail                                                                                         |
+| ---------------------- | -------- | ---------------------------------------------------------------------------------------------- |
+| depth ordering         | `:33-36` | `joints.map((path, index) => ...)` then `.sort()` over the copy, so ancestors restore first    |
+| skip missing           | `:37-40` | no bindpose or no node for a path is skipped silently, so the helper works on partial rigs     |
+| world back-computation | `:43`    | `Mat4.invert(m4_world, bindpose)`                                                              |
+| local against parent   | `:45-51` | `inverse(parent.worldMatrix) * world`, or the world matrix itself when the joint has no parent |
+| apply                  | `:52-55` | `Mat4.toSRT` then `setPosition`, `setRotation`, `setScale`                                     |
 
-Ordering matters twice. The sort exists because a child's local matrix is computed against its parent's *current* world matrix (`:46-48`); restoring a child before its parent would compute against the parent's live, deformed transform. And because the sort runs over a mapped copy (`:34-35`), `skeleton.joints` and `skeleton.bindposes` keep their original index pairing (`docs/guides/skinned-model.md:30`), which the round-trip test pins in `test/smoke/smoke-06-skeleton-utils.test.ts:81-84`.
+Ordering matters twice. The sort exists because a child's local matrix is computed against its parent's _current_ world matrix (`:46-48`); restoring a child before its parent would compute against the parent's live, deformed transform. And because the sort runs over a mapped copy (`:34-35`), `skeleton.joints` and `skeleton.bindposes` keep their original index pairing (`docs/guides/skinned-model.md:30`), which the round-trip test pins in `test/smoke/smoke-06-skeleton-utils.test.ts:81-84`.
 
 The helper restores translation, rotation and scale only. `Mat4.toSRT` decomposes into those three factors (`src/cocos/core/math/mat4.ts:878`), so a bindpose carrying shear cannot be restored exactly, and a mesh whose rest pose depends on shear should not be authored through this path.
 

@@ -4,29 +4,29 @@ Derived from `src/air/assets/asset-bank.ts`, `src/air/ui-kit.ts`, `src/air/utils
 
 ## Public surface
 
-| Member | Declaration | What it does |
-| --- | --- | --- |
+| Member                             | Declaration                        | What it does                                                                                                                                                                                                                                                        |
+| ---------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `load<T>(url, optionsOrProgress?)` | `src/air/assets/asset-bank.ts:173` | Loads or joins the in-flight load; legacy `load(url, onProgress?)` and incremental `load(url, { ext?, signal?, onProgress? })` both route through `normalizeOptions` (`:104`). Generic `T` is a caller assertion only, the bank never infers a type from it (`:9`). |
-| `release(url, ext?)` | `:264` | Drops one subscription; when the local count reaches zero the bank `decRef`s only its own engine reference and returns `true` (`:270-274`). Never force-releases (`:258-263`). |
-| `refCount(url, ext?)` | `:160` | Subscriber refcount of a cached entry, `0` when absent; `ext` participates in the key (`:162`). |
-| `inFlightCount` | `:157` | Number of unsettled in-flight records (test observation surface). |
-| `size` | `:154` | Number of banked entries. |
-| `releaseAll()` | `:288` | Releases every cached entry and revokes in-flight waiters, returns the count released (`:290-304`). |
-| `static underlyingCancelSupported` | `:148` | Hard-coded `false`: the underlying `loadRemote` has no network cancel (`:147`). |
+| `release(url, ext?)`               | `:264`                             | Drops one subscription; when the local count reaches zero the bank `decRef`s only its own engine reference and returns `true` (`:270-274`). Never force-releases (`:258-263`).                                                                                      |
+| `refCount(url, ext?)`              | `:160`                             | Subscriber refcount of a cached entry, `0` when absent; `ext` participates in the key (`:162`).                                                                                                                                                                     |
+| `inFlightCount`                    | `:157`                             | Number of unsettled in-flight records (test observation surface).                                                                                                                                                                                                   |
+| `size`                             | `:154`                             | Number of banked entries.                                                                                                                                                                                                                                           |
+| `releaseAll()`                     | `:288`                             | Releases every cached entry and revokes in-flight waiters, returns the count released (`:290-304`).                                                                                                                                                                 |
+| `static underlyingCancelSupported` | `:148`                             | Hard-coded `false`: the underlying `loadRemote` has no network cancel (`:147`).                                                                                                                                                                                     |
 
 ## Error codes and exact throw sites
 
 `AirAssetErrorCode` is the union at `src/air/assets/asset-bank.ts:61-67`; every throw constructs `AirAssetError` (`:70`).
 
-| Code | Message shape | Throw site |
-| --- | --- | --- |
-| `AIR_E_INVALID_EXT` | `ext must match /^[a-zA-Z0-9]{1,16}$/` | `assertValidExt` `:94`; pattern declared `:77` |
-| `AIR_E_EXT_REQUIRED` | `suffix-less URL requires an explicit ext` | `assertSuffixRule` `:100`, guarded by `hasUrlSuffix` `:85-90` |
-| `AIR_E_ABORTED` | `subscription aborted before load` | `load` entry, pre-aborted signal `:183` |
-| `AIR_E_ABORTED` | `cached subscription aborted` | cache-hit abort handler `:207`; in-callback self-abort `:225`; `_join` subscriber cancel `:320`; settle-time `:414` via `:428` |
-| `AIR_E_PROGRESS_ERROR` | `onProgress threw` | cache-hit callback `:220`; `_join` first-phase `:332`; settle-time `:408` via `:428` |
-| `AIR_E_REVOKED` | `... revoked by releaseAll` | `releaseAll` in-flight loop `:301`; cache-hit entry removed mid-tick `:229`; settle-time `:414` |
-| `AIR_E_LOAD_FAILED` | `load failed: <url> (<cause>)` | `_settle` on `err`/no-asset `:386`; the shared `_settleOneFailed` body is `:425-428` |
+| Code                   | Message shape                              | Throw site                                                                                                                     |
+| ---------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| `AIR_E_INVALID_EXT`    | `ext must match /^[a-zA-Z0-9]{1,16}$/`     | `assertValidExt` `:94`; pattern declared `:77`                                                                                 |
+| `AIR_E_EXT_REQUIRED`   | `suffix-less URL requires an explicit ext` | `assertSuffixRule` `:100`, guarded by `hasUrlSuffix` `:85-90`                                                                  |
+| `AIR_E_ABORTED`        | `subscription aborted before load`         | `load` entry, pre-aborted signal `:183`                                                                                        |
+| `AIR_E_ABORTED`        | `cached subscription aborted`              | cache-hit abort handler `:207`; in-callback self-abort `:225`; `_join` subscriber cancel `:320`; settle-time `:414` via `:428` |
+| `AIR_E_PROGRESS_ERROR` | `onProgress threw`                         | cache-hit callback `:220`; `_join` first-phase `:332`; settle-time `:408` via `:428`                                           |
+| `AIR_E_REVOKED`        | `... revoked by releaseAll`                | `releaseAll` in-flight loop `:301`; cache-hit entry removed mid-tick `:229`; settle-time `:414`                                |
+| `AIR_E_LOAD_FAILED`    | `load failed: <url> (<cause>)`             | `_settle` on `err`/no-asset `:386`; the shared `_settleOneFailed` body is `:425-428`                                           |
 
 ## Semantics pinned from source
 
@@ -45,23 +45,24 @@ The remote entry `assetManager.loadRemote` has overloads at `src/cocos/asset/ass
 
 Resolved by symbol name against the single `export { ... }` block of `build/cocosair.module.js` (the file the npm package ships as `cocosair.js`), not by importing from `src/`.
 
-| Symbol | Reaches the default face by name |
-| --- | --- |
-| `AssetBank` | yes, via `src/air/ui-kit.ts:142` |
-| `assetManager` | yes |
-| `loadAssetAsync` | yes |
-| `ImageAsset` | yes |
-| `Texture2D` | yes |
-| `AirAssetError` | no - `ui-kit.ts:143` re-exports it as a type only |
-| `AirAssetErrorCode` | no - type only |
-| `load` | no - not a bundle-face name |
-| `loadRemote` | no - reach it as `assetManager.loadRemote` |
+| Symbol              | Reaches the default face by name                  |
+| ------------------- | ------------------------------------------------- |
+| `AssetBank`         | yes, via `src/air/ui-kit.ts:142`                  |
+| `assetManager`      | yes                                               |
+| `loadAssetAsync`    | yes                                               |
+| `ImageAsset`        | yes                                               |
+| `Texture2D`         | yes                                               |
+| `AirAssetError`     | no - `ui-kit.ts:143` re-exports it as a type only |
+| `AirAssetErrorCode` | no - type only                                    |
+| `load`              | no - not a bundle-face name                       |
+| `loadRemote`        | no - reach it as `assetManager.loadRemote`        |
 
 ## Browser verification status
 
 `docs/evidence/examples-verified.json` (file-level `measuredAt` 2026-10-04T05:52:32.537Z, top-level `candidateFingerprint` 2f089f6ce25eaccd; each `results[]` entry carries its own `candidateFingerprint` 2f089f6ce25eaccd and no `measuredAt`). No entry binds the `AssetBank` name at all: `AssetBank`, `AirAssetError`, `AirAssetErrorCode`, and `loadRemote` are therefore documented from source and jsdom smoke tests (`test/smoke/port-gap-asset-bank.test.ts`, `test/smoke/port-gap-asset-bank-races.test.ts`), and there is a browser fixture at `test/fixtures/asset-bank-browser/main.ts`, none of which appears in the examples evidence.
 
 The two adjacent example ids prove the engine path, not the bank:
+
 - `runtime-asset-release` (result PASS): binds `GLTFLoader` (`scene-ready`), `GLTFLoader.parseAsync` (`asset-loaded`), `GLTFAsset.instantiate` and `GLTFAsset.destroy` (`resource-released`). See `examples/runtime-asset-release/src/main.ts`.
 - `ui-asset-loading` (result PASS): binds `loadAssetAsync` (`asset-loaded`), `ImageAsset`, `Texture2D` and `SpriteFrame.createWithImage` (`asset-loaded`), `AssetManager.releaseAsset` and `Texture2D.destroy` (`resource-released`), `math.Color` (`visible-frame`). It constructs textures with `new ImageAsset(canvas)` and never imports `AssetBank` (`examples/ui-asset-loading/src/main.ts:94`).
 

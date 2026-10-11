@@ -4,17 +4,17 @@ A runtime texture is two objects: an `ImageAsset` (CPU-side pixel description) a
 
 ## Construction and reset paths
 
-| Member | Declaration | Contract |
-| --- | --- | --- |
-| `new Texture2D(name?)` | `src/cocos/asset/assets/texture-2d.ts:86` | Empty texture until an image or reset. |
-| `reset(info: ITexture2DCreateInfo)` | `:192-202` | Sets width/height/format; `mipmapLevel` defaults to 1 (`:196`), `baseLevel` to 0 (`:198`), `maxLevel` to 1000 (`:199`); after reset the gfx resource is invalid and you must `uploadData` explicitly (`:186-189`). |
-| `ITexture2DCreateInfo` | `:38-78` | `width`, `height` required; `format` defaults `RGBA8888` (`:54`), `mipmapLevel`/`baseLevel`/`maxLevel` optional (`:63,70,77`). |
-| `create(w, h, format, mipmapLevel, baseLevel, maxLevel)` | `:217` | Deprecated positional alias that forwards to `reset` (`:218-225`); default `format = PixelFormat.RGBA8888` (`:217`). |
-| `image` setter | `:161-163` | `this.image = img` equals `this.mipmaps = [img]` and clears all prior mipmaps (`:150-155`). |
-| `mipmaps` setter | `:99-116` | One level calls `extractMipmaps`; multiple levels call `extractMipmap0` per level, then `_setMipmapParams` triggers a `reset` (`:121-147`). |
-| `new ImageAsset(nativeAsset?)` | `src/cocos/asset/assets/image-asset.ts:644` | If an argument is present it calls `reset` (`:660-662`). |
-| `ImageAsset.reset(data)` | `:670` | Accepts `ImageSource` (`:154`: `HTMLCanvasElement \| HTMLImageElement \| IMemoryImageSource \| ImageBitmap`); a memory source sets `_format` from `data.format` (`:676`). |
-| `IMemoryImageSource` | `:141-148` | `{ _data, _compressed, width, height, format, mipmapLevelDataSize? }`. |
+| Member                                                   | Declaration                                 | Contract                                                                                                                                                                                                           |
+| -------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `new Texture2D(name?)`                                   | `src/cocos/asset/assets/texture-2d.ts:86`   | Empty texture until an image or reset.                                                                                                                                                                             |
+| `reset(info: ITexture2DCreateInfo)`                      | `:192-202`                                  | Sets width/height/format; `mipmapLevel` defaults to 1 (`:196`), `baseLevel` to 0 (`:198`), `maxLevel` to 1000 (`:199`); after reset the gfx resource is invalid and you must `uploadData` explicitly (`:186-189`). |
+| `ITexture2DCreateInfo`                                   | `:38-78`                                    | `width`, `height` required; `format` defaults `RGBA8888` (`:54`), `mipmapLevel`/`baseLevel`/`maxLevel` optional (`:63,70,77`).                                                                                     |
+| `create(w, h, format, mipmapLevel, baseLevel, maxLevel)` | `:217`                                      | Deprecated positional alias that forwards to `reset` (`:218-225`); default `format = PixelFormat.RGBA8888` (`:217`).                                                                                               |
+| `image` setter                                           | `:161-163`                                  | `this.image = img` equals `this.mipmaps = [img]` and clears all prior mipmaps (`:150-155`).                                                                                                                        |
+| `mipmaps` setter                                         | `:99-116`                                   | One level calls `extractMipmaps`; multiple levels call `extractMipmap0` per level, then `_setMipmapParams` triggers a `reset` (`:121-147`).                                                                        |
+| `new ImageAsset(nativeAsset?)`                           | `src/cocos/asset/assets/image-asset.ts:644` | If an argument is present it calls `reset` (`:660-662`).                                                                                                                                                           |
+| `ImageAsset.reset(data)`                                 | `:670`                                      | Accepts `ImageSource` (`:154`: `HTMLCanvasElement \| HTMLImageElement \| IMemoryImageSource \| ImageBitmap`); a memory source sets `_format` from `data.format` (`:676`).                                          |
+| `IMemoryImageSource`                                     | `:141-148`                                  | `{ _data, _compressed, width, height, format, mipmapLevelDataSize? }`.                                                                                                                                             |
 
 ## Upload, mipmap, and sampling APIs
 
@@ -24,11 +24,11 @@ Sampling is set on `TextureBase`: `setWrapMode(wrapS, wrapT, wrapR?)` where `wra
 
 ## Enum values
 
-| Enum | Declaration | Members |
-| --- | --- | --- |
-| `WrapMode` | `src/cocos/asset/assets/asset-enum.ts:269` | `REPEAT` (`:276`), `CLAMP_TO_EDGE` (`:283`), `MIRRORED_REPEAT` (`:290`), `CLAMP_TO_BORDER` (`:297`) |
-| `TextureFilter` (aka `Filter`) | `:306` | `NONE` (`:307`), `LINEAR` (`:314`), `NEAREST` (`:321`) |
-| `PixelFormat` | `:42` | maps to `gfx.Format`; compressed families are the PVR/ETC/ASTC entries (`:138-260`) |
+| Enum                           | Declaration                                | Members                                                                                             |
+| ------------------------------ | ------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `WrapMode`                     | `src/cocos/asset/assets/asset-enum.ts:269` | `REPEAT` (`:276`), `CLAMP_TO_EDGE` (`:283`), `MIRRORED_REPEAT` (`:290`), `CLAMP_TO_BORDER` (`:297`) |
+| `TextureFilter` (aka `Filter`) | `:306`                                     | `NONE` (`:307`), `LINEAR` (`:314`), `NEAREST` (`:321`)                                              |
+| `PixelFormat`                  | `:42`                                      | maps to `gfx.Format`; compressed families are the PVR/ETC/ASTC entries (`:138-260`)                 |
 
 Defaults serialized on `TextureBase`: `_format = RGBA8888` (`src/cocos/asset/assets/texture-base.ts:98`), `_minFilter`/`_magFilter = LINEAR` (`:104,110`), `_mipFilter = NONE` (`:116`), `_wrapS`/`_wrapT`/`_wrapR = REPEAT` (`:122,128,134`). `docs/manual/textures.md:33` states the default wrap is `CLAMP_TO_EDGE`; the source default fields are `REPEAT` (lines above), so treat that doc line as stale.
 

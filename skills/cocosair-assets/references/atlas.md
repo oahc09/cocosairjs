@@ -6,28 +6,28 @@ Derived from `src/air/assets/atlas/atlas-parser.ts`, `src/air/assets/atlas/atlas
 
 Two write-side dialects are accepted and told apart by field names:
 
-| Dialect | Position plus size | Trim | Cross-dialect mixing rejected at |
-| --- | --- | --- | --- |
-| legacy | `xy: x,y` + `size: w,h` (`src/air/assets/atlas/atlas-parser.ts:220-227`) | `orig: w,h` + `offset: left,bottom` (`:233-240`) | `:221`, `:225`, `:229` |
-| compact | `bounds: x,y,w,h` (`:228-232`) | `offsets: left,bottom,origW,origH` (`:241-244`) | `:234`, `:238`, `:242` |
+| Dialect | Position plus size                                                       | Trim                                             | Cross-dialect mixing rejected at |
+| ------- | ------------------------------------------------------------------------ | ------------------------------------------------ | -------------------------------- |
+| legacy  | `xy: x,y` + `size: w,h` (`src/air/assets/atlas/atlas-parser.ts:220-227`) | `orig: w,h` + `offset: left,bottom` (`:233-240`) | `:221`, `:225`, `:229`           |
+| compact | `bounds: x,y,w,h` (`:228-232`)                                           | `offsets: left,bottom,origW,origH` (`:241-244`)  | `:234`, `:238`, `:242`           |
 
 Page keys are `size`, `format`, `filter`, `filt`, `repeat`, `pma` (`:113`); region keys are `rotate`, `xy`, `size`, `orig`, `offset`, `index`, `bounds`, `offsets` (`:114`). `filter` and `filt` are equivalent spellings but cannot both appear (`:264`). Unknown keys throw instead of being ignored (`:213`, `:254`). Creator `.plist` atlases are not this parser's input; the engine `SpriteAtlas` is a deserialized frame container queried by `getSpriteFrame(key)` (`src/cocos/2d/assets/sprite-atlas.ts:84`) and carries no text parser.
 
 ## Returned `AirAtlasDocument`
 
-| Member | Value | Source |
-| --- | --- | --- |
-| `pages[i].file/pageIndex/width/height` | page name line, ordinal, parsed `size:` pair | `src/air/assets/atlas/atlas-parser.ts:37-46`, `:257-260`, `:298-312` |
-| `pages[i].format/filter/repeat/pma` | optional strings/boolean, parsed only | `:41-45`, `:261-271` |
-| `regions[i].name/index/pageIndex` | name line; `index` defaults to -1, `>= 0` marks an animation frame (`:246-248`); page ordinal | `:49-53`, `:292` |
-| `regions[i].rotate` | `0` or `90` only (`true` equals `90`) | `:34`, `:216-219` |
-| `regions[i].xy` | packed position on the page, **top-left origin** | `:55-56`, `:220-223`, `:231` |
-| `regions[i].packed` | on-page footprint, width and height swapped when `rotate` is 90 | `:57-58`, `:171-173`, `:320-322` |
-| `regions[i].logical` | unrotated trimmed size | `:59-60`, `:224-232` |
-| `regions[i].original` | pre-trim size, defaults to `logical` | `:61-62`, `:183` |
-| `regions[i].offset` | trim distances from the original's left and bottom edges, default `0,0` | `:63-64`, `:178` |
-| `getRegion(name)` | the `index === -1` region; a lone indexed region is returned; two or more indexed entries give `undefined` | `:339-343` |
-| `getRegions(name)` | every entry for the name, sorted by `index` ascending, frozen copy | `:334`, `:344-346` |
+| Member                                 | Value                                                                                                      | Source                                                               |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `pages[i].file/pageIndex/width/height` | page name line, ordinal, parsed `size:` pair                                                               | `src/air/assets/atlas/atlas-parser.ts:37-46`, `:257-260`, `:298-312` |
+| `pages[i].format/filter/repeat/pma`    | optional strings/boolean, parsed only                                                                      | `:41-45`, `:261-271`                                                 |
+| `regions[i].name/index/pageIndex`      | name line; `index` defaults to -1, `>= 0` marks an animation frame (`:246-248`); page ordinal              | `:49-53`, `:292`                                                     |
+| `regions[i].rotate`                    | `0` or `90` only (`true` equals `90`)                                                                      | `:34`, `:216-219`                                                    |
+| `regions[i].xy`                        | packed position on the page, **top-left origin**                                                           | `:55-56`, `:220-223`, `:231`                                         |
+| `regions[i].packed`                    | on-page footprint, width and height swapped when `rotate` is 90                                            | `:57-58`, `:171-173`, `:320-322`                                     |
+| `regions[i].logical`                   | unrotated trimmed size                                                                                     | `:59-60`, `:224-232`                                                 |
+| `regions[i].original`                  | pre-trim size, defaults to `logical`                                                                       | `:61-62`, `:183`                                                     |
+| `regions[i].offset`                    | trim distances from the original's left and bottom edges, default `0,0`                                    | `:63-64`, `:178`                                                     |
+| `getRegion(name)`                      | the `index === -1` region; a lone indexed region is returned; two or more indexed entries give `undefined` | `:339-343`                                                           |
+| `getRegions(name)`                     | every entry for the name, sorted by `index` ascending, frozen copy                                         | `:334`, `:344-346`                                                   |
 
 The document, both arrays, each region and each nested geometry object are `Object.freeze`d (`:302`, `:314-326`, `:336-347`).
 
@@ -37,15 +37,15 @@ The document, both arrays, each region and each nested geometry object are `Obje
 
 ## Malformed input: throws versus silent handling
 
-| Code | Trigger | Message source |
-| --- | --- | --- |
-| `AIR_E_ATLAS_FORMAT` | non-string or blank input | `src/air/assets/atlas/atlas-parser.ts:144-146` |
-| `AIR_E_ATLAS_FORMAT` | no page block; page without `size`; field before any name line; name containing `:`; unknown or duplicate key; `filter` with `filt`; cross-dialect mixing | `:297`, `:300`, `:274`, `:279`, `:213`, `:214`, `:254`, `:255`, `:264`, `:221-242` |
-| `AIR_E_ATLAS_DATA` | pair or quad arity; value not a non-negative safe integer; `index` below -1; `pma` not `true`/`false`; region without position or size; `original` smaller than `logical` | `:102`, `:108`, `:95`, `:247`, `:269`, `:165`, `:170`, `:185` |
-| `AIR_E_ATLAS_ROTATION` | `rotate` other than `false`, `true`, `90` | `:219` |
-| `AIR_E_ATLAS_BOUNDS` | packed footprint leaving the page rect | `:174-175` |
-| `AIR_E_ATLAS_DUPLICATE` | repeated `name` plus `index` | `:187-188` |
-| `AIR_E_ATLAS_PAGE` | region fields before any page block, or before a page whose `size` is still missing | `:162-163`, `:291` |
+| Code                    | Trigger                                                                                                                                                                   | Message source                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `AIR_E_ATLAS_FORMAT`    | non-string or blank input                                                                                                                                                 | `src/air/assets/atlas/atlas-parser.ts:144-146`                                     |
+| `AIR_E_ATLAS_FORMAT`    | no page block; page without `size`; field before any name line; name containing `:`; unknown or duplicate key; `filter` with `filt`; cross-dialect mixing                 | `:297`, `:300`, `:274`, `:279`, `:213`, `:214`, `:254`, `:255`, `:264`, `:221-242` |
+| `AIR_E_ATLAS_DATA`      | pair or quad arity; value not a non-negative safe integer; `index` below -1; `pma` not `true`/`false`; region without position or size; `original` smaller than `logical` | `:102`, `:108`, `:95`, `:247`, `:269`, `:165`, `:170`, `:185`                      |
+| `AIR_E_ATLAS_ROTATION`  | `rotate` other than `false`, `true`, `90`                                                                                                                                 | `:219`                                                                             |
+| `AIR_E_ATLAS_BOUNDS`    | packed footprint leaving the page rect                                                                                                                                    | `:174-175`                                                                         |
+| `AIR_E_ATLAS_DUPLICATE` | repeated `name` plus `index`                                                                                                                                              | `:187-188`                                                                         |
+| `AIR_E_ATLAS_PAGE`      | region fields before any page block, or before a page whose `size` is still missing                                                                                       | `:162-163`, `:291`                                                                 |
 
 Silently handled, not errors: blank lines dropped (`:149`), tabs replaced by four spaces (`:148`), leading BOM stripped and CRLF accepted (`:147`). Parsed but never applied: page `format`, `filter`/`filt`, `repeat` and `pma`; `createAtlasSpriteFrame` reads only `page.width`/`page.height` plus region geometry (`src/air/assets/atlas/atlas-factory.ts:32-52`), so filtering, wrapping and premultiplied alpha stay caller-side on `Texture2D` (`docs/manual/atlas-loading.md:13`, `:38`).
 
@@ -57,12 +57,12 @@ Silently handled, not errors: blank lines dropped (`:149`), tabs replaced by fou
 
 `loadAtlas(url, options)` (`src/air/assets/atlas/atlas-loader.ts:63`) options (`:31-40`):
 
-| Option | Required | Effect |
-| --- | --- | --- |
-| `bank` | yes | `AssetBank` used for both text and page subscriptions (`:33`) |
-| `signal` | no | subscriber-side cancellation only (`:35`) |
-| `baseURL` | no | absolute base for relative page URLs, else the atlas URL, then `document.baseURI` (`:37`, `:82-84`, `:137-139`) |
-| `pageExt` | only for suffix-less page files | a suffix-less page without it is rejected (`:52-54`) |
+| Option    | Required                        | Effect                                                                                                          |
+| --------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `bank`    | yes                             | `AssetBank` used for both text and page subscriptions (`:33`)                                                   |
+| `signal`  | no                              | subscriber-side cancellation only (`:35`)                                                                       |
+| `baseURL` | no                              | absolute base for relative page URLs, else the atlas URL, then `document.baseURI` (`:37`, `:82-84`, `:137-139`) |
+| `pageExt` | only for suffix-less page files | a suffix-less page without it is rejected (`:52-54`)                                                            |
 
 Steps: `bank.load(url, { ext: 'atlas', signal })` (`:75`), `TextAsset` type guard (`:77`), `parseAtlasText` (`:78`), abort check (`:79`), base URL resolution with `AIR_E_ATLAS_BASE_URL` on failure (`:86`), per-page extension from the file suffix (`:42-60`), concurrent page loads indexed by `pageIndex` so completion order cannot reorder `textures` (`:89`, `:96-107`), `Promise.allSettled` convergence through a locally declared shim (`:92-95`), the first rejection rethrown only after every page settled (`:109-113`), then `createAtlasHandle` (`:117`). Auto path is PNG only: a `.jpg`/`.ktx` style suffix, a suffix-less page without `pageExt`, and an explicit non-png `pageExt` each throw `AIR_E_ATLAS_PAGE_FORMAT` (`:48`, `:53`, `:57`); other formats must be loaded by the caller and passed to `createAtlasHandle`. A page URL that yields no `ImageAsset` throws `AIR_E_ATLAS_PAGE_TEXTURE` (`:102`), as does any unbuilt slot (`:114-115`). On any failure the intermediate `Texture2D` objects are destroyed and the taken subscriptions released (`:129-132`, release bookkeeping `:66-73`), so no half-built handle escapes; the returned wrapper's `dispose()` runs the inner `dispose()` first and only then releases the bank subscriptions, keeping them retryable when the in-use guard throws (`:124-127`).
 

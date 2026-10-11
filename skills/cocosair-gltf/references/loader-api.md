@@ -10,11 +10,11 @@ Derived from `src/air/assets/gltf/loader.ts`, `src/air/assets/gltf/asset.ts`, `s
 
 The constructor copies its argument (`this.options = { ...options }`, `src/air/assets/gltf/loader.ts:78-80`), so later mutation of the caller's object does not affect the loader. The option contract (`src/air/assets/gltf/progress.ts:11-17`):
 
-| Option | Role |
-| --- | --- |
-| `signal?: AbortSignal` | checked at `parseAsync` entry (`src/air/assets/gltf/loader.ts:117`) and at every `throwIfAborted` checkpoint (`src/air/assets/gltf/parser-context.ts:84-86`) |
-| `dracoDecoder?` / `meshoptDecoder?` / `ktx2Transcoder?` | decoder contracts; normally set through the setters, see `skills/cocosair-gltf/references/decoders.md` |
-| `onProgress?` | receives `GLTFLoadProgress { phase, loaded, total, url? }` (`src/air/assets/gltf/progress.ts:4-9`) |
+| Option                                                  | Role                                                                                                                                                         |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `signal?: AbortSignal`                                  | checked at `parseAsync` entry (`src/air/assets/gltf/loader.ts:117`) and at every `throwIfAborted` checkpoint (`src/air/assets/gltf/parser-context.ts:84-86`) |
+| `dracoDecoder?` / `meshoptDecoder?` / `ktx2Transcoder?` | decoder contracts; normally set through the setters, see `skills/cocosair-gltf/references/decoders.md`                                                       |
+| `onProgress?`                                           | receives `GLTFLoadProgress { phase, loaded, total, url? }` (`src/air/assets/gltf/progress.ts:4-9`)                                                           |
 
 Progress phases are `'container' | 'dependencies' | 'decode' | 'textures' | 'objects'` (`src/air/assets/gltf/progress.ts:5`). The loader's `report` closure emits container/decode/textures/objects and includes `url` only when the input was a string (`src/air/assets/gltf/loader.ts:120-121`, `:132`, `:139`, `:152`, `:179`); `dependencies` comes from `loadBuffers` per buffer through `context.report`, which never sets `url` (`src/air/assets/gltf/parser-context.ts:87-89`, `:159`, `:168`), and `resolvePrimitives` emits additional `decode` progress per primitive (`src/air/assets/gltf/parser-context.ts:210`).
 
@@ -44,13 +44,13 @@ All line numbers are `src/air/assets/gltf/loader.ts` unless noted.
 
 `class GLTFAsset extends Asset` (`src/air/assets/gltf/asset.ts:50`). There are five public read-only collections, backed by the `@internal` mutable builder `owned` (`:52-53`):
 
-| Member | Returns | Line |
-| --- | --- | --- |
-| `meshes` / `materials` / `textures` / `skeletons` / `animations` | readonly views of `owned.*` | `src/air/assets/gltf/asset.ts:54-58` |
-| `sceneNames` | scene names, or `['scene_0']` when the document has no `scenes` array | `:59`, `:73` |
-| `document` | `context.json` - original glTF metadata including camera/light descriptions and original node names | `:60-61` |
-| `warnings` | `context.warnings` | `:62` |
-| `images`, `meshMaterials` | `@internal`; per-mesh material slot lists | `:63-64` |
+| Member                                                           | Returns                                                                                             | Line                                 |
+| ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| `meshes` / `materials` / `textures` / `skeletons` / `animations` | readonly views of `owned.*`                                                                         | `src/air/assets/gltf/asset.ts:54-58` |
+| `sceneNames`                                                     | scene names, or `['scene_0']` when the document has no `scenes` array                               | `:59`, `:73`                         |
+| `document`                                                       | `context.json` - original glTF metadata including camera/light descriptions and original node names | `:60-61`                             |
+| `warnings`                                                       | `context.warnings`                                                                                  | `:62`                                |
+| `images`, `meshMaterials`                                        | `@internal`; per-mesh material slot lists                                                           | `:63-64`                             |
 
 The uuid is `` `air-gltf-parsed-${++parsedAssetId}` `` from a module counter (`:72`, `:23`). `destroy()` (`:198-204`) returns `false` if already invalid or already requested, sets `destroyRequested`, removes itself from the `assets` registry when `assets.get(this._uuid) === this` (`:201`), and calls `releaseResources()` immediately only when `instances === 0` (`:202`); otherwise release is deferred to the last instance's destroy hook. `releaseResources()` (`:205-212`) is idempotent through `resourcesReleased` and destroys the `Set` union of materials, meshes, skeletons, animations, textures, images and every cached per-scene clip (`:207-209`), then `super.destroy()` (`:211`).
 

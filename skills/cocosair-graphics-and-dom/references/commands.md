@@ -44,6 +44,7 @@ maps solid color+opacity into a native `Color`, and cap/join onto `Graphics.Line
 `Graphics.LineJoin` (`src/air/graphics-commands.ts:71`, `:81-83`).
 
 Wrong:
+
 ```js
 drawAirGraphics(g, [
     { op: 'rect', args: [0, 0, 200, 100] },
@@ -53,6 +54,7 @@ drawAirGraphics(g, [
 ```
 
 Correct:
+
 ```js
 drawAirGraphics(g, [
     { op: 'rect', args: [0, 0, 100, 50] },

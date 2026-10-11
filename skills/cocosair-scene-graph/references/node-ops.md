@@ -2,54 +2,54 @@ Derived from docs/manual/scenegraph.md, docs/manual/creating-a-scene.md, docs/ma
 
 ## Node hierarchy methods (src/cocos/scene-graph/node.ts)
 
-| Method / accessor | Line | What it does | Side effects |
-|---|---|---|---|
-| `addChild(child: Node): void` | 625 | Calls `child.setParent(this)`; appends as last sibling | Emits `CHILD_ADDED` on the parent and `PARENT_CHANGED` on the child (emit sites node.ts:539, :514); returns void (no chaining) |
-| `insertChild(child: Node, siblingIndex: number): void` | 639 | `setParent(this)` then `child.setSiblingIndex(index)` | Reorders children after attach |
-| `setParent(value: Node \| null, keepWorldTransform = false): void` | 493 | Re-parents; keeps LOCAL transform unless `keepWorldTransform` is true | Detaches from old parent, recomputes world transform |
-| `getParent(): Node \| null` | 473 | Returns parent reference | None |
-| `parent` get/set | 233 / 236 | Getter returns `_parent`; setter delegates to `setParent(value)` | setter has no keepWorldTransform option |
-| `removeFromParent(): void` | 795 | Detaches this node, keeps it alive | Emits `CHILD_REMOVED`; does not destroy |
-| `removeChild(child): void` | 806 | Removes one direct child, keeps it alive | Emits `CHILD_REMOVED` |
-| `removeAllChildren(): void` | 817 | Detaches every direct child | Children stay valid, just orphaned |
-| `destroyAllChildren(): void` | 1385 | Calls `destroy()` on each direct child | Deferred destruction, not immediate |
-| `walk(preFunc, postFunc?)` | 703 | Depth-first traverse over the subtree calling `preFunc(node)` | None |
-| `children: Node[]` get | 176 | Readonly live array of direct children | None |
-| `getChildByUuid(uuid): Node \| null` | 552 | Direct-children lookup by uuid; null if absent | None |
-| `getChildByName(name): Node \| null` | 577 | Direct-children lookup by name (not recursive); null if absent | None |
-| `getChildByPath(path): Node \| null` | 602 | Resolves `'/'`-separated path down the subtree | None |
-| `scene` get (readonly) | 245 | Returns `_scene`: null on a detached root (field starts null at node.ts:402), inherited from the parent on attach (`Node._updateScene`, node.ts:443-449); `Scene` overrides it to point at itself (override declaration scene.ts:84) | None |
-| `name` set | 153 | Assigns the node name | None |
+| Method / accessor                                                  | Line      | What it does                                                                                                                                                                                                                         | Side effects                                                                                                                   |
+| ------------------------------------------------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| `addChild(child: Node): void`                                      | 625       | Calls `child.setParent(this)`; appends as last sibling                                                                                                                                                                               | Emits `CHILD_ADDED` on the parent and `PARENT_CHANGED` on the child (emit sites node.ts:539, :514); returns void (no chaining) |
+| `insertChild(child: Node, siblingIndex: number): void`             | 639       | `setParent(this)` then `child.setSiblingIndex(index)`                                                                                                                                                                                | Reorders children after attach                                                                                                 |
+| `setParent(value: Node \| null, keepWorldTransform = false): void` | 493       | Re-parents; keeps LOCAL transform unless `keepWorldTransform` is true                                                                                                                                                                | Detaches from old parent, recomputes world transform                                                                           |
+| `getParent(): Node \| null`                                        | 473       | Returns parent reference                                                                                                                                                                                                             | None                                                                                                                           |
+| `parent` get/set                                                   | 233 / 236 | Getter returns `_parent`; setter delegates to `setParent(value)`                                                                                                                                                                     | setter has no keepWorldTransform option                                                                                        |
+| `removeFromParent(): void`                                         | 795       | Detaches this node, keeps it alive                                                                                                                                                                                                   | Emits `CHILD_REMOVED`; does not destroy                                                                                        |
+| `removeChild(child): void`                                         | 806       | Removes one direct child, keeps it alive                                                                                                                                                                                             | Emits `CHILD_REMOVED`                                                                                                          |
+| `removeAllChildren(): void`                                        | 817       | Detaches every direct child                                                                                                                                                                                                          | Children stay valid, just orphaned                                                                                             |
+| `destroyAllChildren(): void`                                       | 1385      | Calls `destroy()` on each direct child                                                                                                                                                                                               | Deferred destruction, not immediate                                                                                            |
+| `walk(preFunc, postFunc?)`                                         | 703       | Depth-first traverse over the subtree calling `preFunc(node)`                                                                                                                                                                        | None                                                                                                                           |
+| `children: Node[]` get                                             | 176       | Readonly live array of direct children                                                                                                                                                                                               | None                                                                                                                           |
+| `getChildByUuid(uuid): Node \| null`                               | 552       | Direct-children lookup by uuid; null if absent                                                                                                                                                                                       | None                                                                                                                           |
+| `getChildByName(name): Node \| null`                               | 577       | Direct-children lookup by name (not recursive); null if absent                                                                                                                                                                       | None                                                                                                                           |
+| `getChildByPath(path): Node \| null`                               | 602       | Resolves `'/'`-separated path down the subtree                                                                                                                                                                                       | None                                                                                                                           |
+| `scene` get (readonly)                                             | 245       | Returns `_scene`: null on a detached root (field starts null at node.ts:402), inherited from the parent on attach (`Node._updateScene`, node.ts:443-449); `Scene` overrides it to point at itself (override declaration scene.ts:84) | None                                                                                                                           |
+| `name` set                                                         | 153       | Assigns the node name                                                                                                                                                                                                                | None                                                                                                                           |
 
 `Node.isNode(obj)` (1667), `Node.resetHasChangedFlags()` (2962), `Node.clearNodeArray()` (2972) are static helpers. `node.attr({...})` (465) applies a plain-object bag of properties.
 
 ## Transform and scale (src/cocos/scene-graph/node.ts)
 
-| Member | Line | Behavior |
-|---|---|---|
-| `setScale(Vec3)` / `setScale(x,y,z?)` | 2543-2554 | Writes LOCAL scale (`_lscale`); calls `invalidateChildren(TransformBit.SCALE)` |
-| `scale` get/set | (local) | Local scale, exactly what you set |
-| `getScale(out?)` | 2580 | Reads local scale into optional `out` |
-| `worldScale` get | 1883 | `updateWorldTransform()` then returns the world cache `_scale` = parent world scale * local scale |
-| `worldScale` set / `setWorldScale` | 1888 | Back-solves local scale so the world result matches |
-| `setPosition` / `position` | (local) | Local position relative to parent |
-| `worldPosition` get / `setWorldPosition` | - | Position in world space |
-| `eulerAngles` get | 1823 | Local rotation in degrees |
-| `setRotationFromEuler(x,y,z)` | - | Sets local rotation from degree euler |
-| `matrix` set | 1896 | Assigns local SRT matrix; `invalidateChildren(TransformBit.TRS)` |
-| `updateWorldTransform()` | 2312 | Returns early when the node has no dirty flags (`_transformFlags` is 0, :2313); otherwise collects up to the topmost dirty ancestor (:2316-2322) and recomputes world matrices/caches down through that subtree. Hand-calling it is rarely needed: the world getters refresh the transforms themselves (`worldPosition` get calls it at :1742, `worldScale` get at :1884); `examples/node-hierarchy/src/transform-contract.ts` exercises this world-transform contract in a browser (world reads at :20-:45) |
-| `invalidateChildren(bit)` | - | Propagates a `TransformBit` dirty flag to descendants |
-| `getWorldMatrix/getWorldRS/getWorldRT(out)` | - | World matrix; RS excludes translation; RT excludes scale |
+| Member                                      | Line      | Behavior                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `setScale(Vec3)` / `setScale(x,y,z?)`       | 2543-2554 | Writes LOCAL scale (`_lscale`); calls `invalidateChildren(TransformBit.SCALE)`                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `scale` get/set                             | (local)   | Local scale, exactly what you set                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `getScale(out?)`                            | 2580      | Reads local scale into optional `out`                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `worldScale` get                            | 1883      | `updateWorldTransform()` then returns the world cache `_scale` = parent world scale * local scale                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `worldScale` set / `setWorldScale`          | 1888      | Back-solves local scale so the world result matches                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `setPosition` / `position`                  | (local)   | Local position relative to parent                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `worldPosition` get / `setWorldPosition`    | -         | Position in world space                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `eulerAngles` get                           | 1823      | Local rotation in degrees                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `setRotationFromEuler(x,y,z)`               | -         | Sets local rotation from degree euler                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `matrix` set                                | 1896      | Assigns local SRT matrix; `invalidateChildren(TransformBit.TRS)`                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `updateWorldTransform()`                    | 2312      | Returns early when the node has no dirty flags (`_transformFlags` is 0, :2313); otherwise collects up to the topmost dirty ancestor (:2316-2322) and recomputes world matrices/caches down through that subtree. Hand-calling it is rarely needed: the world getters refresh the transforms themselves (`worldPosition` get calls it at :1742, `worldScale` get at :1884); `examples/node-hierarchy/src/transform-contract.ts` exercises this world-transform contract in a browser (world reads at :20-:45) |
+| `invalidateChildren(bit)`                   | -         | Propagates a `TransformBit` dirty flag to descendants                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `getWorldMatrix/getWorldRS/getWorldRT(out)` | -         | World matrix; RS excludes translation; RT excludes scale                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
 `TransformBit` (node-enum.ts:41): `NONE=0`, `POSITION=1<<0`, `ROTATION=1<<1`, `SCALE=1<<2`, `SKEW=1<<3`, `RS=ROTATION|SCALE`, `RSS=RS|SKEW`, `TRS=POSITION|ROTATION|SCALE`, `TRS_MASK=~TRS`. Aliased as `Node.TransformBit` (node.ts:1587). `NodeSpace` (node-enum.ts:32): `LOCAL`, `WORLD`; aliased `Node.NodeSpace` (node.ts:1574).
 
 ## active semantics (src/cocos/scene-graph/node.ts)
 
-| Member | Line | Meaning |
-|---|---|---|
-| `active` get | 193 | This node's own on/off flag |
-| `active` set | 196 | On change, if the parent chain is active, runs `_nodeActivator.activateNode` (fires onLoad/onEnable or onDisable); stops update scheduling when false |
-| `activeInHierarchy` get (readonly) | 224 | True only if this node and ALL ancestors are active |
+| Member                             | Line | Meaning                                                                                                                                               |
+| ---------------------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `active` get                       | 193  | This node's own on/off flag                                                                                                                           |
+| `active` set                       | 196  | On change, if the parent chain is active, runs `_nodeActivator.activateNode` (fires onLoad/onEnable or onDisable); stops update scheduling when false |
+| `activeInHierarchy` get (readonly) | 224  | True only if this node and ALL ancestors are active                                                                                                   |
 
 `active=false` is a heavy hide: the subtree stops rendering AND its `Component.update` is no longer scheduled. To stop only rendering, disable the `MeshRenderer` component instead.
 
@@ -57,16 +57,16 @@ Derived from docs/manual/scenegraph.md, docs/manual/creating-a-scene.md, docs/ma
 
 Activation runs `__preload -> onLoad -> onEnable` (node-activator.ts:164-167); the per-frame director loop runs `start -> update -> lateUpdate` (director.ts:798 / 800 / 806); teardown runs `onDisable -> onDestroy`.
 
-| Callback | Declaration line (component.ts) | Fires |
-|---|---|---|
-| `__preload?()` | 566 | Before every `onLoad` (engine-internal warm-up) |
-| `onLoad?()` | 585 | Once, when first attached to an active node or its node first activates; always before any `start` |
-| `onEnable?()` | 620 | Every time the component becomes enabled and its node is active |
-| `start?()` | 604 | Once, before the first `update`, if enabled |
-| `update?(dt: number)` | 529 | Every frame while enabled; `dt` in SECONDS |
-| `lateUpdate?(dt: number)` | 546 | Every frame after all `update` calls; `dt` in seconds |
-| `onDisable?()` | 636 | When the component or its node becomes inactive |
-| `onDestroy?()` | 652 | Deferred, at end of frame after `destroy()` |
+| Callback                  | Declaration line (component.ts) | Fires                                                                                              |
+| ------------------------- | ------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `__preload?()`            | 566                             | Before every `onLoad` (engine-internal warm-up)                                                    |
+| `onLoad?()`               | 585                             | Once, when first attached to an active node or its node first activates; always before any `start` |
+| `onEnable?()`             | 620                             | Every time the component becomes enabled and its node is active                                    |
+| `start?()`                | 604                             | Once, before the first `update`, if enabled                                                        |
+| `update?(dt: number)`     | 529                             | Every frame while enabled; `dt` in SECONDS                                                         |
+| `lateUpdate?(dt: number)` | 546                             | Every frame after all `update` calls; `dt` in seconds                                              |
+| `onDisable?()`            | 636                             | When the component or its node becomes inactive                                                    |
+| `onDestroy?()`            | 652                             | Deferred, at end of frame after `destroy()`                                                        |
 
 All are declared `protected` and optional on `Component`; override them as normal class methods on your subclass.
 
@@ -76,41 +76,41 @@ All are declared `protected` and optional on `Component`; override them as norma
 
 ## NodePool (src/extensions/ccpool/node-pool.ts)
 
-| Member | Line | Behavior |
-|---|---|---|
-| `new NodePool(poolHandlerComp?)` | 90 | Optional handler class/ctor or class name providing `unuse()` / `reuse(args)` |
-| `size(): number` | 98 | Number of cached nodes |
-| `clear(): void` | 106 | `destroy()` every cached node, empties the pool |
-| `put(obj: Node): void` | 126 | `obj.removeFromParent()` (no cleanup), calls `unuse()` if a handler matches, pushes to pool; ignores duplicates already in the pool |
-| `get(...args): Node \| null` | 151 | Pops the last cached node, calls `reuse(args)` if a handler matches; returns null when empty |
+| Member                           | Line | Behavior                                                                                                                            |
+| -------------------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `new NodePool(poolHandlerComp?)` | 90   | Optional handler class/ctor or class name providing `unuse()` / `reuse(args)`                                                       |
+| `size(): number`                 | 98   | Number of cached nodes                                                                                                              |
+| `clear(): void`                  | 106  | `destroy()` every cached node, empties the pool                                                                                     |
+| `put(obj: Node): void`           | 126  | `obj.removeFromParent()` (no cleanup), calls `unuse()` if a handler matches, pushes to pool; ignores duplicates already in the pool |
+| `get(...args): Node \| null`     | 151  | Pops the last cached node, calls `reuse(args)` if a handler matches; returns null when empty                                        |
 
 `put` removes from the parent but does NOT deactivate or destroy the node, so pooled nodes keep their components and listeners until you reuse or clear them.
 
 ## destroy() and deferred validity (src/cocos/core/data/object.ts)
 
-| Member | Line | Behavior |
-|---|---|---|
-| `destroy(): boolean` | 300 | Sets `ToDestroy`, pushes onto `objectsToDestroy`; returns true only on the first call. Does not tear down synchronously |
-| `CCObject._deferredDestroy()` | 173-178 | Runs each pending object's `_destroyImmediate()` before rendering (driven by the main loop) |
-| `_destroyImmediate()` | 370 | Calls `_onPreDestroy`; in `Node` it reaches `_onPreDestroyBase` (node.ts:1494) which clears the event processor at node.ts:1531 |
-| `isValid` get | 280 | False only after `_destroyImmediate` sets `Destroyed`, i.e. from the NEXT frame |
-| `isValid(value, strictMode?)` | 651 | Free function re-exported from the main entry |
+| Member                        | Line    | Behavior                                                                                                                        |
+| ----------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `destroy(): boolean`          | 300     | Sets `ToDestroy`, pushes onto `objectsToDestroy`; returns true only on the first call. Does not tear down synchronously         |
+| `CCObject._deferredDestroy()` | 173-178 | Runs each pending object's `_destroyImmediate()` before rendering (driven by the main loop)                                     |
+| `_destroyImmediate()`         | 370     | Calls `_onPreDestroy`; in `Node` it reaches `_onPreDestroyBase` (node.ts:1494) which clears the event processor at node.ts:1531 |
+| `isValid` get                 | 280     | False only after `_destroyImmediate` sets `Destroyed`, i.e. from the NEXT frame                                                 |
+| `isValid(value, strictMode?)` | 651     | Free function re-exported from the main entry                                                                                   |
 
 So `node.destroy(); node.isValid` is still `true` in the current frame (object.ts:257-278 docblock). The one ordinary-flow exception is a scene switch: `director.runSceneImmediate` calls the old scene's `destroy()` (:446) and then `CCObject._deferredDestroy()` within the same call (:464), so after `app.run(newScene)` the previous scene already reads `isValid === false` (same disclosure in `SKILL.md` Contracts). `examples/scene-switch-reentry/src/main.ts:128-133,230` destroys a scratch tree and only asserts `!isValid` after engine frames run.
 
 ## Main entry export surface (build/cocosair.module.d.ts; every line below is a currently :NNNN pointer into the latest generated file)
 
-| Symbol | Declaration line (currently) | Re-export origin (`src/exports/base.ts`) |
-|---|---|---|
-| `find` | 3766 | `:40` `export * from '../cocos/scene-graph'` |
-| `isValid` | 21345 | `:37` `export * from '../cocos/core'` |
-| `Node` | 22049 | `:40` scene-graph barrel |
-| `Scene` | 23155 | `:40` scene-graph barrel |
-| `Layers` | 23218 | `:40` scene-graph barrel |
-| `Component` | 23406 | `:40` scene-graph barrel |
-| `director` | 25819 | `:42` `export * from '../cocos/game'` |
-| `game` | 26383 | `:42` game barrel |
-| `SceneAsset` | 26958 | `:48` `export * from '../cocos/asset/assets'` |
-| `NodePool` | 30409 | `:54` `export * from '../extensions/ccpool/node-pool'` |
+| Symbol       | Declaration line (currently) | Re-export origin (`src/exports/base.ts`)               |
+| ------------ | ---------------------------- | ------------------------------------------------------ |
+| `find`       | 3766                         | `:40` `export * from '../cocos/scene-graph'`           |
+| `isValid`    | 21345                        | `:37` `export * from '../cocos/core'`                  |
+| `Node`       | 22049                        | `:40` scene-graph barrel                               |
+| `Scene`      | 23155                        | `:40` scene-graph barrel                               |
+| `Layers`     | 23218                        | `:40` scene-graph barrel                               |
+| `Component`  | 23406                        | `:40` scene-graph barrel                               |
+| `director`   | 25819                        | `:42` `export * from '../cocos/game'`                  |
+| `game`       | 26383                        | `:42` game barrel                                      |
+| `SceneAsset` | 26958                        | `:48` `export * from '../cocos/asset/assets'`          |
+| `NodePool`   | 30409                        | `:54` `export * from '../extensions/ccpool/node-pool'` |
 
 Every symbol above resolves by symbol name in the main entry declaration (a static check of a generated file). Line numbers shift whenever `npm run build:dts` regenerates the file; the symbol names are the stable pointers. Behavior-level browser evidence for this surface lives in `examples/node-hierarchy` and `examples/scene-switch-reentry` (`docs/evidence/examples-verified.json`, `measuredAt` 2026-10-04 for candidate fingerprint `2f089f6ce25eaccd`; historical against the current candidate - full disclosure in `SKILL.md` Contracts).

@@ -4,11 +4,11 @@ Derived from `docs/manual/batching-recipes.md`, `docs/manual/optimize-lots-of-ob
 
 `docs/manual/batching-recipes.md:3-10` names three runnable routes, each with its own example, all using the same green quad, one shared unlit material, one pass, one camera, no shadows, no post processing:
 
-| Route | Mechanism | Per-object transform kept | Draw count in the recipe |
-| --- | --- | --- | --- |
-| shared mesh x N nodes | one `Mesh` + one `Material`, N `MeshRenderer` nodes | yes | 256 draws for 256 quads (`docs/manual/batching-recipes.md:58`) |
-| merged static mesh | vertices pre-transformed into one space, one `Mesh` | no | 1 draw at 256 and at 50000 quads (`docs/manual/batching-recipes.md:61-62`) |
-| dynamic mesh update | one `Mesh` with typed arrays rewritten per frame | no | 1 draw at 256, 50000 and 100000 quads (`docs/manual/batching-recipes.md:63-65`) |
+| Route                 | Mechanism                                           | Per-object transform kept | Draw count in the recipe                                                        |
+| --------------------- | --------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------- |
+| shared mesh x N nodes | one `Mesh` + one `Material`, N `MeshRenderer` nodes | yes                       | 256 draws for 256 quads (`docs/manual/batching-recipes.md:58`)                  |
+| merged static mesh    | vertices pre-transformed into one space, one `Mesh` | no                        | 1 draw at 256 and at 50000 quads (`docs/manual/batching-recipes.md:61-62`)      |
+| dynamic mesh update   | one `Mesh` with typed arrays rewritten per frame    | no                        | 1 draw at 256, 50000 and 100000 quads (`docs/manual/batching-recipes.md:63-65`) |
 
 Shared resources are not a shared draw: `docs/manual/batching-recipes.md:8` gives the first route as keeping independent node transforms and states that shared resources do not merge into one draw. There is no fourth batching API.
 
@@ -22,7 +22,7 @@ Shared resources are not a shared draw: `docs/manual/batching-recipes.md:8` give
 
 ## Route 1: shared mesh on N nodes
 
-One `Mesh` object plus one `Material` object, referenced by N `MeshRenderer` components. Node transforms and per-node culling stay live; each renderer is still submitted, so draws equal visible nodes unless GPU instancing is enabled (see `references/instancing.md`).
+One `Mesh` object plus one `Material` object, referenced by N `MeshRenderer` components. Node transforms and per-node culling stay live; each renderer is still submitted, so draws equal visible nodes unless GPU instancing is enabled (see [instancing.md](instancing.md)).
 
 ## Route 2: merged static mesh
 
@@ -60,6 +60,7 @@ Other entry points on the same object: `commitComp` (`src/cocos/2d/renderer/batc
 Vertex stride for the common position-uv-color layout is hardcoded as `36 /* 9x4 */` bytes (`src/cocos/2d/renderer/batcher-2d.ts:385`).
 
 Batch buffer sizing, all three accessors derive capacity from one macro:
+
 - `src/cocos/core/platform/macro.ts:1136`: `BATCHER2D_MEM_INCREMENT: 144` (KB), documented formula `vCount = Math.floor(macro.BATCHER2D_MEM_INCREMENT * 1024 / 9 * 4)` at `src/cocos/core/platform/macro.ts:1078`.
 - `src/cocos/2d/renderer/static-vb-accessor.ts:90-91`: `_vCount = vCount || Math.floor(BATCHER2D_MEM_INCREMENT * 1024 / _vertexFormatBytes)`, `_iCount = _vCount * StaticVBAccessor.IB_SCALE` with `IB_SCALE = 4` (`src/cocos/2d/renderer/static-vb-accessor.ts:79`).
 - `src/cocos/2d/renderer/buffer-accessor.ts:45`: `_vertexFormatBytes = _floatsPerVertex * Float32Array.BYTES_PER_ELEMENT`.
@@ -75,16 +76,16 @@ Fixed conditions, `docs/manual/batching-recipes.md:49`: 2026-10-03, Chromium 149
 
 Recorded draws and p95 milliseconds (`docs/manual/batching-recipes.md:58-65`, columns: route / quads, actual draws, CPU submit, dynamic update, rAF interval):
 
-| Route / quads | Draws | CPU submit p95 ms | Dynamic update p95 ms | rAF interval p95 ms |
-| --- | --- | --- | --- | --- |
-| shared / 256 | 256 | 1.90 | 0 | 17.40 |
-| shared + instancing / 256 | 1 | 1.20 | 0 | 17.20 |
-| shared + instancing / 2048 | 2 | 3.70 | 0 | 18.30 |
-| merged / 256 | 1 | 0.60 | 0 | 17.00 |
-| merged / 50000 | 1 | 0.60 | 0 | 17.10 |
-| dynamic / 256 | 1 | 0.60 | 0.20 | 17.00 |
-| dynamic / 50000 | 1 | 0.60 | 2.60 | 17.90 |
-| dynamic / 100000 | 1 | 0.60 | 5.00 | 18.70 |
+| Route / quads              | Draws | CPU submit p95 ms | Dynamic update p95 ms | rAF interval p95 ms |
+| -------------------------- | ----- | ----------------- | --------------------- | ------------------- |
+| shared / 256               | 256   | 1.90              | 0                     | 17.40               |
+| shared + instancing / 256  | 1     | 1.20              | 0                     | 17.20               |
+| shared + instancing / 2048 | 2     | 3.70              | 0                     | 18.30               |
+| merged / 256               | 1     | 0.60              | 0                     | 17.00               |
+| merged / 50000             | 1     | 0.60              | 0                     | 17.10               |
+| dynamic / 256              | 1     | 0.60              | 0.20                  | 17.00               |
+| dynamic / 50000            | 1     | 0.60              | 2.60                  | 17.90               |
+| dynamic / 100000           | 1     | 0.60              | 5.00                  | 18.70               |
 
 GPU time and display-present time are explicitly unmeasured and reported as null (`docs/manual/batching-recipes.md:71-73`; the same in the harness, `examples/shared/batching-routes.ts:231` `gpuTimeMs: null` and `:233` `timingScope: 'rAF intervals and CPU submission only; no GPU or display-present proof'`). A rAF interval near 60 Hz proves callback cadence only.
 

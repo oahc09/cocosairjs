@@ -21,10 +21,10 @@ WebGL 2 always advertises the feature: `features[Feature.INSTANCED_ARRAYS] = tru
 
 `src/air/builtin/builtin-effects.ts` (the AIR builtin effect fixture set) declares the macro and the per-instance attributes:
 
-| Effect | Macro declared | Per-instance attributes |
-| --- | --- | --- |
-| `builtin-standard` (starts `:599`) | `{ "name": "USE_INSTANCING", "type": "boolean" }` `:613` | `:660-665` |
-| `builtin-unlit` (starts `:859`) | `:873` | `:902-907` |
+| Effect                             | Macro declared                                           | Per-instance attributes |
+| ---------------------------------- | -------------------------------------------------------- | ----------------------- |
+| `builtin-standard` (starts `:599`) | `{ "name": "USE_INSTANCING", "type": "boolean" }` `:613` | `:660-665`              |
+| `builtin-unlit` (starts `:859`)    | `:873`                                                   | `:902-907`              |
 
 In both, the instanced attributes are `a_jointAnimInfo` (also needs `CC_USE_BAKED_ANIMATION`), `a_matWorld0`, `a_matWorld1`, `a_matWorld2`, `a_lightingMapUVParam` (also needs `CC_USE_LIGHTMAP`), `a_localShadowBias` (also needs `CC_RECEIVE_SHADOW`), each carrying `"isInstanced": true`. `a_dyn_batch_id` is declared under `["!USE_INSTANCING", "USE_BATCHING"]`, i.e. the batching-macro path and the instancing path are mutually exclusive in the shader layout (`src/air/builtin/builtin-effects.ts:666`, `:908`). The world matrix is delivered as three attributes referenced by `INST_MAT_WORLD = 'a_matWorld0'` (`src/cocos/rendering/define.ts:523`).
 

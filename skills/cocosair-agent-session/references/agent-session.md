@@ -24,15 +24,15 @@ A missing or non-string `requestId`/`action` is itself rejected as `INVALID_ARGU
 
 `AgentErrorCode` is the frozen minimal set (`tools/debug/agent-session.ts:31-38`):
 
-| Code | Meaning | Source line |
-|---|---|---|
-| INVALID_ARGUMENT | bad/missing params, whitelist miss, or a duplicate requestId | `tools/debug/agent-session.ts:32` |
-| STALE_TARGET | unknown id, destroyed node, replaced scene, or no running scene | `tools/debug/agent-session.ts:33` |
-| OUT_OF_SCOPE | write target is not inside `writableScenes` | `tools/debug/agent-session.ts:34` |
-| UNSUPPORTED_ACTION | action not in the operation set, or asset lacks instantiate | `tools/debug/agent-session.ts:35` |
-| LOAD_FAILED | asset load rejected (glTF code kept in `cause`) | `tools/debug/agent-session.ts:36` |
-| SESSION_CLOSED | session already closed | `tools/debug/agent-session.ts:37` |
-| CAPTURE_FAILED | captureFrame timeout, scene swap, or no PNG | `tools/debug/agent-session.ts:38` |
+| Code               | Meaning                                                         | Source line                       |
+| ------------------ | --------------------------------------------------------------- | --------------------------------- |
+| INVALID_ARGUMENT   | bad/missing params, whitelist miss, or a duplicate requestId    | `tools/debug/agent-session.ts:32` |
+| STALE_TARGET       | unknown id, destroyed node, replaced scene, or no running scene | `tools/debug/agent-session.ts:33` |
+| OUT_OF_SCOPE       | write target is not inside `writableScenes`                     | `tools/debug/agent-session.ts:34` |
+| UNSUPPORTED_ACTION | action not in the operation set, or asset lacks instantiate     | `tools/debug/agent-session.ts:35` |
+| LOAD_FAILED        | asset load rejected (glTF code kept in `cause`)                 | `tools/debug/agent-session.ts:36` |
+| SESSION_CLOSED     | session already closed                                          | `tools/debug/agent-session.ts:37` |
+| CAPTURE_FAILED     | captureFrame timeout, scene swap, or no PNG                     | `tools/debug/agent-session.ts:38` |
 
 ## requestId retention and FIFO
 

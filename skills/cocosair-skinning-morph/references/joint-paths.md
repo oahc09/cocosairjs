@@ -4,14 +4,14 @@ Derived from `src/cocos/3d/assets/skeleton.ts`, `src/cocos/3d/skinned-mesh-rende
 
 `Skeleton` is an `Asset` holding two parallel arrays plus cached derived data (`src/cocos/3d/assets/skeleton.ts:35`):
 
-| Member | Line | Contract |
-| --- | --- | --- |
-| `joints: string[]` | `:55-61` | paths relative to `SkinnedMeshRenderer.skinningRoot`, doc at `:31-32` |
-| `bindposes: Mat4[]` | `:67-73` | one matrix per joint, same index, length always equals `joints` |
-| `inverseBindposes: Mat4[]` | `:79-89` | lazily built inverse cache; it is not invalidated by later `bindposes` writes |
-| `hash: number` | `:95-110` | murmur hash over the `toPrecision(2)` bindpose floats, cached once computed |
-| `validate(): boolean` | `:122-124` | true only when both arrays are non-empty |
-| `destroy()` | `:112-115` | releases the skeleton from `Root.dataPoolManager` before the asset destroy |
+| Member                     | Line       | Contract                                                                      |
+| -------------------------- | ---------- | ----------------------------------------------------------------------------- |
+| `joints: string[]`         | `:55-61`   | paths relative to `SkinnedMeshRenderer.skinningRoot`, doc at `:31-32`         |
+| `bindposes: Mat4[]`        | `:67-73`   | one matrix per joint, same index, length always equals `joints`               |
+| `inverseBindposes: Mat4[]` | `:79-89`   | lazily built inverse cache; it is not invalidated by later `bindposes` writes |
+| `hash: number`             | `:95-110`  | murmur hash over the `toPrecision(2)` bindpose floats, cached once computed   |
+| `validate(): boolean`      | `:122-124` | true only when both arrays are non-empty                                      |
+| `destroy()`                | `:112-115` | releases the skeleton from `Root.dataPoolManager` before the asset destroy    |
 
 The path form is not cosmetic: every consumer looks the joint up with `root.getChildByPath(path)`, where `root` is the skinning root, in the pre-bind validation (`src/cocos/3d/models/skinning-validation.ts:13`), in the realtime joint collection (`src/cocos/3d/models/skinning-model.ts:161`) and in the bind-pose helper (`src/air/utils/restore-bind-pose.ts:39`). So a bone named `bone1` that sits under `bone0` must be written `bone0/bone1`, never `bone1`; the rule was recorded from the V0.1 regression in `docs/guides/skinned-model.md:9-12` and again in the helper's own note at `src/air/utils/skeleton-tree.ts:6-9`.
 
@@ -19,7 +19,7 @@ Duplicate paths are allowed by the runtime arrays but rejected for glTF skins, w
 
 ## Who resolves the paths
 
-`SkinnedMeshRenderer` holds the two references that define resolution: `skeleton` (`src/cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts:62-71`) and `skinningRoot` (`:77-87`). Each setter funnels into `_refreshBinding`, which runs `_update` (that is, `model.bindSkeleton(skeleton, skinningRoot, mesh)`, `:205-210`) *before* checking completeness and before rebuilding submodels, so a rejected bind leaves the previous model intact (`:165-178`, and the same ordering note in `docs/manual/skinning-code-first.md:23`). `_updateModelParams` refuses to build skinning descriptors while any of the three inputs is missing, disabling the model instead (`:154-163`); that is the mechanism behind the documented "assign while disabled, then enable" sequence (`docs/manual/skinning-code-first.md:13-21`).
+`SkinnedMeshRenderer` holds the two references that define resolution: `skeleton` (`src/cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts:62-71`) and `skinningRoot` (`:77-87`). Each setter funnels into `_refreshBinding`, which runs `_update` (that is, `model.bindSkeleton(skeleton, skinningRoot, mesh)`, `:205-210`) _before_ checking completeness and before rebuilding submodels, so a rejected bind leaves the previous model intact (`:165-178`, and the same ordering note in `docs/manual/skinning-code-first.md:23`). `_updateModelParams` refuses to build skinning descriptors while any of the three inputs is missing, disabling the model instead (`:154-163`); that is the mechanism behind the documented "assign while disabled, then enable" sequence (`docs/manual/skinning-code-first.md:13-21`).
 
 The root also decides the pose transport. `_tryBindAnimation` walks `this.node` upward, and only when `skinningRoot` is that ancestor does it look for a `cc.SkeletalAnimation` on the root: an enabled animation keeps the association, otherwise the renderer is forced into realtime mode with `setUseBakedAnimation(false)` (`src/cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts:180-203`). The browser-proven code-first rig relies on exactly this: the armature carries no animation component (`examples/skinned-animation/main.js:210-213`).
 

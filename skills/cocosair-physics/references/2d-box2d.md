@@ -16,13 +16,13 @@ Derived from `src/cocos/physics-2d/framework/physics-system.ts`, `src/cocos/phys
 
 ## Components
 
-| Component | Definition | Notes |
-| --- | --- | --- |
-| `RigidBody2D` | `src/cocos/physics-2d/framework/components/rigid-body-2d.ts:39` | `type` from `ERigidBody2DType` (STATIC/KINEMATIC/DYNAMIC) |
-| `Collider2D` | `src/cocos/physics-2d/framework/components/colliders/collider-2d.ts:39` | event base; `sensor = true` makes BEGIN/END contact only |
-| `BoxCollider2D` | `src/cocos/physics-2d/framework/components/colliders/box-collider-2d.ts:36` | half-extents on the UITransform-sized node |
-| `CircleCollider2D` | `src/cocos/physics-2d/framework/components/colliders/circle-collider-2d.ts:36` | radius in the same units |
-| `PolygonCollider2D` | `src/cocos/physics-2d/framework/components/colliders/polygon-collider-2d.ts:36` | convex polygon points |
+| Component           | Definition                                                                      | Notes                                                     |
+| ------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `RigidBody2D`       | `src/cocos/physics-2d/framework/components/rigid-body-2d.ts:39`                 | `type` from `ERigidBody2DType` (STATIC/KINEMATIC/DYNAMIC) |
+| `Collider2D`        | `src/cocos/physics-2d/framework/components/colliders/collider-2d.ts:39`         | event base; `sensor = true` makes BEGIN/END contact only  |
+| `BoxCollider2D`     | `src/cocos/physics-2d/framework/components/colliders/box-collider-2d.ts:36`     | half-extents on the UITransform-sized node                |
+| `CircleCollider2D`  | `src/cocos/physics-2d/framework/components/colliders/circle-collider-2d.ts:36`  | radius in the same units                                  |
+| `PolygonCollider2D` | `src/cocos/physics-2d/framework/components/colliders/polygon-collider-2d.ts:36` | convex polygon points                                     |
 
 Joints mount the same way: `Joint2D` base plus `DistanceJoint2D`, `FixedJoint2D`, `HingeJoint2D`, `SliderJoint2D`, `SpringJoint2D`, `WheelJoint2D`, `MouseJoint2D`, `RelativeJoint2D` - the directories are `src/cocos/physics-2d/framework/components/joints/` and every class name appears in the bundle's single export block (`build/cocosair.module.js`, currently :161574).
 

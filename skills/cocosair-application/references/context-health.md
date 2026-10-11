@@ -6,12 +6,12 @@ Derived from docs/webgl2-only.md, src/air/context-health.ts (as of 2026-10-08)
 
 Type: `'healthy' | 'lost' | 'restoring' | 'failed'` (`src/air/context-health.ts:25`, exported from the main entry declaration as the symbol `AirContextHealthState`, currently `build/cocosair.module.d.ts:55956`). Initial state is `healthy` (`:92`).
 
-| State | Entered when | Code side effects | Loop effect |
-|---|---|---|---|
-| `healthy` | construction; never re-entered by a restore event | `lastEvent` is reset to `null` on a transition into it (`:151`) | running |
-| `lost` | `webglcontextlost` on the canvas (`:159-169`) | `event.preventDefault()` inside a try (`:162`), `lostCount += 1`, timeline entry `detail: 'webglcontextlost'`, observers notified | `game.pause()` when `autoPause` is not `false` (`:165-167`), which stops the pacer (`src/cocos/game/game.ts:591-596`) |
-| `restoring` | `webglcontextrestored` (`:171-173`) | `restoredCount += 1`, timeline `detail: 'webglcontextrestored'`; transient only, `failed` is pushed in the same handler | stays paused |
-| `failed` | immediately after `restoring` (`:174-176`) | `reason = 'context-restored-but-gpu-resources-not-rebuilt'`, `suggestion: 'reload'` | stays paused |
+| State       | Entered when                                      | Code side effects                                                                                                                 | Loop effect                                                                                                           |
+| ----------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `healthy`   | construction; never re-entered by a restore event | `lastEvent` is reset to `null` on a transition into it (`:151`)                                                                   | running                                                                                                               |
+| `lost`      | `webglcontextlost` on the canvas (`:159-169`)     | `event.preventDefault()` inside a try (`:162`), `lostCount += 1`, timeline entry `detail: 'webglcontextlost'`, observers notified | `game.pause()` when `autoPause` is not `false` (`:165-167`), which stops the pacer (`src/cocos/game/game.ts:591-596`) |
+| `restoring` | `webglcontextrestored` (`:171-173`)               | `restoredCount += 1`, timeline `detail: 'webglcontextrestored'`; transient only, `failed` is pushed in the same handler           | stays paused                                                                                                          |
+| `failed`    | immediately after `restoring` (`:174-176`)        | `reason = 'context-restored-but-gpu-resources-not-rebuilt'`, `suggestion: 'reload'`                                               | stays paused                                                                                                          |
 
 There is no transition back to `healthy` anywhere in the file: once lost, the only documented route forward is a reload.
 
@@ -19,36 +19,36 @@ There is no transition back to `healthy` anywhere in the file: once lost, the on
 
 `snapshot()` (`src/air/context-health.ts:31-51`, built at `:125-144`).
 
-| Field | Type | Value rule |
-|---|---|---|
-| `state` | `AirContextHealthState` | current state |
-| `backend` | `'webgl2' \| 'none' \| 'unknown'` | `acquireGl()` calls `canvas.getContext('webgl2')`; a returned context records `webgl2`, otherwise `none`; `unknown` only until the first snapshot or lost event (`:93`, `:104-115`) |
-| `lostCount` | `number` | cumulative `webglcontextlost` observations |
-| `restoredCount` | `number` | cumulative `webglcontextrestored` observations |
-| `isContextLost` | `boolean \| null` | live `gl.isContextLost()`; `null` when no context or the call throws (`:126-129`) |
-| `gamePaused` | `boolean \| null` | reads the private `game._paused`; `null` when unreadable (`:117-123`) |
-| `reason` | `string \| null` | non-null only in `failed`; cleared by every other transition (`:148`) |
-| `suggestion` | `'reload' \| 'none'` | `'reload'` exactly when `state === 'failed'` (`:139`) |
-| `lastEvent` | `'lost' \| 'restoring' \| 'failed' \| null` | `null` in `healthy` (`:151`) |
-| `lastEventAt` | `number \| null` | `Date.now()` of the last transition (`:152`) |
-| `timeline` | `{ at, type, detail? }[]` | copy of the transition log, newest last, hard cap 32 entries: oldest are spliced off (`:80`, `:149-150`) |
+| Field           | Type                                        | Value rule                                                                                                                                                                          |
+| --------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `state`         | `AirContextHealthState`                     | current state                                                                                                                                                                       |
+| `backend`       | `'webgl2' \| 'none' \| 'unknown'`           | `acquireGl()` calls `canvas.getContext('webgl2')`; a returned context records `webgl2`, otherwise `none`; `unknown` only until the first snapshot or lost event (`:93`, `:104-115`) |
+| `lostCount`     | `number`                                    | cumulative `webglcontextlost` observations                                                                                                                                          |
+| `restoredCount` | `number`                                    | cumulative `webglcontextrestored` observations                                                                                                                                      |
+| `isContextLost` | `boolean \| null`                           | live `gl.isContextLost()`; `null` when no context or the call throws (`:126-129`)                                                                                                   |
+| `gamePaused`    | `boolean \| null`                           | reads the private `game._paused`; `null` when unreadable (`:117-123`)                                                                                                               |
+| `reason`        | `string \| null`                            | non-null only in `failed`; cleared by every other transition (`:148`)                                                                                                               |
+| `suggestion`    | `'reload' \| 'none'`                        | `'reload'` exactly when `state === 'failed'` (`:139`)                                                                                                                               |
+| `lastEvent`     | `'lost' \| 'restoring' \| 'failed' \| null` | `null` in `healthy` (`:151`)                                                                                                                                                        |
+| `lastEventAt`   | `number \| null`                            | `Date.now()` of the last transition (`:152`)                                                                                                                                        |
+| `timeline`      | `{ at, type, detail? }[]`                   | copy of the transition log, newest last, hard cap 32 entries: oldest are spliced off (`:80`, `:149-150`)                                                                            |
 
 ## Handle members
 
-| Member | Rule | Source |
-|---|---|---|
-| `snapshot()` | pure read; also probes the GL context, so it is what sets `backend` | `:125-144` |
-| `onChange(cb)` | returns an unsubscribe function; `options.onEvent` is registered as a listener up front (`:102`); a throwing observer is caught and cannot break the machine (`:154-156`) | `:184-187` |
-| `requestReload()` | returns `false` and does nothing unless `state === 'failed'`; otherwise invokes `options.reload ?? window.location.reload()` and returns `true` | `:188-195` |
-| `destroy()` | removes both canvas listeners and clears the observer set; `close()` and a failed `game.init` call it | `:196-201`; `src/air/app.ts:205`; `src/air/bootstrap.ts:161` |
+| Member            | Rule                                                                                                                                                                      | Source                                                       |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `snapshot()`      | pure read; also probes the GL context, so it is what sets `backend`                                                                                                       | `:125-144`                                                   |
+| `onChange(cb)`    | returns an unsubscribe function; `options.onEvent` is registered as a listener up front (`:102`); a throwing observer is caught and cannot break the machine (`:154-156`) | `:184-187`                                                   |
+| `requestReload()` | returns `false` and does nothing unless `state === 'failed'`; otherwise invokes `options.reload ?? window.location.reload()` and returns `true`                           | `:188-195`                                                   |
+| `destroy()`       | removes both canvas listeners and clears the observer set; `close()` and a failed `game.init` call it                                                                     | `:196-201`; `src/air/app.ts:205`; `src/air/bootstrap.ts:161` |
 
 ## Options
 
-| Field | Type | Default | Rule |
-|---|---|---|---|
-| `autoPause` | `boolean` | `true` (`contextLoss.autoPause ?? true` in `src/air/app-config.ts:111`) | `false` keeps the loop running against a dead context; only `=== false` disables it (`context-health.ts:91`) |
-| `reload` | `() => void` | `window.location.reload()` when `window.location` exists | injectable for tests; compared by function identity during admission (`src/air/app-config.ts:120`) |
-| `onEvent` | `(snapshot) => void` | none | added as the first observer; identity participates in `AIR_E_APP_CONFLICT` |
+| Field       | Type                 | Default                                                                 | Rule                                                                                                         |
+| ----------- | -------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `autoPause` | `boolean`            | `true` (`contextLoss.autoPause ?? true` in `src/air/app-config.ts:111`) | `false` keeps the loop running against a dead context; only `=== false` disables it (`context-health.ts:91`) |
+| `reload`    | `() => void`         | `window.location.reload()` when `window.location` exists                | injectable for tests; compared by function identity during admission (`src/air/app-config.ts:120`)           |
+| `onEvent`   | `(snapshot) => void` | none                                                                    | added as the first observer; identity participates in `AIR_E_APP_CONFLICT`                                   |
 
 ## What it does not do
 

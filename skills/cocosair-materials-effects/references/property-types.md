@@ -4,21 +4,21 @@ Derived from `src/cocos/render-scene/core/pass-utils.ts`, `src/cocos/render-scen
 
 `src/cocos/gfx/base/define.ts:294-329` (`export enum Type`, implicit ordinals starting at `UNKNOWN = 0`):
 
-| Ordinal | `Type` member | Ordinal | `Type` member |
-| --- | --- | --- | --- |
-| 0 | `UNKNOWN` | 13 | `FLOAT` |
-| 1 | `BOOL` | 14 | `FLOAT2` |
-| 2 | `BOOL2` | 15 | `FLOAT3` |
-| 3 | `BOOL3` | 16 | `FLOAT4` |
-| 4 | `BOOL4` | 17 | `MAT2` |
-| 5 | `INT` | 21 | `MAT3` |
-| 6 | `INT2` | 25 | `MAT4` |
-| 7 | `INT3` | 26 | `SAMPLER1D` |
-| 8 | `INT4` | 28 | `SAMPLER2D` |
-| 9 | `UINT` | 29 | `SAMPLER2D_ARRAY` |
-| 10 | `UINT2` | 30 | `SAMPLER3D` |
-| 11 | `UINT3` | 31 | `SAMPLER_CUBE` |
-| 12 | `UINT4` | 32 | `SAMPLER` |
+| Ordinal | `Type` member | Ordinal | `Type` member     |
+| ------- | ------------- | ------- | ----------------- |
+| 0       | `UNKNOWN`     | 13      | `FLOAT`           |
+| 1       | `BOOL`        | 14      | `FLOAT2`          |
+| 2       | `BOOL2`       | 15      | `FLOAT3`          |
+| 3       | `BOOL3`       | 16      | `FLOAT4`          |
+| 4       | `BOOL4`       | 17      | `MAT2`            |
+| 5       | `INT`         | 21      | `MAT3`            |
+| 6       | `INT2`        | 25      | `MAT4`            |
+| 7       | `INT3`        | 26      | `SAMPLER1D`       |
+| 8       | `INT4`        | 28      | `SAMPLER2D`       |
+| 9       | `UINT`        | 29      | `SAMPLER2D_ARRAY` |
+| 10      | `UINT2`       | 30      | `SAMPLER3D`       |
+| 11      | `UINT3`       | 31      | `SAMPLER_CUBE`    |
+| 12      | `UINT4`       | 32      | `SAMPLER`         |
 
 `26` is the uniform/sampler boundary: `Material.setProperty` takes the UBO write path only when `type < Type.SAMPLER1D` (`src/cocos/asset/assets/material.ts:312`, `:527`), otherwise it binds a texture (`:535-543`).
 
@@ -28,16 +28,16 @@ Derived from `src/cocos/render-scene/core/pass-utils.ts`, `src/cocos/render-scen
 
 Validator gate: `type2validator` (`pass-utils.ts:76-87`) plus the finite-component scan `validUniformElement` (`:100-107`), run by `validateUniformValue` (`:110-129`).
 
-| Declared type | Accepted instances | Rejected value |
-| --- | --- | --- |
-| `INT`, `FLOAT` (5, 13) | `number` only (`typeof v === 'number'`) | any object, `NaN`, `Infinity`, values not representable as finite `fround` |
-| `INT2`, `FLOAT2` (6, 14) | `Vec2` | `Vec3`, `Vec4`, `[x, y]`, `{ x, y }` |
-| `INT3`, `FLOAT3` (7, 15) | `Vec3` | `Vec2`, `Vec4`, `Color`, plain arrays |
-| `INT4`, `FLOAT4` (8, 16) | `Vec4` or `Color` or `Quat` (`:84`) | `Vec3`, `Mat3`, `[r, g, b, a]` |
-| `MAT3` (21) | `Mat3` | `Mat4` |
-| `MAT4` (25) | `Mat4` | `Mat3` |
-| `SAMPLER2D` (28) | `TextureBase` (ie. `Texture2D`) or raw `gfx.Texture`, or `null` | `ImageAsset` / `SpriteFrame` (both extend `Asset`, not `TextureBase`): silent no-op, see below |
-| array form of any of the above | `MaterialProperty[]` with `length <= count` (`:115`), `null` holes allowed (`:119-121`) | a longer array, sparse holes beyond `length` |
+| Declared type                  | Accepted instances                                                                      | Rejected value                                                                                 |
+| ------------------------------ | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `INT`, `FLOAT` (5, 13)         | `number` only (`typeof v === 'number'`)                                                 | any object, `NaN`, `Infinity`, values not representable as finite `fround`                     |
+| `INT2`, `FLOAT2` (6, 14)       | `Vec2`                                                                                  | `Vec3`, `Vec4`, `[x, y]`, `{ x, y }`                                                           |
+| `INT3`, `FLOAT3` (7, 15)       | `Vec3`                                                                                  | `Vec2`, `Vec4`, `Color`, plain arrays                                                          |
+| `INT4`, `FLOAT4` (8, 16)       | `Vec4` or `Color` or `Quat` (`:84`)                                                     | `Vec3`, `Mat3`, `[r, g, b, a]`                                                                 |
+| `MAT3` (21)                    | `Mat3`                                                                                  | `Mat4`                                                                                         |
+| `MAT4` (25)                    | `Mat4`                                                                                  | `Mat3`                                                                                         |
+| `SAMPLER2D` (28)               | `TextureBase` (ie. `Texture2D`) or raw `gfx.Texture`, or `null`                         | `ImageAsset` / `SpriteFrame` (both extend `Asset`, not `TextureBase`): silent no-op, see below |
+| array form of any of the above | `MaterialProperty[]` with `length <= count` (`:115`), `null` holes allowed (`:119-121`) | a longer array, sparse holes beyond `length`                                                   |
 
 Failure mode for the uniform rows above is a THROW, not a silent drop: `validateUniformValue` raises `propertyTypeError('AIR_E_MATERIAL_TYPE', name, ...)` whose message embeds the expected shape and a working example (`pass-utils.ts:127-128`; `propertyTypeError` builds `TypeError` with `.code/.property/.expected/.example`, `src/cocos/core/platform/property-validation.ts:2-6`). Example strings come from `uniformExamples` (`pass-utils.ts:89-96`), e.g. `[Type.FLOAT4]` reads `new Vec4(1, 2, 3, 4), new Color(255, 128, 64, 255), or new Quat(0, 0, 0, 1)`.
 
@@ -76,21 +76,21 @@ Per-frame uniform updates should use `Pass.setUniform(handle, value)` with a cac
 
 Effect properties may be aliases into another UBO member instead of their own storage: `"handleInfo": ["<blockMember>", <componentOffset>, <type>]`.
 
-| Alias property | Target member | Offset | Type | Effect |
-| --- | --- | --- | --- | --- |
-| `mainColor` | `albedo` | 0 | 16 `FLOAT4` | `builtin-standard` (`builtin-effects.ts:601`) |
-| `albedoScale` | `albedoScaleAndCutoff` | 0 | 15 `FLOAT3` | `builtin-standard` (`:601`) |
-| `alphaThreshold` | `albedoScaleAndCutoff` | 3 | 13 `FLOAT` | `builtin-standard` (`:601`) |
-| `occlusion` | `pbrParams` | 0 | 13 | `builtin-standard` (`:601`) |
-| `roughness` | `pbrParams` | 1 | 13 | `builtin-standard` (`:601`) |
-| `metallic` | `pbrParams` | 2 | 13 | `builtin-standard` (`:601`) |
-| `specularIntensity` | `pbrParams` | 3 | 13 | `builtin-standard` (`:601`) |
-| `emissiveScale` | `emissiveScaleParam` | 0 | 15 | `builtin-standard` (`:601`) |
-| `normalStrength` | `emissiveScaleParam` | 3 | 13 | `builtin-standard` (`:601`) |
-| `mainTexture` | `albedoMap` | 0 | 28 `SAMPLER2D` | `builtin-standard` (`:601`) |
-| `color` | `mainColor` | 0 | 16 | `builtin-unlit` (`:861`) |
-| `colorScale` | `colorScaleAndCutoff` | 0 | 15 | `builtin-unlit` (`:861`) |
-| `alphaThreshold` | `colorScaleAndCutoff` | 3 | 13 | `builtin-unlit` (`:861`) |
+| Alias property      | Target member          | Offset | Type           | Effect                                        |
+| ------------------- | ---------------------- | ------ | -------------- | --------------------------------------------- |
+| `mainColor`         | `albedo`               | 0      | 16 `FLOAT4`    | `builtin-standard` (`builtin-effects.ts:601`) |
+| `albedoScale`       | `albedoScaleAndCutoff` | 0      | 15 `FLOAT3`    | `builtin-standard` (`:601`)                   |
+| `alphaThreshold`    | `albedoScaleAndCutoff` | 3      | 13 `FLOAT`     | `builtin-standard` (`:601`)                   |
+| `occlusion`         | `pbrParams`            | 0      | 13             | `builtin-standard` (`:601`)                   |
+| `roughness`         | `pbrParams`            | 1      | 13             | `builtin-standard` (`:601`)                   |
+| `metallic`          | `pbrParams`            | 2      | 13             | `builtin-standard` (`:601`)                   |
+| `specularIntensity` | `pbrParams`            | 3      | 13             | `builtin-standard` (`:601`)                   |
+| `emissiveScale`     | `emissiveScaleParam`   | 0      | 15             | `builtin-standard` (`:601`)                   |
+| `normalStrength`    | `emissiveScaleParam`   | 3      | 13             | `builtin-standard` (`:601`)                   |
+| `mainTexture`       | `albedoMap`            | 0      | 28 `SAMPLER2D` | `builtin-standard` (`:601`)                   |
+| `color`             | `mainColor`            | 0      | 16             | `builtin-unlit` (`:861`)                      |
+| `colorScale`        | `colorScaleAndCutoff`  | 0      | 15             | `builtin-unlit` (`:861`)                      |
+| `alphaThreshold`    | `colorScaleAndCutoff`  | 3      | 13             | `builtin-unlit` (`:861`)                      |
 
 `Pass.getHandle(name, offset, targetType)` produces aliased component handles: `targetType` re-types the handle, otherwise a non-zero `offset` shifts the component and re-types against the reduced type (`src/cocos/render-scene/core/pass.ts:263-271`). The doc example at `:254-261` shows `pass.getHandle('albedoScale', 3, gfx.Type.FLOAT)` then `pass.setUniform(h, 0.5)` writing `albedoScale.w`.
 
@@ -98,44 +98,44 @@ Effect properties may be aliases into another UBO member instead of their own st
 
 From the single `properties` object at `src/air/builtin/builtin-effects.ts:601` (technique `opaque`, pass 0). Names are case sensitive.
 
-| Property | Type | Default | Notes |
-| --- | --- | --- | --- |
-| `tilingOffset` | 16 `FLOAT4` | `[1, 1, 0, 0]` | x/y = tiling, z/w = offset (`docs/manual/uniform-types.md:24`) |
-| `mainColor` | 16 `FLOAT4` | `[1, 1, 1, 1]` | `linear: true`, aliases `albedo` |
-| `albedoScale` | 15 `FLOAT3` | `[1, 1, 1]` | aliases `albedoScaleAndCutoff` |
-| `alphaThreshold` | 13 `FLOAT` | `[0.5]` | needs `USE_ALPHA_TEST` |
-| `occlusion` | 13 `FLOAT` | `[1]` | `pbrParams.x` |
-| `roughness` | 13 `FLOAT` | `[0.8]` | `pbrParams.y` |
-| `metallic` | 13 `FLOAT` | `[0.6]` | `pbrParams.z` |
-| `specularIntensity` | 13 `FLOAT` | `[0.5]` | `pbrParams.w` |
-| `emissive` | 16 `FLOAT4` | `[0, 0, 0, 1]` | `linear: true`, own UBO member |
-| `emissiveScale` | 15 `FLOAT3` | `[1, 1, 1]` | aliases `emissiveScaleParam` |
-| `normalStrength` | 13 `FLOAT` | `[1]` | aliases `emissiveScaleParam.w` |
-| `mainTexture` | 28 `SAMPLER2D` | `grey` | aliases `albedoMap`, needs `USE_ALBEDO_MAP` |
-| `normalMap` | 28 `SAMPLER2D` | `normal` | needs `USE_NORMAL_MAP` |
-| `pbrMap` | 28 `SAMPLER2D` | `grey` | needs `USE_PBR_MAP` |
-| `metallicRoughnessMap` | 28 `SAMPLER2D` | `grey` | needs `USE_METALLIC_ROUGHNESS_MAP` |
-| `occlusionMap` | 28 `SAMPLER2D` | `white` | needs `USE_OCCLUSION_MAP` |
-| `emissiveMap` | 28 `SAMPLER2D` | `grey` | needs `USE_EMISSIVE_MAP` |
-| `albedo` | 16 `FLOAT4` | `[1, 1, 1, 1]` | raw member behind `mainColor` |
-| `albedoScaleAndCutoff` | 16 `FLOAT4` | `[1, 1, 1, 0.5]` | raw member |
-| `pbrParams` | 16 `FLOAT4` | `[1, 0.8, 0.6, 0.5]` | raw member |
-| `emissiveScaleParam` | 16 `FLOAT4` | `[1, 1, 1, 1]` | raw member |
-| `albedoMap` | 28 `SAMPLER2D` | `grey` | raw sampler |
+| Property               | Type           | Default              | Notes                                                          |
+| ---------------------- | -------------- | -------------------- | -------------------------------------------------------------- |
+| `tilingOffset`         | 16 `FLOAT4`    | `[1, 1, 0, 0]`       | x/y = tiling, z/w = offset (`docs/manual/uniform-types.md:24`) |
+| `mainColor`            | 16 `FLOAT4`    | `[1, 1, 1, 1]`       | `linear: true`, aliases `albedo`                               |
+| `albedoScale`          | 15 `FLOAT3`    | `[1, 1, 1]`          | aliases `albedoScaleAndCutoff`                                 |
+| `alphaThreshold`       | 13 `FLOAT`     | `[0.5]`              | needs `USE_ALPHA_TEST`                                         |
+| `occlusion`            | 13 `FLOAT`     | `[1]`                | `pbrParams.x`                                                  |
+| `roughness`            | 13 `FLOAT`     | `[0.8]`              | `pbrParams.y`                                                  |
+| `metallic`             | 13 `FLOAT`     | `[0.6]`              | `pbrParams.z`                                                  |
+| `specularIntensity`    | 13 `FLOAT`     | `[0.5]`              | `pbrParams.w`                                                  |
+| `emissive`             | 16 `FLOAT4`    | `[0, 0, 0, 1]`       | `linear: true`, own UBO member                                 |
+| `emissiveScale`        | 15 `FLOAT3`    | `[1, 1, 1]`          | aliases `emissiveScaleParam`                                   |
+| `normalStrength`       | 13 `FLOAT`     | `[1]`                | aliases `emissiveScaleParam.w`                                 |
+| `mainTexture`          | 28 `SAMPLER2D` | `grey`               | aliases `albedoMap`, needs `USE_ALBEDO_MAP`                    |
+| `normalMap`            | 28 `SAMPLER2D` | `normal`             | needs `USE_NORMAL_MAP`                                         |
+| `pbrMap`               | 28 `SAMPLER2D` | `grey`               | needs `USE_PBR_MAP`                                            |
+| `metallicRoughnessMap` | 28 `SAMPLER2D` | `grey`               | needs `USE_METALLIC_ROUGHNESS_MAP`                             |
+| `occlusionMap`         | 28 `SAMPLER2D` | `white`              | needs `USE_OCCLUSION_MAP`                                      |
+| `emissiveMap`          | 28 `SAMPLER2D` | `grey`               | needs `USE_EMISSIVE_MAP`                                       |
+| `albedo`               | 16 `FLOAT4`    | `[1, 1, 1, 1]`       | raw member behind `mainColor`                                  |
+| `albedoScaleAndCutoff` | 16 `FLOAT4`    | `[1, 1, 1, 0.5]`     | raw member                                                     |
+| `pbrParams`            | 16 `FLOAT4`    | `[1, 0.8, 0.6, 0.5]` | raw member                                                     |
+| `emissiveScaleParam`   | 16 `FLOAT4`    | `[1, 1, 1, 1]`       | raw member                                                     |
+| `albedoMap`            | 28 `SAMPLER2D` | `grey`               | raw sampler                                                    |
 
 ## builtin-unlit settable properties
 
 From `src/air/builtin/builtin-effects.ts:861` (technique `opaque`, pass 0):
 
-| Property | Type | Default | Notes |
-| --- | --- | --- | --- |
-| `mainTexture` | 28 `SAMPLER2D` | `grey` | gated by `USE_TEXTURE` (`:922`) |
-| `tilingOffset` | 16 `FLOAT4` | `[1, 1, 0, 0]` | |
-| `mainColor` | 16 `FLOAT4` | `[1, 1, 1, 1]` | `linear: true` |
-| `colorScale` | 15 `FLOAT3` | `[1, 1, 1]` | aliases `colorScaleAndCutoff` |
-| `alphaThreshold` | 13 `FLOAT` | `[0.5]` | needs `USE_ALPHA_TEST` |
-| `color` | 16 `FLOAT4` | none | alias of `mainColor`, `linear: true` |
-| `colorScaleAndCutoff` | 16 `FLOAT4` | `[1, 1, 1, 0.5]` | raw member |
+| Property              | Type           | Default          | Notes                                |
+| --------------------- | -------------- | ---------------- | ------------------------------------ |
+| `mainTexture`         | 28 `SAMPLER2D` | `grey`           | gated by `USE_TEXTURE` (`:922`)      |
+| `tilingOffset`        | 16 `FLOAT4`    | `[1, 1, 0, 0]`   |                                      |
+| `mainColor`           | 16 `FLOAT4`    | `[1, 1, 1, 1]`   | `linear: true`                       |
+| `colorScale`          | 15 `FLOAT3`    | `[1, 1, 1]`      | aliases `colorScaleAndCutoff`        |
+| `alphaThreshold`      | 13 `FLOAT`     | `[0.5]`          | needs `USE_ALPHA_TEST`               |
+| `color`               | 16 `FLOAT4`    | none             | alias of `mainColor`, `linear: true` |
+| `colorScaleAndCutoff` | 16 `FLOAT4`    | `[1, 1, 1, 0.5]` | raw member                           |
 
 ## Default sampler values and `resetTextures`
 

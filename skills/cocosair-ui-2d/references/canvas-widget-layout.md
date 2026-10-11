@@ -11,11 +11,11 @@ keeps nodes pinned to edges across viewport changes, and how `Layout` arranges c
 root `Node`, not a `Canvas` component instance (`src/air/ui-kit.ts:37`, `:66`). It does not touch the
 3D scene beyond `scene.addChild(node)` (`:52`).
 
-| Option        | Type     | Default                    | Effect |
-| ------------- | -------- | -------------------------- | ------ |
-| designWidth   | number   | 1280                       | `UITransform.setContentSize` width (`src/air/ui-kit.ts:39`, `:45`) |
-| designHeight  | number   | 720                        | `UITransform.setContentSize` height (`src/air/ui-kit.ts:40`, `:45`) |
-| layer         | number   | `Layers.Enum.UI_2D`        | root `node.layer`, camera `node.layer`, camera `visibility` (`src/air/ui-kit.ts:38`, `:43`, `:55`, `:61`) |
+| Option       | Type   | Default             | Effect                                                                                                    |
+| ------------ | ------ | ------------------- | --------------------------------------------------------------------------------------------------------- |
+| designWidth  | number | 1280                | `UITransform.setContentSize` width (`src/air/ui-kit.ts:39`, `:45`)                                        |
+| designHeight | number | 720                 | `UITransform.setContentSize` height (`src/air/ui-kit.ts:40`, `:45`)                                       |
+| layer        | number | `Layers.Enum.UI_2D` | root `node.layer`, camera `node.layer`, camera `visibility` (`src/air/ui-kit.ts:38`, `:43`, `:55`, `:61`) |
 
 Sequence it performs on the root node:
 
@@ -62,12 +62,12 @@ directly: you must re-issue `view.setDesignResolutionSize(...)` so `widgetManage
 `Layout extends Component` (`src/cocos/ui/layout.ts:214`) is exported only as `Layout$1 as Layout`
 (`build/cocosair.module.js` export block, currently :161574). Its static enums:
 
-| Enum accessor            | Source line | Meaning |
-| ------------------------ | ----------- | ------- |
-| Layout.Type              | `:619`      | `HORIZONTAL`, `VERTICAL`, `GRID` placement axis (`src/cocos/ui/layout.ts:43`) |
+| Enum accessor            | Source line | Meaning                                                                                |
+| ------------------------ | ----------- | -------------------------------------------------------------------------------------- |
+| Layout.Type              | `:619`      | `HORIZONTAL`, `VERTICAL`, `GRID` placement axis (`src/cocos/ui/layout.ts:43`)          |
 | Layout.ResizeMode        | `:634`      | container resize behavior, `NONE` keeps the authored box (`src/cocos/ui/layout.ts:78`) |
-| Layout.VerticalDirection | `:624`      | row fill order, e.g. `TOP_TO_BOTTOM` (`src/cocos/ui/layout.ts:128`) |
-| Layout.Constraint        | `:644`      | grid constraint mode (`src/cocos/ui/layout.ts:170`) |
+| Layout.VerticalDirection | `:624`      | row fill order, e.g. `TOP_TO_BOTTOM` (`src/cocos/ui/layout.ts:128`)                    |
+| Layout.Constraint        | `:644`      | grid constraint mode (`src/cocos/ui/layout.ts:170`)                                    |
 
 Reference usage from `docs/manual/ui-layout-and-interaction.md:68-74`:
 

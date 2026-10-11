@@ -11,6 +11,8 @@ module - a plain trailing ribbon, not a particle emitter.
 
 # The plist chain, end to end
 
+Before attaching the emitter, create a `Canvas` component on its UI root, then assign the orthographic camera to that component's `cameraComponent`. `UITransform` does not create a `Canvas`; `getComponent(Canvas)` on a root with only `UITransform` returns null. Alternatively use `createUICanvas` from cocosair-ui-2d.
+
 1. `assetManager.parser.parsePlist` maps `.plist` input and fails with `parse failed` on malformed text (`src/cocos/asset/asset-manager/parser.ts:63`, `:164-172`).
 2. The parsed dictionary is attached as `asset._nativeAsset`; `ParticleAsset` itself declares only `spriteFrame` (`src/cocos/particle-2d/particle-asset.ts:38-43`), so the config never lives on the asset as named fields.
 3. `custom = false` plus a `file` assignment triggers `_applyFile`, which calls `_initWithDictionary(file._nativeAsset)` only in the non-custom branch (`src/cocos/particle-2d/particle-system-2d.ts:922-948`, guard `:933-936`).
@@ -18,6 +20,7 @@ module - a plain trailing ribbon, not a particle emitter.
 # Key dictionary and its silent-zero cases
 
 - The lifespan key is `particleLifespan` (`src/cocos/particle-2d/particle-system-2d.ts:1047`); assigning `life` in a plist does nothing. A missing lifespan makes `life` 0, which zeroes the emission clamp (`:1055`).
+- Set the `startColorRed/Green/Blue/Alpha` and `finishColorRed/Green/Blue/Alpha` values explicitly. `_initWithDictionary` defaults missing channels to zero; without `startColorAlpha`, particles can simulate with zero visible opacity.
 - `emissionRate` is re-clamped to `totalParticles / life` (`src/cocos/particle-2d/particle-system-2d.ts:1055`), so a large plist rate is silently capped.
 - `blendFuncSource` and `blendFuncDestination` are written straight into the gfx `BlendFactor` slots (`src/cocos/particle-2d/particle-system-2d.ts:1062-1063`), whose enum tops out at 14 (`src/cocos/gfx/base/define.ts:505-521`). The Creator plist values 770 and 1 land out of range, so the emitter simulates fully while drawing nothing. Override them via the inherited `srcBlendFactor` and `dstBlendFactor` accessors on `UIRenderer` (`src/cocos/2d/framework/ui-renderer.ts:246-247`), or keep the plist integers in the gfx slot range.
 

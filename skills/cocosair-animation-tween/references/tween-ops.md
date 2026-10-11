@@ -8,25 +8,25 @@ The constructor stores the target: `this._target = target === undefined ? null :
 
 ## The chain methods
 
-| Method | What it pushes | Line |
-| --- | --- | --- |
-| `to(duration, props, opts?)` | a `TweenAction` with `relative = false` (absolute interpolation to props) | `src/cocos/tween/tween.ts:475-481` |
-| `by(duration, props, opts?)` | a `TweenAction` with `relative = true` (interpolate the delta) | `:496-502` |
-| `set(props)` | a `SetAction` (instant assignment, no interpolation) | `:540-544` |
-| `delay(duration)` | a `delayTime(duration)` action | `:555-559` |
-| `call(cb, this?, data?)` | a `callFunc(cb, this, data)` zero-duration callback | `:572-576` |
-| `update(duration, cb, ...args)` | an `ActionCustomUpdate` of fixed duration | `:512-516` |
-| `updateUntil(cb, ...args)` | an `ActionUnknownDuration`; the callback returning true ends it | `:525-529` |
-| `sequence(...tweens)` | a wrapped `Sequence` of the argument tweens | `:587-591` |
-| `parallel(...tweens)` | a wrapped `Spawn` of the argument tweens | `:602-606` |
-| `repeat(n, embedTween?)` | `repeat(action, n)`; `n === Infinity` forwards to `repeatForever` | `:656-673` |
-| `repeatForever(embedTween?)` | `repeat(action, MAX_SAFE_INTEGER)` when other actions remain, else `repeatForever(action)` | `:685-703` |
-| `reverseTime(embedTween?)` | `reverseTime(action)` wrapping the popped previous action or the embedded tween union | `:715-731` |
-| `union(fromId?)` | collapses prior actions into one `Sequence` in place | `:434-460` |
-| `then(other)` | inserts another tween's union as the rear action | `:166-173` |
-| `timeScale(scale)` | sets `_timeScale` and, if started, `_finalAction.setSpeed(scale)` | `:614-620` |
-| `tag(n)` / `id(n)` | set the tween tag / the previous action's id | `:139-142`, `:150-155` |
-| `hide()` / `show()` / `removeSelf()` / `destroySelf()` | node-target-only visibility and removal actions | `:740-795` |
+| Method                                                 | What it pushes                                                                             | Line                               |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ---------------------------------- |
+| `to(duration, props, opts?)`                           | a `TweenAction` with `relative = false` (absolute interpolation to props)                  | `src/cocos/tween/tween.ts:475-481` |
+| `by(duration, props, opts?)`                           | a `TweenAction` with `relative = true` (interpolate the delta)                             | `:496-502`                         |
+| `set(props)`                                           | a `SetAction` (instant assignment, no interpolation)                                       | `:540-544`                         |
+| `delay(duration)`                                      | a `delayTime(duration)` action                                                             | `:555-559`                         |
+| `call(cb, this?, data?)`                               | a `callFunc(cb, this, data)` zero-duration callback                                        | `:572-576`                         |
+| `update(duration, cb, ...args)`                        | an `ActionCustomUpdate` of fixed duration                                                  | `:512-516`                         |
+| `updateUntil(cb, ...args)`                             | an `ActionUnknownDuration`; the callback returning true ends it                            | `:525-529`                         |
+| `sequence(...tweens)`                                  | a wrapped `Sequence` of the argument tweens                                                | `:587-591`                         |
+| `parallel(...tweens)`                                  | a wrapped `Spawn` of the argument tweens                                                   | `:602-606`                         |
+| `repeat(n, embedTween?)`                               | `repeat(action, n)`; `n === Infinity` forwards to `repeatForever`                          | `:656-673`                         |
+| `repeatForever(embedTween?)`                           | `repeat(action, MAX_SAFE_INTEGER)` when other actions remain, else `repeatForever(action)` | `:685-703`                         |
+| `reverseTime(embedTween?)`                             | `reverseTime(action)` wrapping the popped previous action or the embedded tween union      | `:715-731`                         |
+| `union(fromId?)`                                       | collapses prior actions into one `Sequence` in place                                       | `:434-460`                         |
+| `then(other)`                                          | inserts another tween's union as the rear action                                           | `:166-173`                         |
+| `timeScale(scale)`                                     | sets `_timeScale` and, if started, `_finalAction.setSpeed(scale)`                          | `:614-620`                         |
+| `tag(n)` / `id(n)`                                     | set the tween tag / the previous action's id                                               | `:139-142`, `:150-155`             |
+| `hide()` / `show()` / `removeSelf()` / `destroySelf()` | node-target-only visibility and removal actions                                            | `:740-795`                         |
 
 Props are given as a plain object of property name to target value (`{ position: new Vec3(...) }`, `{ scale: new Vec3(...) }`); there is no string-path form (`docs/manual/animation-system.md:34-35`). `opts.easing` accepts a `TweenEasing` string or a `(k: number) => number` lambda, and `opts.progress` an interpolation function; `onStart`/`onUpdate`/`onComplete` are the callbacks (`src/cocos/tween/export-api.ts:51-92`). The `TweenEasing` string union is the 45-name easing table at `src/cocos/tween/export-api.ts:32-43`.
 

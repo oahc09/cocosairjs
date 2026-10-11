@@ -9,24 +9,24 @@ bearing for import statements.
 
 ## Export aliases
 
-| Import (bare)        | Also exported as        | Class definition note |
-| -------------------- | ----------------------- | --------------------- |
-| Canvas               | Canvas as CanvasComponent | base UI root, links camera (`src/cocos/2d/framework/canvas.ts:92`) |
-| Widget               | Widget as WidgetComponent | `class Widget extends Component` (`src/cocos/ui/widget.ts:227`) |
-| Button               | Button as ButtonComponent | `class Button extends Component` (`src/cocos/ui/button.ts:177`) |
-| Toggle               | Toggle as ToggleComponent | `class Toggle extends Button` (`src/cocos/ui/toggle.ts:53`) |
-| Slider               | Slider as SliderComponent | `class Slider extends Component` (`src/cocos/ui/slider.ts:80`) |
-| ProgressBar          | ProgressBar as ProgressBarComponent | `class ProgressBar extends Component` (`src/cocos/ui/progress-bar.ts:102`) |
-| ScrollView           | ScrollView as ScrollViewComponent | `class ScrollView extends ViewGroup` (`src/cocos/ui/scroll-view.ts:236`) |
-| PageView             | PageView as PageViewComponent | `class PageView extends ScrollView` (`src/cocos/ui/page-view.ts:103`) |
-| EditBox              | EditBox as EditBoxComponent | `class EditBox extends Component` (`src/cocos/ui/editbox/edit-box.ts:77`) |
-| SafeArea             | SafeArea as SafeAreaComponent | `class SafeArea extends Component` (`src/cocos/ui/safe-area.ts:62`) |
-| BlockInputEvents     | BlockInputEvents as BlockInputEventsComponent | `class BlockInputEvents extends Component` (`src/cocos/ui/block-input-events.ts:51`) |
-| Layout               | Layout$1 as LayoutComponent | `class Layout extends Component` (`src/cocos/ui/layout.ts:214`); no bare `Layout` export name |
+| Import (bare)    | Also exported as                              | Class definition note                                                                         |
+| ---------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Canvas           | Canvas as CanvasComponent                     | base UI root, links camera (`src/cocos/2d/framework/canvas.ts:92`)                            |
+| Widget           | Widget as WidgetComponent                     | `class Widget extends Component` (`src/cocos/ui/widget.ts:227`)                               |
+| Button           | Button as ButtonComponent                     | `class Button extends Component` (`src/cocos/ui/button.ts:177`)                               |
+| Toggle           | Toggle as ToggleComponent                     | `class Toggle extends Button` (`src/cocos/ui/toggle.ts:53`)                                   |
+| Slider           | Slider as SliderComponent                     | `class Slider extends Component` (`src/cocos/ui/slider.ts:80`)                                |
+| ProgressBar      | ProgressBar as ProgressBarComponent           | `class ProgressBar extends Component` (`src/cocos/ui/progress-bar.ts:102`)                    |
+| ScrollView       | ScrollView as ScrollViewComponent             | `class ScrollView extends ViewGroup` (`src/cocos/ui/scroll-view.ts:236`)                      |
+| PageView         | PageView as PageViewComponent                 | `class PageView extends ScrollView` (`src/cocos/ui/page-view.ts:103`)                         |
+| EditBox          | EditBox as EditBoxComponent                   | `class EditBox extends Component` (`src/cocos/ui/editbox/edit-box.ts:77`)                     |
+| SafeArea         | SafeArea as SafeAreaComponent                 | `class SafeArea extends Component` (`src/cocos/ui/safe-area.ts:62`)                           |
+| BlockInputEvents | BlockInputEvents as BlockInputEventsComponent | `class BlockInputEvents extends Component` (`src/cocos/ui/block-input-events.ts:51`)          |
+| Layout           | Layout$1 as LayoutComponent                   | `class Layout extends Component` (`src/cocos/ui/layout.ts:214`); no bare `Layout` export name |
 
 `RichText` is exported only as `RichText as RichTextComponent`, with no bare `RichText` name (class at
 `src/cocos/2d/components/rich-text.ts:157`). Importing `{ RichText }` from the bundle resolves to
-nothing. See `references/label-and-text.md`.
+nothing. See [label-and-text.md](label-and-text.md).
 
 ## Base-class relationships
 

@@ -12,12 +12,12 @@ Derived from `src/air/primitive-geometry.ts`, `src/cocos/primitive/define.ts`, `
 
 Only four `type` values exist: `box`, `sphere`, `cylinder`, `cone`. The check `Object.prototype.hasOwnProperty.call(fields, descriptor.type)` (`:44`) throws for anything else, including `capsule`, `plane`, `torus`, `quad`, `circle` and `undefined`.
 
-| `type` | Allowed numeric/boolean fields (whitelist, `:18-22`) |
-| --- | --- |
-| `box` | `width`, `height`, `length`, `widthSegments`, `heightSegments`, `lengthSegments` |
-| `sphere` | `radius`, `segments` |
+| `type`     | Allowed numeric/boolean fields (whitelist, `:18-22`)                                       |
+| ---------- | ------------------------------------------------------------------------------------------ |
+| `box`      | `width`, `height`, `length`, `widthSegments`, `heightSegments`, `lengthSegments`           |
+| `sphere`   | `radius`, `segments`                                                                       |
 | `cylinder` | `radiusTop`, `radiusBottom`, `height`, `radialSegments`, `heightSegments`, `capped`, `arc` |
-| `cone` | `radius`, `height`, `radialSegments`, `heightSegments`, `capped`, `arc` |
+| `cone`     | `radius`, `height`, `radialSegments`, `heightSegments`, `capped`, `arc`                    |
 
 Every key other than `type` is checked against the whitelist: a key that is not allowed and is not `includeNormal` or `includeUV` throws (`:47-49`, reason `is not a <type> parameter`). So `capped` is valid only for `cylinder`/`cone`; `radius` is invalid for `box`; `segs` (a three.js habit) is invalid for every type.
 
@@ -32,19 +32,19 @@ Two helpers drive every range rule:
 
 Per-shape numeric rules with their source lines:
 
-| `type` | Rule | Line |
-| --- | --- | --- |
-| `box` | `width`, `height`, `length` finite and `> 0` | `:56` |
-| `box` | `widthSegments`, `heightSegments`, `lengthSegments` integer, `>= 1`, `<= 1024` | `:57` |
-| `box` | predicted verts `2 * ((x+1)(y+1) + (x+1)(z+1) + (y+1)(z+1)) <= 1_000_000` (`x/y/z` default 1) | `:58-61` |
-| `sphere` | `radius` finite and `> 0`; `segments` integer `>= 3`, `<= 1024` | `:65` |
-| `sphere` | `((segments ?? 32) + 1) ** 2 <= 1_000_000` | `:66` |
-| `cylinder`, `cone` | `height` finite and `> 0`; `radialSegments` integer `>= 3`, `<= 1024`; `heightSegments` integer `>= 1`, `<= 1024` | `:69-71` |
-| `cylinder`, `cone` | `arc` finite and `> 0`, and `<= 2 * Math.PI` (so `arc` in `(0, 2pi]`) | `:72-73` |
+| `type`             | Rule                                                                                                                                               | Line     |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `box`              | `width`, `height`, `length` finite and `> 0`                                                                                                       | `:56`    |
+| `box`              | `widthSegments`, `heightSegments`, `lengthSegments` integer, `>= 1`, `<= 1024`                                                                     | `:57`    |
+| `box`              | predicted verts `2 * ((x+1)(y+1) + (x+1)(z+1) + (y+1)(z+1)) <= 1_000_000` (`x/y/z` default 1)                                                      | `:58-61` |
+| `sphere`           | `radius` finite and `> 0`; `segments` integer `>= 3`, `<= 1024`                                                                                    | `:65`    |
+| `sphere`           | `((segments ?? 32) + 1) ** 2 <= 1_000_000`                                                                                                         | `:66`    |
+| `cylinder`, `cone` | `height` finite and `> 0`; `radialSegments` integer `>= 3`, `<= 1024`; `heightSegments` integer `>= 1`, `<= 1024`                                  | `:69-71` |
+| `cylinder`, `cone` | `arc` finite and `> 0`, and `<= 2 * Math.PI` (so `arc` in `(0, 2pi]`)                                                                              | `:72-73` |
 | `cylinder`, `cone` | predicted verts `(radial+1)(height+1) + 4*radial + 2 <= 1_000_000` (`radial` default 32, `height` default 1; `4*radial+2` covers capped end discs) | `:74-75` |
-| `cone` | `radius` finite and `> 0` | `:77` |
-| `cylinder` | `radiusTop`, `radiusBottom` finite and `>= 0` (inclusive) | `:80-81` |
-| `cylinder` | `radiusTop` and `radiusBottom` may not BOTH be `0` (defaults `0.5`) | `:82` |
+| `cone`             | `radius` finite and `> 0`                                                                                                                          | `:77`    |
+| `cylinder`         | `radiusTop`, `radiusBottom` finite and `>= 0` (inclusive)                                                                                          | `:80-81` |
+| `cylinder`         | `radiusTop` and `radiusBottom` may not BOTH be `0` (defaults `0.5`)                                                                                | `:82`    |
 
 The `1_000_000` figure is a predicted-vertex guard computed from the segment fields, not the literal emitted vertex count and not a hard Mesh ceiling; each shape uses its own formula. Larger meshes are the caller's responsibility via the native API, per `docs/manual/primitive-descriptors.md`. The upper bound on `arc` is `<= 2pi` (only `> 2pi` throws), and the lower bound is `> 0` (from `number(..., 0, exclusive)`), so `arc: 0` and `arc: 2pi + 0.1` both throw while `arc: 2pi` is accepted.
 
@@ -56,4 +56,4 @@ Every rejection goes through `invalid(field, reason)` (`:23-27`), which construc
 
 - Source export: `createPrimitiveGeometry` and the `AirPrimitiveDescriptor` type are defined in `src/air/primitive-geometry.ts` and surface through `src/exports/air.ts:42` (`export * from '../air'`) and the narrow source entry `src/index.ts`.
 - Default-bundle reachable: `createPrimitiveGeometry` appears as a name in the single `export { ... }` block of `build/cocosair.module.js` (626 names parsed), so `import { createPrimitiveGeometry } from 'cocosair'` (or `'cocosair.js'` against the installed package) resolves at build level.
-- Test coverage, not pixel coverage: `test/smoke/port-gap-primitive-descriptor.test.ts` asserts `createPrimitiveGeometry({ type: 'box', ...options })` deep-equals `primitives.box({...options})` and the sphere/cylinder/cone equivalents (`:14,17,19-21`) and that invalid descriptors throw (`:31`). `tools/verify/consumer-acceptance.cjs:139,182` checks the name is importable from the installed bundle and matches the native generator. No example under `examples/` calls `createPrimitiveGeometry`, and no entry in `docs/evidence/examples-verified.json` exercises it, so it is source-exported and default-bundle-reachable plus jsdom/consumer-tested, NOT browser-pixel verified. The `primitives.*` generators it wraps ARE browser-PASS in recorded candidates (see `primitive-shapes.md`).
+- Test coverage, not pixel coverage: `test/smoke/port-gap-primitive-descriptor.test.ts` asserts `createPrimitiveGeometry({ type: 'box', ...options })` deep-equals `primitives.box({...options})` and the sphere/cylinder/cone equivalents (`:14,17,19-21`) and that invalid descriptors throw (`:31`). `tools/verify/consumer-acceptance.cjs:139,182` checks the name is importable from the installed bundle and matches the native generator. No example under `examples/` calls `createPrimitiveGeometry`, and no entry in `docs/evidence/examples-verified.json` exercises it, so it is source-exported and default-bundle-reachable plus jsdom/consumer-tested, NOT browser-pixel verified. The `primitives.*` generators it wraps ARE browser-PASS in recorded candidates (see [primitive-shapes.md](primitive-shapes.md)).

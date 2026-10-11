@@ -55,10 +55,10 @@ draw order; use it for overlap math, not for stacking sprites.
 
 ## Layer versus sorting layer
 
-| Concept        | Type | Controls | Source |
-| -------------- | ---- | -------- | ------ |
-| Node layer     | bitmask per node | whether a camera renders the node (`visibility` AND `layer`) | `src/cocos/scene-graph/layers.ts:34-46` |
-| Sorting layer  | int id per `Sorting2D` | draw order among batched 2D renderers | `src/cocos/sorting/sorting-layers.ts:36-38` |
+| Concept       | Type                   | Controls                                                     | Source                                      |
+| ------------- | ---------------------- | ------------------------------------------------------------ | ------------------------------------------- |
+| Node layer    | bitmask per node       | whether a camera renders the node (`visibility` AND `layer`) | `src/cocos/scene-graph/layers.ts:34-46`     |
+| Sorting layer | int id per `Sorting2D` | draw order among batched 2D renderers                        | `src/cocos/sorting/sorting-layers.ts:36-38` |
 
 UI nodes still need a node layer that matches the UI camera `visibility` before sorting even applies
 (`src/air/ui-kit.ts:38`, `:61`); `Sorting2D` then orders what the camera already accepts.

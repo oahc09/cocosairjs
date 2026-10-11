@@ -6,24 +6,24 @@ Derived from `src/air/assets/bmfont.ts`, `src/air/assets/asset-bank.ts`, `src/ai
 
 Fields actually read, and the guard on each:
 
-| Record.field | Rule | Source |
-| --- | --- | --- |
-| `info size` | integer in -65535..65535, non-zero; `fontSize = Math.abs(size)` | `src/air/assets/bmfont.ts:61-62`, `:89` |
-| `common pages` | must equal 1 | `:63` |
-| `common packed` | if present, must be 0, else `AIR_E_FNT_PACKED` | `:64` |
-| `common lineHeight` | integer >= 1, becomes `commonHeight` | `:89` |
-| `common base` | integer >= 0 | `:90` |
-| `common scaleW` / `scaleH` | integer >= 1 | `:66` |
-| `page id` | must equal 0 | `:63` |
-| `page file` | non-empty, becomes `atlasName` | `:65`, `:90` |
-| `chars count` | must equal the number of `char` records, and at least one | `:69` |
-| `char id` | 0..65535, unique per font | `:71-72` |
-| `char page` | must be 0 | `:73` |
-| `char x y width height` | non-negative integers, `x + width <= scaleW`, `y + height <= scaleH` | `:74-75` |
-| `char xoffset yoffset xadvance` | integers in -65535..65535 | `:77-78` |
-| `kernings count` | when the record exists, must equal the number of `kerning` records | `:81` |
-| `kerning first second` | both must exist in the glyph table; stored under a key packing `first` into the high 16 bits with `second` (`:85`); a repeated pair throws | `:82-87` |
-| `kerning amount` | integer in -65535..65535 | `:87` |
+| Record.field                    | Rule                                                                                                                                       | Source                                  |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
+| `info size`                     | integer in -65535..65535, non-zero; `fontSize = Math.abs(size)`                                                                            | `src/air/assets/bmfont.ts:61-62`, `:89` |
+| `common pages`                  | must equal 1                                                                                                                               | `:63`                                   |
+| `common packed`                 | if present, must be 0, else `AIR_E_FNT_PACKED`                                                                                             | `:64`                                   |
+| `common lineHeight`             | integer >= 1, becomes `commonHeight`                                                                                                       | `:89`                                   |
+| `common base`                   | integer >= 0                                                                                                                               | `:90`                                   |
+| `common scaleW` / `scaleH`      | integer >= 1                                                                                                                               | `:66`                                   |
+| `page id`                       | must equal 0                                                                                                                               | `:63`                                   |
+| `page file`                     | non-empty, becomes `atlasName`                                                                                                             | `:65`, `:90`                            |
+| `chars count`                   | must equal the number of `char` records, and at least one                                                                                  | `:69`                                   |
+| `char id`                       | 0..65535, unique per font                                                                                                                  | `:71-72`                                |
+| `char page`                     | must be 0                                                                                                                                  | `:73`                                   |
+| `char x y width height`         | non-negative integers, `x + width <= scaleW`, `y + height <= scaleH`                                                                       | `:74-75`                                |
+| `char xoffset yoffset xadvance` | integers in -65535..65535                                                                                                                  | `:77-78`                                |
+| `kernings count`                | when the record exists, must equal the number of `kerning` records                                                                         | `:81`                                   |
+| `kerning first second`          | both must exist in the glyph table; stored under a key packing `first` into the high 16 bits with `second` (`:85`); a repeated pair throws | `:82-87`                                |
+| `kerning amount`                | integer in -65535..65535                                                                                                                   | `:87`                                   |
 
 Everything else is parsed into the record map and then never read: `info face/charset/padding/smooth/aa/spacing`, `char chnl`, and any additional attribute on `common` or `page` (`:45-54`); the repository fixture carries exactly those ignored attributes (`test/fixtures/bmfont/font.fnt:1`, `:5`). Every numeric guard above fails through one helper whose message is `<name> must be an integer in [min, max]` (`src/air/assets/bmfont.ts:28-34`) under `AIR_E_FNT_DATA`.
 
@@ -54,18 +54,18 @@ Selection and rendering facts proven in source:
 
 `loadBitmapFont(url, options)` (`src/air/assets/bmfont.ts:132`); options are `{ bank, signal?, baseURL? }` (`:130`).
 
-| Step | Behaviour | Source |
-| --- | --- | --- |
-| text | `bank.load(url, { ext: 'fnt', signal })`, then `instanceof TextAsset` or `AIR_E_FNT_FORMAT` | `:140-141` |
-| parse | `parseFnt(text.text)` | `:142` |
-| page URL | `baseURL` if given, else `new URL(url, document.baseURI)`; `page.file` resolved against it; failure throws `AIR_E_FNT_BASE_URL` | `:143-146` |
-| format | URL must end in `.png` optionally followed by `?`/`#`, else `AIR_E_FNT_PAGE_TEXTURE` | `:147` |
-| page load | `bank.load(pageURL, { ext: 'png', signal })` | `:148` |
-| abort | after the page resolves, `signal.aborted` throws `AIR_E_ABORTED: font subscription was cancelled` | `:149` |
-| page asset | `instanceof ImageAsset` or `AIR_E_FNT_PAGE_TEXTURE` | `:150` |
-| assemble | a fresh `Texture2D` plus a bare full-page `SpriteFrame`, then `createBitmapFont` | `:151-153` |
-| dispose | inner `dispose()` first, then `bank.release` for the `fnt` and `png` subscriptions | `:135-138`, `:154` |
-| failure | the unowned frame and texture are destroyed and already-taken subscriptions released before rethrow | `:155-157` |
+| Step       | Behaviour                                                                                                                       | Source             |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| text       | `bank.load(url, { ext: 'fnt', signal })`, then `instanceof TextAsset` or `AIR_E_FNT_FORMAT`                                     | `:140-141`         |
+| parse      | `parseFnt(text.text)`                                                                                                           | `:142`             |
+| page URL   | `baseURL` if given, else `new URL(url, document.baseURI)`; `page.file` resolved against it; failure throws `AIR_E_FNT_BASE_URL` | `:143-146`         |
+| format     | URL must end in `.png` optionally followed by `?`/`#`, else `AIR_E_FNT_PAGE_TEXTURE`                                            | `:147`             |
+| page load  | `bank.load(pageURL, { ext: 'png', signal })`                                                                                    | `:148`             |
+| abort      | after the page resolves, `signal.aborted` throws `AIR_E_ABORTED: font subscription was cancelled`                               | `:149`             |
+| page asset | `instanceof ImageAsset` or `AIR_E_FNT_PAGE_TEXTURE`                                                                             | `:150`             |
+| assemble   | a fresh `Texture2D` plus a bare full-page `SpriteFrame`, then `createBitmapFont`                                                | `:151-153`         |
+| dispose    | inner `dispose()` first, then `bank.release` for the `fnt` and `png` subscriptions                                              | `:135-138`, `:154` |
+| failure    | the unowned frame and texture are destroyed and already-taken subscriptions released before rethrow                             | `:155-157`         |
 
 `signal` is subscriber-side only: `AssetBank.underlyingCancelSupported` is the literal `false` (`src/air/assets/asset-bank.ts:148`) and the bank raises its own `AIR_E_ABORTED` before starting or while joining a load (`src/air/assets/asset-bank.ts:182-183`, `:320`), which `loadBitmapFont` surfaces unchanged; `docs/manual/bitmap-font-loading.md:31` words the same limit. Error surface overall: `AIR_E_FNT_FORMAT`, `AIR_E_FNT_DATA`, `AIR_E_FNT_PAGES`, `AIR_E_FNT_PACKED`, `AIR_E_FNT_PAGE_TEXTURE`, `AIR_E_FNT_BASE_URL`, `AIR_E_FNT_IN_USE` (`src/air/assets/bmfont.ts:31`, `:37`, `:43`, `:49`, `:53`, `:57`, `:63-65`, `:69`, `:72-75`, `:81-87`, `:110`, `:123`, `:146`), listed at `docs/manual/bitmap-font-loading.md:47-48`.
 

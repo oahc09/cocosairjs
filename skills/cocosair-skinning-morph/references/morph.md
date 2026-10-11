@@ -8,7 +8,7 @@ Morph data lives inside the mesh struct, not on the renderer: `Mesh.IStruct.morp
 - `SubMeshMorph` (`:44-59`) - `attributes: AttributeName[]` listing which attributes morph, `targets: MorphTarget[]`, and per-sub-mesh `weights?` that take precedence over the common list (`:64-67`).
 - `MorphTarget` (`:32-37`) - `displacements: Mesh.IBufferView[]`, one view per entry of `attributes`, in the same order.
 
-`IBufferView` is `{ offset, length, count, stride }` (`src/cocos/3d/assets/mesh.ts:63-68`) pointing into the single `mesh.data` blob. Displacements are additive per-vertex offsets in the attribute's own space, three floats per vertex; the loader comments the trap that `count` here is a *scalar float count*, not a vertex count (`src/air/assets/gltf/mesh.ts:219-220`), and the CPU path derives vertices as `displacements.length / 3` (`src/cocos/3d/assets/morph-rendering.ts:427`). A minimal literal:
+`IBufferView` is `{ offset, length, count, stride }` (`src/cocos/3d/assets/mesh.ts:63-68`) pointing into the single `mesh.data` blob. Displacements are additive per-vertex offsets in the attribute's own space, three floats per vertex; the loader comments the trap that `count` here is a _scalar float count_, not a vertex count (`src/air/assets/gltf/mesh.ts:219-220`), and the CPU path derives vertices as `displacements.length / 3` (`src/cocos/3d/assets/morph-rendering.ts:427`). A minimal literal:
 
 ```ts
 // one blob holds vertex data, then indices, then every displacement array; the views point into it
@@ -49,14 +49,14 @@ Each renderer then gets its own instance through `createInstance()` (`src/cocos/
 
 None of `MorphRendering`, `StdMorphRendering`, `createMorphRendering`, `Morph`, `SubMeshMorph`, `MorphTarget`, `MorphModel` or the animation value-proxy factories appear in the runtime bundle's single export block (`build/cocosair.module.js`, currently :161574; `Mesh.morphRendering` is tracked as a member unit in `docs/example-api-inventory.json`). The public surface is on the renderer (`src/cocos/3d/framework/mesh-renderer.ts`):
 
-| Member | Line | Failure mode |
-| --- | --- | --- |
-| `enableMorph` getter/setter | `:526-532`, default `true` `:564` | setter is a bare assignment; only `mesh` (`:492`) and `onLoad` (`:582`) rebuild the instance |
-| `getWeight(subMeshIndex, shapeIndex)` | `:677-683` | `assertIsTrue` on an out-of-range index, so it throws rather than returns a default |
-| `setWeights(weights, subMeshIndex)` | `:695-706` | silent return when the index is out of bounds or the length differs from the target count |
-| `setWeight(weight, subMeshIndex, shapeIndex)` | `:720-731` | silent return on either out-of-range index |
+| Member                                        | Line                              | Failure mode                                                                                 |
+| --------------------------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------- |
+| `enableMorph` getter/setter                   | `:526-532`, default `true` `:564` | setter is a bare assignment; only `mesh` (`:492`) and `onLoad` (`:582`) rebuild the instance |
+| `getWeight(subMeshIndex, shapeIndex)`         | `:677-683`                        | `assertIsTrue` on an out-of-range index, so it throws rather than returns a default          |
+| `setWeights(weights, subMeshIndex)`           | `:695-706`                        | silent return when the index is out of bounds or the length differs from the target count    |
+| `setWeight(weight, subMeshIndex, shapeIndex)` | `:720-731`                        | silent return on either out-of-range index                                                   |
 
-Weights are stored first, then pushed: `_uploadSubMeshShapesWeights` calls `this._morphInstance?.setWeights(...)` (`:1309-1310`), so with no instance - morph-less mesh, or `_enableMorph` false at instance-build time (`:1239-1241`) - the call records values that never reach the GPU. Initial values come from the asset in precedence order `subMeshMorph.weights`, then `morph.weights`, then zeros (`:1260-1287`), and reassigning `mesh` re-runs that initialisation, which the doc comment warns resets every weight (`:475-479`). Nothing normalises morph weights; only the glTF geometry path normalises *skin* weight sums (`src/air/assets/gltf/mesh.ts:111-118`), while `getBoneSpaceBounds` merely rejects non-finite or negative values (`src/cocos/3d/assets/mesh.ts:724-727`) and the manual assigns normalisation to the application (`docs/manual/skinning-code-first.md:7`).
+Weights are stored first, then pushed: `_uploadSubMeshShapesWeights` calls `this._morphInstance?.setWeights(...)` (`:1309-1310`), so with no instance - morph-less mesh, or `_enableMorph` false at instance-build time (`:1239-1241`) - the call records values that never reach the GPU. Initial values come from the asset in precedence order `subMeshMorph.weights`, then `morph.weights`, then zeros (`:1260-1287`), and reassigning `mesh` re-runs that initialisation, which the doc comment warns resets every weight (`:475-479`). Nothing normalises morph weights; only the glTF geometry path normalises _skin_ weight sums (`src/air/assets/gltf/mesh.ts:111-118`), while `getBoneSpaceBounds` merely rejects non-finite or negative values (`src/cocos/3d/assets/mesh.ts:724-727`) and the manual assigns normalisation to the application (`docs/manual/skinning-code-first.md:7`).
 
 Blending itself is a linear accumulation of weighted displacements per attribute (`src/cocos/3d/assets/morph-rendering.ts:418-445` for the CPU path, uniform-array writes at `:511-517` for the GPU path), which is why a single float per target per sub-mesh is the entire control surface - there is no named-target lookup at runtime beyond `Morph.targetNames` metadata (`src/cocos/3d/assets/morph.ts:80-84`).
 

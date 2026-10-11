@@ -4,14 +4,14 @@ Derived from `docs/manual/shadow-support-matrix.md`, `src/cocos/render-scene/sce
 
 Contract search IDs (`docs/manual/shadow-support-matrix.md:5`): `AIR_SHADOW_POINT_UNSUPPORTED`, `AIR_SHADOW_PLANAR_ROI_NOT_VERIFIED`, `AIR_SHADOW_SPOT_RUNTIME_NOT_SAMPLED`. These are rendering-contract IDs, not glTF extensions.
 
-| Light type | Planar projection | ShadowMap | Documented basis |
-|---|---|---|---|
-| Main `DirectionalLight` | projects onto a single plane along `scene.renderScene.mainLight` direction | fixed-area / CSM path | ShadowFlow reads `mainLight` (`shadow-flow.ts:140`); planar path `PlanarShadowQueue` |
-| `SpotLight` | not a planar projection source | supported when `shadowEnabled` | ShadowFlow collects `LightType.SPOT` (`shadow-flow.ts:122`); not separately evidenced this round |
-| `PointLight` | not a planar projection source | NOT supported | `src/cocos/render-scene/scene/point-light.ts:32` states it does not support shadow generation currently |
-| `SphereLight` | not a planar projection source | no default sphere shadow path | ShadowFlow does not collect this type |
-| `RangedDirectionalLight` | not a `scene.renderScene.mainLight` projection source | no default main-shadow contract for this matrix | local directional lighting is not CSM main light |
-| Ambient | none | none | environment illumination, not a shadow caster |
+| Light type               | Planar projection                                                          | ShadowMap                                       | Documented basis                                                                                        |
+| ------------------------ | -------------------------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Main `DirectionalLight`  | projects onto a single plane along `scene.renderScene.mainLight` direction | fixed-area / CSM path                           | ShadowFlow reads `mainLight` (`shadow-flow.ts:140`); planar path `PlanarShadowQueue`                    |
+| `SpotLight`              | not a planar projection source                                             | supported when `shadowEnabled`                  | ShadowFlow collects `LightType.SPOT` (`shadow-flow.ts:122`); not separately evidenced this round        |
+| `PointLight`             | not a planar projection source                                             | NOT supported                                   | `src/cocos/render-scene/scene/point-light.ts:32` states it does not support shadow generation currently |
+| `SphereLight`            | not a planar projection source                                             | no default sphere shadow path                   | ShadowFlow does not collect this type                                                                   |
+| `RangedDirectionalLight` | not a `scene.renderScene.mainLight` projection source                      | no default main-shadow contract for this matrix | local directional lighting is not CSM main light                                                        |
+| Ambient                  | none                                                                       | none                                            | environment illumination, not a shadow caster                                                           |
 
 ShadowFlow gate: if `!shadowInfo.enabled || shadowInfo.type !== ShadowType.ShadowMap` the flow returns immediately (`src/cocos/rendering/shadow/shadow-flow.ts:116`). Only `SPOT` lights with `spotLight.shadowEnabled` are collected in the punctual loop (`shadow-flow.ts:122`, `:124`), bounded by `shadowInfo.maxReceived` (`:120`).
 
@@ -29,15 +29,15 @@ ShadowFlow gate: if `!shadowInfo.enabled || shadowInfo.type !== ShadowType.Shado
 
 `Shadows` global defaults (`src/cocos/render-scene/scene/shadows.ts`):
 
-| Member | Default | Line |
-|---|---|---|
-| `MAX_FAR` | `2000.0` | `:201` |
-| `maxReceived` | `4` | `:330` |
-| `_size` (shadow map) | `Vec2(1024, 1024)` | `:344` |
-| `_normal` | `Vec3(0, 1, 0)` | `:342` |
-| `_distance` | `0` | `:340` |
-| `_planeBias` | `1.0` | `:341` |
-| `_shadowColor` | `Color(0, 0, 0, 76)` | `:343` |
+| Member               | Default              | Line   |
+| -------------------- | -------------------- | ------ |
+| `MAX_FAR`            | `2000.0`             | `:201` |
+| `maxReceived`        | `4`                  | `:330` |
+| `_size` (shadow map) | `Vec2(1024, 1024)`   | `:344` |
+| `_normal`            | `Vec3(0, 1, 0)`      | `:342` |
+| `_distance`          | `0`                  | `:340` |
+| `_planeBias`         | `1.0`                | `:341` |
+| `_shadowColor`       | `Color(0, 0, 0, 76)` | `:343` |
 
 `Shadows.activate` maps to pipeline macro `CC_SHADOW_TYPE`: `0` disabled, `1` planar, `2` shadow-map (`:381`, `:388`, `:394`, `:406`).
 
@@ -45,25 +45,25 @@ ShadowFlow gate: if `!shadowInfo.enabled || shadowInfo.type !== ShadowType.Shado
 
 From `src/cocos/3d/lights/directional-light-component.ts` (component defaults shown; render-scene `DirectionalLight` mirrors them):
 
-| Field | Default | `@range` / clamp | Line |
-|---|---|---|---|
-| `shadowEnabled` | `false` | boolean | `:55`, `:131` |
-| `shadowPcf` | `PCFType.HARD` | enum `PCFType` | `:59`, `:151` |
-| `shadowBias` | `0.00001` | `CCFloat` | `:61`, `:171` |
-| `shadowNormalBias` | `0.0` | `CCFloat` | `:63`, `:191` |
-| `shadowSaturation` | `1.0` | `[0.0, 1.0, 0.01]`, setter clamps 0..1 | `:65`, `:210`, `:217` |
-| `shadowDistance` | `50` | `[0.0, 2000.0, 0.1]`, setter `Math.min(val, MAX_FAR)` | `:67`, `:237`, `:244` |
-| `shadowInvisibleOcclusionRange` | `200` | `[0.0, 2000.0, 1.0]`, setter `Math.min(val, MAX_FAR)` | `:69`, `:266`, `:273` |
-| `csmLevel` / `enableCSM` | `CSMLevel.LEVEL_4` | `enableCSM` true when `csmLevel > LEVEL_1` | `:71`, `:313`, `:317` |
-| `csmLayerLambda` | `0.75` | `[0.0, 1.0, 0.01]` | `:73`, `:332` |
-| `csmOptimizationMode` (component) | `CSMOptimizationMode.RemoveDuplicates` | enum | `:75` |
-| `csmOptimizationMode` (render-scene) | `CSMOptimizationMode.DisableRotationFix` | enum | `src/cocos/render-scene/scene/directional-light.ts:57` |
-| `shadowFixedArea` | `false` | boolean | `:86`, `:376` |
-| `shadowNear` | `0.1` | `CCFloat` | `:88`, `:399` |
-| `shadowFar` | `10.0` | setter `Math.min(val, MAX_FAR)` | `:90`, `:426` |
-| `shadowOrthoSize` | `5` | `CCFloat` | `:92`, `:444` |
-| `csmLayersTransition` | `false` | boolean | `:80`, `:488` |
-| `csmTransitionRange` | `0.05` | `[0.0, 1.0, 0.01]` | `:82`, `:509` |
+| Field                                | Default                                  | `@range` / clamp                                      | Line                                                   |
+| ------------------------------------ | ---------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------ |
+| `shadowEnabled`                      | `false`                                  | boolean                                               | `:55`, `:131`                                          |
+| `shadowPcf`                          | `PCFType.HARD`                           | enum `PCFType`                                        | `:59`, `:151`                                          |
+| `shadowBias`                         | `0.00001`                                | `CCFloat`                                             | `:61`, `:171`                                          |
+| `shadowNormalBias`                   | `0.0`                                    | `CCFloat`                                             | `:63`, `:191`                                          |
+| `shadowSaturation`                   | `1.0`                                    | `[0.0, 1.0, 0.01]`, setter clamps 0..1                | `:65`, `:210`, `:217`                                  |
+| `shadowDistance`                     | `50`                                     | `[0.0, 2000.0, 0.1]`, setter `Math.min(val, MAX_FAR)` | `:67`, `:237`, `:244`                                  |
+| `shadowInvisibleOcclusionRange`      | `200`                                    | `[0.0, 2000.0, 1.0]`, setter `Math.min(val, MAX_FAR)` | `:69`, `:266`, `:273`                                  |
+| `csmLevel` / `enableCSM`             | `CSMLevel.LEVEL_4`                       | `enableCSM` true when `csmLevel > LEVEL_1`            | `:71`, `:313`, `:317`                                  |
+| `csmLayerLambda`                     | `0.75`                                   | `[0.0, 1.0, 0.01]`                                    | `:73`, `:332`                                          |
+| `csmOptimizationMode` (component)    | `CSMOptimizationMode.RemoveDuplicates`   | enum                                                  | `:75`                                                  |
+| `csmOptimizationMode` (render-scene) | `CSMOptimizationMode.DisableRotationFix` | enum                                                  | `src/cocos/render-scene/scene/directional-light.ts:57` |
+| `shadowFixedArea`                    | `false`                                  | boolean                                               | `:86`, `:376`                                          |
+| `shadowNear`                         | `0.1`                                    | `CCFloat`                                             | `:88`, `:399`                                          |
+| `shadowFar`                          | `10.0`                                   | setter `Math.min(val, MAX_FAR)`                       | `:90`, `:426`                                          |
+| `shadowOrthoSize`                    | `5`                                      | `CCFloat`                                             | `:92`, `:444`                                          |
+| `csmLayersTransition`                | `false`                                  | boolean                                               | `:80`, `:488`                                          |
+| `csmTransitionRange`                 | `0.05`                                   | `[0.0, 1.0, 0.01]`                                    | `:82`, `:509`                                          |
 
 `shadowDistance` setter warns `warnID(15003, ...)` when `shadowDistance / 0.1 < 10.0` (`src/cocos/3d/lights/directional-light-component.ts:245`).
 
@@ -96,16 +96,16 @@ Concrete silent-miss symptoms read this session:
 
 ## Bundle reachability (single `export { ... }` block of `build/cocosair.module.js`)
 
-| Symbol | Top-level ESM export | Evidence |
-|---|---|---|
-| `DirectionalLight` | resolves by symbol name | export block |
-| `SpotLight` | resolves by symbol name | export block |
-| `PointLight` | resolves by symbol name | export block |
-| `SphereLight` | resolves by symbol name | export block |
-| `ShadowType` | not top-level | `src/cocos/render-scene/scene/shadows.ts:73`; `scene` namespace not a top-level export |
-| `PCFType` | not top-level | `shadows.ts:97` |
-| `CSMLevel` | not top-level | `shadows.ts:132` |
-| `CSMOptimizationMode` | not top-level | `shadows.ts:167` |
-| `Shadows` | not top-level | `shadows.ts:196` |
+| Symbol                | Top-level ESM export    | Evidence                                                                               |
+| --------------------- | ----------------------- | -------------------------------------------------------------------------------------- |
+| `DirectionalLight`    | resolves by symbol name | export block                                                                           |
+| `SpotLight`           | resolves by symbol name | export block                                                                           |
+| `PointLight`          | resolves by symbol name | export block                                                                           |
+| `SphereLight`         | resolves by symbol name | export block                                                                           |
+| `ShadowType`          | not top-level           | `src/cocos/render-scene/scene/shadows.ts:73`; `scene` namespace not a top-level export |
+| `PCFType`             | not top-level           | `shadows.ts:97`                                                                        |
+| `CSMLevel`            | not top-level           | `shadows.ts:132`                                                                       |
+| `CSMOptimizationMode` | not top-level           | `shadows.ts:167`                                                                       |
+| `Shadows`             | not top-level           | `shadows.ts:196`                                                                       |
 
 Resolving by symbol name is a declaration/bundle lookup, not browser verification. The documented ShadowMap pixel evidence for the main light is scoped to `examples/campfire-night/` fixed scenes recorded under that revision's fingerprint (`docs/manual/shadow-support-matrix.md:28`, `:30`).

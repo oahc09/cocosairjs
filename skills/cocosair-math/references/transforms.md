@@ -13,83 +13,83 @@ Derived from src/cocos/core/math/mat4.ts, src/cocos/core/math/mat3.ts, src/cocos
 
 (`src/cocos/core/math/mat4.ts:1561-1566`). Field `mNN` is column `NN / 4`, row `NN % 4`; the `Mat4.set` parameter documentation states "m00 Component in column 0, row 0 position (index 0)" (`src/cocos/core/math/mat4.ts:107`). There is no `.m` / `.elements` array on `Mat4`, so comparisons iterate the field names (`docs/manual/matrix-transformations.md:16`, `:100` state that shape).
 
-| Column | Fields | Row-major index (gl `transpose` input) | Meaning |
-|---|---|---|---|
-| 0 | `m00 m01 m02 m03` | 0,4,8,12 | basis vector X (scaled by `s.x` in a TRS matrix) |
-| 1 | `m04 m05 m06 m07` | 1,5,9,13 | basis vector Y (scaled by `s.y`) |
-| 2 | `m08 m09 m10 m11` | 2,6,10,14 | basis vector Z (scaled by `s.z`) |
-| 3 | `m12 m13 m14 m15` | 3,7,11,15 | translation `x, y, z` and `m15 = 1` |
+| Column | Fields            | Row-major index (gl `transpose` input) | Meaning                                          |
+| ------ | ----------------- | -------------------------------------- | ------------------------------------------------ |
+| 0      | `m00 m01 m02 m03` | 0,4,8,12                               | basis vector X (scaled by `s.x` in a TRS matrix) |
+| 1      | `m04 m05 m06 m07` | 1,5,9,13                               | basis vector Y (scaled by `s.y`)                 |
+| 2      | `m08 m09 m10 m11` | 2,6,10,14                              | basis vector Z (scaled by `s.z`)                 |
+| 3      | `m12 m13 m14 m15` | 3,7,11,15                              | translation `x, y, z` and `m15 = 1`              |
 
-| Type | Layout source | Fields |
-|---|---|---|
+| Type   | Layout source                                                                | Fields                                                |
+| ------ | ---------------------------------------------------------------------------- | ----------------------------------------------------- |
 | `Mat3` | `src/cocos/core/math/mat3.ts:681` (`\|m00 m03 m06\|`), `m00` declared `:690` | column-major, 9 fields, column `NN / 3`, row `NN % 3` |
-| `Mat4` | `src/cocos/core/math/mat4.ts:1561-1566` | column-major, 16 fields |
+| `Mat4` | `src/cocos/core/math/mat4.ts:1561-1566`                                      | column-major, 16 fields                               |
 
 `MathBase` is the exported float-array-capable base (`src/cocos/core/math/math-base.ts:31`) with `createFloatArray(size)` `:32`, the `array` getter `:40` and `_array` `:44` over `MATH_FLOAT_ARRAY` `:29`, which is `Float64Array` in this Web build; `Mat3`/`Mat4`/`Vec3` themselves extend `ValueType` and store named fields (`src/cocos/core/math/mat4.ts:62`, `src/cocos/core/value-types/value-type.ts:34`).
 
 ## Composition order
 
-| API | Line | What it computes | Order fact |
-|---|---|---|---|
-| `Mat4.fromSRT(out, q, v, s)` | `mat4.ts:964` | rotation columns scaled per axis (`:983-994`), `v` into `m12-m14`, `m15 = 1` (`:995-998`) | documented "Compose a matrix from scale, rotation and translation, applied in order" (`:956`), i.e. `out = T * R * S` |
-| `Mat4.fromRTS(out, q, v, s)` | `mat4.ts:951` | `return Mat4.fromSRT(out, q, v, s);` (`:952`) | DEPRECATED alias since 3.8.0 (`:949`) - the letters are not an order |
-| `Mat4.fromSRTOrigin(out, q, v, s, o)` | `mat4.ts:1026` | same with an origin offset `o` | `fromRTSOrigin` `:1012` is the deprecated alias |
-| `Mat4.toSRT(m, q, v, s)` | `mat4.ts:878` | extracts translation, scale, rotation into the passed objects, returns `void` | `q`/`v`/`s` may be `null` to skip a part |
-| `Mat4.toRTS(m, q, v, s)` | `mat4.ts:865` | `Mat4.toSRT(m, q, v, s);` (`:866`) | DEPRECATED alias (`:863`) |
-| `Mat4.multiply(out, a, b)` | `mat4.ts:316` | `out = a * b` (`:308`) | child world = parent world * child local (`docs/manual/matrix-transformations.md:7`) |
-| `Mat4.transform(out, a, v)` | `mat4.ts:357` | rewrites only `m12-m15` (`:359-378`) | "the translate is applied before the matrix, i.e. (out = a * T)" (`:350`) |
-| `Mat4.translate(out, a, v)` | `mat4.ts:391` | `out.m12 += v.x` (`:393-395`) | "the translate is applied after the transformation, i.e. (out = T * a)" (`:383`), DEPRECATED since 3.8.0 in favour of `transform` (`:389`) |
-| `Mat4.scale(out, a, v)` | `mat4.ts:413` | `out = a * S` (`:410`) | scale applied BEFORE `a` |
-| `Mat4.rotate(out, a, rad, axis)` | `mat4.ts:441` | `out = a * R` (`:436`) | RADIANS, arbitrary axis, return type `Out \| null` |
-| `Mat4.rotateX/Y/Z(out, a, rad)` | `mat4.ts:501`, `:542`, `:585` | axis-specific pre-multiply | RADIANS |
-| `Mat4.fromRotation(out, rad, axis)` | `mat4.ts:652` | pure rotation about an arbitrary axis | RADIANS, return type `Out \| null` |
-| `Mat4.fromXRotation/Y/Z(out, rad)` | `mat4.ts:693`, `:710`, `:727` | principal-axis rotation matrices | RADIANS |
+| API                                   | Line                          | What it computes                                                                          | Order fact                                                                                                                                 |
+| ------------------------------------- | ----------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Mat4.fromSRT(out, q, v, s)`          | `mat4.ts:964`                 | rotation columns scaled per axis (`:983-994`), `v` into `m12-m14`, `m15 = 1` (`:995-998`) | documented "Compose a matrix from scale, rotation and translation, applied in order" (`:956`), i.e. `out = T * R * S`                      |
+| `Mat4.fromRTS(out, q, v, s)`          | `mat4.ts:951`                 | `return Mat4.fromSRT(out, q, v, s);` (`:952`)                                             | DEPRECATED alias since 3.8.0 (`:949`) - the letters are not an order                                                                       |
+| `Mat4.fromSRTOrigin(out, q, v, s, o)` | `mat4.ts:1026`                | same with an origin offset `o`                                                            | `fromRTSOrigin` `:1012` is the deprecated alias                                                                                            |
+| `Mat4.toSRT(m, q, v, s)`              | `mat4.ts:878`                 | extracts translation, scale, rotation into the passed objects, returns `void`             | `q`/`v`/`s` may be `null` to skip a part                                                                                                   |
+| `Mat4.toRTS(m, q, v, s)`              | `mat4.ts:865`                 | `Mat4.toSRT(m, q, v, s);` (`:866`)                                                        | DEPRECATED alias (`:863`)                                                                                                                  |
+| `Mat4.multiply(out, a, b)`            | `mat4.ts:316`                 | `out = a * b` (`:308`)                                                                    | child world = parent world * child local (`docs/manual/matrix-transformations.md:7`)                                                       |
+| `Mat4.transform(out, a, v)`           | `mat4.ts:357`                 | rewrites only `m12-m15` (`:359-378`)                                                      | "the translate is applied before the matrix, i.e. (out = a * T)" (`:350`)                                                                  |
+| `Mat4.translate(out, a, v)`           | `mat4.ts:391`                 | `out.m12 += v.x` (`:393-395`)                                                             | "the translate is applied after the transformation, i.e. (out = T * a)" (`:383`), DEPRECATED since 3.8.0 in favour of `transform` (`:389`) |
+| `Mat4.scale(out, a, v)`               | `mat4.ts:413`                 | `out = a * S` (`:410`)                                                                    | scale applied BEFORE `a`                                                                                                                   |
+| `Mat4.rotate(out, a, rad, axis)`      | `mat4.ts:441`                 | `out = a * R` (`:436`)                                                                    | RADIANS, arbitrary axis, return type `Out \| null`                                                                                         |
+| `Mat4.rotateX/Y/Z(out, a, rad)`       | `mat4.ts:501`, `:542`, `:585` | axis-specific pre-multiply                                                                | RADIANS                                                                                                                                    |
+| `Mat4.fromRotation(out, rad, axis)`   | `mat4.ts:652`                 | pure rotation about an arbitrary axis                                                     | RADIANS, return type `Out \| null`                                                                                                         |
+| `Mat4.fromXRotation/Y/Z(out, rad)`    | `mat4.ts:693`, `:710`, `:727` | principal-axis rotation matrices                                                          | RADIANS                                                                                                                                    |
 
 ## Reading parts back out
 
-| API | Line | Fact |
-|---|---|---|
-| `Mat4.getTranslation(out, mat)` | `mat4.ts:787` | copies `m12/m13/m14` into any `IVec3Like` |
-| `Mat4.getScaling(out, mat)` | `mat4.ts:799` | `out.x/y/z` are the three column lengths (`:809-811`), then the sign is folded in: `// account for refections` (`:812`) and `if (Mat3.determinant(m3_1) < 0) { out.x *= -1; }` (`:813`), so a mirrored basis reads back as a NEGATIVE `out.x` (and only `x`), the same convention as `toSRT` (`:914-927`); `y`/`z` stay positive lengths |
-| `Mat4.getRotation(out: Quat, mat)` | `mat4.ts:821` | extracts the rotation without removing scale - normalise afterwards |
-| `Mat4.toSRT(m, q, v, s)` | `mat4.ts:878` | translation `:881`; scale `:885-887`; column normalisation `:902-912`; `Quat.fromMat3` `:927` |
-| `Mat4.toEuler(m, v)` | `mat4.ts:936` | RETURNS `boolean` (`:936` signature; `:943` `return Mat3.toEuler(m3_1, v)`) - RADIANS, YXZ order. It inherits `Mat3.toEuler`'s `false` (`mat3.ts:649`, `:668`, `:675`), and the manual recorded it returning `false` with `v` left as a ZERO vector for a clearly non-zero world rotation (`docs/manual/matrix-transformations.md:21`, `:95`), so it is not the read-back path: use `Mat4.getRotation` + `Quat.toEuler`, or `node.eulerAngles` (`docs/manual/matrix-transformations.md:96`, `:104`) |
+| API                                | Line          | Fact                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ---------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Mat4.getTranslation(out, mat)`    | `mat4.ts:787` | copies `m12/m13/m14` into any `IVec3Like`                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `Mat4.getScaling(out, mat)`        | `mat4.ts:799` | `out.x/y/z` are the three column lengths (`:809-811`), then the sign is folded in: `// account for refections` (`:812`) and `if (Mat3.determinant(m3_1) < 0) { out.x *= -1; }` (`:813`), so a mirrored basis reads back as a NEGATIVE `out.x` (and only `x`), the same convention as `toSRT` (`:914-927`); `y`/`z` stay positive lengths                                                                                                                                                            |
+| `Mat4.getRotation(out: Quat, mat)` | `mat4.ts:821` | extracts the rotation without removing scale - normalise afterwards                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `Mat4.toSRT(m, q, v, s)`           | `mat4.ts:878` | translation `:881`; scale `:885-887`; column normalisation `:902-912`; `Quat.fromMat3` `:927`                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `Mat4.toEuler(m, v)`               | `mat4.ts:936` | RETURNS `boolean` (`:936` signature; `:943` `return Mat3.toEuler(m3_1, v)`) - RADIANS, YXZ order. It inherits `Mat3.toEuler`'s `false` (`mat3.ts:649`, `:668`, `:675`), and the manual recorded it returning `false` with `v` left as a ZERO vector for a clearly non-zero world rotation (`docs/manual/matrix-transformations.md:21`, `:95`), so it is not the read-back path: use `Mat4.getRotation` + `Quat.toEuler`, or `node.eulerAngles` (`docs/manual/matrix-transformations.md:96`, `:104`) |
 
 There is no `Mat4.decompose` member in this runtime; `toSRT` is the decomposition entry point.
 
 ### Degenerate and mirrored input
 
-| Case | Line | Behavior |
-|---|---|---|
-| any scale component is exactly 0 | `mat4.ts:894-899` | `Quat.identity(q)` is written and the function returns - scale stays 0, rotation is lost, no throw |
-| negative determinant (mirrored basis) | `mat4.ts:914-927` | `Mat3.determinant` of the normalised 3x3 (`:914`); on `det < 0` the extracted `s.x` is negated (`:916-917`) and column 0 of the working `Mat3` is negated (`:922-925`) before `Quat.fromMat3` (`:927`) |
-| singular matrix in `Mat4.invert` | `mat4.ts:254-255` | `det === 0` returns `Mat4.zero(out)` - every field, including `m15`, is overwritten with 0 and the documented contract states so (`:229`); no throw, no flag, and the previous contents are lost |
-| singular `Mat3.invert` | `mat3.ts:156-158` | same all-zero answer for the 3x3 |
-| `Mat4.inverseTranspose(out, a)` | `mat4.ts:1322` | returns `Out \| null` - `null` for a singular input |
-| `Mat3.inverseTransposeMat4(out, a)` | `mat3.ts:470` | same `Out \| null` contract for the 3x3 normal matrix |
-| `Vec3.normalize` of a zero vector | `vec3.ts:329-345` | writes `(0,0,0)` |
-| `Quat.normalize` / `Quat.invert` of a zero quaternion | `quat.ts:429-448`, `:384-398` | leaves/writes `(0,0,0,0)`, NOT identity; `invert` divides by the squared length with `dot ? 1/dot : 0` (`:385-386`) |
-| `Vec3.transformMat4` bottom row evaluates to 0 | `vec3.ts:477-478` | `rhw = rhw ? 1 / rhw : 1` - the perspective divide is silently skipped; `Vec3` inputs are always completed with a fourth value of 1 (`:470`) |
+| Case                                                  | Line                          | Behavior                                                                                                                                                                                               |
+| ----------------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| any scale component is exactly 0                      | `mat4.ts:894-899`             | `Quat.identity(q)` is written and the function returns - scale stays 0, rotation is lost, no throw                                                                                                     |
+| negative determinant (mirrored basis)                 | `mat4.ts:914-927`             | `Mat3.determinant` of the normalised 3x3 (`:914`); on `det < 0` the extracted `s.x` is negated (`:916-917`) and column 0 of the working `Mat3` is negated (`:922-925`) before `Quat.fromMat3` (`:927`) |
+| singular matrix in `Mat4.invert`                      | `mat4.ts:254-255`             | `det === 0` returns `Mat4.zero(out)` - every field, including `m15`, is overwritten with 0 and the documented contract states so (`:229`); no throw, no flag, and the previous contents are lost       |
+| singular `Mat3.invert`                                | `mat3.ts:156-158`             | same all-zero answer for the 3x3                                                                                                                                                                       |
+| `Mat4.inverseTranspose(out, a)`                       | `mat4.ts:1322`                | returns `Out \| null` - `null` for a singular input                                                                                                                                                    |
+| `Mat3.inverseTransposeMat4(out, a)`                   | `mat3.ts:470`                 | same `Out \| null` contract for the 3x3 normal matrix                                                                                                                                                  |
+| `Vec3.normalize` of a zero vector                     | `vec3.ts:329-345`             | writes `(0,0,0)`                                                                                                                                                                                       |
+| `Quat.normalize` / `Quat.invert` of a zero quaternion | `quat.ts:429-448`, `:384-398` | leaves/writes `(0,0,0,0)`, NOT identity; `invert` divides by the squared length with `dot ? 1/dot : 0` (`:385-386`)                                                                                    |
+| `Vec3.transformMat4` bottom row evaluates to 0        | `vec3.ts:477-478`             | `rhw = rhw ? 1 / rhw : 1` - the perspective divide is silently skipped; `Vec3` inputs are always completed with a fourth value of 1 (`:470`)                                                           |
 
 ## Quaternion angles
 
-| API | Line | Angle unit | Order / range fact |
-|---|---|---|---|
-| `Quat.fromEuler(out, x, y, z)` | `quat.ts:557` | DEGREES (`x *= halfToRad` `:558-560`, `halfToRad = 0.5 * PI / 180` `:934`) | documented order YZX: first around Y, then Z, then X (`:554-555`) |
-| `Quat.fromAngleZ(out, z)` | `quat.ts:584` | DEGREES (`z *= halfToRad` `:585`) | planar shortcut for `(0, 0, z)` |
-| `Quat.toEuler(out, q, outerZ?)` | `quat.ts:642` | DEGREES (`toDegree(...)` at `:650`, `:660-662`) | `out.x` bank, `out.y` heading, `out.z` attitude (`:669`); documented x/y in `[-180, 180]`, z in `[-90, 90]` (`:637`); `outerZ` `:663-667` moves each into the outer complement (`:640`) |
-| `Quat.toEuler` gimbal branch | `quat.ts:648-655` | - | `test = x*y + z*w` (`:647`) beyond `+/-0.499999` forces `bank = 0` and attitude to `+/-90` |
-| `Quat.toEulerInYXZOrder(out, q)` | `quat.ts:678` | DEGREES | returns `void`; routes through `Mat3.fromQuat` + `Mat3.toEuler` (`:679-680`, `mat3.ts:432`, `:649`) - YXZ, differs from `toEuler` |
-| `Mat3.toEuler(matrix, v)` | `mat3.ts:649` | RADIANS (`Math.asin(-a21)` `:659`, `atan2` `:660-661`, `HALF_PI` `:665`/`:672`) | YXZ; ranges documented y,z in `[-PI, PI]`, x in `[-PI/2, PI/2]` (`:645-647`); returns `false` when the decomposition is not unique (`:668`, `:675`) |
-| `Quat.getAxisAngle(outAxis, q)` | `quat.ts:137` | returns RADIANS (`acos(q.w) * 2.0` `:138`) | axis written into `outAxis` |
-| `Quat.fromAxisAngle(out, axis, rad)` | `quat.ts:475` | RADIANS | - |
-| `Quat.rotationTo(out, a, b)` | `quat.ts:104` | - | shortest arc; assumes both inputs normalized; `dot < -0.999999` builds a 180-degree turn about an axis crossed with `Vec3.UNIT_X`, falling back to `UNIT_Y` when that is degenerate (`:106-113`); `dot > 0.999999` writes identity (`:114-120`); otherwise `cross` plus `w = 1 + dot`, then normalize (`:121-128`) |
-| `Quat.multiply(out, a, b)` | `quat.ts:157` | - | "that is a * b" (`quat.ts:154`) - `b` is applied first to a rotated vector |
-| `Quat.fromAxes(out, xAxis, yAxis, zAxis)` | `quat.ts:450` | - | assumes normalized, mutually perpendicular axes |
-| `Quat.fromViewUp(out, view, up?)` | `quat.ts:466` | - | default `up` is the module `Vec3.UP` behaviour |
-| `Quat.toAxisX/toAxisY/toAxisZ(out, q)` | `quat.ts:596`, `:610`, `:625` | - | write the rotated basis vectors |
-| `Quat.lerp` / `slerp` / `sqlerp` | `quat.ts:306`, `:318`, `:373` | - | `lerp` does not renormalize; `slerp` handles the near-identity short path |
-| `Quat.fromMat3(out, m)` | `quat.ts:489` | - | expects a normalized 3x3 (`mat4.ts:927` comment "already normalized") |
+| API                                       | Line                          | Angle unit                                                                      | Order / range fact                                                                                                                                                                                                                                                                                                 |
+| ----------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Quat.fromEuler(out, x, y, z)`            | `quat.ts:557`                 | DEGREES (`x *= halfToRad` `:558-560`, `halfToRad = 0.5 * PI / 180` `:934`)      | documented order YZX: first around Y, then Z, then X (`:554-555`)                                                                                                                                                                                                                                                  |
+| `Quat.fromAngleZ(out, z)`                 | `quat.ts:584`                 | DEGREES (`z *= halfToRad` `:585`)                                               | planar shortcut for `(0, 0, z)`                                                                                                                                                                                                                                                                                    |
+| `Quat.toEuler(out, q, outerZ?)`           | `quat.ts:642`                 | DEGREES (`toDegree(...)` at `:650`, `:660-662`)                                 | `out.x` bank, `out.y` heading, `out.z` attitude (`:669`); documented x/y in `[-180, 180]`, z in `[-90, 90]` (`:637`); `outerZ` `:663-667` moves each into the outer complement (`:640`)                                                                                                                            |
+| `Quat.toEuler` gimbal branch              | `quat.ts:648-655`             | -                                                                               | `test = x*y + z*w` (`:647`) beyond `+/-0.499999` forces `bank = 0` and attitude to `+/-90`                                                                                                                                                                                                                         |
+| `Quat.toEulerInYXZOrder(out, q)`          | `quat.ts:678`                 | DEGREES                                                                         | returns `void`; routes through `Mat3.fromQuat` + `Mat3.toEuler` (`:679-680`, `mat3.ts:432`, `:649`) - YXZ, differs from `toEuler`                                                                                                                                                                                  |
+| `Mat3.toEuler(matrix, v)`                 | `mat3.ts:649`                 | RADIANS (`Math.asin(-a21)` `:659`, `atan2` `:660-661`, `HALF_PI` `:665`/`:672`) | YXZ; ranges documented y,z in `[-PI, PI]`, x in `[-PI/2, PI/2]` (`:645-647`); returns `false` when the decomposition is not unique (`:668`, `:675`)                                                                                                                                                                |
+| `Quat.getAxisAngle(outAxis, q)`           | `quat.ts:137`                 | returns RADIANS (`acos(q.w) * 2.0` `:138`)                                      | axis written into `outAxis`                                                                                                                                                                                                                                                                                        |
+| `Quat.fromAxisAngle(out, axis, rad)`      | `quat.ts:475`                 | RADIANS                                                                         | -                                                                                                                                                                                                                                                                                                                  |
+| `Quat.rotationTo(out, a, b)`              | `quat.ts:104`                 | -                                                                               | shortest arc; assumes both inputs normalized; `dot < -0.999999` builds a 180-degree turn about an axis crossed with `Vec3.UNIT_X`, falling back to `UNIT_Y` when that is degenerate (`:106-113`); `dot > 0.999999` writes identity (`:114-120`); otherwise `cross` plus `w = 1 + dot`, then normalize (`:121-128`) |
+| `Quat.multiply(out, a, b)`                | `quat.ts:157`                 | -                                                                               | "that is a * b" (`quat.ts:154`) - `b` is applied first to a rotated vector                                                                                                                                                                                                                                         |
+| `Quat.fromAxes(out, xAxis, yAxis, zAxis)` | `quat.ts:450`                 | -                                                                               | assumes normalized, mutually perpendicular axes                                                                                                                                                                                                                                                                    |
+| `Quat.fromViewUp(out, view, up?)`         | `quat.ts:466`                 | -                                                                               | default `up` is the module `Vec3.UP` behaviour                                                                                                                                                                                                                                                                     |
+| `Quat.toAxisX/toAxisY/toAxisZ(out, q)`    | `quat.ts:596`, `:610`, `:625` | -                                                                               | write the rotated basis vectors                                                                                                                                                                                                                                                                                    |
+| `Quat.lerp` / `slerp` / `sqlerp`          | `quat.ts:306`, `:318`, `:373` | -                                                                               | `lerp` does not renormalize; `slerp` handles the near-identity short path                                                                                                                                                                                                                                          |
+| `Quat.fromMat3(out, m)`                   | `quat.ts:489`                 | -                                                                               | expects a normalized 3x3 (`mat4.ts:927` comment "already normalized")                                                                                                                                                                                                                                              |
 
 ### Unit mistake: degrees fed to radians APIs
 
@@ -114,34 +114,34 @@ The split is by entry point, not by type: the euler family multiplies degrees by
 
 ## Vector-by-matrix helpers
 
-| API | Line | Fact |
-|---|---|---|
-| `Vec3.transformMat4(out, a, m)` | `vec3.ts:473` | point transform, includes translation and the perspective divide (`:477-480`) |
-| `Vec3.transformMat4Normal(out, a, m)` | `vec3.ts:489` | direction transform: no translation term (`:493-496`) |
-| `Vec3.transformMat3(out, a, m)` | `vec3.ts:505` | 3x3 basis transform, no translation, no divide |
-| `Vec3.transformAffine(out, v, m)` | `vec3.ts:519` | argument order is `out, v, m` - the vector precedes the matrix, unlike the other members |
-| `Vec3.transformQuat(out, a, q)` | `vec3.ts:533` | rotate a vector by a quaternion |
-| `Vec3.transformRTS(out, a, r, t, s)` | `vec3.ts:553` | applies scale, rotation, translation without building a `Mat4` |
-| `Vec3.transformInverseRTS(out, a, r, t, s)` | `vec3.ts:571` | the inverse of the above |
-| `Vec3.rotateX/Y/Z(out, v, o, a)` | `vec3.ts:592`, `:620`, `:648` | rotate a point `v` about an origin `o` by angle `a`, RADIANS |
-| `Vec2.transformMat3` / `transformMat4` | `vec2.ts:365`, `:377` | `Vec2` has both matrix paths plus `Vec2.str(a)` (`:389`) |
-| `Mat3.transform(out, a, v)` | `mat3.ts:247` | return type is `void`, not `Out` - do not chain it |
-| `Mat3.multiplyMat4(out, a, b)` | `mat3.ts:217` | 3x3 by 4x4 top-left path, used for normal matrices |
+| API                                         | Line                          | Fact                                                                                     |
+| ------------------------------------------- | ----------------------------- | ---------------------------------------------------------------------------------------- |
+| `Vec3.transformMat4(out, a, m)`             | `vec3.ts:473`                 | point transform, includes translation and the perspective divide (`:477-480`)            |
+| `Vec3.transformMat4Normal(out, a, m)`       | `vec3.ts:489`                 | direction transform: no translation term (`:493-496`)                                    |
+| `Vec3.transformMat3(out, a, m)`             | `vec3.ts:505`                 | 3x3 basis transform, no translation, no divide                                           |
+| `Vec3.transformAffine(out, v, m)`           | `vec3.ts:519`                 | argument order is `out, v, m` - the vector precedes the matrix, unlike the other members |
+| `Vec3.transformQuat(out, a, q)`             | `vec3.ts:533`                 | rotate a vector by a quaternion                                                          |
+| `Vec3.transformRTS(out, a, r, t, s)`        | `vec3.ts:553`                 | applies scale, rotation, translation without building a `Mat4`                           |
+| `Vec3.transformInverseRTS(out, a, r, t, s)` | `vec3.ts:571`                 | the inverse of the above                                                                 |
+| `Vec3.rotateX/Y/Z(out, v, o, a)`            | `vec3.ts:592`, `:620`, `:648` | rotate a point `v` about an origin `o` by angle `a`, RADIANS                             |
+| `Vec2.transformMat3` / `transformMat4`      | `vec2.ts:365`, `:377`         | `Vec2` has both matrix paths plus `Vec2.str(a)` (`:389`)                                 |
+| `Mat3.transform(out, a, v)`                 | `mat3.ts:247`                 | return type is `void`, not `Out` - do not chain it                                       |
+| `Mat3.multiplyMat4(out, a, b)`              | `mat3.ts:217`                 | 3x3 by 4x4 top-left path, used for normal matrices                                       |
 
 ## How the scene graph consumes these
 
-| Node API | Line | Math it calls |
-|---|---|---|
-| `set matrix(val: Readonly<Mat4>)` | `node.ts:1896` | `Mat4.toSRT(val, this._lrot, this._lpos, this._lscale)` `:1897`, then `_eulerDirty = true` `:1899` - a written matrix is immediately re-expressed as local TRS |
-| `get worldMatrix(): Readonly<Mat4>` | `node.ts:1910` | `this.updateWorldTransform()` `:1911` then returns the internal `_mat` (mutable at runtime; copy it out with `getWorldMatrix`) |
-| `updateWorldTransform()` | `node.ts:2312` | walks ancestors, then per dirty child composes `Mat4.fromSRT(m4_1, child._lrot, child._lpos, child._lscale)` `:2348`; the UI-skew branch re-extracts with `Mat4.toSRT` `:2365` and recomposes `Mat4.fromSRT(childMat, child._rot, child._pos, child._scale)` `:2387` |
-| `getWorldMatrix(out?)` | `node.ts:2848` | `updateWorldTransform()` then `Mat4.copy(target, this._mat)` - allocates when `out` is omitted |
-| `getWorldRS(out?)` | `node.ts:2860` | copies `_mat` and zeroes `m12/m13/m14` `:2864` |
-| `setRotationFromEuler(val)` / `(x, y, zOpt?)` | `node.ts:2506` | `Vec3.copy(this._euler, ...)` and `Quat.fromEuler(this._lrot, ...)` `:2509-2514` - DEGREES, YZX |
-| `set eulerAngles` | `node.ts:1820` | forwards `val.x, val.y, val.z` to `setRotationFromEuler` |
-| `get rotation(): Readonly<Quat>` | `node.ts:1806` | returns the internal `_lrot` reference (`Readonly` is a type marker only) |
-| `setPosition` | `node.ts:2423` | writes the private `_pos`; `getWorldPosition(out?)` `:2666` and `getWorldScale(out?)` `:2834` refresh first |
-| `get worldPosition(): Readonly<Vec3>` | `node.ts:1741` | refreshes then returns the internal vector |
+| Node API                                      | Line           | Math it calls                                                                                                                                                                                                                                                        |
+| --------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `set matrix(val: Readonly<Mat4>)`             | `node.ts:1896` | `Mat4.toSRT(val, this._lrot, this._lpos, this._lscale)` `:1897`, then `_eulerDirty = true` `:1899` - a written matrix is immediately re-expressed as local TRS                                                                                                       |
+| `get worldMatrix(): Readonly<Mat4>`           | `node.ts:1910` | `this.updateWorldTransform()` `:1911` then returns the internal `_mat` (mutable at runtime; copy it out with `getWorldMatrix`)                                                                                                                                       |
+| `updateWorldTransform()`                      | `node.ts:2312` | walks ancestors, then per dirty child composes `Mat4.fromSRT(m4_1, child._lrot, child._lpos, child._lscale)` `:2348`; the UI-skew branch re-extracts with `Mat4.toSRT` `:2365` and recomposes `Mat4.fromSRT(childMat, child._rot, child._pos, child._scale)` `:2387` |
+| `getWorldMatrix(out?)`                        | `node.ts:2848` | `updateWorldTransform()` then `Mat4.copy(target, this._mat)` - allocates when `out` is omitted                                                                                                                                                                       |
+| `getWorldRS(out?)`                            | `node.ts:2860` | copies `_mat` and zeroes `m12/m13/m14` `:2864`                                                                                                                                                                                                                       |
+| `setRotationFromEuler(val)` / `(x, y, zOpt?)` | `node.ts:2506` | `Vec3.copy(this._euler, ...)` and `Quat.fromEuler(this._lrot, ...)` `:2509-2514` - DEGREES, YZX                                                                                                                                                                      |
+| `set eulerAngles`                             | `node.ts:1820` | forwards `val.x, val.y, val.z` to `setRotationFromEuler`                                                                                                                                                                                                             |
+| `get rotation(): Readonly<Quat>`              | `node.ts:1806` | returns the internal `_lrot` reference (`Readonly` is a type marker only)                                                                                                                                                                                            |
+| `setPosition`                                 | `node.ts:2423` | writes the private `_pos`; `getWorldPosition(out?)` `:2666` and `getWorldScale(out?)` `:2834` refresh first                                                                                                                                                          |
+| `get worldPosition(): Readonly<Vec3>`         | `node.ts:1741` | refreshes then returns the internal vector                                                                                                                                                                                                                           |
 
 Consequences that follow from the tables above:
 

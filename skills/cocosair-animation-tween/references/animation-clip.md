@@ -4,20 +4,20 @@ Derived from `src/cocos/animation/animation-component.ts`, `src/cocos/animation/
 
 `class Animation extends Eventify(Component)` (`src/cocos/animation/animation-component.ts:52`), decorated `@ccclass('cc.Animation')` (`:47`) and `@executionOrder(99)` (`:49`). It is re-exported under the alias `AnimationComponent` (`:513`). The 99 matters for ordering: the glTF `GLTFAnimationPolicy` sits at 100, one past it, so its `onLoad` runs after the native rebuild (see `skills/cocosair-gltf/references/loader-api.md`).
 
-| Member | Signature and behavior | Line |
-| --- | --- | --- |
-| `clips` | getter/setter; the setter clears cross-fade, drops states of removed automatic clips, calls `createState` for new ones, and nulls `_defaultClip` if it is no longer present | `src/cocos/animation/animation-component.ts:63`, `:67`, `:84-91` |
-| `defaultClip` | getter/setter; the setter auto-pushes the clip into `_clips` and creates its state if absent | `:105`, `:109`, `:114-117` |
-| `playOnLoad` | public field, default `false` | `:133` |
-| `play(name?)` | returns `void`; early-returns with no name and no default clip, else `crossFade(name, 0)` | `:209`, `:212-215`, `:218` |
-| `crossFade(name, duration=0.3)` | returns `void`; delegates to the internal cross-fade controller | `:229-235` |
-| `pause()` / `resume()` / `stop()` | all return `void`, all delegate to the cross-fade controller | `:243`, `:253`, `:263` |
-| `getState(name)` | declared `AnimationState` but the body ends `return state \|\| null`, so a missing name yields `null` and the declared type omits `\| null` | `:275-281` |
-| `createState(clip, name?)` | calls `removeState(name)` first, then builds and returns the state | `:294-299` |
-| `removeState(name)` | stops the state and deletes it from the name map | `:308-315` |
-| `addClip(clip, name?)` | pushes the clip if absent, returns `createState(clip, name)` | `:326-331` |
-| `removeClip(clip, force?)` | refuses to remove a playing/default clip unless `force`; with `force` on the default clip it nulls `_defaultClip` | `:345-371`, `:356-357` |
-| `on` / `once` / `off` | event wiring; each special-cases `AnimationStateEventType.LASTFRAME` to sync last-frame event delivery | `:401-407`, `:409-415`, `:431-436` |
+| Member                            | Signature and behavior                                                                                                                                                      | Line                                                             |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `clips`                           | getter/setter; the setter clears cross-fade, drops states of removed automatic clips, calls `createState` for new ones, and nulls `_defaultClip` if it is no longer present | `src/cocos/animation/animation-component.ts:63`, `:67`, `:84-91` |
+| `defaultClip`                     | getter/setter; the setter auto-pushes the clip into `_clips` and creates its state if absent                                                                                | `:105`, `:109`, `:114-117`                                       |
+| `playOnLoad`                      | public field, default `false`                                                                                                                                               | `:133`                                                           |
+| `play(name?)`                     | returns `void`; early-returns with no name and no default clip, else `crossFade(name, 0)`                                                                                   | `:209`, `:212-215`, `:218`                                       |
+| `crossFade(name, duration=0.3)`   | returns `void`; delegates to the internal cross-fade controller                                                                                                             | `:229-235`                                                       |
+| `pause()` / `resume()` / `stop()` | all return `void`, all delegate to the cross-fade controller                                                                                                                | `:243`, `:253`, `:263`                                           |
+| `getState(name)`                  | declared `AnimationState` but the body ends `return state \|\| null`, so a missing name yields `null` and the declared type omits `\| null`                                 | `:275-281`                                                       |
+| `createState(clip, name?)`        | calls `removeState(name)` first, then builds and returns the state                                                                                                          | `:294-299`                                                       |
+| `removeState(name)`               | stops the state and deletes it from the name map                                                                                                                            | `:308-315`                                                       |
+| `addClip(clip, name?)`            | pushes the clip if absent, returns `createState(clip, name)`                                                                                                                | `:326-331`                                                       |
+| `removeClip(clip, force?)`        | refuses to remove a playing/default clip unless `force`; with `force` on the default clip it nulls `_defaultClip`                                                           | `:345-371`, `:356-357`                                           |
+| `on` / `once` / `off`             | event wiring; each special-cases `AnimationStateEventType.LASTFRAME` to sync last-frame event delivery                                                                      | `:401-407`, `:409-415`, `:431-436`                               |
 
 Lifecycle: `onLoad()` reassigns `this.clips = this._clips` (`:170`); `start()` cross-fades the default clip only when `playOnLoad && !this._hasBeenPlayed && _defaultClip` (`:179-183`); `onEnable()` resumes the cross-fade (`:185`), `onDisable()` pauses it (`:189`), `onDestroy()` stops it (`:193`). The practical consequence: calling `play()` yourself before `app.run(scene)` is undone by the activation flow, so play from a component `start()` (`docs/manual/animation-system.md:78`).
 
@@ -35,17 +35,17 @@ The enum is declared in `src/cocos/animation/types.ts:30-67` and registered with
 
 `@ccclass('cc.AnimationClip') class AnimationClip extends Asset` (`src/cocos/animation/animation-clip.ts:102-103`). `constructor(name?)` calls `super(name)` (`:158-160`); `name` itself is inherited from `Asset`. Defaults: `sample = 60` (`:134`), `speed = 1` (`:141`), `wrapMode = AnimationWrapMode.Normal` (`:148`). `duration` is a getter/setter pair (`:166`, `:170`).
 
-| Member | Returns / does | Line |
-| --- | --- | --- |
-| `tracksCount` | getter, `this._tracks.length` | `src/cocos/animation/animation-clip.ts:180-182` |
-| `tracks` | getter, an `Iterable<Track>` | `:190-192` |
-| `getTrack(index)` | the `Track` at that index | `:298` |
-| `addTrack(track)` | appends and returns the new index | `:310` |
-| `removeTrack(index)` | removes the track at that index | `:323` |
-| `clearTracks()` | empties the track list | `:333` |
-| `events` / `hasEvents()` | event list getter/setter; `hasEvents()` is `this.events.length !== 0` | `:207`, `:211`, `:623-625` |
-| `range()` | min/max span across tracks | `:277-287` |
-| `createWithSpriteFrames(frames, sample)` | static sprite-frame clip builder | `:115-126` |
+| Member                                   | Returns / does                                                        | Line                                            |
+| ---------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
+| `tracksCount`                            | getter, `this._tracks.length`                                         | `src/cocos/animation/animation-clip.ts:180-182` |
+| `tracks`                                 | getter, an `Iterable<Track>`                                          | `:190-192`                                      |
+| `getTrack(index)`                        | the `Track` at that index                                             | `:298`                                          |
+| `addTrack(track)`                        | appends and returns the new index                                     | `:310`                                          |
+| `removeTrack(index)`                     | removes the track at that index                                       | `:323`                                          |
+| `clearTracks()`                          | empties the track list                                                | `:333`                                          |
+| `events` / `hasEvents()`                 | event list getter/setter; `hasEvents()` is `this.events.length !== 0` | `:207`, `:211`, `:623-625`                      |
+| `range()`                                | min/max span across tracks                                            | `:277-287`                                      |
+| `createWithSpriteFrames(frames, sample)` | static sprite-frame clip builder                                      | `:115-126`                                      |
 
 The minimal code-first skeleton (byte-identical to the manual) is `new AnimationClip()`, set `name`/`duration`/`wrapMode`, build one `animation.VectorTrack`, assign its `path` from `new animation.TrackPath().toProperty('position')`, fill `track.channels()[n].curve.assignSorted([[t, v], ...])`, then `clip.addTrack(track)` (`docs/manual/animation-system.md:40-79`).
 

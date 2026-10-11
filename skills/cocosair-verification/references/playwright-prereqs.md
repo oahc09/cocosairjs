@@ -26,15 +26,15 @@ A matching GPU `readPixels` result is not proof that the frame reached the scree
 
 Capability absence is recorded as `UNSUPPORTED` only after capability discovery has run and reported the gap. In the HTML/Graphics probe, the fixture's own status value distinguishes an absent capability from an executed pass (`tools/verify/graphics-and-dom.cjs:104` proceeds to interaction only when the discovered status is `PASS`; a non-PASS status is reported, not asserted as success). Anything that throws before or during the probe is caught and recorded as `status: 'FAIL'` with the failing stage (`tools/verify/graphics-and-dom.cjs:127`).
 
-| observation | correct label | why |
-| --- | --- | --- |
-| discovery reports the capability is absent | UNSUPPORTED | the probe ran and honestly reported a gap |
-| browser launch throws | FAIL | no probe executed |
-| shader compile or pipeline error | FAIL | execution reached a defect, not an absent capability |
-| probe times out or yields a black frame | FAIL | execution happened and produced bad output |
+| observation                                | correct label | why                                                  |
+| ------------------------------------------ | ------------- | ---------------------------------------------------- |
+| discovery reports the capability is absent | UNSUPPORTED   | the probe ran and honestly reported a gap            |
+| browser launch throws                      | FAIL          | no probe executed                                    |
+| shader compile or pipeline error           | FAIL          | execution reached a defect, not an absent capability |
+| probe times out or yields a black frame    | FAIL          | execution happened and produced bad output           |
 
 Do not soften a launch failure, a timeout, a shader error or a black screen into `UNSUPPORTED`. Capability absence is a discovery result, not an escape hatch for a failed run.
 
 ## Before you report a browser claim
 
-Confirm Playwright resolution, the browser-binary availability, the current bundle and any dev server the gate needs; then read the produced report's exit code, timestamp and subset marker rather than assuming a written file proves success (see `references/gate-catalog.md`).
+Confirm Playwright resolution, the browser-binary availability, the current bundle and any dev server the gate needs; then read the produced report's exit code, timestamp and subset marker rather than assuming a written file proves success (see [gate-catalog.md](gate-catalog.md)).

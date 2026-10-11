@@ -10,13 +10,13 @@ Turning it on has a side effect you cannot undo locally: the `enabled` setter (`
 
 Knob defaults and their setters:
 
-| Member | Default | Source line |
-| --- | --- | --- |
-| `maxAtlasCount` | 5 | `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:51`, setter `:96` |
-| `textureSize` | 2048 | `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:52`, setter `:135` |
-| `maxFrameSize` | 512 | `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:53`, setter `:149` |
-| `textureBleeding` | true | `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:54`, setter `:121` |
-| `enabled` | false | `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:56`, setter `:72` |
+| Member            | Default | Source line                                                           |
+| ----------------- | ------- | --------------------------------------------------------------------- |
+| `maxAtlasCount`   | 5       | `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:51`, setter `:96`  |
+| `textureSize`     | 2048    | `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:52`, setter `:135` |
+| `maxFrameSize`    | 512     | `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:53`, setter `:149` |
+| `textureBleeding` | true    | `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:54`, setter `:121` |
+| `enabled`         | false   | `src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts:56`, setter `:72`  |
 
 The `textureSize` and `maxAtlasCount` setters only store the value; they do not resize or rebuild atlases already created, so change them before any frame is packed.
 

@@ -31,15 +31,15 @@ A `pointerId: '*'` entry is a declaration-time pointer pattern that binds any po
 
 ## Queries
 
-| Method | Meaning | Source |
-| --- | --- | --- |
-| `held(action)` | any source active | `src/air/action-state.ts:130`, impl `:321-324` |
-| `pressed(action)` / `released(action)` | edge seen in the last consumed tick | `src/air/action-state.ts:132-134`, impl `:326-334` |
-| `axis(action)` | clamped sum of active source values; 0 for buttons | `src/air/action-state.ts:135-136`, impl `:336-340`, clamp `:299` |
-| `heldSources(action)` | frozen copies of active sources | `src/air/action-state.ts:137-138` |
-| `mode(action)` | `button`/`axis`; unknown throws | `src/air/action-state.ts:127-128` |
-| `lastReset()` | most recent reset record or null | `src/air/action-state.ts:139-140`, `:94-100` |
-| `actionsFor(source)` | actions bound to the source, patterns included | `src/air/action-state.ts:141-142`, `:351-367` |
+| Method                                 | Meaning                                            | Source                                                           |
+| -------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------------- |
+| `held(action)`                         | any source active                                  | `src/air/action-state.ts:130`, impl `:321-324`                   |
+| `pressed(action)` / `released(action)` | edge seen in the last consumed tick                | `src/air/action-state.ts:132-134`, impl `:326-334`               |
+| `axis(action)`                         | clamped sum of active source values; 0 for buttons | `src/air/action-state.ts:135-136`, impl `:336-340`, clamp `:299` |
+| `heldSources(action)`                  | frozen copies of active sources                    | `src/air/action-state.ts:137-138`                                |
+| `mode(action)`                         | `button`/`axis`; unknown throws                    | `src/air/action-state.ts:127-128`                                |
+| `lastReset()`                          | most recent reset record or null                   | `src/air/action-state.ts:139-140`, `:94-100`                     |
+| `actionsFor(source)`                   | actions bound to the source, patterns included     | `src/air/action-state.ts:141-142`, `:351-367`                    |
 
 Unknown action names throw `AIR_E_UNKNOWN_ACTION` from every query (`src/air/action-state.ts:305-309`).
 
@@ -58,11 +58,11 @@ Unknown action names throw `AIR_E_UNKNOWN_ACTION` from every query (`src/air/act
 
 `AirActionError` carries a stable `code` (`src/air/action-state.ts:26-38`):
 
-| Code | Thrown when | Source |
-| --- | --- | --- |
-| `AIR_E_INVALID_SOURCE` | bad backend, missing identity, `'*'` pattern used at runtime, duplicate binding | `src/air/action-state.ts:203-229`, `:278-280` |
-| `AIR_E_INVALID_VALUE` | non-finite press/setAxis/binding value | `src/air/action-state.ts:231-235` |
-| `AIR_E_UNKNOWN_ACTION` | undeclared action name, empty actions, bad mode, setAxis on a button | `src/air/action-state.ts:305-309`, `:244-256`, `:402-404` |
-| `AIR_E_DISPOSED` | terminal adapter state (raised by `createActionInput`, not here) | `src/air/action-input.ts:341-345` |
+| Code                   | Thrown when                                                                     | Source                                                    |
+| ---------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `AIR_E_INVALID_SOURCE` | bad backend, missing identity, `'*'` pattern used at runtime, duplicate binding | `src/air/action-state.ts:203-229`, `:278-280`             |
+| `AIR_E_INVALID_VALUE`  | non-finite press/setAxis/binding value                                          | `src/air/action-state.ts:231-235`                         |
+| `AIR_E_UNKNOWN_ACTION` | undeclared action name, empty actions, bad mode, setAxis on a button            | `src/air/action-state.ts:305-309`, `:244-256`, `:402-404` |
+| `AIR_E_DISPOSED`       | terminal adapter state (raised by `createActionInput`, not here)                | `src/air/action-input.ts:341-345`                         |
 
 All outward reads (`heldSources`, transitions, tick, reset record, source copies) are frozen, so a snapshot cannot mutate internal identity (`src/air/action-state.ts:310-311`, `:429`, `:439-443`, `:452`).

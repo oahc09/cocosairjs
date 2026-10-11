@@ -19,15 +19,15 @@ path (`docs/manual/creating-text.md:14`, `:38`).
 `labelNode(parent, text, name = 'Label', options)` builds a `UITransform` + `Label` child
 (`src/air/ui-kit.ts:111-131`). Real defaults:
 
-| Option          | Default                          | Line |
-| --------------- | -------------------------------- | ---- |
-| layer           | `Layers.Enum.UI_2D`              | `src/air/ui-kit.ts:116` |
-| fontSize        | 28                               | `src/air/ui-kit.ts:117` |
-| lineHeight      | `Math.round(fontSize * 1.25)`     | `src/air/ui-kit.ts:124` |
-| color           | `options.color ?? Color.WHITE`    | `src/air/ui-kit.ts:125` |
-| boxSize         | `[0, 0]` (auto measure)          | `src/air/ui-kit.ts:119` |
-| overflow        | applied only if supplied         | `src/air/ui-kit.ts:126` |
-| enableWrapText  | applied only if supplied         | `src/air/ui-kit.ts:127` |
+| Option         | Default                        | Line                    |
+| -------------- | ------------------------------ | ----------------------- |
+| layer          | `Layers.Enum.UI_2D`            | `src/air/ui-kit.ts:116` |
+| fontSize       | 28                             | `src/air/ui-kit.ts:117` |
+| lineHeight     | `Math.round(fontSize * 1.25)`  | `src/air/ui-kit.ts:124` |
+| color          | `options.color ?? Color.WHITE` | `src/air/ui-kit.ts:125` |
+| boxSize        | `[0, 0]` (auto measure)        | `src/air/ui-kit.ts:119` |
+| overflow       | applied only if supplied       | `src/air/ui-kit.ts:126` |
+| enableWrapText | applied only if supplied       | `src/air/ui-kit.ts:127` |
 
 `fontSize * 1.25` is rounded, so `fontSize: 28` yields `lineHeight: 35` (`src/air/ui-kit.ts:117`,
 `:124`). This matches the manual's own `addLabel` recipe (`docs/manual/creating-text.md:26`,

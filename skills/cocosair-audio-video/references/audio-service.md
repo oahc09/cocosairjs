@@ -6,22 +6,22 @@ Derived from `src/air/audio-service.ts`, `src/air/index.ts`, `src/cocos/audio/au
 
 Verified method surface (line numbers from `src/air/audio-service.ts`):
 
-| Member | Line | Contract |
-| --- | --- | --- |
-| `load(id, url)` | :67 | `assetManager.loadRemote` (`:71`), caches by id, re-register overwrites (`:68-69`, `:76`) |
-| `playBgm(id, loop=true)` | :108 | throws for an unloaded id (`:110`), pauses all other channels (`:111-113`), records `bgmId` |
-| `pauseBgm()` | :120 | pauses the current channel, head preserved |
-| `resumeBgm()` | :145 | continues from the preserved `currentTime` (`:104-106`); no-op when music disabled or no id |
-| `stopBgm()` | :126 | stops and writes `currentTime = 0`, keeps the id so `resumeBgm` restarts from zero; no-op without a channel |
-| `setBgmVolume(v)` | :132 | applies to existing and future channels (`:139`); rejects non-finite or outside [0,1] with `RangeError` code `AIR_E_AUDIO_VOLUME` (`:133-136`), no partial state change |
-| `bgmVolume` getter | :142 | the stored channel volume |
-| `playSfx(id, volume=1)` | :155 | transient node per fire, single-shot (`:160-167`) |
-| `setMusicEnabled(on)` | :185 | disabling pauses the current BGM (`:187`) |
-| `setSfxEnabled(on)` | :191 | independent of the music switch |
-| `bgmState()` | :199 | `BgmState \| null` snapshot (`:23-32`) |
-| `dispose()` | :207 | stops and destroys all BGM and SFX nodes, clears clips, nulls `bgmId` (`:207-221`) |
-| `bgmId` / `musicEnabled` / `sfxEnabled` / `sfxActive` | :97-:101 | getters; `sfxActive` counts in-flight voices |
-| `sfxDropped` | :57 | public counter of overflow drops |
+| Member                                                | Line     | Contract                                                                                                                                                                |
+| ----------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `load(id, url)`                                       | :67      | `assetManager.loadRemote` (`:71`), caches by id, re-register overwrites (`:68-69`, `:76`)                                                                               |
+| `playBgm(id, loop=true)`                              | :108     | throws for an unloaded id (`:110`), pauses all other channels (`:111-113`), records `bgmId`                                                                             |
+| `pauseBgm()`                                          | :120     | pauses the current channel, head preserved                                                                                                                              |
+| `resumeBgm()`                                         | :145     | continues from the preserved `currentTime` (`:104-106`); no-op when music disabled or no id                                                                             |
+| `stopBgm()`                                           | :126     | stops and writes `currentTime = 0`, keeps the id so `resumeBgm` restarts from zero; no-op without a channel                                                             |
+| `setBgmVolume(v)`                                     | :132     | applies to existing and future channels (`:139`); rejects non-finite or outside [0,1] with `RangeError` code `AIR_E_AUDIO_VOLUME` (`:133-136`), no partial state change |
+| `bgmVolume` getter                                    | :142     | the stored channel volume                                                                                                                                               |
+| `playSfx(id, volume=1)`                               | :155     | transient node per fire, single-shot (`:160-167`)                                                                                                                       |
+| `setMusicEnabled(on)`                                 | :185     | disabling pauses the current BGM (`:187`)                                                                                                                               |
+| `setSfxEnabled(on)`                                   | :191     | independent of the music switch                                                                                                                                         |
+| `bgmState()`                                          | :199     | `BgmState \| null` snapshot (`:23-32`)                                                                                                                                  |
+| `dispose()`                                           | :207     | stops and destroys all BGM and SFX nodes, clears clips, nulls `bgmId` (`:207-221`)                                                                                      |
+| `bgmId` / `musicEnabled` / `sfxEnabled` / `sfxActive` | :97-:101 | getters; `sfxActive` counts in-flight voices                                                                                                                            |
+| `sfxDropped`                                          | :57      | public counter of overflow drops                                                                                                                                        |
 
 ## The SFX voice cap and sfxDropped
 
