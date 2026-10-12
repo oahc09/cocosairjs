@@ -1,0 +1,475 @@
+{
+  "schema": "shaders-wave6-isolated-agent-result/1",
+  "evaluatedAt": "2026-10-11T23:33:17.929Z",
+  "task": "task3-glass",
+  "taskStatus": "PASS",
+  "wave6Status": "COMPLETE_MINIMAL",
+  "subset": true,
+  "projectCompleted": false,
+  "implementation": {
+    "executionChannel": "Orca Worker",
+    "role": "Wave6-isolated-glass-agent",
+    "workerId": "ox3drcp6lhqsub8z4unt2g1i",
+    "sessionId": "ba90f51e-f3e5-4f2a-85f3-d798b67d8d92",
+    "isolationClaimSource": "Agent terminal report; file accesses not independently audited",
+    "manualIntervention": false,
+    "sourceChangesDuringLeadAcceptance": false
+  },
+  "first_run_success": false,
+  "first_runtime_success": true,
+  "final_success": true,
+  "compile_attempts": {
+    "tsc": 3,
+    "esbuild": 3,
+    "source": "Orca Worker terminal report and preserved raw logs; includes quoting retry and final recheck"
+  },
+  "agentRepairRounds": 1,
+  "runtime_attempts": 1,
+  "api_errors": [
+    {
+      "code": "TS2345",
+      "api": "primitives.plane",
+      "occurrences": 2,
+      "error": "widthSegments/lengthSegments required by IPlaneOptions"
+    }
+  ],
+  "toolErrors": [
+    {
+      "tool": "node -e / esbuild",
+      "error": "PowerShell invocation lost quotes: ReferenceError: esbuild is not defined",
+      "firstExitCode": 1,
+      "originalRUNCommandFailureNotEstablished": true
+    }
+  ],
+  "engineCapabilityGapConfirmed": false,
+  "time": {
+    "agentReportedImplementationStart": "2026-10-12T07:21:47+08:00",
+    "agentReportedBuildFinished": "2026-10-12T07:25:17+08:00",
+    "agentReportedReportWritten": "2026-10-12T07:25:40+08:00",
+    "compileWindowSeconds": 210,
+    "totalTimeSeconds": "unavailable",
+    "excludesPriorDocumentationReading": true,
+    "acceptanceStartedAt": "2026-10-11T23:28:35.933Z",
+    "acceptanceEndedAt": "2026-10-11T23:28:41.071Z"
+  },
+  "token_usage": "unavailable",
+  "acceptance": {
+    "executionChannel": "Lead (Codex)",
+    "browser": "chromium",
+    "browserVersion": "149.0.7827.55",
+    "osExitCodeObserved": 0,
+    "checks": {
+      "shaderCompile": true,
+      "oneCanvas": true,
+      "pause": true,
+      "realSceneRT": true,
+      "zeroPassThrough": true,
+      "refractionVisible": true,
+      "resume": true,
+      "resize": true,
+      "release": true,
+      "rtDetachedDisposed": true,
+      "releaseIdempotentAndListenerSilent": true
+    },
+    "shaderCompiles": [
+      {
+        "ok": true,
+        "log": ""
+      },
+      {
+        "ok": true,
+        "log": "WARNING: 0:1168: '' : unexpected end of file found in directive\n\u0000"
+      },
+      {
+        "ok": true,
+        "log": ""
+      },
+      {
+        "ok": true,
+        "log": ""
+      },
+      {
+        "ok": true,
+        "log": ""
+      },
+      {
+        "ok": true,
+        "log": ""
+      }
+    ],
+    "pageErrors": [],
+    "consoleErrors": [],
+    "zeroPassThrough": {
+      "samplePoints": 70,
+      "maxByteError": 0
+    },
+    "resizePassThrough": {
+      "samplePoints": 35,
+      "maxByteError": 0
+    },
+    "refractionChangedPoints": 19,
+    "pixelScreenshotsHideOnlyDOMPanel": true,
+    "resourceBefore": [
+      {
+        "name": "quadMesh",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "glassMaterial",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "glassEffect",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "BoxOrangeMesh",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "BoxOrangeMaterial",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "BoxTealMesh",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "BoxTealMaterial",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "BoxVioletMesh",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "BoxVioletMaterial",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "BoxLitMesh",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "BoxLitMaterial",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "GroundMesh",
+        "refs": 1,
+        "valid": true
+      },
+      {
+        "name": "GroundMaterial",
+        "refs": 1,
+        "valid": true
+      }
+    ],
+    "resourceAfter": {
+      "assets": [
+        {
+          "name": "quadMesh",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "glassMaterial",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "glassEffect",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "BoxOrangeMesh",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "BoxOrangeMaterial",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "BoxTealMesh",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "BoxTealMaterial",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "BoxVioletMesh",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "BoxVioletMaterial",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "BoxLitMesh",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "BoxLitMaterial",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "GroundMesh",
+          "refs": 0,
+          "valid": false
+        },
+        {
+          "name": "GroundMaterial",
+          "refs": 0,
+          "valid": false
+        }
+      ],
+      "quadValid": false,
+      "subValid": false,
+      "targetValid": false,
+      "targetTextureNull": true
+    },
+    "cleanup": {
+      "pageClosed": true,
+      "browserClosed": true,
+      "serverClosed": true
+    },
+    "inputsUnchanged": true
+  },
+  "bindings": [
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/src/main.ts",
+      "bytes": 20969,
+      "sha256": "f4b4127121844f65657e7aaa825f07f80fd4b7e6c7e9bab6ec0673bd018744af"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/main.js",
+      "bytes": 14280,
+      "sha256": "87501eb8dd639b80eb28531306034c39c6db5fe14b2be80752b367a8f2b3a0a6"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/index.html",
+      "bytes": 2620,
+      "sha256": "3d14b49c7d03522669184495eb4a9691b60fe2e057c529fb0c7ccc29c63ff932"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/report.md",
+      "bytes": 9601,
+      "sha256": "66dc81ea1a19108fd02d9fee83e342f22e77f6bd376c5ce3b110d3b871bcfc11"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/sdk/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "4ca4e9a2379cbbc088bd839cb138a14e58888bad0a6a7ca4918b5cc543924cb8"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/sdk/cocosair.module.d.ts",
+      "bytes": 3369681,
+      "sha256": "e1e3b7a241cec02a58b809589ae13efb5089254e4496c81061b62ea20a0b0cbf"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/first-attempt/main.ts",
+      "bytes": 20453,
+      "sha256": "d6513578eeee8e57e9ae4400e5146228230cc9d4203b9d3649512cbfc984fb00"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/first-attempt/index.html",
+      "bytes": 2620,
+      "sha256": "3d14b49c7d03522669184495eb4a9691b60fe2e057c529fb0c7ccc29c63ff932"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/tsc-first.out",
+      "bytes": 1330,
+      "sha256": "7f768950bccbe10f2ee3bc4435a1dccee756bdb9744e3d2626be716cc98b0e96"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/tsc-first.err",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/tsc-round2.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/tsc-round2.err",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/esbuild-first.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/esbuild-first.err",
+      "bytes": 1846,
+      "sha256": "d2c9a8a3ff45a3297bfea905bd3e0c9c47f1adfa4e1e0440c06c357586dc9b2f"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/esbuild-first-try2.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/esbuild-first-try2.err",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/tsc-round3.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/tsc-round3.err",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/esbuild-round3.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/logs/esbuild-round3.err",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-glass-runtime-r1.cjs",
+      "bytes": 9845,
+      "sha256": "30418cfdeb3514bd9dce29d0f23254afb8d282dd959c1d3dd22e1f175e2a2bc7"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-glass-runtime-r1.json",
+      "bytes": 94350,
+      "sha256": "cc2a40ee2fbeff2f9ae584bd65b815038e6fe2ff114efe2aabf5f43a00ac658a"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/docs/materials.md",
+      "bytes": 13459,
+      "sha256": "634a44d317c86afe0cedf0fff54cbec8c272d19cd5e6af0461de1c5b6e4d5368"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/docs/rendertargets.md",
+      "bytes": 11927,
+      "sha256": "4eb92c59d6b1221073946d40090b61e80e5e3c2866a38adca97f46774ac79760"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/docs/custom-shaders.md",
+      "bytes": 17973,
+      "sha256": "dfc4a1c165400e5fe1523187bfd41f4e3bc74aa26b3d846ecaae9e2ad00908a6"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-glass-r1/RUN.md",
+      "bytes": 1299,
+      "sha256": "d3cb28c797f176706e123d498d9e469c52ddcdd2844e668d226a8fbd7a538db9"
+    }
+  ],
+  "screenshots": [
+    {
+      "stage": "default-ui",
+      "path": "output/shaders-absorption/wave6-glass-runtime-r1-artifacts/default-ui.png",
+      "bytes": 20384,
+      "sha256": "55b936d6c933ed90d9392953a84bd9b1a2771ff0b39123bdec568a164a79324f"
+    },
+    {
+      "stage": "default",
+      "path": "output/shaders-absorption/wave6-glass-runtime-r1-artifacts/default.png",
+      "bytes": 10940,
+      "sha256": "7f5ea894ab132bf4eab69cf397c74ea8611986df6abf2bb710f6b091886fb05c",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 70
+    },
+    {
+      "stage": "refraction-zero",
+      "path": "output/shaders-absorption/wave6-glass-runtime-r1-artifacts/refraction-zero.png",
+      "bytes": 4354,
+      "sha256": "fa48245f4d5832027e055f6cf7b473ece4e78a097b9f26e83b827f279a928d74",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 70
+    },
+    {
+      "stage": "refraction-one",
+      "path": "output/shaders-absorption/wave6-glass-runtime-r1-artifacts/refraction-one.png",
+      "bytes": 10880,
+      "sha256": "1ff9a564d7a600ad47dd3647f3188e633344f086ee24bae02814a8231602a00f",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 70
+    },
+    {
+      "stage": "resize",
+      "path": "output/shaders-absorption/wave6-glass-runtime-r1-artifacts/resize.png",
+      "bytes": 3426,
+      "sha256": "bb541816d1a9f2a6ee53ead14ca25ad8ee4d12ef475fb2da3d5a1748943f47be",
+      "width": 480,
+      "height": 320,
+      "pixelSamplePoints": 35
+    }
+  ],
+  "documentationLookupSource": "output/shaders-absorption/wave6-agent-glass-r1/report.md",
+  "confirmedFindings": [
+    {
+      "classification": "DOC_GAP",
+      "issue": "Public plane examples omit segment fields required by frozen declarations",
+      "evidence": {
+        "documentation": [
+          "output/shaders-absorption/wave6-agent-glass-r1/docs/materials.md:225",
+          "output/shaders-absorption/wave6-agent-glass-r1/docs/rendertargets.md:277"
+        ],
+        "declarations": [
+          "output/shaders-absorption/wave6-agent-glass-r1/sdk/cocosair.module.d.ts:69132",
+          "output/shaders-absorption/wave6-agent-glass-r1/sdk/cocosair.module.d.ts:69136"
+        ]
+      }
+    },
+    {
+      "classification": "DOC_GAP",
+      "issue": "Public RT manual lacks dedicated createAirRenderTarget/attachCamera/bindColor guide"
+    }
+  ],
+  "unconfirmedSuggestions": [
+    "IShaderInfo completeness versus partial EffectAsset assembly",
+    "Custom shader precision guidance"
+  ],
+  "notRun": [
+    "Firefox/WebKit",
+    "DPR2",
+    "performance",
+    "100 resource cycles",
+    "complete Engine six gates",
+    "physical devices",
+    "long running"
+  ],
+  "limitations": [
+    "70/35-point sampling, not full-image audit",
+    "Application/camera containers are retained after release",
+    "Frozen public SDK acceptance does not replace workspace SDK gates"
+  ],
+  "wave5CurrentSdkBlockerPreserved": true
+}

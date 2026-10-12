@@ -1,0 +1,54 @@
+{
+  "baselineAccepted": true,
+  "rows": [
+    {
+      "name": "false-agent",
+      "accepted": false,
+      "errors": [
+        "gate schema/claims"
+      ]
+    },
+    {
+      "name": "false-wave5",
+      "accepted": false,
+      "errors": [
+        "gate schema/claims"
+      ]
+    },
+    {
+      "name": "inflated-counts",
+      "accepted": false,
+      "errors": [
+        "declared measurements"
+      ]
+    },
+    {
+      "name": "SDK-spoof",
+      "accepted": false,
+      "errors": [
+        "malformed:candidate SDK manifest disagreement"
+      ]
+    },
+    {
+      "name": "missing-binding",
+      "accepted": false,
+      "errors": [
+        "malformed:The \"paths[1]\" argument must be of type string. Received undefined"
+      ]
+    },
+    {
+      "name": "candidate-outside-boundary",
+      "accepted": false,
+      "errors": [
+        "malformed:ENOENT: no such file or directory, lstat 'E:\\AIProMax\\github\\outside'"
+      ]
+    },
+    {
+      "name": "manifest-spoof",
+      "accepted": false,
+      "errors": [
+        "malformed:candidate boundary/manifest"
+      ]
+    }
+  ]
+}

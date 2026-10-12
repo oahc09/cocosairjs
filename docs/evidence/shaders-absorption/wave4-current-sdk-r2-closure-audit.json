@@ -1,0 +1,183 @@
+{
+  "schemaVersion": "shaders-current-sdk-wave4-metadata-audit/1",
+  "method": "REAL_ASSESSMENT_FROZEN_METADATA_REDUCTION",
+  "executionChannel": "Lead",
+  "baselineAccepted": true,
+  "browserRunsAdded": 0,
+  "rejected": 24,
+  "rows": [
+    {
+      "name": "missing-C04",
+      "rejected": true,
+      "errors": [
+        "effects: measured state mismatch"
+      ]
+    },
+    {
+      "name": "duplicate-C03",
+      "rejected": true,
+      "errors": [
+        "effects: measured state mismatch"
+      ]
+    },
+    {
+      "name": "leaf-error-hidden",
+      "rejected": true,
+      "errors": [
+        "effects: measured state mismatch"
+      ]
+    },
+    {
+      "name": "leaf-validation-forged",
+      "rejected": true,
+      "errors": [
+        "effects: measured state mismatch"
+      ]
+    },
+    {
+      "name": "scope-inflated",
+      "rejected": true,
+      "errors": [
+        "counts: measured state mismatch"
+      ]
+    },
+    {
+      "name": "performance-skipped",
+      "rejected": true,
+      "errors": [
+        "counts: measured state mismatch"
+      ]
+    },
+    {
+      "name": "resources-inflated",
+      "rejected": true,
+      "errors": [
+        "counts: measured state mismatch"
+      ]
+    },
+    {
+      "name": "PNG-scope",
+      "rejected": true,
+      "errors": [
+        "counts: measured state mismatch"
+      ]
+    },
+    {
+      "name": "dimensions-skipped",
+      "rejected": true,
+      "errors": [
+        "counts: measured state mismatch"
+      ]
+    },
+    {
+      "name": "SDK-drift",
+      "rejected": true,
+      "errors": [
+        "currentSdk: measured state mismatch"
+      ]
+    },
+    {
+      "name": "prior-path-historical",
+      "rejected": true,
+      "errors": [
+        "priorWave: measured state mismatch"
+      ]
+    },
+    {
+      "name": "prior-SHA-forged",
+      "rejected": true,
+      "errors": [
+        "priorWave: measured state mismatch"
+      ]
+    },
+    {
+      "name": "prior-errors-hidden",
+      "rejected": true,
+      "errors": [
+        "priorWave: measured state mismatch"
+      ]
+    },
+    {
+      "name": "prior-status-forged",
+      "rejected": true,
+      "errors": [
+        "priorWave: measured state mismatch"
+      ]
+    },
+    {
+      "name": "closure-removed",
+      "rejected": true,
+      "errors": [
+        "current closure fingerprint drift"
+      ]
+    },
+    {
+      "name": "closure-drift",
+      "rejected": true,
+      "errors": [
+        "current closure fingerprint drift"
+      ]
+    },
+    {
+      "name": "base-verifier-drift",
+      "rejected": true,
+      "errors": [
+        "verifier fingerprint drift"
+      ]
+    },
+    {
+      "name": "Agent-PASS",
+      "rejected": true,
+      "errors": [
+        "Wave/project/Agent/Gallery status isolation"
+      ]
+    },
+    {
+      "name": "Gallery-PASS",
+      "rejected": true,
+      "errors": [
+        "Wave/project/Agent/Gallery status isolation"
+      ]
+    },
+    {
+      "name": "project-completed",
+      "rejected": true,
+      "errors": [
+        "Wave/project/Agent/Gallery status isolation"
+      ]
+    },
+    {
+      "name": "subset-hidden",
+      "rejected": true,
+      "errors": [
+        "Wave/project/Agent/Gallery status isolation"
+      ]
+    },
+    {
+      "name": "false-eligibility",
+      "rejected": true,
+      "errors": [
+        "nextWaveEligible: measured state mismatch"
+      ]
+    },
+    {
+      "name": "wrong-wave",
+      "rejected": true,
+      "errors": [
+        "Wave/project/Agent/Gallery status isolation"
+      ]
+    },
+    {
+      "name": "bad-time",
+      "rejected": true,
+      "errors": [
+        "Wave/project/Agent/Gallery status isolation"
+      ]
+    }
+  ],
+  "verifier": {
+    "path": "tools/verify/shaders-current-sdk-wave4-gate.cjs",
+    "bytes": 5249,
+    "sha256": "5f608e45b61f3d7b6b2ab32b256136b5de62b58b072ffbf545e06071b5431e22"
+  }
+}

@@ -1,0 +1,3068 @@
+{
+  "schema": "shaders-uv-fusion-gate/1",
+  "status": "PASS",
+  "evaluatedAt": "2026-10-11T14:32:10.235Z",
+  "functional": {
+    "path": "output/shaders-absorption/lead-w5-uv-fusion-final-functional.json",
+    "bytes": 9579645,
+    "sha256": "267f846d148d31efe3116ee2020aad86f8ed86c0670f5cded015082c21696122"
+  },
+  "performance": {
+    "path": "output/shaders-absorption/lead-w5-uv-fusion-final-performance.json",
+    "bytes": 34623945,
+    "sha256": "0b7286f155a91f2a5d465d7216b70d7ae5ce7b4e24f0bb95fb8bbb30e59b554b"
+  },
+  "performanceOS": {
+    "path": "output/shaders-absorption/lead-w5-uv-fusion-final-performance-os.json",
+    "bytes": 487,
+    "sha256": "c0cee7140966353f327fb72518c9d0010292489bce54ac1d64a54096db384c6e"
+  },
+  "performanceFrozen": {
+    "path": "output/shaders-absorption/lead-w5-uv-fusion-final-performance-frozen.json",
+    "bytes": 5109,
+    "sha256": "7f04edb77930ea93fb7b24ef8d003a4015eb81955ce21b20fa876a5b4817623c"
+  },
+  "previousWave": {
+    "path": "docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json",
+    "bytes": 8661,
+    "sha256": "a10cc337dc51e984403f77db9a8e172d3aebe8aa3a39e6c64fa43efee5e913f0"
+  },
+  "validatorInputs": [
+    {
+      "path": "tools/verify/shaders-uv-fusion-gate.cjs",
+      "bytes": 10322,
+      "sha256": "a19e42b6d5a082c396b9b0b180634ea22f62900ab7cea5ccc4d1f673f43488b2"
+    },
+    {
+      "path": "tools/verify/shaders-uv-fusion-browser.cjs",
+      "bytes": 35850,
+      "sha256": "1cf9a77f2ba80d1eb38ae800867696600ccebe4bec048a45251b78588f0e4948"
+    }
+  ],
+  "effects": [
+    {
+      "id": "emboss",
+      "status": "PASS",
+      "dimensions": {
+        "Build": "PASS",
+        "Runtime": "PASS",
+        "Visual": "PASS",
+        "Boundary": "PASS",
+        "Resource": "PASS",
+        "Performance": "PASS"
+      },
+      "visualCases": 72,
+      "boundaryCases": 480,
+      "resourceCycles": 600,
+      "resizeCases": 6,
+      "performanceWindows": 18,
+      "visual": [
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "default",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1027861328125,
+          "nonzero": 105253,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "box",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1012705078125,
+          "nonzero": 103701,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "identity",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.10262890625,
+          "nonzero": 105092,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "raised",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.101984375,
+          "nonzero": 104432,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "rotated",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1018466796875,
+          "nonzero": 104291,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "blank",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "default",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.10264013671875,
+          "nonzero": 420414,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "box",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.101319091796875,
+          "nonzero": 415003,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "identity",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.102508544921875,
+          "nonzero": 419875,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "raised",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.101919677734375,
+          "nonzero": 417463,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "rotated",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.10180810546875,
+          "nonzero": 417006,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "blank",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "default",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1027861328125,
+          "nonzero": 105253,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "box",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1012705078125,
+          "nonzero": 103701,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "identity",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.10262890625,
+          "nonzero": 105092,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "raised",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.101984375,
+          "nonzero": 104432,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "rotated",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1018466796875,
+          "nonzero": 104291,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "blank",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "default",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.10264013671875,
+          "nonzero": 420414,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "box",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.101319091796875,
+          "nonzero": 415003,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "identity",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.102508544921875,
+          "nonzero": 419875,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "raised",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.101919677734375,
+          "nonzero": 417463,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "rotated",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.10180810546875,
+          "nonzero": 417006,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "blank",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "default",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1027861328125,
+          "nonzero": 105253,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "box",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1012705078125,
+          "nonzero": 103701,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "identity",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.10262890625,
+          "nonzero": 105092,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "raised",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.101984375,
+          "nonzero": 104432,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "rotated",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1018466796875,
+          "nonzero": 104291,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "blank",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "default",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.10264013671875,
+          "nonzero": 420414,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "box",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.101319091796875,
+          "nonzero": 415003,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "identity",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.102508544921875,
+          "nonzero": 419875,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "raised",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.101919677734375,
+          "nonzero": 417463,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "rotated",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 1,
+          "mean": 0.10180810546875,
+          "nonzero": 417006,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "blank",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        }
+      ],
+      "benchmarks": [
+        {
+          "engine": "chromium",
+          "profile": "720p",
+          "reference": {
+            "frames": 329,
+            "passes": 2,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.66999999433756,
+              "p95": 17.104999996721745,
+              "min": 15.230000004172325,
+              "max": 18.809999994933605
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.5250000059604645,
+              "p95": 0.8099999949336052,
+              "min": 0.22999999672174454,
+              "max": 3.059999994933605
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.10000000149011612,
+              "p95": 0.17999999970197678,
+              "min": 0.054999999701976776,
+              "max": 0.24500000476837158
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.15000000596046448,
+              "p95": 0.2749999836087227,
+              "min": 0.06999999284744263,
+              "max": 0.4650000035762787
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0.005000002682209015,
+              "p95": 0.015000000596046448,
+              "min": 0,
+              "max": 0.11000000685453415
+            },
+            "gpuMs": {
+              "count": 329,
+              "median": 0.400384,
+              "p95": 0.509952,
+              "min": 0.043008,
+              "max": 1.671168
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 289328,
+            "bufferBytes": 7137940,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "fused": {
+            "frames": 329,
+            "passes": 1,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.645000003278255,
+              "p95": 17.269999995827675,
+              "min": 14.554999999701977,
+              "max": 19.03999999910593
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.41499999910593033,
+              "p95": 0.5950000062584877,
+              "min": 0.26500000059604645,
+              "max": 0.8599999994039536
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.10499999672174454,
+              "p95": 0.19500000029802322,
+              "min": 0.0650000050663948,
+              "max": 0.32500000298023224
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.08000000566244125,
+              "p95": 0.1599999964237213,
+              "min": 0.04500000178813934,
+              "max": 0.20500001311302185
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0.005000002682209015,
+              "p95": 0.01000000536441803,
+              "min": 0,
+              "max": 0.11500000208616257
+            },
+            "gpuMs": {
+              "count": 329,
+              "median": 0.513024,
+              "p95": 1.712128,
+              "min": 0.410624,
+              "max": 2.577408
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 27184,
+            "bufferBytes": 7137668,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.7904761797987145,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "chromium",
+          "profile": "1080p",
+          "reference": {
+            "frames": 329,
+            "passes": 2,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.679999999701977,
+              "p95": 17.189999997615814,
+              "min": 14.594999998807907,
+              "max": 18.96500000357628
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.5300000011920929,
+              "p95": 0.8350000008940697,
+              "min": 0.20500000566244125,
+              "max": 2.655000001192093
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.10499999672174454,
+              "p95": 0.1900000050663948,
+              "min": 0.059999994933605194,
+              "max": 0.39000000059604645
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.15000000596046448,
+              "p95": 0.2749999985098839,
+              "min": 0.054999999701976776,
+              "max": 0.38999998569488525
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0.005000002682209015,
+              "p95": 0.015000000596046448,
+              "min": 0,
+              "max": 0.12000000476837158
+            },
+            "gpuMs": {
+              "count": 329,
+              "median": 2.101248,
+              "p95": 4.06016,
+              "min": 1.13664,
+              "max": 6.120448
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 289328,
+            "bufferBytes": 7137940,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "fused": {
+            "frames": 328,
+            "passes": 1,
+            "intervalMs": {
+              "count": 328,
+              "median": 16.674999997019768,
+              "p95": 17.145000003278255,
+              "min": 13.730000004172325,
+              "max": 18.685000002384186
+            },
+            "renderEnvelopeMs": {
+              "count": 328,
+              "median": 0.4099999964237213,
+              "p95": 0.5799999982118607,
+              "min": 0.2800000011920929,
+              "max": 1.260000005364418
+            },
+            "updateMs": {
+              "count": 328,
+              "median": 0.09000000357627869,
+              "p95": 0.16499999910593033,
+              "min": 0.054999999701976776,
+              "max": 0.26999999582767487
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 328,
+              "median": 0.07999999076128006,
+              "p95": 0.16499999910593033,
+              "min": 0.04500000178813934,
+              "max": 0.2749999910593033
+            },
+            "glDispatchMs": {
+              "count": 328,
+              "median": 0.005000002682209015,
+              "p95": 0.01000000536441803,
+              "min": 0,
+              "max": 0.11500000208616257
+            },
+            "gpuMs": {
+              "count": 328,
+              "median": 2.06336,
+              "p95": 3.693568,
+              "min": 1.412096,
+              "max": 5.195776
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 27184,
+            "bufferBytes": 7137668,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.77358489717271,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "chromium",
+          "profile": "mobile-dpr",
+          "reference": {
+            "frames": 329,
+            "passes": 2,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.67000000178814,
+              "p95": 17.20999999344349,
+              "min": 8.82999999821186,
+              "max": 24.13000000268221
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.5399999991059303,
+              "p95": 0.8599999994039536,
+              "min": 0.2800000011920929,
+              "max": 3.005000002682209
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.10499999672174454,
+              "p95": 0.19500000029802322,
+              "min": 0.06499999761581421,
+              "max": 0.25
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.1550000011920929,
+              "p95": 0.2799999937415123,
+              "min": 0.06999999284744263,
+              "max": 0.46000001579523087
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0.005000002682209015,
+              "p95": 0.015000000596046448,
+              "min": 0,
+              "max": 0.13000000268220901
+            },
+            "gpuMs": {
+              "count": 329,
+              "median": 0.669696,
+              "p95": 1.896448,
+              "min": 0.6144,
+              "max": 3.027968
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 289328,
+            "bufferBytes": 7137940,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "fused": {
+            "frames": 329,
+            "passes": 1,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.660000003874302,
+              "p95": 17.174999997019768,
+              "min": 14.214999996125698,
+              "max": 18.940000005066395
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.4299999997019768,
+              "p95": 0.5900000035762787,
+              "min": 0.23499999940395355,
+              "max": 1.2549999952316284
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.10999999940395355,
+              "p95": 0.1899999976158142,
+              "min": 0.054999999701976776,
+              "max": 0.369999997317791
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.08499998599290848,
+              "p95": 0.15999998897314072,
+              "min": 0.04999999701976776,
+              "max": 0.23499999940395355
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0.005000002682209015,
+              "p95": 0.009999997913837433,
+              "min": 0,
+              "max": 0.10999999940395355
+            },
+            "gpuMs": {
+              "count": 329,
+              "median": 0.787456,
+              "p95": 1.995776,
+              "min": 0.62976,
+              "max": 3.037184
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 27184,
+            "bufferBytes": 7137668,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.7962962970628169,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "firefox",
+          "profile": "720p",
+          "reference": {
+            "frames": 329,
+            "passes": 2,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.659999999999854,
+              "p95": 17.360000000000582,
+              "min": 13.899999999999636,
+              "max": 19.200000000000273
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.4399999999995998,
+              "p95": 0.599999999999909,
+              "min": 0.23999999999978172,
+              "max": 0.8000000000001819
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.07999999999992724,
+              "p95": 0.15999999999985448,
+              "min": 0.03999999999996362,
+              "max": 2.9600000000000364
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.1000000000003638,
+              "p95": 0.15999999999985448,
+              "min": 0.03999999999996362,
+              "max": 0.23999999999978172
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0,
+              "p95": 0.019999999999527063,
+              "min": 0,
+              "max": 0.03999999999996362
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137940,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "fused": {
+            "frames": 329,
+            "passes": 1,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.67999999999938,
+              "p95": 17.300000000000182,
+              "min": 13.8599999999999,
+              "max": 19.420000000000073
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.35999999999989996,
+              "p95": 0.5,
+              "min": 0.17999999999938154,
+              "max": 0.7400000000002365
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.07999999999992724,
+              "p95": 0.15999999999985448,
+              "min": 0.019999999999527063,
+              "max": 3.019999999999982
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.05999999999994543,
+              "p95": 0.09999999999990905,
+              "min": 0,
+              "max": 0.14000000000032742
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0,
+              "p95": 0.01999999999998181,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137668,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.8181818181823349,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "firefox",
+          "profile": "1080p",
+          "reference": {
+            "frames": 328,
+            "passes": 2,
+            "intervalMs": {
+              "count": 328,
+              "median": 16.659999999999854,
+              "p95": 17.280000000000655,
+              "min": 14.979999999999563,
+              "max": 26.600000000000136
+            },
+            "renderEnvelopeMs": {
+              "count": 328,
+              "median": 0.5199999999999818,
+              "p95": 0.7799999999997453,
+              "min": 0.21999999999934516,
+              "max": 1.400000000000091
+            },
+            "updateMs": {
+              "count": 328,
+              "median": 0.07999999999992724,
+              "p95": 0.18000000000006366,
+              "min": 0.019999999999527063,
+              "max": 2.9600000000000364
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 328,
+              "median": 0.12000000000034561,
+              "p95": 0.1999999999998181,
+              "min": 0.03999999999996362,
+              "max": 0.2600000000002183
+            },
+            "glDispatchMs": {
+              "count": 328,
+              "median": 0,
+              "p95": 0.01999999999998181,
+              "min": 0,
+              "max": 0.03999999999996362
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137940,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "fused": {
+            "frames": 328,
+            "passes": 1,
+            "intervalMs": {
+              "count": 328,
+              "median": 16.659999999999854,
+              "p95": 17.300000000000182,
+              "min": 13.5,
+              "max": 19.460000000000036
+            },
+            "renderEnvelopeMs": {
+              "count": 328,
+              "median": 0.44000000000005457,
+              "p95": 0.5799999999999272,
+              "min": 0.1999999999998181,
+              "max": 3.2999999999999545
+            },
+            "updateMs": {
+              "count": 328,
+              "median": 0.07999999999992724,
+              "p95": 0.16000000000008185,
+              "min": 0.01999999999998181,
+              "max": 0.3000000000001819
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 328,
+              "median": 0.07999999999901775,
+              "p95": 0.11999999999989086,
+              "min": 0.01999999999998181,
+              "max": 0.16000000000076398
+            },
+            "glDispatchMs": {
+              "count": 328,
+              "median": 0,
+              "p95": 0.01999999999998181,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137668,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.8461538461539807,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "firefox",
+          "profile": "mobile-dpr",
+          "reference": {
+            "frames": 329,
+            "passes": 2,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.660000000000082,
+              "p95": 17.460000000000036,
+              "min": 13.340000000000146,
+              "max": 19.61999999999989
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.44000000000005457,
+              "p95": 0.6600000000000819,
+              "min": 0.22000000000025466,
+              "max": 3.5599999999999454
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.07999999999992724,
+              "p95": 0.15999999999985448,
+              "min": 0.019999999999527063,
+              "max": 0.2600000000002183
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.1000000000003638,
+              "p95": 0.1799999999998363,
+              "min": 0.039999999999054126,
+              "max": 0.25999999999976353
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0,
+              "p95": 0.01999999999998181,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137940,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "fused": {
+            "frames": 329,
+            "passes": 1,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.68000000000029,
+              "p95": 17.11999999999989,
+              "min": 14.039999999999964,
+              "max": 19.560000000000173
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.38000000000010914,
+              "p95": 0.5399999999999636,
+              "min": 0.23999999999978172,
+              "max": 3.0800000000001546
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.07999999999992724,
+              "p95": 0.14000000000032742,
+              "min": 0.03999999999996362,
+              "max": 0.40000000000009095
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.05999999999994543,
+              "p95": 0.11999999999989086,
+              "min": 0.019999999999527063,
+              "max": 2.699999999999818
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0,
+              "p95": 0.01999999999998181,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137668,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.8636363636365045,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "webkit",
+          "profile": "720p",
+          "reference": {
+            "frames": 328,
+            "passes": 2,
+            "intervalMs": {
+              "count": 328,
+              "median": 16.61999999999898,
+              "p95": 19.719999999999345,
+              "min": 12.319999999999709,
+              "max": 21.140000000001237
+            },
+            "renderEnvelopeMs": {
+              "count": 328,
+              "median": 0.5200000000004366,
+              "p95": 0.8599999999996726,
+              "min": 0.3600000000005821,
+              "max": 4.020000000000437
+            },
+            "updateMs": {
+              "count": 328,
+              "median": 0.1000000000003638,
+              "p95": 2.2600000000002183,
+              "min": 0.05999999999949068,
+              "max": 3.600000000000364
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 328,
+              "median": 0.1999999999989086,
+              "p95": 0.2600000000011278,
+              "min": 0.1000000000003638,
+              "max": 3.0600000000013097
+            },
+            "glDispatchMs": {
+              "count": 328,
+              "median": 0.019999999998617568,
+              "p95": 0.040000000000873115,
+              "min": 0,
+              "max": 0.040000000000873115
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137940,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "fused": {
+            "frames": 327,
+            "passes": 1,
+            "intervalMs": {
+              "count": 327,
+              "median": 16.69999999999891,
+              "p95": 19.140000000001237,
+              "min": 12.079999999999927,
+              "max": 20.61999999999989
+            },
+            "renderEnvelopeMs": {
+              "count": 327,
+              "median": 0.42000000000007276,
+              "p95": 0.6399999999994179,
+              "min": 0.2999999999992724,
+              "max": 5
+            },
+            "updateMs": {
+              "count": 327,
+              "median": 0.1000000000003638,
+              "p95": 0.22000000000025466,
+              "min": 0.05999999999949068,
+              "max": 3.380000000000109
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 327,
+              "median": 0.11999999999716238,
+              "p95": 0.15999999999985448,
+              "min": 0.05999999999949068,
+              "max": 2.9000000000005457
+            },
+            "glDispatchMs": {
+              "count": 327,
+              "median": 0.019999999998617568,
+              "p95": 0.020000000000436557,
+              "min": 0,
+              "max": 2.540000000000873
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137668,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.8076923076917696,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "webkit",
+          "profile": "1080p",
+          "reference": {
+            "frames": 326,
+            "passes": 2,
+            "intervalMs": {
+              "count": 326,
+              "median": 16.719999999999345,
+              "p95": 19.400000000000546,
+              "min": 11.920000000000073,
+              "max": 21.23999999999978
+            },
+            "renderEnvelopeMs": {
+              "count": 326,
+              "median": 0.5200000000004366,
+              "p95": 0.8999999999996362,
+              "min": 0.3599999999987631,
+              "max": 3.880000000000109
+            },
+            "updateMs": {
+              "count": 326,
+              "median": 0.1000000000003638,
+              "p95": 0.2600000000002183,
+              "min": 0.05999999999949068,
+              "max": 3.480000000000473
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 326,
+              "median": 0.1999999999989086,
+              "p95": 0.2599999999983993,
+              "min": 0.11999999999898137,
+              "max": 3.0799999999990177
+            },
+            "glDispatchMs": {
+              "count": 326,
+              "median": 0,
+              "p95": 0.040000000000873115,
+              "min": 0,
+              "max": 2.1599999999998545
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137940,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "fused": {
+            "frames": 316,
+            "passes": 1,
+            "intervalMs": {
+              "count": 316,
+              "median": 16.73999999999978,
+              "p95": 20.25999999999931,
+              "min": 11.659999999999854,
+              "max": 35.88000000000102
+            },
+            "renderEnvelopeMs": {
+              "count": 316,
+              "median": 0.42000000000007276,
+              "p95": 0.6999999999998181,
+              "min": 0.2999999999992724,
+              "max": 4.020000000000437
+            },
+            "updateMs": {
+              "count": 316,
+              "median": 0.1000000000003638,
+              "p95": 0.28000000000065484,
+              "min": 0.05999999999949068,
+              "max": 3.5
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 316,
+              "median": 0.1000000000003638,
+              "p95": 0.159999999998945,
+              "min": 0.05999999999949068,
+              "max": 3.6199999999989814
+            },
+            "glDispatchMs": {
+              "count": 316,
+              "median": 0,
+              "p95": 0.020000000000436557,
+              "min": 0,
+              "max": 2.5200000000004366
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137668,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.8076923076917696,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "webkit",
+          "profile": "mobile-dpr",
+          "reference": {
+            "frames": 323,
+            "passes": 2,
+            "intervalMs": {
+              "count": 323,
+              "median": 16.600000000000364,
+              "p95": 19.800000000000182,
+              "min": 12.400000000000546,
+              "max": 29.900000000001455
+            },
+            "renderEnvelopeMs": {
+              "count": 323,
+              "median": 0.5399999999990541,
+              "p95": 0.9399999999995998,
+              "min": 0.38000000000101863,
+              "max": 4.039999999999054
+            },
+            "updateMs": {
+              "count": 323,
+              "median": 0.1000000000003638,
+              "p95": 0.2600000000002183,
+              "min": 0.05999999999949068,
+              "max": 3.3400000000001455
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 323,
+              "median": 0.1999999999989086,
+              "p95": 0.2600000000002183,
+              "min": 0.07999999999992724,
+              "max": 3.3399999999983265
+            },
+            "glDispatchMs": {
+              "count": 323,
+              "median": 0.019999999998617568,
+              "p95": 0.039999999999054126,
+              "min": 0,
+              "max": 0.040000000000873115
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137940,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "fused": {
+            "frames": 325,
+            "passes": 1,
+            "intervalMs": {
+              "count": 325,
+              "median": 16.659999999999854,
+              "p95": 19.899999999999636,
+              "min": 6.960000000000946,
+              "max": 27.159999999999854
+            },
+            "renderEnvelopeMs": {
+              "count": 325,
+              "median": 0.4400000000005093,
+              "p95": 0.680000000000291,
+              "min": 0.2999999999992724,
+              "max": 4.280000000000655
+            },
+            "updateMs": {
+              "count": 325,
+              "median": 0.1000000000003638,
+              "p95": 0.2400000000016007,
+              "min": 0.05999999999949068,
+              "max": 4.140000000000327
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 325,
+              "median": 0.11999999999898137,
+              "p95": 0.15999999999985448,
+              "min": 0.05999999999949068,
+              "max": 2.960000000000946
+            },
+            "glDispatchMs": {
+              "count": 325,
+              "median": 0.019999999998617568,
+              "p95": 0.020000000000436557,
+              "min": 0,
+              "max": 0.040000000000873115
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137668,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.8148148148171852,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        }
+      ],
+      "scope": "Pure deterministic 256x256 procedural child; complete original mother algorithm, frozen RGBA8 NEAREST/CLAMP semantics",
+      "coreAPIAdded": false,
+      "agentGate": "NOT_RUN",
+      "galleryGate": "NOT_RUN"
+    },
+    {
+      "id": "glass",
+      "status": "PASS",
+      "dimensions": {
+        "Build": "PASS",
+        "Runtime": "PASS",
+        "Visual": "PASS",
+        "Boundary": "PASS",
+        "Resource": "PASS",
+        "Performance": "PASS"
+      },
+      "visualCases": 72,
+      "boundaryCases": 1176,
+      "resourceCycles": 600,
+      "resizeCases": 6,
+      "performanceWindows": 18,
+      "visual": [
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "default",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.10283203125,
+          "nonzero": 105300,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "box",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 2,
+          "mean": 0.103923828125,
+          "nonzero": 106417,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "refraction-zero",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1032763671875,
+          "nonzero": 105755,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "blur",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 2,
+          "mean": 0.1048544921875,
+          "nonzero": 107369,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "cutout",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 2,
+          "mean": 0.0166259765625,
+          "nonzero": 17024,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 1,
+          "case": "blank",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "default",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.102778076171875,
+          "nonzero": 420973,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "box",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.104123291015625,
+          "nonzero": 426484,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "refraction-zero",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.103140380859375,
+          "nonzero": 422459,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "blur",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.103745849609375,
+          "nonzero": 424942,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "cutout",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.016705322265625,
+          "nonzero": 68422,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "chromium",
+          "dpr": 2,
+          "case": "blank",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "default",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.10283203125,
+          "nonzero": 105300,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "box",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 2,
+          "mean": 0.103923828125,
+          "nonzero": 106417,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "refraction-zero",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1032763671875,
+          "nonzero": 105755,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "blur",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 2,
+          "mean": 0.1048544921875,
+          "nonzero": 107369,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "cutout",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 2,
+          "mean": 0.0166259765625,
+          "nonzero": 17024,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 1,
+          "case": "blank",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "default",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.102778076171875,
+          "nonzero": 420973,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "box",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.104123291015625,
+          "nonzero": 426484,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "refraction-zero",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.103140380859375,
+          "nonzero": 422459,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "blur",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.103745849609375,
+          "nonzero": 424942,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "cutout",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.016705322265625,
+          "nonzero": 68422,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "firefox",
+          "dpr": 2,
+          "case": "blank",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "default",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.10283203125,
+          "nonzero": 105300,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "box",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 2,
+          "mean": 0.103923828125,
+          "nonzero": 106417,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "refraction-zero",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 1,
+          "mean": 0.1032763671875,
+          "nonzero": 105755,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "blur",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 2,
+          "mean": 0.1048544921875,
+          "nonzero": 107369,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "cutout",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 2,
+          "mean": 0.0166259765625,
+          "nonzero": 17024,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 1,
+          "case": "blank",
+          "width": 640,
+          "height": 400,
+          "channels": 1024000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "default",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.102778076171875,
+          "nonzero": 420973,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "box",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.104123291015625,
+          "nonzero": 426484,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "refraction-zero",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.103140380859375,
+          "nonzero": 422459,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "blur",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.103745849609375,
+          "nonzero": 424942,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "cutout",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 2,
+          "mean": 0.016705322265625,
+          "nonzero": 68422,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        },
+        {
+          "engine": "webkit",
+          "dpr": 2,
+          "case": "blank",
+          "width": 1280,
+          "height": 800,
+          "channels": 4096000,
+          "max": 0,
+          "mean": 0,
+          "nonzero": 0,
+          "exceeding": 0,
+          "acceptance": "Measured first pilot data: maximum <=2 code values; mother mathematical oracle remains independently <=2"
+        }
+      ],
+      "benchmarks": [
+        {
+          "engine": "chromium",
+          "profile": "720p",
+          "reference": {
+            "frames": 329,
+            "passes": 2,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.649999998509884,
+              "p95": 17.240000002086163,
+              "min": 14.839999996125698,
+              "max": 18.36999999731779
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.5249999985098839,
+              "p95": 0.7899999991059303,
+              "min": 0.25,
+              "max": 2.744999997317791
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.12000000476837158,
+              "p95": 0.20499999821186066,
+              "min": 0.08999999612569809,
+              "max": 0.6900000050663948
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.14500000327825546,
+              "p95": 0.26500000804662704,
+              "min": 0.06499999761581421,
+              "max": 0.4100000038743019
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0.005000002682209015,
+              "p95": 0.015000000596046448,
+              "min": 0,
+              "max": 0.10500000417232513
+            },
+            "gpuMs": {
+              "count": 329,
+              "median": 0.534528,
+              "p95": 1.734656,
+              "min": 0.31232,
+              "max": 2.73408
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 289328,
+            "bufferBytes": 7137988,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "fused": {
+            "frames": 329,
+            "passes": 1,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.655000001192093,
+              "p95": 17.17000000178814,
+              "min": 14.929999999701977,
+              "max": 18.189999997615814
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.42000000178813934,
+              "p95": 0.5800000056624413,
+              "min": 0.2749999985098839,
+              "max": 1.0499999970197678
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.125,
+              "p95": 0.2150000035762787,
+              "min": 0.08500000089406967,
+              "max": 0.39500000327825546
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.08000000566244125,
+              "p95": 0.1550000086426735,
+              "min": 0.049999989569187164,
+              "max": 0.23499999195337296
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0.005000002682209015,
+              "p95": 0.009999997913837433,
+              "min": 0,
+              "max": 0.08499999344348907
+            },
+            "gpuMs": {
+              "count": 329,
+              "median": 0.8704,
+              "p95": 2.046976,
+              "min": 0.674816,
+              "max": 3.224576
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 27184,
+            "bufferBytes": 7137716,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.8000000056766329,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "chromium",
+          "profile": "1080p",
+          "reference": {
+            "frames": 292,
+            "passes": 2,
+            "intervalMs": {
+              "count": 292,
+              "median": 16.739999994635582,
+              "p95": 32.91499999910593,
+              "min": 14.700000002980232,
+              "max": 33.83000000566244
+            },
+            "renderEnvelopeMs": {
+              "count": 292,
+              "median": 0.5499999970197678,
+              "p95": 0.8299999982118607,
+              "min": 0.23499999940395355,
+              "max": 2.5549999997019768
+            },
+            "updateMs": {
+              "count": 292,
+              "median": 0.125,
+              "p95": 0.2199999988079071,
+              "min": 0.0650000050663948,
+              "max": 0.3400000035762787
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 292,
+              "median": 0.1549999937415123,
+              "p95": 0.25999999791383743,
+              "min": 0.059999994933605194,
+              "max": 0.5099999979138374
+            },
+            "glDispatchMs": {
+              "count": 292,
+              "median": 0.005000002682209015,
+              "p95": 0.01000000536441803,
+              "min": 0,
+              "max": 0.10000000149011612
+            },
+            "gpuMs": {
+              "count": 292,
+              "median": 2.13504,
+              "p95": 5.4272,
+              "min": 1.399808,
+              "max": 8.87808
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 289328,
+            "bufferBytes": 7137988,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "fused": {
+            "frames": 328,
+            "passes": 1,
+            "intervalMs": {
+              "count": 328,
+              "median": 16.679999999701977,
+              "p95": 17.160000003874302,
+              "min": 14.574999995529652,
+              "max": 18.525000005960464
+            },
+            "renderEnvelopeMs": {
+              "count": 328,
+              "median": 0.41499999910593033,
+              "p95": 0.5999999940395355,
+              "min": 0.22999999672174454,
+              "max": 0.8950000032782555
+            },
+            "updateMs": {
+              "count": 328,
+              "median": 0.11499999463558197,
+              "p95": 0.1899999976158142,
+              "min": 0.059999994933605194,
+              "max": 0.32999999821186066
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 328,
+              "median": 0.08000000566244125,
+              "p95": 0.16499999910593033,
+              "min": 0.044999994337558746,
+              "max": 0.26500000059604645
+            },
+            "glDispatchMs": {
+              "count": 328,
+              "median": 0.005000002682209015,
+              "p95": 0.01000000536441803,
+              "min": 0,
+              "max": 0.11000000685453415
+            },
+            "gpuMs": {
+              "count": 328,
+              "median": 2.269184,
+              "p95": 4.995072,
+              "min": 1.998848,
+              "max": 8.43264
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 27184,
+            "bufferBytes": 7137716,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.7545454570084564,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "chromium",
+          "profile": "mobile-dpr",
+          "reference": {
+            "frames": 328,
+            "passes": 2,
+            "intervalMs": {
+              "count": 328,
+              "median": 16.66500000655651,
+              "p95": 17.24500000476837,
+              "min": 13.834999993443489,
+              "max": 31.309999994933605
+            },
+            "renderEnvelopeMs": {
+              "count": 328,
+              "median": 0.5350000038743019,
+              "p95": 0.8299999982118607,
+              "min": 0.26999999582767487,
+              "max": 3.475000001490116
+            },
+            "updateMs": {
+              "count": 328,
+              "median": 0.125,
+              "p95": 0.19999999552965164,
+              "min": 0.08500000089406967,
+              "max": 0.35500000417232513
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 328,
+              "median": 0.1549999937415123,
+              "p95": 0.2749999985098839,
+              "min": 0.07000000774860382,
+              "max": 0.5500000044703484
+            },
+            "glDispatchMs": {
+              "count": 328,
+              "median": 0.005000002682209015,
+              "p95": 0.015000000596046448,
+              "min": 0,
+              "max": 0.10000000149011612
+            },
+            "gpuMs": {
+              "count": 328,
+              "median": 0.799744,
+              "p95": 2.041856,
+              "min": 0.498688,
+              "max": 3.054592
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 289328,
+            "bufferBytes": 7137988,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "fused": {
+            "frames": 273,
+            "passes": 1,
+            "intervalMs": {
+              "count": 273,
+              "median": 16.740000002086163,
+              "p95": 33.524999998509884,
+              "min": 14.444999992847443,
+              "max": 34.559999994933605
+            },
+            "renderEnvelopeMs": {
+              "count": 273,
+              "median": 0.42000000178813934,
+              "p95": 0.6799999997019768,
+              "min": 0.3100000023841858,
+              "max": 0.9450000002980232
+            },
+            "updateMs": {
+              "count": 273,
+              "median": 0.13000000268220901,
+              "p95": 0.23499999940395355,
+              "min": 0.08500000089406967,
+              "max": 0.49000000208616257
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 273,
+              "median": 0.07999999076128006,
+              "p95": 0.1599999964237213,
+              "min": 0.04500000178813934,
+              "max": 0.2600000128149986
+            },
+            "glDispatchMs": {
+              "count": 273,
+              "median": 0.005000002682209015,
+              "p95": 0.009999997913837433,
+              "min": 0,
+              "max": 0.10499999672174454
+            },
+            "gpuMs": {
+              "count": 273,
+              "median": 1.299456,
+              "p95": 2.776064,
+              "min": 1.035264,
+              "max": 5.254144
+            },
+            "timerAvailable": true,
+            "gpuUnavailableReason": null,
+            "textureBytes": 27184,
+            "bufferBytes": 7137716,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.004999995231628418
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.7850467266292174,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "firefox",
+          "profile": "720p",
+          "reference": {
+            "frames": 328,
+            "passes": 2,
+            "intervalMs": {
+              "count": 328,
+              "median": 16.67999999999938,
+              "p95": 17.23999999999978,
+              "min": 13.819999999999936,
+              "max": 19.720000000000027
+            },
+            "renderEnvelopeMs": {
+              "count": 328,
+              "median": 0.40000000000009095,
+              "p95": 0.5800000000008367,
+              "min": 0.1999999999998181,
+              "max": 3.6800000000000637
+            },
+            "updateMs": {
+              "count": 328,
+              "median": 0.07999999999992724,
+              "p95": 0.18000000000006366,
+              "min": 0.019999999999527063,
+              "max": 0.7199999999993452
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 328,
+              "median": 0.09999999999990905,
+              "p95": 0.15999999999985448,
+              "min": 0.03999999999996362,
+              "max": 0.21999999999934516
+            },
+            "glDispatchMs": {
+              "count": 328,
+              "median": 0,
+              "p95": 0.01999999999998181,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137988,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "fused": {
+            "frames": 329,
+            "passes": 1,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.659999999999854,
+              "p95": 17.26000000000022,
+              "min": 10.159999999999854,
+              "max": 23.420000000000073
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.3799999999996544,
+              "p95": 0.5199999999999818,
+              "min": 0.1999999999998181,
+              "max": 2.9600000000000364
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.08000000000083674,
+              "p95": 0.18000000000029104,
+              "min": 0.020000000000436557,
+              "max": 0.5599999999999454
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.05999999999994543,
+              "p95": 0.1000000000003638,
+              "min": 0.019999999999527063,
+              "max": 2.6599999999998545
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0,
+              "p95": 0.019999999999527063,
+              "min": 0,
+              "max": 2.619999999999891
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137716,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.9499999999989199,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "firefox",
+          "profile": "1080p",
+          "reference": {
+            "frames": 329,
+            "passes": 2,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.679999999999836,
+              "p95": 17.279999999999745,
+              "min": 13.899999999999864,
+              "max": 19.62000000000012
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.5,
+              "p95": 0.7200000000000273,
+              "min": 0.23999999999978172,
+              "max": 3.4400000000000546
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.09999999999990905,
+              "p95": 0.22000000000002728,
+              "min": 0.03999999999996362,
+              "max": 0.35999999999989996
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.11999999999989086,
+              "p95": 0.18000000000006366,
+              "min": 0.03999999999996362,
+              "max": 0.24000000000023647
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0,
+              "p95": 0.01999999999998181,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137988,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "fused": {
+            "frames": 328,
+            "passes": 1,
+            "intervalMs": {
+              "count": 328,
+              "median": 16.640000000000327,
+              "p95": 17.220000000000027,
+              "min": 14.259999999999991,
+              "max": 19.12000000000012
+            },
+            "renderEnvelopeMs": {
+              "count": 328,
+              "median": 0.44000000000005457,
+              "p95": 0.5800000000008367,
+              "min": 0.2600000000002183,
+              "max": 3
+            },
+            "updateMs": {
+              "count": 328,
+              "median": 0.09999999999990905,
+              "p95": 0.1999999999998181,
+              "min": 0.03999999999996362,
+              "max": 0.47999999999956344
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 328,
+              "median": 0.07999999999992724,
+              "p95": 0.11999999999989086,
+              "min": 0.019999999999527063,
+              "max": 2.5599999999999454
+            },
+            "glDispatchMs": {
+              "count": 328,
+              "median": 0,
+              "p95": 0.01999999999998181,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137716,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.8800000000001091,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "firefox",
+          "profile": "mobile-dpr",
+          "reference": {
+            "frames": 328,
+            "passes": 2,
+            "intervalMs": {
+              "count": 328,
+              "median": 16.659999999999854,
+              "p95": 17.299999999999727,
+              "min": 13.279999999999745,
+              "max": 20.279999999999973
+            },
+            "renderEnvelopeMs": {
+              "count": 328,
+              "median": 0.5399999999999636,
+              "p95": 0.7000000000002728,
+              "min": 0.31999999999970896,
+              "max": 1.2199999999998
+            },
+            "updateMs": {
+              "count": 328,
+              "median": 0.1000000000003638,
+              "p95": 0.22000000000002728,
+              "min": 0.03999999999996362,
+              "max": 3.740000000000009
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 328,
+              "median": 0.12000000000080036,
+              "p95": 0.18000000000120053,
+              "min": 0.039999999999054126,
+              "max": 0.27999999999974534
+            },
+            "glDispatchMs": {
+              "count": 328,
+              "median": 0,
+              "p95": 0.01999999999998181,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137988,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "fused": {
+            "frames": 329,
+            "passes": 1,
+            "intervalMs": {
+              "count": 329,
+              "median": 16.659999999999854,
+              "p95": 17.280000000000655,
+              "min": 14.120000000000118,
+              "max": 19.24000000000001
+            },
+            "renderEnvelopeMs": {
+              "count": 329,
+              "median": 0.38000000000010914,
+              "p95": 0.5399999999999636,
+              "min": 0.23999999999978172,
+              "max": 3.2000000000000455
+            },
+            "updateMs": {
+              "count": 329,
+              "median": 0.09999999999990905,
+              "p95": 0.18000000000006366,
+              "min": 0.03999999999996362,
+              "max": 0.3400000000001455
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 329,
+              "median": 0.06000000000040018,
+              "p95": 0.1000000000003638,
+              "min": 0.019999999999527063,
+              "max": 0.21999999999934516
+            },
+            "glDispatchMs": {
+              "count": 329,
+              "median": 0,
+              "p95": 0.01999999999998181,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137716,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.01999999999998181
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.7037037037039532,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "webkit",
+          "profile": "720p",
+          "reference": {
+            "frames": 325,
+            "passes": 2,
+            "intervalMs": {
+              "count": 325,
+              "median": 16.700000000000728,
+              "p95": 19.719999999999345,
+              "min": 12.220000000000255,
+              "max": 29.17999999999938
+            },
+            "renderEnvelopeMs": {
+              "count": 325,
+              "median": 0.5200000000004366,
+              "p95": 0.8599999999996726,
+              "min": 0.3600000000005821,
+              "max": 3.7599999999983993
+            },
+            "updateMs": {
+              "count": 325,
+              "median": 0.12000000000080036,
+              "p95": 2.6200000000008004,
+              "min": 0.07999999999992724,
+              "max": 3.8599999999996726
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 325,
+              "median": 0.1999999999998181,
+              "p95": 0.27999999999974534,
+              "min": 0.10000000000218279,
+              "max": 2.8399999999983265
+            },
+            "glDispatchMs": {
+              "count": 325,
+              "median": 0.019999999998617568,
+              "p95": 0.040000000000873115,
+              "min": 0,
+              "max": 0.06000000000130967
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137988,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "fused": {
+            "frames": 325,
+            "passes": 1,
+            "intervalMs": {
+              "count": 325,
+              "median": 16.720000000001164,
+              "p95": 19.920000000000073,
+              "min": 10.899999999999636,
+              "max": 25.079999999999927
+            },
+            "renderEnvelopeMs": {
+              "count": 325,
+              "median": 0.42000000000007276,
+              "p95": 0.6399999999994179,
+              "min": 0.2599999999983993,
+              "max": 1.519999999999527
+            },
+            "updateMs": {
+              "count": 325,
+              "median": 0.12000000000080036,
+              "p95": 2.959999999999127,
+              "min": 0.07999999999992724,
+              "max": 3.5
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 325,
+              "median": 0.1000000000003638,
+              "p95": 0.1599999999980355,
+              "min": 0.05999999999949068,
+              "max": 0.22000000000025466
+            },
+            "glDispatchMs": {
+              "count": 325,
+              "median": 0.019999999998617568,
+              "p95": 0.020000000000436557,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137716,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.8076923076917696,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "webkit",
+          "profile": "1080p",
+          "reference": {
+            "frames": 316,
+            "passes": 2,
+            "intervalMs": {
+              "count": 316,
+              "median": 16.719999999999345,
+              "p95": 20.640000000000327,
+              "min": 11.899999999999636,
+              "max": 35.42000000000007
+            },
+            "renderEnvelopeMs": {
+              "count": 316,
+              "median": 0.5599999999994907,
+              "p95": 0.9200000000000728,
+              "min": 0.28000000000065484,
+              "max": 3.680000000000291
+            },
+            "updateMs": {
+              "count": 316,
+              "median": 0.13999999999941792,
+              "p95": 2.720000000001164,
+              "min": 0.07999999999992724,
+              "max": 4.039999999999964
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 316,
+              "median": 0.1999999999989086,
+              "p95": 0.2600000000002183,
+              "min": 0.09999999999854481,
+              "max": 2.959999999999127
+            },
+            "glDispatchMs": {
+              "count": 316,
+              "median": 0.019999999998617568,
+              "p95": 0.03999999999996362,
+              "min": 0,
+              "max": 0.040000000000873115
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137988,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "fused": {
+            "frames": 326,
+            "passes": 1,
+            "intervalMs": {
+              "count": 326,
+              "median": 16.719999999999345,
+              "p95": 19.840000000000146,
+              "min": 12.159999999999854,
+              "max": 21.640000000000327
+            },
+            "renderEnvelopeMs": {
+              "count": 326,
+              "median": 0.4400000000005093,
+              "p95": 1.5599999999994907,
+              "min": 0.2999999999992724,
+              "max": 4.359999999999673
+            },
+            "updateMs": {
+              "count": 326,
+              "median": 0.12000000000080036,
+              "p95": 2.2599999999983993,
+              "min": 0.07999999999992724,
+              "max": 3.6400000000003274
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 326,
+              "median": 0.10000000000218279,
+              "p95": 0.15999999999985448,
+              "min": 0.05999999999949068,
+              "max": 2.6599999999980355
+            },
+            "glDispatchMs": {
+              "count": 326,
+              "median": 0.019999999998617568,
+              "p95": 0.020000000000436557,
+              "min": 0,
+              "max": 0.020000000000436557
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137716,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.7857142857159098,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        },
+        {
+          "engine": "webkit",
+          "profile": "mobile-dpr",
+          "reference": {
+            "frames": 327,
+            "passes": 2,
+            "intervalMs": {
+              "count": 327,
+              "median": 16.68000000000029,
+              "p95": 20.159999999999854,
+              "min": 11.55999999999949,
+              "max": 21.800000000000182
+            },
+            "renderEnvelopeMs": {
+              "count": 327,
+              "median": 0.5399999999990541,
+              "p95": 0.8800000000001091,
+              "min": 0.37999999999919964,
+              "max": 3.180000000000291
+            },
+            "updateMs": {
+              "count": 327,
+              "median": 0.13999999999941792,
+              "p95": 2.8400000000001455,
+              "min": 0.07999999999992724,
+              "max": 4
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 327,
+              "median": 0.1999999999998181,
+              "p95": 0.2600000000002183,
+              "min": 0.08000000000174623,
+              "max": 2.4200000000018917
+            },
+            "glDispatchMs": {
+              "count": 327,
+              "median": 0.019999999998617568,
+              "p95": 0.03999999999996362,
+              "min": 0,
+              "max": 0.31999999999970896
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 289328,
+            "bufferBytes": 7137988,
+            "childTextures": 1,
+            "estimatedOwnedChildBytes": 262144,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "fused": {
+            "frames": 325,
+            "passes": 1,
+            "intervalMs": {
+              "count": 325,
+              "median": 16.6200000000008,
+              "p95": 20.399999999999636,
+              "min": 11.960000000000946,
+              "max": 28.840000000000146
+            },
+            "renderEnvelopeMs": {
+              "count": 325,
+              "median": 0.4400000000005093,
+              "p95": 0.7000000000007276,
+              "min": 0.28000000000065484,
+              "max": 4.660000000000764
+            },
+            "updateMs": {
+              "count": 325,
+              "median": 0.12000000000080036,
+              "p95": 2.600000000000364,
+              "min": 0.07999999999992724,
+              "max": 3.9200000000000728
+            },
+            "nativeGfxEnvelopeMs": {
+              "count": 325,
+              "median": 0.10000000000218279,
+              "p95": 0.15999999999985448,
+              "min": 0.05999999999949068,
+              "max": 3.640000000001237
+            },
+            "glDispatchMs": {
+              "count": 325,
+              "median": 0.019999999998617568,
+              "p95": 0.020000000000436557,
+              "min": 0,
+              "max": 0.03999999999996362
+            },
+            "gpuMs": {
+              "count": 0,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null
+            },
+            "timerAvailable": false,
+            "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+            "textureBytes": 27184,
+            "bufferBytes": 7137716,
+            "childTextures": 0,
+            "estimatedOwnedChildBytes": 0,
+            "clockMinimumMs": 0.019999999999527063
+          },
+          "textureBytesSaved": 262144,
+          "renderEnvelopeMedianRatio": 0.8148148148171852,
+          "interpretation": "Serial instrumented CPU envelope; GPU and CPU results separated. Lower pass count does not guarantee faster."
+        }
+      ],
+      "scope": "Pure deterministic 256x256 procedural child; complete original mother algorithm, frozen RGBA8 NEAREST/CLAMP semantics",
+      "coreAPIAdded": false,
+      "agentGate": "NOT_RUN",
+      "galleryGate": "NOT_RUN"
+    }
+  ],
+  "agentGate": "NOT_RUN",
+  "galleryGate": "NOT_RUN",
+  "wave5Gate": "NOT_RUN",
+  "projectCompleted": false
+}

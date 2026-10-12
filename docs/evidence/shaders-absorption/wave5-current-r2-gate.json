@@ -1,0 +1,101 @@
+{
+  "schema": "shaders-wave5-current-gate/1",
+  "evaluatedAt": "2026-10-11T16:13:12.743Z",
+  "status": "BLOCKED",
+  "nextWaveEligible": false,
+  "agentGate": "NOT_RUN",
+  "independentGalleryGate": "NOT_RUN",
+  "projectCompleted": false,
+  "coreAPIAdded": false,
+  "currentSdk": [
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303581,
+      "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+    },
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "54522acf10f2f052245d945de634dd02e34d18f5e54c525146420a8236bba151"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6649142,
+      "sha256": "f6f202f459a7df94bde2cfe26b2ae6b25befbdfa066c9534cf5eb02798664d06"
+    }
+  ],
+  "bindings": {
+    "driver": {
+      "path": "docs/evidence/shaders-absorption/wave5-driver-pilot-frozen-gate.json",
+      "bytes": 30513,
+      "sha256": "3f4f7573e4639dac03fba0ebe06f2fd7b34841f5caa1a509e43d89287af809ef"
+    },
+    "fusion": {
+      "path": "docs/evidence/shaders-absorption/wave5-uv-fusion-pilots-gate.json",
+      "bytes": 101854,
+      "sha256": "ac85579d5a3c0dc21547ff42c3b32abe132ac30c4b67b941f8d1138e06a42585"
+    },
+    "previousWave": {
+      "path": "docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json",
+      "bytes": 8661,
+      "sha256": "a10cc337dc51e984403f77db9a8e172d3aebe8aa3a39e6c64fa43efee5e913f0"
+    }
+  },
+  "driver": {
+    "frozenCandidateValidation": {
+      "ok": true,
+      "errors": []
+    },
+    "counts": {
+      "engines": 3,
+      "consumers": 2,
+      "dimensions": 18,
+      "visualCases": 84,
+      "boundaryCases": 180,
+      "malformedAtomicRejections": 96,
+      "resourceCycles": 1200,
+      "liveResize": 12,
+      "screenshots": 96,
+      "performanceWindows": 18,
+      "steadyFrames": 5853
+    },
+    "currentSdkMatches": false
+  },
+  "fusion": {
+    "historicalStatusAtCollection": "PASS",
+    "currentSdkMatches": false,
+    "currentValidationPerformed": false
+  },
+  "previousWave": {
+    "historicalStatusAtCollection": "PASS",
+    "currentSdkMatches": false,
+    "currentValidationPerformed": false
+  },
+  "documentation": {
+    "ok": true,
+    "errors": []
+  },
+  "blockers": [
+    {
+      "classification": "INFRA_FAILURE",
+      "item": "Driver workspace SDK",
+      "errors": [
+        "Exact SDK bytes differ from the accepted candidate; parallel builds must not be relabeled as current evidence."
+      ]
+    },
+    {
+      "classification": "INFRA_FAILURE",
+      "item": "Fusion workspace SDK",
+      "errors": [
+        "Exact SDK bytes differ from the accepted candidate; parallel builds must not be relabeled as current evidence."
+      ]
+    },
+    {
+      "classification": "INFRA_FAILURE",
+      "item": "Wave4 predecessor SDK",
+      "errors": [
+        "Exact SDK bytes differ from the accepted candidate; parallel builds must not be relabeled as current evidence."
+      ]
+    }
+  ]
+}

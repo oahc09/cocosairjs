@@ -245,3 +245,11 @@ C04 `shaders-input-dissolve-browser.cjs --phase=functional --browser=all --out=<
 2026-10-11 C01/C02随后完成当前SDK重采，C03因源码/元数据漂移也完整重采，当前叶级只读路径分别为 `c01-laser-card-current-sdk-gate.json`、`c02-film-neon-current-sdk-gate.json`、`c03-glass-trail-current-sdk-gate.json` 与原C04路径。旧文件保持历史身份，没有覆写。
 
 `node tools/verify/shaders-wave4-gate.cjs --verify=docs/evidence/shaders-absorption/wave4-current-gate.json`只读重算四叶级Gate、当前SDK一致性、实际总范围与前置Wave3当前校验，不启动浏览器、不构建、不安装、不写报告。`ok=true/exit=0`表示汇总诚实合规，不能代替其status：当前四组合PASS/完整Wave4 BLOCKED/nextWaveEligible=false，前置源码/SDK证据需刷新。Agent/独立Gallery仍NOT_RUN，见[Wave4十三项交付](../docs/effects/wave4-validation-delivery.md)。
+
+### Shader Wave5 文档与 Pilot
+
+`node tools/examples/shaders-effect-docs.cjs --write` 从十三例实际参数定义生成五份类型、文档和验证元数据；`--check` 只读检查源码合同与产物字节。它绑定所读取的 SDK 声明，不读取运行时 JS，也不授予 Engine/Agent 状态。详见[文档生成交付](../docs/effects/wave5-docs-generation-delivery.md)。
+
+`node tools/verify/shaders-driver-pilot-browser.cjs --phase=functional --browser=all --out=<new.json>` 写三浏览器、两消费者、DPR1/2 的实际功能报告、构建日志和96张PNG；`--phase=performance --authorization=<token>` 串行测量18个窗口，写实际CPU/GPU、时钟、环境和资源证据；`--verify=<raw.json>`只读复算。`shaders-driver-pilot-gate.cjs --verify=docs/evidence/shaders-absorption/wave5-driver-pilot-frozen-gate.json`验证39文件候选清单、两阶段自然OS退出、完整六维、34类真实篡改及源指纹；当前交付是冻结候选PASS，不能升级成工作区当前SDK通过。见[Driver交付](../docs/effects/driver-pilot-validation-delivery.md)。
+
+`node tools/verify/shaders-wave5-gate.cjs --out=<new.json>` 读取现有Driver、融合和Wave4证据，重算当前SDK一致性、Driver候选验证和文档合同，写新的汇总文件，拒绝覆盖；不启动浏览器或重建SDK。`--verify=<report.json>`只读重算。即使诚实的BLOCKED报告结构验证返回`ok=true`，CLI仍退出1，且`nextWaveEligible=false`。当前[Wave5汇总](../docs/evidence/shaders-absorption/wave5-current-r2-gate.json)存在三项SDK字节阻塞，不进入Wave6；[融合交付](../docs/effects/uv-fusion-pilots-validation-delivery.md)保留GPU回退结果，不默认启用融合。PNG复算需要同一NODE_PATH工具环境。

@@ -2,7 +2,7 @@
 
 ## 1. Goal
 
-2026-10-11：将九个母效果与四个组合的证据绑定到当前源码、示例规格和 SDK，再按 Wave1→Wave2→Wave3→Wave4 顺序验证前置链。当前刷新尚在执行，Wave5 未启动；不以历史 PASS 或采集器退出码替代当前 Gate。
+2026-10-11：九个母效果与四个组合的当前源码、示例规格、SDK 和 Wave1→Wave4 前置链刷新已完成。当前 Engine 链全 PASS，[Wave4 当前 SDK Gate](../evidence/shaders-absorption/wave4-current-sdk-r2-gate.json) 的 `nextWaveEligible=true`，进入 [Wave5](wave5-kickoff.md)。Agent 与独立 Gallery 另列，不代表项目或发布完成。
 
 ## 2. Upstream references
 
@@ -32,19 +32,23 @@ Orca Worker 的只读审查实际完成 10 个文件语法检查与小型 requir
 
 ## 6. Screenshots / visual evidence
 
-Wave1 初次当前 SDK 刷新曾由生产门禁接受：705 个实测案例、18 个独立 Gallery 生命周期条目。六份效果报告当前仍通过自身指纹校验；Gallery 规格闭包随后改变，须重新采集。
+当前 Wave1 r2 已通过：705 个实测案例、18 个新采集的独立 Gallery 生命周期条目；六份效果报告重新通过生产校验。先前规格漂移后的 Gallery 已重采。
 
 Wave2 r2 功能采集三效果、三浏览器均自然退出 0，并通过当时的生产检查。2026-10-11 09:24:28 UTC 的并发规格晋级改变了三个 `example.json`，后续汇总拒收；不将这批截图重标为当前 PASS。
+
+后续重新采集的当前 Wave2 r3 汇总已经生产验证 PASS：117 个视觉案例、132 张截图。当前 Wave3 r2 汇总亦 PASS：120 个视觉案例、141 张截图。截图包含时间与 resize 额外拍摄，不等于算法案例数量。
 
 ## 7. Performance evidence
 
 Wave2 r2 的 27 个性能配置在采集时全部通过，三个性能子进程自然退出 0，SDK 指纹不变。随后的规格闭包失效同样要求完整重采。
 
+后续重新采集并重验的当前 Wave2 r3 包含 27 个性能配置，当前 Wave3 r2 包含 36 个配置；已通过当前 SDK 与前置链生产验证。
+
 新的性能采集等待外部示例验收与 Jest 结束，按冻结配置逐窗口串行运行；不能把同时进行其他验收的窗口当成独占性能基准。GPU timestamp 不可用、物理 GPU 内存不可用和 CPU 插桩开销沿用实际披露。
 
 ## 8. Resource/lifecycle evidence
 
-每效果原有资源、引用、RT 独立 detach/dispose、终态与幂等合同不变。Wave1 的 Gallery 18 条独立运行态证据需随示例规格重新冻结；Wave2–Wave4 的独立 Gallery 和 Agent Gate 保持 NOT_RUN。
+每效果原有资源、引用、RT 独立 detach/dispose、终态与幂等合同不变。当前 Wave1 Gallery 的 18 条独立运行态证据已重新冻结并通过。当前 Wave2、Wave3 各含 900 个资源循环；Wave2–Wave4 的独立 Gallery 和 Agent Gate 保持 NOT_RUN。
 
 ## 9. API DX gaps
 
@@ -60,12 +64,22 @@ Wave2 r2 的 27 个性能配置在采集时全部通过，三个性能子进程�
 
 ## 12. Validation status
 
+最终终态：Lead r6 master 于 2026-10-11 12:01:50 UTC 自然退出 0，两阶段均 exit=0/signal=null/error=null/metadataUnchanged=true。当前路径为 Wave1 r2、Wave2 r3、Wave3 r2、Wave4 r2。四级链由生产验证器实际重算 PASS；Orca Worker 终态独立只读复核同样 PASS。
+
+Wave4 当前范围：72维、198视觉案例、990参数边界、75非法输入拒收、1200资源周期、18活 resize、234截图、54性能配置；17424个稳态帧。四叶审计 56+44+65+44=209项实际拒收，当前汇总元数据24项拒收。Worker额外复核3项汇总克隆拒收，仅检查3张PNG存在可读，未额外进行独立像素复算。完整像素判定来自生产校验器对真实报告的重算。
+
+以下为保留的恢复过程：
+
 截至 2026-10-11 11:01 UTC：新的 Wave1 r2、Wave2 r2 已实际通过；Wave3 六个采集子进程均自然退出 0、生产 `validateFiles` 通过。汇总在 E08 叶级检查失败：通用计数器漏了 `trustedPointerCases` 与 `trustedTouchCases`，并非实际行数不足。Wave3 汇总文件当时尚未生成，Wave4 未启动，master 自然退出 1，失败日志保留。
 
 Lead 已修复计数器并启动独立 r3 恢复队列。校验器源指纹因此变化：以当前生产验证重新核对 Wave2 既有原始报告和叶级 Gate，生成新的 `wave2-current-sdk-r3-gate.json`，保留原 r2 汇总；Wave3 绑定此 r3 前置，复用经重验通过的六份原始报告、生成其 r2 汇总。已有审计再次执行变异并比对，已有文件不覆盖。之后完整刷新四组合，再生成 Wave4 r2 当前链。恢复队列终态仍待验收，不能提前声称全链 PASS。
+
+恢复时发现审计内存诊断 `NaN` 与其 JSON 保存值 `null` 的比较差异；仅在生产验证已经拒收变异之后，以同一 JSON 保存形式比较审计。当前 Wave2 r3、Wave3 r2 已由 r4 恢复队列生产接受，分别通过 15 项汇总元数据篡改拒收。旧失败 master 与审计保留。
+
+Wave4 首个 C01 功能重采自然退出 1，唯一错误为 Chromium 普通模式 reset 快照时间已推进到 0.0165 秒。Orca Worker 将同一真实 click 冻结采样修正接入 C01/C02/C04，并纳入输入闭包，报告聚焦 Node 合同 169/169 通过；C03 已有权威 resetReceipt，不修改。Lead 检查接线与闭包后，于 2026-10-11 11:38 UTC 启动 r5 master：使用新 W4 r3 原始报告路径执行四功能、四性能阶段，再签发当前 Wave4 r2 汇总。此队列尚未终态，浏览器修复仍待新证据确认。
 
 未 stage、commit、push、部署或重写全库库存。外部全库验收结果由其原执行渠道交付，本刷新不代宣其完成状态。
 
 ## 13. Known limitations / next step
 
-当前下一步为完成 Wave3 汇总恢复及四组合真实刷新。完整 Wave4 Gate PASS 后才进入 Wave5 公共能力、同源文档与两个 UV/Pass Fusion 实测 Pilot。实体设备、长时、多标签页、Agent Benchmark 和整个项目完成度仍未验收。
+当前开始 Wave5 公共能力、同源文档与两个 UV/Pass Fusion 实测 Pilot。现有通过的冻结输入保持不变，新增能力需单独验证；正式优化必须先取得两个真实案例的前后指标。实体设备、长时、多标签页、Agent Benchmark 和整个项目完成度仍未验收。

@@ -1,0 +1,720 @@
+{
+  "schemaVersion": "shaders-effect-validation-metadata/1",
+  "generated": "tools/examples/shaders-effect-docs.cjs",
+  "sourceOfTruth": "EffectDefinition (12 parameters.json + 1 static TS literal)",
+  "toolchain": {
+    "node": "24.14.0",
+    "typescript": "4.9.5",
+    "prettier": "3.9.9"
+  },
+  "documented": ["E01", "E02", "E03", "E04", "E05", "E06", "E07", "E08", "E09", "C01", "C02", "C03", "C04"],
+  "cataloged": ["E01", "E02", "E03", "E04", "E05", "E06", "E07", "E08", "E09", "C01", "C02", "C03", "C04"],
+  "implemented": ["E01", "E02", "E03", "E04", "E05", "E06", "E07", "E08", "E09", "C01", "C02", "C03", "C04"],
+  "engineVerified": [],
+  "agentVerified": [],
+  "stable": [],
+  "engineGateStatus": "NOT_EVALUATED_BY_THIS_TOOL",
+  "runtimeIdentityPolicy": "Runtime bundle bytes are bound by Engine collectors; documentation binds the SDK declarations it consumes.",
+  "generatorIdentity": [
+    {
+      "path": "tools/examples/shaders-effect-docs.cjs",
+      "bytes": 27674,
+      "sha256": "510199355578a00707c553e761ba1ee0662f6ef677fd25701fc5d168e6af372b"
+    },
+    {
+      "path": "tools/verify/shaders-effect-contract.cjs",
+      "bytes": 37563,
+      "sha256": "e1eb1a21b1167ab7d5dab8d7cf21fa214a44b23efa9d62f83a75d08d3d7c2ab3"
+    },
+    {
+      "path": "tools/verify/shaders-api-evidence.cjs",
+      "bytes": 1405,
+      "sha256": "e751578131b4376680f934b29a4be070248ffa8f66fd3364201dab368cc1951b"
+    },
+    {
+      "path": "tools/examples/spec-evidence.cjs",
+      "bytes": 12179,
+      "sha256": "ea41d909ead5f9397301cf0758f1894b7d35b8f8af6d84cdb94031ac1d0f846e"
+    },
+    {
+      "path": ".prettierrc.json",
+      "bytes": 726,
+      "sha256": "4c184df4264a37fbd7f178b505c9061f98e264fa9c6eb4f2688a4e479425ad8a"
+    },
+    {
+      "path": ".editorconfig",
+      "bytes": 295,
+      "sha256": "984307403247389fe3697adb933ae35e067a449f46d705091ddf569b41b6bea3"
+    },
+    {
+      "path": ".prettierignore",
+      "bytes": 1024,
+      "sha256": "a121a84d7d629c671a1f1efdb4d9e4b3e52b7f8cad7a1dc0f026de9bd521ea16"
+    },
+    {
+      "path": "package.json",
+      "bytes": 5793,
+      "sha256": "d3772a83ab37cf7b0a0367debc3b32ce36ebff04d4f4e9a75c846832d87ce8de"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303581,
+      "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+    }
+  ],
+  "gates": {
+    "wave1": "docs/evidence/shaders-absorption/wave1-current-sdk-r2-gate.json",
+    "wave2": "docs/evidence/shaders-absorption/wave2-current-sdk-r3-gate.json",
+    "wave3": "docs/evidence/shaders-absorption/wave3-current-sdk-r2-gate.json",
+    "wave4": "docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json"
+  },
+  "structureKeys": {
+    "E01": "f41c9c5f4a790eaf810f1f9edda2fec84c43b36463650b439ea51030d8c72047",
+    "E02": "b906b643ba847f96fe8aab2e84a19da44316edf8af97cfde16d3796de2e60dae",
+    "E03": "bd12b79c0dabd74a53aa87db966b2c996a3cf4f6583f552a40693bebf5a92e1c",
+    "E04": "52213de9e21148ce4df0f5656c6d2cf3c7f656c03503cf62be7617a034af7ca5",
+    "E05": "c74abc6528af781730004f86d64768db79a57e56d4bc742fce4a20886c51c537",
+    "E06": "d207d9b5b670829657e19ff1be9a4633fcf08037900e7e9579b70990424fe073",
+    "E07": "828944efecc0881c327d83eaaa2341df0ba10e277c72ac217169dcf1ffc06309",
+    "E08": "e9e121949eb5ae7744f4ea1e6b4121b9f936b4c9c570836d247d34e7f82b088e",
+    "E09": "ca21f94f34cf7cbbe8cbc3b921df6f6e382499c2500f98153b757d1855a4ffae",
+    "C01": "4efce27b23c700d37ce7028388fe5b544de08c17a2520076013778bdabbe5b99",
+    "C02": "281a5ecc3382a8ba46bb1e4a731e0ad82e71c3e87055b2bf8e628fe5188af9d5",
+    "C03": "0010a27c4826a065c3e123a6099d08e1c841ddccf2dcb40fe1945a6dc69d9cc4",
+    "C04": "9793a92bcc927e258e89b02476f2c82b2e7ad2d16e3d5753a3f22ab3875c0d3c"
+  },
+  "effects": [
+    {
+      "id": "E01",
+      "name": "shader-noise-dissolve",
+      "version": "1.0.0",
+      "directory": "examples/shader-noise-dissolve/",
+      "source": "parameters.ts",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-noise-dissolve/src/parameters.ts",
+          "bytes": 3029,
+          "sha256": "103c75e9381aea4ac4c6bef5c460f5a2e8b5304e185903468c273964d300130e"
+        },
+        {
+          "path": "examples/shader-noise-dissolve/src/main.ts",
+          "bytes": 24673,
+          "sha256": "c35a7672454973b3432cf767ee47fa11758fedd2c32bbdbb02217b61697309e3"
+        },
+        {
+          "path": "examples/shader-noise-dissolve/example.json",
+          "bytes": 5243,
+          "sha256": "b88307c68a0840be6192c4e8de5d4bbb6a22cdd30dbc904817de05fd6043bd25"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 5,
+      "structureKey": "f41c9c5f4a790eaf810f1f9edda2fec84c43b36463650b439ea51030d8c72047",
+      "passes": 1
+    },
+    {
+      "id": "E02",
+      "name": "shader-thin-film",
+      "version": "1",
+      "directory": "examples/shader-thin-film/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-thin-film/parameters.json",
+          "bytes": 2140,
+          "sha256": "3dbdcec85142c858c599902d842a45fd2ff4b575749880b4b57a8ddcb7d29cb7"
+        },
+        {
+          "path": "examples/shader-thin-film/src/parameters.ts",
+          "bytes": 1937,
+          "sha256": "d2ae7be45ce6db350266e9d83f0c0c5cd8fb343b12d19182aeef3c77f4ecbb69"
+        },
+        {
+          "path": "examples/shader-thin-film/src/main.ts",
+          "bytes": 24894,
+          "sha256": "d05b0ed700f546daeed5a8464702c00819738e469e80a924f70da80bb45dafa2"
+        },
+        {
+          "path": "examples/shader-thin-film/example.json",
+          "bytes": 4133,
+          "sha256": "becab3e605a5f22c9e55bccad2e6a0df748d3798fa4c4c83cd68bb5fde7efad1"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 10,
+      "structureKey": "b906b643ba847f96fe8aab2e84a19da44316edf8af97cfde16d3796de2e60dae",
+      "passes": 1
+    },
+    {
+      "id": "E03",
+      "name": "holographic",
+      "version": "1.0.0",
+      "directory": "examples/shader-holographic/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-holographic/parameters.json",
+          "bytes": 3624,
+          "sha256": "96b9a0111e500aeb42b482995eb76b34f78a72b278ecafa0d55050ca38de97b6"
+        },
+        {
+          "path": "examples/shader-holographic/src/parameters.ts",
+          "bytes": 2353,
+          "sha256": "6b122d2b3f870adfde276a0725c517e2ac1eb7fba88f3b555b4368545c0c544f"
+        },
+        {
+          "path": "examples/shader-holographic/src/main.ts",
+          "bytes": 26480,
+          "sha256": "a6ab459b8bb1b64937cc0b423ab112584febad69951bf1e871af1e1f6f12991a"
+        },
+        {
+          "path": "examples/shader-holographic/example.json",
+          "bytes": 6456,
+          "sha256": "6ca8e0d996cc7678a6875df9b74b99f40a4ee2d400b4abe2976a66083979c3f8"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 13,
+      "structureKey": "bd12b79c0dabd74a53aa87db966b2c996a3cf4f6583f552a40693bebf5a92e1c",
+      "passes": 1
+    },
+    {
+      "id": "E04",
+      "name": "neon",
+      "version": "1.0.0",
+      "directory": "examples/shader-neon/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-neon/parameters.json",
+          "bytes": 5702,
+          "sha256": "20175f35189764077b51221a547b32f3895773176f8872d4f42fbd9da52fc280"
+        },
+        {
+          "path": "examples/shader-neon/src/parameters.ts",
+          "bytes": 3101,
+          "sha256": "806147e3044218a09f3f827897792d018bc3e0b209d5654eff8efb7542d6ff5f"
+        },
+        {
+          "path": "examples/shader-neon/src/main.ts",
+          "bytes": 26541,
+          "sha256": "6ce627173d19d8ff8336f4c12ce330e3cefe756087e422fe3fb7a12e500dd39d"
+        },
+        {
+          "path": "examples/shader-neon/example.json",
+          "bytes": 6228,
+          "sha256": "9c02dbfd77e1f6dae50b3670bb25164f955ed0a11192d0d625a2e30c5dc1b198"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 20,
+      "structureKey": "52213de9e21148ce4df0f5656c6d2cf3c7f656c03503cf62be7617a034af7ca5",
+      "passes": 1
+    },
+    {
+      "id": "E05",
+      "name": "emboss",
+      "version": "1.0.0",
+      "directory": "examples/shader-emboss/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-emboss/parameters.json",
+          "bytes": 2410,
+          "sha256": "b5acc5ff6cb3b16f02e9bbe3b504a5b716ac3ded45cd5b328052066c2bd4287d"
+        },
+        {
+          "path": "examples/shader-emboss/src/parameters.ts",
+          "bytes": 2225,
+          "sha256": "342251deb88a313c74af7cefd4e223f0e3df795d2fd848b52b00b5e77b86fc72"
+        },
+        {
+          "path": "examples/shader-emboss/src/main.ts",
+          "bytes": 31373,
+          "sha256": "4ffa9d203381562f4b351fe5f6bfe760a6f4c3c350efea53a9e4f04536f68675"
+        },
+        {
+          "path": "examples/shader-emboss/example.json",
+          "bytes": 6463,
+          "sha256": "e6c4c1e2579ea03338e1fc1f5f33ab95240338566b94863731baaffda799f56d"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 8,
+      "structureKey": "c74abc6528af781730004f86d64768db79a57e56d4bc742fce4a20886c51c537",
+      "passes": 2
+    },
+    {
+      "id": "E06",
+      "name": "sparkle",
+      "version": "1.0.0",
+      "directory": "examples/shader-sparkle/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-sparkle/parameters.json",
+          "bytes": 2522,
+          "sha256": "0d2f874bf2ec038aef2a30942f33b1451999c6fb71f02f4b374d8b905f5ac83b"
+        },
+        {
+          "path": "examples/shader-sparkle/src/parameters.ts",
+          "bytes": 1648,
+          "sha256": "b15071fa69731969d571fcf44334c7d611b26554b0fb011994956a22671d0e8e"
+        },
+        {
+          "path": "examples/shader-sparkle/src/main.ts",
+          "bytes": 28077,
+          "sha256": "c2592515f65ee80b27cae20faab77d43330bfed7b44d41862df1198ca64f9768"
+        },
+        {
+          "path": "examples/shader-sparkle/example.json",
+          "bytes": 6263,
+          "sha256": "a87636e8b5c7d9746a84a255223aeba6b04ac99a8bfbd88a49d9ab82a6fd145a"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 8,
+      "structureKey": "d207d9b5b670829657e19ff1be9a4633fcf08037900e7e9579b70990424fe073",
+      "passes": 1
+    },
+    {
+      "id": "E07",
+      "name": "liquidMetal",
+      "version": "1.0.0",
+      "directory": "examples/shader-liquid-metal/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-liquid-metal/parameters.json",
+          "bytes": 4933,
+          "sha256": "0958a01d47495eb254658a3778bc01c10ca0a7e02322b1e973d647da2c3bb4d0"
+        },
+        {
+          "path": "examples/shader-liquid-metal/src/parameters.ts",
+          "bytes": 2455,
+          "sha256": "e707a0d3f15715db08dd7dc3096f0e68a3a45f273371a01a54237c791d4a49c4"
+        },
+        {
+          "path": "examples/shader-liquid-metal/src/main.ts",
+          "bytes": 26619,
+          "sha256": "9beaa993b91a1d43f4646cedd39138ac157cff81513b204a2aaed7b9ed101c16"
+        },
+        {
+          "path": "examples/shader-liquid-metal/example.json",
+          "bytes": 6397,
+          "sha256": "7dbd9ca1d05a6e2f1e467b0b4464783160e323f7f8ea350bc9766d62f921f198"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 17,
+      "structureKey": "828944efecc0881c327d83eaaa2341df0ba10e277c72ac217169dcf1ffc06309",
+      "passes": 1
+    },
+    {
+      "id": "E08",
+      "name": "cursorTrail",
+      "version": "1.0.0",
+      "directory": "examples/shader-cursor-trail/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-cursor-trail/parameters.json",
+          "bytes": 1579,
+          "sha256": "f2c2b6bb841cf82d8114ce4291ae806902b7fcdf4d60c056193ce519e2628379"
+        },
+        {
+          "path": "examples/shader-cursor-trail/src/parameters.ts",
+          "bytes": 2646,
+          "sha256": "179f8e32ad6c78bcf4cbafdbb6a73e37de4edaa92ef83df7d0a2189c6270d82b"
+        },
+        {
+          "path": "examples/shader-cursor-trail/src/main.ts",
+          "bytes": 33366,
+          "sha256": "9600605e6f8dbf31f0b621987bc0ee6d0d7b593a85528e0b13097f074f477de8"
+        },
+        {
+          "path": "examples/shader-cursor-trail/example.json",
+          "bytes": 6083,
+          "sha256": "dc382e67c43fd79a412ab177b92b6cc84d06dab00c444c7b8ee6d5b706e5f2e3"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 6,
+      "structureKey": "e9e121949eb5ae7744f4ea1e6b4121b9f936b4c9c570836d247d34e7f82b088e",
+      "passes": 1
+    },
+    {
+      "id": "E09",
+      "name": "Glass",
+      "version": "1.0.0",
+      "directory": "examples/shader-glass/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-glass/parameters.json",
+          "bytes": 4365,
+          "sha256": "73cfe844363b574e3d818a07c4be016698aa4eba37779d83aa24017d86f79a03"
+        },
+        {
+          "path": "examples/shader-glass/src/parameters.ts",
+          "bytes": 2660,
+          "sha256": "a99c3d5ffc01ca43980ee410ba8d3c3c4b19269ee357df6f519d984cadab40bc"
+        },
+        {
+          "path": "examples/shader-glass/src/main.ts",
+          "bytes": 32480,
+          "sha256": "3a40ab2239930093b71d64d109df57119fc017718cf84bd7645f7d2b01bf675a"
+        },
+        {
+          "path": "examples/shader-glass/example.json",
+          "bytes": 6567,
+          "sha256": "3509ae445228ca9cc036dab07f4a3df09fe2a02ebb7dc62624a08a37c594f586"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "effect-parameters/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 19,
+      "structureKey": "ca21f94f34cf7cbbe8cbc3b921df6f6e382499c2500f98153b757d1855a4ffae",
+      "passes": 2
+    },
+    {
+      "id": "C01",
+      "name": "laserCard",
+      "version": "1.0.0",
+      "directory": "examples/shader-laser-card/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-laser-card/parameters.json",
+          "bytes": 5241,
+          "sha256": "989e66d8bfcbe6e4d08f705d887dc50d47f4017181288e6600f9ec233456f034"
+        },
+        {
+          "path": "examples/shader-laser-card/src/parameters.ts",
+          "bytes": 2406,
+          "sha256": "125a1d8e9aa1e527f52e177c109f58ab11968ffed47f7e6f1c379d82577c0536"
+        },
+        {
+          "path": "examples/shader-laser-card/src/main.ts",
+          "bytes": 31825,
+          "sha256": "f9e7a22e96e7b747ebd0d9f6214fde3ad1321758aabd327a17e30c024e5a0a2c"
+        },
+        {
+          "path": "examples/shader-laser-card/example.json",
+          "bytes": 5634,
+          "sha256": "a7dae7d870c2eac99370ae0c3dcb9ca5affb08e7ac6ca8a4f326dfa1d2dfa613"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 20,
+      "structureKey": "4efce27b23c700d37ce7028388fe5b544de08c17a2520076013778bdabbe5b99",
+      "passes": 3
+    },
+    {
+      "id": "C02",
+      "name": "filmNeon",
+      "version": "1.0.0",
+      "directory": "examples/shader-film-neon/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-film-neon/parameters.json",
+          "bytes": 5903,
+          "sha256": "59e0969117ad6118a052a2eb62c7d229290769b00bddb6c0459410278348838a"
+        },
+        {
+          "path": "examples/shader-film-neon/src/parameters.ts",
+          "bytes": 3393,
+          "sha256": "6914d9b4827096bda28a05799111e317dd047f8bb8eca906a024a08d8cd5d5fa"
+        },
+        {
+          "path": "examples/shader-film-neon/src/main.ts",
+          "bytes": 26502,
+          "sha256": "090f8cb93e4a5c7538e8500e3fe7d4b8fe4b52c79dc6caf62e0c1b10372148c5"
+        },
+        {
+          "path": "examples/shader-film-neon/example.json",
+          "bytes": 6166,
+          "sha256": "fa4f1de68e9485dca1998745ce97ca2143ba87bae6b8ab0106607439a00d4af9"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 23,
+      "structureKey": "281a5ecc3382a8ba46bb1e4a731e0ad82e71c3e87055b2bf8e628fe5188af9d5",
+      "passes": 1
+    },
+    {
+      "id": "C03",
+      "name": "glassTrail",
+      "version": "1.0.0",
+      "directory": "examples/shader-glass-trail/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-glass-trail/parameters.json",
+          "bytes": 4640,
+          "sha256": "ee52773c9ab41514131640ab47a189ea0d9009607073755362d2bb859b6b17ad"
+        },
+        {
+          "path": "examples/shader-glass-trail/src/parameters.ts",
+          "bytes": 2687,
+          "sha256": "ff162f6bd925d9dc6cf2ee7b6376c29821aedbe8c32adf42b8dfc3f54c055b86"
+        },
+        {
+          "path": "examples/shader-glass-trail/src/main.ts",
+          "bytes": 53286,
+          "sha256": "f86f1972f032040771e1289110f43e49b2dce0c84da2883f41de218983816555"
+        },
+        {
+          "path": "examples/shader-glass-trail/example.json",
+          "bytes": 5163,
+          "sha256": "59b41926ebc41e6d8134c02eaa6ed3d2bd97bec8cfc6b4a651aeba5936e5bb55"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": false,
+        "enumAlias": false,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": null
+      },
+      "paramCount": 19,
+      "structureKey": "0010a27c4826a065c3e123a6099d08e1c841ddccf2dcb40fe1945a6dc69d9cc4",
+      "passes": 2
+    },
+    {
+      "id": "C04",
+      "name": "inputDissolve",
+      "version": "1.0.0",
+      "directory": "examples/shader-input-dissolve/",
+      "source": "parameters.json",
+      "sourceIdentity": [
+        {
+          "path": "examples/shader-input-dissolve/parameters.json",
+          "bytes": 1531,
+          "sha256": "ac67687d6296d479366b5e0d03472e9276a3481fed398ceacbb23526b4b85273"
+        },
+        {
+          "path": "examples/shader-input-dissolve/src/parameters.ts",
+          "bytes": 2748,
+          "sha256": "c55c39ed447caa74d73f0d040c690549cb65f5ba8d4748375e4f60bd6d7ee3ae"
+        },
+        {
+          "path": "examples/shader-input-dissolve/src/main.ts",
+          "bytes": 41858,
+          "sha256": "dd9bcc5708c252a462a587286ad0133e17238f1a400d4d293062a9e2d19ba738"
+        },
+        {
+          "path": "examples/shader-input-dissolve/example.json",
+          "bytes": 5760,
+          "sha256": "cc3cf45530f05950ddc3c513a939fcad165416edef83f917a73da4114ebcf2cc"
+        },
+        {
+          "path": "build/cocosair.module.d.ts",
+          "bytes": 3303581,
+          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+        },
+        {
+          "path": "docs/example-api-inventory.json",
+          "bytes": 2248439,
+          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+        }
+      ],
+      "adaptations": {
+        "sourceSchema": "shaders-effect-contract/1",
+        "defaultAlias": true,
+        "enumAlias": true,
+        "conditionalVariantPolicy": "variant-or-uniform conservatively enters pipeline key",
+        "legacyRoutePolicy": "route structure; other omitted modes uniform (read-only time retained)"
+      },
+      "paramCount": 8,
+      "structureKey": "9793a92bcc927e258e89b02476f2c82b2e7ad2d16e3d5753a3f22ab3875c0d3c",
+      "passes": "image=1, procedural/rendered=2"
+    }
+  ]
+}

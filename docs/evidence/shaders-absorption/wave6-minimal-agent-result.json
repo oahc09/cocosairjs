@@ -1,0 +1,128 @@
+{
+  "schema": "shaders-wave6-minimal-agent-benchmark/1",
+  "evaluatedAt": "2026-10-11T23:33:17.977Z",
+  "status": "PASS",
+  "scope": "Three isolated Agent tasks using frozen public SDK, Chromium desktop minimal acceptance",
+  "wave6Phase": "COMPLETE_MINIMAL",
+  "agentGate": "PASS_MINIMAL_SCOPE",
+  "subset": true,
+  "projectCompleted": false,
+  "fullEngineGate": "NOT_RUN",
+  "currentWorkspaceSdkGate": "NOT_EVALUATED",
+  "wave5CurrentSdkBlockerPreserved": true,
+  "bindings": [
+    {
+      "path": "docs/evidence/shaders-absorption/wave6-noise-agent-result.json",
+      "bytes": 9933,
+      "sha256": "a13cb3fa8df375831e7ba7f13011fb3fc85d92855bc37ceefc149a180ee56bdc"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/wave6-neon-agent-result.json",
+      "bytes": 9643,
+      "sha256": "e92b6010ec603dbc154c43c8fb595b3c0c1edef51fc1db49141417c529c1eb9c"
+    },
+    {
+      "path": "docs/evidence/shaders-absorption/wave6-glass-agent-result.json",
+      "bytes": 14051,
+      "sha256": "60e148935918680f5766b1893d16255ac6254327e0a39609ef70cd2a30a751e2"
+    }
+  ],
+  "sdk": [
+    {
+      "name": "cocosair.module.d.ts",
+      "sha256": "e1e3b7a241cec02a58b809589ae13efb5089254e4496c81061b62ea20a0b0cbf",
+      "bytes": 3369681
+    },
+    {
+      "name": "cocosair.module.js",
+      "sha256": "4ca4e9a2379cbbc088bd839cb138a14e58888bad0a6a7ca4918b5cc543924cb8",
+      "bytes": 6649186
+    }
+  ],
+  "counts": {
+    "tasks": 3,
+    "firstCompleteSuccesses": 0,
+    "firstRuntimeImplementationSuccesses": 3,
+    "finalSuccesses": 3,
+    "agentRepairRounds": 3,
+    "leadBrowserRuns": 6,
+    "finalRuntimeChecks": 34,
+    "finalScreenshots": 19
+  },
+  "tasks": [
+    {
+      "task": "task1-noise-dissolve",
+      "path": "docs/evidence/shaders-absorption/wave6-noise-agent-result.json",
+      "executionChannel": "Orca Worker",
+      "workerId": "tq8u33l01m6skuul19s7f0a3",
+      "implementationAgentKind": "pi",
+      "modelObserved": "glm-5.3",
+      "acceptanceExecutionChannel": "Lead (Codex)",
+      "status": "PASS",
+      "first_run_success": false,
+      "first_runtime_success": true,
+      "agentRepairRounds": 1,
+      "final_success": true,
+      "manualIntervention": false
+    },
+    {
+      "task": "task2-neon",
+      "path": "docs/evidence/shaders-absorption/wave6-neon-agent-result.json",
+      "executionChannel": "Orca Worker",
+      "workerId": "jataabs44bsnoh5mth3d9oga",
+      "implementationAgentKind": "pi",
+      "modelObserved": "glm-5.3",
+      "acceptanceExecutionChannel": "Lead (Codex)",
+      "status": "PASS",
+      "first_run_success": false,
+      "first_runtime_success": true,
+      "agentRepairRounds": 1,
+      "final_success": true,
+      "manualIntervention": false
+    },
+    {
+      "task": "task3-glass",
+      "path": "docs/evidence/shaders-absorption/wave6-glass-agent-result.json",
+      "executionChannel": "Orca Worker",
+      "workerId": "ox3drcp6lhqsub8z4unt2g1i",
+      "implementationAgentKind": "pi",
+      "modelObserved": "glm-5.3",
+      "acceptanceExecutionChannel": "Lead (Codex)",
+      "status": "PASS",
+      "first_run_success": false,
+      "first_runtime_success": true,
+      "agentRepairRounds": 1,
+      "final_success": true,
+      "manualIntervention": false
+    }
+  ],
+  "findings": [
+    {
+      "classification": "DOC_GAP",
+      "issue": "Three independent Agents initially omitted mandatory plane segment options; frozen public examples omit them",
+      "runtimeEngineBugConfirmed": false
+    },
+    {
+      "classification": "DOC_GAP",
+      "issue": "Dedicated native RenderTarget lifecycle guidance missing from public input manual"
+    }
+  ],
+  "notRun": [
+    "Firefox/WebKit",
+    "DPR2",
+    "performance",
+    "100 resource cycles",
+    "full Engine acceptance",
+    "physical devices",
+    "long running",
+    "independent Gallery",
+    "release readiness"
+  ],
+  "limitations": [
+    "Three tasks are a small sample, not a general success-rate estimate",
+    "Isolation by fresh contexts/directories and access instructions; no OS-level sandbox or access audit",
+    "All token usage unavailable",
+    "Glass total execution time unavailable; compile window excludes reading",
+    "Historical and collector-retry results retained, no relabeling"
+  ]
+}

@@ -3,8 +3,10 @@
 > 把相机输出渲进纹理，再把纹理当普通贴图用
 > （镜像/小窗/后处理的基础件）。
 > 配套可运行示例：[`examples/manual-render-targets/`](examples/manual-render-targets/)。
-> **本篇状态：PARTIAL。** RT 的创建/绑定/恢复生命周期可跑通（验证器 4/4），但**快照保真度在本环境
-> 未达成**——quad 上采样到的是均灰纹理而非场景快照，见 §3 证据。不作保真承诺。
+> **本篇状态：PARTIAL（限下方 RenderTexture / camera.targetTexture 历史示例）。**
+> 旧示例的生命周期可跑通（验证器 4/4），但快照保真度在本环境未达成——quad 上采样到的是均灰纹理
+> 而非场景快照，见 §3 证据。该 PARTIAL 判据仅适用于旧 API 示例，不涉及 `createAirRenderTarget`
+> 推荐用法（见文末）。
 
 ## 1. API 面（d.ts 实测）
 
@@ -274,7 +276,7 @@ function showSnapshot(): void {
     quadNode.setRotationFromEuler(90, 0, 0); // plane 法线 +Y → 转到 +Z 面向相机
     scene.addChild(quadNode);
     const renderer = quadNode.addComponent(MeshRenderer);
-    renderer.mesh = utils.createMesh(primitives.plane({ width: 2.2, length: 2.2 }));
+    renderer.mesh = utils.createMesh(primitives.plane({ width: 2.2, length: 2.2, widthSegments: 1, lengthSegments: 1 }));
     const material = new Material();
     material.initialize({ effectName: 'builtin-unlit', defines: { USE_TEXTURE: true } });
     material.setProperty('mainTexture', rt);
@@ -323,6 +325,67 @@ app.run(scene);
 
 console.log('[manual/rendertargets] running on cocosair');
 ```
+
+## 推荐：`createAirRenderTarget` 原生用法
+
+以上 PARTIAL 结论仅限旧 `RenderTexture` / `camera.targetTexture` 示例。Wave6 Glass 的原生双相机 RT 流程已通过冻结 SDK / Chromium 最小验收。本节为接口摘要，假定已创建 `app`、子相机 `childCamera`、屏幕相机 `screenCamera`，以及声明了 `mainTexture` 采样器的 `glassMaterial`；完整实现仍需配置场景节点和材质。生产接口见 [`src/air/rendering/render-target.ts`](../../src/air/rendering/render-target.ts)。
+
+### 基本创建（`createAirApp` 之后）
+
+```typescript
+import { createAirRenderTarget, Layers } from 'cocosair';
+
+const canvas = app.canvas;
+const rt = createAirRenderTarget({
+    name: 'child-scene',
+    width: canvas.width, // 跟随 canvas backing
+    height: canvas.height,
+    colorFormat: 'rgba8', // 也支持 rgba16f、rgba32f、srgb8-alpha8
+    depthFormat: 'depth24-stencil8', // 3D 子场景需要深度；无深度内容可选 none
+    samples: 1,
+});
+```
+
+### 双相机与回调
+
+```typescript
+// 子相机渲染场景内容到 RT；屏幕相机渲染全屏四边形采样 RT。
+childCamera.priority = 0;
+screenCamera.priority = 1;
+childCamera.visibility = Layers.Enum.DEFAULT;
+screenCamera.visibility = Layers.Enum.UI_2D;
+
+const detachCamera = rt.attachCamera(childCamera);
+const unbindColor = rt.bindColor(glassMaterial, 'mainTexture');
+```
+
+子场景节点使用 `DEFAULT` 层，屏幕四边形使用 `UI_2D` 层；若这些层已有其他用途，应选择独立层。相机可见层必须分离，避免子相机拍到正在采样自身 RT 的四边形。
+
+`attachCamera` 将相机输出绑定到 RT；`bindColor` 将 RT 纹理绑定为材质采样器。
+两个回调各自独立，变量命名建议区分（`detachCamera` vs `unbindColor`），
+释放时按正确顺序调用（见下）。
+
+### 尺寸与读回
+
+- `rt.resize(canvas.width, canvas.height)`：backing 变化时调用；已绑定的相机输出和材质采样器自动更新。
+- `rt.readColor({ x, y, width, height })`：返回 `Float32Array`（HDR 格式）或 `Uint8Array`（rgba8），
+  坐标为 GL 行序（自下而上）；`rt.info` 提供 `{ width, height, disposed }` 状态。
+
+### 释放顺序
+
+```typescript
+unbindColor(); // 1. 解绑材质采样器
+detachCamera(); // 2. 恢复子相机原来的 targetTexture
+rt.dispose(); // 3. 销毁 RT（之后 rt.info.disposed === true）
+// 4. 解绑 renderer 的材质/网格，再释放调用方 addRef 持有的资产。
+glassMaterial.decRef(false);
+if (glassMaterial.refCount === 0) glassMaterial.destroy();
+```
+
+调用方拥有创建的 RT，并负责 `dispose()`；材质借用 RT 的纹理视图，不能自行销毁其内部 GPU 附件。RT 会销毁这些附件。调用方另行创建并 `addRef` 持有的 Material、Mesh、EffectAsset 应在解绑 renderer 后分别 `decRef(false)`，引用归零后 `destroy()`。
+
+Wave 6 Glass Agent 实际交付示例见 [wave6-glass-agent-delivery.md](../effects/wave6-glass-agent-delivery.md)。
+以上仅声明冻结 SDK / Chromium 最小范围实测，不声明全平台 RT PASS。
 
 ---
 

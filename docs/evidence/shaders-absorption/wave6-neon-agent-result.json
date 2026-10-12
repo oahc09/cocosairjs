@@ -1,0 +1,306 @@
+{
+  "schema": "shaders-wave6-isolated-agent-result/1",
+  "evaluatedAt": "2026-10-11T23:12:45.534Z",
+  "task": "task2-neon",
+  "taskStatus": "PASS",
+  "wave6Status": "IN_PROGRESS",
+  "subset": true,
+  "projectCompleted": false,
+  "implementation": {
+    "executionChannel": "Orca Worker",
+    "role": "Wave6-isolated-neon-agent",
+    "workerId": "jataabs44bsnoh5mth3d9oga",
+    "sessionId": "5822f6a8-76f6-4ed2-87f1-94cf3661a161",
+    "isolationClaimSource": "Agent terminal report; file accesses not independently audited",
+    "manualIntervention": false,
+    "sourceChangesDuringLeadAcceptance": false
+  },
+  "first_run_success": false,
+  "first_runtime_success": true,
+  "final_success": true,
+  "compile_attempts": {
+    "tsc": 2,
+    "esbuild": 1,
+    "source": "Orca Worker terminal and preserved command/exit logs"
+  },
+  "agentRepairRounds": 1,
+  "runtime_attempts": 2,
+  "api_errors": [
+    {
+      "code": "TS2345",
+      "api": "primitives.plane",
+      "error": "widthSegments/lengthSegments required by IPlaneOptions"
+    }
+  ],
+  "engineCapabilityGapConfirmed": false,
+  "time": {
+    "agentReportedStart": "2026-10-12T07:02:44+08:00",
+    "agentReportedEnd": "2026-10-12T07:08:48+08:00",
+    "agentReportedSeconds": 364,
+    "acceptanceStartedAt": "2026-10-11T23:11:29.907Z",
+    "acceptanceEndedAt": "2026-10-11T23:11:34.770Z"
+  },
+  "token_usage": "unavailable",
+  "acceptance": {
+    "executionChannel": "Lead (Codex)",
+    "browser": "chromium",
+    "browserVersion": "149.0.7827.55",
+    "osExitCodeObserved": 0,
+    "checks": {
+      "shaderCompile": true,
+      "oneCanvas": true,
+      "pause": true,
+      "contentRendered": true,
+      "intensity": true,
+      "thickness": true,
+      "glowRadius": true,
+      "colors": true,
+      "resume": true,
+      "resize": true,
+      "release": true,
+      "releaseIdempotentAndListenerSilent": true
+    },
+    "shaderCompiles": [
+      {
+        "ok": true,
+        "log": ""
+      },
+      {
+        "ok": true,
+        "log": ""
+      }
+    ],
+    "pageErrors": [],
+    "consoleErrors": [],
+    "excludesControlPanelFromPixels": true,
+    "resourceBefore": {
+      "material": {
+        "refs": 1,
+        "valid": true
+      },
+      "mesh": {
+        "refs": 1,
+        "valid": true
+      },
+      "effect": {
+        "refs": 1,
+        "valid": true
+      }
+    },
+    "resourceAfter": {
+      "node": {
+        "refs": null,
+        "valid": false
+      },
+      "material": {
+        "refs": 0,
+        "valid": false
+      },
+      "mesh": {
+        "refs": 0,
+        "valid": false
+      },
+      "effect": {
+        "refs": 0,
+        "valid": false
+      }
+    },
+    "cleanup": {
+      "pageClosed": true,
+      "browserClosed": true,
+      "serverClosed": true
+    },
+    "inputsUnchanged": true
+  },
+  "attempts": [
+    {
+      "report": "output/shaders-absorption/wave6-neon-runtime-r1.json",
+      "observedExitCode": 0,
+      "limitation": "Pixel samples included control panel",
+      "agentSourceChanged": false
+    },
+    {
+      "report": "output/shaders-absorption/wave6-neon-runtime-r2.json",
+      "observedExitCode": 0,
+      "correction": "Control panel excluded from all pixel samples",
+      "agentSourceChanged": false
+    }
+  ],
+  "bindings": [
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/src/main.ts",
+      "bytes": 17364,
+      "sha256": "f9985505e3538aac946e606792611b05630b997e7328b060effa80d1ab36574d"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/main.js",
+      "bytes": 13042,
+      "sha256": "dd48bc0e706cd9a1ef5ef21f3e7a588f4042ffac2655142a6625aede442050c2"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/index.html",
+      "bytes": 5145,
+      "sha256": "8a60be832f961f779467ee2ef7fd5a9bbe83ca4a5f42ce357318aab5545955d6"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/report.md",
+      "bytes": 6040,
+      "sha256": "a04c6fb55c238a30b4bdc15f61819624674cc088689253056b8403fe5ce184b2"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/sdk/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "4ca4e9a2379cbbc088bd839cb138a14e58888bad0a6a7ca4918b5cc543924cb8"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/sdk/cocosair.module.d.ts",
+      "bytes": 3369681,
+      "sha256": "e1e3b7a241cec02a58b809589ae13efb5089254e4496c81061b62ea20a0b0cbf"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/first-attempt/main.first.ts",
+      "bytes": 17327,
+      "sha256": "dd300a24e95ab7b5454d49f342951cdcc275f545ea605578d1d0696e979f0f2f"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/first-attempt/index.first.html",
+      "bytes": 5145,
+      "sha256": "8a60be832f961f779467ee2ef7fd5a9bbe83ca4a5f42ce357318aab5545955d6"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/first-attempt/tsc-attempt-1.log",
+      "bytes": 466,
+      "sha256": "14a7b331c099cde610783970fad8beeef437ea609890bfa37f4eb06ae9b4b887"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/first-attempt/tsc-attempt-2.log",
+      "bytes": 208,
+      "sha256": "39b916905341c54c6bc7d9820e15cd02f286c70718745f24d5117bc7596f7b51"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-neon-r1/first-attempt/esbuild-attempt-1.log",
+      "bytes": 211,
+      "sha256": "993685d38a49313004489af514825c314e6529cd6f9eec0a951138e70541d750"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-neon-runtime-r1.cjs",
+      "bytes": 8923,
+      "sha256": "5fa9283e9f073fb2d74f6087592c2c9314b13678ed782c4ebfdf2b13cfa4b1d9"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-neon-runtime-r1.json",
+      "bytes": 812726,
+      "sha256": "642a95d1f50c9987e3d4f37b497e959f293e9e3ac00142276d9c07829fee8f2d"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2.cjs",
+      "bytes": 9051,
+      "sha256": "5a5e3c5e99adb4da2a179bbb91ad7d1ee02e005aa249a51047ce06d9067db142"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2.json",
+      "bytes": 1276865,
+      "sha256": "0bd163211d9055119e93eb55fe23a81ac32f3779226532cd206aef681d3a446a"
+    }
+  ],
+  "screenshots": [
+    {
+      "stage": "default",
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2-artifacts/default.png",
+      "bytes": 107629,
+      "sha256": "cb3c6d0cf8b17f4509f032f2335fd4e70d9a04149c44d49bbe2c87dfe2628800",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 1681
+    },
+    {
+      "stage": "intensity-low",
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2-artifacts/intensity-low.png",
+      "bytes": 65298,
+      "sha256": "0b5a483c01a16e9244d8ffe208d4f20c3c369951e34f854cf0fcff789439da43",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 1681
+    },
+    {
+      "stage": "intensity-high",
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2-artifacts/intensity-high.png",
+      "bytes": 113493,
+      "sha256": "c53653bc40e00b0fc4753ac4da1ef88a2862b0dbbfeac3db08d3b52f831a72f2",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 1681
+    },
+    {
+      "stage": "tube-thin",
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2-artifacts/tube-thin.png",
+      "bytes": 111246,
+      "sha256": "5711cd4f28464315d8c570866aa7d6a054d02668a673eeed49b2660ba28e3f02",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 1681
+    },
+    {
+      "stage": "tube-thick",
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2-artifacts/tube-thick.png",
+      "bytes": 97339,
+      "sha256": "dd71b9ff91c27ba949886051df39d2cd2bb9a2a7925564767280c79e4e2a235e",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 1681
+    },
+    {
+      "stage": "glow-narrow",
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2-artifacts/glow-narrow.png",
+      "bytes": 81441,
+      "sha256": "f95fef435bec62efa25bf2399074bbe44e3d9957ba0ae04b5f023fbea64b8db2",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 1681
+    },
+    {
+      "stage": "glow-wide",
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2-artifacts/glow-wide.png",
+      "bytes": 99373,
+      "sha256": "c9c66ea56060ce4ede7fcf1dbddde2362f5792dc1583c833fb5085778e3dbac5",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 1681
+    },
+    {
+      "stage": "color-change",
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2-artifacts/color-change.png",
+      "bytes": 62215,
+      "sha256": "3851bc9853c3abec7441fbd5522b72d613863266418f67038dff259fd2b1bfd1",
+      "width": 640,
+      "height": 400,
+      "pixelSamplePoints": 1681
+    },
+    {
+      "stage": "resize",
+      "path": "output/shaders-absorption/wave6-neon-runtime-r2-artifacts/resize.png",
+      "bytes": 45655,
+      "sha256": "08aac3a8451b7c6633c07a1698bce53415d03d397be63366d2a96115a5fc5f73",
+      "width": 480,
+      "height": 320,
+      "pixelSamplePoints": 729
+    }
+  ],
+  "documentationLookupSource": "output/shaders-absorption/wave6-agent-neon-r1/report.md",
+  "notRun": [
+    "Glass isolated task",
+    "Firefox/WebKit",
+    "DPR2",
+    "performance",
+    "100 resource cycles",
+    "complete Engine six gates",
+    "physical devices",
+    "long running"
+  ],
+  "limitations": [
+    "Finite pixel sampling, not full-image mathematical oracle",
+    "Application/camera/driver containers are retained after GPU resource release",
+    "Frozen public SDK acceptance does not replace workspace SDK gates"
+  ],
+  "wave5CurrentSdkBlockerPreserved": true
+}

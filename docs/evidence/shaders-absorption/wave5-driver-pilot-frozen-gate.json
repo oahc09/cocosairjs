@@ -1,0 +1,1033 @@
+{
+  "schema": "shaders-driver-pilot-gate/1",
+  "evaluatedAt": "2026-10-11T15:57:09.935Z",
+  "status": "PASS",
+  "scope": "immutable candidate only",
+  "subset": true,
+  "coreAPIAdded": false,
+  "agentGate": "NOT_RUN",
+  "galleryGate": "NOT_RUN",
+  "wave5Gate": "NOT_RUN",
+  "projectCompleted": false,
+  "candidate": {
+    "mode": "immutable-sdk",
+    "root": "output/shaders-absorption/lead-w5-driver-candidate-r2",
+    "manifest": {
+      "path": "output/shaders-absorption/lead-w5-driver-candidate-r2/candidate-manifest.json",
+      "bytes": 7531,
+      "sha256": "da7fbedfbef5d1d57ade6be647366d8b89f42cf3c9abdbfdc3ed83b7e4522b6a"
+    },
+    "sdk": [
+      {
+        "path": "build/cocosair.module.d.ts",
+        "bytes": 3303581,
+        "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+      },
+      {
+        "path": "build/cocosair.module.js",
+        "bytes": 6649186,
+        "sha256": "27b1526bf6a2c44d256dfb4e2030e343f5ba571d1a4c730dbf4ba0b7bfa6f965"
+      },
+      {
+        "path": "build/npm/cocosair.module.js",
+        "bytes": 6649142,
+        "sha256": "c6d3c7d0fd5f3ca3d159744da3caecf1c263e671021d17f1ac34a2717d991e38"
+      }
+    ]
+  },
+  "sdk": [
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303581,
+      "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+    },
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "27b1526bf6a2c44d256dfb4e2030e343f5ba571d1a4c730dbf4ba0b7bfa6f965"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6649142,
+      "sha256": "c6d3c7d0fd5f3ca3d159744da3caecf1c263e671021d17f1ac34a2717d991e38"
+    }
+  ],
+  "validatorInputs": [
+    {
+      "path": "tools/verify/shaders-driver-pilot-gate.cjs",
+      "bytes": 11268,
+      "sha256": "af48bafdd49cc9aa4a6166e174886eec73c4f81f47234417194dbfcdc0b50974"
+    },
+    {
+      "path": "tools/verify/shaders-driver-pilot-browser.cjs",
+      "bytes": 45839,
+      "sha256": "415f17edd5ac94de4d14ce55c0aed893be100c37f9788b5f056732d07bdccce1"
+    },
+    {
+      "path": "tools/verify/shaders-driver-pilot-performance.cjs",
+      "bytes": 5390,
+      "sha256": "16f62154a0994e5dde7cf8ce233ca7b5de2d7efaa080c0480a118196f94b08b9"
+    },
+    {
+      "path": "tools/verify/shaders-driver-pilot-oracle.cjs",
+      "bytes": 6490,
+      "sha256": "f49c42540f11a4f9eb35682614537c16f6652f80c38d26d265e46ab2a2d6b782"
+    }
+  ],
+  "bindings": {
+    "functional": {
+      "report": {
+        "path": "output/shaders-absorption/lead-w5-driver-candidate-r2/output/shaders-absorption/lead-w5-driver-frozen-final-r1-functional.json",
+        "bytes": 9084034,
+        "sha256": "30a7e6cb12d98af7980e2a71ec3e1a370d2ea5459a50beac50b5ee5745395452"
+      },
+      "os": {
+        "path": "output/shaders-absorption/lead-w5-driver-candidate-r2/output/shaders-absorption/lead-w5-driver-frozen-final-r1-functional-os.json",
+        "bytes": 516,
+        "sha256": "380190fe016065c98eb875edbbc8df4659f52fcf0af4795fb1b8449d8a892905"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w5-driver-candidate-r2/output/shaders-absorption/lead-w5-driver-frozen-final-r1-functional-frozen.json",
+        "bytes": 5663,
+        "sha256": "a5bed109f9a6194d9ea2c73d8646380f421a4374cb5e1a26fb6d6c58c7d3c279"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w5-driver-candidate-r2/output/shaders-absorption/lead-w5-driver-frozen-final-r1-functional-raw.log",
+        "bytes": 114,
+        "sha256": "6d2cf237e42ce8604e70ec73c5ac7144a653656b96c70b2ac66f6ce4ba50590e"
+      }
+    },
+    "performance": {
+      "report": {
+        "path": "output/shaders-absorption/lead-w5-driver-candidate-r2/output/shaders-absorption/lead-w5-driver-frozen-final-r1-performance.json",
+        "bytes": 23726887,
+        "sha256": "4b3bce6a448c46e88e17e99ae2af4f232c5961ef12acf57cac16a95896c41f73"
+      },
+      "os": {
+        "path": "output/shaders-absorption/lead-w5-driver-candidate-r2/output/shaders-absorption/lead-w5-driver-frozen-final-r1-performance-os.json",
+        "bytes": 572,
+        "sha256": "a93230e78c13bd207025acf017c3727741be8ad196b3f58f0e09162e96b753f7"
+      },
+      "frozen": {
+        "path": "output/shaders-absorption/lead-w5-driver-candidate-r2/output/shaders-absorption/lead-w5-driver-frozen-final-r1-performance-frozen.json",
+        "bytes": 5663,
+        "sha256": "a5bed109f9a6194d9ea2c73d8646380f421a4374cb5e1a26fb6d6c58c7d3c279"
+      },
+      "log": {
+        "path": "output/shaders-absorption/lead-w5-driver-candidate-r2/output/shaders-absorption/lead-w5-driver-frozen-final-r1-performance-raw.log",
+        "bytes": 115,
+        "sha256": "45ab13fdd0a402cb39e5b5cfd84494e9c307b55b75c9aff4ad8f5b1f980135a3"
+      }
+    }
+  },
+  "audit": {
+    "path": "docs/evidence/shaders-absorption/wave5-driver-pilot-actual-audit.json",
+    "bytes": 21028,
+    "sha256": "2021df8dc2f7012e84cecbd1c0dffd7f29c44ec94d8be90558d1396f9aa6faa7"
+  },
+  "counts": {
+    "engines": 3,
+    "consumers": 2,
+    "dimensions": 18,
+    "visualCases": 84,
+    "boundaryCases": 180,
+    "malformedAtomicRejections": 96,
+    "resourceCycles": 1200,
+    "liveResize": 12,
+    "screenshots": 96,
+    "performanceWindows": 18,
+    "steadyFrames": 5853
+  },
+  "benchmarks": [
+    {
+      "engine": "chromium",
+      "consumer": "holographic",
+      "profile": "720p",
+      "steadyFrames": 328,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 328,
+        "median": 16.679999999701977,
+        "p95": 17.12999999523163
+      },
+      "renderEnvelopeMs": {
+        "count": 328,
+        "median": 0.42500000447034836,
+        "p95": 0.5749999955296516
+      },
+      "driverUpdateMs": {
+        "count": 328,
+        "median": 0.2150000035762787,
+        "p95": 0.3149999976158142
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 328,
+        "median": 0.07500000298023224,
+        "p95": 0.1499999836087227
+      },
+      "glDispatchMs": {
+        "count": 328,
+        "median": 0.005000002682209015,
+        "p95": 0.01000000536441803
+      },
+      "gpuTimestampMs": {
+        "count": 328,
+        "median": 0.610304,
+        "p95": 1.702912
+      },
+      "gpuUnavailableReason": null,
+      "clockMinimumMs": 0.004999995231628418,
+      "memory": {
+        "bufferSize": 7137684,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "chromium",
+      "consumer": "holographic",
+      "profile": "1080p",
+      "steadyFrames": 329,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 329,
+        "median": 16.66499999910593,
+        "p95": 17.195000000298023
+      },
+      "renderEnvelopeMs": {
+        "count": 329,
+        "median": 0.4399999976158142,
+        "p95": 0.614999994635582
+      },
+      "driverUpdateMs": {
+        "count": 329,
+        "median": 0.22499999403953552,
+        "p95": 0.32500000298023224
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 329,
+        "median": 0.07500000298023224,
+        "p95": 0.1600000038743019
+      },
+      "glDispatchMs": {
+        "count": 329,
+        "median": 0.004999995231628418,
+        "p95": 0.009999997913837433
+      },
+      "gpuTimestampMs": {
+        "count": 329,
+        "median": 1.253376,
+        "p95": 2.481152
+      },
+      "gpuUnavailableReason": null,
+      "clockMinimumMs": 0.004999995231628418,
+      "memory": {
+        "bufferSize": 7137684,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "chromium",
+      "consumer": "holographic",
+      "profile": "mobile-dpr",
+      "steadyFrames": 328,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 328,
+        "median": 16.685000002384186,
+        "p95": 17.125
+      },
+      "renderEnvelopeMs": {
+        "count": 328,
+        "median": 0.42000000178813934,
+        "p95": 0.5999999940395355
+      },
+      "driverUpdateMs": {
+        "count": 328,
+        "median": 0.21000000089406967,
+        "p95": 0.32999999821186066
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 328,
+        "median": 0.07500000298023224,
+        "p95": 0.14500000327825546
+      },
+      "glDispatchMs": {
+        "count": 328,
+        "median": 0.005000002682209015,
+        "p95": 0.009999997913837433
+      },
+      "gpuTimestampMs": {
+        "count": 328,
+        "median": 1.968128,
+        "p95": 3.339264
+      },
+      "gpuUnavailableReason": null,
+      "clockMinimumMs": 0.004999995231628418,
+      "memory": {
+        "bufferSize": 7137684,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "chromium",
+      "consumer": "neon",
+      "profile": "720p",
+      "steadyFrames": 328,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 328,
+        "median": 16.655000001192093,
+        "p95": 17.140000000596046
+      },
+      "renderEnvelopeMs": {
+        "count": 328,
+        "median": 0.42499999701976776,
+        "p95": 0.5900000035762787
+      },
+      "driverUpdateMs": {
+        "count": 328,
+        "median": 0.25,
+        "p95": 0.3500000014901161
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 328,
+        "median": 0.07500000298023224,
+        "p95": 0.1599999964237213
+      },
+      "glDispatchMs": {
+        "count": 328,
+        "median": 0.004999995231628418,
+        "p95": 0.009999997913837433
+      },
+      "gpuTimestampMs": {
+        "count": 328,
+        "median": 0.388096,
+        "p95": 0.429056
+      },
+      "gpuUnavailableReason": null,
+      "clockMinimumMs": 0.004999995231628418,
+      "memory": {
+        "bufferSize": 7137748,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "chromium",
+      "consumer": "neon",
+      "profile": "1080p",
+      "steadyFrames": 329,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 329,
+        "median": 16.685000002384186,
+        "p95": 17.185000002384186
+      },
+      "renderEnvelopeMs": {
+        "count": 329,
+        "median": 0.4299999997019768,
+        "p95": 0.6099999994039536
+      },
+      "driverUpdateMs": {
+        "count": 329,
+        "median": 0.26000000536441803,
+        "p95": 0.36500000208616257
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 329,
+        "median": 0.07499998807907104,
+        "p95": 0.14000000059604645
+      },
+      "glDispatchMs": {
+        "count": 329,
+        "median": 0.004999995231628418,
+        "p95": 0.009999997913837433
+      },
+      "gpuTimestampMs": {
+        "count": 329,
+        "median": 0.889856,
+        "p95": 1.97632
+      },
+      "gpuUnavailableReason": null,
+      "clockMinimumMs": 0.004999995231628418,
+      "memory": {
+        "bufferSize": 7137748,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "chromium",
+      "consumer": "neon",
+      "profile": "mobile-dpr",
+      "steadyFrames": 329,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 329,
+        "median": 16.674999997019768,
+        "p95": 17.17500000447035
+      },
+      "renderEnvelopeMs": {
+        "count": 329,
+        "median": 0.42499999701976776,
+        "p95": 0.5700000002980232
+      },
+      "driverUpdateMs": {
+        "count": 329,
+        "median": 0.24500000476837158,
+        "p95": 0.375
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 329,
+        "median": 0.07500000298023224,
+        "p95": 0.15999998897314072
+      },
+      "glDispatchMs": {
+        "count": 329,
+        "median": 0.005000002682209015,
+        "p95": 0.009999997913837433
+      },
+      "gpuTimestampMs": {
+        "count": 329,
+        "median": 0.8704,
+        "p95": 2.08384
+      },
+      "gpuUnavailableReason": null,
+      "clockMinimumMs": 0.004999995231628418,
+      "memory": {
+        "bufferSize": 7137748,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "firefox",
+      "consumer": "holographic",
+      "profile": "720p",
+      "steadyFrames": 329,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 329,
+        "median": 16.66000000000031,
+        "p95": 17.40000000000009
+      },
+      "renderEnvelopeMs": {
+        "count": 329,
+        "median": 0.38000000000010914,
+        "p95": 0.5399999999999636
+      },
+      "driverUpdateMs": {
+        "count": 329,
+        "median": 0.20000000000027285,
+        "p95": 0.3599999999996726
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 329,
+        "median": 0.06000000000040018,
+        "p95": 0.1000000000003638
+      },
+      "glDispatchMs": {
+        "count": 329,
+        "median": 0,
+        "p95": 0.01999999999998181
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.01999999999998181,
+      "memory": {
+        "bufferSize": 7137684,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "firefox",
+      "consumer": "holographic",
+      "profile": "1080p",
+      "steadyFrames": 329,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 329,
+        "median": 16.680000000000064,
+        "p95": 17.539999999999964
+      },
+      "renderEnvelopeMs": {
+        "count": 329,
+        "median": 0.4400000000005093,
+        "p95": 0.6799999999998363
+      },
+      "driverUpdateMs": {
+        "count": 329,
+        "median": 0.22000000000025466,
+        "p95": 0.38000000000010914
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 329,
+        "median": 0.06000000000040018,
+        "p95": 0.11999999999989086
+      },
+      "glDispatchMs": {
+        "count": 329,
+        "median": 0,
+        "p95": 0.01999999999998181
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.01999999999998181,
+      "memory": {
+        "bufferSize": 7137684,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "firefox",
+      "consumer": "holographic",
+      "profile": "mobile-dpr",
+      "steadyFrames": 329,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 329,
+        "median": 16.699999999999818,
+        "p95": 17.31999999999971
+      },
+      "renderEnvelopeMs": {
+        "count": 329,
+        "median": 0.38000000000010914,
+        "p95": 0.6199999999998909
+      },
+      "driverUpdateMs": {
+        "count": 329,
+        "median": 0.21999999999934516,
+        "p95": 0.3400000000001455
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 329,
+        "median": 0.06000000000040018,
+        "p95": 0.1000000000003638
+      },
+      "glDispatchMs": {
+        "count": 329,
+        "median": 0,
+        "p95": 0.01999999999998181
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.01999999999998181,
+      "memory": {
+        "bufferSize": 7137684,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "firefox",
+      "consumer": "neon",
+      "profile": "720p",
+      "steadyFrames": 329,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 329,
+        "median": 16.659999999999854,
+        "p95": 17.220000000000255
+      },
+      "renderEnvelopeMs": {
+        "count": 329,
+        "median": 0.38000000000010914,
+        "p95": 0.5399999999999636
+      },
+      "driverUpdateMs": {
+        "count": 329,
+        "median": 0.22000000000025466,
+        "p95": 0.40000000000009095
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 329,
+        "median": 0.05999999999994543,
+        "p95": 0.1000000000003638
+      },
+      "glDispatchMs": {
+        "count": 329,
+        "median": 0,
+        "p95": 0.01999999999998181
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.01999999999998181,
+      "memory": {
+        "bufferSize": 7137748,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "firefox",
+      "consumer": "neon",
+      "profile": "1080p",
+      "steadyFrames": 329,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 329,
+        "median": 16.659999999999854,
+        "p95": 17.240000000000236
+      },
+      "renderEnvelopeMs": {
+        "count": 329,
+        "median": 0.44000000000005457,
+        "p95": 0.6000000000003638
+      },
+      "driverUpdateMs": {
+        "count": 329,
+        "median": 0.23999999999978172,
+        "p95": 0.4400000000005093
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 329,
+        "median": 0.060000000000172804,
+        "p95": 0.1000000000003638
+      },
+      "glDispatchMs": {
+        "count": 329,
+        "median": 0,
+        "p95": 0.01999999999998181
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.01999999999998181,
+      "memory": {
+        "bufferSize": 7137748,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "firefox",
+      "consumer": "neon",
+      "profile": "mobile-dpr",
+      "steadyFrames": 329,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 329,
+        "median": 16.67999999999938,
+        "p95": 17.38000000000011
+      },
+      "renderEnvelopeMs": {
+        "count": 329,
+        "median": 0.3999999999996362,
+        "p95": 0.5799999999999272
+      },
+      "driverUpdateMs": {
+        "count": 329,
+        "median": 0.2199999999997999,
+        "p95": 0.38000000000010914
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 329,
+        "median": 0.05999999999994543,
+        "p95": 0.1000000000003638
+      },
+      "glDispatchMs": {
+        "count": 329,
+        "median": 0,
+        "p95": 0.01999999999998181
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.01999999999998181,
+      "memory": {
+        "bufferSize": 7137748,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "webkit",
+      "consumer": "holographic",
+      "profile": "720p",
+      "steadyFrames": 324,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 324,
+        "median": 16.73999999999978,
+        "p95": 20.159999999999854
+      },
+      "renderEnvelopeMs": {
+        "count": 324,
+        "median": 0.48000000000138243,
+        "p95": 0.7600000000002183
+      },
+      "driverUpdateMs": {
+        "count": 324,
+        "median": 0.23999999999978172,
+        "p95": 2.3799999999991996
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 324,
+        "median": 0.10000000000218279,
+        "p95": 0.15999999999985448
+      },
+      "glDispatchMs": {
+        "count": 324,
+        "median": 0.019999999998617568,
+        "p95": 0.020000000000436557
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.019999999999527063,
+      "memory": {
+        "bufferSize": 7137684,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "webkit",
+      "consumer": "holographic",
+      "profile": "1080p",
+      "steadyFrames": 327,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 327,
+        "median": 16.69999999999891,
+        "p95": 20.05999999999949
+      },
+      "renderEnvelopeMs": {
+        "count": 327,
+        "median": 0.47999999999956344,
+        "p95": 0.9600000000000364
+      },
+      "driverUpdateMs": {
+        "count": 327,
+        "median": 0.23999999999978172,
+        "p95": 2.8200000000006185
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 327,
+        "median": 0.11999999999898137,
+        "p95": 0.1400000000030559
+      },
+      "glDispatchMs": {
+        "count": 327,
+        "median": 0.019999999998617568,
+        "p95": 0.020000000000436557
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.019999999999527063,
+      "memory": {
+        "bufferSize": 7137684,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "webkit",
+      "consumer": "holographic",
+      "profile": "mobile-dpr",
+      "steadyFrames": 327,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 327,
+        "median": 16.719999999999345,
+        "p95": 20.219999999999345
+      },
+      "renderEnvelopeMs": {
+        "count": 327,
+        "median": 0.4600000000009459,
+        "p95": 1.0999999999985448
+      },
+      "driverUpdateMs": {
+        "count": 327,
+        "median": 0.23999999999978172,
+        "p95": 2.7799999999997453
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 327,
+        "median": 0.10000000000218279,
+        "p95": 0.15999999999985448
+      },
+      "glDispatchMs": {
+        "count": 327,
+        "median": 0.019999999998617568,
+        "p95": 0.020000000000436557
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.019999999999527063,
+      "memory": {
+        "bufferSize": 7137684,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "webkit",
+      "consumer": "neon",
+      "profile": "720p",
+      "steadyFrames": 329,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 329,
+        "median": 16.700000000000728,
+        "p95": 20.140000000001237
+      },
+      "renderEnvelopeMs": {
+        "count": 329,
+        "median": 0.4400000000005093,
+        "p95": 0.660000000000764
+      },
+      "driverUpdateMs": {
+        "count": 329,
+        "median": 0.2600000000002183,
+        "p95": 3.1400000000003274
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 329,
+        "median": 0.1000000000003638,
+        "p95": 0.1400000000012369
+      },
+      "glDispatchMs": {
+        "count": 329,
+        "median": 0.019999999998617568,
+        "p95": 0.020000000000436557
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.019999999999527063,
+      "memory": {
+        "bufferSize": 7137748,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "webkit",
+      "consumer": "neon",
+      "profile": "1080p",
+      "steadyFrames": 327,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 327,
+        "median": 16.699999999999818,
+        "p95": 20.040000000000873
+      },
+      "renderEnvelopeMs": {
+        "count": 327,
+        "median": 0.4599999999991269,
+        "p95": 0.7200000000002547
+      },
+      "driverUpdateMs": {
+        "count": 327,
+        "median": 0.27999999999883585,
+        "p95": 3.0599999999994907
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 327,
+        "median": 0.1000000000003638,
+        "p95": 0.1400000000012369
+      },
+      "glDispatchMs": {
+        "count": 327,
+        "median": 0,
+        "p95": 0.020000000000436557
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.019999999999527063,
+      "memory": {
+        "bufferSize": 7137748,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    },
+    {
+      "engine": "webkit",
+      "consumer": "neon",
+      "profile": "mobile-dpr",
+      "steadyFrames": 274,
+      "passCount": 1,
+      "drawCount": 1,
+      "frameIntervalMs": {
+        "count": 274,
+        "median": 17.100000000000364,
+        "p95": 33.69999999999891
+      },
+      "renderEnvelopeMs": {
+        "count": 274,
+        "median": 0.5,
+        "p95": 0.7400000000006912
+      },
+      "driverUpdateMs": {
+        "count": 274,
+        "median": 0.28000000000065484,
+        "p95": 3.2999999999992724
+      },
+      "nativeGfxEnvelopeMs": {
+        "count": 274,
+        "median": 0.1000000000003638,
+        "p95": 0.15999999999985448
+      },
+      "glDispatchMs": {
+        "count": 274,
+        "median": 0.019999999998617568,
+        "p95": 0.020000000000436557
+      },
+      "gpuTimestampMs": {
+        "count": 0,
+        "median": null,
+        "p95": null
+      },
+      "gpuUnavailableReason": "EXT_DISJOINT_TIMER_QUERY_UNAVAILABLE",
+      "clockMinimumMs": 0.019999999999527063,
+      "memory": {
+        "bufferSize": 7137748,
+        "textureSize": 27184
+      },
+      "vram": {
+        "status": "UNAVAILABLE",
+        "note": "WebGL does not expose total process VRAM; engine byte counters are separate."
+      },
+      "instrumentation": "instrumented Driver Pilot: native gfx method wrappers, GL draw wrappers, and per-frame uniform receipts"
+    }
+  ],
+  "dimensions": {
+    "Build": "PASS",
+    "Runtime": "PASS",
+    "Visual": "PASS",
+    "Boundary": "PASS",
+    "Resource": "PASS",
+    "Performance": "PASS"
+  }
+}

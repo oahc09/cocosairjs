@@ -222,7 +222,7 @@ const groundNode = new Node('Ground');
 groundNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(groundNode);
 const groundRenderer = groundNode.addComponent(MeshRenderer);
-groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 12, length: 12 }));
+groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 12, length: 12, widthSegments: 1, lengthSegments: 1 }));
 const groundMaterial = new Material();
 groundMaterial.initialize({ effectName: 'builtin-standard' });
 groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));

@@ -28,6 +28,7 @@ const INPUTS = [
     'examples/shared/shader-blocks.js',
     'tools/verify/shaders-laser-card-oracle.cjs',
     'tools/verify/shaders-laser-card-browser.cjs',
+    'tools/verify/shaders-native-reset-capture.cjs',
     'tools/verify/shaders-laser-card.tsconfig.json',
     'tools/verify/shaders-laser-card-performance.cjs',
     'tools/verify/shaders-browser-environment.cjs',
@@ -1391,8 +1392,15 @@ async function main(args = process.argv.slice(2)) {
                     const resumeBefore = await normalPage.evaluate(() => window.__laser.snapshot());
                     await normalPage.waitForTimeout(200);
                     const resumeAfter = await normalPage.evaluate(() => window.__laser.snapshot());
+                    // Native-reset capture: a one-shot bubble listener freezes the post-reset
+                    // snapshot (time===0) at the trusted click, before the native pacer advances.
+                    const { INSTALL_RESET_CAPTURE, READ_RESET_CAPTURE } = require('./shaders-native-reset-capture.cjs');
+                    const resetInstall = await normalPage.evaluate(INSTALL_RESET_CAPTURE, '__laser');
+                    if (!resetInstall?.ok) throw Error('reset capture install failed: ' + resetInstall?.error);
                     await normalPage.locator('#reset').click();
-                    const reset = await normalPage.evaluate(() => window.__laser.snapshot());
+                    const resetCapture = await normalPage.evaluate(READ_RESET_CAPTURE);
+                    if (!resetCapture?.snapshot) throw Error('reset capture missing after click');
+                    const reset = resetCapture.snapshot;
                     // Real trusted release: click the button, await the page's cached release
                     // promise (the same instance the click handler started), read events after.
                     await normalPage.locator('#release').click();

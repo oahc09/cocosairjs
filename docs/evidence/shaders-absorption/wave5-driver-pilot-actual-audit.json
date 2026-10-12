@@ -1,0 +1,696 @@
+{
+  "schema": "w5-driver-actual-audit/1",
+  "startedAt": "2026-10-11T15:56:25.518Z",
+  "execution": "Lead Codex; no browser; structuredClone preserves NaN",
+  "baselinesAccepted": {
+    "functional": true,
+    "performance": true
+  },
+  "rows": [
+    {
+      "name": "pointer-uv",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "pointer UV",
+        "raw event frame binding",
+        "actual uniform ledger",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "untrusted-pointer",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "trusted pointer raw",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "event-sequence",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "frame ledger",
+        "frame ledger",
+        "actual consumer state",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "actual-dt",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "frozen gesture",
+        "actual uniform ledger",
+        "frame ledger",
+        "actual consumer state",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "uniform-whitewash",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "actual consumer state",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "mother-default-spoof",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "actual consumer state",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "GPU-whitewash",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "GPU byte mismatch:320,200",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "GPU-NaN-preserved",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "probe byte channels",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "GPU-point-shift",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "probe structure/cleanup",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "probe-temp-leak",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "probe structure/cleanup",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "probe-time-spoof",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "probe structure/cleanup",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "resource-zero-allocation",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "resource observations",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "resource-leak",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "resource observations",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "resource-missing-cycle",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "100 resources",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "untrusted-reset",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "normal trusted lifecycle",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "listener-leak",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "release",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "resize-backing",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "state/frozen",
+        "actual consumer state",
+        "probe structure/cleanup",
+        "GPU byte mismatch:240,160",
+        "GPU byte mismatch:240,208",
+        "GPU byte mismatch:211,160",
+        "GPU byte mismatch:150,160",
+        "GPU byte mismatch:330,160",
+        "GPU byte mismatch:168,211",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "invalid-accepted",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "invalid atomic",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "duplicate-tuple",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "tuple exact coverage",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "missing-engine",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "tuple exact coverage",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "source-drift",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "source closure",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "agent-false-pass",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "claims",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "cleanup-false",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "global cleanup",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "missing-boundary",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "boundary exact set",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "boundary-binding",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "boundary binding receipt",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "boundary-uniform",
+      "phase": "functional",
+      "accepted": false,
+      "errors": [
+        "actual consumer state",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "native-pass-omitted",
+      "phase": "performance",
+      "accepted": false,
+      "errors": [
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "native one pass/draw/update",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "timed-readback",
+      "phase": "performance",
+      "accepted": false,
+      "errors": [
+        "timed readback",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "missing-profile",
+      "phase": "performance",
+      "accepted": false,
+      "errors": [
+        "tuple exact coverage",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "duplicate-profile",
+      "phase": "performance",
+      "accepted": false,
+      "errors": [
+        "tuple exact coverage",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "GPU-unavailable-contradiction",
+      "phase": "performance",
+      "accepted": false,
+      "errors": [
+        "GPU unavailable contradiction",
+        "GPU query pair",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "clock-NaN",
+      "phase": "performance",
+      "accepted": false,
+      "errors": [
+        "clock calibration",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "DPR-mobile-spoof",
+      "phase": "performance",
+      "accepted": false,
+      "errors": [
+        "repair DPR 1 != expected 2",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    },
+    {
+      "name": "actual-update-omitted",
+      "phase": "performance",
+      "accepted": false,
+      "errors": [
+        "native one pass/draw/update",
+        "performance actual update binding",
+        "scope contradiction",
+        "exit contradiction"
+      ]
+    }
+  ],
+  "endedAt": "2026-10-11T15:57:02.423Z"
+}

@@ -1,0 +1,45 @@
+{
+  "evaluatedAt": "2026-10-11T15:57:23.685Z",
+  "candidateGate": {
+    "path": "docs/evidence/shaders-absorption/wave5-driver-pilot-frozen-gate.json",
+    "bytes": 30513,
+    "sha256": "3f4f7573e4639dac03fba0ebe06f2fd7b34841f5caa1a509e43d89287af809ef"
+  },
+  "candidateSdk": [
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303581,
+      "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+    },
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "27b1526bf6a2c44d256dfb4e2030e343f5ba571d1a4c730dbf4ba0b7bfa6f965"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6649142,
+      "sha256": "c6d3c7d0fd5f3ca3d159744da3caecf1c263e671021d17f1ac34a2717d991e38"
+    }
+  ],
+  "observedWorkspaceSdk": [
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3303581,
+      "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+    },
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "4384d4cdb4f6f27152c89e582e20855ac5dd8f5c7267cfea634b5a2acfa20d7e"
+    },
+    {
+      "path": "build/npm/cocosair.module.js",
+      "bytes": 6649142,
+      "sha256": "f6f202f459a7df94bde2cfe26b2ae6b25befbdfa066c9534cf5eb02798664d06"
+    }
+  ],
+  "currentSdkMatches": false,
+  "currentSdkGate": "BLOCKED",
+  "reason": "Immutable candidate leaf acceptance does not promote the live workspace SDK or prior Waves. Parallel build stamps are still exact byte changes."
+}

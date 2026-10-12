@@ -4,6 +4,10 @@
 `shader-effects-inc/shaders@dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a`。
 实现使用 Cocos 场景、材质、纹理和主循环，不加载上游 runtime 或 TypeGPU。
 
+2026-10-12 最新：[Wave6 三个隔离 Agent 最小验收](wave6-validation-delivery.md)完成，NoiseDissolve/Neon/Glass 最终均通过 Chromium 桌面实际检查；首次编译均失败后自行修复。该结果仅绑定独立公开 SDK，不替代当前工作区 Engine/发布验收，Wave5 SDK 阻塞保留。按用户要求未扩展性能、跨引擎或重复测试矩阵；下列为历史状态记录。
+
+2026-10-11 最新状态：[当前 SDK 刷新交付](current-sdk-refresh-delivery.md)记录 Wave1→Wave4 Engine 链全部 PASS，九个母效果与四个组合完成冻结范围验证。[Wave5](wave5-kickoff.md)已完成[同源文档 Node 合同](wave5-docs-generation-delivery.md)和[两个融合 Pilot 实证](uv-fusion-pilots-validation-delivery.md)：2→1 Pass、少256 KiB RT，但GPU有回退，保留可选示例方案。Driver仍在补齐，Wave5整体IN_PROGRESS。Agent、W2–W4 独立 Gallery、实体设备、长时与发布准备未完成；下列历史裁定按各自记录时间阅读。
+
 - [来源与算法索引](upstream-index.md)：源码身份、许可证和必须区分的算法语义。
 - [效果契约](effect-contract.md)：参数、结构身份及六维 Engine Gate；Agent Gate 单独验证。
 - [能力基线](capability-baseline.md)：当前 SDK 入口、已有实现与测量边界。
@@ -16,6 +20,8 @@
 来源审查、类型声明及空场景启动均不能升级为效果已验证。每个效果需要独立算法
 校验、真实浏览器画面、边界、至少一百轮资源释放和三个分辨率配置的性能测量。
 Engine Gate 通过以后再安排仅能访问公开资料的 Agent Gate。
+
+2026-10-12 Wave5 状态：[Driver Pilot 冻结候选六门通过](driver-pilot-validation-delivery.md)，三浏览器84视觉、180边界、1200资源循环与18串行性能窗；[两个融合 Pilot](uv-fusion-pilots-validation-delivery.md) 的原SDK研究证据保留。[文档生成器47项合同通过](wave5-docs-generation-delivery.md)，只绑定实际消费的声明。并行SDK构建改变字节指纹，[Wave5 当前Gate](../evidence/shaders-absorption/wave5-current-r2-gate.json)为BLOCKED；这些候选/历史PASS不代表当前SDK、Agent或发布验收。用户随后明确授权另行开展冻结公开 SDK 的 Wave6 最小 Agent 验收，该阻塞保持不变。
 
 2026-10-10 当前状态：[Wave 1 Engine Gate](../evidence/shaders-absorption/wave1-r21-current-gate.json)、[Wave 2 Engine Gate](../evidence/shaders-absorption/wave2-current-gate.json)及[Wave 3 Engine Gate](../evidence/shaders-absorption/wave3-current-gate.json)均PASS，九个原生效果完成各自冻结子集的三浏览器六维验收，允许开始Wave4四组合。Agent Gate仍NOT_RUN；完整库存156套2088项、2083通过/5个既有失败。解析形状子集不代表完整上游平台或发布就绪。
 

@@ -1,0 +1,319 @@
+{
+  "schema": "shaders-wave6-isolated-agent-result/1",
+  "evaluatedAt": "2026-10-11T22:56:55.463Z",
+  "task": "task1-noise-dissolve",
+  "taskStatus": "PASS",
+  "wave6Status": "IN_PROGRESS",
+  "subset": true,
+  "projectCompleted": false,
+  "implementation": {
+    "executionChannel": "Orca Worker",
+    "role": "Wave6-isolated-noise-agent",
+    "workerId": "tq8u33l01m6skuul19s7f0a3",
+    "sessionId": "0cb44cdd-914c-4999-82cf-0ab7ad72072f",
+    "isolationClaimSource": "Agent terminal report; file accesses not independently audited",
+    "manualIntervention": false,
+    "sourceChangesDuringLeadAcceptance": false
+  },
+  "first_run_success": false,
+  "first_runtime_success": true,
+  "final_success": true,
+  "compile_attempts": {
+    "tsc": 3,
+    "esbuild": 2,
+    "source": "Orca Worker terminal report and preserved compiler logs",
+    "includesFormattingRecheck": true
+  },
+  "agentRepairRounds": 1,
+  "runtime_attempts": 3,
+  "api_errors": [
+    {
+      "code": "TS2345",
+      "api": "primitives.plane",
+      "error": "widthSegments and lengthSegments required by IPlaneOptions"
+    },
+    {
+      "code": "TS2339",
+      "api": "window.__airApp",
+      "error": "Window augmentation missing"
+    }
+  ],
+  "engineCapabilityGapConfirmed": false,
+  "time": {
+    "agentReportedStart": "2026-10-12T06:31:00+08:00",
+    "agentReportedEnd": "2026-10-12T06:49:30+08:00",
+    "agentReportedSeconds": 1110,
+    "startNotIndependentlyVerified": true,
+    "acceptanceStartedAt": "2026-10-11T22:55:15.756Z",
+    "acceptanceEndedAt": "2026-10-11T22:55:20.174Z"
+  },
+  "token_usage": "unavailable",
+  "acceptance": {
+    "executionChannel": "Lead (Codex)",
+    "browser": "chromium",
+    "browserVersion": "149.0.7827.55",
+    "osExitCodeObserved": 0,
+    "checks": {
+      "shaderCompile": true,
+      "oneCanvas": true,
+      "pause": true,
+      "contentRendered": true,
+      "progressZeroIdentity": true,
+      "midChangesPixels": true,
+      "progressOneBackground": true,
+      "resume": true,
+      "resize": true,
+      "release": true,
+      "releaseIdempotentAndListenerSilent": true
+    },
+    "shaderCompiles": [
+      {
+        "ok": true,
+        "log": ""
+      },
+      {
+        "ok": true,
+        "log": ""
+      }
+    ],
+    "pageErrors": [],
+    "consoleErrors": [],
+    "pixelSamplePointsPerCapture": 54,
+    "resourceBefore": {
+      "material": {
+        "refs": 1,
+        "valid": true
+      },
+      "mesh": {
+        "refs": 1,
+        "valid": true
+      },
+      "effect": {
+        "refs": 1,
+        "valid": true
+      }
+    },
+    "resourceAfter": {
+      "node": {
+        "refs": null,
+        "valid": false
+      },
+      "material": {
+        "refs": 0,
+        "valid": false
+      },
+      "mesh": {
+        "refs": 0,
+        "valid": false
+      },
+      "effect": {
+        "refs": 0,
+        "valid": false
+      }
+    },
+    "cleanup": {
+      "pageClosed": true,
+      "browserClosed": true,
+      "serverClosed": true
+    },
+    "inputsUnchanged": true
+  },
+  "attempts": [
+    {
+      "report": "output/shaders-absorption/wave6-noise-runtime-r1.json",
+      "observedExitCode": 1,
+      "implementationChecksAllTrue": true,
+      "collectorErrors": [
+        "Expected checks count 9 despite 10 actual checks",
+        "favicon.ico 404 console error"
+      ],
+      "agentSourceChanged": false
+    },
+    {
+      "report": "output/shaders-absorption/wave6-noise-runtime-r2.json",
+      "observedExitCode": 0,
+      "agentSourceChanged": false
+    },
+    {
+      "report": "output/shaders-absorption/wave6-noise-runtime-r3.json",
+      "observedExitCode": 0,
+      "addedObservations": [
+        "COMPILE_STATUS directly observed",
+        "resize pixels contain rendered content"
+      ],
+      "agentSourceChanged": false
+    }
+  ],
+  "bindings": [
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/src/main.ts",
+      "bytes": 18979,
+      "sha256": "a8dde43d60fdb4780bd69e10898daaf14686522051e6fbd071807447bac38d1b"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/main.js",
+      "bytes": 12294,
+      "sha256": "f1957b3ba5a912fdb929437c176962a95a2d5509999c2b8fe255b60c3e262ecc"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/index.html",
+      "bytes": 2758,
+      "sha256": "cc8477f0cfa6522290f694ceb36f9a6750a65f97e2d97d6440045c107ab07077"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/report.md",
+      "bytes": 5909,
+      "sha256": "61036f2d72ac750b7835e105b77a87be290286c1425c6fd34efe34c1ee1016fb"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/sdk/cocosair.module.js",
+      "bytes": 6649186,
+      "sha256": "4ca4e9a2379cbbc088bd839cb138a14e58888bad0a6a7ca4918b5cc543924cb8"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/sdk/cocosair.module.d.ts",
+      "bytes": 3369681,
+      "sha256": "e1e3b7a241cec02a58b809589ae13efb5089254e4496c81061b62ea20a0b0cbf"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/first-attempt/src/main.ts",
+      "bytes": 18891,
+      "sha256": "421b0d34b523d29f1c725962cf57e99cd3e81d13c77812660f2162dcfb062bf1"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/first-attempt/index.html",
+      "bytes": 2758,
+      "sha256": "cc8477f0cfa6522290f694ceb36f9a6750a65f97e2d97d6440045c107ab07077"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/first-attempt/tsc-attempt1.log",
+      "bytes": 440,
+      "sha256": "53c488072d4d8b0aa9204b02576ce9c84fc5e0558d6775a8e5db8c86f94d8529"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/first-attempt/tsc-attempt2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/first-attempt/tsc-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/first-attempt/esbuild-attempt1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-agent-noise-r1/first-attempt/esbuild-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-noise-runtime-r1.cjs",
+      "bytes": 8222,
+      "sha256": "e38239356284693a6584cdf5790f28858b785c44ed3f41684ec10128c524128b"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-noise-runtime-r1.json",
+      "bytes": 32417,
+      "sha256": "6150ea52affde36594e8cf51fbb153b7c0f2bc1e02b476cf75c4754e946b032c"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-noise-runtime-r2.cjs",
+      "bytes": 8298,
+      "sha256": "9a4864fb14fa08a50a0b7d78e032c6a822e0c98c26dcae9dbaacef9e0c2e7da3"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-noise-runtime-r2.json",
+      "bytes": 32328,
+      "sha256": "69a7acdcd806d8204e061bd01dec4f89e7027e073504c8af5560838ef701af55"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-noise-runtime-r3.cjs",
+      "bytes": 8984,
+      "sha256": "1c18f35d84e49d579aa1da6b39b1c4101da03438e2c6f03266e4a42937756999"
+    },
+    {
+      "path": "output/shaders-absorption/wave6-noise-runtime-r3.json",
+      "bytes": 32475,
+      "sha256": "7143146212812dca66cb939590972e810e284595ec401a0f24b50ea8c9a41d5c"
+    }
+  ],
+  "screenshots": [
+    {
+      "stage": "progress-zero",
+      "path": "output/shaders-absorption/wave6-noise-runtime-r3-artifacts/progress-zero.png",
+      "bytes": 147949,
+      "sha256": "c9a9793a87cfc2c5dadc131f1dfda407d10f8299c36b894dbe2531187a3f087e",
+      "width": 640,
+      "height": 400
+    },
+    {
+      "stage": "zero-changed-noise",
+      "path": "output/shaders-absorption/wave6-noise-runtime-r3-artifacts/zero-changed-noise.png",
+      "bytes": 148390,
+      "sha256": "f38e4ff43eb3641297d87220067d34b3f1db04b52dee67593f34b7bdc92714e3",
+      "width": 640,
+      "height": 400
+    },
+    {
+      "stage": "progress-mid",
+      "path": "output/shaders-absorption/wave6-noise-runtime-r3-artifacts/progress-mid.png",
+      "bytes": 180453,
+      "sha256": "82c10c75a5f6fe3e1c4a4f75a776f50a207da40c7c828c00d95644c4a72340a7",
+      "width": 640,
+      "height": 400
+    },
+    {
+      "stage": "progress-one",
+      "path": "output/shaders-absorption/wave6-noise-runtime-r3-artifacts/progress-one.png",
+      "bytes": 11717,
+      "sha256": "4e06e9735b885d5ed7ae9381b5a8c0fe1e259f271b9318f050a10538cd51a17e",
+      "width": 640,
+      "height": 400
+    },
+    {
+      "stage": "resize",
+      "path": "output/shaders-absorption/wave6-noise-runtime-r3-artifacts/resize.png",
+      "bytes": 91342,
+      "sha256": "2b69dcc915767e471bab2555aa1145e298fd59a0031f8ccfda401e97c6c88022",
+      "width": 480,
+      "height": 320
+    }
+  ],
+  "documentation_lookup": [
+    "RUN.md",
+    "INDEX.md",
+    "tasks/task1-noise-dissolve.md",
+    "ACCEPTANCE.md",
+    "docs/custom-shaders.md",
+    "docs/materials.md",
+    "docs/cameras.md",
+    "docs/asset-loading-and-lifetime.md",
+    "docs/rendertargets.md",
+    "docs/README.md",
+    "starter/index.html",
+    "starter/main.ts",
+    "sdk/cocosair.module.d.ts",
+    "sdk/cocosair.module.js"
+  ],
+  "notRun": [
+    "Neon isolated task",
+    "Glass isolated task",
+    "Firefox/WebKit",
+    "DPR2",
+    "performance",
+    "100 resource cycles",
+    "complete Engine six gates",
+    "physical devices",
+    "long running"
+  ],
+  "limitations": [
+    "54-point pixel sampling, not full image audit",
+    "Small viewport clips bottom diagnostic text; full mobile layout not evaluated",
+    "Frozen public SDK acceptance does not replace current workspace SDK gates"
+  ],
+  "wave5CurrentSdkBlockerPreserved": true
+}

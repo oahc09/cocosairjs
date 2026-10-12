@@ -1,0 +1,24 @@
+{
+  "id": "shader-driver-pilot",
+  "title": "Effect Driver Pilot",
+  "description": "Pointer、时间和范围映射驱动完整 Holographic / Neon 原生消费者。",
+  "category": "rendering",
+  "entry": "index.html",
+  "version": "1.0.0",
+  "status": "experimental",
+  "specStatus": "pilot",
+  "requiresDevTools": false,
+  "apiClaims": [
+    "createAirApp",
+    "createStepClock",
+    "createAirRenderTarget",
+    "EffectAsset",
+    "Material.initialize",
+    "Material.setProperty",
+    "MeshRenderer",
+    "utils.createMesh"
+  ],
+  "validation": { "lifecycle": ["resource-released"], "agentGate": "NOT_RUN", "galleryGate": "NOT_RUN" },
+  "assets": [],
+  "license": { "assets": "Local design and the reference notices in LICENSE.reference.txt" }
+}

@@ -1,4 +1,6 @@
-# Wave4 当前候选：固定十三项交付
+# Wave4 首轮候选：历史十三项交付
+
+本文保留首轮候选的 BLOCKED 裁定与当时测量。2026-10-11 后续已完成当前 SDK 全链刷新，[最新交付](current-sdk-refresh-delivery.md) 与 [Wave4 当前 SDK Gate](../evidence/shaders-absorption/wave4-current-sdk-r2-gate.json) 为 PASS、nextWaveEligible=true。以下旧身份、计数与前置失败属于历史，不作为当前结果。
 
 ## 1. Goal
 

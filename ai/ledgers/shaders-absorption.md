@@ -316,3 +316,71 @@ Lead已准备r2当前证据链与串行驱动，等待外部验收结束、13份
 
 - r3 master自然exit1：Wave2 r3重新汇总实际PASS；Wave3恢复时已有E08审计的JSON文件（NaN诊断保存为null）与内存重算诊断（仍是NaN）deepEqual不等。并非structuredClone将NaN转换为null，Lead用独立Node断言确认structuredClone保留NaN。分类AGENT_FAILURE，变异自身仍被生产门禁拒收。
 - Lead创建独立resume-r4脚本：先对原始structuredClone变异调用生产validator并确认全部拒收，再将新审计按同一JSON序列化形式与旧文件精确比较，不归一化被验证的输入、不修改历史审计、不放宽生产validator。r4 master已启动，复用已验收Wave2 r3；Wave3汇总恢复后接完整Wave4刷新。SDK/collector/chain源码本次零修改。
+
+### 当前 SDK Wave3 PASS 与组合 reset 修正（2026-10-11）
+
+- Lead r4恢复真实接受Wave3 r2：54维/120视觉/660边界/54非法/900资源/9resize/36性能/141截图，前置为Wave2 r3；E08现含可信指针/触摸各3，37审计全拒；E09 35审计全拒；汇总15篡改全拒。
+- r4后续W4首个C01功能自然exit1，仅chromium reset state(time0.0165)；原始三引擎报告/OS/日志保留。
+- Orca Worker实际修复C01/C02/C04 collector正常reset采集：复用INSTALL_RESET_CAPTURE→真实trusted click→READ.snapshot；helper纳入3输入闭包；C03保留原权威resetReceipt，main/oracle/SDK不动。Worker报告聚焦169/169及3语法/格式检查通过；Lead独立检查接线/闭包，浏览器证据仍待重采。
+- Lead r5 master于11:38 UTC启动，先递归验证已通过前置链，再新W4 r3 raw路径执行4功能+4性能串行窗口，沿用未曾产出的W4 r2叶Gate/汇总新路径，所有输出wx。未终态前不称完整Wave4 PASS、不推进Wave5。
+
+### 当前 SDK Wave4 全部采集通过及前缀恢复（2026-10-11）
+
+- Lead r5的W4 r3 raw全部8阶段自然exit0/signalnull/inputsUnchanged=true/production validateFiles PASS；4功能+4性能（54冻结配置）已采完。三组合reset采样修正真实通过。
+- r5最终exit1来自Lead汇总脚本硬编码旧w4-r2前缀读取不存在性能报告，ENOENT；SDK/算法/真实采集未失败。分类AGENT_FAILURE，所有失败master/log保留。
+- 新独立leaves-finalize-r3接受显式--prefix=output/shaders-absorption/lead-current-sdk-w4-r3，并先核对全部32份raw/log/OS/frozen文件存在。Lead已核对8份OS自然退出，创建r6 master仅执行叶级重验/实际篡改审计/最终链汇总，不再浏览器采集。r6于11:58 UTC启动，尚未终态，Gate不提前升级。
+- Orca Worker补正真实Node测试命令：helper单suite9；laser-card/film-neon/input-dissolve-review/golden/full-report共5suite160；合计6suite169。Lead未将Node结果代替浏览器实证。
+
+### 当前 SDK 四级链最终 PASS 与 Wave5 启动（2026-10-11）
+
+- Lead r6 master于12:01:50.633 UTC自然exit0/ok=true，两汇总阶段自然退出，metadataUnchanged=true。四级当前路径W1r2→W2r3→W3r2→W4r2全经生产重算PASS，nextWaveEligible=true；Orca Worker独立只读终态复核同样PASS。
+- W4实际范围72维/198视觉/990边界/75非法/1200资源/18resize/234PNG/54性能配置；17424稳态帧（C01 2812/C02 2955/C03 2955/C04 8702）；真实4叶审计56+44+65+44=209全拒，当前汇总24 metadata变异全拒。Worker额外3 summary clone全拒；3PNG只读存在性核对，未独立像素复算，不扩大抽样表述。
+- Agent/W2-4独立Gallery/实体设备/长时/发布仍NOT_RUN，旧失败链与raw/audit全保留，无stage/commit/push/SDK修改。
+- Lead正式开启Wave5，创建wave5-kickoff.md并更新最新交付/README；首批为EffectDefinition同源类型、API文档、参数表、Agent参考与验证元数据生成，跨13个真实消费者；随后独立Driver和2个UV/Pass Fusion实测Pilot。当前Wave5子项均NOT_RUN，不借前置PASS升级。
+- 聚焦4份文档Prettier检查PASS；docrefs209/1611/0 unresolved。
+
+### Wave5 同源文档与两个融合 Pilot 实证（2026-10-11）
+
+- 执行渠道 Lead（Codex）：同源生成工具完成13定义加载、AST字面量提取、类型消费、API证据与字节幂等；31自有+15独立review共46/46 Node测试，真实合法类型消费者exit0/非法enum编译拒收。见wave5-docs-generation-delivery.md。仅文档/合同子项PASS，不授予浏览器或Agent状态。
+- Orca Worker Driver初版只有Node23项和collector骨架，资源未配对；Lead独立16项review真实1PASS/15FAIL，已交回Worker补完整消费者字段、原子绑定、资源、真实collector/性能reducer/完整接受正例与篡改拒收。Driver运行态NOT_RUN，不由两个融合Pilot代验。
+- Lead在独立shader-uv-fusion-pilot路径实现完整E05/E09母shader的reference/fused对照：仅替换程序子纹素采样，保留256² texel中心、CLAMP/NEAREST、预乘RGBA8量化、母stencil/阴影/Vogel/色散和一次OETF，源撤销替换精确等于母片段。原十三例、src和SDK不改。
+- 真实最终功能自然exit0，输入前后不变；三引擎两路线DPR1/2合计144视觉/1656边界/1200资源/12resize/156PNG，可信pause/resume/reset/release、变体退役、临时RT与memory回基线通过。独立母数学读回/PNG审计及72对全图差值最大2，超差0。历史attempt1/2失败保留；attempt3旧collector身份不继承当前PASS。
+- 首次性能代理实参传origin而非server对象，未进入窗口即超时，AGENT_FAILURE；OS自然exit1/log/frozen保留。修复后重新冻结并串行重采功能和性能，最终功能14:21:27→14:23:38 UTC、性能14:23:43→14:30:12 UTC，均自然exit0/signalnull/errornull/inputsUnchangedtrue和生产PASS。
+- 最终36性能窗口/11684稳态帧确认2→1真实pass及GLdraw、timed readPixels全0；实际纹理payload每对减少262144bytes。CPU render envelope各配置中位数下降，但update无一致改善。RTX4060/D3D11的Chromium GPU测量：Glass+6%～63%；Emboss 720p/mobile +18%～28%、1080p约−2%。Firefox/WebKit GPU query unavailable如实null。PERFORMANCE_GAP为自动融合缺成本策略，不主张ENGINE_BUG；保留example-local可选CPU/内存取舍，不启用默认自动融合、不新增core API。
+- 两接受真实基线的38类structuredClone篡改全部生产拒收（NaN在内存保留）；完整Gate绑定原始报告/自然OS/采集前frozen/验证器SHA/当前Wave4前置，生产重算PASS。见wave5-uv-fusion-pilots-gate.json与uv-fusion-pilots-validation-delivery.md。聚焦Node33+10共43项PASS，独立于浏览器。
+- Wave5整体IN_PROGRESS；Driver、Agent、独立Gallery、实体设备/长时/发布仍未验，不进入Wave6。无stage/commit/push；历史与并发工作保留。
+
+### Wave5 Driver 冻结验收与当前 SDK 阻塞（2026-10-12）
+
+- 执行渠道：Orca Worker 小三提供纯 Driver 初稿、运行页修复及37文件镜像；Lead（Codex）接管完整母默认参数/真实uniform回读/世界矩阵位置消费/独立CPU回放/实际collector与性能reducer，补齐合成完整正例和实际篡改拒收。没有修改引擎src或重建SDK。Worker初稿及占位指标不作为实际验收。
+- 并行Spark任务持续重建工作区SDK；原四级链和融合证据的69127f39/5b67a560/b7771393不再匹配当前字节。工作区首轮采集和镜像相对编译器路径失败均原样保留。Lead改用require.resolve定位已安装编译器，创建独立39文件不可变候选lead-w5-driver-candidate-r2，SDK冻结为27b1526b/5b67a560/c6d3c7d0；不回退或忽略并发构建、不开第二渲染canvas。
+- 冻结候选最终功能UTC2026-10-11T15:46:53.986–15:48:50.985、性能15:50:28.743–15:53:51.831，OS自然exit0/signal=null/error=null/inputsUnchanged=true，两阶段串行且生产validateFiles PASS。strict与bundle实际exit0，bundle88149B。三引擎×两完整母消费者×DPR1/2：84视觉、180边界、96非法原子拒收、1200真实资源周期、12活resize、96PNG；18真实性能窗口/5853稳态帧，timed readPixels全0。
+- CPU update中位0.20–0.28ms、render envelope中位0.38–0.50ms，包含实际插桩，不宣称未插桩基准或无Driver对照收益。Chromium Holographic GPU 720p/1080p/mobile中位0.610304/1.253376/1.968128ms；Neon为0.388096/0.889856/0.870400ms。FF/WK GPU timer unavailable和实际VRAM unavailable如实披露。
+- Lead四套聚焦Node105/105通过；真实两接受基线的34类structuredClone变异和7类Gate变异全拒，NaN不被序列化洗白。wave5-driver-pilot-frozen-gate.json生产验证PASS；十三项交付driver-pilot-validation-delivery.md绑定自然OS、冻结清单和原始报告。Agent/独立Gallery仍NOT_RUN，未提交、推送或修改全库库存。
+- 同源文档生成器补一条实际文件读取回归，47/47 Node测试与CLI --check exit0。只移除生成器未读取的两个运行时JS指纹，保留实际消费的SDK声明、源码、API/配置指纹；Engine collector三产物字节门禁保持严格。历史46项证据不改写。
+- wave5-current-r2-gate.json生产汇总诚实BLOCKED：Driver、Fusion、Wave4前置各自与当前工作区SDK不匹配，归INFRA_FAILURE；文档检查PASS，无新引擎算法失败主张。Wave5和项目不宣布完成，不进入Wave6。待稳定统一SDK后依序刷新前置与Pilot当前证据；历史raw/OS/audit及并发Spark工作全部保留。
+- r2汇总写出后SDK再次变化，实时validateReport基线拒绝；拟追加的六项汇总克隆测试在基线断言处停止，实际未执行，不计为篡改拒收。Lead只读重算确认changedKeys仅currentSdk，冻结Driver验证与文档检查均ok=true，仍为相同三项INFRA_FAILURE。前后字节写入lead-w5-current-r2-drift-observation.json，原快照保留，不冒称持续有效的当前指纹；105/34+7既有Driver证据不受此影响。
+
+
+### Wave6 首个隔离 Agent 最小验收（2026-10-12）
+
+- 用户明确要求避免过度设计测试并开始 Wave6；此前 Wave5 当前 SDK BLOCKED 原样保留，不补 PASS。用户仅授权先新建一个 Worker。
+- Orca Worker Wave6-isolated-noise-agent（tq8u33l01m6skuul19s7f0a3）使用冻结公开 SDK/手册和独立目录实现 NoiseDissolve。首次 tsc exit2，两处类型使用错误；自行修复一轮后编译/打包通过。first_run_success=false，Agent 实现人工介入零，token unavailable。
+- Lead（Codex）Chromium 149 桌面最终自然exit0，11项聚焦检查通过：原生 shader COMPILE_STATUS、单canvas、溶解两端/中间像素、真实控件、暂停/恢复、同页resize继续呈现、实际 mesh/material/effect refs1→0并失效、重复释放及input监听解绑。页面/浏览器/server关闭，输入SHA不变。54点抽样不声明全图审计。
+- root r1采集失败为自身计数/ favicon问题，十项实现检查均通过；r2修正后PASS，r3补显式shader状态与resize像素要求PASS。所有历史保留，三次浏览器运行没有修改Agent实现。
+- 见wave6-noise-agent-delivery.md与wave6-noise-agent-result.json。仅Noise任务最小验收PASS；Wave6整体IN_PROGRESS，Neon/Glass、跨引擎/性能/完整Engine六门NOT_RUN。没有确认新的引擎能力缺口。
+
+
+### Wave6 Neon 隔离任务最小验收（2026-10-12）
+
+- 用户授权依次新建 Neon、Glass 隔离 Worker。Neon由新 Orca Worker jataabs44bsnoh5mth3d9oga 独立实现，首轮tsc因plane分段参数缺失exit2，自行修复一轮后exit0；esbuild首轮exit0，报告实际约364秒，token unavailable。首次完整成功false。
+- Lead（Codex）Chromium桌面12项实际检查通过：COMPILE_STATUS、单canvas、管体外晕、强度/厚度/外晕半径/颜色消费、真实控件、暂停恢复、resize、实际GPU资产引用1→0和失效、重复释放/监听解绑。r1/r2均自然exit0；r2排除UI面板采样污染，两次均未修改Agent实现。收尾和指纹检查通过。
+- 见wave6-neon-agent-delivery.md及wave6-neon-agent-result.json。Wave6完成2/3、整体IN_PROGRESS；跨引擎/性能/完整Engine六门未测，Wave5 SDK阻塞保留。下一项Glass新隔离Worker已有明确授权，不再重复询问。
+
+
+### Wave6 三任务最小验收完成（2026-10-12）
+
+- Glass由新 Orca Worker ox3drcp6lhqsub8z4unt2g1i 实施；首次tsc两处plane类型错，自行修复一轮；另有node -e引号失败重试。首次源码/原始日志全保留。编译窗口约210秒不含研读，不冒称总耗时；token unavailable。
+- Lead（Codex）首次Chromium自然exit0，11项聚焦检查全通过；真实四方块+地面子场景RT、70点零折射直通误差0、19点非零变化、resize后35点误差0、13份真实自有资产refs1→0且失效、实际camera.targetTexture归null和RT RenderTexture失效；console/pageErrors空、输入不变、所有采集进程资源关闭。没有修改Agent代码。
+- 三个新Orca Worker独立任务最终3/3通过，首次完整成功0/3（均plane必填参数缺失），首次浏览器实现成功3/3；三任务小样本不推广成功率。验收仅冻结公开SDK（4ca4e9a2/e1e3b7a2）、Chromium桌面，34项最终聚焦检查、19张最终PNG；性能/跨引擎/完整Engine六门/实体设备/长时/Gallery/发布未验，Wave5 SDK BLOCKED保留。
+- Lead核对公开materials/rendertargets示例省略plane分段与冻结dts必填不符，归DOC_GAP；RT helper缺专篇指导归资料覆盖不足。其他shader建议未确认。无新SDK运行时能力缺口主张。本轮零SDK/src/build修改、零新增Jest/大型矩阵、无stage/commit/push。见wave6-validation-delivery.md和wave6-minimal-agent-result.json。
