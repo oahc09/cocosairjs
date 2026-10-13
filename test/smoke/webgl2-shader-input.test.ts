@@ -34,7 +34,7 @@ describe('WebGL2 shader input diagnostics', () => {
         const info = new ShaderInfo('valid', [
             new ShaderStage(ShaderStageFlagBit.VERTEX, '/* #version 300 es */\n// #version 300 es\nvoid main() {}'),
         ]);
-        info.blocks = [new UniformBlock(0, 0, 'Global')];
+        info.blocks = [new UniformBlock(0, 0, 'Global'), new UniformBlock(0, 0, 'MacroAlternative')];
         info.samplerTextures = [new UniformSamplerTexture(1, 0, 'image')];
         expect(() => new WebGL2Shader().initialize(info)).not.toThrow();
     });

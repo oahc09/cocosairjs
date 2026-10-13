@@ -57,12 +57,16 @@ export class WebGL2Shader extends Shader {
             }
         }
         const bindings = new Map<string, string>();
-        for (const descriptor of [...info.blocks, ...info.samplerTextures]) {
+        // Builtin macro variants intentionally share block bindings (e.g. CCSkinning/CCSkinningTexture).
+        // Reject only cross-kind aliases here; active same-kind resources are determined after preprocessing.
+        for (const block of info.blocks) {
+            bindings.set(`${block.set}:${block.binding}`, block.name);
+        }
+        for (const descriptor of info.samplerTextures) {
             const key = `${descriptor.set}:${descriptor.binding}`;
             if (bindings.has(key)) {
                 fail('WEBGL2_SHADER_BINDING_CONFLICT', `${descriptor.name} conflicts with ${bindings.get(key)} at set:binding ${key}; assign unique logical bindings within each set`);
             }
-            bindings.set(key, descriptor.name);
         }
         this._name = info.name;
         this._stages = info.stages;

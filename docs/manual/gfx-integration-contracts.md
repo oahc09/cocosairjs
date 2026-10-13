@@ -7,7 +7,7 @@
 - WebGL2 后端添加 `#version 300 es`；`ShaderStage.source` 不再包含版本指令。重复指令在创建 shader 前抛出 `WEBGL2_SHADER_VERSION`，包含 shader 名和阶段说明。
 - 使用 `layout(std140)` 的 uniform block，并使 `UniformBlock.members` 与 GLSL 的声明、顺序、类型及数量一致。普通非 sampler uniform 不应直接套入这条 UBO 上传链。
 - std140 中 float 数组元素步长至少16字节，vec3 的基准对齐为16字节，但其后 float 的放置取决于布局；不能统一把所有 vec3 成员视为独立16字节槽。对于复杂数组/结构体，显式核对 offsets、stride 和 block 大小。受限 [Effect 生成器](custom-shaders.md)不接受这些布局，不代表底层 gfx 不支持。
-- `UniformBlock` 与 `UniformSamplerTexture` 使用逻辑 `set/binding`；同一 set 中不可复用 binding。冲突在初始化前抛出 `WEBGL2_SHADER_BINDING_CONFLICT`，失败不替换已有 shader 状态。
+- `UniformBlock` 与 `UniformSamplerTexture` 使用逻辑 `set/binding`；同一 set 中 block 与 sampler 不可共享 binding。这种跨类型冲突在初始化前抛出 `WEBGL2_SHADER_BINDING_CONFLICT`，失败不替换已有 shader 状态。同类型的宏互斥模板可保留原有共享 binding；实际同时启用的资源仍应使用唯一槽位，不把模板元数据当作全部 active 资源。
 - `device.bindingMappings` 由后端用于映射 GL 的 UBO/texture unit；不要把后端偏移重复加到逻辑 binding。sampler 数组、flexible set 和 effect-import 分支还影响实际映射，不能用固定数字替代布局合同。
 - 编译/链接失败已有阶段、源码及 GL infoLog 输出。新输入诊断保留 Error 类型及 stack，并带 `code/stage/shader`。初始化通过只是元数据通过，实际使用时仍需 GPU 编译及采样验证。
 
