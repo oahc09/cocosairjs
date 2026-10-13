@@ -73862,9 +73862,9 @@
             setFromEuler(e: _air_spark_spark_math__Euler, update?: boolean): this;
             setFromAxisAngle(a: _air_spark_spark_math__Vector3, t: number): this;
             /**
-             * 自持实现（owner 裁定 2026-10-12：为逐位对齐 three r180 放弃 `cc.Quat.fromMat3` 委托）。
-             * 分支判据与算式次序抄自 three.js r180 `Quaternion.setFromRotationMatrix`（MIT）的迹分支式；
-             * 引擎 `cc.Quat.fromMat3` 走「最大分量取正」分支，除法/开方的分组不同，末位舍入不可对齐。
+             * 委托 cc.Mat3.fromMat4（降阶取左上 3x3）+ cc.Quat.fromMat3。
+             * 引擎按「四分量中最大者取正」分支、Three 先判 trace>0，两个分支同解；同一旋转矩阵下
+             * 二者可能给出整体差一个符号的四元数（q 与 -q 表示同一旋转，均为合法结果）。
              */
             setFromRotationMatrix(m: _air_spark_spark_math__Matrix4): this;
             /** 委托 cc.Quat.rotationTo；反平行时引擎换轴方式与 Three 不同（同为合法 180° 旋转）。 */
@@ -74039,17 +74039,14 @@
             makeRotationZ(t: number): this;
             /** 委托 cc.Mat4.identity + cc.Mat4.rotate（绕任意轴）；退化轴（长度 0）引擎返回 null，此处保持单位阵。 */
             makeRotationAxis(axis: _air_spark_spark_math__Vector3, t: number): this;
-            /** 与 three r180 同形：`compose(单位平移, q, 单位缩放)`，因此继承 compose 的算式次序。 */
+            /** 委托 cc.Mat4.fromQuat（平移列写 0、齐次位写 1，与 Three 的纯旋转阵逐一对应）。 */
             makeRotationFromQuaternion(q: _air_spark_spark_math__Quaternion): this;
             makeRotationFromEuler(e: _air_spark_spark_math__Euler): this;
             makeBasis(x: _air_spark_spark_math__Vector3, y: _air_spark_spark_math__Vector3, z: _air_spark_spark_math__Vector3): this;
             extractBasis(x: _air_spark_spark_math__Vector3, y: _air_spark_spark_math__Vector3, z: _air_spark_spark_math__Vector3): this;
             /** 逐列取 cc.Vec3.normalize 后重建基（与 Three 原文一致，标准化本身委托引擎）。 */
             extractRotation(m: _air_spark_spark_math__Matrix4): this;
-            /**
-             * 自持实现（owner 裁定 2026-10-12：为逐位对齐 three r180 放弃 `cc.Mat4.fromSRT` 委托）。
-             * 展开式与运算次序抄自 three.js r180 `Matrix4.compose`（MIT）。
-             */
+            /** 委托 cc.Mat4.fromSRT（`(out, q, v, s)` 即 Three 的 S→R→T 次序，16 个字段逐一同解）。 */
             compose(p: _air_spark_spark_math__Vector3, q: _air_spark_spark_math__Quaternion, s: _air_spark_spark_math__Vector3): this;
             /** 委托 cc.Mat4.toSRT；缩放分量为 0 时引擎给单位四元数（Three 原式给 NaN），见文件头第 7 条。 */
             decompose(p: _air_spark_spark_math__Vector3, q: _air_spark_spark_math__Quaternion, s: _air_spark_spark_math__Vector3): this;
@@ -74058,27 +74055,20 @@
             getMaxScaleOnAxis(): number;
             multiply(m: _air_spark_spark_math__Matrix4): this;
             premultiply(m: _air_spark_spark_math__Matrix4): this;
-            /**
-             * 自持实现（owner 裁定 2026-10-12：为逐位对齐 three r180 放弃 `cc.Mat4.multiply` 委托）。
-             * 16 项展开式与加法次序抄自 three.js r180 `Matrix4.multiplyMatrices`（MIT）；gl-matrix 的
-             * 按列累乘写法在末位舍入上与 three 不等价。
-             */
+            /** 委托 cc.Mat4.multiply（同为列主序 4x4 相乘，16 个字段逐一同解）。 */
             multiplyMatrices(a: _air_spark_spark_math__Matrix4, b: _air_spark_spark_math__Matrix4): this;
             multiplyScalar(s: number): this;
             determinant(): number;
-            /**
-             * 自持实现（owner 裁定 2026-10-12：为逐位对齐 three r180 放弃 `cc.Mat4.invert` 委托）。
-             * 代数式与运算次序抄自 three.js r180 `Matrix4.invert`（MIT）；gl-matrix 血统的引擎实现算式分组不同，
-             * 末位舍入与 ±0 无法对齐，故本成员不再委托。奇异矩阵与 Three 同样写零矩阵。
-             */
+            /** 委托 cc.Mat4.invert（奇异时引擎与本层契约同样写零矩阵）。 */
             invert(): this;
             transpose(): this;
             /**
-             * 自持实现（owner 裁定 2026-10-12：为逐位对齐 three r180 放弃 `cc.Mat4.lookAt` 委托）。
-             * 向量算式与次序抄自 three.js r180 `Matrix4.lookAt`（MIT）：`_z = eye - target`，退化时 `_z.z = 1` 或
-             * 沿 x/z 加 `0.0001`（判据是 `Math.abs(up.z) === 1`，不是视线分量），`normalize()` 即乘 `1 / (length() || 1)`，
-             * 只写世界基 3x3 且不触碰平移/齐次列。引擎的 gl-matrix 实现产出视图基并用 `1/len` 形式归一，
-             * 末位舍入与退化分支都不可对齐，故本成员不再委托。另见文件头 owner 裁定段。
+             * 委托 cc.Mat4.lookAt 取基，再按 Three 的 Matrix4.lookAt 契约做列主序映射：
+             * cc.Mat4.lookAt（gl-matrix 血统）产出「视图基」——3x3 是 Three 世界基的转置，并把 -(基·eye) 写进平移列；
+             * Three 的 Matrix4.lookAt 只写世界基的 3x3，不改动平移/齐次列（保持构造时的单位阵）。
+             * 正常输入用 CCMat4.transpose 把视图基转成世界基（3x3 转置把 cc 的平移搬进 m03/m07/m11，置零即还原
+             * Three 的单位齐次列，纯引擎静态 + 逐字段映射，无自建算法主体）；
+             * 退化输入（视线长度 0 或与 up 平行，引擎产出 NaN）按 Three 原文用 cc.Vec3 原语重建世界基。见文件头第 7 条。
              */
             lookAt(eye: _air_spark_spark_math__Vector3, target: _air_spark_spark_math__Vector3, up: _air_spark_spark_math__Vector3): this;
             /**

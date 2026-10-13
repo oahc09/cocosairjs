@@ -136593,8 +136593,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610120737";
-const AIR_BUILD_NUMBER = 79;
+const AIR_BUILD_DATE = "202610140033";
+const AIR_BUILD_NUMBER = 84;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -156234,6 +156234,31 @@ class WebGL2Shader extends Shader {
     return this._gpuShader;
   }
   initialize(info) {
+    const fail = (code, message) => {
+      const error = new Error(`[${code}] shader '${info.name}': ${message}`);
+      Object.assign(error, {
+        code,
+        stage: 'shader-input',
+        shader: info.name
+      });
+      throw error;
+    };
+    for (const stage of info.stages) {
+      const source = stage.source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+      if (/^\s*#\s*version\b/m.test(source)) {
+        fail('WEBGL2_SHADER_VERSION', `stage ${stage.stage} must omit #version; the backend adds #version 300 es`);
+      }
+    }
+    const bindings = new Map();
+    for (const block of info.blocks) {
+      bindings.set(`${block.set}:${block.binding}`, block.name);
+    }
+    for (const descriptor of info.samplerTextures) {
+      const key = `${descriptor.set}:${descriptor.binding}`;
+      if (bindings.has(key)) {
+        fail('WEBGL2_SHADER_BINDING_CONFLICT', `${descriptor.name} conflicts with ${bindings.get(key)} at set:binding ${key}; assign unique logical bindings within each set`);
+      }
+    }
     this._name = info.name;
     this._stages = info.stages;
     this._attributes = info.attributes;
