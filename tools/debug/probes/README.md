@@ -4,19 +4,20 @@
 **纪律：不登记 files.json / Gallery manifest，不进覆盖率与发布门禁**——页面使用
 仓库根绝对路径 importmap（`/build/...`），不满足 Gallery 工件的相对路径合同。
 
-| 目录                        | 用途                                                                   | 运行器                                                                                   |
-| --------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `shader-probe/`             | 用户 Shader 全链路探针（注册/uniform/动画/冻结/编译错误/销毁，双后端） | `tools/verify/shader-probe.cjs`（默认根即本目录）                                        |
-| `light-contribution-probe/` | GAP-L1 光贡献诊断复现页（13 相位像素采样）                             | `tools/verify/trial-probes.cjs --root=tools/debug/probes --ids=light-contribution-probe` |
-| `lights-hdr-calibration/`   | manual-lights 四型光源 HDR 量级标定页（r53）                           | `tools/verify/trial-probes.cjs --root=tools/debug/probes --ids=lights-hdr-calibration`   |
-| `context-loss-probe/`       | WebGL2 上下文丢失与恢复状态合同                                        | `tools/verify/context-loss.cjs`                                                          |
-| `coldstart-probe/`          | 独立浏览器上下文的冷启动与复启                                         | `tools/verify/coldstart.cjs`                                                             |
-| `capture-probe/`            | 截图时机、像素与 DPR 矩阵                                              | `tools/verify/capture.cjs`                                                               |
-| `canvas-binding-probe/`     | 显式画布绑定、焦点与触摸输入                                           | `tools/verify/canvas-binding.cjs`                                                        |
-| `coordinate-spaces-probe/`  | 输入、屏幕与节点坐标空间                                               | `tools/verify/coordinate-spaces.cjs`                                                     |
-| `label-semantics-probe/`    | Label 溢出、布局、对齐与字影                                           | `tools/verify/label-semantics.cjs`                                                       |
-| `step-clock-probe/`         | 单时钟手动步进与确定性                                                 | `tools/verify/step-clock.cjs`                                                            |
-| `assembly-probe/`           | UI、AssetBank、SceneStack 与音频装配                                   | `tools/verify/assembly.cjs`                                                              |
+| 目录                        | 用途                                                                                                                                         | 运行器                                                                                    |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `shader-probe/`             | 用户 Shader 全链路探针（注册/uniform/动画/冻结/编译错误/销毁，双后端）                                                                       | `tools/verify/shader-probe.cjs`（默认根即本目录）                                         |
+| `light-contribution-probe/` | GAP-L1 光贡献诊断复现页（13 相位像素采样）                                                                                                   | `tools/verify/trial-probes.cjs --root=tools/debug/probes --ids=light-contribution-probe`  |
+| `lights-hdr-calibration/`   | manual-lights 四型光源 HDR 量级标定页（r53）                                                                                                 | `tools/verify/trial-probes.cjs --root=tools/debug/probes --ids=lights-hdr-calibration`    |
+| `context-loss-probe/`       | WebGL2 上下文丢失与恢复状态合同                                                                                                              | `tools/verify/context-loss.cjs`                                                           |
+| `coldstart-probe/`          | 独立浏览器上下文的冷启动与复启                                                                                                               | `tools/verify/coldstart.cjs`                                                              |
+| `capture-probe/`            | 截图时机、像素与 DPR 矩阵                                                                                                                    | `tools/verify/capture.cjs`                                                                |
+| `canvas-binding-probe/`     | 显式画布绑定、焦点与触摸输入                                                                                                                 | `tools/verify/canvas-binding.cjs`                                                         |
+| `coordinate-spaces-probe/`  | 输入、屏幕与节点坐标空间                                                                                                                     | `tools/verify/coordinate-spaces.cjs`                                                      |
+| `label-semantics-probe/`    | Label 溢出、布局、对齐与字影                                                                                                                 | `tools/verify/label-semantics.cjs`                                                        |
+| `step-clock-probe/`         | 单时钟手动步进与确定性                                                                                                                       | `tools/verify/step-clock.cjs`                                                             |
+| `assembly-probe/`           | UI、AssetBank、SceneStack 与音频装配                                                                                                         | `tools/verify/assembly.cjs`                                                               |
+| `spark-native-gfx-probe/`   | Spark 集成所需原生 gfx 合同（整型格式上传/采样、TEX2D_ARRAY 分层视图、MRT、UBO、R32UI 属性、实例化、同步与 PBO+fence 异步回读、GL 错误排空） | `tools/verify/spark-native-gfx-probe.cjs --out=<new.json> --playwright=<隔离 playwright>` |
 
 运行需 `NODE_PATH=<含 playwright 的 node_modules>` 与 `build/cocosair.module.js`。
 `trial-probes.cjs` 写系统临时目录；其他表列运行器会写各自的 `docs/evidence/` JSON，部分还写截图。诊断或 HDR 标定可能保留不通过的候选相位，不能把页面就绪等同于全部合同通过。

@@ -1,0 +1,2392 @@
+{
+  "schemaVersion": "spark-pixel-parity-viewport-matrix/1",
+  "task": "SPK-13",
+  "recorded": "2026-10-12",
+  "extends": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-20261012.json",
+  "purpose": "Closes the allowlist blind spot that this session introduced in the first matrix: the collector only accepted devicePixelRatio 1 and 2, so fractional device pixel ratios (the common 1.25/1.5 laptops) and DPR 3 were structurally untestable. tools/verify/spark-pixel-parity.cjs and tools/debug/probes/spark-pixel-parity/frame.js now share the allowlist {1, 1.25, 1.375, 1.5, 2, 3} and both reject a CSS size whose device dimensions are not integers or exceed 1024, so the sweep cannot silently paper over double-rounding. The first three windows of this file were collected when the allowlist was still {1, 1.5, 2, 3}; the 1.25/1.375 tiers were added afterwards and the last three windows come from that second widening.",
+  "strictRule": "Unchanged: every RGBA8 channel byte difference must be 0, both sides non-empty, each side stable against its own repeat, zero JS + drained GL errors, identical context attributes and unmasked renderer inside one engine, source/asset digest unchanged during the run, negative control must move pixels. No tolerance, no masks.",
+  "noteOnPredecessorEvidence": "The 60-row matrix file was collected BEFORE this harness change, so its rows bind the pre-change collector. Nothing in that file is invalidated: the engine/SDK target path and the comparator are untouched, and the fractional windows here re-run the same four cases through the widened allowlist.",
+  "windows": [
+    {
+      "tag": "5x4-dpr1-5",
+      "report": "output/spark-pixel-parity-frac-5x4-dpr15.json",
+      "css": "320x256",
+      "devicePixelRatio": 1.5,
+      "backingStore": "480x384",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "99fb2bf5655381a19b118fbb13ba2d07574d679341a2bcbd689261c1dce78961",
+      "drift": [],
+      "sourceUnchanged": true
+    },
+    {
+      "tag": "tall-dpr1-5",
+      "report": "output/spark-pixel-parity-frac-tall-dpr15.json",
+      "css": "224x512",
+      "devicePixelRatio": 1.5,
+      "backingStore": "336x768",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "99fb2bf5655381a19b118fbb13ba2d07574d679341a2bcbd689261c1dce78961",
+      "drift": [],
+      "sourceUnchanged": true
+    },
+    {
+      "tag": "square-dpr3",
+      "report": "output/spark-pixel-parity-frac-square-dpr3.json",
+      "css": "256x256",
+      "devicePixelRatio": 3,
+      "backingStore": "768x768",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "99fb2bf5655381a19b118fbb13ba2d07574d679341a2bcbd689261c1dce78961",
+      "drift": [],
+      "sourceUnchanged": true
+    },
+    {
+      "tag": "5x4-dpr1-25",
+      "report": "output/spark-pixel-parity-frac-5x4-dpr125.json",
+      "css": "320x256",
+      "devicePixelRatio": 1.25,
+      "backingStore": "400x320",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "9c8cdf781ef8df78e6f58b0250bb7d0f68f86505091fb28ca4fde13f18c87099",
+      "drift": [],
+      "sourceUnchanged": true
+    },
+    {
+      "tag": "ultra-dpr1-25",
+      "report": "output/spark-pixel-parity-frac-ultra-dpr125.json",
+      "css": "512x224",
+      "devicePixelRatio": 1.25,
+      "backingStore": "640x280",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "9c8cdf781ef8df78e6f58b0250bb7d0f68f86505091fb28ca4fde13f18c87099",
+      "drift": [],
+      "sourceUnchanged": true
+    },
+    {
+      "tag": "square-dpr1-375",
+      "report": "output/spark-pixel-parity-frac-square-dpr1375.json",
+      "css": "256x256",
+      "devicePixelRatio": 1.375,
+      "backingStore": "352x352",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "9c8cdf781ef8df78e6f58b0250bb7d0f68f86505091fb28ca4fde13f18c87099",
+      "drift": [],
+      "sourceUnchanged": true
+    }
+  ],
+  "rollup": {
+    "rowsTotal": 72,
+    "rowsPassed": 72,
+    "channelMismatchSum": 0,
+    "maxErrorSum": 0,
+    "glErrors": 0,
+    "jsErrors": 0,
+    "repeatStableSelf": true,
+    "nativeIdentityAllPassed": true,
+    "environmentMatchAll": true,
+    "splatsMatchAll": true,
+    "antiCheatAllPassed": true,
+    "negativeControls": [
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 588444,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 588444,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 588444,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 980212,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 980212,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 980212,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 2154476,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 2154476,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 2154476,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 408733,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 408733,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 408733,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 314954,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 314954,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 314954,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 452698,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 452698,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 452698,
+        "passed": true
+      }
+    ],
+    "windowsAllPassed": true
+  },
+  "rows": [
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 394091,
+      "referenceNonempty": 394091,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 77505,
+      "referenceNonempty": 77505,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 87582,
+      "referenceNonempty": 87582,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 60,
+        "y": 48,
+        "width": 360,
+        "height": 288
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 183929,
+      "referenceNonempty": 183929,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 394091,
+      "referenceNonempty": 394091,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 75862,
+      "referenceNonempty": 75862,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 87582,
+      "referenceNonempty": 87582,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 60,
+        "y": 48,
+        "width": 360,
+        "height": 288
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 183929,
+      "referenceNonempty": 183929,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 394091,
+      "referenceNonempty": 394091,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 74625,
+      "referenceNonempty": 74625,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 87582,
+      "referenceNonempty": 87582,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "480x384",
+      "targetViewport": {
+        "x": 60,
+        "y": 48,
+        "width": 360,
+        "height": 288
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 183929,
+      "referenceNonempty": 183929,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr15-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 708875,
+      "referenceNonempty": 708875,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 237587,
+      "referenceNonempty": 237587,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 248840,
+      "referenceNonempty": 248840,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 42,
+        "y": 96,
+        "width": 252,
+        "height": 576
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 344650,
+      "referenceNonempty": 344650,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 708875,
+      "referenceNonempty": 708875,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 236007,
+      "referenceNonempty": 236007,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 248840,
+      "referenceNonempty": 248840,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 42,
+        "y": 96,
+        "width": 252,
+        "height": 576
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 344650,
+      "referenceNonempty": 344650,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 708875,
+      "referenceNonempty": 708875,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 231928,
+      "referenceNonempty": 231928,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 248840,
+      "referenceNonempty": 248840,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "336x768",
+      "targetViewport": {
+        "x": 42,
+        "y": 96,
+        "width": 252,
+        "height": 576
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 344650,
+      "referenceNonempty": 344650,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-tall-dpr15-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 1511791,
+      "referenceNonempty": 1511791,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 308646,
+      "referenceNonempty": 308646,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 349963,
+      "referenceNonempty": 349963,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 96,
+        "y": 96,
+        "width": 576,
+        "height": 576
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 722180,
+      "referenceNonempty": 722180,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 1511791,
+      "referenceNonempty": 1511791,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 302784,
+      "referenceNonempty": 302784,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 349963,
+      "referenceNonempty": 349963,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 96,
+        "y": 96,
+        "width": 576,
+        "height": 576
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 722180,
+      "referenceNonempty": 722180,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 1511791,
+      "referenceNonempty": 1511791,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 299986,
+      "referenceNonempty": 299986,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 349963,
+      "referenceNonempty": 349963,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "768x768",
+      "targetViewport": {
+        "x": 96,
+        "y": 96,
+        "width": 576,
+        "height": 576
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 722180,
+      "referenceNonempty": 722180,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr3-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr3-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 400,
+        "height": 320
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 273770,
+      "referenceNonempty": 273770,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 400,
+        "height": 320
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 53797,
+      "referenceNonempty": 53797,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 400,
+        "height": 320
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 60884,
+      "referenceNonempty": 60884,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 50,
+        "y": 40,
+        "width": 300,
+        "height": 240
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 127788,
+      "referenceNonempty": 127788,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 400,
+        "height": 320
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 273770,
+      "referenceNonempty": 273770,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 400,
+        "height": 320
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 53020,
+      "referenceNonempty": 53020,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 400,
+        "height": 320
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 60884,
+      "referenceNonempty": 60884,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 50,
+        "y": 40,
+        "width": 300,
+        "height": 240
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 127788,
+      "referenceNonempty": 127788,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 400,
+        "height": 320
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 273770,
+      "referenceNonempty": 273770,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 400,
+        "height": 320
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 51883,
+      "referenceNonempty": 51883,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 400,
+        "height": 320
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 60884,
+      "referenceNonempty": 60884,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "400x320",
+      "targetViewport": {
+        "x": 50,
+        "y": 40,
+        "width": 300,
+        "height": 240
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 127788,
+      "referenceNonempty": 127788,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-5x4-dpr125-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 280
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 209610,
+      "referenceNonempty": 209610,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 280
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 41607,
+      "referenceNonempty": 41607,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 280
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 46576,
+      "referenceNonempty": 46576,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 80,
+        "y": 35,
+        "width": 480,
+        "height": 210
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 97874,
+      "referenceNonempty": 97874,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 280
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 209610,
+      "referenceNonempty": 209610,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 280
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 40603,
+      "referenceNonempty": 40603,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 280
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 46576,
+      "referenceNonempty": 46576,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 80,
+        "y": 35,
+        "width": 480,
+        "height": 210
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 97874,
+      "referenceNonempty": 97874,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 280
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 209610,
+      "referenceNonempty": 209610,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 280
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 40057,
+      "referenceNonempty": 40057,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 280
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 46576,
+      "referenceNonempty": 46576,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "640x280",
+      "targetViewport": {
+        "x": 80,
+        "y": 35,
+        "width": 480,
+        "height": 210
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 97874,
+      "referenceNonempty": 97874,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-ultra-dpr125-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 352
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 317700,
+      "referenceNonempty": 317700,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 352
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 65194,
+      "referenceNonempty": 65194,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 352
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 73576,
+      "referenceNonempty": 73576,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 44,
+        "y": 44,
+        "width": 264,
+        "height": 264
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 151854,
+      "referenceNonempty": 151854,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 352
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 317700,
+      "referenceNonempty": 317700,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 352
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 64203,
+      "referenceNonempty": 64203,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 352
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 73576,
+      "referenceNonempty": 73576,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 44,
+        "y": 44,
+        "width": 264,
+        "height": 264
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 151854,
+      "referenceNonempty": 151854,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 352
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 317700,
+      "referenceNonempty": 317700,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 352
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 62864,
+      "referenceNonempty": 62864,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 352
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 73576,
+      "referenceNonempty": 73576,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "352x352",
+      "targetViewport": {
+        "x": 44,
+        "y": 44,
+        "width": 264,
+        "height": 264
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 151854,
+      "referenceNonempty": 151854,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-frac-square-dpr1375-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    }
+  ],
+  "artifacts": [
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-5/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-5/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-5/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-5/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-5/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-5/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-5/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-5/inset-viewport-scissor-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/tall-dpr1-5/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/tall-dpr1-5/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/tall-dpr1-5/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/tall-dpr1-5/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/tall-dpr1-5/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/tall-dpr1-5/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/tall-dpr1-5/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/tall-dpr1-5/inset-viewport-scissor-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr3/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr3/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr3/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr3/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr3/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr3/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr3/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr3/inset-viewport-scissor-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-25/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-25/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-25/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-25/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-25/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-25/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-25/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/5x4-dpr1-25/inset-viewport-scissor-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/ultra-dpr1-25/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/ultra-dpr1-25/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/ultra-dpr1-25/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/ultra-dpr1-25/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/ultra-dpr1-25/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/ultra-dpr1-25/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/ultra-dpr1-25/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/ultra-dpr1-25/inset-viewport-scissor-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr1-375/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr1-375/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr1-375/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr1-375/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr1-375/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr1-375/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr1-375/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-extended-20261012-artifacts/square-dpr1-375/inset-viewport-scissor-reference.png"
+  ],
+  "notClaimed": [
+    "Not a cross-GPU/device generalisation: evidence binds to the three browser builds and this machine GPU listed in windows[].engines and .gpu.",
+    "Not release READY: the spark-rs crate-level licence disposition is still `pending` in docs/license-decisions.json.",
+    "The browser context deviceScaleFactor is set to the requested DPR, but pixels() compares the default framebuffer read back over canvas.width/height; a mismatch between the page-reported scale and the canvas-derived scale is still not covered.",
+    "The 1.25 and 1.375 tiers are now in the shared allowlist, but the set is still a deliberate finite list, not a general proof: any other ratio (0.75, 1.75, 2.5, …) remains untested and would be rejected by the collector until added and shown to give integer device pixels.",
+    "Each windows[].sourceFreeze.files/aggregateSha256 is the digest taken BEFORE that window ran, so it identifies the state the window exercised; it is not a proof that later windows or later commits share that state. In particular the first three windows were collected against the pre-widening collector fingerprints."
+  ],
+  "commands": [
+    "node tools/verify/spark-pixel-parity.cjs --out=output/spark-pixel-parity-frac-5x4-dpr15.json --cases=seeded-random400,procedural-text-splats,orthographic-camera,inset-viewport-scissor --width=320 --height=256 --dpr=1.5 --playwright=<absolute tooling path>",
+    "same command with --width=224 --height=512 --dpr=1.5 (portrait, fractional)",
+    "same command with --width=256 --height=256 --dpr=3",
+    "same command with --width=320 --height=256 --dpr=1.25",
+    "same command with --width=512 --height=224 --dpr=1.25 (ultra-wide, fractional)",
+    "same command with --width=256 --height=256 --dpr=1.375"
+  ]
+}

@@ -1,0 +1,1136 @@
+{
+  "schema": "spark-integration-evidence/1",
+  "task": "SPK-04",
+  "acceptanceLine": "ai/plans/spark-integration.md:162 验收：`tests/math-parity` 的等价复跑在位模式上通过（见 SPK-13）",
+  "generatedAt": "2026-10-11T17:31:50.022Z",
+  "verdict": "PARTIAL",
+  "verdictReasoning": "PARTIAL：复跑在位模式上真实失败——1000 次迭代全量覆盖 22001 项检查/152003 个 float32 分量，其中 2110 个位不一致（含 1505 个仅 ±0 符号差异），0 次超出移植件原容差（默认 2e-10，project 1e-8，未放宽）。超差操作：。isolated 趟（把四元数输入统一为 oracle 值）把根因收敛到 0 处（）；其余超差是这些根因的传染。移植件的纹理/RT/Splat/CubeCamera 组亦未复现，覆盖相对原型收窄。",
+  "environment": {
+    "repoRoot": "E:/AIProMax/github/cocosair.js",
+    "gitHead": "810e7d1a5b706eb91bcc76bab4bfc4c00297d2f5",
+    "node": "v24.14.0",
+    "npm": "本次未调用 npm",
+    "jest": "28.1.3",
+    "tsJest": "28.0.8",
+    "typescript": "4.9.5"
+  },
+  "commands": [
+    {
+      "id": "three-install",
+      "command": "（跳过：--skip-install，复用 output/spark-math-parity/node_modules/three）",
+      "exitCode": null,
+      "skipped": true,
+      "present": true
+    },
+    {
+      "id": "jest-replay",
+      "command": "\"D:\\Program Files\\nodejs\\node.exe\" \"E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest\\bin\\jest.js\" --config test/spark-math-parity.jest.config.js --runInBand",
+      "spawnMode": "argv（无 shell，兼容含空格的解释器路径）",
+      "cwd": ".",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "startedAt": "2026-10-11T17:31:44.961Z",
+      "endedAt": "2026-10-11T17:31:50.019Z",
+      "stdoutTail": "",
+      "stderrTail": "PASS test/parity/spark-math-parity.test.ts\n  SPK-04 math-parity：spark-math.ts vs Three.js r180（在位等价复跑）\n    √ oracle 与目标图均可加载 (1 ms)\n    √ 全量覆盖复跑：最终 float32 位模式差异归属（collect 模式，不提前中止） (170 ms)\n    √ 移植件原型语义复跑（assert 模式）：容差超差必须像原型一样真实失败 (77 ms)\n\nTest Suites: 1 passed, 1 total\nTests:       3 passed, 3 total\nSnapshots:   0 total\nTime:        2.598 s\nRan all test suites.\n"
+    }
+  ],
+  "oracle": {
+    "package": "three",
+    "requestedSpec": "three@0.180.0",
+    "installLocation": "output/spark-math-parity/node_modules/three",
+    "isolation": "npm install --prefix output/spark-math-parity --no-save --no-package-lock：不进仓库根 node_modules，不改 package.json/package-lock.json；three 仅作为验证回路的 oracle（计划 §1.3）。",
+    "packageJsonPath": "output/spark-math-parity/node_modules/three/package.json",
+    "packageJsonVersionField": "0.180.0",
+    "packageJsonSha256": "aa42494664dba4cf76d89c6975ee38321a402f09a048672e190bad6f13beec93",
+    "buildCjsSha256": "2980c5831824f46d79a39a93feb70dd851538ce5b5480a6463883b319022c51f",
+    "runtimeRevision": "180",
+    "integrityNote": "build/three.cjs 与 build/three.module.js 为同一次发布的构建产物；package.json 指纹绑定该次安装。"
+  },
+  "target": {
+    "path": "src/air/spark/spark-math.ts",
+    "sha256": "0d61dac7ef027b2bc3643765722028beec0e0b4dcd54818a302aa6117ddf51c8",
+    "sizeBytes": 84906,
+    "lines": 2573,
+    "headerDivergenceAudit": {
+      "headerLineSpan": [
+        1,
+        80
+      ],
+      "perOperation": {
+        "Euler from quaternion": {
+          "keywords": [
+            "setFromQuaternion",
+            "Euler"
+          ],
+          "headerMentionsFound": true,
+          "matchedHeaderLines": [
+            {
+              "line": 38,
+              "text": "* 2. Euler —— 引擎没有 Euler 类（只有 cc.Quat 与 cc.Mat3.toEuler/cc.Mat4.toEuler 的固定 YXZ、度数约定），"
+            },
+            {
+              "line": 39,
+              "text": "*    而 Object3D 的 rotation 契约是弧度 + 六种旋转序，故 AIR 自持薄封装（见 @air-element none:Euler）。"
+            }
+          ]
+        },
+        "parented lookAt matrix": {
+          "keywords": [
+            "lookAt"
+          ],
+          "headerMentionsFound": true,
+          "matchedHeaderLines": [
+            {
+              "line": 17,
+              "text": "*   双向镜像到引擎对象，再转调 multiply/invert/transpose/determinant/multiplyScalar/frustum/ortho/lookAt/"
+            },
+            {
+              "line": 63,
+              "text": "*    - Matrix4.lookAt 转调 cc.Mat4.lookAt 取基：引擎产出 gl-matrix 视图基（3x3 为世界基的转置、平移列写 -(基·eye)），"
+            },
+            {
+              "line": 64,
+              "text": "*      Three 的 Matrix4.lookAt 只要世界基的 3x3 且不写平移列；正常输入再经 CCMat4.transpose 转置、把被搬进"
+            }
+          ]
+        }
+      },
+      "setFromEulerWLastFactor": {
+        "fileLine": 1234,
+        "text": "this._w = cx * cy * cz + s[3] * sx * sy * sz;",
+        "usesCz": false,
+        "oracleExpects": "sz（three/src/math/Quaternion.js 与移植件 src/air-math.js:497 均为 signs[3]*sx*sy*sz）"
+      }
+    }
+  },
+  "harness": {
+    "executionRoute": "jest 28 + ts-jest（diagnostics:false, isolatedModules:true, test/tsconfig.jest.json）：整条引擎 TS import 图（../../cocos/core/math/*, ../../cocos/core/geometry/*）由 ts-jest 解析，`internal:constants` 等沿用根 jest.config.js 的 moduleNameMapper；three 用一条 moduleNameMapper 指向隔离安装的 build/three.cjs。单文件 transpileModule 不足以承载该 import 图，故不用 tools/build/pal-source.cjs 式单文件路线。",
+    "dedicatedConfig": {
+      "path": "test/spark-math-parity.jest.config.js",
+      "sha256": "3d0f002422a9fd0f7981e4c8c0bbc49cb6cc2d47d9a484aaf765103c90d090aa"
+    },
+    "replayTest": {
+      "path": "test/parity/spark-math-parity.test.ts",
+      "sha256": "60f85e46e144f4536371a8668750af2bed78553674222c6f419241ca9b0a624f"
+    },
+    "defaultSuiteUnaffected": "testMatch 只在专用配置里改为 test/parity/*.test.ts；根 jest.config.js 与 package.json scripts 未改动。",
+    "rerun": [
+      "node tools/verify/spark-math-parity.cjs",
+      "离线复跑：node tools/verify/spark-math-parity.cjs --skip-install",
+      "手工：MATH_PARITY_ITERATIONS=1000 npx jest --config test/spark-math-parity.jest.config.js --runInBand"
+    ],
+    "harnessSideShims": "Object3DShim / CameraShim：按 Three r180 Object3D/Camera/PerspectiveCamera 方法体逐行重写的调度垫片，内部矩阵/四元数算术全部落在 spark-math；用于在不依赖 SPK-05a（并行编辑中）的前提下复跑 projection / projection inverse / project / parented lookAt / world direction 五组检查。"
+  },
+  "source": {
+    "portTest": {
+      "path": "E:/AIProMax/github/spark-cocosairjs/tests/math-parity.mjs",
+      "sha256": "b3804af6a798e466692e50144d94e8c1f64ee93c62cabda41e3604772942884b",
+      "lines": 476,
+      "readOnly": true,
+      "importedAs": "Reference（three）+ Air（移植件 src/air-compat.js）；本次把 Air 侧换成 spark-math.ts，Reference 侧沿用真实 three@0.180.0"
+    },
+    "portReferenceImplementation": {
+      "path": "E:/AIProMax/github/spark-cocosairjs/src/air-math.js",
+      "sha256": "37982aff324d7bf367a4b74b8344b643bde407413a634b4eb3a39b686ad35d4b",
+      "note": "只读旁证：setFromEuler 的 w 项与 lookAt 的基向量写入次序按 Three 原文写，故移植件本身能过该检查。"
+    }
+  },
+  "replay": {
+    "seed": "0x5a17c0c0",
+    "iterations": 1000,
+    "iterationsCompleted": 1000,
+    "modeNote": "collect = 同种子全量跑（容差超差不抛出，用于逐操作归属）；assert = 移植件原型语义（首个超差即失败，判定基准）；isolated = 同种子同序列但四元数输入统一取自 oracle，用于把 setFromEuler 的自身分歧与其下游传染分开归因。",
+    "scopeNote": "场景对象三项检查通过 harness 侧 Object3DShim/CameraShim 复跑：调度按 Three r180 方法体逐行重写，矩阵/四元数算术全部落在 spark-math。",
+    "assertRun": {
+      "completedWithoutFailure": true,
+      "counters": {
+        "checks": 22001,
+        "maxAbsoluteError": 1.5347723092418164e-11,
+        "float32Components": 152003,
+        "float32BitMismatches": 2110,
+        "signedZeroMismatches": 1505,
+        "float32MismatchByOperation": {
+          "parented lookAt matrix": 602,
+          "Euler from quaternion": 3
+        },
+        "signedZeroByOperation": {
+          "projection inverse": 1000,
+          "inverse": 505
+        },
+        "float32MismatchSamples": [
+          {
+            "name": "parented lookAt matrix",
+            "a": -3.469446951953614e-17,
+            "b": -1.3877787807814457e-17,
+            "airBits": 2753560576,
+            "referenceBits": 2743074816,
+            "inputs": {
+              "iteration": 0,
+              "position": [
+                -1.606430740095675,
+                0.8166141379624605,
+                -0.40773614402860403
+              ],
+              "scale": [
+                -2.0891326792538165,
+                0.3827931495383382,
+                1.22296341098845
+              ],
+              "euler": [
+                -1.4774036584421992,
+                1.6197033897042274,
+                1.7290193205699325
+              ],
+              "order": "XYZ",
+              "vector": [
+                0.8288435582071543,
+                -0.23200334515422583,
+                1.5761790536344051
+              ],
+              "secondEuler": [
+                -1.616477300412953,
+                -1.9341979790478945,
+                0.05319719482213259
+              ],
+              "slerpT": 0.7512458004057407,
+              "target": [
+                -0.4892977084964514,
+                0.6760368356481194,
+                1.1581290774047375
+              ],
+              "cameraParams": [
+                64.93678024038672,
+                1.575376688502729,
+                0.937282975288108,
+                950.5094107985497
+              ],
+              "hex": 6930288
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": 2.7755575615628914e-16,
+            "b": -8.326672684688674e-17,
+            "airBits": 631242752,
+            "referenceBits": 2764046336,
+            "inputs": {
+              "iteration": 1,
+              "position": [
+                1.7723268438130617,
+                -0.716030172072351,
+                -1.1778968386352062
+              ],
+              "scale": [
+                1.9410573752596973,
+                1.316717743501067,
+                0.353726994805038
+              ],
+              "euler": [
+                0.26824403554201126,
+                -0.15246754232794046,
+                -1.0916215237230062
+              ],
+              "order": "YXZ",
+              "vector": [
+                1.6274968544021249,
+                -1.8541544117033482,
+                -1.4278686242178082
+              ],
+              "secondEuler": [
+                1.9225457441061735,
+                -1.601019780151546,
+                -0.5052848607301712
+              ],
+              "slerpT": 0.915366250788793,
+              "target": [
+                1.9881604025140405,
+                -0.36173342540860176,
+                -1.3856563614681363
+              ],
+              "cameraParams": [
+                95.78398283571005,
+                2.0728762024082243,
+                0.1264747476577759,
+                385.413032239303
+              ],
+              "hex": 6099458
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": 0,
+            "b": -5.551115123125783e-17,
+            "airBits": 0,
+            "referenceBits": 2759852032,
+            "inputs": {
+              "iteration": 3,
+              "position": [
+                1.7779206819832325,
+                -1.632549968548119,
+                0.707874333485961
+              ],
+              "scale": [
+                -0.6807823894545436,
+                0.5374650672078133,
+                1.9147340232506393
+              ],
+              "euler": [
+                1.044220620766282,
+                0.2730528870597482,
+                0.3011050187051296
+              ],
+              "order": "ZYX",
+              "vector": [
+                1.775532047264278,
+                -1.5747555363923311,
+                0.9850584464147687
+              ],
+              "secondEuler": [
+                -0.6452095657587051,
+                1.4918273827061057,
+                0.9184707719832659
+              ],
+              "slerpT": 0.12650183425284922,
+              "target": [
+                -0.4370126174762845,
+                -1.482832821086049,
+                0.642753635533154
+              ],
+              "cameraParams": [
+                78.78915429115295,
+                2.1482979799620807,
+                0.843616164047271,
+                201.52875662781298
+              ],
+              "hex": 6537978
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": 0,
+            "b": -2.5673907444456745e-16,
+            "airBits": 0,
+            "referenceBits": 2777939968,
+            "inputs": {
+              "iteration": 5,
+              "position": [
+                0.5299910064786673,
+                0.2243307949975133,
+                1.1608151271939278
+              ],
+              "scale": [
+                1.4061356360092758,
+                0.3752564486116171,
+                0.19585336055606603
+              ],
+              "euler": [
+                0.8792923055589199,
+                0.9691823525354266,
+                1.1996259223669767
+              ],
+              "order": "XZY",
+              "vector": [
+                0.2826997833326459,
+                1.8011236637830734,
+                0.31073041167110205
+              ],
+              "secondEuler": [
+                -0.5172412674874067,
+                -0.07649258431047201,
+                1.125372502952814
+              ],
+              "slerpT": 0.4024373560678214,
+              "target": [
+                1.0319820391014218,
+                0.8479071855545044,
+                -0.3476929971948266
+              ],
+              "cameraParams": [
+                95.16232345253229,
+                0.8832566034980118,
+                0.3450367369130254,
+                280.57812641374767
+              ],
+              "hex": 703582
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": -4.440892098500626e-16,
+            "b": 5.551115123125783e-17,
+            "airBits": 2785017856,
+            "referenceBits": 612368384,
+            "inputs": {
+              "iteration": 9,
+              "position": [
+                -0.27704322896897793,
+                -0.43642769660800695,
+                0.13257544860243797
+              ],
+              "scale": [
+                -0.24285686444491147,
+                0.6334379423409701,
+                1.7467032117769121
+              ],
+              "euler": [
+                0.530688926577568,
+                1.9297834178432822,
+                1.6878574807196856
+              ],
+              "order": "ZYX",
+              "vector": [
+                1.9173668259754777,
+                1.9602787233889103,
+                1.886320817284286
+              ],
+              "secondEuler": [
+                1.1026620175689459,
+                1.4390658410266042,
+                -1.986693300306797
+              ],
+              "slerpT": 0.5696446800138801,
+              "target": [
+                0.8450360083952546,
+                0.506146002560854,
+                1.6191844968125224
+              ],
+              "cameraParams": [
+                30.376575104892254,
+                1.4390477151609957,
+                0.4451071510463953,
+                986.6634739842266
+              ],
+              "hex": 12668501
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": 1.700029006457271e-16,
+            "b": -5.204170427930421e-17,
+            "airBits": 625213440,
+            "referenceBits": 2758803456,
+            "inputs": {
+              "iteration": 10,
+              "position": [
+                0.6915089348331094,
+                -1.1459750272333622,
+                0.8620662791654468
+              ],
+              "scale": [
+                0.33240024335682394,
+                0.9708016259595752,
+                0.26782152950763705
+              ],
+              "euler": [
+                1.8256755908951163,
+                -0.39279341511428356,
+                -1.5150212114676833
+              ],
+              "order": "YZX",
+              "vector": [
+                -1.7377463541924953,
+                -1.3059403719380498,
+                -1.4533282909542322
+              ],
+              "secondEuler": [
+                -0.32922870200127363,
+                -0.460926778614521,
+                0.798098555766046
+              ],
+              "slerpT": 0.4857020922936499,
+              "target": [
+                1.5951177664101124,
+                -1.6555943163111806,
+                -1.1850859764963388
+              ],
+              "cameraParams": [
+                64.18488645926118,
+                0.9254759885370731,
+                0.9559778086747974,
+                968.0523900128901
+              ],
+              "hex": 2358107
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": 0,
+            "b": 2.7755575615628914e-17,
+            "airBits": 0,
+            "referenceBits": 603979776,
+            "inputs": {
+              "iteration": 12,
+              "position": [
+                0.8726645214483142,
+                0.8568356465548277,
+                1.2988535659387708
+              ],
+              "scale": [
+                -0.9738838762044907,
+                1.7852326115593313,
+                1.6429723124951123
+              ],
+              "euler": [
+                -0.7941840356215835,
+                1.7623788751661777,
+                0.6414578733965755
+              ],
+              "order": "XYZ",
+              "vector": [
+                -0.38901267386972904,
+                -0.3767011193558574,
+                0.5135760828852654
+              ],
+              "secondEuler": [
+                1.173636487685144,
+                0.21893600560724735,
+                1.399005294777453
+              ],
+              "slerpT": 0.5581403328105807,
+              "target": [
+                1.8936835285276175,
+                0.5195943238213658,
+                -1.3138693496584892
+              ],
+              "cameraParams": [
+                81.30063189193606,
+                0.5796340676024556,
+                0.6942559615615755,
+                410.4862543568015
+              ],
+              "hex": 6184102
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": 1.1102230246251565e-16,
+            "b": 3.885780586188048e-16,
+            "airBits": 620756992,
+            "referenceBits": 635437056,
+            "inputs": {
+              "iteration": 13,
+              "position": [
+                -1.2203958500176668,
+                1.5420212345197797,
+                1.8396609276533127
+              ],
+              "scale": [
+                1.6001259783282875,
+                2.149805001541972,
+                0.6259197598323226
+              ],
+              "euler": [
+                0.6060369946062565,
+                0.6727188704535365,
+                -1.6778864357620478
+              ],
+              "order": "YXZ",
+              "vector": [
+                1.0247850688174367,
+                1.3109452351927757,
+                -1.9381188536062837
+              ],
+              "secondEuler": [
+                1.659472892060876,
+                -0.9400704791769385,
+                -1.8700801022350788
+              ],
+              "slerpT": 0.965524761704728,
+              "target": [
+                1.7419594945386052,
+                0.07191876322031021,
+                -0.4763788217678666
+              ],
+              "cameraParams": [
+                79.71937466412783,
+                1.5249561299569905,
+                0.7971763026341796,
+                891.210130630061
+              ],
+              "hex": 4676732
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": -1.1102230246251565e-16,
+            "b": 1.1102230246251565e-16,
+            "airBits": 2768240640,
+            "referenceBits": 620756992,
+            "inputs": {
+              "iteration": 14,
+              "position": [
+                1.4445249931886792,
+                0.9085592776536942,
+                0.575908406637609
+              ],
+              "scale": [
+                1.2651696424931287,
+                1.3451010162010788,
+                0.6132639922201634
+              ],
+              "euler": [
+                -0.5590778412297368,
+                1.9005989637225866,
+                -0.5656377701088786
+              ],
+              "order": "ZXY",
+              "vector": [
+                -1.2650185897946358,
+                1.8760939752683043,
+                -1.7315446343272924
+              ],
+              "secondEuler": [
+                1.6118182549253106,
+                0.7250514440238476,
+                -0.8008643137291074
+              ],
+              "slerpT": 0.06811548722907901,
+              "target": [
+                -1.6019053980708122,
+                1.3615480726584792,
+                -0.25008625350892544
+              ],
+              "cameraParams": [
+                32.46299894526601,
+                2.0551201682537794,
+                0.4450992839317769,
+                891.6545137576759
+              ],
+              "hex": 16199751
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": 0,
+            "b": -1.6653345369377348e-16,
+            "airBits": 0,
+            "referenceBits": 2772434944,
+            "inputs": {
+              "iteration": 15,
+              "position": [
+                -1.7397474199533463,
+                -0.12992595229297876,
+                -0.05146857909858227
+              ],
+              "scale": [
+                -1.942352176271379,
+                2.0880637742578982,
+                0.6981185195967555
+              ],
+              "euler": [
+                1.9231036808341742,
+                -0.9013876048848033,
+                -1.2587489858269691
+              ],
+              "order": "ZYX",
+              "vector": [
+                1.788638255558908,
+                -1.9633939173072577,
+                -1.3159339716657996
+              ],
+              "secondEuler": [
+                -0.0499151237308979,
+                -0.027056281454861164,
+                1.0873832385987043
+              ],
+              "slerpT": 0.8823750999290496,
+              "target": [
+                -1.2175744408741593,
+                1.848075831308961,
+                1.3673814395442605
+              ],
+              "cameraParams": [
+                100.69858603179455,
+                2.0700002661906183,
+                0.5926084422878921,
+                573.4672264475375
+              ],
+              "hex": 4549486
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": 2.7755575615628914e-17,
+            "b": 5.551115123125783e-17,
+            "airBits": 603979776,
+            "referenceBits": 612368384,
+            "inputs": {
+              "iteration": 16,
+              "position": [
+                -0.3483907738700509,
+                -0.20860415510833263,
+                -1.8870098059996963
+              ],
+              "scale": [
+                2.0969402469694614,
+                0.4911412658169866,
+                1.371212128177285
+              ],
+              "euler": [
+                -1.1733824042603374,
+                0.5978204533457756,
+                0.03437726851552725
+              ],
+              "order": "YZX",
+              "vector": [
+                -1.2328523006290197,
+                -0.5314326277002692,
+                -1.9503508992493153
+              ],
+              "secondEuler": [
+                1.1136989248916507,
+                0.6472271662205458,
+                -1.2568748546764255
+              ],
+              "slerpT": 0.831697903573513,
+              "target": [
+                -1.5100723560899496,
+                -0.2442487319931388,
+                -1.176348987966776
+              ],
+              "cameraParams": [
+                42.901529874652624,
+                1.9475010996684432,
+                0.1300307805556804,
+                491.0724167525768
+              ],
+              "hex": 848307
+            }
+          },
+          {
+            "name": "parented lookAt matrix",
+            "a": 5.551115123125783e-17,
+            "b": 1.1102230246251565e-16,
+            "airBits": 612368384,
+            "referenceBits": 620756992,
+            "inputs": {
+              "iteration": 18,
+              "position": [
+                0.6196397477760911,
+                -1.204561110585928,
+                -1.1383261503651738
+              ],
+              "scale": [
+                -0.7588353004306555,
+                1.6272787718102335,
+                1.6466244623064994
+              ],
+              "euler": [
+                1.7773926174268126,
+                -0.6092057432979345,
+                -1.2455911030992866
+              ],
+              "order": "XYZ",
+              "vector": [
+                -0.5866144485771656,
+                -1.4707460151985288,
+                -0.566676439717412
+              ],
+              "secondEuler": [
+                1.8434512661769986,
+                -0.33689484000205994,
+                -0.9392825374379754
+              ],
+              "slerpT": 0.9196607363410294,
+              "target": [
+                1.159208294004202,
+                0.1298492355272174,
+                -1.7569621670991182
+              ],
+              "cameraParams": [
+                99.86162463203073,
+                1.4906517192721367,
+                0.5225786995049566,
+                315.86146073415875
+              ],
+              "hex": 570366
+            }
+          }
+        ],
+        "toleranceViolations": 0,
+        "toleranceViolationByOperation": {},
+        "toleranceViolationSamples": [],
+        "maxErrorByOperation": {
+          "quaternion from Euler": 0,
+          "compose": 0,
+          "inverse": 7.105427357601002e-15,
+          "determinant": 1.7763568394002505e-15,
+          "vector transform": 0,
+          "quaternion transform": 1.1102230246251565e-15,
+          "decompose position": 0,
+          "decompose scale": 0,
+          "decompose quaternion": 4.440892098500626e-16,
+          "Euler from quaternion": 1.2612133559741778e-13,
+          "quaternion multiply": 0,
+          "slerp": 3.3306690738754696e-16,
+          "mat3 inverse": 0,
+          "lookAt": 0,
+          "projection": 8.881784197001252e-16,
+          "projection inverse": 1.4210854715202004e-14,
+          "project": 1.5347723092418164e-11,
+          "box min": 0,
+          "box max": 0,
+          "color": 0,
+          "parented lookAt matrix": 1.3322676295501878e-15,
+          "world direction": 1.0547118733938987e-15,
+          "default color": 0
+        },
+        "iterationsCompleted": 1000
+      },
+      "failure": null
+    },
+    "probes": {
+      "lookAtLayout": {
+        "attempts": 64,
+        "worstDirect": 0,
+        "worstTransposed": 1.968413856938776,
+        "directWithinTolerance": 64,
+        "transposedWithinTolerance": 0
+      }
+    },
+    "supplementary": {
+      "adapterScope": {
+        "countedInVerdict": false,
+        "attempted": true,
+        "status": "passed",
+        "detail": null,
+        "fieldChecks": 20
+      }
+    },
+    "narrowedScope": [
+      {
+        "section": "DataTexture / DataArrayTexture 默认字段契约（magFilter/minFilter/format/type/flipY/unpackAlignment/generateMipmaps）",
+        "portTestLines": "tests/math-parity.mjs:207-220",
+        "ownerTask": "SPK-05a（spark-api-adapter.ts 的 Texture 形状）",
+        "reason": "spark-math.ts 不含 Texture 类；该检查比对 CPU 描述袋字段默认值，非数学委托。本次由附加块 adapterScope 尝试复跑（不参与判定）。"
+      },
+      {
+        "section": "WebGLArrayRenderTarget 尺寸/缓冲/samples 契约与 texture.image 深比较",
+        "portTestLines": "tests/math-parity.mjs:221-244",
+        "ownerTask": "SPK-05a（gfx:* 归属的 RenderTarget 形状）",
+        "reason": "渲染目标形状不在数学层，SPK-04 无对应实现。本次由附加块 adapterScope 尝试复跑（不参与判定）。"
+      },
+      {
+        "section": "PackedSplats / ExtSplats 的 pushSplat/getSplat 与 packed/ext 字节数组深比较、SplatAccumulator.generateMapping/ensureGenerate 纹理布局",
+        "portTestLines": "tests/math-parity.mjs:261-354",
+        "ownerTask": "SPK-11（冻结 Spark 本体接入）",
+        "reason": "需要移植件 dist/spark-cocosairjs.js 与 dist/spark-reference.js 的 Spark 运行时；属冻结上游算法，未合入本仓，SPK-04 无对应实现。"
+      },
+      {
+        "section": "CubeCamera 六面朝向 / -90° 投影 / activeMipmapLevel 与 XR 复原 / 注入渲染失败后的状态复原 / WebGL 与 WebGPU 两套坐标系统",
+        "portTestLines": "tests/math-parity.mjs:372-459",
+        "ownerTask": "SPK-05a（CubeCamera / WebGLCubeRenderTarget）+ SPK-07（CocosRenderer 的 mip/XR 簿记）",
+        "reason": "其矩阵内容已由 projection / projection inverse / parented lookAt 检查覆盖；对象级 mip、XR 保存与渲染器 mock 不属数学层。"
+      }
+    ]
+  },
+  "counts": {
+    "cubeCamera": "not-replayed（SPK-05a/07：CubeCamera 对象契约，不在数学层）",
+    "coordinateSystems": "not-replayed（同上，移植件为 2）",
+    "randomPoses": "not-replayed（同上，移植件为 64）",
+    "totalChecks": 22001,
+    "float32Components": 152003,
+    "float32BitMismatches": 2110,
+    "signedZeroMismatches": 1505,
+    "float32MismatchByOperation": {
+      "parented lookAt matrix": 602,
+      "Euler from quaternion": 3
+    },
+    "nonzeroFloat32Mismatches": 605,
+    "signedZeroByOperation": {
+      "projection inverse": 1000,
+      "inverse": 505
+    },
+    "toleranceViolations": 0,
+    "toleranceViolationByOperation": {},
+    "maxAbsoluteError": 1.5347723092418164e-11,
+    "maxErrorByOperation": {
+      "quaternion from Euler": 0,
+      "compose": 0,
+      "inverse": 7.105427357601002e-15,
+      "determinant": 1.7763568394002505e-15,
+      "vector transform": 0,
+      "quaternion transform": 1.1102230246251565e-15,
+      "decompose position": 0,
+      "decompose scale": 0,
+      "decompose quaternion": 4.440892098500626e-16,
+      "Euler from quaternion": 1.2612133559741778e-13,
+      "quaternion multiply": 0,
+      "slerp": 3.3306690738754696e-16,
+      "mat3 inverse": 0,
+      "lookAt": 0,
+      "projection": 8.881784197001252e-16,
+      "projection inverse": 1.4210854715202004e-14,
+      "project": 1.5347723092418164e-11,
+      "box min": 0,
+      "box max": 0,
+      "color": 0,
+      "parented lookAt matrix": 1.3322676295501878e-15,
+      "world direction": 1.0547118733938987e-15,
+      "default color": 0
+    },
+    "iterationsCompleted": 1000
+  },
+  "isolatedRootCausePass": {
+    "note": "同种子同序列，只把 Quaternion.setFromEuler 的产物换成 oracle 值装载，用来区分「根因」与「传染」。",
+    "toleranceViolations": 0,
+    "toleranceViolationByOperation": {},
+    "float32MismatchByOperation": {
+      "parented lookAt matrix": 602,
+      "Euler from quaternion": 3
+    },
+    "signedZeroByOperation": {
+      "projection inverse": 1000,
+      "inverse": 505
+    },
+    "maxErrorByOperation": {
+      "quaternion from Euler": 0,
+      "compose": 0,
+      "inverse": 7.105427357601002e-15,
+      "determinant": 1.7763568394002505e-15,
+      "vector transform": 0,
+      "quaternion transform": 1.1102230246251565e-15,
+      "decompose position": 0,
+      "decompose scale": 0,
+      "decompose quaternion": 4.440892098500626e-16,
+      "Euler from quaternion": 1.2612133559741778e-13,
+      "quaternion multiply": 0,
+      "slerp": 3.3306690738754696e-16,
+      "mat3 inverse": 0,
+      "lookAt": 0,
+      "projection": 8.881784197001252e-16,
+      "projection inverse": 1.4210854715202004e-14,
+      "project": 1.5347723092418164e-11,
+      "box min": 0,
+      "box max": 0,
+      "color": 0,
+      "parented lookAt matrix": 1.3322676295501878e-15,
+      "world direction": 1.0547118733938987e-15,
+      "default color": 0
+    },
+    "samples": []
+  },
+  "mismatches": [
+    {
+      "operation": "Euler from quaternion",
+      "float32BitMismatches": 3,
+      "signedZeroMismatches": 0,
+      "toleranceViolations": 0,
+      "maxError": 1.2612133559741778e-13,
+      "bitOnly": true,
+      "isolatedRootCauseAttribution": {
+        "toleranceViolationsWithOracleQuaternionInput": 0,
+        "maxErrorWithOracleQuaternionInput": 1.2612133559741778e-13
+      },
+      "inputSummary": []
+    },
+    {
+      "operation": "parented lookAt matrix",
+      "float32BitMismatches": 602,
+      "signedZeroMismatches": 0,
+      "toleranceViolations": 0,
+      "maxError": 1.3322676295501878e-15,
+      "bitOnly": true,
+      "isolatedRootCauseAttribution": {
+        "toleranceViolationsWithOracleQuaternionInput": 0,
+        "maxErrorWithOracleQuaternionInput": 1.3322676295501878e-15
+      },
+      "inputSummary": [
+        {
+          "airFloat32Bits": 2753560576,
+          "referenceFloat32Bits": 2743074816,
+          "seededInputs": {
+            "iteration": 0,
+            "position": [
+              -1.606430740095675,
+              0.8166141379624605,
+              -0.40773614402860403
+            ],
+            "scale": [
+              -2.0891326792538165,
+              0.3827931495383382,
+              1.22296341098845
+            ],
+            "euler": [
+              -1.4774036584421992,
+              1.6197033897042274,
+              1.7290193205699325
+            ],
+            "order": "XYZ",
+            "vector": [
+              0.8288435582071543,
+              -0.23200334515422583,
+              1.5761790536344051
+            ],
+            "secondEuler": [
+              -1.616477300412953,
+              -1.9341979790478945,
+              0.05319719482213259
+            ],
+            "slerpT": 0.7512458004057407,
+            "target": [
+              -0.4892977084964514,
+              0.6760368356481194,
+              1.1581290774047375
+            ],
+            "cameraParams": [
+              64.93678024038672,
+              1.575376688502729,
+              0.937282975288108,
+              950.5094107985497
+            ],
+            "hex": 6930288
+          }
+        },
+        {
+          "airFloat32Bits": 631242752,
+          "referenceFloat32Bits": 2764046336,
+          "seededInputs": {
+            "iteration": 1,
+            "position": [
+              1.7723268438130617,
+              -0.716030172072351,
+              -1.1778968386352062
+            ],
+            "scale": [
+              1.9410573752596973,
+              1.316717743501067,
+              0.353726994805038
+            ],
+            "euler": [
+              0.26824403554201126,
+              -0.15246754232794046,
+              -1.0916215237230062
+            ],
+            "order": "YXZ",
+            "vector": [
+              1.6274968544021249,
+              -1.8541544117033482,
+              -1.4278686242178082
+            ],
+            "secondEuler": [
+              1.9225457441061735,
+              -1.601019780151546,
+              -0.5052848607301712
+            ],
+            "slerpT": 0.915366250788793,
+            "target": [
+              1.9881604025140405,
+              -0.36173342540860176,
+              -1.3856563614681363
+            ],
+            "cameraParams": [
+              95.78398283571005,
+              2.0728762024082243,
+              0.1264747476577759,
+              385.413032239303
+            ],
+            "hex": 6099458
+          }
+        },
+        {
+          "airFloat32Bits": 0,
+          "referenceFloat32Bits": 2759852032,
+          "seededInputs": {
+            "iteration": 3,
+            "position": [
+              1.7779206819832325,
+              -1.632549968548119,
+              0.707874333485961
+            ],
+            "scale": [
+              -0.6807823894545436,
+              0.5374650672078133,
+              1.9147340232506393
+            ],
+            "euler": [
+              1.044220620766282,
+              0.2730528870597482,
+              0.3011050187051296
+            ],
+            "order": "ZYX",
+            "vector": [
+              1.775532047264278,
+              -1.5747555363923311,
+              0.9850584464147687
+            ],
+            "secondEuler": [
+              -0.6452095657587051,
+              1.4918273827061057,
+              0.9184707719832659
+            ],
+            "slerpT": 0.12650183425284922,
+            "target": [
+              -0.4370126174762845,
+              -1.482832821086049,
+              0.642753635533154
+            ],
+            "cameraParams": [
+              78.78915429115295,
+              2.1482979799620807,
+              0.843616164047271,
+              201.52875662781298
+            ],
+            "hex": 6537978
+          }
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "operation": "Euler from quaternion",
+      "observed": "仅在 collect 趟出现位模式差异（来自四元数输入被 w 项污染）；isolated 趟归零",
+      "documentedInHeader": false,
+      "note": "传染，非独立根因。"
+    },
+    {
+      "operation": "零差异/仅 ±0 的操作",
+      "cleanWithinTolerance": [
+        "quaternion from Euler(max 0.0e+0)",
+        "compose(max 0.0e+0)",
+        "inverse(max 7.1e-15)",
+        "determinant(max 1.8e-15)",
+        "vector transform(max 0.0e+0)",
+        "quaternion transform(max 1.1e-15)",
+        "decompose position(max 0.0e+0)",
+        "decompose scale(max 0.0e+0)",
+        "decompose quaternion(max 4.4e-16)",
+        "Euler from quaternion(max 1.3e-13)",
+        "quaternion multiply(max 0.0e+0)",
+        "slerp(max 3.3e-16)",
+        "mat3 inverse(max 0.0e+0)",
+        "lookAt(max 0.0e+0)",
+        "projection(max 8.9e-16)",
+        "projection inverse(max 1.4e-14)",
+        "project(max 1.5e-11)",
+        "box min(max 0.0e+0)",
+        "box max(max 0.0e+0)",
+        "color(max 0.0e+0)",
+        "parented lookAt matrix(max 1.3e-15)",
+        "world direction(max 1.1e-15)",
+        "default color(max 0.0e+0)"
+      ],
+      "signedZeroOnly": [
+        "projection inverse",
+        "inverse"
+      ],
+      "note": "这些组（含 makePerspective→cc.Mat4.frustum 的 projection、Matrix3.invert、Color/hex、Box3.applyMatrix4、compose/inverse/determinant/applyMatrix4/applyQuaternion/slerp/multiply 在 isolated 趟）委托引擎后逐位等价；projection inverse 与 inverse 出现 ±0 与 0 的符号位差异，数值同为 0，按移植件口径单列，不计入失败。"
+    }
+  ],
+  "evidenceIntegrity": {
+    "resultsJson": "output/spark-math-parity/results.json",
+    "resultsSha256": "03c144f10de2271f88a3759dfc6661668d6a9256c57773e0def6b93aa12d0b64",
+    "resultsFreshness": {
+      "priorResultsRemovedBeforeRun": true,
+      "priorRemoveError": null,
+      "resultsMtime": "2026-10-11T17:31:50.000Z",
+      "writtenByThisRun": true,
+      "note": "writtenByThisRun=false 时 results.json 属陈旧产物，verdict 直接降为 BLOCKED，不拿旧数据当本轮结论。"
+    },
+    "jestLog": "spark-math-parity-after-camera-shim-artifacts/jest-replay.log",
+    "rawResultsCopy": "spark-math-parity-after-camera-shim-artifacts/results.json"
+  }
+}

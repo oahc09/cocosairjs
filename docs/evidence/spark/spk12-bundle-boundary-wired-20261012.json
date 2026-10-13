@@ -1,0 +1,110 @@
+{
+  "schema": "spark-bundle-boundary-wired/1",
+  "task": "SPK-11 / SPK-12（接线后体积边界与 XR 不可达取证）",
+  "recorded": "2026-10-12",
+  "supersedes": "docs/evidence/spark/bundle-boundary-20261011.json（该份为接线前基线，闭包内 spark 节点为 0 是因为 spark 尚未落位；本份为接线后复采）",
+  "commands": [
+    "F=air,base,gfx-webgl2,gfx-empty,3d,animation,skeletal-animation,primitive,tween,custom-pipeline,legacy-pipeline,profiler,video,webview,2d,physics-2d-framework,particle-2d,tiled-map,ui,spine-3.8,spine-4.2,dragon-bones,physics-2d-box2d,physics-builtin,physics-cannon,custom-pipeline-post-process; AIR_FEATURES=$F OUT_DIR=output/spark-closure-default-20261012 node tools/analyze/dep-graph.cjs",
+    "AIR_FEATURES=$F,spark OUT_DIR=output/spark-closure-variant-20261012 node tools/analyze/dep-graph.cjs",
+    "AIR_FEATURES=$F,spark AIR_OUT_DIR=output/spark-variant npm run build",
+    "npm run verify:spark-assets",
+    "npm run verify:licenses",
+    "npm run verify:file-map",
+    "npm run verify:feature-exports",
+    "npm run verify:spark-adapter"
+  ],
+  "closure": {
+    "default_26_features": {
+      "exitCode": 0,
+      "featureCount": 26,
+      "sparkInFeatures": false,
+      "scannedNodes": 1379,
+      "reachableNodes": 1152,
+      "unreachableNodes": 227,
+      "sparkReachableNodes": 0,
+      "sparkNodesSeenAllUnreachable": [
+        "air/spark/cocos-renderer.ts",
+        "air/spark/cocos-spark-layer.ts",
+        "air/spark/generated/spark-runtime.d.ts",
+        "air/spark/generated/spark-runtime.js",
+        "air/spark/pmrem.ts",
+        "air/spark/spark-api-adapter.ts",
+        "air/spark/spark-math.ts",
+        "exports/spark.ts"
+      ],
+      "verdict": "PASS：接线后默认闭包内可达 spark 节点数仍为 0，8 个 spark 文件全部落在 UNREACHABLE / UNUSED_IN_AIR_V01",
+      "graph": "output/spark-closure-default-20261012/web-dependency-graph.json"
+    },
+    "spark_variant_27_features": {
+      "exitCode": 0,
+      "featureCount": 27,
+      "scannedNodes": 1379,
+      "reachableNodes": 1159,
+      "unreachableNodes": 220,
+      "sparkReachableNodes": 7,
+      "note": "相对默认集 +7 个可达节点（`spark-runtime.d.ts` 是类型文件，不计入运行时闭包）",
+      "graph": "output/spark-closure-variant-20261012/web-dependency-graph.json"
+    },
+    "registrarSideEffect": "两轮 dep-graph 均重写 docs/upstream-file-map.json；与运行前副本 output/upstream-file-map.before-closure-20261012.json 逐字节相同（425695 B，unchanged=true），`src/air/spark/**` 六行保持 upstreamPath=null + baseline \"AIR Spark integration\"。"
+  },
+  "artifacts": {
+    "default": {
+      "build/cocosair.module.js": { "bytes": 6649186, "sha256_prefix": "69127f39（随 AIR_BUILD_NUMBER 变化，只作当轮快照身份）" },
+      "build/cocosair.module.min.js": { "bytes": 3713427, "sha256_prefix": "779c288e", "unchangedFromPreSparkBaseline": true }
+    },
+    "spark_variant": {
+      "build/cocosair.module.spark.js": { "bytes": 9461302, "sha256_prefix": "689c29100803ad10347b8f04" },
+      "src/air/spark/generated/spark-runtime.js": { "bytes": 2753054, "sha256_prefix": "751f7a284cd1e9dfb4e38bcd", "note": "内含 spark_rs_bg.wasm 的 base64 内联字节（1554721 B），由 verify:spark-assets 的 embedded-wasm 断言与 vendor/spark-rs/MANIFEST.md 对账" }
+    },
+    "publishedSurface": "package.json files[] 不含任何 spark 产物或 build/spark-rs；spark 变体不随 npm 包发布（spark-rs 转付 crate 许可处置=pending）"
+  },
+  "isolationFingerprints": {
+    "method": "grep -c -o <marker> <file>",
+    "defaultBundle": {
+      "spark_rs_bg.wasm": 0,
+      "spark_rs_bg": 0,
+      "SparkRenderer": 0,
+      "sparkjsdev": 0,
+      "SplatMesh": 0,
+      "fflate": 0,
+      "WASM_MODULE": 0,
+      "spark": 0
+    },
+    "variantBundle_positiveControl": {
+      "SparkRenderer": 5,
+      "SplatMesh": 7,
+      "spark_rs_bg.wasm": 0,
+      "sparkjsdev": 0,
+      "fflate": 0,
+      "note": "后三项在变体里同样为 0，属预期而非断言失效：WASM 已按 base64 内联（无文件名字面量），`sparkjsdev`/`fflate` 是裸说明符，构建期被 alias 解析掉。SparkRenderer/SplatMesh 命中证明标记表有鉴别力。"
+    },
+    "verifySparkAssets": { "exitCode": 0, "passed": true, "artifactCount": 12, "failures": 0, "embeddedWasmMatchesAsset": true }
+  },
+  "xrUnreachabilityProof": {
+    "claim": "SPK-10 排除的 XR 家族在生成后的运行时子图与变体产物里均不可达（此前为裁定，现为实测）",
+    "measurements": {
+      "src/air/spark/generated/spark-runtime.js": { "SparkXr": 0, "XrHands": 0, "vendor/spark/src/hands": 0 },
+      "build/cocosair.module.spark.js": { "SparkXr": 0 },
+      "vendorSparkSourceUnchanged": "vendor/spark/src/SparkXr.ts 与 hands.ts 仍在冻结树内（逐字节，--check exit 0），只是不被生成子图引用"
+    },
+    "inertXrShellRetained": "src/air/spark/cocos-renderer.ts 的 inertXr 外壳保留（enabled:false / isPresenting:false / getSession():null / getCamera():null / setAnimationLoop():noop），用于短路冻结代码的非 XR 分支；不对外承诺会话能力"
+  },
+  "featureUnitWiring": {
+    "src/cc.config.json": "第 100 行起声明 `spark` unit（2 处 spark 字样：unit 键与 entry），实测 `grep -n '\"spark\"' src/cc.config.json` 命中",
+    "src/exports/spark.ts": "存在；导出面为 CocosRenderer / CocosSparkLayer / PMREMGenerator+pmremLayout+CUBEUV_SAMPLING_GLSL / `export * as sparkRuntime`",
+    "rootBarrels": { "src/exports/air.ts": 0, "src/air/index.ts": 0, "src/exports/base.ts": 0, "unit": "spark 字样出现次数" },
+    "packageSubpathExport": "未开 `cocosair.js/spark`（exports 与 files 里无 spark 条目）——原登记的「与 ./html-source 同构」形态未成立，原因见 docs/UPSTREAM.md Deviation-07 的公开面边界与 WASM 边界两条",
+    "verifyFeatureExports": { "exitCode": 0 }
+  },
+  "correctionsAgainstPriorDocs": [
+    "「WASM 不内嵌进任何 JS 产物，按 build/gltf-decoders/ 先例独立资产发运」不成立：build/spark-rs/ 不存在，WASM 以构建期 base64 内联进 spark 变体产物。",
+    "「五条只读探测全部无命中」不成立：cc.config.json 的 spark unit、src/exports/spark.ts、package.json 的 verify:spark-assets 脚本已命中；`./spark` 包入口与 build/spark-rs/ 仍无命中（前者为裁定形态未落地并有复议条件，后者被内联形态取代）。",
+    "「verify:spark-adapter 整体仍为 exit 1」不成立：实测 exit 0 / passed=true / findings=[] / rootExportLeakage=[]。",
+    "「file-map 的 spark 五行形态偏差待 registrar 处置」已闭合：六行（含 src/exports/spark.ts）为 AIR 原创形态，verify:file-map PASS。"
+  ],
+  "notClaimed": [
+    "不构成 release READY：spark-rs 的转付 Rust crate 许可链未闭合（docs/license-decisions.json disposition=pending）。",
+    "不构成跨 GPU/设备泛化：像素与行为证据只覆盖本轮三台 Chromium 引擎实例。",
+    "SPK-04 数学层仍为 PARTIAL：在强制复用 cc.* 元素的前提下残留 ULP 级位差（2110 项位不一致，其中 1505 为 ±0 形态），容差超标数为 0。"
+  ]
+}

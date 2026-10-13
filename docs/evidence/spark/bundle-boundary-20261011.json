@@ -1,0 +1,94 @@
+{
+  "schema": "spark-integration-bundle-boundary/v1",
+  "task": "SPK-02",
+  "generatedAt": "2026-10-11T15:03:05.000Z",
+  "purpose": "默认 bundle 边界证据 + 冻结 Spark 运行时/WASM 的发运形态裁定（SPK-02 §1.3 / SPK-11 / SPK-12 输入）",
+  "tool": {
+    "script": "tools/analyze/dep-graph.cjs",
+    "npmAlias": "npm run analyze",
+    "flags": {
+      "AIR_FEATURES": "逗号分隔 feature 集；必须与 tools/build/build.cjs 默认集一致，否则产生假阳性 UNREACHABLE（脚本头注 §用法）",
+      "OUT_DIR": "重定向 web-dependency-graph.json/extraction-manifest.json/upstream-file-map.json；本采集使用 OUT_DIR 以免覆写 docs/ 注册文件"
+    },
+    "buildSystemModified": false
+  },
+  "commands": [
+    {
+      "id": "default-build-closure",
+      "note": "镜像 build.cjs 的真实默认 AIR_FEATURES 集",
+      "command": "AIR_FEATURES=\"air,base,gfx-webgl2,gfx-empty,3d,animation,skeletal-animation,primitive,tween,custom-pipeline,legacy-pipeline,profiler,video,webview,2d,physics-2d-framework,particle-2d,tiled-map,ui,spine-3.8,spine-4.2,dragon-bones,physics-2d-box2d,physics-builtin,physics-cannon,custom-pipeline-post-process\" OUT_DIR=output/spk02-depgraph node tools/analyze/dep-graph.cjs",
+      "exitCode": 0,
+      "scannedFiles": 1370,
+      "reachableModulesExclVirtual": 1151,
+      "byCategory": { "WEB_REQUIRED": 18, "COMMON_REQUIRED": 1133, "UNUSED_IN_AIR_V01": 219 },
+      "sparkNodesInClosure": 0
+    },
+    {
+      "id": "bare-air-entry",
+      "note": "AIR_FEATURES=air（仅 exports/air.ts 入口）",
+      "command": "AIR_FEATURES=\"air\" OUT_DIR=output/spk02-depgraph-air node tools/analyze/dep-graph.cjs",
+      "exitCode": 0,
+      "scannedFiles": 1370,
+      "reachableModulesExclVirtual": 1103,
+      "byCategory": { "WEB_REQUIRED": 18, "COMMON_REQUIRED": 1085 },
+      "sparkNodesInClosure": 0
+    }
+  ],
+  "defaultBundleBytes": {
+    "source": "SPK-00 identity 冻结身份（docs/evidence/spark/identity-20261011.json repository.files）",
+    "build/cocosair.module.js": 6649186,
+    "build/cocosair.module.js.sha256": "69127f39bd9a2a0a14f5872306c1fc717e7849bdfadbdc2b609b06de16d6adcc",
+    "build/cocosair.module.min.js": 3713427,
+    "build/cocosair.module.min.js.sha256": "779c288e647c17f63a08fee5c2b9a9ec50a96c70909e34c2e3b20d9ab661a90a"
+  },
+  "baselineAssertion": {
+    "statement": "接线前基线：当前默认 bundle 闭包内不存在任何 spark 节点/模块。移植件尚未接入本仓运行时（src/air/spark/ 尚不存在，cc.config.json 无 spark feature，src/exports/spark.ts 不存在）。",
+    "evidence": "两次 dep-graph 运行（default-build-closure / bare-air-entry）reachable 闭包内 grep 'spark' 命中数均为 0，退出码均 0。",
+    "sparkFeatureDeclared": false,
+    "sparkExportsPresent": false,
+    "srcAirSparkPresent": false
+  },
+  "postSpk12Assertion": {
+    "statement": "接线后（SPK-12）必须成立的门禁断言：`spark` feature unit 与 `src/exports/spark.ts` 必须存在且被 cc.config.json 声明（否则 ccbuild 静默忽略，产物与默认逐字节相同），但在未过体积门禁前，默认 AIR_FEATURES 集不得包含 `spark`，即默认 bundle 闭包内 spark 节点数必须仍为 0；只有当 owner 决定把 `spark` 折入 `air` 聚合且 bundle 增量落在既定体积预算内时，才允许其进入默认闭包。",
+    "checks": [
+      "cc.config.json 声明 spark feature（modules:[\"spark\"]）",
+      "src/exports/spark.ts 存在",
+      "默认闭包（default-build-closure 命令）spark 节点数 == 0（除非体积门禁通过并被显式并入 air 聚合）",
+      "AIR_FEATURES=air,spark 变体闭包内 spark 子图可达（证明 feature unit 生效，非静默忽略）",
+      "npm run verify:feature-exports / verify:web-only 通过（新 import 不引入 native/minigame 闭包）"
+    ],
+    "sizeGate": "冻结运行时 2 738 871 B（参考身份，非最终产物）+ spark_rs_bg.wasm 1 554 721 B 不进默认发行；默认发行体积（当前 dev 6 649 186 B / min 3 713 427 B）不得因 spark 接线而增长，除非 owner 批复并入并设定新的体积上限。"
+  },
+  "shippingDecision": {
+    "summary": "冻结 Spark 本体与 WASM 均不编进默认 bundle；运行时走独立可选入口 `./spark`，WASM+glue 走 decoder 式独立受审计资产。",
+    "runtimeEntry": {
+      "form": "可选包入口 `exports[\"./spark\"]`，与 `./html-source` 完全同构",
+      "artifacts": [
+        "build/npm/spark.js（由 SPK-11 从 vendor/spark 源码生成的目标子图，three specifier 经 alias 指向 src/air/spark/spark-api-adapter.ts；排除 SparkXr/hands 子图）",
+        "build/spark.d.ts（可选入口类型声明）"
+      ],
+      "packageJsonEdits": "package.json exports[\"./spark\"] = { types: ./build/spark.d.ts, import/default: ./build/npm/spark.js }；files 增 build/npm/spark.js、build/spark.d.ts。默认 cocosair.module.js 不改。",
+      "precedent": "html-source 可选入口：package.json exports[\"./html-source\"] → build/npm/html-source.js + build/html-source.d.ts（现有先例，见 package.json:17-21, files:39-40）",
+      "notShippedInDefault": "运行时不进 src/exports/air.ts 聚合，除非过体积门禁（见 postSpk12Assertion）"
+    },
+    "wasmAsset": {
+      "form": "decoder 式独立受审计资产（与 build/gltf-decoders 同构），绝不嵌入任何 bundle",
+      "namingAndLanding": [
+        "build/spark-rs/spark_rs_bg.wasm（源等价发行件，SHA-256 974320be5859f426967a2d9cc237e5eae1aca98b55e35087022d6d884b2dcce7，未在本环境用 Rust 重建）",
+        "build/spark-rs/spark_rs.js（wasm-bindgen glue，源 SHA a4b2cc72…4bf72）",
+        "build/spark-rs/package.json 声明 { \"type\": \"commonjs\" }（同 build/gltf-decoders/package.json）",
+        "build/spark-rs/MANIFEST.md：逐文件 bytes + sha256 + 固定来源/版本行 + 许可（同 gltf-decoders/MANIFEST.md 结构）"
+      ],
+      "audit": "由 decoder-audit 家族覆盖：扩展现有 tools/verify/decoder-audit.cjs 的 MANIFEST 完整性 + bundle 隔离（引擎与 spark.js bundle 内均不得含 WASM magic 0x0061736d 或 'spark-rs/' 引用）+ npm pack 离线解包校验；或新增等价 tools/verify/spark-asset-audit.cjs 并纳入 npm run verify:decoders 同级门禁",
+      "precedent": "gltf-decoders 先例：build/gltf-decoders/{package.json,type,MANIFEST.md} + tools/verify/decoder-audit.cjs（package.json scripts.verify:decoders）；draco/basis wasm 即以此模式独立发运",
+      "packageJsonEdits": "files 增 build/spark-rs/（含 .wasm/.js/package.json/MANIFEST.md）；npm pack 必须带出，由审计第 4 步解包 require 验证"
+    },
+    "airFeaturesConsequence": {
+      "unit": "`spark` 为独立 feature unit（cc.config.json features.spark.modules=[\"spark\"]，入口 src/exports/spark.ts）",
+      "default": "不加入 tools/build/build.cjs 默认 AIR_FEATURES 数组；默认发行保持精简",
+      "optIn": "消费者显式 `import ... from 'cocosair/spark'` 触发可选入口；引擎主模块不因加载而初始化 spark",
+      "foldRisk": "若把 spark 并入 air 聚合出口（src/exports/air.ts），须先过 bundle 体积门禁并 owner 批复；未过则默认闭包 spark 节点必须为 0（postSpk12Assertion）",
+      "undeclaredGuard": "ccbuild 对未在 cc.config.json 声明的 feature 名静默忽略（build.cjs:54-64），故 SPK-12 必须先登记 feature unit 再构建 spark 变体，否则变体取证整批失效"
+    }
+  }
+}

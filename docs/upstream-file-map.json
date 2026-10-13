@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 198,
+    "modifiedCount": 205,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -4081,8 +4081,8 @@
       "airPath": "src/cocos/gfx/webgl2/webgl2-shader.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-shader.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR WebGL2 shader-input contract: reject caller version directives and conflicting uniform-block/sampler logical set bindings before state replacement; retain deferred GPU compilation and existing compiler logs."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-state-cache.ts",
@@ -9788,6 +9788,48 @@
       "baseline": "AIR glTF adapter",
       "modified": true,
       "reason": "2026-10-06：原 material.ts 的 gltfEffect 与 UV_SLOTS 原逻辑提取为叶模块，physical-effect 不再反向引用材质装配模块；旧 gltfEffect 导出路径继续转发，shader/effect 行为保持。"
+    },
+    {
+      "airPath": "src/air/spark/spark-math.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: three 形状数学垫片，按 @air-element 归属逐成员复用 cc.math 元素供 vendor/spark 使用；不经根导出面可达（SPK-04）"
+    },
+    {
+      "airPath": "src/air/spark/spark-api-adapter.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: vendor/spark 所需的 three API 兼容面（对象/几何/材质/纹理/RT/加载器），按 @air-element 归属复用引擎 cc.*/gfx:* 元素或标注自持理由；构建期作为 `three` specifier 的别名目标，不进根导出面（SPK-05a）"
+    },
+    {
+      "airPath": "src/air/spark/pmrem.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: three PMREMGenerator 移植（IBL 预滤波图集），引擎无对应 PMIP 管线故自持算法体，GPU 对象经 spark-api-adapter 借用；不进根导出面（SPK-06）"
+    },
+    {
+      "airPath": "src/air/spark/cocos-renderer.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: 把 three 形状 WebGLRenderer 桥到本仓 gfx 层的渲染桥；保留惰性 renderer.xr 外壳以短路冻结代码的非 XR 分支（XR 随 SPK-10 移除，移植件 CocosXrManager 未搬运）；不进根导出面（SPK-07）"
+    },
+    {
+      "airPath": "src/air/spark/cocos-spark-layer.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: Spark 泼溅场景层，绑定 cc.Director/app 管线钩子并管理 splat 目标可见性与渲染钩子；不进根导出面（SPK-08）"
+    },
+    {
+      "airPath": "src/exports/spark.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: 可选 feature unit `spark` 的 bundle 入口（ccbuild 声明见 src/cc.config.json），聚合集成层与生成物 `src/air/spark/generated/spark-runtime.js`；不并入 `air` 聚合、不进默认 bundle（SPK-12）"
     }
   ]
 }

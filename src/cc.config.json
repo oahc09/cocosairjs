@@ -97,6 +97,11 @@
                 "air"
             ]
         },
+        "spark": {
+            "modules": [
+                "spark"
+            ]
+        },
         "video": {
             "modules": [
                 "video"

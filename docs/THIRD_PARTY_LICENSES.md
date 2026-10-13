@@ -1,8 +1,12 @@
 # Third Party Licenses / 第三方许可审计（Phase 19）
 
+> 交叉登记：上游身份与 deviation 见 `docs/UPSTREAM.md`（§Spark 冻结上游源码、§Spark WASM 与 glue 的 provenance、§Spark 发运边界与接线状态），
+> 消费面边界见 `docs/reference/spark-optional-entry.md`，逐文件指纹清单见 `docs/evidence/spark/`。本节内出现的仓库路径一律写全 `docs/` 前缀，便于 `npm run verify:doc-refs` 解析。
+
 Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source License Audit 的结果记录。
 
-> 审计复核：2026-09-12（L13 修复与 Phase 18 之后）。
+> 审计复核：2026-09-12（L13 修复与 Phase 18 之后）；§8/§9 的 Spark 登记于 2026-10-11 复核（`npm run verify:licenses` 与
+> `node tools/build/vendor-spark-tree.cjs --check` 当日均为 exit 0）。
 
 ## 1. 引擎源码（src/cocos、src/pal、src/exports、src/extensions、src/external、src/DebugInfos*）
 
@@ -86,6 +90,11 @@ Box2D、Cannon 和 DragonBones 为源码构建及类型检查保留在 devDepend
 | zlib.js（`src/external/compression/zlib.min.js`） | 上游原文 | MIT（imaya/zlib.js） | `licenses/LICENSE_zlibjs.txt` | 默认 bundle 内嵌 |
 | notepack.io（`src/external/deserialize/`） | 上游原文 | MIT（c) 2014 Ion Drive Software Ltd. | `licenses/LICENSE_notepack.io.txt` | 默认 bundle 内嵌 |
 | Cocos PAL（公开 MIT 快照） | `src/pal/**` | MIT（见 §2） | `licenses/LICENSE_pal.txt` + `licenses/NOTICE_pal.txt` | 默认 bundle 内嵌 |
+| Spark 高斯泼溅（`@sparkjsdev/spark` **2.3.1**，冻结提交 `c57ebb936a5d364e021a66a118204d599f6fdaa8`） | `vendor/spark/**`（详见 §8） | MIT（© 2025 WORLD LABS TECHNOLOGIES, INC.） | `licenses/LICENSE_spark.txt`（= `vendor/spark/LICENSE`，逐字节） | `ships: variant`（SPK-11 已接入可选 `spark` feature unit；仅进 spark 变体产物，**不进默认产物**） |
+| Spark 解码 WASM + wasm-bindgen glue（`spark_rs_bg.wasm` / `spark_rs.js`） | 上游 dist 发行件 → 受审计资产目录 `vendor/spark-rs/`（详见 §9） | MIT（同 Spark 项目；Rust 侧 crate 许可面见 §9 缺口） | `vendor/spark-rs/LICENSE`（= `licenses/LICENSE_spark.txt`，逐字节 1 088 B） | `ships: variant`：**构建期 base64 内联**进 spark 变体产物（`build/spark-rs/` 不存在，不引入运行时 fetch）；默认产物无 WASM magic |
+| fflate（SPZ 解压依赖，`build/fflate/`） | `npm pack fflate@0.8.2` 的 dist 原文 → `build/fflate/**` | MIT（© 2023 Arjun Barrett） | `licenses/LICENSE_fflate.txt`（= `build/fflate/LICENSE`，逐字节 1 069 B） | `ships: variant`：由 `tools/build/spark-runtime-tree.cjs` 以构建期 alias 解析冻结树的裸 `from "fflate"`；**不进默认产物**，也不在 `package.json` `files[]`（不随 npm 包发布） |
+
+（Three.js r180 抄写主体一行原先登记在此，已于 2026-10-13 随 SPK-04 恢复纯 `cc.*` 委托一并撤销——见 §10。）
 
 第三方使用条件与当前发布阻塞（`docs/license-decisions.json`）：
 
@@ -102,4 +111,64 @@ Box2D、Cannon 和 DragonBones 为源码构建及类型检查保留在 devDepend
 许可元数据缺口（不阻塞，但记录在案）：`@cocos/dragonbones-js@1.0.2` 的 npm 包既无 `LICENSE` 文件也无
 `license` 字段，许可原文是从上游 cocos4 `licenses/` 取的；`@cocos/box2d`、`@cocos/cannon` 的
 `package.json` 同样无 `license` 字段，但包内带 `LICENSE` 文件（门禁按该文件逐字节比对）。
+
+## 8. Spark 高斯泼溅冻结上游源码（SPK-03，2026-10-11 落位）
+
+- 来源：`@sparkjsdev/spark` **2.3.1**，上游仓库 https://github.com/sparkjsdev/spark，冻结提交 `c57ebb936a5d364e021a66a118204d599f6fdaa8`（dist 发行提交 `699e3ad06ef78fe7f5f4375f705ef4d17c948993`，两者 `src`/`rust` 树等价），版权属 WORLD LABS TECHNOLOGIES, INC.；本次镜像的只读来源树为本机快照 `E:\AIProMax\github\spark-cocosairjs\upstream\spark`（发布面外路径，不随包发布；可复现判据是下条的逐文件 SHA-256 与 git 子树号）。冻结身份全表见 `docs/UPSTREAM.md` §Spark 冻结上游源码（`src` 树 `e28ecaf12054536738814356db41a44afd1df999`、`rust` 树 `23e1a2a05c28c625dfae7e28eeeb9aafbdec151b`）。
+- 落位：`vendor/spark/`（照 §2 `vendor/pal-source/` 的冻结第三方源码惯例）逐字节镜像上游 `src/**`、`rust/**` 与 `LICENSE`、`package.json`、`CHANGELOG.md`、`README.md`、`tsconfig.json`，共 **105** 个文件（`src` 60：52 个 `.ts` + 8 个 `.glsl`；`rust` 40：29 个 `.rs` + 11 个 Cargo/构建脚本/说明；根 5）。
+- 不落位（决策记录在清单里）：`.git`、`.github`、`node_modules`、`dist`、`test`、`scripts`、`.gitattributes`、`.gitignore`、`lefthook.yml`、`biome.json`、`vite.config.ts`、`examples.html`、`index.html`、`mkdocs.yml`、`package-lock.json`——Git/CI/格式化器/站点外壳与上游依赖锁定不属运行时源码；上游 `test/` 与 `scripts/` 未搬运，本仓回归随 SPK-13 重建。
+- 许可：MIT 原文逐字节保存为 `licenses/LICENSE_spark.txt`（= `vendor/spark/LICENSE` = 上游 `LICENSE`；实测两者 SHA-256 均为 `51829693e5dccd9ca1daa093991faac3aaa93238eb8fd5f5cb4130af85791d64`）；`licenses/` 已在 `package.json` `files[]` 内，随 npm 包发布。该逐字节比对同时由 `npm run verify:licenses` 的 REGISTRY 项（`sourceOfTruth: vendored → vendor/spark/LICENSE`）与 `node tools/build/vendor-spark-tree.cjs --check` 双重断言。
+- 产物形态：**ships: variant**（2026-10-12 接线后复采）。`npm run verify:licenses` 用 `SparkRenderer` / `sparkjsdev` 两个**负向**指纹断言默认产物不含 Spark（默认 dev 产物 `grep -c -o spark` 亦为 0），
+  变体侧的命中计数（`SparkRenderer`×5 / `SplatMesh`×7）与默认闭包 0 个 spark 可达节点的实测记录在 `docs/evidence/spark/spk12-bundle-boundary-wired-20261012.json`。
+  变体产物 `build/cocosair.module.spark.js`（9 461 302 B）**不在** `package.json` `files[]` 内，即不随 npm 包发布；原因与放行条件见 §9。
+- 重现：`node tools/build/vendor-spark-tree.cjs --check` 逐文件比对 SHA-256 并检出未登记文件（`--write` 才显式从来源树重建镜像；来源侧始终只读）。105 文件的 `{path, size, sha256}`、树指纹、逐文件 match 结论与可复算命令见 `docs/evidence/spark/vendor-spark-tree-20261011.json`。
+
+## 9. Spark 解码 WASM 与 wasm-bindgen glue（SPK-11 资产登记，2026-10-11；2026-10-12 落位形态与门禁复采）
+
+- 身份：`spark_rs_bg.wasm` 1 554 721 B / SHA-256 `974320be5859f426967a2d9cc237e5eae1aca98b55e35087022d6d884b2dcce7`；`spark_rs.js`（wasm-bindgen glue）47 694 B / SHA-256 `a4b2cc7226f2e4c9bf397b56da3520e6c6f7d65b55e486783ef9bffac3b4bf72`。二者取自上游 `@sparkjsdev/spark` 2.3.1 的 **dist 发行件**（对应提交 `699e3ad06ef78fe7f5f4375f705ef4d17c948993`），其 Rust 侧源码逐字节镜像在本仓 `vendor/spark/rust/`（git 子树 `23e1a2a05c28c625dfae7e28eeeb9aafbdec151b`）。
+- **未重建声明**：本环境没有执行 `cargo` / `vendor/spark/rust/build_rust_wasm.sh`，因此该 WASM 是**源等价发行件**，不是本仓编译产物；任何文档、清单与提交说明都不得写成「本仓用 Rust 重建」。可复核出处即上条的两条 SHA 与冻结提交号。
+- 落位与发运形态（**2026-10-12 订正本节首版预写的 `build/spark-rs/` 口径**）：资产实际逐字节落在 `vendor/spark-rs/`，目录内带 `LICENSE` 与
+  `MANIFEST.md`（逐文件 bytes + sha256 + 固定来源/版本行）。它**不**按 glTF 解码器的 decoder 式托管发运：冻结
+  `vendor/spark/src/wasm.ts` 以 `import WASM from "spark_rs_bg.wasm?arraybuffer&base64"` 静态取字节并在模块求值期 `WebAssembly.compile(WASM)`，
+  故构建期由 `tools/build/spark-runtime-tree.cjs` 把该说明符解析到本目录并将字节 **base64 内联进 spark 变体产物**；
+  `build/spark-rs/` **不存在**，应用侧无需托管、也没有可指向的资产路径，改用托管形态需修改冻结源码（复议条件见
+  `docs/UPSTREAM.md` Deviation-07）。
+- 许可与审计：与 Spark 项目同源（MIT，© 2025 WORLD LABS TECHNOLOGIES, INC.），资产目录自带 `vendor/spark-rs/LICENSE`（1 088 B，
+  SHA-256 `51829693e5dccd…`，与 `licenses/LICENSE_spark.txt`、`vendor/spark/LICENSE` 逐字节相同，三门禁均做原文比对）。
+  审计门禁为 `npm run verify:spark-assets`（`tools/verify/spark-assets.cjs`，decoder-audit 同族，2026-10-12 交付）：
+  清单双向对账、许可原文一致、`build/fflate/package.json` 的 `type` 声明、默认产物隔离（无 WASM magic `00 61 73 6d`、
+  无 `spark_rs_bg.wasm`/`SparkRenderer`/`sparkjsdev`/`fflate`/`SplatMesh` 字样）、以及内嵌反漂移
+  （从生成运行时提取最长 base64 字面量解码后，sha256/长度/字节必须等于清单值）。实测 `passed=true artifacts=12 failures=0`，exit 0。
+  另 `npm run verify:licenses` 的 REGISTRY 现有三条 variant 级登记（Spark 本体 / spark-rs WASM+glue / fflate）。
+  顺带记录一处门禁事实：`tools/verify/license-audit.cjs` 的 `build/` 白名单对**文件**放行任意 `.js/.map/.d.ts/.json`，
+  故 `build/cocosair.module.spark.js` 从不被它拦截；该门禁只扫目录名，`vendor/` 不在其扫描面。首版预写的「必须扩展 `build/` 白名单否则变红」
+  在实态路径下不成立；本轮实际需要的只是把新增目录 `build/fflate/` 加入白名单（已加，`license-audit` 的 issues 从 6 回到既存 5 项，均与本任务无关）。
+- **已知许可缺口（已处置登记，未闭合）**：该 WASM 由 Rust crate 依赖树编译而来，除 Spark 自身的 MIT 外还携带 crate 级许可（上游移植件里以逐 crate 清单形式记录：
+  `WASM-LICENSES-ZH.md`、`licenses/wasm-crates/<name-version>/LICENSE-*`、`rust-1.98.1` 标准库许可）。本仓**未**转录这份逐 crate 清单。
+  §9 首版要求的二选一已按 ② 落地：在 `docs/license-decisions.json` 以 `spark-rs WASM 与 wasm-bindgen glue` 登记处置，
+  `disposition: pending`（附三条备选路径与证据指针），`npm run verify:licenses` 因此输出 1 条 ATTENTION（非 FAIL，默认产物不受影响）。
+  **在 owner 闭合该处置前，spark 变体产物不得作为 release 交付物**；未处置前不得声称该资产的许可面已完整。
+- 消费边界：应用自行托管资产目录并指向它；SDK 产物内既不含 WASM magic 字节，也不得硬编码该目录路径（与 `build/gltf-decoders/` 的隔离护栏同规则）。
+
+## 10. Three.js r180 抄写主体（SPK-04 数学层）—— **已撤销（2026-10-13，复用纪律恢复）**
+
+- 背景（事实保留）：`ai/plans/spark-integration.md` §1.3 与 §SPK-04 原本要求 AIR 侧数学一律委托 `cc.*`，适配层只做形状与命名适配。
+  曾有一版按「与 three 逐位对齐」把 `src/air/spark/spark-math.ts` 的 6 个成员（`Matrix4.invert` / `lookAt` / `compose` /
+  `multiplyMatrices` / `makeRotationFromQuaternion`、`Quaternion.setFromRotationMatrix`）改为逐位抄 three r180 次序，本节即那一版的派生登记。
+
+- **撤销**：owner 指令「复用 cocosair 元素，不重造轮子」优先，该 6 个成员已**改回委托** `cc.Mat4.invert` / `cc.Mat4.lookAt`（+ 转置映射）/
+  `cc.Mat4.fromSRT` / `cc.Mat4.multiply` / `cc.Mat4.fromQuat` / `cc.Quat.fromMat3`（经 `cc.Mat3.fromMat4`）。因此
+  `spark-math.ts` **不再包含** three r180 的抄写主体——threed 派生的算法主体一份不剩，本节的逐成员派生表随之作废，不再需要为
+  `spark-math.ts` 携带 three 的 MIT 许可原文。
+
+- **残留物处置**：
+  - `licenses/LICENSE_three.txt`（1 081 B，取自隔离安装 `output/spark-math-parity/node_modules/three/LICENSE`）**予以删除**——
+    它只服务于那份已撤销的派生登记；three 从未是 `package.json` 依赖，也不被任何运行时代码 `import`。
+  - `tools/verify/verify-licenses.cjs` 的对应 REGISTRY 条目（原 `Three.js r180 抄写主体`）**随之删除**；该清单要求 `licenses/` 下每份
+    `*.txt` 都被登记，因此删除条目必须与删除文件同步，否则 `npm run verify:licenses` 会因孤儿许可文件判红。
+  - 隔离参考安装 `output/spark-math-parity/node_modules/three`（`tools/verify/spark-math-parity.cjs` 用它当 oracle）**保留**：
+    它是 `output/` 下的临时参考件，不是发运物，也不进任何 bundle。
+
+
+
 

@@ -11,7 +11,7 @@ npm run build        # 生成开发 bundle
 npm run dev          # 三频道 Watch（engine/air/example）+ Example Server + 自动刷新
 ```
 
-## Quick Start
+## 快速入门
 
 最小 Code First 模板见 `examples/starter/`：
 
@@ -62,6 +62,7 @@ cocosair.js/
 │   ├── exports/             # ccbuild feature unit 入口（air.ts 为 bundle 入口）
 │   ├── pal/                 # 平台抽象层（Web 实现）
 │   └── cc.config.json       # Air 引擎构建配置（由 tools/analyze/make-air-config 派生）
+├── vendor/         # 只读冻结上游源码：pal 公开 MIT 快照、Spark 高斯泼溅运行时（不入默认 bundle）
 ├── test/           # smoke tests（jsdom + HEADLESS 渲染模式）
 └── tools/          # build / dev / analyze / verify / baseline
 ```
@@ -100,7 +101,7 @@ cocosair.js/
 - [运行时资源检查](docs/guides/runtime-inspection.md) · [Agent 调试会话](docs/guides/agent-development.md)
 - [glTF / GLB 加载](docs/gltf/gltf-runtime.md) · [扩展参考](docs/gltf/gltf-extension-reference.md) · [解码器部署](docs/gltf/gltf-decoder-deployment.md)
 - [官方模型目录与对照预览](docs/gltf/gltf-catalog.md)
-- [功能范围](docs/reference/web-features.md) · [验证与发布检查](docs/reference/verification.md)
+- [功能范围](docs/reference/web-features.md) · [验证与发布检查](docs/reference/verification.md) · [Spark 可选入口边界](docs/reference/spark-optional-entry.md)
 - [上游差异](docs/UPSTREAM.md) · [第三方许可](docs/THIRD_PARTY_LICENSES.md)
 
 ## 能力与支持边界
@@ -138,6 +139,13 @@ cocosair.js/
 - **Draco 浏览器解码**：adapter 支持注入 provider；随包入口为 Node/CommonJS 形态，浏览器 factory 由应用另行提供。见 [decoder 部署边界](docs/gltf/gltf-decoder-deployment.md)。
 - **地形、3D 粒子、XR、Light Probe 等范围项**：不属于当前默认支持面，具体排除与待扩展范围见 [范围记录](docs/reference/scope-decisions.md)。
 - **MiniGame、Native/JSB、Creator Editor**：不属于 Web 运行时依赖闭包。
+- **Spark 高斯泼溅**：冻结上游源码在 `vendor/spark/`，运行时只经**可选 feature unit `spark` 的变体构建**产出（`AIR_FEATURES=…,spark` → `build/cocosair.module.spark.js`），
+  不编进默认 bundle，也不经 `cocosair` 根导出面暴露；WebXR 与手部追踪（`SparkXr`/`hands`）随 XR 移除排除，属相对上游公开面的**真实收窄**。
+  **该变体目前不随 npm 包发运**：`package.json` 无 `exports["./spark"]`、`files[]` 不含 Spark 产物，所以安装本包**无法** `import ... from 'cocosair.js/spark'`；
+  发运前的阻塞项是 spark-rs 的 crate 级许可处置（状态 `pending`，见 `docs/license-decisions.json`）。
+  解码用 WASM 与 glue 落在受审计目录 `vendor/spark-rs/`，由构建**期内联进变体产物**（冻结的 `wasm.ts` 在模块求值期 `WebAssembly.compile` 字节，无法改走运行时 fetch），
+  因此这里**不存在**「应用自行托管资产目录」的 decoder 形态；默认产物里查不到任何 Spark/WASM 指纹。该 WASM 为**源等价发行件、未在本仓用 Rust 重建**。
+  边界与消费方式见 [Spark 可选入口边界](docs/reference/spark-optional-entry.md)，来源身份见 [上游差异](docs/UPSTREAM.md)，运行资产条件见 [Spark 资产来源](docs/notes/spark-asset-sourcing.md)。
 
 ## Code First 注意事项
 

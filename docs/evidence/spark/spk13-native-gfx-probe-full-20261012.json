@@ -1,0 +1,721 @@
+{
+  "schemaVersion": "spark-native-gfx-probe/1",
+  "startedAt": "2026-10-11T17:30:23.881Z",
+  "endedAt": "2026-10-11T17:30:33.086Z",
+  "task": "SPK-09",
+  "scope": "Spark native-gfx data-path contracts (integer format/attribute/clear, array-layer view attach, MRT, public + async PBO readback) via public gfx; not release readiness.",
+  "identity": {
+    "head": "810e7d1a5b706eb91bcc76bab4bfc4c00297d2f5",
+    "dirty": "M README.md\n M ai/README.md\n M ai/ledgers/shaders-absorption.md\n M build/cocosair.module.d.ts\n M build/cocosair.module.js\n M docs/THIRD_PARTY_LICENSES.md\n M docs/UPSTREAM.md\n M docs/effects/README.md\n M docs/effects/current-sdk-refresh-delivery.md\n M docs/effects/wave4-validation-delivery.md\n M docs/reference/web-features.md\n M docs/upstream-file-map.json\n M package.json\n M src/cc.config.json\n M tools/README.md\n M tools/build/build-number.json\n M tools/debug/probes/README.md\n M tools/verify/shaders-film-neon-browser.cjs\n M tools/verify/shaders-input-dissolve-browser.cjs\n M tools/verify/shaders-laser-card-browser.cjs\n M tools/verify/verify-feature-exports.cjs\n M tools/verify/verify-licenses.cjs\n?? ai/ledgers/spark-integration.md\n?? ai/plans/spark-integration.md\n?? build/cocosair.module.spark.js\n?? build/fflate/\n?? docs/effects/driver-pilot-validation-delivery.md\n?? docs/effects/driver-pilot.md\n?? docs/effects/generated/\n?? docs/effects/uv-fusion-pilots-validation-delivery.md\n?? docs/effects/wave5-capability-proposal.md\n?? docs/effects/wave5-docs-generation-delivery.md\n?? docs/effects/wave5-kickoff.md\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-closure-audit.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-actual-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-closure-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-frozen-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-workspace-freshness.json\n?? docs/evidence/shaders-absorption/wave5-uv-fusion-pilots-gate.json\n?? docs/evidence/spark/\n?? docs/notes/spark-asset-sourcing.md\n?? docs/reference/spark-optional-entry.md\n?? examples/shader-driver-pilot/\n?? examples/shader-uv-fusion-pilot/\n?? licenses/LICENSE_spark.txt\n?? src/air/spark/\n?? src/exports/spark.ts\n?? test/parity/\n?? test/smoke/shaders-driver-pilot-acceptance.test.ts\n?? test/smoke/shaders-driver-pilot-production-review.test.ts\n?? test/smoke/shaders-driver-pilot-review.test.ts\n?? test/smoke/shaders-driver-pilot.test.ts\n?? test/smoke/shaders-effect-docs-review.test.ts\n?? test/smoke/shaders-effect-docs.test.ts\n?? test/smoke/shaders-uv-fusion-gate.test.ts\n?? test/smoke/shaders-uv-fusion.test.ts\n?? test/spark-math-parity.jest.config.js\n?? tools/build/register-spark-file-map.cjs\n?? tools/build/spark-runtime-tree.cjs\n?? tools/build/vendor-spark-rs-tree.cjs\n?? tools/build/vendor-spark-tree.cjs\n?? tools/debug/probes/spark-native-gfx-probe/\n?? tools/debug/probes/spark-pixel-parity/\n?? tools/examples/shaders-effect-docs.cjs\n?? tools/generated/\n?? tools/verify/shaders-driver-pilot-browser.cjs\n?? tools/verify/shaders-driver-pilot-gate.cjs\n?? tools/verify/shaders-driver-pilot-oracle.cjs\n?? tools/verify/shaders-driver-pilot-performance.cjs\n?? tools/verify/shaders-driver-pilot.tsconfig.json\n?? tools/verify/shaders-uv-fusion-browser.cjs\n?? tools/verify/shaders-uv-fusion-gate.cjs\n?? tools/verify/shaders-uv-fusion.tsconfig.json\n?? tools/verify/shaders-wave5-gate.cjs\n?? tools/verify/spark-adapter-elements.cjs\n?? tools/verify/spark-identity.cjs\n?? tools/verify/spark-inventory.cjs\n?? tools/verify/spark-math-parity.cjs\n?? tools/verify/spark-native-gfx-probe.cjs\n?? tools/verify/spark-pixel-parity.cjs\n?? tools/verify/spark-rs-audit.cjs\n?? vendor/spark-rs/\n?? vendor/spark/",
+    "node": "v24.14.0",
+    "sdk": {
+      "path": "build/cocosair.module.spark.js",
+      "sha256": "689c29100803ad10347b8f045d1c0dcd6ed0e3b3bad3d8f5bf84b3d7109b63ac"
+    },
+    "toolingPath": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js",
+    "toolingError": null,
+    "playwrightVersion": "1.63.0"
+  },
+  "sdk": "build/cocosair.module.spark.js",
+  "cases": [
+    "SPK-C1",
+    "SPK-C2",
+    "SPK-C3",
+    "SPK-C4",
+    "SPK-C5",
+    "SPK-C6",
+    "SPK-INT"
+  ],
+  "fingerprints": {
+    "build/cocosair.module.spark.js": "689c29100803ad10347b8f045d1c0dcd6ed0e3b3bad3d8f5bf84b3d7109b63ac",
+    "build/cocosair.module.min.js": "779c288e647c17f63a08fee5c2b9a9ec50a96c70909e34c2e3b20d9ab661a90a",
+    "src/cocos/gfx/webgl2/webgl2-device.ts": "b3cefa92f46e7b78a2fc8af8b96e1355b8b173b84169ca52fb7a6dd4352681dc",
+    "src/cocos/gfx/webgl2/webgl2-commands.ts": "8d0a93060e2ee32507c48976843145666ad6537e31943a132200bfb2bda38ff5",
+    "src/cocos/gfx/webgl2/webgl2-texture.ts": "6b51b3a8c03cfb2127dcff5963583113ef0d0311926dcc4f39384077435fba57",
+    "src/cocos/gfx/webgl2/webgl2-gpu-objects.ts": "ab0f3e85457ef185a984108de009b660e18dcb3fc2d696d24d335ef2b49cfd7d",
+    "src/cocos/gfx/base/define.ts": "cc08cc3890726cd8d6227f201079b0243d98016b197033ca4adccc9d23880162",
+    "tools/debug/probes/spark-native-gfx-probe/index.html": "2772851e95826ddb81bad60155711fc4ee1348937a94cf5e0ccd98dd33dbc28e",
+    "tools/debug/probes/spark-native-gfx-probe/main.js": "3790b8be1cd957c798a28986ba891d24521ea72e65748a7bce6abaaaa2abe0e1",
+    "tools/verify/spark-native-gfx-probe.cjs": "86e0e19bb8bfc71a2117de8c717797c323afe3df736ed0e912dad8911f911bbf",
+    "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+    "tools/verify/competitive-example-server.cjs": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af",
+    "tools/verify/loopback-browser-env.cjs": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929",
+    "ai/plans/spark-integration.md": "321d5cef9a1b59176a178f3eb2bc15a79825067d1960fe7fbf4bf2129d94c2e3"
+  },
+  "drift": [],
+  "subset": true,
+  "fullyVerified": true,
+  "note": "All observed cases exercised (no BLOCKED integration case).",
+  "results": [
+    {
+      "engine": "chromium",
+      "status": "PASS",
+      "version": "149.0.7827.55",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe",
+      "raw": {
+        "ready": true,
+        "results": [
+          {
+            "id": "SPK-C1",
+            "variant": "spark-integer-mrt-array-layer-native-readback",
+            "status": "PASS",
+            "expected": {
+              "a": [
+                16777237,
+                25,
+                32,
+                35
+              ],
+              "b": [
+                33554474,
+                50,
+                64,
+                70
+              ],
+              "c": [
+                21,
+                25,
+                32,
+                35
+              ]
+            },
+            "actual": {
+              "a": [
+                16777237,
+                25,
+                32,
+                35
+              ],
+              "b": [
+                33554474,
+                50,
+                64,
+                70
+              ],
+              "c": [
+                21,
+                25,
+                32,
+                35
+              ]
+            },
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-native-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C2",
+            "variant": "async-pbo-fence-readback-exactness",
+            "status": "PASS",
+            "expected": {
+              "sample": [
+                16777217,
+                11,
+                13,
+                17
+              ],
+              "overFloat32": true,
+              "matchesSync": true
+            },
+            "actual": {
+              "sample": [
+                16777217,
+                11,
+                13,
+                17
+              ],
+              "overFloat32": true,
+              "matchesSync": true
+            },
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "sync-public-readback": [],
+              "async-issue": [],
+              "async-completion": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C3",
+            "variant": "integer-linear-filter-rejected-without-gl-error",
+            "status": "PASS",
+            "expected": {
+              "rejected": true
+            },
+            "actual": {
+              "rejected": true
+            },
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C4",
+            "variant": "reject-invalid-array-layer-view",
+            "status": "PASS",
+            "expected": {
+              "rejected": true
+            },
+            "actual": {
+              "rejected": true
+            },
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C5",
+            "variant": "array-layer-and-mrt-capability",
+            "status": "PASS",
+            "expected": true,
+            "actual": true,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C6",
+            "variant": "integer-format-not-linear-filterable",
+            "status": "PASS",
+            "expected": true,
+            "actual": true,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-INT",
+            "variant": "spark-export-surface-presence",
+            "status": "PASS",
+            "expected": "Spark integration symbols exported",
+            "actual": [
+              "CocosSparkLayer",
+              "CocosRenderer"
+            ]
+          }
+        ],
+        "startupErrors": [],
+        "device": "WebGL2Device",
+        "renderer": "WebKit WebGL",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "capabilities": {
+          "maxArrayTextureLayers": 2048,
+          "maxDrawBuffers": 8,
+          "rgba32uiLinear": false
+        },
+        "scenarioInputs": {
+          "packedData": [
+            [
+              7,
+              11,
+              13,
+              17
+            ],
+            [
+              19,
+              23,
+              29,
+              31
+            ]
+          ],
+          "baseU": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "nativeIndex": 16777217,
+          "instances": 2,
+          "attachLayer": 1,
+          "expectedValue": [
+            16777237,
+            25,
+            32,
+            35
+          ]
+        },
+        "diagnostics": "Public gfx owns every resource, upload, state apply and draw; raw GL is read-only state plus the async-PBO diagnostic with explicit state restore."
+      },
+      "failCases": [],
+      "blockedCases": [],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "output/spark-probe-full-20261012-artifacts/chromium.png"
+    },
+    {
+      "engine": "firefox",
+      "status": "PASS",
+      "version": "155.0",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe",
+      "raw": {
+        "ready": true,
+        "results": [
+          {
+            "id": "SPK-C1",
+            "variant": "spark-integer-mrt-array-layer-native-readback",
+            "status": "PASS",
+            "expected": {
+              "a": [
+                16777237,
+                25,
+                32,
+                35
+              ],
+              "b": [
+                33554474,
+                50,
+                64,
+                70
+              ],
+              "c": [
+                21,
+                25,
+                32,
+                35
+              ]
+            },
+            "actual": {
+              "a": [
+                16777237,
+                25,
+                32,
+                35
+              ],
+              "b": [
+                33554474,
+                50,
+                64,
+                70
+              ],
+              "c": [
+                21,
+                25,
+                32,
+                35
+              ]
+            },
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-native-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C2",
+            "variant": "async-pbo-fence-readback-exactness",
+            "status": "PASS",
+            "expected": {
+              "sample": [
+                16777217,
+                11,
+                13,
+                17
+              ],
+              "overFloat32": true,
+              "matchesSync": true
+            },
+            "actual": {
+              "sample": [
+                16777217,
+                11,
+                13,
+                17
+              ],
+              "overFloat32": true,
+              "matchesSync": true
+            },
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "sync-public-readback": [],
+              "async-issue": [],
+              "async-completion": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C3",
+            "variant": "integer-linear-filter-rejected-without-gl-error",
+            "status": "PASS",
+            "expected": {
+              "rejected": true
+            },
+            "actual": {
+              "rejected": true
+            },
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C4",
+            "variant": "reject-invalid-array-layer-view",
+            "status": "PASS",
+            "expected": {
+              "rejected": true
+            },
+            "actual": {
+              "rejected": true
+            },
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C5",
+            "variant": "array-layer-and-mrt-capability",
+            "status": "PASS",
+            "expected": true,
+            "actual": true,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C6",
+            "variant": "integer-format-not-linear-filterable",
+            "status": "PASS",
+            "expected": true,
+            "actual": true,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-INT",
+            "variant": "spark-export-surface-presence",
+            "status": "PASS",
+            "expected": "Spark integration symbols exported",
+            "actual": [
+              "CocosSparkLayer",
+              "CocosRenderer"
+            ]
+          }
+        ],
+        "startupErrors": [],
+        "device": "WebGL2Device",
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+        "version": "WebGL 2.0",
+        "capabilities": {
+          "maxArrayTextureLayers": 2048,
+          "maxDrawBuffers": 8,
+          "rgba32uiLinear": false
+        },
+        "scenarioInputs": {
+          "packedData": [
+            [
+              7,
+              11,
+              13,
+              17
+            ],
+            [
+              19,
+              23,
+              29,
+              31
+            ]
+          ],
+          "baseU": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "nativeIndex": 16777217,
+          "instances": 2,
+          "attachLayer": 1,
+          "expectedValue": [
+            16777237,
+            25,
+            32,
+            35
+          ]
+        },
+        "diagnostics": "Public gfx owns every resource, upload, state apply and draw; raw GL is read-only state plus the async-PBO diagnostic with explicit state restore."
+      },
+      "failCases": [],
+      "blockedCases": [],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "output/spark-probe-full-20261012-artifacts/firefox.png"
+    },
+    {
+      "engine": "webkit",
+      "status": "PASS",
+      "version": "26.6",
+      "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\webkit-2359\\Playwright.exe",
+      "raw": {
+        "ready": true,
+        "results": [
+          {
+            "id": "SPK-C1",
+            "variant": "spark-integer-mrt-array-layer-native-readback",
+            "status": "PASS",
+            "expected": {
+              "a": [
+                16777237,
+                25,
+                32,
+                35
+              ],
+              "b": [
+                33554474,
+                50,
+                64,
+                70
+              ],
+              "c": [
+                21,
+                25,
+                32,
+                35
+              ]
+            },
+            "actual": {
+              "a": [
+                16777237,
+                25,
+                32,
+                35
+              ],
+              "b": [
+                33554474,
+                50,
+                64,
+                70
+              ],
+              "c": [
+                21,
+                25,
+                32,
+                35
+              ]
+            },
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "public-native-readback": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C2",
+            "variant": "async-pbo-fence-readback-exactness",
+            "status": "PASS",
+            "expected": {
+              "sample": [
+                16777217,
+                11,
+                13,
+                17
+              ],
+              "overFloat32": true,
+              "matchesSync": true
+            },
+            "actual": {
+              "sample": [
+                16777217,
+                11,
+                13,
+                17
+              ],
+              "overFloat32": true,
+              "matchesSync": true
+            },
+            "stages": {
+              "preExisting": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "draw": [],
+              "sync-public-readback": [],
+              "async-issue": [],
+              "async-completion": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C3",
+            "variant": "integer-linear-filter-rejected-without-gl-error",
+            "status": "PASS",
+            "expected": {
+              "rejected": true
+            },
+            "actual": {
+              "rejected": true
+            },
+            "stages": {
+              "preExisting": [],
+              "upload": [],
+              "resources-and-shader": [],
+              "clear": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C4",
+            "variant": "reject-invalid-array-layer-view",
+            "status": "PASS",
+            "expected": {
+              "rejected": true
+            },
+            "actual": {
+              "rejected": true
+            },
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C5",
+            "variant": "array-layer-and-mrt-capability",
+            "status": "PASS",
+            "expected": true,
+            "actual": true,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-C6",
+            "variant": "integer-format-not-linear-filterable",
+            "status": "PASS",
+            "expected": true,
+            "actual": true,
+            "stages": {
+              "preExisting": [],
+              "completion": [],
+              "cleanup": []
+            },
+            "glClean": true
+          },
+          {
+            "id": "SPK-INT",
+            "variant": "spark-export-surface-presence",
+            "status": "PASS",
+            "expected": "Spark integration symbols exported",
+            "actual": [
+              "CocosSparkLayer",
+              "CocosRenderer"
+            ]
+          }
+        ],
+        "startupErrors": [],
+        "device": "WebGL2Device",
+        "renderer": "WebKit WebGL",
+        "version": "WebGL 2.0",
+        "capabilities": {
+          "maxArrayTextureLayers": 2048,
+          "maxDrawBuffers": 8,
+          "rgba32uiLinear": false
+        },
+        "scenarioInputs": {
+          "packedData": [
+            [
+              7,
+              11,
+              13,
+              17
+            ],
+            [
+              19,
+              23,
+              29,
+              31
+            ]
+          ],
+          "baseU": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "nativeIndex": 16777217,
+          "instances": 2,
+          "attachLayer": 1,
+          "expectedValue": [
+            16777237,
+            25,
+            32,
+            35
+          ]
+        },
+        "diagnostics": "Public gfx owns every resource, upload, state apply and draw; raw GL is read-only state plus the async-PBO diagnostic with explicit state restore."
+      },
+      "failCases": [],
+      "blockedCases": [],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "output/spark-probe-full-20261012-artifacts/webkit.png"
+    }
+  ],
+  "passed": true
+}

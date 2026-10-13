@@ -81,6 +81,35 @@ const REGISTRY = [
         note: 'Derived exclusively from the frozen public MIT PAL tree; engine-pal npm bytes are retired.',
     },
     {
+        component: 'Spark 高斯泼溅 (@sparkjsdev/spark)',
+        licenseFile: 'licenses/LICENSE_spark.txt',
+        sourceOfTruth: { kind: 'vendored', path: 'vendor/spark/LICENSE' },
+        licenseId: 'MIT (c) 2025 WORLD LABS TECHNOLOGIES, INC.（@sparkjsdev/spark 2.3.1，冻结提交 c57ebb93）',
+        ships: 'variant',
+        probes: ['SparkRenderer', 'sparkjsdev'],
+        note: 'SPK-03 冻结上游源码落位 vendor/spark/（src 52 个 .ts + rust 29 个 .rs，逐字节一致）；SPK-11 已编入可选 `spark` feature unit，故 ships=variant：变体产物 build/cocosair.module.spark.js 含其字节（实测 SparkRenderer×5、SplatMesh×7），默认产物 build/cocosair.module.js{,.min.js} 指纹为 0（由本检查与 verify:spark-assets 双重断言）。清单见 docs/evidence/spark/vendor-spark-tree-20261011.json。',
+    },
+    {
+        component: 'spark-rs WASM 与 wasm-bindgen glue',
+        licenseFile: 'licenses/LICENSE_spark.txt',
+        sourceOfTruth: { kind: 'vendored', path: 'vendor/spark-rs/LICENSE' },
+        licenseId:
+            'MIT (c) 2025 WORLD LABS TECHNOLOGIES, INC.（spark-rs 与 spark 同源同许可；上游 2.3.1 dist 发行字节）',
+        ships: 'variant',
+        probes: ['spark_rs_bg', 'WASM_MODULE'],
+        decisionRequired: true,
+        note: 'vendor/spark-rs/{spark_rs_bg.wasm,spark_rs.js} 为源等价发行件，未在本环境用 Rust 重建（来源/指纹见 vendor/spark-rs/MANIFEST.md）。冻结 vendor/spark/src/wasm.ts 以静态 import 内联字节，故 WASM 以 base64 编进 spark 变体产物、不引入运行时 fetch；默认产物不含（verify:spark-assets 断言内嵌字节 sha 与资产逐字节一致，防漂移）。',
+    },
+    {
+        component: 'fflate (SPZ 解压依赖)',
+        licenseFile: 'licenses/LICENSE_fflate.txt',
+        sourceOfTruth: { kind: 'vendored', path: 'build/fflate/LICENSE' },
+        licenseId: 'MIT (c) 2023 Arjun Barrett（fflate 0.8.2，npm pack 原文）',
+        ships: 'variant',
+        probes: ['fflate'],
+        note: '独立第三方构建资产 build/fflate/（npm pack fflate@0.8.2，tarball SHA 见 build/fflate/MANIFEST.md），非 package.json 依赖；由 tools/build/spark-runtime-tree.cjs 以构建期 alias 把冻结树的裸 `from "fflate"` 说明符解析到 build/fflate/esm/browser.js，vendor/spark 原文不改。因此 fflate 字节只进 spark 变体产物，默认产物指纹为 0。',
+    },
+    {
         component: 'meshoptimizer (glTF 解码器)',
         licenseFile: 'build/gltf-decoders/meshopt/LICENSE.md',
         sourceOfTruth: { kind: 'self', path: 'build/gltf-decoders/meshopt/LICENSE.md' },
@@ -106,26 +135,32 @@ const REGISTRY = [
     },
 ];
 
-function readText (p) { return fs.readFileSync(p, 'utf8'); }
+function readText(p) {
+    return fs.readFileSync(p, 'utf8');
+}
 
-function truthPath (t) {
-    if (t.kind === 'upstream') { return path.join(UPSTREAM, t.path); }
-    if (t.kind === 'npm') { return path.join(ROOT, t.path); }
+function truthPath(t) {
+    if (t.kind === 'upstream') {
+        return path.join(UPSTREAM, t.path);
+    }
+    if (t.kind === 'npm') {
+        return path.join(ROOT, t.path);
+    }
     return path.join(ROOT, t.path);
 }
 
-function check () {
+function check() {
     const failures = [];
     const attention = [];
     const records = [];
     const bundleText = fs.existsSync(BUNDLE) ? readText(BUNDLE) : '';
-    const decisions = fs.existsSync(DECISIONS_PATH)
-        ? JSON.parse(readText(DECISIONS_PATH)).decisions || {}
-        : {};
+    const decisions = fs.existsSync(DECISIONS_PATH) ? JSON.parse(readText(DECISIONS_PATH)).decisions || {} : {};
     const pkg = JSON.parse(readText(path.join(ROOT, 'package.json')));
     const shipsLicensesDir = (pkg.files || []).some((f) => /^licenses\/?$/.test(f));
 
-    if (!fs.existsSync(BUNDLE)) { failures.push('build/cocosair.module.js 缺失（先 npm run build）'); }
+    if (!fs.existsSync(BUNDLE)) {
+        failures.push('build/cocosair.module.js 缺失（先 npm run build）');
+    }
 
     for (const entry of REGISTRY) {
         const problems = [];
@@ -138,13 +173,19 @@ function check () {
                 problems.push(`许可原文缺失：${entry.licenseFile}`);
             } else {
                 licenseBytes = fs.statSync(abs).size;
-                if (licenseBytes === 0) { problems.push(`许可原文为空：${entry.licenseFile}`); }
+                if (licenseBytes === 0) {
+                    problems.push(`许可原文为空：${entry.licenseFile}`);
+                }
                 if (entry.sourceOfTruth.kind === 'upstream' || entry.sourceOfTruth.kind === 'vendored') {
                     const truth = truthPath(entry.sourceOfTruth);
                     if (!fs.existsSync(truth)) {
-                        problems.push(`许可来源不可达：${entry.sourceOfTruth.path}（可用 COCOS_UPSTREAM 覆盖上游路径）`);
+                        problems.push(
+                            `许可来源不可达：${entry.sourceOfTruth.path}（可用 COCOS_UPSTREAM 覆盖上游路径）`,
+                        );
                     } else if (!fs.readFileSync(truth).equals(fs.readFileSync(abs))) {
-                        problems.push(`许可原文与来源不逐字节一致：${entry.licenseFile} != ${entry.sourceOfTruth.path}`);
+                        problems.push(
+                            `许可原文与来源不逐字节一致：${entry.licenseFile} != ${entry.sourceOfTruth.path}`,
+                        );
                     }
                 }
             }
@@ -177,9 +218,13 @@ function check () {
             failures.push(`${entry.component}: ${problems.join('; ')}`);
         }
         if (pending) {
-            attention.push(`${entry.component}: disposition=${decision.disposition}${gaps.length ? ` — ${gaps.join('; ')}` : ''}${decision.owner ? ` (owner: ${decision.owner})` : ''}`);
+            attention.push(
+                `${entry.component}: disposition=${decision.disposition}${gaps.length ? ` — ${gaps.join('; ')}` : ''}${decision.owner ? ` (owner: ${decision.owner})` : ''}`,
+            );
         } else if (riskAccepted && gaps.length) {
-            attention.push(`RISK-ACCEPTED ${entry.component}: ${gaps.join('; ')}（owner 批复的风险接受处置，见 docs/license-decisions.json；不冒充许可清晰）`);
+            attention.push(
+                `RISK-ACCEPTED ${entry.component}: ${gaps.join('; ')}（owner 批复的风险接受处置，见 docs/license-decisions.json；不冒充许可清晰）`,
+            );
         }
         records.push({
             component: entry.component,
@@ -194,16 +239,25 @@ function check () {
         });
     }
     // 4) 发布面
-    if (shipsLicensesDir && !fs.existsSync(path.join(ROOT, 'licenses'))) { failures.push('files[] 声明 licenses/ 但目录不存在'); }
-    const needsShipped = REGISTRY.some((r) => r.licenseFile && r.licenseFile.startsWith('licenses/') && r.ships === 'default');
-    if (needsShipped && !shipsLicensesDir) { failures.push('licenses/ 未列入 package.json files[]：默认产物内嵌的第三方许可未随包发布'); }
+    if (shipsLicensesDir && !fs.existsSync(path.join(ROOT, 'licenses'))) {
+        failures.push('files[] 声明 licenses/ 但目录不存在');
+    }
+    const needsShipped = REGISTRY.some(
+        (r) => r.licenseFile && r.licenseFile.startsWith('licenses/') && r.ships === 'default',
+    );
+    if (needsShipped && !shipsLicensesDir) {
+        failures.push('licenses/ 未列入 package.json files[]：默认产物内嵌的第三方许可未随包发布');
+    }
 
     failures.push(...require('../build/pal-source.cjs').check());
     for (const file of ['build/cocosair.module.js', 'build/cocosair.module.min.js']) {
         const target = path.join(ROOT, file);
-        if (!fs.existsSync(target)) { failures.push(`PAL published bundle missing: ${file}`); continue; }
+        if (!fs.existsSync(target)) {
+            failures.push(`PAL published bundle missing: ${file}`);
+            continue;
+        }
         const text = fs.readFileSync(target, 'utf8');
-        if (['_ccprivate$_gameCanvas', '_ccprivate$_battery'].some(marker => text.includes(marker))) {
+        if (['_ccprivate$_gameCanvas', '_ccprivate$_battery'].some((marker) => text.includes(marker))) {
             failures.push(`${file}: retired engine-pal binary fingerprints remain; rebuild from public MIT PAL`);
         }
     }
@@ -218,12 +272,20 @@ if (require.main === module) {
     } else {
         for (const r of result.records) {
             const tag = r.problems.length ? 'FAIL' : r.gaps.length ? 'WARN' : 'ok  ';
-            console.log(`[licenses] ${tag} ${r.component} | ${r.licenseId} | ships=${r.ships} | text=${r.licenseFile || '—'} | decision=${r.decision || 'n/a'}`);
+            console.log(
+                `[licenses] ${tag} ${r.component} | ${r.licenseId} | ships=${r.ships} | text=${r.licenseFile || '—'} | decision=${r.decision || 'n/a'}`,
+            );
         }
-        for (const f of result.failures) { console.log(`[licenses] FAIL ${f}`); }
-        for (const a of result.attention) { console.log(`[licenses] ATTENTION ${a}`); }
-        console.log(`[licenses] ${result.records.length} 项登记：${result.failures.length} FAIL / ${result.attention.length} ATTENTION`
-            + `；files[] licenses/= ${result.shipsLicensesDir}`);
+        for (const f of result.failures) {
+            console.log(`[licenses] FAIL ${f}`);
+        }
+        for (const a of result.attention) {
+            console.log(`[licenses] ATTENTION ${a}`);
+        }
+        console.log(
+            `[licenses] ${result.records.length} 项登记：${result.failures.length} FAIL / ${result.attention.length} ATTENTION` +
+                `；files[] licenses/= ${result.shipsLicensesDir}`,
+        );
     }
     process.exitCode = result.failures.length ? 1 : 0;
 }

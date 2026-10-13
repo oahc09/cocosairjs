@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="data:," />
+        <title>Spark CPU parity (SPK-13)</title>
+        <!--
+          One document, two Spark implementations, one origin.
+          `dist/spark-reference.js` was built with `external: ["three"]`, so the bare specifier has to
+          resolve through this import map; the AIR bundle is self-contained and never asks for `three`.
+          Serving both trees from the same loopback origin is deliberate: the reference server sets no
+          CORS headers, so a two-origin layout cannot load both modules in one document.
+        -->
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "/dist/three-reference.js",
+                    "three/addons/": "/dist/reference-addons/"
+                }
+            }
+        </script>
+        <style>
+            html,
+            body {
+                margin: 0;
+                background: #111;
+                color: #ddd;
+                font: 12px/1.4 monospace;
+                white-space: pre-wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- The engine resolves its canvas at import time, so one must exist even for a CPU-only probe.
+             Nothing is ever drawn into it and no pixels are claimed by this gate. -->
+        <canvas id="view" width="64" height="64"></canvas>
+        <pre id="status">booting CPU parity...</pre>
+        <script type="module">
+            const parameters = new URLSearchParams(location.search);
+            window.__SPARK_CPU_SDK = parameters.get('sdk') || '/build/cocosair.module.spark.js';
+        </script>
+        <script type="module" src="./cpu-parity.js"></script>
+    </body>
+</html>

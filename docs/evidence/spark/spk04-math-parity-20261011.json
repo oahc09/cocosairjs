@@ -1,0 +1,341 @@
+{
+  "schema": "spark-integration-evidence/1",
+  "task": "SPK-04",
+  "acceptanceLine": "ai/plans/spark-integration.md:162 验收：`tests/math-parity` 的等价复跑在位模式上通过（见 SPK-13）",
+  "generatedAt": "2026-10-12T14:45:23.411Z",
+  "verdict": "PASS",
+  "verdictReasoning": "PASS：全部数学层操作在位模式与容差上等价（容差未放宽），且原型套件的四个非数学分组逐组归属并有复跑/门禁锚点，Texture/RenderTarget 形状两组已在本 harness 内对隔离 three@0.180.0 oracle 复跑通过并计入判定。PASS 的含义是计划 §SPK-04 验收线（数学层声明范围内位等价），不是移植件原型套件的全量复现——Splat 字节面与 CubeCamera/XR 对象面分别由 npm run verify:spark-cpu-parity 与像素门禁/SPK-10 XR deviation 承担，见 narrowedScope。",
+  "scopeComplete": true,
+  "environment": {
+    "repoRoot": "E:/AIProMax/github/cocosair.js",
+    "gitHead": "810e7d1a5b706eb91bcc76bab4bfc4c00297d2f5",
+    "node": "v24.14.0",
+    "npm": "见 commands[three-install].stdoutTail",
+    "jest": "28.1.3",
+    "tsJest": "28.0.8",
+    "typescript": "4.9.5"
+  },
+  "commands": [
+    {
+      "id": "three-install",
+      "command": "npm install three@0.180.0 --prefix output/spark-math-parity --no-save --no-package-lock",
+      "spawnMode": "shell",
+      "cwd": ".",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "startedAt": "2026-10-12T14:45:06.818Z",
+      "endedAt": "2026-10-12T14:45:08.256Z",
+      "stdoutTail": "\nup to date in 1s\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "jest-replay",
+      "command": "\"D:\\Program Files\\nodejs\\node.exe\" \"E:\\AIProMax\\github\\cocosair.js\\node_modules\\jest\\bin\\jest.js\" --config test/spark-math-parity.jest.config.js --runInBand",
+      "spawnMode": "argv（无 shell，兼容含空格的解释器路径）",
+      "cwd": ".",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "startedAt": "2026-10-12T14:45:08.258Z",
+      "endedAt": "2026-10-12T14:45:23.409Z",
+      "stdoutTail": "",
+      "stderrTail": "PASS test/parity/spark-math-parity.test.ts (6.76 s)\n  SPK-04 math-parity：spark-math.ts vs Three.js r180（在位等价复跑）\n    √ oracle 与目标图均可加载 (3 ms)\n    √ 全量覆盖复跑：最终 float32 位模式差异归属（collect 模式，不提前中止） (572 ms)\n    √ 移植件原型语义复跑（assert 模式）：容差超差必须像原型一样真实失败 (258 ms)\n\nTest Suites: 1 passed, 1 total\nTests:       3 passed, 3 total\nSnapshots:   0 total\nTime:        8.225 s\nRan all test suites.\n"
+    }
+  ],
+  "oracle": {
+    "package": "three",
+    "requestedSpec": "three@0.180.0",
+    "installLocation": "output/spark-math-parity/node_modules/three",
+    "isolation": "npm install --prefix output/spark-math-parity --no-save --no-package-lock：不进仓库根 node_modules，不改 package.json/package-lock.json；three 仅作为验证回路的 oracle（计划 §1.3）。",
+    "packageJsonPath": "output/spark-math-parity/node_modules/three/package.json",
+    "packageJsonVersionField": "0.180.0",
+    "packageJsonSha256": "aa42494664dba4cf76d89c6975ee38321a402f09a048672e190bad6f13beec93",
+    "buildCjsSha256": "2980c5831824f46d79a39a93feb70dd851538ce5b5480a6463883b319022c51f",
+    "runtimeRevision": "180",
+    "integrityNote": "build/three.cjs 与 build/three.module.js 为同一次发布的构建产物；package.json 指纹绑定该次安装。"
+  },
+  "target": {
+    "path": "src/air/spark/spark-math.ts",
+    "sha256": "94b2f5b68cdb863016d77036ad92632146dcc4d9e2fa1224bd28e2c56a4a6607",
+    "sizeBytes": 94363,
+    "lines": 2752,
+    "headerDivergenceAudit": {
+      "headerLineSpan": [
+        1,
+        90
+      ],
+      "perOperation": {},
+      "setFromEulerWLastFactor": {
+        "fileLine": 1244,
+        "text": "this._w = cx * cy * cz + s[3] * sx * sy * sz;",
+        "usesCz": false,
+        "oracleExpects": "sz（three/src/math/Quaternion.js 与移植件 src/air-math.js:497 均为 signs[3]*sx*sy*sz）"
+      }
+    }
+  },
+  "harness": {
+    "executionRoute": "jest 28 + ts-jest（diagnostics:false, isolatedModules:true, test/tsconfig.jest.json）：整条引擎 TS import 图（../../cocos/core/math/*, ../../cocos/core/geometry/*）由 ts-jest 解析，`internal:constants` 等沿用根 jest.config.js 的 moduleNameMapper；three 用一条 moduleNameMapper 指向隔离安装的 build/three.cjs。单文件 transpileModule 不足以承载该 import 图，故不用 tools/build/pal-source.cjs 式单文件路线。",
+    "dedicatedConfig": {
+      "path": "test/spark-math-parity.jest.config.js",
+      "sha256": "3d0f002422a9fd0f7981e4c8c0bbc49cb6cc2d47d9a484aaf765103c90d090aa"
+    },
+    "replayTest": {
+      "path": "test/parity/spark-math-parity.test.ts",
+      "sha256": "9a8d758464f644162778a7e0b7ab6d1648f4b1b6960bf312094a8b8f84cea5f8"
+    },
+    "defaultSuiteUnaffected": "testMatch 只在专用配置里改为 test/parity/*.test.ts；根 jest.config.js 与 package.json scripts 未改动。",
+    "rerun": [
+      "node tools/verify/spark-math-parity.cjs",
+      "离线复跑：node tools/verify/spark-math-parity.cjs --skip-install",
+      "手工：MATH_PARITY_ITERATIONS=1000 npx jest --config test/spark-math-parity.jest.config.js --runInBand"
+    ],
+    "harnessSideShims": "Object3DShim / CameraShim：按 Three r180 Object3D/Camera/PerspectiveCamera 方法体逐行重写的调度垫片，内部矩阵/四元数算术全部落在 spark-math；用于在不依赖 SPK-05a（并行编辑中）的前提下复跑 projection / projection inverse / project / parented lookAt / world direction 五组检查。"
+  },
+  "source": {
+    "portTest": {
+      "path": "E:/AIProMax/github/spark-cocosairjs/tests/math-parity.mjs",
+      "sha256": "b3804af6a798e466692e50144d94e8c1f64ee93c62cabda41e3604772942884b",
+      "lines": 476,
+      "readOnly": true,
+      "importedAs": "Reference（three）+ Air（移植件 src/air-compat.js）；本次把 Air 侧换成 spark-math.ts，Reference 侧沿用真实 three@0.180.0"
+    },
+    "portReferenceImplementation": {
+      "path": "E:/AIProMax/github/spark-cocosairjs/src/air-math.js",
+      "sha256": "37982aff324d7bf367a4b74b8344b643bde407413a634b4eb3a39b686ad35d4b",
+      "note": "只读旁证：setFromEuler 的 w 项与 lookAt 的基向量写入次序按 Three 原文写，故移植件本身能过该检查。"
+    }
+  },
+  "replay": {
+    "seed": "0x5a17c0c0",
+    "iterations": 1000,
+    "iterationsCompleted": 1000,
+    "modeNote": "collect = 同种子全量跑（容差超差不抛出，用于逐操作归属）；assert = 移植件原型语义（首个超差即失败，判定基准）；isolated = 同种子同序列但四元数输入统一取自 oracle，用于把 setFromEuler 的自身分歧与其下游传染分开归因。",
+    "scopeNote": "场景对象三项检查通过 harness 侧 Object3DShim/CameraShim 复跑：调度按 Three r180 方法体逐行重写，矩阵/四元数算术全部落在 spark-math。",
+    "assertRun": {
+      "completedWithoutFailure": true,
+      "counters": {
+        "checks": 22001,
+        "maxAbsoluteError": 1.1368683772161603e-13,
+        "float32Components": 152003,
+        "float32BitMismatches": 0,
+        "signedZeroMismatches": 0,
+        "float32MismatchByOperation": {},
+        "signedZeroByOperation": {},
+        "float32MismatchSamples": [],
+        "toleranceViolations": 0,
+        "toleranceViolationByOperation": {},
+        "toleranceViolationSamples": [],
+        "maxErrorByOperation": {
+          "quaternion from Euler": 0,
+          "compose": 0,
+          "inverse": 0,
+          "determinant": 1.7763568394002505e-15,
+          "vector transform": 0,
+          "quaternion transform": 1.1102230246251565e-15,
+          "decompose position": 0,
+          "decompose scale": 0,
+          "decompose quaternion": 4.440892098500626e-16,
+          "Euler from quaternion": 0,
+          "quaternion multiply": 0,
+          "slerp": 3.3306690738754696e-16,
+          "mat3 inverse": 0,
+          "lookAt": 0,
+          "projection": 8.881784197001252e-16,
+          "projection inverse": 1.4210854715202004e-14,
+          "project": 1.1368683772161603e-13,
+          "box min": 0,
+          "box max": 0,
+          "color": 0,
+          "parented lookAt matrix": 0,
+          "world direction": 0,
+          "default color": 0
+        },
+        "iterationsCompleted": 1000
+      },
+      "failure": null
+    },
+    "probes": {
+      "lookAtLayout": {
+        "attempts": 64,
+        "worstDirect": 0,
+        "worstTransposed": 1.968413856938776,
+        "directWithinTolerance": 64,
+        "transposedWithinTolerance": 0
+      }
+    },
+    "supplementary": {
+      "adapterScope": {
+        "countedInVerdict": true,
+        "attempted": true,
+        "status": "passed",
+        "detail": null,
+        "fieldChecks": 20
+      }
+    },
+    "narrowedScope": [
+      {
+        "section": "DataTexture / DataArrayTexture 默认字段契约（magFilter/minFilter/format/type/flipY/unpackAlignment/generateMipmaps）",
+        "portTestLines": "tests/math-parity.mjs:207-220",
+        "ownerTask": "SPK-05a（spark-api-adapter.ts 的 Texture 形状）",
+        "inMathLayerScope": false,
+        "replayedHereBy": "supplementary.adapterScope（与隔离 three@0.180.0 oracle 逐字段对账，计入判定）",
+        "reason": "spark-math.ts 不含 Texture 类；该检查比对 CPU 描述袋字段默认值，非数学委托。由附加块 adapterScope 复跑并计入判定。"
+      },
+      {
+        "section": "WebGLArrayRenderTarget 尺寸/缓冲/samples 契约与 texture.image 深比较",
+        "portTestLines": "tests/math-parity.mjs:221-244",
+        "ownerTask": "SPK-05a（gfx:* 归属的 RenderTarget 形状）",
+        "inMathLayerScope": false,
+        "replayedHereBy": "supplementary.adapterScope（尺寸/缓冲/samples + texture.image 深比较，计入判定）",
+        "reason": "渲染目标形状不在数学层，SPK-04 无对应实现。由附加块 adapterScope 复跑并计入判定。"
+      },
+      {
+        "section": "PackedSplats / ExtSplats 的 pushSplat/getSplat 与 packed/ext 字节数组深比较、SplatAccumulator.generateMapping/ensureGenerate 纹理布局",
+        "portTestLines": "tests/math-parity.mjs:261-354",
+        "ownerTask": "SPK-11（冻结 Spark 本体接入）",
+        "inMathLayerScope": false,
+        "replayedHereBy": null,
+        "owningGate": "npm run verify:spark-cpu-parity（浏览器内把本仓变体产物 cc.sparkRuntime 与上游参考包逐位对账）",
+        "reason": "需要 Spark 运行时（PackedSplats/ExtSplats/SplatAccumulator 属冻结上游算法，不在 spark-math.ts）；本体接入后由 verify:spark-cpu-parity 承担同一检查，本层不复现。"
+      },
+      {
+        "section": "CubeCamera 六面朝向 / -90° 投影 / activeMipmapLevel 与 XR 复原 / 注入渲染失败后的状态复原 / WebGL 与 WebGPU 两套坐标系统",
+        "portTestLines": "tests/math-parity.mjs:372-459",
+        "ownerTask": "SPK-05a（CubeCamera / WebGLCubeRenderTarget）+ SPK-07（CocosRenderer 的 mip/XR 簿记）",
+        "inMathLayerScope": false,
+        "replayedHereBy": "其中的矩阵内容已由 projection / projection inverse / parented lookAt 在本层复跑（计入判定）",
+        "owningGate": "npm run verify:spark-pixel-parity（渲染面）；XR 子项随 SPK-10 移除，见 docs/UPSTREAM.md 的 XR deviation",
+        "reason": "其矩阵内容已由 projection / projection inverse / parented lookAt 检查覆盖；对象级 mip、XR 保存与渲染器 mock 不属数学层。"
+      }
+    ],
+    "scopeAudit": {
+      "rule": "narrowed groups must each declare inMathLayerScope=false + ownerTask + (replayedHereBy|owningGate); the adapter-shape groups must be replayed here and counted",
+      "declaredGroups": 4,
+      "unattributedGroups": [],
+      "adapterScopeDeclaredCounted": true,
+      "adapterScopeAttempted": true,
+      "adapterScopeStatus": "passed"
+    }
+  },
+  "counts": {
+    "cubeCamera": "not-replayed（SPK-05a/07：CubeCamera 对象契约，不在数学层）",
+    "coordinateSystems": "not-replayed（同上，移植件为 2）",
+    "randomPoses": "not-replayed（同上，移植件为 64）",
+    "totalChecks": 22001,
+    "float32Components": 152003,
+    "float32BitMismatches": 0,
+    "signedZeroMismatches": 0,
+    "float32MismatchByOperation": {},
+    "nonzeroFloat32Mismatches": 0,
+    "signedZeroByOperation": {},
+    "toleranceViolations": 0,
+    "toleranceViolationByOperation": {},
+    "maxAbsoluteError": 1.1368683772161603e-13,
+    "maxErrorByOperation": {
+      "quaternion from Euler": 0,
+      "compose": 0,
+      "inverse": 0,
+      "determinant": 1.7763568394002505e-15,
+      "vector transform": 0,
+      "quaternion transform": 1.1102230246251565e-15,
+      "decompose position": 0,
+      "decompose scale": 0,
+      "decompose quaternion": 4.440892098500626e-16,
+      "Euler from quaternion": 0,
+      "quaternion multiply": 0,
+      "slerp": 3.3306690738754696e-16,
+      "mat3 inverse": 0,
+      "lookAt": 0,
+      "projection": 8.881784197001252e-16,
+      "projection inverse": 1.4210854715202004e-14,
+      "project": 1.1368683772161603e-13,
+      "box min": 0,
+      "box max": 0,
+      "color": 0,
+      "parented lookAt matrix": 0,
+      "world direction": 0,
+      "default color": 0
+    },
+    "iterationsCompleted": 1000
+  },
+  "isolatedRootCausePass": {
+    "note": "同种子同序列，只把 Quaternion.setFromEuler 的产物换成 oracle 值装载，用来区分「根因」与「传染」。",
+    "toleranceViolations": 0,
+    "toleranceViolationByOperation": {},
+    "float32MismatchByOperation": {},
+    "signedZeroByOperation": {},
+    "maxErrorByOperation": {
+      "quaternion from Euler": 0,
+      "compose": 0,
+      "inverse": 0,
+      "determinant": 1.7763568394002505e-15,
+      "vector transform": 0,
+      "quaternion transform": 1.1102230246251565e-15,
+      "decompose position": 0,
+      "decompose scale": 0,
+      "decompose quaternion": 4.440892098500626e-16,
+      "Euler from quaternion": 0,
+      "quaternion multiply": 0,
+      "slerp": 3.3306690738754696e-16,
+      "mat3 inverse": 0,
+      "lookAt": 0,
+      "projection": 8.881784197001252e-16,
+      "projection inverse": 1.4210854715202004e-14,
+      "project": 1.1368683772161603e-13,
+      "box min": 0,
+      "box max": 0,
+      "color": 0,
+      "parented lookAt matrix": 0,
+      "world direction": 0,
+      "default color": 0
+    },
+    "samples": []
+  },
+  "mismatches": [],
+  "findings": [
+    {
+      "operation": "零差异/仅 ±0 的操作",
+      "cleanWithinTolerance": [
+        "quaternion from Euler(max 0.0e+0)",
+        "compose(max 0.0e+0)",
+        "inverse(max 0.0e+0)",
+        "determinant(max 1.8e-15)",
+        "vector transform(max 0.0e+0)",
+        "quaternion transform(max 1.1e-15)",
+        "decompose position(max 0.0e+0)",
+        "decompose scale(max 0.0e+0)",
+        "decompose quaternion(max 4.4e-16)",
+        "Euler from quaternion(max 0.0e+0)",
+        "quaternion multiply(max 0.0e+0)",
+        "slerp(max 3.3e-16)",
+        "mat3 inverse(max 0.0e+0)",
+        "lookAt(max 0.0e+0)",
+        "projection(max 8.9e-16)",
+        "projection inverse(max 1.4e-14)",
+        "project(max 1.1e-13)",
+        "box min(max 0.0e+0)",
+        "box max(max 0.0e+0)",
+        "color(max 0.0e+0)",
+        "parented lookAt matrix(max 0.0e+0)",
+        "world direction(max 0.0e+0)",
+        "default color(max 0.0e+0)"
+      ],
+      "signedZeroOnly": [],
+      "note": "这些组（含 makePerspective→cc.Mat4.frustum 的 projection、Matrix3.invert、Color/hex、Box3.applyMatrix4、compose/inverse/determinant/applyMatrix4/applyQuaternion/slerp/multiply 在 isolated 趟）委托引擎后逐位等价；projection inverse 与 inverse 出现 ±0 与 0 的符号位差异，数值同为 0，按移植件口径单列，不计入失败。"
+    }
+  ],
+  "evidenceIntegrity": {
+    "resultsJson": "output/spark-math-parity/results.json",
+    "resultsSha256": "71ac9101fb827cb60d13208f160fe2aa0730596caa372dc93dc0958dced6833f",
+    "resultsFreshness": {
+      "priorResultsRemovedBeforeRun": true,
+      "priorRemoveError": null,
+      "resultsMtime": "2026-10-12T14:45:24.000Z",
+      "writtenByThisRun": true,
+      "note": "writtenByThisRun=false 时 results.json 属陈旧产物，verdict 直接降为 BLOCKED，不拿旧数据当本轮结论。"
+    },
+    "jestLog": "spk04-math-parity-20261011-artifacts/jest-replay.log",
+    "rawResultsCopy": "spk04-math-parity-20261011-artifacts/results.json"
+  }
+}

@@ -1,0 +1,2047 @@
+{
+  "schemaVersion": "spark-pixel-parity-viewport-matrix/1",
+  "task": "SPK-13",
+  "recorded": "2026-10-12",
+  "purpose": "Strengthens the SPK-13 pixel-parity acceptance from a single 256x256 / devicePixelRatio-1 window to an aspect+DPR matrix, so that a viewport- or projection-shape asymmetry cannot hide behind one constant canvas geometry.",
+  "strictRule": "Unchanged from spk13-pixel-parity-20261012.json: every RGBA8 channel byte difference must be 0, both sides non-empty, each side stable against its own repeat, zero JS + drained GL errors, identical context attributes and unmasked renderer inside one engine, source/asset digest unchanged during the run, negative control must move pixels. No tolerance, no masks.",
+  "windows": [
+    {
+      "tag": "square-dpr1",
+      "report": "output/spark-pixel-parity-final-square-dpr1-02.json",
+      "reportRetainedIn": "this file carries every row of that report; the output/*.json originals are gitignored scratch and may be regenerated with commands[]",
+      "css": "256x256",
+      "devicePixelRatio": 1,
+      "backingStore": "256x256",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "d045ca09b286ff6d71c3bb0e6f78f251b77fbc9fc2619d3e6c24ce56704d71da",
+      "drift": [],
+      "sourceUnchanged": true
+    },
+    {
+      "tag": "5x4-dpr1",
+      "report": "output/spark-pixel-parity-final-5x4-dpr1.json",
+      "reportRetainedIn": "this file carries every row of that report; the output/*.json originals are gitignored scratch and may be regenerated with commands[]",
+      "css": "320x256",
+      "devicePixelRatio": 1,
+      "backingStore": "320x256",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "d045ca09b286ff6d71c3bb0e6f78f251b77fbc9fc2619d3e6c24ce56704d71da",
+      "drift": [],
+      "sourceUnchanged": true
+    },
+    {
+      "tag": "ultra-dpr1",
+      "report": "output/spark-pixel-parity-final-ultra-dpr1.json",
+      "reportRetainedIn": "this file carries every row of that report; the output/*.json originals are gitignored scratch and may be regenerated with commands[]",
+      "css": "512x224",
+      "devicePixelRatio": 1,
+      "backingStore": "512x224",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "d045ca09b286ff6d71c3bb0e6f78f251b77fbc9fc2619d3e6c24ce56704d71da",
+      "drift": [],
+      "sourceUnchanged": true
+    },
+    {
+      "tag": "square-dpr2",
+      "report": "output/spark-pixel-parity-final-square-dpr2.json",
+      "reportRetainedIn": "this file carries every row of that report; the output/*.json originals are gitignored scratch and may be regenerated with commands[]",
+      "css": "256x256",
+      "devicePixelRatio": 2,
+      "backingStore": "512x512",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "d045ca09b286ff6d71c3bb0e6f78f251b77fbc9fc2619d3e6c24ce56704d71da",
+      "drift": [],
+      "sourceUnchanged": true
+    },
+    {
+      "tag": "tall-dpr2",
+      "report": "output/spark-pixel-parity-final-tall-dpr2.json",
+      "reportRetainedIn": "this file carries every row of that report; the output/*.json originals are gitignored scratch and may be regenerated with commands[]",
+      "css": "224x512",
+      "devicePixelRatio": 2,
+      "backingStore": "448x1024",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "d045ca09b286ff6d71c3bb0e6f78f251b77fbc9fc2619d3e6c24ce56704d71da",
+      "drift": [],
+      "sourceUnchanged": true
+    }
+  ],
+  "rollup": {
+    "rowsTotal": 60,
+    "rowsPassed": 60,
+    "channelMismatchSum": 0,
+    "maxErrorSum": 0,
+    "glErrors": 0,
+    "jsErrors": 0,
+    "repeatStableSelf": true,
+    "nativeIdentityAllPassed": true,
+    "environmentMatchAll": true,
+    "splatsMatchAll": true,
+    "antiCheatAllPassed": true,
+    "negativeControls": [
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 239534,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 239534,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 239534,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 261715,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 261715,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 261715,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 201631,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 201631,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 201631,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 957666,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 957666,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 957666,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 1742525,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 1742525,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 1742525,
+        "passed": true
+      }
+    ]
+  },
+  "rows": [
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 168103,
+      "referenceNonempty": 168103,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 34648,
+      "referenceNonempty": 34648,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38959,
+      "referenceNonempty": 38959,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 80397,
+      "referenceNonempty": 80397,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/chromium/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 168103,
+      "referenceNonempty": 168103,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 34077,
+      "referenceNonempty": 34077,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38959,
+      "referenceNonempty": 38959,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 80397,
+      "referenceNonempty": 80397,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/firefox/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 168103,
+      "referenceNonempty": 168103,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 33370,
+      "referenceNonempty": 33370,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38959,
+      "referenceNonempty": 38959,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 80397,
+      "referenceNonempty": 80397,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr1-02-artifacts/webkit/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 175263,
+      "referenceNonempty": 175263,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 34648,
+      "referenceNonempty": 34648,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38967,
+      "referenceNonempty": 38967,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 40,
+        "y": 32,
+        "width": 240,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 81859,
+      "referenceNonempty": 81859,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/chromium/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 175263,
+      "referenceNonempty": 175263,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 34077,
+      "referenceNonempty": 34077,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38967,
+      "referenceNonempty": 38967,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 40,
+        "y": 32,
+        "width": 240,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 81859,
+      "referenceNonempty": 81859,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/firefox/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 175263,
+      "referenceNonempty": 175263,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 33370,
+      "referenceNonempty": 33370,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38967,
+      "referenceNonempty": 38967,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 40,
+        "y": 32,
+        "width": 240,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 81859,
+      "referenceNonempty": 81859,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-5x4-dpr1-artifacts/webkit/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 134238,
+      "referenceNonempty": 134238,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 26648,
+      "referenceNonempty": 26648,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 29843,
+      "referenceNonempty": 29843,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 64,
+        "y": 28,
+        "width": 384,
+        "height": 168
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 62706,
+      "referenceNonempty": 62706,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/chromium/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 134238,
+      "referenceNonempty": 134238,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 26413,
+      "referenceNonempty": 26413,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 29843,
+      "referenceNonempty": 29843,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 64,
+        "y": 28,
+        "width": 384,
+        "height": 168
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 62706,
+      "referenceNonempty": 62706,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/firefox/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 134238,
+      "referenceNonempty": 134238,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 25702,
+      "referenceNonempty": 25702,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 29843,
+      "referenceNonempty": 29843,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 64,
+        "y": 28,
+        "width": 384,
+        "height": 168
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 62706,
+      "referenceNonempty": 62706,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-ultra-dpr1-artifacts/webkit/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 671960,
+      "referenceNonempty": 671960,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 137291,
+      "referenceNonempty": 137291,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 155617,
+      "referenceNonempty": 155617,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 64,
+        "y": 64,
+        "width": 384,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 321076,
+      "referenceNonempty": 321076,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/chromium/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 671960,
+      "referenceNonempty": 671960,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 134911,
+      "referenceNonempty": 134911,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 155617,
+      "referenceNonempty": 155617,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 64,
+        "y": 64,
+        "width": 384,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 321076,
+      "referenceNonempty": 321076,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/firefox/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 671960,
+      "referenceNonempty": 671960,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 133709,
+      "referenceNonempty": 133709,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 155617,
+      "referenceNonempty": 155617,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 64,
+        "y": 64,
+        "width": 384,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 321076,
+      "referenceNonempty": 321076,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-square-dpr2-artifacts/webkit/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 1260213,
+      "referenceNonempty": 1260213,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 422475,
+      "referenceNonempty": 422475,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 442444,
+      "referenceNonempty": 442444,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 56,
+        "y": 128,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 612679,
+      "referenceNonempty": 612679,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/chromium/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 1260213,
+      "referenceNonempty": 1260213,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 419886,
+      "referenceNonempty": 419886,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 442444,
+      "referenceNonempty": 442444,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 56,
+        "y": 128,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 612679,
+      "referenceNonempty": 612679,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/firefox/inset-viewport-scissor/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 1260213,
+      "referenceNonempty": 1260213,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/seeded-random400/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/seeded-random400/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 416860,
+      "referenceNonempty": 416860,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/procedural-text-splats/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/procedural-text-splats/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 442444,
+      "referenceNonempty": 442444,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/orthographic-camera/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/orthographic-camera/diff.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 56,
+        "y": 128,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 612679,
+      "referenceNonempty": 612679,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "artifacts": {
+        "target": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/inset-viewport-scissor/reference.png",
+        "diff": "output/spark-pixel-parity-final-tall-dpr2-artifacts/webkit/inset-viewport-scissor/diff.png"
+      }
+    }
+  ],
+  "harnessFinding": {
+    "id": "reference-viewport-unit-seam",
+    "discoveredBy": "this matrix (DPR=2 columns); invisible to the earlier 256x256 / DPR-1 run",
+    "symptom": "First DPR=2 sweep: 3/3 engines FAIL with channelMismatch 983560/1048576 (94% of channels) while both sides were internally stable, and the reference image was a 2x magnified crop of the target. Preserved un-relabelled at docs/evidence/spark/spk13-pixel-parity-viewport-dpr2-before-unit-fix-20261012.json (passed=false; original collector path output/spark-pixel-parity-viewport-square-dpr2.json).",
+    "rootCause": "Collector-side unit mismatch, NOT an engine or SDK defect: the target reports its native gfx viewport in DEVICE pixels, while three.js WebGLRenderer.setViewport/setScissor take CSS pixels and multiply by the renderer pixel ratio internally (dist/three-reference.js:15570 and :17621-17622, read-only port repo). At devicePixelRatio 1 the two unit systems coincide, which is why the single-window run could not expose it.",
+    "fix": "tools/debug/probes/spark-pixel-parity/frame.js adopt() now divides the adopted viewport/scissor by DPR before calling the reference renderer; the target side is untouched.",
+    "fixVerifiedBy": "output/spark-pixel-parity-viewport-smoke-dpr2.json (chromium, channelMismatch=0, negative control 0 -> 957666) and the four DPR=2/DPR=1 windows re-collected in this file.",
+    "artifactProof": {
+      "note": "PNG files are the direct RGBA8 read-back re-encoded deterministically (same writer, row-flip only), so identical pixels mean identical file bytes.",
+      "targetAfterUnitFixMd5": "edf9cd3ebc2c878b76c6230a109528ab",
+      "referenceAfterUnitFixMd5": "edf9cd3ebc2c878b76c6230a109528ab",
+      "targetBeforeUnitFixMd5": "edf9cd3ebc2c878b76c6230a109528ab",
+      "referenceBeforeUnitFixMd5": "8aa1d9d26b4f4239c62e16d1ad676843",
+      "reading": "after-target == after-reference (parity reached) and before-target == after-target (the fix touched only the reference collector, never the engine path); before-reference is the odd one out (the 2x zoom).",
+      "files": [
+        "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-20261012-artifacts/before-unit-fix-chromium/{target,reference,diff}.png",
+        "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-20261012-artifacts/after-unit-fix-chromium/{target,reference,diff}.png",
+        "docs/evidence/spark/spk13-pixel-parity-viewport-dpr2-before-unit-fix-20261012.json (the un-relabelled FAIL report, passed=false)"
+      ]
+    }
+  },
+  "discardedRuns": [
+    {
+      "report": "output/spark-pixel-parity-final-square-dpr1.json",
+      "status": "passed=false, drift=[\"ai/plans/spark-integration.md\"]",
+      "cause": "Self-inflicted: this session edited the plan file while that window was running, and that file is one of the collector fingerprintFiles (drift assertion), so the run rejected itself. All 12 pixel rows were PASS; it is replaced by output/spark-pixel-parity-final-square-dpr1-02.json (drift=0). Kept un-relabelled as the record of the first attempt."
+    }
+  ],
+  "notClaimed": [
+    "Not a cross-GPU/device generalisation: evidence binds to the three browser builds and this machine GPU listed in windows[].engines and .gpu.",
+    "Not release READY: the spark-rs crate-level licence disposition is still `pending` in docs/license-decisions.json, and the spark variant bundle is therefore not a published artifact.",
+    "The 5 window reports record a source/asset digest taken inside their own run; the evidence file itself and the ledger entries written afterwards are by construction outside that digest.",
+    "Camera-matrix construction parity is covered by SPK-04 math parity, not here (the reference adopts the target matrices)."
+  ],
+  "commands": [
+    "node tools/verify/spark-pixel-parity.cjs --out=output/spark-pixel-parity-final-square-dpr1-02.json --cases=seeded-random400,procedural-text-splats,orthographic-camera,inset-viewport-scissor --width=256 --height=256 --dpr=1 --playwright=<absolute tooling path>",
+    "same command with --width=320 --height=256 --dpr=1 (5:4)",
+    "same command with --width=512 --height=224 --dpr=1 (ultra-wide)",
+    "same command with --width=256 --height=256 --dpr=2",
+    "same command with --width=224 --height=512 --dpr=2 (portrait)"
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "schema": "spark-native-gfx-probe/1",
+  "task": "SPK-09",
+  "startedAt": "2026-10-11T15:16:51.466Z",
+  "endedAt": "2026-10-11T15:17:06.378Z",
+  "identity": {
+    "head": "810e7d1a5b706eb91bcc76bab4bfc4c00297d2f5",
+    "dirty": "M ai/README.md\n M ai/ledgers/shaders-absorption.md\n M build/cocosair.module.js\n M docs/THIRD_PARTY_LICENSES.md\n M docs/UPSTREAM.md\n M docs/effects/README.md\n M docs/effects/current-sdk-refresh-delivery.md\n M docs/effects/wave4-validation-delivery.md\n M docs/upstream-file-map.json\n M package.json\n M tools/build/build-number.json\n M tools/verify/shaders-film-neon-browser.cjs\n M tools/verify/shaders-input-dissolve-browser.cjs\n M tools/verify/shaders-laser-card-browser.cjs\n M tools/verify/verify-licenses.cjs\n?? ai/ledgers/spark-integration.md\n?? ai/plans/spark-integration.md\n?? docs/effects/driver-pilot.md\n?? docs/effects/generated/\n?? docs/effects/uv-fusion-pilots-validation-delivery.md\n?? docs/effects/wave5-capability-proposal.md\n?? docs/effects/wave5-docs-generation-delivery.md\n?? docs/effects/wave5-kickoff.md\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-closure-audit.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-uv-fusion-pilots-gate.json\n?? docs/evidence/spark/\n?? examples/shader-driver-pilot/\n?? examples/shader-uv-fusion-pilot/\n?? licenses/LICENSE_spark.txt\n?? src/air/spark/\n?? test/smoke/shaders-driver-pilot-production-review.test.ts\n?? test/smoke/shaders-driver-pilot-review.test.ts\n?? test/smoke/shaders-driver-pilot.test.ts\n?? test/smoke/shaders-effect-docs-review.test.ts\n?? test/smoke/shaders-effect-docs.test.ts\n?? test/smoke/shaders-uv-fusion-gate.test.ts\n?? test/smoke/shaders-uv-fusion.test.ts\n?? tools/build/register-spark-file-map.cjs\n?? tools/build/vendor-spark-tree.cjs\n?? tools/debug/probes/spark-native-gfx-probe/\n?? tools/examples/shaders-effect-docs.cjs\n?? tools/generated/\n?? tools/verify/shaders-driver-pilot-browser.cjs\n?? tools/verify/shaders-driver-pilot-oracle.cjs\n?? tools/verify/shaders-driver-pilot-performance.cjs\n?? tools/verify/shaders-driver-pilot.tsconfig.json\n?? tools/verify/shaders-uv-fusion-browser.cjs\n?? tools/verify/shaders-uv-fusion-gate.cjs\n?? tools/verify/shaders-uv-fusion.tsconfig.json\n?? tools/verify/spark-adapter-elements.cjs\n?? tools/verify/spark-identity.cjs\n?? tools/verify/spark-inventory.cjs\n?? tools/verify/spark-native-gfx-probe.cjs\n?? vendor/spark/",
+    "node": "v24.14.0",
+    "toolingPath": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js",
+    "toolingVersion": "1.63.0"
+  },
+  "sdk": "build/cocosair.module.js",
+  "probe": "tools/debug/probes/spark-native-gfx-probe",
+  "fingerprints": {
+    "build/cocosair.module.js": "ba4e72a6567da2da5d8a5f1261dccf90ede7c4d40096633c18281ddf5041887d",
+    "build/cocosair.module.min.js": "779c288e647c17f63a08fee5c2b9a9ec50a96c70909e34c2e3b20d9ab661a90a",
+    "tools/debug/probes/spark-native-gfx-probe/index.html": "ad4a8eaa81b1041963d1f7d828a99dc1a4bd4e0d088561a155b89daabbc1dc68",
+    "tools/debug/probes/spark-native-gfx-probe/main.js": "929a9c8a6eeec36d051645f4ab8ae05b7b69a51b1c7214c573a08f612be96004",
+    "tools/verify/spark-native-gfx-probe.cjs": "65e4aec3a187525c8bedf7361b7386a0b9f75e9d01ce00cafbb4057d378692bb",
+    "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+    "tools/verify/competitive-example-server.cjs": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af",
+    "src/cocos/gfx/webgl2/webgl2-commands.ts": "8d0a93060e2ee32507c48976843145666ad6537e31943a132200bfb2bda38ff5",
+    "src/cocos/gfx/webgl2/webgl2-texture.ts": "6b51b3a8c03cfb2127dcff5963583113ef0d0311926dcc4f39384077435fba57",
+    "src/cocos/gfx/webgl2/webgl2-framebuffer.ts": "32ea0195515620562380f89bd0d15c1f3a6137dc7dc79402c77c18ae5fbf2245"
+  },
+  "results": [
+    {
+      "engine": "chromium",
+      "stage": "tooling",
+      "status": "PASS",
+      "report": {
+        "ready": true,
+        "result": {
+          "passed": true,
+          "device": "WebGL2Device",
+          "contextAttributes": {
+            "alpha": false,
+            "antialias": false,
+            "depth": true,
+            "desynchronized": false,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true,
+            "xrCompatible": false
+          },
+          "samples": [
+            [
+              16777237,
+              25,
+              32,
+              35
+            ],
+            [
+              33554474,
+              50,
+              64,
+              70
+            ],
+            [
+              21,
+              25,
+              32,
+              35
+            ]
+          ],
+          "expected": [
+            [
+              16777237,
+              25,
+              32,
+              35
+            ],
+            [
+              33554474,
+              50,
+              64,
+              70
+            ],
+            [
+              21,
+              25,
+              32,
+              35
+            ]
+          ],
+          "errors": [],
+          "asyncReadback": {
+            "sample": [
+              16777237,
+              25,
+              32,
+              35
+            ],
+            "polls": 2,
+            "exact": true
+          },
+          "integerAttribute": {
+            "value": 16777217,
+            "exact": true
+          },
+          "capabilities": {
+            "maxArrayTextureLayers": 2048,
+            "maxDrawBuffers": 8,
+            "rgba32ui": 27,
+            "rgba32f": 31
+          }
+        }
+      },
+      "samplesMatched": true,
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "engine": "firefox",
+      "stage": "tooling",
+      "status": "PASS",
+      "report": {
+        "ready": true,
+        "result": {
+          "passed": true,
+          "device": "WebGL2Device",
+          "contextAttributes": {
+            "alpha": false,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "samples": [
+            [
+              16777237,
+              25,
+              32,
+              35
+            ],
+            [
+              33554474,
+              50,
+              64,
+              70
+            ],
+            [
+              21,
+              25,
+              32,
+              35
+            ]
+          ],
+          "expected": [
+            [
+              16777237,
+              25,
+              32,
+              35
+            ],
+            [
+              33554474,
+              50,
+              64,
+              70
+            ],
+            [
+              21,
+              25,
+              32,
+              35
+            ]
+          ],
+          "errors": [],
+          "asyncReadback": {
+            "sample": [
+              16777237,
+              25,
+              32,
+              35
+            ],
+            "polls": 3,
+            "exact": true
+          },
+          "integerAttribute": {
+            "value": 16777217,
+            "exact": true
+          },
+          "capabilities": {
+            "maxArrayTextureLayers": 2048,
+            "maxDrawBuffers": 8,
+            "rgba32ui": 27,
+            "rgba32f": 31
+          }
+        }
+      },
+      "samplesMatched": true,
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "engine": "webkit",
+      "stage": "tooling",
+      "status": "PASS",
+      "report": {
+        "ready": true,
+        "result": {
+          "passed": true,
+          "device": "WebGL2Device",
+          "contextAttributes": {
+            "alpha": false,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "samples": [
+            [
+              16777237,
+              25,
+              32,
+              35
+            ],
+            [
+              33554474,
+              50,
+              64,
+              70
+            ],
+            [
+              21,
+              25,
+              32,
+              35
+            ]
+          ],
+          "expected": [
+            [
+              16777237,
+              25,
+              32,
+              35
+            ],
+            [
+              33554474,
+              50,
+              64,
+              70
+            ],
+            [
+              21,
+              25,
+              32,
+              35
+            ]
+          ],
+          "errors": [],
+          "asyncReadback": {
+            "sample": [
+              16777237,
+              25,
+              32,
+              35
+            ],
+            "polls": 2,
+            "exact": true
+          },
+          "integerAttribute": {
+            "value": 16777217,
+            "exact": true
+          },
+          "capabilities": {
+            "maxArrayTextureLayers": 2048,
+            "maxDrawBuffers": 8,
+            "rgba32ui": 27,
+            "rgba32f": 31
+          }
+        }
+      },
+      "samplesMatched": true,
+      "pageErrors": [],
+      "consoleErrors": []
+    }
+  ],
+  "summary": {
+    "engines": [
+      "chromium:PASS",
+      "firefox:PASS",
+      "webkit:PASS"
+    ],
+    "pass": 3,
+    "fail": 0
+  }
+}

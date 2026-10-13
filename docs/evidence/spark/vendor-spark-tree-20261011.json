@@ -1,0 +1,994 @@
+{
+  "schema": "spark-vendor-tree-v1",
+  "task": "SPK-03",
+  "generatedAt": "2026-10-11T15:24:05.563Z",
+  "component": "@sparkjsdev/spark",
+  "version": "2.3.1",
+  "license": "MIT",
+  "copyrightHolder": "WORLD LABS TECHNOLOGIES, INC.",
+  "frozenCommit": "c57ebb936a5d364e021a66a118204d599f6fdaa8",
+  "sourceOfTruth": "E:\\AIProMax\\github\\spark-cocosairjs\\upstream\\spark",
+  "vendorRoot": "vendor/spark",
+  "includes": {
+    "dirs": [
+      "src",
+      "rust"
+    ],
+    "files": [
+      "LICENSE",
+      "package.json",
+      "CHANGELOG.md",
+      "README.md",
+      "tsconfig.json"
+    ]
+  },
+  "skippedDuringWalk": [
+    "node_modules",
+    "dist",
+    "target",
+    "pkg",
+    ".git",
+    ".cache",
+    ".DS_Store"
+  ],
+  "excluded": [
+    {
+      "path": ".git/",
+      "reason": "Git 元数据：冻结身份以 frozenCommit 记录，不搬运仓库对象"
+    },
+    {
+      "path": ".github/",
+      "reason": "上游 CI 配置"
+    },
+    {
+      "path": "node_modules/",
+      "reason": "依赖安装产物，由本仓 npm 依赖管理"
+    },
+    {
+      "path": "dist/",
+      "reason": "上游预构建 bundle 产物；本仓从 vendor 源码构建"
+    },
+    {
+      "path": "test/",
+      "reason": "上游测试套件（SPK-03 范围只需要运行时源码与许可；测试随 SPK-13 在本仓重建）"
+    },
+    {
+      "path": "scripts/",
+      "reason": "上游发布/构建脚本，不属运行时源码"
+    },
+    {
+      "path": ".gitattributes",
+      "reason": "Git 检出配置"
+    },
+    {
+      "path": ".gitignore",
+      "reason": "Git 忽略配置"
+    },
+    {
+      "path": "lefthook.yml",
+      "reason": "上游 Git 钩子配置"
+    },
+    {
+      "path": "biome.json",
+      "reason": "上游格式化器配置（本仓格式纪律不作用于 vendor 字节）"
+    },
+    {
+      "path": "vite.config.ts",
+      "reason": "上游站点/示例构建配置"
+    },
+    {
+      "path": "examples.html",
+      "reason": "上游示例页外壳"
+    },
+    {
+      "path": "index.html",
+      "reason": "上游站点首页"
+    },
+    {
+      "path": "mkdocs.yml",
+      "reason": "上游文档站配置"
+    },
+    {
+      "path": "package-lock.json",
+      "reason": "上游依赖锁定；本仓不安装 vendor/spark 的依赖，运行时子图由 SPK-11/12 决定"
+    }
+  ],
+  "artifactIdentity": {
+    "gitHead": "810e7d1a5b706eb91bcc76bab4bfc4c00297d2f5",
+    "buildNumberFile": {
+      "lastBuildNumber": 30
+    },
+    "bundleSha256": "b77137fa8f41e4be0f9c20ee3dd78f75dea6f78f362b944b88bcdd4b6a178aea",
+    "licenseTextSha256": "51829693e5dccd9ca1daa093991faac3aaa93238eb8fd5f5cb4130af85791d64"
+  },
+  "treeDigest": {
+    "sha256": "b511e63e5e800ffc700b6521b387bd11830c795860404dd3abe480fc27cb0b44",
+    "method": "sha256 over the sorted lines \"<fileSha256>  <path>\" joined by LF with a trailing LF"
+  },
+  "counts": {
+    "files": 105,
+    "tsUnderSrc": 52,
+    "rsUnderRust": 29
+  },
+  "byteIdentical": true,
+  "gitTreeCrossCheck": {
+    "method": "临时 git 仓库内 git update-index --add --cacheinfo <mode>,<git hash-object --no-filters -w>,<path>（src/rust 全量），再 git write-tree / ls-tree 取子树号",
+    "execModeFiles": [
+      "rust/build_rust_wasm.sh"
+    ],
+    "expectedFrom": "E:/AIProMax/github/spark-cocosairjs/provenance.json",
+    "expectedTrees": {
+      "commit": "c57ebb936a5d364e021a66a118204d599f6fdaa8",
+      "src": "e28ecaf12054536738814356db41a44afd1df999",
+      "rust": "23e1a2a05c28c625dfae7e28eeeb9aafbdec151b"
+    },
+    "vendoredTrees": {
+      "src": "e28ecaf12054536738814356db41a44afd1df999",
+      "rust": "23e1a2a05c28c625dfae7e28eeeb9aafbdec151b"
+    },
+    "match": true,
+    "error": null
+  },
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "size": 17326,
+      "sha256": "fe4423414873dee9e832eae302d00e012832c8caa67b41a66bef9c6045c8881e",
+      "sourceSha256": "fe4423414873dee9e832eae302d00e012832c8caa67b41a66bef9c6045c8881e",
+      "upstreamPath": "CHANGELOG.md",
+      "match": "match"
+    },
+    {
+      "path": "LICENSE",
+      "size": 1088,
+      "sha256": "51829693e5dccd9ca1daa093991faac3aaa93238eb8fd5f5cb4130af85791d64",
+      "sourceSha256": "51829693e5dccd9ca1daa093991faac3aaa93238eb8fd5f5cb4130af85791d64",
+      "upstreamPath": "LICENSE",
+      "match": "match"
+    },
+    {
+      "path": "README.md",
+      "size": 6320,
+      "sha256": "ec54a48d4f7db7c99dc338b476eb0b80ee41b3d6eabf7372c10bcaa64b75daba",
+      "sourceSha256": "ec54a48d4f7db7c99dc338b476eb0b80ee41b3d6eabf7372c10bcaa64b75daba",
+      "upstreamPath": "README.md",
+      "match": "match"
+    },
+    {
+      "path": "package.json",
+      "size": 3338,
+      "sha256": "3450c33d888664b9b5fcf7607dcae8faf4f7d6c62cf98404f4596f872c49369f",
+      "sourceSha256": "3450c33d888664b9b5fcf7607dcae8faf4f7d6c62cf98404f4596f872c49369f",
+      "upstreamPath": "package.json",
+      "match": "match"
+    },
+    {
+      "path": "rust/.cargo/config.toml",
+      "size": 91,
+      "sha256": "76ffc9d846732c56f0de7afb566b9dd7c6273db733918787ad57d402b16e83a4",
+      "sourceSha256": "76ffc9d846732c56f0de7afb566b9dd7c6273db733918787ad57d402b16e83a4",
+      "upstreamPath": "rust/.cargo/config.toml",
+      "match": "match"
+    },
+    {
+      "path": "rust/.gitignore",
+      "size": 22,
+      "sha256": "972f9a44fc3b430ac592947c8437976d5c73b94414431efc0c7c219607b2026f",
+      "sourceSha256": "972f9a44fc3b430ac592947c8437976d5c73b94414431efc0c7c219607b2026f",
+      "upstreamPath": "rust/.gitignore",
+      "match": "match"
+    },
+    {
+      "path": "rust/Cargo.lock",
+      "size": 40120,
+      "sha256": "cf6154b3925f929dbad307ddda2b13235e7ba7f44787d65e87e00a392454d3c9",
+      "sourceSha256": "cf6154b3925f929dbad307ddda2b13235e7ba7f44787d65e87e00a392454d3c9",
+      "upstreamPath": "rust/Cargo.lock",
+      "match": "match"
+    },
+    {
+      "path": "rust/Cargo.toml",
+      "size": 1628,
+      "sha256": "2a1b91f6cef6c314bfb0c2af816e0208e2497b446dc068fa6bab2671055d18b3",
+      "sourceSha256": "2a1b91f6cef6c314bfb0c2af816e0208e2497b446dc068fa6bab2671055d18b3",
+      "upstreamPath": "rust/Cargo.toml",
+      "match": "match"
+    },
+    {
+      "path": "rust/build-lod/Cargo.toml",
+      "size": 592,
+      "sha256": "a3172b0898875269d4e28923894c426d8e6c0eec26c2ea2be4c332d034e0cd0d",
+      "sourceSha256": "a3172b0898875269d4e28923894c426d8e6c0eec26c2ea2be4c332d034e0cd0d",
+      "upstreamPath": "rust/build-lod/Cargo.toml",
+      "match": "match"
+    },
+    {
+      "path": "rust/build-lod/src/gpu_sh_clustering.rs",
+      "size": 14005,
+      "sha256": "a01aedb8590fbe64bcf2ce098ca120713b3b96e48573336580131ac9edc43350",
+      "sourceSha256": "a01aedb8590fbe64bcf2ce098ca120713b3b96e48573336580131ac9edc43350",
+      "upstreamPath": "rust/build-lod/src/gpu_sh_clustering.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/build-lod/src/main.rs",
+      "size": 27171,
+      "sha256": "8857ab528ff7072a9cdfcef98e83bf5a9117e63125ba6b2520efa5e6b1cfd65d",
+      "sourceSha256": "8857ab528ff7072a9cdfcef98e83bf5a9117e63125ba6b2520efa5e6b1cfd65d",
+      "upstreamPath": "rust/build-lod/src/main.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/build_rust_wasm.ps1",
+      "size": 860,
+      "sha256": "3b13f2547a16acc7cff4e6a1851bfad51a406479bf7f0530b9e3ba0b2871bc0c",
+      "sourceSha256": "3b13f2547a16acc7cff4e6a1851bfad51a406479bf7f0530b9e3ba0b2871bc0c",
+      "upstreamPath": "rust/build_rust_wasm.ps1",
+      "match": "match"
+    },
+    {
+      "path": "rust/build_rust_wasm.sh",
+      "size": 1121,
+      "sha256": "976c0ac79ef8dfab29a9f44a45bcf08aab6be465074f6407316f338551853aff",
+      "sourceSha256": "976c0ac79ef8dfab29a9f44a45bcf08aab6be465074f6407316f338551853aff",
+      "upstreamPath": "rust/build_rust_wasm.sh",
+      "match": "match"
+    },
+    {
+      "path": "rust/build_wasm.js",
+      "size": 492,
+      "sha256": "1570f817a6adfda3cb9a470c4045c2088f2774b3c29c9bf65c75de9ba0271017",
+      "sourceSha256": "1570f817a6adfda3cb9a470c4045c2088f2774b3c29c9bf65c75de9ba0271017",
+      "upstreamPath": "rust/build_wasm.js",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/Cargo.toml",
+      "size": 976,
+      "sha256": "58c56166291b3f2775ecfe055075521343a5fcc78cc86ff1f93abd1210338984",
+      "sourceSha256": "58c56166291b3f2775ecfe055075521343a5fcc78cc86ff1f93abd1210338984",
+      "upstreamPath": "rust/spark-lib/Cargo.toml",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/antisplat.rs",
+      "size": 7343,
+      "sha256": "7a6458e8b9f063a03f695903eebb5cb3bcf2bfe97c1f845da03fe8a73b11985e",
+      "sourceSha256": "7a6458e8b9f063a03f695903eebb5cb3bcf2bfe97c1f845da03fe8a73b11985e",
+      "upstreamPath": "rust/spark-lib/src/antisplat.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/bhatt_lod.rs",
+      "size": 9501,
+      "sha256": "38c1d9a77f97ace56588b804d50dc712aaf49ab219a7202d0c855c1699326420",
+      "sourceSha256": "38c1d9a77f97ace56588b804d50dc712aaf49ab219a7202d0c855c1699326420",
+      "upstreamPath": "rust/spark-lib/src/bhatt_lod.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/chunk_tree.rs",
+      "size": 23225,
+      "sha256": "44c3f250a4cf65e12d7a5531946a8987789b3504d2761d5c2a9160be3c9b9921",
+      "sourceSha256": "44c3f250a4cf65e12d7a5531946a8987789b3504d2761d5c2a9160be3c9b9921",
+      "upstreamPath": "rust/spark-lib/src/chunk_tree.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/csplat.rs",
+      "size": 27653,
+      "sha256": "ba58a3e1413d6f3f6edcfed01e43a89a8ada849fc2d4b033b9739150208a1614",
+      "sourceSha256": "ba58a3e1413d6f3f6edcfed01e43a89a8ada849fc2d4b033b9739150208a1614",
+      "upstreamPath": "rust/spark-lib/src/csplat.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/decoder.rs",
+      "size": 24454,
+      "sha256": "4e5fbe37675d549bcb6faeeba13dd971b922ae079facc185a5472fca27290f3a",
+      "sourceSha256": "4e5fbe37675d549bcb6faeeba13dd971b922ae079facc185a5472fca27290f3a",
+      "upstreamPath": "rust/spark-lib/src/decoder.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/gsplat.rs",
+      "size": 33989,
+      "sha256": "115c5da7f1db9922c74cce3acd366eeb871c829ba562977137196e7baea57165",
+      "sourceSha256": "115c5da7f1db9922c74cce3acd366eeb871c829ba562977137196e7baea57165",
+      "upstreamPath": "rust/spark-lib/src/gsplat.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/ksplat.rs",
+      "size": 26062,
+      "sha256": "56e5daba0fa35cff3f6a09c958ef199da75c3114d234789bdbff138fca2f16ae",
+      "sourceSha256": "56e5daba0fa35cff3f6a09c958ef199da75c3114d234789bdbff138fca2f16ae",
+      "upstreamPath": "rust/spark-lib/src/ksplat.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/lib.rs",
+      "size": 14622,
+      "sha256": "b908ab754c3e6635ec3ee3ddd071a44a1568fbf97c21c5d5af129231ba252be1",
+      "sourceSha256": "b908ab754c3e6635ec3ee3ddd071a44a1568fbf97c21c5d5af129231ba252be1",
+      "upstreamPath": "rust/spark-lib/src/lib.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/ordering.rs",
+      "size": 11360,
+      "sha256": "43fe146645ced12aec1c933cd0daaa2ae1e0c25ef877cd77785595c197142ab4",
+      "sourceSha256": "43fe146645ced12aec1c933cd0daaa2ae1e0c25ef877cd77785595c197142ab4",
+      "upstreamPath": "rust/spark-lib/src/ordering.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/ply.rs",
+      "size": 53965,
+      "sha256": "9c5a73e7109e0c90367a0ea1c952723db99f6544d074bff304d3054db9bb0bd7",
+      "sourceSha256": "9c5a73e7109e0c90367a0ea1c952723db99f6544d074bff304d3054db9bb0bd7",
+      "upstreamPath": "rust/spark-lib/src/ply.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/quick_lod.rs",
+      "size": 10424,
+      "sha256": "e66ad8cda89df142ee0aeae6b5a9ff2ac0c0f2e4fb7a5789f9d050be895e091b",
+      "sourceSha256": "e66ad8cda89df142ee0aeae6b5a9ff2ac0c0f2e4fb7a5789f9d050be895e091b",
+      "upstreamPath": "rust/spark-lib/src/quick_lod.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/rad.rs",
+      "size": 67478,
+      "sha256": "7abd343feb746183560e75a137ccc2a170fe6fff85eaac8c18f3468a411cddb7",
+      "sourceSha256": "7abd343feb746183560e75a137ccc2a170fe6fff85eaac8c18f3468a411cddb7",
+      "upstreamPath": "rust/spark-lib/src/rad.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/sh_clustering.rs",
+      "size": 7977,
+      "sha256": "13dd1dc1540b6f4af97891f0bd82acaf9384c4553ddf3c45afd52a1736ece759",
+      "sourceSha256": "13dd1dc1540b6f4af97891f0bd82acaf9384c4553ddf3c45afd52a1736ece759",
+      "upstreamPath": "rust/spark-lib/src/sh_clustering.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/sogs.rs",
+      "size": 20890,
+      "sha256": "0d82ea3d7b90c23bad8a3c15d2cafa0eefa067e46cf50ab95fe40c3c1d812774",
+      "sourceSha256": "0d82ea3d7b90c23bad8a3c15d2cafa0eefa067e46cf50ab95fe40c3c1d812774",
+      "upstreamPath": "rust/spark-lib/src/sogs.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/splat_encode.rs",
+      "size": 20062,
+      "sha256": "b6ad44a5c3654965da2b6c6223c117593ed12f098e30f4918fb9dc20761cbe97",
+      "sourceSha256": "b6ad44a5c3654965da2b6c6223c117593ed12f098e30f4918fb9dc20761cbe97",
+      "upstreamPath": "rust/spark-lib/src/splat_encode.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/spz.rs",
+      "size": 38576,
+      "sha256": "159c93e1ec601543f5e2a2de16bdeebb7ec47d7e5bddb8b9761091bfe278b640",
+      "sourceSha256": "159c93e1ec601543f5e2a2de16bdeebb7ec47d7e5bddb8b9761091bfe278b640",
+      "upstreamPath": "rust/spark-lib/src/spz.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/symmat3.rs",
+      "size": 9369,
+      "sha256": "d09b06b648909426613748e40eb5cf64b1d503e5c35ddad47d97e06d18ca8611",
+      "sourceSha256": "d09b06b648909426613748e40eb5cf64b1d503e5c35ddad47d97e06d18ca8611",
+      "upstreamPath": "rust/spark-lib/src/symmat3.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/tiny_lod.rs",
+      "size": 8919,
+      "sha256": "a84612f58986e04aba63fe6ce7429b516ac3c60b2324bf0933d097e4f899e1b7",
+      "sourceSha256": "a84612f58986e04aba63fe6ce7429b516ac3c60b2324bf0933d097e4f899e1b7",
+      "upstreamPath": "rust/spark-lib/src/tiny_lod.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-lib/src/tsplat.rs",
+      "size": 6512,
+      "sha256": "b94edf0a5ceccbdeb8ded57f0f201ba252fa5359f6f91fc3e5c0b3316dc10bef",
+      "sourceSha256": "b94edf0a5ceccbdeb8ded57f0f201ba252fa5359f6f91fc3e5c0b3316dc10bef",
+      "upstreamPath": "rust/spark-lib/src/tsplat.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-rs/Cargo.toml",
+      "size": 1253,
+      "sha256": "e2c8e4deace1a9ac77f36eaf2c8fcde13e3765048c4f5798b554cf27b0c96fcf",
+      "sourceSha256": "e2c8e4deace1a9ac77f36eaf2c8fcde13e3765048c4f5798b554cf27b0c96fcf",
+      "upstreamPath": "rust/spark-rs/Cargo.toml",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-rs/README.md",
+      "size": 907,
+      "sha256": "585dd663290799a88a71756050d2c45e1b78f8888227aca3f7388bd00eb22ac0",
+      "sourceSha256": "585dd663290799a88a71756050d2c45e1b78f8888227aca3f7388bd00eb22ac0",
+      "upstreamPath": "rust/spark-rs/README.md",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-rs/src/decoder.rs",
+      "size": 1802,
+      "sha256": "6d653d17463fd4da22c010e7d1abba46cbe83c10fdb3e446db313762bb701850",
+      "sourceSha256": "6d653d17463fd4da22c010e7d1abba46cbe83c10fdb3e446db313762bb701850",
+      "upstreamPath": "rust/spark-rs/src/decoder.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-rs/src/ext_splats.rs",
+      "size": 42941,
+      "sha256": "c7740df9ec994f7fbb44edd18e349a651ad4ba6b4f2b14a3afd9ab4559109642",
+      "sourceSha256": "c7740df9ec994f7fbb44edd18e349a651ad4ba6b4f2b14a3afd9ab4559109642",
+      "upstreamPath": "rust/spark-rs/src/ext_splats.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-rs/src/lib.rs",
+      "size": 25533,
+      "sha256": "cdd7f0711031078612e8c102653c23a15f24e5d8e9768814ccc9edd87bdb5696",
+      "sourceSha256": "cdd7f0711031078612e8c102653c23a15f24e5d8e9768814ccc9edd87bdb5696",
+      "upstreamPath": "rust/spark-rs/src/lib.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-rs/src/lod_tree.rs",
+      "size": 32299,
+      "sha256": "b2dfd4d5902dc42ec868e2d26dfdc5ec25706c2ba670aa4befce47a4697c83a5",
+      "sourceSha256": "b2dfd4d5902dc42ec868e2d26dfdc5ec25706c2ba670aa4befce47a4697c83a5",
+      "upstreamPath": "rust/spark-rs/src/lod_tree.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-rs/src/packed_splats.rs",
+      "size": 37741,
+      "sha256": "55b8428b50a794e2b9231fc6da1fbf48597bd5ad621f049e798a8b941ba5a35e",
+      "sourceSha256": "55b8428b50a794e2b9231fc6da1fbf48597bd5ad621f049e798a8b941ba5a35e",
+      "upstreamPath": "rust/spark-rs/src/packed_splats.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-rs/src/raycast.rs",
+      "size": 4989,
+      "sha256": "75f06f1821dba5b5029ce78df0717d9e222cc9133852efe3a50a5815d41a9667",
+      "sourceSha256": "75f06f1821dba5b5029ce78df0717d9e222cc9133852efe3a50a5815d41a9667",
+      "upstreamPath": "rust/spark-rs/src/raycast.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-rs/src/sort.rs",
+      "size": 7831,
+      "sha256": "6cdaa718d33e5e764aa742230795f006e909ef181d79a704756e2815fe259442",
+      "sourceSha256": "6cdaa718d33e5e764aa742230795f006e909ef181d79a704756e2815fe259442",
+      "upstreamPath": "rust/spark-rs/src/sort.rs",
+      "match": "match"
+    },
+    {
+      "path": "rust/spark-rs/src/transform.rs",
+      "size": 2490,
+      "sha256": "f29becd23eab9f125ecba10ff4ecc5fdd00c74f9762896e54cd545062ead24da",
+      "sourceSha256": "f29becd23eab9f125ecba10ff4ecc5fdd00c74f9762896e54cd545062ead24da",
+      "upstreamPath": "rust/spark-rs/src/transform.rs",
+      "match": "match"
+    },
+    {
+      "path": "src/ExtSplats.ts",
+      "size": 28515,
+      "sha256": "523e5fc1d7c4b344563bad8aa2616401bdf923d826959b91a699ae5236b3b926",
+      "sourceSha256": "523e5fc1d7c4b344563bad8aa2616401bdf923d826959b91a699ae5236b3b926",
+      "upstreamPath": "src/ExtSplats.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/PackedSplats.ts",
+      "size": 40192,
+      "sha256": "912e35d21166d43acd608f0b95e661e79b11a0f175846a6ecbc8689c14fe5ce5",
+      "sourceSha256": "912e35d21166d43acd608f0b95e661e79b11a0f175846a6ecbc8689c14fe5ce5",
+      "upstreamPath": "src/PackedSplats.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/PagedSplats.ts",
+      "size": 15783,
+      "sha256": "d1f2feab690820f799ca814094be6b7a3d69c77af5c162ca323e491f9b18f331",
+      "sourceSha256": "d1f2feab690820f799ca814094be6b7a3d69c77af5c162ca323e491f9b18f331",
+      "upstreamPath": "src/PagedSplats.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/Readback.ts",
+      "size": 10666,
+      "sha256": "95003960cc99cba2dbc8c673689619f08a2c847642c830961cc51885df0aec20",
+      "sourceSha256": "95003960cc99cba2dbc8c673689619f08a2c847642c830961cc51885df0aec20",
+      "upstreamPath": "src/Readback.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/RgbaArray.ts",
+      "size": 8716,
+      "sha256": "c2f71607daea1b63aea8b29e2b5032df9f7bf826eb5e2f264449e87e25d46341",
+      "sourceSha256": "c2f71607daea1b63aea8b29e2b5032df9f7bf826eb5e2f264449e87e25d46341",
+      "upstreamPath": "src/RgbaArray.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SparkPortals.ts",
+      "size": 22375,
+      "sha256": "921aa1ee34d14c4380dd3b25c049734719511da6db3c5b522052f2c310bda887",
+      "sourceSha256": "921aa1ee34d14c4380dd3b25c049734719511da6db3c5b522052f2c310bda887",
+      "upstreamPath": "src/SparkPortals.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SparkRenderer.ts",
+      "size": 69613,
+      "sha256": "462abdf4ae36df4cbec1af9695568b8b3bb946138b52140f4b6913c1459c9e7d",
+      "sourceSha256": "462abdf4ae36df4cbec1af9695568b8b3bb946138b52140f4b6913c1459c9e7d",
+      "upstreamPath": "src/SparkRenderer.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SparkXr.ts",
+      "size": 24879,
+      "sha256": "5782c05808d0b6be0b61bb577c83b29ab5dcbdedd05aefe8baf357ac80b32bd5",
+      "sourceSha256": "5782c05808d0b6be0b61bb577c83b29ab5dcbdedd05aefe8baf357ac80b32bd5",
+      "upstreamPath": "src/SparkXr.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SplatAccumulator.ts",
+      "size": 22317,
+      "sha256": "bd4d343696d5a43bd8893f722ee12371e468cdb3ab6dcf55bfdbf4f8d791deb4",
+      "sourceSha256": "bd4d343696d5a43bd8893f722ee12371e468cdb3ab6dcf55bfdbf4f8d791deb4",
+      "upstreamPath": "src/SplatAccumulator.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SplatEdit.ts",
+      "size": 30040,
+      "sha256": "763fc926f0d03f757da1481c80775bf49dc68a3804bd9a3706fe8944816921cc",
+      "sourceSha256": "763fc926f0d03f757da1481c80775bf49dc68a3804bd9a3706fe8944816921cc",
+      "upstreamPath": "src/SplatEdit.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SplatGenerator.ts",
+      "size": 10279,
+      "sha256": "2e21be08ddb0bf8a55a2816bb121abf38a135502803b0963c5d42ff9ee92936b",
+      "sourceSha256": "2e21be08ddb0bf8a55a2816bb121abf38a135502803b0963c5d42ff9ee92936b",
+      "upstreamPath": "src/SplatGenerator.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SplatGeometry.ts",
+      "size": 799,
+      "sha256": "9440e1a8c46bb706d91860398df4af888ac8cbdd1cf50c33f9a3834d02625451",
+      "sourceSha256": "9440e1a8c46bb706d91860398df4af888ac8cbdd1cf50c33f9a3834d02625451",
+      "upstreamPath": "src/SplatGeometry.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SplatLoader.ts",
+      "size": 16899,
+      "sha256": "2726fc83ce9d3879e6a0a1674eee0a2eafa3ef18333bf6be2f2e31072c314aae",
+      "sourceSha256": "2726fc83ce9d3879e6a0a1674eee0a2eafa3ef18333bf6be2f2e31072c314aae",
+      "upstreamPath": "src/SplatLoader.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SplatMesh.ts",
+      "size": 40826,
+      "sha256": "2fcb6dddd8cd087a87b89eb92c53d4aaa3e35205ced195307d04653d4d7ef0fe",
+      "sourceSha256": "2fcb6dddd8cd087a87b89eb92c53d4aaa3e35205ced195307d04653d4d7ef0fe",
+      "upstreamPath": "src/SplatMesh.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SplatPager.ts",
+      "size": 26968,
+      "sha256": "39b22c1790475c6f3c7edb550ad96c1e706f8622e65a77ce4ad46dcdac64a0f6",
+      "sourceSha256": "39b22c1790475c6f3c7edb550ad96c1e706f8622e65a77ce4ad46dcdac64a0f6",
+      "upstreamPath": "src/SplatPager.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SplatSkinning.ts",
+      "size": 20527,
+      "sha256": "3cc1e745a18c897d2cc5c4415729ef197e59dbae7c24d882f8b4742ae83f016c",
+      "sourceSha256": "3cc1e745a18c897d2cc5c4415729ef197e59dbae7c24d882f8b4742ae83f016c",
+      "upstreamPath": "src/SplatSkinning.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/SplatWorker.ts",
+      "size": 3805,
+      "sha256": "416d1bc35f7b0058799bd7a14185712ec556f54d6664485261ec01c64c48ab3a",
+      "sourceSha256": "416d1bc35f7b0058799bd7a14185712ec556f54d6664485261ec01c64c48ab3a",
+      "upstreamPath": "src/SplatWorker.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/controls.ts",
+      "size": 32327,
+      "sha256": "2da0f770dc1e884102ed9acee3edd4d9583a9324248aceebb2f149834cef15eb",
+      "sourceSha256": "2da0f770dc1e884102ed9acee3edd4d9583a9324248aceebb2f149834cef15eb",
+      "upstreamPath": "src/controls.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/defines.ts",
+      "size": 3419,
+      "sha256": "d1827f15d9f3927e611151277e930c443de876e07003a84726f5c908942e4791",
+      "sourceSha256": "d1827f15d9f3927e611151277e930c443de876e07003a84726f5c908942e4791",
+      "upstreamPath": "src/defines.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno.ts",
+      "size": 494,
+      "sha256": "8efef2255b0d6b27ec7ff503e284345306d9248aa74fa5fe5313c115326c8870",
+      "sourceSha256": "8efef2255b0d6b27ec7ff503e284345306d9248aa74fa5fe5313c115326c8870",
+      "upstreamPath": "src/dyno.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/base.ts",
+      "size": 14875,
+      "sha256": "ae539020c40c8a460fb0a9d026e666f07ec8d8bbf412e0ca248c6a147fdcacf8",
+      "sourceSha256": "ae539020c40c8a460fb0a9d026e666f07ec8d8bbf412e0ca248c6a147fdcacf8",
+      "upstreamPath": "src/dyno/base.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/control.ts",
+      "size": 508,
+      "sha256": "3994d94ea850b2611b36f75ad810aa35010eda12e232ea997a54599e9336d40b",
+      "sourceSha256": "3994d94ea850b2611b36f75ad810aa35010eda12e232ea997a54599e9336d40b",
+      "upstreamPath": "src/dyno/control.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/convert.ts",
+      "size": 13366,
+      "sha256": "b2b0ddb5cfab9538d1979f3b12c4ae84fe2f2f22c2e25d4bec6a700fabcabfb2",
+      "sourceSha256": "b2b0ddb5cfab9538d1979f3b12c4ae84fe2f2f22c2e25d4bec6a700fabcabfb2",
+      "upstreamPath": "src/dyno/convert.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/logic.ts",
+      "size": 12965,
+      "sha256": "dbc37ae3fb3eccaa8dc65770b2d12051884795982c85f8108cd07f9f90686bcc",
+      "sourceSha256": "dbc37ae3fb3eccaa8dc65770b2d12051884795982c85f8108cd07f9f90686bcc",
+      "upstreamPath": "src/dyno/logic.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/math.ts",
+      "size": 16141,
+      "sha256": "28a30f2d4bb404f767eece3a0cd6a185cc77951027721296ca7ff0e77dd6bf72",
+      "sourceSha256": "28a30f2d4bb404f767eece3a0cd6a185cc77951027721296ca7ff0e77dd6bf72",
+      "upstreamPath": "src/dyno/math.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/mathTypes.ts",
+      "size": 22864,
+      "sha256": "b35e537721be5146483c64e4f3dffa42ddbcc68e658095fc91a615de40d9adb3",
+      "sourceSha256": "b35e537721be5146483c64e4f3dffa42ddbcc68e658095fc91a615de40d9adb3",
+      "upstreamPath": "src/dyno/mathTypes.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/output.ts",
+      "size": 8255,
+      "sha256": "5a447667971994e6c1443d124d8dcfc9b8443871947fef0227117ff9aca387e1",
+      "sourceSha256": "5a447667971994e6c1443d124d8dcfc9b8443871947fef0227117ff9aca387e1",
+      "upstreamPath": "src/dyno/output.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/program.ts",
+      "size": 3098,
+      "sha256": "cefe82e33ff748c3f91a74fdc1d8c7f896c054f795722fea886d87c5038b80f6",
+      "sourceSha256": "cefe82e33ff748c3f91a74fdc1d8c7f896c054f795722fea886d87c5038b80f6",
+      "upstreamPath": "src/dyno/program.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/splats.ts",
+      "size": 32255,
+      "sha256": "0eeca73d8ab3c668ac68a296b64c7a99551f7e047e22a98cbdca47cf8622c5e4",
+      "sourceSha256": "0eeca73d8ab3c668ac68a296b64c7a99551f7e047e22a98cbdca47cf8622c5e4",
+      "upstreamPath": "src/dyno/splats.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/texture.ts",
+      "size": 6434,
+      "sha256": "56128b31aa57d611dee4f49be0fd58e0ef20ce61dea66197d6ccd8ea2688a4bd",
+      "sourceSha256": "56128b31aa57d611dee4f49be0fd58e0ef20ce61dea66197d6ccd8ea2688a4bd",
+      "upstreamPath": "src/dyno/texture.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/transform.ts",
+      "size": 4021,
+      "sha256": "3f24b6621eb1a8bc429d266e780abed4ba0f3d6dc3b88a63d4fc4c8620e6e85c",
+      "sourceSha256": "3f24b6621eb1a8bc429d266e780abed4ba0f3d6dc3b88a63d4fc4c8620e6e85c",
+      "upstreamPath": "src/dyno/transform.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/trig.ts",
+      "size": 6212,
+      "sha256": "578848bb2445a3093acd20793bcd05402e8fd66995986515d7087cb00e400b70",
+      "sourceSha256": "578848bb2445a3093acd20793bcd05402e8fd66995986515d7087cb00e400b70",
+      "upstreamPath": "src/dyno/trig.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/types.ts",
+      "size": 15157,
+      "sha256": "25c001bf44ef2f1795f0ead8d6905ed2c8837a194df1136bda273aa839902987",
+      "sourceSha256": "25c001bf44ef2f1795f0ead8d6905ed2c8837a194df1136bda273aa839902987",
+      "upstreamPath": "src/dyno/types.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/uniforms.ts",
+      "size": 20380,
+      "sha256": "538a72ef2288f7927b89ee353b02742182703a1965971b8fd479f11814ce27ab",
+      "sourceSha256": "538a72ef2288f7927b89ee353b02742182703a1965971b8fd479f11814ce27ab",
+      "upstreamPath": "src/dyno/uniforms.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/util.ts",
+      "size": 13195,
+      "sha256": "912dfcc1848692155bddf0a255d71edbc609aca251e57b6b33dbb3f519fe4aa8",
+      "sourceSha256": "912dfcc1848692155bddf0a255d71edbc609aca251e57b6b33dbb3f519fe4aa8",
+      "upstreamPath": "src/dyno/util.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/value.ts",
+      "size": 9512,
+      "sha256": "e60089b2e104fdca9169f3f65ba7c376c15b5b48d88f1b83d703f0a8c6ecd044",
+      "sourceSha256": "e60089b2e104fdca9169f3f65ba7c376c15b5b48d88f1b83d703f0a8c6ecd044",
+      "upstreamPath": "src/dyno/value.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/dyno/vecmat.ts",
+      "size": 22520,
+      "sha256": "9a4d5ae7b65dca22e78c0926a700195f609ec32e73f545cd7389ce86b6059814",
+      "sourceSha256": "9a4d5ae7b65dca22e78c0926a700195f609ec32e73f545cd7389ce86b6059814",
+      "upstreamPath": "src/dyno/vecmat.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/generators.ts",
+      "size": 72,
+      "sha256": "e8c1137ff85b9179202a9960114b733935cc91935693f528471ccd88716393f0",
+      "sourceSha256": "e8c1137ff85b9179202a9960114b733935cc91935693f528471ccd88716393f0",
+      "upstreamPath": "src/generators.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/generators/snow.ts",
+      "size": 9026,
+      "sha256": "1a7885c14984f8d2877da9663b012dd81cda5f65536280759693863f2ba82ffd",
+      "sourceSha256": "1a7885c14984f8d2877da9663b012dd81cda5f65536280759693863f2ba82ffd",
+      "upstreamPath": "src/generators/snow.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/generators/static.ts",
+      "size": 3092,
+      "sha256": "741404a70126fadc292b371921b0d5be01097ba295cb41525914f9464a33c253",
+      "sourceSha256": "741404a70126fadc292b371921b0d5be01097ba295cb41525914f9464a33c253",
+      "upstreamPath": "src/generators/static.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/hands.ts",
+      "size": 13752,
+      "sha256": "32450974e3263430c398da9549509c82409d9c4b5b432b670f00f60597fd520f",
+      "sourceSha256": "32450974e3263430c398da9549509c82409d9c4b5b432b670f00f60597fd520f",
+      "upstreamPath": "src/hands.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/hooks.ts",
+      "size": 1074,
+      "sha256": "eb0b759dd2a834e68762b19953ea4d7fad5ca42fa6a5a284fe60de1fb4106f9e",
+      "sourceSha256": "eb0b759dd2a834e68762b19953ea4d7fad5ca42fa6a5a284fe60de1fb4106f9e",
+      "upstreamPath": "src/hooks.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/index.ts",
+      "size": 2387,
+      "sha256": "37fc56c814dafab8882e83af619c23624769ce165789e78edb9edb8fdc37cadd",
+      "sourceSha256": "37fc56c814dafab8882e83af619c23624769ce165789e78edb9edb8fdc37cadd",
+      "upstreamPath": "src/index.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/modifiers.ts",
+      "size": 81,
+      "sha256": "a571c0516ac7d405a672f16e2805d8876944aac1e1e729230221107e39c9326e",
+      "sourceSha256": "a571c0516ac7d405a672f16e2805d8876944aac1e1e729230221107e39c9326e",
+      "upstreamPath": "src/modifiers.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/modifiers/depthColor.ts",
+      "size": 1529,
+      "sha256": "846ab169703298b140bc06a3159beb0474267a10affe14f12d7c6d6f38f080a4",
+      "sourceSha256": "846ab169703298b140bc06a3159beb0474267a10affe14f12d7c6d6f38f080a4",
+      "upstreamPath": "src/modifiers/depthColor.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/modifiers/normalColor.ts",
+      "size": 1255,
+      "sha256": "13c27df56fd4f7cb8d2c57cdbfeb095edcf3e1cf7d8ae489295d71411a128bca",
+      "sourceSha256": "13c27df56fd4f7cb8d2c57cdbfeb095edcf3e1cf7d8ae489295d71411a128bca",
+      "upstreamPath": "src/modifiers/normalColor.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/shaders.ts",
+      "size": 880,
+      "sha256": "5771f8930973b29102a665a35b6c9dc8332a23911916239602f6baf9a89a61c6",
+      "sourceSha256": "5771f8930973b29102a665a35b6c9dc8332a23911916239602f6baf9a89a61c6",
+      "upstreamPath": "src/shaders.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/shaders/computeUvec4.glsl",
+      "size": 817,
+      "sha256": "bfe93583faa4b0e1f46150592167db6679b374dcd4513ce9a8a2ead06ec394c2",
+      "sourceSha256": "bfe93583faa4b0e1f46150592167db6679b374dcd4513ce9a8a2ead06ec394c2",
+      "upstreamPath": "src/shaders/computeUvec4.glsl",
+      "match": "match"
+    },
+    {
+      "path": "src/shaders/computeUvec4_Vec4.glsl",
+      "size": 998,
+      "sha256": "b67f11881562eb786476dbf0119733341798f1794b9271d5a8d53fddb1af0315",
+      "sourceSha256": "b67f11881562eb786476dbf0119733341798f1794b9271d5a8d53fddb1af0315",
+      "upstreamPath": "src/shaders/computeUvec4_Vec4.glsl",
+      "match": "match"
+    },
+    {
+      "path": "src/shaders/computeUvec4x2.glsl",
+      "size": 915,
+      "sha256": "c92717cd0dcd2d58fabf65b3860bf1414c93a45798514643e72cd45042c46f5b",
+      "sourceSha256": "c92717cd0dcd2d58fabf65b3860bf1414c93a45798514643e72cd45042c46f5b",
+      "upstreamPath": "src/shaders/computeUvec4x2.glsl",
+      "match": "match"
+    },
+    {
+      "path": "src/shaders/computeUvec4x2_Vec4.glsl",
+      "size": 1199,
+      "sha256": "ed9bfec88e51e3d79ae0e8daddeadf57c196c6364f1a783c5624e660bb7955e1",
+      "sourceSha256": "ed9bfec88e51e3d79ae0e8daddeadf57c196c6364f1a783c5624e660bb7955e1",
+      "upstreamPath": "src/shaders/computeUvec4x2_Vec4.glsl",
+      "match": "match"
+    },
+    {
+      "path": "src/shaders/computeVec4.glsl",
+      "size": 842,
+      "sha256": "1ea2bbc1c05ee89f916a29dbe1e6775c0dd7574e94637030e1cd77b79687029c",
+      "sourceSha256": "1ea2bbc1c05ee89f916a29dbe1e6775c0dd7574e94637030e1cd77b79687029c",
+      "upstreamPath": "src/shaders/computeVec4.glsl",
+      "match": "match"
+    },
+    {
+      "path": "src/shaders/splatDefines.glsl",
+      "size": 19628,
+      "sha256": "502befc014af640911208c33fda2f6babd28431a04f6ad5d05ff4b41a4f07f0f",
+      "sourceSha256": "502befc014af640911208c33fda2f6babd28431a04f6ad5d05ff4b41a4f07f0f",
+      "upstreamPath": "src/shaders/splatDefines.glsl",
+      "match": "match"
+    },
+    {
+      "path": "src/shaders/splatFragment.glsl",
+      "size": 1561,
+      "sha256": "d1ba1bfb9dee652fe751975407af4db81bccc8bb60f864baae9582b425281c94",
+      "sourceSha256": "d1ba1bfb9dee652fe751975407af4db81bccc8bb60f864baae9582b425281c94",
+      "upstreamPath": "src/shaders/splatFragment.glsl",
+      "match": "match"
+    },
+    {
+      "path": "src/shaders/splatVertex.glsl",
+      "size": 8995,
+      "sha256": "efc2683b5409a9cafaa6b94dfcb5e8fb723e685bac18f9fa48a98a1721d06f60",
+      "sourceSha256": "efc2683b5409a9cafaa6b94dfcb5e8fb723e685bac18f9fa48a98a1721d06f60",
+      "upstreamPath": "src/shaders/splatVertex.glsl",
+      "match": "match"
+    },
+    {
+      "path": "src/splatConstructors.ts",
+      "size": 13972,
+      "sha256": "aaaca7e66a9d820e3f7c292f4002628c8b382271dba6683d8e7a3aef9681c3ff",
+      "sourceSha256": "aaaca7e66a9d820e3f7c292f4002628c8b382271dba6683d8e7a3aef9681c3ff",
+      "upstreamPath": "src/splatConstructors.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/spz.ts",
+      "size": 3982,
+      "sha256": "1df131f781b37bbbc312131e4d807a5b18898b3dd54440f5bb218d384a24eb25",
+      "sourceSha256": "1df131f781b37bbbc312131e4d807a5b18898b3dd54440f5bb218d384a24eb25",
+      "upstreamPath": "src/spz.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/utils.ts",
+      "size": 53924,
+      "sha256": "9a5e49c631ae02c7817ed555e03143d035a105985387c18efb34df183b6e3e7c",
+      "sourceSha256": "9a5e49c631ae02c7817ed555e03143d035a105985387c18efb34df183b6e3e7c",
+      "upstreamPath": "src/utils.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/wasm.ts",
+      "size": 615,
+      "sha256": "6f798a1594b7404d22e824f3384cce4b455ebd7d817c9c967eba666c7627593f",
+      "sourceSha256": "6f798a1594b7404d22e824f3384cce4b455ebd7d817c9c967eba666c7627593f",
+      "upstreamPath": "src/wasm.ts",
+      "match": "match"
+    },
+    {
+      "path": "src/worker.ts",
+      "size": 21436,
+      "sha256": "360142fcbf6a7ac9669fe2a391fa791de75cb671e60456d4f3030aa93ff51668",
+      "sourceSha256": "360142fcbf6a7ac9669fe2a391fa791de75cb671e60456d4f3030aa93ff51668",
+      "upstreamPath": "src/worker.ts",
+      "match": "match"
+    },
+    {
+      "path": "tsconfig.json",
+      "size": 620,
+      "sha256": "55e3a5420aee77d9f847ac372ec41aa888070942633b8eaa19ac0719f2dce638",
+      "sourceSha256": "55e3a5420aee77d9f847ac372ec41aa888070942633b8eaa19ac0719f2dce638",
+      "upstreamPath": "tsconfig.json",
+      "match": "match"
+    }
+  ],
+  "verifyCommands": [
+    "export REPO=/e/AIProMax/github/cocosair.js SPARK_UPSTREAM=/e/AIProMax/github/spark-cocosairjs/upstream/spark",
+    "cd \"$REPO\" && node tools/build/vendor-spark-tree.cjs --check",
+    "cd \"$REPO\" && node tools/build/vendor-spark-tree.cjs --manifest docs/evidence/spark/vendor-spark-tree-20261011.json",
+    "cd \"$REPO/vendor/spark\" && { find src rust -type f; printf '%s\\n' LICENSE package.json CHANGELOG.md README.md tsconfig.json; } | LC_ALL=C sort | while IFS= read -r f; do sha256sum \"$f\"; done",
+    "cd \"$SPARK_UPSTREAM\" && { find src rust -type f; printf '%s\\n' LICENSE package.json CHANGELOG.md README.md tsconfig.json; } | LC_ALL=C sort | while IFS= read -r f; do sha256sum \"$f\"; done",
+    "diff <(cd \"$REPO/vendor/spark\" && { find src rust -type f; printf '%s\\n' LICENSE package.json CHANGELOG.md README.md tsconfig.json; } | LC_ALL=C sort | while IFS= read -r f; do sha256sum \"$f\"; done) <(cd \"$SPARK_UPSTREAM\" && { find src rust -type f; printf '%s\\n' LICENSE package.json CHANGELOG.md README.md tsconfig.json; } | LC_ALL=C sort | while IFS= read -r f; do sha256sum \"$f\"; done)",
+    "cd \"$REPO/vendor/spark\" && { find src rust -type f; printf '%s\\n' LICENSE package.json CHANGELOG.md README.md tsconfig.json; } | LC_ALL=C sort | while IFS= read -r f; do sha256sum \"$f\"; done | sed 's|^\\([0-9a-f]\\{64\\}\\) \\*|\\1  |' | sha256sum",
+    "cmp \"$REPO/vendor/spark\"/LICENSE \"$REPO/licenses/LICENSE_spark.txt\" && cmp \"$REPO/licenses/LICENSE_spark.txt\" \"$SPARK_UPSTREAM/LICENSE\""
+  ],
+  "verifyNotes": [
+    "第 1 条 export 为后续条目的前提；后续条目自带 cd，顺序串联时 cwd 会漂移，故各条都用绝对变量而不是相对路径。",
+    "第 2 条 --check 是只读门禁：逐文件 SHA-256 比对 + 未登记文件检出 + 许可原文比对 + git tree 交叉核验（见 gitTreeCrossCheck 字段：临时 git 仓库内 git hash-object --no-filters -w 与 git update-index --add --cacheinfo <mode>,<blob>,<path>，src/rust 全量，rust/build_rust_wasm.sh 用 100755、其余 100644，再 git write-tree / ls-tree 取子树号；期望值取 provenance.json 的 spark.source_tree / spark.rust_tree）。Windows/NTFS 上 git 默认忽略 exec 位，所以必须显式传模式，直接 git add 得到的 rust 子树号会不同。",
+    "第 3 条重新生成本清单文件（唯一会写仓库内容的条目）。",
+    "第 4、5 条分别列出 vendor 侧与来源树侧的逐文件 SHA-256（selection 与 INCLUDE_* 同构，按 path 排序，输出 \"<hash>  <path>\"）。",
+    "第 6 条 diff 无输出即两侧 105 行全等，也就是逐字节一致。",
+    "第 7 条复算树指纹，应等于 treeDigest.sha256；Git Bash 的 sha256sum 对文件输出 \"*path\" 前缀，故先 sed 归一为两空格分隔再取 sha256sum。",
+    "第 8 条证明许可原文三处逐字节一致：上游 LICENSE = vendor/spark/LICENSE = licenses/LICENSE_spark.txt。",
+    "来源树只读：本工具对 SPARK_UPSTREAM 只读取，不写入、不格式化、不重排。"
+  ]
+}

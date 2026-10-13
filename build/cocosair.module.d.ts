@@ -19667,21 +19667,21 @@
          * @zh
          * 注册screen事件回调。
          */
-        on(type: PalScreenEvent, callback: (...args: any) => void, target?: any): void;
+        on(type: sparkRuntime, callback: (...args: any) => void, target?: any): void;
         /**
          * @en
          * Register a callback of a specific screen event type once.
          * @zh
          * 注册单次的screen事件回调。
          */
-        once(type: PalScreenEvent, callback: (...args: any) => void, target?: any): void;
+        once(type: sparkRuntime, callback: (...args: any) => void, target?: any): void;
         /**
          * @en
          * Unregister screen event callback.
          * @zh
          * 取消注册screen事件回调。
          */
-        off(type: PalScreenEvent, callback?: (...args: any) => void, target?: any): void;
+        off(type: sparkRuntime, callback?: (...args: any) => void, target?: any): void;
     }
     /**
      * @en A set of system related variables.
@@ -19901,7 +19901,7 @@
          * @zh
          * 平台相关的特性枚举类型。
          */
-        export type Feature = __private.__types_globals__EnumAlias<typeof Feature>;
+        export type Feature = __private.__types_globals__EnumAlias<typeof sparkRuntime>;
     }
     /**
      * @en
@@ -59619,6 +59619,239 @@
          */
         abstract render(camera: renderer.scene.Camera): void;
     }
+    export class CocosRenderer {
+        static create({ canvas, width, height, pixelRatio, engineUrl, antialias, alpha, ...options }?: __private._air_spark_cocos_renderer__CocosRendererOptions): Promise<CocosRenderer>;
+        cc: __private._air_spark_cocos_renderer__AirEngineSurface;
+        app: __private._air_spark_cocos_renderer__AirAppSurface;
+        domElement: HTMLCanvasElement;
+        device: WebGL2Device;
+        g: __private._air_spark_cocos_renderer__GfxNamespace;
+        gl: WebGL2RenderingContext;
+        coordinateSystem: number;
+        ownsApp: boolean;
+        isCocosRenderer: true;
+        autoClear: boolean;
+        autoClearColor: boolean;
+        autoClearDepth: boolean;
+        autoClearStencil: boolean;
+        outputColorSpace: string;
+        toneMapping: number;
+        toneMappingExposure: number;
+        sortObjects: boolean;
+        _target: __private._air_spark_cocos_renderer__SparkRenderTarget | null;
+        _layer: number;
+        _mip: number;
+        _pixelRatio: number;
+        _renderDepth: number;
+        _clearColor: number[];
+        _clearAlpha: number;
+        _engineScene?: unknown;
+        _width: number;
+        _height: number;
+        _viewport: __private._air_spark_cocos_renderer__ViewportRect;
+        _scissor: __private._air_spark_cocos_renderer__ViewportRect;
+        _scissorTest?: boolean;
+        _eyeViewport: __private._air_spark_cocos_renderer__SparkRectLike | null;
+        _screen?: __private._air_spark_cocos_renderer__PassSet;
+        _boundTarget: number;
+        _raf: number | null;
+        _loop: __private._air_spark_cocos_renderer__AnimationLoopCallback | null;
+        _disposed?: boolean;
+        _liveMaterials: Set<__private._air_spark_cocos_renderer__MaterialEntry>;
+        _liveGeometries: Set<__private._air_spark_cocos_renderer__GeometryEntry>;
+        properties: {
+            get: (o: object) => Record<string, unknown>;
+            has: (o: object) => boolean;
+            remove: (o: object) => boolean;
+        };
+        /** SPK-10 inert XR shell: the field itself must survive because frozen Spark reads renderer.xr.* unconditionally. */
+        xr: __private._air_spark_cocos_renderer__InertXrShell;
+        capabilities: {
+            isWebGL2: true;
+            logarithmicDepthBuffer: boolean;
+            maxTextureSize: number;
+            maxTextures: number;
+            maxVertexTextures: number;
+            precision: string;
+        };
+        extensions: {
+            get(name: string): unknown;
+            has(name: string): boolean;
+        };
+        info: {
+            render: {
+                frame: number;
+                calls: number;
+                triangles: number;
+                points: number;
+                lines: number;
+            };
+            memory: {
+                geometries: number;
+                textures: number;
+            };
+            programs: {
+                program: WebGLProgram;
+                name: string;
+                vertex: string;
+                fragment: string;
+            }[];
+        };
+        cmd: gfx.CommandBuffer;
+        _texBinding: number;
+        state: {
+            activeTexture(unit: number): void;
+            bindTexture(target: number, texture: WebGLTexture | null): void;
+            unbindTexture(): void;
+            pixelStorei(...args: [
+                number,
+                unknown
+            ]): void;
+            reset(): void;
+        };
+        constructor(cc: __private._air_spark_cocos_renderer__AirEngineSurface, app: __private._air_spark_cocos_renderer__AirAppSurface, canvas: HTMLCanvasElement, options?: __private._air_spark_cocos_renderer__CocosRendererOptions);
+        getContext(): WebGL2RenderingContext;
+        getPixelRatio(): number;
+        setPixelRatio(r: number): void;
+        setSize(w: number, h: number, updateStyle?: boolean): this;
+        getSize<T extends __private._air_spark_cocos_renderer__SparkVector2Setter>(out: T): T;
+        getDrawingBufferSize<T extends __private._air_spark_cocos_renderer__SparkVector2Setter>(out: T): T;
+        setViewport(x: number | __private._air_spark_cocos_renderer__SparkRectLike, y?: number, w?: number, h?: number): void;
+        getViewport<T extends __private._air_spark_cocos_renderer__SparkVector4Setter>(out: T): T;
+        setScissor(x: number | __private._air_spark_cocos_renderer__SparkRectLike, y?: number, w?: number, h?: number): void;
+        getScissor<T extends __private._air_spark_cocos_renderer__SparkVector4Setter>(out: T): T;
+        setScissorTest(v: boolean): void;
+        getScissorTest(): boolean;
+        setClearColor(c: number | string | {
+            r: number;
+            g: number;
+            b: number;
+        }, a?: number): this;
+        setClearAlpha(a: number): void;
+        getClearAlpha(): number;
+        getClearColor<T extends __private._air_spark_cocos_renderer__SparkColorSetter>(out: T): T;
+        getRenderTarget(): __private._air_spark_cocos_renderer__SparkRenderTarget | null;
+        getActiveCubeFace(): number;
+        getActiveMipmapLevel(): number;
+        setRenderTarget(target: __private._air_spark_cocos_renderer__SparkRenderTarget | null, layer?: number, mip?: number): void;
+        _own<T extends {
+            destroy(): void;
+        }>(o: T): T;
+        _destroy(o?: {
+            destroy(): void;
+        } | null): void;
+        _format(t: __private._air_spark_cocos_renderer__SparkTexture): gfx.Format;
+        _sampler(t: __private._air_spark_cocos_renderer__SparkTexture): gfx.Sampler;
+        initTexture(t: __private._air_spark_cocos_renderer__SparkTexture): gfx.Texture;
+        _texture(t: __private._air_spark_cocos_renderer__SparkTexture | null | undefined, renderTarget?: boolean): __private._air_spark_cocos_renderer__TextureEntry;
+        _ensureTarget(t: __private._air_spark_cocos_renderer__SparkRenderTarget): __private._air_spark_cocos_renderer__TargetEntry;
+        _disposeTarget(t: __private._air_spark_cocos_renderer__SparkRenderTarget): void;
+        _framebuffer(t?: __private._air_spark_cocos_renderer__SparkRenderTarget | null, layer?: number, mip?: number): __private._air_spark_cocos_renderer__FramebufferEntry;
+        _ensureCocosTarget(t: __private._air_spark_cocos_renderer__SparkRenderTarget): __private._air_spark_cocos_renderer__TargetEntry;
+        releaseRenderTarget(target: __private._air_spark_cocos_renderer__SparkRenderTarget): void;
+        _ensureXrTarget(t: __private._air_spark_cocos_renderer__SparkRenderTarget): __private._air_spark_cocos_renderer__TargetEntry;
+        _releaseXrTarget(t: __private._air_spark_cocos_renderer__SparkRenderTarget | null | undefined): void;
+        _screenPasses(): __private._air_spark_cocos_renderer__PassSet;
+        _sources(m: __private._air_spark_cocos_renderer__SparkMaterial): {
+            vs: string;
+            fs: string;
+        };
+        _material(m: __private._air_spark_cocos_renderer__SparkMaterial): __private._air_spark_cocos_renderer__MaterialEntry;
+        _disposeMaterial(m: __private._air_spark_cocos_renderer__SparkMaterial): void;
+        _disposeGeometry(geo: __private._air_spark_cocos_renderer__SparkGeometry): void;
+        purgeMaterialCache(): {
+            materials: number;
+            geometries: number;
+            released: number;
+            remaining: number;
+        };
+        _generateMipmaps(texture: gfx.Texture): void;
+        compile(scene: __private._air_spark_cocos_renderer__SparkObject, camera: __private._air_spark_cocos_renderer__SparkCamera | null): __private._air_spark_cocos_renderer__SparkObject;
+        compileAsync(scene: __private._air_spark_cocos_renderer__SparkObject, camera: __private._air_spark_cocos_renderer__SparkCamera | null): Promise<__private._air_spark_cocos_renderer__SparkObject>;
+        _geometry(geo: __private._air_spark_cocos_renderer__SparkGeometry, p: __private._air_spark_cocos_renderer__MaterialEntry): __private._air_spark_cocos_renderer__GeometryEntry;
+        _pso(m: __private._air_spark_cocos_renderer__SparkMaterial, p: __private._air_spark_cocos_renderer__MaterialEntry, geometry: __private._air_spark_cocos_renderer__GeometryEntry, pass: gfx.RenderPass, flipped?: boolean): gfx.PipelineState;
+        _uniforms(m: __private._air_spark_cocos_renderer__SparkMaterial, p: __private._air_spark_cocos_renderer__MaterialEntry, obj: __private._air_spark_cocos_renderer__SparkObject, camera: __private._air_spark_cocos_renderer__SparkCamera | null): void;
+        _draw(obj: __private._air_spark_cocos_renderer__SparkObject, camera: __private._air_spark_cocos_renderer__SparkCamera | null, scene: __private._air_spark_cocos_renderer__SparkObject): void;
+        render(scene: __private._air_spark_cocos_renderer__SparkObject, camera: __private._air_spark_cocos_renderer__SparkCamera | null): void;
+        clear(color?: boolean, depth?: boolean, stencil?: boolean): void;
+        readRenderTargetPixels(target: __private._air_spark_cocos_renderer__SparkRenderTarget, x: number, y: number, w: number, h: number, buffer: ArrayBufferView, face?: number | null, textureIndex?: number): ArrayBufferView;
+        readRenderTargetPixelsAsync(target: __private._air_spark_cocos_renderer__SparkRenderTarget, x: number, y: number, w: number, h: number, buffer: ArrayBufferView, face?: number | null, textureIndex?: number): Promise<ArrayBufferView>;
+        setAnimationLoop(callback: __private._air_spark_cocos_renderer__AnimationLoopCallback | null): void;
+        resetState(): void;
+        dispose(): void;
+    }
+    export class CocosSparkLayer {
+        cc: any;
+        app: any;
+        nativeCamera: any;
+        scene: __private._air_spark_spark_api_adapter__Scene;
+        camera: __private._air_spark_spark_api_adapter__Camera;
+        bindings: Map<sparkRuntime, __private._air_spark_cocos_spark_layer__SplatBinding>;
+        autoRender: boolean;
+        renderHook: string;
+        renderer: CocosRenderer;
+        spark: sparkRuntime;
+        renderTarget: __private._air_spark_cocos_spark_layer__SparkTarget | null;
+        _disposed: boolean;
+        _onRender: () => void;
+        _onCameraRender: (native: any) => void;
+        constructor({ cc, app, camera, canvas, sparkOptions, autoRender, renderHook, }: __private._air_spark_cocos_spark_layer__CocosSparkLayerOptions);
+        _validateTarget(): void;
+        add({ node, visible, ...options }: {
+            node: any;
+            visible?: boolean;
+            [key: string]: any;
+        }): sparkRuntime;
+        setVisible(mesh: sparkRuntime, visible: boolean): void;
+        remove(mesh: sparkRuntime, { dispose }?: {
+            dispose?: boolean;
+        }): void;
+        _matrix(native: any, dest: any): any;
+        sync(): this;
+        _syncRenderTarget(window: any, width: number, height: number): void;
+        render(): boolean;
+        dispose(): void;
+    }
+    export class PMREMGenerator {
+        _renderer: __private._air_spark_pmrem__PMREMRenderer;
+        _pingPongRenderTarget: __private._air_spark_spark_api_adapter__WebGLRenderTarget | null;
+        _lodPlanes: __private._air_spark_spark_api_adapter__BufferGeometry[];
+        _sizeLods: number[];
+        _sigmas: number[];
+        _blurMaterial: __private._air_spark_spark_api_adapter__RawShaderMaterial | null;
+        _cubemapMaterial: __private._air_spark_spark_api_adapter__RawShaderMaterial | null;
+        _equirectMaterial: __private._air_spark_spark_api_adapter__RawShaderMaterial | null;
+        _solidMaterial: __private._air_spark_spark_api_adapter__RawShaderMaterial | null;
+        _flatCamera: __private._air_spark_spark_api_adapter__OrthographicCamera;
+        _layout: __private._air_spark_pmrem__PMREMLayout | null;
+        _cubeSize: number;
+        _lodMax: number;
+        constructor(renderer: __private._air_spark_pmrem__PMREMRenderer);
+        _prepare(size: number): void;
+        _newTarget(): __private._air_spark_spark_api_adapter__WebGLRenderTarget;
+        _inputMaterial(cube: boolean): __private._air_spark_spark_api_adapter__RawShaderMaterial;
+        _draw(material: __private._air_spark_spark_api_adapter__RawShaderMaterial, index: number, target: __private._air_spark_spark_api_adapter__WebGLRenderTarget, box: readonly [
+            number,
+            number,
+            number,
+            number
+        ]): void;
+        _convert(texture: __private._air_spark_pmrem__PMREMSourceTexture, target: __private._air_spark_spark_api_adapter__WebGLRenderTarget): void;
+        _halfBlur(input: __private._air_spark_spark_api_adapter__WebGLRenderTarget, output: __private._air_spark_spark_api_adapter__WebGLRenderTarget, inIndex: number, outIndex: number, sigma: number, latitudinal: boolean, pole?: __private._air_spark_spark_math__Vector3): void;
+        _blur(target: __private._air_spark_spark_api_adapter__WebGLRenderTarget, inIndex: number, outIndex: number, sigma: number, pole?: __private._air_spark_spark_math__Vector3): void;
+        _filter(target: __private._air_spark_spark_api_adapter__WebGLRenderTarget): void;
+        _fromTexture(texture: __private._air_spark_pmrem__PMREMSourceTexture, target: __private._air_spark_spark_api_adapter__WebGLRenderTarget | null, cube: boolean): __private._air_spark_spark_api_adapter__WebGLRenderTarget;
+        fromCubemap(texture: __private._air_spark_pmrem__PMREMSourceTexture, target?: __private._air_spark_spark_api_adapter__WebGLRenderTarget | null): __private._air_spark_spark_api_adapter__WebGLRenderTarget;
+        fromEquirectangular(texture: __private._air_spark_pmrem__PMREMSourceTexture, target?: __private._air_spark_spark_api_adapter__WebGLRenderTarget | null): __private._air_spark_spark_api_adapter__WebGLRenderTarget;
+        fromScene(scene: __private._air_spark_spark_api_adapter__Scene, sigma?: number, near?: number, far?: number, options?: __private._air_spark_pmrem__PMREMSceneOptions): __private._air_spark_spark_api_adapter__WebGLRenderTarget;
+        _compile(material: __private._air_spark_spark_api_adapter__RawShaderMaterial): void;
+        compileCubemapShader(): void;
+        compileEquirectangularShader(): void;
+        _releaseLevels(): void;
+        dispose(): void;
+    }
+    export function pmremLayout(requestedSize: number): __private._air_spark_pmrem__PMREMLayout;
+    export const CUBEUV_SAMPLING_GLSL = "\nfloat airCubeFace(vec3 d){\n vec3 a=abs(d);\n if(a.x>a.z){if(a.x>a.y)return d.x>0.0?0.0:3.0;else return d.y>0.0?1.0:4.0;}\n else{if(a.z>a.y)return d.z>0.0?2.0:5.0;else return d.y>0.0?1.0:4.0;}\n}\nvec2 airCubeFaceUV(vec3 d,float f){\n vec2 uv;\n if(f==0.0)uv=vec2(d.z,d.y)/abs(d.x);\n else if(f==1.0)uv=vec2(-d.x,-d.z)/abs(d.y);\n else if(f==2.0)uv=vec2(-d.x,d.y)/abs(d.z);\n else if(f==3.0)uv=vec2(-d.z,d.y)/abs(d.x);\n else if(f==4.0)uv=vec2(-d.x,d.z)/abs(d.y);\n else uv=vec2(d.x,d.y)/abs(d.z);\n return 0.5*(uv+1.0);\n}\nvec3 airBilinearCubeUV(sampler2D atlas,vec3 d,float mip){\n float face=airCubeFace(d);\n float extra=max(4.0-mip,0.0);\n mip=max(mip,4.0);\n float size=exp2(mip);\n highp vec2 uv=airCubeFaceUV(d,face)*(size-2.0)+1.0;\n if(face>2.0){uv.y+=size;face-=3.0;}\n uv.x+=face*size;\n uv.x+=extra*3.0*16.0;\n uv.y+=4.0*(exp2(CUBEUV_MAX_MIP)-size);\n uv.x*=CUBEUV_TEXEL_WIDTH;\n uv.y*=CUBEUV_TEXEL_HEIGHT;\n return textureGrad(atlas,uv,vec2(0.0),vec2(0.0)).rgb;\n}\nfloat airRoughnessToMip(float r){\n if(r>=0.8)return (1.0-r)*(-1.0-(-2.0))/(1.0-0.8)+(-2.0);\n if(r>=0.4)return (0.8-r)*(2.0-(-1.0))/(0.8-0.4)+(-1.0);\n if(r>=0.305)return (0.4-r)*(3.0-2.0)/(0.4-0.305)+2.0;\n if(r>=0.21)return (0.305-r)*(4.0-3.0)/(0.305-0.21)+3.0;\n return -2.0*log2(1.16*r);\n}\nvec4 airTextureCubeUV(sampler2D atlas,vec3 d,float roughness){\n float mip=clamp(airRoughnessToMip(roughness),-2.0,CUBEUV_MAX_MIP);\n float fraction=fract(mip),whole=floor(mip);\n vec3 c=airBilinearCubeUV(atlas,d,whole);\n if(fraction==0.0)return vec4(c,1.0);\n return vec4(mix(c,airBilinearCubeUV(atlas,d,whole+1.0),fraction),1.0);\n}\n";
     export import find = utils.find;
     export import bits = math.bits;
     export import Vec2 = math.Vec2;
@@ -73260,6 +73493,965 @@
             updateShadowUBOLight(globalDS: gfx.DescriptorSet, light: renderer.scene.Light, level?: number): void;
             updateShadowUBORange(offset: number, data: math.Mat4 | math.Color): void;
             destroy(): void;
+        }
+        export interface _air_spark_cocos_renderer__CocosRendererOptions {
+            canvas?: HTMLCanvasElement | null;
+            width?: number;
+            height?: number;
+            pixelRatio?: number;
+            engineUrl?: string;
+            antialias?: boolean;
+            alpha?: boolean;
+            ownsApp?: boolean;
+            logarithmicDepthBuffer?: boolean;
+            [key: string]: unknown;
+        }
+        /** Structural surface of the dynamically imported cocosair engine namespace, as `create()` uses it. */
+        export interface _air_spark_cocos_renderer__AirAppSurface {
+            run(scene: unknown): void | Promise<unknown>;
+            close?(): void | Promise<unknown>;
+        }
+        export interface _air_spark_cocos_renderer__AirNodeSurface {
+            addChild(node: _air_spark_cocos_renderer__AirNodeSurface): void;
+            addComponent(cameraClass: unknown): {
+                visibility: number;
+            };
+        }
+        export interface _air_spark_cocos_renderer__AirSceneSurface {
+            addChild(node: _air_spark_cocos_renderer__AirNodeSurface): void;
+        }
+        /** @mangle */
+        export interface _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPURenderPass {
+            colorAttachments: gfx.ColorAttachment[];
+            depthStencilAttachment: gfx.DepthStencilAttachment | null;
+        }
+        /** @mangle */
+        export interface _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPUFramebuffer {
+            gpuRenderPass: _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPURenderPass;
+            gpuColorViews: _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPUTextureView[];
+            gpuDepthStencilView: _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPUTextureView | null;
+            glFramebuffer: WebGLFramebuffer | null;
+            glAttachments?: (WebGLTexture | WebGLRenderbuffer | null)[];
+            isOffscreen: boolean;
+            width: number;
+            height: number;
+        }
+        /** @mangle */
+        export class _cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer extends gfx.Framebuffer {
+            constructor();
+            getGpuFramebuffer(): _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPUFramebuffer;
+            get width(): number;
+            get height(): number;
+            get needRebuild(): boolean;
+            initialize(info: Readonly<gfx.FramebufferInfo>): void;
+            destroy(): void;
+        }
+        export type _air_spark_cocos_renderer__GfxNamespace = typeof gfx;
+        export interface _air_spark_cocos_renderer__AirEngineSurface {
+            macro: {
+                ENABLE_WEBGL_ANTIALIAS: boolean;
+                ENABLE_TRANSPARENT_CANVAS: boolean;
+            };
+            createAirApp(options: {
+                canvas: HTMLCanvasElement;
+                pixelRatioCap: number;
+                diagnostics: string;
+            }): Promise<_air_spark_cocos_renderer__AirAppSurface>;
+            Scene: new (name?: string) => _air_spark_cocos_renderer__AirSceneSurface;
+            Node: new (name?: string) => _air_spark_cocos_renderer__AirNodeSurface;
+            Camera: unknown;
+            Size: new (width: number, height: number) => unknown;
+            screen: {
+                windowSize: unknown;
+            };
+            view: {
+                setDesignResolutionSize(width: number, height: number, policy: unknown): void;
+            };
+            ResolutionPolicy: {
+                EXACT_FIT: unknown;
+            };
+            director: {
+                root: {
+                    device: WebGL2Device;
+                    resize(width: number, height: number): void;
+                    mainWindow: {
+                        framebuffer: _cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer;
+                    };
+                };
+            };
+            game: {
+                pause(): void;
+            };
+            gfx: _air_spark_cocos_renderer__GfxNamespace;
+        }
+        export type _air_spark_cocos_renderer__NumericArray = Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array;
+        export interface _air_spark_cocos_renderer__SparkImageData {
+            width?: number;
+            height?: number;
+            depth?: number;
+            data?: _air_spark_cocos_renderer__NumericArray | null;
+            image?: _air_spark_cocos_renderer__SparkImageData;
+        }
+        export interface _air_spark_cocos_renderer__SparkLayerUpdates {
+            readonly size: number;
+            [Symbol.iterator](): Iterator<number>;
+        }
+        export interface _air_spark_cocos_renderer__SparkTexture {
+            id?: number | string;
+            uuid?: string;
+            internalFormat?: string;
+            format?: number;
+            type?: number;
+            colorSpace?: string;
+            isDataArrayTexture?: boolean;
+            isData3DTexture?: boolean;
+            isCubeTexture?: boolean;
+            isRenderTargetTexture?: boolean;
+            renderTarget?: unknown;
+            generateMipmaps?: boolean;
+            version?: number;
+            needsUpdate?: boolean;
+            unpackAlignment?: number;
+            minFilter?: number;
+            magFilter?: number;
+            wrapS?: number;
+            wrapT?: number;
+            wrapR?: number;
+            anisotropy?: number;
+            image?: _air_spark_cocos_renderer__SparkImageData | null;
+            source?: {
+                data?: _air_spark_cocos_renderer__SparkImageData;
+                dataReady?: boolean;
+            } | null;
+            layerUpdates?: _air_spark_cocos_renderer__SparkLayerUpdates;
+            clearLayerUpdates?: () => void;
+            addEventListener?: (type: string, callback: () => void) => void;
+        }
+        export interface _air_spark_cocos_renderer__SparkRectLike {
+            x?: number;
+            y?: number;
+            z?: number;
+            w?: number;
+            width?: number;
+            height?: number;
+        }
+        export interface _air_spark_cocos_renderer__SparkRenderTarget {
+            width: number;
+            height: number;
+            depth?: number;
+            isCocosRenderTarget?: boolean;
+            _cocosFramebuffer?: _cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer;
+            isXRRenderTarget?: boolean;
+            isWebGLArrayRenderTarget?: boolean;
+            isWebGLCubeRenderTarget?: boolean;
+            depthBuffer?: boolean;
+            stencilBuffer?: boolean;
+            texture?: _air_spark_cocos_renderer__SparkTexture;
+            textures?: _air_spark_cocos_renderer__SparkTexture[];
+            viewport?: _air_spark_cocos_renderer__SparkRectLike;
+            scissor?: _air_spark_cocos_renderer__SparkRectLike;
+            scissorTest?: boolean;
+            _externalFramebuffer?: WebGLFramebuffer | null;
+            addEventListener?: (type: string, callback: () => void) => void;
+        }
+        export interface _air_spark_cocos_renderer__ViewportRect {
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        }
+        export interface _air_spark_cocos_renderer__PassSet {
+            load: gfx.RenderPass;
+            clear?: gfx.RenderPass;
+        }
+        export type _air_spark_cocos_renderer__AnimationLoopCallback = (time: number, ...args: unknown[]) => void;
+        export interface _air_spark_cocos_renderer__SamplerDecl {
+            name: string;
+            type: string;
+            count: number;
+        }
+        export interface _air_spark_cocos_renderer__SamplerSlot extends _air_spark_cocos_renderer__SamplerDecl {
+            binding: number;
+        }
+        export interface _air_spark_cocos_renderer__NativeUniform {
+            type: number;
+            size: number;
+            name: string;
+            location: WebGLUniformLocation | null;
+        }
+        export interface _air_spark_cocos_renderer__MaterialEntry {
+            key: string;
+            shader: gfx.Shader;
+            program: WebGLProgram;
+            samplers: _air_spark_cocos_renderer__SamplerSlot[];
+            uniforms: _air_spark_cocos_renderer__NativeUniform[];
+            layout: gfx.DescriptorSetLayout;
+            pl: gfx.PipelineLayout;
+            ds: gfx.DescriptorSet;
+            psos: Map<string, gfx.PipelineState>;
+            vs: string;
+            fs: string;
+        }
+        export interface _air_spark_cocos_renderer__GeometryEntry {
+            signature: string;
+            attrs: gfx.Attribute[];
+            buffers: gfx.Buffer[];
+            ia: gfx.InputAssembler;
+        }
+        export interface _air_spark_cocos_renderer__InertXrShell {
+            enabled: boolean;
+            isPresenting: boolean;
+            getSession(): null;
+            getCamera(): null;
+            setAnimationLoop(callback: _air_spark_cocos_renderer__AnimationLoopCallback | null): void;
+        }
+        export interface _air_spark_cocos_renderer__SparkVector2Setter {
+            set(x: number, y: number): unknown;
+        }
+        export interface _air_spark_cocos_renderer__SparkVector4Setter {
+            set(x: number, y: number, z: number, w: number): unknown;
+        }
+        export interface _air_spark_cocos_renderer__SparkColorSetter {
+            setRGB(r: number, g: number, b: number): unknown;
+        }
+        /** Internal native-gfx entry caches (lifetime bookkeeping mirrors the source one for one). */
+        export interface _air_spark_cocos_renderer__TextureEntry {
+            texture: gfx.Texture;
+            signature: string;
+            version: number;
+            w: number;
+            h: number;
+            depth: number;
+            format: gfx.Format;
+            type: gfx.TextureType;
+            renderTarget: boolean;
+        }
+        export interface _air_spark_cocos_renderer__LayerEntry {
+            views: gfx.Texture[];
+            framebuffer: gfx.Framebuffer;
+        }
+        export interface _air_spark_cocos_renderer__TargetEntry {
+            signature?: string;
+            textures: _air_spark_cocos_renderer__SparkTexture[];
+            passes: _air_spark_cocos_renderer__PassSet;
+            depth?: gfx.Texture | null;
+            layers?: Map<string, _air_spark_cocos_renderer__LayerEntry>;
+            framebuffer?: gfx.Framebuffer;
+            external?: boolean;
+        }
+        export interface _air_spark_cocos_renderer__FramebufferEntry {
+            framebuffer: gfx.Framebuffer;
+            passes: _air_spark_cocos_renderer__PassSet;
+            width: number;
+            height: number;
+            views?: gfx.Texture[];
+        }
+        /** Duck-typed shapes of adapter/Spark objects this renderer reads (no algorithm, fields only). */
+        export interface _air_spark_cocos_renderer__SparkUniforms {
+            [name: string]: {
+                value: unknown;
+            } | undefined;
+        }
+        export class _air_spark_spark_math__Color {
+            r: number;
+            g: number;
+            b: number;
+            readonly isColor = true;
+            constructor(r?: number, g?: number, b?: number);
+            set(v: number | string | _air_spark_spark_math__Color, g?: number, b?: number): this;
+            setRGB(r: number, g: number, b: number, cs?: string): this;
+            setScalar(v: number): this;
+            /** 十六进制取字节委托 cc.Color.fromHEX（先 & 0xffffff，与 Three 的移位取字节完全等价）。 */
+            setHex(h: number, cs?: string): this;
+            /** CSS 颜色解析（引擎无 CSS 解析入口，命名色板是数据表；取到 hex 后仍委托 setHex/cc.Color）。 */
+            setStyle(s: string, cs?: string): this;
+            /** HSL 合成：引擎只有 HSV（cc.Color.fromHSV），无 HSL 等价，故保留 Three 原式。 */
+            setHSL(h: number, s: number, l: number, cs?: string): this;
+            copy(c: _air_spark_spark_math__Color): this;
+            clone(): _air_spark_spark_math__Color;
+            add(c: _air_spark_spark_math__Color): this;
+            addScalar(s: number): this;
+            multiply(c: _air_spark_spark_math__Color): this;
+            multiplyScalar(s: number): this;
+            /** 逐分量插值委托 cc.lerp（引擎 cc.Color.lerp 是 8bit 存储，不等价）。 */
+            lerp(c: _air_spark_spark_math__Color, t: number): this;
+            lerpColors(a: _air_spark_spark_math__Color, b: _air_spark_spark_math__Color, t: number): this;
+            equals(c: _air_spark_spark_math__Color): boolean;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            copySRGBToLinear(c: _air_spark_spark_math__Color): this;
+            convertSRGBToLinear(): this;
+            copyLinearToSRGB(c: _air_spark_spark_math__Color): this;
+            convertLinearToSRGB(): this;
+            getRGB(target: _air_spark_spark_math__Color, cs?: string): _air_spark_spark_math__Color;
+            getHex(cs?: string): number;
+            getHexString(cs?: string): string;
+            [Symbol.iterator](): IterableIterator<number>;
+        }
+        export interface _air_spark_cocos_renderer__SparkAttribute {
+            array: _air_spark_cocos_renderer__NumericArray;
+            itemSize: number;
+            count?: number;
+            normalized?: boolean;
+            version?: number;
+            isInstancedBufferAttribute?: boolean;
+            isInterleavedBufferAttribute?: boolean;
+        }
+        export interface _air_spark_cocos_renderer__SparkGeometry {
+            attributes: Record<string, _air_spark_cocos_renderer__SparkAttribute | undefined>;
+            index?: _air_spark_cocos_renderer__SparkAttribute | null;
+            instanceCount?: number;
+            drawRange?: {
+                start: number;
+                count: number;
+            };
+            addEventListener?: (type: string, callback: () => void) => void;
+        }
+        export interface _air_spark_cocos_renderer__SparkLayers {
+            test(layers: unknown): boolean;
+        }
+        /** BufferAttribute 的最小结构契约（避免数学层反向依赖适配层）。 */
+        export interface _air_spark_spark_math__IBindableAttribute {
+            array: ArrayLike<number>;
+            itemSize: number;
+        }
+        export class _air_spark_spark_math__Euler {
+            readonly isEuler = true;
+            constructor(x?: number, y?: number, z?: number, order?: string);
+            get x(): number;
+            set x(v: number);
+            get y(): number;
+            set y(v: number);
+            get z(): number;
+            set z(v: number);
+            get order(): string;
+            set order(v: string);
+            set(x: number, y: number, z: number, o?: string): this;
+            copy(e: _air_spark_spark_math__Euler): this;
+            clone(): _air_spark_spark_math__Euler;
+            _onChange(f: () => void): this;
+            setFromRotationMatrix(m: _air_spark_spark_math__Matrix4, o?: string, update?: boolean): this;
+            setFromQuaternion(q: _air_spark_spark_math__Quaternion, o?: string, update?: boolean): this;
+            setFromVector3(v: _air_spark_spark_math__Vector3, o?: string): this;
+            reorder(o: string): this;
+            equals(e: _air_spark_spark_math__Euler): boolean;
+            fromArray(a: ArrayLike<unknown>): this;
+            toArray(a?: unknown[], o?: number): unknown[];
+        }
+        export class _air_spark_spark_math__Quaternion {
+            readonly isQuaternion = true;
+            constructor(x?: number, y?: number, z?: number, w?: number);
+            get x(): number;
+            set x(v: number);
+            get y(): number;
+            set y(v: number);
+            get z(): number;
+            set z(v: number);
+            get w(): number;
+            set w(v: number);
+            set(x: number, y: number, z: number, w: number): this;
+            identity(): this;
+            copy(q: _air_spark_spark_math__Quaternion): this;
+            clone(): _air_spark_spark_math__Quaternion;
+            _onChange(f: () => void): this;
+            /**
+             * Closed-form products of intrinsic axis rotations. Keep each triple product
+             * left-associated so conversion to the eventual GPU float32 is predictable.
+             * 引擎 cc.Quat.fromEuler 是「角度制 + 固定 YXZ 序」，无法覆盖 Three 的弧度六序契约，故保留原式。
+             */
+            setFromEuler(e: _air_spark_spark_math__Euler, update?: boolean): this;
+            setFromAxisAngle(a: _air_spark_spark_math__Vector3, t: number): this;
+            /**
+             * 自持实现（owner 裁定 2026-10-12：为逐位对齐 three r180 放弃 `cc.Quat.fromMat3` 委托）。
+             * 分支判据与算式次序抄自 three.js r180 `Quaternion.setFromRotationMatrix`（MIT）的迹分支式；
+             * 引擎 `cc.Quat.fromMat3` 走「最大分量取正」分支，除法/开方的分组不同，末位舍入不可对齐。
+             */
+            setFromRotationMatrix(m: _air_spark_spark_math__Matrix4): this;
+            /** 委托 cc.Quat.rotationTo；反平行时引擎换轴方式与 Three 不同（同为合法 180° 旋转）。 */
+            setFromUnitVectors(a: _air_spark_spark_math__Vector3, b: _air_spark_spark_math__Vector3): this;
+            multiply(q: _air_spark_spark_math__Quaternion): this;
+            premultiply(q: _air_spark_spark_math__Quaternion): this;
+            multiplyQuaternions(a: _air_spark_spark_math__Quaternion, b: _air_spark_spark_math__Quaternion): this;
+            dot(q: _air_spark_spark_math__Quaternion): number;
+            lengthSq(): number;
+            length(): number;
+            /** 引擎在零四元数上置 (0,0,0,0)，Three 契约是回单位元，故补长度守卫。 */
+            normalize(): this;
+            conjugate(): this;
+            /** Three 的 invert 即共轭（cc.Quat.invert 会除以长度平方，语义不同）。 */
+            invert(): this;
+            angleTo(q: _air_spark_spark_math__Quaternion): number;
+            /** 委托 cc.Quat.rotateTowards：入参是角度制（step 弧度换算），且夹角 0 时按 Three 原地返回。 */
+            rotateTowards(q: _air_spark_spark_math__Quaternion, step: number): this;
+            slerp(q: _air_spark_spark_math__Quaternion, t: number): this;
+            slerpQuaternions(a: _air_spark_spark_math__Quaternion, b: _air_spark_spark_math__Quaternion, t: number): this;
+            equals(q: _air_spark_spark_math__Quaternion): boolean;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            [Symbol.iterator](): IterableIterator<number>;
+        }
+        /** 相机矩阵的最小结构契约（project/unproject 用，适配层的 Camera 满足该形状）。 */
+        export interface _air_spark_spark_math__ICameraMatrices {
+            matrixWorld: _air_spark_spark_math__Matrix4;
+            matrixWorldInverse: _air_spark_spark_math__Matrix4;
+            projectionMatrix: _air_spark_spark_math__Matrix4;
+            projectionMatrixInverse: _air_spark_spark_math__Matrix4;
+        }
+        export class _air_spark_spark_math__Vector3 {
+            x: number;
+            y: number;
+            z: number;
+            readonly isVector3 = true;
+            constructor(x?: number, y?: number, z?: number);
+            set(x: number, y: number, z: number): this;
+            setScalar(s: number): this;
+            setComponent(i: number, v: number): this;
+            getComponent(i: number): number;
+            setX(v: number): this;
+            setY(v: number): this;
+            setZ(v: number): this;
+            clone(): _air_spark_spark_math__Vector3;
+            copy(v: _air_spark_spark_math__Vector3): this;
+            add(v: _air_spark_spark_math__Vector3): this;
+            sub(v: _air_spark_spark_math__Vector3): this;
+            multiply(v: _air_spark_spark_math__Vector3): this;
+            divide(v: _air_spark_spark_math__Vector3): this;
+            addScalar(v: number): this;
+            subScalar(v: number): this;
+            multiplyScalar(v: number): this;
+            divideScalar(v: number): this;
+            addVectors(a: _air_spark_spark_math__Vector3, b: _air_spark_spark_math__Vector3): this;
+            subVectors(a: _air_spark_spark_math__Vector3, b: _air_spark_spark_math__Vector3): this;
+            multiplyVectors(a: _air_spark_spark_math__Vector3, b: _air_spark_spark_math__Vector3): this;
+            addScaledVector(v: _air_spark_spark_math__Vector3, s: number): this;
+            dot(v: _air_spark_spark_math__Vector3): number;
+            lengthSq(): number;
+            length(): number;
+            /** 三分量绝对值求和（标量映射，见文件头第 8 条）。 */
+            manhattanLength(): number;
+            normalize(): this;
+            setLength(v: number): this;
+            distanceToSquared(v: _air_spark_spark_math__Vector3): number;
+            distanceTo(v: _air_spark_spark_math__Vector3): number;
+            /** 三分量绝对差求和（标量映射）。 */
+            manhattanDistanceTo(v: _air_spark_spark_math__Vector3): number;
+            negate(): this;
+            min(v: _air_spark_spark_math__Vector3): this;
+            max(v: _air_spark_spark_math__Vector3): this;
+            clamp(a: _air_spark_spark_math__Vector3, b: _air_spark_spark_math__Vector3): this;
+            clampScalar(a: number, b: number): this;
+            clampLength(a: number, b: number): this;
+            lerp(v: _air_spark_spark_math__Vector3, t: number): this;
+            lerpVectors(a: _air_spark_spark_math__Vector3, b: _air_spark_spark_math__Vector3, t: number): this;
+            floor(): this;
+            ceil(): this;
+            round(): this;
+            /** 引擎无 Vec3.trunc 静态：逐分量 Math.trunc（标量映射）。 */
+            roundToZero(): this;
+            equals(v: _air_spark_spark_math__Vector3): boolean;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            fromBufferAttribute(a: _air_spark_spark_math__IBindableAttribute, i: number): this;
+            /** 引擎 cc.Vec3.random 产出随机单位向量，与 Three 的逐分量 [0,1) 不同，故用 cc.random。 */
+            random(): this;
+            [Symbol.iterator](): IterableIterator<number>;
+            cross(v: _air_spark_spark_math__Vector3): this;
+            crossVectors(a: _air_spark_spark_math__Vector3, b: _air_spark_spark_math__Vector3): this;
+            applyMatrix3(m: _air_spark_spark_math__Matrix3): this;
+            applyMatrix4(m: _air_spark_spark_math__Matrix4): this;
+            applyNormalMatrix(m: _air_spark_spark_math__Matrix3): this;
+            applyQuaternion(q: _air_spark_spark_math__Quaternion): this;
+            applyEuler(e: _air_spark_spark_math__Euler): this;
+            applyAxisAngle(axis: _air_spark_spark_math__Vector3, a: number): this;
+            /** 方向变换：cc.Vec3.transformMat4Normal 在仿射矩阵下不除 rhw（m03/m07/m11 为 0），与 Three 一致。 */
+            transformDirection(m: _air_spark_spark_math__Matrix4): this;
+            project(c: _air_spark_spark_math__ICameraMatrices): this;
+            unproject(c: _air_spark_spark_math__ICameraMatrices): this;
+            setFromMatrixPosition(m: _air_spark_spark_math__Matrix4): this;
+            setFromMatrixColumn(m: _air_spark_spark_math__Matrix4, i: number): this;
+            setFromMatrix3Column(m: _air_spark_spark_math__Matrix3, i: number): this;
+            /** Three 的 setFromMatrixScale 取列向量模长（不含反射取负），故用 cc.Vec3.len 而非 cc.Mat4.getScaling。 */
+            setFromMatrixScale(m: _air_spark_spark_math__Matrix4): this;
+            /** 球坐标转直角坐标：引擎无对应静态（cc.geometry 只有形状检测），保留 Three 原式。 */
+            setFromSphericalCoords(r: number, phi: number, theta: number): this;
+            setFromCylindricalCoords(r: number, theta: number, y: number): this;
+            /** 委托 cc.Vec3.angle；零向量按 Three 契约补 π/2（引擎返回 0）。 */
+            angleTo(v: _air_spark_spark_math__Vector3): number;
+            /** 委托 cc.Vec3.project（引擎退化阈值 1e-6，Three 为 === 0，见文件头第 7 条）。 */
+            projectOnVector(v: _air_spark_spark_math__Vector3): this;
+            projectOnPlane(v: _air_spark_spark_math__Vector3): this;
+            reflect(n: _air_spark_spark_math__Vector3): this;
+        }
+        /**
+         * 只承载「列主序 elements 数组」的读写映射，不含算法：
+         * Matrix2/3/4 的 set/identity/copy/fromArray/toArray/equals 全是 Three 行主序入参与列主序存储之间的索引映射。
+         */
+        export class _air_spark_spark_math__MatrixStorage {
+            protected readonly _n: number;
+            elements: number[];
+            constructor(n: number);
+            set(...v: number[]): this;
+            identity(): this;
+            copy(m: _air_spark_spark_math__MatrixStorage): this;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            equals(m: _air_spark_spark_math__MatrixStorage): boolean;
+        }
+        export class _air_spark_spark_math__Matrix3 extends _air_spark_spark_math__MatrixStorage {
+            readonly isMatrix3 = true;
+            constructor(...v: number[]);
+            clone(): _air_spark_spark_math__Matrix3;
+            setFromMatrix4(m: _air_spark_spark_math__Matrix4): this;
+            /** 委托 cc.Mat3.inverseTransposeMat4；引擎在奇异输入上返回 null（Three 无此返回），此时按零矩阵处理。 */
+            getNormalMatrix(m: _air_spark_spark_math__Matrix4): this;
+            multiply(m: _air_spark_spark_math__Matrix3): this;
+            premultiply(m: _air_spark_spark_math__Matrix3): this;
+            multiplyMatrices(a: _air_spark_spark_math__Matrix3, b: _air_spark_spark_math__Matrix3): this;
+            multiplyScalar(s: number): this;
+            determinant(): number;
+            /** 引擎 cc.Mat3.invert 与 Three 一致：奇异矩阵写零矩阵（mat3.ts:158 的 Mat3.set(out, 0...)）。 */
+            invert(): this;
+            transpose(): this;
+            extractBasis(x: _air_spark_spark_math__Vector3, y: _air_spark_spark_math__Vector3, z: _air_spark_spark_math__Vector3): this;
+            /** 转置写入外部数组：复用引擎 cc.Mat3.transpose 的镜像结果再按列主序导出，不另写 3x3 展开循环。 */
+            transposeIntoArray(a: number[]): this;
+            /**
+             * UV 变换：引擎 cc.Mat3 有 fromScaling/fromRotation/fromTranslation 三个基元，
+             * 但没有 Three 的七参数合成入口，故保留 Three 的列主序写入（纯字段映射，无算法主体）。
+             */
+            setUvTransform(tx: number, ty: number, sx: number, sy: number, r: number, cx: number, cy: number): this;
+        }
+        export class _air_spark_spark_math__Matrix4 extends _air_spark_spark_math__MatrixStorage {
+            readonly isMatrix4 = true;
+            constructor(...v: number[]);
+            clone(): _air_spark_spark_math__Matrix4;
+            copyPosition(m: _air_spark_spark_math__Matrix4): this;
+            /**
+             * 引擎 cc.Mat4 没有 fromMat3 静态（cc.Mat3 与 cc.Mat4 之间只有 Mat3.fromMat4 降阶方向），
+             * 因此这里按 Three 契约做纯索引升阶（3x3 列主序 → 4x4 列主序 + 单位齐次行/列），无算法主体。
+             */
+            setFromMatrix3(m: _air_spark_spark_math__Matrix3): this;
+            setPosition(x: number | _air_spark_spark_math__Vector3, y?: number, z?: number): this;
+            makeTranslation(x: number | _air_spark_spark_math__Vector3, y?: number, z?: number): this;
+            makeScale(x: number, y: number, z: number): this;
+            makeRotationX(t: number): this;
+            makeRotationY(t: number): this;
+            makeRotationZ(t: number): this;
+            /** 委托 cc.Mat4.identity + cc.Mat4.rotate（绕任意轴）；退化轴（长度 0）引擎返回 null，此处保持单位阵。 */
+            makeRotationAxis(axis: _air_spark_spark_math__Vector3, t: number): this;
+            /** 与 three r180 同形：`compose(单位平移, q, 单位缩放)`，因此继承 compose 的算式次序。 */
+            makeRotationFromQuaternion(q: _air_spark_spark_math__Quaternion): this;
+            makeRotationFromEuler(e: _air_spark_spark_math__Euler): this;
+            makeBasis(x: _air_spark_spark_math__Vector3, y: _air_spark_spark_math__Vector3, z: _air_spark_spark_math__Vector3): this;
+            extractBasis(x: _air_spark_spark_math__Vector3, y: _air_spark_spark_math__Vector3, z: _air_spark_spark_math__Vector3): this;
+            /** 逐列取 cc.Vec3.normalize 后重建基（与 Three 原文一致，标准化本身委托引擎）。 */
+            extractRotation(m: _air_spark_spark_math__Matrix4): this;
+            /**
+             * 自持实现（owner 裁定 2026-10-12：为逐位对齐 three r180 放弃 `cc.Mat4.fromSRT` 委托）。
+             * 展开式与运算次序抄自 three.js r180 `Matrix4.compose`（MIT）。
+             */
+            compose(p: _air_spark_spark_math__Vector3, q: _air_spark_spark_math__Quaternion, s: _air_spark_spark_math__Vector3): this;
+            /** 委托 cc.Mat4.toSRT；缩放分量为 0 时引擎给单位四元数（Three 原式给 NaN），见文件头第 7 条。 */
+            decompose(p: _air_spark_spark_math__Vector3, q: _air_spark_spark_math__Quaternion, s: _air_spark_spark_math__Vector3): this;
+            scale(s: _air_spark_spark_math__Vector3): this;
+            /** 逐列模长取最大（用 cc.Vec3.len，不用 cc.Mat4.getScaling：后者在反射时把 x 取负）。 */
+            getMaxScaleOnAxis(): number;
+            multiply(m: _air_spark_spark_math__Matrix4): this;
+            premultiply(m: _air_spark_spark_math__Matrix4): this;
+            /**
+             * 自持实现（owner 裁定 2026-10-12：为逐位对齐 three r180 放弃 `cc.Mat4.multiply` 委托）。
+             * 16 项展开式与加法次序抄自 three.js r180 `Matrix4.multiplyMatrices`（MIT）；gl-matrix 的
+             * 按列累乘写法在末位舍入上与 three 不等价。
+             */
+            multiplyMatrices(a: _air_spark_spark_math__Matrix4, b: _air_spark_spark_math__Matrix4): this;
+            multiplyScalar(s: number): this;
+            determinant(): number;
+            /**
+             * 自持实现（owner 裁定 2026-10-12：为逐位对齐 three r180 放弃 `cc.Mat4.invert` 委托）。
+             * 代数式与运算次序抄自 three.js r180 `Matrix4.invert`（MIT）；gl-matrix 血统的引擎实现算式分组不同，
+             * 末位舍入与 ±0 无法对齐，故本成员不再委托。奇异矩阵与 Three 同样写零矩阵。
+             */
+            invert(): this;
+            transpose(): this;
+            /**
+             * 自持实现（owner 裁定 2026-10-12：为逐位对齐 three r180 放弃 `cc.Mat4.lookAt` 委托）。
+             * 向量算式与次序抄自 three.js r180 `Matrix4.lookAt`（MIT）：`_z = eye - target`，退化时 `_z.z = 1` 或
+             * 沿 x/z 加 `0.0001`（判据是 `Math.abs(up.z) === 1`，不是视线分量），`normalize()` 即乘 `1 / (length() || 1)`，
+             * 只写世界基 3x3 且不触碰平移/齐次列。引擎的 gl-matrix 实现产出视图基并用 `1/len` 形式归一，
+             * 末位舍入与退化分支都不可对齐，故本成员不再委托。另见文件头 owner 裁定段。
+             */
+            lookAt(eye: _air_spark_spark_math__Vector3, target: _air_spark_spark_math__Vector3, up: _air_spark_spark_math__Vector3): this;
+            /**
+             * 委托 cc.Mat4.frustum（同为 -1..1 深度约定，逐字段等价）；
+             * far === Infinity 与 coordinateSystem === 2001（WebGPU 0..1）两分支引擎无对应静态，
+             * 按 Three 原式做列主序字段写入（纯映射）。
+             */
+            makePerspective(l: number, r: number, t: number, b: number, n: number, f: number, coordinateSystem?: number): this;
+            /** 委托 cc.Mat4.ortho，Three 的 coordinateSystem 直接映射到引擎的 minClipZ 参数。 */
+            makeOrthographic(l: number, r: number, t: number, b: number, n: number, f: number, coordinateSystem?: number): this;
+        }
+        export interface _air_spark_cocos_renderer__SparkCamera {
+            visible?: boolean;
+            parent?: _air_spark_cocos_renderer__SparkObject | null;
+            children?: _air_spark_cocos_renderer__SparkObject[];
+            layers?: _air_spark_cocos_renderer__SparkLayers;
+            position?: _air_spark_spark_math__Vector3;
+            matrix?: _air_spark_spark_math__Matrix4;
+            matrixWorld?: _air_spark_spark_math__Matrix4;
+            matrixWorldInverse?: _air_spark_spark_math__Matrix4;
+            projectionMatrix?: _air_spark_spark_math__Matrix4;
+            projectionMatrixInverse?: _air_spark_spark_math__Matrix4;
+            matrixWorldAutoUpdate?: boolean;
+            isOrthographicCamera?: boolean;
+            isArrayCamera?: boolean;
+            cameras?: _air_spark_cocos_renderer__SparkCamera[];
+            viewport?: _air_spark_cocos_renderer__SparkRectLike;
+            near?: number;
+            far?: number;
+            updateMatrixWorld?: (force?: boolean) => void;
+        }
+        export interface _air_spark_cocos_renderer__SparkObject {
+            visible?: boolean;
+            children?: _air_spark_cocos_renderer__SparkObject[];
+            geometry?: _air_spark_cocos_renderer__SparkGeometry | null;
+            material?: _air_spark_cocos_renderer__SparkMaterial | _air_spark_cocos_renderer__SparkMaterial[] | null;
+            layers?: _air_spark_cocos_renderer__SparkLayers;
+            matrixWorld?: _air_spark_spark_math__Matrix4;
+            renderOrder?: number;
+            onBeforeRender?: (renderer: CocosRenderer, scene: _air_spark_cocos_renderer__SparkObject, camera: _air_spark_cocos_renderer__SparkCamera | null, geometry: _air_spark_cocos_renderer__SparkGeometry | null | undefined, material: _air_spark_cocos_renderer__SparkMaterial, group: unknown) => void;
+            onAfterRender?: (renderer: CocosRenderer, scene: _air_spark_cocos_renderer__SparkObject, camera: _air_spark_cocos_renderer__SparkCamera | null, geometry: _air_spark_cocos_renderer__SparkGeometry, material: _air_spark_cocos_renderer__SparkMaterial, group: unknown) => void;
+            traverse?: (callback: (object: _air_spark_cocos_renderer__SparkObject) => void) => void;
+            updateMatrixWorld?: (force?: boolean) => void;
+        }
+        export interface _air_spark_cocos_renderer__SparkMaterial {
+            id?: number | string;
+            name?: string;
+            type?: string;
+            version?: number;
+            visible?: boolean;
+            vertexShader?: string;
+            fragmentShader?: string;
+            defines?: Record<string, string | number | boolean | undefined>;
+            wireframe?: boolean;
+            uniforms?: _air_spark_cocos_renderer__SparkUniforms;
+            premultipliedAlpha?: boolean;
+            isRawShaderMaterial?: boolean;
+            transparent?: boolean;
+            blending?: number;
+            side?: number;
+            depthTest?: boolean;
+            depthWrite?: boolean;
+            depthFunc?: number;
+            colorWrite?: boolean;
+            blendSrc?: number;
+            blendDst?: number;
+            blendSrcAlpha?: number;
+            blendDstAlpha?: number;
+            blendEquation?: number;
+            blendEquationAlpha?: number;
+            blendAlpha?: number;
+            blendColor?: _air_spark_spark_math__Color;
+            polygonOffset?: boolean;
+            polygonOffsetFactor?: number;
+            polygonOffsetUnits?: number;
+            alphaToCoverage?: boolean;
+            stencilWrite?: boolean;
+            stencilFunc?: number;
+            stencilRef?: number;
+            stencilFuncMask?: number;
+            stencilWriteMask?: number;
+            stencilFail?: number;
+            stencilZFail?: number;
+            stencilZPass?: number;
+            onBeforeRender?: (renderer: CocosRenderer, scene: _air_spark_cocos_renderer__SparkObject, camera: _air_spark_cocos_renderer__SparkCamera | null, geometry: _air_spark_cocos_renderer__SparkGeometry | null | undefined, material: _air_spark_cocos_renderer__SparkMaterial, group: unknown) => void;
+            addEventListener?: (type: string, callback: () => void) => void;
+        }
+        export class _air_spark_spark_api_adapter__EventDispatcher {
+            _listeners?: Record<string, Set<any>>;
+            addEventListener(type: string, listener: any): void;
+            hasEventListener(type: string, listener: any): boolean;
+            removeEventListener(type: string, listener: any): void;
+            dispatchEvent(event: any): void;
+        }
+        export class _air_spark_spark_api_adapter__Object3D extends _air_spark_spark_api_adapter__EventDispatcher {
+            static DEFAULT_UP: _air_spark_spark_math__Vector3;
+            static DEFAULT_MATRIX_AUTO_UPDATE: boolean;
+            static DEFAULT_MATRIX_WORLD_AUTO_UPDATE: boolean;
+            [key: string]: any;
+            constructor();
+            onBeforeRender(): void;
+            onAfterRender(): void;
+            onBeforeShadow(): void;
+            onAfterShadow(): void;
+            add(...objects: any[]): this;
+            remove(...objects: any[]): this;
+            removeFromParent(): this;
+            clear(): this;
+            attach(o: any): this;
+            traverse(fn: (o: any) => void): void;
+            traverseVisible(fn: (o: any) => void): void;
+            traverseAncestors(fn: (o: any) => void): void;
+            getObjectByProperty(k: string, v: any): any;
+            getObjectByName(v: any): any;
+            getObjectById(v: any): any;
+            getObjectsByProperty(k: string, v: any, result?: any[]): any[];
+            updateMatrix(): void;
+            updateMatrixWorld(force?: boolean): void;
+            updateWorldMatrix(updateParents: boolean, updateChildren: boolean): void;
+            applyMatrix4(m: _air_spark_spark_math__Matrix4): this;
+            applyQuaternion(q: _air_spark_spark_math__Quaternion): this;
+            setRotationFromAxisAngle(axis: _air_spark_spark_math__Vector3, a: number): void;
+            setRotationFromEuler(e: _air_spark_spark_math__Euler): void;
+            setRotationFromMatrix(m: _air_spark_spark_math__Matrix4): void;
+            setRotationFromQuaternion(q: _air_spark_spark_math__Quaternion): void;
+            rotateOnAxis(a: _air_spark_spark_math__Vector3, t: number): this;
+            rotateOnWorldAxis(a: _air_spark_spark_math__Vector3, t: number): this;
+            rotateX(t: number): this;
+            rotateY(t: number): this;
+            rotateZ(t: number): this;
+            translateOnAxis(a: _air_spark_spark_math__Vector3, d: number): this;
+            translateX(d: number): this;
+            translateY(d: number): this;
+            translateZ(d: number): this;
+            localToWorld(v: _air_spark_spark_math__Vector3): _air_spark_spark_math__Vector3;
+            worldToLocal(v: _air_spark_spark_math__Vector3): _air_spark_spark_math__Vector3;
+            getWorldPosition(t: _air_spark_spark_math__Vector3): _air_spark_spark_math__Vector3;
+            getWorldQuaternion(t: _air_spark_spark_math__Quaternion): _air_spark_spark_math__Quaternion;
+            getWorldScale(t: _air_spark_spark_math__Vector3): _air_spark_spark_math__Vector3;
+            getWorldDirection(t: _air_spark_spark_math__Vector3): _air_spark_spark_math__Vector3;
+            lookAt(x: any, y?: number, z?: number): void;
+            copy(o: any, recursive?: boolean): this;
+            clone(recursive?: boolean): any;
+            raycast(): void;
+        }
+        export class _air_spark_spark_api_adapter__Scene extends _air_spark_spark_api_adapter__Object3D {
+            constructor();
+        }
+        export class _air_spark_spark_api_adapter__Camera extends _air_spark_spark_api_adapter__Object3D {
+            constructor();
+            updateMatrixWorld(force?: boolean): void;
+            updateWorldMatrix(a: boolean, b: boolean): void;
+            getWorldDirection(t: _air_spark_spark_math__Vector3): _air_spark_spark_math__Vector3;
+            copy(o: any, r?: boolean): this;
+        }
+        export interface _air_spark_cocos_spark_layer__SplatBinding {
+            node: any;
+            visible: boolean;
+        }
+        export class _air_spark_spark_math__Vector4 {
+            x: number;
+            y: number;
+            z: number;
+            w: number;
+            readonly isVector4 = true;
+            constructor(x?: number, y?: number, z?: number, w?: number);
+            get width(): number;
+            set width(v: number);
+            get height(): number;
+            set height(v: number);
+            set(x: number, y: number, z: number, w: number): this;
+            setScalar(s: number): this;
+            setComponent(i: number, v: number): this;
+            getComponent(i: number): number;
+            setX(v: number): this;
+            setY(v: number): this;
+            setZ(v: number): this;
+            setW(v: number): this;
+            clone(): _air_spark_spark_math__Vector4;
+            /** Three 允许从三分量对象拷贝并把 w 补 1，引擎 cc.Vec4.copy 要求 w 存在，故显式映射。 */
+            copy(v: {
+                x: number;
+                y: number;
+                z: number;
+                w?: number;
+            }): this;
+            add(v: _air_spark_spark_math__Vector4): this;
+            sub(v: _air_spark_spark_math__Vector4): this;
+            multiply(v: _air_spark_spark_math__Vector4): this;
+            divide(v: _air_spark_spark_math__Vector4): this;
+            addScalar(v: number): this;
+            subScalar(v: number): this;
+            multiplyScalar(v: number): this;
+            divideScalar(v: number): this;
+            addVectors(a: _air_spark_spark_math__Vector4, b: _air_spark_spark_math__Vector4): this;
+            subVectors(a: _air_spark_spark_math__Vector4, b: _air_spark_spark_math__Vector4): this;
+            multiplyVectors(a: _air_spark_spark_math__Vector4, b: _air_spark_spark_math__Vector4): this;
+            addScaledVector(v: _air_spark_spark_math__Vector4, s: number): this;
+            dot(v: _air_spark_spark_math__Vector4): number;
+            lengthSq(): number;
+            length(): number;
+            /** 四分量绝对值求和（标量映射）。 */
+            manhattanLength(): number;
+            normalize(): this;
+            setLength(v: number): this;
+            distanceToSquared(v: _air_spark_spark_math__Vector4): number;
+            distanceTo(v: _air_spark_spark_math__Vector4): number;
+            /** 四分量绝对差求和（标量映射）。 */
+            manhattanDistanceTo(v: _air_spark_spark_math__Vector4): number;
+            negate(): this;
+            min(v: _air_spark_spark_math__Vector4): this;
+            max(v: _air_spark_spark_math__Vector4): this;
+            clamp(a: _air_spark_spark_math__Vector4, b: _air_spark_spark_math__Vector4): this;
+            clampScalar(a: number, b: number): this;
+            clampLength(a: number, b: number): this;
+            lerp(v: _air_spark_spark_math__Vector4, t: number): this;
+            lerpVectors(a: _air_spark_spark_math__Vector4, b: _air_spark_spark_math__Vector4, t: number): this;
+            floor(): this;
+            ceil(): this;
+            round(): this;
+            /** 引擎无 Vec4.trunc 静态：逐分量 Math.trunc（标量映射）。 */
+            roundToZero(): this;
+            equals(v: _air_spark_spark_math__Vector4): boolean;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            fromBufferAttribute(a: _air_spark_spark_math__IBindableAttribute, i: number): this;
+            random(): this;
+            [Symbol.iterator](): IterableIterator<number>;
+            applyMatrix4(m: _air_spark_spark_math__Matrix4): this;
+            /** 委托 cc.Quat.getAxisAngle（引擎对 s===0 回退 (1,0,0)，与 Three 的 s<1e-4 阈值等价语义）。 */
+            setAxisAngleFromQuaternion(q: _air_spark_spark_math__Quaternion): this;
+        }
+        export interface _air_spark_cocos_spark_layer__SparkTarget {
+            isCocosRenderTarget: true;
+            _cocosFramebuffer: any;
+            width: number;
+            height: number;
+            depthBuffer: boolean;
+            stencilBuffer: boolean;
+            texture: {
+                colorSpace: string;
+            };
+            viewport: _air_spark_spark_math__Vector4;
+            scissor: _air_spark_spark_math__Vector4;
+            scissorTest: boolean;
+        }
+        export interface _air_spark_cocos_spark_layer__CocosSparkLayerOptions {
+            cc: any;
+            app: any;
+            camera: any;
+            canvas?: any;
+            sparkOptions?: Record<string, unknown>;
+            autoRender?: boolean;
+            renderHook?: "after-render" | "camera-end" | string;
+        }
+        export class _air_spark_spark_api_adapter__Texture extends _air_spark_spark_api_adapter__EventDispatcher {
+            [key: string]: any;
+            constructor(image?: any, mapping?: number, wrapS?: number, wrapT?: number, magFilter?: number, minFilter?: number, format?: number, type?: number, anisotropy?: number, colorSpace?: string);
+            get image(): any;
+            set image(v: any);
+            set needsPMREMUpdate(v: boolean);
+            set needsUpdate(v: boolean);
+            addUpdateRange(start: number, count: number): void;
+            clearUpdateRanges(): void;
+            updateMatrix(): void;
+            clone(): any;
+            copy(t: any): this;
+            dispose(): void;
+        }
+        export class _air_spark_spark_api_adapter__RenderTarget extends _air_spark_spark_api_adapter__EventDispatcher {
+            [key: string]: any;
+            constructor(width?: number, height?: number, options?: any);
+            _createTexture(options: any): _air_spark_spark_api_adapter__Texture;
+            get texture(): any;
+            set texture(v: any);
+            setSize(width: number, height: number, depth?: number): void;
+            dispose(): void;
+            clone(): any;
+            copy(r: any): this;
+        }
+        export class _air_spark_spark_api_adapter__WebGLRenderTarget extends _air_spark_spark_api_adapter__RenderTarget {
+            constructor(...a: any[]);
+        }
+        export class _air_spark_spark_api_adapter__Material extends _air_spark_spark_api_adapter__EventDispatcher {
+            [key: string]: any;
+            constructor();
+            set needsUpdate(v: boolean);
+            setValues(p: any): void;
+            dispose(): void;
+            copy(m: any): this;
+            clone(): any;
+            onBeforeCompile(): void;
+            customProgramCacheKey(): string;
+        }
+        export class _air_spark_spark_api_adapter__ShaderMaterial extends _air_spark_spark_api_adapter__Material {
+            constructor(parameters?: any);
+            copy(m: any): this;
+        }
+        export class _air_spark_spark_api_adapter__RawShaderMaterial extends _air_spark_spark_api_adapter__ShaderMaterial {
+            constructor(p?: any);
+        }
+        export interface _air_spark_pmrem__PMREMRenderer {
+            autoClear: boolean;
+            toneMapping: number;
+            xr: {
+                enabled: boolean;
+            };
+            render(object3D: unknown, camera: unknown): void;
+            setRenderTarget(target: _air_spark_spark_api_adapter__WebGLRenderTarget | null, face?: number, mip?: number): void;
+            getRenderTarget(): _air_spark_spark_api_adapter__WebGLRenderTarget | null;
+            getActiveCubeFace(): number;
+            getActiveMipmapLevel(): number;
+            clear(color?: boolean, depth?: boolean, stencil?: boolean): void;
+            getClearColor(out: _air_spark_spark_math__Color): _air_spark_spark_math__Color;
+            compile?(object3D: unknown, camera: unknown): void;
+            _material?(material: _air_spark_spark_api_adapter__RawShaderMaterial): void;
+        }
+        export class _air_spark_spark_api_adapter__BufferGeometry extends _air_spark_spark_api_adapter__EventDispatcher {
+            [key: string]: any;
+            constructor();
+            setAttribute(n: string, a: any): this;
+            getAttribute(n: string): any;
+            deleteAttribute(n: string): this;
+            hasAttribute(n: string): boolean;
+            setIndex(a: any): this;
+            getIndex(): any;
+            setDrawRange(start: number, count: number): void;
+            addGroup(start: number, count: number, materialIndex?: number): void;
+            clearGroups(): void;
+            applyMatrix4(m: _air_spark_spark_math__Matrix4): this;
+            translate(x: number, y: number, z: number): this;
+            scale(x: number, y: number, z: number): this;
+            rotateX(a: number): this;
+            rotateY(a: number): this;
+            rotateZ(a: number): this;
+            computeBoundingBox(): void;
+            dispose(): void;
+            clone(): any;
+            copy(g: any): this;
+        }
+        export class _air_spark_spark_api_adapter__OrthographicCamera extends _air_spark_spark_api_adapter__Camera {
+            constructor(left?: number, right?: number, top?: number, bottom?: number, near?: number, far?: number);
+            updateProjectionMatrix(): void;
+            setViewOffset(fullWidth: number, fullHeight: number, x: number, y: number, width: number, height: number): void;
+            clearViewOffset(): void;
+            copy(o: any, r?: boolean): this;
+        }
+        export interface _air_spark_pmrem__PMREMLevel {
+            index: number;
+            size: number;
+            mip: number;
+            sigma: number;
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        }
+        export interface _air_spark_pmrem__PMREMLayout {
+            lodMax: number;
+            cubeSize: number;
+            width: number;
+            height: number;
+            levels: _air_spark_pmrem__PMREMLevel[];
+        }
+        export interface _air_spark_pmrem__PMREMSourceTexture {
+            isCubeTexture?: boolean;
+            isRenderTargetTexture?: boolean;
+            mapping?: number;
+            image?: unknown;
+        }
+        export interface _air_spark_pmrem__PMREMSceneOptions {
+            size?: number;
+            position?: _air_spark_spark_math__Vector3;
         }
     }
     export { Canvas as CanvasComponent, UIRenderer as RenderComponent, UIRenderer as UIRenderable, UIRenderer as Renderable2D, UITransform as UITransformComponent, Sprite as SpriteComponent, UIMeshRenderer as UIModelComponent, LabelOutline as LabelOutlineComponent, UIStaticBatch as UIStaticBatchComponent, UIOpacity as UIOpacityComponent, Label as LabelComponent, MaskComponent as Mask, GraphicsComponent as Graphics, MeshRenderer as ModelComponent, DirectionalLight as DirectionalLightComponent, Light as LightComponent, SphereLight as SphereLightComponent, SpotLight as SpotLightComponent, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, Node as BaseNode, Camera as CameraComponent, ModelRenderer as RenderableComponent, Animation as AnimationComponent, SkeletalAnimation as SkeletalAnimationComponent, Button as ButtonComponent, EditBox as EditBoxComponent, Layout as LayoutComponent, ProgressBar as ProgressBarComponent, ScrollBar as ScrollBarComponent, ScrollView as ScrollViewComponent, Slider as SliderComponent, Toggle as ToggleComponent, ToggleContainer as ToggleContainerComponent, Widget as WidgetComponent, PageView as PageViewComponent, PageViewIndicator as PageViewIndicatorComponent, SafeArea as SafeAreaComponent, UICoordinateTracker as UICoordinateTrackerComponent, BlockInputEvents as BlockInputEventsComponent, AudioSource as AudioSourceComponent } from "./cocosair.module";

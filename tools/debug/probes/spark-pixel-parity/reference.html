@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="data:," />
+        <title>Spark pixel parity - reference (three + upstream Spark 2.3.1)</title>
+        <!--
+          SPK-13 oracle document. Served from the read-only port origin so that `dist/three-reference.js`
+          and `dist/reference-addons/` are same-origin; `dist/spark-reference.js` was built with
+          `external: ["three"]`, so these bare specifiers must resolve through this import map.
+          This page never imports the AIR bundle.
+        -->
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "/dist/three-reference.js",
+                    "three/addons/": "/dist/reference-addons/"
+                }
+            }
+        </script>
+        <style>
+            html,
+            body {
+                margin: 0;
+                background: #111;
+                color: #ddd;
+                font: 12px/1.4 monospace;
+            }
+            canvas {
+                display: block;
+                image-rendering: pixelated;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="view" width="256" height="256"></canvas>
+        <pre id="status">booting reference (three + upstream Spark)...</pre>
+        <script type="module">
+            window.__SPARK_PARITY_MODE = 'reference';
+        </script>
+        <script type="module" src="./frame.js"></script>
+    </body>
+</html>

@@ -8,13 +8,13 @@
 
 ## 两层入口怎么选
 
-|          | 全局 `input` 单例                           | 节点事件（`node.on(Node.EventType.*)`）                            |
-| -------- | ------------------------------------------- | ------------------------------------------------------------------ |
-| 订阅     | `input.on(Input.EventType.TOUCH_START, cb)` | `node.on(Node.EventType.TOUCH_START, cb)`                          |
+|          | 全局 `input` 单例                                                | 节点事件（`node.on(Node.EventType.*)`）                            |
+| -------- | ---------------------------------------------------------------- | ------------------------------------------------------------------ |
+| 订阅     | `input.on(Input.EventType.TOUCH_START, cb)`                      | `node.on(Node.EventType.TOUCH_START, cb)`                          |
 | 前提     | 平台绑定已初始化；Web 键盘要求 canvas 聚焦，指针事件遵循画布通道 | 节点要有 `UITransform`（2D/UI 命中测试）且在 UI 相机可见层         |
-| 坐标     | `event.getUILocation()`（UI 坐标）          | 命中测试已完成，回调即"点在我身上"                                 |
-| 生命周期 | **不随节点销毁清理**，必须手动 `input.off`  | 随节点销毁自动清理                                                 |
-| 吞掉     | 节点命中的事件**不会**再到达全局监听        | 命中节点处理后沿父链冒泡，`event.propagationStopped = true` 可阻断 |
+| 坐标     | `event.getUILocation()`（UI 坐标）                               | 命中测试已完成，回调即"点在我身上"                                 |
+| 生命周期 | **不随节点销毁清理**，必须手动 `input.off`                       | 随节点销毁自动清理                                                 |
+| 吞掉     | 节点命中的事件**不会**再到达全局监听                             | 命中节点处理后沿父链冒泡，`event.propagationStopped = true` 可阻断 |
 
 实测语义（AIR，源自 `input.ts` 的鼠标→触摸模拟与 `pointer-event-dispatcher.ts` 的派发序）：
 一次鼠标按下 = 引擎 `_simulateEventTouch` 先派发 UI 节点的 `TOUCH_START`（命中即吞掉，全局不再收到），
@@ -24,6 +24,27 @@
 ## DOM 传播、滚轮与坐标合同
 
 DOM 事件传播与引擎 `input`/节点派发是两条不同的路径。Web PAL 在 canvas 的鼠标、触摸、wheel 和键盘处理器中调用 `stopPropagation()`，阻止原生事件继续向父 DOM/window 冒泡；canvas 事件还会调用 `preventDefault()`，避免浏览器滚动等默认行为。它不阻止已执行的 window 捕获监听器，也不等同于节点的 `propagationStopped`。默认 DOM 传播策略保持不变。
+
+### canvas 聚焦后的 DOM 快捷键
+
+应用原先使用 window 冒泡快捷键时，点击画布后可能收不到事件。选择原生 `input`，或将该应用的快捷键改为 window capture；同一动作不要同时接两条通道。以下是应用侧绑定配方，不是新增 SDK API：
+
+```typescript
+function bindShortcuts(onShortcut: (code: string) => void): () => void {
+    const codes = new Set(['KeyR', 'KeyW', 'KeyC', 'KeyH', 'KeyM', 'Escape']);
+    const handler = (event: KeyboardEvent): void => {
+        const target = event.target;
+        if (event.repeat || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return;
+        if (target instanceof HTMLElement && target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])')) return;
+        if (!codes.has(event.code)) return;
+        onShortcut(event.code);
+    };
+    window.addEventListener('keydown', handler, true);
+    return () => window.removeEventListener('keydown', handler, true);
+}
+```
+
+页面卸载时调用返回的解绑函数。此配方只处理一次性快捷键；连续 held 输入还需按 source 所有权处理 keyup、blur/hidden 和取消，不能把按键释放丢在编辑控件过滤之后。window capture 先于 canvas 的转场屏蔽执行，应用必须在回调前检查其 active/session 状态。合成 dispatch 的计数验证不等于真实键盘验收。
 
 键盘推荐使用 `input.on(Input.EventType.KEY_DOWN/KEY_UP, ...)`；业务确实需要原始 DOM 键盘事件时，应使用捕获阶段，不能依赖 window 冒泡监听。已有 [createActionInput](input-action-state.md) 的 DOM 后端会处理捕获、编辑控件过滤和失焦清理，不必再安装第二套监听。
 

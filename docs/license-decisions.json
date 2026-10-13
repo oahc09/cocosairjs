@@ -67,6 +67,25 @@
         "tools/build/pal-source.cjs"
       ],
       "resolution": "Use exclusively the frozen public MIT TS sources plus explicit AIR canvas/DPR adaptations. Verify source SHA-256 and Git blob identities, reproduce all JS/d.ts outputs, preserve notices, and reject old binary fingerprints. Core cocos4 baseline is unchanged."
+    },
+    "spark-rs WASM 与 wasm-bindgen glue": {
+      "disposition": "pending",
+      "recorded": "2026-10-12",
+      "blocking": false,
+      "obligation": "spark-rs 的 MIT 原文（vendor/spark-rs/LICENSE，与 vendor/spark/LICENSE 逐字节一致）只覆盖 Rust 源码本身；产物 spark_rs_bg.wasm 由 Rust 工具链编译，静态链接进二进制的第三方 crate 各自带许可（多为 MIT/Apache-2.0），上游 2.3.1 dist 未随 wasm 附带 crate 清单或 NOTICE。再分发该二进制需要闭合这条转付许可链。",
+      "currentState": "已发运为源等价发行件并登记字节指纹（vendor/spark-rs/MANIFEST.md：spark_rs_bg.wasm 1554721B sha256 974320be…，spark_rs.js 47694B sha256 a4b2cc72…，LICENSE 1088B sha256 51829693…），未在本环境用 Rust 重建；WASM 字节以构建期 base64 内联进可选 spark 变体产物，默认产物不含（verify:spark-assets + verify:licenses 双重断言）。",
+      "optionsForOwner": [
+        "取得或重建带 crate 清单的 WASM（cargo about / cargo license 输出 NOTICE），把 crate 级许可一并登记后再放行 spark 变体",
+        "接受该风险并在此登记 riskAccepted（不冒充许可清晰），发布说明显式声明第三方 crate 许可未逐一分列",
+        "不对外发运 spark 变体（保持默认产物不含 Spark），把资产留在仓库内部使用"
+      ],
+      "evidence": [
+        "vendor/spark-rs/MANIFEST.md",
+        "licenses/LICENSE_spark.txt",
+        "npm run verify:spark-assets",
+        "npm run verify:licenses"
+      ],
+      "resolution": "未决：登记为 pending，owner 处置前 spark 变体不得作为 release 交付物；本项不阻塞默认产物（默认闭包内 0 个 spark 节点）。"
     }
   }
 }

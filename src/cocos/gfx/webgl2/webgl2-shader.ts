@@ -44,6 +44,26 @@ export class WebGL2Shader extends Shader {
     private _gpuShader: IWebGL2GPUShader | null = null;
 
     public initialize (info: Readonly<ShaderInfo>): void {
+        // Validate before replacing state or allocating GPU resources. WebGL2 prepends its own version directive.
+        const fail = (code: string, message: string): never => {
+            const error = new Error(`[${code}] shader '${info.name}': ${message}`);
+            Object.assign(error, { code, stage: 'shader-input', shader: info.name });
+            throw error;
+        };
+        for (const stage of info.stages) {
+            const source = stage.source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+            if (/^\s*#\s*version\b/m.test(source)) {
+                fail('WEBGL2_SHADER_VERSION', `stage ${stage.stage} must omit #version; the backend adds #version 300 es`);
+            }
+        }
+        const bindings = new Map<string, string>();
+        for (const descriptor of [...info.blocks, ...info.samplerTextures]) {
+            const key = `${descriptor.set}:${descriptor.binding}`;
+            if (bindings.has(key)) {
+                fail('WEBGL2_SHADER_BINDING_CONFLICT', `${descriptor.name} conflicts with ${bindings.get(key)} at set:binding ${key}; assign unique logical bindings within each set`);
+            }
+            bindings.set(key, descriptor.name);
+        }
         this._name = info.name;
         this._stages = info.stages;
         this._attributes = info.attributes;

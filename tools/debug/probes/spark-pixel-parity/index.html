@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="data:," />
+        <title>Spark pixel parity - target (SPK-13)</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                background: #111;
+                color: #ddd;
+                font: 12px/1.4 monospace;
+            }
+            canvas {
+                display: block;
+                image-rendering: pixelated;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="view" width="256" height="256"></canvas>
+        <pre id="status">booting target (AIR bundle)...</pre>
+        <script type="module">
+            // Target document: the AIR Spark integration layer from this repo's bundle.
+            // Mode/SDK are injected here so one shared frame.js can serve both documents.
+            const parameters = new URLSearchParams(location.search);
+            window.__SPARK_PARITY_MODE = 'target';
+            window.__SPARK_PARITY_SDK = parameters.get('sdk') || '/build/cocosair.module.spark.js';
+        </script>
+        <script type="module" src="./frame.js"></script>
+    </body>
+</html>

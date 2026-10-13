@@ -136593,8 +136593,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610110058";
-const AIR_BUILD_NUMBER = 22;
+const AIR_BUILD_DATE = "202610120737";
+const AIR_BUILD_NUMBER = 79;
 class AirAppImpl {
   get session() {
     return this._scope;

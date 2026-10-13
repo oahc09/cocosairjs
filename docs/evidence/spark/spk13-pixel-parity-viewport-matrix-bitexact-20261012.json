@@ -1,0 +1,4807 @@
+{
+  "schemaVersion": "spark-pixel-parity-viewport-matrix/1",
+  "task": "SPK-13 / SPK-04 bit-exact rerun",
+  "recorded": "2026-10-12",
+  "extends": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-20261012.json",
+  "reasonForRerun": "src/air/spark/spark-math.ts changed: six members (Matrix4.invert / lookAt / compose / multiplyMatrices / makeRotationFromQuaternion, Quaternion.setFromRotationMatrix) stopped delegating to cc.* and now carry three r180 scalar bodies, so every pixel window accepted before the change binds a different source digest. This file re-establishes the same windows, cases, comparators and strict rule against the current source; it is a re-confirmation run, not new coverage.",
+  "windowsCovered": "Five windows on the {1,2} tiers: 1:1, 5:4 and ultra-wide at DPR 1, plus 1:1 and portrait at DPR 2. Cases are the four viewport/scissor-sensitive scenes (seeded-random400, procedural-text-splats, orthographic-camera, inset-viewport-scissor); the same 4-case subset as the predecessor file, so row counts stay comparable.",
+  "strictRule": "Unchanged from the predecessor: every RGBA8 channel byte difference must be 0, both sides non-empty, each side stable against its own repeat, zero JS + drained GL errors, identical context attributes and unmasked renderer inside one engine, source/asset digest unchanged during the run, negative control must move pixels. No tolerance, no masks.",
+  "predecessorStatus": "The predecessor file is kept as the historical record of the pre-rerun source state (it documents the collector-side unit fix and the before/after artifact comparison). Its rows are no longer bound to the current src/air/spark digest and must not be cited as evidence for it.",
+  "windows": [
+    {
+      "tag": "square-dpr1",
+      "report": "output/spark-pixel-parity-be-square-dpr1.json",
+      "publishedReport": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-reports/spark-pixel-parity-be-square-dpr1.json",
+      "css": "256x256",
+      "devicePixelRatio": 1,
+      "backingStore": "256x256",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "0a7eb1dc5ef05efd67d86e43c93e61b3ccee1af59a8598cd30b4aad9b4c223f4",
+      "drift": [],
+      "sourceUnchanged": true,
+      "sparkBundleSha256": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25"
+    },
+    {
+      "tag": "5x4-dpr1",
+      "report": "output/spark-pixel-parity-be-5x4-dpr1.json",
+      "publishedReport": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-reports/spark-pixel-parity-be-5x4-dpr1.json",
+      "css": "320x256",
+      "devicePixelRatio": 1,
+      "backingStore": "320x256",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "0a7eb1dc5ef05efd67d86e43c93e61b3ccee1af59a8598cd30b4aad9b4c223f4",
+      "drift": [],
+      "sourceUnchanged": true,
+      "sparkBundleSha256": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25"
+    },
+    {
+      "tag": "ultra-dpr1",
+      "report": "output/spark-pixel-parity-be-ultra-dpr1.json",
+      "publishedReport": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-reports/spark-pixel-parity-be-ultra-dpr1.json",
+      "css": "512x224",
+      "devicePixelRatio": 1,
+      "backingStore": "512x224",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "0a7eb1dc5ef05efd67d86e43c93e61b3ccee1af59a8598cd30b4aad9b4c223f4",
+      "drift": [],
+      "sourceUnchanged": true,
+      "sparkBundleSha256": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25"
+    },
+    {
+      "tag": "square-dpr2",
+      "report": "output/spark-pixel-parity-be-square-dpr2.json",
+      "publishedReport": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-reports/spark-pixel-parity-be-square-dpr2.json",
+      "css": "256x256",
+      "devicePixelRatio": 2,
+      "backingStore": "512x512",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "0a7eb1dc5ef05efd67d86e43c93e61b3ccee1af59a8598cd30b4aad9b4c223f4",
+      "drift": [],
+      "sourceUnchanged": true,
+      "sparkBundleSha256": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25"
+    },
+    {
+      "tag": "tall-dpr2",
+      "report": "output/spark-pixel-parity-be-tall-dpr2.json",
+      "publishedReport": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-reports/spark-pixel-parity-be-tall-dpr2.json",
+      "css": "224x512",
+      "devicePixelRatio": 2,
+      "backingStore": "448x1024",
+      "rows": 12,
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "aggregateSha256": "0a7eb1dc5ef05efd67d86e43c93e61b3ccee1af59a8598cd30b4aad9b4c223f4",
+      "drift": [],
+      "sourceUnchanged": true,
+      "sparkBundleSha256": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25"
+    }
+  ],
+  "rollup": {
+    "windowsExpected": 5,
+    "windowsCollected": 5,
+    "windowsMissing": [],
+    "rowsTotal": 60,
+    "rowsPassed": 60,
+    "channelMismatchSum": 0,
+    "maxErrorSum": 0,
+    "glErrors": 0,
+    "jsErrors": 0,
+    "repeatStableSelf": true,
+    "nativeIdentityAllPassed": true,
+    "environmentMatchAll": true,
+    "splatsMatchAll": true,
+    "antiCheatAllPassed": true,
+    "negativeControls": [
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 239534,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 239534,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 239534,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 261715,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 261715,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 261715,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 201631,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 201631,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 201631,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 957666,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 957666,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 957666,
+        "passed": true
+      },
+      {
+        "engine": "chromium",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 1742525,
+        "passed": true
+      },
+      {
+        "engine": "firefox",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 1742525,
+        "passed": true
+      },
+      {
+        "engine": "webkit",
+        "baselineMismatch": 0,
+        "perturbedMismatch": 1742525,
+        "passed": true
+      }
+    ],
+    "windowsAllPassed": true,
+    "allWindowsSourceUnchanged": true
+  },
+  "windowsDetail": [
+    {
+      "tag": "square-dpr1",
+      "report": "output/spark-pixel-parity-be-square-dpr1.json",
+      "publishedReport": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-reports/spark-pixel-parity-be-square-dpr1.json",
+      "css": "256x256",
+      "devicePixelRatio": 1,
+      "backingStore": "256x256",
+      "startedAt": "2026-10-12T03:09:03.381Z",
+      "endedAt": "2026-10-12T03:11:04.863Z",
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "negativeControl": [
+        {
+          "engine": "chromium",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 239534,
+          "passed": true
+        },
+        {
+          "engine": "firefox",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 239534,
+          "passed": true
+        },
+        {
+          "engine": "webkit",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 239534,
+          "passed": true
+        }
+      ],
+      "gpu": [
+        {
+          "engine": "chromium",
+          "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "unmaskedVendor": "Google Inc. (NVIDIA)",
+          "version": "149.0.7827.55",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "desynchronized": false,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true,
+            "xrCompatible": false
+          },
+          "drawingBufferColorSpace": "srgb",
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        },
+        {
+          "engine": "firefox",
+          "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+          "unmaskedVendor": "Google Inc. (NVIDIA)",
+          "version": "155.0",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "drawingBufferColorSpace": "srgb",
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        },
+        {
+          "engine": "webkit",
+          "unmaskedRenderer": "Apple GPU",
+          "unmaskedVendor": "Apple Inc.",
+          "version": "26.6",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "drawingBufferColorSpace": null,
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        }
+      ],
+      "rows": [
+        {
+          "engine": "chromium",
+          "case": "seeded-random400",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 256,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 168103,
+          "referenceNonempty": 168103,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "procedural-text-splats",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 256,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 34648,
+          "referenceNonempty": 34648,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "orthographic-camera",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 256,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 38959,
+          "referenceNonempty": 38959,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "inset-viewport-scissor",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 32,
+            "y": 32,
+            "width": 192,
+            "height": 192
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 80397,
+          "referenceNonempty": 80397,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/inset-viewport-scissor/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "seeded-random400",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 256,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 168103,
+          "referenceNonempty": 168103,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "procedural-text-splats",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 256,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 34077,
+          "referenceNonempty": 34077,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "orthographic-camera",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 256,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 38959,
+          "referenceNonempty": 38959,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "inset-viewport-scissor",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 32,
+            "y": 32,
+            "width": 192,
+            "height": 192
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 80397,
+          "referenceNonempty": 80397,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/inset-viewport-scissor/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "seeded-random400",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 256,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 168103,
+          "referenceNonempty": 168103,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "procedural-text-splats",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 256,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 33370,
+          "referenceNonempty": 33370,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "orthographic-camera",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 256,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 38959,
+          "referenceNonempty": 38959,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "inset-viewport-scissor",
+          "dims": "256x256",
+          "targetViewport": {
+            "x": 32,
+            "y": 32,
+            "width": 192,
+            "height": 192
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 80397,
+          "referenceNonempty": 80397,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/inset-viewport-scissor/reference.png"
+          }
+        }
+      ],
+      "sourceFreeze": {
+        "directories": [
+          "src",
+          "vendor",
+          "build",
+          "tools",
+          "docs"
+        ],
+        "files": 7419,
+        "bytes": 343738650,
+        "aggregateSha256": "0a7eb1dc5ef05efd67d86e43c93e61b3ccee1af59a8598cd30b4aad9b4c223f4",
+        "sourceUnchanged": true,
+        "drift": []
+      },
+      "identity": {
+        "head": "810e7d1a5b706eb91bcc76bab4bfc4c00297d2f5",
+        "dirty": "M README.md\n M ai/README.md\n M ai/ledgers/shaders-absorption.md\n M build/cocosair.module.d.ts\n M build/cocosair.module.js\n M docs/THIRD_PARTY_LICENSES.md\n M docs/UPSTREAM.md\n M docs/effects/README.md\n M docs/effects/current-sdk-refresh-delivery.md\n M docs/effects/wave4-validation-delivery.md\n M docs/license-decisions.json\n M docs/manual/materials.md\n M docs/manual/rendertargets.md\n M docs/reference/web-features.md\n M docs/upstream-file-map.json\n M package.json\n M src/cc.config.json\n M tools/README.md\n M tools/build/build-number.json\n M tools/debug/probes/README.md\n M tools/verify/license-audit.cjs\n M tools/verify/shaders-film-neon-browser.cjs\n M tools/verify/shaders-input-dissolve-browser.cjs\n M tools/verify/shaders-laser-card-browser.cjs\n M tools/verify/verify-feature-exports.cjs\n M tools/verify/verify-licenses.cjs\n?? ai/ledgers/spark-integration.md\n?? ai/plans/shaders-wave6-agent-benchmark.md\n?? ai/plans/spark-integration.md\n?? build/cocosair.module.spark.js\n?? build/cocosair.module.spark.js.map\n?? build/fflate/\n?? docs/effects/driver-pilot-validation-delivery.md\n?? docs/effects/driver-pilot.md\n?? docs/effects/generated/\n?? docs/effects/uv-fusion-pilots-validation-delivery.md\n?? docs/effects/wave5-capability-proposal.md\n?? docs/effects/wave5-docs-generation-delivery.md\n?? docs/effects/wave5-kickoff.md\n?? docs/effects/wave6-glass-agent-delivery.md\n?? docs/effects/wave6-kickoff.md\n?? docs/effects/wave6-neon-agent-delivery.md\n?? docs/effects/wave6-noise-agent-delivery.md\n?? docs/effects/wave6-validation-delivery.md\n?? docs/evidence/license-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-closure-audit.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-actual-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-closure-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-frozen-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-workspace-freshness.json\n?? docs/evidence/shaders-absorption/wave5-uv-fusion-pilots-gate.json\n?? docs/evidence/shaders-absorption/wave6-glass-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-minimal-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-neon-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-noise-agent-result.json\n?? docs/evidence/spark/\n?? docs/notes/spark-asset-sourcing.md\n?? docs/reference/spark-optional-entry.md\n?? examples/shader-driver-pilot/\n?? examples/shader-uv-fusion-pilot/\n?? licenses/LICENSE_fflate.txt\n?? licenses/LICENSE_spark.txt\n?? licenses/LICENSE_three.txt\n?? src/air/spark/\n?? src/exports/spark.ts\n?? test/parity/\n?? test/smoke/shaders-driver-pilot-acceptance.test.ts\n?? test/smoke/shaders-driver-pilot-production-review.test.ts\n?? test/smoke/shaders-driver-pilot-review.test.ts\n?? test/smoke/shaders-driver-pilot.test.ts\n?? test/smoke/shaders-effect-docs-review.test.ts\n?? test/smoke/shaders-effect-docs.test.ts\n?? test/smoke/shaders-uv-fusion-gate.test.ts\n?? test/smoke/shaders-uv-fusion.test.ts\n?? test/spark-math-parity.jest.config.js\n?? tools/build/register-spark-file-map.cjs\n?? tools/build/spark-runtime-tree.cjs\n?? tools/build/vendor-spark-rs-tree.cjs\n?? tools/build/vendor-spark-tree.cjs\n?? tools/debug/probes/spark-cpu-parity/\n?? tools/debug/probes/spark-native-gfx-probe/\n?? tools/debug/probes/spark-pixel-parity/\n?? tools/examples/shaders-effect-docs.cjs\n?? tools/generated/\n?? tools/verify/shaders-driver-pilot-browser.cjs\n?? tools/verify/shaders-driver-pilot-gate.cjs\n?? tools/verify/shaders-driver-pilot-oracle.cjs\n?? tools/verify/shaders-driver-pilot-performance.cjs\n?? tools/verify/shaders-driver-pilot.tsconfig.json\n?? tools/verify/shaders-uv-fusion-browser.cjs\n?? tools/verify/shaders-uv-fusion-gate.cjs\n?? tools/verify/shaders-uv-fusion.tsconfig.json\n?? tools/verify/shaders-wave5-gate.cjs\n?? tools/verify/spark-adapter-elements.cjs\n?? tools/verify/spark-assets.cjs\n?? tools/verify/spark-cpu-parity.cjs\n?? tools/verify/spark-data-parity.cjs\n?? tools/verify/spark-dpr-mismatch-parity.cjs\n?? tools/verify/spark-identity.cjs\n?? tools/verify/spark-inventory.cjs\n?? tools/verify/spark-math-parity.cjs\n?? tools/verify/spark-native-gfx-probe.cjs\n?? tools/verify/spark-pixel-parity.cjs\n?? tools/verify/spark-rs-audit.cjs\n?? vendor/spark-rs/\n?? vendor/spark/",
+        "node": "v24.14.0",
+        "sdk": {
+          "path": "build/cocosair.module.spark.js",
+          "sha256": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25"
+        },
+        "toolingPath": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js",
+        "toolingError": null,
+        "playwrightVersion": "1.63.0"
+      },
+      "fingerprints": {
+        "build/cocosair.module.spark.js": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25",
+        "tools/debug/probes/spark-pixel-parity/index.html": "9e680891211f2184d31b200e661abe628baed24e15e2cb46ae31cfbd7376bbf8",
+        "tools/debug/probes/spark-pixel-parity/reference.html": "6bf9bb023ab558fbf790291fa107bc50730da8619bfc07bd1b962feae8e97c1f",
+        "tools/debug/probes/spark-pixel-parity/frame.js": "6d0b058b5936b823f21290648bfad0c8a390016c1424b2f6a3257ec509356513",
+        "tools/verify/spark-pixel-parity.cjs": "9eabf104d3aaf5e3bf66de4157248c82c28b246495be0434b89f6501441ebe5d",
+        "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+        "tools/verify/competitive-example-server.cjs": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af",
+        "tools/verify/loopback-browser-env.cjs": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929",
+        "ai/plans/spark-integration.md": "d58686f6b852516c1ca972e4641b387ad0a059f4c6335cf9370f6ee27fd49174",
+        "src/air/spark/cocos-spark-layer.ts": "4ae4b4c40e88505a9d9a725571749ecfa7f1a4e12d40eb77d30bb5445fc2a994",
+        "src/air/spark/cocos-renderer.ts": "f0fc239ec972c354670eddf04246150192ee2411c21f6ffd7a413030a76c9858",
+        "src/air/spark/spark-api-adapter.ts": "043f670516bb1805c0518cfbcae8dd9c7f3b16f32f4352119cd24003e5085b36",
+        "src/exports/spark.ts": "67c4f85064f7fa596a201e4fac27c0d86bb53501924ad0460a38e930963e4664"
+      },
+      "comparator": {
+        "selfTestPassed": true,
+        "checks": [
+          {
+            "name": "rejects undefined image",
+            "passed": true
+          },
+          {
+            "name": "rejects NaN byte",
+            "passed": true
+          },
+          {
+            "name": "rejects Infinity byte",
+            "passed": true
+          },
+          {
+            "name": "rejects -1 byte",
+            "passed": true
+          },
+          {
+            "name": "rejects 256 byte",
+            "passed": true
+          },
+          {
+            "name": "rejects fractional byte",
+            "passed": true
+          },
+          {
+            "name": "rejects null byte",
+            "passed": true
+          },
+          {
+            "name": "rejects string byte",
+            "passed": true
+          },
+          {
+            "name": "rejects truncated data",
+            "passed": true
+          },
+          {
+            "name": "rejects empty data",
+            "passed": true
+          },
+          {
+            "name": "rejects wrong container",
+            "passed": true
+          },
+          {
+            "name": "rejects zero width",
+            "passed": true
+          },
+          {
+            "name": "rejects dimension mismatch",
+            "passed": true
+          },
+          {
+            "name": "single channel delta fails",
+            "passed": true
+          },
+          {
+            "name": "alpha delta counts",
+            "passed": true
+          },
+          {
+            "name": "identical buffers pass",
+            "passed": true
+          }
+        ],
+        "rule": "channelMismatch === 0 (alpha included); dimensions and byte domains validated before compare"
+      }
+    },
+    {
+      "tag": "5x4-dpr1",
+      "report": "output/spark-pixel-parity-be-5x4-dpr1.json",
+      "publishedReport": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-reports/spark-pixel-parity-be-5x4-dpr1.json",
+      "css": "320x256",
+      "devicePixelRatio": 1,
+      "backingStore": "320x256",
+      "startedAt": "2026-10-12T03:11:06.219Z",
+      "endedAt": "2026-10-12T03:13:32.705Z",
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "negativeControl": [
+        {
+          "engine": "chromium",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 261715,
+          "passed": true
+        },
+        {
+          "engine": "firefox",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 261715,
+          "passed": true
+        },
+        {
+          "engine": "webkit",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 261715,
+          "passed": true
+        }
+      ],
+      "gpu": [
+        {
+          "engine": "chromium",
+          "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "unmaskedVendor": "Google Inc. (NVIDIA)",
+          "version": "149.0.7827.55",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "desynchronized": false,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true,
+            "xrCompatible": false
+          },
+          "drawingBufferColorSpace": "srgb",
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        },
+        {
+          "engine": "firefox",
+          "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+          "unmaskedVendor": "Google Inc. (NVIDIA)",
+          "version": "155.0",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "drawingBufferColorSpace": "srgb",
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        },
+        {
+          "engine": "webkit",
+          "unmaskedRenderer": "Apple GPU",
+          "unmaskedVendor": "Apple Inc.",
+          "version": "26.6",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "drawingBufferColorSpace": null,
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        }
+      ],
+      "rows": [
+        {
+          "engine": "chromium",
+          "case": "seeded-random400",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 175263,
+          "referenceNonempty": 175263,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "procedural-text-splats",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 34648,
+          "referenceNonempty": 34648,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "orthographic-camera",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 38967,
+          "referenceNonempty": 38967,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "inset-viewport-scissor",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 40,
+            "y": 32,
+            "width": 240,
+            "height": 192
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 81859,
+          "referenceNonempty": 81859,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/inset-viewport-scissor/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "seeded-random400",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 175263,
+          "referenceNonempty": 175263,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "procedural-text-splats",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 34077,
+          "referenceNonempty": 34077,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "orthographic-camera",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 38967,
+          "referenceNonempty": 38967,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "inset-viewport-scissor",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 40,
+            "y": 32,
+            "width": 240,
+            "height": 192
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 81859,
+          "referenceNonempty": 81859,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/inset-viewport-scissor/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "seeded-random400",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 175263,
+          "referenceNonempty": 175263,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "procedural-text-splats",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 33370,
+          "referenceNonempty": 33370,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "orthographic-camera",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 256
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 38967,
+          "referenceNonempty": 38967,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "inset-viewport-scissor",
+          "dims": "320x256",
+          "targetViewport": {
+            "x": 40,
+            "y": 32,
+            "width": 240,
+            "height": 192
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 81859,
+          "referenceNonempty": 81859,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/inset-viewport-scissor/reference.png"
+          }
+        }
+      ],
+      "sourceFreeze": {
+        "directories": [
+          "src",
+          "vendor",
+          "build",
+          "tools",
+          "docs"
+        ],
+        "files": 7419,
+        "bytes": 343738650,
+        "aggregateSha256": "0a7eb1dc5ef05efd67d86e43c93e61b3ccee1af59a8598cd30b4aad9b4c223f4",
+        "sourceUnchanged": true,
+        "drift": []
+      },
+      "identity": {
+        "head": "810e7d1a5b706eb91bcc76bab4bfc4c00297d2f5",
+        "dirty": "M README.md\n M ai/README.md\n M ai/ledgers/shaders-absorption.md\n M build/cocosair.module.d.ts\n M build/cocosair.module.js\n M docs/THIRD_PARTY_LICENSES.md\n M docs/UPSTREAM.md\n M docs/effects/README.md\n M docs/effects/current-sdk-refresh-delivery.md\n M docs/effects/wave4-validation-delivery.md\n M docs/license-decisions.json\n M docs/manual/materials.md\n M docs/manual/rendertargets.md\n M docs/reference/web-features.md\n M docs/upstream-file-map.json\n M package.json\n M src/cc.config.json\n M tools/README.md\n M tools/build/build-number.json\n M tools/debug/probes/README.md\n M tools/verify/license-audit.cjs\n M tools/verify/shaders-film-neon-browser.cjs\n M tools/verify/shaders-input-dissolve-browser.cjs\n M tools/verify/shaders-laser-card-browser.cjs\n M tools/verify/verify-feature-exports.cjs\n M tools/verify/verify-licenses.cjs\n?? ai/ledgers/spark-integration.md\n?? ai/plans/shaders-wave6-agent-benchmark.md\n?? ai/plans/spark-integration.md\n?? build/cocosair.module.spark.js\n?? build/cocosair.module.spark.js.map\n?? build/fflate/\n?? docs/effects/driver-pilot-validation-delivery.md\n?? docs/effects/driver-pilot.md\n?? docs/effects/generated/\n?? docs/effects/uv-fusion-pilots-validation-delivery.md\n?? docs/effects/wave5-capability-proposal.md\n?? docs/effects/wave5-docs-generation-delivery.md\n?? docs/effects/wave5-kickoff.md\n?? docs/effects/wave6-glass-agent-delivery.md\n?? docs/effects/wave6-kickoff.md\n?? docs/effects/wave6-neon-agent-delivery.md\n?? docs/effects/wave6-noise-agent-delivery.md\n?? docs/effects/wave6-validation-delivery.md\n?? docs/evidence/license-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-closure-audit.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-actual-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-closure-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-frozen-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-workspace-freshness.json\n?? docs/evidence/shaders-absorption/wave5-uv-fusion-pilots-gate.json\n?? docs/evidence/shaders-absorption/wave6-glass-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-minimal-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-neon-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-noise-agent-result.json\n?? docs/evidence/spark/\n?? docs/notes/spark-asset-sourcing.md\n?? docs/reference/spark-optional-entry.md\n?? examples/shader-driver-pilot/\n?? examples/shader-uv-fusion-pilot/\n?? licenses/LICENSE_fflate.txt\n?? licenses/LICENSE_spark.txt\n?? licenses/LICENSE_three.txt\n?? src/air/spark/\n?? src/exports/spark.ts\n?? test/parity/\n?? test/smoke/shaders-driver-pilot-acceptance.test.ts\n?? test/smoke/shaders-driver-pilot-production-review.test.ts\n?? test/smoke/shaders-driver-pilot-review.test.ts\n?? test/smoke/shaders-driver-pilot.test.ts\n?? test/smoke/shaders-effect-docs-review.test.ts\n?? test/smoke/shaders-effect-docs.test.ts\n?? test/smoke/shaders-uv-fusion-gate.test.ts\n?? test/smoke/shaders-uv-fusion.test.ts\n?? test/spark-math-parity.jest.config.js\n?? tools/build/register-spark-file-map.cjs\n?? tools/build/spark-runtime-tree.cjs\n?? tools/build/vendor-spark-rs-tree.cjs\n?? tools/build/vendor-spark-tree.cjs\n?? tools/debug/probes/spark-cpu-parity/\n?? tools/debug/probes/spark-native-gfx-probe/\n?? tools/debug/probes/spark-pixel-parity/\n?? tools/examples/shaders-effect-docs.cjs\n?? tools/generated/\n?? tools/verify/shaders-driver-pilot-browser.cjs\n?? tools/verify/shaders-driver-pilot-gate.cjs\n?? tools/verify/shaders-driver-pilot-oracle.cjs\n?? tools/verify/shaders-driver-pilot-performance.cjs\n?? tools/verify/shaders-driver-pilot.tsconfig.json\n?? tools/verify/shaders-uv-fusion-browser.cjs\n?? tools/verify/shaders-uv-fusion-gate.cjs\n?? tools/verify/shaders-uv-fusion.tsconfig.json\n?? tools/verify/shaders-wave5-gate.cjs\n?? tools/verify/spark-adapter-elements.cjs\n?? tools/verify/spark-assets.cjs\n?? tools/verify/spark-cpu-parity.cjs\n?? tools/verify/spark-data-parity.cjs\n?? tools/verify/spark-dpr-mismatch-parity.cjs\n?? tools/verify/spark-identity.cjs\n?? tools/verify/spark-inventory.cjs\n?? tools/verify/spark-math-parity.cjs\n?? tools/verify/spark-native-gfx-probe.cjs\n?? tools/verify/spark-pixel-parity.cjs\n?? tools/verify/spark-rs-audit.cjs\n?? vendor/spark-rs/\n?? vendor/spark/",
+        "node": "v24.14.0",
+        "sdk": {
+          "path": "build/cocosair.module.spark.js",
+          "sha256": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25"
+        },
+        "toolingPath": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js",
+        "toolingError": null,
+        "playwrightVersion": "1.63.0"
+      },
+      "fingerprints": {
+        "build/cocosair.module.spark.js": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25",
+        "tools/debug/probes/spark-pixel-parity/index.html": "9e680891211f2184d31b200e661abe628baed24e15e2cb46ae31cfbd7376bbf8",
+        "tools/debug/probes/spark-pixel-parity/reference.html": "6bf9bb023ab558fbf790291fa107bc50730da8619bfc07bd1b962feae8e97c1f",
+        "tools/debug/probes/spark-pixel-parity/frame.js": "6d0b058b5936b823f21290648bfad0c8a390016c1424b2f6a3257ec509356513",
+        "tools/verify/spark-pixel-parity.cjs": "9eabf104d3aaf5e3bf66de4157248c82c28b246495be0434b89f6501441ebe5d",
+        "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+        "tools/verify/competitive-example-server.cjs": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af",
+        "tools/verify/loopback-browser-env.cjs": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929",
+        "ai/plans/spark-integration.md": "d58686f6b852516c1ca972e4641b387ad0a059f4c6335cf9370f6ee27fd49174",
+        "src/air/spark/cocos-spark-layer.ts": "4ae4b4c40e88505a9d9a725571749ecfa7f1a4e12d40eb77d30bb5445fc2a994",
+        "src/air/spark/cocos-renderer.ts": "f0fc239ec972c354670eddf04246150192ee2411c21f6ffd7a413030a76c9858",
+        "src/air/spark/spark-api-adapter.ts": "043f670516bb1805c0518cfbcae8dd9c7f3b16f32f4352119cd24003e5085b36",
+        "src/exports/spark.ts": "67c4f85064f7fa596a201e4fac27c0d86bb53501924ad0460a38e930963e4664"
+      },
+      "comparator": {
+        "selfTestPassed": true,
+        "checks": [
+          {
+            "name": "rejects undefined image",
+            "passed": true
+          },
+          {
+            "name": "rejects NaN byte",
+            "passed": true
+          },
+          {
+            "name": "rejects Infinity byte",
+            "passed": true
+          },
+          {
+            "name": "rejects -1 byte",
+            "passed": true
+          },
+          {
+            "name": "rejects 256 byte",
+            "passed": true
+          },
+          {
+            "name": "rejects fractional byte",
+            "passed": true
+          },
+          {
+            "name": "rejects null byte",
+            "passed": true
+          },
+          {
+            "name": "rejects string byte",
+            "passed": true
+          },
+          {
+            "name": "rejects truncated data",
+            "passed": true
+          },
+          {
+            "name": "rejects empty data",
+            "passed": true
+          },
+          {
+            "name": "rejects wrong container",
+            "passed": true
+          },
+          {
+            "name": "rejects zero width",
+            "passed": true
+          },
+          {
+            "name": "rejects dimension mismatch",
+            "passed": true
+          },
+          {
+            "name": "single channel delta fails",
+            "passed": true
+          },
+          {
+            "name": "alpha delta counts",
+            "passed": true
+          },
+          {
+            "name": "identical buffers pass",
+            "passed": true
+          }
+        ],
+        "rule": "channelMismatch === 0 (alpha included); dimensions and byte domains validated before compare"
+      }
+    },
+    {
+      "tag": "ultra-dpr1",
+      "report": "output/spark-pixel-parity-be-ultra-dpr1.json",
+      "publishedReport": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-reports/spark-pixel-parity-be-ultra-dpr1.json",
+      "css": "512x224",
+      "devicePixelRatio": 1,
+      "backingStore": "512x224",
+      "startedAt": "2026-10-12T03:13:34.013Z",
+      "endedAt": "2026-10-12T03:16:58.627Z",
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "negativeControl": [
+        {
+          "engine": "chromium",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 201631,
+          "passed": true
+        },
+        {
+          "engine": "firefox",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 201631,
+          "passed": true
+        },
+        {
+          "engine": "webkit",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 201631,
+          "passed": true
+        }
+      ],
+      "gpu": [
+        {
+          "engine": "chromium",
+          "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "unmaskedVendor": "Google Inc. (NVIDIA)",
+          "version": "149.0.7827.55",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "desynchronized": false,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true,
+            "xrCompatible": false
+          },
+          "drawingBufferColorSpace": "srgb",
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        },
+        {
+          "engine": "firefox",
+          "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+          "unmaskedVendor": "Google Inc. (NVIDIA)",
+          "version": "155.0",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "drawingBufferColorSpace": "srgb",
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        },
+        {
+          "engine": "webkit",
+          "unmaskedRenderer": "Apple GPU",
+          "unmaskedVendor": "Apple Inc.",
+          "version": "26.6",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "drawingBufferColorSpace": null,
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        }
+      ],
+      "rows": [
+        {
+          "engine": "chromium",
+          "case": "seeded-random400",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 224
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 134238,
+          "referenceNonempty": 134238,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "procedural-text-splats",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 224
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 26648,
+          "referenceNonempty": 26648,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "orthographic-camera",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 224
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 29843,
+          "referenceNonempty": 29843,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "inset-viewport-scissor",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 64,
+            "y": 28,
+            "width": 384,
+            "height": 168
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 62706,
+          "referenceNonempty": 62706,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/inset-viewport-scissor/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "seeded-random400",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 224
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 134238,
+          "referenceNonempty": 134238,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "procedural-text-splats",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 224
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 26413,
+          "referenceNonempty": 26413,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "orthographic-camera",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 224
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 29843,
+          "referenceNonempty": 29843,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "inset-viewport-scissor",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 64,
+            "y": 28,
+            "width": 384,
+            "height": 168
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 62706,
+          "referenceNonempty": 62706,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/inset-viewport-scissor/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "seeded-random400",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 224
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 134238,
+          "referenceNonempty": 134238,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "procedural-text-splats",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 224
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 25702,
+          "referenceNonempty": 25702,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "orthographic-camera",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 224
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 29843,
+          "referenceNonempty": 29843,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "inset-viewport-scissor",
+          "dims": "512x224",
+          "targetViewport": {
+            "x": 64,
+            "y": 28,
+            "width": 384,
+            "height": 168
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 62706,
+          "referenceNonempty": 62706,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/inset-viewport-scissor/reference.png"
+          }
+        }
+      ],
+      "sourceFreeze": {
+        "directories": [
+          "src",
+          "vendor",
+          "build",
+          "tools",
+          "docs"
+        ],
+        "files": 7419,
+        "bytes": 343738650,
+        "aggregateSha256": "0a7eb1dc5ef05efd67d86e43c93e61b3ccee1af59a8598cd30b4aad9b4c223f4",
+        "sourceUnchanged": true,
+        "drift": []
+      },
+      "identity": {
+        "head": "810e7d1a5b706eb91bcc76bab4bfc4c00297d2f5",
+        "dirty": "M README.md\n M ai/README.md\n M ai/ledgers/shaders-absorption.md\n M build/cocosair.module.d.ts\n M build/cocosair.module.js\n M docs/THIRD_PARTY_LICENSES.md\n M docs/UPSTREAM.md\n M docs/effects/README.md\n M docs/effects/current-sdk-refresh-delivery.md\n M docs/effects/wave4-validation-delivery.md\n M docs/license-decisions.json\n M docs/manual/materials.md\n M docs/manual/rendertargets.md\n M docs/reference/web-features.md\n M docs/upstream-file-map.json\n M package.json\n M src/cc.config.json\n M tools/README.md\n M tools/build/build-number.json\n M tools/debug/probes/README.md\n M tools/verify/license-audit.cjs\n M tools/verify/shaders-film-neon-browser.cjs\n M tools/verify/shaders-input-dissolve-browser.cjs\n M tools/verify/shaders-laser-card-browser.cjs\n M tools/verify/verify-feature-exports.cjs\n M tools/verify/verify-licenses.cjs\n?? ai/ledgers/spark-integration.md\n?? ai/plans/shaders-wave6-agent-benchmark.md\n?? ai/plans/spark-integration.md\n?? build/cocosair.module.spark.js\n?? build/cocosair.module.spark.js.map\n?? build/fflate/\n?? docs/effects/driver-pilot-validation-delivery.md\n?? docs/effects/driver-pilot.md\n?? docs/effects/generated/\n?? docs/effects/uv-fusion-pilots-validation-delivery.md\n?? docs/effects/wave5-capability-proposal.md\n?? docs/effects/wave5-docs-generation-delivery.md\n?? docs/effects/wave5-kickoff.md\n?? docs/effects/wave6-glass-agent-delivery.md\n?? docs/effects/wave6-kickoff.md\n?? docs/effects/wave6-neon-agent-delivery.md\n?? docs/effects/wave6-noise-agent-delivery.md\n?? docs/effects/wave6-validation-delivery.md\n?? docs/evidence/license-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-closure-audit.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-actual-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-closure-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-frozen-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-workspace-freshness.json\n?? docs/evidence/shaders-absorption/wave5-uv-fusion-pilots-gate.json\n?? docs/evidence/shaders-absorption/wave6-glass-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-minimal-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-neon-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-noise-agent-result.json\n?? docs/evidence/spark/\n?? docs/notes/spark-asset-sourcing.md\n?? docs/reference/spark-optional-entry.md\n?? examples/shader-driver-pilot/\n?? examples/shader-uv-fusion-pilot/\n?? licenses/LICENSE_fflate.txt\n?? licenses/LICENSE_spark.txt\n?? licenses/LICENSE_three.txt\n?? src/air/spark/\n?? src/exports/spark.ts\n?? test/parity/\n?? test/smoke/shaders-driver-pilot-acceptance.test.ts\n?? test/smoke/shaders-driver-pilot-production-review.test.ts\n?? test/smoke/shaders-driver-pilot-review.test.ts\n?? test/smoke/shaders-driver-pilot.test.ts\n?? test/smoke/shaders-effect-docs-review.test.ts\n?? test/smoke/shaders-effect-docs.test.ts\n?? test/smoke/shaders-uv-fusion-gate.test.ts\n?? test/smoke/shaders-uv-fusion.test.ts\n?? test/spark-math-parity.jest.config.js\n?? tools/build/register-spark-file-map.cjs\n?? tools/build/spark-runtime-tree.cjs\n?? tools/build/vendor-spark-rs-tree.cjs\n?? tools/build/vendor-spark-tree.cjs\n?? tools/debug/probes/spark-cpu-parity/\n?? tools/debug/probes/spark-native-gfx-probe/\n?? tools/debug/probes/spark-pixel-parity/\n?? tools/examples/shaders-effect-docs.cjs\n?? tools/generated/\n?? tools/verify/shaders-driver-pilot-browser.cjs\n?? tools/verify/shaders-driver-pilot-gate.cjs\n?? tools/verify/shaders-driver-pilot-oracle.cjs\n?? tools/verify/shaders-driver-pilot-performance.cjs\n?? tools/verify/shaders-driver-pilot.tsconfig.json\n?? tools/verify/shaders-uv-fusion-browser.cjs\n?? tools/verify/shaders-uv-fusion-gate.cjs\n?? tools/verify/shaders-uv-fusion.tsconfig.json\n?? tools/verify/shaders-wave5-gate.cjs\n?? tools/verify/spark-adapter-elements.cjs\n?? tools/verify/spark-assets.cjs\n?? tools/verify/spark-cpu-parity.cjs\n?? tools/verify/spark-data-parity.cjs\n?? tools/verify/spark-dpr-mismatch-parity.cjs\n?? tools/verify/spark-identity.cjs\n?? tools/verify/spark-inventory.cjs\n?? tools/verify/spark-math-parity.cjs\n?? tools/verify/spark-native-gfx-probe.cjs\n?? tools/verify/spark-pixel-parity.cjs\n?? tools/verify/spark-rs-audit.cjs\n?? vendor/spark-rs/\n?? vendor/spark/",
+        "node": "v24.14.0",
+        "sdk": {
+          "path": "build/cocosair.module.spark.js",
+          "sha256": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25"
+        },
+        "toolingPath": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js",
+        "toolingError": null,
+        "playwrightVersion": "1.63.0"
+      },
+      "fingerprints": {
+        "build/cocosair.module.spark.js": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25",
+        "tools/debug/probes/spark-pixel-parity/index.html": "9e680891211f2184d31b200e661abe628baed24e15e2cb46ae31cfbd7376bbf8",
+        "tools/debug/probes/spark-pixel-parity/reference.html": "6bf9bb023ab558fbf790291fa107bc50730da8619bfc07bd1b962feae8e97c1f",
+        "tools/debug/probes/spark-pixel-parity/frame.js": "6d0b058b5936b823f21290648bfad0c8a390016c1424b2f6a3257ec509356513",
+        "tools/verify/spark-pixel-parity.cjs": "9eabf104d3aaf5e3bf66de4157248c82c28b246495be0434b89f6501441ebe5d",
+        "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+        "tools/verify/competitive-example-server.cjs": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af",
+        "tools/verify/loopback-browser-env.cjs": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929",
+        "ai/plans/spark-integration.md": "d58686f6b852516c1ca972e4641b387ad0a059f4c6335cf9370f6ee27fd49174",
+        "src/air/spark/cocos-spark-layer.ts": "4ae4b4c40e88505a9d9a725571749ecfa7f1a4e12d40eb77d30bb5445fc2a994",
+        "src/air/spark/cocos-renderer.ts": "f0fc239ec972c354670eddf04246150192ee2411c21f6ffd7a413030a76c9858",
+        "src/air/spark/spark-api-adapter.ts": "043f670516bb1805c0518cfbcae8dd9c7f3b16f32f4352119cd24003e5085b36",
+        "src/exports/spark.ts": "67c4f85064f7fa596a201e4fac27c0d86bb53501924ad0460a38e930963e4664"
+      },
+      "comparator": {
+        "selfTestPassed": true,
+        "checks": [
+          {
+            "name": "rejects undefined image",
+            "passed": true
+          },
+          {
+            "name": "rejects NaN byte",
+            "passed": true
+          },
+          {
+            "name": "rejects Infinity byte",
+            "passed": true
+          },
+          {
+            "name": "rejects -1 byte",
+            "passed": true
+          },
+          {
+            "name": "rejects 256 byte",
+            "passed": true
+          },
+          {
+            "name": "rejects fractional byte",
+            "passed": true
+          },
+          {
+            "name": "rejects null byte",
+            "passed": true
+          },
+          {
+            "name": "rejects string byte",
+            "passed": true
+          },
+          {
+            "name": "rejects truncated data",
+            "passed": true
+          },
+          {
+            "name": "rejects empty data",
+            "passed": true
+          },
+          {
+            "name": "rejects wrong container",
+            "passed": true
+          },
+          {
+            "name": "rejects zero width",
+            "passed": true
+          },
+          {
+            "name": "rejects dimension mismatch",
+            "passed": true
+          },
+          {
+            "name": "single channel delta fails",
+            "passed": true
+          },
+          {
+            "name": "alpha delta counts",
+            "passed": true
+          },
+          {
+            "name": "identical buffers pass",
+            "passed": true
+          }
+        ],
+        "rule": "channelMismatch === 0 (alpha included); dimensions and byte domains validated before compare"
+      }
+    },
+    {
+      "tag": "square-dpr2",
+      "report": "output/spark-pixel-parity-be-square-dpr2.json",
+      "publishedReport": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-reports/spark-pixel-parity-be-square-dpr2.json",
+      "css": "256x256",
+      "devicePixelRatio": 2,
+      "backingStore": "512x512",
+      "startedAt": "2026-10-12T03:16:59.983Z",
+      "endedAt": "2026-10-12T03:23:15.914Z",
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "negativeControl": [
+        {
+          "engine": "chromium",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 957666,
+          "passed": true
+        },
+        {
+          "engine": "firefox",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 957666,
+          "passed": true
+        },
+        {
+          "engine": "webkit",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 957666,
+          "passed": true
+        }
+      ],
+      "gpu": [
+        {
+          "engine": "chromium",
+          "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "unmaskedVendor": "Google Inc. (NVIDIA)",
+          "version": "149.0.7827.55",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "desynchronized": false,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true,
+            "xrCompatible": false
+          },
+          "drawingBufferColorSpace": "srgb",
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        },
+        {
+          "engine": "firefox",
+          "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+          "unmaskedVendor": "Google Inc. (NVIDIA)",
+          "version": "155.0",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "drawingBufferColorSpace": "srgb",
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        },
+        {
+          "engine": "webkit",
+          "unmaskedRenderer": "Apple GPU",
+          "unmaskedVendor": "Apple Inc.",
+          "version": "26.6",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "drawingBufferColorSpace": null,
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        }
+      ],
+      "rows": [
+        {
+          "engine": "chromium",
+          "case": "seeded-random400",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 512
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 671960,
+          "referenceNonempty": 671960,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "procedural-text-splats",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 512
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 137291,
+          "referenceNonempty": 137291,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "orthographic-camera",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 512
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 155617,
+          "referenceNonempty": 155617,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "inset-viewport-scissor",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 64,
+            "y": 64,
+            "width": 384,
+            "height": 384
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 321076,
+          "referenceNonempty": 321076,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/inset-viewport-scissor/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "seeded-random400",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 512
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 671960,
+          "referenceNonempty": 671960,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "procedural-text-splats",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 512
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 134911,
+          "referenceNonempty": 134911,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "orthographic-camera",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 512
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 155617,
+          "referenceNonempty": 155617,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "inset-viewport-scissor",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 64,
+            "y": 64,
+            "width": 384,
+            "height": 384
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 321076,
+          "referenceNonempty": 321076,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/inset-viewport-scissor/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "seeded-random400",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 512
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 671960,
+          "referenceNonempty": 671960,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "procedural-text-splats",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 512
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 133709,
+          "referenceNonempty": 133709,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "orthographic-camera",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 512,
+            "height": 512
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 155617,
+          "referenceNonempty": 155617,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "inset-viewport-scissor",
+          "dims": "512x512",
+          "targetViewport": {
+            "x": 64,
+            "y": 64,
+            "width": 384,
+            "height": 384
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 321076,
+          "referenceNonempty": 321076,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/inset-viewport-scissor/reference.png"
+          }
+        }
+      ],
+      "sourceFreeze": {
+        "directories": [
+          "src",
+          "vendor",
+          "build",
+          "tools",
+          "docs"
+        ],
+        "files": 7419,
+        "bytes": 343738650,
+        "aggregateSha256": "0a7eb1dc5ef05efd67d86e43c93e61b3ccee1af59a8598cd30b4aad9b4c223f4",
+        "sourceUnchanged": true,
+        "drift": []
+      },
+      "identity": {
+        "head": "810e7d1a5b706eb91bcc76bab4bfc4c00297d2f5",
+        "dirty": "M README.md\n M ai/README.md\n M ai/ledgers/shaders-absorption.md\n M build/cocosair.module.d.ts\n M build/cocosair.module.js\n M docs/THIRD_PARTY_LICENSES.md\n M docs/UPSTREAM.md\n M docs/effects/README.md\n M docs/effects/current-sdk-refresh-delivery.md\n M docs/effects/wave4-validation-delivery.md\n M docs/license-decisions.json\n M docs/manual/materials.md\n M docs/manual/rendertargets.md\n M docs/reference/web-features.md\n M docs/upstream-file-map.json\n M package.json\n M src/cc.config.json\n M tools/README.md\n M tools/build/build-number.json\n M tools/debug/probes/README.md\n M tools/verify/license-audit.cjs\n M tools/verify/shaders-film-neon-browser.cjs\n M tools/verify/shaders-input-dissolve-browser.cjs\n M tools/verify/shaders-laser-card-browser.cjs\n M tools/verify/verify-feature-exports.cjs\n M tools/verify/verify-licenses.cjs\n?? ai/ledgers/spark-integration.md\n?? ai/plans/shaders-wave6-agent-benchmark.md\n?? ai/plans/spark-integration.md\n?? build/cocosair.module.spark.js\n?? build/cocosair.module.spark.js.map\n?? build/fflate/\n?? docs/effects/driver-pilot-validation-delivery.md\n?? docs/effects/driver-pilot.md\n?? docs/effects/generated/\n?? docs/effects/uv-fusion-pilots-validation-delivery.md\n?? docs/effects/wave5-capability-proposal.md\n?? docs/effects/wave5-docs-generation-delivery.md\n?? docs/effects/wave5-kickoff.md\n?? docs/effects/wave6-glass-agent-delivery.md\n?? docs/effects/wave6-kickoff.md\n?? docs/effects/wave6-neon-agent-delivery.md\n?? docs/effects/wave6-noise-agent-delivery.md\n?? docs/effects/wave6-validation-delivery.md\n?? docs/evidence/license-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-closure-audit.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-actual-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-closure-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-frozen-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-workspace-freshness.json\n?? docs/evidence/shaders-absorption/wave5-uv-fusion-pilots-gate.json\n?? docs/evidence/shaders-absorption/wave6-glass-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-minimal-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-neon-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-noise-agent-result.json\n?? docs/evidence/spark/\n?? docs/notes/spark-asset-sourcing.md\n?? docs/reference/spark-optional-entry.md\n?? examples/shader-driver-pilot/\n?? examples/shader-uv-fusion-pilot/\n?? licenses/LICENSE_fflate.txt\n?? licenses/LICENSE_spark.txt\n?? licenses/LICENSE_three.txt\n?? src/air/spark/\n?? src/exports/spark.ts\n?? test/parity/\n?? test/smoke/shaders-driver-pilot-acceptance.test.ts\n?? test/smoke/shaders-driver-pilot-production-review.test.ts\n?? test/smoke/shaders-driver-pilot-review.test.ts\n?? test/smoke/shaders-driver-pilot.test.ts\n?? test/smoke/shaders-effect-docs-review.test.ts\n?? test/smoke/shaders-effect-docs.test.ts\n?? test/smoke/shaders-uv-fusion-gate.test.ts\n?? test/smoke/shaders-uv-fusion.test.ts\n?? test/spark-math-parity.jest.config.js\n?? tools/build/register-spark-file-map.cjs\n?? tools/build/spark-runtime-tree.cjs\n?? tools/build/vendor-spark-rs-tree.cjs\n?? tools/build/vendor-spark-tree.cjs\n?? tools/debug/probes/spark-cpu-parity/\n?? tools/debug/probes/spark-native-gfx-probe/\n?? tools/debug/probes/spark-pixel-parity/\n?? tools/examples/shaders-effect-docs.cjs\n?? tools/generated/\n?? tools/verify/shaders-driver-pilot-browser.cjs\n?? tools/verify/shaders-driver-pilot-gate.cjs\n?? tools/verify/shaders-driver-pilot-oracle.cjs\n?? tools/verify/shaders-driver-pilot-performance.cjs\n?? tools/verify/shaders-driver-pilot.tsconfig.json\n?? tools/verify/shaders-uv-fusion-browser.cjs\n?? tools/verify/shaders-uv-fusion-gate.cjs\n?? tools/verify/shaders-uv-fusion.tsconfig.json\n?? tools/verify/shaders-wave5-gate.cjs\n?? tools/verify/spark-adapter-elements.cjs\n?? tools/verify/spark-assets.cjs\n?? tools/verify/spark-cpu-parity.cjs\n?? tools/verify/spark-data-parity.cjs\n?? tools/verify/spark-dpr-mismatch-parity.cjs\n?? tools/verify/spark-identity.cjs\n?? tools/verify/spark-inventory.cjs\n?? tools/verify/spark-math-parity.cjs\n?? tools/verify/spark-native-gfx-probe.cjs\n?? tools/verify/spark-pixel-parity.cjs\n?? tools/verify/spark-rs-audit.cjs\n?? vendor/spark-rs/\n?? vendor/spark/",
+        "node": "v24.14.0",
+        "sdk": {
+          "path": "build/cocosair.module.spark.js",
+          "sha256": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25"
+        },
+        "toolingPath": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js",
+        "toolingError": null,
+        "playwrightVersion": "1.63.0"
+      },
+      "fingerprints": {
+        "build/cocosair.module.spark.js": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25",
+        "tools/debug/probes/spark-pixel-parity/index.html": "9e680891211f2184d31b200e661abe628baed24e15e2cb46ae31cfbd7376bbf8",
+        "tools/debug/probes/spark-pixel-parity/reference.html": "6bf9bb023ab558fbf790291fa107bc50730da8619bfc07bd1b962feae8e97c1f",
+        "tools/debug/probes/spark-pixel-parity/frame.js": "6d0b058b5936b823f21290648bfad0c8a390016c1424b2f6a3257ec509356513",
+        "tools/verify/spark-pixel-parity.cjs": "9eabf104d3aaf5e3bf66de4157248c82c28b246495be0434b89f6501441ebe5d",
+        "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+        "tools/verify/competitive-example-server.cjs": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af",
+        "tools/verify/loopback-browser-env.cjs": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929",
+        "ai/plans/spark-integration.md": "d58686f6b852516c1ca972e4641b387ad0a059f4c6335cf9370f6ee27fd49174",
+        "src/air/spark/cocos-spark-layer.ts": "4ae4b4c40e88505a9d9a725571749ecfa7f1a4e12d40eb77d30bb5445fc2a994",
+        "src/air/spark/cocos-renderer.ts": "f0fc239ec972c354670eddf04246150192ee2411c21f6ffd7a413030a76c9858",
+        "src/air/spark/spark-api-adapter.ts": "043f670516bb1805c0518cfbcae8dd9c7f3b16f32f4352119cd24003e5085b36",
+        "src/exports/spark.ts": "67c4f85064f7fa596a201e4fac27c0d86bb53501924ad0460a38e930963e4664"
+      },
+      "comparator": {
+        "selfTestPassed": true,
+        "checks": [
+          {
+            "name": "rejects undefined image",
+            "passed": true
+          },
+          {
+            "name": "rejects NaN byte",
+            "passed": true
+          },
+          {
+            "name": "rejects Infinity byte",
+            "passed": true
+          },
+          {
+            "name": "rejects -1 byte",
+            "passed": true
+          },
+          {
+            "name": "rejects 256 byte",
+            "passed": true
+          },
+          {
+            "name": "rejects fractional byte",
+            "passed": true
+          },
+          {
+            "name": "rejects null byte",
+            "passed": true
+          },
+          {
+            "name": "rejects string byte",
+            "passed": true
+          },
+          {
+            "name": "rejects truncated data",
+            "passed": true
+          },
+          {
+            "name": "rejects empty data",
+            "passed": true
+          },
+          {
+            "name": "rejects wrong container",
+            "passed": true
+          },
+          {
+            "name": "rejects zero width",
+            "passed": true
+          },
+          {
+            "name": "rejects dimension mismatch",
+            "passed": true
+          },
+          {
+            "name": "single channel delta fails",
+            "passed": true
+          },
+          {
+            "name": "alpha delta counts",
+            "passed": true
+          },
+          {
+            "name": "identical buffers pass",
+            "passed": true
+          }
+        ],
+        "rule": "channelMismatch === 0 (alpha included); dimensions and byte domains validated before compare"
+      }
+    },
+    {
+      "tag": "tall-dpr2",
+      "report": "output/spark-pixel-parity-be-tall-dpr2.json",
+      "publishedReport": "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-reports/spark-pixel-parity-be-tall-dpr2.json",
+      "css": "224x512",
+      "devicePixelRatio": 2,
+      "backingStore": "448x1024",
+      "startedAt": "2026-10-12T03:23:17.229Z",
+      "endedAt": "2026-10-12T03:33:44.424Z",
+      "passed": true,
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "149.0.7827.55",
+          "status": "PASS"
+        },
+        {
+          "engine": "firefox",
+          "version": "155.0",
+          "status": "PASS"
+        },
+        {
+          "engine": "webkit",
+          "version": "26.6",
+          "status": "PASS"
+        }
+      ],
+      "negativeControl": [
+        {
+          "engine": "chromium",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 1742525,
+          "passed": true
+        },
+        {
+          "engine": "firefox",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 1742525,
+          "passed": true
+        },
+        {
+          "engine": "webkit",
+          "baselineMismatch": 0,
+          "perturbedMismatch": 1742525,
+          "passed": true
+        }
+      ],
+      "gpu": [
+        {
+          "engine": "chromium",
+          "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "unmaskedVendor": "Google Inc. (NVIDIA)",
+          "version": "149.0.7827.55",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "desynchronized": false,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true,
+            "xrCompatible": false
+          },
+          "drawingBufferColorSpace": "srgb",
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        },
+        {
+          "engine": "firefox",
+          "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+          "unmaskedVendor": "Google Inc. (NVIDIA)",
+          "version": "155.0",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "drawingBufferColorSpace": "srgb",
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        },
+        {
+          "engine": "webkit",
+          "unmaskedRenderer": "Apple GPU",
+          "unmaskedVendor": "Apple Inc.",
+          "version": "26.6",
+          "contextAttributes": {
+            "alpha": true,
+            "antialias": false,
+            "depth": true,
+            "failIfMajorPerformanceCaveat": false,
+            "powerPreference": "default",
+            "premultipliedAlpha": false,
+            "preserveDrawingBuffer": true,
+            "stencil": true
+          },
+          "drawingBufferColorSpace": null,
+          "contextAttributesMatched": true,
+          "unmaskedRendererMatched": true
+        }
+      ],
+      "rows": [
+        {
+          "engine": "chromium",
+          "case": "seeded-random400",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 448,
+            "height": 1024
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 1260213,
+          "referenceNonempty": 1260213,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "procedural-text-splats",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 448,
+            "height": 1024
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 422475,
+          "referenceNonempty": 422475,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "orthographic-camera",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 448,
+            "height": 1024
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 442444,
+          "referenceNonempty": 442444,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "chromium",
+          "case": "inset-viewport-scissor",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 56,
+            "y": 128,
+            "width": 336,
+            "height": 768
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 612679,
+          "referenceNonempty": 612679,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/inset-viewport-scissor/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "seeded-random400",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 448,
+            "height": 1024
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 1260213,
+          "referenceNonempty": 1260213,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "procedural-text-splats",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 448,
+            "height": 1024
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 419886,
+          "referenceNonempty": 419886,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "orthographic-camera",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 448,
+            "height": 1024
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 442444,
+          "referenceNonempty": 442444,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "firefox",
+          "case": "inset-viewport-scissor",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 56,
+            "y": 128,
+            "width": 336,
+            "height": 768
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 612679,
+          "referenceNonempty": 612679,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/inset-viewport-scissor/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "seeded-random400",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 448,
+            "height": 1024
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 1260213,
+          "referenceNonempty": 1260213,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/seeded-random400/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/seeded-random400/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "procedural-text-splats",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 448,
+            "height": 1024
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 416860,
+          "referenceNonempty": 416860,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/procedural-text-splats/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/procedural-text-splats/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "orthographic-camera",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 0,
+            "y": 0,
+            "width": 448,
+            "height": 1024
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 442444,
+          "referenceNonempty": 442444,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/orthographic-camera/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/orthographic-camera/reference.png"
+          }
+        },
+        {
+          "engine": "webkit",
+          "case": "inset-viewport-scissor",
+          "dims": "448x1024",
+          "targetViewport": {
+            "x": 56,
+            "y": 128,
+            "width": 336,
+            "height": 768
+          },
+          "channelMismatch": 0,
+          "pixelMismatch": 0,
+          "maxError": 0,
+          "targetNonempty": 612679,
+          "referenceNonempty": 612679,
+          "repeatStableSelf": true,
+          "glErrorCount": 0,
+          "jsErrorCount": 0,
+          "splatsMatch": true,
+          "environmentMatch": true,
+          "nativeIdentityPassed": true,
+          "antiCheatPassed": true,
+          "passed": true,
+          "reportArtifacts": {
+            "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/inset-viewport-scissor/target.png",
+            "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/inset-viewport-scissor/reference.png"
+          }
+        }
+      ],
+      "sourceFreeze": {
+        "directories": [
+          "src",
+          "vendor",
+          "build",
+          "tools",
+          "docs"
+        ],
+        "files": 7419,
+        "bytes": 343738650,
+        "aggregateSha256": "0a7eb1dc5ef05efd67d86e43c93e61b3ccee1af59a8598cd30b4aad9b4c223f4",
+        "sourceUnchanged": true,
+        "drift": []
+      },
+      "identity": {
+        "head": "810e7d1a5b706eb91bcc76bab4bfc4c00297d2f5",
+        "dirty": "M README.md\n M ai/README.md\n M ai/ledgers/shaders-absorption.md\n M build/cocosair.module.d.ts\n M build/cocosair.module.js\n M docs/THIRD_PARTY_LICENSES.md\n M docs/UPSTREAM.md\n M docs/effects/README.md\n M docs/effects/current-sdk-refresh-delivery.md\n M docs/effects/wave4-validation-delivery.md\n M docs/license-decisions.json\n M docs/manual/materials.md\n M docs/manual/rendertargets.md\n M docs/reference/web-features.md\n M docs/upstream-file-map.json\n M package.json\n M src/cc.config.json\n M tools/README.md\n M tools/build/build-number.json\n M tools/debug/probes/README.md\n M tools/verify/license-audit.cjs\n M tools/verify/shaders-film-neon-browser.cjs\n M tools/verify/shaders-input-dissolve-browser.cjs\n M tools/verify/shaders-laser-card-browser.cjs\n M tools/verify/verify-feature-exports.cjs\n M tools/verify/verify-licenses.cjs\n?? ai/ledgers/spark-integration.md\n?? ai/plans/shaders-wave6-agent-benchmark.md\n?? ai/plans/spark-integration.md\n?? build/cocosair.module.spark.js\n?? build/cocosair.module.spark.js.map\n?? build/fflate/\n?? docs/effects/driver-pilot-validation-delivery.md\n?? docs/effects/driver-pilot.md\n?? docs/effects/generated/\n?? docs/effects/uv-fusion-pilots-validation-delivery.md\n?? docs/effects/wave5-capability-proposal.md\n?? docs/effects/wave5-docs-generation-delivery.md\n?? docs/effects/wave5-kickoff.md\n?? docs/effects/wave6-glass-agent-delivery.md\n?? docs/effects/wave6-kickoff.md\n?? docs/effects/wave6-neon-agent-delivery.md\n?? docs/effects/wave6-noise-agent-delivery.md\n?? docs/effects/wave6-validation-delivery.md\n?? docs/evidence/license-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c01-laser-card-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c02-film-neon-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c03-glass-trail-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-actual-audit.json\n?? docs/evidence/shaders-absorption/c04-input-dissolve-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-closure-audit.json\n?? docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-gate.json\n?? docs/evidence/shaders-absorption/wave5-current-r2-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-actual-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-closure-audit.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-frozen-gate.json\n?? docs/evidence/shaders-absorption/wave5-driver-pilot-workspace-freshness.json\n?? docs/evidence/shaders-absorption/wave5-uv-fusion-pilots-gate.json\n?? docs/evidence/shaders-absorption/wave6-glass-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-minimal-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-neon-agent-result.json\n?? docs/evidence/shaders-absorption/wave6-noise-agent-result.json\n?? docs/evidence/spark/\n?? docs/notes/spark-asset-sourcing.md\n?? docs/reference/spark-optional-entry.md\n?? examples/shader-driver-pilot/\n?? examples/shader-uv-fusion-pilot/\n?? licenses/LICENSE_fflate.txt\n?? licenses/LICENSE_spark.txt\n?? licenses/LICENSE_three.txt\n?? src/air/spark/\n?? src/exports/spark.ts\n?? test/parity/\n?? test/smoke/shaders-driver-pilot-acceptance.test.ts\n?? test/smoke/shaders-driver-pilot-production-review.test.ts\n?? test/smoke/shaders-driver-pilot-review.test.ts\n?? test/smoke/shaders-driver-pilot.test.ts\n?? test/smoke/shaders-effect-docs-review.test.ts\n?? test/smoke/shaders-effect-docs.test.ts\n?? test/smoke/shaders-uv-fusion-gate.test.ts\n?? test/smoke/shaders-uv-fusion.test.ts\n?? test/spark-math-parity.jest.config.js\n?? tools/build/register-spark-file-map.cjs\n?? tools/build/spark-runtime-tree.cjs\n?? tools/build/vendor-spark-rs-tree.cjs\n?? tools/build/vendor-spark-tree.cjs\n?? tools/debug/probes/spark-cpu-parity/\n?? tools/debug/probes/spark-native-gfx-probe/\n?? tools/debug/probes/spark-pixel-parity/\n?? tools/examples/shaders-effect-docs.cjs\n?? tools/generated/\n?? tools/verify/shaders-driver-pilot-browser.cjs\n?? tools/verify/shaders-driver-pilot-gate.cjs\n?? tools/verify/shaders-driver-pilot-oracle.cjs\n?? tools/verify/shaders-driver-pilot-performance.cjs\n?? tools/verify/shaders-driver-pilot.tsconfig.json\n?? tools/verify/shaders-uv-fusion-browser.cjs\n?? tools/verify/shaders-uv-fusion-gate.cjs\n?? tools/verify/shaders-uv-fusion.tsconfig.json\n?? tools/verify/shaders-wave5-gate.cjs\n?? tools/verify/spark-adapter-elements.cjs\n?? tools/verify/spark-assets.cjs\n?? tools/verify/spark-cpu-parity.cjs\n?? tools/verify/spark-data-parity.cjs\n?? tools/verify/spark-dpr-mismatch-parity.cjs\n?? tools/verify/spark-identity.cjs\n?? tools/verify/spark-inventory.cjs\n?? tools/verify/spark-math-parity.cjs\n?? tools/verify/spark-native-gfx-probe.cjs\n?? tools/verify/spark-pixel-parity.cjs\n?? tools/verify/spark-rs-audit.cjs\n?? vendor/spark-rs/\n?? vendor/spark/",
+        "node": "v24.14.0",
+        "sdk": {
+          "path": "build/cocosair.module.spark.js",
+          "sha256": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25"
+        },
+        "toolingPath": "E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\tooling\\node_modules\\playwright\\index.js",
+        "toolingError": null,
+        "playwrightVersion": "1.63.0"
+      },
+      "fingerprints": {
+        "build/cocosair.module.spark.js": "0107b4405c3ae64a6c2ceeaf8a6b73bf77e7cce3262396ef4130a544e8f46c25",
+        "tools/debug/probes/spark-pixel-parity/index.html": "9e680891211f2184d31b200e661abe628baed24e15e2cb46ae31cfbd7376bbf8",
+        "tools/debug/probes/spark-pixel-parity/reference.html": "6bf9bb023ab558fbf790291fa107bc50730da8619bfc07bd1b962feae8e97c1f",
+        "tools/debug/probes/spark-pixel-parity/frame.js": "6d0b058b5936b823f21290648bfad0c8a390016c1424b2f6a3257ec509356513",
+        "tools/verify/spark-pixel-parity.cjs": "9eabf104d3aaf5e3bf66de4157248c82c28b246495be0434b89f6501441ebe5d",
+        "tools/verify/browser-engines.cjs": "4928b71952badc5237344c0cd1d49ab3178397bdf3123f4b318e76c1259c3d41",
+        "tools/verify/competitive-example-server.cjs": "fb811f442af34131c8834882ed98c1ad6cfc759b9478c48b4b021506a9e034af",
+        "tools/verify/loopback-browser-env.cjs": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929",
+        "ai/plans/spark-integration.md": "d58686f6b852516c1ca972e4641b387ad0a059f4c6335cf9370f6ee27fd49174",
+        "src/air/spark/cocos-spark-layer.ts": "4ae4b4c40e88505a9d9a725571749ecfa7f1a4e12d40eb77d30bb5445fc2a994",
+        "src/air/spark/cocos-renderer.ts": "f0fc239ec972c354670eddf04246150192ee2411c21f6ffd7a413030a76c9858",
+        "src/air/spark/spark-api-adapter.ts": "043f670516bb1805c0518cfbcae8dd9c7f3b16f32f4352119cd24003e5085b36",
+        "src/exports/spark.ts": "67c4f85064f7fa596a201e4fac27c0d86bb53501924ad0460a38e930963e4664"
+      },
+      "comparator": {
+        "selfTestPassed": true,
+        "checks": [
+          {
+            "name": "rejects undefined image",
+            "passed": true
+          },
+          {
+            "name": "rejects NaN byte",
+            "passed": true
+          },
+          {
+            "name": "rejects Infinity byte",
+            "passed": true
+          },
+          {
+            "name": "rejects -1 byte",
+            "passed": true
+          },
+          {
+            "name": "rejects 256 byte",
+            "passed": true
+          },
+          {
+            "name": "rejects fractional byte",
+            "passed": true
+          },
+          {
+            "name": "rejects null byte",
+            "passed": true
+          },
+          {
+            "name": "rejects string byte",
+            "passed": true
+          },
+          {
+            "name": "rejects truncated data",
+            "passed": true
+          },
+          {
+            "name": "rejects empty data",
+            "passed": true
+          },
+          {
+            "name": "rejects wrong container",
+            "passed": true
+          },
+          {
+            "name": "rejects zero width",
+            "passed": true
+          },
+          {
+            "name": "rejects dimension mismatch",
+            "passed": true
+          },
+          {
+            "name": "single channel delta fails",
+            "passed": true
+          },
+          {
+            "name": "alpha delta counts",
+            "passed": true
+          },
+          {
+            "name": "identical buffers pass",
+            "passed": true
+          }
+        ],
+        "rule": "channelMismatch === 0 (alpha included); dimensions and byte domains validated before compare"
+      }
+    }
+  ],
+  "rows": [
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 168103,
+      "referenceNonempty": 168103,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 34648,
+      "referenceNonempty": 34648,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38959,
+      "referenceNonempty": 38959,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 80397,
+      "referenceNonempty": 80397,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 168103,
+      "referenceNonempty": 168103,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 34077,
+      "referenceNonempty": 34077,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38959,
+      "referenceNonempty": 38959,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 80397,
+      "referenceNonempty": 80397,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 168103,
+      "referenceNonempty": 168103,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 33370,
+      "referenceNonempty": 33370,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 256,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38959,
+      "referenceNonempty": 38959,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "256x256",
+      "targetViewport": {
+        "x": 32,
+        "y": 32,
+        "width": 192,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 80397,
+      "referenceNonempty": 80397,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr1-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 175263,
+      "referenceNonempty": 175263,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 34648,
+      "referenceNonempty": 34648,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38967,
+      "referenceNonempty": 38967,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 40,
+        "y": 32,
+        "width": 240,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 81859,
+      "referenceNonempty": 81859,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 175263,
+      "referenceNonempty": 175263,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 34077,
+      "referenceNonempty": 34077,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38967,
+      "referenceNonempty": 38967,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 40,
+        "y": 32,
+        "width": 240,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 81859,
+      "referenceNonempty": 81859,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 175263,
+      "referenceNonempty": 175263,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 33370,
+      "referenceNonempty": 33370,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 256
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 38967,
+      "referenceNonempty": 38967,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "320x256",
+      "targetViewport": {
+        "x": 40,
+        "y": 32,
+        "width": 240,
+        "height": 192
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 81859,
+      "referenceNonempty": 81859,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-5x4-dpr1-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 134238,
+      "referenceNonempty": 134238,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 26648,
+      "referenceNonempty": 26648,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 29843,
+      "referenceNonempty": 29843,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 64,
+        "y": 28,
+        "width": 384,
+        "height": 168
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 62706,
+      "referenceNonempty": 62706,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 134238,
+      "referenceNonempty": 134238,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 26413,
+      "referenceNonempty": 26413,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 29843,
+      "referenceNonempty": 29843,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 64,
+        "y": 28,
+        "width": 384,
+        "height": 168
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 62706,
+      "referenceNonempty": 62706,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 134238,
+      "referenceNonempty": 134238,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 25702,
+      "referenceNonempty": 25702,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 224
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 29843,
+      "referenceNonempty": 29843,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "512x224",
+      "targetViewport": {
+        "x": 64,
+        "y": 28,
+        "width": 384,
+        "height": 168
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 62706,
+      "referenceNonempty": 62706,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-ultra-dpr1-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 671960,
+      "referenceNonempty": 671960,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 137291,
+      "referenceNonempty": 137291,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 155617,
+      "referenceNonempty": 155617,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 64,
+        "y": 64,
+        "width": 384,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 321076,
+      "referenceNonempty": 321076,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 671960,
+      "referenceNonempty": 671960,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 134911,
+      "referenceNonempty": 134911,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 155617,
+      "referenceNonempty": 155617,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 64,
+        "y": 64,
+        "width": 384,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 321076,
+      "referenceNonempty": 321076,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 671960,
+      "referenceNonempty": 671960,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 133709,
+      "referenceNonempty": 133709,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 155617,
+      "referenceNonempty": 155617,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "512x512",
+      "targetViewport": {
+        "x": 64,
+        "y": 64,
+        "width": 384,
+        "height": 384
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 321076,
+      "referenceNonempty": 321076,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-square-dpr2-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "seeded-random400",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 1260213,
+      "referenceNonempty": 1260213,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "procedural-text-splats",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 422475,
+      "referenceNonempty": 422475,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "orthographic-camera",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 442444,
+      "referenceNonempty": 442444,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "chromium",
+      "case": "inset-viewport-scissor",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 56,
+        "y": 128,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 612679,
+      "referenceNonempty": 612679,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/chromium/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "seeded-random400",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 1260213,
+      "referenceNonempty": 1260213,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "procedural-text-splats",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 419886,
+      "referenceNonempty": 419886,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "orthographic-camera",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 442444,
+      "referenceNonempty": 442444,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "firefox",
+      "case": "inset-viewport-scissor",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 56,
+        "y": 128,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 612679,
+      "referenceNonempty": 612679,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/firefox/inset-viewport-scissor/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "seeded-random400",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 1260213,
+      "referenceNonempty": 1260213,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/seeded-random400/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/seeded-random400/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "procedural-text-splats",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 416860,
+      "referenceNonempty": 416860,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/procedural-text-splats/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/procedural-text-splats/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "orthographic-camera",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 0,
+        "y": 0,
+        "width": 448,
+        "height": 1024
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 442444,
+      "referenceNonempty": 442444,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/orthographic-camera/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/orthographic-camera/reference.png"
+      }
+    },
+    {
+      "engine": "webkit",
+      "case": "inset-viewport-scissor",
+      "dims": "448x1024",
+      "targetViewport": {
+        "x": 56,
+        "y": 128,
+        "width": 336,
+        "height": 768
+      },
+      "channelMismatch": 0,
+      "pixelMismatch": 0,
+      "maxError": 0,
+      "targetNonempty": 612679,
+      "referenceNonempty": 612679,
+      "repeatStableSelf": true,
+      "glErrorCount": 0,
+      "jsErrorCount": 0,
+      "splatsMatch": true,
+      "environmentMatch": true,
+      "nativeIdentityPassed": true,
+      "antiCheatPassed": true,
+      "passed": true,
+      "reportArtifacts": {
+        "target": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/inset-viewport-scissor/target.png",
+        "reference": "output/spark-pixel-parity-be-tall-dpr2-artifacts/webkit/inset-viewport-scissor/reference.png"
+      }
+    }
+  ],
+  "artifacts": [
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr1/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr1/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr1/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr1/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr1/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr1/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr1/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr1/inset-viewport-scissor-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/5x4-dpr1/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/5x4-dpr1/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/5x4-dpr1/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/5x4-dpr1/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/5x4-dpr1/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/5x4-dpr1/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/5x4-dpr1/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/5x4-dpr1/inset-viewport-scissor-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/ultra-dpr1/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/ultra-dpr1/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/ultra-dpr1/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/ultra-dpr1/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/ultra-dpr1/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/ultra-dpr1/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/ultra-dpr1/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/ultra-dpr1/inset-viewport-scissor-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr2/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr2/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr2/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr2/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr2/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr2/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr2/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/square-dpr2/inset-viewport-scissor-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/tall-dpr2/seeded-random400-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/tall-dpr2/seeded-random400-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/tall-dpr2/procedural-text-splats-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/tall-dpr2/procedural-text-splats-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/tall-dpr2/orthographic-camera-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/tall-dpr2/orthographic-camera-reference.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/tall-dpr2/inset-viewport-scissor-target.png",
+    "docs/evidence/spark/spk13-pixel-parity-viewport-matrix-bitexact-20261012-artifacts/tall-dpr2/inset-viewport-scissor-reference.png"
+  ],
+  "notClaimed": [
+    "Not a cross-GPU/device generalisation: evidence binds to the three browser builds and this machine GPU listed in windowsDetail[].engines and .gpu.",
+    "Not release READY: the spark-rs crate-level licence disposition is still `pending` in docs/license-decisions.json.",
+    "Re-confirms the viewport/DPR matrix only; it does not re-open real touch/event-channel acceptance, which remains owner-level.",
+    "The allowlist is still the finite list {1, 1.25, 1.375, 1.5, 2, 3}; any other ratio stays untested and is rejected by the collector until added and shown to give integer device pixels.",
+    "Each windowsDetail[].sourceFreeze is the digest taken BEFORE that window ran; it identifies the state the window exercised, not a proof that later windows or later commits share it."
+  ],
+  "commands": [
+    "node tools/verify/spark-pixel-parity.cjs --out=output/spark-pixel-parity-be-square-dpr1.json --cases=seeded-random400,procedural-text-splats,orthographic-camera,inset-viewport-scissor --width=... --height=... --dpr=... --playwright=<absolute tooling path>",
+    "node tools/verify/spark-pixel-parity.cjs --out=output/spark-pixel-parity-be-5x4-dpr1.json --cases=seeded-random400,procedural-text-splats,orthographic-camera,inset-viewport-scissor --width=... --height=... --dpr=... --playwright=<absolute tooling path>",
+    "node tools/verify/spark-pixel-parity.cjs --out=output/spark-pixel-parity-be-ultra-dpr1.json --cases=seeded-random400,procedural-text-splats,orthographic-camera,inset-viewport-scissor --width=... --height=... --dpr=... --playwright=<absolute tooling path>",
+    "node tools/verify/spark-pixel-parity.cjs --out=output/spark-pixel-parity-be-square-dpr2.json --cases=seeded-random400,procedural-text-splats,orthographic-camera,inset-viewport-scissor --width=... --height=... --dpr=... --playwright=<absolute tooling path>",
+    "node tools/verify/spark-pixel-parity.cjs --out=output/spark-pixel-parity-be-tall-dpr2.json --cases=seeded-random400,procedural-text-splats,orthographic-camera,inset-viewport-scissor --width=... --height=... --dpr=... --playwright=<absolute tooling path>"
+  ]
+}

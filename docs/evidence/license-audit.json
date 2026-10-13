@@ -1,0 +1,20 @@
+{
+  "scanned": 87,
+  "issues": [
+    "example product-viewer/assets/corrupt-product.glb: missing .LICENSE.md",
+    "unexpected directory in build/: npm",
+    "unexpected directory in build/: examples",
+    "unexpected file in build/: README.md",
+    "unexpected directory in build/: reports"
+  ],
+  "issueCount": 5,
+  "pass": false,
+  "licenses": {
+    "LICENSE": 1060,
+    "docs/THIRD_PARTY_LICENSES.md": 17956,
+    "docs/UPSTREAM.md": 63643,
+    "gltf-decoders/draco/LICENSE.md": 12203,
+    "gltf-decoders/meshopt/LICENSE.md": 1079,
+    "gltf-decoders/basis/LICENSE.md": 12400
+  }
+}

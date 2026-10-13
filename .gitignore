@@ -1,5 +1,17 @@
 # Cocos Air V0.1
 node_modules/
+
+# 本机环境与本机敏感文件（不得入库）
+.env
+.env.*
+!.env.example
+
+# 操作系统与编辑器临时文件
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
 # V1.2 P1：引擎根内的 vendored 运行库（tools/build/vendor-package-subset.cjs 逐字节复制，必须入库以满足「源码自包含」）
 !src/node_modules/
 bin/

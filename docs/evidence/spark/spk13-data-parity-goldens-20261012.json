@@ -1,0 +1,1529 @@
+{
+  "schemaVersion": "spark-data-parity-goldens/1",
+  "task": "SPK-13",
+  "collectedAt": "2026-10-11T19:32:54.195Z",
+  "wasmSha256": "974320be5859f426967a2d9cc237e5eae1aca98b55e35087022d6d884b2dcce7",
+  "glueSha256": "a4b2cc7226f2e4c9bf397b56da3520e6c6f7d65b55e486783ef9bffac3b4bf72",
+  "origin": "Frozen decode summaries produced by THIS repository's vendor/spark-rs WASM and glue. Writing this file is a baseline generation step, not by itself evidence of rendering parity.",
+  "cases": {
+    "packed/synthetic-boundaries.splat": {
+      "fileType": "splat",
+      "maxShDegree": 0,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "36dfab88ddd324881491b30c0f3cfa84fc5de07e805af9753d3bb278f14216d6"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-boundaries.splat": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "b12d8abc17aba4060da81b1a706e29b3971b8864caf19f512ec0d01748f5f268"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "68c844891b2286622261b3302eff311f0d493f55920ac9fd326a35d1d50ba308"
+      },
+      "fileType": "splat",
+      "maxShDegree": 0,
+      "maxSplats": 2048,
+      "numSplats": 24
+    },
+    "packed/synthetic-sh0.ply": {
+      "fileType": "ply",
+      "maxShDegree": 0,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6cf45a1212a4e3de9e467162a524ad6d87539ab7725b51db2c40156062150a30"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh0.ply": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6cc6e921a1dfd3d2ddf29e0c09224c10a66d42fe59d9911400292b762769edd6"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "558563c9b2f93bb59ff63ea8f6da68ad8f0e8796ac176039c01ff885ff092684"
+      },
+      "fileType": "ply",
+      "maxShDegree": 0,
+      "maxSplats": 2048,
+      "numSplats": 24
+    },
+    "packed/synthetic-sh1.ply": {
+      "fileType": "ply",
+      "maxShDegree": 1,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6cf45a1212a4e3de9e467162a524ad6d87539ab7725b51db2c40156062150a30"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "cbb9c019c0d597db840cefbac9a7a53c86fc2f8c9d39aaeb27e7f8a66265a4a9"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh1.ply": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6cc6e921a1dfd3d2ddf29e0c09224c10a66d42fe59d9911400292b762769edd6"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "558563c9b2f93bb59ff63ea8f6da68ad8f0e8796ac176039c01ff885ff092684"
+      },
+      "fileType": "ply",
+      "maxShDegree": 1,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "b6011873497cdbb2ff1770dfb06d447aefbd7682017864c9082b30e9620a1607"
+      }
+    },
+    "packed/synthetic-sh2.ply": {
+      "fileType": "ply",
+      "maxShDegree": 2,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6cf45a1212a4e3de9e467162a524ad6d87539ab7725b51db2c40156062150a30"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "002bad853ef82725179188aaa5a34d2ba7a55ad0f15319e6a01e4b35cc20970b"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "c9dd2466dc0886888113151ea21bc554fa0d7f83d4f45c714e6c8386650d71f4"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh2.ply": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6cc6e921a1dfd3d2ddf29e0c09224c10a66d42fe59d9911400292b762769edd6"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "558563c9b2f93bb59ff63ea8f6da68ad8f0e8796ac176039c01ff885ff092684"
+      },
+      "fileType": "ply",
+      "maxShDegree": 2,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "38433c65929cc71623f928d75480838d51f95738893184b1e3ecdbbd8ed545cb"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6ccfe2f49d8a9a33bd2817081df2afc779d166c35528a704477a568772e35341"
+      }
+    },
+    "packed/synthetic-sh3-c1.ksplat": {
+      "fileType": "ksplat",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "7047f8ece4bedf0703fc38c4320485fb7025bf3ed8e5ca2c66d2f14545a2b9c2"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "91bc286856dcfd69be97d60d71bbd2986fb8c858e6af11c160254e30afe371ca"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "883ae411da41633d0281064687edd06f271295edffd0b58afb396832c975ef27"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "23f839cfb86fd0931e6b883da7900b4144842e3b9a3ad83019d7b24908859443"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3-c1.ksplat": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "8bc6462031e432658712aea588c285b59419a8aeb69792fd437f1884390ba614"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "a7cc92ad7b48ebdd59ace6d413b5ce04c166a9568e41016e252b831a53aea39e"
+      },
+      "fileType": "ksplat",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "3c44e5425ce25f8d3edc454f2bfa8dbc52d85ba3aa9aba592bfe82a6134712ea"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "3c44e5425ce25f8d3edc454f2bfa8dbc52d85ba3aa9aba592bfe82a6134712ea"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "3c44e5425ce25f8d3edc454f2bfa8dbc52d85ba3aa9aba592bfe82a6134712ea"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "3c44e5425ce25f8d3edc454f2bfa8dbc52d85ba3aa9aba592bfe82a6134712ea"
+      }
+    },
+    "packed/synthetic-sh3-c2.ksplat": {
+      "fileType": "ksplat",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "7047f8ece4bedf0703fc38c4320485fb7025bf3ed8e5ca2c66d2f14545a2b9c2"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "c516b72f86ff75225c2f9dffcca5f0b6adcf15a165397b8fe393dc103de042b2"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "e6bdee892285a787beb124e923c19d287c520182fb0f2f248e1c092a175cbbf8"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "b588f45b4965b97e4129a8adbe457387d384f0e41142edb22bd99144ec14fdb0"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3-c2.ksplat": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "8bc6462031e432658712aea588c285b59419a8aeb69792fd437f1884390ba614"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "a7cc92ad7b48ebdd59ace6d413b5ce04c166a9568e41016e252b831a53aea39e"
+      },
+      "fileType": "ksplat",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "81f870d96f73a0d246266a50afd704b9eaa2faae90d5b5ca79bbc86e927405f3"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6a73cbd5c32effbe2f1d167628ad8d0a36f783c3a93d4b1a400027f6092c92d7"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "f614ab903c50552cb515734d93926fd45a24c77a429233a9b424c273b1839d8b"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "02cb54cb1ba86e71ee113bada89a4d4f278508705b82fc5fd08cdc89cab5a4a9"
+      }
+    },
+    "header/synthetic-sh3-chunked-lod.rad": {
+      "chunksStart": 312,
+      "meta": {
+        "allChunkBytes": 18568,
+        "chunkSize": 65536,
+        "chunks": [
+          {
+            "base": 0,
+            "bytes": 16816,
+            "count": 65536,
+            "filename": "synthetic-sh3-lod-0.radc",
+            "offset": 0
+          },
+          {
+            "base": 65536,
+            "bytes": 1752,
+            "count": 24,
+            "filename": "synthetic-sh3-lod-1.radc",
+            "offset": 16816
+          }
+        ],
+        "count": 65560,
+        "lodTree": true,
+        "maxSh": 3,
+        "type": "gsplat",
+        "version": 1
+      }
+    },
+    "packed/synthetic-sh3-lod-0.radc": {
+      "fileType": "rad",
+      "lodTree": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "067c3052643cef7ff40adad8eafcb454bccf6f04a1d8a9fe385d5588f081d917"
+      },
+      "maxShDegree": 3,
+      "maxSplats": 65536,
+      "numSplats": 65536,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "72d9f8b26252b1b487335b3fdefed9d3173efc34be9e1e870b225c747ae0b51f"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 131072,
+        "sha256": "165621337772ce7eac3dc4af092cabc7657cea77515f35a660c6c5f3fc202f13"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "24640e132a64cd7c235f995740e1c4e981427229a92edf33c9e1d308cf38bd91"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "30e14955ebf1352266dc2ff8067e68104607e750abb9d3b36582b8af909fcb58"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": true,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3-lod-0.radc": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "c8eed930502634fbc1b54add9a89efa2a418af97f6cafbfceefd6437d26252c3"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "1391ba627cd9578d5da3c98bf1492a01f62f07bb067488d58251874675f0dd57"
+      },
+      "fileType": "rad",
+      "lodTree": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "5c5f43bab9dedc40f38ac03be7beb817a1974cdbe350314c029ecf76f879d26c"
+      },
+      "maxShDegree": 3,
+      "maxSplats": 65536,
+      "numSplats": 65536,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "03a3972db5e135f6de38c7d6fac0f8dac9d46d684fccfcdb9fa28ce613fd72c3"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "03a3972db5e135f6de38c7d6fac0f8dac9d46d684fccfcdb9fa28ce613fd72c3"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "03a3972db5e135f6de38c7d6fac0f8dac9d46d684fccfcdb9fa28ce613fd72c3"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 262144,
+        "sha256": "03a3972db5e135f6de38c7d6fac0f8dac9d46d684fccfcdb9fa28ce613fd72c3"
+      }
+    },
+    "packed/synthetic-sh3-lod-1.radc": {
+      "fileType": "rad",
+      "lodTree": {
+        "type": "Uint32Array",
+        "length": 96,
+        "sha256": "2452266bc6bc81450a7eaf69861e1dc3c37aa2170573984274ca6b594d29652c"
+      },
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "3db9834776536b8e3979c760af41021dcdb034ee83f25416f2b1b4a514212c1d"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "d0438f720fa86b7e582c02afc414e4d9a4561265308f3ccd96e96a8e314564f8"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "947c655888b2a95c80d21eec7d5184eca4a750b2329d11247d7d3e70f080ee7f"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "d88af9509d65ae408486f38f4499e7780ddabec2e8fe829adb512faac3b772e6"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": true,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3-lod-1.radc": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6cc6e921a1dfd3d2ddf29e0c09224c10a66d42fe59d9911400292b762769edd6"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "dc8c59c49e5cc2bd4c4e8e16035caae088e12b63e2da86228b46640a628ede7b"
+      },
+      "fileType": "rad",
+      "lodTree": {
+        "type": "Uint32Array",
+        "length": 96,
+        "sha256": "a9744cab66c841b1625d0e03f70ec34fa128146044a4ecd05fbac7bb4fed5642"
+      },
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "2690512f9f5bfcd6b9b2072864104809021dc2e843e877462202b08f0f94ed81"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "537934f3c609cfb2d0f28ed7657037276dec67d5ab0c22b18bb067351181733b"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6f1d63cf0ed20278c873e27f7eb761ac04907b54d7504556ec36ce1772cda23f"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "55634146dc1f6e7b95054ea20e07c82b884f5e27052e10b873d5be4e5efaf63e"
+      }
+    },
+    "packed/synthetic-sh3-lod.rad": {
+      "fileType": "rad",
+      "lodTree": {
+        "type": "Uint32Array",
+        "length": 262240,
+        "sha256": "870730d5a51814ecd77ab849d5574d0c475f75cc6d6c416b9d77bfb402c7cac6"
+      },
+      "maxShDegree": 3,
+      "maxSplats": 67584,
+      "numSplats": 65560,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 270336,
+        "sha256": "40b96e7da8635b146b1c0574e6c62480467c3c742fdbbcccf4665dadb195b4c8"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 135168,
+        "sha256": "686dd0a157a586ea8d7da30b2dd5103719808640a04c506b07ba65df9888f796"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 270336,
+        "sha256": "16ae7cac9ef890013cf4396e545ebd85b3388181a5d467cb588b20c9420bf560"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 270336,
+        "sha256": "965b21207aa2d7cfe5ef79d48c3e053c08d3b2d5a025ae93d2b824982459266b"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": true,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3-lod.rad": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 270336,
+        "sha256": "b7680022b0c9f2b141b4015032d382d1c4a29cbc34dbc1ff73f4240d211b1385"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 270336,
+        "sha256": "6e893e263870d9ad0b37a794650246c04728b20dc20f6fdffaed758a2a029e29"
+      },
+      "fileType": "rad",
+      "lodTree": {
+        "type": "Uint32Array",
+        "length": 262240,
+        "sha256": "69b5c66eb3cd661564e3226e0e8aee1ea2881cd650a0ab6b5aded341e806a4d6"
+      },
+      "maxShDegree": 3,
+      "maxSplats": 67584,
+      "numSplats": 65560,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 270336,
+        "sha256": "b3404dc41ebea20e3aa29741cdbfece4c2358097dbc29d0eaeac0ce72fa9933f"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 270336,
+        "sha256": "3802a314012f5a0e19441e690a47790b9df339fc820a0be21da4a74d9128d624"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 270336,
+        "sha256": "77447dcf6b6beed689adf1a4cd323baa9772480cc8c439f6bba6445872c33904"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 270336,
+        "sha256": "0c89fcde6acd20e645c884bcf0b4bc3b5beb9c5fe11efa6573ff73306188612c"
+      }
+    },
+    "packed/synthetic-sh3-v1.sog": {
+      "fileType": "pcsogszip",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "b3019b2788d05628d076fc1b1f71ac7e1a5d3ddda118e06788e9eddb1924643d"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "6daaacf6f93d2b722452a1371498f90a30151b7010306a97145ab353880bfd7e"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "f075889770363c9a693e15fa177ca577a92464692a3fc7c9db9c8560c2b493df"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "5088cbc0ecf2ab8433323565fff7ce7d43592dc17a004c4889fff7de748ad4f0"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3-v1.sog": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "ef7ecc6614ac34584f6a6eb45a88c772fb1e1abcfed22280b8d8311ee1f45edb"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "701b57c4f23beccd9cde0648bc42396a71545f85be7f9c24088b5a840af9c45c"
+      },
+      "fileType": "pcsogszip",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6d8ca8e248b9c4ca894ec99112c4f7e2585aa8d42b80bf081d1b7f03c90dcf16"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "3d7626e9ed67a97987fef3b3c70d18fbff523de6432efc3aa4aa1a55856e8daa"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "49529c49bac7f1e80b94c95891a8d4ed051c49ca4d7e8e1095a11ad50330618f"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "177b16ca9277ae323b6c51aae45be08d23107cfbb04ccec492e02419722425a6"
+      }
+    },
+    "packed/synthetic-sh3-v2.sog": {
+      "fileType": "pcsogszip",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "3f43e2c7786fc5443eda8b16779d79d14a2d48bf86ec4a1be36a52254e29aa2f"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "6daaacf6f93d2b722452a1371498f90a30151b7010306a97145ab353880bfd7e"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "f075889770363c9a693e15fa177ca577a92464692a3fc7c9db9c8560c2b493df"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "5088cbc0ecf2ab8433323565fff7ce7d43592dc17a004c4889fff7de748ad4f0"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3-v2.sog": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "79c8938b04b6d85172af7d1eecf070c4299d272a1c53ed37c4f1eebbd5b1cd3a"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "b553997a090343a2f65ea87c97a99ff44165b1af2a13ecf6bfe4da636218ce83"
+      },
+      "fileType": "pcsogszip",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "d4ce0f8e92589bc03207354c8113cf67d83dac43a8f1b3ea610fcd0e93100fba"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "15fa3869e7135f6ad117925e67f0da8e04aa4319c0ee4c16cd29440b5bec1155"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "ba98cea4b71be18c4c118b163424eacb151bea6a2c2f0d7565df87f47bd1c3e7"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "02caf5a022017d8838fb939a4678e4b0fab9b41b35fb14acc94033bf702924a7"
+      }
+    },
+    "packed/synthetic-sh3-v2.spz": {
+      "fileType": "spz",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "30e890486838522c64a410b5d2133d4238096882c18afe47a4e4a278e712d1c8"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "016bf9873c2384f9721f818955619a3c102a04aee7f22d455ce763743c9f7fc9"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "ea22c60270246ca01e0e5a1d9d9b8ca25871844b18d10f8b65c556948c719b18"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "b9aa6dada94f5760a9fc05f4df417a03484b4aab4a8731db8b6d37262daead6d"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3-v2.spz": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "ccb2b08648b58850f19f42840b022d55e7c56ddb0377dd3fc7a6fc972d052821"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "1db2b512068a831e93a921b1a0c5456c11700c17e125acc35007ecb212fccd67"
+      },
+      "fileType": "spz",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6a194fd8644a9a177b4160cd365d73fcf7508f2de2404db63bd992f71759885d"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "cc7c1198569d49732a754519854a82e0a94cc4d9149751372fe7d1a743fad37c"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "7c528b1ea1afcc842103d53b872a40176bad58f85d5d41c7f2c955ea2ce16cbc"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "e83c71f61ae553c6d53a646d14cafdf641e073faa16c01fc3ad2ec5a3ae8a1bd"
+      }
+    },
+    "packed/synthetic-sh3-v3.spz": {
+      "fileType": "spz",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "2bebff72e06055f0350b9ab6533c4cfe92aaf80e14dafe9f27606497cc7bebad"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "016bf9873c2384f9721f818955619a3c102a04aee7f22d455ce763743c9f7fc9"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "ea22c60270246ca01e0e5a1d9d9b8ca25871844b18d10f8b65c556948c719b18"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "b9aa6dada94f5760a9fc05f4df417a03484b4aab4a8731db8b6d37262daead6d"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3-v3.spz": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "ccb2b08648b58850f19f42840b022d55e7c56ddb0377dd3fc7a6fc972d052821"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "a85f1901897978ab5b5e0d919ae7ed3256e125d999e3ebca385292328de88f1d"
+      },
+      "fileType": "spz",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6a194fd8644a9a177b4160cd365d73fcf7508f2de2404db63bd992f71759885d"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "cc7c1198569d49732a754519854a82e0a94cc4d9149751372fe7d1a743fad37c"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "7c528b1ea1afcc842103d53b872a40176bad58f85d5d41c7f2c955ea2ce16cbc"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "e83c71f61ae553c6d53a646d14cafdf641e073faa16c01fc3ad2ec5a3ae8a1bd"
+      }
+    },
+    "packed/synthetic-sh3.ksplat": {
+      "fileType": "ksplat",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "836a47cb0cb315b3f9f956145afb4e046ec7eaa6e04d6ccd93875a6b7ff93168"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "cbb9c019c0d597db840cefbac9a7a53c86fc2f8c9d39aaeb27e7f8a66265a4a9"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6ad1f13682ffd019a183d0fa16f56dff7357cd219ae290a14b7e68a6343bbb56"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "139e29c7650241c020982684b1362d7af0783095d77458ccfed396fdf00740fe"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3.ksplat": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "b12d8abc17aba4060da81b1a706e29b3971b8864caf19f512ec0d01748f5f268"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6cd9941c7726940d39bd92dc5285035a8558b83a73ae5a765b9a6e9c85fcc1e7"
+      },
+      "fileType": "ksplat",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "df1a8d0b13c4ebc3a4a47b25106868a180e8f121058df92afce0529e83562c06"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "e91bf55b389ed4930cdb67a1720c4ce5687ce2591bdb14ea964329605362f714"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "2fdb7b7d570d1df24f67f4865d616aa0f3aa05fb7a9eeed99283ebd47442fc3b"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "fda3107956c5443ba15b700a04904ac379a7c5eff29ff24e9574621f6f2128bd"
+      }
+    },
+    "packed/synthetic-sh3.ply": {
+      "fileType": "ply",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6cf45a1212a4e3de9e467162a524ad6d87539ab7725b51db2c40156062150a30"
+      },
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 4096,
+        "sha256": "4b699cbc33b677a5a4ef83b97300828a02d0e1bec21b8f620495157fcb762d1c"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "2c56f7ef9faa1824d5ae1e8bc4589e074ccc48f528f6c0d59679e3a6addd6c79"
+      },
+      "sh3": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "769413d96d96227d30eaaffe9307746b5f08f0158c80b993c31cb52e7a479251"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-sh3.ply": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "6cc6e921a1dfd3d2ddf29e0c09224c10a66d42fe59d9911400292b762769edd6"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "558563c9b2f93bb59ff63ea8f6da68ad8f0e8796ac176039c01ff885ff092684"
+      },
+      "fileType": "ply",
+      "maxShDegree": 3,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "sh1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "9cafbb0406a9a916df37b408bd32a4acdd99123cd257ee111367382ba3d381db"
+      },
+      "sh2": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "eb7de98db35a836b5a13ad8bf3a0b2c337cfadee33df4a7e0ced97d22dac7af2"
+      },
+      "sh3a": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "f75249c15d3324b917e1d0a425a62b9ed55dd473f0b37ac9f39cb2cb582f94c6"
+      },
+      "sh3b": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "f0818f4c629333b74bbd74d41f60765bd0c3d169aa1458c773f9b4a889944de8"
+      }
+    },
+    "packed/synthetic-v1.spz": {
+      "fileType": "spz",
+      "maxShDegree": 0,
+      "maxSplats": 2048,
+      "numSplats": 24,
+      "packed": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "d45f53f16a981b6b2aecf4be8c78d29094888490d46bdeadc81f7a49a29887b0"
+      },
+      "splatEncoding": {
+        "lnScaleMax": 9,
+        "lnScaleMin": -12,
+        "lodOpacity": false,
+        "rgbMax": 1,
+        "rgbMin": 0,
+        "sh1Max": 1,
+        "sh2Max": 1,
+        "sh3Max": 1
+      }
+    },
+    "extended/synthetic-v1.spz": {
+      "ext0": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "7901877824db786ca4c60a7e44cdee374627652abd3eaeb897cb08b2d5d61928"
+      },
+      "ext1": {
+        "type": "Uint32Array",
+        "length": 8192,
+        "sha256": "987aa52e5542eabfb0e11caf803f5c56072bf404115b6417a903fbdac4b33c44"
+      },
+      "fileType": "spz",
+      "maxShDegree": 0,
+      "maxSplats": 2048,
+      "numSplats": 24
+    },
+    "sort16/edges": {
+      "type": "Uint32Array",
+      "length": 10,
+      "sha256": "f9d051fffebc078a5f1882cf6a6041f87b2dcf7162c68b410d0e9bbc0359e997"
+    },
+    "sort16/empty": {
+      "type": "Uint32Array",
+      "length": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "sort16/one": {
+      "type": "Uint32Array",
+      "length": 1,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    "sort16/ties": {
+      "type": "Uint32Array",
+      "length": 4097,
+      "sha256": "d698c2f876bbcbfb2dfd012e687a874484caf1528e4ad6a5c12acaa856f078d7"
+    },
+    "sort16/random": {
+      "type": "Uint32Array",
+      "length": 37319,
+      "sha256": "9866ac90b06a7e8fad08f3ac0b8d6d0fbce854bfa1bdb95c107e9c237f516b1b"
+    },
+    "sort32/edges": {
+      "type": "Uint32Array",
+      "length": 10,
+      "sha256": "f9d051fffebc078a5f1882cf6a6041f87b2dcf7162c68b410d0e9bbc0359e997"
+    },
+    "sort32/empty": {
+      "type": "Uint32Array",
+      "length": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "sort32/one": {
+      "type": "Uint32Array",
+      "length": 1,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    "sort32/ties": {
+      "type": "Uint32Array",
+      "length": 4097,
+      "sha256": "d698c2f876bbcbfb2dfd012e687a874484caf1528e4ad6a5c12acaa856f078d7"
+    },
+    "sort32/random": {
+      "type": "Uint32Array",
+      "length": 37807,
+      "sha256": "6be2a852e81c14ff648d4b1c9a9d5f9fde2f002330dd6575953b1b6e3946126a"
+    },
+    "lod/packed/tiny": {
+      "level": {
+        "indices": {
+          "type": "Uint32Array",
+          "length": 1,
+          "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+        }
+      },
+      "lod": {
+        "lodTree": {
+          "type": "Uint32Array",
+          "length": 88,
+          "sha256": "bf4e22516aa4d2aa04ac829546b50921d9c43521b89b75f86c9088dfedb88f86"
+        },
+        "maxShDegree": 3,
+        "maxSplats": 2048,
+        "numSplats": 22,
+        "packed": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "f429a5615be74a73620e6d0c5a95e2e46e3dbcbd327ca7c917983e84b1cdd7ed"
+        },
+        "sh1": {
+          "type": "Uint32Array",
+          "length": 4096,
+          "sha256": "94e43a983264ee2cfc71fd84c8383f644789cf49693e9cae0712544eb1bdc319"
+        },
+        "sh2": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "4d64537d4c2c2993738f3c2d857bf49afcc310da939bd912ff1ca4cb32e0493b"
+        },
+        "sh3": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "67e9af1f93139e0b0f6c52ec23e7c33f9249c329512acfaaf5ce9b6b2301c4a2"
+        },
+        "splatEncoding": {
+          "lnScaleMax": 9,
+          "lnScaleMin": -12,
+          "lodOpacity": true,
+          "rgbMax": 1,
+          "rgbMin": 0,
+          "sh1Max": 1,
+          "sh2Max": 1,
+          "sh3Max": 1
+        }
+      },
+      "traversals": {
+        "dynamic": {
+          "chunks": [
+            [
+              1000,
+              0
+            ]
+          ],
+          "instanceIndices": [
+            {
+              "indices": {
+                "type": "Uint32Array",
+                "length": 16384,
+                "sha256": "13bb036bfa4e1a17e2c6749c5a869011d686b82afff99aec05ee20112f61540b"
+              },
+              "lodId": 1000,
+              "numSplats": 13
+            }
+          ],
+          "leafCount": 0,
+          "missingCount": 0,
+          "outputSize": 13,
+          "pixelLimit": 0.032984647899866104
+        },
+        "standard": {
+          "chunks": [
+            [
+              1000,
+              0
+            ]
+          ],
+          "frontierSize": 11,
+          "instanceIndices": [
+            {
+              "indices": {
+                "type": "Uint32Array",
+                "length": 16384,
+                "sha256": "75b634bf185ae56b5878e35f1ec6f8d49dc797639974eb516cbddba901184c8f"
+              },
+              "lodId": 1000,
+              "numSplats": 11
+            }
+          ],
+          "leafCount": 0,
+          "outputSize": 0,
+          "pixelLimit": 0.14051979780197144
+        }
+      }
+    },
+    "lod/packed/quality": {
+      "level": {
+        "indices": {
+          "type": "Uint32Array",
+          "length": 1,
+          "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+        }
+      },
+      "lod": {
+        "lodTree": {
+          "type": "Uint32Array",
+          "length": 96,
+          "sha256": "d921f0a323548d08d93d71d75f05e40e51b28b9d5e207edf7ace38d88f580af4"
+        },
+        "maxShDegree": 3,
+        "maxSplats": 2048,
+        "numSplats": 24,
+        "packed": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "55f3a1bdc639f048b350b3c5d2636f8784a4b2d35cc0cce1bc905ab0139412b7"
+        },
+        "sh1": {
+          "type": "Uint32Array",
+          "length": 4096,
+          "sha256": "aaae7f26eb2d5dd4fdfd2d403ccae68c918f312d8663db4f6136ef9bba3663c0"
+        },
+        "sh2": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "5799de9106ac89888b2cae343e8e1303b1f9bcb0a536894121ed612da20ab289"
+        },
+        "sh3": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "e7fa9c3ded20b649c7e877b169c28cdce935041dca7b0838abe198964f522bf7"
+        },
+        "splatEncoding": {
+          "lnScaleMax": 9,
+          "lnScaleMin": -12,
+          "lodOpacity": true,
+          "rgbMax": 1,
+          "rgbMin": 0,
+          "sh1Max": 1,
+          "sh2Max": 1,
+          "sh3Max": 1
+        }
+      },
+      "traversals": {
+        "dynamic": {
+          "chunks": [
+            [
+              1002,
+              0
+            ]
+          ],
+          "instanceIndices": [
+            {
+              "indices": {
+                "type": "Uint32Array",
+                "length": 16384,
+                "sha256": "acff22ab6f5e74d39a79e79211a49571d69799569cc611ee7c68047919110857"
+              },
+              "lodId": 1002,
+              "numSplats": 14
+            }
+          ],
+          "leafCount": 0,
+          "missingCount": 0,
+          "outputSize": 14,
+          "pixelLimit": 0.035860463976860046
+        },
+        "standard": {
+          "chunks": [
+            [
+              1002,
+              0
+            ]
+          ],
+          "frontierSize": 12,
+          "instanceIndices": [
+            {
+              "indices": {
+                "type": "Uint32Array",
+                "length": 16384,
+                "sha256": "7bbd6c3edba73ed29eff4b297c9a84f72c397c652a053f4f4c4da881f887d51c"
+              },
+              "lodId": 1002,
+              "numSplats": 12
+            }
+          ],
+          "leafCount": 0,
+          "outputSize": 0,
+          "pixelLimit": 0.15087488293647766
+        }
+      }
+    },
+    "lod/extended/tiny": {
+      "level": {
+        "indices": {
+          "type": "Uint32Array",
+          "length": 1,
+          "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+        }
+      },
+      "lod": {
+        "ext0": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "24b1de5fe77c0d8cb692985e28143bb2ecd16aba499793fb9b3c95ebee6a5e23"
+        },
+        "ext1": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "83acb53a17c45e7a6fba2be8b73ac3092a287d18030c4e1acb42a77f2224645f"
+        },
+        "lodTree": {
+          "type": "Uint32Array",
+          "length": 116,
+          "sha256": "36e2e39bf713458e86dd902b48efb0acbd81f2a6f2b3e8b96eb3841ddc89a1c6"
+        },
+        "maxShDegree": 3,
+        "maxSplats": 2048,
+        "numSplats": 29,
+        "sh1": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "3f5808a9cd93df558197371c68c0ed4348e895acd97749a58e9f4ccc590989a9"
+        },
+        "sh2": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "a1f6e78e01db9455e2325f3f76e96975486cb4d31b5f1b7d43de20021affc4e6"
+        },
+        "sh3a": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "dbc12c45545277a1899937c70ec9bb0600295d304a340ea97dcf6e3b58a1d137"
+        },
+        "sh3b": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "1ed396b9577cb8e4d97d27fd5cc936adf8ce5b72511c8e0a00268f099e24c8b8"
+        }
+      },
+      "traversals": {
+        "dynamic": {
+          "chunks": [
+            [
+              1004,
+              0
+            ]
+          ],
+          "instanceIndices": [
+            {
+              "indices": {
+                "type": "Uint32Array",
+                "length": 16384,
+                "sha256": "163496bef0f137d654b904b3bceb39892fa49f4d633be76abca0715c3082106c"
+              },
+              "lodId": 1004,
+              "numSplats": 12
+            }
+          ],
+          "leafCount": 0,
+          "missingCount": 0,
+          "outputSize": 12,
+          "pixelLimit": 0.04718336462974548
+        },
+        "standard": {
+          "chunks": [
+            [
+              1004,
+              0
+            ]
+          ],
+          "frontierSize": 12,
+          "instanceIndices": [
+            {
+              "indices": {
+                "type": "Uint32Array",
+                "length": 16384,
+                "sha256": "c01b9196044359700d946de241197c52310634a229dbaa2f395e57f9bed6f672"
+              },
+              "lodId": 1004,
+              "numSplats": 12
+            }
+          ],
+          "leafCount": 0,
+          "outputSize": 0,
+          "pixelLimit": 0.14197680354118347
+        }
+      }
+    },
+    "lod/extended/quality": {
+      "level": {
+        "indices": {
+          "type": "Uint32Array",
+          "length": 1,
+          "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+        }
+      },
+      "lod": {
+        "ext0": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "fce8b56be2ce5e53ee46a3cfe2a18ed226d86ba32488e2185fc73cb5be679441"
+        },
+        "ext1": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "f10207c7b182ca4db3da3603d3fc44aac81f6deb83a30e7e3bea15eb1272a5fb"
+        },
+        "lodTree": {
+          "type": "Uint32Array",
+          "length": 112,
+          "sha256": "d6ff587b1c56bfdc48dcc861241ba1bca3bce0256ddca71b2bcccc2877985d65"
+        },
+        "maxShDegree": 3,
+        "maxSplats": 2048,
+        "numSplats": 28,
+        "sh1": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "17aee3223983dd17b195b12ba1ef57d8a21b86e50a4f840f7f46f60e49af38f4"
+        },
+        "sh2": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "f94b48790f116b5903edc8fbbe1c07e3424d2f27b2b8a6a1fbf25f252020460c"
+        },
+        "sh3a": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "d3e2fc6320829815af16a6dd4800c97da8ee21330598ef7b62cb88529f8d6d96"
+        },
+        "sh3b": {
+          "type": "Uint32Array",
+          "length": 8192,
+          "sha256": "2407f96c262e23560522524005b1940de84382e295015cf6b9cfbc8a077de9dd"
+        }
+      },
+      "traversals": {
+        "dynamic": {
+          "chunks": [
+            [
+              1006,
+              0
+            ]
+          ],
+          "instanceIndices": [
+            {
+              "indices": {
+                "type": "Uint32Array",
+                "length": 16384,
+                "sha256": "fd0dffec0ca1a3834622e99ab5d122958760c0686c3723228a25c9936d0658ee"
+              },
+              "lodId": 1006,
+              "numSplats": 16
+            }
+          ],
+          "leafCount": 0,
+          "missingCount": 0,
+          "outputSize": 16,
+          "pixelLimit": 0.04627550393342972
+        },
+        "standard": {
+          "chunks": [
+            [
+              1006,
+              0
+            ]
+          ],
+          "frontierSize": 12,
+          "instanceIndices": [
+            {
+              "indices": {
+                "type": "Uint32Array",
+                "length": 16384,
+                "sha256": "8996e1f3a9f6dd0d31cc96dbe7d6c407b6d352dbba91d92c3b87ceaa43a37c1e"
+              },
+              "lodId": 1006,
+              "numSplats": 12
+            }
+          ],
+          "leafCount": 0,
+          "outputSize": 0,
+          "pixelLimit": 0.1893520951271057
+        }
+      }
+    },
+    "raycast/packed": [
+      [],
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    "raycast/extended": [
+      [],
+      [],
+      [],
+      [],
+      [],
+      []
+    ]
+  }
+}

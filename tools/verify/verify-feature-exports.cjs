@@ -27,7 +27,9 @@ const ROOT = path.resolve(process.env.AIR_ROOT || path.resolve(__dirname, '..', 
 const UPSTREAM = path.resolve(process.env.COCOS_UPSTREAM || 'E:/AIProMax/github/cocos4');
 
 const EXPECT = {
-    declared: { air: 33, upstream: 55, missing: 23, airOnly: ['air'], defaultAirFeatures: 26 }, // WebGL 2-only: gfx-webgl retired by owner.
+    // SPK-12：新增**可选** feature unit `spark`（`src/exports/spark.ts`，不并入 `air` 聚合、不进默认集，
+    // 见 ai/plans/spark-integration.md §1.3 体积边界与 §SPK-12），故 Air 声明数 +1、airOnly 增列 spark。
+    declared: { air: 34, upstream: 55, missing: 23, airOnly: ['air', 'spark'], defaultAirFeatures: 26 }, // WebGL 2-only: gfx-webgl retired by owner.
     undeclaredExportNames: [
         'geometry-renderer', 'gfx-webgl', 'gfx-webgpu', 'graphics', 'intersection-2d', 'mask',
         'physics-framework', 'sorting', 'sorting-2d', 'spine',

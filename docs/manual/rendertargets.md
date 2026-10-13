@@ -1,5 +1,7 @@
 # 渲染目标（Render Targets）
 
+原生多采样附件、resolve 和共享 gfx 资源的接入边界见 [gfx 接入合同](gfx-integration-contracts.md)。
+
 > 把相机输出渲进纹理，再把纹理当普通贴图用
 > （镜像/小窗/后处理的基础件）。
 > 配套可运行示例：[`examples/manual-render-targets/`](examples/manual-render-targets/)。
