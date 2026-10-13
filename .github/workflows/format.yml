@@ -7,6 +7,17 @@ on:
     tags: ["v*"]
 
 jobs:
+  effect-types:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Verify committed effect declaration consumers
+        run: npx jest --runInBand test/smoke/shaders-effect-docs.test.ts
   quality:
     runs-on: ubuntu-latest
     steps:
@@ -43,8 +54,6 @@ jobs:
       - run: npm run build:all
       - run: npm run gallery:api
       - run: git diff --exit-code -- docs/example-api-inventory.json
-      - name: Verify strict generated effect types
-        run: npx jest --runInBand test/smoke/shaders-effect-docs.test.ts
       - name: Prepare browser evidence tooling
         run: |
           npm install --no-save --ignore-scripts --package-lock=false playwright@1.62.1
