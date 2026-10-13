@@ -1,11 +1,21 @@
 ---
 name: cocosair-gltf
-description: Drives the Cocos AIR glTF and GLB surface - GLTFLoader with loadAsync and parseAsync, the three decoder setters and the provider factories behind them, getExtensionSupport and the five-status extension contract across 21 registered handlers, GLTFAsset with its five read-only collections plus instantiate(sceneIndex), GLTFInstance setAnimationLoop and dispose, the five GLTFError codes, and the plain Error, DOMException and tagged TypeError shapes that are not GLTFError. Use when a Draco, meshopt or KTX2 model reports GLTF_DECODER_MISSING, when getExtensionSupport says decoder-required, when a load rejects with no code field, when an instance animation will not loop, or when destroying a GLTFAsset leaves GPU resources behind.
+description: "Drives the Cocos AIR glTF and GLB surface - GLTFLoader with loadAsync and parseAsync, the three decoder setters and the provider factories behind them, getExtensionSupport and the five-status extension contract across 21 registered handlers, GLTFAsset with its five read-only collections plus instantiate(sceneIndex), GLTFInstance setAnimationLoop and dispose, the five GLTFError codes, and the plain Error, DOMException and tagged TypeError shapes that are not GLTFError. Use when a Draco, meshopt or KTX2 model reports GLTF_DECODER_MISSING, when getExtensionSupport says decoder-required, when a load rejects with no code field, when an instance animation will not loop, or when destroying a GLTFAsset leaves GPU resources behind."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, gltf"
+  description_en: "Drives the Cocos AIR glTF and GLB surface - GLTFLoader with loadAsync and parseAsync, the three decoder setters and the provider factories behind them, getExtensionSupport and the five-status extension contract across 21 registered handlers, GLTFAsset with its five read-only collections plus instantiate(sceneIndex), GLTFInstance setAnimationLoop and dispose, the five GLTFError codes, and the plain Error, DOMException and tagged TypeError shapes that are not GLTFError. Use when a Draco, meshopt or KTX2 model reports GLTF_DECODER_MISSING, when getExtensionSupport says decoder-required, when a load rejects with no code field, when an instance animation will not loop, or when destroying a GLTFAsset leaves GPU resources behind."
+  description_zh: "加载 glTF 和 GLB，配置解码器、扩展、进度、实例和错误处理。用于模型加载、压缩资源部署和加载器能力诊断。"
 ---
 
 # Cocos AIR glTF contracts
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Load glTF and GLB straight from a URL or from bytes, inject your own decoders, instantiate shared assets into independent node trees, and read the support matrix honestly - there is no Creator importer and no bundled Draco, meshopt or KTX2 decoder here.
 
@@ -15,15 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which entry exposes a name, how the importmap alias `cocosair` differs from the npm package `cocosair.js`, and where `build/gltf-decoders/` sits relative to your bundle.
-- [cocosair-assets](../cocosair-assets/SKILL.md) - `loadAssetAsync` routes `.gltf`/`.glb` into this skill and stops being the generic path; `AssetBank` and `Texture2D` ownership live there.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - deferred `destroy()`, `isValid` and `NODE_DESTROYED` ordering, which is what makes `GLTFAsset` release deferred too, plus the `MeshRenderer` and `SkinnedMeshRenderer` the instantiated nodes carry.
-- [cocosair-materials-effects](../cocosair-materials-effects/SKILL.md) - the `air-gltf-standard` and `air-gltf-physical` effects the parser builds; overriding them means overriding a shared material.
-- [cocosair-animation-tween](../cocosair-animation-tween/SKILL.md) - the native `Animation` component and `AnimationClip` wrap modes that `setAnimationLoop` reconfigures per instance.
-- [cocosair-skinning-morph](../cocosair-skinning-morph/SKILL.md) - joint paths, bind pose and morph targets for the skeletons and weight sets this skill loads.
-- [cocosair-performance](../cocosair-performance/SKILL.md) - cost of re-instantiating versus sharing one `GLTFAsset`, and draw-call consequences of `EXT_mesh_gpu_instancing` expansion.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - the gates and collectors behind every browser claim quoted below, including `npm run capabilities` and `verify:decoders`.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

@@ -1,11 +1,21 @@
 ---
 name: cocosair-camera
-description: Add and drive the Cocos AIR Camera component with the original Cocos APIs - projection switching between PERSPECTIVE and ORTHO, fov and fovAxis, orthoHeight and orthoWidth, near and far clip planes, the normalized rect viewport and priority draw order, visibility layer masks, the screen-to-world conversions worldToScreen/screenToWorld/screenPointToRay/convertToUINode in left-bottom-origin physical pixels, the AIR frameObject(camera,target,fallbackDistance=6) framing helper over MeshRenderer worldBounds, and the oblique near plane via calculateObliqueMat and clip-space minZ. Use when adding or configuring a camera, switching perspective or ortho, stacking a split-screen or overlay second camera, fitting a model in view, converting pointer pixels to a world ray or UI node, or debugging AIR_E_ORTHO_WIDTH and wrong screenToWorld results.
+description: "Add and drive the Cocos AIR Camera component with the original Cocos APIs - projection switching between PERSPECTIVE and ORTHO, fov and fovAxis, orthoHeight and orthoWidth, near and far clip planes, the normalized rect viewport and priority draw order, visibility layer masks, the screen-to-world conversions worldToScreen/screenToWorld/screenPointToRay/convertToUINode in left-bottom-origin physical pixels, the AIR frameObject(camera,target,fallbackDistance=6) framing helper over MeshRenderer worldBounds, and the oblique near plane via calculateObliqueMat and clip-space minZ. Use when adding or configuring a camera, switching perspective or ortho, stacking a split-screen or overlay second camera, fitting a model in view, converting pointer pixels to a world ray or UI node, or debugging AIR_E_ORTHO_WIDTH and wrong screenToWorld results."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, camera"
+  description_en: "Add and drive the Cocos AIR Camera component with the original Cocos APIs - projection switching between PERSPECTIVE and ORTHO, fov and fovAxis, orthoHeight and orthoWidth, near and far clip planes, the normalized rect viewport and priority draw order, visibility layer masks, the screen-to-world conversions worldToScreen/screenToWorld/screenPointToRay/convertToUINode in left-bottom-origin physical pixels, the AIR frameObject(camera,target,fallbackDistance=6) framing helper over MeshRenderer worldBounds, and the oblique near plane via calculateObliqueMat and clip-space minZ. Use when adding or configuring a camera, switching perspective or ortho, stacking a split-screen or overlay second camera, fitting a model in view, converting pointer pixels to a world ray or UI node, or debugging AIR_E_ORTHO_WIDTH and wrong screenToWorld results."
+  description_zh: "配置相机投影、视口、可见层和多相机顺序，并进行坐标转换、射线拾取与模型取景。用于相机配置或屏幕与世界坐标问题。"
 ---
 
 # Cocos AIR camera
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Frame a scene with the original `Camera` component: choose the projection and its clip planes, decide which layers it draws and in what order, and convert between world space and the physical screen rectangle it renders into. AIR ships no Creator camera preview; every camera is built and configured in code.
 
@@ -15,11 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - `node.layer` bits and the `visibility` mask values this camera tests against ([layers.md](../cocosair-scene-graph/references/layers.md) there).
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which entry exposes `Camera` and `frameObject`.
-
-Rendering pipeline, lights, shadows and post-process belong to the cocosair-rendering skill; UI canvas and design-resolution input handling belong to the cocosair-ui-2d and cocosair-input-action skills - load the matching existing skill only when the task crosses that boundary.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

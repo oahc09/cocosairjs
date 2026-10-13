@@ -1,11 +1,21 @@
 ---
 name: cocosair-materials-effects
-description: Author and drive Cocos AIR materials in a Code First scene - new Material() plus initialize({effectName, defines, technique, states}), the 21 registered AIR effect entries and 17 builtin materials, setProperty value types for float, Vec3, Vec4, Color, Texture2D and arrays, the USE_TEXTURE versus USE_ALBEDO_MAP define gates, handleInfo property aliases, MaterialInstance versus shared materials, the Pass warn stubs for recompileShaders and overridePipelineStates, the glsl4 to glsl3 source transform, the set and binding layout assignEffectBindings enforces including CCSkinning at binding 3, createAirUnlitFogEffect, attachAirSpriteMask and inspectAirMaterial. Use when creating or configuring a Material or EffectAsset, picking builtin-standard or builtin-unlit, setting a color, texture or uniform array, overriding blend or depth state, writing custom GLSL, or debugging AIR_E_MATERIAL_NOT_READY, AIR_E_MATERIAL_TYPE, uniform buffer too small, a flat untextured surface or a setProperty call that does nothing.
+description: "Author and drive Cocos AIR materials in a Code First scene - new Material() plus initialize({effectName, defines, technique, states}), the 21 registered AIR effect entries and 17 builtin materials, setProperty value types for float, Vec3, Vec4, Color, Texture2D and arrays, the USE_TEXTURE versus USE_ALBEDO_MAP define gates, handleInfo property aliases, MaterialInstance versus shared materials, the Pass warn stubs for recompileShaders and overridePipelineStates, the glsl4 to glsl3 source transform, the set and binding layout assignEffectBindings enforces including CCSkinning at binding 3, createAirUnlitFogEffect, attachAirSpriteMask and inspectAirMaterial. Use when creating or configuring a Material or EffectAsset, picking builtin-standard or builtin-unlit, setting a color, texture or uniform array, overriding blend or depth state, writing custom GLSL, or debugging AIR_E_MATERIAL_NOT_READY, AIR_E_MATERIAL_TYPE, uniform buffer too small, a flat untextured surface or a setProperty call that does nothing."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, materials, effects"
+  description_en: "Author and drive Cocos AIR materials in a Code First scene - new Material() plus initialize({effectName, defines, technique, states}), the 21 registered AIR effect entries and 17 builtin materials, setProperty value types for float, Vec3, Vec4, Color, Texture2D and arrays, the USE_TEXTURE versus USE_ALBEDO_MAP define gates, handleInfo property aliases, MaterialInstance versus shared materials, the Pass warn stubs for recompileShaders and overridePipelineStates, the glsl4 to glsl3 source transform, the set and binding layout assignEffectBindings enforces including CCSkinning at binding 3, createAirUnlitFogEffect, attachAirSpriteMask and inspectAirMaterial. Use when creating or configuring a Material or EffectAsset, picking builtin-standard or builtin-unlit, setting a color, texture or uniform array, overriding blend or depth state, writing custom GLSL, or debugging AIR_E_MATERIAL_NOT_READY, AIR_E_MATERIAL_TYPE, uniform buffer too small, a flat untextured surface or a setProperty call that does nothing."
+  description_zh: "配置材质、效果、属性类型、宏和自定义 GLSL。用于 USE_TEXTURE、uniform 类型、效果初始化或材质诊断问题。"
 ---
 
 # Cocos AIR materials and effects
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 A material in AIR is one effect recipe plus a bag of uniform values: `new Material()`, `initialize({ effectName })` picks the recipe, `setProperty(name, value)` fills it. There is no material inheritance tree, no `ShaderMaterial`, and no Editor asset pipeline - recipe names are strings and custom shaders are hand-written compiled effect JSON.
 
@@ -15,16 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which entry exposes `Material` and `EffectAsset`.
-- [cocosair-application](../cocosair-application/SKILL.md) - the device-initialization ordering that `Material.initialize` depends on.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - `MeshRenderer` attachment, `node.layer` bits a material's draws are culled against.
-- [cocosair-camera](../cocosair-camera/SKILL.md) - `camera.visibility` and clear flags decide whether a correct material is visible at all.
-- [cocosair-math](../cocosair-math/SKILL.md) - `Color`, `Vec3`, `Vec4`, `Mat3`, `Mat4`, `Quat` values a `setProperty` call must carry.
-- [cocosair-graphics-and-dom](../cocosair-graphics-and-dom/SKILL.md) - the `ui-graphics-material` / `builtin-graphics` path and canvas-backed textures.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - pixel readback recipes that prove a material actually rendered.
-
-Lighting, shadows and the post-process pipeline belong to the cocosair-rendering skill; mesh primitives and multi-material sub-models to cocosair-primitives-mesh; `SkinnedMeshRenderer` macro handling to cocosair-skinning-morph; UI 2D materials to cocosair-ui-2d; glTF material import to cocosair-gltf. Use the matching existing skill as a direct dependency; keep material authoring here.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

@@ -1,11 +1,21 @@
 ---
 name: cocosair-primitives-mesh
-description: Builds and attaches procedural geometry in a Cocos AIR Code First scene - the nine primitives.* shape generators and their parameter defaults, the createPrimitiveGeometry(descriptor) helper whose box, sphere, cylinder, cone whitelist, integer segment cap of 1024, predicted-vertex cap and arc range throw RangeError AIR_E_PRIMITIVE_DESCRIPTOR, turning the returned IGeometry into a Mesh with utils.createMesh, hand-authoring a Mesh struct from gfx.Attribute and Format rows and reading or copying vertex attributes and indices, and driving MeshRenderer hooks such as bakeSettings, setInstancedAttribute and morph setWeight. Use when generating a box, sphere, cylinder or cone without a Creator asset, wiring a BufferGeometry-style object to a renderer, hitting AIR_E_PRIMITIVE_DESCRIPTOR, choosing new Mesh plus struct versus primitives.box, reading mesh vertex attributes, or exporting geometry as OBJ or wireframe.
+description: "Builds and attaches procedural geometry in a Cocos AIR Code First scene - the nine primitives.* shape generators and their parameter defaults, the createPrimitiveGeometry(descriptor) helper whose box, sphere, cylinder, cone whitelist, integer segment cap of 1024, predicted-vertex cap and arc range throw RangeError AIR_E_PRIMITIVE_DESCRIPTOR, turning the returned IGeometry into a Mesh with utils.createMesh, hand-authoring a Mesh struct from gfx.Attribute and Format rows and reading or copying vertex attributes and indices, and driving MeshRenderer hooks such as bakeSettings, setInstancedAttribute and morph setWeight. Use when generating a box, sphere, cylinder or cone without a Creator asset, wiring a BufferGeometry-style object to a renderer, hitting AIR_E_PRIMITIVE_DESCRIPTOR, choosing new Mesh plus struct versus primitives.box, reading mesh vertex attributes, or exporting geometry as OBJ or wireframe."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, primitives, mesh"
+  description_en: "Builds and attaches procedural geometry in a Cocos AIR Code First scene - the nine primitives.* shape generators and their parameter defaults, the createPrimitiveGeometry(descriptor) helper whose box, sphere, cylinder, cone whitelist, integer segment cap of 1024, predicted-vertex cap and arc range throw RangeError AIR_E_PRIMITIVE_DESCRIPTOR, turning the returned IGeometry into a Mesh with utils.createMesh, hand-authoring a Mesh struct from gfx.Attribute and Format rows and reading or copying vertex attributes and indices, and driving MeshRenderer hooks such as bakeSettings, setInstancedAttribute and morph setWeight. Use when generating a box, sphere, cylinder or cone without a Creator asset, wiring a BufferGeometry-style object to a renderer, hitting AIR_E_PRIMITIVE_DESCRIPTOR, choosing new Mesh plus struct versus primitives.box, reading mesh vertex attributes, or exporting geometry as OBJ or wireframe."
+  description_zh: "构建基本几何和原生 Mesh，检查顶点属性、索引、边界与渲染器写入契约。用于代码生成几何或自定义网格。"
 ---
 
 # Cocos AIR primitives and mesh authoring
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Generate procedural geometry in code, convert it into a renderable `Mesh` asset, and know exactly where a `MeshRenderer` will accept it.
 
@@ -15,13 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - `Node`, `Layers.Enum.DEFAULT`, component `enabled` and release ordering a `MeshRenderer` rides on.
-- [cocosair-materials-effects](../cocosair-materials-effects/SKILL.md) - the material and `overridePipelineStates` that turn a `Mesh` into pixels; this skill only produces geometry.
-- [cocosair-rendering](../cocosair-rendering/SKILL.md) - the camera, lighting and shadow gates that decide whether an attached `MeshRenderer` is drawn at all.
-- [cocosair-math](../cocosair-math/SKILL.md) - `Vec3` bounds and transforms used by `translate`/`scale` and by hand-written `minPos`/`maxPos`.
-
-Skinning weight binding (joint attributes), morph target authoring, asset loading and disposal policy, and performance of many instances belong to the cocosair-skinning-morph, cocosair-assets and cocosair-performance skills; load the matching existing skill when the task needs it. This skill owns only the `MeshRenderer` write contract below: `bakeSettings`, morph `setWeight` and `setInstancedAttribute`.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

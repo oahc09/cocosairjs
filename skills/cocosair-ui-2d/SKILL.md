@@ -1,11 +1,21 @@
 ---
 name: cocosair-ui-2d
-description: Drives code-first 2D UI in the Cocos AIR runtime - createUICanvas (Canvas plus fullscreen Widget plus an ortho UI camera bound through canvas.cameraComponent, defaults designWidth 1280, designHeight 720, layer Layers.Enum.UI_2D), the spriteNode and labelNode helpers and their real defaults (fontSize 28, lineHeight Math.round(fontSize*1.25), the AIR_E_LABEL_WRAP guard), the widget components Canvas, Widget, Layout (exported as Layout$1 as Layout), Button, ScrollView, ProgressBar, Slider, Toggle, EditBox, PageView, SafeArea and BlockInputEvents, each also aliased as ...Component, Label system-font and BMFont binding, LabelOutline, LabelShadow, LabelAtlas, the RichText-only-as-RichTextComponent alias, and 2D draw order through SortingLayers, Sorting2D and the Intersection2D utility. Use when a UI node renders nothing, when text needs a font without any Creator font-asset pipeline, when widgets must realign on a viewport change, or when 2D sprites and labels stack in the wrong order.
+description: "Drives code-first 2D UI in the Cocos AIR runtime - createUICanvas (Canvas plus fullscreen Widget plus an ortho UI camera bound through canvas.cameraComponent, defaults designWidth 1280, designHeight 720, layer Layers.Enum.UI_2D), the spriteNode and labelNode helpers and their real defaults (fontSize 28, lineHeight Math.round(fontSize*1.25), the AIR_E_LABEL_WRAP guard), the widget components Canvas, Widget, Layout (exported as Layout$1 as Layout), Button, ScrollView, ProgressBar, Slider, Toggle, EditBox, PageView, SafeArea and BlockInputEvents, each also aliased as ...Component, Label system-font and BMFont binding, LabelOutline, LabelShadow, LabelAtlas, the RichText-only-as-RichTextComponent alias, and 2D draw order through SortingLayers, Sorting2D and the Intersection2D utility. Use when a UI node renders nothing, when text needs a font without any Creator font-asset pipeline, when widgets must realign on a viewport change, or when 2D sprites and labels stack in the wrong order."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, ui, 2d"
+  description_en: "Drives code-first 2D UI in the Cocos AIR runtime - createUICanvas (Canvas plus fullscreen Widget plus an ortho UI camera bound through canvas.cameraComponent, defaults designWidth 1280, designHeight 720, layer Layers.Enum.UI_2D), the spriteNode and labelNode helpers and their real defaults (fontSize 28, lineHeight Math.round(fontSize*1.25), the AIR_E_LABEL_WRAP guard), the widget components Canvas, Widget, Layout (exported as Layout$1 as Layout), Button, ScrollView, ProgressBar, Slider, Toggle, EditBox, PageView, SafeArea and BlockInputEvents, each also aliased as ...Component, Label system-font and BMFont binding, LabelOutline, LabelShadow, LabelAtlas, the RichText-only-as-RichTextComponent alias, and 2D draw order through SortingLayers, Sorting2D and the Intersection2D utility. Use when a UI node renders nothing, when text needs a font without any Creator font-asset pipeline, when widgets must realign on a viewport change, or when 2D sprites and labels stack in the wrong order."
+  description_zh: "使用 Canvas、布局、控件、Label、位图字体和二维排序。用于 UI 构建、文本显示或交互布局问题。"
 ---
 
 # Cocos AIR 2D UI contracts
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Assemble a Canvas and its ortho UI camera from code, add sprites, labels and interactive
 widgets, and control 2D draw order - no Prefab, no Editor, no parallel UI abstraction.
@@ -16,13 +26,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - deferred `destroy()`, parenting order and `Node.layer`, which every UI node depends on.
-- [cocosair-camera](../cocosair-camera/SKILL.md) - `Camera` projection, `visibility` and clear color, the half of a Canvas that makes UI pixels appear.
-- [cocosair-assets](../cocosair-assets/SKILL.md) - `Texture2D`/`SpriteFrame` ownership and `loadBitmapFont` for authored faces.
-- [cocosair-graphics-and-dom](../cocosair-graphics-and-dom/SKILL.md) - `Graphics`, masks and the DOM overlay path for text that must stay selectable.
-- [cocosair-performance](../cocosair-performance/SKILL.md) - 2D batching and atlas behavior behind draw-order and label cache-mode choices.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - the browser probes and gates behind the click and layout claims quoted below.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

@@ -1,11 +1,21 @@
 ---
 name: cocosair-graphics-and-dom
-description: Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js/html-source). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets.
+description: "Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js/html-source). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, graphics, and, dom"
+  description_en: "Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js/html-source). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets."
+  description_zh: "使用 Graphics、SVG、栅格填充、纹理显示、遮罩、混合和 DOM 覆盖层。用于绘图导出、富填充或实验性 HTML 纹理。"
 ---
 
 # Cocos AIR graphics and DOM
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Replay drawing data on the native `Graphics`, rasterize rich fills into a native
 `Texture2D`, mask a single `Sprite`, inherit UI blend across a subtree, borrow a
@@ -20,14 +30,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - `Node`/`Layer` and deferred destroy, which texture sprites and masks depend on.
-- [cocosair-camera](../cocosair-camera/SKILL.md) - the ortho UI camera a `createAirDOMOverlay` binding projects through.
-- [cocosair-ui-2d](../cocosair-ui-2d/SKILL.md) - Canvas, `Sprite`/`SpriteFrame` and UI layer wiring that every helper here attaches to.
-- [cocosair-assets](../cocosair-assets/SKILL.md) - `Texture2D` ownership; masks and raster paints borrow, never own, the source texture.
-- [cocosair-rendering](../cocosair-rendering/SKILL.md) - blend factors, materials and batching these helpers rewrite.
-- [cocosair-performance](../cocosair-performance/SKILL.md) - explicit raster/HTML update cadence instead of per-frame re-upload.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - the pixel, SVG and click probes behind the claims below.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

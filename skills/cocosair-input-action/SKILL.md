@@ -1,11 +1,21 @@
 ---
 name: cocosair-input-action
-description: Wires native input events and the AIR action layer in code-first Cocos AIR - the engine input singleton and systemEvent globals, EventTouch/EventKeyboard/EventMouse with the Input.EventType and SystemEvent.EventType enums and KeyCode key codes, createActionState as a pure held/pressed/released/axis reducer keyed per (action, source) with seven reset reasons and no listener removal, createActionInput over the native or dom backend where dom needs an explicit canvas and skips editable targets, createSessionGate for session admission, and SceneStack persistent-page navigation with dual-page transition, capture-phase input block and LRU eviction. Use when handling touch/keyboard/mouse in a Cocos AIR scene, when keys stop firing because an input or textarea has focus, when a dom action backend throws for a missing canvas, when a held button must survive a blur or page-hidden reset, or when push/pop page state must be preserved during a transition.
+description: "Wires native input events and the AIR action layer in code-first Cocos AIR - the engine input singleton and systemEvent globals, EventTouch/EventKeyboard/EventMouse with the Input.EventType and SystemEvent.EventType enums and KeyCode key codes, createActionState as a pure held/pressed/released/axis reducer keyed per (action, source) with seven reset reasons and no listener removal, createActionInput over the native or dom backend where dom needs an explicit canvas and skips editable targets, createSessionGate for session admission, and SceneStack persistent-page navigation with dual-page transition, capture-phase input block and LRU eviction. Use when handling touch/keyboard/mouse in a Cocos AIR scene, when keys stop firing because an input or textarea has focus, when a dom action backend throws for a missing canvas, when a held button must survive a blur or page-hidden reset, or when push/pop page state must be preserved during a transition."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, input, action"
+  description_en: "Wires native input events and the AIR action layer in code-first Cocos AIR - the engine input singleton and systemEvent globals, EventTouch/EventKeyboard/EventMouse with the Input.EventType and SystemEvent.EventType enums and KeyCode key codes, createActionState as a pure held/pressed/released/axis reducer keyed per (action, source) with seven reset reasons and no listener removal, createActionInput over the native or dom backend where dom needs an explicit canvas and skips editable targets, createSessionGate for session admission, and SceneStack persistent-page navigation with dual-page transition, capture-phase input block and LRU eviction. Use when handling touch/keyboard/mouse in a Cocos AIR scene, when keys stop firing because an input or textarea has focus, when a dom action backend throws for a missing canvas, when a held button must survive a blur or page-hidden reset, or when push/pop page state must be preserved during a transition."
+  description_zh: "处理原生和 DOM 输入、动作状态、焦点、会话门禁及 SceneStack。用于按键触摸、动作映射、输入阻断或清理问题。"
 ---
 
 # Cocos AIR native input and the action layer
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Read real events through `input` / `systemEvent`, then drive gameplay through the AIR action layer: `createActionState` holds the state machine, `createActionInput` wires one backend to it, `createSessionGate` admits or rejects, and `SceneStack` navigates persistent pages.
 
@@ -15,13 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-application](../cocosair-application/SKILL.md) - `createAirApp`, the app handle and its session scope that gate input admission.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - `Node`/`Scene` structure and deferred `destroy()` that `SceneStack` pages rely on.
-- [cocosair-camera](../cocosair-camera/SKILL.md) - the camera converting a screen point to a ray for a picked node.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - how to prove an input path in a real browser instead of asserting it.
-
-For gesture unlock, live inspection or widgets, load cocosair-audio-video, cocosair-agent-session or cocosair-ui-2d as needed. These skills exist alongside this one.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

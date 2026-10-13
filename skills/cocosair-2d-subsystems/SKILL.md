@@ -1,11 +1,21 @@
 ---
 name: cocosair-2d-subsystems
-description: Drives the Cocos AIR 2D subsystem runtime modules in code-first scenes - the sp namespace and loadWasmModuleSpine plus the BLOCKED Spine backend and asset sourcing state, dragonBones ArmatureDisplay, DragonBonesAsset, DragonBonesAtlasAsset, CCFactory and AnimationCacheMode with realtime versus cached skinning on the vendored dragonbones-js, TiledMap, TiledMapAsset, TiledLayer, TiledObjectGroup and TiledTile built from runtime tmx and tsx strings, ParticleSystem2D and ParticleAsset fed by a generated plist through assetManager.parser.parsePlist, MotionStreak (exported as MotionStreak, there is no MotionStreak2D), and Billboard as a scene.Model whose size and rotation travel through one cc_size_rotation uniform. Use when a Spine skeleton draws nothing without any error, when a TiledMap cell edit or object query does not refresh or resolve, when plist-tuned particles compute but render no pixels, or when a billboard is invisible at its default size.
+description: "Drives the Cocos AIR 2D subsystem runtime modules in code-first scenes - the sp namespace and loadWasmModuleSpine plus the BLOCKED Spine backend and asset sourcing state, dragonBones ArmatureDisplay, DragonBonesAsset, DragonBonesAtlasAsset, CCFactory and AnimationCacheMode with realtime versus cached skinning on the vendored dragonbones-js, TiledMap, TiledMapAsset, TiledLayer, TiledObjectGroup and TiledTile built from runtime tmx and tsx strings, ParticleSystem2D and ParticleAsset fed by a generated plist through assetManager.parser.parsePlist, MotionStreak (exported as MotionStreak, there is no MotionStreak2D), and Billboard as a scene.Model whose size and rotation travel through one cc_size_rotation uniform. Use when a Spine skeleton draws nothing without any error, when a TiledMap cell edit or object query does not refresh or resolve, when plist-tuned particles compute but render no pixels, or when a billboard is invisible at its default size."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, 2d, subsystems"
+  description_en: "Drives the Cocos AIR 2D subsystem runtime modules in code-first scenes - the sp namespace and loadWasmModuleSpine plus the BLOCKED Spine backend and asset sourcing state, dragonBones ArmatureDisplay, DragonBonesAsset, DragonBonesAtlasAsset, CCFactory and AnimationCacheMode with realtime versus cached skinning on the vendored dragonbones-js, TiledMap, TiledMapAsset, TiledLayer, TiledObjectGroup and TiledTile built from runtime tmx and tsx strings, ParticleSystem2D and ParticleAsset fed by a generated plist through assetManager.parser.parsePlist, MotionStreak (exported as MotionStreak, there is no MotionStreak2D), and Billboard as a scene.Model whose size and rotation travel through one cc_size_rotation uniform. Use when a Spine skeleton draws nothing without any error, when a TiledMap cell edit or object query does not refresh or resolve, when plist-tuned particles compute but render no pixels, or when a billboard is invisible at its default size."
+  description_zh: "配置 Spine、DragonBones、TiledMap、二维粒子和 Billboard 的原生运行时契约。用于资源构造、空白画面或子系统能力边界问题。"
 ---
 
 # Cocos AIR 2D subsystem contracts
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Build Spine, DragonBones, TiledMap, particle and billboard content from strings and bytes at runtime - there is no Creator importer, no uuid dependency graph and no prefab here, and one of these five subsystems cannot run at all in the default bundle.
 
@@ -15,13 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - the router and the Code First discipline this skill applies.
-- [cocosair-ui-2d](../cocosair-ui-2d/SKILL.md) - `Canvas`, UI camera and layer setup, `UITransform` sizing and draw order that every subsystem here except `Billboard` sits on top of.
-- [cocosair-assets](../cocosair-assets/SKILL.md) - `assetManager.loadRemote` with an explicit extension, `Texture2D` and `SpriteFrame` ownership, and the `ImageAsset` to `Texture2D` wrap these asset constructors need.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - `active` toggling that forces a TiledLayer rebuild, deferred `destroy()`, and the node transforms `Billboard` and `ArmatureDisplay` read.
-- [cocosair-materials-effects](../cocosair-materials-effects/SKILL.md) - `builtin-billboard` and `SpineMaterialType` sit in the same effect registry; technique and blend-state overrides happen on the material.
-- [cocosair-camera](../cocosair-camera/SKILL.md) - TiledMap culling projects through the camera that resolves at run time, and `Billboard` needs a 3D camera visibility, not the UI one.
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which symbol each entry file exports and how the `cocosair` importmap alias is wired.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

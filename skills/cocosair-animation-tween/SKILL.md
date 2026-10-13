@@ -1,11 +1,21 @@
 ---
 name: cocosair-animation-tween
-description: Drives the Cocos AIR animation and tween surface - the code-first tween(target) chain (to/by/set/delay/call/sequence/parallel/repeat/repeatForever/reverseTime/union/clone/timeScale plus start/stop/pause/resume and the target-bound statics), TweenSystem and its ActionManager, the native Animation component (play/stop/pause/resume/getState/createState/addClip/crossFade, executionOrder 99, playOnLoad), AnimationState wrapMode whose setter resets time and repeatCount, code-first AnimationClip construction, the AnimationClip.WrapMode static enum, the animation namespace that is the only route to VectorTrack and TrackPath, createStepClock single-clock stepping with its dual-clock guard, and the unpublished marionette and pose-graph state. Use when a tween will not reverse, when a clip plays once instead of looping, when track classes fail to import by name, when deterministic frame stepping is needed for evidence, or when pose-graph animation is assumed available.
+description: "Drives the Cocos AIR animation and tween surface - the code-first tween(target) chain (to/by/set/delay/call/sequence/parallel/repeat/repeatForever/reverseTime/union/clone/timeScale plus start/stop/pause/resume and the target-bound statics), TweenSystem and its ActionManager, the native Animation component (play/stop/pause/resume/getState/createState/addClip/crossFade, executionOrder 99, playOnLoad), AnimationState wrapMode whose setter resets time and repeatCount, code-first AnimationClip construction, the AnimationClip.WrapMode static enum, the animation namespace that is the only route to VectorTrack and TrackPath, createStepClock single-clock stepping with its dual-clock guard, and the unpublished marionette and pose-graph state. Use when a tween will not reverse, when a clip plays once instead of looping, when track classes fail to import by name, when deterministic frame stepping is needed for evidence, or when pose-graph animation is assumed available."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, animation, tween"
+  description_en: "Drives the Cocos AIR animation and tween surface - the code-first tween(target) chain (to/by/set/delay/call/sequence/parallel/repeat/repeatForever/reverseTime/union/clone/timeScale plus start/stop/pause/resume and the target-bound statics), TweenSystem and its ActionManager, the native Animation component (play/stop/pause/resume/getState/createState/addClip/crossFade, executionOrder 99, playOnLoad), AnimationState wrapMode whose setter resets time and repeatCount, code-first AnimationClip construction, the AnimationClip.WrapMode static enum, the animation namespace that is the only route to VectorTrack and TrackPath, createStepClock single-clock stepping with its dual-clock guard, and the unpublished marionette and pose-graph state. Use when a tween will not reverse, when a clip plays once instead of looping, when track classes fail to import by name, when deterministic frame stepping is needed for evidence, or when pose-graph animation is assumed available."
+  description_zh: "使用 AnimationClip、Animation 和 tween，管理播放模式、组合及单一时钟。用于动画播放、补间回收或确定性步进问题。"
 ---
 
 # Cocos AIR animation and tween contracts
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Move things over time two ways: the code-first `tween(target)` chain (zero assets, the shortest path) and the native `Animation` component driving an `AnimationClip` you can build entirely in code. Both are stepped by the director, never by your own `requestAnimationFrame`. For deterministic evidence there is a third, test-only driver, `createStepClock`, that pauses the real clock and advances one frame at a time.
 
@@ -15,14 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - `Node` activation, `active`, deferred `destroy()` and `NODE_DESTROYED`, which is what tween node-state binding hooks into.
-- [cocosair-application](../cocosair-application/SKILL.md) - `createAirApp`, `app.run(scene)`, `game.pause()`/`game.resume()` and the director pacer that `createStepClock` freezes.
-- [cocosair-math](../cocosair-math/SKILL.md) - `Vec3`, `Quat`, `Color` and the value types tween props and track channels interpolate.
-- [cocosair-gltf](../cocosair-gltf/SKILL.md) - `GLTFInstance.setAnimationLoop` reconfigures the native `AnimationState.wrapMode` this skill documents; glTF clips default to `WrapMode.Normal`.
-- [cocosair-skinning-morph](../cocosair-skinning-morph/SKILL.md) - `SkeletalAnimation`, joint paths and bind pose; skeletal clips play through the same `Animation` component.
-- [cocosair-performance](../cocosair-performance/SKILL.md) - cost of mass tween/animation, the ActionManager update, and render-on-demand versus a resident loop.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - the gates and collectors behind every browser claim quoted below, including the step-clock probe and `examples-verified.json`.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

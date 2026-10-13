@@ -1,11 +1,21 @@
 ---
 name: cocosair-math
-description: Do vector, matrix, quaternion, rect, size and color arithmetic with the original Cocos math types in Cocos AIR - the math namespace and top-level exports, Vec2/Vec3/Vec4, Mat3/Mat4, Quat, Rect, Size and Color plus v2/v3/v4/quat/mat4/color factories, the out-first static convention (Vec3.add(out, a, b)), frozen constants like Vec3.UP via Object.freeze, Mat4 column-major m00..m15 layout and S->R->T composition with fromSRT/toSRT, Quat euler degrees versus radians, Mat3/Mat4 inverse and mirror handling, epsilon comparison with approx, scalar utilities clamp/clamp01/lerp/inverseLerp/repeat/pingPong, randomRange/pseudoRandom, floatToHalf encoding, bits helpers and easing curves. Use when normalizing or projecting a direction, composing or decomposing a node transform matrix, picking a quaternion or euler rotation, packing a Color or hex value, choosing an easing curve for a manual tween, hitting a TypeError from writing Vec3.UP, seeing -0 or NaN in a position, or getting an all-zero matrix from Mat4.invert.
+description: "Do vector, matrix, quaternion, rect, size and color arithmetic with the original Cocos math types in Cocos AIR - the math namespace and top-level exports, Vec2/Vec3/Vec4, Mat3/Mat4, Quat, Rect, Size and Color plus v2/v3/v4/quat/mat4/color factories, the out-first static convention (Vec3.add(out, a, b)), frozen constants like Vec3.UP via Object.freeze, Mat4 column-major m00..m15 layout and S->R->T composition with fromSRT/toSRT, Quat euler degrees versus radians, Mat3/Mat4 inverse and mirror handling, epsilon comparison with approx, scalar utilities clamp/clamp01/lerp/inverseLerp/repeat/pingPong, randomRange/pseudoRandom, floatToHalf encoding, bits helpers and easing curves. Use when normalizing or projecting a direction, composing or decomposing a node transform matrix, picking a quaternion or euler rotation, packing a Color or hex value, choosing an easing curve for a manual tween, hitting a TypeError from writing Vec3.UP, seeing -0 or NaN in a position, or getting an all-zero matrix from Mat4.invert."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, math"
+  description_en: "Do vector, matrix, quaternion, rect, size and color arithmetic with the original Cocos math types in Cocos AIR - the math namespace and top-level exports, Vec2/Vec3/Vec4, Mat3/Mat4, Quat, Rect, Size and Color plus v2/v3/v4/quat/mat4/color factories, the out-first static convention (Vec3.add(out, a, b)), frozen constants like Vec3.UP via Object.freeze, Mat4 column-major m00..m15 layout and S->R->T composition with fromSRT/toSRT, Quat euler degrees versus radians, Mat3/Mat4 inverse and mirror handling, epsilon comparison with approx, scalar utilities clamp/clamp01/lerp/inverseLerp/repeat/pingPong, randomRange/pseudoRandom, floatToHalf encoding, bits helpers and easing curves. Use when normalizing or projecting a direction, composing or decomposing a node transform matrix, picking a quaternion or euler rotation, packing a Color or hex value, choosing an easing curve for a manual tween, hitting a TypeError from writing Vec3.UP, seeing -0 or NaN in a position, or getting an all-zero matrix from Mat4.invert."
+  description_zh: "使用 Cocos 数学类型进行向量、矩阵、四元数、颜色和插值计算。用于坐标变换、旋转、颜色处理、缓动或确定性随机。"
 ---
 
 # Cocos AIR math
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Compute with the value types the scene graph itself consumes: mutable instance fields, static operations that write into their first `out` argument, and matrices the `Node` transform pipeline reads back.
 
@@ -15,12 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - `Node` position/rotation/scale setters that consume `Vec3`/`Quat`/`Mat4` and the dirty-flag propagation.
-- [cocosair-camera](../cocosair-camera/SKILL.md) - `Mat4.perspective`/`ortho`/`lookAt` consumers and screen-to-world conversions returning `Vec3`.
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which entry exposes these symbols.
-
-Material property packing (`Vec4`/`Color` into effects) belongs to [cocosair-materials-effects](../cocosair-materials-effects/SKILL.md) and curve application inside `tween().easing(...)` to the cocosair-animation-tween skill; load the matching existing skill when applying these values to a material or animation.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

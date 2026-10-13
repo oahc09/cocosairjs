@@ -1,11 +1,21 @@
 ---
 name: cocosair-scene-graph
-description: Build and drive the Cocos AIR scene graph with the original Cocos APIs - Scene as the Node tree root, Node addChild/insertChild/removeChild/removeFromParent/setParent and getChildByUuid, active versus activeInHierarchy hiding, local setScale versus inherited worldScale, the Component lifecycle order onLoad onEnable start update lateUpdate onDisable onDestroy, node on/off/once/emit events and exactly what node.destroy() does and does not unsubscribe, Layers bits with UI_2D and DEFAULT and addLayer plus makeMaskInclude/makeMaskExclude, find by path, NodePool put/get, scene.globals ambient fog skybox lightProbeInfo activation, and Scene or SceneAsset addRef decRef plus autoReleaseAssets refcounting. Use when building or re-parenting nodes, ordering component lifecycle, subscribing node or input events, assigning camera-culling layers, pooling nodes, or releasing scenes without leaking.
+description: "Build and drive the Cocos AIR scene graph with the original Cocos APIs - Scene as the Node tree root, Node addChild/insertChild/removeChild/removeFromParent/setParent and getChildByUuid, active versus activeInHierarchy hiding, local setScale versus inherited worldScale, the Component lifecycle order onLoad onEnable start update lateUpdate onDisable onDestroy, node on/off/once/emit events and exactly what node.destroy() does and does not unsubscribe, Layers bits with UI_2D and DEFAULT and addLayer plus makeMaskInclude/makeMaskExclude, find by path, NodePool put/get, scene.globals ambient fog skybox lightProbeInfo activation, and Scene or SceneAsset addRef decRef plus autoReleaseAssets refcounting. Use when building or re-parenting nodes, ordering component lifecycle, subscribing node or input events, assigning camera-culling layers, pooling nodes, or releasing scenes without leaking."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, scene, graph"
+  description_en: "Build and drive the Cocos AIR scene graph with the original Cocos APIs - Scene as the Node tree root, Node addChild/insertChild/removeChild/removeFromParent/setParent and getChildByUuid, active versus activeInHierarchy hiding, local setScale versus inherited worldScale, the Component lifecycle order onLoad onEnable start update lateUpdate onDisable onDestroy, node on/off/once/emit events and exactly what node.destroy() does and does not unsubscribe, Layers bits with UI_2D and DEFAULT and addLayer plus makeMaskInclude/makeMaskExclude, find by path, NodePool put/get, scene.globals ambient fog skybox lightProbeInfo activation, and Scene or SceneAsset addRef decRef plus autoReleaseAssets refcounting. Use when building or re-parenting nodes, ordering component lifecycle, subscribing node or input events, assigning camera-culling layers, pooling nodes, or releasing scenes without leaking."
+  description_zh: "使用原生 Scene、Node、Component 构建场景树并管理层、事件、生命周期和资源释放。用于节点组织、组件更新、对象池或场景配置。"
 ---
 
 # Cocos AIR scene graph
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Assemble scenes in code with the original `Scene`/`Node`/`Component` classes, predict transform and `active` inheritance, subscribe and unsubscribe node events correctly, and manage layers, `find`, `NodePool`, scene globals and refcounts. AIR ships no Creator editor pipeline: no tool serializes `.scene`/`.prefab` assets and no project `resources` bundle exists, so everything is built and released through code.
 
@@ -15,12 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which entry the page imports.
-- [cocosair-application](../cocosair-application/SKILL.md) - `app.run`/`getScene`/`releaseScene`/`close` and the single per-document runtime.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - proving a lifecycle or refcount claim in a browser instead of asserting it.
-
-Camera culling fields (`visibility`), `createUICanvas` sorting layers, global `input.on` listeners and action mapping, and glTF/asset loading are owned by the cocosair-camera, cocosair-ui-2d, cocosair-input-action and cocosair-gltf skills (not yet authored; route through the router).
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

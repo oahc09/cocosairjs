@@ -1,11 +1,21 @@
 ---
 name: cocosair-application
-description: Configure and drive the Cocos AIR application handle - every AirAppOptions field vs its validator (canvas selector or element, renderMode 0..3, physics builtin or cannon, diagnostics errors or warnings, pixelRatioCap default 2, screenMode window or container, container, designResolution policy 0..4, contextLoss), the one-runtime-per-document admission rule keyed by Symbol.for('cocosair.bootstrap.v1'), the run/getScene/releaseScene/close lifecycle and the whole-page reload a closed runtime needs, startup error literals WEBGL2_REQUIRED and AIR_E_* codes, the attachContextHealth healthy/lost/restoring/failed state machine with no GPU rebuild, and createSessionScope ownership with (0,5000] timeoutMs. Use when starting a cocosair.js app with createAirApp, choosing or rejecting AirAppOptions values, hitting an AIR_E_ or WEBGL2_REQUIRED startup failure, replacing or releasing a scene, wiring screenMode container or designResolution, or reacting to a lost WebGL context.
+description: "Configure and drive the Cocos AIR application handle - every AirAppOptions field vs its validator (canvas selector or element, renderMode 0..3, physics builtin or cannon, diagnostics errors or warnings, pixelRatioCap default 2, screenMode window or container, container, designResolution policy 0..4, contextLoss), the one-runtime-per-document admission rule keyed by Symbol.for('cocosair.bootstrap.v1'), the run/getScene/releaseScene/close lifecycle and the whole-page reload a closed runtime needs, startup error literals WEBGL2_REQUIRED and AIR_E_* codes, the attachContextHealth healthy/lost/restoring/failed state machine with no GPU rebuild, and createSessionScope ownership with (0,5000] timeoutMs. Use when starting a cocosair.js app with createAirApp, choosing or rejecting AirAppOptions values, hitting an AIR_E_ or WEBGL2_REQUIRED startup failure, replacing or releasing a scene, wiring screenMode container or designResolution, or reacting to a lost WebGL context."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, application"
+  description_en: "Configure and drive the Cocos AIR application handle - every AirAppOptions field vs its validator (canvas selector or element, renderMode 0..3, physics builtin or cannon, diagnostics errors or warnings, pixelRatioCap default 2, screenMode window or container, container, designResolution policy 0..4, contextLoss), the one-runtime-per-document admission rule keyed by Symbol.for('cocosair.bootstrap.v1'), the run/getScene/releaseScene/close lifecycle and the whole-page reload a closed runtime needs, startup error literals WEBGL2_REQUIRED and AIR_E_* codes, the attachContextHealth healthy/lost/restoring/failed state machine with no GPU rebuild, and createSessionScope ownership with (0,5000] timeoutMs. Use when starting a cocosair.js app with createAirApp, choosing or rejecting AirAppOptions values, hitting an AIR_E_ or WEBGL2_REQUIRED startup failure, replacing or releasing a scene, wiring screenMode container or designResolution, or reacting to a lost WebGL context."
+  description_zh: "配置 createAirApp 和应用生命周期、屏幕尺寸、会话清理及 WebGL 上下文健康。用于启动错误、场景替换、关闭和自定义 canvas。"
 ---
 
 # Cocos AIR application lifecycle
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Build the app handle correctly: admit options before the engine evaluates, run and release scenes through the single per-document runtime, and read context health and session ownership from the handle instead of guessing at engine internals.
 
@@ -15,12 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which entry the page imports and how the canvas gets there.
-- [cocosair-graphics-and-dom](../cocosair-graphics-and-dom/SKILL.md) - DOM overlays and canvas textures on the same `#GameCanvas`.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - how to prove a lifecycle claim instead of asserting it.
-
-Scene replacement by a page-stack component, physics backend internals and live-session inspection are owned by the cocosair-scene-graph, cocosair-physics and cocosair-agent-session skills (the router's Foundations row for this skill routes here for the app handle itself).
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

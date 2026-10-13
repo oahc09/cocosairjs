@@ -1,11 +1,21 @@
 ---
 name: cocosair-performance
-description: Drives the Cocos AIR draw-call and frame-budget surface - the only three batching routes (shared mesh across N renderers, Mesh.merge and BatchingUtility.batchStaticModel for static subtrees, utils.MeshUtils.createDynamicMesh with Mesh.updateSubMesh for per-frame geometry), instancing through the single USE_INSTANCING material define with its 1024-per-group split, dynamic atlas defaults and silent-null acceptance rules, 2D auto-batch keys on director.root.batcher2D, the profiler singleton counters behind the pipeline.profiler gate, on-demand rendering as game.pause plus game.step behind Director.EVENT_AFTER_DRAW, pixelRatioCap and the DPR import-order contract, and the recorded limits of the 50k starfield evidence. Use when draw calls equal object count, batching hundreds of cubes or sprites, hitting AIR_E_MESH_CAPACITY or AIR_E_PIXEL_RATIO_IMPORT_ORDER, enabling dynamicAtlasManager, showing the stats overlay, checking whether the loop is really paused, or cutting resolution on a slow device.
+description: "Drives the Cocos AIR draw-call and frame-budget surface - the only three batching routes (shared mesh across N renderers, Mesh.merge and BatchingUtility.batchStaticModel for static subtrees, utils.MeshUtils.createDynamicMesh with Mesh.updateSubMesh for per-frame geometry), instancing through the single USE_INSTANCING material define with its 1024-per-group split, dynamic atlas defaults and silent-null acceptance rules, 2D auto-batch keys on director.root.batcher2D, the profiler singleton counters behind the pipeline.profiler gate, on-demand rendering as game.pause plus game.step behind Director.EVENT_AFTER_DRAW, pixelRatioCap and the DPR import-order contract, and the recorded limits of the 50k starfield evidence. Use when draw calls equal object count, batching hundreds of cubes or sprites, hitting AIR_E_MESH_CAPACITY or AIR_E_PIXEL_RATIO_IMPORT_ORDER, enabling dynamicAtlasManager, showing the stats overlay, checking whether the loop is really paused, or cutting resolution on a slow device."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, performance"
+  description_en: "Drives the Cocos AIR draw-call and frame-budget surface - the only three batching routes (shared mesh across N renderers, Mesh.merge and BatchingUtility.batchStaticModel for static subtrees, utils.MeshUtils.createDynamicMesh with Mesh.updateSubMesh for per-frame geometry), instancing through the single USE_INSTANCING material define with its 1024-per-group split, dynamic atlas defaults and silent-null acceptance rules, 2D auto-batch keys on director.root.batcher2D, the profiler singleton counters behind the pipeline.profiler gate, on-demand rendering as game.pause plus game.step behind Director.EVENT_AFTER_DRAW, pixelRatioCap and the DPR import-order contract, and the recorded limits of the 50k starfield evidence. Use when draw calls equal object count, batching hundreds of cubes or sprites, hitting AIR_E_MESH_CAPACITY or AIR_E_PIXEL_RATIO_IMPORT_ORDER, enabling dynamicAtlasManager, showing the stats overlay, checking whether the loop is really paused, or cutting resolution on a slow device."
+  description_zh: "选择静态合批、动态图集和实例化，并检查性能统计、剔除和按需渲染。用于大量对象、动画或绘制性能优化。"
 ---
 
 # Cocos AIR performance contracts
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Cut draw calls through the three documented batching routes and the one instancing macro, keep 2D sprites batchable, and read the frame budget with the profiler singleton plus pause/step rendering.
 
@@ -15,16 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-application](../cocosair-application/SKILL.md) - `game` and `createAirApp` lifecycle, `designResolution` and the rest of the option plumbing; this skill owns only `pixelRatioCap` cost and the pause/step discipline.
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which entry exposes a name and how `AIR_FEATURES` variants are built; this skill reads the default bundle face only.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - node activation order, `layer` bits and when a `MeshRenderer` component exists at all; this skill owns what batching does to those renderers.
-- [cocosair-camera](../cocosair-camera/SKILL.md) - `visibility` masks, camera `priority` and frustum culling, which keep running per node under every route below.
-- [cocosair-materials-effects](../cocosair-materials-effects/SKILL.md) - effect and material authoring, including the shader side of `USE_INSTANCING`; this skill owns the batching decision and the draw count.
-- [cocosair-primitives-mesh](../cocosair-primitives-mesh/SKILL.md) - `Mesh` structure, attributes and `createPrimitiveGeometry`; this skill owns `Mesh.merge` and the dynamic-mesh update loop.
-- [cocosair-rendering](../cocosair-rendering/SKILL.md) - lights, shadows, render targets and pipeline reachability; shadow and target cost is not this skill.
-- [cocosair-graphics-and-dom](../cocosair-graphics-and-dom/SKILL.md) - `AirUIMesh` authoring and its geometry limits; this skill owns its atlas and lease behavior, and `Vec3`/`Mat4` helpers come from [cocosair-math](../cocosair-math/SKILL.md).
-- [cocosair-verification](../cocosair-verification/SKILL.md) - gate and evidence-collection commands; the two performance collectors are summarized there.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

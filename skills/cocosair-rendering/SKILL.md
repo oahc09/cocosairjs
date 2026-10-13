@@ -1,11 +1,21 @@
 ---
 name: cocosair-rendering
-description: Drives the Cocos AIR rendering contracts in code - legacy forward lighting units with illuminance in Lux, the single mainLight rule for multiple directional lights and inspectAirDirectionalLights, the per-light-type shadow matrix with the four switches a ShadowMap cast needs, offscreen rendering through createAirRenderTarget and camera targetTexture with requested-versus-effective MSAA samples and sampleFallback, the one-per-scene AirTransmissionCapture behind transmission materials, texture format and sRGB decode preflight with resolveAirTextureFormat and validateAirTextureColorContract, and which post-process and custom-pipeline names a Code First app can really reach. Use when lighting looks flat, asking why there are no shadows, rendering a mirror or refraction into a texture, reading back a target's pixels, hitting AIR_E_RENDER_TARGET_SAMPLES or AIR_E_TEXTURE_COLOR, choosing rgba8, rgba16f or hardware-srgb, or deciding whether bloom and other post-processing run without a variant build.
+description: "Drives the Cocos AIR rendering contracts in code - legacy forward lighting units with illuminance in Lux, the single mainLight rule for multiple directional lights and inspectAirDirectionalLights, the per-light-type shadow matrix with the four switches a ShadowMap cast needs, offscreen rendering through createAirRenderTarget and camera targetTexture with requested-versus-effective MSAA samples and sampleFallback, the one-per-scene AirTransmissionCapture behind transmission materials, texture format and sRGB decode preflight with resolveAirTextureFormat and validateAirTextureColorContract, and which post-process and custom-pipeline names a Code First app can really reach. Use when lighting looks flat, asking why there are no shadows, rendering a mirror or refraction into a texture, reading back a target's pixels, hitting AIR_E_RENDER_TARGET_SAMPLES or AIR_E_TEXTURE_COLOR, choosing rgba8, rgba16f or hardware-srgb, or deciding whether bloom and other post-processing run without a variant build."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, rendering"
+  description_en: "Drives the Cocos AIR rendering contracts in code - legacy forward lighting units with illuminance in Lux, the single mainLight rule for multiple directional lights and inspectAirDirectionalLights, the per-light-type shadow matrix with the four switches a ShadowMap cast needs, offscreen rendering through createAirRenderTarget and camera targetTexture with requested-versus-effective MSAA samples and sampleFallback, the one-per-scene AirTransmissionCapture behind transmission materials, texture format and sRGB decode preflight with resolveAirTextureFormat and validateAirTextureColorContract, and which post-process and custom-pipeline names a Code First app can really reach. Use when lighting looks flat, asking why there are no shadows, rendering a mirror or refraction into a texture, reading back a target's pixels, hitting AIR_E_RENDER_TARGET_SAMPLES or AIR_E_TEXTURE_COLOR, choosing rgba8, rgba16f or hardware-srgb, or deciding whether bloom and other post-processing run without a variant build."
+  description_zh: "配置灯光、阴影、渲染目标、MSAA、颜色契约和管线可达性。用于光照、阴影、离屏渲染、读回或后处理问题。"
 ---
 
 # Cocos AIR rendering contracts
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Configure what the legacy forward pipeline actually draws - light units and the one main light, shadow casting, offscreen camera targets, texture color contracts - and know which pipeline surfaces a Code First app can reach.
 
@@ -15,14 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-camera](../cocosair-camera/SKILL.md) - the `Camera` component an offscreen pass needs: `priority`, `rect`, `visibility`, `targetTexture`.
-- [cocosair-materials-effects](../cocosair-materials-effects/SKILL.md) - authoring the effect and setting a material's `sampler2D`; this skill owns only the texture color contract and target bindings.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - node activation order, `layer` bits and camera `visibility` masks, which decide what a shadow pass or an offscreen camera sees at all; `Vec3` directions come from [cocosair-math](../cocosair-math/SKILL.md).
-- [cocosair-application](../cocosair-application/SKILL.md) - when the scene and its native render scene exist, which gates every light query below.
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which entry exposes a symbol, and variant-build options such as `AIR_FEATURES`.
-
-Offscreen passes for 2D and DOM content belong to [cocosair-graphics-and-dom](../cocosair-graphics-and-dom/SKILL.md). glTF loading, primitive geometry, animation, UI, input, physics, audio and broad performance work belong to the cocosair-gltf, cocosair-primitives-mesh, cocosair-animation-tween, cocosair-ui-2d, cocosair-input-action, cocosair-physics, cocosair-audio-video and cocosair-performance skills; load the matching existing skill only for the task's direct dependencies.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

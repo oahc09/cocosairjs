@@ -1,11 +1,21 @@
 ---
 name: cocosair-assets
-description: Drives the Cocos AIR asset surface - the Code First loading route (assetManager.assets registry plus loadAssetAsync and its gltf, resources, registry, then URL deserialize order), the reference-counted AssetBank over assetManager.loadRemote with the ext and cache-key rules, the subscriber-side-only signal and the full AIR_E_* throw map, the two-object texture model where ImageAsset carries CPU pixels and Texture2D samples them through reset, uploadData, updateMipmaps and the wrap and filter setters, parseAtlasText and createAtlasHandle for libGDX TexturePacker text atlases with top-left rect.y semantics, and parseFnt, createBitmapFont and loadBitmapFont for single-page BMFont. Use when assetManager.resources is null, when load or loadRemote is not an importable name, when reloading the same URL hands back a destroyed asset, when an atlas or font handle refuses to dispose, or when a label still renders with a system font.
+description: "Drives the Cocos AIR asset surface - the Code First loading route (assetManager.assets registry plus loadAssetAsync and its gltf, resources, registry, then URL deserialize order), the reference-counted AssetBank over assetManager.loadRemote with the ext and cache-key rules, the subscriber-side-only signal and the full AIR_E_* throw map, the two-object texture model where ImageAsset carries CPU pixels and Texture2D samples them through reset, uploadData, updateMipmaps and the wrap and filter setters, parseAtlasText and createAtlasHandle for libGDX TexturePacker text atlases with top-left rect.y semantics, and parseFnt, createBitmapFont and loadBitmapFont for single-page BMFont. Use when assetManager.resources is null, when load or loadRemote is not an importable name, when reloading the same URL hands back a destroyed asset, when an atlas or font handle refuses to dispose, or when a label still renders with a system font."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, assets"
+  description_en: "Drives the Cocos AIR asset surface - the Code First loading route (assetManager.assets registry plus loadAssetAsync and its gltf, resources, registry, then URL deserialize order), the reference-counted AssetBank over assetManager.loadRemote with the ext and cache-key rules, the subscriber-side-only signal and the full AIR_E_* throw map, the two-object texture model where ImageAsset carries CPU pixels and Texture2D samples them through reset, uploadData, updateMipmaps and the wrap and filter setters, parseAtlasText and createAtlasHandle for libGDX TexturePacker text atlases with top-left rect.y semantics, and parseFnt, createBitmapFont and loadBitmapFont for single-page BMFont. Use when assetManager.resources is null, when load or loadRemote is not an importable name, when reloading the same URL hands back a destroyed asset, when an atlas or font handle refuses to dispose, or when a label still renders with a system font."
+  description_zh: "管理远程资产、AssetBank 引用计数、纹理、图集和位图字体。用于加载、缓存、取消、共享资源释放或字体导入问题。"
 ---
 
 # Cocos AIR asset contracts
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Load assets through the Code First registry and the reference-counted bank, build textures from canvas and pixel data, and parse libGDX atlases and BMFont pages - there is no Creator bundle pipeline here, so every bundle-era snippet needs re-grounding.
 
@@ -15,24 +25,14 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which entry exposes a name and how `AIR_FEATURES` variants are built; this skill reads the default bundle face only.
-- [cocosair-application](../cocosair-application/SKILL.md) - `createAirApp` boot order and the `#GameCanvas` import contract; asset manager initialization comes from there, not from this skill.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - the deferred `destroy()` and `isValid` rules this skill's asset release ordering depends on.
-- [cocosair-materials-effects](../cocosair-materials-effects/SKILL.md) - sampling a `Texture2D` from a material (`USE_TEXTURE`, `setProperty` type matching); this skill owns producing and releasing the texture.
-- [cocosair-primitives-mesh](../cocosair-primitives-mesh/SKILL.md) - `utils.createMesh` results are assets you register and release the same way.
-- [cocosair-gltf](../cocosair-gltf/SKILL.md) - `GLTFLoader`/`GLTFAsset` and decoder injection; `loadAssetAsync` routes `.gltf`/`.glb` there and stops being the generic path.
-- [cocosair-ui-2d](../cocosair-ui-2d/SKILL.md) - `Sprite` and `Label` consumption of `SpriteFrame` and `BitmapFont`; this skill owns the loading and refcount side.
-- [cocosair-performance](../cocosair-performance/SKILL.md) - `dynamicAtlasManager` re-copying atlas and sprite frames, and texture identity in 2D batch keys.
-- [cocosair-graphics-and-dom](../cocosair-graphics-and-dom/SKILL.md) - canvas and DOM image sources for textures, and `AirUIMesh` texture leases.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - the gates and collectors behind every browser claim quoted below.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 
 - "load a JSON/manifest file at runtime" -> `loadAssetAsync(url)` with no type argument (`src/air/utils/load-asset.ts:38`, `:68-77`).
 - "load something I built in code" -> `assetManager.assets.add(key, asset)` then `loadAssetAsync(key, Type)` (`:60-62`); see `examples/ui-asset-loading/src/main.ts:339-342` for the round-trip shape.
 - "load a png/jpg/audio/text by URL" -> `new AssetBank().load(url, { ext })` for refcounted ownership, or `assetManager.loadRemote` when you accept the engine's URL cache ([asset-bank.md](references/asset-bank.md)).
-- "load a model" -> not this skill; `loadAssetAsync` routes `.gltf`/`.glb` to `GLTFLoader` (`src/air/utils/load-asset.ts:40-43`), see [cocosair-gltf](../cocosair-gltf/SKILL.md).
+- "load a model" -> not this skill; `loadAssetAsync` routes `.gltf`/`.glb` to `GLTFLoader` (`src/air/utils/load-asset.ts:40-43`), see [cocosair-gltf](references/context.md#related-skills).
 - "texture from pixels without a file" -> `new ImageAsset(canvasElement)` plus `texture.image =` (`src/cocos/asset/assets/image-asset.ts:670`, `src/cocos/asset/assets/texture-2d.ts:161-163`); to refill a level from a typed array, `reset(info)` then `uploadData(source, level)` ([texture2d.md](references/texture2d.md)).
 - "sprite sheets" -> `parseAtlasText`/`createAtlasHandle` for libGDX text atlases; Creator `.plist` atlases are not this parser's input ([atlas.md](references/atlas.md)).
 - "custom font" -> `loadBitmapFont(url, { bank })` then `label.font = handle.font`; the Creator TTF/font-asset workflow does not exist here ([bmfont.md](references/bmfont.md)).

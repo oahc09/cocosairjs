@@ -1,11 +1,21 @@
 ---
 name: cocosair-verification
-description: Runs and interprets Cocos AIR verification gates without confusing subset or stale evidence with release readiness. Use when validating an AIR change, classifying a verify:* npm command as read-only or write, reading browser or package evidence, binding a report to its source and bundle fingerprints, telling UNSUPPORTED from FAIL, or preparing a release candidate that needs a clean worktree.
+description: "Runs and interprets Cocos AIR verification gates without confusing subset or stale evidence with release readiness. Use when validating an AIR change, classifying a verify:* npm command as read-only or write, reading browser or package evidence, binding a report to its source and bundle fingerprints, telling UNSUPPORTED from FAIL, or preparing a release candidate that needs a clean worktree."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, verification"
+  description_en: "Runs and interprets Cocos AIR verification gates without confusing subset or stale evidence with release readiness. Use when validating an AIR change, classifying a verify:* npm command as read-only or write, reading browser or package evidence, binding a report to its source and bundle fingerprints, telling UNSUPPORTED from FAIL, or preparing a release candidate that needs a clean worktree."
+  description_zh: "选择并解释 AIR 验证门禁、写行为、指纹和逐 API 证据。用于验证改动、包消费、浏览器行为或发布候选。"
 ---
 
 # AIR verification gates and evidence
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Verification in this repository separates three claims that an agent tends to collapse into one: that a symbol is exported from source, that it is reachable in the built default bundle, and that it behaves correctly in a real browser. Each npm gate proves one layer, and passing a lower layer does not prove the next. Read the command's documented write behavior before running it, because several gates named `verify:*` rewrite repository content.
 
@@ -15,10 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-application](../cocosair-application/SKILL.md) - `createAirApp` and bootstrap startup; its build artifacts are what the reachability layer inspects.
-- [cocosair-project-setup](../cocosair-project-setup/SKILL.md) - which entry and `AIR_FEATURES` variant produced the bundle a gate is reading.
-- [cocosair-performance](../cocosair-performance/SKILL.md) - the two performance collectors and their evidence boundaries.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

@@ -1,11 +1,21 @@
 ---
 name: cocosair-physics
-description: Applies to physics in code-first Cocos AIR apps - choosing the 3D backend with createAirApp({ physics: 'builtin' | 'cannon' }) (default builtin), selectPhysicsBackend and the official last-registration-before-init rule, the query-only boundary of the builtin discrete collision detector (no gravity integration, no MeshCollider in the world, trigger events and raycasts still real), PhysicsSystem/RigidBody/Collider wiring and the bidirectional group-and-mask filter, error 9642 for default-physics-material (fatal on cannon, benign on builtin) and AIR's built-in material registration, and the pure-JS 2D box2d backend with PhysicsSystem2D, RigidBody2D, Collider2D, BoxCollider2D and the raycast/testPoint/testAABB queries. Use when dynamic bodies do not fall or stack, when triggers fire silently, when deciding between builtin and cannon, when 9642 appears in the console, or when asking whether ammo, physx or box2d-wasm ship (they do not).
+description: "Applies to physics in code-first Cocos AIR apps - choosing the 3D backend with createAirApp({ physics: 'builtin' | 'cannon' }) (default builtin), selectPhysicsBackend and the official last-registration-before-init rule, the query-only boundary of the builtin discrete collision detector (no gravity integration, no MeshCollider in the world, trigger events and raycasts still real), PhysicsSystem/RigidBody/Collider wiring and the bidirectional group-and-mask filter, error 9642 for default-physics-material (fatal on cannon, benign on builtin) and AIR's built-in material registration, and the pure-JS 2D box2d backend with PhysicsSystem2D, RigidBody2D, Collider2D, BoxCollider2D and the raycast/testPoint/testAABB queries. Use when dynamic bodies do not fall or stack, when triggers fire silently, when deciding between builtin and cannon, when 9642 appears in the console, or when asking whether ammo, physx or box2d-wasm ship (they do not)."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, physics"
+  description_en: "Applies to physics in code-first Cocos AIR apps - choosing the 3D backend with createAirApp({ physics: 'builtin' | 'cannon' }) (default builtin), selectPhysicsBackend and the official last-registration-before-init rule, the query-only boundary of the builtin discrete collision detector (no gravity integration, no MeshCollider in the world, trigger events and raycasts still real), PhysicsSystem/RigidBody/Collider wiring and the bidirectional group-and-mask filter, error 9642 for default-physics-material (fatal on cannon, benign on builtin) and AIR's built-in material registration, and the pure-JS 2D box2d backend with PhysicsSystem2D, RigidBody2D, Collider2D, BoxCollider2D and the raycast/testPoint/testAABB queries. Use when dynamic bodies do not fall or stack, when triggers fire silently, when deciding between builtin and cannon, when 9642 appears in the console, or when asking whether ammo, physx or box2d-wasm ship (they do not)."
+  description_zh: "选择 builtin 或 cannon，并区分碰撞检测、运动积分和二维 Box2D 的能力。用于刚体、触发器、射线查询或物理后端问题。"
 ---
 
 # Cocos AIR physics contracts
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Pick the backend honestly, mount the framework components, and state what each backend actually simulates - no Creator asset bundle, no WASM artifacts, no parallel physics abstraction.
 
@@ -15,10 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-application](../cocosair-application/SKILL.md) - `createAirApp` options and lifecycle that carry the `physics` field.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - component mount order and deferred `destroy()`, which colliders and the lazy world sync both depend on.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - the browser-matrix contract rows behind the builtin boundary below.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

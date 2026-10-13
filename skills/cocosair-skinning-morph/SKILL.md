@@ -1,11 +1,21 @@
 ---
 name: cocosair-skinning-morph
-description: Drives Cocos AIR skeletal skinning and morph targets from code - SkinnedMeshRenderer skeleton and skinningRoot binding, Skeleton.joints as full paths relative to the skinning root with AIR_E_SKINNING_JOINT_PATH, buildSkeletonTree bindposes as inverse world matrices, restoreBindPose ancestor-first ordering, realtime versus baked pose through setUseBakedAnimation, joint palette capacity and AIR_E_SKINNING_CAPACITY, Mesh.morphRendering plus getBoneSpaceBounds, and MeshRenderer setWeight, setWeights and enableMorph. Use when a skinned mesh stays in rest pose or draws nothing, when a joint path throws AIR_E_SKINNING_JOINT_PATH, when moving bone nodes after setUseBakedAnimation(true) has no effect, when a morph weight setter appears to be ignored, or when binding a hand-built Mesh to a Skeleton without the Cocos Creator asset pipeline.
+description: "Drives Cocos AIR skeletal skinning and morph targets from code - SkinnedMeshRenderer skeleton and skinningRoot binding, Skeleton.joints as full paths relative to the skinning root with AIR_E_SKINNING_JOINT_PATH, buildSkeletonTree bindposes as inverse world matrices, restoreBindPose ancestor-first ordering, realtime versus baked pose through setUseBakedAnimation, joint palette capacity and AIR_E_SKINNING_CAPACITY, Mesh.morphRendering plus getBoneSpaceBounds, and MeshRenderer setWeight, setWeights and enableMorph. Use when a skinned mesh stays in rest pose or draws nothing, when a joint path throws AIR_E_SKINNING_JOINT_PATH, when moving bone nodes after setUseBakedAnimation(true) has no effect, when a morph weight setter appears to be ignored, or when binding a hand-built Mesh to a Skeleton without the Cocos Creator asset pipeline."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, skinning, morph"
+  description_en: "Drives Cocos AIR skeletal skinning and morph targets from code - SkinnedMeshRenderer skeleton and skinningRoot binding, Skeleton.joints as full paths relative to the skinning root with AIR_E_SKINNING_JOINT_PATH, buildSkeletonTree bindposes as inverse world matrices, restoreBindPose ancestor-first ordering, realtime versus baked pose through setUseBakedAnimation, joint palette capacity and AIR_E_SKINNING_CAPACITY, Mesh.morphRendering plus getBoneSpaceBounds, and MeshRenderer setWeight, setWeights and enableMorph. Use when a skinned mesh stays in rest pose or draws nothing, when a joint path throws AIR_E_SKINNING_JOINT_PATH, when moving bone nodes after setUseBakedAnimation(true) has no effect, when a morph weight setter appears to be ignored, or when binding a hand-built Mesh to a Skeleton without the Cocos Creator asset pipeline."
+  description_zh: "配置骨骼路径、蒙皮、绑定姿态、Morph 权重和烘焙动画。用于骨骼变形、绑定姿态恢复或 Morph 问题。"
 ---
 
 # Cocos AIR skinning and morph contracts
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Bind a code-built bone hierarchy to a skinned mesh, keep the bind pose restorable, choose realtime versus baked pose honestly, and drive morph weights through the native renderer - no Prefab, no Editor, no parallel skeleton abstraction.
 
@@ -15,13 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - `getChildByPath` resolution, parenting order and deferred `destroy()`, which a joint path and a release both depend on.
-- [cocosair-primitives-mesh](../cocosair-primitives-mesh/SKILL.md) - `Mesh` struct, vertex bundles and `minPosition`/`maxPosition`; the geometry half of a skinned mesh.
-- [cocosair-materials-effects](../cocosair-materials-effects/SKILL.md) - the effect and `MaterialInstance` side of `setSharedMaterial`, which realtime mode forces.
-- [cocosair-animation-tween](../cocosair-animation-tween/SKILL.md) - `SkeletalAnimation` clips and `useBakedAnimation`, the only way to move a pose in baked mode.
-- [cocosair-gltf](../cocosair-gltf/SKILL.md) - where loaded joints, bindposes and morph weights come from.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - the smoke test and browser probes behind the claims below.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

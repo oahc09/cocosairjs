@@ -1,11 +1,21 @@
 ---
 name: cocosair-project-setup
-description: Set up a Cocos AIR project end to end - install the cocosair.js npm package or build from source, choose among the main entry, cocosair.js/bootstrap and the experimental cocosair.js/html-source, write the importmap and the #GameCanvas-before-import page skeleton, resolve TypeScript declarations on TS 4.9 and TS 5+ via the exports types conditions, map npm scripts to build artifacts, and run AIR_FEATURES/AIR_OUT_DIR variant builds without disturbing the default 26-feature candidate. Use when installing or importing cocosair.js, fixing unresolved-import or wrong-entry errors, wiring a page shell or editor types, or deciding which build command produces which file.
+description: "Set up a Cocos AIR project end to end - install the cocosair.js npm package or build from source, choose among the main entry, cocosair.js/bootstrap and the experimental cocosair.js/html-source, write the importmap and the #GameCanvas-before-import page skeleton, resolve TypeScript declarations on TS 4.9 and TS 5+ via the exports types conditions, map npm scripts to build artifacts, and run AIR_FEATURES/AIR_OUT_DIR variant builds without disturbing the default 26-feature candidate. Use when installing or importing cocosair.js, fixing unresolved-import or wrong-entry errors, wiring a page shell or editor types, or deciding which build command produces which file."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Edit Write Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, project, setup"
+  description_en: "Set up a Cocos AIR project end to end - install the cocosair.js npm package or build from source, choose among the main entry, cocosair.js/bootstrap and the experimental cocosair.js/html-source, write the importmap and the #GameCanvas-before-import page skeleton, resolve TypeScript declarations on TS 4.9 and TS 5+ via the exports types conditions, map npm scripts to build artifacts, and run AIR_FEATURES/AIR_OUT_DIR variant builds without disturbing the default 26-feature candidate. Use when installing or importing cocosair.js, fixing unresolved-import or wrong-entry errors, wiring a page shell or editor types, or deciding which build command produces which file."
+  description_zh: "安装和配置 Cocos AIR 项目，选择包入口、importmap、TypeScript 声明和变体构建。用于安装导入、页面骨架、类型解析或构建产物问题。"
 ---
 
 # Cocos AIR project setup
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Install, import and type-consume Cocos AIR correctly: one startup path per page, the canvas bound before engine evaluation, the declarations the compiler can resolve, and a build candidate you can name.
 
@@ -15,9 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-graphics-and-dom](../cocosair-graphics-and-dom/SKILL.md) - owns the `cocosair.js/html-source` texture surface and DOM overlays once the entry is wired.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - which gates consume these build artifacts and how artifact drift is judged.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 

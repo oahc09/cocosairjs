@@ -1,11 +1,21 @@
 ---
 name: cocosair-agent-session
-description: Drives and inspects a running Cocos AIR app from an agent or devtool session. Covers the window.__airApp page binding, the devtools agent-session request protocol in tools/debug/agent-session.ts (requestId/action/targetId/params returning requestId ok result or error, the INVALID_ARGUMENT duplicate-requestId rejection, inspectScene and inspectNode snapshots, captureFrame on AFTER_DRAW, getRuntimeErrors ring buffer), the visual probe pixel-region conventions, and the runtime AirDiagnostics bounded channel. Use when an agent needs to observe a live scene, apply a controlled write, capture a frame, read runtime errors, or wire the dev-only session, remembering the session and probe surface are devtools not default-runtime APIs.
+description: "Drives and inspects a running Cocos AIR app from an agent or devtool session. Covers the window.__airApp page binding, the devtools agent-session request protocol in tools/debug/agent-session.ts (requestId/action/targetId/params returning requestId ok result or error, the INVALID_ARGUMENT duplicate-requestId rejection, inspectScene and inspectNode snapshots, captureFrame on AFTER_DRAW, getRuntimeErrors ring buffer), the visual probe pixel-region conventions, and the runtime AirDiagnostics bounded channel. Use when an agent needs to observe a live scene, apply a controlled write, capture a frame, read runtime errors, or wire the dev-only session, remembering the session and probe surface are devtools not default-runtime APIs."
+license: MIT
+compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
+allowed-tools: Read Bash
+metadata:
+  author: "oahc09@gmail.com"
+  version: "1.0.0"
+  last-updated: "2026-10-13"
+  keywords: "Cocos AIR, cocosair.js, agent, session"
+  description_en: "Drives and inspects a running Cocos AIR app from an agent or devtool session. Covers the window.__airApp page binding, the devtools agent-session request protocol in tools/debug/agent-session.ts (requestId/action/targetId/params returning requestId ok result or error, the INVALID_ARGUMENT duplicate-requestId rejection, inspectScene and inspectNode snapshots, captureFrame on AFTER_DRAW, getRuntimeErrors ring buffer), the visual probe pixel-region conventions, and the runtime AirDiagnostics bounded channel. Use when an agent needs to observe a live scene, apply a controlled write, capture a frame, read runtime errors, or wire the dev-only session, remembering the session and probe surface are devtools not default-runtime APIs."
+  description_zh: "使用开发工具观察运行时、按明确范围写入、捕获画面和读取诊断。用于实时应用检查或受控自动化，工具不属于默认运行时包。"
 ---
 
 # Cocos AIR agent session and inspection
 
-Use the [environment rules](../cocosair/references/environment.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
 
 Drive and observe a running Cocos AIR app through two distinct faces: the runtime face (the `window.__airApp` binding the app sets itself plus the bounded `AirDiagnostics` channel on the main entry) and the devtools face (the `tools/debug/**` session protocol, scene/node snapshots, frame capture, error ring buffer, and pixel probes). The devtools face is NOT part of the default runtime bundle and is not importable from `cocosair`; keep it out of shipped app code.
 
@@ -15,12 +25,7 @@ Read [references/quick-start.md](references/quick-start.md) when constructing th
 
 ## Related skills
 
-- [cocosair](../cocosair/SKILL.md) - routing and shared Code First constraints; reuse it if already loaded.
-- [cocosair-application](../cocosair-application/SKILL.md) - `createAirApp`/`AirApp` and the app lifecycle a session binds to.
-- [cocosair-scene-graph](../cocosair-scene-graph/SKILL.md) - the `Scene`/`Node`/`Component` tree that `inspectScene` and `inspectNode` snapshot.
-- [cocosair-rendering](../cocosair-rendering/SKILL.md) - cameras, renderers and the drawn frame `captureFrame` samples on AFTER_DRAW.
-- [cocosair-verification](../cocosair-verification/SKILL.md) - the browser probes and evidence conventions the pixel regions align with.
-- [cocosair-performance](../cocosair-performance/SKILL.md) - the step clock and frame pacing the session's capture waits ride on.
+Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
 
 ## When to use what
 
