@@ -47,9 +47,14 @@ jobs:
         run: |
           npm install --no-save --ignore-scripts --package-lock=false playwright@1.62.1
           npx playwright install --with-deps chromium firefox webkit
-          sudo apt-get install -y libgl1-mesa-dri xvfb
+          sudo apt-get install -y libgl1-mesa-dri xvfb pulseaudio pulseaudio-utils
+          pulseaudio --start --exit-idle-time=-1
+          pactl load-module module-null-sink sink_name=ci_audio
+          pactl set-default-sink ci_audio
+          pactl info
+          node tools/verify/static-file-response.cjs
       - name: Diagnose runner browser prerequisites
-        run: xvfb-run --auto-servernum npm run verify:browser-matrix -- --ids=profiler-overlay,point-cloud-basics,video-basic --out=output/ci-browser-diagnostic.json
+        run: xvfb-run --auto-servernum npm run verify:browser-matrix -- --ids=profiler-overlay,point-cloud-basics,audio-basic,video-basic --out=output/ci-browser-diagnostic.json
       - name: Collect current full browser matrix
         run: |
           xvfb-run --auto-servernum npm run verify:browser-matrix -- --out=output/ci-browser-matrix.json

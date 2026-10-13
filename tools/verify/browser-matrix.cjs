@@ -35,6 +35,7 @@ const { evaluateProbeRanges } = require('./probe-ranges.cjs');
 const { readBrowserProbe } = require('./browser-probe.cjs');
 const { loopbackBrowserEnv } = require('./loopback-browser-env.cjs');
 const { ENGINES, launchOptions } = require('./browser-engines.cjs');
+const { serveStaticFile } = require('./static-file-response.cjs');
 
 // V1.1 全 40 例共同存在的非致命日志，不计入失败（披露在证据 benignConsole 字段）
 const BENIGN_CONSOLE = ['[Physics] PhysicsSystem initDefaultMaterial()'];
@@ -92,8 +93,7 @@ function serveRepo() {
                 }
                 return;
             }
-            res.writeHead(200, { 'Content-Type': EXT[path.extname(file).toLowerCase()] || 'application/octet-stream' });
-            fs.createReadStream(file).pipe(res);
+            serveStaticFile(req, res, file, EXT[path.extname(file).toLowerCase()] || 'application/octet-stream');
         });
         server.listen(0, '127.0.0.1', () => resolve({ server, port: server.address().port }));
     });
