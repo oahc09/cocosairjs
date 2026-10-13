@@ -55,6 +55,8 @@ import {
     js,
     view,
     ResolutionPolicy,
+    director,
+    Director,
 } from 'cocosair';
 import { installAssetLifecycle } from '../shared/asset-lifecycle.js';
 
@@ -349,6 +351,19 @@ async function p1Mount(c) {
     const metaMs = await waitFor(() => eventLog.includes('meta-loaded'), 6000);
     const readyMs = await waitFor(() => eventLog.includes('ready-to-play'), 3000);
     await waitFor(() => player.state === VideoPlayer.EventType.READY_TO_PLAY, 1000);
+    // Media readiness may precede the native lateUpdate/DOM projection. Snapshot
+    // the mounted rectangle only after a committed draw, not a fixed timer delay.
+    await new Promise((resolve, reject) => {
+        const afterDraw = () => {
+            clearTimeout(timer);
+            resolve();
+        };
+        const timer = setTimeout(() => {
+            director.off(Director.EVENT_AFTER_DRAW, afterDraw);
+            reject(new Error('Video mount did not reach a committed native frame'));
+        }, 8000);
+        director.once(Director.EVENT_AFTER_DRAW, afterDraw);
+    });
     const v = player.nativeVideo;
     const rect = v ? v.getBoundingClientRect() : null;
     results.p1Mount = {

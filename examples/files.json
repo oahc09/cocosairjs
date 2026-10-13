@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-13T18:39:02.124Z",
-  "revision": "543f5a50",
+  "generatedAt": "2026-10-13T19:34:31.134Z",
+  "revision": "3167e4e1",
   "examples": [
     {
       "dir": "anim-position",
@@ -21483,7 +21483,7 @@
       "version": "1.0.0",
       "title": "VideoPlayer — HTMLVideoElement 挂载/透明 video/全屏切换/事件回调 + Code First 运行时 VideoClip (V12 LV12-04)",
       "category": "video",
-      "status": "stable",
+      "status": "draft",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -21619,14 +21619,6 @@
           "resource-released"
         ],
         "capability": []
-      },
-      "promotion": {
-        "spec": "131f1ec448fd",
-        "source": "6bf9e6f3199f8aa6",
-        "candidate": "24fcbd038ef9869c",
-        "verified": 29,
-        "attested": 7,
-        "units": 36
       }
     },
     {
