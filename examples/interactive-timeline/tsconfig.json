@@ -1,1 +1,4 @@
-{"extends":"../../tools/verify/interactive-timeline-browser.tsconfig.json","include":["src/main.ts","src/timeline-contract.ts"]}
+{
+  "extends": "../../tools/verify/interactive-timeline-browser.tsconfig.json",
+  "include": ["src/main.ts", "src/timeline-contract.ts"]
+}

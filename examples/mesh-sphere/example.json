@@ -19,15 +19,8 @@
     "visual": "画面中央显示一个完整可见的蓝色球体，持续缓慢自转，明暗随球面法线变化，可观察到立体轮廓。"
   },
   "api": {
-    "primary": [
-      "primitives.sphere",
-      "utils.createMesh",
-      "MeshRenderer"
-    ],
-    "supporting": [
-      "Component",
-      "DirectionalLight"
-    ],
+    "primary": ["primitives.sphere", "utils.createMesh", "MeshRenderer"],
+    "supporting": ["Component", "DirectionalLight"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -48,10 +41,7 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "引用私有 geometry 函数绕过 primitives/utils 公开 API",
-      "用静态贴图或截图冒充实时渲染"
-    ],
+    "forbiddenShortcut": ["引用私有 geometry 函数绕过 primitives/utils 公开 API", "用静态贴图或截图冒充实时渲染"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -163,38 +153,23 @@
       }
     ]
   },
-  "capabilities": [
-    "basics"
-  ],
+  "capabilities": ["basics"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "sphere"
-      ]
+      "nodes": ["Main Camera", "Main Light", "sphere"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -209,11 +184,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          2.4,
-          6.5
-        ],
+        "position": [0, 2.4, 6.5],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -223,11 +194,7 @@
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -235,18 +202,10 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "sphere": {
-        "position": [
-          0,
-          0.6,
-          0
-        ],
+        "position": [0, 0.6, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -269,12 +228,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              65,
-              155,
-              235,
-              255
-            ],
+            "value": [65, 155, 235, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {

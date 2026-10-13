@@ -8,33 +8,17 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "复现unlit大三角顶点雾与accurate开关边界，用Air专用effect验证片元世界坐标、TRS和实例化",
-    "points": [
-      "固定相机和光照参数",
-      "实际像素而非仅字段读回",
-      "GPU/present耗时与CPU观测分开"
-    ]
+    "points": ["固定相机和光照参数", "实际像素而非仅字段读回", "GPU/present耗时与CPU观测分开"]
   },
   "effect": {
     "functional": "固定camera z=5、fogStart0/fogEnd8、大三角顶点超出雾范围，中点仍在范围内。比较native两种模式、Air变体、z+1 TRS与instancing；参数bypass验证宏不变。",
     "visual": "正交相机观察一块覆盖视口中心的大三角；顶点雾基线为黑，native accurate基线为白，Air accurate结果为灰，中点像素必须落在二者之间。"
   },
   "api": {
-    "primary": [
-      "createAirApp",
-      "utils.createMesh",
-      "Material.initialize"
-    ],
+    "primary": ["createAirApp", "utils.createMesh", "Material.initialize"],
     "supporting": [],
-    "claims": [
-      "createAirApp",
-      "utils.createMesh",
-      "Material.initialize"
-    ],
-    "forbiddenShortcut": [
-      "用DOM图像冒充WebGL效果",
-      "只检查宏或属性而不检查画面",
-      "用rAF计数冒充GPU或显示present性能"
-    ],
+    "claims": ["createAirApp", "utils.createMesh", "Material.initialize"],
+    "forbiddenShortcut": ["用DOM图像冒充WebGL效果", "只检查宏或属性而不检查画面", "用rAF计数冒充GPU或显示present性能"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -56,38 +40,24 @@
       }
     ]
   },
-  "capabilities": [
-    "rendering"
-  ],
+  "capabilities": ["rendering"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Large Triangle"
-      ]
+      "nodes": ["Main Camera", "Large Triangle"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

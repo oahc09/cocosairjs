@@ -53,27 +53,15 @@
     "TweenSystem.constructor",
     "TweenSystem.update"
   ],
-  "capabilities": [
-    "animation"
-  ],
+  "capabilities": ["animation"],
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error",
-      "material-property"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
     "interaction": [],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -91,9 +79,7 @@
     "visual": "立方体在左右两端之间平滑往返，两端缓入缓出"
   },
   "api": {
-    "primary": [
-      "tween"
-    ],
+    "primary": ["tween"],
     "supporting": [
       "MeshRenderer",
       "primitives.box",
@@ -181,10 +167,7 @@
       "TweenSystem.constructor",
       "TweenSystem.update"
     ],
-    "forbiddenShortcut": [
-      "setInterval 线性改写位置冒充补间",
-      "在 update 中手写插值替代 tween 合同"
-    ],
+    "forbiddenShortcut": ["setInterval 线性改写位置冒充补间", "在 update 中手写插值替代 tween 合同"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -545,20 +528,14 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "cam",
-        "light",
-        "tween-cube"
-      ]
+      "nodes": ["cam", "light", "tween-cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -571,11 +548,7 @@
   "validationExpectations": {
     "transform-equals": {
       "cam": {
-        "position": [
-          0,
-          3,
-          9
-        ],
+        "position": [0, 3, 9],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -583,18 +556,10 @@
             "text": "cam.setPosition(new Vec3(0, 3, 9));"
           }
         ],
-        "rotationEuler": [
-          -18.43494882292201,
-          0,
-          0
-        ]
+        "rotationEuler": [-18.43494882292201, 0, 0]
       },
       "light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -602,28 +567,15 @@
             "text": "light.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "tween-cube": {
         "position": {
           "vary": true,
           "range": [
-            [
-              -3,
-              3
-            ],
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              0
-            ]
+            [-3, 3],
+            [0, 0],
+            [0, 0]
           ],
           "minDelta": 0.0001
         },

@@ -16,10 +16,7 @@
     "MeshRenderer",
     "utils.createMesh"
   ],
-  "capabilities": [
-    "rendering",
-    "material"
-  ],
+  "capabilities": ["rendering", "material"],
   "benchmarkRefs": [],
   "recipeRefs": [],
   "learning": {
@@ -40,10 +37,7 @@
     "visual": "RGB保持、alpha被Perlin fBM coverage消去；棋盘含零与半透明输入"
   },
   "api": {
-    "primary": [
-      "Material.initialize",
-      "EffectAsset"
-    ],
+    "primary": ["Material.initialize", "EffectAsset"],
     "supporting": [
       "Texture2D",
       "MeshRenderer",
@@ -139,32 +133,17 @@
   },
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Camera",
-        "CheckerBackground",
-        "Dissolve-1"
-      ]
+      "nodes": ["Camera", "CheckerBackground", "Dissolve-1"]
     }
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

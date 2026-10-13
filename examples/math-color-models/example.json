@@ -74,21 +74,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Color 的 HSV 色彩模型、颜色插值/乘法、 setter/clone/equals 与可改属性面查询。",
-    "points": [
-      "fromHSV(h,1,1) 的 r/g/b 分量关系",
-      "lerp 中点灰阶",
-      "multiply 逐通道乘"
-    ]
+    "points": ["fromHSV(h,1,1) 的 r/g/b 分量关系", "lerp 中点灰阶", "multiply 逐通道乘"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 250,160,160）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "math.Color.fromHSV",
-      "math.Color.toHSV"
-    ],
+    "primary": ["math.Color.fromHSV", "math.Color.toHSV"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -205,9 +198,7 @@
       "math.Color.w",
       "math.Color.constructor"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -586,32 +577,21 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],

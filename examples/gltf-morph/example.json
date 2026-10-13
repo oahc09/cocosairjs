@@ -19,15 +19,8 @@
     "visual": "立方体持续做收缩/膨胀的变形动画，顶点位置随时间明显改变（帧间差异可测）"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.parseAsync",
-      "Animation.play",
-      "AnimationClip"
-    ],
-    "supporting": [
-      "GLTFAsset.instantiate",
-      "frameObject"
-    ],
+    "primary": ["GLTFLoader.parseAsync", "Animation.play", "AnimationClip"],
+    "supporting": ["GLTFAsset.instantiate", "frameObject"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -50,10 +43,7 @@
       "GLTFAsset.destroy",
       "isValid"
     ],
-    "forbiddenShortcut": [
-      "用 Component 手写顶点抖动冒充 morph 动画",
-      "用缩放脉冲冒充 morph target 变形"
-    ],
+    "forbiddenShortcut": ["用 Component 手写顶点抖动冒充 morph 动画", "用缩放脉冲冒充 morph target 变形"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -177,45 +167,24 @@
       }
     ]
   },
-  "capabilities": [
-    "gltf",
-    "animation"
-  ],
-  "assets": [
-    "assets/AnimatedMorphCube.glb"
-  ],
+  "capabilities": ["gltf", "animation"],
+  "assets": ["assets/AnimatedMorphCube.glb"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light"
-      ]
+      "nodes": ["Main Camera", "Main Light"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "asset-loaded",
-      "animation-playing",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "asset-loaded", "animation-playing", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -229,11 +198,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -241,11 +206,7 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       }
     },
     "asset-loaded": {

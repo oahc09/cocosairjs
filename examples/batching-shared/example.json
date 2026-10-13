@@ -8,32 +8,17 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "同等几何条件下验证shared原生批处理路线",
-    "points": [
-      "固定mesh/material/pass条件",
-      "实际提交draw读数",
-      "像素与资源释放",
-      "rAF不等于GPU耗时或显示present"
-    ]
+    "points": ["固定mesh/material/pass条件", "实际提交draw读数", "像素与资源释放", "rAF不等于GPU耗时或显示present"]
   },
   "effect": {
     "functional": "渲染shared路线的绿色quad场；默认256个，query count可改。检查实际像素、draw数量和动态路线帧差。",
     "visual": "深色背景中央是16×16的绿色方形网格，各quad之间留有规则空隙；shared和merged保持静态，dynamic各列轻微横向摆动，画面位置与色彩可比较。"
   },
   "api": {
-    "primary": [
-      "Material.initialize",
-      "utils.createMesh"
-    ],
+    "primary": ["Material.initialize", "utils.createMesh"],
     "supporting": [],
-    "claims": [
-      "Material.initialize",
-      "utils.createMesh"
-    ],
-    "forbiddenShortcut": [
-      "以60fps作为GPU性能证明",
-      "声称任意材质合并恒1draw",
-      "跳过bounds和动态容量"
-    ],
+    "claims": ["Material.initialize", "utils.createMesh"],
+    "forbiddenShortcut": ["以60fps作为GPU性能证明", "声称任意材质合并恒1draw", "跳过bounds和动态容量"],
     "evidence": [
       {
         "api": "Material.initialize",
@@ -49,38 +34,24 @@
       }
     ]
   },
-  "capabilities": [
-    "rendering"
-  ],
+  "capabilities": ["rendering"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "BatchRoot"
-      ]
+      "nodes": ["Main Camera", "BatchRoot"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

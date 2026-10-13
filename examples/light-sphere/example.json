@@ -20,9 +20,7 @@
     "visual": "浅色球体在画面中央自转，球面从亮面到暗面有平滑明暗过渡，明暗交界位置固定于光源方向"
   },
   "api": {
-    "primary": [
-      "DirectionalLight"
-    ],
+    "primary": ["DirectionalLight"],
     "supporting": [
       "Node.setRotationFromEuler",
       "primitives.sphere",
@@ -61,9 +59,7 @@
       "SphereLight.size",
       "SphereLight.range"
     ],
-    "forbiddenShortcut": [
-      "用环境光把球照成平面色，掩盖方向光照"
-    ],
+    "forbiddenShortcut": ["用环境光把球照成平面色，掩盖方向光照"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -217,39 +213,23 @@
       }
     ]
   },
-  "capabilities": [
-    "lights"
-  ],
+  "capabilities": ["lights"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "ShadingSphere"
-      ]
+      "nodes": ["Main Camera", "Main Light", "ShadingSphere"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
+    "visual": ["visible-frame", "frame-diff"],
     "lifecycle": [],
     "capability": []
   },
@@ -264,11 +244,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -281,18 +257,10 @@
             "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "ShadingSphere": {
-        "position": [
-          0,
-          0.8,
-          0
-        ],
+        "position": [0, 0.8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -315,12 +283,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              230,
-              230,
-              235,
-              255
-            ],
+            "value": [230, 230, 235, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {

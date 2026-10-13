@@ -19,12 +19,8 @@
     "visual": "画面为相机/灯光骨架 + 左上角状态面板，面板展示扩展状态、稳定错误码与宿主接入示例代码"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.getExtensionSupport"
-    ],
-    "supporting": [
-      "GLTFLoader.parseAsync"
-    ],
+    "primary": ["GLTFLoader.getExtensionSupport"],
+    "supporting": ["GLTFLoader.parseAsync"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -133,48 +129,29 @@
     ],
     "claimsNote": "claims / evidence / primary 只保留示例源码真实调用的 API；GLTFLoader.setDRACODecoder / createDracoDecoder 在源码中仅出现在面板教学字符串（src/main.ts L56-57）内，不构成执行证据；教学表述仍保留在 learning.points 与 README。Draco 正向解码路径因 shipped bundle 无浏览器端 draco3d glue 而未覆盖（独立缺口）。"
   },
-  "capabilities": [
-    "gltf"
-  ],
-  "assets": [
-    "assets/draco.glb"
-  ],
+  "capabilities": ["gltf"],
+  "assets": ["assets/draco.glb"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light"
-      ]
+      "nodes": ["Main Camera", "Main Light"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "capability-status",
-      "no-runtime-error",
-      "asset-loaded",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "capability-status", "no-runtime-error", "asset-loaded", "transform-equals"],
     "interaction": [],
     "visual": [],
     "lifecycle": [],
-    "capability": [
-      "capability-status"
-    ],
+    "capability": ["capability-status"],
     "capabilityExpectations": [
       {
         "extension": "KHR_draco_mesh_compression",
-        "statuses": [
-          "decoder-required"
-        ]
+        "statuses": ["decoder-required"]
       }
     ]
   },
@@ -189,11 +166,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          1.8,
-          5.5
-        ],
+        "position": [0, 1.8, 5.5],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -201,18 +174,10 @@
             "text": "cameraNode.setPosition(new Vec3(0, 1.8, 5.5));"
           }
         ],
-        "rotationEuler": [
-          -15,
-          0,
-          0
-        ]
+        "rotationEuler": [-15, 0, 0]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -220,11 +185,7 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       }
     },
     "asset-loaded": {

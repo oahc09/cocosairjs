@@ -18,37 +18,20 @@
     "MeshRenderer",
     "utils.createMesh"
   ],
-  "capabilities": [
-    "rendering",
-    "material"
-  ],
+  "capabilities": ["rendering", "material"],
   "benchmarkRefs": [],
   "recipeRefs": [],
   "learning": {
     "goal": "RenderTexture折射、alpha-safe逆预乘与原生两Pass",
-    "points": [
-      "固定来源独立数值与像素校验",
-      "9/27 tap Vogel模糊与色散变体",
-      "sampler/detach/dispose独立释放"
-    ]
+    "points": ["固定来源独立数值与像素校验", "9/27 tap Vogel模糊与色散变体", "sampler/detach/dispose独立释放"]
   },
   "assets": [],
   "license": {
     "assets": "纯确定性图案，无外部素材；参考 Glass MIT 通知束见 LICENSE.reference.txt，独立实现见 UPSTREAM.md"
   },
   "api": {
-    "primary": [
-      "EffectAsset",
-      "Material.initialize"
-    ],
-    "supporting": [
-      "MeshRenderer",
-      "Camera",
-      "Node",
-      "utils.createMesh",
-      "createStepClock",
-      "createAirRenderTarget"
-    ],
+    "primary": ["EffectAsset", "Material.initialize"],
+    "supporting": ["MeshRenderer", "Camera", "Node", "utils.createMesh", "createStepClock", "createAirRenderTarget"],
     "claims": [
       "createAirApp",
       "createStepClock",
@@ -180,9 +163,7 @@
       {
         "action": "单步推进示例步进时钟",
         "probe": "__glass.step",
-        "probeArgs": [
-          0.0333
-        ],
+        "probeArgs": [0.0333],
         "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
       },
       {
@@ -194,34 +175,18 @@
   },
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "child-source-camera",
-        "native-camera",
-        "owned-glass-child-1",
-        "owned-glass-1"
-      ]
+      "nodes": ["child-source-camera", "native-camera", "owned-glass-child-1", "owned-glass-1"]
     }
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ],
+    "validators": ["scene-ready"],
     "note": "Default startup scene plus __glass.ready; Gallery validators declared, not yet executed."
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

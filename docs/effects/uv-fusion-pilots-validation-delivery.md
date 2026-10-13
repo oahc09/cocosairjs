@@ -1,5 +1,7 @@
 # Wave5 Emboss / Glass 融合 Pilot：十三项交付
 
+> 本文的 `output/` 路径是未随仓库分发的本地历史产物，保留为溯源记录；不作为可点击仓库链接或当期验收证明。
+
 2026-10-11，执行渠道：Lead（Codex）。[两个 Pilot 的六维 Gate](../evidence/shaders-absorption/wave5-uv-fusion-pilots-gate.json) 已通过生产重算与 38 类真实报告篡改拒收。测量发现 GPU 取舍，不开启默认自动融合。Driver 的 Orca Worker 实施与本交付分开；Wave5 整体仍 IN_PROGRESS。
 
 ## 1. Goal
@@ -24,7 +26,7 @@
 
 ## 5. Tests performed
 
-Lead 的 NODE_CONTRACT Jest **33/33 + Gate 10/10 PASS**；strict TypeScript exit0，esbuild 真实 bundle >0，构建原始日志记录 exit0。最终功能采集自然 exit0，生产只读重算 `{ok:true,errors:[]}`，报告为 [final functional](../../output/shaders-absorption/lead-w5-uv-fusion-final-functional.json)，另有独立 [OS 回执](../../output/shaders-absorption/lead-w5-uv-fusion-final-functional-os.json)与采集前冻结输入。两个接受真实基线的 [38 类篡改](../../output/shaders-absorption/lead-w5-uv-fusion-final-actual-audit.json)全部被生产数据门禁拒收，直接 structuredClone 保留 NaN；Gate 又独立绑定当前 SDK、前置 Wave4、两份原始报告、性能自然 OS 退出、采集前冻结输入与自身验证器指纹。不把 Node 测试标作浏览器实证。
+Lead 的 NODE_CONTRACT Jest **33/33 + Gate 10/10 PASS**；strict TypeScript exit0，esbuild 真实 bundle >0，构建原始日志记录 exit0。最终功能采集自然 exit0，生产只读重算 `{ok:true,errors:[]}`，报告为 final functional（本地历史产物：`../../output/shaders-absorption/lead-w5-uv-fusion-final-functional.json`），另有独立 OS 回执（本地历史产物：`../../output/shaders-absorption/lead-w5-uv-fusion-final-functional-os.json`）与采集前冻结输入。两个接受真实基线的 38 类篡改（本地历史产物：`../../output/shaders-absorption/lead-w5-uv-fusion-final-actual-audit.json`）全部被生产数据门禁拒收，直接 structuredClone 保留 NaN；Gate 又独立绑定当前 SDK、前置 Wave4、两份原始报告、性能自然 OS 退出、采集前冻结输入与自身验证器指纹。不把 Node 测试标作浏览器实证。
 
 ## 6. Screenshots / visual comparison
 
@@ -34,7 +36,7 @@ Chromium/Firefox/WebKit × reference/fused × DPR1/2：每 Pilot 72 视觉例和
 
 采集计划为两个 Pilot × 两管线 × 三 profile × 三引擎 = 36 窗口，串行、独立页面、真实 HTTP 隔离、导航后 DPR 协议修复、25000 次时钟标定。每窗口原生 pacer 6 秒，前 30 帧预热，稳态至少 60 帧；定时窗口内禁止 readPixels。CPU update、原生 gfx 方法墙钟包络、实际 GL draw、AFTER_DRAW 间隔与可用的原生 GPU query 分开记录。方法包络含 dispatch，不能称为纯编码时间；无法测 GPU 时明确 unavailable，不用 CPU 替代。
 
-36 窗口全部自然 exit0，前后输入不变，生产重算 PASS；[原始性能报告](../../output/shaders-absorption/lead-w5-uv-fusion-final-performance.json)、[OS 回执](../../output/shaders-absorption/lead-w5-uv-fusion-final-performance-os.json)与冻结输入保留。合计 11684 稳态帧；原生命令/GL dispatch 确认 reference 每帧 2 pass/2 draw，fused 每帧 1 pass/1 draw。定时 readPixels 全部 0。
+36 窗口全部自然 exit0，前后输入不变，生产重算 PASS；原始性能报告（本地历史产物：`../../output/shaders-absorption/lead-w5-uv-fusion-final-performance.json`）、OS 回执（本地历史产物：`../../output/shaders-absorption/lead-w5-uv-fusion-final-performance-os.json`）与冻结输入保留。合计 11684 稳态帧；原生命令/GL dispatch 确认 reference 每帧 2 pass/2 draw，fused 每帧 1 pass/1 draw。定时 readPixels 全部 0。
 
 每个比较的实际 `device.memoryStatus.textureSize` 差为 **262144 bytes（256 KiB）**，与少一张 256² RGBA8 RT 一致。这是引擎纹理 payload 计数与格式估算，完整 GPU 驱动显存不可用。
 

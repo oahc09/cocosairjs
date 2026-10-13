@@ -8,30 +8,17 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "实验浏览器将表单上传为原生纹理；普通浏览器明确显示不支持。",
-    "points": [
-      "实时 HTML",
-      "不可变快照",
-      "改变 DOM 颜色"
-    ]
+    "points": ["实时 HTML", "不可变快照", "改变 DOM 颜色"]
   },
   "effect": {
     "functional": "实验浏览器将表单上传为原生纹理；普通浏览器明确显示不支持。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
     "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
   },
   "api": {
-    "primary": [
-      "Texture2D",
-      "createAirTextureSprite"
-    ],
+    "primary": ["Texture2D", "createAirTextureSprite"],
     "supporting": [],
-    "claims": [
-      "Texture2D",
-      "createAirTextureSprite"
-    ],
-    "forbiddenShortcut": [
-      "用 DOM 图片代替原生 GPU 渲染",
-      "将未支持的实验能力记录为已支持"
-    ],
+    "claims": ["Texture2D", "createAirTextureSprite"],
+    "forbiddenShortcut": ["用 DOM 图片代替原生 GPU 渲染", "将未支持的实验能力记录为已支持"],
     "evidence": [
       {
         "api": "Texture2D",
@@ -47,37 +34,24 @@
       }
     ]
   },
-  "capabilities": [
-    "rendering"
-  ],
+  "capabilities": ["rendering"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "HTML texture surface"
-      ]
+      "nodes": ["HTML texture surface"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

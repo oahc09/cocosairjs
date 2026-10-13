@@ -59,21 +59,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握顶层标量工具：区间钳制、插值与逆插值、循环折返、角度弧度互转、绝对值极值。",
-    "points": [
-      "clamp(5,0,3)=3；clamp01(-0.5)=0",
-      "repeat(7,3)=1；pingPong(4,3)=2",
-      "toRadian(180)=π（取整回读）"
-    ]
+    "points": ["clamp(5,0,3)=3；clamp01(-0.5)=0", "repeat(7,3)=1；pingPong(4,3)=2", "toRadian(180)=π（取整回读）"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 120,190,210）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "math.clamp",
-      "math.lerp"
-    ],
+    "primary": ["math.clamp", "math.lerp"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -163,9 +156,7 @@
       "math.EPSILON",
       "math.MATH_FLOAT_ARRAY"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -454,32 +445,21 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],

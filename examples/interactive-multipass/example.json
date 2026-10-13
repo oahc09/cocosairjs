@@ -20,18 +20,9 @@
     "visual": "capture 显示红绿色块及蓝色标记；native 显示红绿蓝黄棋盘，LOD+ 后变为蓝黄紫青。"
   },
   "api": {
-    "primary": [
-      "createAirRenderTarget"
-    ],
-    "supporting": [
-      "Material.initialize",
-      "gfx.CommandBuffer.draw"
-    ],
-    "claims": [
-      "createAirRenderTarget",
-      "Material.initialize",
-      "gfx.CommandBuffer.draw"
-    ],
+    "primary": ["createAirRenderTarget"],
+    "supporting": ["Material.initialize", "gfx.CommandBuffer.draw"],
+    "claims": ["createAirRenderTarget", "Material.initialize", "gfx.CommandBuffer.draw"],
     "forbiddenShortcut": [
       "用未采样的 mip 层声明冒充像素证据",
       "把静态 binding 检测说成运行时 GL 拒绝",
@@ -59,20 +50,11 @@
       }
     ]
   },
-  "capabilities": [
-    "rendering",
-    "material"
-  ],
+  "capabilities": ["rendering", "material"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "source-red",
-        "source-green",
-        "capture-camera",
-        "display-camera",
-        "display-quad"
-      ]
+      "nodes": ["source-red", "source-green", "capture-camera", "display-camera", "display-quad"]
     }
   },
   "interaction": {
@@ -85,24 +67,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

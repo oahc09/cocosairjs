@@ -18,18 +18,11 @@
     "Layers.Enum",
     "math.Color"
   ],
-  "capabilities": [
-    "basics"
-  ],
+  "capabilities": ["basics"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -49,19 +42,8 @@
     "visual": "整屏为引擎清屏色 (20,60,120) 的纯蓝画面，无任何几何体、无文字、无 DOM 覆盖物；页面 body 背景是白色，因此只要画布呈蓝色就证明这一帧来自 WebGL 帧缓冲而不是 CSS 背景。"
   },
   "api": {
-    "primary": [
-      "createAirApp",
-      "Scene"
-    ],
-    "supporting": [
-      "Node",
-      "Node.addChild",
-      "Camera",
-      "Node.addComponent",
-      "Layers",
-      "Layers.Enum",
-      "math.Color"
-    ],
+    "primary": ["createAirApp", "Scene"],
+    "supporting": ["Node", "Node.addChild", "Camera", "Node.addComponent", "Layers", "Layers.Enum", "math.Color"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -138,18 +120,14 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera"
-      ]
+      "nodes": ["Main Camera"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],

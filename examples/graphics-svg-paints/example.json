@@ -8,36 +8,17 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "原生绘图、渐变孔洞、纹理填充与 SVG 导出对照。",
-    "points": [
-      "原生 Graphics",
-      "渐变与孔洞",
-      "纹理填充",
-      "下载 SVG"
-    ]
+    "points": ["原生 Graphics", "渐变与孔洞", "纹理填充", "下载 SVG"]
   },
   "effect": {
     "functional": "原生绘图、渐变孔洞、纹理填充与 SVG 导出对照。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
     "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
   },
   "api": {
-    "primary": [
-      "drawAirGraphics",
-      "airGraphicsCommandsToSvg",
-      "rasterizeAirGraphics"
-    ],
-    "supporting": [
-      "createAirTextureSprite"
-    ],
-    "claims": [
-      "drawAirGraphics",
-      "airGraphicsCommandsToSvg",
-      "rasterizeAirGraphics",
-      "createAirTextureSprite"
-    ],
-    "forbiddenShortcut": [
-      "用 DOM 图片代替原生 GPU 渲染",
-      "将未支持的实验能力记录为已支持"
-    ],
+    "primary": ["drawAirGraphics", "airGraphicsCommandsToSvg", "rasterizeAirGraphics"],
+    "supporting": ["createAirTextureSprite"],
+    "claims": ["drawAirGraphics", "airGraphicsCommandsToSvg", "rasterizeAirGraphics", "createAirTextureSprite"],
+    "forbiddenShortcut": ["用 DOM 图片代替原生 GPU 渲染", "将未支持的实验能力记录为已支持"],
     "evidence": [
       {
         "api": "drawAirGraphics",
@@ -65,16 +46,11 @@
       }
     ]
   },
-  "capabilities": [
-    "rendering"
-  ],
+  "capabilities": ["rendering"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Rich fill",
-        "Native Graphics"
-      ]
+      "nodes": ["Rich fill", "Native Graphics"]
     }
   },
   "interaction": {
@@ -87,24 +63,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

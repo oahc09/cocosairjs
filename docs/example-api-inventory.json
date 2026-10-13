@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "5b67a5608b25e766",
-  "apiInventoryRevision": "48ba46ec9d9ea6e8",
+  "sourceFingerprint": "6fdd026ebcb95fac",
+  "apiInventoryRevision": "97dcdbf23f10eebd",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -56509,6 +56509,972 @@
       "coverageRequired": false,
       "parent": "RenderStage"
     },
+    "CocosRenderer": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "CocosRenderer.create": {
+      "kind": "static",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.cc": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.app": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.domElement": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.device": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.g": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.gl": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.coordinateSystem": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.ownsApp": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.isCocosRenderer": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.autoClear": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.autoClearColor": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.autoClearDepth": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.autoClearStencil": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.outputColorSpace": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.toneMapping": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.toneMappingExposure": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.sortObjects": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._target": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._layer": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._mip": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._pixelRatio": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._renderDepth": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._clearColor": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._clearAlpha": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._engineScene": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._width": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._height": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._viewport": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._scissor": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._scissorTest": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._eyeViewport": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._screen": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._boundTarget": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._raf": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._loop": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._disposed": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._liveMaterials": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._liveGeometries": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.properties": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.xr": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.capabilities": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.extensions": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.info": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.cmd": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._texBinding": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.state": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getContext": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getPixelRatio": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.setPixelRatio": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.setSize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getSize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getDrawingBufferSize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.setViewport": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getViewport": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.setScissor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getScissor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.setScissorTest": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getScissorTest": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.setClearColor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.setClearAlpha": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getClearAlpha": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getClearColor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getRenderTarget": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getActiveCubeFace": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.getActiveMipmapLevel": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.setRenderTarget": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._own": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._destroy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._format": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._sampler": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.initTexture": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._texture": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._ensureTarget": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._disposeTarget": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._framebuffer": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._ensureCocosTarget": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.releaseRenderTarget": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._ensureXrTarget": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._releaseXrTarget": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._screenPasses": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._sources": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._material": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._disposeMaterial": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._disposeGeometry": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.purgeMaterialCache": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._generateMipmaps": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.compile": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.compileAsync": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._geometry": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._pso": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._uniforms": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer._draw": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.render": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.clear": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.readRenderTargetPixels": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.readRenderTargetPixelsAsync": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.setAnimationLoop": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.resetState": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosRenderer.dispose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosRenderer"
+    },
+    "CocosSparkLayer": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "CocosSparkLayer.cc": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.app": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.nativeCamera": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.scene": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.camera": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.bindings": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.autoRender": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.renderHook": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.renderer": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.spark": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.renderTarget": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer._disposed": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer._onRender": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer._onCameraRender": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer._validateTarget": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.add": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.setVisible": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.remove": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer._matrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.sync": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer._syncRenderTarget": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.render": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "CocosSparkLayer.dispose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CocosSparkLayer"
+    },
+    "PMREMGenerator": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "PMREMGenerator._renderer": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._pingPongRenderTarget": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._lodPlanes": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._sizeLods": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._sigmas": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._blurMaterial": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._cubemapMaterial": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._equirectMaterial": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._solidMaterial": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._flatCamera": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._layout": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._cubeSize": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._lodMax": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._prepare": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._newTarget": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._inputMaterial": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._draw": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._convert": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._halfBlur": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._blur": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._filter": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._fromTexture": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator.fromCubemap": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator.fromEquirectangular": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator.fromScene": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._compile": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator.compileCubemapShader": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator.compileEquirectangularShader": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator._releaseLevels": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "PMREMGenerator.dispose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "PMREMGenerator"
+    },
+    "pmremLayout": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "CUBEUV_SAMPLING_GLSL": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "__private._cocos_2d_renderer_native_2d__NativeUIMeshBuffer": {
       "kind": "class",
       "tier": "internal",
@@ -70237,6 +71203,2424 @@
       "coverageRequired": false,
       "parent": "__private._cocos_rendering_pipeline_ubo__PipelineUBO"
     },
+    "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer"
+    },
+    "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer.getGpuFramebuffer": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer"
+    },
+    "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer.width": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer"
+    },
+    "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer.height": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer"
+    },
+    "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer.needRebuild": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer"
+    },
+    "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer.initialize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer"
+    },
+    "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer.destroy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer"
+    },
+    "__private._air_spark_spark_math__Color": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_math__Color.r": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.g": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.b": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.isColor": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.setRGB": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.setScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.setHex": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.setStyle": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.setHSL": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.add": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.addScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.multiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.multiplyScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.lerp": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.lerpColors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.fromArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.toArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.copySRGBToLinear": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.convertSRGBToLinear": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.copyLinearToSRGB": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.convertLinearToSRGB": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.getRGB": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.getHex": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Color.getHexString": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Color"
+    },
+    "__private._air_spark_spark_math__Euler": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_math__Euler.isEuler": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.x": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.y": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.z": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.order": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler._onChange": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.setFromRotationMatrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.setFromQuaternion": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.setFromVector3": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.reorder": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.fromArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Euler.toArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Euler"
+    },
+    "__private._air_spark_spark_math__Quaternion": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_math__Quaternion.isQuaternion": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.x": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.y": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.z": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.w": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.identity": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion._onChange": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.setFromEuler": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.setFromAxisAngle": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.setFromRotationMatrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.setFromUnitVectors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.multiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.premultiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.multiplyQuaternions": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.dot": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.lengthSq": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.length": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.normalize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.conjugate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.invert": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.angleTo": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.rotateTowards": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.slerp": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.slerpQuaternions": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.fromArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Quaternion.toArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Quaternion"
+    },
+    "__private._air_spark_spark_math__Vector3": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_math__Vector3.x": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.y": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.z": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.isVector3": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setComponent": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.getComponent": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setX": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setY": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setZ": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.add": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.sub": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.multiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.divide": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.addScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.subScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.multiplyScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.divideScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.addVectors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.subVectors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.multiplyVectors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.addScaledVector": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.dot": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.lengthSq": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.length": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.manhattanLength": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.normalize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setLength": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.distanceToSquared": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.distanceTo": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.manhattanDistanceTo": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.negate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.min": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.max": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.clamp": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.clampScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.clampLength": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.lerp": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.lerpVectors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.floor": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.ceil": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.round": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.roundToZero": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.fromArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.toArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.fromBufferAttribute": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.random": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.cross": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.crossVectors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.applyMatrix3": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.applyMatrix4": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.applyNormalMatrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.applyQuaternion": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.applyEuler": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.applyAxisAngle": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.transformDirection": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.project": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.unproject": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setFromMatrixPosition": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setFromMatrixColumn": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setFromMatrix3Column": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setFromMatrixScale": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setFromSphericalCoords": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.setFromCylindricalCoords": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.angleTo": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.projectOnVector": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.projectOnPlane": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__Vector3.reflect": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector3"
+    },
+    "__private._air_spark_spark_math__MatrixStorage": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_math__MatrixStorage.elements": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.identity": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.fromArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.toArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__Matrix3": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_math__Matrix3.isMatrix3": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.setFromMatrix4": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.getNormalMatrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.multiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.premultiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.multiplyMatrices": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.multiplyScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.determinant": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.invert": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.transpose": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.extractBasis": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.transposeIntoArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix3.setUvTransform": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix3"
+    },
+    "__private._air_spark_spark_math__Matrix4": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_math__Matrix4.isMatrix4": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.copyPosition": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.setFromMatrix3": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.setPosition": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makeTranslation": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makeScale": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makeRotationX": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makeRotationY": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makeRotationZ": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makeRotationAxis": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makeRotationFromQuaternion": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makeRotationFromEuler": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makeBasis": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.extractBasis": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.extractRotation": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.compose": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.decompose": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.scale": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.getMaxScaleOnAxis": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.multiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.premultiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.multiplyMatrices": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.multiplyScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.determinant": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.invert": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.transpose": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.lookAt": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makePerspective": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_math__Matrix4.makeOrthographic": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Matrix4"
+    },
+    "__private._air_spark_spark_api_adapter__EventDispatcher": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__EventDispatcher._listeners": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__EventDispatcher"
+    },
+    "__private._air_spark_spark_api_adapter__EventDispatcher.addEventListener": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__EventDispatcher"
+    },
+    "__private._air_spark_spark_api_adapter__EventDispatcher.hasEventListener": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__EventDispatcher"
+    },
+    "__private._air_spark_spark_api_adapter__EventDispatcher.removeEventListener": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__EventDispatcher"
+    },
+    "__private._air_spark_spark_api_adapter__EventDispatcher.dispatchEvent": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__EventDispatcher"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.DEFAULT_UP": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.DEFAULT_MATRIX_AUTO_UPDATE": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.DEFAULT_MATRIX_WORLD_AUTO_UPDATE": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.onBeforeRender": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.onAfterRender": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.onBeforeShadow": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.onAfterShadow": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.add": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.remove": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.removeFromParent": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.clear": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.attach": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.traverse": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.traverseVisible": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.traverseAncestors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.getObjectByProperty": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.getObjectByName": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.getObjectById": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.getObjectsByProperty": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.updateMatrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.updateMatrixWorld": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.updateWorldMatrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.applyMatrix4": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.applyQuaternion": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.setRotationFromAxisAngle": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.setRotationFromEuler": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.setRotationFromMatrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.setRotationFromQuaternion": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.rotateOnAxis": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.rotateOnWorldAxis": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.rotateX": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.rotateY": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.rotateZ": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.translateOnAxis": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.translateX": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.translateY": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.translateZ": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.localToWorld": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.worldToLocal": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.getWorldPosition": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.getWorldQuaternion": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.getWorldScale": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.getWorldDirection": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.lookAt": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Object3D.raycast": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Object3D"
+    },
+    "__private._air_spark_spark_api_adapter__Scene": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__Scene.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Scene"
+    },
+    "__private._air_spark_spark_api_adapter__Camera": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__Camera.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Camera"
+    },
+    "__private._air_spark_spark_api_adapter__Camera.updateMatrixWorld": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Camera"
+    },
+    "__private._air_spark_spark_api_adapter__Camera.updateWorldMatrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Camera"
+    },
+    "__private._air_spark_spark_api_adapter__Camera.getWorldDirection": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Camera"
+    },
+    "__private._air_spark_spark_api_adapter__Camera.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Camera"
+    },
+    "__private._air_spark_spark_math__Vector4": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_math__Vector4.x": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.y": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.z": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.w": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.isVector4": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.width": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.height": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.setScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.setComponent": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.getComponent": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.setX": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.setY": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.setZ": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.setW": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.add": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.sub": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.multiply": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.divide": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.addScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.subScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.multiplyScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.divideScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.addVectors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.subVectors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.multiplyVectors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.addScaledVector": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.dot": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.lengthSq": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.length": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.manhattanLength": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.normalize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.setLength": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.distanceToSquared": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.distanceTo": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.manhattanDistanceTo": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.negate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.min": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.max": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.clamp": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.clampScalar": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.clampLength": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.lerp": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.lerpVectors": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.floor": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.ceil": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.round": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.roundToZero": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.fromArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.toArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.fromBufferAttribute": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.random": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.applyMatrix4": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_math__Vector4.setAxisAngleFromQuaternion": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__Vector4"
+    },
+    "__private._air_spark_spark_api_adapter__Texture": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__Texture.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Texture"
+    },
+    "__private._air_spark_spark_api_adapter__Texture.image": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Texture"
+    },
+    "__private._air_spark_spark_api_adapter__Texture.needsPMREMUpdate": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Texture"
+    },
+    "__private._air_spark_spark_api_adapter__Texture.needsUpdate": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Texture"
+    },
+    "__private._air_spark_spark_api_adapter__Texture.addUpdateRange": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Texture"
+    },
+    "__private._air_spark_spark_api_adapter__Texture.clearUpdateRanges": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Texture"
+    },
+    "__private._air_spark_spark_api_adapter__Texture.updateMatrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Texture"
+    },
+    "__private._air_spark_spark_api_adapter__Texture.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Texture"
+    },
+    "__private._air_spark_spark_api_adapter__Texture.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Texture"
+    },
+    "__private._air_spark_spark_api_adapter__Texture.dispose": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Texture"
+    },
+    "__private._air_spark_spark_api_adapter__RenderTarget": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__RenderTarget.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__RenderTarget"
+    },
+    "__private._air_spark_spark_api_adapter__RenderTarget._createTexture": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__RenderTarget"
+    },
+    "__private._air_spark_spark_api_adapter__RenderTarget.texture": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__RenderTarget"
+    },
+    "__private._air_spark_spark_api_adapter__RenderTarget.setSize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__RenderTarget"
+    },
+    "__private._air_spark_spark_api_adapter__RenderTarget.dispose": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__RenderTarget"
+    },
+    "__private._air_spark_spark_api_adapter__RenderTarget.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__RenderTarget"
+    },
+    "__private._air_spark_spark_api_adapter__RenderTarget.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__RenderTarget"
+    },
+    "__private._air_spark_spark_api_adapter__WebGLRenderTarget": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__WebGLRenderTarget.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__WebGLRenderTarget"
+    },
+    "__private._air_spark_spark_api_adapter__Material": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__Material.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Material"
+    },
+    "__private._air_spark_spark_api_adapter__Material.needsUpdate": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Material"
+    },
+    "__private._air_spark_spark_api_adapter__Material.setValues": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Material"
+    },
+    "__private._air_spark_spark_api_adapter__Material.dispose": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Material"
+    },
+    "__private._air_spark_spark_api_adapter__Material.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Material"
+    },
+    "__private._air_spark_spark_api_adapter__Material.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Material"
+    },
+    "__private._air_spark_spark_api_adapter__Material.onBeforeCompile": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Material"
+    },
+    "__private._air_spark_spark_api_adapter__Material.customProgramCacheKey": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__Material"
+    },
+    "__private._air_spark_spark_api_adapter__ShaderMaterial": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__ShaderMaterial.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__ShaderMaterial"
+    },
+    "__private._air_spark_spark_api_adapter__ShaderMaterial.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__ShaderMaterial"
+    },
+    "__private._air_spark_spark_api_adapter__RawShaderMaterial": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__RawShaderMaterial.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__RawShaderMaterial"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.setAttribute": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.getAttribute": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.deleteAttribute": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.hasAttribute": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.setIndex": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.getIndex": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.setDrawRange": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.addGroup": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.clearGroups": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.applyMatrix4": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.translate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.scale": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.rotateX": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.rotateY": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.rotateZ": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.computeBoundingBox": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.dispose": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.clone": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__BufferGeometry.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__BufferGeometry"
+    },
+    "__private._air_spark_spark_api_adapter__OrthographicCamera": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_api_adapter__OrthographicCamera.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__OrthographicCamera"
+    },
+    "__private._air_spark_spark_api_adapter__OrthographicCamera.updateProjectionMatrix": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__OrthographicCamera"
+    },
+    "__private._air_spark_spark_api_adapter__OrthographicCamera.setViewOffset": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__OrthographicCamera"
+    },
+    "__private._air_spark_spark_api_adapter__OrthographicCamera.clearViewOffset": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__OrthographicCamera"
+    },
+    "__private._air_spark_spark_api_adapter__OrthographicCamera.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_api_adapter__OrthographicCamera"
+    },
     "physics.utils.cylinder": {
       "kind": "function",
       "tier": "supporting",
@@ -77248,9 +80632,9 @@
     "core": 964,
     "important": 283,
     "advanced": 192,
-    "supporting": 8238,
-    "internal": 3035
+    "supporting": 8326,
+    "internal": 3511
   },
-  "totalUnits": 12712,
+  "totalUnits": 13276,
   "coverageRequiredUnits": 1439
 }

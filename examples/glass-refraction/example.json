@@ -8,31 +8,17 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "用GLTFLoader与原生场景色capture呈现真实transmission、volume、IOR与色散，验证相机/材质交互和PNG下载",
-    "points": [
-      "折射必须从背景capture采样",
-      "glTF原生资产有实例与共享生命周期",
-      "下载计数必须配真实download事件"
-    ]
+    "points": ["折射必须从背景capture采样", "glTF原生资产有实例与共享生命周期", "下载计数必须配真实download事件"]
   },
   "effect": {
     "functional": "96面程序化晶体、三点棚拍、原生折射与色散、五色吸收色样、双击真实相机推近/拉回、PNG导出、Reset与资源重建",
     "visual": "暗色摄影棚里的晶体切面、高光与背景条纹折射"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.parseAsync",
-      "Material.setProperty"
-    ],
+    "primary": ["GLTFLoader.parseAsync", "Material.setProperty"],
     "supporting": [],
-    "claims": [
-      "GLTFLoader.parseAsync",
-      "Material.setProperty"
-    ],
-    "forbiddenShortcut": [
-      "黑色透明球冒充折射",
-      "静态彩虹贴图冒充色散",
-      "假下载计数或视口缩放冒充相机移动"
-    ],
+    "claims": ["GLTFLoader.parseAsync", "Material.setProperty"],
+    "forbiddenShortcut": ["黑色透明球冒充折射", "静态彩虹贴图冒充色散", "假下载计数或视口缩放冒充相机移动"],
     "evidence": [
       {
         "api": "GLTFLoader.parseAsync",
@@ -48,20 +34,11 @@
       }
     ]
   },
-  "capabilities": [
-    "rendering",
-    "material",
-    "gltf"
-  ],
+  "capabilities": ["rendering", "material", "gltf"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Studio Camera",
-        "Turntable",
-        "Scene color capture",
-        "Gemstone__0"
-      ]
+      "nodes": ["Studio Camera", "Turntable", "Scene color capture", "Gemstone__0"]
     }
   },
   "interaction": {
@@ -88,25 +65,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

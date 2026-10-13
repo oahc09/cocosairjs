@@ -43,10 +43,7 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 160,200,210）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "utils.toPPM",
-      "utils.readMesh"
-    ],
+    "primary": ["utils.toPPM", "utils.readMesh"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -85,9 +82,7 @@
       "utils.toPPM",
       "utils.readMesh"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -214,32 +209,21 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],

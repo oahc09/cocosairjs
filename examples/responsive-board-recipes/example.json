@@ -20,11 +20,7 @@
     "visual": "480² 棋盘网格中选中格呈绿色脉冲（visiblePulse），状态行显示 hits/drops/flags，右列单行标签不换行"
   },
   "api": {
-    "primary": [
-      "createActionInput",
-      "labelNode",
-      "Label"
-    ],
+    "primary": ["createActionInput", "labelNode", "Label"],
     "supporting": [
       "createAirApp",
       "createUICanvas",
@@ -115,15 +111,7 @@
   },
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "TranslatedScaledGroup",
-        "Board",
-        "Status",
-        "SingleRight",
-        "SingleLong",
-        "MultiText",
-        "Driver"
-      ]
+      "nodes": ["TranslatedScaledGroup", "Board", "Status", "SingleRight", "SingleLong", "MultiText", "Driver"]
     }
   },
   "interaction": {
@@ -149,22 +137,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ],
+    "validators": ["scene-ready"],
     "note": "Driver 组件挂载并首帧 render 后即绪"
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },

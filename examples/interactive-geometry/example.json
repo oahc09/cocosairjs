@@ -20,14 +20,8 @@
     "visual": "mesh 显示蓝色静态面与运动橙色动态面；cut 显示红切线、黄轨迹与青色刀刃；ribbon 显示运动青色波带。"
   },
   "api": {
-    "primary": [
-      "utils.MeshUtils.createDynamicMesh"
-    ],
-    "supporting": [
-      "Mesh.updateSubMesh",
-      "Camera.screenPointToRay",
-      "MeshRenderer.onGeometryChanged"
-    ],
+    "primary": ["utils.MeshUtils.createDynamicMesh"],
+    "supporting": ["Mesh.updateSubMesh", "Camera.screenPointToRay", "MeshRenderer.onGeometryChanged"],
     "claims": [
       "utils.MeshUtils.createDynamicMesh",
       "Mesh.updateSubMesh",
@@ -67,17 +61,11 @@
       }
     ]
   },
-  "capabilities": [
-    "rendering",
-    "mesh"
-  ],
+  "capabilities": ["rendering", "mesh"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "static-quad",
-        "dynamic-quad"
-      ]
+      "nodes": ["static-quad", "dynamic-quad"]
     }
   },
   "interaction": {
@@ -89,24 +77,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -125,25 +102,13 @@
     "apiVariants": [
       {
         "query": "mode=cut",
-        "nodes": [
-          "target-slab",
-          "input-stroke",
-          "cut-surface",
-          "animated-blade",
-          "cut-render-overlay"
-        ],
+        "nodes": ["target-slab", "input-stroke", "cut-surface", "animated-blade", "cut-render-overlay"],
         "steps": [
           {
             "action": "拖动刀线穿过目标",
             "drag": [
-              [
-                0.2,
-                0.35
-              ],
-              [
-                0.8,
-                0.65
-              ]
+              [0.2, 0.35],
+              [0.8, 0.65]
             ],
             "expected": "真实指针经相机射线映射产生动态切割几何及画面变化"
           }

@@ -19,14 +19,8 @@
     "visual": "双骨骼蒙皮方块随动画绕关节弯曲摆动，网格顶点逐帧变形"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.parseAsync",
-      "Animation.play"
-    ],
-    "supporting": [
-      "GLTFAsset.instantiate",
-      "Animation"
-    ],
+    "primary": ["GLTFLoader.parseAsync", "Animation.play"],
+    "supporting": ["GLTFAsset.instantiate", "Animation"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -48,10 +42,7 @@
       "GLTFAsset.destroy",
       "isValid"
     ],
-    "forbiddenShortcut": [
-      "用 morph 变形冒充骨骼蒙皮",
-      "用整体旋转冒充关节弯曲"
-    ],
+    "forbiddenShortcut": ["用 morph 变形冒充骨骼蒙皮", "用整体旋转冒充关节弯曲"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -169,45 +160,24 @@
       }
     ]
   },
-  "capabilities": [
-    "gltf",
-    "animation"
-  ],
-  "assets": [
-    "assets/SimpleSkin.gltf"
-  ],
+  "capabilities": ["gltf", "animation"],
+  "assets": ["assets/SimpleSkin.gltf"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light"
-      ]
+      "nodes": ["Main Camera", "Main Light"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "asset-loaded",
-      "animation-playing",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "asset-loaded", "animation-playing", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -221,11 +191,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -233,11 +199,7 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       }
     },
     "asset-loaded": {

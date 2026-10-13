@@ -19,14 +19,8 @@
     "visual": "绿色方块每次点击后顺时针转动一个直角并带缓动收尾，左上角计数与目标角实时更新"
   },
   "api": {
-    "primary": [
-      "input",
-      "Input"
-    ],
-    "supporting": [
-      "Component",
-      "Node.setRotationFromEuler"
-    ],
+    "primary": ["input", "Input"],
+    "supporting": ["Component", "Node.setRotationFromEuler"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -49,10 +43,7 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "在页面脚本里直接调用 click handler 冒充真实输入链",
-      "用 setInterval 模拟点击"
-    ],
+    "forbiddenShortcut": ["在页面脚本里直接调用 click handler 冒充真实输入链", "用 setInterval 模拟点击"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -176,17 +167,11 @@
       }
     ]
   },
-  "capabilities": [
-    "input"
-  ],
+  "capabilities": ["input"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "ClickableCube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "ClickableCube"]
     }
   },
   "interaction": {
@@ -202,23 +187,12 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error",
-      "material-property"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -233,11 +207,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          2.2,
-          6.5
-        ],
+        "position": [0, 2.2, 6.5],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -247,11 +217,7 @@
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -259,18 +225,10 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "ClickableCube": {
-        "position": [
-          0,
-          0.6,
-          0
-        ],
+        "position": [0, 0.6, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -294,12 +252,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              95,
-              205,
-              120,
-              255
-            ],
+            "value": [95, 205, 120, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {

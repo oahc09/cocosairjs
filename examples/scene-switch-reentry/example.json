@@ -20,16 +20,8 @@
     "visual": "gen1/gen3 为绿色立方体、gen2 为绿色球体（同机位同名结构）；点击画布当代 Ticker 材质绿↔橙切换；左上角面板实时显示 scene/gen/updates/clicks"
   },
   "api": {
-    "primary": [
-      "Scene",
-      "Scene.destroy",
-      "isValid"
-    ],
-    "supporting": [
-      "Component",
-      "Node.walk",
-      "input"
-    ],
+    "primary": ["Scene", "Scene.destroy", "isValid"],
+    "supporting": ["Component", "Node.walk", "input"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -264,17 +256,11 @@
       }
     ]
   },
-  "capabilities": [
-    "lifecycle"
-  ],
+  "capabilities": ["lifecycle"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Ticker"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Ticker"]
     }
   },
   "interaction": {
@@ -286,26 +272,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "material-property",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "material-property", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -319,11 +292,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          1.6,
-          6
-        ],
+        "position": [0, 1.6, 6],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -333,16 +302,8 @@
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ],
+        "position": [0, 8, 0],
+        "rotationEuler": [-45, -30, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -357,11 +318,7 @@
         ]
       },
       "Ticker": {
-        "position": [
-          0,
-          0.8,
-          0
-        ],
+        "position": [0, 0.8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -376,12 +333,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              95,
-              205,
-              120,
-              255
-            ],
+            "value": [95, 205, 120, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {

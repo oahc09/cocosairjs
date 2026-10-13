@@ -8,13 +8,62 @@
             { "imports": { "cocosair": "/build/cocosair.module.js" } }
         </script>
         <style>
-            html, body { margin: 0; padding: 0; background: #0e1116; color: #dde2ea; font: 13px/1.5 system-ui, sans-serif; }
-            #GameCanvas { display: block; width: min(100vw, 640px); height: auto; aspect-ratio: 4 / 3; }
-            #controls { position: fixed; left: 8px; right: 8px; bottom: 44px; z-index: 10; background: #111827ee; border-radius: 8px; padding: 10px 14px; display: flex; gap: 8px; flex-wrap: wrap; }
-            #controls button { font: inherit; padding: 4px 12px; border: 1px solid #3a4252; border-radius: 4px; background: #1a1f29; color: #dde2ea; cursor: pointer; }
-            #controls button:hover { background: #252c3a; }
-            #controls button.active { border-color: #4a9eff; color: #7ab8ff; }
-            #status { position: fixed; left: 8px; right: 8px; bottom: 4px; z-index: 10; background: #111827ee; padding: 4px 14px 10px; font-size: 11px; color: #8a93a5; }
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                background: #0e1116;
+                color: #dde2ea;
+                font:
+                    13px/1.5 system-ui,
+                    sans-serif;
+            }
+            #GameCanvas {
+                display: block;
+                width: min(100vw, 640px);
+                height: auto;
+                aspect-ratio: 4 / 3;
+            }
+            #controls {
+                position: fixed;
+                left: 8px;
+                right: 8px;
+                bottom: 44px;
+                z-index: 10;
+                background: #111827ee;
+                border-radius: 8px;
+                padding: 10px 14px;
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            #controls button {
+                font: inherit;
+                padding: 4px 12px;
+                border: 1px solid #3a4252;
+                border-radius: 4px;
+                background: #1a1f29;
+                color: #dde2ea;
+                cursor: pointer;
+            }
+            #controls button:hover {
+                background: #252c3a;
+            }
+            #controls button.active {
+                border-color: #4a9eff;
+                color: #7ab8ff;
+            }
+            #status {
+                position: fixed;
+                left: 8px;
+                right: 8px;
+                bottom: 4px;
+                z-index: 10;
+                background: #111827ee;
+                padding: 4px 14px 10px;
+                font-size: 11px;
+                color: #8a93a5;
+            }
         </style>
     </head>
     <body>

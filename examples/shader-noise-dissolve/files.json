@@ -1,7 +1,14 @@
 {
   "files": [
-    "index.html", "src/main.ts", "src/parameters.ts", "src/effect.generated.ts",
-    "src/noise.frag", "generate-effects.mjs", "README.md", "UPSTREAM.md",
-    "UPSTREAM.json", "THIRD_PARTY_NOTICES.txt"
+    "index.html",
+    "src/main.ts",
+    "src/parameters.ts",
+    "src/effect.generated.ts",
+    "src/noise.frag",
+    "generate-effects.mjs",
+    "README.md",
+    "UPSTREAM.md",
+    "UPSTREAM.json",
+    "THIRD_PARTY_NOTICES.txt"
   ]
 }

@@ -53,8 +53,9 @@ const REFERENCE = {
         'output/shaders-absorption/lead-w2-e03-upstream-materialParts.ts',
         'output/shaders-absorption/lead-w2-e03-upstream-kit-fetch.json',
         'output/shaders-absorption/lead-w2-e03-upstream-materialParts-fetch.json',
-        'output/shaders-absorption/worker-w2-e03-silhouette-correction.md',
-    ].map((f) => (f.startsWith('output/') ? f : 'output/shaders-absorption/reference/' + f)),
+        // The reviewed correction is retained in the versioned contract, not a worker's local scratch note.
+        'docs/effects/holographic.md',
+    ].map((f) => (f.startsWith('packages/') ? 'output/shaders-absorption/reference/' + f : f)),
 };
 const CAPTURES = [
     ['default', {}],

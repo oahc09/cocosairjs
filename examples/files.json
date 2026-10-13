@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-11T11:02:08.147Z",
-  "revision": "a870ff3",
+  "generatedAt": "2026-10-13T17:04:33.424Z",
+  "revision": "420163a9",
   "examples": [
     {
       "dir": "anim-position",
@@ -17532,6 +17532,110 @@
       }
     },
     {
+      "dir": "shader-driver-pilot",
+      "id": "shader-driver-pilot",
+      "version": "1.0.0",
+      "title": "Effect Driver Pilot",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "将指针、时间和范围映射到原生材质属性，使用一个模拟时钟驱动效果",
+        "points": [
+          "在 Holographic 与 Neon 原生消费者间切换",
+          "核对 driver 状态和实际 uniform 读回",
+          "通过既有生命周期桥接释放并重建拥有的资源"
+        ]
+      },
+      "effect": {
+        "functional": "指针、时间和范围值驱动原生 Holographic / Neon uniform；支持步进、暂停、重建与释放。",
+        "visual": "真实原生网格上的全息色谱或霓虹轮廓随驱动值变化；范围条和控制状态同步展示。",
+        "limitations": [
+          "本例仍为 draft；冻结的是完整规格，不是运行时验收结论。",
+          "只提供 Holographic 与 Neon 两个消费者；完整生产验收和性能结果不得从 Node 合同测试推断。"
+        ]
+      },
+      "api": {
+        "primary": [
+          "Material.setProperty"
+        ],
+        "supporting": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Scene",
+          "Node",
+          "Camera"
+        ],
+        "claims": [
+          "createAirApp",
+          "createStepClock",
+          "createAirRenderTarget",
+          "EffectAsset",
+          "Material.initialize",
+          "Material.setProperty",
+          "MeshRenderer",
+          "utils.createMesh",
+          "Scene",
+          "Node",
+          "Camera"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "material"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "camera",
+            "driver-1"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "移动指针或修改范围映射",
+            "expected": "driver 状态和消费者 uniform 同步变化"
+          },
+          {
+            "action": "暂停、步进、重建和释放",
+            "expected": "同一模拟时钟受控推进，原生资源通过既有生命周期桥接释放并重建"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ],
+        "note": "原生场景节点就绪且 __driverpilot.ready 为 true；这是规格声明，不是已执行证据。"
+      },
+      "validation": {
+        "lifecycle": [
+          "resource-released"
+        ],
+        "agentGate": "NOT_RUN",
+        "galleryGate": "NOT_RUN",
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "capability": []
+      }
+    },
+    {
       "dir": "shader-emboss",
       "id": "shader-emboss",
       "version": "1.0.0",
@@ -22004,7 +22108,8 @@
       "shader-film-neon",
       "shader-laser-card",
       "shader-glass-trail",
-      "shader-input-dissolve"
+      "shader-input-dissolve",
+      "shader-driver-pilot"
     ],
     "shader": [
       "shader-custom-gradient",

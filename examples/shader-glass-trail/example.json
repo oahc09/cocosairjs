@@ -18,10 +18,7 @@
     "MeshRenderer",
     "utils.createMesh"
   ],
-  "capabilities": [
-    "rendering",
-    "material"
-  ],
+  "capabilities": ["rendering", "material"],
   "benchmarkRefs": [],
   "recipeRefs": [],
   "learning": {
@@ -38,18 +35,8 @@
     "assets": "纯程序化；参考 MIT 通知束见 LICENSE.reference.txt"
   },
   "api": {
-    "primary": [
-      "EffectAsset",
-      "Material.initialize"
-    ],
-    "supporting": [
-      "MeshRenderer",
-      "Camera",
-      "Node",
-      "utils.createMesh",
-      "createStepClock",
-      "createAirRenderTarget"
-    ],
+    "primary": ["EffectAsset", "Material.initialize"],
+    "supporting": ["MeshRenderer", "Camera", "Node", "utils.createMesh", "createStepClock", "createAirRenderTarget"],
     "claims": [
       "createAirApp",
       "createStepClock",
@@ -62,12 +49,7 @@
       "Camera",
       "Node"
     ],
-    "forbiddenShortcut": [
-      "shaders runtime/TypeGPU/额外canvas",
-      "独立RAF",
-      "固定白图替代实际trail",
-      "双OETF"
-    ],
+    "forbiddenShortcut": ["shaders runtime/TypeGPU/额外canvas", "独立RAF", "固定白图替代实际trail", "双OETF"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -135,11 +117,7 @@
   "effect": {
     "functional": "19 参数、层开关 identity、双 pass",
     "visual": "premultiplied RT 链、一次 OETF、两像素外零",
-    "limitations": [
-      "本地组合设计",
-      "仅 circle/rounded-box",
-      "Agent NOT_RUN"
-    ]
+    "limitations": ["本地组合设计", "仅 circle/rounded-box", "Agent NOT_RUN"]
   },
   "interaction": {
     "steps": [
@@ -151,9 +129,7 @@
       {
         "action": "单步推进示例步进时钟",
         "probe": "__glasstrail.step",
-        "probeArgs": [
-          0.0333
-        ],
+        "probeArgs": [0.0333],
         "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
       },
       {
@@ -165,34 +141,18 @@
   },
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "trail-camera",
-        "main-camera",
-        "c03-trail-1",
-        "c03-glass-1"
-      ]
+      "nodes": ["trail-camera", "main-camera", "c03-trail-1", "c03-glass-1"]
     }
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ],
+    "validators": ["scene-ready"],
     "note": "__glasstrail.ready"
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

@@ -1,7 +1,114 @@
-<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,"><title>可取消形变与音频主时钟</title><script type="importmap">{"imports":{"cocosair":"/build/cocosair.module.js"}}</script>
-<style>*{box-sizing:border-box}body{margin:0;background:#111b2b;color:#eef4ff;font:16px/1.6 system-ui}main{padding:16px;max-width:960px;margin:auto}button,input{font:inherit}button{padding:6px 10px;margin:3px}#host{height:360px;width:100%}#GameDiv,#Cocos3dGameContainer,#GameCanvas{width:100%;height:100%}canvas{display:block;touch-action:none}#controls{position:sticky;top:0;z-index:2;background:#111b2b}#range{width:60%}section{padding:24px;margin:18px 0;background:#1e3147}#section0{height:420px}#section1{height:570px}#section2{height:680px}#section3{height:370px}#state{white-space:pre-wrap}#audio-state{font-family:monospace}</style>
-<main><h1>18组部件与可取消时间轴</h1><div id="controls"><button id="assembly">拆装/形变</button><button id="audio-mode">音频模式</button><button id="target0">装配</button><button id="target1">展开</button><button id="target2">形变</button><button id="pause">Pause</button><button id="resume">Resume</button><button id="reset">Reset</button><button id="back">Back</button><button id="replay">Replay</button><button id="play" disabled>音频 Play</button><button id="mute">Mute</button><button id="release">Release</button></div>
-<div id="host"><div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas" tabindex="0"></canvas></div></div></div>
-<p><label>本地地球终点 499 秒 <input id="range" type="range" min="0" max="499" step="1" value="0"></label> <label>速度 <input id="speed" type="range" min="0.25" max="3" step="0.25" value="1"></label></p><label><input id="scroll-mode" type="checkbox"> 按实际 section offset / document end 驱动</label><pre id="state"></pre><p id="audio-state">新的原创16.2秒程序音轨；不是原约59秒音乐。WebAudio为主时钟，原生音频能力全量验收不在此例。</p>
-<section id="section0">第1段：18组教学部件；不宣称1188零件或155步模型。</section><section id="section1">第2段：标签变化不等于原生pose已收敛。</section><section id="section2">第3段：短屏、长屏与反向滚动使用实际offset。</section><section id="section3">最后段：document end强制到达终段；不按固定屏数估算。</section></main><script type="module" src="./src/main.ts"></script></body>
+<!doctype html>
+<html lang="zh-CN">
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><link
+        rel="icon"
+        href="data:,"
+    /><title>可取消形变与音频主时钟</title>
+    <script type="importmap">
+        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            background: #111b2b;
+            color: #eef4ff;
+            font: 16px/1.6 system-ui;
+        }
+        main {
+            padding: 16px;
+            max-width: 960px;
+            margin: auto;
+        }
+        button,
+        input {
+            font: inherit;
+        }
+        button {
+            padding: 6px 10px;
+            margin: 3px;
+        }
+        #host {
+            height: 360px;
+            width: 100%;
+        }
+        #GameDiv,
+        #Cocos3dGameContainer,
+        #GameCanvas {
+            width: 100%;
+            height: 100%;
+        }
+        canvas {
+            display: block;
+            touch-action: none;
+        }
+        #controls {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: #111b2b;
+        }
+        #range {
+            width: 60%;
+        }
+        section {
+            padding: 24px;
+            margin: 18px 0;
+            background: #1e3147;
+        }
+        #section0 {
+            height: 420px;
+        }
+        #section1 {
+            height: 570px;
+        }
+        #section2 {
+            height: 680px;
+        }
+        #section3 {
+            height: 370px;
+        }
+        #state {
+            white-space: pre-wrap;
+        }
+        #audio-state {
+            font-family: monospace;
+        }
+    </style>
+    <body>
+        <main>
+            <h1>18组部件与可取消时间轴</h1>
+            <div id="controls">
+                <button id="assembly">拆装/形变</button><button id="audio-mode">音频模式</button
+                ><button id="target0">装配</button><button id="target1">展开</button><button id="target2">形变</button
+                ><button id="pause">Pause</button><button id="resume">Resume</button><button id="reset">Reset</button
+                ><button id="back">Back</button><button id="replay">Replay</button
+                ><button id="play" disabled>音频 Play</button><button id="mute">Mute</button
+                ><button id="release">Release</button>
+            </div>
+            <div id="host">
+                <div id="GameDiv">
+                    <div id="Cocos3dGameContainer"><canvas id="GameCanvas" tabindex="0"></canvas></div>
+                </div>
+            </div>
+            <p>
+                <label
+                    >本地地球终点 499 秒 <input id="range" type="range" min="0" max="499" step="1" value="0"
+                /></label>
+                <label>速度 <input id="speed" type="range" min="0.25" max="3" step="0.25" value="1" /></label>
+            </p>
+            <label><input id="scroll-mode" type="checkbox" /> 按实际 section offset / document end 驱动</label>
+            <pre id="state"></pre>
+            <p id="audio-state">
+                新的原创16.2秒程序音轨；不是原约59秒音乐。WebAudio为主时钟，原生音频能力全量验收不在此例。
+            </p>
+            <section id="section0">第1段：18组教学部件；不宣称1188零件或155步模型。</section>
+            <section id="section1">第2段：标签变化不等于原生pose已收敛。</section>
+            <section id="section2">第3段：短屏、长屏与反向滚动使用实际offset。</section>
+            <section id="section3">最后段：document end强制到达终段；不按固定屏数估算。</section>
+        </main>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
 </html>

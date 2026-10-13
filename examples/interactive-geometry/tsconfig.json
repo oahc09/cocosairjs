@@ -1,7 +1,4 @@
 {
   "extends": "../../tools/verify/interactive-geometry-browser.tsconfig.json",
-  "include": [
-    "src/main.ts",
-    "src/geometry-contract.ts"
-  ]
+  "include": ["src/main.ts", "src/geometry-contract.ts"]
 }

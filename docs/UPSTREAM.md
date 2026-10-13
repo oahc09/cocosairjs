@@ -1,5 +1,7 @@
 # UPSTREAM
 
+2026-10-14 CI 登记对账：`verify:wasm-backends` 的共享源码闭包偏差白名单同步为当前 39 个已登记文件，每项都要求 `docs/upstream-file-map.json` 中存在 `modified: true` 与非空理由；任何清单外字节偏差仍失败。同步已有可选 `spark` feature 后的 Air 声明数 34、air-only 集合 `air/spark`；默认仍为 26 个 feature，三个 WASM 物理后端仍不进入默认集，A6 解禁触发器保持。未修改引擎源码或批准新的偏差，冻结上游提交不变。
+
 2026-10-13 gfx 接入诊断：`webgl2-shader.ts` 在替换 shader 状态前拒绝调用方重复 `#version`（后端自动添加 ESSL 3.00）及同 set 的 uniform block / sampler binding 冲突；抛出带 shader 名、stage 和 code 的 Error。保留合法布局、GPU 延迟编译及原编译/链接日志，冻结上游不变。MSAA、资源所有权、键盘 capture 与可选 Spine 资产合同集中在 `docs/manual/gfx-integration-contracts.md`，不改默认输入传播或 Spine 部署范围。
 
 本项目 `cocosair.js`（Cocos AIR）的源码基线来自 Cocos 引擎（cocos4）本地完整快照。

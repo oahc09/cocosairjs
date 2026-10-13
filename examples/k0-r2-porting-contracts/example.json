@@ -20,15 +20,8 @@
     "visual": "顶点色是红绿蓝黄渐变四边形；混合模式在绿底上显示黄色透明区和青色加色区；动态青色网格边缘摆动；Billboard 显示四色纹理。"
   },
   "api": {
-    "primary": [
-      "Material.initialize",
-      "Mesh.updateSubMesh",
-      "Billboard"
-    ],
-    "supporting": [
-      "utils.MeshUtils.createDynamicMesh",
-      "MeshRenderer.onGeometryChanged"
-    ],
+    "primary": ["Material.initialize", "Mesh.updateSubMesh", "Billboard"],
+    "supporting": ["utils.MeshUtils.createDynamicMesh", "MeshRenderer.onGeometryChanged"],
     "claims": [
       "Material.initialize",
       "Mesh.updateSubMesh",
@@ -75,15 +68,11 @@
       }
     ]
   },
-  "capabilities": [
-    "rendering"
-  ],
+  "capabilities": ["rendering"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Camera"
-      ]
+      "nodes": ["Camera"]
     }
   },
   "interaction": {
@@ -100,24 +89,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

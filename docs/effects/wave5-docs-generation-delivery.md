@@ -1,6 +1,8 @@
 # Wave5 同源生成工具：十三项交付
 
-2026-10-12 更新。本子项为 NODE_CONTRACT 验证通过，Wave5 当前 SDK 总 Gate 仍 BLOCKED。历史证据：[生成与类型消费者验证](../../output/shaders-absorption/lead-w5-docs-r1-validation.json)。W1–W4 的浏览器 Gate 保持独立，不由本工具重新授予。
+> 本文的 `output/` 路径是未随仓库分发的本地历史产物，保留为溯源记录；不作为可点击仓库链接或当期验收证明。
+
+2026-10-12 更新。本子项为 NODE_CONTRACT 验证通过，Wave5 当前 SDK 总 Gate 仍 BLOCKED。历史证据：生成与类型消费者验证（本地历史产物：`../../output/shaders-absorption/lead-w5-docs-r1-validation.json`）。W1–W4 的浏览器 Gate 保持独立，不由本工具重新授予。
 
 ## 1. Goal
 

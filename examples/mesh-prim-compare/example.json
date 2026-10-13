@@ -33,21 +33,14 @@
   "capabilities": [],
   "learning": {
     "goal": "在同一管线下对照三件图元的顶点/索引规模关系：quad 恒为 4 顶点、cone 随段数增长、circle ≥ 3 段下限。",
-    "points": [
-      "quad=4 顶点（顶点数下界）",
-      "cone 8 段 vs 16 段的单调性",
-      "circle 顶点=segments+1 形状"
-    ]
+    "points": ["quad=4 顶点（顶点数下界）", "cone 8 段 vs 16 段的单调性", "circle 顶点=segments+1 形状"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 235,205,145）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "primitives.cone",
-      "primitives.quad"
-    ],
+    "primary": ["primitives.cone", "primitives.quad"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -87,9 +80,7 @@
       "primitives.quad",
       "primitives.circle"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -222,32 +213,21 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],

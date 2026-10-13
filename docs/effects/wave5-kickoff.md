@@ -1,5 +1,7 @@
 # Wave5：公共能力、同源文档与融合试验
 
+> 本文的 `output/` 路径是未随仓库分发的本地历史产物，保留为溯源记录；不作为可点击仓库链接或当期验收证明。
+
 2026-10-11 启动时，前置 [Wave4 Gate](../evidence/shaders-absorption/wave4-current-sdk-r2-gate.json) 已由 Lead 与 Orca Worker 独立生产验证通过。随后并行 Spark 工作重建 SDK，字节指纹发生变化；2026-10-12 当前 [Wave5 Gate](../evidence/shaders-absorption/wave5-current-r2-gate.json) 为 BLOCKED，不能把旧 SDK 或冻结候选的 PASS 重标为当前 PASS。Agent Gate 为 NOT_RUN。
 
 ## 本轮交付
@@ -29,4 +31,4 @@ Lead 负责当前 Gate 的接线、独立审查、冻结采集与最终裁定；
 
 问题按任务书九类登记。所有输出遵守固定十三项交付模板，合成夹具明确 NODE_CONTRACT，历史失败与原始证据保留。
 
-SDK 继续变化时，汇总快照也会失效。r2 写出后再次复核只有 `currentSdk` 变化，冻结 Driver 校验和文档检查仍通过，三个阻塞结论不变；[漂移观测](../../output/shaders-absorption/lead-w5-current-r2-drift-observation.json)保留前后字节。对 r2 的实时验证因此拒收，未在失效基线上进行汇总篡改测试，也未覆盖原快照。待 SDK 稳定后生成新快照并刷新当前证据。
+SDK 继续变化时，汇总快照也会失效。r2 写出后再次复核只有 `currentSdk` 变化，冻结 Driver 校验和文档检查仍通过，三个阻塞结论不变；漂移观测（本地历史产物：`../../output/shaders-absorption/lead-w5-current-r2-drift-observation.json`）保留前后字节。对 r2 的实时验证因此拒收，未在失效基线上进行汇总篡改测试，也未覆盖原快照。待 SDK 稳定后生成新快照并刷新当前证据。

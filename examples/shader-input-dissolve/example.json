@@ -9,10 +9,7 @@
   "specStatus": "frozen",
   "requiresDevTools": false,
   "apiClaims": [],
-  "capabilities": [
-    "rendering",
-    "material"
-  ],
+  "capabilities": ["rendering", "material"],
   "benchmarkRefs": [],
   "recipeRefs": [],
   "learning": {
@@ -24,25 +21,13 @@
       "路线 pass 合同：image 1 / procedural+rendered 2"
     ]
   },
-  "assets": [
-    "assets/input-pattern.png"
-  ],
+  "assets": ["assets/input-pattern.png"],
   "license": {
     "assets": "input-pattern.png 为确定性生成；MaterialX/OSL noise 见 THIRD_PARTY_NOTICES.txt"
   },
   "api": {
-    "primary": [
-      "EffectAsset",
-      "Material.initialize"
-    ],
-    "supporting": [
-      "MeshRenderer",
-      "Camera",
-      "Node",
-      "utils.createMesh",
-      "createStepClock",
-      "createAirRenderTarget"
-    ],
+    "primary": ["EffectAsset", "Material.initialize"],
+    "supporting": ["MeshRenderer", "Camera", "Node", "utils.createMesh", "createStepClock", "createAirRenderTarget"],
     "claims": [
       "createAirApp",
       "createStepClock",
@@ -55,11 +40,7 @@
       "Camera",
       "Node"
     ],
-    "forbiddenShortcut": [
-      "额外canvas渲染",
-      "CPU纹理冒充场景",
-      "双OETF"
-    ],
+    "forbiddenShortcut": ["额外canvas渲染", "CPU纹理冒充场景", "双OETF"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -127,10 +108,7 @@
   "effect": {
     "functional": "8 参数+3路线+层开关",
     "visual": "18 视觉案例+DPR2；端点精确",
-    "limitations": [
-      "本地组合设计",
-      "零浏览器运行时未验证"
-    ]
+    "limitations": ["本地组合设计", "零浏览器运行时未验证"]
   },
   "interaction": {
     "steps": [
@@ -164,9 +142,7 @@
       {
         "action": "单步推进示例步进时钟",
         "probe": "__inputdissolve.step",
-        "probeArgs": [
-          0.0333
-        ],
+        "probeArgs": [0.0333],
         "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
       },
       {
@@ -178,33 +154,18 @@
   },
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "content-camera",
-        "main-camera",
-        "c04-dissolve-1"
-      ]
+      "nodes": ["content-camera", "main-camera", "c04-dissolve-1"]
     }
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ],
+    "validators": ["scene-ready"],
     "note": "__inputdissolve.ready"
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

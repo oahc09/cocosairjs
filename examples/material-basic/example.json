@@ -4,54 +4,30 @@
   "title": "Material Basic",
   "category": "material",
   "status": "stable",
-  "apiClaims": [
-    "MeshRenderer",
-    "builtinResMgr.get",
-    "builtin-standard-material"
-  ],
-  "capabilities": [
-    "materials"
-  ],
-  "benchmarkRefs": [
-    "B031"
-  ],
+  "apiClaims": ["MeshRenderer", "builtinResMgr.get", "builtin-standard-material"],
+  "capabilities": ["materials"],
+  "benchmarkRefs": ["B031"],
   "recipeRefs": [],
   "requiresDevTools": false,
   "validation": {
-    "functional": [
-      "node-exists",
-      "material-property",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "material-property", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
     "goal": "builtin-standard 材质的最小接线：builtinResMgr.get + MeshRenderer.material",
-    "points": [
-      "builtinResMgr 获取内建标准材质",
-      "renderer.material 挂接",
-      "三色并排的材质实例语义"
-    ]
+    "points": ["builtinResMgr 获取内建标准材质", "renderer.material 挂接", "三色并排的材质实例语义"]
   },
   "effect": {
     "functional": "三个 cube 各持 MeshRenderer，材质均为 builtin-standard-material；场景由 cam（PERSPECTIVE）与 light 照明。",
     "visual": "红/绿/蓝三个立方体并排，受光呈现不同明暗面"
   },
   "api": {
-    "primary": [
-      "builtinResMgr",
-      "MeshRenderer"
-    ],
-    "supporting": [
-      "Camera",
-      "DirectionalLight"
-    ],
+    "primary": ["builtinResMgr", "MeshRenderer"],
+    "supporting": ["Camera", "DirectionalLight"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -68,9 +44,7 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "未初始化的裸 Material 实例直接上渲染"
-    ],
+    "forbiddenShortcut": ["未初始化的裸 Material 实例直接上渲染"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -161,27 +135,17 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "cam",
-        "light",
-        "cube-0",
-        "cube-1",
-        "cube-2"
-      ]
+      "nodes": ["cam", "light", "cube-0", "cube-1", "cube-2"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
-    "benchmarkRefs": [
-      "B031"
-    ],
+    "benchmarkRefs": ["B031"],
     "recipeRefs": []
   },
   "screenshot": {},

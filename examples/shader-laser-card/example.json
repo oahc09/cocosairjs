@@ -18,10 +18,7 @@
     "MeshRenderer",
     "utils.createMesh"
   ],
-  "capabilities": [
-    "rendering",
-    "material"
-  ],
+  "capabilities": ["rendering", "material"],
   "benchmarkRefs": [],
   "recipeRefs": [],
   "learning": {
@@ -38,18 +35,8 @@
     "assets": "纯程序化，无外部素材；参考 MIT 通知束见 LICENSE.reference.txt"
   },
   "api": {
-    "primary": [
-      "EffectAsset",
-      "Material.initialize"
-    ],
-    "supporting": [
-      "MeshRenderer",
-      "Camera",
-      "Node",
-      "utils.createMesh",
-      "createStepClock",
-      "createAirRenderTarget"
-    ],
+    "primary": ["EffectAsset", "Material.initialize"],
+    "supporting": ["MeshRenderer", "Camera", "Node", "utils.createMesh", "createStepClock", "createAirRenderTarget"],
     "claims": [
       "createAirApp",
       "createStepClock",
@@ -155,9 +142,7 @@
       {
         "action": "单步推进示例步进时钟",
         "probe": "__laser.step",
-        "probeArgs": [
-          0.0333
-        ],
+        "probeArgs": [0.0333],
         "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
       },
       {
@@ -169,36 +154,18 @@
   },
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "holo-camera",
-        "emboss-camera",
-        "main-camera",
-        "c01-holo-1",
-        "c01-emboss-1",
-        "c01-sparkle-1"
-      ]
+      "nodes": ["holo-camera", "emboss-camera", "main-camera", "c01-holo-1", "c01-emboss-1", "c01-sparkle-1"]
     }
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ],
+    "validators": ["scene-ready"],
     "note": "__laser.ready"
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

@@ -20,16 +20,8 @@
     "visual": "深色背景下 3 层木色箱塔落在绿色地面上；左侧灰色旋转环持续转动（frame-diff 护栏）；点击后红色投球从右侧飞入撞塔；顶部引擎 Label 状态行实时显示 phase/pairs/clicks/balls/hit"
   },
   "api": {
-    "primary": [
-      "physics.PhysicsSystem.step",
-      "physics.PhysicsSystem.raycast",
-      "Camera.screenPointToRay"
-    ],
-    "supporting": [
-      "physics.RigidBody",
-      "physics.BoxCollider",
-      "input"
-    ],
+    "primary": ["physics.PhysicsSystem.step", "physics.PhysicsSystem.raycast", "Camera.screenPointToRay"],
+    "supporting": ["physics.RigidBody", "physics.BoxCollider", "input"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -328,9 +320,7 @@
       }
     ]
   },
-  "capabilities": [
-    "physics"
-  ],
+  "capabilities": ["physics"],
   "assets": [],
   "scene": {
     "expectedGraph": {
@@ -357,25 +347,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

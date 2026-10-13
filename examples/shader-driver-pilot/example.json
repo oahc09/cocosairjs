@@ -5,8 +5,8 @@
   "category": "rendering",
   "entry": "index.html",
   "version": "1.0.0",
-  "status": "experimental",
-  "specStatus": "pilot",
+  "status": "draft",
+  "specStatus": "frozen",
   "requiresDevTools": false,
   "apiClaims": [
     "createAirApp",
@@ -18,7 +18,167 @@
     "MeshRenderer",
     "utils.createMesh"
   ],
-  "validation": { "lifecycle": ["resource-released"], "agentGate": "NOT_RUN", "galleryGate": "NOT_RUN" },
+  "validation": {
+    "lifecycle": ["resource-released"],
+    "agentGate": "NOT_RUN",
+    "galleryGate": "NOT_RUN",
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "capability": []
+  },
   "assets": [],
-  "license": { "assets": "Local design and the reference notices in LICENSE.reference.txt" }
+  "license": {
+    "assets": "Local design and the reference notices in LICENSE.reference.txt"
+  },
+  "capabilities": ["rendering", "material"],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "learning": {
+    "goal": "将指针、时间和范围映射到原生材质属性，使用一个模拟时钟驱动效果",
+    "points": [
+      "在 Holographic 与 Neon 原生消费者间切换",
+      "核对 driver 状态和实际 uniform 读回",
+      "通过既有生命周期桥接释放并重建拥有的资源"
+    ]
+  },
+  "api": {
+    "primary": ["Material.setProperty"],
+    "supporting": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Scene",
+      "Node",
+      "Camera"
+    ],
+    "claims": [
+      "createAirApp",
+      "createStepClock",
+      "createAirRenderTarget",
+      "EffectAsset",
+      "Material.initialize",
+      "Material.setProperty",
+      "MeshRenderer",
+      "utils.createMesh",
+      "Scene",
+      "Node",
+      "Camera"
+    ],
+    "forbiddenShortcut": [
+      "独立 RAF 或第二模拟时钟",
+      "用合成颜色截图替代真实消费者读回",
+      "将 NODE_CONTRACT 或源码绑定当作浏览器 PASS"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L34",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createStepClock",
+        "source": "src/main.ts",
+        "sourceLocation": "L310",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "sourceLocation": "L463",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "sourceLocation": "L158",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "sourceLocation": "L103",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "sourceLocation": "L129",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L181",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "sourceLocation": "L147",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "sourceLocation": "L37",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L39",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L42",
+        "validator": "visible-frame"
+      }
+    ],
+    "evidenceStatus": "仅绑定当前可执行源码；浏览器、Agent 与 Gallery 验收仍为 NOT_RUN。"
+  },
+  "effect": {
+    "functional": "指针、时间和范围值驱动原生 Holographic / Neon uniform；支持步进、暂停、重建与释放。",
+    "visual": "真实原生网格上的全息色谱或霓虹轮廓随驱动值变化；范围条和控制状态同步展示。",
+    "limitations": [
+      "本例仍为 draft；冻结的是完整规格，不是运行时验收结论。",
+      "只提供 Holographic 与 Neon 两个消费者；完整生产验收和性能结果不得从 Node 合同测试推断。"
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["camera", "driver-1"]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "移动指针或修改范围映射",
+        "expected": "driver 状态和消费者 uniform 同步变化"
+      },
+      {
+        "action": "暂停、步进、重建和释放",
+        "expected": "同一模拟时钟受控推进，原生资源通过既有生命周期桥接释放并重建"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"],
+    "note": "原生场景节点就绪且 __driverpilot.ready 为 true；这是规格声明，不是已执行证据。"
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {
+    "target": "#GameCanvas",
+    "note": "实际消费者截图和 uniform 读回由专用采集器验证；既有 agentGate / galleryGate 的 NOT_RUN 保留。"
+  }
 }

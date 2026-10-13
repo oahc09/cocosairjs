@@ -19,11 +19,7 @@
     "utils.createMesh",
     "Texture2D"
   ],
-  "capabilities": [
-    "rendering",
-    "material",
-    "input"
-  ],
+  "capabilities": ["rendering", "material", "input"],
   "benchmarkRefs": [],
   "recipeRefs": [],
   "learning": {
@@ -39,10 +35,7 @@
     "assets": "程序化轨迹；MIT 来源见 UPSTREAM.md 与 LICENSE.reference.txt"
   },
   "api": {
-    "primary": [
-      "Texture2D",
-      "Material.initialize"
-    ],
+    "primary": ["Texture2D", "Material.initialize"],
     "supporting": [
       "createAirApp",
       "createStepClock",
@@ -65,10 +58,7 @@
       "utils.createMesh",
       "Texture2D"
     ],
-    "forbiddenShortcut": [
-      "shaders runtime/TypeGPU/额外 canvas",
-      "截图相似替代数值 oracle"
-    ],
+    "forbiddenShortcut": ["shaders runtime/TypeGPU/额外 canvas", "截图相似替代数值 oracle"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -129,32 +119,18 @@
   },
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "native-camera",
-        "owned-cursor-trail-1"
-      ]
+      "nodes": ["native-camera", "owned-cursor-trail-1"]
     }
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ],
+    "validators": ["scene-ready"],
     "note": "__trail.ready"
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -195,14 +171,8 @@
       {
         "action": "拖动鼠标绘制轨迹",
         "drag": [
-          [
-            0.3,
-            0.4
-          ],
-          [
-            0.7,
-            0.6
-          ]
+          [0.3, 0.4],
+          [0.7, 0.6]
         ],
         "expected": "速度响应轨迹跟随真实指针生长"
       },
@@ -214,9 +184,7 @@
       {
         "action": "单步推进示例步进时钟",
         "probe": "__trail.step",
-        "probeArgs": [
-          0.0333
-        ],
+        "probeArgs": [0.0333],
         "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
       },
       {

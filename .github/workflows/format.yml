@@ -17,6 +17,21 @@ jobs:
           ref: 557b06f7e636572a15a426eb8c2387f40b92798a
           path: _upstream
       - run: echo '_upstream/' >> .git/info/exclude
+      - uses: actions/checkout@v4
+        with:
+          repository: shader-effects-inc/shaders
+          ref: dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a
+          path: output/shaders-absorption/reference
+      - uses: actions/checkout@v4
+        with:
+          repository: AcademySoftwareFoundation/MaterialX
+          ref: 7b64921ef1d42f2d57871e9d2c43dc11f041f26b
+          path: output/shaders-absorption/materialx-source
+          sparse-checkout: |
+            libraries/stdlib/genglsl/lib/mx_noise.glsl
+            LICENSE
+          sparse-checkout-cone-mode: false
+      - run: node tools/ci/prepare-shader-reference.cjs
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -25,15 +40,20 @@ jobs:
       - run: npm run format:check
       - run: npx prettier --check tools/verify/release-readiness.cjs tools/examples/api-inventory.cjs tools/examples/reconcile-api-claims.cjs tools/examples/coverage-bindings/bind-vector-instance.cjs tools/examples/coverage-bindings/bind-tween-control.cjs tools/examples/coverage-bindings/bind-animation-runtime.cjs tools/examples/coverage-bindings/bind-widget-layout.cjs
       - run: npm run typecheck
-      - run: npx jest --runInBand
       - run: npm run build:all
       - run: npm run gallery:api
       - run: git diff --exit-code -- docs/example-api-inventory.json
+      - name: Prepare browser evidence tooling
+        run: |
+          npm install --no-save --ignore-scripts --package-lock=false playwright@1.62.1
+          npx playwright install --with-deps chromium firefox webkit
+      - run: npm run verify:browser-matrix
+      - name: Run Jest and verify test discovery
+        run: npm run verify:test-inventory
       - run: npm run verify:consumer
       - run: npm run verify:web-only
       - run: npm run verify:licenses
       - run: npm run verify:decoders
-      - run: npm run verify:test-inventory
       - run: npm run verify:benchmark
       - run: npm run verify:file-map
       - run: npm run verify:wasm-backends

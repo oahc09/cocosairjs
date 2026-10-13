@@ -19,10 +19,7 @@
     "Texture2D",
     "utils.createMesh"
   ],
-  "capabilities": [
-    "rendering",
-    "material"
-  ],
+  "capabilities": ["rendering", "material"],
   "benchmarkRefs": [],
   "recipeRefs": [],
   "learning": {
@@ -39,16 +36,8 @@
     "assets": "程序化 RGBA8 输入；参考 Sparkle MIT 通知见 LICENSE.reference.txt，独立 uint hash 非 Fi 派生"
   },
   "api": {
-    "primary": [
-      "EffectAsset",
-      "Material.initialize"
-    ],
-    "supporting": [
-      "MeshRenderer",
-      "Texture2D",
-      "createStepClock",
-      "createAirRenderTarget"
-    ],
+    "primary": ["EffectAsset", "Material.initialize"],
+    "supporting": ["MeshRenderer", "Texture2D", "createStepClock", "createAirRenderTarget"],
     "claims": [
       "createAirApp",
       "createStepClock",
@@ -165,9 +154,7 @@
       {
         "action": "单步推进示例步进时钟",
         "probe": "__sparkle.step",
-        "probeArgs": [
-          0.0333
-        ],
+        "probeArgs": [0.0333],
         "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
       },
       {
@@ -179,32 +166,18 @@
   },
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "native-camera",
-        "owned-sparkle-1"
-      ]
+      "nodes": ["native-camera", "owned-sparkle-1"]
     }
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ],
+    "validators": ["scene-ready"],
     "note": "Default startup scene plus __sparkle.ready; Gallery validators are declared, not yet executed as a Gallery benchmark."
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

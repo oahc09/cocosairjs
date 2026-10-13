@@ -8,38 +8,17 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "对照 red / alpha、软遮罩 / 阈值裁剪，以及粒子的 normal / add 混合。",
-    "points": [
-      "Alpha 软遮罩",
-      "Red 软遮罩",
-      "Alpha 阈值",
-      "反向遮罩",
-      "粒子 Normal",
-      "粒子 Add"
-    ]
+    "points": ["Alpha 软遮罩", "Red 软遮罩", "Alpha 阈值", "反向遮罩", "粒子 Normal", "粒子 Add"]
   },
   "effect": {
     "functional": "对照 red / alpha、软遮罩 / 阈值裁剪，以及粒子的 normal / add 混合。 点击运行断言执行原生像素/交互检查；释放资源验证所有权。",
     "visual": "原生画布展示效果，侧栏提供控制、结果与对应边界。"
   },
   "api": {
-    "primary": [
-      "attachAirSpriteMask",
-      "createAirUIBlendScope",
-      "ParticleSystem2D"
-    ],
-    "supporting": [
-      "createAirTextureSprite"
-    ],
-    "claims": [
-      "attachAirSpriteMask",
-      "createAirUIBlendScope",
-      "ParticleSystem2D",
-      "createAirTextureSprite"
-    ],
-    "forbiddenShortcut": [
-      "用 DOM 图片代替原生 GPU 渲染",
-      "将未支持的实验能力记录为已支持"
-    ],
+    "primary": ["attachAirSpriteMask", "createAirUIBlendScope", "ParticleSystem2D"],
+    "supporting": ["createAirTextureSprite"],
+    "claims": ["attachAirSpriteMask", "createAirUIBlendScope", "ParticleSystem2D", "createAirTextureSprite"],
+    "forbiddenShortcut": ["用 DOM 图片代替原生 GPU 渲染", "将未支持的实验能力记录为已支持"],
     "evidence": [
       {
         "api": "attachAirSpriteMask",
@@ -67,16 +46,11 @@
       }
     ]
   },
-  "capabilities": [
-    "rendering"
-  ],
+  "capabilities": ["rendering"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Masked sprite",
-        "Particles"
-      ]
+      "nodes": ["Masked sprite", "Particles"]
     }
   },
   "interaction": {
@@ -89,24 +63,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

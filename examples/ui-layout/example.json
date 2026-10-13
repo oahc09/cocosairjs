@@ -45,22 +45,12 @@
     "Widget.updateAlignment",
     "Widget.setDirty"
   ],
-  "capabilities": [
-    "ui"
-  ],
+  "capabilities": ["ui"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -78,11 +68,7 @@
     "visual": "深蓝底上一屏响应式布局：顶栏横贯且标题实时写着当前视口尺寸、左下绿徽章、右下橙徽章、中央三个等距色块；视口缩小后顶栏变窄、右徽章左移、色块整体重排、标题数字同步（截图 resize 前后各一张）"
   },
   "api": {
-    "primary": [
-      "Canvas",
-      "Widget",
-      "Layout"
-    ],
+    "primary": ["Canvas", "Widget", "Layout"],
     "supporting": [
       "UITransform",
       "Sprite",
@@ -472,35 +458,19 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "TopBar",
-        "BadgeL",
-        "BadgeR",
-        "Row",
-        "Cell0",
-        "Cell1",
-        "Cell2"
-      ]
+      "nodes": ["Canvas", "UICamera", "TopBar", "BadgeL", "BadgeR", "Row", "Cell0", "Cell1", "Cell2"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [
-          240,
-          180,
-          0
-        ],
+        "position": [240, 180, 0],
         "provenance": [
           {
             "source": "main.js",
@@ -510,11 +480,7 @@
         ]
       },
       "UICamera": {
-        "position": [
-          0,
-          0,
-          1000
-        ],
+        "position": [0, 0, 1000],
         "provenance": [
           {
             "source": "main.js",
@@ -524,11 +490,7 @@
         ]
       },
       "TopBar": {
-        "position": [
-          0,
-          160,
-          0
-        ],
+        "position": [0, 160, 0],
         "provenance": [
           {
             "source": "main.js",
@@ -538,11 +500,7 @@
         ]
       },
       "BadgeL": {
-        "position": [
-          -200,
-          -158,
-          0
-        ],
+        "position": [-200, -158, 0],
         "provenance": [
           {
             "source": "main.js",
@@ -552,11 +510,7 @@
         ]
       },
       "BadgeR": {
-        "position": [
-          200,
-          -158,
-          0
-        ],
+        "position": [200, -158, 0],
         "provenance": [
           {
             "source": "main.js",
@@ -566,11 +520,7 @@
         ]
       },
       "Row": {
-        "position": [
-          0,
-          20,
-          0
-        ],
+        "position": [0, 20, 0],
         "provenance": [
           {
             "source": "main.js",
@@ -580,11 +530,7 @@
         ]
       },
       "Cell0": {
-        "position": [
-          165,
-          0,
-          0
-        ],
+        "position": [165, 0, 0],
         "provenance": [
           {
             "source": "main.js",
@@ -594,11 +540,7 @@
         ]
       },
       "Cell1": {
-        "position": [
-          65,
-          0,
-          0
-        ],
+        "position": [65, 0, 0],
         "provenance": [
           {
             "source": "main.js",
@@ -608,11 +550,7 @@
         ]
       },
       "Cell2": {
-        "position": [
-          -35,
-          0,
-          0
-        ],
+        "position": [-35, 0, 0],
         "provenance": [
           {
             "source": "main.js",

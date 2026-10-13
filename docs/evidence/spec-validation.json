@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-10-11T11:01:53.772Z",
-  "total": 185,
-  "frozen": 185,
+  "measuredAt": "2026-10-13T17:39:03.823Z",
+  "total": 186,
+  "frozen": 186,
   "draft": 0,
   "blocked": 0,
   "examples": [
@@ -762,6 +762,11 @@
     },
     {
       "id": "shader-dissolve",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-driver-pilot",
       "specStatus": "frozen",
       "issues": []
     },

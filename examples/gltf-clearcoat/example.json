@@ -19,12 +19,8 @@
     "visual": "从左到右三个球体表面第二层镜面高光逐渐增强，基础色与光照完全一致"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.parseAsync"
-    ],
-    "supporting": [
-      "GLTFAsset.instantiate"
-    ],
+    "primary": ["GLTFLoader.parseAsync"],
+    "supporting": ["GLTFAsset.instantiate"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -42,10 +38,7 @@
       "GLTFAsset.destroy",
       "isValid"
     ],
-    "forbiddenShortcut": [
-      "用贴图/环境球伪造清漆高光",
-      "三球使用不同 baseColor 使对照失效"
-    ],
+    "forbiddenShortcut": ["用贴图/环境球伪造清漆高光", "三球使用不同 baseColor 使对照失效"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -139,29 +132,18 @@
       }
     ]
   },
-  "capabilities": [
-    "materials"
-  ],
+  "capabilities": ["materials"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Fill Light",
-        "Sphere-Co-0",
-        "Sphere-Co-0_5",
-        "Sphere-Co-1"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Fill Light", "Sphere-Co-0", "Sphere-Co-0_5", "Sphere-Co-1"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
     "functional": [
@@ -173,21 +155,13 @@
       "transform-equals"
     ],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
-    "capability": [
-      "capability-status"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
+    "capability": ["capability-status"],
     "capabilityExpectations": [
       {
         "extension": "KHR_materials_clearcoat",
-        "statuses": [
-          "supported"
-        ]
+        "statuses": ["supported"]
       }
     ]
   },
@@ -202,21 +176,9 @@
   "validationExpectations": {
     "transform-equals": {
       "Sphere-Co-0": {
-        "position": [
-          -2.6,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [-2.6, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -227,21 +189,9 @@
         "handAuthored": true
       },
       "Sphere-Co-0_5": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -252,21 +202,9 @@
         "handAuthored": true
       },
       "Sphere-Co-1": {
-        "position": [
-          2.6,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [2.6, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -277,11 +215,7 @@
         "handAuthored": true
       },
       "Main Light": {
-        "position": [
-          0,
-          6,
-          4
-        ],
+        "position": [0, 6, 4],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -289,18 +223,10 @@
             "text": "keyNode.setPosition(new Vec3(0, 6, 4));"
           }
         ],
-        "rotationEuler": [
-          -50,
-          0,
-          0
-        ]
+        "rotationEuler": [-50, 0, 0]
       },
       "Fill Light": {
-        "position": [
-          -5,
-          2,
-          -4
-        ],
+        "position": [-5, 2, -4],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -308,11 +234,7 @@
             "text": "fillNode.setPosition(new Vec3(-5, 2, -4));"
           }
         ],
-        "rotationEuler": [
-          -5,
-          60,
-          0
-        ]
+        "rotationEuler": [-5, 60, 0]
       }
     },
     "material-property": {
@@ -321,12 +243,7 @@
         "effect": "air-gltf-standard",
         "props": {
           "albedo": {
-            "value": [
-              0.55,
-              0.62,
-              0.72,
-              1
-            ],
+            "value": [0.55, 0.62, 0.72, 1],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
@@ -358,12 +275,7 @@
         "effect": "air-gltf-physical",
         "props": {
           "albedo": {
-            "value": [
-              0.55,
-              0.62,
-              0.72,
-              1
-            ],
+            "value": [0.55, 0.62, 0.72, 1],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
@@ -373,10 +285,7 @@
             }
           },
           "airClearcoat": {
-            "value": [
-              0.5,
-              0.12
-            ],
+            "value": [0.5, 0.12],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
@@ -400,12 +309,7 @@
         "effect": "air-gltf-physical",
         "props": {
           "albedo": {
-            "value": [
-              0.55,
-              0.62,
-              0.72,
-              1
-            ],
+            "value": [0.55, 0.62, 0.72, 1],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
@@ -415,10 +319,7 @@
             }
           },
           "airClearcoat": {
-            "value": [
-              1,
-              0.12
-            ],
+            "value": [1, 0.12],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {

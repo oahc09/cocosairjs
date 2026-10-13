@@ -20,16 +20,8 @@
     "visual": "深蓝 UI 背景；中央蓝色 LoadButton（按下变橙）；上方 Preview 精灵从灰色占位变为绿色纹理；顶部状态行显示 phase/state，底部信息行显示 loads/locks/clicks/fails 实时计数"
   },
   "api": {
-    "primary": [
-      "loadAssetAsync",
-      "AssetManager.releaseAsset",
-      "SpriteFrame.createWithImage"
-    ],
-    "supporting": [
-      "assetManager",
-      "Button",
-      "isValid"
-    ],
+    "primary": ["loadAssetAsync", "AssetManager.releaseAsset", "SpriteFrame.createWithImage"],
+    "supporting": ["assetManager", "Button", "isValid"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -251,23 +243,11 @@
       }
     ]
   },
-  "capabilities": [
-    "ui",
-    "lifecycle"
-  ],
-  "assets": [
-    "assets/panel-manifest.json"
-  ],
+  "capabilities": ["ui", "lifecycle"],
+  "assets": ["assets/panel-manifest.json"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "StatusLabel",
-        "Preview",
-        "LoadButton",
-        "InfoLabel"
-      ]
+      "nodes": ["Canvas", "UICamera", "StatusLabel", "Preview", "LoadButton", "InfoLabel"]
     }
   },
   "interaction": {
@@ -279,26 +259,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "asset-loaded",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "asset-loaded", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -312,11 +279,7 @@
   "validationExpectations": {
     "transform-equals": {
       "UICamera": {
-        "position": [
-          0,
-          0,
-          1000
-        ],
+        "position": [0, 0, 1000],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -326,11 +289,7 @@
         ]
       },
       "StatusLabel": {
-        "position": [
-          0,
-          270,
-          0
-        ],
+        "position": [0, 270, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -340,11 +299,7 @@
         ]
       },
       "Preview": {
-        "position": [
-          0,
-          130,
-          0
-        ],
+        "position": [0, 130, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -354,11 +309,7 @@
         ]
       },
       "LoadButton": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -368,11 +319,7 @@
         ]
       },
       "InfoLabel": {
-        "position": [
-          0,
-          -160,
-          0
-        ],
+        "position": [0, -160, 0],
         "provenance": [
           {
             "source": "src/main.ts",

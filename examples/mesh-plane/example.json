@@ -19,14 +19,8 @@
     "visual": "绿色平面铺在画面下方作为地板，黄色小球悬浮在平面上方缓慢自转，整体构成可辨识的地面场景。"
   },
   "api": {
-    "primary": [
-      "primitives.plane",
-      "utils.createMesh"
-    ],
-    "supporting": [
-      "MeshRenderer",
-      "Node.setRotationFromEuler"
-    ],
+    "primary": ["primitives.plane", "utils.createMesh"],
+    "supporting": ["MeshRenderer", "Node.setRotationFromEuler"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -48,9 +42,7 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "用缩放的 box 冒充 plane 图元"
-    ],
+    "forbiddenShortcut": ["用缩放的 box 冒充 plane 图元"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -168,39 +160,23 @@
       }
     ]
   },
-  "capabilities": [
-    "basics"
-  ],
+  "capabilities": ["basics"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "floor",
-        "marker"
-      ]
+      "nodes": ["Main Camera", "Main Light", "floor", "marker"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -215,11 +191,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          2.4,
-          6.5
-        ],
+        "position": [0, 2.4, 6.5],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -229,11 +201,7 @@
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -241,18 +209,10 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "floor": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -265,18 +225,10 @@
             "text": "floor.setRotationFromEuler(0, 0, 0);"
           }
         ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ]
+        "rotationEuler": [0, 0, 0]
       },
       "marker": {
-        "position": [
-          0,
-          1.2,
-          0
-        ],
+        "position": [0, 1.2, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -299,12 +251,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              95,
-              205,
-              120,
-              255
-            ],
+            "value": [95, 205, 120, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -319,12 +266,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              235,
-              205,
-              75,
-              255
-            ],
+            "value": [235, 205, 75, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {

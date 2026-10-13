@@ -1,8 +1,8 @@
 {
-  "measuredAt": "2026-10-11T11:02:01.126Z",
+  "measuredAt": "2026-10-13T17:39:12.975Z",
   "tool": "tools/examples/spec-compliance-audit.cjs",
   "spec": "ai/example-spec-execution.md",
-  "total": 185,
+  "total": 186,
   "examples": [
     {
       "id": "gltf-draco",
@@ -31,7 +31,7 @@
   ],
   "globalFindings": [],
   "summary": {
-    "examples": 185,
+    "examples": 186,
     "withFindings": 2,
     "fail": 0,
     "warn": 2,

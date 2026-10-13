@@ -1,1 +1,4 @@
-{"extends":"../../tools/verify/interactive-container-browser.tsconfig.json","include":["src/main.ts","src/control.ts"]}
+{
+  "extends": "../../tools/verify/interactive-container-browser.tsconfig.json",
+  "include": ["src/main.ts", "src/control.ts"]
+}

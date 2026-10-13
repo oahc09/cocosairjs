@@ -19,14 +19,8 @@
     "visual": "画面中央橙色圆环带 12° 侧倾持续旋转，环面内外侧明暗交替清晰可辨。"
   },
   "api": {
-    "primary": [
-      "primitives.torus",
-      "utils.createMesh"
-    ],
-    "supporting": [
-      "Node.setRotationFromEuler",
-      "Component"
-    ],
+    "primary": ["primitives.torus", "utils.createMesh"],
+    "supporting": ["Node.setRotationFromEuler", "Component"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -47,9 +41,7 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "用旋转的 plane 贴图冒充 torus 几何"
-    ],
+    "forbiddenShortcut": ["用旋转的 plane 贴图冒充 torus 几何"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -161,38 +153,23 @@
       }
     ]
   },
-  "capabilities": [
-    "basics"
-  ],
+  "capabilities": ["basics"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "torus"
-      ]
+      "nodes": ["Main Camera", "Main Light", "torus"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -207,11 +184,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          2.4,
-          6.5
-        ],
+        "position": [0, 2.4, 6.5],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -221,11 +194,7 @@
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -233,18 +202,10 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "torus": {
-        "position": [
-          0,
-          0.4,
-          0
-        ],
+        "position": [0, 0.4, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -267,12 +228,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              235,
-              125,
-              65,
-              255
-            ],
+            "value": [235, 125, 65, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {

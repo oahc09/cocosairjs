@@ -19,13 +19,8 @@
     "visual": "面板输出每轮 cycle 的 load/dispose/reload 状态行；场景中模型随 dispose 消失、随 reload 重新出现"
   },
   "api": {
-    "primary": [
-      "GLTFAsset.instantiate",
-      "isValid"
-    ],
-    "supporting": [
-      "GLTFLoader.parseAsync"
-    ],
+    "primary": ["GLTFAsset.instantiate", "isValid"],
+    "supporting": ["GLTFLoader.parseAsync"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -44,10 +39,7 @@
       "Node.setRotationFromEuler",
       "GLTFAsset.destroy"
     ],
-    "forbiddenShortcut": [
-      "只把节点 removeFromParent 不释放资产冒充 dispose",
-      "统计 no-runtime-error 冒充生命周期验证"
-    ],
+    "forbiddenShortcut": ["只把节点 removeFromParent 不释放资产冒充 dispose", "统计 no-runtime-error 冒充生命周期验证"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -147,43 +139,24 @@
       }
     ]
   },
-  "capabilities": [
-    "lifecycle"
-  ],
-  "assets": [
-    "assets/BoxTextured.glb"
-  ],
+  "capabilities": ["lifecycle"],
+  "assets": ["assets/BoxTextured.glb"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light"
-      ]
+      "nodes": ["Main Camera", "Main Light"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "asset-loaded",
-      "resource-released",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "asset-loaded", "resource-released", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -197,11 +170,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          1.8,
-          5
-        ],
+        "position": [0, 1.8, 5],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -211,11 +180,7 @@
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -223,11 +188,7 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       }
     },
     "asset-loaded": {

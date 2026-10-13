@@ -8,20 +8,14 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "组合主光与补光两盏平行光，并用 illuminance 三态切换理解光照强度对画面的影响",
-    "points": [
-      "两盏 DirectionalLight 的主/补配合",
-      "illuminance OFF/LOW/NORMAL 三态",
-      "input.on 真实点击驱动状态切换"
-    ]
+    "points": ["两盏 DirectionalLight 的主/补配合", "illuminance OFF/LOW/NORMAL 三态", "input.on 真实点击驱动状态切换"]
   },
   "effect": {
     "functional": "Key Light（illuminance=20000 lux）+ Fill Light（4000 lux）同时存在；点击画面后 keyLight.illuminance 依次 20000→5000→0 循环，__lightState 记录当前档位。",
     "visual": "点击画面时黄色方块从正常照明变暗直至只剩补光的蓝色微光，左上角状态文字同步显示当前档位"
   },
   "api": {
-    "primary": [
-      "DirectionalLight"
-    ],
+    "primary": ["DirectionalLight"],
     "supporting": [
       "input",
       "Input",
@@ -83,9 +77,7 @@
       "DirectionalLight.csmLayersTransition",
       "DirectionalLight.csmTransitionRange"
     ],
-    "forbiddenShortcut": [
-      "用修改材质颜色冒充灯光强度变化"
-    ],
+    "forbiddenShortcut": ["用修改材质颜色冒充灯光强度变化"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -311,18 +303,11 @@
       }
     ]
   },
-  "capabilities": [
-    "lights"
-  ],
+  "capabilities": ["lights"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Key Light",
-        "Fill Light",
-        "Subject"
-      ]
+      "nodes": ["Main Camera", "Key Light", "Fill Light", "Subject"]
     }
   },
   "interaction": {
@@ -338,23 +323,12 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property",
-      "transform-equals"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -369,11 +343,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          2.6,
-          7.5
-        ],
+        "position": [0, 2.6, 7.5],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -383,11 +353,7 @@
         ]
       },
       "Key Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -395,18 +361,10 @@
             "text": "keyNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "Fill Light": {
-        "position": [
-          0,
-          4,
-          -8
-        ],
+        "position": [0, 4, -8],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -414,18 +372,10 @@
             "text": "fillNode.setPosition(new Vec3(0, 4, -8));"
           }
         ],
-        "rotationEuler": [
-          -10,
-          180,
-          0
-        ]
+        "rotationEuler": [-10, 180, 0]
       },
       "Subject": {
-        "position": [
-          0,
-          0.6,
-          0
-        ],
+        "position": [0, 0.6, 0],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -440,12 +390,7 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              235,
-              205,
-              75,
-              255
-            ],
+            "value": [235, 205, 75, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {

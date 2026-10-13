@@ -8,28 +8,15 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "使用原生 EffectAsset、SDF 梯度与线性 straight RGBA 构建内侧虹彩",
-    "points": [
-      "cosine phase 周期",
-      "解析梯度与 fwidth AA 分工",
-      "线性核心和显示 OETF 分开",
-      "100 实例自有资产归还"
-    ]
+    "points": ["cosine phase 周期", "解析梯度与 fwidth AA 分工", "线性核心和显示 OETF 分开", "100 实例自有资产归还"]
   },
   "effect": {
     "functional": "十参数、暂停、恢复、重置和释放；单一原生帧循环",
     "visual": "circle 或 rounded-box 的透明内侧虹彩"
   },
   "api": {
-    "primary": [
-      "Material.initialize",
-      "EffectAsset.onLoaded",
-      "MeshRenderer.mesh"
-    ],
-    "supporting": [
-      "createAirApp",
-      "createStepClock",
-      "createAirRenderTarget"
-    ],
+    "primary": ["Material.initialize", "EffectAsset.onLoaded", "MeshRenderer.mesh"],
+    "supporting": ["createAirApp", "createStepClock", "createAirRenderTarget"],
     "claims": [
       "Material.initialize",
       "EffectAsset.onLoaded",
@@ -83,17 +70,11 @@
       "不得把引擎字节计数或 Queue.submit bookkeeping 当作 GPU 物理成本"
     ]
   },
-  "capabilities": [
-    "rendering",
-    "material"
-  ],
+  "capabilities": ["rendering", "material"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "native-camera",
-        "owned-film-1"
-      ]
+      "nodes": ["native-camera", "owned-film-1"]
     }
   },
   "interaction": {
@@ -110,9 +91,7 @@
       {
         "action": "单步推进示例步进时钟",
         "probe": "__thinFilm.step",
-        "probeArgs": [
-          0.0333
-        ],
+        "probeArgs": [0.0333],
         "expected": "真实 game.pause + createStepClock 后确定帧推进，时间轴画面变化"
       },
       {
@@ -123,23 +102,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {

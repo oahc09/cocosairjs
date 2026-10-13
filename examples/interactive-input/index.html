@@ -1,35 +1,137 @@
 <!doctype html>
 <html lang="zh-CN">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" href="data:,">
-<title>Canvas 与 HTML 输入所有权</title>
-<script type="importmap">{"imports":{"cocosair":"/build/cocosair.module.js"}}</script>
-<style>
-  * {box-sizing:border-box} body {margin:0;background:#101722;color:#e8eff7;font:16px/1.6 system-ui}
-  main {max-width:800px;margin:auto;padding:24px} h1 {font-size:26px;margin:0 0 8px}
-  #host {height:280px;width:100%;position:relative;background:#162230;border:1px solid #41526a}
-  #host #GameDiv,#host #Cocos3dGameContainer {width:100%!important;height:100%!important;position:relative}
-  /* The Web screen adapter writes absolute positioning; keep this embedded canvas in its host. */
-  #GameCanvas {display:block;position:relative!important;inset:auto!important;width:100%!important;height:100%!important;touch-action:none;outline-offset:3px}
-  #html-marker {position:absolute;width:48px;height:48px;top:116px;left:45%;background:#f24545;pointer-events:none;display:none}
-  button,input {font:inherit} button {padding:10px 16px;border:1px solid #526781;border-radius:6px;background:#253751;color:inherit}
-  button:focus-visible,input:focus-visible {outline:3px solid #79caff} .controls {display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
-  #range {width:100%;touch-action:pan-y} #rail {padding:18px;background:#1b2b40;touch-action:pan-y}
-  #trace {height:180px;overflow:auto;background:#0a111c;padding:12px;white-space:pre;font:12px/1.4 monospace}
-  .explanation {color:#b6c6dc} #scroll-space {height:1100px;background:linear-gradient(#182435,#101722)}
-</style>
-<main>
-  <h1>Canvas 与 HTML 各自拥有输入</h1>
-  <p class="explanation">画布拖动由应用处理；按钮使用标准 click。横向 rail 编辑值，竖向手势交给文档滚动。没有兼容 click 禁用时间窗。</p>
-  <div id="host"><canvas id="GameCanvas" tabindex="0"></canvas><div id="html-marker"></div></div>
-  <div class="controls"><button id="activate"><span id="button-label">激活 0</span></button><button id="reset">Reset</button><button id="mode">切换模式</button><button id="release">Release</button></div>
-  <label><input id="rewrite" type="checkbox"> 负例：每帧重建相同按钮文字节点</label>
-  <div id="rail"><label for="range">横向编辑 <output id="value">50</output></label><input id="range" type="range" min="0" max="100" value="50"></div>
-  <p id="status" role="status">等待启动</p><pre id="trace"></pre>
-  <p class="explanation">?control=html 使用相同 DOM、普通 HTML 输入与滚动，不导入 SDK。真实 touch/cancel 与引擎页逐项对照。</p>
-  <div id="scroll-space"></div>
-</main>
-<script type="module" src="./src/main.ts"></script>
-</body>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <title>Canvas 与 HTML 输入所有权</title>
+    <script type="importmap">
+        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            background: #101722;
+            color: #e8eff7;
+            font: 16px/1.6 system-ui;
+        }
+        main {
+            max-width: 800px;
+            margin: auto;
+            padding: 24px;
+        }
+        h1 {
+            font-size: 26px;
+            margin: 0 0 8px;
+        }
+        #host {
+            height: 280px;
+            width: 100%;
+            position: relative;
+            background: #162230;
+            border: 1px solid #41526a;
+        }
+        #host #GameDiv,
+        #host #Cocos3dGameContainer {
+            width: 100% !important;
+            height: 100% !important;
+            position: relative;
+        }
+        /* The Web screen adapter writes absolute positioning; keep this embedded canvas in its host. */
+        #GameCanvas {
+            display: block;
+            position: relative !important;
+            inset: auto !important;
+            width: 100% !important;
+            height: 100% !important;
+            touch-action: none;
+            outline-offset: 3px;
+        }
+        #html-marker {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            top: 116px;
+            left: 45%;
+            background: #f24545;
+            pointer-events: none;
+            display: none;
+        }
+        button,
+        input {
+            font: inherit;
+        }
+        button {
+            padding: 10px 16px;
+            border: 1px solid #526781;
+            border-radius: 6px;
+            background: #253751;
+            color: inherit;
+        }
+        button:focus-visible,
+        input:focus-visible {
+            outline: 3px solid #79caff;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 18px 0;
+        }
+        #range {
+            width: 100%;
+            touch-action: pan-y;
+        }
+        #rail {
+            padding: 18px;
+            background: #1b2b40;
+            touch-action: pan-y;
+        }
+        #trace {
+            height: 180px;
+            overflow: auto;
+            background: #0a111c;
+            padding: 12px;
+            white-space: pre;
+            font: 12px/1.4 monospace;
+        }
+        .explanation {
+            color: #b6c6dc;
+        }
+        #scroll-space {
+            height: 1100px;
+            background: linear-gradient(#182435, #101722);
+        }
+    </style>
+    <body>
+        <main>
+            <h1>Canvas 与 HTML 各自拥有输入</h1>
+            <p class="explanation">
+                画布拖动由应用处理；按钮使用标准 click。横向 rail 编辑值，竖向手势交给文档滚动。没有兼容 click
+                禁用时间窗。
+            </p>
+            <div id="host">
+                <canvas id="GameCanvas" tabindex="0"></canvas>
+                <div id="html-marker"></div>
+            </div>
+            <div class="controls">
+                <button id="activate"><span id="button-label">激活 0</span></button><button id="reset">Reset</button
+                ><button id="mode">切换模式</button><button id="release">Release</button>
+            </div>
+            <label><input id="rewrite" type="checkbox" /> 负例：每帧重建相同按钮文字节点</label>
+            <div id="rail">
+                <label for="range">横向编辑 <output id="value">50</output></label
+                ><input id="range" type="range" min="0" max="100" value="50" />
+            </div>
+            <p id="status" role="status">等待启动</p>
+            <pre id="trace"></pre>
+            <p class="explanation">
+                ?control=html 使用相同 DOM、普通 HTML 输入与滚动，不导入 SDK。真实 touch/cancel 与引擎页逐项对照。
+            </p>
+            <div id="scroll-space"></div>
+        </main>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
 </html>

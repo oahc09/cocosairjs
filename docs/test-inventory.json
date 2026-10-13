@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T10:25:25.502Z",
+  "generatedAt": "2026-10-13T17:44:51.146Z",
   "suites": [
     {
       "file": "test/smoke/air-dom-texture-blend.test.ts",
@@ -1363,6 +1363,7 @@
         "leaf metadata never inherits historical statements rejects scope inflation from an accepted leaf baseline",
         "leaf metadata never inherits historical statements rejects wrong PNG from an accepted leaf baseline",
         "leaf metadata never inherits historical statements rejects wrong effect from an accepted leaf baseline",
+        "leaf scopes preserve effect-specific interaction evidence E08 counts exactly match its independent production reducer",
         "natural OS receipts are read from actual temporary files accepts real file contents with natural exit and bound command",
         "natural OS receipts are read from actual temporary files rejects command malformed from a valid OS file",
         "natural OS receipts are read from actual temporary files rejects drift from a valid OS file",
@@ -1507,6 +1508,131 @@
       ]
     },
     {
+      "file": "test/smoke/shaders-driver-pilot-acceptance.test.ts",
+      "tests": [
+        "Driver production complete report acceptance consumer adapter actually consumes both position coordinates and maternal uniform components",
+        "Driver production complete report acceptance consumer adapter rejects unknown and vector-to-scalar targets",
+        "Driver production complete report acceptance functional baseline is accepted including real temporary PNG decode",
+        "Driver production complete report acceptance performance baseline is accepted for all eighteen tuples",
+        "Driver production complete report acceptance rejects boundary accepted wrong value",
+        "Driver production complete report acceptance rejects boundary uniform spoof",
+        "Driver production complete report acceptance rejects functional Agent false PASS",
+        "Driver production complete report acceptance rejects functional GPU NaN preserved",
+        "Driver production complete report acceptance rejects functional GPU byte whitewash",
+        "Driver production complete report acceptance rejects functional cleanup false",
+        "Driver production complete report acceptance rejects functional duplicate row",
+        "Driver production complete report acceptance rejects functional future event sequence",
+        "Driver production complete report acceptance rejects functional invalid accepted",
+        "Driver production complete report acceptance rejects functional missing engine",
+        "Driver production complete report acceptance rejects functional mother params spoof",
+        "Driver production complete report acceptance rejects functional normal untrusted reset",
+        "Driver production complete report acceptance rejects functional pointer UV spoof",
+        "Driver production complete report acceptance rejects functional probe leaked ref",
+        "Driver production complete report acceptance rejects functional probe touched time",
+        "Driver production complete report acceptance rejects functional release listeners leaked",
+        "Driver production complete report acceptance rejects functional resize fake backing",
+        "Driver production complete report acceptance rejects functional resource leak",
+        "Driver production complete report acceptance rejects functional resource missing cycle",
+        "Driver production complete report acceptance rejects functional resource zero allocation",
+        "Driver production complete report acceptance rejects functional source drift",
+        "Driver production complete report acceptance rejects functional uniform receipt spoof",
+        "Driver production complete report acceptance rejects functional untrusted raw event",
+        "Driver production complete report acceptance rejects functional wrong dt",
+        "Driver production complete report acceptance rejects functional wrong raw point",
+        "Driver production complete report acceptance rejects missing boundary",
+        "Driver production complete report acceptance rejects performance GPU fake samples",
+        "Driver production complete report acceptance rejects performance clock NaN",
+        "Driver production complete report acceptance rejects performance duplicate profile",
+        "Driver production complete report acceptance rejects performance missing profile",
+        "Driver production complete report acceptance rejects performance no actual update",
+        "Driver production complete report acceptance rejects performance single pass omitted",
+        "Driver production complete report acceptance rejects performance timed readback",
+        "Driver production complete report acceptance rejects performance wrong mobile DPR",
+        "Driver production complete report acceptance tampered PNG SHA is independently rejected",
+        "Driver production complete report acceptance total malformed report does not throw"
+      ]
+    },
+    {
+      "file": "test/smoke/shaders-driver-pilot-production-review.test.ts",
+      "tests": [
+        "Driver production contract: independent inputs and observations HOLO_DEFAULTS agrees with the frozen mother parameter defaults",
+        "Driver production contract: independent inputs and observations NEON_DEFAULTS agrees with the frozen mother parameter defaults",
+        "Driver production contract: independent inputs and observations current fingerprints and empty engine objects cannot substitute for measurements",
+        "Driver production contract: independent inputs and observations empty frame records cannot pass a complete-looking performance window",
+        "Driver production contract: independent inputs and observations finite duration overflow is rejected without poisoning state",
+        "Driver production contract: independent inputs and observations independent oracle preserves vector output",
+        "Driver production contract: independent inputs and observations paused state freezes pointer-driven outputs as well as time",
+        "Driver production contract: independent inputs and observations performance plan has six unique consumer/profile tuples per engine",
+        "Driver production contract: independent inputs and observations rejects invalid scalar default null",
+        "Driver production contract: independent inputs and observations rejects invalid scalar default true",
+        "Driver production contract: independent inputs and observations rejects invalid scalar default {\"x\": NaN, \"y\": 0.5}",
+        "Driver production contract: independent inputs and observations rejects invalid scalar default {}",
+        "Driver production contract: independent inputs and observations shape-correct containers with no measured captures, cycles or controls are rejected",
+        "Driver production contract: independent inputs and observations vector default must contain two finite coordinates"
+      ]
+    },
+    {
+      "file": "test/smoke/shaders-driver-pilot-review.test.ts",
+      "tests": [
+        "Driver Lead review: atomic validation and actual mapping default target namespaces match the actual consumer registry",
+        "Driver Lead review: atomic validation and actual mapping non-finite pointer is rejected before state changes",
+        "Driver Lead review: atomic validation and actual mapping pointer-position preserves both normalized coordinates",
+        "Driver Lead review: atomic validation and actual mapping rejects duplicate target",
+        "Driver Lead review: atomic validation and actual mapping rejects missing default",
+        "Driver Lead review: atomic validation and actual mapping rejects non-boolean clamp",
+        "Driver Lead review: atomic validation and actual mapping rejects partial range",
+        "Driver Lead review: atomic validation and actual mapping rejects string scalar default",
+        "Driver Lead review: atomic validation and actual mapping rejects unknown binding key",
+        "Driver Lead review: atomic validation and actual mapping rejects unknown root key",
+        "Driver Lead review: atomic validation and actual mapping returned binding data cannot be mutated through caller aliases",
+        "Driver Lead review: atomic validation and actual mapping valid scalar binding is accepted",
+        "Driver Lead review: evidence cannot pass without execution GPU unavailable cannot carry nonempty GPU samples",
+        "Driver Lead review: evidence cannot pass without execution empty source closure and empty engine set are rejected",
+        "Driver Lead review: evidence cannot pass without execution malformed source closure is rejected without TypeError",
+        "Driver Lead review: evidence cannot pass without execution performance cannot pass with omitted frames and updates"
+      ]
+    },
+    {
+      "file": "test/smoke/shaders-driver-pilot.test.ts",
+      "tests": [
+        "W5 driver: consumer field separation holographic and neon targets receive distinct values",
+        "W5 driver: frame computation auto-animate is continuous and periodic",
+        "W5 driver: frame computation axis=uv preserves both coordinates",
+        "W5 driver: frame computation negative dt rejects",
+        "W5 driver: frame computation non-finite pointer rejects before state changes",
+        "W5 driver: frame computation pause freezes time",
+        "W5 driver: frame computation pointer position maps to normalized UV",
+        "W5 driver: frame computation released driver throws DRIVER_DISPOSED",
+        "W5 driver: frame computation time accumulates over frames",
+        "W5 driver: independent oracle replay oracle pointerToUV matches CSS rect normalization (v-up)",
+        "W5 driver: independent oracle replay oracle replay matches production driver outputs",
+        "W5 driver: independent oracle replay oracle validateBindings rejects unknown source",
+        "W5 driver: map-range clamps out-of-range input",
+        "W5 driver: map-range extrapolates when clamp is false",
+        "W5 driver: map-range midpoint maps correctly",
+        "W5 driver: validation NaN defaultValue rejects",
+        "W5 driver: validation backwards range rejects",
+        "W5 driver: validation duplicate target rejects",
+        "W5 driver: validation missing default rejects",
+        "W5 driver: validation negative period rejects",
+        "W5 driver: validation non-boolean clamp rejects",
+        "W5 driver: validation partial map-range rejects",
+        "W5 driver: validation rejects array",
+        "W5 driver: validation rejects bindings not array",
+        "W5 driver: validation rejects missing bindings",
+        "W5 driver: validation rejects null",
+        "W5 driver: validation rejects string",
+        "W5 driver: validation rejects undefined",
+        "W5 driver: validation returned values are deep copies (caller mutation cannot corrupt)",
+        "W5 driver: validation string default rejects",
+        "W5 driver: validation unknown binding key rejects",
+        "W5 driver: validation unknown root key rejects",
+        "W5 driver: validation unknown source rejects",
+        "W5 driver: validation valid bindings pass",
+        "W5 driver: validation zero range rejects"
+      ]
+    },
+    {
       "file": "test/smoke/shaders-effect-contract.test.ts",
       "tests": [
         "shaders effect contract (synthetic data, not engine/browser evidence) 100 fabricated all-zero counters cannot substitute for allocation/ref traces and resource oracle",
@@ -1539,6 +1665,63 @@
         "shaders effect contract (synthetic data, not engine/browser evidence) total invalid input null",
         "shaders effect contract (synthetic data, not engine/browser evidence) total invalid input undefined",
         "shaders effect contract (synthetic data, not engine/browser evidence) visual screenshot cannot substitute for algorithm oracle or independent pixel verification"
+      ]
+    },
+    {
+      "file": "test/smoke/shaders-effect-docs-review.test.ts",
+      "tests": [
+        "Wave5 docs Lead review: independent data contracts Agent reference imports the actual npm package name",
+        "Wave5 docs Lead review: independent data contracts TS extraction is available as a literal-only parser and never executes calls",
+        "Wave5 docs Lead review: independent data contracts alternative default fields survive parameter and type documentation",
+        "Wave5 docs Lead review: independent data contracts arrays with descriptor properties are not plain definitions",
+        "Wave5 docs Lead review: independent data contracts changing a structural value changes the key for the same definition",
+        "Wave5 docs Lead review: independent data contracts changing only a uniform preserves the key",
+        "Wave5 docs Lead review: independent data contracts conflicting default aliases are rejected",
+        "Wave5 docs Lead review: independent data contracts documentation binds consumed SDK declarations and does not read runtime build stamps",
+        "Wave5 docs Lead review: independent data contracts duplicate enum entries are rejected",
+        "Wave5 docs Lead review: independent data contracts generated local links resolve from the generated document location",
+        "Wave5 docs Lead review: independent data contracts non-finite max is rejected",
+        "Wave5 docs Lead review: independent data contracts non-finite min is rejected",
+        "Wave5 docs Lead review: independent data contracts non-finite step is rejected",
+        "Wave5 docs Lead review: independent data contracts out-of-range default is rejected",
+        "Wave5 docs Lead review: independent data contracts rendering definitions alone cannot award engine verification",
+        "Wave5 docs Lead review: independent data contracts valid fixture is actually accepted"
+      ]
+    },
+    {
+      "file": "test/smoke/shaders-effect-docs.test.ts",
+      "tests": [
+        "Wave5 generation contracts API executable source line drift rejects",
+        "Wave5 generation contracts AST accepts TS literals, comments, escapes and trailing commas: export const definition = {/* brace } */a: \"escaped\\nline\",};",
+        "Wave5 generation contracts AST accepts TS literals, comments, escapes and trailing commas: export const definition = {a: [1, -2,], b: true,} as const;",
+        "Wave5 generation contracts AST rejects executable or ambiguous initializer {...other}",
+        "Wave5 generation contracts AST rejects executable or ambiguous initializer {[\"a\"]: 1}",
+        "Wave5 generation contracts AST rejects executable or ambiguous initializer {a: 1 + 2}",
+        "Wave5 generation contracts AST rejects executable or ambiguous initializer {a: 1, a: 2}",
+        "Wave5 generation contracts AST rejects executable or ambiguous initializer {a: Math.random()}",
+        "Wave5 generation contracts AST rejects executable or ambiguous initializer {a: [1,,2]}",
+        "Wave5 generation contracts AST rejects executable or ambiguous initializer {a: `${value}`}",
+        "Wave5 generation contracts AST rejects executable or ambiguous initializer {a: missing}",
+        "Wave5 generation contracts AST rejects executable or ambiguous initializer {get a(){return 1}}",
+        "Wave5 generation contracts C04 route enters structure key; E09 conditional variants are conservatively pipeline",
+        "Wave5 generation contracts CLI rejects conflicting modes before writing",
+        "Wave5 generation contracts SDK declaration drift invalidates API inventory",
+        "Wave5 generation contracts accessor is rejected without calling it",
+        "Wave5 generation contracts all thirteen actual sources and API contracts pass",
+        "Wave5 generation contracts changed output bytes fail without repairing them",
+        "Wave5 generation contracts conflicting enum aliases reject",
+        "Wave5 generation contracts cycle rejects without throwing",
+        "Wave5 generation contracts definition and source identity both affect structure key",
+        "Wave5 generation contracts extra actual source parameter rejects",
+        "Wave5 generation contracts invalid actual structural value rejects instead of hashing",
+        "Wave5 generation contracts missing output fails without recreating it",
+        "Wave5 generation contracts public API claim without a SDK symbol rejects",
+        "Wave5 generation contracts second generation is byte-identical in all five artifacts",
+        "Wave5 generation contracts source definition mutation invalidates generated bytes",
+        "Wave5 generation contracts source parameter key in a comment cannot replace a missing property",
+        "Wave5 generation contracts strict real TS consumer accepts all thirteen interfaces and rejects an invalid enum",
+        "Wave5 generation contracts unknown schema is rejected",
+        "Wave5 generation contracts write and read-only check use an isolated output directory"
       ]
     },
     {
@@ -3014,6 +3197,59 @@
       ]
     },
     {
+      "file": "test/smoke/shaders-uv-fusion-gate.test.ts",
+      "tests": [
+        "W5 fusion aggregation contracts (NODE_CONTRACT) empty GPU evidence stays unavailable, never zero milliseconds",
+        "W5 fusion aggregation contracts (NODE_CONTRACT) malformed or false Agent claim rejected []",
+        "W5 fusion aggregation contracts (NODE_CONTRACT) malformed or false Agent claim rejected null",
+        "W5 fusion aggregation contracts (NODE_CONTRACT) malformed or false Agent claim rejected {\"agentGate\": \"PASS\", \"schema\": \"shaders-uv-fusion-gate/1\", \"status\": \"PASS\"}",
+        "W5 fusion aggregation contracts (NODE_CONTRACT) malformed or false Agent claim rejected {}",
+        "W5 fusion aggregation contracts (NODE_CONTRACT) malformed timing rejected [-1]",
+        "W5 fusion aggregation contracts (NODE_CONTRACT) malformed timing rejected [Infinity]",
+        "W5 fusion aggregation contracts (NODE_CONTRACT) malformed timing rejected [NaN]",
+        "W5 fusion aggregation contracts (NODE_CONTRACT) metric statistics independently reduced in declared nearest-rank order",
+        "W5 fusion aggregation contracts (NODE_CONTRACT) omitting validator closure cannot create a PASS gate"
+      ]
+    },
+    {
+      "file": "test/smoke/shaders-uv-fusion.test.ts",
+      "tests": [
+        "W5 UV fusion contracts atomic parameter rejection []",
+        "W5 UV fusion contracts atomic parameter rejection null",
+        "W5 UV fusion contracts atomic parameter rejection {\"scale\": -1}",
+        "W5 UV fusion contracts atomic parameter rejection {\"scale\": Infinity}",
+        "W5 UV fusion contracts atomic parameter rejection {\"scale\": NaN}",
+        "W5 UV fusion contracts atomic parameter rejection {\"shape\": \"bad\"}",
+        "W5 UV fusion contracts atomic parameter rejection {\"tintColor\": \"invalid-shape\"}",
+        "W5 UV fusion contracts atomic parameter rejection {\"unknown\": 3}",
+        "W5 UV fusion contracts emboss: exact metadata members, sampler elimination, no lost defines",
+        "W5 UV fusion contracts emboss: fused only substitutes quantized child reads",
+        "W5 UV fusion contracts emboss: pure procedural sample honors CLAMP, hidden RGB, half alpha and texel centers",
+        "W5 UV fusion contracts emboss: reference preserves complete mother algorithm",
+        "W5 UV fusion contracts frozen source closure includes both mother algorithms and SDK",
+        "W5 UV fusion contracts fused cannot claim a retained render target",
+        "W5 UV fusion contracts fused: duplicate kind rejected",
+        "W5 UV fusion contracts fused: material leak rejected",
+        "W5 UV fusion contracts fused: paired ownership accepted",
+        "W5 UV fusion contracts getter is rejected without side effects",
+        "W5 UV fusion contracts glass: exact metadata members, sampler elimination, no lost defines",
+        "W5 UV fusion contracts glass: fused only substitutes quantized child reads",
+        "W5 UV fusion contracts glass: pure procedural sample honors CLAMP, hidden RGB, half alpha and texel centers",
+        "W5 UV fusion contracts glass: reference preserves complete mother algorithm",
+        "W5 UV fusion contracts hex color and finite uniforms accepted with independent result",
+        "W5 UV fusion contracts missing source sampler is rejected before generation",
+        "W5 UV fusion contracts reference camera left attached is rejected",
+        "W5 UV fusion contracts reference: duplicate kind rejected",
+        "W5 UV fusion contracts reference: material leak rejected",
+        "W5 UV fusion contracts reference: paired ownership accepted",
+        "W5 UV fusion contracts total validator rejects malformed input \"garbage\"",
+        "W5 UV fusion contracts total validator rejects malformed input []",
+        "W5 UV fusion contracts total validator rejects malformed input null",
+        "W5 UV fusion contracts total validator rejects malformed input {\"schema\": \"wrong\"}",
+        "W5 UV fusion contracts total validator rejects malformed input {}"
+      ]
+    },
+    {
       "file": "test/smoke/shaders-wave1-gate.test.ts",
       "tests": [
         "Thin Film isolation receipt migration (NODE_CONTRACT) accepts either actual legacy headers or current HTTP proxy headers",
@@ -3661,12 +3897,20 @@
         "WebGL2 sampler and format contracts renderability is independent of filtering and restricted to legal channel layouts ({\"EXT_color_buffer_half_float\":{}})",
         "WebGL2 sampler and format contracts renderability is independent of filtering and restricted to legal channel layouts ({})"
       ]
+    },
+    {
+      "file": "test/smoke/webgl2-shader-input.test.ts",
+      "tests": [
+        "WebGL2 shader input diagnostics accepts comments mentioning version and equal bindings in different sets",
+        "WebGL2 shader input diagnostics rejects a block and sampler sharing a logical descriptor binding",
+        "WebGL2 shader input diagnostics rejects an extra version before replacing initialized state"
+      ]
     }
   ],
   "totals": {
-    "suites": 178,
-    "tests": 2771,
-    "passed": 2771,
+    "suites": 187,
+    "tests": 2970,
+    "passed": 2970,
     "failed": 0
   }
 }
