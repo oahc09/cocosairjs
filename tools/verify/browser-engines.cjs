@@ -18,6 +18,10 @@ const ENGINES = {
 const DEFAULT_LOCAL_APP_DATA = 'C:/Users/caosh/AppData/Local';
 
 function runnerOptions(engine, options) {
+    if (process.platform === 'linux' && process.env.AIR_CI_SOFTWARE_GL === '1' && engine === 'chromium') {
+        // Do not let ANGLE auto-select Mesa/OpenGL in a GPU-less Xvfb session.
+        return { ...options, args: [...options.args, '--use-angle=swiftshader'] };
+    }
     if (process.platform === 'linux' && process.env.AIR_CI_SOFTWARE_GL === '1' && engine === 'firefox') {
         // Firefox blocks software WebGL2 by default on GPU-less runners. Use the
         // real Mesa context in an Xvfb display; no engine fallback or mocked pixels.
