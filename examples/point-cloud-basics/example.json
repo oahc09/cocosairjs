@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Points and Lines: Topology Contract",
   "category": "shader",
-  "status": "stable",
+  "status": "draft",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -23,22 +23,23 @@
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
-        "sourceLocation": "L80",
+        "sourceLocation": "L89",
         "validator": "visible-frame"
       },
       {
         "api": "EffectAsset.onLoaded",
         "source": "src/main.ts",
-        "sourceLocation": "L76",
+        "sourceLocation": "L85",
         "validator": "visible-frame"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
-        "sourceLocation": "L78",
+        "sourceLocation": "L87",
         "validator": "visible-frame"
       }
-    ]
+    ],
+    "evidenceStatus": "像素中心对齐后的实际源码行号已同步；既有浏览器/API 晋级证据是历史记录，当前跨平台像素检查不替代逐 API 验收。"
   },
   "capabilities": ["shader", "rendering"],
   "assets": ["point.effect.json"],
@@ -67,13 +68,5 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序化网格与shader，无第三方模型资产"
-  },
-  "promotion": {
-    "spec": "937a7a051d1f",
-    "source": "464c7ed802269cad",
-    "candidate": "24fcbd038ef9869c",
-    "verified": 3,
-    "attested": 0,
-    "units": 3
   }
 }

@@ -220,8 +220,14 @@ export class VideoPlayerImplWeb extends VideoPlayerImpl {
             });
         } else {
             video.removeAttribute('x5-video-player-fullscreen');
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            screen.exitFullScreen();
+            // Disabling an already windowed player is a no-op. Native fullscreen
+            // exit can also reject during detach/navigation; observe that promise.
+            if (screen.fullScreen()) {
+                screen.exitFullScreen().catch((error) => {
+                    this._fullScreenOnAwake = screen.fullScreen();
+                    warn(`[AIR_W_VIDEO_FULLSCREEN_EXIT] ${String(error)}`);
+                });
+            }
         }
     }
 

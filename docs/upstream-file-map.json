@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 205,
+    "modifiedCount": 206,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -6902,8 +6902,8 @@
       "airPath": "src/cocos/video/video-player-impl-web.ts",
       "upstreamPath": "cocos/video/video-player-impl-web.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: idempotent windowed VideoPlayer fullscreen disable and observed native exit rejection during detach/navigation; preserve fullscreen admission and real browser diagnostics."
     },
     {
       "airPath": "src/cocos/video/video-player-impl.ts",

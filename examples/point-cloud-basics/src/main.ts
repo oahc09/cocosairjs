@@ -60,7 +60,16 @@ async function main(): Promise<void> {
         for (let row = 0; row < 4; row++)
             for (let col = 0; col < 12; col++) points.push(-1.5 + col * (3 / 11), 0.35 + row * 0.24, 0);
         const lines: number[] = [];
-        for (let row = 0; row < 4; row++) lines.push(-1.5, -0.35 - row * 0.24, 0, 1.5, -0.35 - row * 0.24, 0);
+        const canvas = document.getElementById('GameCanvas') as HTMLCanvasElement;
+        const worldPerPixel = (2 * camera.orthoHeight) / canvas.height;
+        for (let row = 0; row < 4; row++) {
+            const y = -0.35 - row * 0.24;
+            // A one-pixel line on a sample boundary can resolve to half coverage
+            // under MSAA. Align it to pixel centers without changing the oracle.
+            const screenY = canvas.height / 2 - y / worldPerPixel;
+            const alignedY = (canvas.height / 2 - (Math.floor(screenY) + 0.5)) * worldPerPixel;
+            lines.push(-1.5, alignedY, 0, 1.5, alignedY, 0);
+        }
         for (const [name, positions, primitiveMode, tint] of [
             ['PointCloud', points, gfx.PrimitiveMode.POINT_LIST, new Vec4(0.1, 0.8, 1, 1)],
             ['LineGrid', lines, gfx.PrimitiveMode.LINE_LIST, new Vec4(1, 0.35, 0.05, 1)],

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-13T17:04:33.424Z",
-  "revision": "420163a9",
+  "generatedAt": "2026-10-13T18:39:02.124Z",
+  "revision": "543f5a50",
   "examples": [
     {
       "dir": "anim-position",
@@ -15324,7 +15324,7 @@
       "version": "1.0.0",
       "title": "Points and Lines: Topology Contract",
       "category": "shader",
-      "status": "stable",
+      "status": "draft",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -15386,14 +15386,6 @@
           "resource-released"
         ],
         "capability": []
-      },
-      "promotion": {
-        "spec": "937a7a051d1f",
-        "source": "464c7ed802269cad",
-        "candidate": "24fcbd038ef9869c",
-        "verified": 3,
-        "attested": 0,
-        "units": 3
       }
     },
     {

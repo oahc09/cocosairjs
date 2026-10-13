@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T17:44:51.146Z",
+  "generatedAt": "2026-10-13T19:02:48.983Z",
   "suites": [
     {
       "file": "test/smoke/air-dom-texture-blend.test.ts",
@@ -3801,6 +3801,13 @@
       ]
     },
     {
+      "file": "test/smoke/video-fullscreen-cleanup.test.ts",
+      "tests": [
+        "VideoPlayer fullscreen cleanup a rejected native exit is observed and retains the actual fullscreen state",
+        "VideoPlayer fullscreen cleanup disabling an already windowed player does not request a native exit"
+      ]
+    },
+    {
       "file": "test/smoke/webgl2-gfx-command-contracts.test.ts",
       "tests": [
         "WebGL2 command contracts RGB10A2UI uploads one packed UINT32 per pixel and validates the clear channel ranges",
@@ -3908,9 +3915,9 @@
     }
   ],
   "totals": {
-    "suites": 187,
-    "tests": 2970,
-    "passed": 2970,
+    "suites": 188,
+    "tests": 2972,
+    "passed": 2972,
     "failed": 0
   }
 }

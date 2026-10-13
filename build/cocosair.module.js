@@ -68408,7 +68408,12 @@ class VideoPlayerImplWeb extends VideoPlayerImpl {
       });
     } else {
       video.removeAttribute('x5-video-player-fullscreen');
-      screen$1.exitFullScreen();
+      if (screen$1.fullScreen()) {
+        screen$1.exitFullScreen().catch(error => {
+          this._fullScreenOnAwake = screen$1.fullScreen();
+          warn(`[AIR_W_VIDEO_FULLSCREEN_EXIT] ${String(error)}`);
+        });
+      }
     }
   }
   syncStayOnBottom(enabled) {
@@ -136593,8 +136598,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610140033";
-const AIR_BUILD_NUMBER = 84;
+const AIR_BUILD_DATE = "202610140232";
+const AIR_BUILD_NUMBER = 86;
 class AirAppImpl {
   get session() {
     return this._scope;

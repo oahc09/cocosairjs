@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-10-13T17:39:12.975Z",
+  "measuredAt": "2026-10-13T18:57:06.004Z",
   "tool": "tools/examples/spec-compliance-audit.cjs",
   "spec": "ai/example-spec-execution.md",
   "total": 186,
