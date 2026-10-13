@@ -43,6 +43,8 @@ jobs:
       - run: npm run build:all
       - run: npm run gallery:api
       - run: git diff --exit-code -- docs/example-api-inventory.json
+      - run: npm run verify:doc-refs
+      - run: npm run verify:example-chain
       - name: Prepare browser evidence tooling
         run: |
           sha256sum node_modules/typescript/package.json node_modules/@types/node/package.json > "$RUNNER_TEMP/air-type-dependencies.sha256"
@@ -81,8 +83,6 @@ jobs:
       - run: npm run verify:wasm-backends
       - run: npm run verify:feature-exports
       - run: npm run verify:custom-exports
-      - run: npm run verify:doc-refs
-      - run: npm run verify:example-chain
       - if: startsWith(github.ref, 'refs/tags/v')
         run: node tools/examples/coverage-report.cjs --check
       - if: startsWith(github.ref, 'refs/tags/v')
