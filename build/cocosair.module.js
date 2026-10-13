@@ -136598,8 +136598,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610140232";
-const AIR_BUILD_NUMBER = 86;
+const AIR_BUILD_DATE = "202610140650";
+const AIR_BUILD_NUMBER = 88;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -142758,6 +142758,7 @@ async function initializeAirApp(options) {
     game.off(Game.EVENT_PRE_SUBSYSTEM_INIT, selectBackend);
     game.off(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
   }
+  console.info(`[Cocos AIR] v${AIR_VERSION} (r${AIR_REVISION}) | Cocos Engine v${engineVersion}` + ` | Build ${AIR_BUILD_DATE} #${AIR_BUILD_NUMBER}`);
   return new AirAppImpl(canvas, contextHealth, diagnostics);
 }
 

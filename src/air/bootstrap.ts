@@ -32,7 +32,7 @@
 
 import { game, Game } from '../cocos/game';
 import { DebugMode } from '../cocos/core/platform/debug';
-import { AirAppImpl } from './app';
+import { AirAppImpl, AIR_VERSION, AIR_REVISION, AIR_BUILD_DATE, AIR_BUILD_NUMBER } from './app';
 import type { AirApp, AirAppOptions } from './app';
 import { registerBuiltinAirAssets } from './builtin/register';
 import { selectPhysicsBackend } from './physics-backend';
@@ -42,6 +42,7 @@ import { admitAirOptions, normalizeAirOptions, airError, AirNormalizedOptions, p
 import { view } from '../cocos/ui/view';
 import { screenAdapter } from 'pal/screen-adapter';
 import { settings, SettingsCategory } from '../cocos/core/settings';
+import { VERSION } from '../cocos/core/global-exports';
 
 export type { AirApp, AirAppOptions } from './app';
 
@@ -187,5 +188,10 @@ async function initializeAirApp (options: AirNormalizedOptions): Promise<AirApp>
         game.off(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
     }
 
+    // Startup identity stays visible even when engine diagnostics only report errors.
+    console.info(
+        `[Cocos AIR] v${AIR_VERSION} (r${AIR_REVISION}) | Cocos Engine v${VERSION}`
+        + ` | Build ${AIR_BUILD_DATE} #${AIR_BUILD_NUMBER}`,
+    );
     return new AirAppImpl(canvas, contextHealth, diagnostics);
 }
