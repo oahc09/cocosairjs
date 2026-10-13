@@ -43,6 +43,8 @@ jobs:
       - run: npm run build:all
       - run: npm run gallery:api
       - run: git diff --exit-code -- docs/example-api-inventory.json
+      - name: Verify strict generated effect types
+        run: npx jest --runInBand test/smoke/shaders-effect-docs.test.ts
       - name: Prepare browser evidence tooling
         run: |
           npm install --no-save --ignore-scripts --package-lock=false playwright@1.62.1
