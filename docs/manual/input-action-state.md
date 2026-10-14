@@ -67,6 +67,7 @@ input.requestFocus();              // 仅 Start/Resume 显式调用
 ```
 
 - **后端不混用**：动作声明里的 source 绑定可以覆盖多条通道，但每个适配器只订阅一个后端；键盘事件只会来自 attach 的那一路（native 走引擎 `KeyCode`，dom 走 `KeyboardEvent.code`），不会因另一路的绑定产生双计数。
+- `native` 消费已启动的引擎输入：应用先 `await createAirApp(...)`，该入口负责所选 canvas 的 PAL 绑定；`adapter.attach()` 只把动作订阅接到引擎 `input`，不能代替应用启动。单纯 import 不再安装 PAL 键鼠触监听。应用无需也不应调用内部 `screenAdapter.bindCanvas()`；只有直接加载 PAL 的内部测试夹具显式模拟这一步。
 - `native` 保持引擎既有鼠标转 TOUCH 通道（不重建平行通道）；`dom` 键盘监听 `window` 捕获阶段（先于 canvas 屏蔽），指针走 PointerEvent（不支持的环境退化 mouse+touch 单路，绝不双路订阅）。
 - editable（input/textarea/select/contentEditable）中的 keydown 不准入：dom 检查 `event.target`；native 以 PAL rawEvent.target 为主、`document.activeElement` 兜底的显式检查保证。已持有 source 的 keyup 仍释放：native 用 PAL 同一物理键码表在 window capture 做释放清理，因焦点移走而未到 canvas 的 keyup 也不残留。它不接纳第二条 keydown 通道、不派发第二次引擎事件；重复释放幂等。
 - 鼠标离开 canvas 时释放该鼠标 source，其他键、HUD 和触点继续持有。鼠标在 canvas 外的抬起仍有 window 释放清理；浏览器协议坐标移出整个窗口不等于物理操作系统已派发离窗事件。

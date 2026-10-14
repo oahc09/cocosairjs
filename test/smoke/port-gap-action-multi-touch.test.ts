@@ -8,24 +8,49 @@ describe('native per-contact dispatch with a partly swallowed touch batch', () =
             const { input, Input } = require('../../src/cocos/input');
             const { createActionInput } = require('../../src/air/action-input');
             const { createActionState } = require('../../src/air/action-state');
-            const state = createActionState({ actions: { point: { sources: [{ backend: 'native', pointerId: '*' }] } } });
+            const state = createActionState({
+                actions: { point: { sources: [{ backend: 'native', pointerId: '*' }] } },
+            });
             const adapter = createActionInput({ state, backend: 'native' });
-            input._registerEventDispatcher({ priority: 1, dispatchEvent: (event: any) => event.touch?.getID() !== 11, onThrowException: () => {} });
+            input._registerEventDispatcher({
+                priority: 1,
+                dispatchEvent: (event: any) => event.touch?.getID() !== 11,
+                onThrowException: () => {},
+            });
             const canvas = document.getElementById('GameCanvas')!;
             const dispatch = (type: string, ids: number[]) => {
                 const changed = ids.map((identifier) => ({ identifier, clientX: 10, clientY: 20 }));
-                canvas.dispatchEvent(new TouchEvent(type, { bubbles: true, cancelable: true, changedTouches: changed as any, touches: changed as any }));
+                canvas.dispatchEvent(
+                    new TouchEvent(type, {
+                        bubbles: true,
+                        cancelable: true,
+                        changedTouches: changed as any,
+                        touches: changed as any,
+                    }),
+                );
             };
             adapter.attach();
-            dispatch('touchstart', [11,12,13]);
-            expect(state.heldSources('point').map((s: any) => s.pointerId)).toEqual([12,13]);
-            expect(state.consumeTick().transitions.map((e: any) => e.source.pointerId)).toEqual([12,13]);
-            dispatch('touchend', [11,12]);
+            const rawTouchStart = jest.fn();
+            input.on(Input.EventType.TOUCH_START, rawTouchStart);
+            dispatch('touchstart', [11, 12, 13]);
+            expect(rawTouchStart).not.toHaveBeenCalled();
+            expect(state.heldSources('point')).toEqual([]);
+            expect(state.consumeTick().transitions).toEqual([]);
+            // Each isolated PAL graph needs the same explicit bind as app startup.
+            const { screenAdapter } = require('pal/screen-adapter');
+            screenAdapter.bindCanvas();
+            screenAdapter.bindCanvas();
+            dispatch('touchstart', [11, 12, 13]);
+            expect(rawTouchStart).toHaveBeenCalledTimes(2);
+            expect(state.heldSources('point').map((s: any) => s.pointerId)).toEqual([12, 13]);
+            expect(state.consumeTick().transitions.map((e: any) => e.source.pointerId)).toEqual([12, 13]);
+            dispatch('touchend', [11, 12]);
             expect(state.heldSources('point').map((s: any) => s.pointerId)).toEqual([13]);
             expect(state.consumeTick().transitions.map((e: any) => e.source.pointerId)).toEqual([12]);
             dispatch('touchcancel', [13]);
             expect(state.held('point')).toBe(false);
             expect(state.consumeTick().transitions.map((e: any) => e.source.pointerId)).toEqual([13]);
+            input.off(Input.EventType.TOUCH_START, rawTouchStart);
             adapter.dispose();
         });
     });
