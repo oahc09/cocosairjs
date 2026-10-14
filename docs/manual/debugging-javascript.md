@@ -73,7 +73,7 @@ debugging-javascript [-] @(0.0,0.0,0.0)
 读数自洽：`Marker` 本地 `(0,0.9,0)` 挂在 `Cube`（世界 y=1.0）下，世界 y=1.9，证明层级合成正确、`getWorldPosition` 可信。
 `Cube` 行组件列 `[MeshRenderer,Spinner]` 证明 `components` 内省能看到自定义组件。
 
-**本仓库实测踩过的坑（调试时优先排查）**：`#GameCanvas` 必须在引擎 import 前存在；`utils.createSphere` 等几何体用位置参数易传错；共享 builtin material 直接改属性会串色（要 `new Material()`）；`Mat4` 实例是具名字段 `m00…m15` 而非 `.m` 数组（见 [矩阵变换](matrix-transformations.md) §3）。
+**本仓库实测踩过的坑（调试时优先排查）**：canvas 必须在 createAirApp 时存在，允许先 import 后创建；`utils.createSphere` 等几何体用位置参数易传错；共享 builtin material 直接改属性会串色（要 `new Material()`）；`Mat4` 实例是具名字段 `m00…m15` 而非 `.m` 数组（见 [矩阵变换](matrix-transformations.md) §3）。
 
 ## 4. 调试要点备忘
 
@@ -169,7 +169,7 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
         <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
         <div id="GameDiv">
             <div id="Cocos3dGameContainer">
-                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <!-- 推荐模板；也可在 import 后创建 canvas，再传给 createAirApp -->
                 <canvas id="GameCanvas"></canvas>
             </div>
         </div>

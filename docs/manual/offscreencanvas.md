@@ -18,8 +18,8 @@
 
 ## 2. 架构归因
 
-AIR 的 `pal/screen-adapter` 是**模块顶层单例**，在 import 时即绑定文档里的 `#GameCanvas`
-（本手册多篇示例注释里的"#GameCanvas 必须在引擎 import 前存在"即此约束的实测表现）。
+AIR 的 `pal/screen-adapter` 是**模块顶层单例**，画布、DOM 包装和输入监听在 createAirApp 时显式绑定。
+允许先 import 后创建 canvas，但选定画布仍是主线程文档里的 HTMLCanvasElement。
 这一设计把"渲染表面 = 主线程文档元素"写进了启动路径，OffscreenCanvas/Worker 化需要先把该单例参数化，
 属于引擎改造而非应用层技巧。
 

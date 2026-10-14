@@ -14998,6 +14998,9 @@ class ScreenAdapter extends EventTarget {
     }
     return WindowType.SubFrame;
   }
+  onCanvasBound(callback) {
+    if (this._canvasBound) callback();else this._canvasWaiters.push(callback);
+  }
   constructor() {
     super();
     this.isFrameRotated = false;
@@ -15024,23 +15027,33 @@ class ScreenAdapter extends EventTarget {
     this._resolutionScale = 1;
     this._orientation = Orientation$1.AUTO;
     this._orientationDevice = Orientation$1.AUTO;
+    this._canvasBound = false;
+    this._canvasWaiters = [];
+  }
+  bindCanvas() {
+    const canvas = globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas');
+    if (this._canvasBound) {
+      if (canvas !== this._gameCanvas) throw new Error('[AIR_E_CANVAS_CONFLICT] Screen adapter already owns another canvas.');
+      return;
+    }
+    if (!canvas) throw new Error('[AIR_E_CANVAS] Startup requires a canvas.');
     this._gameFrame = document.getElementById('GameDiv');
     this._gameContainer = document.getElementById('Cocos3dGameContainer');
     this._gameCanvas = globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas');
-    if (!this._gameCanvas && !TEST && !EDITOR) throw new Error("[cocosair] GameCanvas or __CC_CANVAS__ must exist before importing the engine.");
     {
       if (!this._gameFrame) {
-        var _this$_gameCanvas, _this$_gameCanvas$par;
+        var _anchor$parentNode;
         this._gameFrame = document.createElement('div');
         this._gameFrame.setAttribute('id', 'GameDiv');
-        (_this$_gameCanvas = this._gameCanvas) == null ? void 0 : (_this$_gameCanvas$par = _this$_gameCanvas.parentNode) == null ? void 0 : _this$_gameCanvas$par.insertBefore(this._gameFrame, this._gameCanvas);
-        this._gameFrame.appendChild(this._gameCanvas);
+        const anchor = this._gameContainer || this._gameCanvas;
+        anchor == null ? void 0 : (_anchor$parentNode = anchor.parentNode) == null ? void 0 : _anchor$parentNode.insertBefore(this._gameFrame, anchor);
+        this._gameFrame.appendChild(anchor);
       }
       if (!this._gameContainer) {
-        var _this$_gameCanvas2, _this$_gameCanvas2$pa;
+        var _this$_gameCanvas, _this$_gameCanvas$par;
         this._gameContainer = document.createElement('div');
         this._gameContainer.setAttribute('id', 'Cocos3dGameContainer');
-        (_this$_gameCanvas2 = this._gameCanvas) == null ? void 0 : (_this$_gameCanvas2$pa = _this$_gameCanvas2.parentNode) == null ? void 0 : _this$_gameCanvas2$pa.insertBefore(this._gameContainer, this._gameCanvas);
+        (_this$_gameCanvas = this._gameCanvas) == null ? void 0 : (_this$_gameCanvas$par = _this$_gameCanvas.parentNode) == null ? void 0 : _this$_gameCanvas$par.insertBefore(this._gameContainer, this._gameCanvas);
         this._gameContainer.appendChild(this._gameCanvas);
       }
     }
@@ -15058,8 +15071,12 @@ class ScreenAdapter extends EventTarget {
     this._supportFullScreen = this._fn.requestFullscreen !== undefined;
     this._touchEventName = 'ontouchstart' in window ? 'touchend' : 'mousedown';
     this._registerEvent();
+    this._canvasBound = true;
+    const waiters = this._canvasWaiters.splice(0);
+    for (const callback of waiters) callback();
   }
   init(options, cbToRebuildFrameBuffer) {
+    this.bindCanvas();
     this._cbToUpdateFrameBuffer = cbToRebuildFrameBuffer;
     this.orientation = orientationMap$2[options.configOrientation];
     this._exactFitScreen = options.exactFitScreen;
@@ -41959,6 +41976,9 @@ function getKeyCode(code) {
 class KeyboardInputSource {
   constructor() {
     this._eventTarget = new EventTarget();
+    screenAdapter.onCanvasBound(() => this._bindCanvas());
+  }
+  _bindCanvas() {
     this._registerEvent();
   }
   dispatchKeyboardDownEvent(nativeKeyboardEvent) {
@@ -42005,6 +42025,9 @@ class MouseInputSource {
     this._pointLocked = false;
     this._isPressed = false;
     this._preMousePos = new Vec2$1();
+    screenAdapter.onCanvasBound(() => this._bindCanvas());
+  }
+  _bindCanvas() {
     if (systemInfo.hasFeature(Feature$1.EVENT_MOUSE)) {
       this._canvas = globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas');
       if (!this._canvas && !TEST && !EDITOR) {
@@ -42232,6 +42255,9 @@ const touchManager = new TouchManager();
 class TouchInputSource {
   constructor() {
     this._eventTarget = new EventTarget();
+    screenAdapter.onCanvasBound(() => this._bindCanvas());
+  }
+  _bindCanvas() {
     if (systemInfo.hasFeature(Feature$1.INPUT_TOUCH)) {
       this._canvas = globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas');
       if (!this._canvas && !TEST && !EDITOR) {
@@ -68408,7 +68434,12 @@ class VideoPlayerImplWeb extends VideoPlayerImpl {
       });
     } else {
       video.removeAttribute('x5-video-player-fullscreen');
-      screen$1.exitFullScreen();
+      if (screen$1.fullScreen()) {
+        screen$1.exitFullScreen().catch(error => {
+          this._fullScreenOnAwake = screen$1.fullScreen();
+          warn(`[AIR_W_VIDEO_FULLSCREEN_EXIT] ${String(error)}`);
+        });
+      }
     }
   }
   syncStayOnBottom(enabled) {
@@ -108392,7 +108423,7 @@ var cannon = {exports: {}};
 	    var ri = bi.boundingRadius,
 	        rj = bj.boundingRadius,
 	        boundA2 = biPos + ri,
-	        boundB1 = bjPos - rj;
+	        boundB1 = bjPos - rj;
 
 	    return boundB1 < boundA2;
 	};
@@ -108936,7 +108967,7 @@ var cannon = {exports: {}};
 	        this.motorEquation;
 	        var r1 = this.rotationalEquation1,
 	        r2 = this.rotationalEquation2,
-	        r3 = this.rotationalEquation3;
+	        r3 = this.rotationalEquation3;
 
 	    PointToPointConstraint.prototype.update.call(this);
 
@@ -112170,7 +112201,7 @@ var cannon = {exports: {}};
 	    var I = this.invInertia;
 	    if (I.x === I.y && I.y === I.z && !force) ; else {
 	        var m1 = uiw_m1,
-	            m2 = uiw_m2;
+	            m2 = uiw_m2;
 	        m1.setRotationFromQuaternion(this.quaternion);
 	        m1.transpose(m2);
 	        m1.scale(I,m1);
@@ -115128,7 +115159,7 @@ var cannon = {exports: {}};
 	new Vec3();
 	ConvexPolyhedron.prototype.computeLocalAABB = function(aabbmin,aabbmax){
 	    var n = this.vertices.length,
-	        vertices = this.vertices;
+	        vertices = this.vertices;
 
 	    aabbmin.set(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
 	    aabbmax.set(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
@@ -134873,7 +134904,7 @@ function ensurePlaying(domAudio) {
         }).catch(e => {});
         resolve();
       };
-      const canvas = document.getElementById('GameCanvas');
+      const canvas = globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas');
       canvas == null ? void 0 : canvas.addEventListener('touchend', onGesture, {
         capture: true
       });
@@ -135245,7 +135276,7 @@ class AudioContextAgent {
         resolve();
         return;
       }
-      const canvas = document.getElementById('GameCanvas');
+      const canvas = globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas');
       const onGesture = () => {
         context.resume().then(() => {
           canvas == null ? void 0 : canvas.removeEventListener('touchend', onGesture, {
@@ -136349,6 +136380,11 @@ function normalizeAirOptions(options) {
   if (decoy && decoy !== canvas) {
     throw airError('AIR_E_CANVAS_CONFLICT', 'Page already contains another element with id "GameCanvas"; select that canvas or remove the conflicting id.');
   }
+  const existingFrame = document.getElementById('GameDiv');
+  const existingContainer = document.getElementById('Cocos3dGameContainer');
+  if (existingFrame && !existingFrame.contains(canvas) || existingContainer && (!existingContainer.contains(canvas) || existingFrame && !existingFrame.contains(existingContainer))) {
+    throw airError('AIR_E_CONTAINER_CONFLICT', 'Existing GameDiv/Cocos3dGameContainer must belong to the selected canvas.');
+  }
   if (options.renderMode !== undefined && ![0, 1, 2, 3].includes(options.renderMode)) {
     throw airError('AIR_E_RENDER_MODE', 'renderMode must be an engine render mode integer (0..3); browser startup requires WebGL 2.');
   }
@@ -136377,9 +136413,12 @@ function normalizeAirOptions(options) {
     }
   }
   if (options.screenMode === 'container') {
-    var _document$getElementB;
-    if (options.container === undefined) container = (_document$getElementB = document.getElementById('GameDiv')) !== null && _document$getElementB !== void 0 ? _document$getElementB : canvas.parentElement;
-    if (!(container instanceof HTMLElement) || container === document.body || container === document.documentElement || !container.contains(canvas) || container === canvas) {
+    if (options.container === undefined) {
+      var _ref;
+      const admitted = airBootstrapRegistry().options;
+      container = (admitted == null ? void 0 : admitted.canvas) === canvas && admitted.screenMode === 'container' ? admitted.container : (_ref = existingFrame !== null && existingFrame !== void 0 ? existingFrame : existingContainer == null ? void 0 : existingContainer.parentElement) !== null && _ref !== void 0 ? _ref : canvas.parentElement;
+    }
+    if (!(container instanceof HTMLElement) || container === document.body || container === document.documentElement || !container.contains(canvas) || container === canvas || container === existingContainer) {
       throw airError('AIR_E_CONTAINER', 'Container must be an existing non-body ancestor of the canvas.');
     }
     const frame = document.getElementById('GameDiv');
@@ -136421,15 +136460,17 @@ function equalAirOptions(a, b) {
 function prepareAirContainer(options) {
   if (options.screenMode !== 'container') return undefined;
   let frame = document.getElementById('GameDiv');
+  let inner = document.getElementById('Cocos3dGameContainer');
   if (!frame) {
+    var _inner;
     frame = document.createElement('div');
     frame.id = 'GameDiv';
     frame.style.width = '100%';
     frame.style.height = '100%';
-    options.canvas.parentElement.insertBefore(frame, options.canvas);
-    frame.appendChild(options.canvas);
+    const anchor = (_inner = inner) !== null && _inner !== void 0 ? _inner : options.canvas;
+    anchor.parentElement.insertBefore(frame, anchor);
+    frame.appendChild(anchor);
   }
-  let inner = document.getElementById('Cocos3dGameContainer');
   if (inner && (!frame.contains(inner) || !inner.contains(options.canvas))) {
     throw airError('AIR_E_CONTAINER_CONFLICT', 'Cocos3dGameContainer must contain the canvas inside GameDiv.');
   }
@@ -136457,6 +136498,39 @@ function admitAirOptions(options) {
     throw airError('AIR_E_APP_CONFLICT', 'An app already owns another canvas or configuration; reuse its options or reload the document.');
   }
   return state;
+}
+
+function registerAirInitializer(initialize) {
+  airBootstrapRegistry().initialize = initialize;
+}
+function requestAirApp(options, load) {
+  try {
+    const normalized = normalizeAirOptions(options),
+      state = admitAirOptions(normalized);
+    if (state.initPromise) return state.initPromise;
+    const globals = globalThis;
+    if (globals.__CC_CANVAS__ && globals.__CC_CANVAS__ !== normalized.canvas) {
+      throw airError('AIR_E_CANVAS_CONFLICT', 'A different canvas was explicitly selected; reuse it or reload the document.');
+    }
+    state.options = normalized;
+    state.status = 'initializing';
+    state.initPromise = Promise.resolve().then(load).then(initialize => {
+      globals.__CC_CANVAS__ = normalized.canvas;
+      globals.__CCDPR_CAP__ = normalized.pixelRatioCap;
+      return initialize(normalized);
+    }).then(app => {
+      state.app = app;
+      state.status = 'ready';
+      return app;
+    }, error => {
+      state.status = 'failed';
+      state.failure = error;
+      throw error;
+    });
+    return state.initPromise;
+  } catch (error) {
+    return Promise.reject(error);
+  }
 }
 
 function createSessionScope() {
@@ -136593,8 +136667,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610130722";
-const AIR_BUILD_NUMBER = 81;
+const AIR_BUILD_DATE = "202610142241";
+const AIR_BUILD_NUMBER = 109;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -142646,15 +142720,6 @@ function createAirDiagnostics(mode = 'errors') {
 function ensureCanvasDOM(canvas, options) {
   var _window$devicePixelRa, _hostFrame$clientWidt, _hostFrame$clientHeig;
   const hostFrame = prepareAirContainer(options);
-  if (canvas.id !== 'GameCanvas') {
-    const decoy = document.getElementById('GameCanvas');
-    if (decoy && decoy !== canvas) {
-      throw new Error('[cocosair] createAirApp: page already contains another element with id "GameCanvas"' + ` (found <${decoy.tagName.toLowerCase()}>), and the passed canvas has id "${canvas.id}".` + ' Engine input binds by that id — rename/remove the other element, or pass it as the canvas.');
-    }
-    if (globalThis.__CC_CANVAS__ !== canvas) {
-      throw new Error('[cocosair] custom canvas must be assigned to globalThis.__CC_CANVAS__ before importing the engine');
-    }
-  }
   if (canvas.tabIndex < 0) {
     canvas.tabIndex = 0;
   }
@@ -142681,34 +142746,7 @@ function ensureCanvasDOM(canvas, options) {
   }
 }
 function createAirApp(options) {
-  try {
-    var _window$devicePixelRa2;
-    const normalized = normalizeAirOptions(options),
-      state = admitAirOptions(normalized);
-    if (state.initPromise) return state.initPromise;
-    if (Math.abs(screenAdapter.devicePixelRatio - Math.min((_window$devicePixelRa2 = window.devicePixelRatio) !== null && _window$devicePixelRa2 !== void 0 ? _window$devicePixelRa2 : 1, normalized.pixelRatioCap)) > 1e-9) {
-      throw airError('AIR_E_PIXEL_RATIO_IMPORT_ORDER', 'Set __CCDPR_CAP__ before importing the engine, or use cocosair.js/bootstrap.');
-    }
-    const globals = globalThis;
-    if (globals.__CC_CANVAS__ && globals.__CC_CANVAS__ !== normalized.canvas) {
-      throw airError('AIR_E_CANVAS_IMPORT_ORDER', 'The imported runtime is bound to another canvas; reload and use cocosair.js/bootstrap.');
-    }
-    globals.__CCDPR_CAP__ = normalized.pixelRatioCap;
-    state.options = normalized;
-    state.status = 'initializing';
-    state.initPromise = Promise.resolve().then(() => initializeAirApp(normalized)).then(app => {
-      state.app = app;
-      state.status = 'ready';
-      return app;
-    }, error => {
-      state.status = 'failed';
-      state.failure = error;
-      throw error;
-    });
-    return state.initPromise;
-  } catch (error) {
-    return Promise.reject(error);
-  }
+  return requestAirApp(options, () => initializeAirApp);
 }
 async function initializeAirApp(options) {
   var _options$diagnostics;
@@ -142716,6 +142754,7 @@ async function initializeAirApp(options) {
   const exactFit = settings.querySettings(SettingsCategory.SCREEN, 'exactFitScreen');
   validateAirScreenMode(options.screenMode, exactFit);
   ensureCanvasDOM(canvas, options);
+  screenAdapter.bindCanvas();
   const contextHealth = attachContextHealth(canvas, options.contextLoss);
   const diagnostics = createAirDiagnostics((_options$diagnostics = options.diagnostics) !== null && _options$diagnostics !== void 0 ? _options$diagnostics : 'errors');
   const selectBackend = () => selectPhysicsBackend(options.physics);
@@ -142753,7 +142792,169 @@ async function initializeAirApp(options) {
     game.off(Game.EVENT_PRE_SUBSYSTEM_INIT, selectBackend);
     game.off(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
   }
+  console.info(`[Cocos AIR] v${AIR_VERSION} (r${AIR_REVISION}) | Cocos Engine v${engineVersion}` + ` | Build ${AIR_BUILD_DATE} #${AIR_BUILD_NUMBER}`);
   return new AirAppImpl(canvas, contextHealth, diagnostics);
+}
+registerAirInitializer(initializeAirApp);
+
+const canvasLeases = new WeakMap();
+const elementLeases = new WeakSet();
+function getAirHTMLSourceSupport(canvas) {
+  const surface = canvas;
+  if (typeof surface.requestPaint !== 'function' || typeof surface.captureElementImage !== 'function' || typeof surface.updateElementGeometry !== 'function' || typeof surface.clearElementGeometry !== 'function') return {
+    supported: false,
+    reason: 'HTML-in-Canvas APIs unavailable; experimental browser support is required'
+  };
+  const gl = canvas.getContext('webgl2');
+  return gl && typeof gl.texElementSubImage2D === 'function' ? {
+    supported: true,
+    reason: null
+  } : {
+    supported: false,
+    reason: 'WebGL2 texElementSubImage2D unavailable'
+  };
+}
+function createAirHTMLSource(options) {
+  var _ref, _options$resolution, _canvas$ownerDocument, _canvasLeases$get;
+  const {
+      canvas,
+      element,
+      texture
+    } = options,
+    support = getAirHTMLSourceSupport(canvas);
+  if (!support.supported) throw Object.assign(new Error(`AIR_E_HTML_SOURCE_UNSUPPORTED: ${support.reason}`), {
+    code: 'AIR_E_HTML_SOURCE_UNSUPPORTED'
+  });
+  const resolution = (_ref = (_options$resolution = options.resolution) !== null && _options$resolution !== void 0 ? _options$resolution : (_canvas$ownerDocument = canvas.ownerDocument.defaultView) == null ? void 0 : _canvas$ownerDocument.devicePixelRatio) !== null && _ref !== void 0 ? _ref : 1;
+  if (element.parentNode !== canvas || elementLeases.has(element) || !Number.isFinite(resolution) || resolution <= 0) throw new Error('AIR_E_HTML_SOURCE_OPTIONS: unique direct canvas child and positive resolution required');
+  const surface = canvas,
+    gl = canvas.getContext('webgl2');
+  const lease = (_canvasLeases$get = canvasLeases.get(canvas)) !== null && _canvasLeases$get !== void 0 ? _canvasLeases$get : {
+      count: 0,
+      original: canvas.getAttribute('content'),
+      layout: canvas.getAttribute('layoutsubtree')
+    },
+    oldDrawable = element.getAttribute('drawable');
+  lease.count++;
+  canvasLeases.set(canvas, lease);
+  elementLeases.add(element);
+  canvas.setAttribute('content', 'drawable');
+  canvas.setAttribute('layoutsubtree', '');
+  element.setAttribute('drawable', '');
+  let disposed = false,
+    pending = true,
+    snapshot = null,
+    failed = false;
+  let status = 'waiting',
+    lastError = null,
+    snapshotSize = null;
+  const alive = () => {
+    if (disposed) throw new Error('AIR_E_HTML_SOURCE_DISPOSED');
+  };
+  const paint = () => {
+    if (disposed || failed || !pending && (options.autoUpdate === false || options.snapshot)) return;
+    pending = false;
+    try {
+      var _snapshotSize$, _snapshotSize, _snapshotSize$2, _snapshotSize2;
+      if (gl.isContextLost()) throw new Error('AIR_E_HTML_SOURCE_CONTEXT_LOST');
+      if (element.parentNode !== canvas) throw new Error('AIR_E_HTML_SOURCE_ELEMENT_MOVED');
+      const width = (_snapshotSize$ = (_snapshotSize = snapshotSize) == null ? void 0 : _snapshotSize[0]) !== null && _snapshotSize$ !== void 0 ? _snapshotSize$ : Math.ceil(element.offsetWidth * resolution),
+        height = (_snapshotSize$2 = (_snapshotSize2 = snapshotSize) == null ? void 0 : _snapshotSize2[1]) !== null && _snapshotSize$2 !== void 0 ? _snapshotSize$2 : Math.ceil(element.offsetHeight * resolution);
+      if (width <= 0 || height <= 0) throw new Error('AIR_E_HTML_SOURCE_SIZE');
+      if (texture.width !== width || texture.height !== height) texture.reset({
+        width,
+        height,
+        mipmapLevel: 1
+      });
+      const target = texture.getGFXTexture();
+      const gpu = target == null ? void 0 : target.gpuTexture;
+      if (!(gpu != null && gpu.glTexture) || !gl.isTexture(gpu.glTexture) || gpu.glTarget !== gl.TEXTURE_2D || gpu.mipLevel !== 1 || gpu.glFormat !== gl.RGBA || gpu.glType !== gl.UNSIGNED_BYTE) throw new Error('AIR_E_HTML_SOURCE_TEXTURE: native single-mip RGBA8 WebGL2 Texture2D required');
+      if (options.snapshot && !snapshot) {
+        snapshot = surface.captureElementImage(element);
+        snapshotSize = [width, height];
+      }
+      const previous = gl.getParameter(gl.TEXTURE_BINDING_2D);
+      try {
+        var _snapshot;
+        gl.bindTexture(gl.TEXTURE_2D, gpu.glTexture);
+        gl.texElementSubImage2D(gl.TEXTURE_2D, 0, 0, 0, (_snapshot = snapshot) !== null && _snapshot !== void 0 ? _snapshot : element, {
+          width,
+          height
+        });
+      } finally {
+        gl.bindTexture(gl.TEXTURE_2D, previous);
+      }
+      const error = gl.getError();
+      if (error !== gl.NO_ERROR) throw new Error(`AIR_E_HTML_SOURCE_UPLOAD: WebGL error ${error}`);
+      status = 'ready';
+      lastError = null;
+      options.onUpdate == null ? void 0 : options.onUpdate();
+    } catch (error) {
+      failed = true;
+      status = 'failed';
+      lastError = error;
+      options.onError == null ? void 0 : options.onError(error);
+    }
+  };
+  canvas.addEventListener('paint', paint);
+  surface.requestPaint();
+  return {
+    texture,
+    get status() {
+      return status;
+    },
+    get error() {
+      return lastError;
+    },
+    update() {
+      alive();
+      failed = false;
+      pending = true;
+      status = 'waiting';
+      surface.requestPaint();
+    },
+    updateGeometry(geometry) {
+      var _snapshot2;
+      alive();
+      surface.updateElementGeometry((_snapshot2 = snapshot) !== null && _snapshot2 !== void 0 ? _snapshot2 : element, geometry);
+    },
+    dispose() {
+      if (disposed) return;
+      disposed = true;
+      status = 'disposed';
+      canvas.removeEventListener('paint', paint);
+      let cleanupError = null;
+      try {
+        var _snapshot3;
+        surface.clearElementGeometry((_snapshot3 = snapshot) !== null && _snapshot3 !== void 0 ? _snapshot3 : element);
+      } catch (error) {
+        cleanupError = error;
+      }
+      try {
+        var _snapshot4;
+        (_snapshot4 = snapshot) == null ? void 0 : _snapshot4.close();
+      } catch (error) {
+        var _cleanupError;
+        cleanupError = (_cleanupError = cleanupError) !== null && _cleanupError !== void 0 ? _cleanupError : error;
+      }
+      snapshot = null;
+      elementLeases.delete(element);
+      lease.count--;
+      if (element.getAttribute('drawable') === '') {
+        if (oldDrawable === null) element.removeAttribute('drawable');else element.setAttribute('drawable', oldDrawable);
+      }
+      if (lease.count === 0) {
+        canvasLeases.delete(canvas);
+        if (canvas.getAttribute('content') === 'drawable') {
+          if (lease.original === null) canvas.removeAttribute('content');else canvas.setAttribute('content', lease.original);
+        }
+        if (canvas.getAttribute('layoutsubtree') === '') {
+          if (lease.layout === null) canvas.removeAttribute('layoutsubtree');else canvas.setAttribute('layoutsubtree', lease.layout);
+        }
+      }
+      if (cleanupError) throw cleanupError;
+    }
+  };
 }
 
 function createStepClock(options = {}) {
@@ -156234,6 +156435,31 @@ class WebGL2Shader extends Shader {
     return this._gpuShader;
   }
   initialize(info) {
+    const fail = (code, message) => {
+      const error = new Error(`[${code}] shader '${info.name}': ${message}`);
+      Object.assign(error, {
+        code,
+        stage: 'shader-input',
+        shader: info.name
+      });
+      throw error;
+    };
+    for (const stage of info.stages) {
+      const source = stage.source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+      if (/^\s*#\s*version\b/m.test(source)) {
+        fail('WEBGL2_SHADER_VERSION', `stage ${stage.stage} must omit #version; the backend adds #version 300 es`);
+      }
+    }
+    const bindings = new Map();
+    for (const block of info.blocks) {
+      bindings.set(`${block.set}:${block.binding}`, block.name);
+    }
+    for (const descriptor of info.samplerTextures) {
+      const key = `${descriptor.set}:${descriptor.binding}`;
+      if (bindings.has(key)) {
+        fail('WEBGL2_SHADER_BINDING_CONFLICT', `${descriptor.name} conflicts with ${bindings.get(key)} at set:binding ${key}; assign unique logical bindings within each set`);
+      }
+    }
     this._name = info.name;
     this._stages = info.stages;
     this._attributes = info.attributes;
@@ -168797,5 +169023,5 @@ class CocosSparkLayer {
   }
 }
 
-export { AIR_BUILD_DATE, AIR_BUILD_NUMBER, AIR_REVISION, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirRenderTarget, AirTransmissionCapture, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CUBEUV_SAMPLING_GLSL, CacheMode, CachedArray, CallbacksInvoker, Camera$1 as Camera, Camera$1 as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, CocosRenderer, CocosSparkLayer, Collider, Collider2D, Collider as ColliderComponent, Color$1 as Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers$1 as Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3$1 as Mat3, Mat4$1 as Mat4, Material$1 as Material, MathBase, Mesh$1 as Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PMREMGenerator, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene$1 as Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2$1 as Vec2, Vec3$1 as Vec3, Vec4$1 as Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, airGraphicsCommandsToSvg, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachAirSpriteMask, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits$1 as bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$2 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirDOMOverlay, createAirRenderTarget, createAirTextureSprite, createAirUIBlendScope, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, drawAirGraphics, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirAnimationControllers, inspectAirDirectionalLights, inspectAirGeometry, inspectAirMaterial, inspectAirMeshMaterial, instantiate, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadWasmModuleSpine, loader, log$1 as log, logID, macro, markAsWarning, mat4$1 as mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, parseAtlasText, parseFnt, path, physics, pingPong, define as pipeline, pmremLayout, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rasterizeAirGraphics, rect$1 as rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, sparkRuntime, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirGraphicsCommands, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
-//# sourceMappingURL=cocosair.module.js.map
+export { AIR_BUILD_DATE, AIR_BUILD_NUMBER, AIR_REVISION, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirRenderTarget, AirTransmissionCapture, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CUBEUV_SAMPLING_GLSL, CacheMode, CachedArray, CallbacksInvoker, Camera$1 as Camera, Camera$1 as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, CocosRenderer, CocosSparkLayer, Collider, Collider2D, Collider as ColliderComponent, Color$1 as Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers$1 as Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3$1 as Mat3, Mat4$1 as Mat4, Material$1 as Material, MathBase, Mesh$1 as Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PMREMGenerator, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene$1 as Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2$1 as Vec2, Vec3$1 as Vec3, Vec4$1 as Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, airGraphicsCommandsToSvg, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachAirSpriteMask, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits$1 as bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$2 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirDOMOverlay, createAirHTMLSource, createAirRenderTarget, createAirTextureSprite, createAirUIBlendScope, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, drawAirGraphics, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getAirHTMLSourceSupport, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirAnimationControllers, inspectAirDirectionalLights, inspectAirGeometry, inspectAirMaterial, inspectAirMeshMaterial, instantiate, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadWasmModuleSpine, loader, log$1 as log, logID, macro, markAsWarning, mat4$1 as mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, parseAtlasText, parseFnt, path, physics, pingPong, define as pipeline, pmremLayout, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rasterizeAirGraphics, rect$1 as rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, sparkRuntime, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirGraphicsCommands, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
+//# sourceMappingURL=cocosair.module.spark.js.map

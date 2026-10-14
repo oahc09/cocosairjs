@@ -1,5 +1,7 @@
 # UPSTREAM
 
+2026-10-14 安全启动：`tools/build/startup-binding-patch.cjs` 在冻结 PAL 生成流程中将 ScreenAdapter 的 DOM 包装、画布解析、事件注册与 Input 单例的 keyboard/mouse/touch 绑定移到显式启动边界；生成器精确校验替换命中数。音频手势恢复选择相同的自定义 canvas。冻结 vendor 与 `src/cocos` 不变。AIR 主入口与延迟入口通过一个 admission/initPromise 启动，options-only canvas/DPR 在 PAL bind 前生效；主入口仍依赖浏览器，不承诺 SSR。
+
 2026-10-14 VideoPlayer 全屏清理：`video-player-impl-web.ts` 对已窗口化的播放器不再调用原生 exitFullscreen；退出 Promise 在 detach/navigation 期间拒绝时更新实际全屏状态并发出诊断，避免未处理 rejection。保留进入全屏、用户手势、原生 DOM 和平台能力边界；不改变冻结上游或压制浏览器错误。
 
 2026-10-14 CI 登记对账：`verify:wasm-backends` 的共享源码闭包偏差白名单同步为当前 39 个已登记文件，每项都要求 `docs/upstream-file-map.json` 中存在 `modified: true` 与非空理由；任何清单外字节偏差仍失败。同步已有可选 `spark` feature 后的 Air 声明数 34、air-only 集合 `air/spark`；默认仍为 26 个 feature，三个 WASM 物理后端仍不进入默认集，A6 解禁触发器保持。未修改引擎源码或批准新的偏差，冻结上游提交不变。

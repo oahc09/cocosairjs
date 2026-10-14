@@ -20,25 +20,19 @@
  THE SOFTWARE.
 */
 import type { AirApp, AirAppOptions } from './app';
-import { admitAirOptions, normalizeAirOptions, prepareAirContainer } from './app-config';
+import { airBootstrapRegistry, airError, requestAirApp } from './app-config';
 export type { AirApp, AirAppOptions } from './app';
 
-/** Validate and bind the canvas before dynamically importing the same runtime. */
-export function createAirApp (options: AirAppOptions): Promise<AirApp> {
-    try {
-        const normalized = normalizeAirOptions(options), state = admitAirOptions(normalized);
-        if (state.initPromise) return state.initPromise;
-        if (state.loadPromise) return state.loadPromise;
-        prepareAirContainer(normalized);
-        state.options = normalized; state.status = 'initializing';
-        const globals = globalThis as { __CC_CANVAS__?: HTMLCanvasElement; __CCDPR_CAP__?: number };
-        globals.__CC_CANVAS__ = normalized.canvas;
-        globals.__CCDPR_CAP__ = normalized.pixelRatioCap;
-        // The safe-entry builder rewrites this literal to ./cocosair.module.js
-        // without bundling it. Consumer bundlers can then emit a deferred chunk.
-        state.loadPromise = import('../index')
-            .then((runtime) => runtime.createAirApp(normalized))
-            .catch((error) => { state.status = 'failed'; state.failure = error; throw error; });
-        return state.loadPromise;
-    } catch (error) { return Promise.reject(error); }
+/** Defer the full browser runtime while sharing main's admission and initialization. */
+export function createAirApp(options: AirAppOptions): Promise<AirApp> {
+    return requestAirApp(options, async () => {
+        // The builder keeps this import external, preserving the consumer's deferred chunk.
+        await import('../index');
+        const initialize = airBootstrapRegistry().initialize;
+        if (!initialize) throw airError('AIR_E_RUNTIME_ENTRY', 'The loaded runtime did not register its initializer.');
+        return initialize;
+    });
 }
+
+// Optional helpers stay engine-free in the deferred entry.
+export * from './html-source';

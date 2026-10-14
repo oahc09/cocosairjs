@@ -24,15 +24,15 @@ These are engine-repository commands. Run them from a Cocos AIR source checkout 
 
 ## Write gates (rewrite repository content)
 
-| command                         | canonical output it rewrites                                                                            |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `npm run analyze`               | the extraction manifest and upstream file map under `docs/`                                             |
-| `npm run capabilities`          | the glTF capabilities JSON under `examples/gltf-catalog/`                                               |
-| `npm run gallery:manifest`      | `files.json` under `examples/`                                                                          |
-| `npm run gallery:api`           | the API inventory under `docs/`                                                                         |
-| `npm run verify:api-coverage`   | `api-coverage-report.json` under `docs/`                                                                |
-| `npm run verify:v06-gate`       | `v06-review-gate.json` under `docs/evidence/`, `build/reports/v06-final-gate.md` under `build/reports/` |
-| `npm run verify:test-inventory` | the test inventory under `docs/` only with `-- --update`                                                |
+| command                         | canonical output it rewrites                                                              |
+| ------------------------------- | ----------------------------------------------------------------------------------------- |
+| `npm run analyze`               | the extraction manifest and upstream file map under `docs/`                               |
+| `npm run capabilities`          | the glTF capabilities JSON under `examples/gltf-catalog/`                                 |
+| `npm run gallery:manifest`      | `files.json` under `examples/`                                                            |
+| `npm run gallery:api`           | the API inventory under `docs/`                                                           |
+| `npm run verify:api-coverage`   | `api-coverage-report.json` under `docs/`                                                  |
+| `npm run verify:v06-gate`       | `v06-review-gate.json` under `docs/evidence/`, `v06-final-gate.md` under `build/reports/` |
+| `npm run verify:test-inventory` | the test inventory under `docs/` only with `-- --update`                                  |
 
 A name containing `verify` does not mean the operation is read-only: `verify:api-coverage` rewrites its report even when the gate fails, and `verify:v06-gate` rewrites both its JSON and its Markdown report.
 

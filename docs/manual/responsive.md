@@ -7,13 +7,13 @@
 
 ## 要点对照
 
-| 关注点          | Cocos AIR                                                           | 说明                                                         |
-| --------------- | ------------------------------------------------------------------- | ------------------------------------------------------------ |
-| canvas 尺寸同步 | **无需手动 setSize**（screen-adapter 自动）                         | 不要改 canvas 的 width/height 属性，引擎会持续同步           |
-| 相机纵横比      | **无需手动更新**（自动跟随 canvas）                                 | 相机投影由引擎按当前 canvas 维护                             |
-| 窗口变化事件    | `screen.on('window-resize', cb)` / `screen.on('canvas-resize', cb)` | 事件源是 `screen`；`screen.off(type, cb)` 退订               |
-| 设备像素比      | `screen.devicePixelRatio`（只读）                                   | 返回**已 clamp** 的 dpr（默认上限 2，见 §3），清晰度策略由引擎按它处理             |
-| 渲染分辨率读数  | `canvas.width/height` + `screen.resolution`                         | `resolution` 是引擎认定的渲染分辨率（对象 `{width,height}`） |
+| 关注点          | Cocos AIR                                                           | 说明                                                                   |
+| --------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| canvas 尺寸同步 | **无需手动 setSize**（screen-adapter 自动）                         | 不要改 canvas 的 width/height 属性，引擎会持续同步                     |
+| 相机纵横比      | **无需手动更新**（自动跟随 canvas）                                 | 相机投影由引擎按当前 canvas 维护                                       |
+| 窗口变化事件    | `screen.on('window-resize', cb)` / `screen.on('canvas-resize', cb)` | 事件源是 `screen`；`screen.off(type, cb)` 退订                         |
+| 设备像素比      | `screen.devicePixelRatio`（只读）                                   | 返回**已 clamp** 的 dpr（默认上限 2，见 §3），清晰度策略由引擎按它处理 |
+| 渲染分辨率读数  | `canvas.width/height` + `screen.resolution`                         | `resolution` 是引擎认定的渲染分辨率（对象 `{width,height}`）           |
 
 **没有 `cc.view`**：老 Cocos 教程里的 `cc.view.setDesignResolutionSize` 一类在 AIR 不存在，视口一律走 `screen`。
 
@@ -152,7 +152,7 @@ npm run dev
         <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
         <div id="GameDiv">
             <div id="Cocos3dGameContainer">
-                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <!-- 推荐模板；也可在 import 后创建 canvas，再传给 createAirApp -->
                 <canvas id="GameCanvas"></canvas>
             </div>
         </div>

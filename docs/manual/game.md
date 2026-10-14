@@ -22,14 +22,14 @@ AIR 本身带组件级 2D/3D 物理（[physics](physics.md) 篇），需要摩�
 
 ## 1. 输入与循环 API 面（实测锚点）
 
-| 入口                    | 锚点                                   | 语义（实测）                                                              |
-| ----------------------- | -------------------------------------- | ------------------------------------------------------------------------- |
+| 入口                    | 锚点                                   | 语义（实测）                                                                               |
+| ----------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------ |
 | `input` 单例            | d.ts 28294 `export const input: Input` | 全局订阅接口；Web 键盘来自聚焦的 canvas，画布交互或 Start/Resume 后接收，见[tips](tips.md) |
-| `EventKeyboard.keyCode` | d.ts 27150/27160                       | KEY_DOWN/KEY_UP 事件携带 `KeyCode` 枚举值                                 |
-| `KeyCode`               | d.ts 27626                             | `KEY_W/A/S/D`、`ARROW_UP/…`、`SPACE` 等，与 tips-keyboard 篇同一张表      |
-| `Component.update(dt)`  | update-things 篇                       | 游戏主循环：每帧一次，`dt` 秒——移动/判定/重生全在这里                     |
-| `tween(node).to/.call`  | animation-system 篇                    | 消失动画（scale→0）与重生回调的零资产路径                                 |
-| DOM HUD                 | 页面同源                               | `document.querySelector('#score').textContent = ...` 直接改，无需 UI 系统 |
+| `EventKeyboard.keyCode` | d.ts 27150/27160                       | KEY_DOWN/KEY_UP 事件携带 `KeyCode` 枚举值                                                  |
+| `KeyCode`               | d.ts 27626                             | `KEY_W/A/S/D`、`ARROW_UP/…`、`SPACE` 等，与 tips-keyboard 篇同一张表                       |
+| `Component.update(dt)`  | update-things 篇                       | 游戏主循环：每帧一次，`dt` 秒——移动/判定/重生全在这里                                      |
+| `tween(node).to/.call`  | animation-system 篇                    | 消失动画（scale→0）与重生回调的零资产路径                                                  |
+| DOM HUD                 | 页面同源                               | `document.querySelector('#score').textContent = ...` 直接改，无需 UI 系统                  |
 
 ## 2. 示例拆解：一个 update 跑完整局游戏
 
@@ -185,7 +185,7 @@ node tools/verify/manual-doc-consistency.cjs
         <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
         <div id="GameDiv">
             <div id="Cocos3dGameContainer">
-                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <!-- 推荐模板；也可在 import 后创建 canvas，再传给 createAirApp -->
                 <canvas id="GameCanvas"></canvas>
             </div>
         </div>

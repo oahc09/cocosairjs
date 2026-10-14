@@ -19,9 +19,8 @@ mat.initialize({ effectName: "builtin-standard" });
   编译与设备相关注册延迟到 renderer 就绪；它与材质初始化的时机不同。
   当前合同见 `test/smoke/competitive-bootstrap-contract.test.ts` 和
   `tools/verify/competitive-early-effect-browser.cjs`；旧 `registerBeforeBoot` 报告记录的是历史缺陷。
-- 默认模板的 `#GameCanvas` 必须在引擎模块 import 前存在于 DOM。使用自定义 id 时，
-  在动态 import 前执行 `globalThis.__CC_CANVAS__ = canvas`；`createAirApp` 不改写该 id，
-  缺少预绑定会明确报错。键盘事件要求 canvas 聚焦。
+- canvas 可以在引擎模块 import 后创建。使用任意 id 时，将元素或 selector 传给 createAirApp；
+  启动时绑定 PAL，不要求预写全局，也不改写该 id。键盘事件要求 canvas 聚焦。
 - `createAirApp` 将负 `tabIndex` 设为 0，PAL 在画布 mousedown/touchstart 时聚焦；
   首屏尚未交互时不能假定画布已经聚焦。明确的 Start/Resume 操作可调用 `app.canvas.focus()`，
   普通 HUD 和文本输入不应持续抢焦点。PAL 在画布上停止键盘冒泡，若需要观察 DOM按键，

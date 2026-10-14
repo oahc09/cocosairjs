@@ -38,7 +38,13 @@ import { registerBuiltinAirAssets } from './builtin/register';
 import { selectPhysicsBackend } from './physics-backend';
 import { attachContextHealth } from './context-health';
 import { createAirDiagnostics } from './diagnostics';
-import { admitAirOptions, normalizeAirOptions, airError, AirNormalizedOptions, prepareAirContainer, validateAirScreenMode } from './app-config';
+import {
+    requestAirApp,
+    registerAirInitializer,
+    AirNormalizedOptions,
+    prepareAirContainer,
+    validateAirScreenMode,
+} from './app-config';
 import { view } from '../cocos/ui/view';
 import { screenAdapter } from 'pal/screen-adapter';
 import { settings, SettingsCategory } from '../cocos/core/settings';
@@ -46,37 +52,13 @@ import { VERSION } from '../cocos/core/global-exports';
 
 export type { AirApp, AirAppOptions } from './app';
 
-/**
- * DOM 结构与官方 Web 模板保持一致。自定义 canvas 必须在 import 前经
- * globalThis.__CC_CANVAS__ 绑定；不会改写调用方的 canvas ID。
- * 若用户的 canvas 已按模板挂载，则不做任何改动。
- *
- * W04 画布绑定合同（Code First 与 Web 可靠性任务清单）：
- * - PAL 输入源（keyboard/mouse/touch）与 screen-adapter 在**引擎 import 时**按
- *   `#GameCanvas` 或 `globalThis.__CC_CANVAS__`（元素引用，优先）解析画布——自定义 id
- *   画布必须在 import 前设置 `__CC_CANVAS__`（静态页用内联脚本，或动态 import 前赋值）。
- * - 页面已有**另一个** `#GameCanvas` 元素时（会静默错绑输入），显式抛错而非绑定错误元素。
- * - 画布默认 `tabIndex=0`（可聚焦；PAL 在 mousedown/touchstart 时自动 focus），
- *   键盘事件仅在画布聚焦时到达——焦点合同见 docs/manual/script-component-workflow.md。
- */
-function ensureCanvasDOM (canvas: HTMLCanvasElement, options: AirNormalizedOptions): void {
+/** Prepare native wrappers and first-frame dimensions before the explicit PAL bind. */
+function ensureCanvasDOM(canvas: HTMLCanvasElement, options: AirNormalizedOptions): void {
     const hostFrame = prepareAirContainer(options);
-    if (canvas.id !== 'GameCanvas') {
-        const decoy = document.getElementById('GameCanvas');
-        if (decoy && decoy !== canvas) {
-            throw new Error(
-                '[cocosair] createAirApp: page already contains another element with id "GameCanvas"'
-                + ` (found <${decoy.tagName.toLowerCase()}>), and the passed canvas has id "${canvas.id}".`
-                + ' Engine input binds by that id — rename/remove the other element, or pass it as the canvas.');
-        }
-        // Input and screen-adapter bind during engine import. Renaming here would
-        // silently leave input attached to a different element (or to nothing).
-        if ((globalThis as { __CC_CANVAS__?: unknown }).__CC_CANVAS__ !== canvas) {
-            throw new Error('[cocosair] custom canvas must be assigned to globalThis.__CC_CANVAS__ before importing the engine');
-        }
-    }
     // 焦点合同：可聚焦（PAL 的 mousedown/touchstart 回调会 canvas.focus()）；用户显式设置的 tabIndex 不改写。
-    if (canvas.tabIndex < 0) { canvas.tabIndex = 0; }
+    if (canvas.tabIndex < 0) {
+        canvas.tabIndex = 0;
+    }
     if (document.body && !canvas.parentElement) {
         const frame = document.createElement('div');
         frame.id = 'GameDiv';
@@ -125,32 +107,16 @@ function ensureCanvasDOM (canvas: HTMLCanvasElement, options: AirNormalizedOptio
  * app.getScene(); // → Scene | null
  * ```
  */
-export function createAirApp (options: AirAppOptions): Promise<AirApp> {
-    try {
-        const normalized = normalizeAirOptions(options), state = admitAirOptions(normalized);
-        if (state.initPromise) return state.initPromise;
-        // The PAL has already evaluated on the eager path. Never change its density silently.
-        if (Math.abs(screenAdapter.devicePixelRatio - Math.min(window.devicePixelRatio ?? 1, normalized.pixelRatioCap)) > 1e-9) {
-            throw airError('AIR_E_PIXEL_RATIO_IMPORT_ORDER', 'Set __CCDPR_CAP__ before importing the engine, or use cocosair.js/bootstrap.');
-        }
-        const globals = globalThis as { __CC_CANVAS__?: HTMLCanvasElement; __CCDPR_CAP__?: number };
-        if (globals.__CC_CANVAS__ && globals.__CC_CANVAS__ !== normalized.canvas) {
-            throw airError('AIR_E_CANVAS_IMPORT_ORDER', 'The imported runtime is bound to another canvas; reload and use cocosair.js/bootstrap.');
-        }
-        globals.__CCDPR_CAP__ = normalized.pixelRatioCap;
-        state.options = normalized; state.status = 'initializing';
-        state.initPromise = Promise.resolve().then(() => initializeAirApp(normalized)).then((app) => {
-            state.app = app; state.status = 'ready'; return app;
-        }, (error) => { state.status = 'failed'; state.failure = error; throw error; });
-        return state.initPromise;
-    } catch (error) { return Promise.reject(error); }
+export function createAirApp(options: AirAppOptions): Promise<AirApp> {
+    return requestAirApp(options, () => initializeAirApp);
 }
 
-async function initializeAirApp (options: AirNormalizedOptions): Promise<AirApp> {
+async function initializeAirApp(options: AirNormalizedOptions): Promise<AirApp> {
     const canvas = options.canvas;
     const exactFit = settings.querySettings(SettingsCategory.SCREEN, 'exactFitScreen');
     validateAirScreenMode(options.screenMode, exactFit);
     ensureCanvasDOM(canvas, options);
+    (screenAdapter as unknown as { bindCanvas: () => void }).bindCanvas();
 
     // W01：上下文健康状态机（在引擎 init 前挂接，早于 swapchain 自身的 lost 告警监听）。
     const contextHealth = attachContextHealth(canvas, options.contextLoss);
@@ -171,8 +137,12 @@ async function initializeAirApp (options: AirNormalizedOptions): Promise<AirApp>
         await game.init({
             debugMode: options.diagnostics === 'warnings' ? DebugMode.WARN : DebugMode.ERROR,
             settingsPath: '',
-            overrideSettings: { rendering: { renderMode: options.renderMode },
-                ...(options.screenMode !== undefined ? { screen: { exactFitScreen: options.screenMode === 'window' } } : {}) },
+            overrideSettings: {
+                rendering: { renderMode: options.renderMode },
+                ...(options.screenMode !== undefined
+                    ? { screen: { exactFitScreen: options.screenMode === 'window' } }
+                    : {}),
+            },
         });
         if (options.designResolution) {
             const { width, height, policy } = options.designResolution;
@@ -190,8 +160,11 @@ async function initializeAirApp (options: AirNormalizedOptions): Promise<AirApp>
 
     // Startup identity stays visible even when engine diagnostics only report errors.
     console.info(
-        `[Cocos AIR] v${AIR_VERSION} (r${AIR_REVISION}) | Cocos Engine v${VERSION}`
-        + ` | Build ${AIR_BUILD_DATE} #${AIR_BUILD_NUMBER}`,
+        `[Cocos AIR] v${AIR_VERSION} (r${AIR_REVISION}) | Cocos Engine v${VERSION}` +
+            ` | Build ${AIR_BUILD_DATE} #${AIR_BUILD_NUMBER}`,
     );
     return new AirAppImpl(canvas, contextHealth, diagnostics);
 }
+
+// Registration is engine-local; no canvas, wrapper or input listener is bound here.
+registerAirInitializer(initializeAirApp);

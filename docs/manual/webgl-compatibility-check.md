@@ -4,7 +4,6 @@
 
 原生 gfx 的格式过滤、比较 sampler、整数附件、TextureView 和读回布局边界见 [WebGL2 gfx 合同](../reference/webgl2-gfx-contracts.md)。创建 context、能力位、GL 状态及实际数值须分别验证。
 
-
 > 在跑渲染之前，先问清楚当前环境到底支持什么、支持到什么程度。
 > Cocos AIR 里这件事分**三层**，缺一不可：浏览器原生能力（`canvas.getContext('webgl2')`）、引擎枚举（`gfx.API.*` 的数值）、以及**引擎实际跑在哪个后端 + 硬件上限**（`device.constructor.name` + `device.capabilities`）。
 > 本篇给一个只做检测、不渲染花哨内容的页面，把三层全部问出来打到覆盖层，并解释为什么不能只看 `gfx.API`。
@@ -150,7 +149,7 @@ npm run dev
         <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
         <div id="GameDiv">
             <div id="Cocos3dGameContainer">
-                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <!-- 推荐模板；也可在 import 后创建 canvas，再传给 createAirApp -->
                 <canvas id="GameCanvas"></canvas>
             </div>
         </div>
@@ -290,12 +289,12 @@ console.log('[manual/webgl-compat] running on cocosair');
 
 移动端 GPU 驱动回收、标签页休眠或驱动崩溃都会触发 `webglcontextlost`——所有 GPU 资源（纹理/buffer/program/FBO）即刻失效。上游引擎对此只打印告警（`warnID(11000)`），渲染循环继续向已死的上下文提交调用。AIR 在**不动上游 gfx 文件**的前提下，于画布层挂接同一标准事件，提供显式状态机：
 
-| 状态          | 进入时机                     | AIR 行为                                                                       |
-| ------------- | ---------------------------- | ------------------------------------------------------------------------------ |
-| `healthy`     | 启动后                       | 正常运行                                                                       |
-| `lost`        | `webglcontextlost`           | `event.preventDefault()`（为受控恢复留门）+ `game.pause()`：rAF、渲染、业务时钟、音频全部暂停——不再向失效上下文提交无效 GL 调用 |
-| `restoring`   | `webglcontextrestored`（瞬时）| 状态机观测点，立即进入下态                                                      |
-| `failed`      | 恢复事件到达后               | **如实判定**：AIR 本期不重建 GPU 资源（全量重建属引擎级能力，上游 Web 端同样缺失），恢复到的空上下文不能继续正确渲染；给出 `suggestion: 'reload'` 与受控重载入口。不宣称「自愈」 |
+| 状态        | 进入时机                       | AIR 行为                                                                                                                                                                         |
+| ----------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `healthy`   | 启动后                         | 正常运行                                                                                                                                                                         |
+| `lost`      | `webglcontextlost`             | `event.preventDefault()`（为受控恢复留门）+ `game.pause()`：rAF、渲染、业务时钟、音频全部暂停——不再向失效上下文提交无效 GL 调用                                                  |
+| `restoring` | `webglcontextrestored`（瞬时） | 状态机观测点，立即进入下态                                                                                                                                                       |
+| `failed`    | 恢复事件到达后                 | **如实判定**：AIR 本期不重建 GPU 资源（全量重建属引擎级能力，上游 Web 端同样缺失），恢复到的空上下文不能继续正确渲染；给出 `suggestion: 'reload'` 与受控重载入口。不宣称「自愈」 |
 
 ```ts
 const app = await createAirApp({ canvas: '#GameCanvas' });

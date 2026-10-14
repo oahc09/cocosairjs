@@ -230,6 +230,12 @@ class ScreenAdapter extends EventTarget {
         }
         return WindowType.SubFrame;
     }
+    onCanvasBound(callback) {
+        if (this._canvasBound)
+            callback();
+        else
+            this._canvasWaiters.push(callback);
+    }
     constructor() {
         super();
         this.isFrameRotated = false;
@@ -293,19 +299,31 @@ class ScreenAdapter extends EventTarget {
         this._resolutionScale = 1;
         this._orientation = Orientation.AUTO; //The orientation set by user.
         this._orientationDevice = Orientation.AUTO; //Store the device's orientation.
+        this._canvasBound = false;
+        this._canvasWaiters = [];
+    }
+    // Explicit startup boundary: no DOM lookup, wrappers or listeners at module import.
+    bindCanvas() {
+        const canvas = (globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas'));
+        if (this._canvasBound) {
+            if (canvas !== this._gameCanvas)
+                throw new Error('[AIR_E_CANVAS_CONFLICT] Screen adapter already owns another canvas.');
+            return;
+        }
+        if (!canvas)
+            throw new Error('[AIR_E_CANVAS] Startup requires a canvas.');
         // TODO: need to access frame from 'pal/launcher' module
         this._gameFrame = document.getElementById('GameDiv');
         this._gameContainer = document.getElementById('Cocos3dGameContainer');
         this._gameCanvas = (globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas'));
-        if (!this._gameCanvas && !TEST && !EDITOR)
-            throw new Error("[cocosair] GameCanvas or __CC_CANVAS__ must exist before importing the engine.");
         // Compability with old preview or build template in Editor.
         if (!TEST && !EDITOR) {
             if (!this._gameFrame) {
                 this._gameFrame = document.createElement('div');
                 this._gameFrame.setAttribute('id', 'GameDiv');
-                this._gameCanvas?.parentNode?.insertBefore(this._gameFrame, this._gameCanvas);
-                this._gameFrame.appendChild(this._gameCanvas);
+                const anchor = this._gameContainer || this._gameCanvas;
+                anchor?.parentNode?.insertBefore(this._gameFrame, anchor);
+                this._gameFrame.appendChild(anchor);
             }
             if (!this._gameContainer) {
                 this._gameContainer = document.createElement('div');
@@ -329,8 +347,13 @@ class ScreenAdapter extends EventTarget {
         this._supportFullScreen = (this._fn.requestFullscreen !== undefined);
         this._touchEventName = ('ontouchstart' in window) ? 'touchend' : 'mousedown';
         this._registerEvent();
+        this._canvasBound = true;
+        const waiters = this._canvasWaiters.splice(0);
+        for (const callback of waiters)
+            callback();
     }
     init(options, cbToRebuildFrameBuffer) {
+        this.bindCanvas();
         this._cbToUpdateFrameBuffer = cbToRebuildFrameBuffer;
         this.orientation = orientationMap[options.configOrientation];
         this._exactFitScreen = options.exactFitScreen;

@@ -6,7 +6,7 @@
 
 - **JavaScript ES Module**：`import` / `export`、裸说明符 + importmap。AIR 只有 ESM 构建，没有 UMD/CJS（见 [Installation](./installation.md) §1）。
 - **顶层 await**：手册所有 `main.ts` 都是顶层 await 的 ES module（`createAirApp` 是异步的）。浏览器需支持 top-level await（现代浏览器均可）。
-- **DOM 基础**：`document.querySelector`、canvas 元素、事件监听。`#GameCanvas` 必须在引擎 import 前存在（见 [Creating a Scene](./creating-a-scene.md) §1）。
+- **DOM 基础**：`document.querySelector`、canvas 元素、事件监听。canvas 必须在 createAirApp 时存在，允许先 import 后创建（见 [Creating a Scene](./creating-a-scene.md) §1）。
 - **npm / Node 命令行**：`npm install`、`npm run build`、`npm run dev`。构建产物与 dev server 都走 npm scripts（见 [Setup](./setup.md)）。
 
 ## 强烈建议

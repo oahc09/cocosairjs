@@ -1,6 +1,6 @@
 # 安全启动与场景释放
 
-`cocosair.js/bootstrap` 是无 eager engine import 的小入口。它先解析canvas、验证配置并绑定全局canvas/DPR，再动态导入旁边的同一runtime。可以先导入该入口，再创建自定义ID的canvas：
+`cocosair.js/bootstrap` 是无 eager engine import 的小入口。它先解析 canvas、验证配置并取得共享初始化 Promise，再动态导入旁边的同一 runtime；随后选择 canvas/DPR、准备包装容器、绑定 PAL 与输入，最后初始化引擎。可以先导入该入口，再创建自定义ID的canvas：
 
 ```ts
 import { createAirApp } from 'cocosair.js/bootstrap';
@@ -18,11 +18,15 @@ const { Scene } = await import('cocosair.js');
 app.run(new Scene('Main'));
 ```
 
-引擎主入口保留 eager import。通过主入口使用自定义canvas时，仍须在import之前设置 `globalThis.__CC_CANVAS__`；DPR上限通过import前的 `__CCDPR_CAP__` 配置，或使用安全入口。安全入口本身不创建body/CSS，不抢焦点；页面负责canvas布局。引擎给可交互canvas补默认tabIndex，真实点击才聚焦。
+推荐普通浏览器应用直接从 `cocosair.js` 导入。主入口可以先 import、后创建任意 ID 的 canvas，`pixelRatioCap` 只需在 createAirApp options 中传入；无需手写 `__CC_CANVAS__` / `__CCDPR_CAP__`。主入口仍会求值浏览器引擎，不承诺 SSR 或无 DOM 的 Node 导入。
+
+`cocosair.js/bootstrap` 保留延迟 runtime chunk；`cocosair.js/html-source` 保留独立 HTML 能力探测。两个轻入口可在无 DOM 的 Node 中 import，但真正启动和纹理操作仍需浏览器。HTML helper 也由主入口和 bootstrap 导出，不必为了取得它们而强制加载完整引擎。
+
+页面负责 canvas 布局；已有 GameDiv/Cocos3dGameContainer 必须包住所选 canvas，错误归属在绑定前拒绝。PAL 在启动时补齐缺失包装。独立、未挂载 canvas 仍保留原有全窗口模板行为。可交互 canvas 补默认 tabIndex，真实点击才聚焦。
 
 `pixelRatioCap` 是有限正数，默认2并保留旧全局上限。首次缓冲和resize都采用 `min(devicePixelRatio, cap)`，物理尺寸按Math.round取整。`designResolution.policy` 使用原生枚举0…4（EXACT_FIT、NO_BORDER、SHOW_ALL、FIXED_HEIGHT、FIXED_WIDTH）；初始化后、场景运行前调用原生view，不添加第二套坐标换算。EXACT_FIT的独立正交半宽、原生命中及三种控制方向见[设计视口手册](./design-viewport-and-controls.md)。
 
-同canvas、同规范化配置的并发调用共享初始化Promise和app。默认值与显式默认值相同；context回调比较函数身份。不同canvas/配置报 `AIR_E_APP_CONFLICT`，已有 `#GameCanvas` 与目标canvas冲突报 `AIR_E_CANVAS_CONFLICT`。校验失败不导入引擎；开始导入/初始化后失败则 `AIR_E_APP_RELOAD_REQUIRED` 要求重载，不能假定单例可以原地回滚。底层 `WEBGL2_REQUIRED` 原错误码保留。
+主入口与 bootstrap 的同 canvas、同规范化配置并发调用共享精确相同的初始化 Promise 和 app（包括交叉调用）。默认值与显式默认值相同；context回调比较函数身份。不同canvas/配置报 `AIR_E_APP_CONFLICT`，已有 `#GameCanvas` 与目标canvas冲突报 `AIR_E_CANVAS_CONFLICT`。校验失败不导入引擎；开始导入/初始化后失败则 `AIR_E_APP_RELOAD_REQUIRED` 要求重载，不能假定单例可以原地回滚。底层 `WEBGL2_REQUIRED` 原错误码保留。
 
 ## 资源与会话所有权
 

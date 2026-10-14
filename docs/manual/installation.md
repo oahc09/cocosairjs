@@ -7,12 +7,12 @@
 
 ## 引入要点
 
-| 做法                                                     | 说明                                                                                   |
-| -------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| 做法                                                     | 说明                                                        |
+| -------------------------------------------------------- | ----------------------------------------------------------- |
 | `npm install && npm run build`                           | 从源码生成开发 bundle 与 source map；声明需另跑 `build:dts` |
-| `importmap: { "cocosair": "/build/cocosair.module.js" }` | 裸说明符统一叫 `cocosair`                                                              |
-| `import { createAirApp, Scene, Node } from 'cocosair'`   | 使用下文 importmap 别名；SDK 提供具名导出，**没有默认导出**          |
-| `await createAirApp({ canvas })`                         | 异步；渲染器由 app 托管，你拿不到 renderer 对象                                        |
+| `importmap: { "cocosair": "/build/cocosair.module.js" }` | 裸说明符统一叫 `cocosair`                                   |
+| `import { createAirApp, Scene, Node } from 'cocosair'`   | 使用下文 importmap 别名；SDK 提供具名导出，**没有默认导出** |
+| `await createAirApp({ canvas })`                         | 异步；渲染器由 app 托管，你拿不到 renderer 对象             |
 
 ## 1. 获取构建产物
 
@@ -119,7 +119,7 @@ npm run build:dts      # → build/cocosair.module.d.ts
         <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
         <div id="GameDiv">
             <div id="Cocos3dGameContainer">
-                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <!-- 推荐模板；也可在 import 后创建 canvas，再传给 createAirApp -->
                 <canvas id="GameCanvas"></canvas>
             </div>
         </div>
@@ -129,10 +129,10 @@ npm run build:dts      # → build/cocosair.module.d.ts
 </html>
 ```
 
-两条硬性约束：
+启动约定：
 
-1. **`#GameCanvas` 必须在 `import 'cocosair'` 执行前就存在于 DOM。** 引擎的 screen-adapter 是模块顶层单例，import 那一刻就会去查画布；先 import 再插画布，你会得到一个不报错但永远不渲染的页面。把 `<canvas>` 写在 `<script type="module">` 之前是最简单的保证。
-2. **DOM 结构照官方 Web 模板**（`#GameDiv` > `#Cocos3dGameContainer` > `#GameCanvas`）。`createAirApp` 内部有 `ensureCanvasDOM`：如果你的画布已经按模板挂好，它不做任何改动；如果结构不对，它会补齐，但自适应行为可能与你预期不同。
+1. 主入口允许先 import，再创建 canvas；在调用 createAirApp 时通过 canvas 选项指定元素或 selector，通过 pixelRatioCap 指定上限。无需预写全局变量。主入口仍是浏览器模块，只有 bootstrap/html-source 轻入口可无 DOM 导入。
+2. 推荐 DOM 结构是 `#GameDiv` > `#Cocos3dGameContainer` > canvas（ID 可自定义）。启动时补齐缺失包装；已有包装必须属于所选 canvas，否则在绑定前拒绝。容器模式使用显式 screenMode/container 选项。
 
 `#info` 那个 overlay 是本篇特有的，用来把"引擎到底跑在什么上面"显示出来 —— 见第 5 节。
 

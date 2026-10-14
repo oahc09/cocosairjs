@@ -1,30 +1,57 @@
 # build/ — 构建产物目录说明
 
-本目录是所有构建/验证脚本的产物落点。除本 README 外，内容均为生成物：**不要手改，用对应脚本重建**。核心产物提交入库以固定指纹证据（`verify:port-candidate`、`verify:feature-exports`、`verify:licenses`、`verify:decoders` 等门禁按这些文件核对），可再生目录已被 [.gitignore](../.gitignore) 排除。脚本口径的权威描述见 [AGENTS.md](../AGENTS.md) 的 npm 命令表；本 README 不随 npm 包发布（不在 [package.json](../package.json) 的 `files` 清单内）。
+本目录是构建/验证脚本的产物落点，也保留随库发布的第三方资源。生成物**不要手改，用对应脚本重建**；`gltf-decoders/` 与 `fflate/` 是受审计的入库发布资产。核心产物提交入库以固定指纹证据（`verify:port-candidate`、`verify:feature-exports`、`verify:licenses`、`verify:decoders` 等门禁按这些文件核对），可再生目录已被 [.gitignore](../.gitignore) 排除。脚本口径的权威描述见 [AGENTS.md](../AGENTS.md) 的 npm 命令表；本 README 不随 npm 包发布（不在 [package.json](../package.json) 的 `files` 清单内）。
+
+## 按使用场景选择入口
+
+| 场景                       | 入口                                                   | 准备方式                                                                |
+| -------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------- |
+| 仓库内浏览器应用开发       | `build/cocosair.module.js`                             | `npm run build`                                                         |
+| npm 安装后的浏览器应用     | `cocosair.js` → `build/npm/cocosair.module.js`         | 发布者运行 `npm run build:all`，消费者直接 import 包名                  |
+| 延迟加载完整引擎           | `cocosair.js/bootstrap` → `build/npm/bootstrap.js`     | 同一构建生成，调用启动时才加载 runtime                                  |
+| 不加载引擎的 HTML 能力探测 | `cocosair.js/html-source` → `build/npm/html-source.js` | 同一构建生成，Node 中也可导入能力检查函数                               |
+| Spark 可选浏览器变体       | `build/cocosair.module.spark.js`                       | 按 [Spark 构建说明](../docs/reference/spark-optional-entry.md) 单独重建 |
+
+开发版、压缩版以及 Spark 的正式 JS/map 均提交入库；改源码后必须重建匹配产物。`build/npm/` 是忽略的发布副本目录，新 checkout 中不存在属预期，不是 exports 死链。`prepack` 保留开发文件与 map，仅移除发布副本末尾的 sourceMappingURL；不编译、不推进构建号。
+
+## 完整构建的内存要求
+
+完整 JS、source map 和声明构建使用 Node 22，给构建进程预留 4 GiB V8 堆：
+
+```bash
+NODE_OPTIONS=--max-old-space-size=4096 npm run build:all
+```
+
+这是已通过本地、独立 clean build 和 CI 构建的配置；默认约 2 GiB 堆曾在保留完整 map 的生成阶段以 exit 134 耗尽。4 GiB 是堆上限，不是整机内存总需求：原生缓冲区、子进程和操作系统仍需要额外余量。构建时避免并发其他大内存任务，不能仅因主机有 4 GiB 就断言足够。
+
+CI 只对构建步骤设置此上限，构建后才启动浏览器和 Jest。该步骤记录主机/可用/受限内存、实际 V8 上限和高 RSS 进程；有 GNU time 时也记录构建的最大 RSS，便于按 runner 的真实资源判断。不要把这个设置全局传播给所有测试 worker，也不要删除 min/map 来绕过内存问题。
 
 ## 总览
 
-| 条目 | 含义 | 生成者 | git |
-| --- | --- | --- | --- |
-| `cocosair.module.js` + `.js.map` | 未压缩 Web ESM 运行时（默认 feature 集）；dev 服务器热刷新与绝大多数浏览器证据使用它 | `npm run build` | 跟踪 |
-| `cocosair.module.min.js` + `.js.map` | 同一运行时的压缩版 | `npm run build:min` | 跟踪 |
-| `cocosair.module.d.ts` | 打包后的 SDK 类型声明，npm 包 `types` 入口 | `npm run build:dts` | 跟踪 |
-| `cocosair.legacy.d.ts` / `bootstrap.legacy.d.ts` | TS <5.0 消费者的包装声明（带 DecompressionStream fallback；现代编译器入口走原生 lib.dom） | `npm run build:dts` | 跟踪 |
-| `bootstrap.js` + `.map` + `.d.ts` | **引擎无关**的 bootstrap 包装入口，对应 npm 子路径 `cocosair.js/bootstrap`（自定义 canvas、需在引擎导入前配置 DPR 的场景） | `npm run build` | 跟踪 |
-| `package.json` | 仅 `{ "type": "module" }`：声明本目录 JS 按 ESM 解析 | `build` / `build:min` / `build:system` 默认刷新 | 跟踪 |
-| `cc.js` + `cc.js.map` | SystemJS 模块格式运行时（非默认 npm ESM 入口，不在 `build:all` 内）；按需生成，本工作区当前不存在 | `npm run build:system` | 生成后跟踪 |
-| `gltf-decoders/` | 随库发布的解码器资产（见下） | 入库资产，非脚本生成 | 跟踪 |
-| `devtools/` | 独立 DevTools 工件（见下） | devtools 构建流程 | 跟踪（但**不进 npm 包**） |
-| `npm/` | prepack 发布副本（见下） | `npm run prepack` | 忽略 |
-| `examples/` | Gallery 自包含静态发布物（见下） | `tools/verify/gallery-artifact.cjs` | 忽略 |
-| `reports/` | 分析与验证报告输出（见下） | analyze/compare/verify 各工具 | 忽略 |
-| `.tmp-*/`、`.dts-*/`、`.dev-log.txt` | dev/rollup/dts 中间产物与缓存（见下） | dev server 与各脚本 | 忽略 |
+| 条目                                             | 含义                                                                                                     | 生成者                                          | git                       |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ------------------------- |
+| `cocosair.module.js` + `.js.map`                 | 未压缩 Web ESM 运行时（默认 feature 集）；dev 服务器热刷新与绝大多数浏览器证据使用它                     | `npm run build`                                 | 跟踪                      |
+| `cocosair.module.min.js` + `.js.map`             | 同一运行时的压缩版                                                                                       | `npm run build:min`                             | 跟踪                      |
+| `cocosair.module.d.ts`                           | 打包后的 SDK 类型声明，npm 包 `types` 入口                                                               | `npm run build:dts`                             | 跟踪                      |
+| `cocosair.legacy.d.ts` / `bootstrap.legacy.d.ts` | TS <5.0 消费者的包装声明（带 DecompressionStream fallback；现代编译器入口走原生 lib.dom）                | `npm run build:dts`                             | 跟踪                      |
+| `bootstrap.js` + `.map` + `.d.ts`                | **引擎无关**的 bootstrap 包装入口，对应 npm 子路径 `cocosair.js/bootstrap`（需要延迟加载完整引擎的场景） | `npm run build`                                 | 跟踪                      |
+| `html-source.js` + `.map` + `.d.ts`              | 引擎无关的 HTML 能力探测与纹理源适配器                                                                   | `npm run build`                                 | 跟踪                      |
+| `cocosair.module.spark.js` + `.js.map`           | 完整默认 feature 集加 Spark 的可选运行时                                                                 | 独立变体构建                                    | 跟踪                      |
+| `fflate/`                                        | Spark 子图使用的受审计 fflate 发布资产；不进 npm 白名单                                                  | 入库资产，非默认构建生成                        | 跟踪                      |
+| `package.json`                                   | 仅 `{ "type": "module" }`：声明本目录 JS 按 ESM 解析                                                     | `build` / `build:min` / `build:system` 默认刷新 | 跟踪                      |
+| `cc.js` + `cc.js.map`                            | SystemJS 模块格式运行时（非默认 npm ESM 入口，不在 `build:all` 内）；按需生成，本工作区当前不存在        | `npm run build:system`                          | 生成后跟踪                |
+| `gltf-decoders/`                                 | 随库发布的解码器资产（见下）                                                                             | 入库资产，非脚本生成                            | 跟踪                      |
+| `devtools/`                                      | 独立 DevTools 工件（见下）                                                                               | devtools 构建流程                               | 跟踪（但**不进 npm 包**） |
+| `npm/`                                           | prepack 发布副本（见下）                                                                                 | `npm run prepack`                               | 忽略                      |
+| `examples/`                                      | Gallery 自包含静态发布物（见下）                                                                         | `tools/verify/gallery-artifact.cjs`             | 忽略                      |
+| `reports/`                                       | 分析与验证报告输出（见下）                                                                               | analyze/compare/verify 各工具                   | 忽略                      |
+| `.tmp-*/`、`.dts-*/`、`.dev-log.txt`             | dev/rollup/dts 中间产物与缓存（见下）                                                                    | dev server 与各脚本                             | 忽略                      |
 
 ## 运行时文件：二选一关系，不是叠加
 
 - **默认入口只有一个**：npm `exports["."]` 指向 `build/npm/cocosair.module.js`（prepack 后的 source-map-free 副本）。`cocosair.module.min.js` 打包进 tarball 但默认入口不指它——是给想要发布体积的场景手动取用的副本。
-- `bootstrap.js` 是**替代入口**而非额外依赖：普通应用 import 主入口即可；只有自定义 canvas 或需要引擎导入前配置 DPR 时才改用 `cocosair.js/bootstrap` 子路径，两者二选一、共享同一 canvas/config 初始化。
-- 应用侧开发最小集 = 运行时 JS + `cocosair.module.d.ts`；加载 Draco/Basis/meshopt 压缩模型才需要另取 `gltf-decoders/`（部署见 [docs/gltf/gltf-decoder-deployment.md](../docs/gltf/gltf-decoder-deployment.md)）。环境前提：WebGL 2 浏览器；页面先有 `#GameCanvas` 再 import（或走 bootstrap 自定义 canvas）。
+- `bootstrap.js` 是**替代入口**而非额外依赖：普通应用 import 主入口即可；需要延迟加载完整引擎时可用 `cocosair.js/bootstrap` 子路径，两个入口可混用、同一 canvas/config 共享精确相同的初始化 Promise。
+- 应用侧开发最小集 = 运行时 JS + `cocosair.module.d.ts`；加载 Draco/Basis/meshopt 压缩模型才需要另取 `gltf-decoders/`（部署见 [docs/gltf/gltf-decoder-deployment.md](../docs/gltf/gltf-decoder-deployment.md)）。环境前提：WebGL 2 浏览器；主入口允许先 import 后创建 canvas；调用 createAirApp 时传入 canvas 与 DPR 选项。仅轻入口承诺无 DOM 导入。
 
 ## gltf-decoders/
 
@@ -36,7 +63,7 @@
 
 ## npm/（git 忽略，可再生）
 
-`prepack` 从**已存在**的本地 bundle 准备的 npm 发布副本：source-map-free 的 unmin/min 运行时与 `bootstrap.js`（`npm run build:all` 的最后一步也会刷新）。它只复制、不编译——本地没有先跑过 `build`/`build:min` 时 prepack 无从准备；`verify:tarball-consumer` 以它为离线安装消费口径的证据源。
+`prepack` 从**已存在**的本地 bundle 准备的 npm 发布副本：source-map-free 的 unmin/min 运行时、`bootstrap.js` 与 `html-source.js`（`npm run build:all` 的最后一步也会刷新）。它只复制、不编译——本地没有先跑过 `build`/`build:min` 时 prepack 无从准备；`verify:tarball-consumer` 以它为离线安装消费口径的证据源。
 
 ## examples/（git 忽略，可再生）
 

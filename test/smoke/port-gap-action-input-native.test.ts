@@ -19,9 +19,31 @@ describe('PG-28 native backend adapter (real engine dispatch chain)', () => {
         const { systemInfo } = await import('pal/system-info');
         const { Feature } = await import('../../src/pal/system-info/enum-type');
         touchSupported = systemInfo.hasFeature(Feature.INPUT_TOUCH);
+
+        // Import alone no longer binds native DOM input. Model the admitted startup
+        // boundary explicitly in this real PAL graph, without changing global setup.
+        const { screenAdapter } = await import('pal/screen-adapter');
+        const { state, adapter } = nativeSetup();
+        adapter.attach();
+        const rawKeyDown = jest.fn();
+        inputMod.input.on(inputMod.Input.EventType.KEY_DOWN, rawKeyDown);
+        key('keydown', 'KeyA');
+        expect(rawKeyDown).not.toHaveBeenCalled();
+        expect(state.held('fire')).toBe(false);
+        expect(state.consumeTick().transitions).toEqual([]);
+        screenAdapter.bindCanvas();
+        screenAdapter.bindCanvas(); // Re-entry must not bind another listener set.
+        key('keydown', 'KeyA');
+        expect(rawKeyDown).toHaveBeenCalledTimes(1);
+        expect(state.held('fire')).toBe(true);
+        expect(state.consumeTick().transitions.map((edge) => edge.kind)).toEqual(['press']);
+        key('keyup', 'KeyA');
+        expect(state.consumeTick().transitions.map((edge) => edge.kind)).toEqual(['release']);
+        inputMod.input.off(inputMod.Input.EventType.KEY_DOWN, rawKeyDown);
+        adapter.dispose();
     });
 
-    function nativeSetup () {
+    function nativeSetup() {
         const state = stateMod.createActionState({
             actions: {
                 fire: { sources: [{ backend: 'native', keyCode: KeyCode.KEY_A }] },
@@ -33,17 +55,22 @@ describe('PG-28 native backend adapter (real engine dispatch chain)', () => {
         return { state, adapter };
     }
 
-    function canvasEl (): HTMLCanvasElement {
+    function canvasEl(): HTMLCanvasElement {
         return document.getElementById('GameCanvas') as HTMLCanvasElement;
     }
-    function key (type: 'keydown' | 'keyup', code: string, repeat = false) {
+    function key(type: 'keydown' | 'keyup', code: string, repeat = false) {
         canvasEl().dispatchEvent(new KeyboardEvent(type, { code, bubbles: true, cancelable: true, repeat }));
     }
-    function touch (type: 'touchstart' | 'touchend' | 'touchcancel', ids: number[]) {
+    function touch(type: 'touchstart' | 'touchend' | 'touchcancel', ids: number[]) {
         const touches = ids.map((identifier) => ({ identifier, clientX: 0, clientY: 0 }));
-        canvasEl().dispatchEvent(new TouchEvent(type, {
-            bubbles: true, cancelable: true, touches: touches as any, changedTouches: touches as any,
-        } as TouchEventInit));
+        canvasEl().dispatchEvent(
+            new TouchEvent(type, {
+                bubbles: true,
+                cancelable: true,
+                touches: touches as any,
+                changedTouches: touches as any,
+            } as TouchEventInit),
+        );
     }
 
     test('keyboard flows through the real PAL→input chain; adapter sees engine KeyCode identity', () => {
@@ -60,15 +87,18 @@ describe('PG-28 native backend adapter (real engine dispatch chain)', () => {
 
     test('a held key released into an editable uses PAL identity cleanup exactly once', () => {
         const { state, adapter } = nativeSetup();
-        const editable = document.createElement('input'); document.body.appendChild(editable);
+        const editable = document.createElement('input');
+        document.body.appendChild(editable);
         adapter.attach();
-        key('keydown', 'Space'); editable.focus();
+        key('keydown', 'Space');
+        editable.focus();
         editable.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }));
         expect(state.held('jump')).toBe(false);
         expect(state.consumeTick().transitions.map((edge) => edge.kind)).toEqual(['press', 'release']);
         editable.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', bubbles: true }));
         expect(state.held('jump')).toBe(false);
-        adapter.dispose(); editable.remove();
+        adapter.dispose();
+        editable.remove();
     });
 
     test('repeat keydown arrives as KEY_PRESSING in the chain and never re-arms the press', () => {
@@ -111,14 +141,31 @@ describe('PG-28 native backend adapter (real engine dispatch chain)', () => {
             });
             const adapter = ai.createActionInput({ state, backend: 'native' });
             adapter.attach();
+            const { input, Input } = require('../../src/cocos/input');
+            const rawTouchStart = jest.fn();
+            input.on(Input.EventType.TOUCH_START, rawTouchStart);
             touch('touchstart', [7]);
+            expect(rawTouchStart).not.toHaveBeenCalled();
+            expect(state.heldSources('touch')).toEqual([]);
+            const { screenAdapter } = require('pal/screen-adapter');
+            screenAdapter.bindCanvas();
+            screenAdapter.bindCanvas();
+            touch('touchstart', [7]);
+            expect(rawTouchStart).toHaveBeenCalledTimes(1);
             expect(state.heldSources('touch')).toEqual([{ backend: 'native', pointerId: 7 }]);
             touch('touchstart', [8]); // 第二触点独立
-            expect(state.heldSources('touch').map((t: any) => t.pointerId).sort()).toEqual([7, 8]);
+            expect(
+                state
+                    .heldSources('touch')
+                    .map((t: any) => t.pointerId)
+                    .sort(),
+            ).toEqual([7, 8]);
             touch('touchend', [7]); // 抬起 7 不清 8
             expect(state.heldSources('touch').map((t: any) => t.pointerId)).toEqual([8]);
             touch('touchcancel', [8]);
             expect(state.held('touch')).toBe(false);
+            expect(rawTouchStart).toHaveBeenCalledTimes(2);
+            input.off(Input.EventType.TOUCH_START, rawTouchStart);
             adapter.dispose();
         });
     });

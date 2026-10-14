@@ -28,6 +28,7 @@
 
 export * from './app';
 export * from './bootstrap';
+export * from './html-source';
 export * from './physics-backend';
 export * from './context-health';
 export { createSessionScope } from './session-scope';

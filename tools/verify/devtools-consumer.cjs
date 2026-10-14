@@ -18,7 +18,7 @@ const REPO = path.resolve(__dirname, '..', '..');
 const failures = [];
 const report = { runtimeOnly: { ok: false }, runtimePlusDevtools: { ok: false }, devtoolsArtifact: {} };
 
-function run (cmd, opts) {
+function run(cmd, opts) {
     return execSync(cmd, { encoding: 'utf8', maxBuffer: 4 * 1024 * 1024, ...opts });
 }
 
@@ -30,18 +30,32 @@ function run (cmd, opts) {
         const result = esbuildBundle(path.join(REPO, 'tools', 'debug', entry + '.ts'));
         fs.writeFileSync(path.join(devtoolsDir, entry + '.js'), result);
     }
-    fs.writeFileSync(path.join(devtoolsDir, 'package.json'), JSON.stringify({
-        name: 'cocosair-devtools', version: '0.6.0', type: 'module',
-        description: 'Cocos AIR DevTools artifact: agent development session + debug panel (requires cocosair runtime via importmap).',
-        main: 'agent-session.js',
-    }, null, 2) + '\n');
-    fs.writeFileSync(path.join(devtoolsDir, 'README.md'),
-        '# cocosair devtools\n\n显式启用：页面 importmap 解析 `cocosair` 后 `import(\'./agent-session.js\')`。\n'
-        + '合同见仓库 docs/guides/agent-development.md。不属于默认 runtime 包。\n');
+    fs.writeFileSync(
+        path.join(devtoolsDir, 'package.json'),
+        JSON.stringify(
+            {
+                name: 'cocosair-devtools',
+                version: '0.6.0',
+                type: 'module',
+                description:
+                    'Cocos AIR DevTools artifact: agent development session + debug panel (requires cocosair runtime via importmap).',
+                main: 'agent-session.js',
+            },
+            null,
+            2,
+        ) + '\n',
+    );
+    fs.writeFileSync(
+        path.join(devtoolsDir, 'README.md'),
+        "# cocosair devtools\n\n显式启用：页面 importmap 解析 `cocosair` 后 `import('./agent-session.js')`。\n" +
+            '合同见仓库 docs/guides/agent-development.md。不属于默认 runtime 包。\n',
+    );
     report.devtoolsArtifact = { files: fs.readdirSync(devtoolsDir) };
     const sessionJs = fs.readFileSync(path.join(devtoolsDir, 'agent-session.js'), 'utf8');
     for (const marker of ['createAgentSession', 'STALE_TARGET', 'SESSION_CLOSED']) {
-        if (!sessionJs.includes(marker)) { failures.push(`devtools artifact missing marker: ${marker}`); }
+        if (!sessionJs.includes(marker)) {
+            failures.push(`devtools artifact missing marker: ${marker}`);
+        }
     }
     if (/node_modules/.test(path.join(devtoolsDir, 'agent-session.js')) === false && sessionJs.length < 10000) {
         failures.push('devtools agent-session bundle implausibly small');
@@ -55,26 +69,59 @@ function run (cmd, opts) {
     const makeConsumer = (name, withDevtools) => {
         const dir = path.join(packDir, name);
         fs.mkdirSync(dir, { recursive: true });
-        fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify({
-            name, version: '1.0.0', private: true, type: 'module',
-            dependencies: { cocosair: `file:${tarballPath}` },
-        }, null, 2));
+        fs.writeFileSync(
+            path.join(dir, 'package.json'),
+            JSON.stringify(
+                {
+                    name,
+                    version: '1.0.0',
+                    private: true,
+                    type: 'module',
+                    dependencies: { cocosair: `file:${tarballPath}` },
+                },
+                null,
+                2,
+            ),
+        );
         run('npm install --no-audit --no-fund', { cwd: dir, stdio: 'pipe' });
         if (withDevtools) {
             fs.mkdirSync(path.join(dir, 'devtools'), { recursive: true });
-            for (const f of fs.readdirSync(devtoolsDir)) { fs.copyFileSync(path.join(devtoolsDir, f), path.join(dir, 'devtools', f)); }
+            for (const f of fs.readdirSync(devtoolsDir)) {
+                fs.copyFileSync(path.join(devtoolsDir, f), path.join(dir, 'devtools', f));
+            }
         }
         return dir;
     };
 
     const setupBrowserEnv = () => {
         const { JSDOM } = require(path.join(REPO, 'node_modules', 'jsdom'));
-        const dom = new JSDOM('<!DOCTYPE html><html><body><canvas id="GameCanvas"></canvas></body></html>', { url: 'http://localhost/validate/' });
+        const dom = new JSDOM('<!DOCTYPE html><html><body><canvas id="GameCanvas"></canvas></body></html>', {
+            url: 'http://localhost/validate/',
+        });
         globalThis.window = dom.window;
-        for (const key of ['document', 'navigator', 'location', 'CustomEvent', 'Event', 'HTMLElement', 'HTMLCanvasElement', 'HTMLImageElement', 'HTMLVideoElement', 'MutationObserver', 'requestAnimationFrame', 'cancelAnimationFrame', 'getComputedStyle', 'matchMedia']) {
-            if (dom.window[key] !== undefined && globalThis[key] === undefined) { Object.defineProperty(globalThis, key, { value: dom.window[key], configurable: true }); }
+        for (const key of [
+            'document',
+            'navigator',
+            'location',
+            'CustomEvent',
+            'Event',
+            'HTMLElement',
+            'HTMLCanvasElement',
+            'HTMLImageElement',
+            'HTMLVideoElement',
+            'MutationObserver',
+            'requestAnimationFrame',
+            'cancelAnimationFrame',
+            'getComputedStyle',
+            'matchMedia',
+        ]) {
+            if (dom.window[key] !== undefined && globalThis[key] === undefined) {
+                Object.defineProperty(globalThis, key, { value: dom.window[key], configurable: true });
+            }
         }
-        dom.window.HTMLCanvasElement.prototype.getContext = function () { return null; };
+        dom.window.HTMLCanvasElement.prototype.getContext = function () {
+            return null;
+        };
         return dom;
     };
 
@@ -82,20 +129,35 @@ function run (cmd, opts) {
     try {
         const rtDir = makeConsumer('runtime-only', false);
         setupBrowserEnv();
-        const mod = await import(pathToFileURL(path.join(rtDir, 'node_modules', 'cocosair', 'build', 'cocosair.module.js')).href);
-        const okExports = ['createAirApp', 'GLTFLoader', 'Scene', 'Node', 'MeshRenderer'].every((k) => typeof mod[k] !== 'undefined');
+        const mod = await import(
+            pathToFileURL(path.join(rtDir, 'node_modules', 'cocosair', 'build', 'npm', 'cocosair.module.js')).href
+        );
+        const okExports = ['createAirApp', 'GLTFLoader', 'Scene', 'Node', 'MeshRenderer'].every(
+            (k) => typeof mod[k] !== 'undefined',
+        );
         // 默认入口不得包含 debug/agent 模块
-        const bundle = fs.readFileSync(path.join(rtDir, 'node_modules', 'cocosair', 'build', 'cocosair.module.js'), 'utf8');
-        const noDebug = !bundle.includes('createAgentSession') && !bundle.includes('SESSION_CLOSED');
-        if (!okExports) { failures.push('[runtime-only] key exports missing'); }
-        if (!noDebug) { failures.push('[runtime-only] default bundle contains debug/agent code'); }
+        const bundle = fs.readFileSync(
+            path.join(rtDir, 'node_modules', 'cocosair', 'build', 'npm', 'cocosair.module.js'),
+            'utf8',
+        );
+        // AIR_E_SESSION_CLOSED is a legitimate runtime error, not an agent-tool marker.
+        const debugMarkers = require('./devtools-runtime-boundary.cjs').developmentRuntimeMarkers(bundle);
+        const noDebug = debugMarkers.length === 0;
+        if (!okExports) {
+            failures.push('[runtime-only] key exports missing');
+        }
+        if (!noDebug) {
+            failures.push('[runtime-only] default bundle contains debug/agent code');
+        }
         report.runtimeOnly = { ok: okExports && noDebug, exportCount: Object.keys(mod).length, noDebug };
     } catch (e) {
-        failures.push('[runtime-only] ' + String(e && e.stack ? e.stack.split('\n').slice(0, 3).join(' | ') : e).slice(0, 300));
+        failures.push(
+            '[runtime-only] ' + String(e && e.stack ? e.stack.split('\n').slice(0, 3).join(' | ') : e).slice(0, 300),
+        );
     }
 
     // ---- 3) Runtime + DevTools Consumer：inspection / session / capture / error 可用 ----
-        const dtDir = makeConsumer('runtime-devtools', true);
+    const dtDir = makeConsumer('runtime-devtools', true);
     try {
         const dom = setupBrowserEnv();
         const devtools = await import(pathToFileURL(path.join(dtDir, 'devtools', 'agent-session.js')).href);
@@ -118,15 +180,24 @@ function run (cmd, opts) {
         const closed = await session.dispatch({ requestId: 'x1', action: 'createNode', params: {} });
         capabilities.sessionClosed = !closed.ok && closed.error.code === 'SESSION_CLOSED';
         const ok = Object.values(capabilities).every(Boolean);
-        if (!ok) { failures.push('[runtime+devtools] capabilities incomplete: ' + JSON.stringify(capabilities)); }
+        if (!ok) {
+            failures.push('[runtime+devtools] capabilities incomplete: ' + JSON.stringify(capabilities));
+        }
         report.runtimePlusDevtools = { ok, capabilities };
     } catch (e) {
-        failures.push('[runtime+devtools] ' + String(e && e.stack ? e.stack.split('\n').slice(0, 3).join(' | ') : e).slice(0, 300));
+        failures.push(
+            '[runtime+devtools] ' +
+                String(e && e.stack ? e.stack.split('\n').slice(0, 3).join(' | ') : e).slice(0, 300),
+        );
     }
 
     // ---- 4) 版本匹配记录（§71）----
     const pkg = JSON.parse(fs.readFileSync(path.join(REPO, 'package.json'), 'utf8'));
-    report.versionMatch = { runtimeRevision: 'f519d86+', devtoolsRevision: pkg.version, contractVersion: 'v051-agent-contract' };
+    report.versionMatch = {
+        runtimeRevision: 'f519d86+',
+        devtoolsRevision: pkg.version,
+        contractVersion: 'v051-agent-contract',
+    };
 
     fs.rmSync(packDir, { recursive: true, force: true });
     fs.rmSync(tarballPath, { force: true });
@@ -137,11 +208,17 @@ function run (cmd, opts) {
     process.exit(failures.length ? 1 : 0);
 })();
 
-function esbuildBundle (entry) {
+function esbuildBundle(entry) {
     const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
     const result = esbuild.buildSync({
-        entryPoints: [entry], bundle: true, format: 'esm', target: 'es2022', platform: 'browser',
-        sourcemap: false, external: ['cocosair'], write: false,
+        entryPoints: [entry],
+        bundle: true,
+        format: 'esm',
+        target: 'es2022',
+        platform: 'browser',
+        sourcemap: false,
+        external: ['cocosair'],
+        write: false,
     });
     return result.outputFiles[0].text;
 }
