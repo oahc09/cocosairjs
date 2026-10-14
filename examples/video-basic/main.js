@@ -597,10 +597,19 @@ async function p6SourceSwitch() {
         6000,
     );
     const remoteVideo = player.nativeVideo;
+    const logBeforeLocal = eventLog.length;
     player.resourceType = VideoPlayer.ResourceType.LOCAL;
     player.clip = clip;
-    const waitBack = await waitFor(() => eventLog.slice(eventLog.length - 3).includes('meta-loaded'), 6000);
     const after = player.nativeVideo;
+    // The REMOTE element's metadata is still in eventLog. Wait for the new LOCAL
+    // element and a new callback before P7 seeks; an old event is not readiness.
+    const waitBack = await waitFor(
+        () => after && after.readyState >= 1 && eventLog.slice(logBeforeLocal).includes('meta-loaded'),
+        6000,
+    );
+    if (waitBack < 0) {
+        throw new Error('Replacement LOCAL video did not load metadata');
+    }
     results.p6SourceSwitch = {
         videoCountAfterEnumOnly: countAfterEnum,
         remoteMetaWithinMs: waitRemote,
@@ -632,28 +641,41 @@ async function p7Completed() {
         })(),
     };
 
+    // P7 leaves an asynchronous seek at the end of the clip. Starting playback
+    // there overlaps the browser's loop restart with our seek below. Establish a
+    // paused, settled position first; PLAYING alone does not prove media progress.
+    player.pause();
     player.loop = true;
-    player.play();
-    await waitFor(() => player.state === VideoPlayer.EventType.PLAYING, 2000);
     const beforeLoop = completedEvents;
-    // seek 目标离片尾留 1 s 余量，并等 seek 落地再看回绕：P7 末尾把 currentTime 置成 99（钳到 3 = 片尾），
-    // 此时 2.7 这类「几乎贴着片尾」的回跳在 webkit 上会与 loop 重启抢次序——实测 in-flight seek
-    // (ct=3, seeking=1) 之后元素停在 seek 目标 2.704 且 paused，不回绕也不报错。
+    const v = player.nativeVideo;
     player.currentTime = 2.0;
-    const seekSettledMs = await waitFor(() => {
-        const v = player.nativeVideo;
-        return !!v && !v.seeking && v.currentTime >= 1.9 && v.currentTime <= 2.3;
-    }, 2000);
-    const wrapMs = await waitFor(() => player.currentTime < 1.0, 3000);
+    const seekSettledMs = await waitFor(() => v && !v.seeking && v.currentTime >= 1.9 && v.currentTime <= 2.3, 2000);
+    let playingMs = -1;
+    let wrapMs = -1;
+    if (seekSettledMs >= 0) {
+        const seekTime = v.currentTime;
+        player.play();
+        playingMs = await waitFor(
+            () =>
+                player.isPlaying && !v.paused && !v.seeking && (v.currentTime > seekTime + 0.05 || v.currentTime < 1.0),
+            2000,
+        );
+        if (playingMs >= 0) {
+            wrapMs = await waitFor(() => player.isPlaying && !v.paused && !v.seeking && v.currentTime < 1.0, 3000);
+        }
+    }
     results.p8Loop = {
-        wrappedBelowSeekTarget: wrapMs >= 0,
+        wrappedBelowSeekTarget: seekSettledMs >= 0 && playingMs >= 0 && wrapMs >= 0,
         seekSettledWithinMs: seekSettledMs,
+        playingWithinMs: playingMs,
         wrapWithinMs: wrapMs,
         completedDeltaDuringLoop: completedEvents - beforeLoop,
         stateNow: player.state,
         currentTimeNow: num(player.currentTime),
+        nativePausedNow: v ? v.paused : null,
+        nativeSeekingNow: v ? v.seeking : null,
     };
-    status.string = 'video loop ok';
+    status.string = results.p8Loop.wrappedBelowSeekTarget ? 'video loop ok' : 'video loop failed';
 }
 
 // ---------------------------------------------------------------- 点击：CLICKED → 全屏双向 → 收尾停在透明 video
@@ -761,6 +783,9 @@ async function runSequence() {
     await p5Geometry();
     await p6SourceSwitch();
     await p7Completed();
+    if (!results.p8Loop.wrappedBelowSeekTarget) {
+        return;
+    }
     hostNode.on('clicked', onUserClick); // CLICKED 由引擎的 DOM click 监听转发（video-player.ts:477-480）
     results.sequenceComplete = true;
     results.sequenceMs = Math.round(performance.now() - T0);
