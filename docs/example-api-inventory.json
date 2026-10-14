@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "6fdd026ebcb95fac",
-  "apiInventoryRevision": "97dcdbf23f10eebd",
+  "sourceFingerprint": "a97a49dbdffc6577",
+  "apiInventoryRevision": "7b13c6eaa768c9f6",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -53369,6 +53369,18 @@
       "coverageRequired": true,
       "parent": null
     },
+    "getAirHTMLSourceSupport": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAirHTMLSource": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "selectPhysicsBackend": {
       "kind": "function",
       "tier": "supporting",
@@ -80632,9 +80644,9 @@
     "core": 964,
     "important": 283,
     "advanced": 192,
-    "supporting": 8326,
+    "supporting": 8328,
     "internal": 3511
   },
-  "totalUnits": 13276,
+  "totalUnits": 13278,
   "coverageRequiredUnits": 1439
 }
