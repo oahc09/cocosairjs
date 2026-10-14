@@ -88,7 +88,7 @@
     "verify:tarball-consumer": "node tools/verify/tarball-browser-consumer.cjs",
     "verify:benchmark": "tsc -p tools/benchmark/tsconfig.json && node tools/verify/benchmark-regression.cjs",
     "verify:v06-gate": "node tools/verify/recipe-review-gate.cjs",
-    "verify:browser-matrix": "node --test tools/verify/video-loop-sequencing.test.cjs && node tools/verify/browser-matrix.cjs",
+    "verify:browser-matrix": "node tools/verify/video-loop-sequencing.test.cjs && node tools/verify/browser-matrix.cjs",
     "verify:wasm-backends": "node tools/verify/verify-wasm-backends.cjs",
     "verify:custom-exports": "node tools/verify/verify-custom-exports.cjs",
     "verify:doc-refs": "node tools/verify/verify-doc-refs.cjs",

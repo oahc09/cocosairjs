@@ -26,7 +26,7 @@
 
 ## 回归方式
 
-`node --test tools/verify/video-loop-sequencing.test.cjs` 从实际示例提取两个函数，使用确定性 CPU 模型验证旧 metadata、未落地 seek、停滞播放头和不回绕等负例。它是控制流测试，不是视频播放证据。7 项在原 main 全部失败，在修复后全部通过。
+`node tools/verify/video-loop-sequencing.test.cjs` 从实际示例提取两个函数，使用确定性 CPU 模型验证旧 metadata、未落地 seek、停滞播放头和不回绕等负例。它是控制流测试，不是视频播放证据。7 项在原 main 全部失败，在修复后全部通过。
 
 `npm run verify:browser-matrix` 先运行该 CPU 回归，再执行原矩阵采集器；`--ids`、`--engines` 和 `--out` 仍传给采集器。没有改变 Jest discovery 清单或历史执行统计。
 
