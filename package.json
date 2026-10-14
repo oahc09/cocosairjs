@@ -74,7 +74,7 @@
     "vendor:npm": "node tools/build/vendor-package-subset.cjs",
     "typecheck": "tsc -p tsconfig.json",
     "verify:decoders": "node tools/verify/decoder-audit.cjs",
-    "verify:test-inventory": "node tools/verify/test-inventory.cjs",
+    "verify:test-inventory": "node tools/verify/test-inventory-runner.test.cjs && node tools/verify/test-inventory.cjs",
     "verify:api-coverage": "node tools/examples/coverage-report.cjs",
     "verify:release": "node tools/verify/release-readiness.cjs",
     "capabilities": "node tools/verify/update-capabilities.cjs",
