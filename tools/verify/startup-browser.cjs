@@ -165,7 +165,15 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
         save();
     }
     for (const scenario of [
-        { id: 'installed-bundled-high-dpr', dpr: 3.25, cap: 3, entry: 'entry.js', order: 'safe-first', bundled: true },
+        {
+            id: 'installed-bundled-high-dpr',
+            dpr: 3.25,
+            cap: 3,
+            entry: 'entry.js',
+            order: 'safe-first',
+            bundled: true,
+            deferredOnly: true,
+        },
         {
             id: 'late-partial-container',
             dpr: 1.5,
@@ -216,10 +224,11 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
             };
             const prefix = s.bundled ? '/bundled/' : s.installed ? '/installed/' : '/build/';
             const loaded = await import(prefix + s.entry);
-            const runtime = s.bundled ? await loaded.loadRuntime() : loaded;
+            let runtime = s.deferredOnly ? undefined : s.bundled ? await loaded.loadRuntime() : loaded;
+            const api = runtime ?? loaded;
             if (s.spark && (typeof runtime.CocosRenderer !== 'function' || !runtime.sparkRuntime?.SplatMesh))
                 throw new Error('Spark variant exports missing');
-            if (!s.spark && runtime.sparkRuntime) throw new Error('Spark leaked into default');
+            if (!s.spark && runtime?.sparkRuntime) throw new Error('Spark leaked into default');
             const afterImport = {
                 canvases: document.querySelectorAll('canvas').length,
                 wrappers: document.querySelectorAll('#GameDiv,#Cocos3dGameContainer').length,
@@ -231,7 +240,7 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
             const invalid = [];
             for (const options of [{ canvas: '#missing' }, { canvas: '[' }, { canvas: document.body }]) {
                 try {
-                    await runtime.createAirApp(options);
+                    await api.createAirApp(options);
                     invalid.push('accepted');
                 } catch (e) {
                     invalid.push(e.code);
@@ -270,12 +279,14 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
                 ...(s.container && !s.inferredHost ? { container: host } : {}),
             };
             const safe = s.bundled ? loaded : s.spark ? runtime : await import(prefix + 'bootstrap.js');
-            const a = (s.order === 'main-first' ? runtime : safe).createAirApp(options);
-            const b = (s.order === 'main-first' ? safe : runtime).createAirApp(options);
+            const runtimeRegisteredBeforeStart =
+                typeof globalThis[Symbol.for('cocosair.bootstrap.v1')]?.initialize === 'function';
+            const a = (s.order === 'main-first' ? api : safe).createAirApp(options);
+            const b = (s.order === 'main-first' ? safe : api).createAirApp(options);
             const sharedPromise = a === b;
             let conflict;
             try {
-                await runtime.createAirApp({ ...options, pixelRatioCap: s.cap + 1 });
+                await api.createAirApp({ ...options, pixelRatioCap: s.cap + 1 });
             } catch (e) {
                 conflict = e.code;
             }
@@ -297,6 +308,7 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
                 };
             }
             const [app, other] = await Promise.all([a, b]);
+            if (s.deferredOnly) runtime = await loaded.loadRuntime();
             const firstBuffer = [canvas.width, canvas.height];
             const scene = new runtime.Scene('StartupBinding');
             const cameraNode = new runtime.Node('Camera');
@@ -335,6 +347,7 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
                 afterImport,
                 invalid,
                 sharedPromise,
+                runtimeRegisteredBeforeStart,
                 sameApp: app === other,
                 conflict,
                 firstBuffer,
@@ -369,6 +382,7 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
             assert.equal(startup.wrapperOrder, true);
             assert.equal(startup.hostContainsFrame, true);
             assert.equal(startup.readyPromiseShared, true);
+            if (scenario.deferredOnly) assert.equal(startup.runtimeRegisteredBeforeStart, false);
             const density = Math.min(startup.rawDpr, scenario.cap);
             assert.deepEqual(startup.firstBuffer, [
                 Math.round((scenario.container ? 400 : 640) * density),
