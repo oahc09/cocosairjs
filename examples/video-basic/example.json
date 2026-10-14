@@ -325,13 +325,13 @@
         "api": "Screen.requestFullScreen",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L685"
+        "sourceLocation": "L707"
       },
       {
         "api": "Screen.exitFullScreen",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L698"
+        "sourceLocation": "L720"
       },
       {
         "api": "js.setClassName",
