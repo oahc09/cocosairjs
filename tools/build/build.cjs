@@ -16,6 +16,7 @@ const { ensureDir, moveSync, existsSync } = require('fs-extra');
 const { buildEngine } = require('@cocos/ccbuild');
 const { withIncrementalCache, acquireBuildLock } = require('./incremental.cjs');
 const { withESMHelpers } = require('./esm-helpers.cjs');
+const { lineEndingsPlugin } = require('./line-endings.cjs');
 const { resolveBuildDate, readBuildNumber, commitBuildNumber, buildMetadataPlugin } = require('./build-metadata.cjs');
 
 const ROOT = join(__dirname, '..', '..');
@@ -131,7 +132,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
                         // 会产生 `_i is not defined` 的上游变换 bug（program-lib 布局合并路径）。
                         targets: { chrome: '66' },
                     }),
-                [buildMetadataPlugin(ROOT, buildDate, buildNumber)],
+                [lineEndingsPlugin(), buildMetadataPlugin(ROOT, buildDate, buildNumber)],
             );
         if (!min && moduleFormat === 'esm' && !VARIANT) await withIncrementalCache(ROOT, build);
         else await build();

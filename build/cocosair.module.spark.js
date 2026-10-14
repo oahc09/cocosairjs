@@ -108423,7 +108423,7 @@ var cannon = {exports: {}};
 	    var ri = bi.boundingRadius,
 	        rj = bj.boundingRadius,
 	        boundA2 = biPos + ri,
-	        boundB1 = bjPos - rj;
+	        boundB1 = bjPos - rj;
 
 	    return boundB1 < boundA2;
 	};
@@ -108967,7 +108967,7 @@ var cannon = {exports: {}};
 	        this.motorEquation;
 	        var r1 = this.rotationalEquation1,
 	        r2 = this.rotationalEquation2,
-	        r3 = this.rotationalEquation3;
+	        r3 = this.rotationalEquation3;
 
 	    PointToPointConstraint.prototype.update.call(this);
 
@@ -112201,7 +112201,7 @@ var cannon = {exports: {}};
 	    var I = this.invInertia;
 	    if (I.x === I.y && I.y === I.z && !force) ; else {
 	        var m1 = uiw_m1,
-	            m2 = uiw_m2;
+	            m2 = uiw_m2;
 	        m1.setRotationFromQuaternion(this.quaternion);
 	        m1.transpose(m2);
 	        m1.scale(I,m1);
@@ -115159,7 +115159,7 @@ var cannon = {exports: {}};
 	new Vec3();
 	ConvexPolyhedron.prototype.computeLocalAABB = function(aabbmin,aabbmax){
 	    var n = this.vertices.length,
-	        vertices = this.vertices;
+	        vertices = this.vertices;
 
 	    aabbmin.set(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
 	    aabbmax.set(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
@@ -136667,8 +136667,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610142007";
-const AIR_BUILD_NUMBER = 100;
+const AIR_BUILD_DATE = "202610142019";
+const AIR_BUILD_NUMBER = 103;
 class AirAppImpl {
   get session() {
     return this._scope;
