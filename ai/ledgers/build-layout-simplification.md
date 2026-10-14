@@ -70,3 +70,8 @@ This record supersedes the rev 2 task's conflicting instructions. It is an imple
 - Development/minified/Spark and declaration artifacts were regenerated. A shared node_modules symlink initially leaked the worktree sibling name into private declaration identifiers; using a real isolated dependency directory and the unchanged declaration generator restored canonical node_modules-based names. No dependency source or generated declaration was hand-edited.
 - The canonical API inventory was genuinely regenerated to include the two main-barrel HTML helpers; repeat generation was byte-identical. Final real tarball/TS checks passed all 13 cases, and all five JS/map pairs passed actual-position checks. Final compilation counters are 107/108/109 for development/minified/Spark respectively.
 - This PR remains separate from the merged CI fix and from exhibition/Vulkan work. Historical local browser evidence retains its original binary hashes; newly stamped outputs are not relabelled as that earlier run. Remote checks will provide the new PR's CI result.
+
+## Remote CI follow-through
+
+- PR #2 was opened as a draft at 191f1738. Its first run (38583845567, job 115920458167) exited 134 during build:all: the log records a roughly 2 GiB V8 heap ceiling and an allocation failure while producing the full build. Browser and Jest stages did not execute in that attempt.
+- The build step now uses the same 4 GiB Node heap as the successful local and independent clean builds. This is step-scoped; it does not skip generation, alter source maps, increase browser waits or weaken any assertion. The original failure remains available in the remote run and local submission logs. The next run must establish its own result.

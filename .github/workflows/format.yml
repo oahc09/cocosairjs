@@ -41,6 +41,9 @@ jobs:
       - run: npx prettier --check tools/verify/release-readiness.cjs tools/examples/api-inventory.cjs tools/examples/reconcile-api-claims.cjs tools/examples/coverage-bindings/bind-vector-instance.cjs tools/examples/coverage-bindings/bind-tween-control.cjs tools/examples/coverage-bindings/bind-animation-runtime.cjs tools/examples/coverage-bindings/bind-widget-layout.cjs
       - run: npm run typecheck
       - run: npm run build:all
+        env:
+          # Preserve full JS/map generation; its measured working set exceeds Node's default 2 GiB heap.
+          NODE_OPTIONS: --max-old-space-size=4096
       - run: npm run gallery:api
       - run: git diff --exit-code -- docs/example-api-inventory.json
       - run: npm run verify:doc-refs
