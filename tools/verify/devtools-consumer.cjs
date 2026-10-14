@@ -130,17 +130,19 @@ function run(cmd, opts) {
         const rtDir = makeConsumer('runtime-only', false);
         setupBrowserEnv();
         const mod = await import(
-            pathToFileURL(path.join(rtDir, 'node_modules', 'cocosair', 'build', 'cocosair.module.js')).href
+            pathToFileURL(path.join(rtDir, 'node_modules', 'cocosair', 'build', 'npm', 'cocosair.module.js')).href
         );
         const okExports = ['createAirApp', 'GLTFLoader', 'Scene', 'Node', 'MeshRenderer'].every(
             (k) => typeof mod[k] !== 'undefined',
         );
         // 默认入口不得包含 debug/agent 模块
         const bundle = fs.readFileSync(
-            path.join(rtDir, 'node_modules', 'cocosair', 'build', 'cocosair.module.js'),
+            path.join(rtDir, 'node_modules', 'cocosair', 'build', 'npm', 'cocosair.module.js'),
             'utf8',
         );
-        const noDebug = !bundle.includes('createAgentSession') && !bundle.includes('SESSION_CLOSED');
+        // AIR_E_SESSION_CLOSED is a legitimate runtime error, not an agent-tool marker.
+        const debugMarkers = require('./devtools-runtime-boundary.cjs').developmentRuntimeMarkers(bundle);
+        const noDebug = debugMarkers.length === 0;
         if (!okExports) {
             failures.push('[runtime-only] key exports missing');
         }

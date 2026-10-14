@@ -36,6 +36,9 @@ export class MouseInputSource {
         this._pointLocked = false;
         this._isPressed = false;
         this._preMousePos = new Vec2();
+        screenAdapter.onCanvasBound(() => this._bindCanvas());
+    }
+    _bindCanvas() {
         if (systemInfo.hasFeature(Feature.EVENT_MOUSE)) {
             this._canvas = (globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas'));
             if (!this._canvas && !TEST && !EDITOR) {

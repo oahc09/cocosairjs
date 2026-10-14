@@ -28,3 +28,13 @@ This record supersedes the rev 2 task's conflicting instructions. It is an imple
 
 - Created isolated `refactor/build-layout-safe-start` worktree from the baseline. No changes to main, CI-fix branch or exhibition SDK.
 - Implementation and verification results will be appended after each stage; no push or PR is authorized.
+
+## Implementation checkpoint (before GPU acceptance)
+
+- Default/dev + min + declarations + all four npm copies rebuilt successfully; Spark rebuilt from the full default feature set plus spark through the new --spark option. The first default attempt hit the process heap limit (exit 134); the 4 GiB retry passed. Its stale isolated-worktree lock was moved only after the failed process had exited.
+- PAL --write/--check, typecheck, full file-map (official pinned cocos/cocos4 557b06f7 snapshot), licenses, decoders, custom/feature exports, web-only and Spark asset checks passed. Spark subtree was genuinely regenerated and its check passed; the initial check correctly reported the absent ignored manifest.
+- Real tarball acceptance passed 13 checks: clean/upgrade npm copies, every exports condition target, four map-free JS copies, isolated Node lightweight imports, actual bundler isolation/splitting, each subpath in TS4.9 Node16 and TS5.9.3 Node16/Bundler. Fixture-only failures (calling a canvas-required helper without an argument and modern definite assignment) were corrected and retained in prior logs.
+- Ten focused Jest suites passed; new standalone suites now contain 8 passing tests including exact admission promise/terminal states, custom-canvas audio gesture routing and DevTools positive/negative controls. Inventory additions are generated from passing JSON plus full real discovery, preserve 188 existing suites, and explicitly do not certify a current full Jest run.
+- DevTools old installed path was corrected to build/npm. Its old SESSION_CLOSED substring incorrectly matched baseline AIR_E_SESSION_CLOSED; exact tool signatures plus valid-runtime / injected-tool / real-tool controls replace that false positive. Runtime-only and runtime-plus-DevTools consumer checks passed.
+- Full Gallery build is blocked by unchanged pre-existing responsive-board-recipes imports (tools/recipes, /build/bootstrap and unavailable legacy baseline). The full-build failure is retained; a separately labelled affected-entry subset will be checked. No claim of full Gallery/release certification.
+- CPU supervisor normal exit and forced timeout recovery have real exit+close receipts and no owned running processes. Browser acceptance is pending the shared GPU window, not claimed passed here.

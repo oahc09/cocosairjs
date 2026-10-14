@@ -39,13 +39,13 @@ import { Button, RigidBody, Skeleton, createAirApp } from 'cocosair.js';
 
 `src/index.ts` is a narrower source-form entry whose own header comment claims parity with the build entry - that comment is not true on disk today. Agents trust in-code doc comments, then under-report the package surface or resolve a path the package never exposed. Declaration presence is the export layer only: `Skeleton` is the core 3D skeletal asset class (`build/cocosair.module.d.ts:4247`), while Spine playback stays runtime-asset-gated (`docs/reference/web-features.md:13`, `docs/notes/spine-asset-sourcing.md`) - a symbol resolving from `cocosair.js` does not mean spine works out of the box.
 
-### [MEDIUM] Using ./bootstrap as an addition to the main entry
+### [MEDIUM] Expecting deferred loading while statically importing main
 
 Wrong:
 
 ```ts
 import { Scene } from 'cocosair.js';                    // evaluates the engine now
-import { createAirApp } from 'cocosair.js/bootstrap';   // too late: canvas prep already lost
+import { createAirApp } from 'cocosair.js/bootstrap';   // safe, but main has already loaded
 ```
 
 Correct:
@@ -53,10 +53,10 @@ Correct:
 ```ts
 import { createAirApp } from 'cocosair.js/bootstrap';
 const app = await createAirApp({ canvas: '#GameCanvas' });
-const cc = await import('cocosair.js'); // engine loads after bootstrap prepared it
+const cc = await import('cocosair.js'); // obtains the runtime loaded by bootstrap
 ```
 
-Bootstrap's only advantage is deferring the engine module until options are admitted and the canvas is bound (`src/air/safe-bootstrap.ts` sets `__CC_CANVAS__` before `import('../index')`); a static main import evaluates the engine at module time anyway, so the ordering trap returns while the page looks like it opted out of it.
+Bootstrap defers the engine module until startup admission. A static main import is now safe before canvas creation, but it removes deferred loading. Both entry paths use the same startup-time binding and exact promise.
 
 ### [MEDIUM] Treating a variant build as the default candidate
 

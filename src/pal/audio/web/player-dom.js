@@ -49,7 +49,7 @@ function ensurePlaying(domAudio) {
                 }).catch((e) => { });
                 resolve();
             };
-            const canvas = document.getElementById('GameCanvas');
+            const canvas = (globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas'));
             canvas?.addEventListener('touchend', onGesture, { capture: true });
             canvas?.addEventListener('mouseup', onGesture, { capture: true });
         });

@@ -22,7 +22,7 @@
 | `cocosair.module.min.js` + `.js.map` | 同一运行时的压缩版 | `npm run build:min` | 跟踪 |
 | `cocosair.module.d.ts` | 打包后的 SDK 类型声明，npm 包 `types` 入口 | `npm run build:dts` | 跟踪 |
 | `cocosair.legacy.d.ts` / `bootstrap.legacy.d.ts` | TS <5.0 消费者的包装声明（带 DecompressionStream fallback；现代编译器入口走原生 lib.dom） | `npm run build:dts` | 跟踪 |
-| `bootstrap.js` + `.map` + `.d.ts` | **引擎无关**的 bootstrap 包装入口，对应 npm 子路径 `cocosair.js/bootstrap`（自定义 canvas、需在引擎导入前配置 DPR 的场景） | `npm run build` | 跟踪 |
+| `bootstrap.js` + `.map` + `.d.ts` | **引擎无关**的 bootstrap 包装入口，对应 npm 子路径 `cocosair.js/bootstrap`（需要延迟加载完整引擎的场景） | `npm run build` | 跟踪 |
 | `html-source.js` + `.map` + `.d.ts` | 引擎无关的 HTML 能力探测与纹理源适配器 | `npm run build` | 跟踪 |
 | `cocosair.module.spark.js` + `.js.map` | 完整默认 feature 集加 Spark 的可选运行时 | 独立变体构建 | 跟踪 |
 | `fflate/` | Spark 子图使用的受审计 fflate 发布资产；不进 npm 白名单 | 入库资产，非默认构建生成 | 跟踪 |
@@ -38,8 +38,8 @@
 ## 运行时文件：二选一关系，不是叠加
 
 - **默认入口只有一个**：npm `exports["."]` 指向 `build/npm/cocosair.module.js`（prepack 后的 source-map-free 副本）。`cocosair.module.min.js` 打包进 tarball 但默认入口不指它——是给想要发布体积的场景手动取用的副本。
-- `bootstrap.js` 是**替代入口**而非额外依赖：普通应用 import 主入口即可；只有自定义 canvas 或需要引擎导入前配置 DPR 时才改用 `cocosair.js/bootstrap` 子路径，两者二选一、共享同一 canvas/config 初始化。
-- 应用侧开发最小集 = 运行时 JS + `cocosair.module.d.ts`；加载 Draco/Basis/meshopt 压缩模型才需要另取 `gltf-decoders/`（部署见 [docs/gltf/gltf-decoder-deployment.md](../docs/gltf/gltf-decoder-deployment.md)）。环境前提：WebGL 2 浏览器；页面先有 `#GameCanvas` 再 import（或走 bootstrap 自定义 canvas）。
+- `bootstrap.js` 是**替代入口**而非额外依赖：普通应用 import 主入口即可；需要延迟加载完整引擎时可用 `cocosair.js/bootstrap` 子路径，两个入口可混用、同一 canvas/config 共享精确相同的初始化 Promise。
+- 应用侧开发最小集 = 运行时 JS + `cocosair.module.d.ts`；加载 Draco/Basis/meshopt 压缩模型才需要另取 `gltf-decoders/`（部署见 [docs/gltf/gltf-decoder-deployment.md](../docs/gltf/gltf-decoder-deployment.md)）。环境前提：WebGL 2 浏览器；主入口允许先 import 后创建 canvas；调用 createAirApp 时传入 canvas 与 DPR 选项。仅轻入口承诺无 DOM 导入。
 
 ## gltf-decoders/
 

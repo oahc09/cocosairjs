@@ -12,19 +12,19 @@ Start with [README.md](README.md) for the current quick start and capability bou
 
 ## Repository layout
 
-| Path | Purpose |
-|---|---|
-| `src/cocos/` | Extracted Cocos engine source. Keep upstream differences small and traceable. |
-| `src/pal/`, `src/exports/` | Web platform adapters and build feature/export entry points. |
-| `src/air/` | Cocos AIR's thin bootstrap, Code First helpers, built-in resources, and glTF integration. |
-| `build/` | Generated ESM bundles, declarations, and separately shipped decoder assets. |
-| `examples/` | Runnable applications, Gallery metadata, and example assets. |
-| `docs/` | Getting-started material, engine analysis, API guidance, and verification records. |
-| `docs/manual/` | Developer manual and its examples. |
-| `tools/` | Build, development server, analysis, and verification tooling. `tools/debug/` contains optional development tools. |
+| Path                                              | Purpose                                                                                                                                                                 |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/cocos/`                                      | Extracted Cocos engine source. Keep upstream differences small and traceable.                                                                                           |
+| `src/pal/`, `src/exports/`                        | Web platform adapters and build feature/export entry points.                                                                                                            |
+| `src/air/`                                        | Cocos AIR's thin bootstrap, Code First helpers, built-in resources, and glTF integration.                                                                               |
+| `build/`                                          | Generated ESM bundles, declarations, and separately shipped decoder assets.                                                                                             |
+| `examples/`                                       | Runnable applications, Gallery metadata, and example assets.                                                                                                            |
+| `docs/`                                           | Getting-started material, engine analysis, API guidance, and verification records.                                                                                      |
+| `docs/manual/`                                    | Developer manual and its examples.                                                                                                                                      |
+| `tools/`                                          | Build, development server, analysis, and verification tooling. `tools/debug/` contains optional development tools.                                                      |
 | `tools/build/`, `tools/analyze/`, `tools/verify/` | Dependency vendoring and builds; dependency analysis and upstream group import; static gates and browser probes. Organize active tools by purpose, not release version. |
-| `test/` | Smoke tests and fixtures. |
-| `ai/` | Topic-based plans, execution ledgers, and prompts; see `ai/README.md`. These are not proof that a feature shipped. |
+| `test/`                                           | Smoke tests and fixtures.                                                                                                                                               |
+| `ai/`                                             | Topic-based plans, execution ledgers, and prompts; see `ai/README.md`. These are not proof that a feature shipped.                                                      |
 
 PAL uses the frozen public MIT source in `vendor/pal-source/`. `node tools/build/pal-source.cjs --check` performs read-only verification of source hashes, generated outputs, and copyright notices; `--write` explicitly rebuilds `src/pal/`. Do not reintroduce bytes from the retired `@cocos/engine-pal` package.
 
@@ -48,7 +48,7 @@ The rules below are the parts you must know before running scripts rather than l
 - **Runtime builds stamp identity.** `build`, `build:min`, and `build:system` write `build/package.json` (`type: module`) and `build/gltf-decoders/package.json` (`type: commonjs`); the latter only declares the module format of existing decoder files and **does not download or generate decoder JS/WASM assets**. Runtime builds inject `AIR_BUILD_DATE` (`yyyyMMddHHmm`, Asia/Shanghai) and `AIR_BUILD_NUMBER` as a compilation counter starting at 1; each successful runtime JS build advances `tools/build/build-number.json`, and `build:all` compiles development and minified JS separately, **consuming two numbers**. Declaration builds and packaging do not increment it, and the counter survives cleanup of generated `build/`. `SOURCE_DATE_EPOCH` pins only the time, not the counter. The scripts support `AIR_FEATURES` and `AIR_OUT_DIR`; those variants neither refresh default release-side files nor share the default ESM incremental cache, and `build:dts` does not follow `AIR_OUT_DIR`.
 - **ESM builds also emit the engine-free [html-source](build/html-source.js) entry** (JS, map, and `.d.ts`); `prepack` copies the JS without its map to `build/npm/`, and `cocosair.js/html-source` exposes it. The npm `files` list includes AIR-specific `skills/`; no skills are installed into the host automatically. `build:dts` alone does not regenerate the HTML entry.
 - **Browser evidence needs real tooling.** The browser collectors require resolvable Playwright tooling and matching browser binaries; when Playwright is not a project dependency use the configured tooling environment or `NODE_PATH`. A successful `npm install` does not establish browser availability, and an existing `build/cocosair.module.js` is usually required. Ordinary viewing uses the native pacer; actions/assertions must pause it and advance via the single step clock. A matching GPU readback alone is not compositor presentation evidence, and `--mobile` initializes at a mobile viewport independently.
-- **`#GameCanvas` must exist before importing the engine** in a browser page, because the screen adapter initializes during module import. Use `examples/starter/` for the minimal page structure. For model loading and decoder deployment, see [docs/gltf/gltf-runtime.md](docs/gltf/gltf-runtime.md) and [docs/gltf/gltf-decoder-deployment.md](docs/gltf/gltf-decoder-deployment.md).
+- **The main entry is browser-only but may be imported before a canvas exists.** Pass the selected canvas and optional pixelRatioCap to createAirApp: admission precedes globals, wrappers, PAL screen/input binding and engine initialization. The optional bootstrap and html-source entries remain engine-free on import (including Node); this does not make the full entry SSR-compatible. Use `examples/starter/` for the minimal page structure. For model loading and decoder deployment, see [docs/gltf/gltf-runtime.md](docs/gltf/gltf-runtime.md) and [docs/gltf/gltf-decoder-deployment.md](docs/gltf/gltf-decoder-deployment.md).
 
 When adding or changing an npm script, update `docs/reference/npm-scripts.md` with its purpose, output paths, and write behavior, and keep the script count above accurate.
 

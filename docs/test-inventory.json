@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T19:02:48.983Z",
+  "generatedAt": "2026-10-14T11:44:43.451Z",
   "suites": [
     {
       "file": "test/smoke/air-dom-texture-blend.test.ts",
@@ -3801,6 +3801,24 @@
       ]
     },
     {
+      "file": "test/smoke/startup-admission.test.ts",
+      "tests": [
+        "runtime session errors stay allowed while actual DevTools signatures are rejected",
+        "startup admission shared by eager and deferred entries closed is terminal even when an old init promise exists",
+        "startup admission shared by eager and deferred entries invalid options reject before loader or registry ownership mutation",
+        "startup admission shared by eager and deferred entries load or initialization failure is terminal and preserves the original error",
+        "startup admission shared by eager and deferred entries one exact promise across loaders, admission before canvas and cap mutation",
+        "startup admission shared by eager and deferred entries preselected conflicting canvas is not overwritten"
+      ]
+    },
+    {
+      "file": "test/smoke/startup-audio-canvas.test.ts",
+      "tests": [
+        "selected canvas audio gesture recovery DOM playback retry listens to selected custom canvas and detaches on success",
+        "selected canvas audio gesture recovery Web Audio recovery uses selected custom canvas and removes gesture listeners"
+      ]
+    },
+    {
       "file": "test/smoke/video-fullscreen-cleanup.test.ts",
       "tests": [
         "VideoPlayer fullscreen cleanup a rejected native exit is observed and retains the actual fullscreen state",
@@ -3915,9 +3933,20 @@
     }
   ],
   "totals": {
-    "suites": 188,
-    "tests": 2972,
-    "passed": 2972,
-    "failed": 0
+    "suites": 190,
+    "tests": 2980,
+    "passed": null,
+    "failed": null
+  },
+  "verification": {
+    "scope": "additions-only",
+    "fullRunVerified": false,
+    "previousGeneratedAt": "2026-10-13T19:02:48.983Z",
+    "addedSuites": [
+      "test/smoke/startup-admission.test.ts",
+      "test/smoke/startup-audio-canvas.test.ts"
+    ],
+    "addedTestsPassed": 8,
+    "note": "Complete discovery and new suites verified. Older titles preserved; current full Jest execution is not certified."
   }
 }

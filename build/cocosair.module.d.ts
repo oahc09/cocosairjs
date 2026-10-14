@@ -48013,7 +48013,7 @@
              * @version DragonBones 5.0
              * @language zh_CN
              */
-            fadeOutMode: __private.___node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode;
+            fadeOutMode: __private.____repo_node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode;
             /**
              * @private
              */
@@ -50273,7 +50273,7 @@
              * @version DragonBones 4.5
              * @language zh_CN
              */
-            fadeIn(animationName: string, fadeInTime?: number, playTimes?: number, layer?: number, group?: string | null, fadeOutMode?: __private.___node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode): AnimationState | null;
+            fadeIn(animationName: string, fadeInTime?: number, playTimes?: number, layer?: number, group?: string | null, fadeOutMode?: __private.____repo_node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode): AnimationState | null;
             /**
              * - Play a specific animation from the specific time.
              * @param animationName - The name of animation data.
@@ -50530,7 +50530,7 @@
              * @deprecated
              * @language zh_CN
              */
-            gotoAndPlay(animationName: string, fadeInTime?: number, duration?: number, playTimes?: number, layer?: number, group?: string | null, fadeOutMode?: __private.___node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode, pauseFadeOut?: boolean, pauseFadeIn?: boolean): AnimationState | null;
+            gotoAndPlay(animationName: string, fadeInTime?: number, duration?: number, playTimes?: number, layer?: number, group?: string | null, fadeOutMode?: __private.____repo_node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode, pauseFadeOut?: boolean, pauseFadeIn?: boolean): AnimationState | null;
             /**
              * - Deprecated, please refer to {@link #gotoAndStopByTime()}.
              * @deprecated
@@ -55900,6 +55900,45 @@
      * ```
      */
     export function createAirApp(options: AirAppOptions): Promise<AirApp>;
+    export function getAirHTMLSourceSupport(canvas: HTMLCanvasElement): {
+        supported: boolean;
+        reason: string | null;
+    };
+    /** Uploads only on canvas paint events. Owns listeners/snapshots, borrows DOM and Texture2D. */
+    export function createAirHTMLSource(options: AirHTMLSourceOptions): {
+        readonly texture: AirHTMLTextureTarget;
+        readonly status: "waiting" | "ready" | "failed" | "disposed";
+        readonly error: unknown;
+        /** Queues a paint; upload completion is signalled by onUpdate/onError. */
+        update(): void;
+        updateGeometry(options: {
+            canvasTransform?: DOMMatrixInit;
+            clip?: DOMRectInit;
+            preserveHitTestOrder?: boolean;
+        }): void;
+        dispose(): void;
+    };
+    /** Experimental, engine-free opt-in entry. A native Texture2D is supplied by the caller. */
+    export interface AirHTMLTextureTarget {
+        readonly width: number;
+        readonly height: number;
+        reset(info: {
+            width: number;
+            height: number;
+            mipmapLevel: number;
+        }): void;
+        getGFXTexture(): unknown;
+    }
+    export interface AirHTMLSourceOptions {
+        canvas: HTMLCanvasElement;
+        element: HTMLElement;
+        texture: AirHTMLTextureTarget;
+        resolution?: number;
+        autoUpdate?: boolean;
+        snapshot?: boolean;
+        onUpdate?: () => void;
+        onError?: (error: unknown) => void;
+    }
     /**
      * @en Select the 3D physics backend before engine initialization. Must be called before
      * `game.init()` (Air does this inside [[createAirApp]]); after the physics world exists
@@ -72095,7 +72134,7 @@
          * @version DragonBones 4.5
          * @language zh_CN
          */
-        export enum ___node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode {
+        export enum ____repo_node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode {
             /**
              * - Do not fade out of any animation states.
              * @language en_US
@@ -73142,42 +73181,42 @@
             getDescriptorNameID(name: string): number;
             getDescriptorName(nameID: number): string;
         }
-        export interface ___node_modules_typescript_lib_libdom__EXT_color_buffer_half_float {
+        export interface ____repo_node_modules_typescript_lib_libdom__EXT_color_buffer_half_float {
             readonly FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE_EXT: GLenum;
             readonly RGB16F_EXT: GLenum;
             readonly RGBA16F_EXT: GLenum;
             readonly UNSIGNED_NORMALIZED_EXT: GLenum;
         }
-        export interface ___node_modules_typescript_lib_libdom__EXT_color_buffer_half_float {
+        export interface ____repo_node_modules_typescript_lib_libdom__EXT_color_buffer_half_float {
             readonly RGBA16F_EXT: GLenum;
             readonly RGB16F_EXT: GLenum;
             readonly FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE_EXT: GLenum;
             readonly UNSIGNED_NORMALIZED_EXT: GLenum;
         }
-        export interface ___node_modules_typescript_lib_libdom__EXT_color_buffer_float {
+        export interface ____repo_node_modules_typescript_lib_libdom__EXT_color_buffer_float {
         }
-        export interface ___node_modules_typescript_lib_libdom__EXT_color_buffer_float {
+        export interface ____repo_node_modules_typescript_lib_libdom__EXT_color_buffer_float {
         }
-        export interface ___node_modules_typescript_lib_libdom__WEBGL_multi_draw {
+        export interface ____repo_node_modules_typescript_lib_libdom__WEBGL_multi_draw {
             multiDrawArraysInstancedWEBGL(mode: GLenum, firstsList: Int32Array | GLint[], firstsOffset: GLuint, countsList: Int32Array | GLsizei[], countsOffset: GLuint, instanceCountsList: Int32Array | GLsizei[], instanceCountsOffset: GLuint, drawcount: GLsizei): void;
             multiDrawArraysWEBGL(mode: GLenum, firstsList: Int32Array | GLint[], firstsOffset: GLuint, countsList: Int32Array | GLsizei[], countsOffset: GLuint, drawcount: GLsizei): void;
             multiDrawElementsInstancedWEBGL(mode: GLenum, countsList: Int32Array | GLsizei[], countsOffset: GLuint, type: GLenum, offsetsList: Int32Array | GLsizei[], offsetsOffset: GLuint, instanceCountsList: Int32Array | GLsizei[], instanceCountsOffset: GLuint, drawcount: GLsizei): void;
             multiDrawElementsWEBGL(mode: GLenum, countsList: Int32Array | GLsizei[], countsOffset: GLuint, type: GLenum, offsetsList: Int32Array | GLsizei[], offsetsOffset: GLuint, drawcount: GLsizei): void;
         }
-        export interface ___node_modules_typescript_lib_libdom__WEBGL_multi_draw {
+        export interface ____repo_node_modules_typescript_lib_libdom__WEBGL_multi_draw {
             multiDrawArraysWEBGL(mode: GLenum, firstsList: GLint[] | Int32Array, firstsOffset: GLuint, countsList: GLsizei[] | Int32Array, countsOffset: GLuint, drawCount: GLsizei): void;
             multiDrawElementsWEBGL(mode: GLenum, countsList: GLint[] | Int32Array, countsOffset: GLuint, type: GLenum, offsetsList: GLsizei[] | Int32Array, OffsetsOffset: GLuint, drawCount: GLsizei): void;
             multiDrawArraysInstancedWEBGL(mode: GLenum, firstsList: GLint[] | Int32Array, firstsOffset: GLuint, countsList: GLsizei[] | Int32Array, countsOffset: GLuint, instanceCountsList: GLsizei[] | Int32Array, instanceCountsOffset: GLuint, drawCount: GLsizei): void;
             multiDrawElementsInstancedWEBGL(mode: GLenum, countsList: GLint[] | Int32Array, countsOffset: GLuint, type: GLenum, offsetsList: GLsizei[] | Int32Array, OffsetsOffset: GLuint, instanceCountsList: GLsizei[] | Int32Array, instanceCountsOffset: GLuint, drawCount: GLsizei): void;
         }
-        export interface ___node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc1 {
+        export interface ____repo_node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc1 {
             readonly COMPRESSED_RGB_ETC1_WEBGL: GLenum;
         }
         // note that ETC1 is not supported with the compressedTexSubImage2D() method
-        export interface ___node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc1 {
+        export interface ____repo_node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc1 {
             readonly COMPRESSED_RGB_ETC1_WEBGL: GLenum;
         }
-        export interface ___node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc {
+        export interface ____repo_node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc {
             readonly COMPRESSED_R11_EAC: GLenum;
             readonly COMPRESSED_RG11_EAC: GLenum;
             readonly COMPRESSED_RGB8_ETC2: GLenum;
@@ -73189,7 +73228,7 @@
             readonly COMPRESSED_SRGB8_ETC2: GLenum;
             readonly COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2: GLenum;
         }
-        export interface ___node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc {
+        export interface ____repo_node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc {
             readonly COMPRESSED_R11_EAC: GLenum;
             readonly COMPRESSED_SIGNED_R11_EAC: GLenum;
             readonly COMPRESSED_RG11_EAC: GLenum;
@@ -73210,11 +73249,11 @@
         /** @mangle */
         export interface _cocos_gfx_webgl2_webgl2_define__IWebGL2Extensions {
             EXT_texture_filter_anisotropic: EXT_texture_filter_anisotropic | null;
-            EXT_color_buffer_half_float: ___node_modules_typescript_lib_libdom__EXT_color_buffer_half_float | null;
-            EXT_color_buffer_float: ___node_modules_typescript_lib_libdom__EXT_color_buffer_float | null;
-            WEBGL_multi_draw: ___node_modules_typescript_lib_libdom__WEBGL_multi_draw | null;
-            WEBGL_compressed_texture_etc1: ___node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc1 | null;
-            WEBGL_compressed_texture_etc: ___node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc | null;
+            EXT_color_buffer_half_float: ____repo_node_modules_typescript_lib_libdom__EXT_color_buffer_half_float | null;
+            EXT_color_buffer_float: ____repo_node_modules_typescript_lib_libdom__EXT_color_buffer_float | null;
+            WEBGL_multi_draw: ____repo_node_modules_typescript_lib_libdom__WEBGL_multi_draw | null;
+            WEBGL_compressed_texture_etc1: ____repo_node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc1 | null;
+            WEBGL_compressed_texture_etc: ____repo_node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc | null;
             WEBGL_compressed_texture_pvrtc: __types_webGLextras__WEBGL_compressed_texture_pvrtc | null;
             WEBGL_compressed_texture_astc: WEBGL_compressed_texture_astc | null;
             WEBGL_compressed_texture_s3tc: WEBGL_compressed_texture_s3tc | null;

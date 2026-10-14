@@ -21,6 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import { screenAdapter } from 'pal/screen-adapter';
 import { KeyCode, EventKeyboard } from '../../../cocos/input/types';
 import { EventTarget } from '../../../cocos/core/event';
 import { InputEventType } from '../../../cocos/input/types/event-enum';
@@ -31,6 +32,9 @@ function getKeyCode(code) {
 export class KeyboardInputSource {
     constructor() {
         this._eventTarget = new EventTarget();
+        screenAdapter.onCanvasBound(() => this._bindCanvas());
+    }
+    _bindCanvas() {
         this._registerEvent();
     }
     dispatchKeyboardDownEvent(nativeKeyboardEvent) { this._handleKeyboardDown(nativeKeyboardEvent); }

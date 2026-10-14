@@ -124,6 +124,100 @@ function inspectRuntimeAssets(root, types, collections = {}) {
   return { ok: diagnostics.length === 0, counts, resources, references, diagnostics, unchecked };
 }
 
+// tools/debug/skinning-inspector.ts
+var bound = (value) => value ? Object.freeze({
+  center: Object.freeze([value.center.x, value.center.y, value.center.z]),
+  halfExtents: Object.freeze([value.halfExtents.x, value.halfExtents.y, value.halfExtents.z])
+}) : null;
+function inspectSkinning(renderer) {
+  const model = renderer.model, animation = renderer.associatedAnimation;
+  const patches = model?.getMacroPatches(0) ?? [];
+  const macro = (name) => patches.find((p) => p.name === name)?.value;
+  const baked = macro("CC_USE_BAKED_ANIMATION") === true;
+  const texture = macro("CC_USE_REAL_TIME_JOINT_TEXTURE") === true;
+  const transport = !model ? "NOT_READY" : baked ? "BAKED_TEXTURE" : macro("CC_USE_SKINNING") !== true ? "UNKNOWN" : texture ? "REALTIME_TEXTURE" : "REALTIME_UNIFORM";
+  const mat = model?.transform?.worldMatrix;
+  const determinant = mat ? mat.m00 * (mat.m05 * mat.m10 - mat.m09 * mat.m06) - mat.m04 * (mat.m01 * mat.m10 - mat.m09 * mat.m02) + mat.m08 * (mat.m01 * mat.m06 - mat.m05 * mat.m02) : null;
+  const arrays = Array.isArray(model?._dataArray) ? model._dataArray : null;
+  const slots = arrays ? arrays.slice(0, 80).map((v) => v.length / 12) : null;
+  return Object.freeze({
+    requestedMode: animation ? animation.useBakedAnimation ? "BAKED" : "REALTIME" : "AUTO_REALTIME",
+    animationEnabled: animation?.enabledInHierarchy ?? null,
+    effectiveModel: model?.constructor.name ?? null,
+    transport,
+    skeletonJoints: renderer.skeleton?.joints.length ?? null,
+    boundWeightedJoints: Array.isArray(model?._joints) ? model._joints.length : null,
+    paletteSlots: slots ? Object.freeze(slots) : null,
+    paletteCount: arrays?.length ?? null,
+    palettesTruncated: arrays ? arrays.length > 80 : false,
+    deviceVertexUniformVectors: model?._device?.capabilities?.maxVertexUniformVectors ?? null,
+    realtimeTextureFormat: texture ? model?._realTimeJointTexture?._format ?? null : null,
+    root: renderer.skinningRoot?.name ?? null,
+    modelTransform: model?.transform?.name ?? null,
+    modelBounds: bound(model?.modelBounds),
+    worldBounds: bound(model?.worldBounds),
+    rootWorldDeterminant: determinant,
+    reflected: determinant === null ? null : determinant < 0,
+    limitations: "Pinned native private arrays are observed where available; counts are not binding success rates or GPU allocation measurements."
+  });
+}
+
+// tools/debug/render-visibility.ts
+function inspectRenderVisibility(renderer, cameras, aabbFrustum) {
+  const model = renderer.model, worldBounds = model?.worldBounds ?? null;
+  const finiteBounds = worldBounds ? [
+    worldBounds.center.x,
+    worldBounds.center.y,
+    worldBounds.center.z,
+    worldBounds.halfExtents.x,
+    worldBounds.halfExtents.y,
+    worldBounds.halfExtents.z
+  ].every(Number.isFinite) : null;
+  const nodeLayer = renderer.node.layer >>> 0, modelVisibility = model?.visFlags === void 0 ? null : model.visFlags >>> 0;
+  const attached = model ? model.scene === renderer.node.scene?.renderScene && model.scene !== null : null;
+  const observations = cameras.slice(0, 80).map((camera) => {
+    const mask = camera.visibility >>> 0;
+    const nodeIncluded = (mask & nodeLayer) === nodeLayer;
+    const modelIncluded = modelVisibility === null ? null : (mask & modelVisibility) !== 0;
+    const layerIncluded = nodeIncluded || modelIncluded === true;
+    const nativeCamera = camera.camera;
+    const frustum = worldBounds && finiteBounds && nativeCamera && aabbFrustum ? Boolean(aabbFrustum(worldBounds, nativeCamera.frustum)) : "UNAVAILABLE";
+    let reason;
+    if (!model) reason = "MODEL_NOT_READY";
+    else if (!renderer.enabledInHierarchy || !model.enabled) reason = "MODEL_DISABLED";
+    else if (!camera.enabledInHierarchy) reason = "CAMERA_DISABLED";
+    else if (renderer.node.scene !== camera.node.scene) reason = "DIFFERENT_SCENE";
+    else if (!attached) reason = "MODEL_NOT_ATTACHED";
+    else if (!layerIncluded) reason = "LAYER_MASK";
+    else if (finiteBounds === false) reason = "INVALID_BOUNDS";
+    else if (frustum === false) reason = "FRUSTUM";
+    else if (frustum === "UNAVAILABLE") reason = "FRUSTUM_UNCHECKED";
+    else reason = "PASSES_OBSERVED_FILTERS";
+    return Object.freeze({
+      camera: camera.node.name,
+      mask,
+      cameraEnabled: camera.enabledInHierarchy,
+      nodeIncluded,
+      modelIncluded,
+      layerIncluded,
+      frustum,
+      reason
+    });
+  });
+  return Object.freeze({
+    nodeLayer,
+    modelVisibility,
+    rendererEnabled: renderer.enabledInHierarchy,
+    modelEnabled: model?.enabled ?? null,
+    attached,
+    finiteBounds,
+    cameraCount: cameras.length,
+    camerasTruncated: cameras.length > 80,
+    cameras: Object.freeze(observations),
+    limitations: "Current native layer/model visibility OR and AABB-frustum filters only; no draw, LOD, occlusion, shader, material or GPU allocation claim."
+  });
+}
+
 // tools/debug/agent-session.ts
 var AgentSessionError = class extends Error {
   constructor(code, message, cause) {
@@ -167,7 +261,7 @@ var Collector = class _Collector {
     }
     return collector;
   }
-  attach(session) {
+  attach(session, app) {
     this.owners.add(session);
     if (this.owners.size > 1 && this.hook) {
       return;
@@ -176,6 +270,20 @@ var Collector = class _Collector {
     const push = (category, message, source, requestId) => {
       this.emit({ seq: ++this.seq, time: (/* @__PURE__ */ new Date()).toISOString(), category, message, source, requestId });
     };
+    const diagnostics = app.diagnostics;
+    if (diagnostics) {
+      const collect = (entry) => {
+        push(
+          entry.severity === "warning" ? "engine-warning" : "engine-error",
+          entry.message,
+          entry.id === null ? void 0 : `cocos:${entry.id}`
+        );
+      };
+      for (const entry of diagnostics.snapshot()) {
+        collect(entry);
+      }
+      ownership.subscribers.add(diagnostics.onMessage(collect));
+    }
     if (window.__airErrorHub) {
       const unsubscribe = window.__airErrorHub.subscribe((entry) => {
         const known = entry.category;
@@ -186,7 +294,9 @@ var Collector = class _Collector {
     } else {
       const onError = ((event) => {
         const isResource = event.target && event.target.tagName;
-        push("window-error", isResource ? `RESOURCE: ${event.target.src || event.target.tagName}` : String(event.error && event.error.stack || event.message).slice(0, 600));
+        const target = event.target;
+        const mediaError = target?.error?.code ?? target?.parentElement?.error?.code ?? null;
+        push("window-error", isResource ? `RESOURCE: ${target.src || target.tagName} [tag=${target.tagName}, mediaCode=${mediaError}, connected=${target.isConnected}]` : String(event.error && event.error.stack || event.message).slice(0, 600));
       });
       const onRejection = ((event) => {
         push("unhandled-rejection", String(event.reason && (event.reason.stack || event.reason) || event.reason).slice(0, 600));
@@ -274,6 +384,7 @@ var AgentSessionImpl = class _AgentSessionImpl {
     this.componentIds = /* @__PURE__ */ new Map();
     this.assetIds = /* @__PURE__ */ new Map();
     this.assetsById = /* @__PURE__ */ new Map();
+    this.assetLabels = /* @__PURE__ */ new Map();
     this.ownedNodes = /* @__PURE__ */ new Set();
     this.ownedInstances = [];
     this.ownedAssets = /* @__PURE__ */ new Set();
@@ -284,7 +395,15 @@ var AgentSessionImpl = class _AgentSessionImpl {
     this.pendingCaptures = /* @__PURE__ */ new Set();
     this.id = `agent-session-${++_AgentSessionImpl.counter}`;
     this.collector = Collector.for(options.app, options.errorBufferLimit ?? DEFAULT_ERROR_LIMIT);
-    this.collector.attach(this);
+    this.collector.attach(this, options.app);
+  }
+  /** Business-supplied names for assets such as atlas frames; never inferred from a texture UUID. */
+  registerAssetLabel(asset, label) {
+    this.requireOpen();
+    if (!cc.isValid(asset, true) || !label) {
+      throw new AgentSessionError("INVALID_ARGUMENT", "a live asset and nonempty label are required");
+    }
+    this.assetLabels.set(asset, label);
   }
   static {
     this.counter = 0;
@@ -445,6 +564,13 @@ var AgentSessionImpl = class _AgentSessionImpl {
     const parent = node.parent;
     const euler = node.eulerAngles;
     const world = node.worldPosition;
+    const ui = node.getComponent(cc.UITransform);
+    const label = node.getComponent(cc.Label);
+    const sprite = node.getComponent(cc.Sprite);
+    const frame = sprite?.spriteFrame;
+    const texture = frame?.texture;
+    const renderer = node.getComponent(cc.MeshRenderer);
+    const rect = frame?.rect;
     return {
       id: this.nodeId(node),
       name: node.name,
@@ -452,6 +578,7 @@ var AgentSessionImpl = class _AgentSessionImpl {
       childrenIds: node.children.map((child) => this.nodeId(child)),
       active: node.activeInHierarchy,
       activeSelf: node.active,
+      layer: node.layer,
       components: node.components.map((component) => ({
         id: this.componentId(component),
         type: component.constructor.name,
@@ -462,7 +589,30 @@ var AgentSessionImpl = class _AgentSessionImpl {
         rotationEuler: [euler.x, euler.y, euler.z],
         scale: [node.scale.x, node.scale.y, node.scale.z]
       },
-      world: { position: [world.x, world.y, world.z] }
+      world: { position: [world.x, world.y, world.z] },
+      visual: {
+        ui: ui ? { size: [ui.width, ui.height], anchor: [ui.anchorX, ui.anchorY] } : null,
+        label: label ? { text: label.string, overflow: label.overflow, fontSize: label.fontSize } : null,
+        sprite: sprite ? {
+          frameId: frame ? this.assetId(frame) : null,
+          frameName: frame?.name ?? null,
+          rect: rect ? [rect.x, rect.y, rect.width, rect.height] : null,
+          textureId: texture ? this.assetId(texture) : null,
+          textureValid: texture ? cc.isValid(texture, true) : null,
+          frameLabel: frame ? this.assetLabels.get(frame) ?? null : null,
+          textureLabel: texture ? this.assetLabels.get(texture) ?? null : null
+        } : null,
+        mesh: renderer ? {
+          meshId: renderer.mesh ? this.assetId(renderer.mesh) : null,
+          materialIds: renderer.sharedMaterials.map((material) => material ? this.assetId(material) : null),
+          skinning: renderer instanceof cc.SkinnedMeshRenderer ? inspectSkinning(renderer) : null,
+          visibility: inspectRenderVisibility(
+            renderer,
+            this.currentScene().getComponentsInChildren(cc.Camera),
+            (bounds, frustum) => cc.geometry.intersect.aabbFrustum(bounds, frustum)
+          )
+        } : null
+      }
     };
   }
   inspectAsset() {
@@ -852,6 +1002,7 @@ var AgentSessionImpl = class _AgentSessionImpl {
     this.componentIds.clear();
     this.assetIds.clear();
     this.assetsById.clear();
+    this.assetLabels.clear();
     this.requestLog.clear();
   }
 };

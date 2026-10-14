@@ -23,7 +23,7 @@ app.run(new Scene('Main'));
 app.getScene(); // → Scene | null
 ```
 
-自定义canvas或需要在引擎导入前配置DPR时，使用无eager engine import的 `cocosair.js/bootstrap` 子路径；同canvas/config共享初始化，释放场景可用 `app.releaseScene()`，关闭后要求reload。完整用法见[安全启动与释放](docs/manual/safe-startup-and-release.md)。
+主入口可先 import，再创建默认或自定义 canvas；canvas 和 DPR 上限均通过 createAirApp 选项传入。需要延迟加载完整引擎时，使用轻量 `cocosair.js/bootstrap`；仅检查 HTML 能力时用 `cocosair.js/html-source`。main/bootstrap 的同 canvas/config 调用共享同一个初始化 Promise，释放场景可用 `app.releaseScene()`，关闭后要求 reload。完整用法见[安全启动与释放](docs/manual/safe-startup-and-release.md)。
 
 Promise 资产加载：
 
@@ -149,7 +149,7 @@ cocosair.js/
 
 ## Code First 注意事项
 
-- 使用eager主入口时，`#GameCanvas`或显式 `__CC_CANVAS__` 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例），
+- 主入口仍要求浏览器全局对象，但 canvas、包装容器和输入监听延迟到 createAirApp 启动时绑定；无需在 import 前创建 canvas 或设置 DPR。
   参考 `examples/hello-cube/index.html` 的模板结构。
 - 原生Camera默认可见层已包含 `Layers.Enum.DEFAULT`；只在需要隔离层时显式配置visibility。
 - builtin 材质/效果由 `src/air/builtin/register.ts` 程序化注册（无 Creator internal db）。

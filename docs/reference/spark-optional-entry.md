@@ -31,24 +31,23 @@
 ## 公开入口（可选 feature unit，变体构建）
 
 - 形态：独立 ccbuild feature unit `spark`（入口 `src/exports/spark.ts`）。使用时以变体构建显式点名，例如
-  `AIR_FEATURES=<默认 26 项>,spark AIR_OUT_DIR=output/spark-variant npm run build`。
+  `node tools/build/build.cjs --format esm --spark`。
   **`AIR_FEATURES` 是覆盖语义而非追加**：只写 `air,base,gfx-webgl2,spark` 会裁掉默认集其余 feature，
   产物缺 pipeline/场景装配而在运行期报 `pipelineSceneData` 为 null——必须带满默认 26 项再追加 `spark`。
-- **完整配方（构建 + 落位）**：门禁与探针消费的是 `build/cocosair.module.spark.js`，而变体构建**不会**自己写到那里——
+- **完整配方（构建 + 落位）**：门禁与探针消费的是 `build/cocosair.module.spark.js`，通用 AIR_FEATURES 变体不会自动落位，专用 `--spark` 会直接生成此文件及其匹配 map——
   `tools/build/build.cjs` 把「feature 集被覆盖，或 `AIR_OUT_DIR` 重定向」判为 `VARIANT`，变体既不共享默认集的增量缓存，
-  也不写 `build/` 的发布附属产物，以免污染共用工作树里的默认 bundle。因此两步：
+  也不写 `build/` 的发布附属产物，以免污染共用工作树里的默认 bundle。可使用专用参数直接生成正确命名的 JS/map 对：
 
   ```bash
-  AIR_FEATURES=<默认 26 项>,spark AIR_OUT_DIR=output/spark-variant npm run build
-  cp output/spark-variant/cocosair.module.js      build/cocosair.module.spark.js
-  cp output/spark-variant/cocosair.module.js.map  build/cocosair.module.spark.js.map
+  node tools/build/build.cjs --format esm --spark
   ```
 
   落位后 `npm run verify:spark-assets` / `verify:spark-pixel-parity` / `verify:spark-cpu-parity` /
-  `verify:spark-dpr-mismatch` 才有对象可验。**注意 `AIR_BUILD_NUMBER` 每次成功构建自增**（现为 80）并写进 dev 产物，
+  `verify:spark-dpr-mismatch` 才有对象可验。**注意 `AIR_BUILD_NUMBER` 每次成功构建自增**并写进 dev 产物，
   所以变体产物的 sha256 跨轮次不可比；证据交叉锚因此按探针文档哈希对账并**刻意排除 SDK 字节**
   （见 `ai/ledgers/spark-integration.md` §SPK-13 比例不一致像素面收口）。默认 min 产物不受影响：
   `build/cocosair.module.min.js` 仍为 3 713 427 B / sha256 `779c288e647c17f6…`。
+
 - 加载默认发行（`cocosair.js` 主入口 / `build/cocosair.module.js`）**不会**初始化 Spark，也不会为 Spark 付出 bundle 体积：
   默认 26 feature 集闭包 1152 个可达节点里 spark 节点为 **0**（8 个 spark 文件全部落在 UNREACHABLE）。
 - **没有** `cocosair.js/spark` 包内子路径：`package.json` 的 `exports` 与 `files` 里都无 spark 条目，变体产物不随 npm 包发布
@@ -186,4 +185,3 @@ WASM 解码见上一段），也不是 release READY 判定。上一段 `notClai
 03:16 的分数 DPR 扩展甩在身后，故在同一探针现状上重采了 `docs/evidence/spark/spk13-pixel-parity-20261012-refresh.json`
 （3 浏览器 × 6 场景 + negative control 全 PASS）。以上均为 per-machine、per-engine 证据，不外推到其他 GPU 或真实设备缩放，
 不覆盖真实触摸/事件通道，也不是 release READY 判定。
-

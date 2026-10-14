@@ -6,7 +6,7 @@
 
 - 保留主入口的 eager import 及现有 `createAirApp`、`AirAppImpl` 导出。新增 `cocosair.js/bootstrap` 子路径只依赖 DOM、类型和动态导入：先解析唯一 canvas、验证配置、设置 `__CC_CANVAS__`/DPR，再导入同一份运行时。不得将整个引擎内联进安全入口。
 - 单例状态为 `idle / initializing / ready / failed / closed`。同 canvas、规范化配置相同的并发请求共享初始化和 app；不同 canvas 或配置拒绝，错误带稳定的 `AIR_E_*` 代码。默认值与显式默认值相等。回调按身份比较，不以 JSON 序列化掩盖差异。
-- `pixelRatioCap` 为有限正数，默认 2，保留 `__CCDPR_CAP__` 兼容。安全入口在 import 前写入；首次缓冲尺寸和 resize 读相同规范化值。既有 eager 使用者须在 import 前配置；初始化后冲突不能静默改变全局状态。
+- `pixelRatioCap` 为有限正数，默认 2，保留 `__CCDPR_CAP__` 兼容。主入口和延迟入口均在启动绑定前从 options 写入；首次缓冲尺寸和 resize 读相同规范化值，允许先 import 后配置；初始化后冲突不能静默改变全局状态。
 - `designResolution` 使用 `{ width, height, policy }`，有限正宽高；policy 采用原生 `ResolutionPolicy` 支持的固定枚举。初始化后、运行场景前调用原生 `view.setDesignResolutionSize`；不建立第二套坐标换算或修改 body/CSS。
 - `diagnostics` 采用 `'errors' | 'warnings'`，默认 `'errors'` 保持兼容；warnings 使用原生日志模式并由现有 debug session 捕获。正常剔除、无权重关节及合法 UBO→texture 自动选择不得升级为默认错误。
 - `releaseScene()` 返回 Promise receipt；成功后 `getScene()` 为 null。在途重复释放返回同一 Promise，释放中 `run()` 拒绝。receipt 明列释放对象、保留的 runtime/cache、pending 和测量不可用项。暂停、未开始主循环或 context lost 也执行 CPU 清理，不等无限的 AFTER_DRAW；默认 5 秒内成功或明确清理失败。

@@ -34,6 +34,9 @@ import { warn } from '../../../cocos/core/platform/debug';
 export class TouchInputSource {
     constructor() {
         this._eventTarget = new EventTarget();
+        screenAdapter.onCanvasBound(() => this._bindCanvas());
+    }
+    _bindCanvas() {
         if (systemInfo.hasFeature(Feature.INPUT_TOUCH)) {
             this._canvas = (globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas'));
             if (!this._canvas && !TEST && !EDITOR) {

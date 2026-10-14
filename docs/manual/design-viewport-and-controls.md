@@ -27,16 +27,16 @@ app.run(scene);
 
 `Camera.orthoHeight` 与新增 `orthoWidth` 都是世界半轴，完整宽高分别为两倍。`orthoWidth=0`（默认）保持原生 `orthoHeight * aspect`；正有限值独立指定半宽，负数/非有限值抛 `AIR_E_ORTHO_WIDTH`，旧值保留。透视模式忽略它。普通相机自动纵横比保持；screen-aligned Canvas拥有UI相机的两轴配置，在resize/设计分辨率变化后更新。targetTexture路径保留自动纵横比。应用自行控制正交相机时可以设置半宽/半高，projection、inverse、ray和hitTest会使用同一矩阵。
 
-密度与设计分辨率独立：有效DPR为 `min(devicePixelRatio, pixelRatioCap)`，默认cap=2，旧 `__CCDPR_CAP__` 兼容。物理缓冲宽高按 `Math.round(CSS窗口尺寸 * 有效DPR)` 取整，首次初始化和resize共用PAL规则；小数取整可能使原生输入与投影差小于一个物理像素。cap须是有限正数，不能用0关闭渲染。通过安全入口在引擎import前设置；使用eager主入口时不同DPR配置报 `AIR_E_PIXEL_RATIO_IMPORT_ORDER`，需改用安全入口或在import前配置旧全局。入口不修改body/CSS，页面负责布局。
+密度与设计分辨率独立：有效DPR为 `min(devicePixelRatio, pixelRatioCap)`，默认cap=2，旧 `__CCDPR_CAP__` 兼容。物理缓冲宽高按 `Math.round(CSS窗口尺寸 * 有效DPR)` 取整，首次初始化和resize共用PAL规则；小数取整可能使原生输入与投影差小于一个物理像素。cap须是有限正数，不能用0关闭渲染。主入口和延迟入口都在 createAirApp options 中设置，不要求在 import 前写全局；配置先于 PAL 绑定生效，冲突调用不能改动现有 app 的 cap。入口不修改body/CSS，页面负责布局。
 
 ## 三种控制方向
 
 Cocos使用Y-up，Camera沿局部-Z观察，Node的 `forward` 也是世界旋转下的局部-Z；`right` 为+X、`up` 为+Y。Euler API用度，不能把弧度直接传 `setRotationFromEuler`。模型的几何鼻尖可沿其他轴，必须明确建模朝向；yaw旋转不是镜像，signed scale的反射另见[蒙皮手册](./skinning-code-first.md)。
 
-| 模式 | 前进方向 | 相机转动后的行为 |
-| --- | --- | --- |
-| world-relative | 固定世界方向，例如(0,0,-1) | 方向不变，屏幕投影会变 |
-| vehicle-relative | 车辆Node.forward或约定的建模鼻尖轴 | 随车辆姿态转动，与相机无关 |
+| 模式                      | 前进方向                            | 相机转动后的行为                |
+| ------------------------- | ----------------------------------- | ------------------------------- |
+| world-relative            | 固定世界方向，例如(0,0,-1)          | 方向不变，屏幕投影会变          |
+| vehicle-relative          | 车辆Node.forward或约定的建模鼻尖轴  | 随车辆姿态转动，与相机无关      |
 | screen-relative（地面XZ） | 相机forward/right投影到地面后归一化 | 相机水平旋转后仍分别朝屏幕上/右 |
 
 ```ts

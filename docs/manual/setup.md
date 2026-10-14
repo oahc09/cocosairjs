@@ -68,7 +68,7 @@ canvas: 640x480
 
 - `package.json` **没有** `prepare-static` 之类的打包脚本；产物就是 `npm run build` 生成的 `build/cocosair.module.js`（及 `build:dts` 的类型）。
 - 静态部署 = 任意静态服务器 + **仓库根为 web root**（页面 importmap 指向 `/build/cocosair.module.js`）。
-- `#GameCanvas` 必须在引擎 import 之前存在于 DOM（pal/screen-adapter 是模块顶层单例），这一点与部署方式无关，见 [Installation](./installation.md)。
+- canvas 必须在 createAirApp 时存在，允许先 import 后创建，这一点与部署方式无关，见 [Installation](./installation.md)。
 
 ## 完整 index.html
 
@@ -125,7 +125,7 @@ canvas: 640x480
         <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
         <div id="GameDiv">
             <div id="Cocos3dGameContainer">
-                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <!-- 推荐模板；也可在 import 后创建 canvas，再传给 createAirApp -->
                 <canvas id="GameCanvas"></canvas>
             </div>
         </div>

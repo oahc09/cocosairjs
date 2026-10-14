@@ -46,6 +46,7 @@ Discipline: `build/` is generated - rebuild, never hand-edit (`build/README.md:3
 
 ## Entry-choice rules
 
-- Ordinary app with the canvas already in the DOM: main entry only.
-- Custom canvas or configuration that must land before engine evaluation: `cocosair.js/bootstrap` instead of the static main import, then `await import('cocosair.js')` if you need the full surface - both entries export `createAirApp`, and repeated `createAirApp` calls share one admission promise (`src/air/safe-bootstrap.ts:9-10`).
-- HTML-as-texture: add `cocosair.js/html-source` alongside your runtime; the caller supplies a native `Texture2D` (`build/html-source.d.ts:1`).
+- Ordinary browser app: main entry; import may precede canvas creation. Pass canvas and pixelRatioCap through createAirApp.
+- Deferred engine loading: cocosair.js/bootstrap remains engine-free until valid startup. Static main imports are compatible but remove this loading benefit. Both entries share exactly one initialization promise.
+- HTML-only capability probing: cocosair.js/html-source remains engine-free, including Node import; pass a canvas when actually checking browser support. HTML helpers are also available from main/bootstrap.
+- The full main entry is browser-only, not an SSR/Node import contract. See docs/manual/safe-startup-and-release.md.
