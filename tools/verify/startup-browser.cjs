@@ -73,6 +73,14 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
         files.set('/bundled/' + name, bytes);
         report.bundleHashes['bundled/' + name] = sha(bytes);
     }
+    assert.ok(files.has('/bundled/entry.js'), 'Missing bundled entry: prepare fixtures before browser launch');
+    assert.ok(fs.existsSync(path.join(fixtureRoot, 'gallery/starter/index.html')), 'Missing nested Gallery fixture');
+    for (const name of ['cocosair.module.js', 'bootstrap.js', 'html-source.js']) {
+        assert.ok(
+            files.get('/installed/' + name).equals(fs.readFileSync(path.join(root, 'build/npm', name))),
+            'Installed runtime drift: ' + name,
+        );
+    }
     server = http.createServer((req, res) => {
         const url = new URL(req.url, 'http://localhost');
         if (url.pathname.startsWith('/apps/gallery/')) {
@@ -105,11 +113,14 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
         if (files.has(url.pathname)) {
             res.setHeader('Content-Type', 'text/javascript');
             res.end(files.get(url.pathname));
-        } else {
+        } else if (url.pathname === '/') {
             res.setHeader('Content-Type', 'text/html');
             res.end(
                 '<!doctype html><meta charset="utf-8"><link rel="icon" href="data:,"><style>html,body{margin:0;width:100%;height:100%;overflow:hidden}canvas{display:block;width:100%;height:100%}</style><body></body>',
             );
+        } else {
+            res.writeHead(404);
+            res.end('Unknown fixture: ' + url.pathname);
         }
     });
     await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));

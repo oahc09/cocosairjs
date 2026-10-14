@@ -30,11 +30,28 @@ const built = require('esbuild').buildSync({
     bundle: true,
     format: 'esm',
     splitting: true,
+    entryNames: 'entry',
     outdir: path.join(out, 'bundled'),
     platform: 'browser',
     target: 'es2020',
     metafile: true,
 });
+if (!fs.existsSync(path.join(out, 'bundled/entry.js'))) throw Error('Missing bundled startup entry');
+for (const [file, metadata] of Object.entries(built.metafile.outputs)) {
+    if (!fs.existsSync(path.resolve(root, file))) throw Error('Missing bundled output: ' + file);
+    for (const dependency of metadata.imports) {
+        if (!dependency.external && !fs.existsSync(path.resolve(root, dependency.path)))
+            throw Error('Missing bundled dependency: ' + dependency.path);
+    }
+}
+for (const name of ['cocosair.module.js', 'cocosair.module.min.js', 'bootstrap.js', 'html-source.js']) {
+    if (
+        !fs
+            .readFileSync(path.join(root, 'build/npm', name))
+            .equals(fs.readFileSync(path.join(installed, 'node_modules/cocosair.js/build/npm', name)))
+    )
+        throw Error('Installed tarball byte drift: ' + name);
+}
 fs.writeFileSync(path.join(out, 'bundled-metafile.json'), JSON.stringify(built.metafile, null, 2));
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'air-startup-gallery-'));
 try {
