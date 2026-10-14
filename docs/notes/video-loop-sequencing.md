@@ -32,6 +32,10 @@
 
 真实媒体复验使用同 SHA 源码构建的 bundle 与 Playwright 1.62.1 / WebKit 26.5。最初 dev-server 路径一轮 P3/P5 失败，原生报错明确为 Range 请求意外返回 HTTP 200；该失败被保留。其后直接使用官方矩阵采集器的静态 Range 服务器复验，避免混用服务器。此处不修改 dev-server，也不把该本地错误归为原 CI 根因。
 
-最终使用原官方采集器连续两轮 `video-basic/webkit`，各自 1/1 PASS、`scopePassed=true`、`subset=true`、`completed=false`。P8 两轮 seek 均 23 ms，真实推进均 71 ms，回绕为 940 / 960 ms；`completedDeltaDuringLoop=0`，无 console error、资源失败或失败断言，截图帧变化与字节下界均通过。各 browser、collector/HTTP server 与 supervisor 都有实际 exit/close 回执，无残留进程。
+直接使用官方采集器的前两轮 `video-basic/webkit` 各自 1/1 PASS。不过这两轮的外部启动 hook 在原 `load` 后额外等待 scene-ready，等待发生在合同 26 秒计时前，不能称为完全未适配 CI 等价运行。
+
+最终在 2026-10-14 10:41 UTC 对代码提交 `6cedebbdfa86bb08f21a5524fae826a4421444a8` 再跑一轮，移除了额外 scene-ready 等待。外部 hook 只适配现有合法 WebKit 二进制路径，并在原 `goto(load)` 返回时清除 15 秒 Node 启动 watchdog，不改变合同等待。该轮 1/1 PASS、`scopePassed=true`、`subset=true`、`completed=false`；P8 seek 23 ms，真实推进 71 ms，回绕 960 ms，`completedDeltaDuringLoop=0`。无 console error、资源失败或失败断言，截图帧变化与字节下界均通过。
+
+该轮运行前后 main/test/package/collector/contract/bundle 的 SHA-256 全部一致；示例 main.js 为 `9caa22a2ff926116cea4b63dc6cdecaa3f4da557e18f0c95b4d45ad09d355810`。browser、collector/HTTP server 与 supervisor 都有实际 exit/close 回执，无残留进程。后续本专题记录更新只改文档，不改已验证代码。
 
 另已通过 typecheck、format:check、HTTP byte-range 8 项检查及 npm 参数透传检查。单例 WebKit 通过不表示三浏览器完整矩阵、完整 Jest 或整条远端 CI 已通过；后续必须在远端用新代码触发完整 CI。
