@@ -15042,17 +15042,18 @@ class ScreenAdapter extends EventTarget {
     this._gameCanvas = globalThis.__CC_CANVAS__ || document.getElementById('GameCanvas');
     {
       if (!this._gameFrame) {
-        var _this$_gameCanvas, _this$_gameCanvas$par;
+        var _anchor$parentNode;
         this._gameFrame = document.createElement('div');
         this._gameFrame.setAttribute('id', 'GameDiv');
-        (_this$_gameCanvas = this._gameCanvas) == null ? void 0 : (_this$_gameCanvas$par = _this$_gameCanvas.parentNode) == null ? void 0 : _this$_gameCanvas$par.insertBefore(this._gameFrame, this._gameCanvas);
-        this._gameFrame.appendChild(this._gameCanvas);
+        const anchor = this._gameContainer || this._gameCanvas;
+        anchor == null ? void 0 : (_anchor$parentNode = anchor.parentNode) == null ? void 0 : _anchor$parentNode.insertBefore(this._gameFrame, anchor);
+        this._gameFrame.appendChild(anchor);
       }
       if (!this._gameContainer) {
-        var _this$_gameCanvas2, _this$_gameCanvas2$pa;
+        var _this$_gameCanvas, _this$_gameCanvas$par;
         this._gameContainer = document.createElement('div');
         this._gameContainer.setAttribute('id', 'Cocos3dGameContainer');
-        (_this$_gameCanvas2 = this._gameCanvas) == null ? void 0 : (_this$_gameCanvas2$pa = _this$_gameCanvas2.parentNode) == null ? void 0 : _this$_gameCanvas2$pa.insertBefore(this._gameContainer, this._gameCanvas);
+        (_this$_gameCanvas = this._gameCanvas) == null ? void 0 : (_this$_gameCanvas$par = _this$_gameCanvas.parentNode) == null ? void 0 : _this$_gameCanvas$par.insertBefore(this._gameContainer, this._gameCanvas);
         this._gameContainer.appendChild(this._gameCanvas);
       }
     }
@@ -136412,9 +136413,12 @@ function normalizeAirOptions(options) {
     }
   }
   if (options.screenMode === 'container') {
-    var _document$getElementB;
-    if (options.container === undefined) container = (_document$getElementB = document.getElementById('GameDiv')) !== null && _document$getElementB !== void 0 ? _document$getElementB : canvas.parentElement;
-    if (!(container instanceof HTMLElement) || container === document.body || container === document.documentElement || !container.contains(canvas) || container === canvas) {
+    if (options.container === undefined) {
+      var _ref;
+      const admitted = airBootstrapRegistry().options;
+      container = (admitted == null ? void 0 : admitted.canvas) === canvas && admitted.screenMode === 'container' ? admitted.container : (_ref = existingFrame !== null && existingFrame !== void 0 ? existingFrame : existingContainer == null ? void 0 : existingContainer.parentElement) !== null && _ref !== void 0 ? _ref : canvas.parentElement;
+    }
+    if (!(container instanceof HTMLElement) || container === document.body || container === document.documentElement || !container.contains(canvas) || container === canvas || container === existingContainer) {
       throw airError('AIR_E_CONTAINER', 'Container must be an existing non-body ancestor of the canvas.');
     }
     const frame = document.getElementById('GameDiv');
@@ -136456,15 +136460,17 @@ function equalAirOptions(a, b) {
 function prepareAirContainer(options) {
   if (options.screenMode !== 'container') return undefined;
   let frame = document.getElementById('GameDiv');
+  let inner = document.getElementById('Cocos3dGameContainer');
   if (!frame) {
+    var _inner;
     frame = document.createElement('div');
     frame.id = 'GameDiv';
     frame.style.width = '100%';
     frame.style.height = '100%';
-    options.canvas.parentElement.insertBefore(frame, options.canvas);
-    frame.appendChild(options.canvas);
+    const anchor = (_inner = inner) !== null && _inner !== void 0 ? _inner : options.canvas;
+    anchor.parentElement.insertBefore(frame, anchor);
+    frame.appendChild(anchor);
   }
-  let inner = document.getElementById('Cocos3dGameContainer');
   if (inner && (!frame.contains(inner) || !inner.contains(options.canvas))) {
     throw airError('AIR_E_CONTAINER_CONFLICT', 'Cocos3dGameContainer must contain the canvas inside GameDiv.');
   }
@@ -136661,8 +136667,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610141941";
-const AIR_BUILD_NUMBER = 94;
+const AIR_BUILD_DATE = "202610142007";
+const AIR_BUILD_NUMBER = 100;
 class AirAppImpl {
   get session() {
     return this._scope;

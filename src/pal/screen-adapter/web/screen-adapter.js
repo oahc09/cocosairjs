@@ -321,8 +321,9 @@ class ScreenAdapter extends EventTarget {
             if (!this._gameFrame) {
                 this._gameFrame = document.createElement('div');
                 this._gameFrame.setAttribute('id', 'GameDiv');
-                this._gameCanvas?.parentNode?.insertBefore(this._gameFrame, this._gameCanvas);
-                this._gameFrame.appendChild(this._gameCanvas);
+                const anchor = this._gameContainer || this._gameCanvas;
+                anchor?.parentNode?.insertBefore(this._gameFrame, anchor);
+                this._gameFrame.appendChild(anchor);
             }
             if (!this._gameContainer) {
                 this._gameContainer = document.createElement('div');

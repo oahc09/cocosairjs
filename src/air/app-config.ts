@@ -152,13 +152,22 @@ export function normalizeAirOptions(options: AirAppOptions): AirNormalizedOption
         }
     }
     if (options.screenMode === 'container') {
-        if (options.container === undefined) container = document.getElementById('GameDiv') ?? canvas.parentElement;
+        if (options.container === undefined) {
+            // Preparation inserts native wrappers. Reuse the admitted host instead of
+            // letting those runtime-owned DOM changes alter an identical request.
+            const admitted = airBootstrapRegistry().options;
+            container =
+                admitted?.canvas === canvas && admitted.screenMode === 'container'
+                    ? admitted.container
+                    : (existingFrame ?? existingContainer?.parentElement ?? canvas.parentElement);
+        }
         if (
             !(container instanceof HTMLElement) ||
             container === document.body ||
             container === document.documentElement ||
             !container.contains(canvas) ||
-            container === canvas
+            container === canvas ||
+            container === existingContainer
         ) {
             throw airError('AIR_E_CONTAINER', 'Container must be an existing non-body ancestor of the canvas.');
         }
@@ -232,15 +241,16 @@ export function equalAirOptions(a: AirNormalizedOptions, b: AirNormalizedOptions
 export function prepareAirContainer(options: AirNormalizedOptions): HTMLElement | undefined {
     if (options.screenMode !== 'container') return undefined;
     let frame = document.getElementById('GameDiv');
+    let inner = document.getElementById('Cocos3dGameContainer');
     if (!frame) {
         frame = document.createElement('div');
         frame.id = 'GameDiv';
         frame.style.width = '100%';
         frame.style.height = '100%';
-        options.canvas.parentElement!.insertBefore(frame, options.canvas);
-        frame.appendChild(options.canvas);
+        const anchor = inner ?? options.canvas;
+        anchor.parentElement!.insertBefore(frame, anchor);
+        frame.appendChild(anchor);
     }
-    let inner = document.getElementById('Cocos3dGameContainer');
     if (inner && (!frame.contains(inner) || !inner.contains(options.canvas))) {
         throw airError('AIR_E_CONTAINER_CONFLICT', 'Cocos3dGameContainer must contain the canvas inside GameDiv.');
     }

@@ -15,7 +15,11 @@ assert(
     arg('report') && arg('discovery') && arg('out') && !fs.existsSync(out),
     'new output and both real inputs required',
 );
-const old = JSON.parse(fs.readFileSync(path.join(root, 'docs/test-inventory.json')));
+const old = JSON.parse(
+    fs.readFileSync(
+        arg('baseline') ? path.resolve(root, arg('baseline')) : path.join(root, 'docs/test-inventory.json'),
+    ),
+);
 const report = JSON.parse(fs.readFileSync(reportPath));
 assert.equal(report.success, true);
 assert.equal(report.numFailedTests, 0);

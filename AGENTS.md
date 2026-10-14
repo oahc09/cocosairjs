@@ -28,7 +28,7 @@ Start with [README.md](README.md) for the current quick start and capability bou
 
 PAL uses the frozen public MIT source in `vendor/pal-source/`. `node tools/build/pal-source.cjs --check` performs read-only verification of source hashes, generated outputs, and copyright notices; `--write` explicitly rebuilds `src/pal/`. Do not reintroduce bytes from the retired `@cocos/engine-pal` package.
 
-See [tools/README.md](tools/README.md) for tool entry points and [repository organization conventions](docs/reference/repository-layout.md) for directory and naming rules. New examples use `src/main.ts` by default; existing example IDs, upstream paths, and evidence schema identifiers remain stable references. Documentation and evidence filenames describe their purpose; path migrations must update producers, consumers, and embedded artifact paths together.
+See [tools/README.md](tools/README.md) for tool entry points and [repository organization conventions](docs/reference/repository-layout.md) for directory and naming rules. New examples use a main.ts entry in their src directory by default; existing example IDs, upstream paths, and evidence schema identifiers remain stable references. Documentation and evidence filenames describe their purpose; path migrations must update producers, consumers, and embedded artifact paths together.
 
 ## Development workflow
 

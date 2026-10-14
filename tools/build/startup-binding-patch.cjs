@@ -36,6 +36,10 @@ exports.patchStartupBinding = (source, file) => {
         // TODO:`,
         );
         replace(
+            '                this._gameCanvas?.parentNode?.insertBefore(this._gameFrame, this._gameCanvas);\n                this._gameFrame.appendChild(this._gameCanvas);',
+            '                const anchor = this._gameContainer || this._gameCanvas;\n                anchor?.parentNode?.insertBefore(this._gameFrame, anchor);\n                this._gameFrame.appendChild(anchor);',
+        );
+        replace(
             '        this._registerEvent();\n    }\n\n    public init',
             `        this._registerEvent();
         this._canvasBound = true;

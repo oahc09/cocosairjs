@@ -1,4 +1,9 @@
-import { airBootstrapRegistry, requestAirApp, registerAirInitializer } from '../../src/air/app-config';
+import {
+    airBootstrapRegistry,
+    requestAirApp,
+    registerAirInitializer,
+    prepareAirContainer,
+} from '../../src/air/app-config';
 import type { AirApp } from '../../src/air/app';
 
 describe('startup admission shared by eager and deferred entries', () => {
@@ -62,6 +67,59 @@ describe('startup admission shared by eager and deferred entries', () => {
             code: 'AIR_E_APP_CLOSED',
         });
     });
+    test.each(['none', 'frame', 'inner'])(
+        'inferred host stays stable before and after %s wrapper preparation',
+        async (wrapper) => {
+            document.body.innerHTML = `<div id="host">${wrapper === 'frame' ? '<div id="GameDiv">' : wrapper === 'inner' ? '<div id="Cocos3dGameContainer">' : ''}<canvas id="custom"></canvas>${wrapper === 'none' ? '' : '</div>'}</div>`;
+            const width = jest.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(400);
+            const height = jest.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(300);
+            try {
+                const options = { canvas: '#custom', screenMode: 'container' as const };
+                let release!: () => void;
+                let prepared!: () => void;
+                const preparedPromise = new Promise<void>((resolve) => {
+                    prepared = resolve;
+                });
+                const gate = new Promise<void>((resolve) => {
+                    release = resolve;
+                });
+                const initialize = jest.fn(async (normalized) => {
+                    prepareAirContainer(normalized);
+                    prepared();
+                    await gate;
+                    return {} as AirApp;
+                });
+                const first = requestAirApp(options, () => initialize);
+                const other = jest.fn(() => initialize);
+                expect(requestAirApp(options, other)).toBe(first);
+                await preparedPromise;
+                expect(airBootstrapRegistry().status).toBe('initializing');
+                expect(requestAirApp(options, other)).toBe(first);
+                release();
+                await first;
+                expect(airBootstrapRegistry().status).toBe('ready');
+                expect(requestAirApp(options, other)).toBe(first);
+                expect(initialize).toHaveBeenCalledTimes(1);
+                expect(other).not.toHaveBeenCalled();
+            } finally {
+                width.mockRestore();
+                height.mockRestore();
+            }
+        },
+    );
+    test('an inner wrapper cannot be selected as the host and rejects before mutation', async () => {
+        document.body.innerHTML =
+            '<div id="host"><div id="Cocos3dGameContainer"><canvas id="custom"></canvas></div></div>';
+        const before = document.body.innerHTML;
+        const load = jest.fn();
+        await expect(
+            requestAirApp({ canvas: '#custom', screenMode: 'container', container: '#Cocos3dGameContainer' }, load),
+        ).rejects.toMatchObject({ code: 'AIR_E_CONTAINER' });
+        expect(document.body.innerHTML).toBe(before);
+        expect(airBootstrapRegistry().status).toBe('idle');
+        expect(load).not.toHaveBeenCalled();
+        expect((globalThis as any).__CC_CANVAS__).toBeUndefined();
+    });
 });
 
 // Positive/negative controls for the formerly over-broad DevTools package gate.
@@ -75,4 +133,17 @@ test('runtime session errors stay allowed while actual DevTools signatures are r
     expect(
         developmentRuntimeMarkers(fs.readFileSync('build/devtools/agent-session.js', 'utf8')).length,
     ).toBeGreaterThan(0);
+});
+
+test('an existing inner wrapper stays inside the newly prepared frame', () => {
+    const { normalizeAirOptions, prepareAirContainer } = require('../../src/air/app-config');
+    document.body.innerHTML = '<div id="host"><div id="Cocos3dGameContainer"><canvas id="custom"></canvas></div></div>';
+    const options = normalizeAirOptions({ canvas: '#custom', screenMode: 'container', container: '#host' });
+    // jsdom has zero layout size, but preparation must never invert the native wrapper tree.
+    expect(() => prepareAirContainer(options)).toThrow('AIR_E_CONTAINER_SIZE');
+    const frame = document.getElementById('GameDiv')!;
+    const inner = document.getElementById('Cocos3dGameContainer')!;
+    expect(frame.contains(inner)).toBe(true);
+    expect(inner.contains(options.canvas)).toBe(true);
+    expect(document.getElementById('host')!.contains(frame)).toBe(true);
 });

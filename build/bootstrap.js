@@ -78,8 +78,11 @@ function normalizeAirOptions(options) {
     }
   }
   if (options.screenMode === "container") {
-    if (options.container === void 0) container = document.getElementById("GameDiv") ?? canvas.parentElement;
-    if (!(container instanceof HTMLElement) || container === document.body || container === document.documentElement || !container.contains(canvas) || container === canvas) {
+    if (options.container === void 0) {
+      const admitted = airBootstrapRegistry().options;
+      container = admitted?.canvas === canvas && admitted.screenMode === "container" ? admitted.container : existingFrame ?? existingContainer?.parentElement ?? canvas.parentElement;
+    }
+    if (!(container instanceof HTMLElement) || container === document.body || container === document.documentElement || !container.contains(canvas) || container === canvas || container === existingContainer) {
       throw airError("AIR_E_CONTAINER", "Container must be an existing non-body ancestor of the canvas.");
     }
     const frame = document.getElementById("GameDiv");
