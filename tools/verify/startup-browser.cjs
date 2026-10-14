@@ -24,16 +24,32 @@ const stat = (pid) => {
 };
 // Hook before loading Playwright so the supervisor sees actual spawned browser exit/close events.
 const spawn = cp.spawn;
+const spawnedClosed = [];
+const sendReceipt = (message) =>
+    new Promise((resolve) => {
+        if (!process.connected || !process.send) return resolve();
+        process.send(message, () => resolve());
+    });
 cp.spawn = function (command, args, options) {
     const child = spawn.apply(this, arguments);
-    process.send?.({
+    void sendReceipt({
         processEvent: {
             type: 'spawn',
             row: { pid: child.pid, command, detached: !!options?.detached, initial: stat(child.pid) },
         },
     });
-    for (const type of ['exit', 'close'])
-        child.once(type, (code, signal) => process.send?.({ processEvent: { type, pid: child.pid, code, signal } }));
+    child.once(
+        'exit',
+        (code, signal) => void sendReceipt({ processEvent: { type: 'exit', pid: child.pid, code, signal } }),
+    );
+    spawnedClosed.push(
+        new Promise((resolve) =>
+            child.once('close', async (code, signal) => {
+                await sendReceipt({ processEvent: { type: 'close', pid: child.pid, code, signal } });
+                resolve();
+            }),
+        ),
+    );
     return child;
 };
 const playwright = require('playwright');
@@ -50,6 +66,14 @@ const report = {
 let browser, server;
 const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n');
 (async () => {
+    if (option('process-self-test') === 'launch-failure') {
+        // Exercise a late real process close after a rejected launch, without GPU.
+        cp.spawn(process.execPath, ['-e', 'setTimeout(()=>process.exit(7),80)'], {
+            detached: true,
+            stdio: ['ignore', 'pipe', 'pipe'],
+        });
+        throw Error('Expected CPU launch-failure fixture');
+    }
     const baseline = cp.execFileSync(
         'git',
         ['show', 'f76257fc6805f2e9cd722f376d50afc402afe074:build/cocosair.module.js'],
@@ -495,6 +519,9 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
             }
         }
         if (server) await new Promise((resolve) => server.close(resolve));
+        // launch() may reject before its browser process finishes closing. Keep
+        // IPC open until those real receipts arrive; the outer watchdog owns bounds.
+        await Promise.all(spawnedClosed);
         report.ended = new Date().toISOString();
         save();
         console.log(
