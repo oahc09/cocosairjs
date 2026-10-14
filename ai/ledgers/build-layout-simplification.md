@@ -75,3 +75,5 @@ This record supersedes the rev 2 task's conflicting instructions. It is an imple
 
 - PR #2 was opened as a draft at 191f1738. Its first run (38583845567, job 115920458167) exited 134 during build:all: the log records a roughly 2 GiB V8 heap ceiling and an allocation failure while producing the full build. Browser and Jest stages did not execute in that attempt.
 - The build step now uses the same 4 GiB Node heap as the successful local and independent clean builds. This is step-scoped; it does not skip generation, alter source maps, increase browser waits or weaken any assertion. The original failure remains available in the remote run and local submission logs. The next run must establish its own result.
+
+- The 4 GiB retry (38584850813 at 5b111b76) passed build:all, canonical API inventory, documentation references and example-chain before reaching browser setup. Build-only resource diagnostics now record actual runner memory/heap and concurrent process RSS, plus GNU time maximum RSS when available. The build documentation states that 4 GiB heap requires additional system/native memory headroom; this is not a blanket minimum-machine-memory claim.

@@ -40,7 +40,15 @@ jobs:
       - run: npm run format:check
       - run: npx prettier --check tools/verify/release-readiness.cjs tools/examples/api-inventory.cjs tools/examples/reconcile-api-claims.cjs tools/examples/coverage-bindings/bind-vector-instance.cjs tools/examples/coverage-bindings/bind-tween-control.cjs tools/examples/coverage-bindings/bind-animation-runtime.cjs tools/examples/coverage-bindings/bind-widget-layout.cjs
       - run: npm run typecheck
-      - run: npm run build:all
+      - name: Build runtime and declarations
+        run: |
+          node -e 'const os = require("node:os"); const v8 = require("node:v8"); console.log(JSON.stringify({buildResources: {totalBytes: os.totalmem(), freeBytes: os.freemem(), constrainedBytes: process.constrainedMemory(), availableBytes: process.availableMemory(), heapLimitBytes: v8.getHeapStatistics().heap_size_limit, parallelism: os.availableParallelism()}}))'
+          ps -eo pid,ppid,rss,comm --sort=-rss | sed -n '1,12p'
+          if [ -x /usr/bin/time ]; then
+            /usr/bin/time -v npm run build:all
+          else
+            npm run build:all
+          fi
         env:
           # Preserve full JS/map generation; its measured working set exceeds Node's default 2 GiB heap.
           NODE_OPTIONS: --max-old-space-size=4096
