@@ -139,6 +139,62 @@ test('actual CPU subprocess/HTTP lifecycle controls, sequential and bounded', as
                 assert.equal(receipt.timedOut, true);
         });
     }
+    await t.test('in-flight stop ACK drains before the original failed worker receipt and pipe closure', async () => {
+        const receipt = await run('custodian-delayed-stop-ack');
+        assert.equal(receipt.ok, false, 'a signaled worker and incomplete barrier cannot become PASS');
+        assert.equal(receipt.worker.exit.signal, 'SIGTERM');
+        assert.ok(receipt.errors.includes('Custody barrier remained pending at worker closure'));
+        assert.ok(receipt.errors.includes('Custody IPC: collector disconnected before response'));
+        assert.equal(
+            receipt.events.find((row) => row.type === 'custody-request-settled' && row.phase === 'stop')?.outcome,
+            'response',
+        );
+        const raw = receipt.custody.observation;
+        assert.deepEqual(raw.errors, []);
+        assert.equal(raw.innerSupervisor.exit.code, 0);
+        assert.equal(raw.innerSupervisor.exit.signal, null);
+        assert.equal(raw.final.result, 'ECHILD');
+        const absent = raw.events.find((row) => row.type === 'cpu-worker-absent-before-ack');
+        assert.ok(absent && absent.cpuOnly && absent.pid === receipt.worker.pid);
+        const pending = JSON.parse(
+            fs.readFileSync(path.join(base, 'custodian-delayed-stop-ack', 'pending-node-receipt.json'), 'utf8'),
+        );
+        assert.equal(pending.pending, true);
+        assert.equal(pending.ok, false);
+        assert.deepEqual(pending.worker, receipt.worker);
+        assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true, requireSuccess: false }).ok, false);
+    });
+    for (const [cpuCase, outcome] of [
+        ['custodian-stop-drain-cancel', 'SIGTERM'],
+        ['custodian-stop-drain-deadline', 'deadline'],
+    ]) {
+        await t.test(`${cpuCase} interrupts the actual finalization waiter within the original budget`, async () => {
+            const receipt = await run(cpuCase);
+            assert.equal(receipt.ok, false);
+            assert.equal(receipt.worker.exit.signal, 'SIGTERM');
+            const settled = receipt.events.find(
+                (row) => row.type === 'custody-request-settled' && row.phase === 'stop',
+            );
+            const marker = JSON.parse(fs.readFileSync(path.join(base, cpuCase, 'cpu-drain-ready.json'), 'utf8'));
+            assert.deepEqual(
+                marker,
+                receipt.events.find((row) => row.type === 'cpu-custody-drain-ready'),
+            );
+            assert.equal(settled.outcome, outcome);
+            assert.ok(marker.eventId < settled.eventId, 'the waiter was already active before cancellation/deadline');
+            assert.ok(settled.supervisorElapsedMs < LIMITS.finalMs);
+            const raw = receipt.custody.observation;
+            assert.deepEqual(raw.errors, []);
+            assert.equal(raw.innerSupervisor.exit.code, 0);
+            assert.equal(raw.final.result, 'ECHILD');
+            assert.ok(raw.events.some((row) => row.type === 'cpu-drain-ready-observed'));
+            assert.equal(
+                JSON.parse(fs.readFileSync(path.join(base, cpuCase, 'pending-node-receipt.json'), 'utf8')).pending,
+                true,
+            );
+            assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true, requireSuccess: false }).ok, false);
+        });
+    }
     await t.test('an exited adopted child is actually reaped without forcing', async () => {
         const receipt = await run('detached-zombie');
         assert.equal(receipt.ok, true, JSON.stringify(receipt.errors));

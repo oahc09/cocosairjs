@@ -53,6 +53,9 @@ const CPU_CASES = [
     'detached-zombie',
     'custodian-pipe-eof',
     'custodian-duplicate-ack',
+    'custodian-delayed-stop-ack',
+    'custodian-stop-drain-cancel',
+    'custodian-stop-drain-deadline',
 ];
 const sha256 = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 function stat(pid) {
@@ -650,6 +653,7 @@ async function superviseAttemptInner(options) {
     const timers = new Set();
     let child,
         finished = false,
+        finishing = false,
         abortRequested = false,
         firstReady = false;
     let lastObserverSequence = 0;
@@ -827,6 +831,13 @@ async function superviseAttemptInner(options) {
     let custodyPending = null;
     let custodySequence = 0;
     let custodyBuffer = '';
+    function settleCustody(pending, outcome) {
+        if (!pending || custodyPending !== pending) return;
+        clearTimeout(pending.timer);
+        custodyPending = null;
+        event('custody-request-settled', { requestId: pending.requestId, phase: pending.phase, outcome });
+        pending.resolveDrained();
+    }
     const custodyToken = process.env.EXAMPLE_EVIDENCE_CUSTODIAN_TOKEN;
     // Wrap only already inherited anonymous pipe descriptors. No socket/network creation occurs.
     const custodyRead = new Socket({ fd: responseFD, readable: true, writable: false });
@@ -870,8 +881,7 @@ async function superviseAttemptInner(options) {
                 custodyFailure('unknown, duplicate, late or mismatched response');
                 continue;
             }
-            clearTimeout(pending.timer);
-            custodyPending = null;
+            settleCustody(pending, 'response');
             if (response.ok !== true) custodyFailure('kernel barrier rejected');
             if (child?.connected)
                 child.send({ exampleCustodyResponse: response }, (error) => {
@@ -915,13 +925,20 @@ async function superviseAttemptInner(options) {
             request.phase === 'stop'
                 ? limits.closeMs - (performance.now() - origin - runtime.stopBegin.supervisorElapsedMs)
                 : limits.closeMs;
-        custodyPending = {
+        let resolveDrained;
+        const drained = new Promise((resolve) => {
+            resolveDrained = resolve;
+        });
+        const pending = {
             ...request,
+            drained,
+            resolveDrained,
             timer: timer(() => {
-                custodyPending = null;
                 custodyFailure('barrier deadline');
+                settleCustody(pending, 'deadline');
             }, remaining),
         };
+        custodyPending = pending;
         const forwarded = {
             ...request,
             workerStartTicks: current.startTicks,
@@ -1082,14 +1099,39 @@ async function superviseAttemptInner(options) {
     }
     async function finish(atDeadline = false) {
         if (finished) return;
-        if (custodyPending) fail('Custody barrier remained pending at worker closure');
-        finished = true;
-        custodyRead.destroy();
-        custodyWrite.destroy();
-        for (const value of timers) clearTimeout(value);
-        clearInterval(ownershipPoll);
-        process.removeListener('SIGINT', onInterrupt);
-        process.removeListener('SIGTERM', onTerminate);
+        // Final cancellation must interrupt a pending drain even when another finish call owns finalization.
+        if (atDeadline) {
+            fail('final worker deadline reached');
+            settleCustody(custodyPending, 'final-deadline');
+        }
+        if (finishing) return;
+        finishing = true;
+        if (custodyPending) {
+            fail('Custody barrier remained pending at worker closure');
+            if (
+                ['custodian-delayed-stop-ack', 'custodian-stop-drain-cancel', 'custodian-stop-drain-deadline'].includes(
+                    cpuCase,
+                )
+            ) {
+                const marker = event('cpu-custody-drain-ready', {
+                    cpuOnly: true,
+                    nodePID: process.pid,
+                    nodeStartTicks: stat(process.pid)?.startTicks,
+                    namespace,
+                    workerPID: child.pid,
+                    workerStartTicks: receipt.worker.startTicks,
+                    workerCloseEventId: receipt.worker.close?.eventId,
+                    requestId: custodyPending.requestId,
+                });
+                const markerPath = path.join(path.dirname(out), 'cpu-drain-ready.json');
+                if (fs.existsSync(markerPath)) throw Error('CPU drain marker already exists');
+                fs.writeFileSync(markerPath + '.tmp', JSON.stringify(marker) + '\n', { flag: 'wx' });
+                fs.renameSync(markerPath + '.tmp', markerPath);
+            }
+            // Keep the original barrier/absolute deadlines armed. Closing this pipe early can make
+            // the custodian kill this Node process before its original failure receipt is durable.
+            await custodyPending.drained;
+        }
         receipt.noOwnedProcesses = scanOwned().length === 0;
         receipt.ownedProcesses = [...owned.values()].map(
             ({ pid, startTicks, namespace, role, firstObserved, disappearance }) => ({
@@ -1173,10 +1215,21 @@ async function superviseAttemptInner(options) {
         receipt.endedAt = new Date().toISOString();
         if (receipt.noOwnedProcesses && receipt.worker.exit && receipt.worker.close) activeWorker = null;
         fs.writeFileSync(receiptPath, JSON.stringify(receipt, null, 2) + '\n', { flag: 'wx' });
+        finished = true;
+        custodyRead.destroy();
+        custodyWrite.destroy();
+        for (const value of timers) clearTimeout(value);
+        clearInterval(ownershipPoll);
+        process.removeListener('SIGINT', onInterrupt);
+        process.removeListener('SIGTERM', onTerminate);
         resolveFinished(receipt);
     }
-    const onInterrupt = () => requestAbort('supervisor received SIGINT');
-    const onTerminate = () => requestAbort('supervisor received SIGTERM');
+    const interrupted = (signal) => {
+        requestAbort(`supervisor received ${signal}`);
+        if (finishing) settleCustody(custodyPending, signal);
+    };
+    const onInterrupt = () => interrupted('SIGINT');
+    const onTerminate = () => interrupted('SIGTERM');
     process.once('SIGINT', onInterrupt);
     process.once('SIGTERM', onTerminate);
     const workerEnvironment = { ...process.env };

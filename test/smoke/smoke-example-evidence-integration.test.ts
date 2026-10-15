@@ -432,6 +432,10 @@ describe('Committed example evidence workflow safeguards', () => {
             'node tools/build/spark-runtime-tree.cjs',
         ]);
         expect(shell).not.toMatch(/\bln\s+[^\n]*node_modules/);
+        for (const filename of ['example-evidence.yml', 'format.yml']) {
+            const workflow = fs.readFileSync(path.join(root, '.github/workflows', filename), 'utf8');
+            expect(workflow).toContain('test/smoke/smoke-example-driver-pixel-diagnostics.test.ts');
+        }
     });
 
     test('one immutable frozen ID list runs the HTML, driver and Spark pilots before every remaining ID', () => {

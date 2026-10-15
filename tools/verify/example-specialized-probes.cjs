@@ -3,6 +3,7 @@
 // This primary-session proof is not the dedicated three-engine Driver Pilot gate.
 const driver = require('./shaders-driver-pilot-browser.cjs');
 const oracle = require('./shaders-driver-pilot-oracle.cjs');
+const pixelDiagnostics = require('./driver-pixel-diagnostics.cjs');
 const ID = 'shader-driver-pilot';
 const SCHEMA = 'example-driver-primary-probe/1';
 const DT = 1 / 60;
@@ -129,6 +130,9 @@ async function collectProbe(page, scope) {
     if (scope.id !== ID) return null;
     const plan = expectedPlan(scope);
     const data = { schema: SCHEMA, scope, consumer: plan.consumer, dt: DT, errors: [] };
+    let diagnosticCaptureAttempted = false;
+    const diagnosticCaptureToken = pixelDiagnostics.createToken();
+    const diagnosticErrors = [];
     try {
         const states = await page.evaluate(
             async ({ dt, bindings }) => {
@@ -146,6 +150,14 @@ async function collectProbe(page, scope) {
             { dt: DT, bindings: driver.bindingsFor(plan.consumer, 'time') },
         );
         Object.assign(data, states);
+        // Passive synchronous draw observation only. Its separate replay cannot
+        // supply canonical pixels, API counts, or a specialized-probe verdict.
+        diagnosticCaptureAttempted = true;
+        try {
+            await pixelDiagnostics.prepare(page, diagnosticCaptureToken);
+        } catch (error) {
+            diagnosticErrors.push(String(error.stack || error));
+        }
         const points = oracle.points(plan.consumer, data.stepped.canvas.width, data.stepped.canvas.height);
         const readback = await page.evaluate(async (points) => {
             const hook = window.__driverpilot;
@@ -195,6 +207,23 @@ async function collectProbe(page, scope) {
     } catch (error) {
         data.errors.push(String(error.stack || error));
     } finally {
+        if (diagnosticCaptureAttempted) {
+            try {
+                data.pixelDiagnostics = await pixelDiagnostics.finish(
+                    page,
+                    data,
+                    data.errors.length > 0,
+                    diagnosticCaptureToken,
+                );
+                if (diagnosticErrors.length) {
+                    data.pixelDiagnostics.status = 'error';
+                    data.pixelDiagnostics.errors.unshift(...diagnosticErrors);
+                }
+            } catch (error) {
+                data.pixelDiagnostics = pixelDiagnostics.failure(error);
+                data.pixelDiagnostics.errors.unshift(...diagnosticErrors);
+            }
+        }
         try {
             data.resumedBefore = await page.evaluate(() => {
                 const hook = window.__driverpilot;

@@ -128,6 +128,21 @@ describe('ordinary Driver Pilot specialized proof contract (synthetic CPU only)'
     test('recomputes a complete primary proof and accepts real assets with empty UUIDs', () => {
         expect(P.validateProbe(synthetic(), scope)).toEqual({ ok: true, errors: [] });
     });
+    test('separate diagnostic success, failure or replacement pixels cannot change the canonical verdict', () => {
+        for (const corrupt of [false, true]) {
+            const raw = synthetic();
+            if (corrupt) raw.probe.pixels[0].rgba[0] ^= 128;
+            const original = P.validateProbe(raw, scope);
+            for (const diagnostic of [
+                null,
+                { status: 'PASS', pixels: synthetic().probe.pixels },
+                { diagnosticOnly: true, status: 'error', errors: ['diagnostic failure'] },
+            ]) {
+                expect(P.validateProbe({ ...raw, pixelDiagnostics: diagnostic }, scope)).toEqual(original);
+            }
+            expect(original.ok).toBe(!corrupt);
+        }
+    });
     test.each([
         ['raw absent', (r: any) => null],
         [
@@ -372,7 +387,8 @@ describe('ordinary Driver Pilot specialized proof contract (synthetic CPU only)'
         (window as any).__driverpilot = { ready: true, snapshot: () => raw.afterProbe, resumePacer: resume };
         let count = 0;
         const page = {
-            evaluate: jest.fn(async (fn: any) => {
+            evaluate: jest.fn(async (fn: any, arg: any) => {
+                if (arg?.key === '__driverPixelDiagnosticReplay') return { errors: [], diagnosticOnly: true };
                 count++;
                 if (count === 1) return { zero: raw.zero, stepped: raw.stepped };
                 if (count === 2) throw Error('real readback failed');
@@ -394,13 +410,14 @@ describe('ordinary Driver Pilot specialized proof contract (synthetic CPU only)'
         const raw = synthetic();
         let count = 0;
         const page = {
-            evaluate: jest.fn(
-                async () =>
-                    [
-                        { zero: raw.zero, stepped: raw.stepped },
-                        { probe: raw.probe, afterProbe: raw.afterProbe, renderer: raw.renderer },
-                        raw.resumedBefore,
-                    ][count++],
+            evaluate: jest.fn(async (_fn: any, arg: any) =>
+                arg?.key === '__driverPixelDiagnosticReplay'
+                    ? { errors: [], diagnosticOnly: true }
+                    : [
+                          { zero: raw.zero, stepped: raw.stepped },
+                          { probe: raw.probe, afterProbe: raw.afterProbe, renderer: raw.renderer },
+                          raw.resumedBefore,
+                      ][count++],
             ),
             waitForFunction: jest.fn(async () => {
                 throw Error('native pacer timeout');

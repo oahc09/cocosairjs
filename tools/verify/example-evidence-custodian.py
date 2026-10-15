@@ -231,6 +231,43 @@ def run(config_path, node, supervisor):
         if config.get('cpuCase') == 'custodian-pipe-eof':
             os.close(response_write)
             raise RuntimeError('Intentional CPU custody pipe EOF')
+        if config.get('cpuCase') in ['custodian-delayed-stop-ack', 'custodian-stop-drain-cancel', 'custodian-stop-drain-deadline'] and request['phase'] == 'stop':
+            # CPU-only negative control: the exact worker exits while its validated ACK is in flight.
+            current = identity(peer_pid)
+            if (not current or current['ppid'] != node_process.pid or current['startTicks'] != peer['startTicks']
+                    or current['namespace'] != peer['namespace']):
+                raise RuntimeError('CPU delayed ACK worker identity changed before signal')
+            os.kill(peer_pid, signal.SIGTERM)
+            event('cpu-worker-signal', cpuOnly=True, pid=peer_pid, startTicks=peer['startTicks'],
+                  namespace=peer['namespace'], ppid=current['ppid'], signal='SIGTERM')
+            stop_deadline = min(proof['elapsedMs'] + limits['closeMs'], limits['finalMs'])
+            while same(peer):
+                if interrupted or elapsed() >= stop_deadline:
+                    raise RuntimeError('CPU delayed ACK worker did not close within the original deadline')
+                time.sleep(0.001)
+            event('cpu-worker-absent-before-ack', cpuOnly=True, pid=peer_pid, startTicks=peer['startTicks'],
+                  namespace=peer['namespace'])
+            marker_path = pathlib.Path(config['out']).parent / 'cpu-drain-ready.json'
+            while not marker_path.exists():
+                if interrupted or elapsed() >= stop_deadline:
+                    raise RuntimeError('CPU finalization handshake missed the original deadline')
+                time.sleep(0.001)
+            marker = json.loads(marker_path.read_text())
+            if (marker.get('type') != 'cpu-custody-drain-ready' or marker.get('cpuOnly') is not True
+                    or marker.get('nodePID') != node_process.pid or marker.get('nodeStartTicks') != node_row['startTicks']
+                    or marker.get('namespace') != peer['namespace'] or marker.get('workerPID') != peer_pid
+                    or marker.get('workerStartTicks') != peer['startTicks'] or marker.get('requestId') != request_id
+                    or not isinstance(marker.get('workerCloseEventId'), int)):
+                raise RuntimeError('CPU finalization handshake identity mismatch')
+            event('cpu-drain-ready-observed', cpuOnly=True, marker=marker)
+            if config.get('cpuCase') == 'custodian-stop-drain-cancel':
+                if not same(node_row):
+                    raise RuntimeError('CPU cancellation target identity changed')
+                os.kill(node_process.pid, signal.SIGTERM)
+                event('cpu-inner-signal', cpuOnly=True, pid=node_process.pid, startTicks=node_row['startTicks'],
+                      namespace=node_row['namespace'], signal='SIGTERM')
+            if config.get('cpuCase') != 'custodian-delayed-stop-ack':
+                return  # Cancellation or the existing barrier timer must settle the actual in-flight wait.
         if config.get('cpuCase') != 'custodian-no-ack':
             payload = (json.dumps(dict(ok=ok, token=custody['token'], requestId=request_id,
                 runtimeId=request.get('runtimeId'), phase=request['phase'], custodianPID=os.getpid(),

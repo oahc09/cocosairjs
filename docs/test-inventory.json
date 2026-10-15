@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T04:10:06.469726+00:00",
+  "generatedAt": "2026-10-15T04:44:58.194Z",
   "suites": [
     {
       "file": "test/smoke/air-content-size-fitter.test.ts",
@@ -3910,6 +3910,31 @@
       ]
     },
     {
+      "file": "test/smoke/smoke-example-driver-pixel-diagnostics.test.ts",
+      "tests": [
+        "Driver pixel diagnostic replay (synthetic CPU only) diagnostic mismatch selection keeps original point, bytes and tolerance",
+        "Driver pixel diagnostic replay (synthetic CPU only) diagnostics cannot promote incomplete or original failed canonical evidence",
+        "Driver pixel diagnostic replay (synthetic CPU only) does not consume a different session or require a GPU for no-mismatch cleanup",
+        "Driver pixel diagnostic replay (synthetic CPU only) does not overwrite a session published during the module-import await",
+        "Driver pixel diagnostic replay (synthetic CPU only) labels source reconstruction and does not alter the shader before its instrumentation point",
+        "Driver pixel diagnostic replay (synthetic CPU only) observes actual callback synchronously, replays unchanged bytes first, and restores every owned state",
+        "Driver pixel diagnostic replay (synthetic CPU only) rejects an existing undefined non-writable session slot before installing any wrapper",
+        "Driver pixel diagnostic replay (synthetic CPU only) rejects silently blocked wrapper installation and rolls back every installed method",
+        "Driver pixel diagnostic replay (synthetic CPU only) requires exactly one canonical matching draw, observed=0",
+        "Driver pixel diagnostic replay (synthetic CPU only) requires exactly one canonical matching draw, observed=2",
+        "Driver pixel diagnostic replay (synthetic CPU only) retains allocation failure and restores other state/resources without canonical mutation",
+        "Driver pixel diagnostic replay (synthetic CPU only) retains capture failure and restores other state/resources without canonical mutation",
+        "Driver pixel diagnostic replay (synthetic CPU only) retains cleanup-delete failure and restores other state/resources without canonical mutation",
+        "Driver pixel diagnostic replay (synthetic CPU only) retains cleanup-query failure and restores other state/resources without canonical mutation",
+        "Driver pixel diagnostic replay (synthetic CPU only) retains compile failure and restores other state/resources without canonical mutation",
+        "Driver pixel diagnostic replay (synthetic CPU only) retains framebuffer failure and restores other state/resources without canonical mutation",
+        "Driver pixel diagnostic replay (synthetic CPU only) retains link failure and restores other state/resources without canonical mutation",
+        "Driver pixel diagnostic replay (synthetic CPU only) retains readback failure and restores other state/resources without canonical mutation",
+        "Driver pixel diagnostic replay (synthetic CPU only) retains replay-byte failure and restores other state/resources without canonical mutation",
+        "Driver pixel diagnostic replay (synthetic CPU only) retains texture-query failure and restores other state/resources without canonical mutation"
+      ]
+    },
+    {
       "file": "test/smoke/smoke-example-evidence-campaign.test.ts",
       "tests": [
         "fixed-snapshot segmented example evidence CPU dummy cannot be relabeled as production rejects completion without trusting ok:true",
@@ -4113,6 +4138,7 @@
         "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects viewport even when other flags claim success",
         "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects wrong generation even when other flags claim success",
         "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects wrong ledger dt even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) separate diagnostic success, failure or replacement pixels cannot change the canonical verdict",
         "ordinary Driver Pilot specialized proof contract (synthetic CPU only) strict campaign consumer enforces driver absent raw proof",
         "ordinary Driver Pilot specialized proof contract (synthetic CPU only) strict campaign consumer enforces driver pixel-corrupt raw proof",
         "ordinary Driver Pilot specialized proof contract (synthetic CPU only) strict campaign consumer enforces driver valid raw proof",
@@ -4285,8 +4311,8 @@
     }
   ],
   "totals": {
-    "suites": 199,
-    "tests": 3287,
+    "suites": 200,
+    "tests": 3308,
     "passed": null,
     "failed": null
   }
