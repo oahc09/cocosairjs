@@ -386,6 +386,47 @@ function sameObservedOwnership(a, b) {
     );
 }
 
+// Fixed, descriptive witnesses only. They never restore an invalid cache window.
+function imageFailureWitness(before, after, previous, frozenImage) {
+    const tuple = (row) =>
+        Object.fromEntries(['pid', 'tgid', 'ppid', 'startTicks', 'namespace'].map((key) => [key, row[key]]));
+    const image = (row) =>
+        validImage(row) ? Object.fromEntries(['dev', 'ino', 'size', 'mtimeMs'].map((key) => [key, row[key]])) : null;
+    const observed = (row) => ({
+        observedAt: Number.isFinite(row.observedAt) ? row.observedAt : null,
+        imageBefore: image(row.imageBefore),
+        imageAfter: image(row.imageAfter),
+        imageStable: row.imageStable === true,
+        frozenImage: image(row.frozenImage),
+    });
+    const witness = {
+        reason: 'unknown',
+        thread: tuple(before.thread),
+        process: tuple(before.process),
+        root: tuple(before.root),
+        before: observed(before),
+        after: observed(after),
+        previousPresent: !!previous,
+        previousImage: image(previous?.observation.imageAfter),
+        expectedFrozenImage: image(frozenImage),
+        previousInvalid: !!(previous?.imageChanged || previous?.imageInvalid),
+    };
+    // An old invalid bit has no retained cause. Do not reconstruct it from a later read.
+    if (witness.previousInvalid) return witness;
+    const images = [
+        witness.before.imageBefore,
+        witness.before.imageAfter,
+        witness.after.imageBefore,
+        witness.after.imageAfter,
+    ];
+    if (previous) images.unshift(witness.previousImage);
+    if (images.some((row) => row === null)) witness.reason = 'unavailable';
+    else if (images.some((row) => !imageSame(row, images[0]))) witness.reason = 'changed';
+    // Stable flags or frozen-baseline inconsistencies with unchanged valid exe tuples
+    // remain unknown; they do not establish exec or authorize attribution.
+    return witness;
+}
+
 // Enumerate tasks only under an independently proved owned TGID. Each task's children
 // are read between two complete ownership observations; no global /proc scan is used.
 function sampleOwnedIdentities({
@@ -533,6 +574,13 @@ function sampleOwnedIdentities({
                           !Number.isFinite(after.observedAt) ||
                           before.observedAt > after.observedAt,
                   };
+            value.imageInvalid = value.imageChanged || previous?.imageInvalid === true;
+            value.firstImageFailure =
+                previous?.firstImageFailure ||
+                (value.imageInvalid ? imageFailureWitness(before, after, previous, frozenImage) : null);
+            value.firstImageFailureAt = previous?.firstImageFailure
+                ? previous.firstImageFailureAt
+                : (value.firstImageFailure?.after.observedAt ?? null);
             cache.set(key, value);
             if (Buffer.byteLength(JSON.stringify([...cache.values()], null, 2) + '\n') > bounds.identityBytes) {
                 if (previous) cache.set(key, previous);
@@ -570,6 +618,15 @@ function cachedObservation(pid, timestamp, cache, receipt) {
     if (candidates.length !== 1) return null;
     const candidate = candidates[0],
         observed = candidate.observation;
+    const imageFields = ['imageInvalid', 'firstImageFailureAt', 'firstImageFailure'];
+    if (
+        imageFields.some((key) => Object.hasOwn(candidate, key)) &&
+        (!imageFields.every((key) => Object.hasOwn(candidate, key)) ||
+            candidate.imageInvalid !== false ||
+            candidate.firstImageFailureAt !== null ||
+            candidate.firstImageFailure !== null)
+    )
+        return null;
     if (
         candidate.metadataUnknown ||
         candidate.imageChanged ||
@@ -1708,11 +1765,66 @@ function physicalReceipt(receipt) {
 }
 
 function knownCpuSender(receipt, records, knownRoot) {
-    const raw = receipt.custody.observation;
-    const proof = raw.events.find(
-        (row) => row.type === 'cpu-worker-signal' && row.signal === 'SIGTERM' && same(row, receipt.worker),
-    );
-    if (!proof) return false;
+    const raw = receipt?.custody?.observation,
+        worker = receipt?.worker;
+    if (!raw || !worker || !Array.isArray(raw.events) || !Array.isArray(receipt.events)) return false;
+    const proofs = raw.events.filter((row) => row.type === 'cpu-worker-signal');
+    if (proofs.length !== 1) return false;
+    const proof = proofs[0];
+    const absences = raw.events.filter((row) => row.type === 'cpu-worker-absent-before-ack');
+    if (absences.length !== 1) return false;
+    const absence = absences[0];
+    if (
+        proof.cpuOnly !== true ||
+        proof.signal !== 'SIGTERM' ||
+        !same(proof, worker) ||
+        absence.cpuOnly !== true ||
+        !same(absence, worker) ||
+        !(proof.eventId < absence.eventId) ||
+        [proof, absence].some((event) => raw.events.filter((row) => row.eventId === event.eventId).length !== 1)
+    )
+        return false;
+    const originalEvent = (event, type) => {
+        const matches = receipt.events.filter((row) => row.type === type);
+        return (
+            event &&
+            event.source === 'supervisor' &&
+            matches.length === 1 &&
+            receipt.events.filter((row) => row.eventId === event.eventId).length === 1 &&
+            JSON.stringify(matches[0]) === JSON.stringify(event)
+        );
+    };
+    const { spawn, exit, close } = worker;
+    if (
+        !originalEvent(spawn, 'worker-spawn') ||
+        !originalEvent(exit, 'worker-exit') ||
+        !originalEvent(close, 'worker-stdio-close') ||
+        !same(spawn, worker) ||
+        exit.code !== null ||
+        exit.signal !== 'SIGTERM' ||
+        close.code !== null ||
+        close.signal !== 'SIGTERM' ||
+        !(spawn.eventId < exit.eventId && exit.eventId < close.eventId)
+    )
+        return false;
+    // strace carries microseconds; ISO receipts truncate to milliseconds. Each ISO
+    // value denotes [ms, ms + 1), not an extra scheduling/delivery grace period.
+    const utcMicros = (value) => {
+        const ms = typeof value === 'string' ? Date.parse(value) : NaN;
+        return Number.isFinite(ms) && new Date(ms).toISOString() === value ? BigInt(ms) * 1000n : null;
+    };
+    const traceMicros = (value) =>
+        typeof value === 'string' && /^\d+\.\d{6}$/.test(value) ? BigInt(value.replace('.', '')) : null;
+    const spawned = utcMicros(spawn.receivedUtc),
+        exited = utcMicros(exit.receivedUtc),
+        closed = utcMicros(close.receivedUtc),
+        proved = utcMicros(proof.utc),
+        absent = utcMicros(absence.utc);
+    if (
+        [spawned, exited, closed, proved, absent].includes(null) ||
+        !(spawned <= exited && exited <= closed && proved <= absent)
+    )
+        return false;
     const sends = records.filter(
         (row) =>
             row.kind === 'syscall' &&
@@ -1727,18 +1839,29 @@ function knownCpuSender(receipt, records, knownRoot) {
             fullSame(row.callerProcessIdentity, row.identityObservation.process) &&
             same(row.callerProcessIdentity, raw.custodian),
     );
+    const deliveries = records.filter(
+        (row) =>
+            row.kind === 'delivery' &&
+            row.signal === 'SIGTERM' &&
+            row.siCode === 'SI_USER' &&
+            row.siPid === raw.custodian.pid &&
+            row.tid === worker.pid,
+    );
+    if (sends.length !== 1 || deliveries.length !== 1) return false;
+    const began = traceMicros(sends[0].beganAt),
+        returned = traceMicros(sends[0].timestamp),
+        delivered = traceMicros(deliveries[0].timestamp);
+    // The Python proof is emitted after os.kill returns, not after remote delivery.
+    // Delivery may precede the resumed syscall return or follow the proof; its upper
+    // bound is this exact worker's independently recorded SIGTERM exit. Python may
+    // log the send after Node records exit/close; only its own later absence bounds it.
     return (
-        sends.length === 1 &&
-        records.some(
-            (row) =>
-                row.kind === 'delivery' &&
-                row.signal === 'SIGTERM' &&
-                row.siCode === 'SI_USER' &&
-                row.siPid === raw.custodian.pid &&
-                row.tid === receipt.worker.pid &&
-                Number(row.timestamp) >= Number(sends[0].beganAt) &&
-                Number(row.timestamp) <= Date.parse(proof.utc) / 1000 + 0.001,
-        )
+        ![began, returned, delivered].includes(null) &&
+        spawned <= began &&
+        began <= returned &&
+        returned < proved + 1000n &&
+        began <= delivered &&
+        delivered < exited + 1000n
     );
 }
 

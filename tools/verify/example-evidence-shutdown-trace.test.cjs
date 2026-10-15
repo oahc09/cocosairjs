@@ -1040,16 +1040,298 @@ test('PIDFD is opaque, group kill/unknown TID/ambiguous sender never establish a
         identityObservation: observation(target),
     };
     assert.equal(correlate([syscall, delivery], [sender, target])[0].status, 'CORRELATED_DIAGNOSTIC_ONLY');
+    const spawn = {
+        ...target,
+        type: 'worker-spawn',
+        source: 'supervisor',
+        eventId: 1,
+        receivedUtc: '2023-11-14T22:13:20.000Z',
+    };
+    const exit = {
+        type: 'worker-exit',
+        source: 'supervisor',
+        eventId: 2,
+        code: null,
+        signal: 'SIGTERM',
+        receivedUtc: '2023-11-14T22:13:20.010Z',
+    };
+    const close = { ...exit, type: 'worker-stdio-close', eventId: 3 };
     const receipt = {
-        worker: target,
+        worker: { ...target, spawn, exit, close },
+        events: [spawn, exit, close],
         custody: {
             observation: {
                 custodian: sender,
-                events: [{ ...target, type: 'cpu-worker-signal', signal: 'SIGTERM', utc: '2023-11-14T22:13:20.001Z' }],
+                events: [
+                    {
+                        ...target,
+                        type: 'cpu-worker-signal',
+                        eventId: 1,
+                        cpuOnly: true,
+                        signal: 'SIGTERM',
+                        utc: '2023-11-14T22:13:20.001Z',
+                    },
+                    {
+                        ...target,
+                        type: 'cpu-worker-absent-before-ack',
+                        eventId: 2,
+                        cpuOnly: true,
+                        utc: '2023-11-14T22:13:20.020Z',
+                    },
+                ],
             },
         },
     };
     assert.equal(knownCpuSender(receipt, [syscall, delivery], TEST_ROOT), true);
+    // Pure synthetic timing controls, not new trace evidence. Millisecond endpoints
+    // are half-open precision intervals; delivery is not bounded by Python's send log.
+    const time = (fraction) => `1700000000.${fraction}`;
+    for (const [returned, delivered] of [
+        ['000001', '005000'], // after proof, before actual exit
+        ['001999', '000002'], // remote delivery before observed syscall return
+        ['000001', '010999'], // last microsecond in the recorded exit millisecond
+    ]) {
+        const rows = structuredClone([syscall, delivery]);
+        rows[0].timestamp = time(returned);
+        rows[1].timestamp = time(delivered);
+        assert.equal(knownCpuSender(receipt, rows, TEST_ROOT), true);
+    }
+    const delayedProof = structuredClone(receipt),
+        returnedAfterExit = structuredClone([syscall, delivery]);
+    delayedProof.custody.observation.events[0].utc = '2023-11-14T22:13:20.015Z';
+    returnedAfterExit[0].timestamp = time('014999');
+    assert.equal(
+        knownCpuSender(delayedProof, returnedAfterExit, TEST_ROOT),
+        true,
+        'Python may resume from kill and log proof after Node has recorded worker exit/close',
+    );
+    for (const mutate of [
+        (r) => {
+            r.custody.observation.events.pop();
+        },
+        (r) => {
+            r.custody.observation.events[1].cpuOnly = false;
+        },
+        (r) => {
+            r.custody.observation.events[1].startTicks = '999';
+        },
+        (r) => {
+            r.custody.observation.events[1].eventId = 0;
+        },
+        (r) => {
+            r.custody.observation.events[1].utc = '2023-11-14T22:13:20.000Z';
+        },
+        (r) => {
+            r.custody.observation.events.push(structuredClone(r.custody.observation.events[1]));
+        },
+        (r) => {
+            r.custody.observation.events.push({ type: 'unrelated', eventId: 1 });
+        },
+    ]) {
+        const changed = structuredClone(receipt);
+        mutate(changed);
+        assert.equal(knownCpuSender(changed, [syscall, delivery], TEST_ROOT), false);
+    }
+    const setEventTime = (r, key, fraction) => {
+        r.worker[key].receivedUtc = `2023-11-14T22:13:20.${fraction}Z`;
+        r.events.find((event) => event.eventId === r.worker[key].eventId).receivedUtc = r.worker[key].receivedUtc;
+    };
+    const mutations = [
+        [
+            'missing exit',
+            (r) => {
+                delete r.worker.exit;
+            },
+        ],
+        [
+            'missing close',
+            (r) => {
+                delete r.worker.close;
+            },
+        ],
+        [
+            'unreferenced exit',
+            (r) => {
+                r.worker.exit = { ...r.worker.exit, eventId: 99 };
+            },
+        ],
+        [
+            'duplicate exit',
+            (r) => {
+                r.events.push(structuredClone(r.worker.exit));
+            },
+        ],
+        [
+            'wrong exit signal',
+            (r) => {
+                r.worker.exit.signal = 'SIGKILL';
+            },
+        ],
+        [
+            'wrong close code',
+            (r) => {
+                r.worker.close.code = 0;
+            },
+        ],
+        [
+            'wrong spawn identity',
+            (r) => {
+                r.worker.spawn.startTicks = '999';
+            },
+        ],
+        [
+            'wrong proof identity',
+            (r) => {
+                r.custody.observation.events[0].startTicks = '999';
+            },
+        ],
+        [
+            'wrong proof signal',
+            (r) => {
+                r.custody.observation.events[0].signal = 'SIGKILL';
+            },
+        ],
+        [
+            'proof not CPU-only',
+            (r) => {
+                r.custody.observation.events[0].cpuOnly = false;
+            },
+        ],
+        [
+            'duplicate proof',
+            (r) => {
+                r.custody.observation.events.push(structuredClone(r.custody.observation.events[0]));
+            },
+        ],
+        [
+            'proof after same-source absence',
+            (r) => {
+                r.custody.observation.events[0].utc = '2023-11-14T22:13:20.021Z';
+            },
+        ],
+        [
+            'send before spawn',
+            (r) => {
+                setEventTime(r, 'spawn', '001');
+            },
+        ],
+        [
+            'exit before worker spawn',
+            (r) => {
+                setEventTime(r, 'spawn', '009');
+                setEventTime(r, 'exit', '008');
+            },
+        ],
+        [
+            'close before exit',
+            (r) => {
+                setEventTime(r, 'close', '009');
+            },
+        ],
+        [
+            'send at proof upper endpoint',
+            (r, rows) => {
+                rows[0].timestamp = time('002000');
+            },
+        ],
+        [
+            'delivery at exit upper endpoint',
+            (r, rows) => {
+                rows[1].timestamp = time('011000');
+            },
+        ],
+        [
+            'delivery before send',
+            (r, rows) => {
+                rows[1].timestamp = time('000000');
+            },
+        ],
+        [
+            'send return before entry',
+            (r, rows) => {
+                rows[0].timestamp = time('000000');
+            },
+        ],
+        [
+            'invalid send timestamp',
+            (r, rows) => {
+                rows[0].timestamp = 'NaN';
+            },
+        ],
+        [
+            'duplicate send',
+            (r, rows) => {
+                rows.push(structuredClone(rows[0]));
+            },
+        ],
+        [
+            'duplicate delivery',
+            (r, rows) => {
+                rows.push(structuredClone(rows[1]));
+            },
+        ],
+        [
+            'unfinished send',
+            (r, rows) => {
+                rows[0].kind = 'syscall-incomplete';
+            },
+        ],
+        [
+            'failed send',
+            (r, rows) => {
+                rows[0].result = -1;
+                rows[0].errno = 'ESRCH';
+            },
+        ],
+        [
+            'wrong caller',
+            (r, rows) => {
+                rows[0].callerProcessIdentity.startTicks = '999';
+            },
+        ],
+        [
+            'wrong send target',
+            (r, rows) => {
+                rows[0].target = 999;
+            },
+        ],
+        [
+            'wrong send signal',
+            (r, rows) => {
+                rows[0].signal = 'SIGKILL';
+            },
+        ],
+        [
+            'wrong delivery sender',
+            (r, rows) => {
+                rows[1].siPid = 999;
+            },
+        ],
+        [
+            'wrong delivery target',
+            (r, rows) => {
+                rows[1].tid = 999;
+            },
+        ],
+        [
+            'wrong delivery signal',
+            (r, rows) => {
+                rows[1].signal = 'SIGKILL';
+            },
+        ],
+        [
+            'wrong delivery code',
+            (r, rows) => {
+                rows[1].siCode = 'SI_TKILL';
+            },
+        ],
+    ];
+    for (const [name, mutate] of mutations) {
+        const changed = structuredClone(receipt),
+            rows = structuredClone([syscall, delivery]);
+        mutate(changed, rows);
+        assert.equal(knownCpuSender(changed, rows, TEST_ROOT), false, name);
+    }
     const stop = parse('202 1700000000.000002 --- stopped by SIGTERM ---\n').records[0];
     for (const replacement of [stop, { ...delivery, kind: stop.kind }]) {
         assert.deepEqual(correlate([syscall, replacement], [sender, target]), []);
@@ -1119,6 +1401,66 @@ test('PIDFD is opaque, group kill/unknown TID/ambiguous sender never establish a
         assert.equal(correlateRaw(changed, identities, knownRoot)[0].status, 'UNKNOWN');
     }
 });
+
+test(
+    'retained CPU known-sender proof allows delivery after send logging within the real worker lifetime',
+    { skip: !process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT },
+    () => {
+        const fs = require('node:fs'),
+            path = require('node:path'),
+            crypto = require('node:crypto');
+        const { expectedOutcome } = require('./example-evidence-shutdown-trace.cjs');
+        const { validateCustodyArtifacts } = require('./example-evidence-supervisor.cjs');
+        const root = process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT;
+        let checked = 0;
+        for (const run of ['38803365977', '38806513208', '38814058706']) {
+            const directory = path.join(root, `shutdown-diagnostics-${run}`, 'cpu-custodian-delayed-stop-ack-on');
+            if (!fs.existsSync(directory)) continue;
+            checked++;
+            const reportBytes = fs.readFileSync(path.join(directory, 'diagnostic.json'));
+            const report = JSON.parse(reportBytes);
+            const receiptBytes = fs.readFileSync(path.join(directory, 'attempt/attempt-receipt.json'));
+            const receipt = JSON.parse(receiptBytes);
+            const records = fs
+                .readFileSync(path.join(directory, 'filtered-trace.jsonl'), 'utf8')
+                .trim()
+                .split('\n')
+                .map(JSON.parse);
+            const knownRoot = report.events.find((event) => event.type === 'original-outer-observed').identity;
+            const artifacts = {};
+            for (const [role, reference] of Object.entries(receipt.custody.artifacts)) {
+                const bytes = fs.readFileSync(path.join(directory, 'attempt', path.basename(reference.path)));
+                assert.equal(bytes.length, reference.bytes);
+                assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), reference.sha256);
+                artifacts[role] = ['raw', 'nodeReceipt'].includes(role) ? JSON.parse(bytes) : bytes;
+            }
+            assert.equal(validateCustodyArtifacts(receipt, artifacts).ok, true, run);
+            assert.equal(expectedOutcome(receipt, { mode: 'cpu', cpuCase: 'custodian-delayed-stop-ack' }), true, run);
+            assert.equal(receipt.ok, false, 'known negative remains a failed production receipt');
+            assert.equal(knownCpuSender(receipt, records, knownRoot), true, run);
+            if (run === '38814058706') {
+                assert.equal(report.status, 'FAIL');
+                assert.deepEqual(report.errors, ['cpu-known-sender-not-established']);
+                assert.equal(report.cpuKnownSender.established, false);
+                const delivery = records.find((row) => row.kind === 'delivery' && row.siCode === 'SI_USER');
+                const proof = receipt.custody.observation.events.find((row) => row.type === 'cpu-worker-signal');
+                assert.equal(delivery.timestamp, '1792101800.430266');
+                assert.ok(
+                    Number(delivery.timestamp) > Date.parse(proof.utc) / 1000 + 0.001,
+                    'the old proof-plus-1ms bound rejected this actual delivery',
+                );
+                for (const key of ['exit', 'close']) {
+                    const changed = structuredClone(receipt);
+                    delete changed.worker[key];
+                    assert.equal(knownCpuSender(changed, records, knownRoot), false);
+                }
+            }
+            assert.deepEqual(fs.readFileSync(path.join(directory, 'diagnostic.json')), reportBytes);
+            assert.deepEqual(fs.readFileSync(path.join(directory, 'attempt/attempt-receipt.json')), receiptBytes);
+        }
+        assert.ok(checked > 0, 'at least one original traced CPU known-sender fixture is required');
+    },
+);
 
 test('reviewer mutation cases reject duplicate siginfo, conflicting signo, extra args and unsafe numbers', () => {
     for (const line of [
@@ -1367,6 +1709,98 @@ test('cross-read exec and later ownership changes permanently disqualify cached 
         sampleOwnedIdentities(f.options);
         assert.equal(f.cache.get('202:52:pid:[1]').metadataUnknown, true);
         assert.equal(cachedObservation(202, '1700000000.015000', [...f.cache.values()], receiptFor(f)), null);
+    }
+});
+
+test('image read unavailability records a fixed first witness without restoring invalid cache trust', () => {
+    const { sampleOwnedIdentities, cachedObservation } = require('./example-evidence-shutdown-trace.cjs');
+    const receiptFor = (f) => ({
+        ownedProcesses: [f.root, f.child],
+        browsers: [],
+        custody: {
+            observation: {
+                adopted: [f.root, f.child].map((row) => ({ ...row, reap: { utc: '2023-11-14T22:13:20.100Z' } })),
+            },
+        },
+    });
+    for (const kind of ['within-read', 'across-read', 'across-samples', 'changed', 'baseline', 'legacy']) {
+        const f = ownedThreadFixture();
+        if (['across-samples', 'changed', 'legacy'].includes(kind)) sampleOwnedIdentities(f.options);
+        if (kind === 'legacy') {
+            const old = f.cache.get('100:41:pid:[1]');
+            old.imageChanged = true;
+            for (const key of ['imageInvalid', 'firstImageFailureAt', 'firstImageFailure']) delete old[key];
+        }
+        let reads = 0;
+        sampleOwnedIdentities({
+            ...f.options,
+            observe: (pid) => {
+                const row = f.options.observe(pid);
+                if (pid !== 100) return row;
+                reads++;
+                row.observedAt += reads;
+                if (kind === 'within-read' && reads === 1) {
+                    row.imageAfter = null;
+                    row.imageStable = false;
+                }
+                if ((kind === 'across-read' && reads === 2) || kind === 'across-samples') {
+                    row.imageBefore = null;
+                    row.imageAfter = null;
+                    row.imageStable = false;
+                }
+                if (kind === 'changed') {
+                    row.imageBefore.ino = 999;
+                    row.imageAfter.ino = 999;
+                }
+                if (kind === 'baseline') row.imageStable = false;
+                return row;
+            },
+        });
+        const entry = f.cache.get('100:41:pid:[1]'),
+            witness = structuredClone(entry.firstImageFailure);
+        assert.equal(entry.imageChanged, true);
+        assert.equal(entry.imageInvalid, true);
+        assert.equal(
+            witness.reason,
+            kind === 'changed' ? 'changed' : ['baseline', 'legacy'].includes(kind) ? 'unknown' : 'unavailable',
+            kind,
+        );
+        assert.deepEqual(witness.thread, entry.observation.thread);
+        assert.deepEqual(witness.process, entry.observation.process);
+        assert.deepEqual(witness.root, f.root);
+        assert.equal(entry.firstImageFailureAt, witness.after.observedAt);
+        assert.equal(witness.previousInvalid, kind === 'legacy');
+        if (kind === 'changed') {
+            assert.equal(witness.previousImage.ino, 2);
+            assert.equal(witness.before.imageBefore.ino, 999);
+        }
+        if (kind === 'across-samples') {
+            assert.equal(witness.previousImage.ino, 2);
+            assert.equal(witness.before.imageBefore, null);
+            assert.equal(entry.firstAbsentAt, null, 'unavailable exe does not establish thread absence');
+        }
+        assert.equal(cachedObservation(100, '1700000000.015000', [...f.cache.values()], receiptFor(f)), null);
+        sampleOwnedIdentities(f.options);
+        const final = f.cache.get('100:41:pid:[1]');
+        assert.deepEqual(final.firstImageFailure, witness, 'later valid reads never replace the first issue');
+        assert.equal(final.imageInvalid, true);
+        const altered = structuredClone(final);
+        altered.imageChanged = false;
+        assert.equal(cachedObservation(100, '1700000000.015000', [altered], receiptFor(f)), null);
+        altered.imageInvalid = false;
+        assert.equal(cachedObservation(100, '1700000000.015000', [altered], receiptFor(f)), null);
+        assert.doesNotMatch(JSON.stringify(witness), /\/proc\/|EACCES|ENOENT|PRIVATE_TOKEN/);
+    }
+    const f = ownedThreadFixture();
+    sampleOwnedIdentities(f.options);
+    const good = f.cache.get('100:41:pid:[1]');
+    assert.equal(good.imageInvalid, false);
+    assert.equal(good.firstImageFailure, null);
+    assert.ok(cachedObservation(100, '1700000000.015000', [good], receiptFor(f)));
+    for (const key of ['imageInvalid', 'firstImageFailureAt', 'firstImageFailure']) {
+        const incomplete = structuredClone(good);
+        delete incomplete[key];
+        assert.equal(cachedObservation(100, '1700000000.015000', [incomplete], receiptFor(f)), null);
     }
 });
 
