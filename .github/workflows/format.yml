@@ -46,6 +46,7 @@ jobs:
           sha256sum --check "$RUNNER_TEMP/committed-spark-tree.sha256"
           git diff --exit-code -- src/air/spark/generated
           EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu" node tools/verify/example-evidence-supervisor.test.cjs
+          node --test tools/verify/shaders-holographic-rotation.test.cjs
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-workspace.test.ts test/smoke/smoke-example-evidence-campaign.test.ts test/smoke/smoke-example-evidence-publication.test.ts test/smoke/smoke-example-evidence-integration.test.ts test/smoke/smoke-example-specialized-probes.test.ts test/smoke/smoke-example-driver-pixel-diagnostics.test.ts
           node tools/verify/example-evidence-preflight.cjs
           node tools/verify/example-evidence-campaign.cjs check
@@ -57,7 +58,7 @@ jobs:
           if-no-files-found: ignore
       - run: npm run format:check
       - run: npx prettier --check tools/verify/release-readiness.cjs tools/examples/api-inventory.cjs tools/examples/reconcile-api-claims.cjs tools/examples/coverage-bindings/bind-vector-instance.cjs tools/examples/coverage-bindings/bind-tween-control.cjs tools/examples/coverage-bindings/bind-animation-runtime.cjs tools/examples/coverage-bindings/bind-widget-layout.cjs
-      - run: npx prettier --check "tools/verify/example-evidence*.cjs" tools/verify/example-specialized-probes.cjs tools/verify/driver-pixel-diagnostics.cjs tools/verify/example-workspace.cjs tools/verify/run-example-evidence-campaign.cjs tools/verify/publish-example-evidence.cjs "test/smoke/smoke-example-*.test.ts" AGENTS.md tools/README.md docs/reference/example-evidence-campaign.md docs/reference/verification.md
+      - run: npx prettier --check "tools/verify/example-evidence*.cjs" tools/verify/example-specialized-probes.cjs tools/verify/driver-pixel-diagnostics.cjs tools/verify/shaders-holographic-rotation.test.cjs tools/verify/example-workspace.cjs tools/verify/run-example-evidence-campaign.cjs tools/verify/publish-example-evidence.cjs "test/smoke/smoke-example-*.test.ts" AGENTS.md tools/README.md docs/reference/example-evidence-campaign.md docs/reference/verification.md
       - run: npm run typecheck
       - name: Build runtime and declarations
         run: |
