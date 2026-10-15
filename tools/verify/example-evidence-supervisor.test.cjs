@@ -46,6 +46,29 @@ test('actual CPU subprocess/HTTP lifecycle controls, sequential and bounded', as
         assert.equal(positive.ok, true, JSON.stringify(positive.errors));
         assert.equal(positive.browsers.length, 2);
         assert.equal(positive.servers.length, 2);
+        for (const browser of positive.browsers) {
+            const owned = positive.ownedProcesses.find(
+                (row) => row.pid === browser.pid && row.startTicks === browser.startTicks,
+            );
+            assert.equal(owned.firstObserved.processDiagnostic.status, 'observed');
+            assert.equal(owned.firstObserved.processDiagnostic.purpose, 'diagnostic-only');
+            assert.equal(owned.firstObserved.processDiagnostic.details.executable, 'node');
+        }
+        for (const runtime of positive.runtimes) {
+            const diagnostics = positive.events.filter(
+                (event) => event.type === 'owned-process-diagnostic' && event.runtimeId === runtime.runtimeId,
+            );
+            assert.ok(diagnostics.length > 0);
+            assert.ok(
+                diagnostics.every(
+                    (event) =>
+                        event.sourceEventId === runtime.stopBegin.eventId &&
+                        event.phase === 'stop-begin-received' &&
+                        event.processDiagnostic.purpose === 'diagnostic-only' &&
+                        event.processDiagnostic.signalSender === 'unknown',
+                ),
+            );
+        }
         const ready = fs
             .readFileSync(positive.output.stdout, 'utf8')
             .split('\n')

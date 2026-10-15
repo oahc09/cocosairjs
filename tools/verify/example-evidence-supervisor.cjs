@@ -9,6 +9,7 @@ const crypto = require('crypto');
 const { spawn, spawnSync } = require('child_process');
 const { Socket } = require('net');
 const { performance } = require('perf_hooks');
+const { snapshotOwnedProcess } = require('./example-evidence-process-diagnostics.cjs');
 
 const SCHEMA_VERSION = 'example-evidence-attempt/1';
 let activeWorker = null;
@@ -695,6 +696,8 @@ async function superviseAttemptInner(options) {
                 role,
                 pgrp: row.initial?.pgrp ?? row.pgrp,
                 ppid: row.initial?.ppid ?? row.ppid,
+                // Descriptive, privacy-limited observations only. Never used for ownership or PASS decisions.
+                processDiagnostic: snapshotOwnedProcess(row),
             });
             owned.set(key, { ...row, role, firstObserved, disappearance: null });
         }
@@ -1087,6 +1090,20 @@ async function superviseAttemptInner(options) {
             }
             runtime.stopBegin = entry;
             runtime.stopTimer = timer(() => requestAbort(`${raw.runtimeId} stop deadline`, true), limits.closeMs);
+            // A forked browser child can change role before shutdown. Retain a second identity-bound
+            // observation when stop-begin is received, possibly after shutdown has already begun.
+            // It never accepts a signal or replaces the kernel custody result.
+            for (const row of scanOwned()) {
+                event('owned-process-diagnostic', {
+                    pid: row.pid,
+                    startTicks: row.startTicks,
+                    namespace: row.namespace,
+                    runtimeId: raw.runtimeId,
+                    phase: 'stop-begin-received',
+                    sourceEventId: entry.eventId,
+                    processDiagnostic: snapshotOwnedProcess(row),
+                });
+            }
         }
         if (raw.type === 'stop-complete') {
             if (!runtime || runtime.stopComplete) {

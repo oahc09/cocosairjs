@@ -45,8 +45,10 @@ jobs:
           node tools/build/spark-runtime-tree.cjs
           sha256sum --check "$RUNNER_TEMP/committed-spark-tree.sha256"
           git diff --exit-code -- src/air/spark/generated
+          npx prettier --check tools/verify/example-evidence-process-diagnostics.cjs tools/verify/example-evidence-process-diagnostics.test.cjs tools/verify/example-evidence-supervisor.cjs tools/verify/example-evidence-supervisor.test.cjs .github/workflows/example-evidence.yml .github/workflows/format.yml docs/reference/example-evidence-campaign.md
           EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu" node tools/verify/example-evidence-supervisor.test.cjs
           node --test tools/verify/shaders-holographic-rotation.test.cjs
+          node --test tools/verify/example-evidence-process-diagnostics.test.cjs
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-workspace.test.ts test/smoke/smoke-example-evidence-campaign.test.ts test/smoke/smoke-example-evidence-publication.test.ts test/smoke/smoke-example-evidence-integration.test.ts test/smoke/smoke-example-specialized-probes.test.ts test/smoke/smoke-example-driver-pixel-diagnostics.test.ts
           node tools/verify/example-evidence-preflight.cjs
           node tools/verify/example-evidence-campaign.cjs check
