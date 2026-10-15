@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-14T23:47:06.708Z",
-  "revision": "8e309822",
+  "generatedAt": "2026-10-15T01:04:43.267Z",
+  "revision": "0f005d7d",
   "examples": [
     {
       "dir": "anim-position",
@@ -19343,8 +19343,8 @@
       "version": "1.0.0",
       "title": "Spark 独立模块",
       "category": "rendering",
-      "status": "experimental",
-      "specStatus": "draft",
+      "status": "draft",
+      "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
         "goal": "加载独立 Spark 模块并复用主引擎的场景和 gfx 设备",
@@ -19358,9 +19358,50 @@
         "functional": "360 个程序化泼溅绑定到原生 Node，使用同一主引擎的 Camera、Device 和 framebuffer。",
         "visual": "中央显示由 360 个 Gaussian Splats 构成的彩色球。"
       },
+      "api": {
+        "primary": [
+          "createAirApp",
+          "Camera",
+          "Node"
+        ],
+        "supporting": [],
+        "claims": [
+          "createAirApp",
+          "Camera",
+          "Node"
+        ]
+      },
       "capabilities": [
         "spark"
-      ]
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Camera",
+            "Splats"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      }
     },
     {
       "dir": "sprite-mask-blend",
@@ -21890,264 +21931,264 @@
     }
   ],
   "categories": {
-    "basics": [
-      "hello-cube",
-      "starter",
-      "transform",
-      "node-hierarchy",
-      "node-active",
-      "node-scale"
-    ],
-    "mesh": [
-      "static-model",
-      "mesh-attributes-indices",
-      "mesh-lifecycle-ops",
-      "meshrenderer-hooks",
-      "primitives-shapes-extra",
-      "primitives-geometry-ops",
-      "primitives-wireframe-obj",
-      "batching-utility",
-      "mesh-morph-bounds",
-      "mesh-prim-compare"
-    ],
     "animation": [
-      "skinned-animation",
-      "tween-basic",
-      "anim-rotation",
       "anim-position",
+      "anim-rotation",
+      "animated-character-showcase",
       "color-timeline-key",
       "colortimeline-ops",
       "gltf-animation-contract",
-      "animated-character-showcase"
-    ],
-    "gltf": [
-      "gltf-viewer",
-      "gltf-catalog",
-      "gltf-draco",
-      "gltf-meshopt",
-      "gltf-morph",
-      "gltf-skin",
-      "gltf-basic",
-      "gltf-loader-registry",
-      "gltf-asset-readonly",
-      "model-character-interaction"
-    ],
-    "camera": [
-      "camera",
-      "camera-lookat",
-      "camera-ortho",
-      "camera-multi",
-      "camera-screen-world",
-      "camera-geometry-extras",
-      "camera-viewport-props",
-      "camera-second-view"
-    ],
-    "interaction": [
-      "input",
-      "orbit-controls",
-      "interactive-input"
-    ],
-    "devtools": [
-      "automation"
-    ],
-    "material": [
-      "material-basic",
-      "material-ops",
-      "material-lifecycle"
-    ],
-    "lights": [
-      "light-spot",
-      "light-sphere",
-      "light-point",
-      "light-two-directional"
-    ],
-    "meshes": [
-      "mesh-sphere",
-      "mesh-cylinder",
-      "mesh-torus",
-      "mesh-plane",
-      "mesh-multi-material"
-    ],
-    "materials": [
-      "material-color",
-      "material-transparent",
-      "material-unlit",
-      "texture-basic",
-      "gltf-clearcoat",
-      "glass-refraction"
-    ],
-    "runtime-control": [
-      "rc-inspect-scene",
-      "rc-create-node",
-      "rc-capture-frame",
-      "rc-error-report"
-    ],
-    "input": [
-      "interaction-click",
-      "input-queries"
-    ],
-    "runtime": [
-      "runtime-asset-release",
-      "scene-switch-reentry"
-    ],
-    "debug": [
-      "profiler-overlay"
-    ],
-    "ui": [
-      "ui-components",
-      "ui-layout",
-      "webview-basic",
-      "ui-asset-loading",
-      "ui-api-lifecycle",
-      "responsive-board-recipes"
-    ],
-    "physics-2d": [
-      "physics-2d-basic",
-      "physics-2d-collision"
-    ],
-    "particle-2d": [
-      "particle-2d-basic"
-    ],
-    "tiledmap": [
-      "tiledmap-basic"
+      "skinned-animation",
+      "tween-basic"
     ],
     "audio": [
       "audio-basic"
     ],
-    "video": [
-      "video-basic"
+    "devtools": [
+      "automation"
+    ],
+    "performance": [
+      "batching-dynamic",
+      "batching-merged",
+      "batching-shared"
+    ],
+    "mesh": [
+      "batching-utility",
+      "mesh-attributes-indices",
+      "mesh-lifecycle-ops",
+      "mesh-morph-bounds",
+      "mesh-prim-compare",
+      "meshrenderer-hooks",
+      "primitives-geometry-ops",
+      "primitives-shapes-extra",
+      "primitives-wireframe-obj",
+      "static-model"
+    ],
+    "shader": [
+      "black-hole-accretion",
+      "point-cloud-basics",
+      "shader-custom-gradient",
+      "shader-dissolve"
+    ],
+    "camera": [
+      "camera",
+      "camera-geometry-extras",
+      "camera-lookat",
+      "camera-multi",
+      "camera-ortho",
+      "camera-screen-world",
+      "camera-second-view",
+      "camera-viewport-props"
+    ],
+    "rendering": [
+      "campfire-night",
+      "dom-overlay-texture",
+      "fog-accuracy",
+      "graphics-svg-paints",
+      "hdr-color-pipeline",
+      "html-texture-experimental",
+      "interactive-geometry",
+      "interactive-multipass",
+      "k0-r2-porting-contracts",
+      "neon-night-city",
+      "render-composite",
+      "shader-cursor-trail",
+      "shader-driver-pilot",
+      "shader-emboss",
+      "shader-film-neon",
+      "shader-glass",
+      "shader-glass-trail",
+      "shader-holographic",
+      "shader-input-dissolve",
+      "shader-laser-card",
+      "shader-liquid-metal",
+      "shader-neon",
+      "shader-noise-dissolve",
+      "shader-sparkle",
+      "shader-thin-film",
+      "spark-splats",
+      "sprite-mask-blend",
+      "water-multipass"
+    ],
+    "game": [
+      "collector-dodge",
+      "contra-action",
+      "match3-classic",
+      "tank-battle",
+      "tetris-classic"
+    ],
+    "light": [
+      "directional-light-face",
+      "light-attach-cycle"
+    ],
+    "dragon-bones": [
+      "dragonbones-basic"
+    ],
+    "materials": [
+      "glass-refraction",
+      "gltf-clearcoat",
+      "material-color",
+      "material-transparent",
+      "material-unlit",
+      "texture-basic"
+    ],
+    "gltf": [
+      "gltf-asset-readonly",
+      "gltf-basic",
+      "gltf-catalog",
+      "gltf-draco",
+      "gltf-loader-registry",
+      "gltf-meshopt",
+      "gltf-morph",
+      "gltf-skin",
+      "gltf-viewer",
+      "model-character-interaction"
+    ],
+    "basics": [
+      "hello-cube",
+      "node-active",
+      "node-hierarchy",
+      "node-scale",
+      "starter",
+      "transform"
+    ],
+    "interaction": [
+      "input",
+      "interactive-input",
+      "orbit-controls"
+    ],
+    "input": [
+      "input-queries",
+      "interaction-click"
+    ],
+    "integration": [
+      "interactive-container",
+      "interactive-timeline"
+    ],
+    "node": [
+      "layers-enum-ops",
+      "node-children-ops",
+      "node-component-queries",
+      "node-events",
+      "node-pool",
+      "node-scene-id"
+    ],
+    "lights": [
+      "light-point",
+      "light-sphere",
+      "light-spot",
+      "light-two-directional"
+    ],
+    "material": [
+      "material-basic",
+      "material-lifecycle",
+      "material-ops"
+    ],
+    "math": [
+      "math-approx-compare",
+      "math-bits",
+      "math-bits-constants",
+      "math-color-applied",
+      "math-color-convert",
+      "math-color-models",
+      "math-easing-patterns",
+      "math-enumerable-props",
+      "math-float-encoding",
+      "math-mat3-basics",
+      "math-mat3-elements",
+      "math-mat3-transforms",
+      "math-mat4-applied",
+      "math-mat4-basics",
+      "math-mat4-compose",
+      "math-mat4-transform",
+      "math-quat-applied",
+      "math-quat-components",
+      "math-quat-euler",
+      "math-quat-interp",
+      "math-random-utils",
+      "math-rect-geometry",
+      "math-rect-ops",
+      "math-scalar-utils",
+      "math-size-ops",
+      "math-vec2-applied",
+      "math-vec2-arithmetic",
+      "math-vec2-components",
+      "math-vec2-equality-misc",
+      "math-vec2-length-angle",
+      "math-vec2-tovec3",
+      "math-vec3-applied",
+      "math-vec3-arithmetic",
+      "math-vec3-components",
+      "math-vec3-equality-misc",
+      "math-vec3-length-products",
+      "math-vec3-tovec2",
+      "math-vec4-arithmetic",
+      "math-vec4-components",
+      "math-vec4-length-misc"
+    ],
+    "meshes": [
+      "mesh-cylinder",
+      "mesh-multi-material",
+      "mesh-plane",
+      "mesh-sphere",
+      "mesh-torus"
+    ],
+    "particle-2d": [
+      "particle-2d-basic"
+    ],
+    "physics-2d": [
+      "physics-2d-basic",
+      "physics-2d-collision"
     ],
     "physics": [
       "physics-3d-basic",
       "physics-3d-collision",
       "physics-interaction"
     ],
-    "dragon-bones": [
-      "dragonbones-basic"
+    "application": [
+      "product-viewer"
     ],
-    "math": [
-      "math-bits",
-      "math-vec2-arithmetic",
-      "math-vec2-length-angle",
-      "math-vec2-equality-misc",
-      "math-vec3-arithmetic",
-      "math-vec3-length-products",
-      "math-vec3-equality-misc",
-      "math-vec4-arithmetic",
-      "math-vec4-length-misc",
-      "math-mat3-basics",
-      "math-mat3-transforms",
-      "math-mat4-basics",
-      "math-mat4-compose",
-      "math-mat4-transform",
-      "math-quat-euler",
-      "math-quat-interp",
-      "math-size-ops",
-      "math-rect-ops",
-      "math-color-convert",
-      "math-color-models",
-      "math-scalar-utils",
-      "math-approx-compare",
-      "math-random-utils",
-      "math-float-encoding",
-      "math-vec2-components",
-      "math-vec3-components",
-      "math-vec4-components",
-      "math-quat-components",
-      "math-mat3-elements",
-      "math-vec2-tovec3",
-      "math-vec3-tovec2",
-      "math-bits-constants",
-      "math-enumerable-props",
-      "math-vec3-applied",
-      "math-quat-applied",
-      "math-mat4-applied",
-      "math-color-applied",
-      "math-rect-geometry",
-      "math-vec2-applied",
-      "math-easing-patterns"
+    "debug": [
+      "profiler-overlay"
     ],
-    "node": [
-      "node-events",
-      "node-children-ops",
-      "node-component-queries",
-      "node-pool",
-      "layers-enum-ops",
-      "node-scene-id"
+    "runtime-control": [
+      "rc-capture-frame",
+      "rc-create-node",
+      "rc-error-report",
+      "rc-inspect-scene"
     ],
-    "utils": [
-      "utils-family"
+    "ui": [
+      "responsive-board-recipes",
+      "ui-api-lifecycle",
+      "ui-asset-loading",
+      "ui-components",
+      "ui-layout",
+      "webview-basic"
+    ],
+    "runtime": [
+      "runtime-asset-release",
+      "scene-switch-reentry"
+    ],
+    "scene": [
+      "scene-asset-meta",
+      "scene-globals-read",
+      "scene-runtime-ops"
+    ],
+    "particles": [
+      "starfield-galaxy"
     ],
     "texture": [
       "texture2d-ops",
       "texture2d-serialization"
     ],
-    "scene": [
-      "scene-globals-read",
-      "scene-runtime-ops",
-      "scene-asset-meta"
+    "tiledmap": [
+      "tiledmap-basic"
     ],
-    "light": [
-      "directional-light-face",
-      "light-attach-cycle"
+    "utils": [
+      "utils-family"
     ],
-    "rendering": [
-      "render-composite",
-      "campfire-night",
-      "fog-accuracy",
-      "neon-night-city",
-      "water-multipass",
-      "hdr-color-pipeline",
-      "graphics-svg-paints",
-      "sprite-mask-blend",
-      "dom-overlay-texture",
-      "html-texture-experimental",
-      "k0-r2-porting-contracts",
-      "interactive-multipass",
-      "interactive-geometry",
-      "shader-noise-dissolve",
-      "shader-thin-film",
-      "shader-sparkle",
-      "shader-neon",
-      "shader-emboss",
-      "shader-holographic",
-      "shader-liquid-metal",
-      "shader-cursor-trail",
-      "shader-glass",
-      "shader-film-neon",
-      "shader-laser-card",
-      "shader-glass-trail",
-      "shader-input-dissolve",
-      "shader-driver-pilot",
-      "spark-splats"
-    ],
-    "shader": [
-      "shader-custom-gradient",
-      "shader-dissolve",
-      "point-cloud-basics",
-      "black-hole-accretion"
-    ],
-    "game": [
-      "tetris-classic",
-      "match3-classic",
-      "tank-battle",
-      "contra-action",
-      "collector-dodge"
-    ],
-    "application": [
-      "product-viewer"
-    ],
-    "performance": [
-      "batching-shared",
-      "batching-merged",
-      "batching-dynamic"
-    ],
-    "particles": [
-      "starfield-galaxy"
-    ],
-    "integration": [
-      "interactive-container",
-      "interactive-timeline"
+    "video": [
+      "video-basic"
     ]
   }
 }

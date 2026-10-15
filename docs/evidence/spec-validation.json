@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-10-13T19:34:27.144Z",
-  "total": 186,
-  "frozen": 186,
+  "measuredAt": "2026-10-15T01:04:45.249Z",
+  "total": 187,
+  "frozen": 187,
   "draft": 0,
   "blocked": 0,
   "examples": [
@@ -832,6 +832,11 @@
     },
     {
       "id": "skinned-animation",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "spark-splats",
       "specStatus": "frozen",
       "issues": []
     },
