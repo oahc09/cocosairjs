@@ -621,7 +621,9 @@ function buildCommand(options) {
             executable: process.execPath,
             args: [
                 '-e',
-                'process.on("SIGTERM", () => setTimeout(() => process.exit(143), 100)); setTimeout(() => process.kill(process.pid, "SIGTERM"), 100)',
+                // Signal watchers alone do not keep Node alive after the one-shot sender timer.
+                // Retain a handle until the real handler installs the original exit timer.
+                'const keepAlive = setInterval(() => {}, 1000); process.on("SIGTERM", () => { clearInterval(keepAlive); setTimeout(() => process.exit(143), 100); }); setTimeout(() => process.kill(process.pid, "SIGTERM"), 100)',
             ],
             limits,
         };

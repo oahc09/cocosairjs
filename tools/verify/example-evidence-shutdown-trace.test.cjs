@@ -11,6 +11,34 @@ const {
     BOUNDS,
 } = require('./example-evidence-shutdown-trace.cjs');
 
+test(
+    'availability Node fixture stays alive until its real SIGTERM handler establishes exit 143',
+    {
+        skip: process.platform !== 'linux',
+    },
+    () => {
+        const { spawnSync } = require('node:child_process');
+        const command = buildCommand({ mode: 'availability', trace: 'on' });
+        const oldFixture =
+            'process.on("SIGTERM", () => setTimeout(() => process.exit(143), 100)); setTimeout(() => process.kill(process.pid, "SIGTERM"), 100)';
+        for (const [args, expectedExit] of [
+            [['-e', oldFixture], 0],
+            [command.args, 143],
+        ]) {
+            const child = spawnSync(command.executable, args, {
+                encoding: 'utf8',
+                timeout: 4000,
+                maxBuffer: 8192,
+            });
+            assert.ok(Number.isSafeInteger(child.pid) && child.pid > 0);
+            assert.equal(child.error, undefined);
+            assert.equal(child.signal, null);
+            assert.equal(child.status, expectedExit);
+            assert.equal(child.stdout, '');
+        }
+    },
+);
+
 test('external deadlines count all preflight time from one monotonic entry without extending any budget', () => {
     for (const mode of ['cpu', 'target']) {
         let now = 123.25;
