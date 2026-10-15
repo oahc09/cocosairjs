@@ -50,10 +50,11 @@ jobs:
       - name: Validate collector CPU contracts
         run: |
           set -euo pipefail
-          npx prettier --check tools/verify/example-evidence-process-diagnostics.cjs tools/verify/example-evidence-process-diagnostics.test.cjs tools/verify/example-evidence-supervisor.cjs tools/verify/example-evidence-supervisor.test.cjs .github/workflows/example-evidence.yml .github/workflows/format.yml docs/reference/example-evidence-campaign.md
+          npx prettier --check tools/verify/example-evidence-shutdown-trace.cjs tools/verify/example-evidence-shutdown-trace.test.cjs test/smoke/smoke-example-evidence-integration.test.ts tools/verify/example-evidence-process-diagnostics.cjs tools/verify/example-evidence-process-diagnostics.test.cjs tools/verify/example-evidence-supervisor.cjs tools/verify/example-evidence-supervisor.test.cjs .github/workflows/example-evidence.yml .github/workflows/format.yml docs/reference/example-evidence-campaign.md
           EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu" node tools/verify/example-evidence-supervisor.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/supervisor-tests.log"
           node --test tools/verify/shaders-holographic-rotation.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/rotation-tests.log"
           node --test tools/verify/example-evidence-process-diagnostics.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/process-diagnostics-tests.log"
+          node --test tools/verify/example-evidence-shutdown-trace.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/shutdown-trace-tests.log"
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-workspace.test.ts test/smoke/smoke-example-evidence-campaign.test.ts test/smoke/smoke-example-evidence-publication.test.ts test/smoke/smoke-example-evidence-integration.test.ts test/smoke/smoke-example-specialized-probes.test.ts test/smoke/smoke-example-driver-pixel-diagnostics.test.ts 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/focused-tests.log"
           node tools/verify/example-evidence-preflight.cjs > "$RUNNER_TEMP/committed-example-campaign/preflight.json"
       - uses: actions/upload-artifact@v4
@@ -68,7 +69,7 @@ jobs:
           npm install --prefix "$RUNNER_TEMP/air-browser-tools" --no-save --ignore-scripts --package-lock=false playwright@1.62.1
           node "$RUNNER_TEMP/air-browser-tools/node_modules/playwright/cli.js" install --with-deps chromium
           echo "NODE_PATH=$RUNNER_TEMP/air-browser-tools/node_modules" >> "$GITHUB_ENV"
-          sudo apt-get install -y libgl1-mesa-dri pulseaudio pulseaudio-utils
+          sudo apt-get install -y libgl1-mesa-dri pulseaudio pulseaudio-utils strace
           pulseaudio --start --exit-idle-time=-1
           pactl load-module module-null-sink sink_name=ci_audio
           pactl set-default-sink ci_audio
@@ -76,6 +77,82 @@ jobs:
           python3 --version
           sha256sum --check "$RUNNER_TEMP/committed-example-campaign/committed-build.sha256"
           git diff --exit-code -- build tools/build/build-number.json package.json package-lock.json
+      - name: Diagnose shutdown signals with bounded independent controls
+        timeout-minutes: 10
+        run: |
+          set -euo pipefail
+          diagnostic="$RUNNER_TEMP/example-shutdown-diagnostics"
+          mkdir "$diagnostic"
+          diagnostic_deadline=$(( $(date +%s) + 600 ))
+          original_job_deadline=$(( $(cat "$RUNNER_TEMP/committed-example-campaign/job-started-epoch.txt") + 4800 ))
+          diagnostic_deadline=$(( diagnostic_deadline < original_job_deadline ? diagnostic_deadline : original_job_deadline ))
+          if [ "$(( $(date +%s) + 180 ))" -gt "$diagnostic_deadline" ]; then
+            echo 'Insufficient original job budget for shutdown diagnostics.' >&2
+            exit 124
+          fi
+          strace_path=$(command -v strace)
+          strace_sha=$(sha256sum "$strace_path" | cut -d ' ' -f 1)
+          strace_version=$(strace --version | sed -n '1p')
+          printf '%s\n' "$strace_sha" > "$diagnostic/strace.sha256"
+          printf '%s\n' "$strace_version" > "$diagnostic/strace.version"
+          # One original-permission self-spawn probe. A denial stops this route;
+          # never change ptrace, sysctl, capability, seccomp or browser settings.
+          node tools/verify/example-evidence-shutdown-trace.cjs --mode=availability --trace=on --out="$diagnostic/availability" --strace="$strace_path" --strace-sha256="$strace_sha" --strace-version="$strace_version"
+          if [ "$(( $(date +%s) + 370 ))" -gt "$diagnostic_deadline" ]; then
+            echo 'Diagnostic budget exhausted before wrapper cancellation controls.' >&2
+            exit 124
+          fi
+          # These two controls must fail diagnostically while proving actual
+          # outer/custodian/tracer closure. They never produce campaign PASS.
+          EXAMPLE_EVIDENCE_LIVE_STRACE_CONTROLS=1 EXAMPLE_EVIDENCE_TRACE_DEADLINE_EPOCH="$diagnostic_deadline" EXAMPLE_EVIDENCE_TRACE_CONTROL_OUT="$diagnostic/live-controls" STRACE_PATH="$strace_path" STRACE_SHA256="$strace_sha" STRACE_VERSION="$strace_version" node --test tools/verify/example-evidence-shutdown-trace.test.cjs 2>&1 | tee "$diagnostic/live-controls.log"
+          limits='{"startupMs":800,"closeMs":300,"innerMs":1600,"abortMs":1900,"forceMs":2400,"finalMs":2800}'
+          for control in positive browser-nonzero custodian-delayed-stop-ack; do
+            for trace in off on; do
+              if [ "$(( $(date +%s) + 180 ))" -gt "$diagnostic_deadline" ]; then
+                echo 'Diagnostic budget exhausted before required CPU controls.' >&2
+                exit 124
+              fi
+              node tools/verify/example-evidence-shutdown-trace.cjs --mode=cpu --case="$control" --trace="$trace" --limits="$limits" --out="$diagnostic/cpu-$control-$trace" --strace="$strace_path" --strace-sha256="$strace_sha" --strace-version="$strace_version"
+            done
+          done
+          matched=false
+          untraced_completed=0
+          traced_completed=0
+          # One untraced target, then at most six traced attempts. Every attempt
+          # has a different freeze and directory. These are never published.
+          for sample in 0 1 2 3 4 5 6; do
+            if [ "$(( $(date +%s) + 180 ))" -gt "$diagnostic_deadline" ]; then
+              echo 'No additional target fits the remaining diagnostic budget.'
+              break
+            fi
+            trace=on
+            if [ "$sample" -eq 0 ]; then trace=off; fi
+            sample_root="$diagnostic/target-$sample"
+            mkdir "$sample_root"
+            node - "$sample_root" <<'NODE'
+          const path = require('node:path');
+          const protocol = require('./tools/verify/example-evidence-campaign.cjs');
+          protocol.freezeCampaign({repo: process.cwd(), out: path.join(process.argv[2], 'freeze.json'), runtimeIdentity: protocol.collectRuntimeIdentity('chromium')});
+          NODE
+            if [ "$(( $(date +%s) + 180 ))" -gt "$diagnostic_deadline" ]; then
+              echo 'Freeze preparation consumed the remaining diagnostic budget.'
+              break
+            fi
+            timeout --signal=TERM --kill-after=4s 174s node tools/verify/example-evidence-shutdown-trace.cjs --mode=target --trace="$trace" --freeze="$sample_root/freeze.json" --out="$sample_root/diagnostic" --strace="$strace_path" --strace-sha256="$strace_sha" --strace-version="$strace_version"
+            attribution=$(node -e 'const r=require(process.argv[1]);if(r.diagnosticComplete!==true||r.canonicalEligible!==false)throw Error("Incomplete diagnostic");process.stdout.write(r.attribution.status)' "$sample_root/diagnostic/diagnostic.json")
+            if [ "$trace" = on ]; then traced_completed=$((traced_completed + 1)); else untraced_completed=$((untraced_completed + 1)); fi
+            if [ "$trace" = on ] && [ "$attribution" = MATCHED ]; then
+              matched=true
+              break
+            fi
+          done
+          printf '{"canonicalEligible":false,"matched":%s,"untracedCompleted":%s,"tracedCompleted":%s}\n' "$matched" "$untraced_completed" "$traced_completed" > "$diagnostic/summary.json"
+          if [ "$untraced_completed" -ne 1 ] || [ "$traced_completed" -lt 1 ]; then
+            echo 'The required closed untraced/traced target pair is incomplete.' >&2
+            exit 124
+          fi
+          sha256sum --check "$RUNNER_TEMP/committed-example-campaign/committed-build.sha256"
+          # The following ordinary campaign starts from a separate fresh freeze.
       - name: Capture three pilots then the exact remaining frozen scope
         run: |
           set -euo pipefail
@@ -127,6 +204,12 @@ jobs:
           npm run verify:example-chain
           git diff --binary -- examples > "$campaign/promotion-delta.patch"
           sha256sum --check "$campaign/committed-build.sha256"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: example-shutdown-diagnostics
+          path: ${{ runner.temp }}/example-shutdown-diagnostics/
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         if: always()
         with:

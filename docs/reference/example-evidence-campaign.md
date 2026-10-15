@@ -140,3 +140,59 @@ Download and independently validate the complete portable publication, its exact
 ## Auxiliary GPU mismatch diagnostics
 
 The Driver Pilot collector may retain a separate diagnostic replay after its original pixel readback. It must preserve the original pixels, sample locations, dimensions, tolerance, validator failure, and API proof. A replay is interpretable only after the unchanged submitted shader, copied uniform data, and draw state reproduce every original sample byte exactly. Instrumented UV, SDF, and transition values are auxiliary observations from a separately compiled program, never replacement acceptance pixels or evidence that the original compiler evaluated every intermediate identically. Restore all touched GL state and dispose temporary resources; retain diagnostic failures and limitations. Do not hide original GL errors, alter example behavior, or relax a pixel oracle to clear a collection gate.
+
+## Shutdown signal diagnostics
+
+A signaled adopted process remains a failed campaign attempt under the current
+custody contract. Chromium can send SIGTERM during normal child-host shutdown,
+but source code, a GPU process-name hint, or temporal proximity alone does not
+identify the sender of a particular signal. Keep historical failures unchanged.
+
+The separate shutdown-trace probe runs outside the existing outer supervisor.
+It never replaces the browser executable or inserts a process into the
+Python-to-inner-Node custody channel. Its reports are diagnostic-only with
+`canonicalEligible: false`; they cannot be merged or published as example
+evidence. The ordinary campaign uses another fresh freeze and all original
+182-example / 183-session admission rules.
+
+Run the parser tests first. The official runner then makes one non-privileged,
+self-spawned strace availability probe. A ptrace restriction is a diagnostic
+failure: do not change sysctl, capabilities, seccomp, sandbox flags, or security
+settings to enable tracing. Never retry a denied local probe through escalation.
+Known-sender CPU controls must retain the original positive and negative
+verdicts, exact exit/stdio-close receipts, and kernel ECHILD before browser
+diagnostics can start.
+
+The tracer wrapper also has two explicit real-process CPU cancellation controls:
+TERM delivered to that wrapper and a parser input-limit cancellation. These must
+remain failed diagnostics while proving outer/custodian/inner identity-linked
+closure, adopted-process reaping and absence, final ECHILD, and tracer
+exit/stdio-close plus FIFO EOF. Their retained originals are uploaded separately;
+a missing pending receipt cannot satisfy ordinary campaign admission. The live
+control suite receives the original global deadline, reserves its full two-case
+budget before starting, and rechecks 180 seconds of remaining time before each
+case. A failed case must finish cleanup before the suite stops; it must never
+start its next case while the failed case has unknown closure. A failure
+to prove closure stops the job before any target browser. These controls do not
+establish safety after a wrapper or parent SIGKILL; missing closure in that case
+is UNKNOWN and stops the job.
+
+Only an explicit signal/wait syscall list and selected signal deliveries are
+observed. Persist fixed numeric identities, signal and result enums, and bounded
+filtered records. Do not retain raw argv, environment values, arbitrary text,
+or address contents. Mark filtered traces as such rather than calling them
+complete raw strace logs. Bind sender and target to their exact PID namespace,
+start ticks and executable-image observations; ambiguous or missing links stay
+UNKNOWN. Process-role hints are not executable authentication.
+
+Each diagnostic keeps the original attempt deadlines. The whole diagnostic
+phase is bounded to the lesser of 600 seconds and the remaining original job
+budget, with one untraced target control and at most
+six traced target attempts. Do not start another target with fewer than 180
+seconds remaining; stop after the first complete attribution, otherwise retain
+UNKNOWN. At least one complete untraced/traced target pair is required; an
+unexecuted or half-finished pair cannot satisfy the diagnostic preflight. Keep
+every attempt, including failed and untraced results. Any missing
+physical closure, output overflow, timeout, ptrace failure, or incomplete trace
+ends the diagnostic phase and prevents the ordinary campaign from starting.
+No count of successful repeats can erase an earlier failed attempt.

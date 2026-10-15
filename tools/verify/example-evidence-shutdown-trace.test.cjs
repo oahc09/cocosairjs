@@ -1,0 +1,628 @@
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const {
+    createParser,
+    correlate: correlateRaw,
+    buildCommand,
+    traceArgs,
+    SYSCALLS,
+    BOUNDS,
+} = require('./example-evidence-shutdown-trace.cjs');
+
+const TEST_ROOT = { pid: 99, tgid: 99, ppid: 1, startTicks: '40', namespace: 'pid:[1]' };
+const correlate = (records, identities) => correlateRaw(records, identities, TEST_ROOT);
+function observation(process, thread = process) {
+    const root = { pid: 99, tgid: 99, ppid: 1, startTicks: '40', namespace: 'pid:[1]' };
+    process = { ...process, ppid: 99, tgid: process.pid };
+    thread = { ...thread, tgid: process.pid, ppid: 99 };
+    const image = { dev: 1, ino: 2, size: 3, mtimeMs: 4 };
+    return {
+        thread,
+        process,
+        threadBefore: thread,
+        threadAfter: thread,
+        processBefore: process,
+        processAfter: process,
+        root,
+        doubleChecked: true,
+        imageStable: true,
+        imageBefore: image,
+        imageAfter: image,
+        frozenImage: image,
+        frozenBrowserImageMatch: true,
+        ownedLineage: [process, root],
+        lineageAfter: [process, root],
+    };
+}
+
+function parse(lines, options = {}) {
+    const records = [],
+        failures = [];
+    const parser = createParser({
+        ...options,
+        onRecord: (row) => records.push(row),
+        onFailure: (reason) => failures.push(reason),
+    });
+    const bytes = Buffer.from(lines);
+    for (let i = 0; i < bytes.length; i += 7) parser.push(bytes.subarray(i, i + 7));
+    return { records, failures, result: parser.finish() };
+}
+
+test('six exact syscalls; no exec/process/I/O/stack/fd-path decoding', () => {
+    const command = buildCommand({ mode: 'cpu', trace: 'on', cpuCase: 'positive', out: '/tmp/diagnostic' });
+    const args = traceArgs('/tmp/private.fifo', command);
+    assert.ok(args.includes(`trace=${SYSCALLS.join(',')}`));
+    assert.ok(args.includes('signal=SIGTERM,SIGKILL'));
+    assert.equal(args.includes('-ff'), false);
+    assert.ok(command.args[0].endsWith('/example-evidence-supervisor.cjs'));
+    assert.equal(
+        command.args.some((arg) => /execve|trace=process|--executable/.test(arg)),
+        false,
+    );
+    assert.throws(() => buildCommand({ mode: 'cpu', trace: 'on', cpuCase: 'invented', out: '/tmp/x' }));
+});
+
+test('signal source and wait outcome preserve only fixed numeric/enum fields', () => {
+    const data = parse(
+        '101 1700000000.000001 kill(202, SIGTERM) = 0\n' +
+            '202 1700000000.000002 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=101, si_uid=1001} ---\n' +
+            '101 1700000000.000003 wait4(202, [{WIFSIGNALED(s) && WTERMSIG(s) == SIGTERM}], WNOHANG, {ru_utime={tv_sec=0, tv_usec=123}, ru_stime={tv_sec=0, tv_usec=456}}) = 202\n' +
+            '101 1700000000.000004 waitid(P_ALL, 0, 0x7ffddeadbeef, WNOHANG|WEXITED|WNOWAIT, NULL) = -1 ECHILD (No child processes)\n',
+    );
+    assert.equal(data.result.ok, true, JSON.stringify(data.failures));
+    assert.equal(data.records[0].target, 202);
+    assert.equal(data.records[1].siPid, 101);
+    assert.equal(data.records[2].waitSignal, 'SIGTERM');
+    assert.equal(data.records[3].errno, 'ECHILD');
+    assert.doesNotMatch(JSON.stringify(data.records), /1001|deadbeef|tv_usec|ru_utime|si_uid/);
+    assert.equal(data.result.rawStraceRetained, false);
+});
+
+test('unfinished and resumed calls join only the same exact TID and syscall', () => {
+    const data = parse(
+        '101 1700000000.000001 wait4(-1, <unfinished ...>\n' +
+            '102 1700000000.000002 tgkill(202, 203, SIGTERM) = 0\n' +
+            '101 1700000000.000003 <... wait4 resumed>0x7ffd1234, WNOHANG, NULL) = -1 ECHILD (No child processes)\n',
+    );
+    assert.equal(data.result.ok, true);
+    assert.equal(data.records[1].beganAt, '1700000000.000001');
+    for (const lines of [
+        '101 1700000000.000001 <... wait4 resumed>NULL, WNOHANG, NULL) = 0\n',
+        '101 1700000000.000001 wait4(-1, <unfinished ...>\n',
+        '101 1700000000.000001 wait4(-1, <unfinished ...>\n101 1700000000.000002 kill(1, <unfinished ...>\n',
+        '101 1700000000.000001 wait4(-1, <unfinished ...>\n102 1700000000.000002 <... wait4 resumed>NULL, WNOHANG, NULL) = 0\n',
+    ])
+        assert.equal(parse(lines).result.ok, false);
+});
+
+test('unknown trace, secrets, comments, unexpected signals, and truncated lines fail without retaining text', () => {
+    for (const line of [
+        '101 1700000000.000001 execve("PRIVATE_TOKEN", [], []) = 0\n',
+        '101 1700000000.000001 kill(202, SIGTERM) = -1 EPERM (PRIVATE_TOKEN)\n',
+        '101 1700000000.000001 kill(202, SIGTERM) = 0 /* PRIVATE_TOKEN */\n',
+        '101 1700000000.000001 --- SIGUSR1 {si_signo=SIGUSR1, si_code=SI_USER, si_pid=202, si_uid=0} ---\n',
+        '101 1700000000.000001 kill(202, SIGTERM) = 0',
+        '101 1700000000.000001 kill(202, SIGTERM) = 0\0\n',
+    ]) {
+        const data = parse(line);
+        assert.equal(data.result.ok, false);
+        assert.equal(data.records.length, 0);
+        assert.doesNotMatch(JSON.stringify(data), /PRIVATE_TOKEN/);
+    }
+});
+
+test('input, line, event and partial-line bounds fail closed', () => {
+    const line = '101 1700000000.000001 kill(202, SIGTERM) = 0\n';
+    for (const bounds of [
+        { ...BOUNDS, inputBytes: 10 },
+        { ...BOUNDS, lineBytes: 10 },
+        { ...BOUNDS, events: 1 },
+    ])
+        assert.equal(parse(line + line, { bounds }).result.ok, false);
+});
+
+test('PIDFD is opaque, group kill/unknown TID/ambiguous sender never establish attribution', () => {
+    const sender = { pid: 101, tgid: 101, ppid: 99, startTicks: '42', namespace: 'pid:[1]' };
+    const target = { pid: 202, tgid: 202, ppid: 99, startTicks: '52', namespace: 'pid:[1]' };
+    const syscall = {
+        eventId: 1,
+        kind: 'syscall',
+        syscall: 'kill',
+        tid: 102,
+        timestamp: '1700000000.000001',
+        beganAt: '1700000000.000001',
+        result: 0,
+        signal: 'SIGTERM',
+        target: 202,
+        targetKind: 'pid-or-group',
+        callerProcessIdentity: sender,
+        threadIdentity: { pid: 102, tgid: 101, ppid: 99, startTicks: '43', namespace: 'pid:[1]' },
+        identityObservation: observation(sender, { pid: 102, tgid: 101, startTicks: '43', namespace: 'pid:[1]' }),
+        targetObservation: observation(target),
+    };
+    const delivery = {
+        eventId: 2,
+        kind: 'delivery',
+        tid: 202,
+        timestamp: '1700000000.000002',
+        signal: 'SIGTERM',
+        siPid: 101,
+        siCode: 'SI_USER',
+        threadIdentity: target,
+        processIdentity: target,
+        identityObservation: observation(target),
+    };
+    assert.equal(correlate([syscall, delivery], [sender, target])[0].status, 'CORRELATED_DIAGNOSTIC_ONLY');
+    for (const changed of [
+        { ...syscall, targetKind: 'pidfd-unknown' },
+        { ...syscall, target: -202 },
+        { ...syscall, callerProcessIdentity: null },
+        { ...syscall, result: -1 },
+        { ...syscall, callerProcessIdentity: { ...sender, startTicks: '99' } },
+        { ...syscall, beganAt: '1700000000.900000' },
+        { ...syscall, threadIdentity: { ...syscall.threadIdentity, tgid: 999 } },
+        { ...syscall, targetObservation: null },
+        { ...syscall, identityObservation: null },
+        { ...syscall, identityObservation: observation(target) },
+        { ...syscall, threadIdentity: { ...syscall.threadIdentity, pid: 999, startTicks: '999' } },
+    ])
+        assert.equal(correlate([changed, delivery], [sender, target])[0].status, 'UNKNOWN');
+    assert.equal(correlate([syscall, { ...delivery, siCode: 'SI_KERNEL' }], [sender, target])[0].status, 'UNKNOWN');
+    assert.equal(
+        correlate([syscall, { ...delivery, identityObservation: observation(sender) }], [sender, target])[0].status,
+        'UNKNOWN',
+    );
+    const grafted = structuredClone(syscall);
+    for (const field of ['process', 'thread', 'threadBefore', 'threadAfter', 'processBefore', 'processAfter'])
+        grafted.identityObservation[field].ppid = 888;
+    assert.equal(correlate([grafted, delivery], [sender, target])[0].status, 'UNKNOWN');
+    assert.equal(
+        correlateRaw([syscall, delivery], [sender, target], { ...TEST_ROOT, startTicks: '999' })[0].status,
+        'UNKNOWN',
+    );
+    assert.equal(
+        correlate([{ ...syscall, timestamp: '1700000000.000003' }, delivery], [sender, target])[0].status,
+        'CORRELATED_DIAGNOSTIC_ONLY',
+    );
+    assert.equal(correlate([syscall, { ...syscall, eventId: 3 }, delivery], [sender, target])[0].status, 'UNKNOWN');
+    const pidfd = parse('101 1700000000.000001 pidfd_send_signal(7, SIGTERM, NULL, 0) = 0\n');
+    assert.equal(pidfd.result.ok, true);
+    assert.equal(pidfd.records[0].targetKind, 'pidfd-unknown');
+});
+
+test('reviewer mutation cases reject duplicate siginfo, conflicting signo, extra args and unsafe numbers', () => {
+    for (const line of [
+        '101 1700000000.000001 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=101, si_pid=999, si_uid=0} ---\n',
+        '101 1700000000.000001 --- SIGTERM {si_signo=SIGKILL, si_code=SI_USER, si_pid=101, si_uid=0} ---\n',
+        '101 1700000000.000001 kill(202, SIGTERM, 999) = 0\n',
+        '101 1700000000.000001 tgkill(202, 203, SIGTERM, 999) = 0\n',
+        '9999999999999999999999999999999999999 1700000000.000001 kill(202, SIGTERM) = 0\n',
+        '101 1700000000.000001 kill(9999999999999999999999999999999999999, SIGTERM) = 0\n',
+        '101 9999999999999999999999999999999.000001 kill(202, SIGTERM) = 0\n',
+        '101 1700000000.000001 wait4(-1, {)], WNOHANG, NULL) = 0\n',
+    ])
+        assert.equal(parse(line).result.ok, false, line);
+});
+
+test('cached live identities require unique exact lifetime and reject PID reuse or image change', () => {
+    const { cachedObservation } = require('./example-evidence-shutdown-trace.cjs');
+    const process = { pid: 202, startTicks: '52', namespace: 'pid:[1]', tgid: 202 };
+    const observed = observation(process);
+    const entry = {
+        observation: observed,
+        firstObservedAt: 1700000000000,
+        lastObservedAt: 1700000000010,
+        firstAbsentAt: 1700000000030,
+        imageChanged: false,
+    };
+    const receipt = {
+        ownedProcesses: [process],
+        browsers: [],
+        custody: { observation: { adopted: [{ ...process, reap: { utc: '2023-11-14T22:13:20.025Z' } }] } },
+    };
+    assert.ok(cachedObservation(202, '1700000000.020000', [entry], receipt));
+    for (const cache of [
+        [{ ...entry, imageChanged: true }],
+        [{ ...entry, firstAbsentAt: 1700000000015 }],
+        [entry, { ...entry, observation: { ...observed, process: { ...process, startTicks: '99' } } }],
+        [{ ...entry, observation: { ...observed, process: { ...process, startTicks: '99' } } }],
+        [{ ...entry, observation: { ...observed, doubleChecked: false } }],
+    ])
+        assert.equal(cachedObservation(202, '1700000000.020000', cache, receipt), null);
+    assert.equal(cachedObservation(202, '1700000000.030000', [entry], receipt), null);
+    assert.equal(cachedObservation(202, '1699999999.990000', [entry], receipt), null);
+});
+
+test('control-only bounds cannot be applied to a target or ordinary positive', () => {
+    assert.throws(
+        () => buildCommand({ mode: 'target', trace: 'on', control: 'trace-input-bound' }),
+        /control-requires/,
+    );
+    assert.throws(
+        () => buildCommand({ mode: 'cpu', cpuCase: 'positive', trace: 'on', control: 'wrapper-term' }),
+        /control-requires/,
+    );
+    const command = buildCommand({
+        mode: 'cpu',
+        cpuCase: 'hang',
+        trace: 'on',
+        control: 'wrapper-term',
+        out: '/tmp/controlled',
+    });
+    assert.ok(command.args.includes('--cpu=hang'));
+    assert.equal(command.limits.startupMs, 15000);
+    assert.equal(command.limits.closeMs, 4000);
+});
+
+test(
+    'retained real receipt classifications and fail-closed mutations',
+    { skip: !process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT },
+    () => {
+        const fs = require('node:fs'),
+            path = require('node:path');
+        const { expectedOutcome } = require('./example-evidence-shutdown-trace.cjs');
+        const root = process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT;
+        for (const cpuCase of ['positive', 'browser-nonzero', 'custodian-delayed-stop-ack']) {
+            const receipt = JSON.parse(
+                fs.readFileSync(path.join(root, 'quality-cpu-38764015813', cpuCase, 'attempt-receipt.json')),
+            );
+            assert.equal(expectedOutcome(receipt, { mode: 'cpu', cpuCase }), true);
+        }
+        const original = JSON.parse(
+            fs.readFileSync(path.join(root, 'capture-38764015727/attempts/collector-dodge/1/attempt-receipt.json')),
+        );
+        assert.equal(original.ok, false);
+        assert.equal(expectedOutcome(original, { mode: 'target' }), true);
+        const mutations = [
+            (row) => {
+                row.worker.close = { ...row.worker.close, eventId: 99999 };
+            },
+            (row) => {
+                row.ownedProcesses = [];
+                row.ownedGroups = [];
+            },
+            (row) => {
+                row.custody.observation.innerSupervisor.exit.code = 17;
+            },
+            (row) => {
+                row.events.forEach((event) => {
+                    event.eventId = 1;
+                });
+            },
+            (row) => {
+                row.custody.observation.final.result = 'FAKE';
+            },
+            (row) => {
+                row.errors.push('unrelated collector assertion failed');
+            },
+        ];
+        for (const mutate of mutations) {
+            const changed = structuredClone(original);
+            mutate(changed);
+            assert.equal(expectedOutcome(changed, { mode: 'target' }), false);
+        }
+    },
+);
+
+async function closeGuardedControl(action, lifetime) {
+    try {
+        return await action();
+    } finally {
+        if (!lifetime.isClosed()) lifetime.cancelExact();
+        await lifetime.closed;
+    }
+}
+function requireControlBudget(epoch, now = Date.now()) {
+    const deadline = Number(epoch);
+    assert.ok(Number.isSafeInteger(deadline) && deadline > 0, 'explicit global control deadline required');
+    assert.ok(deadline * 1000 - now >= 180000, 'insufficient original global budget; no control spawned');
+}
+
+test('missing ready and malformed marker always cancel and await close before returning failure', async () => {
+    for (const error of [Error('missing-ready'), SyntaxError('bad-marker')]) {
+        const order = [];
+        let closed = false,
+            resolve;
+        const lifetime = {
+            isClosed: () => closed,
+            closed: new Promise((done) => {
+                resolve = done;
+            }),
+            cancelExact: () => {
+                order.push('cancel');
+                setTimeout(() => {
+                    closed = true;
+                    order.push('close');
+                    resolve();
+                }, 5);
+            },
+        };
+        let nextStarted = false;
+        await assert.rejects(async () => {
+            await closeGuardedControl(async () => {
+                throw error;
+            }, lifetime);
+            nextStarted = true;
+        }, error);
+        assert.deepEqual(order, ['cancel', 'close']);
+        assert.equal(nextStarted, false);
+    }
+    let spawned = false;
+    assert.throws(() => {
+        requireControlBudget(100, 99000);
+        spawned = true;
+    });
+    assert.equal(spawned, false);
+    assert.throws(() => requireControlBudget(undefined));
+});
+
+function assertOriginalControlClosure(out, ready, report) {
+    const fs = require('node:fs'),
+        path = require('node:path'),
+        crypto = require('node:crypto');
+    const { validObservation, receiptIdentities } = require('./example-evidence-shutdown-trace.cjs');
+    const same = (a, b) => a && b && a.pid === b.pid && a.startTicks === b.startTicks && a.namespace === b.namespace;
+    assert.equal(validObservation(ready.innerObservation), true);
+    assert.equal(validObservation(ready.custodianObservation), true);
+    assert.ok(same(ready.innerObservation.root, ready.originalOuter));
+    assert.ok(same(ready.custodianObservation.root, ready.originalOuter));
+    const receipt = JSON.parse(fs.readFileSync(path.join(out, 'attempt', 'attempt-receipt.json')));
+    const raw = receipt.custody.observation;
+    for (const reference of Object.values(receipt.custody.artifacts)) {
+        const bytes = fs.readFileSync(reference.path);
+        assert.equal(bytes.length, reference.bytes);
+        assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), reference.sha256);
+    }
+    assert.deepEqual(JSON.parse(fs.readFileSync(receipt.custody.artifacts.raw.path)), raw);
+    const journal = fs
+        .readFileSync(receipt.custody.artifacts.journal.path, 'utf8')
+        .trim()
+        .split('\n')
+        .filter(Boolean)
+        .map(JSON.parse);
+    assert.deepEqual(journal, raw.events);
+    assert.ok(same(raw.custodian, ready.custodianObservation.process));
+    assert.ok(same(raw.innerSupervisor, ready.innerObservation.process));
+    assert.equal(raw.custodian.ppid, ready.originalOuter.pid);
+    let previous = -1;
+    raw.events.forEach((row, index) => {
+        assert.equal(row.eventId, index + 1);
+        assert.ok(row.elapsedMs >= previous);
+        previous = row.elapsedMs;
+    });
+    const exact = (row) => {
+        assert.ok(row);
+        assert.deepEqual(raw.events[row.eventId - 1], row);
+    };
+    exact(raw.final);
+    assert.equal(raw.final.result, 'ECHILD');
+    for (const row of [raw.innerSupervisor.exit, raw.innerSupervisor.stdoutEOF, raw.innerSupervisor.stderrEOF]) {
+        exact(row);
+        assert.ok(row.eventId < raw.final.eventId);
+    }
+    for (const row of raw.adopted) {
+        exact(row.reap);
+        exact(row.absent);
+        assert.ok(same(row, row.reap) && same(row, row.absent));
+        assert.ok(row.reap.eventId < row.absent.eventId && row.absent.eventId < raw.final.eventId);
+        assert.ok(Number.isInteger(row.reap.rawStatus));
+    }
+    const wrapper = receipt.custody.wrapper;
+    assert.ok(
+        wrapper.exit &&
+            wrapper.close &&
+            wrapper.exit.elapsedMs >= raw.final.elapsedMs &&
+            wrapper.close.elapsedMs >= wrapper.exit.elapsedMs,
+    );
+    assert.equal(wrapper.exit.code, wrapper.close.code);
+    assert.equal(wrapper.exit.signal, wrapper.close.signal);
+    const tracerExit = report.events.find((row) => row.type === 'tracer-exit');
+    const tracerClose = report.events.find((row) => row.type === 'tracer-stdio-close');
+    assert.ok(tracerExit && tracerClose && tracerExit.elapsedMs <= tracerClose.elapsedMs);
+    assert.equal(tracerExit.code, tracerClose.code);
+    assert.equal(tracerExit.signal, tracerClose.signal);
+    for (const name of ['tracer-stdout-eof', 'tracer-stderr-eof', 'trace-fifo-eof'])
+        assert.ok(report.events.some((row) => row.type === name));
+    const identities = [
+        ...receiptIdentities(receipt),
+        ready.originalOuter,
+        report.events.find((row) => row.type === 'tracer-spawn').identity,
+    ];
+    for (const row of identities) {
+        let current = null;
+        try {
+            const text = fs.readFileSync(`/proc/${row.pid}/stat`, 'utf8');
+            current = {
+                pid: row.pid,
+                startTicks: text.slice(text.lastIndexOf(')') + 2).split(' ')[19],
+                namespace: fs.readlinkSync(`/proc/${row.pid}/ns/pid`),
+            };
+            assert.ok(
+                /^\d+$/.test(current.startTicks) && /^pid:\[\d+\]$/.test(current.namespace),
+                'malformed process metadata is unknown',
+            );
+        } catch (error) {
+            if (!['ENOENT', 'ESRCH'].includes(error.code)) throw error;
+        }
+        assert.equal(!!same(row, current), false, 'exact recorded identity remains after control');
+    }
+}
+
+test(
+    'live strace wrapper cancellation and hard-input-bound controls',
+    {
+        skip: process.env.EXAMPLE_EVIDENCE_LIVE_STRACE_CONTROLS !== '1',
+        timeout: 370000,
+    },
+    async (t) => {
+        const fs = require('node:fs'),
+            path = require('node:path'),
+            { spawn } = require('node:child_process');
+        const root = process.env.EXAMPLE_EVIDENCE_TRACE_CONTROL_OUT;
+        assert.ok(root && path.isAbsolute(root), 'explicit retained control directory required');
+        assert.equal(fs.existsSync(root), false, 'never overwrite controls');
+        fs.mkdirSync(root, { recursive: true });
+        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+        const ticks = (pid) => {
+            try {
+                const raw = fs.readFileSync(`/proc/${pid}/stat`, 'utf8');
+                return raw.slice(raw.lastIndexOf(')') + 2).split(' ')[19];
+            } catch {
+                return null;
+            }
+        };
+        for (const control of ['wrapper-term', 'trace-input-bound']) {
+            requireControlBudget(process.env.EXAMPLE_EVIDENCE_TRACE_DEADLINE_EPOCH);
+            let succeeded = false;
+            await t.test(control, { timeout: 182000 }, async (t) => {
+                const out = path.join(root, control);
+                const args = [
+                    path.join(__dirname, 'example-evidence-shutdown-trace.cjs'),
+                    '--mode=cpu',
+                    '--case=hang',
+                    '--trace=on',
+                    `--control=${control}`,
+                    `--out=${out}`,
+                    `--strace=${process.env.STRACE_PATH}`,
+                    `--strace-sha256=${process.env.STRACE_SHA256}`,
+                    `--strace-version=${process.env.STRACE_VERSION}`,
+                ];
+                const child = spawn(process.execPath, args, { stdio: ['ignore', 'pipe', 'pipe'] });
+                const initial = ticks(child.pid);
+                child.stdout.resume();
+                child.stderr.resume();
+                let closed = false;
+                const result = new Promise((resolve) =>
+                    child.once('close', (code, signal) => {
+                        closed = true;
+                        resolve({ code, signal });
+                    }),
+                );
+                const cancelExact = () => {
+                    if (!closed && initial && ticks(child.pid) === initial) child.kill('SIGTERM');
+                };
+                const onAbort = () => cancelExact();
+                t.signal.addEventListener('abort', onAbort, { once: true });
+                try {
+                    await closeGuardedControl(
+                        async () => {
+                            const readyFile = path.join(out, 'control-ready.json');
+                            const deadline = Date.now() + 17000;
+                            while (!fs.existsSync(readyFile) && !closed && !t.signal.aborted && Date.now() < deadline)
+                                await delay(10);
+                            assert.equal(
+                                fs.existsSync(readyFile),
+                                true,
+                                'real original start custody barrier required before cancellation',
+                            );
+                            const ready = JSON.parse(fs.readFileSync(readyFile));
+                            assert.equal(ready.wrapperPID, child.pid);
+                            assert.ok(ready.originalOuter?.startTicks && ready.originalOuter?.namespace);
+                            if (control === 'wrapper-term') {
+                                assert.equal(ticks(child.pid), initial);
+                                child.kill('SIGTERM');
+                            }
+                            const exit = await result;
+                            assert.equal(exit.code, 1);
+                            assert.equal(exit.signal, null);
+                            const report = JSON.parse(fs.readFileSync(path.join(out, 'diagnostic.json')));
+                            assert.equal(report.diagnosticComplete, false);
+                            assert.equal(report.canonicalEligible, false);
+                            assert.equal(report.physicalClosure, true, JSON.stringify(report.errors));
+                            assertOriginalControlClosure(out, ready, report);
+                            assert.ok(
+                                report.events.some(
+                                    (event) =>
+                                        event.type === 'original-outer-signal' &&
+                                        event.signal === 'SIGTERM' &&
+                                        event.identity.pid === ready.originalOuter.pid &&
+                                        event.identity.startTicks === ready.originalOuter.startTicks,
+                                ),
+                            );
+                            assert.ok(
+                                report.errors.includes(
+                                    control === 'wrapper-term' ? 'diagnostic-wrapper-interrupted' : 'trace-input-bound',
+                                ),
+                            );
+                            assert.ok(Date.now() <= Number(process.env.EXAMPLE_EVIDENCE_TRACE_DEADLINE_EPOCH) * 1000);
+                            succeeded = true;
+                        },
+                        { isClosed: () => closed, cancelExact, closed: result },
+                    );
+                } finally {
+                    t.signal.removeEventListener('abort', onAbort);
+                }
+            });
+            assert.equal(succeeded, true, 'stop the entire live suite after any failure; never overlap another tree');
+        }
+    },
+);
+
+test('record callback errors and unavailable children interfaces retain only fixed reasons', () => {
+    let failure;
+    const parser = createParser({
+        onRecord: () => {
+            throw Error('PRIVATE_TOKEN arbitrary path');
+        },
+        onFailure: (reason) => {
+            failure = reason;
+        },
+    });
+    parser.push(Buffer.from('101 1700000000.000001 kill(202, SIGTERM) = 0\n'));
+    assert.equal(failure, 'trace-record-processing-failed');
+    assert.doesNotMatch(JSON.stringify(parser.finish()), /PRIVATE_TOKEN|arbitrary path/);
+    const { checkChildrenInterface } = require('./example-evidence-shutdown-trace.cjs');
+    assert.equal(
+        checkChildrenInterface(() => '1 2 3 '),
+        true,
+    );
+    assert.equal(
+        checkChildrenInterface(() => ''),
+        true,
+    );
+    for (const read of [
+        () => {
+            throw Error('PRIVATE_TOKEN');
+        },
+        () => 'x',
+        () => '999999999999999999999999999',
+        () => '1 '.repeat(5000),
+    ])
+        assert.throws(() => checkChildrenInterface(read), { message: 'owned-children-interface-unavailable' });
+});
+
+test('exact absence distinguishes missing, denied, corrupt, live and reused identities', () => {
+    const { exactPresence, validImage } = require('./example-evidence-shutdown-trace.cjs');
+    const expected = { pid: 202, startTicks: '52', namespace: 'pid:[1]' };
+    for (const code of ['ENOENT', 'ESRCH', 'EACCES', 'EPERM', 'EIO']) {
+        const io = {
+            readFileSync: () => {
+                throw Object.assign(Error('PRIVATE_TOKEN'), { code });
+            },
+        };
+        assert.equal(exactPresence(expected, io), ['ENOENT', 'ESRCH'].includes(code) ? 'ABSENT' : 'UNKNOWN');
+    }
+    const stat = (ticks) => '202 (node) ' + ['S', '99', ...Array(17).fill('0'), ticks].join(' ');
+    assert.equal(exactPresence(expected, { readFileSync: () => stat('52'), readlinkSync: () => 'pid:[1]' }), 'PRESENT');
+    assert.equal(exactPresence(expected, { readFileSync: () => stat('99'), readlinkSync: () => 'pid:[1]' }), 'ABSENT');
+    assert.equal(exactPresence(expected, { readFileSync: () => 'bad-stat', readlinkSync: () => 'pid:[1]' }), 'UNKNOWN');
+    assert.equal(
+        exactPresence(expected, { readFileSync: () => stat('52'), readlinkSync: () => 'bad-namespace' }),
+        'UNKNOWN',
+    );
+    let reads = 0;
+    assert.equal(
+        exactPresence(expected, { readFileSync: () => stat(String(++reads)), readlinkSync: () => 'pid:[1]' }),
+        'UNKNOWN',
+    );
+    for (const image of [
+        {},
+        null,
+        { dev: 1, ino: 2, size: 3, mtimeMs: NaN },
+        { dev: 1, ino: 2, size: -1, mtimeMs: 4 },
+        { dev: 1, ino: 2, size: 3 },
+    ])
+        assert.equal(validImage(image), false);
+    assert.equal(validImage({ dev: 1, ino: 2, size: 3, mtimeMs: 4 }), true);
+});

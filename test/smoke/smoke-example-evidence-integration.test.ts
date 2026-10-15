@@ -518,12 +518,44 @@ describe('Committed example evidence workflow safeguards', () => {
         for (const run of [capture, publish])
             expect(run).toContain('sha256sum --check "$campaign/committed-build.sha256"');
         expect(shell).not.toMatch(/--allow-partial|--promote|--demote|gallery:manifest/);
+        const diagnostic = runContaining('diagnostic_deadline=');
+        expect(steps.find((step: any) => step.run === diagnostic)['timeout-minutes']).toBe(10);
+        expect(shell.indexOf(diagnostic)).toBeLessThan(shell.indexOf(capture));
+        expect(diagnostic).toContain('diagnostic_deadline=$(( $(date +%s) + 600 ))');
+        expect(diagnostic).toContain(
+            'diagnostic_deadline=$(( diagnostic_deadline < original_job_deadline ? diagnostic_deadline : original_job_deadline ))',
+        );
+        expect(diagnostic).toContain('if [ "$untraced_completed" -ne 1 ] || [ "$traced_completed" -lt 1 ]; then');
+
+        expect(diagnostic).toContain('for sample in 0 1 2 3 4 5 6; do');
+        expect(diagnostic).toContain('if [ "$(( $(date +%s) + 180 ))" -gt "$diagnostic_deadline" ]; then');
+        expect(diagnostic).toContain('--mode=availability --trace=on');
+        expect(diagnostic).toContain('EXAMPLE_EVIDENCE_LIVE_STRACE_CONTROLS=1');
+        expect(diagnostic).toContain('EXAMPLE_EVIDENCE_TRACE_DEADLINE_EPOCH="$diagnostic_deadline"');
+        expect(diagnostic).toContain('if [ "$(( $(date +%s) + 370 ))" -gt "$diagnostic_deadline" ]; then');
+        expect(diagnostic).toContain('EXAMPLE_EVIDENCE_TRACE_CONTROL_OUT="$diagnostic/live-controls"');
+        expect(diagnostic.indexOf('--mode=availability --trace=on')).toBeLessThan(
+            diagnostic.indexOf('EXAMPLE_EVIDENCE_LIVE_STRACE_CONTROLS=1'),
+        );
+        expect(diagnostic.indexOf('EXAMPLE_EVIDENCE_LIVE_STRACE_CONTROLS=1')).toBeLessThan(
+            diagnostic.indexOf('for sample in 0 1 2 3 4 5 6; do'),
+        );
+        expect(diagnostic).toContain('for control in positive browser-nonzero custodian-delayed-stop-ack; do');
+        expect(diagnostic).toContain('for trace in off on; do');
+        expect(diagnostic).toContain('r.diagnosticComplete!==true||r.canonicalEligible!==false');
+        expect(diagnostic).toContain('[ "$attribution" = MATCHED ]');
+        expect(diagnostic).not.toMatch(/publish-example|campaign\.cjs merge|--allow-partial/);
+        expect(diagnostic).not.toMatch(/sudo|sysctl\s|setcap|seccomp=/);
+        expect(capture).not.toContain('example-shutdown-diagnostics');
     });
 
     test('uploads preserve raw attempts, complete portable evidence and hidden interruption backups', () => {
         const uploads = steps.filter((step: any) => step.uses === 'actions/upload-artifact@v4');
-        expect(uploads).toHaveLength(4);
+        expect(uploads).toHaveLength(5);
         const byName = Object.fromEntries(uploads.map((step: any) => [step.with.name, step]));
+        const diagnostic = byName['example-shutdown-diagnostics'];
+        expect(diagnostic.if).toBe('always()');
+        expect(diagnostic.with.path).toBe('${{ runner.temp }}/example-shutdown-diagnostics/');
         const cpu = byName['example-evidence-cpu-receipts'];
         expect(cpu.if).toBe('always()');
         expect(cpu.with.path).toBe('${{ runner.temp }}/example-evidence-cpu/');
