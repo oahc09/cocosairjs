@@ -15,6 +15,7 @@ const {
     limitsOf,
     validateAttemptReceipt,
     validateCustodyArtifacts,
+    validAbortObservation,
 } = require('./example-evidence-supervisor.cjs');
 
 const REPO = path.resolve(__dirname, '../..');
@@ -1239,6 +1240,66 @@ function browserNonzeroRejectedDrain(receipt, bytes) {
     );
 }
 
+const ABORT_EPIPE_FAILURE = 'abort IPC send failed: Error: write EPIPE';
+function browserNonzeroAbortEpipe(receipt, bytes) {
+    if (!originalCustodyBytesValid(receipt, bytes)) return false;
+    const events = receipt.events,
+        worker = receipt.worker;
+    const aborts = events.filter((row) => row.type === 'abort-request');
+    const delivery = events.filter((row) => row.type.startsWith('abort-ipc-'));
+    if (aborts.length !== 1 || delivery.length !== 2) return false;
+    const abort = aborts[0],
+        [send, result] = delivery;
+    const before = (a, b) => a.eventId < b.eventId && a.supervisorElapsedMs < b.supervisorElapsedMs;
+    const target = {
+        pid: worker.pid,
+        startTicks: worker.startTicks,
+        namespace: worker.namespace,
+        ppid: receipt.custody.observation.innerSupervisor.pid,
+    };
+    const bound = (row) =>
+        row.source === 'supervisor' &&
+        row.childPID === worker.pid &&
+        row.abortRequestEventId === abort.eventId &&
+        row.workerPID === worker.pid &&
+        row.workerStartTicks === worker.startTicks &&
+        row.namespace === worker.namespace &&
+        row.deadlineMs === Math.min(abort.supervisorElapsedMs + receipt.limits.closeMs, receipt.limits.finalMs);
+    const exitObserved = result.workerExitEventId === worker.exit.eventId && before(worker.exit, result);
+    const closeObserved = result.workerCloseEventId === worker.close.eventId && before(worker.close, result);
+    const terminalObserved =
+        result.observation?.status === 'TERMINAL' && validAbortObservation(result.observation, target);
+    const nodeReceipt = JSON.parse(bytes.nodeReceipt);
+    return (
+        abort.source === 'supervisor' &&
+        abort.reason === 'unclean browser exit: 7/null' &&
+        before(receipt.browsers[0].exit, abort) &&
+        before(abort, send) &&
+        before(send, result) &&
+        send.type === 'abort-ipc-send' &&
+        result.type === 'abort-ipc-result' &&
+        bound(send) &&
+        bound(result) &&
+        send.workerExitEventId === null &&
+        send.workerCloseEventId === null &&
+        send.observation?.status === 'LIVE' &&
+        validAbortObservation(send.observation, target) &&
+        result.sendEventId === send.eventId &&
+        result.outcome === 'callback' &&
+        result.errorCode === 'EPIPE' &&
+        result.failed === true &&
+        (result.workerExitEventId === null || exitObserved) &&
+        (result.workerCloseEventId === null || closeObserved) &&
+        (!closeObserved || exitObserved) &&
+        (exitObserved || closeObserved || terminalObserved) &&
+        result.supervisorElapsedMs < result.deadlineMs &&
+        Date.parse(result.receivedUtc) < Date.parse(receipt.custody.observation.innerSupervisor.exit.utc) &&
+        [receipt, nodeReceipt].every(
+            (row) => row.errors.includes(ABORT_EPIPE_FAILURE) && row.lifecycleErrors.includes(ABORT_EPIPE_FAILURE),
+        )
+    );
+}
+
 function expectedOutcome(receipt, options) {
     const raw = receipt.custody?.observation;
     const pair = (row, code, signal = null) =>
@@ -1281,6 +1342,10 @@ function expectedOutcome(receipt, options) {
             if (!browserNonzeroRejectedDrain(receipt, options.artifactBytes)) return false;
             for (const value of LATE_STOP_FAILURES) allowed.add(value);
         } else if (raw.errors.length) return false;
+        if ([...receipt.errors, ...receipt.lifecycleErrors].includes(ABORT_EPIPE_FAILURE)) {
+            if (!rejectedStop || !browserNonzeroAbortEpipe(receipt, options.artifactBytes)) return false;
+            allowed.add(ABORT_EPIPE_FAILURE);
+        }
         const pendingFailure = 'Custody barrier remained pending at worker closure';
         if ([...receipt.errors, ...receipt.lifecycleErrors].includes(pendingFailure)) {
             if (!rejectedStop && !browserNonzeroPendingDrain(receipt)) return false;

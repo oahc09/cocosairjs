@@ -776,3 +776,469 @@ test('late-stop rejection keeps failed originals and cancellation bounded by the
         });
     }
 });
+
+function abortFixtureIO(rows) {
+    let index = 0;
+    return {
+        readFileSync() {
+            const row = rows[index];
+            if (row instanceof Error) throw row;
+            return `${row.pid} (node) ${[row.state, row.ppid, row.pgrp, ...Array(16).fill('0'), row.startTicks].join(' ')}\n`;
+        },
+        readlinkSync() {
+            return rows[index++].namespace;
+        },
+    };
+}
+const abortWorkerTuple = { pid: 321, startTicks: '123', namespace: 'pid:[1]', ppid: 123, pgrp: 321 };
+function abortObservation(state = 'R') {
+    const row = { ...abortWorkerTuple, state };
+    return { status: ['Z', 'X'].includes(state) ? 'TERMINAL' : 'LIVE', before: { ...row }, after: { ...row } };
+}
+
+test('abort IPC terminal observations require two exact reads and never turn UNKNOWN into exit', () => {
+    const { observeAbortWorker } = require('./example-evidence-supervisor.cjs');
+    const read = (a, b) => observeAbortWorker(abortWorkerTuple, abortFixtureIO([a, b]));
+    const inheritedGroup = { ...abortWorkerTuple, pgrp: 88 };
+    assert.equal(
+        observeAbortWorker(
+            inheritedGroup,
+            abortFixtureIO([
+                { ...abortWorkerTuple, state: 'R' },
+                { ...abortWorkerTuple, state: 'Z' },
+            ]),
+        ).status,
+        'TERMINAL',
+        'initial inherited group does not replace two exact current group observations',
+    );
+    for (const [a, b, status] of [
+        ['R', 'R', 'LIVE'],
+        ['R', 'Z', 'TERMINAL'],
+        ['Z', 'X', 'TERMINAL'],
+        ['Z', 'R', 'UNKNOWN'],
+    ]) {
+        const value = read({ ...abortWorkerTuple, state: a }, { ...abortWorkerTuple, state: b });
+        assert.equal(value.status, status);
+        assert.equal(value.before.state, a);
+        assert.equal(value.after.state, b);
+    }
+    for (const key of ['pid', 'startTicks', 'namespace', 'ppid', 'pgrp', 'state']) {
+        const changed = {
+            ...abortWorkerTuple,
+            state: 'Z',
+            [key]: key === 'state' ? '?' : key === 'startTicks' ? '999' : key === 'namespace' ? 'pid:[2]' : 999,
+        };
+        assert.equal(read({ ...abortWorkerTuple, state: 'R' }, changed).status, 'UNKNOWN', key);
+    }
+    for (const code of ['ENOENT', 'ESRCH', 'EPERM', 'EACCES', 'EIO']) {
+        const error = Object.assign(Error(code), { code });
+        assert.equal(read(error, error).status, 'UNKNOWN');
+        assert.equal(read({ ...abortWorkerTuple, state: 'R' }, error).status, 'UNKNOWN');
+    }
+    for (const value of [null, '', 'broken stat', '321 (node) Z -1 oops']) {
+        const io = { readFileSync: () => value, readlinkSync: () => 'pid:[1]' };
+        assert.equal(observeAbortWorker(abortWorkerTuple, io).status, 'UNKNOWN');
+    }
+});
+
+function abortDeliveryHarness({
+    state = 'R',
+    closed = false,
+    connected = true,
+    throwing = null,
+    synchronousReply = false,
+    observeTime = null,
+    startTime = 10,
+} = {}) {
+    const { deliverWorkerAbort } = require('./example-evidence-supervisor.cjs');
+    const events = [],
+        errors = [];
+    let callback,
+        scheduled,
+        time = startTime,
+        reads = 0,
+        sends = 0;
+    const child = {
+        pid: 321,
+        connected,
+        send(message, done) {
+            sends++;
+            callback = done;
+            if (synchronousReply) done(null);
+            if (throwing) throw throwing;
+        },
+    };
+    const worker = {
+        ...abortWorkerTuple,
+        initial: { ...abortWorkerTuple },
+        exit: closed ? { eventId: 1 } : null,
+        close: null,
+    };
+    const event = (type, data) => {
+        const row = { type, ...data, eventId: events.length + 1, supervisorElapsedMs: time };
+        events.push(row);
+        return row;
+    };
+    const abort = event('abort-request', { reason: 'root failure' });
+    const delivery = deliverWorkerAbort({
+        child,
+        worker,
+        abort,
+        event,
+        fail: (reason) => errors.push(reason),
+        closure: () => worker,
+        observe: () => {
+            reads++;
+            if (observeTime !== null) time = observeTime;
+            return state === 'UNKNOWN' ? { status: 'UNKNOWN', before: null, after: null } : abortObservation(state);
+        },
+        now: () => time,
+        deadline: 30,
+        schedule: (fn, delay) => {
+            scheduled = { fn, delay };
+            return 1;
+        },
+        unschedule() {},
+    });
+    return {
+        child,
+        worker,
+        events,
+        errors,
+        delivery,
+        get sends() {
+            return sends;
+        },
+        get reads() {
+            return reads;
+        },
+        reply: (error) => callback(error),
+        expire: () => scheduled.fn(),
+        setTime: (value) => {
+            time = value;
+        },
+        setState: (value) => {
+            state = value;
+        },
+        get delay() {
+            return scheduled?.delay;
+        },
+    };
+}
+
+test('abort IPC delivery binds the target, drains callbacks and keeps every error fail-closed', async () => {
+    const epipe = () => Object.assign(Error('write EPIPE'), { code: 'EPIPE' });
+    for (const startTime of [30, 31]) {
+        const h = abortDeliveryHarness({ startTime });
+        await h.delivery.drained;
+        assert.equal(h.sends, 0);
+        assert.equal(h.reads, 0);
+        assert.equal(h.delay, undefined);
+        assert.equal(h.events.at(-1).reason, 'deadline-expired');
+        assert.deepEqual(h.errors, ['abort IPC did not settle: deadline']);
+    }
+    const observedLate = abortDeliveryHarness({ observeTime: 30 });
+    await observedLate.delivery.drained;
+    assert.equal(observedLate.sends, 0);
+    assert.equal(observedLate.events.at(-1).reason, 'deadline-expired');
+    const callbackThenThrow = abortDeliveryHarness({ synchronousReply: true, throwing: epipe() });
+    await callbackThenThrow.delivery.drained;
+    assert.ok(callbackThenThrow.errors.includes('abort IPC result after settlement'));
+    assert.ok(callbackThenThrow.errors.includes('abort IPC send failed: Error: write EPIPE'));
+    for (const options of [{ closed: true }, { state: 'Z' }, { state: 'X' }, { connected: false }]) {
+        const h = abortDeliveryHarness(options);
+        await h.delivery.drained;
+        assert.equal(h.sends, 0);
+        assert.equal(h.events.at(-1).type, 'abort-ipc-skipped');
+    }
+    for (const state of ['R', 'UNKNOWN']) {
+        const h = abortDeliveryHarness({ state });
+        assert.equal(h.sends, 1);
+        assert.equal(h.delay, 20);
+        h.reply(epipe());
+        await h.delivery.drained;
+        assert.deepEqual(h.errors, ['abort IPC send failed: Error: write EPIPE']);
+        assert.equal(h.events.at(-1).observation.status, state === 'R' ? 'LIVE' : state);
+        assert.equal(h.events.at(-1).outcome, 'callback');
+        assert.equal(h.events.at(-1).sendEventId, h.events[1].eventId);
+        h.reply(epipe());
+        assert.ok(h.errors.includes('abort IPC result after settlement'));
+        h.delivery.seal();
+        const saved = JSON.stringify(h.events);
+        h.reply(epipe());
+        assert.equal(JSON.stringify(h.events), saved);
+    }
+    for (const outcome of ['deadline', 'SIGTERM', 'SIGINT', 'final-deadline']) {
+        const h = abortDeliveryHarness();
+        let drained = false;
+        h.delivery.drained.then(() => {
+            drained = true;
+        });
+        await Promise.resolve();
+        assert.equal(drained, false);
+        if (outcome === 'deadline') h.expire();
+        else h.delivery.cancel(outcome);
+        await h.delivery.drained;
+        assert.equal(h.events.at(-1).outcome, outcome);
+        assert.ok(h.errors.includes(`abort IPC did not settle: ${outcome}`));
+        h.delivery.seal();
+        const saved = JSON.stringify(h.events);
+        h.reply(epipe());
+        assert.equal(JSON.stringify(h.events), saved);
+    }
+    const late = abortDeliveryHarness();
+    late.setTime(30);
+    late.reply(epipe());
+    await late.delivery.drained;
+    assert.equal(late.events.at(-1).outcome, 'deadline');
+    for (const code of ['EPIPE', 'EIO', 'ERR_IPC_CHANNEL_CLOSED']) {
+        const error = Object.assign(Error(code === 'EPIPE' ? 'write EPIPE' : code), { code });
+        const h = abortDeliveryHarness({ throwing: error });
+        await h.delivery.drained;
+        assert.equal(h.events.at(-1).outcome, 'throw');
+        assert.ok(h.errors.length >= 2);
+    }
+    const exited = abortDeliveryHarness();
+    exited.worker.exit = { eventId: 50 };
+    exited.reply(epipe());
+    await exited.delivery.drained;
+    assert.equal(exited.events.at(-1).workerExitEventId, 50);
+    const terminal = abortDeliveryHarness();
+    terminal.setState('Z');
+    terminal.reply(epipe());
+    await terminal.delivery.drained;
+    assert.equal(terminal.events.at(-1).observation.status, 'TERMINAL');
+    const drift = abortDeliveryHarness();
+    drift.child.pid++;
+    drift.reply(epipe());
+    await drift.delivery.drained;
+    assert.notEqual(drift.events.at(-1).childPID, drift.events.at(-1).workerPID);
+});
+
+test(
+    'abort IPC real Node exit race skips terminal children before their exit event is consumed',
+    { timeout: 10000 },
+    async () => {
+        const { spawn } = require('node:child_process');
+        const { once } = require('node:events');
+        const { observeAbortWorker, deliverWorkerAbort } = require('./example-evidence-supervisor.cjs');
+        const child = spawn(process.execPath, ['-e', 'process.send("ready"); setTimeout(() => process.exit(7), 50)'], {
+            detached: true,
+            stdio: ['ignore', 'pipe', 'pipe', 'ipc'],
+        });
+        const closed = once(child, 'close');
+        let exit = null,
+            close = null,
+            sends = 0;
+        child.once('exit', (code, signal) => {
+            exit = { eventId: 100, code, signal };
+        });
+        child.once('close', (code, signal) => {
+            close = { eventId: 101, code, signal };
+        });
+        const raw = fs.readFileSync(`/proc/${child.pid}/stat`, 'utf8');
+        const fields = raw
+            .slice(raw.lastIndexOf(')') + 2)
+            .trim()
+            .split(' ');
+        const tuple = {
+            pid: child.pid,
+            startTicks: fields[19],
+            namespace: fs.readlinkSync(`/proc/${child.pid}/ns/pid`),
+            ppid: Number(fields[1]),
+            pgrp: Number(fields[2]),
+        };
+        const worker = { ...tuple, initial: { ...tuple } };
+        const originalSend = child.send.bind(child);
+        child.send = (...args) => {
+            sends++;
+            return originalSend(...args);
+        };
+        const events = [],
+            errors = [];
+        try {
+            await once(child, 'message');
+            const deadline = performance.now() + 2000;
+            while (observeAbortWorker(tuple).status !== 'TERMINAL' && performance.now() < deadline)
+                Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1);
+            assert.equal(exit, null, 'same ChildProcess exit callback has deliberately not been consumed yet');
+            assert.equal(observeAbortWorker(tuple).status, 'TERMINAL');
+            const delivery = deliverWorkerAbort({
+                child,
+                worker,
+                abort: { eventId: 1, reason: 'CPU root failure' },
+                event: (type, data) => {
+                    const row = { type, ...data, eventId: events.length + 2 };
+                    events.push(row);
+                    return row;
+                },
+                fail: (reason) => errors.push(reason),
+                closure: () => ({ exit, close }),
+                now: () => performance.now(),
+                deadline,
+            });
+            await delivery.drained;
+            assert.equal(sends, 0);
+            assert.equal(events[0].reason, 'worker-exited');
+            assert.deepEqual(errors, []);
+            assert.deepEqual(await closed, [7, null]);
+            assert.equal(exit.code, 7);
+            assert.equal(close.code, 7);
+            assert.equal(fs.existsSync(`/proc/${child.pid}`), false);
+        } finally {
+            if (!close) child.kill('SIGKILL');
+            await closed;
+        }
+    },
+);
+
+test(
+    'abort IPC real closed peer reports asynchronous EPIPE while its worker is still alive',
+    { timeout: 10000 },
+    async () => {
+        const { spawn } = require('node:child_process');
+        const { once } = require('node:events');
+        const { observeAbortWorker, deliverWorkerAbort } = require('./example-evidence-supervisor.cjs');
+        const directory = fs.mkdtempSync(path.join(base, 'abort-peer-'));
+        const disconnected = path.join(directory, 'disconnected'),
+            release = path.join(directory, 'release');
+        const child = spawn(
+            process.execPath,
+            [
+                '-e',
+                'const fs = require("fs"); process.send("ready", () => { process.disconnect(); fs.writeFileSync(process.argv[1], "closed"); setInterval(() => { if(fs.existsSync(process.argv[2])) process.exit(7); }, 5); setTimeout(() => process.exit(99), 4000); });',
+                disconnected,
+                release,
+            ],
+            { detached: true, stdio: ['ignore', 'pipe', 'pipe', 'ipc'] },
+        );
+        const closed = once(child, 'close');
+        let exit = null,
+            close = null;
+        child.once('exit', (code, signal) => {
+            exit = { eventId: 100, code, signal };
+        });
+        child.once('close', (code, signal) => {
+            close = { eventId: 101, code, signal };
+        });
+        const raw = fs.readFileSync(`/proc/${child.pid}/stat`, 'utf8');
+        const fields = raw
+            .slice(raw.lastIndexOf(')') + 2)
+            .trim()
+            .split(' ');
+        const tuple = {
+            pid: child.pid,
+            startTicks: fields[19],
+            namespace: fs.readlinkSync(`/proc/${child.pid}/ns/pid`),
+            ppid: Number(fields[1]),
+            pgrp: Number(fields[2]),
+        };
+        const events = [],
+            errors = [];
+        try {
+            await once(child, 'message');
+            // The peer confirms its disconnect but remains alive until the result is inspected.
+            const deadline = performance.now() + 2000;
+            while (!fs.existsSync(disconnected) && performance.now() < deadline)
+                Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1);
+            assert.equal(fs.existsSync(disconnected), true);
+            assert.equal(child.connected, true);
+            assert.equal(observeAbortWorker(tuple).status, 'LIVE');
+            const delivery = deliverWorkerAbort({
+                child,
+                worker: { ...tuple, initial: { ...tuple } },
+                abort: { eventId: 1, reason: 'CPU root failure' },
+                event: (type, data) => {
+                    const row = { type, ...data, eventId: events.length + 2 };
+                    events.push(row);
+                    return row;
+                },
+                fail: (reason) => errors.push(reason),
+                closure: () => ({ exit, close }),
+                now: () => performance.now(),
+                deadline: performance.now() + 2000,
+            });
+            await delivery.drained;
+            assert.deepEqual(
+                events.map((e) => e.type),
+                ['abort-ipc-send', 'abort-ipc-result'],
+            );
+            assert.equal(events[1].outcome, 'callback');
+            assert.equal(events[1].errorCode, 'EPIPE');
+            assert.equal(events[1].workerExitEventId, null);
+            assert.equal(events[1].observation.status, 'LIVE');
+            assert.deepEqual(errors, ['abort IPC send failed: Error: write EPIPE']);
+            fs.writeFileSync(release, 'release', { flag: 'wx' });
+            assert.deepEqual(await closed, [7, null]);
+            assert.equal(fs.existsSync(`/proc/${child.pid}`), false);
+        } finally {
+            if (!close) child.kill('SIGKILL');
+            await closed;
+        }
+    },
+);
+
+test('abort IPC finish keeps custody and delivery drains interruptible at the original final deadline', async () => {
+    const vm = require('node:vm');
+    const source = fs.readFileSync(path.join(__dirname, 'example-evidence-supervisor.cjs'), 'utf8');
+    const finishSource = source.slice(
+        source.indexOf('    async function finish(atDeadline'),
+        source.indexOf('    const interrupted ='),
+    );
+    const interruptSource = source.slice(
+        source.indexOf('    const interrupted ='),
+        source.indexOf('    const onInterrupt ='),
+    );
+    for (const outcome of ['final-deadline', 'SIGTERM', 'SIGINT']) {
+        const order = [];
+        let resolveCustody, resolveAbort;
+        const context = {
+            finished: false,
+            finishing: false,
+            cpuCase: null,
+            receipt: {},
+            fail: (reason) => order.push(reason),
+            requestAbort: (reason) => order.push(reason),
+            custodyPending: {
+                drained: new Promise((done) => {
+                    resolveCustody = done;
+                }),
+            },
+            abortDelivery: {
+                drained: new Promise((done) => {
+                    resolveAbort = done;
+                }),
+                cancel: (value) => {
+                    order.push(`abort:${value}`);
+                    resolveAbort();
+                },
+            },
+            scanOwned: () => {
+                order.push('finalizing');
+                throw Error('controlled finalization boundary');
+            },
+        };
+        context.settleCustody = (pending, value) => {
+            assert.ok(pending);
+            order.push(`custody:${value}`);
+            context.custodyPending = null;
+            resolveCustody();
+        };
+        vm.createContext(context);
+        vm.runInContext(
+            finishSource + interruptSource + '\nthis.finish = finish; this.interrupted = interrupted;',
+            context,
+        );
+        const finishing = context.finish();
+        const checked = assert.rejects(finishing, /controlled finalization boundary/);
+        await Promise.resolve();
+        assert.deepEqual(order, ['Custody barrier remained pending at worker closure']);
+        if (outcome === 'final-deadline') await context.finish(true);
+        else context.interrupted(outcome);
+        await checked;
+        assert.ok(order.includes(`custody:${outcome}`));
+        assert.ok(order.includes(`abort:${outcome}`));
+        assert.equal(order.at(-1), 'finalizing');
+        assert.ok(order.indexOf(`abort:${outcome}`) < order.indexOf('finalizing'));
+    }
+});

@@ -595,6 +595,185 @@ function validCustodyResponse(response, pending, token, custodianPID, acceptedSt
     );
 }
 
+// This observation only avoids an abort message to an exact terminal child. It is never
+// custody authority, permission to signal, or proof that the process has been reaped.
+function observeAbortWorker(worker, io = fs) {
+    const result = { status: 'UNKNOWN', before: null, after: null };
+    try {
+        const read = () => {
+            const raw = io.readFileSync(`/proc/${worker.pid}/stat`, 'utf8');
+            const end = raw.lastIndexOf(')');
+            if (!raw.startsWith(`${worker.pid} (`) || end < 0 || raw[end + 1] !== ' ') throw Error('stat');
+            const fields = raw
+                .slice(end + 2)
+                .trimEnd()
+                .split(' ');
+            if (fields.length < 20 || ![fields[1], fields[2], fields[19]].every((value) => /^\d+$/.test(value)))
+                throw Error('stat fields');
+            return {
+                pid: worker.pid,
+                state: fields[0],
+                ppid: Number(fields[1]),
+                pgrp: Number(fields[2]),
+                startTicks: fields[19],
+                namespace: io.readlinkSync(`/proc/${worker.pid}/ns/pid`),
+            };
+        };
+        result.before = read();
+        result.after = read();
+        if (validAbortObservation(result, worker, 'TERMINAL')) result.status = 'TERMINAL';
+        else if (validAbortObservation(result, worker, 'LIVE')) result.status = 'LIVE';
+    } catch {
+        // Missing, unreadable and malformed metadata are all UNKNOWN here, never absence.
+    }
+    return result;
+}
+
+function validAbortObservation(observation, worker, status = observation?.status) {
+    const states = ['R', 'S', 'D', 'T', 't', 'K', 'W', 'P', 'I', 'Z', 'X'];
+    const terminal = (row) => ['Z', 'X'].includes(row.state);
+    const exact = (row) =>
+        row &&
+        Object.keys(row).length === 6 &&
+        ['pid', 'ppid', 'pgrp'].every(
+            (key) => Number.isSafeInteger(row[key]) && row[key] >= 0 && row[key] <= 2147483647,
+        ) &&
+        row.pid > 0 &&
+        typeof row.startTicks === 'string' &&
+        /^\d+$/.test(row.startTicks) &&
+        typeof row.namespace === 'string' &&
+        /^pid:\[\d+\]$/.test(row.namespace) &&
+        states.includes(row.state) &&
+        ['pid', 'startTicks', 'namespace', 'ppid'].every((key) => row[key] === worker?.[key]);
+    return !!(
+        observation &&
+        exact(observation.before) &&
+        exact(observation.after) &&
+        // The spawn snapshot can precede setsid(). Only these two current groups must agree.
+        observation.before.pgrp === observation.after.pgrp &&
+        (status === 'TERMINAL'
+            ? terminal(observation.after)
+            : status === 'LIVE' && !terminal(observation.before) && !terminal(observation.after))
+    );
+}
+
+function deliverWorkerAbort({
+    child,
+    worker,
+    abort,
+    event,
+    fail,
+    closure,
+    observe = observeAbortWorker,
+    now,
+    deadline,
+    schedule = setTimeout,
+    unschedule = clearTimeout,
+}) {
+    // Copy the spawn identity and retain this ChildProcess, not a PID lookup or mutable later target.
+    const target = Object.freeze({
+        pid: worker.pid,
+        startTicks: worker.startTicks,
+        namespace: worker.namespace,
+        ppid: worker.initial?.ppid,
+    });
+    const binding = {
+        abortRequestEventId: abort.eventId,
+        workerPID: target.pid,
+        workerStartTicks: target.startTicks,
+        namespace: target.namespace,
+        deadlineMs: deadline,
+    };
+    let resolve,
+        settled = false,
+        sealed = false,
+        timer,
+        send;
+    const drained = new Promise((done) => {
+        resolve = done;
+    });
+    const snapshot = () => {
+        const closed = closure();
+        return {
+            childPID: child.pid,
+            workerExitEventId: closed.exit?.eventId || null,
+            workerCloseEventId: closed.close?.eventId || null,
+            observation: observe(target),
+        };
+    };
+    const settle = (outcome, error = null) => {
+        if (settled) {
+            if (['callback', 'throw'].includes(outcome) && !sealed) {
+                event('abort-ipc-extra-result', { ...binding, sendEventId: send.eventId, outcome });
+                fail('abort IPC result after settlement');
+                if (error) fail(`abort IPC send failed: ${error}`);
+            }
+            return;
+        }
+        if (outcome === 'callback' && now() >= deadline) outcome = 'deadline';
+        settled = true;
+        unschedule(timer);
+        event('abort-ipc-result', {
+            ...binding,
+            sendEventId: send.eventId,
+            outcome,
+            errorCode: error
+                ? ['EPIPE', 'ERR_IPC_CHANNEL_CLOSED'].includes(error.code)
+                    ? error.code
+                    : 'UNKNOWN'
+                : null,
+            failed: !!error,
+            ...snapshot(),
+        });
+        if (error) fail(`abort IPC send failed: ${error}`);
+        if (outcome !== 'callback') fail(`abort IPC did not settle: ${outcome}`);
+        resolve();
+    };
+    const initial =
+        now() >= deadline
+            ? {
+                  childPID: child.pid,
+                  workerExitEventId: null,
+                  workerCloseEventId: null,
+                  observation: { status: 'UNKNOWN', before: null, after: null },
+              }
+            : snapshot();
+    const expired = now() >= deadline;
+    const skip =
+        child.pid === target.pid &&
+        (initial.workerExitEventId ||
+            initial.workerCloseEventId ||
+            (initial.observation.status === 'TERMINAL' && validAbortObservation(initial.observation, target)));
+    if (expired || skip || !child.connected) {
+        event('abort-ipc-skipped', {
+            ...binding,
+            reason: expired ? 'deadline-expired' : skip ? 'worker-exited' : 'ipc-disconnected',
+            ...initial,
+        });
+        if (expired) fail('abort IPC did not settle: deadline');
+        settled = true;
+        resolve();
+    } else {
+        send = event('abort-ipc-send', { ...binding, ...initial });
+        timer = schedule(() => settle('deadline'), Math.max(1, deadline - now()));
+        try {
+            if (child.pid !== target.pid) throw Error('abort IPC target identity changed');
+            child.send({ exampleEvidenceAbort: abort.reason }, (error) => settle('callback', error));
+        } catch (error) {
+            settle('throw', error);
+        }
+    }
+    return {
+        drained,
+        cancel: (outcome) => {
+            if (send) settle(outcome);
+        },
+        seal: () => {
+            sealed = true;
+        },
+    };
+}
+
 async function superviseAttemptInner(options) {
     if (activeWorker) throw Error('Previous attempt worker has not physically closed');
     const requestFD = Number(process.env.EXAMPLE_EVIDENCE_CUSTODIAN_REQUEST_FD);
@@ -729,7 +908,8 @@ async function superviseAttemptInner(options) {
         finished = false,
         finishing = false,
         abortRequested = false,
-        firstReady = false;
+        firstReady = false,
+        abortDelivery = null;
     let lastObserverSequence = 0;
     let resolveFinished;
     const finishedPromise = new Promise((resolve) => {
@@ -894,10 +1074,18 @@ async function superviseAttemptInner(options) {
         receipt.timedOut ||= timedOut;
         if (abortRequested) return;
         abortRequested = true;
-        event('abort-request', { reason });
-        if (child?.connected)
-            child.send({ exampleEvidenceAbort: reason }, (error) => {
-                if (error && error.code !== 'ERR_IPC_CHANNEL_CLOSED') fail(`abort IPC send failed: ${error}`);
+        const abort = event('abort-request', { reason });
+        if (child)
+            abortDelivery = deliverWorkerAbort({
+                child,
+                worker: receipt.worker,
+                abort,
+                event,
+                fail,
+                closure: () => receipt.worker,
+                now: () => performance.now() - origin,
+                deadline: Math.min(abort.supervisorElapsedMs + limits.closeMs, limits.finalMs),
+                schedule: timer,
             });
         timer(
             () => reclaim('abort cleanup deadline exceeded'),
@@ -1210,6 +1398,7 @@ async function superviseAttemptInner(options) {
         if (atDeadline) {
             fail('final worker deadline reached');
             settleCustody(custodyPending, 'final-deadline');
+            abortDelivery?.cancel('final-deadline');
         }
         if (finishing) return;
         finishing = true;
@@ -1244,6 +1433,7 @@ async function superviseAttemptInner(options) {
             // the custodian kill this Node process before its original failure receipt is durable.
             await custodyPending.drained;
         }
+        if (abortDelivery) await abortDelivery.drained;
         receipt.noOwnedProcesses = scanOwned().length === 0;
         receipt.ownedProcesses = [...owned.values()].map(
             ({ pid, startTicks, namespace, role, firstObserved, disappearance }) => ({
@@ -1305,6 +1495,7 @@ async function superviseAttemptInner(options) {
                     }),
             ),
         );
+        abortDelivery?.seal();
         receipt.endedAt = new Date().toISOString();
         const structural = validateCoreReceipt(receipt, {
             id,
@@ -1338,6 +1529,7 @@ async function superviseAttemptInner(options) {
     }
     const interrupted = (signal) => {
         requestAbort(`supervisor received ${signal}`);
+        abortDelivery?.cancel(signal);
         if (finishing) settleCustody(custodyPending, signal);
     };
     const onInterrupt = () => interrupted('SIGINT');
@@ -2028,6 +2220,9 @@ if (require.main === module)
         process.exitCode = 1;
     });
 module.exports = {
+    observeAbortWorker,
+    validAbortObservation,
+    deliverWorkerAbort,
     validCustodyResponse,
     SCHEMA_VERSION,
     DEFAULT_LIMITS,

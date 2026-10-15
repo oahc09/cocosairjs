@@ -1797,3 +1797,213 @@ test('late-stop browser-7 diagnostic accepts only a complete rejected failure ch
         );
     }
 });
+
+function abortEpipeSchemaFixture(terminal = false) {
+    const { receipt } = rejectedStopSchemaFixture();
+    const worker = receipt.worker;
+    worker.initial.pgrp = worker.pid;
+    const tuple = {
+        pid: worker.pid,
+        startTicks: worker.startTicks,
+        namespace: worker.namespace,
+        ppid: receipt.custody.observation.innerSupervisor.pid,
+        pgrp: worker.initial.pgrp,
+    };
+    const observation = (state) => ({
+        status: state === 'Z' ? 'TERMINAL' : 'LIVE',
+        before: { ...tuple, state: 'R' },
+        after: { ...tuple, state },
+    });
+    const add = (type, elapsed, values) => {
+        const row = {
+            type,
+            source: 'supervisor',
+            supervisorElapsedMs: elapsed,
+            receivedUtc: new Date(Date.parse(receipt.startedAt) + elapsed).toISOString(),
+            ...values,
+        };
+        receipt.events.push(row);
+        return row;
+    };
+    const elapsed = receipt.browsers[0].exit.supervisorElapsedMs;
+    const abort = add('abort-request', elapsed + 1, { reason: 'unclean browser exit: 7/null' });
+    const binding = {
+        workerPID: worker.pid,
+        childPID: worker.pid,
+        workerStartTicks: worker.startTicks,
+        namespace: worker.namespace,
+        deadlineMs: Math.min(abort.supervisorElapsedMs + receipt.limits.closeMs, receipt.limits.finalMs),
+    };
+    const send = add('abort-ipc-send', elapsed + 2, {
+        ...binding,
+        workerExitEventId: null,
+        workerCloseEventId: null,
+        observation: observation('R'),
+    });
+    const result = add(
+        'abort-ipc-result',
+        terminal ? worker.exit.supervisorElapsedMs - 1 : worker.close.supervisorElapsedMs + 1,
+        {
+            ...binding,
+            outcome: 'callback',
+            errorCode: 'EPIPE',
+            failed: true,
+            observation: observation(terminal ? 'Z' : 'R'),
+        },
+    );
+    receipt.events.sort((a, b) => a.supervisorElapsedMs - b.supervisorElapsedMs);
+    receipt.events.forEach((row, index) => {
+        row.eventId = index + 1;
+    });
+    send.abortRequestEventId = result.abortRequestEventId = abort.eventId;
+    result.sendEventId = send.eventId;
+    result.workerExitEventId = terminal ? null : worker.exit.eventId;
+    result.workerCloseEventId = terminal ? null : worker.close.eventId;
+    for (const errors of [receipt.errors, receipt.lifecycleErrors])
+        errors.push('abort IPC send failed: Error: write EPIPE', 'failure event retained: abort-request');
+    return receipt;
+}
+
+test('browser-7 abort EPIPE classification requires an exact asynchronous exit proof and all originals', () => {
+    const { expectedOutcome } = require('./example-evidence-shutdown-trace.cjs');
+    const { validateAttemptReceipt } = require('./example-evidence-supervisor.cjs');
+    const options = { mode: 'cpu', cpuCase: 'browser-nonzero' };
+    const check = (r) => expectedOutcome(r, { ...options, artifactBytes: rebuildSchemaOriginals(r) });
+    for (const terminal of [false, true]) {
+        const receipt = abortEpipeSchemaFixture(terminal);
+        assert.equal(check(receipt), true, JSON.stringify(receipt.errors));
+        const inheritedGroup = structuredClone(receipt);
+        inheritedGroup.worker.initial.pgrp = 88;
+        assert.equal(check(inheritedGroup), true, 'fork-time inherited group is not current group authority');
+        assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true }).ok, false);
+        assert.equal(
+            expectedOutcome(receipt, { ...options, mode: 'target', artifactBytes: rebuildSchemaOriginals(receipt) }),
+            false,
+        );
+        const send = (r) => r.events.find((e) => e.type === 'abort-ipc-send');
+        const result = (r) => r.events.find((e) => e.type === 'abort-ipc-result');
+        const mutations = [
+            (r) => {
+                send(r).workerPID++;
+            },
+            (r) => {
+                result(r).childPID++;
+            },
+            (r) => {
+                result(r).workerStartTicks = '999';
+            },
+            (r) => {
+                result(r).namespace = 'pid:[2]';
+            },
+            (r) => {
+                result(r).abortRequestEventId++;
+            },
+            (r) => {
+                result(r).sendEventId++;
+            },
+            (r) => {
+                result(r).outcome = 'throw';
+            },
+            (r) => {
+                result(r).outcome = 'deadline';
+            },
+            (r) => {
+                result(r).errorCode = 'EIO';
+            },
+            (r) => {
+                result(r).failed = false;
+            },
+            (r) => {
+                send(r).deadlineMs++;
+                result(r).deadlineMs++;
+            },
+            (r) => {
+                send(r).observation.status = 'UNKNOWN';
+            },
+            (r) => {
+                send(r).observation.before.startTicks = '999';
+            },
+            (r) => {
+                result(r).workerExitEventId = 99999;
+            },
+            (r) => {
+                result(r).workerCloseEventId = 99999;
+            },
+            (r) => {
+                result(r).workerExitEventId = null;
+                result(r).workerCloseEventId = null;
+                result(r).observation.status = 'UNKNOWN';
+            },
+            (r) => {
+                result(r).workerExitEventId = null;
+                result(r).workerCloseEventId = null;
+                result(r).observation.status = 'LIVE';
+                result(r).observation.after.state = 'R';
+            },
+            (r) => {
+                r.events.find((e) => e.type === 'abort-request').reason = 'unrelated failure';
+            },
+            (r) => {
+                r.events.push({ ...result(r), type: 'abort-ipc-extra-callback' });
+            },
+            (r) => {
+                r.events.push({ ...send(r) });
+            },
+            (r) => {
+                r.errors.push('unrelated error');
+            },
+            (r) => {
+                r.events = r.events.filter((e) => e !== send(r));
+            },
+            (r) => {
+                r.events = r.events.filter((e) => e !== result(r));
+            },
+        ];
+        if (terminal) {
+            for (const field of ['pid', 'ppid', 'pgrp', 'startTicks', 'namespace', 'state'])
+                mutations.push((r) => {
+                    result(r).observation.after[field] = field === 'state' ? '?' : 'changed';
+                });
+            mutations.push((r) => {
+                result(r).observation.before.state = 'Z';
+                result(r).observation.after.state = 'R';
+            });
+        }
+        for (const [index, mutate] of mutations.entries()) {
+            const changed = structuredClone(receipt);
+            mutate(changed);
+            assert.equal(check(changed), false, `terminal=${terminal} rehashed mutation ${index}`);
+        }
+        const bytes = rebuildSchemaOriginals(receipt);
+        for (const role of Object.keys(bytes)) {
+            const missing = { ...bytes };
+            delete missing[role];
+            assert.equal(expectedOutcome(receipt, { ...options, artifactBytes: missing }), false, role);
+        }
+    }
+    const old = rejectedStopSchemaFixture().receipt;
+    old.errors.push('abort IPC send failed: Error: write EPIPE');
+    old.lifecycleErrors.push('abort IPC send failed: Error: write EPIPE');
+    assert.equal(check(old), false, 'old EPIPE without contemporaneous send/callback proof stays rejected');
+    const root = process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT;
+    if (root) {
+        const fs = require('node:fs'),
+            path = require('node:path');
+        const directory = path.join(root, 'shutdown-diagnostics-38799219346/cpu-browser-nonzero-on/attempt');
+        const file = path.join(directory, 'attempt-receipt.json');
+        if (fs.existsSync(file)) {
+            const r = JSON.parse(fs.readFileSync(file));
+            const bytes = Object.fromEntries(
+                Object.entries(r.custody.artifacts).map(([role, ref]) => [
+                    role,
+                    fs.readFileSync(path.join(directory, path.basename(ref.path))),
+                ]),
+            );
+            assert.equal(
+                expectedOutcome(r, { ...options, artifactBytes: bytes }),
+                false,
+                'official old failure is immutable and unproven',
+            );
+        }
+    }
+});
