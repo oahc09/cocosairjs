@@ -110,24 +110,37 @@ function sourceFingerprint(exampleDir) {
     return sha16(Buffer.from(JSON.stringify(files)));
 }
 
-function candidateFingerprint() {
-    const bundle = path.join(REPO, 'build', 'cocosair.module.js');
-    const dts = path.join(REPO, 'build', 'cocosair.module.d.ts');
-    const parts = [];
-    for (const f of [bundle, dts]) {
-        if (fs.existsSync(f)) {
-            parts.push(sha16(fs.readFileSync(f)));
+function candidateFingerprint(repo = REPO) {
+    // Independent shipped runtimes are part of the candidate, even when only one example imports them.
+    const files = [
+        'build/cocosair.module.js',
+        'build/cocosair.module.d.ts',
+        'build/spark.module.js',
+        'build/spark.module.d.ts',
+    ];
+    const parts = files.map((rel) => {
+        const abs = path.join(repo, rel);
+        if (!fs.existsSync(abs)) throw new Error(`candidate artifact missing: ${rel}`);
+        if (
+            fs.lstatSync(abs).isSymbolicLink() ||
+            !fs.statSync(abs).isFile() ||
+            fs.realpathSync(abs) !== path.resolve(abs)
+        )
+            throw new Error(`candidate artifact must be a regular in-tree file: ${rel}`);
+        return rel + ':' + sha16(fs.readFileSync(abs));
+    });
+    const walk = (dir) => {
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+            const abs = path.join(dir, entry.name);
+            if (entry.isSymbolicLink()) throw new Error(`candidate input symlink: ${abs}`);
+            if (entry.isDirectory()) walk(abs);
+            else if (entry.isFile())
+                parts.push(path.relative(repo, abs).split(path.sep).join('/') + ':' + sha16(fs.readFileSync(abs)));
+            else throw new Error(`candidate input is not a regular file: ${abs}`);
         }
-    }
-    const shared = path.join(REPO, 'examples', 'shared');
-    if (fs.existsSync(shared)) {
-        for (const entry of fs.readdirSync(shared).sort()) {
-            const abs = path.join(shared, entry);
-            if (fs.statSync(abs).isFile()) {
-                parts.push(entry + ':' + sha16(fs.readFileSync(abs)));
-            }
-        }
-    }
+    };
+    const shared = path.join(repo, 'examples', 'shared');
+    if (fs.existsSync(shared)) walk(shared);
     return sha16(Buffer.from(parts.join('|')));
 }
 

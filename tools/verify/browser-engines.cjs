@@ -35,6 +35,20 @@ function launchOptions(engine, localAppData = process.env.LOCALAPPDATA || DEFAUL
     if (!conf) {
         throw new Error(`未知浏览器引擎: ${engine}（可选 ${Object.keys(ENGINES).join('/')}）`);
     }
+    // Evidence campaigns may explicitly pin an already-installed executable. There is no silent fallback:
+    // its version, bytes and arguments are frozen before collection and checked for every attempt.
+    if (arguments.length < 2 && process.env.AIR_EVIDENCE_BROWSER_EXECUTABLE) {
+        const executablePath = process.env.AIR_EVIDENCE_BROWSER_EXECUTABLE;
+        if (
+            !path.isAbsolute(executablePath) ||
+            !fs.existsSync(executablePath) ||
+            !fs.lstatSync(executablePath).isFile() ||
+            fs.realpathSync(executablePath) !== executablePath
+        ) {
+            throw new Error('AIR_EVIDENCE_BROWSER_EXECUTABLE must name an existing regular absolute executable');
+        }
+        return runnerOptions(engine, { executablePath, args: conf.args.slice() });
+    }
     // Chromium 1193 (the installed package's default) cannot decode the checked-in
     // H.264 clip. The project-pinned 1228 has been verified by the video example.
     // Use the same media-capable browser for all Chromium example evidence.

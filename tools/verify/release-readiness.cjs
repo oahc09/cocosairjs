@@ -49,6 +49,11 @@ if (missingEvidence.length) {
     process.exit(1);
 }
 const v11 = read('docs/evidence/examples-verified.json');
+const v11Validation = require('./example-evidence-campaign.cjs').validateCampaign(v11, {
+    repo: root,
+    evidencePath: path.join(root, 'docs/evidence/examples-verified.json'),
+});
+requireCheck(v11Validation.ok, `V1.1 strict campaign invalid: ${v11Validation.errors.join('; ')}`);
 const devtools = read('docs/evidence/devtools-examples.json');
 const gallery = read('docs/evidence/gallery-artifact.json');
 const v12 = read('docs/evidence/browser-matrix/browser-matrix.json');
