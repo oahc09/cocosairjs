@@ -12,11 +12,14 @@ const { spawn, spawnSync } = require('node:child_process');
 const { performance } = require('node:perf_hooks');
 const {
     DEFAULT_LIMITS,
+    TARGET_DIAGNOSTIC_LIMITS,
+    validateTargetDiagnosticProfile,
     limitsOf,
     validateAttemptReceipt,
     validateCustodyArtifacts,
     validAbortObservation,
 } = require('./example-evidence-supervisor.cjs');
+const { planTargetDiagnostic, readTargetDiagnostic } = require('./run-example-shutdown-target.cjs');
 
 const REPO = path.resolve(__dirname, '../..');
 const SCHEMA = 'example-evidence-shutdown-diagnostic/1';
@@ -346,8 +349,224 @@ function validObservation(row, knownRoot = row?.root) {
 const frozenImageMatch = (row) =>
     validObservation(row) && imageSame(row.imageBefore, row.imageAfter) && imageSame(row.imageBefore, row.frozenImage);
 
+function taskIds(pid, limit) {
+    const directory = fs.opendirSync(`/proc/${pid}/task`),
+        result = [];
+    try {
+        for (let item; (item = directory.readSync());) {
+            invariant(/^\d+$/.test(item.name), 'identity-task-metadata-invalid');
+            if (result.length >= limit) throw Error('identity-count-bound');
+            result.push(integer(item.name));
+        }
+    } finally {
+        directory.closeSync();
+    }
+    return result;
+}
+function taskChildren(pid, tid, limit) {
+    const file = fs.openSync(`/proc/${pid}/task/${tid}/children`, 'r');
+    try {
+        const bytes = Buffer.alloc(Math.min(BOUNDS.lineBytes, limit) + 1);
+        const size = fs.readSync(file, bytes, 0, bytes.length, null);
+        invariant(size < bytes.length, 'identity-input-bound');
+        return bytes.subarray(0, size).toString('ascii');
+    } finally {
+        fs.closeSync(file);
+    }
+}
+function sameObservedOwnership(a, b) {
+    return (
+        fullSame(a.thread, b.thread) &&
+        fullSame(a.process, b.process) &&
+        fullSame(a.root, b.root) &&
+        a.ownedLineage.length === b.ownedLineage.length &&
+        a.ownedLineage.every(
+            (row, index) => same(row, b.ownedLineage[index]) && row.ppid === b.ownedLineage[index].ppid,
+        )
+    );
+}
+
+// Enumerate tasks only under an independently proved owned TGID. Each task's children
+// are read between two complete ownership observations; no global /proc scan is used.
+function sampleOwnedIdentities({
+    root,
+    frozenImage,
+    cache,
+    bounds = BOUNDS,
+    onFailure = () => {},
+    observe = observeOwned,
+    listTasks = taskIds,
+    readChildren = taskChildren,
+    presence = exactPresence,
+    now = Date.now,
+}) {
+    const queue = [root.pid],
+        queued = new Set(queue),
+        visited = new Set(),
+        seenTasks = new Set();
+    let inputBytes = 0,
+        failed = false;
+    const fail = (reason) => {
+        failed = true;
+        onFailure(reason);
+    };
+    const markUnknown = (pid, leader = false) => {
+        for (const value of cache.values()) {
+            if ((leader ? value.observation.process.pid : value.observation.thread.pid) !== pid) continue;
+            const state = presence(value.observation.thread);
+            if (state === 'ABSENT') value.firstAbsentAt ??= now();
+            else value.metadataUnknown = true;
+        }
+    };
+    while (queue.length && !failed) {
+        const pid = queue.shift();
+        if (visited.has(pid)) continue;
+        visited.add(pid);
+        const leader = observe(pid, root, frozenImage);
+        if (!validObservation(leader, root) || leader.thread.pid !== pid || leader.process.pid !== pid) {
+            markUnknown(pid, true);
+            continue;
+        }
+        let tasks;
+        try {
+            tasks = listTasks(pid, bounds.identities - seenTasks.size);
+            invariant(
+                Array.isArray(tasks) && tasks.length <= bounds.identities - seenTasks.size,
+                'identity-count-bound',
+            );
+        } catch (error) {
+            if (error.message === 'identity-count-bound') fail(error.message);
+            else markUnknown(pid, true);
+            continue;
+        }
+        for (const tid of tasks) {
+            if (failed) break;
+            if (!Number.isSafeInteger(tid) || tid <= 0 || tid > 2147483647) {
+                markUnknown(pid, true);
+                continue;
+            }
+            if (seenTasks.has(tid)) continue;
+            if (seenTasks.size >= bounds.identities) {
+                fail('identity-count-bound');
+                break;
+            }
+            seenTasks.add(tid);
+            const before = observe(tid, root, frozenImage);
+            if (
+                !validObservation(before, root) ||
+                !fullSame(before.process, leader.process) ||
+                before.thread.pid !== tid ||
+                before.thread.ppid !== before.process.ppid
+            ) {
+                markUnknown(tid);
+                continue;
+            }
+            let children, after;
+            try {
+                children = readChildren(pid, tid, bounds.identityBytes - inputBytes);
+                invariant(
+                    typeof children === 'string' && /^[\s\d]*$/.test(children),
+                    'identity-children-metadata-invalid',
+                );
+                inputBytes += Buffer.byteLength(children);
+                invariant(
+                    inputBytes <= bounds.identityBytes && Buffer.byteLength(children) <= BOUNDS.lineBytes,
+                    'identity-input-bound',
+                );
+                after = observe(tid, root, frozenImage);
+                invariant(
+                    validObservation(after, root) &&
+                        after.thread.ppid === after.process.ppid &&
+                        fullSame(before.thread, after.thread) &&
+                        fullSame(before.process, after.process) &&
+                        before.ownedLineage.length === after.ownedLineage.length &&
+                        before.ownedLineage.every(
+                            (row, index) =>
+                                same(row, after.ownedLineage[index]) && row.ppid === after.ownedLineage[index].ppid,
+                        ),
+                    'identity-task-changed-during-read',
+                );
+            } catch (error) {
+                if (error.message === 'identity-input-bound') fail(error.message);
+                else markUnknown(tid);
+                continue;
+            }
+            const key = `${tid}:${before.thread.startTicks}:${before.thread.namespace}`;
+            const previous = cache.get(key);
+            if (!previous && cache.size >= bounds.identities) {
+                fail('identity-count-bound');
+                break;
+            }
+            const imageChanged =
+                !before.imageStable ||
+                !after.imageStable ||
+                !imageSame(before.imageBefore, before.imageAfter) ||
+                !imageSame(before.imageAfter, after.imageBefore) ||
+                !imageSame(after.imageBefore, after.imageAfter) ||
+                !(
+                    (before.frozenImage == null && after.frozenImage == null) ||
+                    imageSame(before.frozenImage, after.frozenImage)
+                ) ||
+                (!!frozenImage &&
+                    (!imageSame(before.frozenImage, frozenImage) || !imageSame(after.frozenImage, frozenImage)));
+            const value = previous
+                ? {
+                      ...previous,
+                      lastObservedAt: after.observedAt,
+                      imageChanged:
+                          previous.imageChanged ||
+                          !imageSame(previous.observation.imageAfter, after.imageAfter) ||
+                          imageChanged,
+                      metadataUnknown:
+                          previous.metadataUnknown ||
+                          !sameObservedOwnership(previous.observation, before) ||
+                          !sameObservedOwnership(previous.observation, after),
+                  }
+                : {
+                      observation: before,
+                      firstObservedAt: before.observedAt,
+                      lastObservedAt: after.observedAt,
+                      firstAbsentAt: null,
+                      imageChanged,
+                      metadataUnknown:
+                          !Number.isFinite(before.observedAt) ||
+                          !Number.isFinite(after.observedAt) ||
+                          before.observedAt > after.observedAt,
+                  };
+            cache.set(key, value);
+            if (Buffer.byteLength(JSON.stringify([...cache.values()], null, 2) + '\n') > bounds.identityBytes) {
+                if (previous) cache.set(key, previous);
+                else cache.delete(key);
+                fail('identity-output-bound');
+                break;
+            }
+            for (const text of children.trim().split(/\s+/).filter(Boolean)) {
+                const child = Number(text);
+                if (!Number.isSafeInteger(child) || child <= 0 || child > 2147483647) {
+                    markUnknown(tid);
+                    continue;
+                }
+                if (!queued.has(child)) {
+                    if (queued.size >= bounds.identities) {
+                        fail('identity-count-bound');
+                        break;
+                    }
+                    queued.add(child);
+                    queue.push(child);
+                }
+            }
+        }
+    }
+    for (const value of cache.values()) {
+        const state = presence(value.observation.thread);
+        if (state === 'ABSENT') value.firstAbsentAt ??= now();
+        if (!['PRESENT', 'ABSENT'].includes(state)) value.metadataUnknown = true;
+    }
+    return { ok: !failed, tasks: seenTasks.size, inputBytes };
+}
+
 function cachedObservation(pid, timestamp, cache, receipt) {
-    const candidates = cache.filter((row) => row.observation.process.pid === pid);
+    const candidates = cache.filter((row) => row.observation.thread.pid === pid);
     if (candidates.length !== 1) return null;
     const candidate = candidates[0],
         observed = candidate.observation;
@@ -767,6 +986,7 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
 function buildCommand(options) {
     invariant(['availability', 'cpu', 'target'].includes(options.mode), 'unsupported-diagnostic-mode');
     invariant(['on', 'off'].includes(options.trace), 'trace-must-be-on-or-off');
+    invariant(options.mode !== 'target' || !options.limits, 'target-deadlines-cannot-be-overridden');
     const limits = limitsOf(options.limits);
     invariant(
         !options.control ||
@@ -811,20 +1031,12 @@ function buildCommand(options) {
             limits,
         };
     }
-    invariant(!options.limits, 'target-deadlines-cannot-be-overridden');
     invariant(options.freeze, 'target-requires-independent-freeze');
-    const freezeFile = fs.realpathSync(options.freeze),
-        root = path.dirname(freezeFile);
-    invariant(outside(REPO, root) && outside(REPO, options.out), 'diagnostics-must-be-external');
-    const freeze = JSON.parse(fs.readFileSync(freezeFile, 'utf8'));
-    invariant(
-        Object.keys(DEFAULT_LIMITS).every((key) => freeze.limits?.[key] === DEFAULT_LIMITS[key]),
-        'original-target-limits-required',
-    );
-    invariant(
-        freeze.scope?.some((row) => row.id === 'collector-dodge'),
-        'target-missing-from-real-freeze',
-    );
+    const target = planTargetDiagnostic({
+        freezePath: options.freeze,
+        out: path.join(options.out, 'target-diagnostic'),
+    });
+    const { freeze, freezeFile } = target;
     invariant(freeze.runtimeIdentity?.playwrightVersion === '1.62.1', 'playwright-pin-mismatch');
     invariant(
         /(?:^|\s)151\.0\.7922\.34(?:\s|$)/.test(freeze.runtimeIdentity?.executableVersion || ''),
@@ -833,23 +1045,26 @@ function buildCommand(options) {
     const browser = freeze.runtimeIdentity.host?.executablePath || freeze.runtimeIdentity.executablePath;
     invariant(sha256(browser) === freeze.runtimeIdentity.executableSha256, 'browser-hash-mismatch');
     return {
-        role: 'original-single-id-campaign',
+        role: 'independent-shutdown-target',
         executable: process.execPath,
         args: [
-            path.join(REPO, 'tools/verify/run-example-evidence-campaign.cjs'),
+            path.join(REPO, 'tools/verify/run-example-shutdown-target.cjs'),
             `--freeze=${freezeFile}`,
-            '--id=collector-dodge',
-            `--out=${path.join(root, 'attempts', 'collector-dodge', '1')}`,
+            `--out=${target.output}`,
             '--execute-authorized',
         ],
-        limits,
+        limits: TARGET_DIAGNOSTIC_LIMITS,
+        diagnosticProfile: target.profile,
+        freeze,
+        targetDirectory: target.output,
+        runnerSha256: target.source.sha256,
         browser: {
             executable: browser,
             sha256: freeze.runtimeIdentity.executableSha256,
             version: '151.0.7922.34',
             playwrightVersion: '1.62.1',
         },
-        receipt: path.join(root, 'attempts', 'collector-dodge', '1', 'attempt-receipt.json'),
+        receipt: path.join(target.output, 'attempt-receipt.json'),
     };
 }
 
@@ -1310,6 +1525,18 @@ function browserNonzeroAbortEpipe(receipt, bytes) {
 }
 
 function expectedOutcome(receipt, options) {
+    const profile = options.diagnosticProfile;
+    if (
+        profile !== undefined &&
+        (options.mode !== 'target' ||
+            !validateTargetDiagnosticProfile(profile) ||
+            !validateTargetDiagnosticProfile(receipt.diagnosticProfile) ||
+            ['schemaVersion', 'freezeId', 'inputDigest', 'canonicalEligible'].some(
+                (key) => profile[key] !== receipt.diagnosticProfile[key],
+            ))
+    )
+        return false;
+    const validation = profile === undefined ? {} : { diagnosticProfile: profile };
     const raw = receipt.custody?.observation;
     const pair = (row, code, signal = null) =>
         row?.exit?.code === code &&
@@ -1335,7 +1562,7 @@ function expectedOutcome(receipt, options) {
         return false;
     if (options.mode === 'cpu' && options.cpuCase === 'positive')
         return receipt.ok === true && validateAttemptReceipt(receipt, { allowCpuDummy: true }).ok;
-    if (receipt.ok === true) return options.mode === 'target' && validateAttemptReceipt(receipt).ok;
+    if (receipt.ok === true) return options.mode === 'target' && validateAttemptReceipt(receipt, validation).ok;
     const allowed = new Set(SECONDARY_FAILURES);
     if (options.mode === 'cpu' && options.cpuCase === 'browser-nonzero') {
         if (
@@ -1437,6 +1664,7 @@ function expectedOutcome(receipt, options) {
         if (fs.existsSync(receipt.output.report)) return false;
     } else return false;
     const structural = validateAttemptReceipt(receipt, {
+        ...validation,
         allowCpuDummy: options.mode === 'cpu',
         requireSuccess: false,
     });
@@ -1673,11 +1901,17 @@ async function runDiagnostic(options) {
         traceFilter: options.trace === 'on' ? { syscalls: TRACE_SYSCALLS, signals: ['SIGTERM', 'SIGKILL'] } : null,
         startedAt,
         limits: command.limits,
+        diagnosticProfile: command.diagnosticProfile || null,
         externalLimits: budget.limits,
         externalBudgetOrigin: 'runDiagnostic-entry-monotonic',
         bounds: BOUNDS,
         tracerIdentity,
-        commandIdentity: { role: command.role, nodeSha256: sha256(process.execPath), toolSha256: sha256(__filename) },
+        commandIdentity: {
+            role: command.role,
+            nodeSha256: sha256(process.execPath),
+            toolSha256: sha256(__filename),
+            runnerSha256: command.runnerSha256 || null,
+        },
         browserIdentity: command.browser
             ? {
                   sha256: command.browser.sha256,
@@ -1856,51 +2090,7 @@ async function runDiagnostic(options) {
     const sampleOwned = () => {
         if (!report.traced || !rootIdentity || Date.now() - lastSample < 25) return;
         lastSample = Date.now();
-        const queue = [rootIdentity.pid],
-            visited = new Set();
-        while (queue.length && visited.size < BOUNDS.identities) {
-            const pid = queue.shift();
-            if (visited.has(pid)) continue;
-            visited.add(pid);
-            const observation = observeOwned(pid, rootIdentity, frozenImage);
-            if (!observation) continue;
-            const key = `${pid}:${observation.process.startTicks}:${observation.process.namespace}`;
-            const previous = identityCache.get(key);
-            if (!previous && identityCache.size >= BOUNDS.identities) {
-                cancel('identity-count-bound');
-                break;
-            }
-            identityCache.set(
-                key,
-                previous
-                    ? {
-                          ...previous,
-                          lastObservedAt: observation.observedAt,
-                          imageChanged:
-                              previous.imageChanged ||
-                              !imageSame(previous.observation.imageAfter, observation.imageAfter) ||
-                              !observation.imageStable,
-                      }
-                    : {
-                          observation,
-                          firstObservedAt: observation.observedAt,
-                          lastObservedAt: observation.observedAt,
-                          firstAbsentAt: null,
-                          imageChanged: !observation.imageStable,
-                      },
-            );
-            try {
-                const children = fs.readFileSync(`/proc/${pid}/task/${pid}/children`, 'utf8').trim();
-                for (const value of children.split(/\s+/)) if (/^\d+$/.test(value)) queue.push(Number(value));
-            } catch {
-                /* No unproven child is sampled. */
-            }
-        }
-        for (const value of identityCache.values()) {
-            const presence = exactPresence(value.observation.process);
-            if (value.firstAbsentAt === null && presence === 'ABSENT') value.firstAbsentAt = Date.now();
-            if (presence === 'UNKNOWN') value.metadataUnknown = true;
-        }
+        sampleOwnedIdentities({ root: rootIdentity, frozenImage, cache: identityCache, onFailure: cancel });
     };
     const poll = setInterval(() => {
         observeRoot();
@@ -1990,6 +2180,9 @@ async function runDiagnostic(options) {
     report.trace = { ...parser.finish(), outputBytes, retainedEvents: records.length };
     fs.closeSync(traceFile);
     report.trace.filteredSha256 = sha256(path.join(options.out, 'filtered-trace.jsonl'));
+    // Refresh each exact thread's absence/unknown state after the outer process physically closes.
+    if (report.traced && rootIdentity)
+        sampleOwnedIdentities({ root: rootIdentity, frozenImage, cache: identityCache, onFailure: failure });
     const cache = [...identityCache.values()];
     const encodedCache = JSON.stringify(cache, null, 2) + '\n';
     if (Buffer.byteLength(encodedCache) > BOUNDS.identityBytes) failure('identity-output-bound');
@@ -2085,23 +2278,36 @@ async function runDiagnostic(options) {
         if (!report.physicalClosure) failure('control-physical-closure-incomplete');
     } else if (options.mode !== 'availability') {
         try {
-            const receipt = JSON.parse(fs.readFileSync(receiptFile, 'utf8'));
+            const target =
+                options.mode === 'target'
+                    ? readTargetDiagnostic({
+                          directory: command.targetDirectory,
+                          freeze: command.freeze,
+                          runnerSha256: sha256(command.args[0]),
+                      })
+                    : null;
+            const receipt = target?.receipt || JSON.parse(fs.readFileSync(receiptFile, 'utf8'));
             report.originalReceiptOK = receipt.ok;
             const artifacts = {},
                 artifactBytes = {};
             for (const role of ['raw', 'nodeReceipt', 'journal', 'stdout', 'stderr']) {
                 const reference = receipt.custody.artifacts[role];
-                const bytes = fs.readFileSync(reference.path);
+                const bytes = target ? target.artifactBytes[role] : fs.readFileSync(reference.path);
                 invariant(
-                    bytes.length === reference.bytes && sha256(reference.path) === reference.sha256,
+                    bytes.length === reference.bytes &&
+                        crypto.createHash('sha256').update(bytes).digest('hex') === reference.sha256,
                     'original-custody-artifact-mismatch',
                 );
                 artifactBytes[role] = bytes;
                 artifacts[role] = ['raw', 'nodeReceipt'].includes(role) ? JSON.parse(bytes) : bytes;
             }
-            if (!validateCustodyArtifacts(receipt, artifacts).ok) failure('original-custody-artifacts-invalid');
+            const validation = command.diagnosticProfile ? { diagnosticProfile: command.diagnosticProfile } : {};
+            if (!validateCustodyArtifacts(receipt, artifacts, validation).ok)
+                failure('original-custody-artifacts-invalid');
             report.original = {
-                receiptSha256: sha256(receiptFile),
+                receiptSha256: target
+                    ? crypto.createHash('sha256').update(target.receiptBytes).digest('hex')
+                    : sha256(receiptFile),
                 ok: receipt.ok,
                 forced: receipt.forced,
                 timedOut: receipt.timedOut,
@@ -2121,24 +2327,16 @@ async function runDiagnostic(options) {
                 !receipt.noOwnedProcesses
             )
                 failure('original-closure-incomplete');
-            if (!expectedOutcome(receipt, { ...options, artifactBytes })) failure('unexpected-original-outcome');
+            if (!expectedOutcome(receipt, { ...options, ...validation, artifactBytes }))
+                failure('unexpected-original-outcome');
             if (options.mode === 'target') {
-                const admission = JSON.parse(
-                    fs.readFileSync(path.join(path.dirname(receiptFile), 'admission.json'), 'utf8'),
-                );
-                const attempt = JSON.parse(
-                    fs.readFileSync(path.join(path.dirname(receiptFile), 'attempt.json'), 'utf8'),
-                );
-                report.original.admitted = admission.ok;
-                report.original.collectorResult = attempt.result?.result || null;
-                if (
-                    admission.ok !== receipt.ok ||
-                    admission.partial !== true ||
-                    admission.completed !== false ||
-                    attempt.id !== 'collector-dodge' ||
-                    attempt.result?.result !== (receipt.ok ? 'PASS' : 'FAIL')
-                )
-                    failure('original-campaign-verdict-mismatch');
+                report.original.diagnosticProfile = target.report.diagnosticProfile;
+                report.original.targetReportSha256 = crypto
+                    .createHash('sha256')
+                    .update(target.reportBytes)
+                    .digest('hex');
+                report.original.collectorResult = target.report.collectorResult;
+                report.original.canonicalEligible = false;
             }
             const outerClosed = report.events.find((row) => row.type === `${prefix}-stdio-close`);
             if (outerClosed?.code !== (receipt.ok ? 0 : 1) || outerClosed?.signal)
@@ -2226,6 +2424,9 @@ module.exports = {
     targetAttribution,
     physicalReceipt,
     cachedObservation,
+    sampleOwnedIdentities,
+    observeOwned,
+    identity,
     validObservation,
     validImage,
     exactPresence,

@@ -72,6 +72,8 @@ An authenticated next stop request can arrive after its previously started worke
 
 Abort cleanup retains its original failure. A genuine child exit/close event or an exact, stable terminal-process observation only avoids an unusable IPC send; it does not establish reaping or absence. Preserve the request, target identity, send and asynchronous result chain. Any pending result must settle within the original close and absolute deadlines, including cancellation during finalization. Only the diagnostic CPU `browser-nonzero` control may classify an asynchronous `EPIPE` as an expected secondary failure, and only with that unique sending chain, proof that the same worker had exited or was terminal when the callback ran, and all original failed-receipt and physical-closure evidence. The production attempt remains FAIL. Unknown identities, a still-live worker, synchronous exceptions, other errors, and historical `EPIPE` records without that chain remain rejected.
 
+Apply the same bounded delivery lifecycle to custody-response forwarding. A strictly validated rejection that proves the original worker is no longer authorized is retained with its exact request, worker, and custody event, but is not forwarded to that worker. This skip preserves the root failure; it does not acknowledge a successful stop. Other responses use the same exact child identity and terminal-state guard as abort delivery. Register any asynchronous send before finalization can seal the receipt, and settle it within the original request deadline or cancellation. A rejected response, skipped delivery, or failed send cannot reopen the custody chain or change the attempt to PASS.
+
 Owned-process diagnostics are descriptive only. The supervisor records bounded, identity-checked observations at first ownership and on receipt of a runtime stop-begin event, retaining only fixed executable/role/flag enums. It never publishes raw command lines, arbitrary paths, unknown argument values, or hashes of those private values. A disappeared, reused, unreadable, or already-zombie process remains explicitly unknown; a later adopted-child record may be correlated only by its exact namespace, PID, and start ticks. These observations cannot identify a signal sender or turn a signalled child, failed custody barrier, or incomplete attempt into a PASS.
 
 Each attempt and segment is immutable and remains `partial: true`, `completed: false`. Retain the first failed result even if an explicitly admitted same-input retry later passes. An allowed retry uses the next attempt number and a new directory:
@@ -184,6 +186,25 @@ any earlier instrumented short-budget failure as FAIL; a new diagnostic budget
 does not reclassify it. The 600-second phase limit and 180-second remaining-time
 admission check still apply to every pair member.
 
+The target-browser signal investigation uses a separate fixed
+`example-shutdown-target-profile/1` profile for both traced and untraced runs:
+30-second startup, 4-second close, and the same 120/125/133/139-second absolute
+deadlines. Its startup clock begins at the independent runner's entry and includes
+all input and runtime checks. This allows observation overhead; it is not a
+production startup-performance result. The ordinary frozen campaign retains its
+15-second limit and rejects diagnostic profiles, including records with their
+labels removed or mismatched original artifacts. Keep earlier 15-second failures
+unchanged.
+
+The independent target runner binds its profile to the ordinary freeze's exact
+input identity and verifies inputs and runtime before and after execution. It
+retains the collector output and full custody originals, but creates no ordinary
+attempt, segment, admission, or publication record. The profile is bound through
+the outer request, Python observation, inner pending receipt, observer, and final
+receipt. Explicit diagnostic validation reuses the existing identity and closure
+rules; unknown profiles or arbitrary deadline overrides fail. Only the dedicated
+signal report may consume this profile, always with `canonicalEligible: false`.
+
 The tracer wrapper also has two explicit real-process CPU cancellation controls:
 TERM delivered to that wrapper and a parser input-limit cancellation. These must
 remain failed diagnostics while proving outer/custodian/inner identity-linked
@@ -222,13 +243,19 @@ or address contents. Mark filtered traces as such rather than calling them
 complete raw strace logs. Bind sender and target to their exact PID namespace,
 start ticks and executable-image observations; ambiguous or missing links stay
 UNKNOWN. Process-role hints are not executable authentication.
+Sample threads and their children only inside already-proven owned processes.
+Each thread observation must retain its own start ticks, the same process leader,
+namespace, and verified ancestry before and after bounded reads. Threads and
+processes share the existing identity/output limits. Missing, reused, changed, or
+unreadable identities cannot establish a sender or recipient; never infer a
+thread identity from its process leader alone.
 A valid four-syscall trace can be empty after a normal close. It remains UNKNOWN
 only when the parser, real traced-root identity, original result classification,
 and complete physical closure all validate. Availability and known-sender
 controls still require their real signal correlation; an empty trace cannot
 satisfy either proof.
 
-Each diagnostic keeps the original attempt deadlines. The whole diagnostic
+Each diagnostic keeps its explicitly recorded fixed profile. The whole diagnostic
 phase is bounded to the lesser of 600 seconds and the remaining original job
 budget, with one untraced target control and at most
 six traced target attempts. Do not start another target with fewer than 180

@@ -10,6 +10,26 @@ const { performance } = require('perf_hooks');
 if (process.env.EXAMPLE_EVIDENCE_SUPERVISED !== '1') throw Error('Use example-evidence-supervisor.cjs');
 const limits = JSON.parse(process.env.EXAMPLE_EVIDENCE_LIMITS);
 const cpuCase = process.env.EXAMPLE_EVIDENCE_CPU_CASE || '';
+const diagnosticProfile = process.env.EXAMPLE_EVIDENCE_DIAGNOSTIC_PROFILE
+    ? JSON.parse(process.env.EXAMPLE_EVIDENCE_DIAGNOSTIC_PROFILE)
+    : undefined;
+const {
+    limitsOf,
+    validateTargetDiagnosticProfile,
+    TARGET_DIAGNOSTIC_LIMITS,
+} = require('./example-evidence-supervisor.cjs');
+if (diagnosticProfile !== undefined) {
+    if (
+        !validateTargetDiagnosticProfile(diagnosticProfile) ||
+        !(
+            process.env.EXAMPLE_EVIDENCE_ID === 'collector-dodge' ||
+            (cpuCase && process.env.EXAMPLE_EVIDENCE_ID === 'cpu-example')
+        ) ||
+        Object.keys(limits).length !== Object.keys(TARGET_DIAGNOSTIC_LIMITS).length ||
+        !Object.entries(TARGET_DIAGNOSTIC_LIMITS).every(([key, value]) => limits[key] === value)
+    )
+        throw Error('Observer target diagnostic profile mismatch');
+} else limitsOf(limits);
 const origin = performance.now();
 const namespace = fs.readlinkSync('/proc/self/ns/pid');
 const runtimes = new Map();
@@ -443,6 +463,7 @@ process.on('beforeExit', () => {
 });
 process.channel?.unref();
 emit('observer-start', {
+    ...(diagnosticProfile === undefined ? {} : { diagnosticProfile }),
     limits,
     serverModel: 'HTTP server shares the physical collector worker PID',
     esbuildWorkerThreads: process.env.ESBUILD_WORKER_THREADS || null,

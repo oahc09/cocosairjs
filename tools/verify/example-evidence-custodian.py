@@ -131,9 +131,27 @@ def check_barrier_request(request, peer, node_pid, namespace, token, sequence, a
     raise RuntimeError('Barrier request is not the exact current collector worker over inherited pipes')
 
 
+def validate_diagnostic_config(config):
+    limits = config['limits']
+    profile = config.get('diagnosticProfile')
+    if 'diagnosticProfile' in config:
+        expected_limits = dict(startupMs=30000, closeMs=4000, innerMs=120000, abortMs=125000, forceMs=133000, finalMs=139000)
+        if (not isinstance(profile, dict) or set(profile) != {'schemaVersion', 'freezeId', 'inputDigest', 'canonicalEligible'}
+                or profile['schemaVersion'] != 'example-shutdown-target-profile/1' or profile['canonicalEligible'] is not False
+                or any(not isinstance(profile[key], str) or len(profile[key]) != 64
+                       or any(char not in '0123456789abcdef' for char in profile[key]) for key in ['freezeId', 'inputDigest'])
+                or limits != expected_limits or any(type(limits[key]) is not int for key in expected_limits)
+                or not (config.get('id') == 'collector-dodge' or (config.get('cpuCase') and config.get('id') == 'cpu-example'))):
+            raise RuntimeError('Custodian target diagnostic profile mismatch')
+    elif type(limits.get('startupMs')) is not int or not 0 < limits['startupMs'] <= 15000:
+        raise RuntimeError('Ordinary custodian startup limit exceeds 15000ms')
+    return profile
+
+
 def run(config_path, node, supervisor):
     global ACTIVE
     config = json.loads(pathlib.Path(config_path).read_text())
+    profile = validate_diagnostic_config(config)
     custody = config['custodian']
     limits = config['limits']
     started = datetime.datetime.fromisoformat(config['startedAt'].replace('Z', '+00:00')).timestamp()
@@ -157,6 +175,9 @@ def run(config_path, node, supervisor):
             event('custody-error', message=message)
 
     ACTIVE = dict(config=config, report=report, journal=journal, origin=origin, node=None, previous=None)
+    if profile is not None:
+        report.update(diagnosticProfile=profile, canonicalEligible=False)
+        event('diagnostic-profile', diagnosticProfile=profile, limits=limits)
     interrupted = []
     signal.signal(signal.SIGTERM, lambda number, frame: interrupted.append('SIGTERM'))
     signal.signal(signal.SIGINT, lambda number, frame: interrupted.append('SIGINT'))

@@ -761,6 +761,17 @@ test('late-stop rejection keeps failed originals and cancellation bounded by the
                 assert.equal(rejection[0].startEventId, proof.startEventId);
                 assert.ok(rejection[0].eventId < settled.eventId);
                 assert.ok(receipt.errors.includes('Custody IPC: kernel barrier rejected'));
+                const delivery = receipt.events.filter(
+                    (row) => row.type.startsWith('custody-response-ipc-') && row.requestId === proof.requestId,
+                );
+                assert.equal(delivery.length, 1, 'a rejected kernel barrier never sends a failed ACK to the worker');
+                assert.equal(delivery[0].type, 'custody-response-ipc-skipped');
+                assert.equal(delivery[0].reason, 'kernel-barrier-rejected');
+                assert.equal(delivery[0].custodyEventId, proof.eventId);
+                assert.equal(delivery[0].startEventId, proof.startEventId);
+                assert.equal(delivery[0].workerPID, proof.workerPID);
+                assert.equal(delivery[0].workerStartTicks, proof.workerStartTicks);
+                assert.equal(delivery[0].namespace, proof.namespace);
             }
             const { validateCustodyArtifacts } = require('./example-evidence-supervisor.cjs');
             const artifacts = Object.fromEntries(
@@ -1015,79 +1026,109 @@ test('abort IPC delivery binds the target, drains callbacks and keeps every erro
     assert.notEqual(drift.events.at(-1).childPID, drift.events.at(-1).workerPID);
 });
 
+function workerDeliveryForTest(protocol, options) {
+    const { deliverWorkerAbort, deliverWorkerCustodyResponse } = require('./example-evidence-supervisor.cjs');
+    if (protocol === 'abort') return deliverWorkerAbort(options);
+    const pending = {
+        requestId: 1,
+        runtimeId: 'runtime-1',
+        phase: 'start',
+        workerPID: options.worker.pid,
+        workerStartTicks: options.worker.startTicks,
+        namespace: options.worker.namespace,
+        deadlineMs: options.deadline,
+    };
+    return deliverWorkerCustodyResponse({
+        ...options,
+        pending,
+        token: 'private-token',
+        custodianPID: 99,
+        response: { ...pending, token: 'private-token', custodianPID: 99, eventId: 5, ok: true },
+    });
+}
+
 test(
     'abort IPC real Node exit race skips terminal children before their exit event is consumed',
     { timeout: 10000 },
     async () => {
-        const { spawn } = require('node:child_process');
-        const { once } = require('node:events');
-        const { observeAbortWorker, deliverWorkerAbort } = require('./example-evidence-supervisor.cjs');
-        const child = spawn(process.execPath, ['-e', 'process.send("ready"); setTimeout(() => process.exit(7), 50)'], {
-            detached: true,
-            stdio: ['ignore', 'pipe', 'pipe', 'ipc'],
-        });
-        const closed = once(child, 'close');
-        let exit = null,
-            close = null,
-            sends = 0;
-        child.once('exit', (code, signal) => {
-            exit = { eventId: 100, code, signal };
-        });
-        child.once('close', (code, signal) => {
-            close = { eventId: 101, code, signal };
-        });
-        const raw = fs.readFileSync(`/proc/${child.pid}/stat`, 'utf8');
-        const fields = raw
-            .slice(raw.lastIndexOf(')') + 2)
-            .trim()
-            .split(' ');
-        const tuple = {
-            pid: child.pid,
-            startTicks: fields[19],
-            namespace: fs.readlinkSync(`/proc/${child.pid}/ns/pid`),
-            ppid: Number(fields[1]),
-            pgrp: Number(fields[2]),
-        };
-        const worker = { ...tuple, initial: { ...tuple } };
-        const originalSend = child.send.bind(child);
-        child.send = (...args) => {
-            sends++;
-            return originalSend(...args);
-        };
-        const events = [],
-            errors = [];
-        try {
-            await once(child, 'message');
-            const deadline = performance.now() + 2000;
-            while (observeAbortWorker(tuple).status !== 'TERMINAL' && performance.now() < deadline)
-                Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1);
-            assert.equal(exit, null, 'same ChildProcess exit callback has deliberately not been consumed yet');
-            assert.equal(observeAbortWorker(tuple).status, 'TERMINAL');
-            const delivery = deliverWorkerAbort({
-                child,
-                worker,
-                abort: { eventId: 1, reason: 'CPU root failure' },
-                event: (type, data) => {
-                    const row = { type, ...data, eventId: events.length + 2 };
-                    events.push(row);
-                    return row;
+        for (const protocol of ['abort', 'custody']) {
+            const { spawn } = require('node:child_process');
+            const { once } = require('node:events');
+            const { observeAbortWorker } = require('./example-evidence-supervisor.cjs');
+            const child = spawn(
+                process.execPath,
+                ['-e', 'process.send("ready"); setTimeout(() => process.exit(7), 50)'],
+                {
+                    detached: true,
+                    stdio: ['ignore', 'pipe', 'pipe', 'ipc'],
                 },
-                fail: (reason) => errors.push(reason),
-                closure: () => ({ exit, close }),
-                now: () => performance.now(),
-                deadline,
+            );
+            const closed = once(child, 'close');
+            let exit = null,
+                close = null,
+                sends = 0;
+            child.once('exit', (code, signal) => {
+                exit = { eventId: 100, code, signal };
             });
-            await delivery.drained;
-            assert.equal(sends, 0);
-            assert.equal(events[0].reason, 'worker-exited');
-            assert.deepEqual(errors, []);
-            assert.deepEqual(await closed, [7, null]);
-            assert.equal(exit.code, 7);
-            assert.equal(close.code, 7);
-            assert.equal(fs.existsSync(`/proc/${child.pid}`), false);
-        } finally {
-            if (!close) child.kill('SIGKILL');
-            await closed;
+            child.once('close', (code, signal) => {
+                close = { eventId: 101, code, signal };
+            });
+            const raw = fs.readFileSync(`/proc/${child.pid}/stat`, 'utf8');
+            const fields = raw
+                .slice(raw.lastIndexOf(')') + 2)
+                .trim()
+                .split(' ');
+            const tuple = {
+                pid: child.pid,
+                startTicks: fields[19],
+                namespace: fs.readlinkSync(`/proc/${child.pid}/ns/pid`),
+                ppid: Number(fields[1]),
+                pgrp: Number(fields[2]),
+            };
+            const worker = { ...tuple, initial: { ...tuple } };
+            const originalSend = child.send.bind(child);
+            child.send = (...args) => {
+                sends++;
+                return originalSend(...args);
+            };
+            const events = [],
+                errors = [];
+            try {
+                await once(child, 'message');
+                const deadline = performance.now() + 2000;
+                while (observeAbortWorker(tuple).status !== 'TERMINAL' && performance.now() < deadline)
+                    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1);
+                assert.equal(exit, null, 'same ChildProcess exit callback has deliberately not been consumed yet');
+                assert.equal(observeAbortWorker(tuple).status, 'TERMINAL');
+                const delivery = workerDeliveryForTest(protocol, {
+                    child,
+                    worker,
+                    abort: { eventId: 1, reason: 'CPU root failure' },
+                    event: (type, data) => {
+                        const row = { type, ...data, eventId: events.length + 2 };
+                        events.push(row);
+                        return row;
+                    },
+                    fail: (reason) => errors.push(reason),
+                    closure: () => ({ exit, close }),
+                    now: () => performance.now(),
+                    deadline,
+                });
+                await delivery.drained;
+                assert.equal(sends, 0);
+                assert.equal(events[0].reason, 'worker-exited');
+                assert.deepEqual(
+                    errors,
+                    protocol === 'abort' ? [] : ['Custody IPC: collector disconnected before response'],
+                );
+                assert.deepEqual(await closed, [7, null]);
+                assert.equal(exit.code, 7);
+                assert.equal(close.code, 7);
+                assert.equal(fs.existsSync(`/proc/${child.pid}`), false);
+            } finally {
+                if (!close) child.kill('SIGKILL');
+                await closed;
+            }
         }
     },
 );
@@ -1096,84 +1137,93 @@ test(
     'abort IPC real closed peer reports asynchronous EPIPE while its worker is still alive',
     { timeout: 10000 },
     async () => {
-        const { spawn } = require('node:child_process');
-        const { once } = require('node:events');
-        const { observeAbortWorker, deliverWorkerAbort } = require('./example-evidence-supervisor.cjs');
-        const directory = fs.mkdtempSync(path.join(base, 'abort-peer-'));
-        const disconnected = path.join(directory, 'disconnected'),
-            release = path.join(directory, 'release');
-        const child = spawn(
-            process.execPath,
-            [
-                '-e',
-                'const fs = require("fs"); process.send("ready", () => { process.disconnect(); fs.writeFileSync(process.argv[1], "closed"); setInterval(() => { if(fs.existsSync(process.argv[2])) process.exit(7); }, 5); setTimeout(() => process.exit(99), 4000); });',
-                disconnected,
-                release,
-            ],
-            { detached: true, stdio: ['ignore', 'pipe', 'pipe', 'ipc'] },
-        );
-        const closed = once(child, 'close');
-        let exit = null,
-            close = null;
-        child.once('exit', (code, signal) => {
-            exit = { eventId: 100, code, signal };
-        });
-        child.once('close', (code, signal) => {
-            close = { eventId: 101, code, signal };
-        });
-        const raw = fs.readFileSync(`/proc/${child.pid}/stat`, 'utf8');
-        const fields = raw
-            .slice(raw.lastIndexOf(')') + 2)
-            .trim()
-            .split(' ');
-        const tuple = {
-            pid: child.pid,
-            startTicks: fields[19],
-            namespace: fs.readlinkSync(`/proc/${child.pid}/ns/pid`),
-            ppid: Number(fields[1]),
-            pgrp: Number(fields[2]),
-        };
-        const events = [],
-            errors = [];
-        try {
-            await once(child, 'message');
-            // The peer confirms its disconnect but remains alive until the result is inspected.
-            const deadline = performance.now() + 2000;
-            while (!fs.existsSync(disconnected) && performance.now() < deadline)
-                Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1);
-            assert.equal(fs.existsSync(disconnected), true);
-            assert.equal(child.connected, true);
-            assert.equal(observeAbortWorker(tuple).status, 'LIVE');
-            const delivery = deliverWorkerAbort({
-                child,
-                worker: { ...tuple, initial: { ...tuple } },
-                abort: { eventId: 1, reason: 'CPU root failure' },
-                event: (type, data) => {
-                    const row = { type, ...data, eventId: events.length + 2 };
-                    events.push(row);
-                    return row;
-                },
-                fail: (reason) => errors.push(reason),
-                closure: () => ({ exit, close }),
-                now: () => performance.now(),
-                deadline: performance.now() + 2000,
-            });
-            await delivery.drained;
-            assert.deepEqual(
-                events.map((e) => e.type),
-                ['abort-ipc-send', 'abort-ipc-result'],
+        for (const protocol of ['abort', 'custody']) {
+            const { spawn } = require('node:child_process');
+            const { once } = require('node:events');
+            const { observeAbortWorker } = require('./example-evidence-supervisor.cjs');
+            const directory = fs.mkdtempSync(path.join(base, 'abort-peer-'));
+            const disconnected = path.join(directory, 'disconnected'),
+                release = path.join(directory, 'release');
+            const child = spawn(
+                process.execPath,
+                [
+                    '-e',
+                    'const fs = require("fs"); process.send("ready", () => { process.disconnect(); fs.writeFileSync(process.argv[1], "closed"); setInterval(() => { if(fs.existsSync(process.argv[2])) process.exit(7); }, 5); setTimeout(() => process.exit(99), 4000); });',
+                    disconnected,
+                    release,
+                ],
+                { detached: true, stdio: ['ignore', 'pipe', 'pipe', 'ipc'] },
             );
-            assert.equal(events[1].outcome, 'callback');
-            assert.equal(events[1].errorCode, 'EPIPE');
-            assert.equal(events[1].workerExitEventId, null);
-            assert.equal(events[1].observation.status, 'LIVE');
-            assert.deepEqual(errors, ['abort IPC send failed: Error: write EPIPE']);
-            fs.writeFileSync(release, 'release', { flag: 'wx' });
-            assert.deepEqual(await closed, [7, null]);
-            assert.equal(fs.existsSync(`/proc/${child.pid}`), false);
-        } finally {
-            if (!close) child.kill('SIGKILL');
-            await closed;
+            const closed = once(child, 'close');
+            let exit = null,
+                close = null;
+            child.once('exit', (code, signal) => {
+                exit = { eventId: 100, code, signal };
+            });
+            child.once('close', (code, signal) => {
+                close = { eventId: 101, code, signal };
+            });
+            const raw = fs.readFileSync(`/proc/${child.pid}/stat`, 'utf8');
+            const fields = raw
+                .slice(raw.lastIndexOf(')') + 2)
+                .trim()
+                .split(' ');
+            const tuple = {
+                pid: child.pid,
+                startTicks: fields[19],
+                namespace: fs.readlinkSync(`/proc/${child.pid}/ns/pid`),
+                ppid: Number(fields[1]),
+                pgrp: Number(fields[2]),
+            };
+            const events = [],
+                errors = [];
+            try {
+                await once(child, 'message');
+                // The peer confirms its disconnect but remains alive until the result is inspected.
+                const deadline = performance.now() + 2000;
+                while (!fs.existsSync(disconnected) && performance.now() < deadline)
+                    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1);
+                assert.equal(fs.existsSync(disconnected), true);
+                assert.equal(child.connected, true);
+                assert.equal(observeAbortWorker(tuple).status, 'LIVE');
+                const delivery = workerDeliveryForTest(protocol, {
+                    child,
+                    worker: { ...tuple, initial: { ...tuple } },
+                    abort: { eventId: 1, reason: 'CPU root failure' },
+                    event: (type, data) => {
+                        const row = { type, ...data, eventId: events.length + 2 };
+                        events.push(row);
+                        return row;
+                    },
+                    fail: (reason) => errors.push(reason),
+                    closure: () => ({ exit, close }),
+                    now: () => performance.now(),
+                    deadline: performance.now() + 2000,
+                });
+                await delivery.drained;
+                assert.deepEqual(
+                    events.map((e) => e.type),
+                    protocol === 'abort'
+                        ? ['abort-ipc-send', 'abort-ipc-result']
+                        : ['custody-response-ipc-send', 'custody-response-ipc-result'],
+                );
+                assert.equal(events[1].outcome, 'callback');
+                assert.equal(events[1].errorCode, 'EPIPE');
+                assert.equal(events[1].workerExitEventId, null);
+                assert.equal(events[1].observation.status, 'LIVE');
+                assert.deepEqual(
+                    errors,
+                    protocol === 'abort'
+                        ? ['abort IPC send failed: Error: write EPIPE']
+                        : ['Custody IPC: worker response delivery: write EPIPE'],
+                );
+                fs.writeFileSync(release, 'release', { flag: 'wx' });
+                assert.deepEqual(await closed, [7, null]);
+                assert.equal(fs.existsSync(`/proc/${child.pid}`), false);
+            } finally {
+                if (!close) child.kill('SIGKILL');
+                await closed;
+            }
         }
     },
 );
@@ -1191,7 +1241,7 @@ test('abort IPC finish keeps custody and delivery drains interruptible at the or
     );
     for (const outcome of ['final-deadline', 'SIGTERM', 'SIGINT']) {
         const order = [];
-        let resolveCustody, resolveAbort;
+        let resolveCustody, resolveAbort, resolveResponse;
         const context = {
             finished: false,
             finishing: false,
@@ -1204,6 +1254,17 @@ test('abort IPC finish keeps custody and delivery drains interruptible at the or
                     resolveCustody = done;
                 }),
             },
+            custodyDeliveries: [
+                {
+                    drained: new Promise((done) => {
+                        resolveResponse = done;
+                    }),
+                    cancel: (value) => {
+                        order.push(`response:${value}`);
+                        resolveResponse();
+                    },
+                },
+            ],
             abortDelivery: {
                 drained: new Promise((done) => {
                     resolveAbort = done;
@@ -1238,7 +1299,460 @@ test('abort IPC finish keeps custody and delivery drains interruptible at the or
         await checked;
         assert.ok(order.includes(`custody:${outcome}`));
         assert.ok(order.includes(`abort:${outcome}`));
+        assert.ok(order.includes(`response:${outcome}`));
         assert.equal(order.at(-1), 'finalizing');
         assert.ok(order.indexOf(`abort:${outcome}`) < order.indexOf('finalizing'));
+    }
+});
+
+function custodyDeliveryHarness(options = {}) {
+    const { deliverWorkerCustodyResponse } = require('./example-evidence-supervisor.cjs');
+    const events = [],
+        errors = ['Custody IPC: kernel barrier rejected'];
+    let sends = 0,
+        callback,
+        timer,
+        time = options.time ?? 10;
+    const worker = { ...abortWorkerTuple, initial: { ...abortWorkerTuple }, ...options.worker };
+    const child = {
+        pid: options.childPID ?? worker.pid,
+        connected: options.connected ?? true,
+        send(message, done) {
+            sends++;
+            callback = done;
+            assert.ok(message.exampleCustodyResponse);
+            if (options.syncReply) done(null);
+            if (options.throwing) throw options.throwing;
+        },
+    };
+    const pending = options.late
+        ? null
+        : {
+              requestId: 2,
+              runtimeId: 'runtime-1',
+              phase: 'stop',
+              workerPID: abortWorkerTuple.pid,
+              workerStartTicks: abortWorkerTuple.startTicks,
+              namespace: abortWorkerTuple.namespace,
+              deadlineMs: 30,
+          };
+    const acceptedStart = { ...pending, requestId: 1, phase: 'start', eventId: 5 };
+    const response = {
+        ...pending,
+        token: 'private-token',
+        custodianPID: 99,
+        eventId: 9,
+        ok: false,
+        rejection: 'worker-exited',
+        startEventId: 5,
+        ...options.response,
+    };
+    const event = (type, data) => {
+        const row = { type, ...data, eventId: events.length + 1 };
+        events.push(row);
+        return row;
+    };
+    const delivery = deliverWorkerCustodyResponse({
+        child,
+        worker,
+        pending,
+        response,
+        acceptedStart,
+        token: 'private-token',
+        custodianPID: 99,
+        event,
+        fail: (reason) => errors.push(reason),
+        closure: () => worker,
+        observe: () =>
+            options.unknown ? { status: 'UNKNOWN', before: null, after: null } : abortObservation(options.state || 'R'),
+        now: () => time,
+        schedule: (fn, delay) => {
+            timer = { fn, delay };
+            return 1;
+        },
+        unschedule() {},
+    });
+    return {
+        events,
+        errors,
+        delivery,
+        child,
+        worker,
+        pending,
+        response,
+        get sends() {
+            return sends;
+        },
+        get delay() {
+            return timer?.delay;
+        },
+        reply: (error) => callback(error),
+        expire: () => timer.fn(),
+        setTime: (value) => {
+            time = value;
+        },
+    };
+}
+
+test('custody response IPC skips only bound rejection or terminal workers and retains every failure', async () => {
+    const epipe = () => Object.assign(Error('write EPIPE'), { code: 'EPIPE' });
+    // The previous connected-only forwarding always sent this failed ACK, even after the
+    // kernel had rejected the same worker. Keep a deterministic reproduction of that gap.
+    let oldSends = 0,
+        oldError;
+    const oldChild = {
+        connected: true,
+        send(message, done) {
+            oldSends++;
+            done(epipe());
+        },
+    };
+    if (oldChild.connected)
+        oldChild.send({ exampleCustodyResponse: { ok: false } }, (error) => {
+            oldError = error;
+        });
+    assert.equal(oldSends, 1);
+    assert.equal(oldError.code, 'EPIPE');
+    for (const rejection of ['worker-absent', 'worker-exited', 'worker-identity-mismatch']) {
+        const h = custodyDeliveryHarness({ response: { rejection } });
+        await h.delivery.drained;
+        assert.equal(h.sends, 0);
+        assert.equal(h.delay, undefined);
+        assert.deepEqual(h.errors, ['Custody IPC: kernel barrier rejected']);
+        assert.equal(h.events[0].type, 'custody-response-ipc-skipped');
+        assert.equal(h.events[0].reason, 'kernel-barrier-rejected');
+        for (const key of ['requestId', 'runtimeId', 'phase']) assert.equal(h.events[0][key], h.pending[key]);
+        assert.equal(h.events[0].custodyEventId, 9);
+        assert.equal(h.events[0].startEventId, 5);
+        assert.equal(h.events[0].workerPID, abortWorkerTuple.pid);
+        assert.equal(JSON.stringify(h.events).includes('private-token'), false);
+    }
+    for (const options of [
+        { late: true },
+        { childPID: 999 },
+        ...[
+            { token: 'wrong' },
+            { requestId: 3 },
+            { runtimeId: 'old' },
+            { phase: 'start' },
+            { workerPID: 999 },
+            { workerStartTicks: '999' },
+            { namespace: 'pid:[9]' },
+            { startEventId: 1 },
+            { rejection: 'unknown' },
+        ].map((response) => ({ response })),
+    ]) {
+        const h = custodyDeliveryHarness(options);
+        await h.delivery.drained;
+        assert.equal(h.sends, 0);
+        assert.equal(h.events[0].reason, 'invalid-binding');
+        assert.ok(h.errors.includes('Custody IPC: worker response delivery: invalid binding'));
+    }
+    const response = { ok: true, rejection: undefined };
+    for (const options of [
+        { state: 'Z' },
+        { state: 'X' },
+        { worker: { exit: { eventId: 20 } } },
+        { worker: { close: { eventId: 21 } } },
+        { connected: false },
+    ]) {
+        const h = custodyDeliveryHarness({ response, ...options });
+        await h.delivery.drained;
+        assert.equal(h.sends, 0);
+        assert.ok(h.errors.includes('Custody IPC: collector disconnected before response'));
+    }
+    for (const time of [30, 31]) {
+        const h = custodyDeliveryHarness({ response, time });
+        await h.delivery.drained;
+        assert.equal(h.sends, 0);
+        assert.equal(h.delay, undefined);
+        assert.equal(h.events[0].reason, 'deadline-expired');
+    }
+    for (const options of [{}, { unknown: true }, { response: { ok: false, rejection: undefined } }]) {
+        for (const code of ['EPIPE', 'EIO', 'ERR_IPC_CHANNEL_CLOSED']) {
+            const h = custodyDeliveryHarness({ response, ...options });
+            assert.equal(h.sends, 1);
+            assert.equal(h.delay, 20);
+            h.reply(Object.assign(Error(code), { code }));
+            await h.delivery.drained;
+            assert.ok(h.errors.includes(`Custody IPC: worker response delivery: ${code}`));
+            assert.equal(h.events[1].failed, true);
+            assert.equal(h.events[1].errorCode, code === 'EIO' ? 'UNKNOWN' : code);
+            h.reply(epipe());
+            assert.ok(h.errors.includes('Custody IPC: worker response delivery result after settlement'));
+            h.delivery.seal();
+            const saved = JSON.stringify(h.events);
+            h.reply(epipe());
+            assert.equal(JSON.stringify(h.events), saved);
+        }
+    }
+    for (const syncReply of [false, true]) {
+        const h = custodyDeliveryHarness({ response, syncReply, throwing: epipe() });
+        await h.delivery.drained;
+        assert.ok(h.errors.includes('Custody IPC: worker response delivery: write EPIPE'));
+    }
+    for (const outcome of ['deadline', 'SIGTERM', 'SIGINT', 'final-deadline']) {
+        const h = custodyDeliveryHarness({ response });
+        if (outcome === 'deadline') h.expire();
+        else h.delivery.cancel(outcome);
+        await h.delivery.drained;
+        assert.ok(h.errors.includes(`Custody IPC: worker response delivery did not settle: ${outcome}`));
+        h.delivery.seal();
+        const saved = JSON.stringify(h.events);
+        h.reply(epipe());
+        assert.equal(JSON.stringify(h.events), saved);
+    }
+    const late = custodyDeliveryHarness({ response });
+    late.setTime(30);
+    late.reply(null);
+    await late.delivery.drained;
+    assert.equal(late.events[1].outcome, 'deadline');
+});
+
+test('custody response IPC registers delivery before releasing the source-bound finish drain', async () => {
+    const source = fs.readFileSync(path.join(__dirname, 'example-evidence-supervisor.cjs'), 'utf8');
+    const handler = source.slice(
+        source.indexOf("            if (response.ok !== true) custodyFailure('kernel barrier rejected');"),
+        source.indexOf('\n        }\n    });\n    function relayCustody'),
+    );
+    const order = [],
+        custodyDeliveries = [];
+    let resume;
+    const waiting = new Promise((done) => {
+        resume = done;
+    }).then(() => {
+        assert.equal(custodyDeliveries.length, 1);
+        order.push('finish-resumed');
+    });
+    require('node:vm').runInNewContext(handler, {
+        response: { ok: false, rejection: 'worker-exited' },
+        pending: {},
+        child: {},
+        receipt: { worker: {} },
+        custodyAcceptedStart: {},
+        custodyToken: 'private-token',
+        process: { ppid: 99 },
+        custodyDeliveries,
+        custodyFailure: () => order.push('root-fail'),
+        deliverWorkerCustodyResponse: () => {
+            order.push('delivery');
+            return {};
+        },
+        event() {},
+        requestAbort() {},
+        performance: { now: () => 10 },
+        origin: 0,
+        timer() {},
+        settleCustody: () => {
+            assert.equal(custodyDeliveries.length, 1);
+            order.push('settled');
+            resume();
+        },
+    });
+    await waiting;
+    assert.deepEqual(order, ['root-fail', 'delivery', 'settled', 'finish-resumed']);
+    assert.equal((source.match(/child\.send\(/g) || []).length, 1, 'both fixed protocols share one send site');
+});
+
+test('target diagnostic profile is exact, fixed, opt-in and unavailable to the ordinary CLI', async () => {
+    const { spawnSync } = require('node:child_process');
+    const {
+        DEFAULT_LIMITS,
+        TARGET_DIAGNOSTIC_LIMITS,
+        createTargetDiagnosticProfile,
+        validateTargetDiagnosticProfile,
+    } = require('./example-evidence-supervisor.cjs');
+    const profile = createTargetDiagnosticProfile({ freezeId: 'a'.repeat(64), inputDigest: 'b'.repeat(64) });
+    assert.equal(validateTargetDiagnosticProfile(profile), true);
+    assert.deepEqual(TARGET_DIAGNOSTIC_LIMITS, { ...DEFAULT_LIMITS, startupMs: 30000 });
+    assert.throws(() => limitsOf(TARGET_DIAGNOSTIC_LIMITS), /1\.\.15000/);
+    assert.throws(() =>
+        createTargetDiagnosticProfile({ freezeId: 'a'.repeat(64), inputDigest: 'b'.repeat(64), extra: 1 }),
+    );
+    const invalid = [
+        null,
+        [],
+        {},
+        ...Object.keys(profile).map((key) => {
+            const p = { ...profile };
+            delete p[key];
+            return p;
+        }),
+        { ...profile, extra: 1 },
+        { ...profile, canonicalEligible: true },
+        { ...profile, freezeId: 'A'.repeat(64) },
+        { ...profile, inputDigest: 'bad' },
+        { ...profile, schemaVersion: 'other' },
+    ];
+    for (const diagnosticProfile of invalid) {
+        assert.equal(validateTargetDiagnosticProfile(diagnosticProfile), false);
+        await assert.rejects(
+            superviseAttempt({ id: 'cpu-example', cpuCase: 'positive', diagnosticProfile }),
+            /diagnostic profile/,
+        );
+    }
+    for (const key of Object.keys(TARGET_DIAGNOSTIC_LIMITS)) {
+        const limits = { ...TARGET_DIAGNOSTIC_LIMITS, [key]: TARGET_DIAGNOSTIC_LIMITS[key] - 1 };
+        await assert.rejects(
+            superviseAttempt({ id: 'cpu-example', cpuCase: 'positive', diagnosticProfile: profile, limits }),
+            /fixed 30000ms/,
+        );
+    }
+    await assert.rejects(
+        superviseAttempt({
+            id: 'cpu-example',
+            cpuCase: 'positive',
+            diagnosticProfile: profile,
+            limits: { ...TARGET_DIAGNOSTIC_LIMITS, extra: undefined },
+        }),
+        /fixed 30000ms/,
+    );
+    await assert.rejects(
+        superviseAttempt({ id: 'unrelated-example', cpuCase: 'positive', diagnosticProfile: profile }),
+        /target/,
+    );
+    const cli = spawnSync(
+        process.execPath,
+        [
+            path.join(__dirname, 'example-evidence-supervisor.cjs'),
+            `--limits=${JSON.stringify(TARGET_DIAGNOSTIC_LIMITS)}`,
+        ],
+        { encoding: 'utf8', timeout: 5000 },
+    );
+    assert.equal(cli.status, 1);
+    assert.match(cli.stderr, /1\.\.15000/);
+    const script = `import runpy,json,sys
+m=runpy.run_path(sys.argv[1]); validate=m['validate_diagnostic_config']; data=json.loads(sys.argv[2])
+assert validate({'limits':data['default']}) is None
+valid={'id':'collector-dodge','limits':data['limits'],'diagnosticProfile':data['profile']}
+assert validate(valid)==data['profile']
+for profile in data['invalid']:
+ try: validate(dict(valid,diagnosticProfile=profile))
+ except (RuntimeError,TypeError): pass
+ else: raise AssertionError('invalid profile accepted')
+for key in data['limits']:
+ try: validate(dict(valid,limits=dict(data['limits'],**{key:data['limits'][key]-1})))
+ except RuntimeError: pass
+ else: raise AssertionError('changed limits accepted')
+try: validate({'limits':data['limits']})
+except RuntimeError: pass
+else: raise AssertionError('ordinary 30s accepted')
+print('Python diagnostic profile controls passed')`;
+    const python = spawnSync(
+        'python3',
+        [
+            '-B',
+            '-c',
+            script,
+            path.join(__dirname, 'example-evidence-custodian.py'),
+            JSON.stringify({ default: DEFAULT_LIMITS, limits: TARGET_DIAGNOSTIC_LIMITS, profile, invalid }),
+        ],
+        { encoding: 'utf8', timeout: 5000 },
+    );
+    console.log(python.stdout);
+    assert.equal(python.status, 0, python.stderr);
+});
+
+test('target diagnostic profile remains bound to every original and never becomes production evidence', async () => {
+    const {
+        DEFAULT_LIMITS,
+        TARGET_DIAGNOSTIC_LIMITS,
+        createTargetDiagnosticProfile,
+        validateCustodyArtifacts,
+    } = require('./example-evidence-supervisor.cjs');
+    const profile = createTargetDiagnosticProfile({ freezeId: 'a'.repeat(64), inputDigest: 'b'.repeat(64) });
+    for (const cpuCase of ['positive', 'browser-nonzero']) {
+        const dir = path.join(base, `target-profile-${cpuCase}`);
+        const receipt = await superviseAttempt({
+            repo: ROOT,
+            id: 'cpu-example',
+            cpuCase,
+            diagnosticProfile: profile,
+            limits: TARGET_DIAGNOSTIC_LIMITS,
+            out: path.join(dir, 'collector.json'),
+            artifactDir: path.join(dir, 'artifacts'),
+        });
+        const artifacts = Object.fromEntries(
+            Object.entries(receipt.custody.artifacts).map(([role, ref]) => {
+                const bytes = fs.readFileSync(ref.path);
+                return [role, ['raw', 'nodeReceipt'].includes(role) ? JSON.parse(bytes) : bytes];
+            }),
+        );
+        const options = { allowCpuDummy: true, diagnosticProfile: profile };
+        assert.equal(receipt.ok, cpuCase === 'positive', JSON.stringify(receipt.errors));
+        assert.equal(receipt.canonicalEligible, false);
+        assert.deepEqual(receipt.diagnosticProfile, profile);
+        assert.equal(receipt.forced, false);
+        assert.equal(receipt.timedOut, false);
+        assert.equal(receipt.noOwnedProcesses, true);
+        assert.equal(receipt.custody.observation.final.result, 'ECHILD');
+        assert.equal(validateCustodyArtifacts(receipt, artifacts, options).ok, true);
+        assert.equal(validateCustodyArtifacts(receipt, artifacts).ok, false);
+        assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true }).ok, false);
+        assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true, requireSuccess: false }).ok, false);
+        assert.equal(validateAttemptReceipt(receipt, options).ok, cpuCase === 'positive');
+        assert.deepEqual(
+            JSON.parse(fs.readFileSync(path.join(dir, 'custodian-request.json'))).diagnosticProfile,
+            profile,
+        );
+        if (cpuCase !== 'positive') continue;
+        const checks = [
+            (r) => {
+                delete r.diagnosticProfile;
+            },
+            (r) => {
+                r.diagnosticProfile.freezeId = 'c'.repeat(64);
+            },
+            (r) => {
+                r.diagnosticProfile.extra = 1;
+            },
+            (r) => {
+                r.canonicalEligible = true;
+            },
+            (r) => {
+                delete r.events.find((e) => e.type === 'observer-start').diagnosticProfile;
+            },
+            (r) => {
+                r.events.find((e) => e.type === 'observer-start').limits.startupMs = 15000;
+            },
+            (r) => {
+                r.custody.observation.diagnosticProfile.inputDigest = 'd'.repeat(64);
+            },
+            (r) => {
+                r.custody.observation.events = r.custody.observation.events.filter(
+                    (e) => e.type !== 'diagnostic-profile',
+                );
+            },
+            (r) => {
+                r.custody.observation.events.push({
+                    ...r.custody.observation.events.find((e) => e.type === 'diagnostic-profile'),
+                });
+            },
+            (r) => {
+                r.custody.observation.events.find((e) => e.type === 'diagnostic-profile').limits.finalMs++;
+            },
+            (r) => {
+                r.limits = { ...DEFAULT_LIMITS };
+            },
+        ];
+        for (const [index, change] of checks.entries()) {
+            const r = structuredClone(receipt);
+            change(r);
+            assert.equal(validateAttemptReceipt(r, options).ok, false, `profile mutation ${index}`);
+            assert.equal(validateCustodyArtifacts(r, artifacts, options).ok, false, `original binding ${index}`);
+        }
+        for (const where of ['raw', 'nodeReceipt']) {
+            const a = structuredClone(artifacts);
+            delete a[where].diagnosticProfile;
+            assert.equal(validateCustodyArtifacts(receipt, a, options).ok, false);
+        }
+        const stripped = structuredClone(receipt);
+        delete stripped.diagnosticProfile;
+        delete stripped.canonicalEligible;
+        assert.equal(validateAttemptReceipt(stripped, { allowCpuDummy: true }).ok, false);
+        assert.equal(validateCustodyArtifacts(stripped, artifacts).ok, false);
+        stripped.limits = { ...DEFAULT_LIMITS };
+        assert.equal(validateAttemptReceipt(stripped, { allowCpuDummy: true }).ok, false);
+        assert.equal(validateCustodyArtifacts(stripped, artifacts).ok, false);
     }
 });

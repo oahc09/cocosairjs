@@ -14,6 +14,396 @@ const {
     BOUNDS,
 } = require('./example-evidence-shutdown-trace.cjs');
 
+// Pure synthetic envelope/flow fixtures only. These never launch a browser or become evidence.
+function targetDiagnosticFixture() {
+    const fs = require('node:fs'),
+        os = require('node:os'),
+        path = require('node:path');
+    const protocol = require('./example-evidence-campaign.cjs');
+    const fixture = require('./example-evidence-campaign.cpu-fixture.cjs');
+    const supervisor = require('./example-evidence-supervisor.cjs');
+    const runner = require('./run-example-shutdown-target.cjs');
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'shutdown-target-synthetic-'));
+    const browser = path.join(directory, 'synthetic-browser');
+    fs.writeFileSync(browser, 'synthetic bytes, never executable');
+    const runtimeIdentity = {
+        ...structuredClone(fixture.identity),
+        executablePath: browser,
+        executableVersion: 'Chromium 151.0.7922.34',
+        playwrightVersion: '1.62.1',
+        executableSha256: protocol.fileDigest(browser).sha256,
+        host: { executablePath: browser },
+    };
+    const inputs = [
+        { path: 'tools/verify/example-evidence-custodian.py', bytes: 1, sha256: runtimeIdentity.custody.helper.sha256 },
+        { path: runner.TOOL, ...protocol.fileDigest(path.join(__dirname, 'run-example-shutdown-target.cjs')) },
+    ];
+    const freeze = {
+        schema: protocol.SCHEMAS.freeze,
+        mode: protocol.MODE,
+        createdAt: new Date().toISOString(),
+        runtimeIdentity,
+        limits: { ...supervisor.DEFAULT_LIMITS },
+        inputs,
+        inputDigest: protocol.objectDigest(inputs),
+        scope: [
+            { id: 'collector-dodge', shell: false, modes: [{ id: 'primary', viewport: { width: 480, height: 360 } }] },
+        ],
+    };
+    const freezePath = path.join(directory, 'freeze.json');
+    const writeFreeze = () => {
+        delete freeze.freezeId;
+        freeze.freezeId = protocol.objectDigest(freeze);
+        fs.writeFileSync(freezePath, JSON.stringify(freeze));
+    };
+    writeFreeze();
+    const options = { freezePath, out: path.join(directory, 'target-diagnostic'), executeAuthorized: true };
+    const began = Date.now() - 10000;
+    const state = { now: began + 10000, assertions: 0, spawns: 0, runtimeCalls: 0, postChange: null };
+    const dependencies = {
+        invocationStarted: began,
+        now: () => state.now,
+        collectRuntimeIdentity: () => {
+            state.runtimeCalls++;
+            const value = structuredClone(freeze.runtimeIdentity);
+            if (state.postChange === 'runtime' && state.runtimeCalls > 1) value.launchArgs.push('--changed');
+            return value;
+        },
+        assertFrozenInputs: (baseline, { runtimeIdentity: actual }) => {
+            state.assertions++;
+            assert.deepEqual(actual, baseline.runtimeIdentity);
+            if (state.postChange === 'inputs' && state.assertions > 1) throw Error('synthetic changed input');
+            if (state.postChange === 'preflight') state.now = began + 30000;
+            return baseline.inputDigest;
+        },
+        superviseAttempt: async (call) => {
+            state.spawns++;
+            assert.equal(call.startedAt, began);
+            assert.deepEqual(call.limits, supervisor.TARGET_DIAGNOSTIC_LIMITS);
+            const receipt = fixture.makeReceipt(
+                freeze.scope[0],
+                { ...freeze, limits: call.limits },
+                {
+                    report: call.out,
+                    artifactDir: call.artifactDir,
+                    receipt: path.join(options.out, 'attempt-receipt.json'),
+                    stdout: path.join(options.out, 'worker.stdout.log'),
+                    stderr: path.join(options.out, 'worker.stderr.log'),
+                },
+                false,
+                new Date(began).toISOString(),
+            );
+            receipt.cpuDummy = false;
+            receipt.cpuCase = null;
+            receipt.diagnosticProfile = call.diagnosticProfile;
+            receipt.canonicalEligible = false;
+            const observer = receipt.events.find((event) => event.type === 'observer-start');
+            observer.diagnosticProfile = call.diagnosticProfile;
+            observer.limits = call.limits;
+            const raw = receipt.custody.observation;
+            raw.diagnosticProfile = call.diagnosticProfile;
+            raw.canonicalEligible = false;
+            raw.events.unshift({
+                type: 'diagnostic-profile',
+                elapsedMs: 0,
+                utc: receipt.startedAt,
+                diagnosticProfile: call.diagnosticProfile,
+                limits: call.limits,
+            });
+            raw.events.forEach((event, index) => {
+                event.eventId = index + 1;
+            });
+            const pending = JSON.parse(fs.readFileSync(receipt.custody.artifacts.nodeReceipt.path));
+            for (const key of ['cpuDummy', 'cpuCase', 'diagnosticProfile', 'canonicalEligible', 'events'])
+                pending[key] = receipt[key];
+            const bytes = {
+                raw: Buffer.from(JSON.stringify(raw)),
+                nodeReceipt: Buffer.from(JSON.stringify(pending)),
+                journal: Buffer.from(raw.events.map((event) => JSON.stringify(event)).join('\n') + '\n'),
+                stdout: Buffer.alloc(0),
+                stderr: Buffer.alloc(0),
+            };
+            for (const [role, value] of Object.entries(bytes)) {
+                const file = receipt.custody.artifacts[role].path;
+                fs.writeFileSync(file, value);
+                receipt.custody.artifacts[role] = { path: file, bytes: value.length, sha256: protocol.sha256(value) };
+            }
+            fs.writeFileSync(
+                call.out,
+                JSON.stringify({
+                    completed: false,
+                    partial: true,
+                    results: [{ id: 'collector-dodge', result: 'PASS' }],
+                }),
+            );
+            fs.writeFileSync(receipt.output.receipt, JSON.stringify(receipt));
+            return receipt;
+        },
+    };
+    return { fs, path, protocol, runner, supervisor, directory, freeze, writeFreeze, options, state, dependencies };
+}
+
+test('independent target on/off share only the fixed diagnostic startup profile', () => {
+    const f = targetDiagnosticFixture();
+    try {
+        for (const trace of ['on', 'off']) {
+            const command = buildCommand({ mode: 'target', trace, freeze: f.options.freezePath, out: f.directory });
+            assert.equal(command.role, 'independent-shutdown-target');
+            assert.ok(command.args[0].endsWith('/run-example-shutdown-target.cjs'));
+            assert.deepEqual(command.limits, { ...f.supervisor.DEFAULT_LIMITS, startupMs: 30000 });
+            assert.equal(command.diagnosticProfile.freezeId, f.freeze.freezeId);
+            assert.equal(command.diagnosticProfile.inputDigest, f.freeze.inputDigest);
+            assert.equal(command.diagnosticProfile.canonicalEligible, false);
+            assert.equal(
+                command.args.some((arg) => /--limits|--id|attempts|segments/.test(arg)),
+                false,
+            );
+            assert.throws(
+                () =>
+                    buildCommand({
+                        mode: 'target',
+                        trace,
+                        freeze: f.options.freezePath,
+                        out: f.directory,
+                        limits: f.supervisor.TARGET_DIAGNOSTIC_LIMITS,
+                    }),
+                /target-deadlines-cannot-be-overridden/,
+            );
+        }
+        for (const trace of ['on', 'off'])
+            assert.deepEqual(
+                buildCommand({ mode: 'cpu', trace, cpuCase: 'positive', out: f.directory }).limits,
+                f.supervisor.DEFAULT_LIMITS,
+            );
+        f.freeze.limits.startupMs = 30000;
+        f.writeFreeze();
+        assert.throws(() => f.runner.planTargetDiagnostic(f.options), /limits exceed contract/);
+        for (const extra of ['--limits={}', '--id=alpha', '--startedAt=1', '--diagnosticProfile={}'])
+            assert.throws(
+                () => f.runner.parseArguments(['--freeze=x', '--out=y', '--execute-authorized', extra]),
+                /unsupported-target-argument/,
+            );
+    } finally {
+        f.fs.rmSync(f.directory, { recursive: true, force: true });
+    }
+});
+
+test('synthetic target flow keeps one entry clock and preserves failed postflight originals', async () => {
+    for (const change of [null, 'preflight', 'inputs', 'runtime']) {
+        const f = targetDiagnosticFixture();
+        try {
+            f.state.postChange = change;
+            if (change === 'preflight') {
+                await assert.rejects(
+                    f.runner.runTargetDiagnostic(f.options, f.dependencies),
+                    /entry-startup-budget-exhausted/,
+                );
+                assert.equal(f.state.spawns, 0);
+                assert.equal(f.fs.existsSync(f.options.out), false);
+                continue;
+            }
+            const report = await f.runner.runTargetDiagnostic(f.options, f.dependencies);
+            assert.equal(f.state.spawns, 1);
+            assert.equal(report.status, change ? 'FAIL' : 'DIAGNOSTIC_RECORDED');
+            assert.equal(report.startedAt, new Date(f.dependencies.invocationStarted).toISOString());
+            assert.equal(report.canonicalEligible, false);
+            assert.equal(f.fs.existsSync(f.path.join(f.options.out, 'attempt-receipt.json')), true);
+            for (const name of Object.values(f.runner.FILES))
+                assert.equal(f.fs.existsSync(f.path.join(f.options.out, name)), true);
+            assert.equal(
+                f.fs
+                    .readdirSync(f.options.out)
+                    .some((name) => /^(?:attempt\.json|admission\.json|segments|attempts)$/.test(name)),
+                false,
+            );
+            assert.throws(() => f.runner.planTargetDiagnostic(f.options), /immutable-target-directory-exists/);
+            const input = {
+                directory: f.options.out,
+                freeze: f.freeze,
+                runnerSha256: f.protocol.fileDigest(f.path.join(__dirname, 'run-example-shutdown-target.cjs')).sha256,
+            };
+            if (change) assert.throws(() => f.runner.readTargetDiagnostic(input));
+            else {
+                const retained = f.runner.readTargetDiagnostic(input);
+                assert.equal(retained.report.status, 'DIAGNOSTIC_RECORDED');
+                assert.equal(f.supervisor.validateAttemptReceipt(retained.receipt).ok, false);
+                assert.ok(
+                    f.supervisor
+                        .validateAttemptReceipt(retained.receipt)
+                        .errors.includes('Diagnostic profile is not canonical evidence'),
+                );
+            }
+        } finally {
+            f.fs.rmSync(f.directory, { recursive: true, force: true });
+        }
+    }
+    const f = targetDiagnosticFixture();
+    try {
+        await assert.rejects(
+            f.runner.runTargetDiagnostic({ ...f.options, startedAt: Date.now() }, f.dependencies),
+            /unsupported-target-option/,
+        );
+        assert.equal(f.state.spawns, 0);
+    } finally {
+        f.fs.rmSync(f.directory, { recursive: true, force: true });
+    }
+});
+
+test('synthetic target envelope rejects grafted profiles, limits, sources, times and original paths', async () => {
+    const f = targetDiagnosticFixture();
+    try {
+        await f.runner.runTargetDiagnostic(f.options, f.dependencies);
+        const directory = f.options.out;
+        const read = (name) => f.fs.readFileSync(f.path.join(directory, name));
+        const receiptBytes = read('attempt-receipt.json'),
+            collectorBytes = read('collector.json');
+        const receipt = JSON.parse(receiptBytes),
+            report = JSON.parse(read('diagnostic-target.json'));
+        const artifactBytes = Object.fromEntries(
+            Object.entries(f.runner.FILES).map(([role, name]) => [role, read(name)]),
+        );
+        const args = {
+            freeze: f.freeze,
+            receipt,
+            receiptBytes,
+            collectorBytes,
+            artifactBytes,
+            directory,
+            runnerSha256: report.runnerSha256Before,
+        };
+        assert.equal(f.runner.validateTargetDiagnosticReport(report, args).ok, true);
+        const plainArtifacts = Object.fromEntries(
+            Object.entries(artifactBytes).map(([role, bytes]) => [
+                role,
+                ['raw', 'nodeReceipt'].includes(role) ? JSON.parse(bytes) : bytes,
+            ]),
+        );
+        assert.equal(f.supervisor.validateCustodyArtifacts(receipt, plainArtifacts).ok, false);
+        const otherFreeze = structuredClone(f.freeze);
+        delete otherFreeze.freezeId;
+        otherFreeze.createdAt = new Date(Date.parse(otherFreeze.createdAt) + 1).toISOString();
+        otherFreeze.freezeId = f.protocol.objectDigest(otherFreeze);
+        assert.equal(f.runner.validateTargetDiagnosticReport(report, { ...args, freeze: otherFreeze }).ok, false);
+        for (const mutate of [
+            (r) => {
+                delete r.diagnosticProfile;
+            },
+            (r) => {
+                r.diagnosticProfile.freezeId = 'f'.repeat(64);
+            },
+            (r) => {
+                r.diagnosticProfile.extra = true;
+            },
+            (r) => {
+                r.freezeId = 'f'.repeat(64);
+            },
+            (r) => {
+                r.inputDigestAfter = 'f'.repeat(64);
+            },
+            (r) => {
+                r.limits.startupMs = 15000;
+            },
+            (r) => {
+                r.limits.finalMs++;
+            },
+            (r) => {
+                r.runnerSha256After = 'f'.repeat(64);
+            },
+            (r) => {
+                r.runtimeIdentityAfter.launchArgs.push('--changed');
+            },
+            (r) => {
+                r.startedAt = r.finishedAt;
+            },
+            (r) => {
+                r.finishedAt = 'invalid';
+            },
+            (r) => {
+                r.id = 'alpha';
+            },
+            (r) => {
+                r.mode = 'cpu';
+            },
+            (r) => {
+                r.originals.raw.file = '../custodian-observations.json';
+            },
+            (r) => {
+                r.collectorResult = 'FAIL';
+            },
+        ]) {
+            const changed = structuredClone(report);
+            mutate(changed);
+            assert.equal(f.runner.validateTargetDiagnosticReport(changed, args).ok, false);
+        }
+        for (const mutate of [
+            (r) => {
+                delete r.diagnosticProfile;
+            },
+            (r) => {
+                r.limits.startupMs = 15000;
+            },
+            (r) => {
+                r.startedAt = report.finishedAt;
+            },
+            (r) => {
+                r.runtimes[0].kind = 'ui-shell';
+            },
+            (r) => {
+                r.custody.artifacts.raw.path += '.elsewhere';
+            },
+        ]) {
+            const changed = structuredClone(receipt);
+            mutate(changed);
+            const bytes = Buffer.from(JSON.stringify(changed));
+            const bound = {
+                ...report,
+                receipt: { file: 'attempt-receipt.json', bytes: bytes.length, sha256: f.protocol.sha256(bytes) },
+            };
+            assert.equal(
+                f.runner.validateTargetDiagnosticReport(bound, { ...args, receipt: changed, receiptBytes: bytes }).ok,
+                false,
+            );
+        }
+        const moved = f.path.join(f.directory, 'downloaded-target');
+        f.fs.cpSync(directory, moved, { recursive: true });
+        f.fs.rmSync(directory, { recursive: true });
+        assert.equal(
+            f.runner.readTargetDiagnostic({
+                directory: moved,
+                freeze: f.freeze,
+                runnerSha256: report.runnerSha256Before,
+            }).report.status,
+            'DIAGNOSTIC_RECORDED',
+        );
+        const alias = f.path.join(f.directory, 'symlinked-parent');
+        f.fs.symlinkSync(moved, alias);
+        assert.throws(
+            () =>
+                f.runner.readTargetDiagnostic({
+                    directory: alias,
+                    freeze: f.freeze,
+                    runnerSha256: report.runnerSha256Before,
+                }),
+            /nonregular-target-file/,
+        );
+        const raw = f.path.join(moved, f.runner.FILES.raw),
+            copied = f.path.join(f.directory, 'copied-raw.json');
+        f.fs.renameSync(raw, copied);
+        f.fs.symlinkSync(copied, raw);
+        assert.throws(
+            () =>
+                f.runner.readTargetDiagnostic({
+                    directory: moved,
+                    freeze: f.freeze,
+                    runnerSha256: report.runnerSha256Before,
+                }),
+            /nonregular-target-file/,
+        );
+    } finally {
+        f.fs.rmSync(f.directory, { recursive: true, force: true });
+    }
+});
+
 test(
     'availability Node fixture stays alive until its real SIGTERM handler establishes exit 143',
     {
@@ -772,6 +1162,358 @@ test('cached live identities require unique exact lifetime and reject PID reuse 
     assert.equal(cachedObservation(202, '1700000000.030000', [entry], receipt), null);
     assert.equal(cachedObservation(202, '1699999999.990000', [entry], receipt), null);
 });
+
+function ownedThreadFixture() {
+    const root = { ...TEST_ROOT };
+    const thread = { pid: 100, tgid: root.pid, ppid: root.ppid, startTicks: '41', namespace: root.namespace };
+    const child = { pid: 202, tgid: 202, ppid: root.pid, startTicks: '52', namespace: root.namespace };
+    const make = (process, task = process) => {
+        const image = { dev: 1, ino: 2, size: 3, mtimeMs: 4 };
+        const lineage = process.pid === root.pid ? [root] : [process, root];
+        return {
+            root,
+            thread: task,
+            process,
+            threadBefore: task,
+            threadAfter: task,
+            processBefore: process,
+            processAfter: process,
+            ownedLineage: lineage,
+            lineageAfter: lineage,
+            doubleChecked: true,
+            imageStable: true,
+            imageBefore: image,
+            imageAfter: image,
+            frozenImage: image,
+            frozenBrowserImageMatch: true,
+            observedAt: 1700000000010,
+        };
+    };
+    const observations = new Map([
+        [root.pid, make(root)],
+        [thread.pid, make(root, thread)],
+        [child.pid, make(child)],
+    ]);
+    const cache = new Map(),
+        failures = [],
+        listed = [],
+        presenceCalls = [];
+    const options = {
+        root,
+        cache,
+        now: () => 1700000000020,
+        onFailure: (reason) => failures.push(reason),
+        observe: (pid) => structuredClone(observations.get(pid)),
+        listTasks: (pid) => {
+            listed.push(pid);
+            return pid === root.pid ? [root.pid, thread.pid] : [pid];
+        },
+        readChildren: (_pid, tid) => (tid === thread.pid ? String(child.pid) : ''),
+        presence: (row) => {
+            presenceCalls.push(row.pid);
+            return 'PRESENT';
+        },
+    };
+    return { root, thread, child, observations, cache, failures, listed, presenceCalls, options };
+}
+
+test('owned task enumeration reaches nonleader children and keeps thread identity windows separate', () => {
+    const { sampleOwnedIdentities, cachedObservation } = require('./example-evidence-shutdown-trace.cjs');
+    const f = ownedThreadFixture();
+    assert.equal(sampleOwnedIdentities(f.options).ok, true);
+    assert.deepEqual(f.listed, [99, 202]);
+    assert.equal(f.cache.size, 3);
+    assert.ok(f.cache.has('100:41:pid:[1]'));
+    assert.equal(f.cache.has('100:40:pid:[1]'), false);
+    assert.ok(f.presenceCalls.includes(100));
+    const receipt = {
+        ownedProcesses: [f.root, f.child],
+        browsers: [],
+        worker: f.root,
+        custody: {
+            observation: {
+                adopted: [
+                    { ...f.root, reap: { utc: '2023-11-14T22:13:20.100Z' } },
+                    { ...f.child, reap: { utc: '2023-11-14T22:13:20.100Z' } },
+                ],
+            },
+        },
+    };
+    const rows = [...f.cache.values()];
+    assert.equal(cachedObservation(100, '1700000000.015000', rows, receipt).thread.startTicks, '41');
+    const reused = structuredClone(rows.find((row) => row.observation.thread.pid === 100));
+    for (const key of ['thread', 'threadBefore', 'threadAfter']) reused.observation[key].startTicks = '99';
+    assert.equal(cachedObservation(100, '1700000000.015000', [...rows, reused], receipt), null);
+    sampleOwnedIdentities({ ...f.options, presence: (row) => (row.pid === 100 ? 'ABSENT' : 'PRESENT') });
+    assert.equal(f.cache.get('100:41:pid:[1]').firstAbsentAt, 1700000000020);
+    assert.equal(cachedObservation(100, '1700000000.021000', [...f.cache.values()], receipt), null);
+    assert.ok(cachedObservation(99, '1700000000.021000', [...f.cache.values()], receipt));
+    sampleOwnedIdentities({ ...f.options, presence: (row) => (row.pid === 100 ? 'UNKNOWN' : 'PRESENT') });
+    sampleOwnedIdentities(f.options);
+    assert.equal(cachedObservation(100, '1700000000.015000', [...f.cache.values()], receipt), null);
+});
+
+test('owned task sampling rejects wrong TGID, namespace, parents, reuse, reads and shared bounds', () => {
+    const { sampleOwnedIdentities } = require('./example-evidence-shutdown-trace.cjs');
+    for (const mutation of ['tgid', 'namespace', 'ppid', 'reuse', 'read', 'ancestor']) {
+        const f = ownedThreadFixture();
+        let seen = 0;
+        const observe = (pid) => {
+            const row = f.options.observe(pid);
+            if (pid === 100) {
+                seen++;
+                if (mutation === 'tgid')
+                    for (const key of ['thread', 'threadBefore', 'threadAfter']) row[key].tgid = 777;
+                if (mutation === 'namespace')
+                    for (const key of ['thread', 'threadBefore', 'threadAfter']) row[key].namespace = 'pid:[2]';
+                if (mutation === 'ppid')
+                    for (const key of ['thread', 'threadBefore', 'threadAfter']) row[key].ppid = 777;
+                if (mutation === 'reuse' && seen > 1)
+                    for (const key of ['thread', 'threadBefore', 'threadAfter']) row[key].startTicks = '99';
+                if (mutation === 'ancestor' && seen > 1) row.ownedLineage.at(-1).ppid = 777;
+            }
+            return row;
+        };
+        sampleOwnedIdentities({
+            ...f.options,
+            observe,
+            readChildren: (pid, tid, limit) => {
+                if (mutation === 'read' && tid === 100) throw Object.assign(Error('denied'), { code: 'EACCES' });
+                return f.options.readChildren(pid, tid, limit);
+            },
+        });
+        assert.equal(f.listed.includes(202), false, mutation);
+        assert.equal(f.cache.has('100:41:pid:[1]'), false, mutation);
+    }
+    for (const [bounds, read, expected] of [
+        [{ ...BOUNDS, identities: 2 }, null, 'identity-count-bound'],
+        [{ ...BOUNDS, identityBytes: 65536 }, () => '1'.repeat(65537), 'identity-input-bound'],
+        [{ ...BOUNDS, identityBytes: 1 }, () => '', 'identity-output-bound'],
+    ]) {
+        const f = ownedThreadFixture();
+        assert.equal(
+            sampleOwnedIdentities({ ...f.options, bounds, readChildren: read || f.options.readChildren }).ok,
+            false,
+        );
+        assert.ok(f.failures.includes(expected));
+        assert.ok(f.cache.size <= bounds.identities);
+    }
+    const f = ownedThreadFixture();
+    sampleOwnedIdentities(f.options);
+    sampleOwnedIdentities({
+        ...f.options,
+        readChildren: () => {
+            throw Object.assign(Error('denied'), { code: 'EACCES' });
+        },
+    });
+    assert.equal(f.cache.get('100:41:pid:[1]').metadataUnknown, true);
+    assert.equal(f.cache.get('100:41:pid:[1]').firstAbsentAt, null);
+});
+
+test('cross-read exec and later ownership changes permanently disqualify cached thread observations', () => {
+    const { sampleOwnedIdentities, cachedObservation } = require('./example-evidence-shutdown-trace.cjs');
+    const receiptFor = (f) => ({
+        ownedProcesses: [f.root, f.child],
+        browsers: [],
+        custody: {
+            observation: {
+                adopted: [f.root, f.child].map((row) => ({ ...row, reap: { utc: '2023-11-14T22:13:20.100Z' } })),
+            },
+        },
+    });
+    for (const [pid, change] of [
+        [99, 'image'],
+        [100, 'image'],
+        [100, 'frozen'],
+    ]) {
+        const f = ownedThreadFixture();
+        let count = 0;
+        sampleOwnedIdentities({
+            ...f.options,
+            observe: (tid) => {
+                const row = f.options.observe(tid);
+                if (tid === pid && ++count >= (pid === 99 ? 3 : 2)) {
+                    if (change === 'image') {
+                        row.imageBefore = { ...row.imageBefore, ino: 999 };
+                        row.imageAfter = { ...row.imageAfter, ino: 999 };
+                    } else row.frozenImage = { ...row.frozenImage, ino: 999 };
+                }
+                return row;
+            },
+        });
+        const rows = [...f.cache.values()],
+            row = rows.find((item) => item.observation.thread.pid === pid);
+        assert.equal(row.imageChanged, true);
+        assert.equal(cachedObservation(pid, '1700000000.015000', rows, receiptFor(f)), null);
+    }
+    for (const change of ['parent', 'ancestor']) {
+        const f = ownedThreadFixture();
+        const modify = (ticks) => {
+            const row = f.observations.get(202),
+                leader = { ...f.child, ppid: 150 };
+            for (const key of ['process', 'processBefore', 'processAfter', 'thread', 'threadBefore', 'threadAfter'])
+                row[key] = leader;
+            row.ownedLineage = [
+                leader,
+                { pid: 150, tgid: 150, ppid: 99, startTicks: ticks, namespace: 'pid:[1]' },
+                f.root,
+            ];
+            row.lineageAfter = row.ownedLineage;
+        };
+        if (change === 'ancestor') modify('73');
+        sampleOwnedIdentities(f.options);
+        assert.equal(f.cache.get('202:52:pid:[1]').metadataUnknown, false);
+        modify('74');
+        sampleOwnedIdentities(f.options);
+        assert.equal(f.cache.get('202:52:pid:[1]').metadataUnknown, true);
+        assert.equal(cachedObservation(202, '1700000000.015000', [...f.cache.values()], receiptFor(f)), null);
+    }
+});
+
+function realThreadControlSkip({
+    read = require('node:fs').readFileSync,
+    ci = !!(process.env.CI || process.env.GITHUB_ACTIONS),
+    platform = process.platform,
+} = {}) {
+    if (platform !== 'linux') return 'Linux required';
+    try {
+        const children = read(`/proc/self/task/${process.pid}/children`, 'utf8');
+        assert.equal(typeof children, 'string');
+        assert.ok(
+            Buffer.byteLength(children) <= 8192 && /^\s*(?:\d+\s*)*$/.test(children),
+            'invalid task children interface',
+        );
+        return false;
+    } catch (error) {
+        if (error.code === 'ENOENT' && !ci)
+            return 'task children interface unavailable locally; required on the official runner';
+        throw error;
+    }
+}
+
+test('official task capability checks fail on missing, denied or malformed children interfaces', () => {
+    const missing = () => {
+        throw Object.assign(Error('missing'), { code: 'ENOENT' });
+    };
+    assert.equal(typeof realThreadControlSkip({ read: missing, ci: false, platform: 'linux' }), 'string');
+    assert.throws(() => realThreadControlSkip({ read: missing, ci: true, platform: 'linux' }), /missing/);
+    for (const ci of [false, true]) {
+        assert.throws(
+            () =>
+                realThreadControlSkip({
+                    read: () => {
+                        throw Object.assign(Error('denied'), { code: 'EACCES' });
+                    },
+                    ci,
+                    platform: 'linux',
+                }),
+            /denied/,
+        );
+        assert.throws(
+            () => realThreadControlSkip({ read: () => 'bad metadata', ci, platform: 'linux' }),
+            /invalid task children interface/,
+        );
+    }
+    assert.equal(realThreadControlSkip({ read: () => '12 34\n', ci: true, platform: 'linux' }), false);
+});
+
+test(
+    'real CPU worker-thread child is found through its nonleader task and physically closes',
+    {
+        skip: realThreadControlSkip(),
+        timeout: 10000,
+    },
+    async () => {
+        const { spawn } = require('node:child_process');
+        const fs = require('node:fs');
+        const { identity, sampleOwnedIdentities, exactPresence } = require('./example-evidence-shutdown-trace.cjs');
+        const workerCode = `
+        const { parentPort } = require('node:worker_threads');
+        const fs = require('node:fs');
+        const { spawn } = require('node:child_process');
+        const child = spawn(process.execPath, ['-e', 'setTimeout(() => {}, 3000)'], { stdio: ['ignore', 'pipe', 'pipe'] });
+        const tid = Number(fs.readlinkSync('/proc/thread-self').split('/').at(-1));
+        let exit;
+        child.once('exit', (code, signal) => { exit = { code, signal }; });
+        child.once('close', (code, signal) => { parentPort.postMessage({ type: 'child-closed', exit, close: { code, signal } }); parentPort.close(); });
+        parentPort.on('message', () => child.kill('SIGTERM'));
+        parentPort.postMessage({ type: 'ready', tid, processPID: process.pid, childPID: child.pid });
+    `;
+        const rootCode = `
+        const { Worker } = require('node:worker_threads');
+        const worker = new Worker(${JSON.stringify(workerCode)}, { eval: true });
+        worker.on('message', message => process.send(message));
+        worker.once('exit', code => { process.send({ type: 'worker-exit', code }, () => process.disconnect()); });
+        process.on('message', () => worker.postMessage('stop'));
+    `;
+        const child = spawn(process.execPath, ['-e', rootCode], { stdio: ['ignore', 'pipe', 'pipe', 'ipc'] });
+        child.stdout.resume();
+        child.stderr.resume();
+        const messages = [];
+        let exit;
+        child.on('message', (message) => messages.push(message));
+        child.once('exit', (code, signal) => {
+            exit = { code, signal };
+        });
+        const closed = new Promise((resolve) => child.once('close', (code, signal) => resolve({ code, signal })));
+        const ready = await new Promise((resolve, reject) => {
+            child.on('message', (message) => {
+                if (message.type === 'ready') resolve(message);
+            });
+            child.once('error', reject);
+            child.once('exit', () => {
+                if (!messages.some((message) => message.type === 'ready')) reject(Error('fixture exited before ready'));
+            });
+        });
+        const root = identity(child.pid),
+            target = identity(ready.childPID),
+            task = identity(ready.tid);
+        let result;
+        try {
+            assert.equal(ready.processPID, child.pid);
+            assert.notEqual(ready.tid, child.pid);
+            assert.ok(
+                fs
+                    .readFileSync(`/proc/${child.pid}/task/${ready.tid}/children`, 'utf8')
+                    .split(/\s+/)
+                    .includes(String(ready.childPID)),
+            );
+            assert.equal(
+                fs
+                    .readFileSync(`/proc/${child.pid}/task/${child.pid}/children`, 'utf8')
+                    .split(/\s+/)
+                    .includes(String(ready.childPID)),
+                false,
+            );
+            const cache = new Map(),
+                failures = [];
+            result = sampleOwnedIdentities({ root, cache, onFailure: (reason) => failures.push(reason) });
+            assert.equal(result.ok, true, JSON.stringify(failures));
+            assert.ok(
+                [...cache.values()].some(
+                    (row) => row.observation.thread.pid === ready.tid && row.observation.process.pid === child.pid,
+                ),
+            );
+            assert.ok([...cache.values()].some((row) => row.observation.process.pid === ready.childPID));
+        } finally {
+            if (child.connected) child.send('stop');
+            const close = await closed;
+            assert.deepEqual(exit, { code: 0, signal: null });
+            assert.deepEqual(close, exit);
+            const childClose = messages.find((message) => message.type === 'child-closed');
+            assert.ok(childClose?.exit && childClose.close);
+            assert.deepEqual(childClose.exit, childClose.close);
+            assert.ok(
+                (childClose.exit.code === null && childClose.exit.signal === 'SIGTERM') ||
+                    (childClose.exit.code === 0 && childClose.exit.signal === null),
+            );
+            assert.equal(messages.find((message) => message.type === 'worker-exit')?.code, 0);
+            assert.equal(exactPresence(root), 'ABSENT');
+            assert.equal(exactPresence(task), 'ABSENT');
+            assert.equal(exactPresence(target), 'ABSENT');
+        }
+    },
+);
 
 test('control-only bounds cannot be applied to a target or ordinary positive', () => {
     assert.throws(

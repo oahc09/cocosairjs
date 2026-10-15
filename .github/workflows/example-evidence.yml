@@ -50,7 +50,7 @@ jobs:
       - name: Validate collector CPU contracts
         run: |
           set -euo pipefail
-          npx prettier --check tools/verify/example-evidence-shutdown-trace.cjs tools/verify/example-evidence-shutdown-trace.test.cjs test/smoke/smoke-example-evidence-integration.test.ts tools/verify/example-evidence-process-diagnostics.cjs tools/verify/example-evidence-process-diagnostics.test.cjs tools/verify/example-evidence-supervisor.cjs tools/verify/example-evidence-supervisor.test.cjs .github/workflows/example-evidence.yml .github/workflows/format.yml docs/reference/example-evidence-campaign.md
+          npx prettier --check tools/verify/example-evidence-shutdown-trace.cjs tools/verify/example-evidence-shutdown-trace.test.cjs tools/verify/run-example-shutdown-target.cjs test/smoke/smoke-example-evidence-integration.test.ts tools/verify/example-evidence-process-diagnostics.cjs tools/verify/example-evidence-process-diagnostics.test.cjs tools/verify/example-evidence-supervisor.cjs tools/verify/example-evidence-supervisor.test.cjs .github/workflows/example-evidence.yml .github/workflows/format.yml docs/reference/example-evidence-campaign.md
           EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu" node tools/verify/example-evidence-supervisor.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/supervisor-tests.log"
           node --test tools/verify/shaders-holographic-rotation.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/rotation-tests.log"
           node --test tools/verify/example-evidence-process-diagnostics.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/process-diagnostics-tests.log"

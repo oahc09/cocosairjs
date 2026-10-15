@@ -21,6 +21,102 @@ const DEFAULT_LIMITS = Object.freeze({
     forceMs: 133000,
     finalMs: 139000,
 });
+const TARGET_DIAGNOSTIC_LIMITS = Object.freeze({ ...DEFAULT_LIMITS, startupMs: 30000 });
+function validateTargetDiagnosticProfile(profile) {
+    const keys = ['schemaVersion', 'freezeId', 'inputDigest', 'canonicalEligible'];
+    return !!(
+        profile &&
+        typeof profile === 'object' &&
+        !Array.isArray(profile) &&
+        Object.keys(profile).length === keys.length &&
+        keys.every((key) => Object.hasOwn(profile, key)) &&
+        profile.schemaVersion === 'example-shutdown-target-profile/1' &&
+        profile.canonicalEligible === false &&
+        ['freezeId', 'inputDigest'].every(
+            (key) => typeof profile[key] === 'string' && /^[a-f0-9]{64}$/.test(profile[key]),
+        )
+    );
+}
+function createTargetDiagnosticProfile(input) {
+    if (
+        !input ||
+        Object.keys(input).length !== 2 ||
+        !['freezeId', 'inputDigest'].every((key) => Object.hasOwn(input, key))
+    )
+        throw Error('Target diagnostic profile requires exact freezeId and inputDigest');
+    const profile = {
+        schemaVersion: 'example-shutdown-target-profile/1',
+        freezeId: input.freezeId,
+        inputDigest: input.inputDigest,
+        canonicalEligible: false,
+    };
+    if (!validateTargetDiagnosticProfile(profile)) throw Error('Invalid target diagnostic profile');
+    return Object.freeze(profile);
+}
+function targetDiagnosticLimitsMatch(limits) {
+    return !!(
+        limits &&
+        typeof limits === 'object' &&
+        !Array.isArray(limits) &&
+        Object.keys(limits).length === Object.keys(TARGET_DIAGNOSTIC_LIMITS).length &&
+        Object.entries(TARGET_DIAGNOSTIC_LIMITS).every(
+            ([key, value]) => Object.hasOwn(limits, key) && limits[key] === value,
+        )
+    );
+}
+function attemptLimits(options) {
+    if (!Object.hasOwn(options, 'diagnosticProfile')) return limitsOf(options.limits);
+    if (
+        !validateTargetDiagnosticProfile(options.diagnosticProfile) ||
+        !(options.id === 'collector-dodge' || (options.cpuDummy === true && options.id === 'cpu-example'))
+    )
+        throw Error('Invalid target diagnostic profile or target');
+    if (options.limits !== undefined && !targetDiagnosticLimitsMatch(options.limits))
+        throw Error('Target diagnostic limits must be the fixed 30000ms profile');
+    return { ...TARGET_DIAGNOSTIC_LIMITS };
+}
+function diagnosticFields(options) {
+    return Object.hasOwn(options, 'diagnosticProfile')
+        ? { diagnosticProfile: options.diagnosticProfile, canonicalEligible: false }
+        : {};
+}
+function diagnosticBindingErrors(receipt, options = {}, raw, inner) {
+    const observers = (receipt.events || []).filter((event) => event.type === 'observer-start');
+    const proofs = (raw?.events || []).filter((event) => event.type === 'diagnostic-profile');
+    const carriesProfile =
+        [receipt, raw, inner, ...observers].some(
+            (value) => value && (Object.hasOwn(value, 'diagnosticProfile') || value.canonicalEligible === false),
+        ) || proofs.length;
+    if (!Object.hasOwn(options, 'diagnosticProfile'))
+        return carriesProfile ? ['Diagnostic profile is not canonical evidence'] : [];
+    const profile = options.diagnosticProfile;
+    const matches = (value) => validateTargetDiagnosticProfile(value) && stableJson(value) === stableJson(profile);
+    if (
+        !validateTargetDiagnosticProfile(profile) ||
+        !matches(receipt.diagnosticProfile) ||
+        receipt.canonicalEligible !== false ||
+        !targetDiagnosticLimitsMatch(receipt.limits) ||
+        !(receipt.id === 'collector-dodge' || (receipt.cpuDummy === true && receipt.id === 'cpu-example')) ||
+        observers.length !== 1 ||
+        !matches(observers[0].diagnosticProfile) ||
+        !targetDiagnosticLimitsMatch(observers[0].limits)
+    )
+        return ['Target diagnostic profile binding differs'];
+    if (
+        raw &&
+        (!matches(raw.diagnosticProfile) ||
+            raw.canonicalEligible !== false ||
+            proofs.length !== 1 ||
+            !matches(proofs[0].diagnosticProfile) ||
+            !targetDiagnosticLimitsMatch(proofs[0].limits) ||
+            proofs[0].eventId >= raw.innerSupervisor?.spawn?.eventId ||
+            proofs[0].elapsedMs > raw.innerSupervisor?.spawn?.elapsedMs)
+    )
+        return ['Original Python diagnostic profile differs'];
+    if (inner && (!matches(inner.diagnosticProfile) || inner.canonicalEligible !== false))
+        return ['Original Node diagnostic profile differs'];
+    return [];
+}
 const CPU_CASES = [
     'positive',
     'synchronous-compiler',
@@ -108,6 +204,7 @@ function validateAttemptReceiptUnchecked(receipt, options = {}) {
     const errors = [];
     const fail = (message) => errors.push(message);
     if (!receipt || typeof receipt !== 'object') return { ok: false, errors: ['receipt missing'] };
+    errors.push(...diagnosticBindingErrors(receipt, options));
     const success = options.requireSuccess !== false;
     const command = receipt.command;
     const expectedCollector = receipt.cpuDummy
@@ -140,7 +237,9 @@ function validateAttemptReceiptUnchecked(receipt, options = {}) {
     if (!Array.isArray(receipt.errors) || (success && receipt.errors.length)) fail('attempt errors retained');
     let limits;
     try {
-        limits = limitsOf(receipt.limits);
+        limits = Object.hasOwn(options, 'diagnosticProfile')
+            ? attemptLimits({ ...receipt, diagnosticProfile: options.diagnosticProfile })
+            : limitsOf(receipt.limits);
     } catch (error) {
         fail(error.message);
         limits = DEFAULT_LIMITS;
@@ -595,7 +694,7 @@ function validCustodyResponse(response, pending, token, custodianPID, acceptedSt
     );
 }
 
-// This observation only avoids an abort message to an exact terminal child. It is never
+// This observation only avoids an IPC message to an exact terminal child. It is never
 // custody authority, permission to signal, or proof that the process has been reaped.
 function observeAbortWorker(worker, io = fs) {
     const result = { status: 'UNKNOWN', before: null, after: null };
@@ -657,7 +756,23 @@ function validAbortObservation(observation, worker, status = observation?.status
     );
 }
 
-function deliverWorkerAbort({
+function deliverWorkerAbort(options) {
+    return deliverWorkerMessage({ ...options, kind: 'abort' });
+}
+
+function deliverWorkerCustodyResponse(options) {
+    return deliverWorkerMessage({ ...options, kind: 'custody', deadline: options.pending?.deadlineMs });
+}
+
+// Only the two fixed supervisor-to-worker protocols use this lifecycle. No delivery
+// outcome grants custody authority or removes an existing failure.
+function deliverWorkerMessage({
+    kind,
+    response,
+    pending,
+    acceptedStart,
+    token,
+    custodianPID,
     child,
     worker,
     abort,
@@ -677,8 +792,29 @@ function deliverWorkerAbort({
         namespace: worker.namespace,
         ppid: worker.initial?.ppid,
     });
+    const isAbort = kind === 'abort';
+    const prefix = isAbort ? 'abort-ipc' : 'custody-response-ipc';
+    const label = isAbort ? 'abort IPC' : 'Custody IPC: worker response delivery';
+    const bindingValid =
+        isAbort ||
+        (validCustodyResponse(response, pending, token, custodianPID, acceptedStart) &&
+            pending.workerPID === target.pid &&
+            pending.workerStartTicks === target.startTicks &&
+            pending.namespace === target.namespace &&
+            child.pid === target.pid &&
+            Number.isFinite(deadline));
+    const rejected = !isAbort && bindingValid && response.rejection !== undefined;
     const binding = {
-        abortRequestEventId: abort.eventId,
+        ...(isAbort
+            ? { abortRequestEventId: abort.eventId }
+            : {
+                  requestId: pending?.requestId,
+                  runtimeId: pending?.runtimeId,
+                  phase: pending?.phase,
+                  custodyEventId: response?.eventId,
+                  startEventId: response?.startEventId || null,
+                  rejection: response?.rejection || null,
+              }),
         workerPID: target.pid,
         workerStartTicks: target.startTicks,
         namespace: target.namespace,
@@ -704,16 +840,16 @@ function deliverWorkerAbort({
     const settle = (outcome, error = null) => {
         if (settled) {
             if (['callback', 'throw'].includes(outcome) && !sealed) {
-                event('abort-ipc-extra-result', { ...binding, sendEventId: send.eventId, outcome });
-                fail('abort IPC result after settlement');
-                if (error) fail(`abort IPC send failed: ${error}`);
+                event(`${prefix}-extra-result`, { ...binding, sendEventId: send.eventId, outcome });
+                fail(`${label} result after settlement`);
+                if (error) fail(isAbort ? `abort IPC send failed: ${error}` : `${label}: ${error.message}`);
             }
             return;
         }
         if (outcome === 'callback' && now() >= deadline) outcome = 'deadline';
         settled = true;
         unschedule(timer);
-        event('abort-ipc-result', {
+        event(`${prefix}-result`, {
             ...binding,
             sendEventId: send.eventId,
             outcome,
@@ -725,12 +861,12 @@ function deliverWorkerAbort({
             failed: !!error,
             ...snapshot(),
         });
-        if (error) fail(`abort IPC send failed: ${error}`);
-        if (outcome !== 'callback') fail(`abort IPC did not settle: ${outcome}`);
+        if (error) fail(isAbort ? `abort IPC send failed: ${error}` : `${label}: ${error.message}`);
+        if (outcome !== 'callback') fail(`${label} did not settle: ${outcome}`);
         resolve();
     };
     const initial =
-        now() >= deadline
+        !bindingValid || rejected || now() >= deadline
             ? {
                   childPID: child.pid,
                   workerExitEventId: null,
@@ -744,21 +880,34 @@ function deliverWorkerAbort({
         (initial.workerExitEventId ||
             initial.workerCloseEventId ||
             (initial.observation.status === 'TERMINAL' && validAbortObservation(initial.observation, target)));
-    if (expired || skip || !child.connected) {
-        event('abort-ipc-skipped', {
+    if (!bindingValid || rejected || expired || skip || !child.connected) {
+        event(`${prefix}-skipped`, {
             ...binding,
-            reason: expired ? 'deadline-expired' : skip ? 'worker-exited' : 'ipc-disconnected',
+            reason: !bindingValid
+                ? 'invalid-binding'
+                : rejected
+                  ? 'kernel-barrier-rejected'
+                  : expired
+                    ? 'deadline-expired'
+                    : skip
+                      ? 'worker-exited'
+                      : 'ipc-disconnected',
             ...initial,
         });
-        if (expired) fail('abort IPC did not settle: deadline');
+        if (!bindingValid) fail(`${label}: invalid binding`);
+        else if (expired) fail(`${label} did not settle: deadline`);
+        else if (!isAbort && !rejected) fail('Custody IPC: collector disconnected before response');
         settled = true;
         resolve();
     } else {
-        send = event('abort-ipc-send', { ...binding, ...initial });
+        send = event(`${prefix}-send`, { ...binding, ...initial });
         timer = schedule(() => settle('deadline'), Math.max(1, deadline - now()));
         try {
-            if (child.pid !== target.pid) throw Error('abort IPC target identity changed');
-            child.send({ exampleEvidenceAbort: abort.reason }, (error) => settle('callback', error));
+            if (child.pid !== target.pid) throw Error(`${label} target identity changed`);
+            child.send(
+                isAbort ? { exampleEvidenceAbort: abort.reason } : { exampleCustodyResponse: response },
+                (error) => settle('callback', error),
+            );
         } catch (error) {
             settle('throw', error);
         }
@@ -829,7 +978,7 @@ async function superviseAttemptInner(options) {
             : path.join(fs.realpathSync(path.dirname(file)), path.basename(file));
         if (!outsideRepo(real, repo)) throw Error('Attempt output resolves inside repository');
     }
-    const limits = limitsOf(options.limits);
+    const limits = attemptLimits({ ...options, cpuDummy: !!cpuCase });
     const namespace = namespaceOf();
     if (!namespace) throw Error('Linux /proc process-namespace observation required');
     const expectedModes = options.expectedModes || ['primary'];
@@ -868,6 +1017,7 @@ async function superviseAttemptInner(options) {
         throw Error('Original first-exec startup budget exhausted before worker spawn');
     const origin = performance.now() - elapsedBeforeSpawnMs;
     const receipt = {
+        ...diagnosticFields(options),
         schemaVersion: SCHEMA_VERSION,
         attemptId: options.attemptId || crypto.randomUUID(),
         id,
@@ -1092,6 +1242,7 @@ async function superviseAttemptInner(options) {
             Math.min(limits.closeMs * 2, limits.forceMs - (performance.now() - origin)),
         );
     }
+    const custodyDeliveries = [];
     let custodyPending = null;
     let custodySequence = 0;
     let custodyAcceptedStart = null;
@@ -1158,15 +1309,28 @@ async function superviseAttemptInner(options) {
                     ok: false,
                 });
             }
+            if (response.ok !== true) custodyFailure('kernel barrier rejected');
+            // Register synchronously before settling the request and releasing any finish drain.
+            // A proven rejection already says the fixed worker cannot receive an authorized ACK.
+            custodyDeliveries.push(
+                deliverWorkerCustodyResponse({
+                    child,
+                    worker: receipt.worker,
+                    response,
+                    pending,
+                    acceptedStart: custodyAcceptedStart,
+                    token: custodyToken,
+                    custodianPID: process.ppid,
+                    event,
+                    fail: (reason) => requestAbort(reason),
+                    closure: () => receipt.worker,
+                    now: () => performance.now() - origin,
+                    schedule: timer,
+                }),
+            );
             custodyAcceptedStart =
                 response.ok === true && response.phase === 'start' ? { ...pending, eventId: response.eventId } : null;
             settleCustody(pending, response.rejection === undefined ? 'response' : 'rejected-response');
-            if (response.ok !== true) custodyFailure('kernel barrier rejected');
-            if (child?.connected)
-                child.send({ exampleCustodyResponse: response }, (error) => {
-                    if (error) custodyFailure(`worker response delivery: ${error.message}`);
-                });
-            else custodyFailure('collector disconnected before response');
         }
     });
     function relayCustody(request) {
@@ -1200,9 +1364,10 @@ async function superviseAttemptInner(options) {
             return;
         }
         custodySequence = request.requestId;
+        const requestedAt = performance.now() - origin;
         const remaining =
             request.phase === 'stop'
-                ? limits.closeMs - (performance.now() - origin - runtime.stopBegin.supervisorElapsedMs)
+                ? limits.closeMs - (requestedAt - runtime.stopBegin.supervisorElapsedMs)
                 : limits.closeMs;
         let resolveDrained;
         const drained = new Promise((resolve) => {
@@ -1212,6 +1377,7 @@ async function superviseAttemptInner(options) {
             ...request,
             workerStartTicks: current.startTicks,
             namespace,
+            deadlineMs: Math.min(requestedAt + remaining, limits.finalMs),
             drained,
             resolveDrained,
             timer: timer(() => {
@@ -1399,6 +1565,7 @@ async function superviseAttemptInner(options) {
             fail('final worker deadline reached');
             settleCustody(custodyPending, 'final-deadline');
             abortDelivery?.cancel('final-deadline');
+            for (const delivery of custodyDeliveries) delivery.cancel('final-deadline');
         }
         if (finishing) return;
         finishing = true;
@@ -1434,6 +1601,7 @@ async function superviseAttemptInner(options) {
             await custodyPending.drained;
         }
         if (abortDelivery) await abortDelivery.drained;
+        await Promise.all(custodyDeliveries.map((delivery) => delivery.drained));
         receipt.noOwnedProcesses = scanOwned().length === 0;
         receipt.ownedProcesses = [...owned.values()].map(
             ({ pid, startTicks, namespace, role, firstObserved, disappearance }) => ({
@@ -1496,8 +1664,10 @@ async function superviseAttemptInner(options) {
             ),
         );
         abortDelivery?.seal();
+        for (const delivery of custodyDeliveries) delivery.seal();
         receipt.endedAt = new Date().toISOString();
         const structural = validateCoreReceipt(receipt, {
+            ...diagnosticFields(options),
             id,
             expectedModes,
             expectedViewports: options.expectedViewports,
@@ -1506,6 +1676,7 @@ async function superviseAttemptInner(options) {
         });
         for (const error of structural.errors) fail(error);
         const checked = validateCoreReceipt(receipt, {
+            ...diagnosticFields(options),
             id,
             expectedModes,
             expectedViewports: options.expectedViewports,
@@ -1530,6 +1701,7 @@ async function superviseAttemptInner(options) {
     const interrupted = (signal) => {
         requestAbort(`supervisor received ${signal}`);
         abortDelivery?.cancel(signal);
+        for (const delivery of custodyDeliveries) delivery.cancel(signal);
         if (finishing) settleCustody(custodyPending, signal);
     };
     const onInterrupt = () => interrupted('SIGINT');
@@ -1551,6 +1723,9 @@ async function superviseAttemptInner(options) {
             EXAMPLE_EVIDENCE_SUPERVISED: '1',
             EXAMPLE_EVIDENCE_STARTED_AT: new Date(startedEpoch).toISOString(),
             EXAMPLE_EVIDENCE_LIMITS: JSON.stringify(limits),
+            EXAMPLE_EVIDENCE_DIAGNOSTIC_PROFILE: Object.hasOwn(options, 'diagnosticProfile')
+                ? JSON.stringify(options.diagnosticProfile)
+                : '',
             EXAMPLE_EVIDENCE_CPU_CASE: cpuCase,
             EXAMPLE_EVIDENCE_ID: id,
             EXAMPLE_EVIDENCE_MODES: JSON.stringify(expectedModes),
@@ -1639,7 +1814,7 @@ const stableJson = (value) =>
               )
             : entry;
     });
-function validateCustodyReceipt(receipt) {
+function validateCustodyReceipt(receipt, options = {}) {
     const errors = [];
     const fail = (message) => errors.push(message);
     const custody = receipt.custody;
@@ -1651,6 +1826,7 @@ function validateCustodyReceipt(receipt) {
     if (!raw || raw.schemaVersion !== 'example-evidence-custody-observation/1' || !wrapper) {
         return { ok: false, errors: ['Kernel custody observation missing'] };
     }
+    errors.push(...diagnosticBindingErrors(receipt, options, raw));
     const eventIs = (event, type) =>
         !!event &&
         event.type === type &&
@@ -1888,15 +2064,25 @@ function validateAttemptReceipt(receipt, options = {}) {
     const core = validateCoreReceipt(receipt, options);
     let custody;
     try {
-        custody = validateCustodyReceipt(receipt);
+        custody = validateCustodyReceipt(receipt, options);
     } catch (error) {
         custody = { ok: false, errors: [`Malformed custody receipt: ${error.message}`] };
     }
     return { ok: core.ok && custody.ok, errors: [...core.errors, ...custody.errors] };
 }
-function validateCustodyArtifacts(receipt, artifacts) {
+function validateCustodyArtifacts(receipt, artifacts, options = {}) {
     try {
         const errors = [];
+        errors.push(...diagnosticBindingErrors(receipt, options, artifacts.raw, artifacts.nodeReceipt));
+        // Artifact validation is also a default consumer: stripping a profile cannot admit its 30s limits.
+        if (!Object.hasOwn(options, 'diagnosticProfile')) {
+            try {
+                limitsOf(receipt.limits);
+                limitsOf(artifacts.nodeReceipt?.limits);
+            } catch (error) {
+                errors.push(error.message);
+            }
+        }
         if (stableJson(artifacts.raw) !== stableJson(receipt.custody.observation))
             errors.push('Original Python observation differs');
         const inner = artifacts.nodeReceipt;
@@ -1905,6 +2091,8 @@ function validateCustodyArtifacts(receipt, artifacts) {
         const keys = [
             'schemaVersion',
             'attemptId',
+            'diagnosticProfile',
+            'canonicalEligible',
             'id',
             'cpuDummy',
             'cpuCase',
@@ -1970,7 +2158,7 @@ async function superviseAttempt(options) {
             : typeof options.startedAt === 'number'
               ? options.startedAt
               : Date.parse(options.startedAt);
-    const limits = limitsOf(options.limits);
+    const limits = attemptLimits({ ...options, cpuDummy: !!options.cpuCase });
     if (!Number.isFinite(startedEpoch) || startedEpoch > Date.now() || Date.now() - startedEpoch >= limits.startupMs)
         throw Error('Original first-exec startup budget exhausted before worker spawn');
     if (!options.cpuCase && options.executeAuthorized !== true)
@@ -2106,6 +2294,7 @@ async function superviseAttempt(options) {
     for (const [name, file] of Object.entries(paths))
         if (fs.existsSync(file)) artifacts[name] = { path: file, bytes: fs.statSync(file).size, sha256: sha256(file) };
     const receipt = inner || {
+        ...diagnosticFields(options),
         schemaVersion: SCHEMA_VERSION,
         attemptId: options.attemptId || crypto.randomUUID(),
         id: options.id,
@@ -2154,6 +2343,7 @@ async function superviseAttempt(options) {
     }
     receipt.endedAt = new Date().toISOString();
     const structural = validateAttemptReceipt(receipt, {
+        ...diagnosticFields(options),
         id: options.id,
         expectedModes: options.expectedModes,
         expectedViewports: options.expectedViewports,
@@ -2163,6 +2353,7 @@ async function superviseAttempt(options) {
     receipt.lifecycleErrors.push(...structural.errors.filter((error) => !receipt.lifecycleErrors.includes(error)));
     receipt.errors.push(...structural.errors.filter((error) => !receipt.errors.includes(error)));
     const checked = validateAttemptReceipt(receipt, {
+        ...diagnosticFields(options),
         id: options.id,
         expectedModes: options.expectedModes,
         expectedViewports: options.expectedViewports,
@@ -2220,9 +2411,13 @@ if (require.main === module)
         process.exitCode = 1;
     });
 module.exports = {
+    TARGET_DIAGNOSTIC_LIMITS,
+    createTargetDiagnosticProfile,
+    validateTargetDiagnosticProfile,
     observeAbortWorker,
     validAbortObservation,
     deliverWorkerAbort,
+    deliverWorkerCustodyResponse,
     validCustodyResponse,
     SCHEMA_VERSION,
     DEFAULT_LIMITS,
