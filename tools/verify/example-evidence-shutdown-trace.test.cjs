@@ -705,6 +705,258 @@ test(
     },
 );
 
+test(
+    'browser-nonzero pending stop ACK requires the exact retained drain and physical closure',
+    { skip: !process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT },
+    () => {
+        const fs = require('node:fs'),
+            path = require('node:path');
+        const { expectedOutcome } = require('./example-evidence-shutdown-trace.cjs');
+        const root = process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT;
+        const names = [
+            'cpu-capture-38774702281/browser-nonzero/attempt-receipt.json',
+            'cpu-capture-38784147029/browser-nonzero/attempt-receipt.json',
+            'quality-cpu-38784147193/browser-nonzero/attempt-receipt.json',
+            'shutdown-diagnostics-38784147029/cpu-browser-nonzero-off/attempt/attempt-receipt.json',
+        ];
+        const options = { mode: 'cpu', cpuCase: 'browser-nonzero' };
+        const editProof = (r, changes) => {
+            for (const rows of [r.custody.observation.barriers, r.custody.observation.events])
+                for (const row of rows)
+                    if (row.type === 'runtime-custody-barrier' && row.phase === 'stop') Object.assign(row, changes);
+        };
+        const response = (r) => r.events.find((row) => row.type === 'custody-request-settled' && row.phase === 'stop');
+        const changeEveryEventAlias = (value, type, field, replacement) => {
+            if (!value || typeof value !== 'object') return;
+            if (value.type === type) value[field] = replacement;
+            for (const item of Object.values(value)) changeEveryEventAlias(item, type, field, replacement);
+        };
+        let retained = 0;
+        for (const name of names) {
+            const file = path.join(root, name);
+            if (!fs.existsSync(file)) continue;
+            retained++;
+            const original = JSON.parse(fs.readFileSync(file));
+            assert.equal(original.ok, false);
+            assert.equal(expectedOutcome(original, options), true, name);
+            const mutations = [
+                (r) => editProof(r, { requestId: 999 }),
+                (r) => editProof(r, { phase: 'start' }),
+                (r) => editProof(r, { runtimeId: 'runtime-wrong' }),
+                (r) => editProof(r, { workerPID: r.worker.pid + 1 }),
+                (r) => editProof(r, { workerStartTicks: '1' }),
+                (r) => editProof(r, { directChildren: [] }),
+                (r) => editProof(r, { ok: false }),
+                (r) => editProof(r, { utc: new Date(Date.parse(response(r).receivedUtc) + 1).toISOString() }),
+                (r) => {
+                    response(r).requestId = 999;
+                },
+                (r) => {
+                    response(r).phase = 'start';
+                },
+                (r) => {
+                    response(r).outcome = 'deadline';
+                },
+                (r) => {
+                    response(r).supervisorElapsedMs = r.worker.close.supervisorElapsedMs - 1;
+                },
+                (r) => {
+                    response(r).supervisorElapsedMs =
+                        r.runtimes[0].stopBegin.supervisorElapsedMs + r.limits.closeMs + 1;
+                },
+                (r) => {
+                    response(r).receivedUtc = r.custody.observation.innerSupervisor.exit.utc;
+                },
+                (r) => {
+                    r.events = r.events.filter((row) => row !== response(r));
+                },
+                (r) => {
+                    r.events.push({ ...response(r), eventId: 999 });
+                },
+                (r) => {
+                    r.custody.observation.barriers.find((row) => row.phase === 'stop').elapsedMs += 1;
+                },
+                (r) => {
+                    r.servers[0].close = null;
+                },
+                (r) => {
+                    r.runtimes[0].stopBegin.workerPID += 1;
+                },
+                (r) => {
+                    r.custody.observation.innerSupervisor.exit.code = 7;
+                },
+                (r) => {
+                    r.custody.observation.final.result = 'UNKNOWN';
+                },
+                (r) => {
+                    delete r.custody.artifacts.nodeReceipt;
+                },
+                (r) => {
+                    r.forced = true;
+                },
+                (r) => {
+                    r.timedOut = true;
+                },
+                (r) => {
+                    r.custody.observation.errors.push('unrelated failure');
+                },
+                (r) => {
+                    r.errors.push('unrelated collector assertion');
+                },
+            ];
+            for (const [type, fields] of [
+                [
+                    'browser-exit',
+                    ['pid', 'runtimeId', 'launchId', 'workerPID', 'namespace', 'source', 'cpuDummy', 'type'],
+                ],
+                [
+                    'browser-close',
+                    ['pid', 'runtimeId', 'launchId', 'workerPID', 'namespace', 'source', 'cpuDummy', 'type'],
+                ],
+                [
+                    'server-close',
+                    [
+                        'serverId',
+                        'runtimeId',
+                        'ownerPID',
+                        'workerPID',
+                        'namespace',
+                        'physicalProcess',
+                        'source',
+                        'cpuDummy',
+                        'type',
+                    ],
+                ],
+                ['stop-begin', ['runtimeId', 'launchId', 'workerPID', 'namespace', 'source', 'cpuDummy', 'type']],
+            ]) {
+                for (const field of fields)
+                    mutations.push((r) =>
+                        changeEveryEventAlias(
+                            r,
+                            type,
+                            field,
+                            field.endsWith('PID') || field === 'pid' ? 999999 : 'wrong-binding',
+                        ),
+                    );
+            }
+            for (const [index, mutate] of mutations.entries()) {
+                const changed = structuredClone(original);
+                mutate(changed);
+                assert.equal(expectedOutcome(changed, options), false, `${name} mutation ${index}`);
+                assert.equal(changed.ok, false);
+            }
+        }
+        assert.ok(retained > 0, 'at least one genuine pending stop-ACK fixture is required');
+        const prior = JSON.parse(
+            fs.readFileSync(path.join(root, 'quality-cpu-38764015813/browser-nonzero/attempt-receipt.json')),
+        );
+        assert.equal(expectedOutcome(prior, options), true);
+        prior.errors.push('Custody barrier remained pending at worker closure');
+        assert.equal(
+            expectedOutcome(prior, options),
+            false,
+            'an earlier response cannot prove a pending-at-closure failure',
+        );
+    },
+);
+
+test(
+    'all browser-nonzero variants reject event grafts even with synchronized aliases and rehashed node receipts',
+    { skip: !process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT },
+    () => {
+        const fs = require('node:fs'),
+            path = require('node:path'),
+            crypto = require('node:crypto');
+        const { expectedOutcome } = require('./example-evidence-shutdown-trace.cjs');
+        const { validateCustodyArtifacts } = require('./example-evidence-supervisor.cjs');
+        const root = process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT;
+        const walk = (value, type, field, replacement) => {
+            if (!value || typeof value !== 'object') return;
+            if (value.type === type) value[field] = replacement;
+            for (const item of Object.values(value)) walk(item, type, field, replacement);
+        };
+        const names = [
+            'quality-cpu-38764015813/browser-nonzero/attempt-receipt.json',
+            'cpu-capture-38772137122/browser-nonzero/attempt-receipt.json',
+            'cpu-capture-38774702281/browser-nonzero/attempt-receipt.json',
+            'cpu-capture-38784147029/browser-nonzero/attempt-receipt.json',
+            'quality-cpu-38784147193/browser-nonzero/attempt-receipt.json',
+            'shutdown-diagnostics-38784147029/cpu-browser-nonzero-off/attempt/attempt-receipt.json',
+        ];
+        let retained = 0;
+        for (const name of names) {
+            const file = path.join(root, name);
+            if (!fs.existsSync(file)) continue;
+            retained++;
+            const original = JSON.parse(fs.readFileSync(file)),
+                options = { mode: 'cpu', cpuCase: 'browser-nonzero' };
+            assert.equal(expectedOutcome(original, options), true);
+            for (const [type, fields] of [
+                [
+                    'browser-exit',
+                    ['pid', 'runtimeId', 'launchId', 'workerPID', 'namespace', 'source', 'cpuDummy', 'type'],
+                ],
+                [
+                    'browser-close',
+                    ['pid', 'runtimeId', 'launchId', 'workerPID', 'namespace', 'source', 'cpuDummy', 'type'],
+                ],
+                [
+                    'server-close',
+                    [
+                        'serverId',
+                        'runtimeId',
+                        'ownerPID',
+                        'workerPID',
+                        'namespace',
+                        'physicalProcess',
+                        'source',
+                        'cpuDummy',
+                        'type',
+                    ],
+                ],
+                ['stop-begin', ['runtimeId', 'launchId', 'workerPID', 'namespace', 'source', 'cpuDummy', 'type']],
+            ])
+                for (const field of fields) {
+                    const changed = structuredClone(original);
+                    walk(changed, type, field, field.endsWith('PID') || field === 'pid' ? 999999 : 'wrong-binding');
+                    assert.equal(expectedOutcome(changed, options), false, `${name} ${type}.${field}`);
+                }
+            for (const [type, field, replacement] of [
+                ['browser-exit', 'pid', 999999],
+                ['browser-close', 'pid', 999999],
+                ['browser-exit', 'runtimeId', 'foreign'],
+                ['server-close', 'runtimeId', 'foreign'],
+                ['server-close', 'serverId', 'foreign'],
+            ]) {
+                const changed = structuredClone(original),
+                    artifacts = {};
+                for (const [role, reference] of Object.entries(original.custody.artifacts)) {
+                    const bytes = fs.readFileSync(path.join(path.dirname(file), path.basename(reference.path)));
+                    assert.equal(bytes.length, reference.bytes);
+                    assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), reference.sha256);
+                    artifacts[role] = ['raw', 'nodeReceipt'].includes(role) ? JSON.parse(bytes) : bytes;
+                }
+                walk(changed, type, field, replacement);
+                walk(artifacts.nodeReceipt, type, field, replacement);
+                const syntheticBytes = Buffer.from(JSON.stringify(artifacts.nodeReceipt, null, 2) + '\n');
+                changed.custody.artifacts.nodeReceipt.bytes = syntheticBytes.length;
+                changed.custody.artifacts.nodeReceipt.sha256 = crypto
+                    .createHash('sha256')
+                    .update(syntheticBytes)
+                    .digest('hex');
+                assert.equal(
+                    validateCustodyArtifacts(changed, artifacts).ok,
+                    true,
+                    'artifact consistency alone cannot prove ownership',
+                );
+                assert.equal(expectedOutcome(changed, options), false, `${name} rehashed ${type}.${field}`);
+                assert.equal(changed.ok, false);
+            }
+        }
+        assert.ok(retained >= 2, 'genuine ACK-before-close and pending-ACK fixtures are required');
+    },
+);
+
 async function closeGuardedControl(action, lifetime) {
     try {
         return await action();

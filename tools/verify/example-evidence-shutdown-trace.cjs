@@ -954,6 +954,121 @@ const SECONDARY_FAILURES = new Set([
     'worker exit and stdio close receipts are not clean',
     'Per-runtime custody barriers missing',
 ]);
+// Matching an event-log copy alone is insufficient: bind each physical event to its
+// original browser/server row, runtime launch and exact worker namespace.
+function browserNonzeroEventOwnership(receipt) {
+    const raw = receipt.custody?.observation;
+    if (!raw || receipt.runtimes.length !== 1 || receipt.browsers.length !== 1 || receipt.servers.length !== 1)
+        return false;
+    const runtime = receipt.runtimes[0],
+        browser = receipt.browsers[0],
+        server = receipt.servers[0],
+        worker = receipt.worker,
+        stop = runtime.stopBegin;
+    const observerEvent = (row, type) =>
+        row?.type === type &&
+        row.source === 'observer' &&
+        row.cpuDummy === true &&
+        row.workerPID === worker.pid &&
+        row.namespace === worker.namespace &&
+        receipt.events.filter((event) => event.eventId === row.eventId).length === 1 &&
+        receipt.events.some((event) => JSON.stringify(event) === JSON.stringify(row));
+    const browserEvent = (row, type) =>
+        observerEvent(row, type) &&
+        row.pid === browser.pid &&
+        row.runtimeId === browser.runtimeId &&
+        row.launchId === browser.launchId;
+    return (
+        observerEvent(stop, 'stop-begin') &&
+        stop.runtimeId === runtime.runtimeId &&
+        stop.launchId === browser.launchId &&
+        raw.innerSupervisor.namespace === worker.namespace &&
+        raw.custodian.namespace === worker.namespace &&
+        browser.runtimeId === runtime.runtimeId &&
+        typeof browser.launchId === 'string' &&
+        browser.launchId.length > 0 &&
+        browser.launchId === runtime.launch?.launchId &&
+        browserEvent(browser.exit, 'browser-exit') &&
+        browserEvent(browser.close, 'browser-close') &&
+        server.runtimeId === runtime.runtimeId &&
+        typeof server.serverId === 'string' &&
+        server.serverId.length > 0 &&
+        server.ownerPID === worker.pid &&
+        server.physicalProcess === 'collector-worker' &&
+        observerEvent(server.close, 'server-close') &&
+        server.close.serverId === server.serverId &&
+        server.close.runtimeId === server.runtimeId &&
+        server.close.ownerPID === server.ownerPID &&
+        server.close.physicalProcess === server.physicalProcess
+    );
+}
+
+// The browser-nonzero fixture can close its worker before the already-issued stop ACK
+// reaches the inner supervisor. This permits only that retained negative-control failure.
+function browserNonzeroPendingDrain(receipt) {
+    const raw = receipt.custody?.observation;
+    if (!raw || receipt.runtimes.length !== 1 || receipt.browsers.length !== 1 || receipt.servers.length !== 1)
+        return false;
+    const runtime = receipt.runtimes[0],
+        browser = receipt.browsers[0],
+        server = receipt.servers[0];
+    const stop = runtime.stopBegin,
+        worker = receipt.worker,
+        inner = raw.innerSupervisor;
+    const exact = (row, events) =>
+        row &&
+        events.filter((item) => item.eventId === row.eventId).length === 1 &&
+        events.some((item) => JSON.stringify(item) === JSON.stringify(row));
+    const proofs = raw.barriers.filter((row) => row.phase === 'stop');
+    const responses = receipt.events.filter((row) => row.type === 'custody-request-settled' && row.phase === 'stop');
+    if (proofs.length !== 1 || responses.length !== 1) return false;
+    const proof = proofs[0],
+        settled = responses[0];
+    const start = raw.barriers.filter((row) => row.phase === 'start');
+    const localBefore = (a, b) =>
+        exact(a, receipt.events) &&
+        exact(b, receipt.events) &&
+        a.eventId < b.eventId &&
+        Number.isFinite(a.supervisorElapsedMs) &&
+        Number.isFinite(b.supervisorElapsedMs) &&
+        a.supervisorElapsedMs < b.supervisorElapsedMs;
+    const proofTime = Date.parse(proof.utc),
+        settledTime = Date.parse(settled.receivedUtc),
+        innerTime = Date.parse(inner.exit?.utc);
+    return (
+        start.length === 1 &&
+        start[0].requestId === 1 &&
+        proof.requestId === 2 &&
+        settled.requestId === proof.requestId &&
+        proof.runtimeId === runtime.runtimeId &&
+        proof.workerPID === worker.pid &&
+        proof.workerStartTicks === worker.startTicks &&
+        proof.type === 'runtime-custody-barrier' &&
+        proof.ok === true &&
+        proof.observedSubreaper === 1 &&
+        proof.transport === 'inherited-anonymous-pipes/v1' &&
+        JSON.stringify(proof.directChildren) === JSON.stringify([inner.pid]) &&
+        exact(proof, raw.events) &&
+        settled.outcome === 'response' &&
+        localBefore(stop, browser.exit) &&
+        localBefore(browser.exit, browser.close) &&
+        localBefore(browser.close, server.close) &&
+        localBefore(server.close, worker.exit) &&
+        localBefore(worker.exit, worker.close) &&
+        localBefore(worker.close, settled) &&
+        settled.supervisorElapsedMs - stop.supervisorElapsedMs <= receipt.limits.closeMs &&
+        Number.isFinite(proofTime) &&
+        Number.isFinite(settledTime) &&
+        Number.isFinite(innerTime) &&
+        Date.parse(stop.utc) <= proofTime &&
+        proofTime <= settledTime &&
+        settledTime < innerTime &&
+        exact(inner.exit, raw.events) &&
+        inner.exit.code === 0 &&
+        inner.exit.signal === null
+    );
+}
+
 function expectedOutcome(receipt, options) {
     const raw = receipt.custody?.observation;
     const pair = (row, code, signal = null) =>
@@ -988,9 +1103,15 @@ function expectedOutcome(receipt, options) {
             raw.errors.length ||
             !pair(receipt.worker, 124) ||
             receipt.browsers.length !== 1 ||
-            !pair(receipt.browsers[0], 7)
+            !pair(receipt.browsers[0], 7) ||
+            !browserNonzeroEventOwnership(receipt)
         )
             return false;
+        const pendingFailure = 'Custody barrier remained pending at worker closure';
+        if ([...receipt.errors, ...receipt.lifecycleErrors].includes(pendingFailure)) {
+            if (!browserNonzeroPendingDrain(receipt)) return false;
+            allowed.add(pendingFailure);
+        }
         for (const value of [
             'unclean browser exit: 7/null',
             'unclean browser close: 7/null',
