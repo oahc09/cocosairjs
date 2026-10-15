@@ -22,6 +22,9 @@ const DEFAULT_LIMITS = Object.freeze({
 });
 const CPU_CASES = [
     'positive',
+    'synchronous-compiler',
+    'compiler-mode-missing',
+    'compiler-mode-invalid',
     'ui-shell',
     'missing-browser-close',
     'missing-server-close',
@@ -306,6 +309,8 @@ function validateAttemptReceiptUnchecked(receipt, options = {}) {
         ...['server-listen-request', 'server-listening', 'server-close'].map((type) => [type, servers.length]),
     ])
         if (events.filter((event) => event.type === type).length !== count) fail(`${type} event cardinality invalid`);
+    if (events.find((event) => event.type === 'observer-start')?.esbuildWorkerThreads !== '0')
+        fail('collector compiler must use synchronous subprocess mode');
     const modes = options.expectedModes || receipt.expectedModes;
     if (
         !Array.isArray(modes) ||
@@ -1179,6 +1184,10 @@ async function superviseAttemptInner(options) {
         detached: true,
         env: {
             ...workerEnvironment,
+            // esbuild's sync API otherwise owns an unref worker-thread service that can outlive this worker.
+            // Its supported synchronous subprocess mode returns only after wait/stdio collection.
+            ESBUILD_WORKER_THREADS:
+                cpuCase === 'compiler-mode-missing' ? undefined : cpuCase === 'compiler-mode-invalid' ? '1' : '0',
             EXAMPLE_EVIDENCE_SUPERVISED: '1',
             EXAMPLE_EVIDENCE_STARTED_AT: new Date(startedEpoch).toISOString(),
             EXAMPLE_EVIDENCE_LIMITS: JSON.stringify(limits),

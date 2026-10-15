@@ -442,5 +442,9 @@ process.on('beforeExit', () => {
     if (process.connected) process.disconnect();
 });
 process.channel?.unref();
-emit('observer-start', { limits, serverModel: 'HTTP server shares the physical collector worker PID' });
+emit('observer-start', {
+    limits,
+    serverModel: 'HTTP server shares the physical collector worker PID',
+    esbuildWorkerThreads: process.env.ESBUILD_WORKER_THREADS || null,
+});
 module.exports = { instrumentLauncher, instrumentRuntime, abort, limits };

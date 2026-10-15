@@ -542,3 +542,90 @@ describe('Committed example evidence workflow safeguards', () => {
         ]);
     });
 });
+
+test('collector sync compiler mode preserves real build/transform bytes without a persistent helper', () => {
+    const script = `
+        const fs = require('fs'), path = require('path'), crypto = require('crypto');
+        const repo = process.argv[1];
+        const esbuild = require(path.join(repo, 'node_modules/esbuild'));
+        const { BrowserRuntime } = require(path.join(repo, 'tools/benchmark/runner/browser-runtime.cjs'));
+        const hash = (value) => crypto.createHash('sha256').update(value).digest('hex');
+        const namespace = fs.readlinkSync('/proc/self/ns/pid');
+        function identity(pid) {
+            try {
+                const stat = fs.readFileSync('/proc/' + pid + '/stat', 'utf8');
+                const fields = stat.slice(stat.lastIndexOf(')') + 2).split(' ');
+                if (+fields[1] !== process.pid) return null; // Do not inspect unrelated users' namespaces.
+                return { pid, state: fields[0], ppid: +fields[1], startTicks: fields[19],
+                    namespace: fs.readlinkSync('/proc/' + pid + '/ns/pid'),
+                    command: fs.readFileSync('/proc/' + pid + '/cmdline', 'utf8').split('\\0') };
+            } catch (error) { if (error.code === 'ENOENT' || error.code === 'ESRCH') return null; throw error; }
+        }
+        function children() {
+            return fs.readdirSync('/proc').filter(name => /^\\d+$/.test(name)).map(name => identity(+name))
+                .filter(row => row && row.ppid === process.pid && row.namespace === namespace);
+        }
+        const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+        (async () => {
+            const outputs = [];
+            const initial = children();
+            for (const dir of ['html-texture-experimental', 'shader-driver-pilot', 'spark-splats']) {
+                const runtime = new BrowserRuntime({ esbuild, repo });
+                const built = await runtime.build({ paths: { workspace: path.join(repo, 'examples', dir) } });
+                if (!built.success) throw Error(JSON.stringify(built));
+                outputs.push({ dir, sha256: hash(runtime.compiledEntry.code) });
+            }
+            const transformed = esbuild.transformSync('export const answer: number = 42', { loader: 'ts', format: 'esm' });
+            const afterCalls = children();
+            // This is the explicit negative-control teardown, not a production success receipt.
+            // Kill only this process's exact esbuild child while its Worker still owns waitpid.
+            for (const child of afterCalls) {
+                if (!child.command.some(value => /^--service=/.test(value))) throw Error('Unexpected CPU child');
+                const current = identity(child.pid);
+                if (!current || current.startTicks !== child.startTicks || current.namespace !== child.namespace ||
+                    current.ppid !== process.pid) throw Error('CPU child identity changed before cleanup');
+                process.kill(child.pid, 'SIGTERM');
+            }
+            const deadline = Date.now() + 3000;
+            while (children().length && Date.now() < deadline) await pause(10);
+            const afterCleanup = children();
+            await esbuild.stop();
+            if (afterCleanup.length) throw Error('Compiler child not physically collected');
+            console.log(JSON.stringify({ outputs, transformed: transformed.code, initial, afterCalls, afterCleanup }));
+        })().catch(error => { console.error(error.stack); process.exitCode = 1; });
+    `;
+    const probe = (mode: string) => {
+        const child = cp.spawnSync(nodeProcess.execPath, ['-e', script, root], {
+            cwd: root,
+            env: { ...nodeProcess.env, ESBUILD_WORKER_THREADS: mode },
+            encoding: 'utf8',
+            timeout: 25000,
+        });
+        expect(child.status).toBe(0);
+        expect(child.signal).toBe(null);
+        expect(child.error).toBeUndefined();
+        return JSON.parse(child.stdout);
+    };
+    const defaultMode = probe('1');
+    const syncMode = probe('0');
+    expect(defaultMode.initial).toEqual([]);
+    expect(defaultMode.afterCalls).toHaveLength(1);
+    expect(defaultMode.afterCalls[0].command.join(' ')).toMatch(/esbuild.*--service=/);
+    expect(defaultMode.afterCleanup).toEqual([]);
+    expect(syncMode.initial).toEqual([]);
+    expect(syncMode.afterCalls).toEqual([]);
+    expect(syncMode.afterCleanup).toEqual([]);
+    expect(syncMode.outputs).toEqual(defaultMode.outputs);
+    expect(syncMode.transformed).toEqual(defaultMode.transformed);
+}, 60000);
+
+test.each([undefined, '1'])('collector rejects compiler mode %s before loading esbuild', (mode) => {
+    const child = cp.spawnSync(nodeProcess.execPath, ['-e', `require('./tools/verify/example-spec-browser.cjs')`], {
+        cwd: root,
+        env: { ...nodeProcess.env, EXAMPLE_EVIDENCE_SUPERVISED: '1', ESBUILD_WORKER_THREADS: mode },
+        encoding: 'utf8',
+        timeout: 5000,
+    });
+    expect(child.status).toBe(1);
+    expect(child.stderr).toContain('requires ESBUILD_WORKER_THREADS=0 before loading esbuild');
+});

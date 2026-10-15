@@ -5,6 +5,7 @@ const http = require('http');
 const cp = require('child_process');
 const mode = process.env.EXAMPLE_EVIDENCE_CPU_CASE;
 if (!mode) throw Error('CPU fixture requires supervisor CPU mode');
+if (process.env.ESBUILD_WORKER_THREADS !== '0') throw Error('CPU collector compiler mode mismatch');
 if (process.env.EXAMPLE_EVIDENCE_CUSTODIAN_REQUEST_FD || process.env.EXAMPLE_EVIDENCE_CUSTODIAN_RESPONSE_FD)
     throw Error('Custodian private pipe descriptors leaked into collector');
 const modes = JSON.parse(process.env.EXAMPLE_EVIDENCE_MODES);
@@ -107,6 +108,17 @@ class CpuRuntime {
 hooks.instrumentRuntime(CpuRuntime);
 (async () => {
     if (mode === 'worker-startup') await pause(hooks.limits.startupMs + 100);
+    if (mode === 'synchronous-compiler') {
+        const esbuild = require(require('path').join(process.cwd(), 'node_modules/esbuild'));
+        const built = esbuild.buildSync({
+            stdin: { contents: 'export const value: number = 42', loader: 'ts' },
+            write: false,
+            format: 'esm',
+        });
+        const transformed = esbuild.transformSync('const value: number = 42', { loader: 'ts' });
+        if (!built.outputFiles[0].text.includes('42') || !transformed.code.includes('42'))
+            throw Error('Real synchronous compiler output missing');
+    }
     for (const evidenceMode of modes) {
         const runtime = new CpuRuntime();
         try {

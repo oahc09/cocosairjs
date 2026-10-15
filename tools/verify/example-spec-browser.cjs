@@ -29,6 +29,9 @@ const os = require('os');
 const crypto = require('crypto');
 
 const REPO = path.resolve(__dirname, '..', '..');
+// Must precede the first esbuild load: its default sync API starts a persistent worker-thread service.
+if (process.env.EXAMPLE_EVIDENCE_SUPERVISED === '1' && process.env.ESBUILD_WORKER_THREADS !== '0')
+    throw new Error('Supervised collector requires ESBUILD_WORKER_THREADS=0 before loading esbuild');
 const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
 const { BrowserRuntime } = require(path.join(REPO, 'tools', 'benchmark', 'runner', 'browser-runtime.cjs'));
 const specCommon = require(path.join(REPO, 'tools', 'verify', 'example-spec-common.cjs'));

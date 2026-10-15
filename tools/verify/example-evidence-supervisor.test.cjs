@@ -62,7 +62,20 @@ test('actual CPU subprocess/HTTP lifecycle controls, sequential and bounded', as
         assert.equal(receipt.runtimes[0].ready.clock, 'CPU_DUMMY_NOT_RENDERING');
         assert.equal(receipt.runtimes[0].ready.nativeEngineFrames, null);
     });
+    await t.test('real synchronous esbuild finishes before worker and browser closure', async () => {
+        const receipt = await run('synchronous-compiler');
+        assert.equal(receipt.ok, true, JSON.stringify(receipt.errors));
+        assert.equal(receipt.forced, false);
+        assert.equal(receipt.events.find((event) => event.type === 'observer-start').esbuildWorkerThreads, '0');
+        for (const mode of [undefined, '1']) {
+            const changed = structuredClone(receipt);
+            changed.events.find((event) => event.type === 'observer-start').esbuildWorkerThreads = mode;
+            assert.equal(validateAttemptReceipt(changed, { allowCpuDummy: true }).ok, false);
+        }
+    });
     for (const cpuCase of [
+        'compiler-mode-missing',
+        'compiler-mode-invalid',
         'missing-browser-close',
         'missing-server-close',
         'missing-ready',

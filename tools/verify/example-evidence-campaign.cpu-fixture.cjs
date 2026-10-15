@@ -85,7 +85,7 @@ function makeReceipt(entry, freeze, output, failed = false, startAt = freeze.cre
         return row;
     };
     worker.spawn = event('worker-spawn', { pid: workerPID, startTicks: '1000', namespace });
-    event('observer-start');
+    event('observer-start', { esbuildWorkerThreads: '0' });
     const browsers = [];
     const servers = [];
     const runtimes = [];

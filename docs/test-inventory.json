@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T03:23:02.013487+00:00",
+  "generatedAt": "2026-10-15T03:43:39.270708+00:00",
   "suites": [
     {
       "file": "test/smoke/air-content-size-fitter.test.ts",
@@ -4030,7 +4030,10 @@
         "Evidence collector integration safeguards response body symlink is rejected even when its target has identical bytes",
         "Evidence collector integration safeguards stale source map contents fail before evidence collection",
         "Evidence collector integration safeguards unknown ID and overwrite/retry without history are rejected before browser launch",
-        "Evidence collector integration safeguards unrecognized virtual source cannot skip current-source checks"
+        "Evidence collector integration safeguards unrecognized virtual source cannot skip current-source checks",
+        "collector rejects compiler mode 1 before loading esbuild",
+        "collector rejects compiler mode undefined before loading esbuild",
+        "collector sync compiler mode preserves real build/transform bytes without a persistent helper"
       ]
     },
     {
@@ -4234,7 +4237,7 @@
   ],
   "totals": {
     "suites": 198,
-    "tests": 3240,
+    "tests": 3243,
     "passed": null,
     "failed": null
   }
