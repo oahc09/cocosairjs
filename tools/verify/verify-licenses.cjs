@@ -87,7 +87,7 @@ const REGISTRY = [
         licenseId: 'MIT (c) 2025 WORLD LABS TECHNOLOGIES, INC.（@sparkjsdev/spark 2.3.1，冻结提交 c57ebb93）',
         ships: 'variant',
         probes: ['SparkRenderer', 'sparkjsdev'],
-        note: 'SPK-03 冻结上游源码落位 vendor/spark/（src 52 个 .ts + rust 29 个 .rs，逐字节一致）；SPK-11 已编入可选 `spark` feature unit，故 ships=variant：变体产物 build/cocosair.module.spark.js 含其字节（实测 SparkRenderer×5、SplatMesh×7），默认产物 build/cocosair.module.js{,.min.js} 指纹为 0（由本检查与 verify:spark-assets 双重断言）。清单见 docs/evidence/spark/vendor-spark-tree-20261011.json。',
+        note: 'SPK-03 冻结上游源码落位 vendor/spark/（src 52 个 .ts + rust 29 个 .rs，逐字节一致）；SPK-11 已编入可选 `spark` feature unit，故 ships=variant：变体产物 build/spark.module.js 含其字节（实测 SparkRenderer×5、SplatMesh×7），默认产物 build/cocosair.module.js{,.min.js} 指纹为 0（由本检查与 verify:spark-assets 双重断言）。清单见 docs/evidence/spark/vendor-spark-tree-20261011.json。',
     },
     {
         component: 'spark-rs WASM 与 wasm-bindgen glue',

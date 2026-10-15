@@ -47,9 +47,12 @@ function buildArtifact () {
   fs.mkdirSync(ARTIFACT, { recursive: true });
   // 引擎与解码器（根相对）
   fs.copyFileSync(path.join(REPO, 'build', 'cocosair.module.js'), path.join(ARTIFACT, 'cocosair.module.js'));
-  for (const entry of ['bootstrap.js', 'html-source.js']) {
-    fs.copyFileSync(path.join(REPO, 'build', entry), path.join(ARTIFACT, entry));
+  if (manifest.examples.some(ex => ex.id === 'spark-splats')) {
+    const moduleFile = path.join(REPO, 'build', 'spark.module.js');
+    if (!fs.existsSync(moduleFile)) throw new Error('Spark example requires npm run build:spark');
+    fs.copyFileSync(moduleFile, path.join(ARTIFACT, 'spark.module.js'));
   }
+
   fs.cpSync(path.join(REPO, 'build', 'gltf-decoders'), path.join(ARTIFACT, 'gltf-decoders'), { recursive: true });
   // 示例（源目录全量 + 共享库）。shared/bench.* 是 V0.5.1 的 DevTools/基准测量台：
   // 它的 importmap 写死仓库根 /build/ 且需要 agent 通道，不属于静态交付物，故不随包发布。
@@ -71,8 +74,8 @@ function buildArtifact () {
       const html = fs.readFileSync(htmlPath, 'utf8');
       fs.writeFileSync(htmlPath, html
         .split('"/build/cocosair.module.js"').join('"../cocosair.module.js"')
-        .split('"/build/bootstrap.js"').join('"../bootstrap.js"')
-        .split('"/build/html-source.js"').join('"../html-source.js"'));
+        .split('"/build/spark.module.js"').join('"../spark.module.js"')
+        );
       rewrites++;
     }
     for (const entry of ['src/main.ts', 'src/main.js', 'main.ts', 'main.js']) {

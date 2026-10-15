@@ -56480,6 +56480,60 @@
         /** @internal Keeps the packed texture and original page alive through dynamic-atlas restoration. */
         refreshFrame(): void;
     }
+    /** @en Which size the fitter may write on one axis. @zh 单轴自适应模式。 */
+    export type AirFitMode = "off" | "min" | "preferred";
+    /** @en Intrinsic sizes returned by a measurer. @zh 测量器返回的固有尺寸。 */
+    export interface AirFitMeasure {
+        minWidth?: number;
+        minHeight?: number;
+        preferredWidth?: number;
+        preferredHeight?: number;
+    }
+    /** @en Custom measurer hook; return null to fall back to the built-in sources. @zh 自定义测量钩子，返回 null 回落内置测量。 */
+    export type AirFitMeasureFn = (fitter: AirContentSizeFitter) => AirFitMeasure | null;
+    /**
+     * @en Resizes the node's UITransform to the intrinsic size of its content.
+     * @zh 按节点内容的固有尺寸回写 `UITransform` 内容尺寸。
+     *
+     * @example
+     * ```ts
+     * const fitter = node.addComponent(AirContentSizeFitter);
+     * fitter.horizontalFit = 'preferred';
+     * fitter.verticalFit = 'preferred';
+     * ```
+     */
+    export class AirContentSizeFitter extends Component {
+        /** @en Recompute in `update` while dirty. Set false to drive {@link fitNow} yourself. @zh 置 true 时每帧按脏标记重算；关闭后由 fitNow 手动驱动。 */
+        autoFit: boolean;
+        protected _horizontalFit: AirFitMode;
+        protected _verticalFit: AirFitMode;
+        protected _measure: AirFitMeasureFn | null;
+        protected _affectedByScale: boolean;
+        protected _dirty: boolean;
+        /** @en Horizontal fit mode. @zh 水平轴自适应模式。 */
+        get horizontalFit(): AirFitMode;
+        set horizontalFit(value: AirFitMode);
+        /** @en Vertical fit mode. @zh 垂直轴自适应模式。 */
+        get verticalFit(): AirFitMode;
+        set verticalFit(value: AirFitMode);
+        /** @en Optional custom measurer; wins over the built-in sources. @zh 可选自定义测量器，优先于内置测量源。 */
+        get measure(): AirFitMeasureFn | null;
+        set measure(value: AirFitMeasureFn | null);
+        /** @en Whether child scale counts toward the children bounding box, like `Layout.affectedByScale`. @zh 子节点缩放是否计入包围盒测量，语义同 `Layout.affectedByScale`。 */
+        get affectedByScale(): boolean;
+        set affectedByScale(value: boolean);
+        protected onEnable(): void;
+        protected update(): void;
+        /** @en Mark the fitter dirty; the next `update` (or {@link fitNow}) recomputes. Call this after you change the measured content. @zh 置脏；内容变化后调用，下一次 update 或 fitNow 时重算。 */
+        markDirty(): void;
+        /**
+         * @en Measure and apply immediately. Returns true when the content size changed.
+         * @zh 立即测量并回写尺寸；内容尺寸发生变化时返回 true。
+         */
+        fitNow(): boolean;
+        protected _axisSize(source: AirFitMeasure, axis: "Width" | "Height", mode: AirFitMode): number | null;
+        protected _assertFitMode(field: string, value: AirFitMode): void;
+    }
     /** Owns one independent overlay; never changes game.container or the host's styles. */
     export function createAirDOMOverlay(options: AirDOMOverlayOptions): AirDOMOverlay;
     export interface AirDOMOverlayOptions {

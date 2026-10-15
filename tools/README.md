@@ -6,7 +6,7 @@
 
 Code quality 在重建默认包后使用固定 Playwright 工具版本采集三浏览器矩阵，再运行读取当期产物绑定的 Jest 门禁，避免将历史截图指纹改写为当前证据。`pngjs` 是这些 Node/PNG 合同测试的开发依赖，不进入运行时 bundle。
 
-`tools/verify/example-spec-browser.cjs` 的隔离工作区支持 DOM iterable 类型、bootstrap 边车、`.js` 指向 TypeScript 源文件及本示例参数/recipe 的路径迁移。规格可用 `bench.startupButtonText` 声明实际启动按钮、`bench.viewport` 声明视口；`bench.apiVariants` 的 `query`、`nodes`、`steps` 声明额外模式，`steps[].drag` 为两个归一化画布坐标。每个模式独立运行全部非 API 检查并保留原始证据，只有真实执行的 API 才能汇总为已执行，截图按模式分别保存。调试入口可从真实 `createAirApp()` 返回值获取；跟踪保留其 Promise 与延迟启动行为。`--ids` 仍是子集，不晋级规格或标记完整门禁通过。
+`tools/verify/example-spec-browser.cjs` 的隔离工作区支持 DOM iterable 类型、应用主入口包装、`.js` 指向 TypeScript 源文件及本示例参数/recipe 的路径迁移。规格可用 `bench.startupButtonText` 声明实际启动按钮、`bench.viewport` 声明视口；`bench.apiVariants` 的 `query`、`nodes`、`steps` 声明额外模式，`steps[].drag` 为两个归一化画布坐标。每个模式独立运行全部非 API 检查并保留原始证据，只有真实执行的 API 才能汇总为已执行，截图按模式分别保存。调试入口可从真实 `createAirApp()` 返回值获取；跟踪保留其 Promise 与延迟启动行为。`--ids` 仍是子集，不晋级规格或标记完整门禁通过。
 
 `node tools/verify/input-camera-examples.cjs --out=<new.json>`：只读运行现有 SDK，以三浏览器 × DPR 1/2/3 检查相机投影/深度往返、DOM 射线拾取、正交横竖屏完整取景、HTML 标签偏移缩放和输入失焦清理。要求外部 Playwright 与已有浏览器；拒绝覆盖报告，写显式 JSON 及相邻 `-artifacts/` 页面截图，不构建或重采历史矩阵。resize 先由原生 pacer 处理，断言时暂停并单步，避免双时钟；像素合成/present 不是本工具的通过结论。
 
@@ -160,7 +160,7 @@ CB21 成本复测使用 [benchmark/prepare-cost-retest.mjs](benchmark/prepare-co
 
 `node tools/verify/air-action-input-browser.cjs --out=<新.json>` 采集三浏览器×native/dom×默认/自定义canvas的生产动作reducer与适配器检查，覆盖键盘多源/边沿/编辑控件、HUD所有权、鼠标离开canvas、可信touch tap与session释放。写指定新报告；不等价物理设备多指、OS窗口离开或完整发布验证。
 
-`node tools/verify/air-bootstrap-browser.cjs --out=<新.json>` 检查三浏览器中的 unmin/min/npm-copy 安全入口、首次启动、DPR resize、初始化失败和暂停释放，写指定报告及相邻截图。`npm run verify:consumer -- --bootstrap-browser --browser-out=<新.json>` 另行打包并安装到临时消费者，再用 esbuild 生成分块，检查实际安装包的三浏览器启动/像素/释放；默认 consumer 命令只执行 Node、类型及 bundler 解析检查。浏览器模式需要可解析的 Playwright 与匹配二进制。这些限定探针不替代完整发布或长时间生命周期证据。
+`node tools/verify/air-bootstrap-browser.cjs --out=<新.json>` 检查三浏览器中的 unmin/min/npm-copy 主入口、首次启动、DPR resize、初始化失败和暂停释放，写指定报告及相邻截图。`npm run verify:consumer -- --bootstrap-browser --browser-out=<新.json>` 另行打包并安装到临时消费者，再用 esbuild 生成分块，检查实际安装包的三浏览器启动/像素/释放；默认 consumer 命令只执行 Node、类型及 bundler 解析检查。浏览器模式需要可解析的 Playwright 与匹配二进制。这些限定探针不替代完整发布或长时间生命周期证据。
 
 - `node tools/verify/air-asset-bank-browser.cjs --out=<new.json>`：三浏览器真实HTTP无后缀JSON/PNG、显式ext分派、共享/取消/迟到释放和404/CORS/CSP。自动启动并关闭只读夹具及资源server；写显式新报告，保留实际请求、预期错误和指纹，不重建/安装引擎；`subset=true / completed=false`，不等于全部PG-32能力验收。
 
@@ -262,9 +262,9 @@ C04 `shaders-input-dissolve-browser.cjs --phase=functional --browser=all --out=<
 
 ## Build layout and startup lifecycle
 
-- `node tools/build/build.cjs --format esm --spark`: rebuild the full default feature set plus Spark directly as `build/cocosair.module.spark.js` and its correctly named map. This increments the build counter once, does not overwrite default/npm copies, and accepts AIR_OUT_DIR for an isolated destination. Do not combine --spark with AIR_FEATURES, --min or SystemJS.
+- `node tools/build/build.cjs --format esm --spark`: rebuild the full default feature set plus Spark directly as `build/spark.module.js` and its correctly named map. This increments the build counter once, does not overwrite default/npm copies, and accepts AIR_OUT_DIR for an isolated destination. Do not combine --spark with AIR_FEATURES, --min or SystemJS.
 - `tools/build/startup-binding-patch.cjs`: internal checked PAL adaptation; only pal-source --write changes generated PAL outputs.
-- `node tools/verify/build-layout-consumer.cjs --modern-ts=/path/to/tsc --out=new.json`: real tarball installation, clean/upgrade npm-copy regeneration, recursive exports, engine-free imports, bundler splitting, and isolated TS4.9/modern subpath checks. Writes build/npm and temporary consumers; optional report refuses overwrite. Does not build runtime JS or change the build number.
+- `node tools/verify/build-layout-consumer.cjs --modern-ts=/path/to/tsc --out=new.json`: real tarball installation, clean/upgrade npm-copy regeneration, recursive exports, single main entry, consumer bundler resolution, and isolated TS4.9/modern subpath checks. Writes build/npm and temporary consumers; optional report refuses overwrite. Does not build runtime JS or change the build number.
 - `node tools/verify/startup-browser-supervisor.cjs --browser=chromium --out=new.json`: bounded, single-engine startup regression; 15-second outer startup watchdog, 300-second default overall limit, actual child/browser exit+close receipts. Requires Playwright and a matching usable browser; Linux can select AIR_CHROMIUM_PATH/AIR_WEBKIT_PATH. Writes a new supervisor report, adjacent log/probe report; no build or publication. CPU-only --self-test=normal/timeout verifies supervisor cleanup.
 - `node tools/verify/test-inventory-additions.cjs --report=focused.json --discovery=all-suites.json --out=new.json`: generate an additive inventory from real passing new-suite results and complete Jest discovery. Preserves all old titles, refuses removed/renamed suites and failing/pending tests, sets fullRunVerified=false and does not manufacture full-run totals. Only writes the explicit new output; the full inventory execution gate is unchanged.
 

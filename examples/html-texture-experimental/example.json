@@ -62,7 +62,7 @@
   "license": {
     "assets": "Original procedural textures, geometry and DOM; MIT. No third-party downloaded assets."
   },
-  "experimentalEntry": "cocosair.js/html-source",
+  "experimentalEntry": "cocosair.js",
   "supportBoundary": "Normal browsers may report HTML UNSUPPORTED; only an experimental browser can validate live textures.",
   "promotion": {
     "spec": "533471c42d45",

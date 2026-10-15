@@ -23,7 +23,7 @@ run('npm', ['install', '--ignore-scripts', '--offline', '--no-audit', '--no-fund
 const built = require('esbuild').buildSync({
     stdin: {
         contents:
-            "export * from 'cocosair.js/bootstrap'; export function loadRuntime() { return import('cocosair.js'); }",
+            "export async function createAirApp(options) { return (await import('cocosair.js')).createAirApp(options); } export function loadRuntime() { return import('cocosair.js'); }",
         resolveDir: installed,
         sourcefile: 'entry.js',
     },
@@ -44,7 +44,7 @@ for (const [file, metadata] of Object.entries(built.metafile.outputs)) {
             throw Error('Missing bundled dependency: ' + dependency.path);
     }
 }
-for (const name of ['cocosair.module.js', 'cocosair.module.min.js', 'bootstrap.js', 'html-source.js']) {
+for (const name of ['cocosair.module.js', 'cocosair.module.min.js']) {
     if (
         !fs
             .readFileSync(path.join(root, 'build/npm', name))
@@ -65,7 +65,7 @@ try {
 } finally {
     fs.rmSync(temporary, { recursive: true, force: true });
 }
-for (const name of ['cocosair.module.js', 'bootstrap.js', 'html-source.js']) {
+for (const name of ['cocosair.module.js']) {
     if (!fs.readFileSync(path.join(root, 'build', name)).equals(fs.readFileSync(path.join(out, 'gallery', name))))
         throw Error('Gallery byte drift: ' + name);
 }

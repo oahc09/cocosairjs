@@ -33,6 +33,8 @@
  * The locally declared `Spark*` interfaces below only describe the duck-typed surface of adapter/Spark
  * objects this file reads; they carry no algorithm and change no numeric value.
  */
+import { nativeEngine } from './engine';
+import type { AirApp } from './engine';
 import {
     AddEquation,
     AdditiveBlending,
@@ -580,12 +582,10 @@ export class CocosRenderer {
         ...options
     }: CocosRendererOptions = {}): Promise<CocosRenderer> {
         if (!canvas) throw new Error('CocosRenderer.create requires a canvas');
-        (globalThis as { __CC_CANVAS__?: unknown }).__CC_CANVAS__ = canvas;
-        (globalThis as { __CCDPR_CAP__?: unknown }).__CCDPR_CAP__ = pixelRatio;
         // The source resolved this fallback against import.meta.url; this repo's typecheck runs under
         // module=commonjs where import.meta is rejected, so the specifier stays a relative string.
-        const specifier: string = engineUrl ?? '../vendor/cocos/cocosair.module.js';
-        const cc = (await import(specifier)) as AirEngineSurface;
+        const cc = (engineUrl ? await import(engineUrl) : nativeEngine) as unknown as AirEngineSurface;
+        if (cc.gfx !== nativeEngine.gfx) throw new Error('SPARK_E_ENGINE_IDENTITY: use the same main engine module');
         cc.macro.ENABLE_WEBGL_ANTIALIAS = antialias;
         cc.macro.ENABLE_TRANSPARENT_CANVAS = alpha;
         const app = await cc.createAirApp({
@@ -689,12 +689,17 @@ export class CocosRenderer {
         reset(): void;
     };
 
+    constructor(cc: typeof nativeEngine, app: AirApp, canvas: HTMLCanvasElement, options?: CocosRendererOptions);
+    constructor(cc: AirEngineSurface, app: AirAppSurface, canvas: HTMLCanvasElement, options?: CocosRendererOptions);
     constructor(
-        cc: AirEngineSurface,
-        app: AirAppSurface,
+        engine: AirEngineSurface | typeof nativeEngine,
+        nativeApp: AirAppSurface | AirApp,
         canvas: HTMLCanvasElement,
         options: CocosRendererOptions = {},
     ) {
+        const cc = engine as unknown as AirEngineSurface;
+        const app = nativeApp as unknown as AirAppSurface;
+        if (cc.gfx !== nativeEngine.gfx) throw new Error('SPARK_E_ENGINE_IDENTITY: use the same main engine module');
         this.cc = cc;
         this.app = app;
         this.domElement = canvas;

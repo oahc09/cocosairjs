@@ -7,7 +7,7 @@
  *
  * 形态依据（均为本仓既有先例，不新造机制）：
  * - esbuild 预打包第三方/冻结源码树 → 单个 ESM 文件：`tools/build/vendor-package-esm.cjs`；
- * - 可选入口独立于默认 bundle：`tools/build/html-source-entry.cjs` + `package.json` `./html-source`；
+ * - 可选入口独立于默认 bundle：`src/exports/spark.ts` + `build.cjs --spark`；
  * - specifier 改写（`three` → 兼容层、wasm 字节内联、`.glsl` 文本、`?worker&inline` 内联 Worker）：
  *   移植件 `spark-cocosairjs/tools/build.mjs`（只读参照）。
  *

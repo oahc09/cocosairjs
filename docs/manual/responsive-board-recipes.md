@@ -13,7 +13,7 @@
   <canvas id="board"></canvas>
 </section>
 <script type="module">
-  import { createAirApp } from '/build/bootstrap.js';
+  import { createAirApp } from '/build/cocosair.module.js';
   const app = await createAirApp({
     canvas: '#board', screenMode: 'container', container: '#host',
     pixelRatioCap: 2,

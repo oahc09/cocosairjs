@@ -8,7 +8,8 @@ const path = require('path');
 const root = path.resolve(__dirname, '../..');
 const buildDir = path.join(root, 'build');
 const packageDir = path.join(buildDir, 'npm');
-const bundles = ['cocosair.module.js', 'cocosair.module.min.js', 'bootstrap.js', 'html-source.js'];
+const { runtimeBundles: bundles, removeRetiredEntries } = require('./runtime-layout.cjs');
+removeRetiredEntries(buildDir);
 const sourceMapComment = /(?:\r?\n)?\/\/# sourceMappingURL=[^\r\n]*(?:\r?\n)?$/;
 
 for (const bundle of bundles) {

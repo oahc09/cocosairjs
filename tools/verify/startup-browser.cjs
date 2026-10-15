@@ -80,13 +80,13 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
         { cwd: root, maxBuffer: 20 * 1024 * 1024 },
     );
     const files = new Map([['/baseline.js', baseline]]);
-    for (const name of ['cocosair.module.js', 'cocosair.module.spark.js', 'bootstrap.js', 'html-source.js']) {
+    for (const name of ['cocosair.module.js', 'spark.module.js']) {
         const bytes = fs.readFileSync(path.join(root, 'build', name));
         files.set('/build/' + name, bytes);
         report.bundleHashes[name] = sha(bytes);
     }
     const installed = path.join(fixtureRoot, 'installed/node_modules/cocosair.js/build/npm');
-    for (const name of ['cocosair.module.js', 'bootstrap.js', 'html-source.js']) {
+    for (const name of ['cocosair.module.js']) {
         const bytes = fs.readFileSync(path.join(installed, name));
         files.set('/installed/' + name, bytes);
         report.bundleHashes['installed/' + name] = sha(bytes);
@@ -99,7 +99,7 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
     }
     assert.ok(files.has('/bundled/entry.js'), 'Missing bundled entry: prepare fixtures before browser launch');
     assert.ok(fs.existsSync(path.join(fixtureRoot, 'gallery/starter/index.html')), 'Missing nested Gallery fixture');
-    for (const name of ['cocosair.module.js', 'bootstrap.js', 'html-source.js']) {
+    for (const name of ['cocosair.module.js']) {
         assert.ok(
             files.get('/installed/' + name).equals(fs.readFileSync(path.join(root, 'build/npm', name))),
             'Installed runtime drift: ' + name,
@@ -226,7 +226,7 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
             defaultCanvas: true,
         },
         { id: 'late-container', dpr: 1.5, cap: 2, entry: 'cocosair.module.js', container: true, inferredHost: true },
-        { id: 'spark-late-custom', dpr: 1.5, cap: 3, entry: 'cocosair.module.spark.js', spark: true },
+        { id: 'spark-late-custom', dpr: 1.5, cap: 3, entry: 'spark.module.js', spark: true },
         { id: 'failed-startup', dpr: 1, cap: 2, entry: 'cocosair.module.js', fail: true },
     ]) {
         const context = await browser.newContext({
@@ -249,6 +249,7 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
             const prefix = s.bundled ? '/bundled/' : s.installed ? '/installed/' : '/build/';
             const loaded = await import(prefix + s.entry);
             let runtime = s.deferredOnly ? undefined : s.bundled ? await loaded.loadRuntime() : loaded;
+            if (s.spark) runtime = { ...await import(prefix + 'cocosair.module.js'), ...runtime };
             const api = runtime ?? loaded;
             if (s.spark && (typeof runtime.CocosRenderer !== 'function' || !runtime.sparkRuntime?.SplatMesh))
                 throw new Error('Spark variant exports missing');
@@ -302,7 +303,7 @@ const save = () => fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n')
                 screenMode: s.container ? 'container' : 'window',
                 ...(s.container && !s.inferredHost ? { container: host } : {}),
             };
-            const safe = s.bundled ? loaded : s.spark ? runtime : await import(prefix + 'bootstrap.js');
+            const safe = s.bundled ? loaded : s.spark ? runtime : await import(prefix + 'cocosair.module.js');
             const runtimeRegisteredBeforeStart =
                 typeof globalThis[Symbol.for('cocosair.bootstrap.v1')]?.initialize === 'function';
             const a = (s.order === 'main-first' ? api : safe).createAirApp(options);

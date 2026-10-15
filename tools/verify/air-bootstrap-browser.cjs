@@ -11,12 +11,7 @@ async function main() {
     const args = process.argv.slice(2), out = args.find((arg) => arg.startsWith('--out='))?.slice(6);
     if (!out || args.some((arg) => !arg.startsWith('--out='))) throw new Error('usage: node tools/verify/air-bootstrap-browser.cjs --out=<new.json>');
     const output = path.resolve(root, out); if (fs.existsSync(output)) throw new Error('choose a new report path');
-    const startedAt = new Date().toISOString(), candidate = collectSnapshot(), files = [
-        'src/air/safe-bootstrap.ts', 'src/air/app-config.ts', 'src/air/bootstrap.ts', 'src/air/app.ts', 'src/air/session-scope.ts',
-        'src/cocos/game/director.ts', 'src/cocos/asset/asset-manager/release-manager.ts',
-        'test/fixtures/safe-bootstrap/main.ts', 'tools/verify/air-bootstrap-browser.cjs',
-        'build/bootstrap.js', 'build/cocosair.module.js', 'build/cocosair.module.min.js',
-        'build/npm/bootstrap.js', 'build/npm/cocosair.module.js'];
+    const startedAt = new Date().toISOString(), candidate = collectSnapshot(), files = ['src/air/safe-bootstrap.ts', 'src/air/app-config.ts', 'src/air/bootstrap.ts', 'src/air/app.ts', 'src/air/session-scope.ts', 'src/cocos/game/director.ts', 'src/cocos/asset/asset-manager/release-manager.ts', 'test/fixtures/safe-bootstrap/main.ts', 'tools/verify/air-bootstrap-browser.cjs', 'build/cocosair.module.js', 'build/cocosair.module.min.js', 'build/npm/cocosair.module.js'];
     const fingerprints = Object.fromEntries(files.map((file) => [file, hash(file)]));
     const artifacts = output.replace(/\.json$/, '') + '-artifacts'; fs.mkdirSync(artifacts, { recursive: true });
     const server = await startExampleServer(root), results = [];
@@ -31,15 +26,17 @@ async function main() {
                     const context = await browser.newContext({ viewport: { width: 800, height: 600 }, deviceScaleFactor: 3 });
                     const page = await context.newPage(), requests = [], pageErrors = [];
                     page.on('request', (request) => requests.push(request.url())); page.on('pageerror', (error) => pageErrors.push(String(error)));
-                    if (variant === 'min') await page.route('**/build/cocosair.module.js', (route) => route.fulfill({
-                        contentType: 'text/javascript', body: fs.readFileSync(path.join(root, 'build/cocosair.module.min.js')) }));
-                    const entry = variant === 'npm' ? '/build/npm/bootstrap.js' : '/build/bootstrap.js';
+                    const entry = variant === 'npm' ? '/build/npm/cocosair.module.js'
+                        : variant === 'min' ? '/build/cocosair.module.min.js' : '/build/cocosair.module.js';
                     await page.goto(`${server.origin}/test/fixtures/safe-bootstrap/?entry=${entry}`);
                     await page.waitForFunction(() => window.__safeBootstrapProbe?.ready);
                     stage = 'application';
+                    const runtimeRequests = requests.filter((url) => /cocosair\.module/.test(url)).length;
                     const invalid = await page.evaluate(() => window.__safeBootstrapProbe.invalid());
                     assert.equal(invalid.unchanged, true); assert(invalid.codes.every((code) => code.startsWith('AIR_E_')));
-                    assert(!requests.some((url) => /cocosair\.module/.test(url)), 'safe import/invalid calls must not request engine');
+                    assert(runtimeRequests > 0, 'the fixture imports the main runtime');
+                    assert.equal(requests.filter((url) => /cocosair\.module/.test(url)).length, runtimeRequests,
+                        'invalid admission must not reload the main runtime');
                     stage = 'engine'; const startup = await page.evaluate(() => window.__safeBootstrapProbe.start());
                     console.error(`[air-bootstrap-sample] ${engine}/${variant} ` + JSON.stringify(startup));
                     assert.equal(startup.sharedPromise, true); assert.equal(startup.sameApp, true); assert.equal(startup.conflictCode, 'AIR_E_APP_CONFLICT');

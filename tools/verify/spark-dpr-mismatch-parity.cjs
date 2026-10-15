@@ -417,7 +417,7 @@ function main() {
             `combo ${combo.id} asks for a ratio the probe page rejects or a non-integer/oversized buffer`,
         );
     }
-    const sdk = args.find((a) => a.startsWith('--sdk='))?.slice(6) || 'build/cocosair.module.spark.js';
+    const sdk = args.find((a) => a.startsWith('--sdk='))?.slice(6) || 'build/spark.module.js';
     assert(/^build\/[a-zA-Z0-9_.-]+\.js$/.test(sdk), 'Invalid SDK path (build/<name>.js only)');
     assert(fs.existsSync(path.resolve(root, sdk)), `Missing SDK build: ${sdk}`);
     const portRepo = path.resolve(

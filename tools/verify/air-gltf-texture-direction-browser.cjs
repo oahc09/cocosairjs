@@ -12,9 +12,7 @@ function colors(pixels) {
 async function main() {
     const arg = process.argv.find((value) => value.startsWith('--out=')); assert(arg, '--out=<new.json> required');
     const output = path.resolve(root, arg.slice(6)); assert(!fs.existsSync(output), 'new report required');
-    const files = ['build/bootstrap.js', 'build/cocosair.module.js', 'src/air/assets/gltf/material.ts', 'src/air/assets/gltf/mesh.ts',
-        'src/air/assets/gltf/loader.ts', 'test/fixtures/gltf-texture-direction/index.html', 'test/fixtures/gltf-texture-direction/main.ts',
-        'tools/verify/air-gltf-texture-direction-browser.cjs', 'tools/verify/browser-engines.cjs'];
+    const files = ['build/cocosair.module.js', 'src/air/assets/gltf/material.ts', 'src/air/assets/gltf/mesh.ts', 'src/air/assets/gltf/loader.ts', 'test/fixtures/gltf-texture-direction/index.html', 'test/fixtures/gltf-texture-direction/main.ts', 'tools/verify/air-gltf-texture-direction-browser.cjs', 'tools/verify/browser-engines.cjs'];
     const fingerprints = Object.fromEntries(files.map((file) => [file,hash(file)])), startedAt = new Date().toISOString(), results = [];
     const built = await require('esbuild').build({ entryPoints: [path.join(root,'test/fixtures/gltf-texture-direction/main.ts')],
         bundle: true, write: false, format: 'esm', platform: 'browser', target: 'es2022', external: ['cocosair', '/build/*'] });

@@ -17,22 +17,11 @@ async function main() {
     );
     const engines = selected === 'all' ? ['chromium', 'firefox', 'webkit'] : [selected];
     assert(engines.every((v) => ['chromium', 'firefox', 'webkit'].includes(v)));
-    const files = [
-        'build/cocosair.module.js',
-        'build/bootstrap.js',
-        'build/html-source.js',
-        'src/air/texture-sprite.ts',
-        'examples/shared/capability-lab.ts',
-        'examples/shared/capability-lab.css',
-        'tools/verify/graphics-examples.cjs',
-        'tools/verify/gallery-artifact.cjs',
-        'tools/verify/competitive-example-server.cjs',
-        ...ids.flatMap((id) => [
+    const files = ['build/cocosair.module.js', 'src/air/texture-sprite.ts', 'examples/shared/capability-lab.ts', 'examples/shared/capability-lab.css', 'tools/verify/graphics-examples.cjs', 'tools/verify/gallery-artifact.cjs', 'tools/verify/competitive-example-server.cjs', ...ids.flatMap((id) => [
             `examples/${id}/src/main.ts`,
             `examples/${id}/index.html`,
             `examples/${id}/example.json`,
-        ]),
-    ];
+        ])];
     const hash = (f) =>
             crypto
                 .createHash('sha256')
@@ -114,7 +103,7 @@ async function main() {
                             write: false,
                             format: 'esm',
                             target: 'es2022',
-                            external: ['cocosair', 'cocosair/bootstrap', 'cocosair/html-source'],
+                            external: ['cocosair', 'cocosair', 'cocosair'],
                         });
                         if (!staticDirectory)
                             await page.route('**/src/main.ts', (route) =>

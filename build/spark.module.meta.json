@@ -1,0 +1,376 @@
+{
+  "inputs": {
+    "src/air/spark/engine.ts": {
+      "bytes": 1772,
+      "imports": [
+        {
+          "path": "./cocosair.module.js",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./cocosair.module.js",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./cocosair.module.js",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/air/spark/spark-math.ts": {
+      "bytes": 86447,
+      "imports": [
+        {
+          "path": "src/air/spark/engine.ts",
+          "kind": "import-statement",
+          "original": "./engine"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/air/spark/pmrem.ts": {
+      "bytes": 24333,
+      "imports": [
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "./spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-math.ts",
+          "kind": "import-statement",
+          "original": "./spark-math"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/air/spark/spark-api-adapter.ts": {
+      "bytes": 74558,
+      "imports": [
+        {
+          "path": "src/air/spark/spark-math.ts",
+          "kind": "import-statement",
+          "original": "./spark-math"
+        },
+        {
+          "path": "src/air/spark/spark-math.ts",
+          "kind": "import-statement",
+          "original": "./spark-math"
+        },
+        {
+          "path": "src/air/spark/pmrem.ts",
+          "kind": "import-statement",
+          "original": "./pmrem"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/air/spark/cocos-renderer.ts": {
+      "bytes": 97441,
+      "imports": [
+        {
+          "path": "src/air/spark/engine.ts",
+          "kind": "import-statement",
+          "original": "./engine"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "./spark-api-adapter"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/air/spark/generated/spark-runtime.js": {
+      "bytes": 2753094,
+      "imports": [
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "../spark-api-adapter"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/air/spark/cocos-spark-layer.ts": {
+      "bytes": 15152,
+      "imports": [
+        {
+          "path": "src/air/spark/cocos-renderer.ts",
+          "kind": "import-statement",
+          "original": "./cocos-renderer"
+        },
+        {
+          "path": "src/air/spark/spark-api-adapter.ts",
+          "kind": "import-statement",
+          "original": "./spark-api-adapter"
+        },
+        {
+          "path": "src/air/spark/spark-math.ts",
+          "kind": "import-statement",
+          "original": "./spark-math"
+        },
+        {
+          "path": "src/air/spark/generated/spark-runtime.js",
+          "kind": "import-statement",
+          "original": "./generated/spark-runtime"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/exports/spark.ts": {
+      "bytes": 524,
+      "imports": [
+        {
+          "path": "src/air/spark/cocos-renderer.ts",
+          "kind": "import-statement",
+          "original": "../air/spark/cocos-renderer"
+        },
+        {
+          "path": "src/air/spark/cocos-spark-layer.ts",
+          "kind": "import-statement",
+          "original": "../air/spark/cocos-spark-layer"
+        },
+        {
+          "path": "src/air/spark/pmrem.ts",
+          "kind": "import-statement",
+          "original": "../air/spark/pmrem"
+        },
+        {
+          "path": "src/air/spark/generated/spark-runtime.js",
+          "kind": "import-statement",
+          "original": "../air/spark/generated/spark-runtime"
+        },
+        {
+          "path": "src/air/spark/spark-math.ts",
+          "kind": "import-statement",
+          "original": "../air/spark/spark-math"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "build/spark.module.js.map": {
+      "imports": [],
+      "exports": [],
+      "inputs": {},
+      "bytes": 1822956
+    },
+    "build/spark.module.js": {
+      "imports": [
+        {
+          "path": "./cocosair.module.js",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./cocosair.module.js",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./cocosair.module.js",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "exports": [
+        "CUBEUV_SAMPLING_GLSL",
+        "CocosRenderer",
+        "CocosSparkLayer",
+        "PMREMGenerator",
+        "pmremLayout",
+        "sparkMath",
+        "sparkRuntime"
+      ],
+      "entryPoint": "src/exports/spark.ts",
+      "inputs": {
+        "src/air/spark/engine.ts": {
+          "bytesInOutput": 404
+        },
+        "src/air/spark/spark-math.ts": {
+          "bytesInOutput": 56218
+        },
+        "src/air/spark/spark-api-adapter.ts": {
+          "bytesInOutput": 46984
+        },
+        "src/air/spark/pmrem.ts": {
+          "bytesInOutput": 16565
+        },
+        "src/air/spark/cocos-renderer.ts": {
+          "bytesInOutput": 59595
+        },
+        "src/exports/spark.ts": {
+          "bytesInOutput": 0
+        },
+        "src/air/spark/generated/spark-runtime.js": {
+          "bytesInOutput": 2786005
+        },
+        "src/air/spark/cocos-spark-layer.ts": {
+          "bytesInOutput": 9519
+        }
+      },
+      "bytes": 2976017
+    }
+  }
+}

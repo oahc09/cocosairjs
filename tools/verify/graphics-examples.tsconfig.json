@@ -3,16 +3,19 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "lib": ["ES2022", "DOM"],
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
     "strict": true,
     "skipLibCheck": true,
     "noEmit": true,
     "types": [],
     "baseUrl": "../..",
     "paths": {
-      "cocosair": ["build/cocosair.legacy.d.ts"],
-      "cocosair/bootstrap": ["build/bootstrap.legacy.d.ts"],
-      "cocosair/html-source": ["build/html-source.d.ts"]
+      "cocosair": [
+        "build/cocosair.legacy.d.ts"
+      ]
     }
   },
   "include": [

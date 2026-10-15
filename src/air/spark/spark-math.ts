@@ -99,28 +99,13 @@
  *    本类实例混在同一次调用里（TS2345）。tmpVec2.set(v, v) 内部仍转调 cc.Vec2.set，数值与逐分量加标量等价。
  */
 
-import { Color as CCColor } from '../../cocos/core/math/color';
-import { Mat3 as CCMat3 } from '../../cocos/core/math/mat3';
-import { Mat4 as CCMat4 } from '../../cocos/core/math/mat4';
-import { Quat as CCQuat } from '../../cocos/core/math/quat';
-import { Vec2 as CCVec2 } from '../../cocos/core/math/vec2';
-import { Vec3 as CCVec3 } from '../../cocos/core/math/vec3';
-import { Vec4 as CCVec4 } from '../../cocos/core/math/vec4';
 import {
-    clamp as ccClamp,
-    inverseLerp as ccInverseLerp,
-    lerp as ccLerp,
-    nextPow2 as ccNextPow2,
-    random as ccRandom,
-    repeat as ccRepeat,
-    toDegree as ccToDegree,
-    toRadian as ccToRadian,
-} from '../../cocos/core/math/utils';
-import { AABB } from '../../cocos/core/geometry/aabb';
-import { Ray as CCRay } from '../../cocos/core/geometry/ray';
-import intersect from '../../cocos/core/geometry/intersect';
-import { ShapeType } from '../../cocos/core/geometry/enums';
-import { pt_point_aabb } from '../../cocos/core/geometry/distance';
+    Color as CCColor, Mat3 as CCMat3, Mat4 as CCMat4, Quat as CCQuat,
+    Vec2 as CCVec2, Vec3 as CCVec3, Vec4 as CCVec4,
+    clamp as ccClamp, inverseLerp as ccInverseLerp, lerp as ccLerp, nextPow2 as ccNextPow2,
+    random as ccRandom, repeat as ccRepeat, toDegree as ccToDegree, toRadian as ccToRadian,
+    AABB, Ray as CCRay, intersect, ShapeType, pt_point_aabb,
+} from './engine';
 
 // 引擎把形状检测挂在按 ShapeType 位组合索引的派发表上，且 ray-AABB 返回距离而非布尔；
 // 这里把该表的本层用到的两项固化成显式签名（纯类型声明，不改上游语义）。

@@ -149,11 +149,11 @@ function prepareWorkspace (example, workspace, spec, options = {}) {
     }
     const units = apiTrace.claimedUnits([example], () => spec);
     const trace = apiTrace.writeTraceWorkspace(workspace, units);
-    if (tracedHtml.includes('"/build/bootstrap.js"')) {
+    if (tracedHtml.includes('"/build/cocosair.module.js"')) {
       // Keep bootstrap lazy: initialize the trace only after the real safe startup completed.
-      const bootstrapTrace = `export * from '/build/bootstrap.js';\nimport { createAirApp as start } from '/build/bootstrap.js';\nexport function createAirApp(...args) {\n  const promise = start(...args);\n  promise.then(async () => {\n    await import('./${apiTrace.TRACE_FILE_NAME}');\n    window.__apiTrace.hit('createAirApp');\n  }, () => {}).catch((error) => console.error('[bootstrap-trace]', error));\n  return promise;\n}\n`;
+      const bootstrapTrace = `export * from '/build/cocosair.module.js';\nimport { createAirApp as start } from '/build/cocosair.module.js';\nexport function createAirApp(...args) {\n  const promise = start(...args);\n  promise.then(async () => {\n    await import('./${apiTrace.TRACE_FILE_NAME}');\n    window.__apiTrace.hit('createAirApp');\n  }, () => {}).catch((error) => console.error('[bootstrap-trace]', error));\n  return promise;\n}\n`;
       fs.writeFileSync(path.join(workspace, 'bootstrap.traced.js'), bootstrapTrace);
-      tracedHtml = tracedHtml.replace('"/build/bootstrap.js"', '"./bootstrap.traced.js"');
+      tracedHtml = tracedHtml.replace('"/build/cocosair.module.js"', '"./bootstrap.traced.js"');
       trace.bootstrap = { name: 'bootstrap.traced.js', bytes: Buffer.byteLength(bootstrapTrace),
         hash: require('crypto').createHash('sha256').update(bootstrapTrace).digest('hex') };
     }

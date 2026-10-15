@@ -11,10 +11,7 @@ function colors(pixels) {
 async function main() {
     const arg = process.argv.find((v) => v.startsWith('--out=')); assert(arg,'--out=<new.json> required');
     const output = path.resolve(root,arg.slice(6)); assert(!fs.existsSync(output),'new report required');
-    const files = ['build/bootstrap.js','build/cocosair.module.js','build/cocosair.module.d.ts','examples/shared/canvas-texture.js',
-        'src/cocos/asset/assets/image-asset.ts','src/cocos/asset/assets/texture-2d.ts','src/cocos/primitive/plane.ts',
-        'test/fixtures/texture-source-review/index.html','test/fixtures/texture-source-review/main.ts',
-        'tools/verify/air-texture-source-review.cjs','tools/verify/browser-engines.cjs'];
+    const files = ['build/cocosair.module.js', 'build/cocosair.module.d.ts', 'examples/shared/canvas-texture.js', 'src/cocos/asset/assets/image-asset.ts', 'src/cocos/asset/assets/texture-2d.ts', 'src/cocos/primitive/plane.ts', 'test/fixtures/texture-source-review/index.html', 'test/fixtures/texture-source-review/main.ts', 'tools/verify/air-texture-source-review.cjs', 'tools/verify/browser-engines.cjs'];
     const fingerprints = Object.fromEntries(files.map((f) => [f,hash(f)])), startedAt = new Date().toISOString(), results = [];
     const built = await require('esbuild').build({entryPoints:[path.join(root,'test/fixtures/texture-source-review/main.ts')],bundle:true,write:false,
         format:'esm',target:'es2022',platform:'browser',external:['cocosair','/build/*']});

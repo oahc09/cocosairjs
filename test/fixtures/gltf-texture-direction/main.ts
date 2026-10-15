@@ -1,6 +1,6 @@
 import { Scene, Node, Camera, Color, Layers, GLTFLoader, Texture2D, director, game } from 'cocosair';
 import type { GLTFAsset, GLTFInstance } from 'cocosair';
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas', designResolution: { width: 480, height: 360, policy: 0 } });
 const scene = new Scene('GLTFTextureDirection');
 const cameraNode = new Node('Camera'); scene.addChild(cameraNode); cameraNode.setPosition(0, 0, 10);

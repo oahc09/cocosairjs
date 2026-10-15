@@ -1,4 +1,4 @@
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas', diagnostics: 'warnings' });
 const { AssetBank, JsonAsset, TextAsset, ImageAsset, Scene, game, director, assetManager } = await import('/build/cocosair.module.js');
 app.run(new Scene('AssetBankRequests')); game.pause();

@@ -3,7 +3,7 @@ const {startExampleServer}=require('./competitive-example-server.cjs'),{launchOp
 const root=path.resolve(__dirname,'../..'),hash=(f)=>crypto.createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex');
 async function main(){
     const arg=process.argv.find((v)=>v.startsWith('--out='));assert(arg,'--out=<new.json> required');const output=path.resolve(root,arg.slice(6));assert(!fs.existsSync(output),'new report required');
-    const files=['build/bootstrap.js','build/cocosair.module.js','src/air/app.ts','src/air/session-scope.ts','src/air/scene-stack.ts','src/cocos/game/director.ts','src/cocos/asset/asset-manager/release-manager.ts','test/fixtures/scene-switch-contract/index.html','test/fixtures/scene-switch-contract/main.ts','tools/verify/air-scene-switch-browser.cjs'];
+    const files=['build/cocosair.module.js', 'src/air/app.ts', 'src/air/session-scope.ts', 'src/air/scene-stack.ts', 'src/cocos/game/director.ts', 'src/cocos/asset/asset-manager/release-manager.ts', 'test/fixtures/scene-switch-contract/index.html', 'test/fixtures/scene-switch-contract/main.ts', 'tools/verify/air-scene-switch-browser.cjs'];
     const fingerprints=Object.fromEntries(files.map((f)=>[f,hash(f)])),startedAt=new Date().toISOString(),results=[];
     const built=await require('esbuild').build({entryPoints:[path.join(root,'test/fixtures/scene-switch-contract/main.ts')],bundle:true,write:false,format:'esm',target:'es2022',external:['/build/*']});
     const server=await startExampleServer(root),playwright=require('playwright');

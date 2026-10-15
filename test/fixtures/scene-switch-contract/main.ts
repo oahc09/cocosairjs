@@ -1,5 +1,5 @@
 const started=performance.now(), identity=crypto.randomUUID();
-const {createAirApp}=await import('/build/bootstrap.js'), imported=performance.now();
+const {createAirApp}=await import('/build/cocosair.module.js'), imported=performance.now();
 const app=await createAirApp({canvas:'#GameCanvas',diagnostics:'warnings',designResolution:{width:480,height:360,policy:0}}), initialized=performance.now();
 const {Scene,Node,Camera,Color,MeshRenderer,Material,Texture2D,utils,primitives,Component,SceneStack,director,game,Input,input}=await import('/build/cocosair.module.js');
 let runCalls=0,destroyed=0,cleanup=0;const originalRun=game.run.bind(game);game.run=(...args)=>{runCalls++;return originalRun(...args);};

@@ -17,20 +17,7 @@ async function main() {
     );
     const engines = selected === 'all' ? ['chromium', 'firefox', 'webkit'] : [selected];
     assert(engines.every((v) => ['chromium', 'firefox', 'webkit'].includes(v)));
-    const files = [
-        'build/cocosair.module.js',
-        'build/html-source.js',
-        'src/air/dom-overlay.ts',
-        'src/air/texture-sprite.ts',
-        'src/air/graphics-commands.ts',
-        'src/air/graphics-raster.ts',
-        'src/air/ui-blend.ts',
-        'src/air/effects/sprite-mask.ts',
-        'src/air/html-source.ts',
-        'test/fixtures/graphics-and-dom/index.html',
-        'test/fixtures/graphics-and-dom/main.ts',
-        'tools/verify/graphics-and-dom.cjs',
-    ];
+    const files = ['build/cocosair.module.js', 'src/air/dom-overlay.ts', 'src/air/texture-sprite.ts', 'src/air/graphics-commands.ts', 'src/air/graphics-raster.ts', 'src/air/ui-blend.ts', 'src/air/effects/sprite-mask.ts', 'src/air/html-source.ts', 'test/fixtures/graphics-and-dom/index.html', 'test/fixtures/graphics-and-dom/main.ts', 'tools/verify/graphics-and-dom.cjs'];
     const hash = (f) =>
         crypto
             .createHash('sha256')

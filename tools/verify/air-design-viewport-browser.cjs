@@ -7,11 +7,7 @@ async function main() {
     assert(process.argv[2]?.startsWith('--out='), '--out=<new.json> required');
     const output = path.resolve(root, process.argv[2].slice(6)); assert(!fs.existsSync(output), 'new report required');
     const artifacts = output.replace(/\.json$/, '-artifacts'); fs.mkdirSync(artifacts, { recursive: true });
-    const files = ['src/air/app-config.ts', 'src/air/bootstrap.ts', 'src/air/safe-bootstrap.ts', 'src/air/ui-kit.ts',
-        'src/cocos/2d/framework/canvas.ts', 'src/cocos/render-scene/scene/camera.ts', 'src/cocos/misc/camera-component.ts',
-        'src/pal/screen-adapter/web/screen-adapter.js', 'tools/build/pal-source.cjs',
-        'build/cocosair.module.js', 'build/bootstrap.js', 'test/fixtures/design-viewport/main.ts', 'test/fixtures/design-viewport/index.html',
-        'tools/verify/air-design-viewport-browser.cjs', 'tools/verify/screenshot-pixels.cjs'];
+    const files = ['src/air/app-config.ts', 'src/air/bootstrap.ts', 'src/air/safe-bootstrap.ts', 'src/air/ui-kit.ts', 'src/cocos/2d/framework/canvas.ts', 'src/cocos/render-scene/scene/camera.ts', 'src/cocos/misc/camera-component.ts', 'src/pal/screen-adapter/web/screen-adapter.js', 'tools/build/pal-source.cjs', 'build/cocosair.module.js', 'test/fixtures/design-viewport/main.ts', 'test/fixtures/design-viewport/index.html', 'tools/verify/air-design-viewport-browser.cjs', 'tools/verify/screenshot-pixels.cjs'];
     const fingerprints = Object.fromEntries(files.map((file) => [file, hash(file)])), results = [], startedAt = new Date().toISOString();
     const playwright = require('playwright'), server = await startExampleServer(root);
     try {

@@ -122,7 +122,7 @@ class BrowserRuntime {
         target: 'es2022',
         platform: 'browser',
         loader: { '.ts': 'ts' },
-        external: ['cocosair', 'cocosair-bootstrap', '/build/bootstrap.js', '/output/responsive-host/baseline/cocosair.module.js'],
+        external: ['cocosair', 'cocosair', '/build/cocosair.module.js', '/output/responsive-host/baseline/cocosair.module.js'],
         sourcemap: false,
         logLevel: 'silent',
       });
@@ -144,7 +144,6 @@ class BrowserRuntime {
       baseUrl: workspace.paths.workspace,
       paths: {
         cocosair: [path.join(this.REPO, 'build/cocosair.module.d.ts')],
-        'cocosair-bootstrap': [path.join(this.REPO, 'build/bootstrap.d.ts')],
       },
     };
     // 注入 bench 合同的全局声明（__airApp/__benchSession），不写入 workspace。

@@ -14,17 +14,6 @@
       "types": "./build/cocosair.module.d.ts",
       "import": "./build/npm/cocosair.module.js",
       "default": "./build/npm/cocosair.module.js"
-    },
-    "./html-source": {
-      "types": "./build/html-source.d.ts",
-      "import": "./build/npm/html-source.js",
-      "default": "./build/npm/html-source.js"
-    },
-    "./bootstrap": {
-      "types@<5.0": "./build/bootstrap.legacy.d.ts",
-      "types": "./build/bootstrap.d.ts",
-      "import": "./build/npm/bootstrap.js",
-      "default": "./build/npm/bootstrap.js"
     }
   },
   "typesVersions": {
@@ -38,12 +27,7 @@
     "build/package.json",
     "build/npm/cocosair.module.js",
     "build/npm/cocosair.module.min.js",
-    "build/npm/bootstrap.js",
-    "build/npm/html-source.js",
-    "build/html-source.d.ts",
     "skills/",
-    "build/bootstrap.d.ts",
-    "build/bootstrap.legacy.d.ts",
     "build/cocosair.legacy.d.ts",
     "build/cocosair.module.d.ts",
     "build/gltf-decoders/package.json",
@@ -109,7 +93,8 @@
     "format": "prettier --write \"examples/**/*.{ts,js,json,html,css}\" \"docs/manual/examples/**/*.{ts,js,json,html,css}\" \"tools/debug/probes/**/*.{ts,js,json,html}\" \"tools/verify/trial-probes.cjs\" \"tools/verify/shader-probe.cjs\" \"tools/examples/spec-fixlines.cjs\" \"tools/dev/resolve-script.cjs\" \"tools/verify/dev-tooling.cjs\" \".github/workflows/format.yml\" \"docs/manual/script-component-workflow.md\" \"docs/manual/custom-shaders.md\" \"tools/verify/dev-samples.cjs\"",
     "format:check": "prettier --check \"examples/**/*.{ts,js,json,html,css}\" \"docs/manual/examples/**/*.{ts,js,json,html,css}\" \"tools/debug/probes/**/*.{ts,js,json,html}\" \"tools/verify/trial-probes.cjs\" \"tools/verify/shader-probe.cjs\" \"tools/examples/spec-fixlines.cjs\" \"tools/dev/resolve-script.cjs\" \"tools/verify/dev-tooling.cjs\" \".github/workflows/format.yml\" \"docs/manual/script-component-workflow.md\" \"docs/manual/custom-shaders.md\" \"tools/verify/dev-samples.cjs\" \"tools/verify/spark-pixel-parity.cjs\" \"tools/verify/spark-dpr-mismatch-parity.cjs\" \"tools/verify/spark-cpu-parity.cjs\"",
     "verify:g3-tooling": "node tools/verify/dev-tooling.cjs",
-    "verify:g3-dev": "node tools/verify/dev-samples.cjs"
+    "verify:g3-dev": "node tools/verify/dev-samples.cjs",
+    "build:spark": "node tools/build/spark-module.cjs"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.29.7",

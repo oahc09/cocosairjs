@@ -60,13 +60,7 @@ assert.throws(() =>
     ),
 );
 const rows = [];
-for (const name of [
-    'cocosair.module.js',
-    'cocosair.module.min.js',
-    'cocosair.module.spark.js',
-    'bootstrap.js',
-    'html-source.js',
-]) {
+for (const name of ['cocosair.module.js', 'cocosair.module.min.js', 'spark.module.js']) {
     const code = fs.readFileSync(path.join(root, 'build', name), 'utf8');
     const map = JSON.parse(fs.readFileSync(path.join(root, 'build', name + '.map')));
     assert.equal(code.match(/sourceMappingURL=([^\s]+)/)?.[1], name + '.map');
@@ -85,10 +79,9 @@ for (const name of [
         assert.deepEqual(missing, [], 'Relocated map sources must resolve from build/');
         assert.ok(map.sources.some((source) => source.endsWith('src/air/utils/frame-object.ts')));
     }
-    const markers =
-        name === 'html-source.js'
-            ? [['AIR_E_HTML_SOURCE_DISPOSED', '/air/html-source.ts']]
-            : [
+    const markers = name === 'spark.module.js'
+        ? [['SPARK_E_ENGINE_IDENTITY', '/air/spark/cocos-renderer.ts']]
+        : [
                   ['AIR_E_APP_CONFLICT', '/air/app-config.ts'],
                   ['AIR_E_PIXEL_RATIO_CAP', '/air/app-config.ts'],
                   ['AIR_E_HTML_SOURCE_DISPOSED', '/air/html-source.ts'],

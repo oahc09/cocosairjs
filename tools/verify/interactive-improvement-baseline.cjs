@@ -10,7 +10,7 @@
  * - 补齐 1.2 清单遗漏项：validateAirPrefilteredEnvironment、bindAirPrefilteredEnvironment、
  *   releaseScene、createSessionScope（sessionScope）；修正 createSessionGate 的测试映射。
  * - 身份复用 tools/verify/port-gap-candidate-snapshot.cjs 的 collectSnapshot（branch/HEAD/完整 dirty/
- *   AIR/source/config/runner/contracts/artifacts），并补充 min/map/bootstrap/npm/html-source 产物身份。
+ *   AIR/source/config/runner/contracts/artifacts），并补充 min/map/npm 产物身份。
  * - 源码与 bundle 对应：对 dev/min 两个 source map 做抽样 sourcesContent 比对；无法证明的记 UNKNOWN，
  *   不再用 HEAD 臒测 builtFrom。
  * - 历史任务书 SHA 修正为精确 64 位值。
@@ -108,15 +108,7 @@ const DEDUP_TABLE = [
 ];
 
 // ── 产物身份清单 ──
-const ARTIFACT_IDENTITY_FILES = [
-    'build/cocosair.module.js', 'build/cocosair.module.js.map',
-    'build/cocosair.module.min.js', 'build/cocosair.module.min.js.map',
-    'build/cocosair.module.d.ts',
-    'build/bootstrap.js', 'build/bootstrap.js.map', 'build/bootstrap.d.ts',
-    'build/html-source.js', 'build/html-source.d.ts',
-    'build/npm/cocosair.module.js', 'build/npm/cocosair.module.min.js',
-    'build/npm/bootstrap.js', 'build/npm/html-source.js',
-];
+const ARTIFACT_IDENTITY_FILES = ['build/cocosair.module.js', 'build/cocosair.module.js.map', 'build/cocosair.module.min.js', 'build/cocosair.module.min.js.map', 'build/cocosair.module.d.ts', 'build/npm/cocosair.module.js', 'build/npm/cocosair.module.min.js'];
 // Newly created tools may not yet be tracked by Git. Pin their actual bytes explicitly.
 const HARNESS_IDENTITY_FILES = [
     'tools/verify/interactive-improvement-baseline.cjs',
@@ -226,7 +218,6 @@ function currentIdentity () {
         sdkTypes: read('build/cocosair.module.d.ts'),
         npmModule: read('build/npm/cocosair.module.js'),
         minModule: read('build/cocosair.module.min.js'),
-        bootstrap: read('build/bootstrap.js'),
     };
 }
 

@@ -2,7 +2,7 @@ import { Scene, Node, Camera, Color, Layers, Canvas, createUICanvas, UITransform
     Texture2D, ImageAsset, MeshRenderer, Material, utils, primitives, director, game } from 'cocosair';
 import type { Asset } from 'cocosair';
 import { copyCanvasRows } from '../../../examples/shared/canvas-texture.js';
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas', designResolution: { width: 480, height: 360, policy: 0 } });
 const scene = new Scene('TextureSourceReview');
 const ui = createUICanvas(scene, 'Canvas', { designWidth: 480, designHeight: 360 });

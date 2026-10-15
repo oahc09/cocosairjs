@@ -131,16 +131,9 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
         expect(baseline.candidateSnapshotId).toMatch(/^[0-9a-f]{64}$/);
     });
 
-    test('min/map/bootstrap/npm/html-source artifact identities provided', () => {
+    test('min/map/npm artifact identities provided', () => {
         const arts = buildBaseline().artifactIdentity;
-        for (const rel of [
-            'build/cocosair.module.min.js',
-            'build/cocosair.module.min.js.map',
-            'build/bootstrap.js',
-            'build/bootstrap.js.map',
-            'build/npm/cocosair.module.js',
-            'build/npm/html-source.js',
-        ]) {
+        for (const rel of ['build/cocosair.module.min.js', 'build/cocosair.module.min.js.map', 'build/npm/cocosair.module.js']) {
             expect(arts[rel].present).toBe(true);
             expect(arts[rel].sha256).toMatch(/^[0-9a-f]{64}$/);
             expect(arts[rel].bytes).toBeGreaterThan(0);

@@ -530,11 +530,11 @@ Spark 是本项目除 `cocos4` 之外的**第二个上游**，按只读冻结源
   但**没有** `./spark` 子路径导出与 `files` 条目，`build/spark-rs/` **不存在**（被内联形态取代，见上两条）。
   接线后体积边界已重采（`docs/evidence/spark/spk12-bundle-boundary-wired-20261012.json`）：默认 26 feature 集
   扫描 1379 / 可达 **1152**，其中 **spark 可达节点 0**（8 个 spark 文件全在 UNREACHABLE）；点名 `,spark` 的 27 feature 集
-  可达 1159（+7，`spark-runtime.d.ts` 为类型文件不入运行时闭包）。变体产物 `build/cocosair.module.spark.js`
+  可达 1159（+7，`spark-runtime.d.ts` 为类型文件不入运行时闭包）。变体产物 `cocosair.module.spark.js（旧整合产物，已退役）`
   9 461 302 B（`689c29100803ad10…`），生成运行时 `src/air/spark/generated/spark-runtime.js` 2 753 054 B（`751f7a284cd1e9df…`）。
   默认 min 产物仍为 3 713 427 B / `779c288e…`，与接线前基线逐字节一致。
 - **XR 排除的不可达证明（此前为裁定，现为实测）**：生成后的运行时子图 `src/air/spark/generated/spark-runtime.js` 内
-  `SparkXr` / `XrHands` / `vendor/spark/src/hands` 命中数各为 **0**，变体产物 `build/cocosair.module.spark.js` 内 `SparkXr` 命中 **0**；
+  `SparkXr` / `XrHands` / `vendor/spark/src/hands` 命中数各为 **0**，变体产物 `cocosair.module.spark.js（旧整合产物，已退役）` 内 `SparkXr` 命中 **0**；
   `vendor/spark/src/SparkXr.ts`、`hands.ts` 原文仍在冻结树内（`--check` exit 0），只是不被子图引用。
   `src/air/spark/cocos-renderer.ts` 的惰性 `inertXr` 外壳按 §Spark XR 范围收窄 deviation 保留。
 - 消费边界、外部资产部署责任与「未重建」提示的读者向登记见
@@ -542,3 +542,7 @@ Spark 是本项目除 `cocos4` 之外的**第二个上游**，按只读冻结源
 
 不改变的发运纪律：不修改 `vendor/spark/**` 的任何字节；不把 Three.js 运行库引回目标运行时；
 `three` specifier 只在构建期别名到 `src/air/spark/spark-api-adapter.ts`，运行时不存在 `three` 依赖。
+
+### Spark 模块拆分（2026-10-15）
+
+旧整合版 cocosair.module.spark.js 由独立 spark.module.js 替代。AIR 自有桥接层通过 src/air/spark/engine.ts 借用主入口的数学/几何值；可选构建将主引擎标记 external，并以 metafile 拒绝打包 Cocos/PAL 实现。没有改动冻结 vendor/spark、spark-rs 或引擎源码；保留 XR 排除、WASM 内联及未决转付许可边界。独立模块的生成声明引用主 SDK，sparkRuntime 原有 any 边界不变。

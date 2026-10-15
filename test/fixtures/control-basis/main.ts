@@ -1,4 +1,4 @@
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas' });
 const { Scene, Node, Camera, MeshRenderer, Material, Color, Vec3, primitives, utils, director, game } = await import('/build/cocosair.module.js');
 const scene = new Scene('ControlBasis'), cameraNode = new Node('Camera'), vehicle = new Node('Vehicle');

@@ -1,4 +1,4 @@
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas', diagnostics: 'warnings' });
 const { Scene, Node, Camera, Billboard, Texture2D, ImageAsset, Color, game, director } = await import('/build/cocosair.module.js');
 const scene = new Scene('NativeBillboard'), cameraNode = new Node('Camera');

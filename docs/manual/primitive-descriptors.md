@@ -13,12 +13,12 @@ const geometry = createPrimitiveGeometry({
 const mesh = utils.createMesh(geometry);
 ```
 
-| type | 参数 | 原生默认值 |
-| --- | --- | --- |
-| box | width、height、length；各自的 widthSegments/heightSegments/lengthSegments | 尺寸1，段数1 |
-| sphere | radius、segments | 半径0.5，段数32 |
+| type     | 参数                                                                         | 原生默认值                         |
+| -------- | ---------------------------------------------------------------------------- | ---------------------------------- |
+| box      | width、height、length；各自的 widthSegments/heightSegments/lengthSegments    | 尺寸1，段数1                       |
+| sphere   | radius、segments                                                             | 半径0.5，段数32                    |
 | cylinder | radiusTop、radiusBottom、height、radialSegments、heightSegments、capped、arc | 半径均0.5，高2，段数32/1，封盖，2π |
-| cone | radius、height、radialSegments、heightSegments、capped、arc | 半径0.5，高1，其余同cylinder |
+| cone     | radius、height、radialSegments、heightSegments、capped、arc                  | 半径0.5，高1，其余同cylinder       |
 
 `includeNormal`/`includeUV` 作为原生选项转发；实际输出仍遵循对应原生函数，不增加第二套几何生成规则。
 尺寸和球/锥半径必须有限且正。圆柱两端半径允许零，但不能同时为零。
@@ -28,17 +28,17 @@ arc 为弧度，范围 `(0, 2π]`。段数为整数：球/径向至少3，其他
 
 现有公共名字与调用行为保持：
 
-| API | 使用合同 |
-| --- | --- |
-| `primitives.box(options)` | options对象，返回geometry |
-| `primitives.sphere(radius, options)` | 位置参数半径，返回geometry |
-| `primitives.cylinder(radiusTop, radiusBottom, height, options)` | 位置参数两半径/高度，返回geometry |
-| `primitives.cone(radius, height, options)` | 位置参数半径/高度，返回geometry |
-| `utils.createMesh(geometry)` | geometry转原生Mesh；应用负责拥有和释放 |
-| `Node.addChild(node)` | 返回void，不可链式构造子节点 |
-| `Scene.addComponent()` | 原生弃用入口；在Scene内创建Node后给Node加组件 |
-| `AirAppImpl` | 保留已发布导出和旧构造方式；推荐通过createAirApp初始化 |
-| `cocosair.js/bootstrap` | 无DOM时可导入；调用时先验证canvas，再动态加载原生入口 |
+| API                                                             | 使用合同                                                                  |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `primitives.box(options)`                                       | options对象，返回geometry                                                 |
+| `primitives.sphere(radius, options)`                            | 位置参数半径，返回geometry                                                |
+| `primitives.cylinder(radiusTop, radiusBottom, height, options)` | 位置参数两半径/高度，返回geometry                                         |
+| `primitives.cone(radius, height, options)`                      | 位置参数半径/高度，返回geometry                                           |
+| `utils.createMesh(geometry)`                                    | geometry转原生Mesh；应用负责拥有和释放                                    |
+| `Node.addChild(node)`                                           | 返回void，不可链式构造子节点                                              |
+| `Scene.addComponent()`                                          | 原生弃用入口；在Scene内创建Node后给Node加组件                             |
+| `AirAppImpl`                                                    | 保留已发布导出和旧构造方式；推荐通过createAirApp初始化                    |
+| `cocosair.js`                                                   | 浏览器主入口；启动与 HTML helper 均从此导入，支持先 import、后创建 canvas |
 
 `node tools/verify/air-signature-usage.cjs --types <file.ts|file.js>` 可查指定业务文件的签名误用。
 描述入口采用 TypeScript discriminated union，四种默认/自定义输出均用完整geometry数据对照原生函数；

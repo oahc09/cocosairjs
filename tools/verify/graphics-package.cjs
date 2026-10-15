@@ -20,14 +20,7 @@ async function main() {
             .createHash('sha256')
             .update(fs.readFileSync(path.join(root, file)))
             .digest('hex');
-    const artifactFiles = [
-        'build/cocosair.module.js',
-        'build/cocosair.module.min.js',
-        'build/cocosair.module.d.ts',
-        'build/html-source.js',
-        'build/html-source.d.ts',
-        'package.json',
-    ];
+    const artifactFiles = ['build/cocosair.module.js', 'build/cocosair.module.min.js', 'build/cocosair.module.d.ts', 'package.json'];
     const fingerprints = Object.fromEntries(artifactFiles.map((f) => [f, hash(f)]));
     const check = (name, action) => {
         try {
@@ -74,16 +67,9 @@ async function main() {
                 maxBuffer: 8 * 1024 * 1024,
             });
         const packed = JSON.parse(npm(['pack', '--json', '--pack-destination=' + directory]))[0];
-        check('tarball has HTML subpath, skills and manual; no source maps', () => {
+        check('tarball has main entry, skills and manual; no source maps', () => {
             const files = packed.files.map((f) => f.path);
-            for (const required of [
-                'build/npm/html-source.js',
-                'build/html-source.d.ts',
-                'skills/cocosair/SKILL.md',
-                'skills/cocosair-graphics-and-dom/SKILL.md',
-                'skills/cocosair-verification/SKILL.md',
-                'docs/manual/graphics-and-dom.md',
-            ])
+            for (const required of ['skills/cocosair/SKILL.md', 'skills/cocosair-graphics-and-dom/SKILL.md', 'skills/cocosair-verification/SKILL.md', 'docs/manual/graphics-and-dom.md'])
                 assert(files.includes(required), required);
             assert(!files.some((f) => /\.map$/.test(f)), 'no source maps');
         });
@@ -111,16 +97,10 @@ async function main() {
             { cwd: consumer, stdio: 'pipe' },
         );
         const installed = path.join(consumer, 'node_modules/cocosair.js');
-        const html = await import(pathToFileURL(path.join(installed, 'build/npm/html-source.js')).href);
-        check('installed HTML entry evaluates without document or eager engine', () => {
-            assert.equal(typeof global.document, 'undefined');
-            assert.equal(typeof html.createAirHTMLSource, 'function');
-            assert.equal(typeof html.getAirHTMLSourceSupport, 'function');
-        });
         fs.writeFileSync(
             path.join(consumer, 'probe.ts'),
             `import { createAirTextureSprite, createAirDOMOverlay, drawAirGraphics, airGraphicsCommandsToSvg, rasterizeAirGraphics, attachAirSpriteMask, createAirUIBlendScope, Texture2D, type AirGraphicsCommand } from 'cocosair.js';
-import { createAirHTMLSource, type AirHTMLTextureTarget } from 'cocosair.js/html-source';
+import { createAirHTMLSource, type AirHTMLTextureTarget } from 'cocosair.js';
 const texture: AirHTMLTextureTarget = new Texture2D();
 const commands: AirGraphicsCommand[] = [{op:'circle',args:[0,0,10]},{op:'fill',paint:{color:'#ffffff'}}];
 airGraphicsCommandsToSvg(commands,{x:0,y:0,width:20,height:20});
@@ -149,7 +129,7 @@ void [texture, createAirTextureSprite, createAirDOMOverlay, drawAirGraphics, ras
         });
         const runtime = require('esbuild').buildSync({
             stdin: {
-                contents: `import {createAirTextureSprite,createAirDOMOverlay,drawAirGraphics,airGraphicsCommandsToSvg,rasterizeAirGraphics,attachAirSpriteMask,createAirUIBlendScope} from 'cocosair.js'; globalThis.__apis=[createAirTextureSprite,createAirDOMOverlay,drawAirGraphics,airGraphicsCommandsToSvg,rasterizeAirGraphics,attachAirSpriteMask,createAirUIBlendScope];`,
+                contents: `import {createAirTextureSprite,createAirDOMOverlay,drawAirGraphics,airGraphicsCommandsToSvg,rasterizeAirGraphics,attachAirSpriteMask,createAirUIBlendScope,createAirHTMLSource,getAirHTMLSourceSupport} from 'cocosair.js'; globalThis.__apis=[createAirTextureSprite,createAirDOMOverlay,drawAirGraphics,airGraphicsCommandsToSvg,rasterizeAirGraphics,attachAirSpriteMask,createAirUIBlendScope,createAirHTMLSource,getAirHTMLSourceSupport];`,
                 resolveDir: consumer,
             },
             bundle: true,

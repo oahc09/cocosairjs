@@ -120,7 +120,7 @@ Box2D、Cannon 和 DragonBones 为源码构建及类型检查保留在 devDepend
 - 许可：MIT 原文逐字节保存为 `licenses/LICENSE_spark.txt`（= `vendor/spark/LICENSE` = 上游 `LICENSE`；实测两者 SHA-256 均为 `51829693e5dccd9ca1daa093991faac3aaa93238eb8fd5f5cb4130af85791d64`）；`licenses/` 已在 `package.json` `files[]` 内，随 npm 包发布。该逐字节比对同时由 `npm run verify:licenses` 的 REGISTRY 项（`sourceOfTruth: vendored → vendor/spark/LICENSE`）与 `node tools/build/vendor-spark-tree.cjs --check` 双重断言。
 - 产物形态：**ships: variant**（2026-10-12 接线后复采）。`npm run verify:licenses` 用 `SparkRenderer` / `sparkjsdev` 两个**负向**指纹断言默认产物不含 Spark（默认 dev 产物 `grep -c -o spark` 亦为 0），
   变体侧的命中计数（`SparkRenderer`×5 / `SplatMesh`×7）与默认闭包 0 个 spark 可达节点的实测记录在 `docs/evidence/spark/spk12-bundle-boundary-wired-20261012.json`。
-  变体产物 `build/cocosair.module.spark.js`（9 461 302 B）**不在** `package.json` `files[]` 内，即不随 npm 包发布；原因与放行条件见 §9。
+  变体产物 `cocosair.module.spark.js（旧整合产物，已退役）`（9 461 302 B）**不在** `package.json` `files[]` 内，即不随 npm 包发布；原因与放行条件见 §9。
 - 重现：`node tools/build/vendor-spark-tree.cjs --check` 逐文件比对 SHA-256 并检出未登记文件（`--write` 才显式从来源树重建镜像；来源侧始终只读）。105 文件的 `{path, size, sha256}`、树指纹、逐文件 match 结论与可复算命令见 `docs/evidence/spark/vendor-spark-tree-20261011.json`。
 
 ## 9. Spark 解码 WASM 与 wasm-bindgen glue（SPK-11 资产登记，2026-10-11；2026-10-12 落位形态与门禁复采）
@@ -141,7 +141,7 @@ Box2D、Cannon 和 DragonBones 为源码构建及类型检查保留在 devDepend
   （从生成运行时提取最长 base64 字面量解码后，sha256/长度/字节必须等于清单值）。实测 `passed=true artifacts=12 failures=0`，exit 0。
   另 `npm run verify:licenses` 的 REGISTRY 现有三条 variant 级登记（Spark 本体 / spark-rs WASM+glue / fflate）。
   顺带记录一处门禁事实：`tools/verify/license-audit.cjs` 的 `build/` 白名单对**文件**放行任意 `.js/.map/.d.ts/.json`，
-  故 `build/cocosair.module.spark.js` 从不被它拦截；该门禁只扫目录名，`vendor/` 不在其扫描面。首版预写的「必须扩展 `build/` 白名单否则变红」
+  故 `cocosair.module.spark.js（旧整合产物，已退役）` 从不被它拦截；该门禁只扫目录名，`vendor/` 不在其扫描面。首版预写的「必须扩展 `build/` 白名单否则变红」
   在实态路径下不成立；本轮实际需要的只是把新增目录 `build/fflate/` 加入白名单（已加，`license-audit` 的 issues 从 6 回到既存 5 项，均与本任务无关）。
 - **已知许可缺口（已处置登记，未闭合）**：该 WASM 由 Rust crate 依赖树编译而来，除 Spark 自身的 MIT 外还携带 crate 级许可（上游移植件里以逐 crate 清单形式记录：
   `WASM-LICENSES-ZH.md`、`licenses/wasm-crates/<name-version>/LICENSE-*`、`rust-1.98.1` 标准库许可）。本仓**未**转录这份逐 crate 清单。

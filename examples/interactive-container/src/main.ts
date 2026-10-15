@@ -84,8 +84,8 @@ async function boot(): Promise<void> {
     if (r.width <= 0 || r.height <= 0) throw Error('STARTUP_CONTAINER_NOT_READY');
     // Safe bootstrap binds native wrappers and density before the deferred runtime import.
     // 说明符保持运行期解析（index.html importmap）：规格门禁的 bundle 阶段不静态解析边车包。
-    const bootstrapSpecifier = 'cocosair-bootstrap';
-    const safe = (await import(bootstrapSpecifier)) as typeof import('cocosair-bootstrap');
+    const bootstrapSpecifier = 'cocosair';
+    const safe = (await import(bootstrapSpecifier)) as typeof import('cocosair');
     app = await safe.createAirApp({ canvas, screenMode: 'container', container: host });
     (window as unknown as Record<string, unknown>).__airApp = app;
     if (disposed) throw Error('CONTAINER_DISPOSED');

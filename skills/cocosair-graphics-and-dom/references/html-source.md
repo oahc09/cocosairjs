@@ -1,18 +1,13 @@
-Derived from src/air/html-source.ts, docs/manual/graphics-and-dom.md, and build/html-source.js (as of 2026-10-10)
+Derived from src/air/html-source.ts, docs/manual/graphics-and-dom.md, and build/cocosair.module.js (as of 2026-10-10)
 
 # Experimental HTML-in-canvas textures
 
-Live HTML-to-texture upload is a separate, engine-free experimental entry shipped as the
-`html-source` subpath (bundle `build/html-source.js`, published as `cocosair.js/html-source`).
-It is not on the main runtime export block, so import it as `cocosair/html-source` in source and
-deploy the standalone bundle. A DOM overlay in [dom-overlay.md](dom-overlay.md) is the ordinary-
-browser alternative, but borrowing DOM does not equal a GPU HTML texture
-(`docs/manual/graphics-and-dom.md:3`, `:139`).
+Live HTML-to-texture helpers are experimental APIs exported by the single browser engine entry `cocosair.js`. There is no separate HTML package entry; importing the main runtime in Node without DOM is unsupported.
 
 ## Support probe
 
 ```js
-import { getAirHTMLSourceSupport, createAirHTMLSource } from 'cocosair/html-source';
+import { getAirHTMLSourceSupport, createAirHTMLSource } from 'cocosair';
 
 const support = getAirHTMLSourceSupport(canvas);
 if (support.supported) { /* create a source */ }

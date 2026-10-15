@@ -18,7 +18,7 @@ Correct:
 
 ```html
 <script type="module">
-  import { createAirApp } from 'cocosair.js/bootstrap'; // binds the canvas, then imports the engine
+  import { createAirApp } from 'cocosair.js'; // binds the canvas, then imports the engine
   const canvas = document.createElement('canvas');
   canvas.id = 'game'; // keep any #GameCanvas off the page: a second holder conflicts (app-config.ts:59-62)
   document.body.appendChild(canvas);

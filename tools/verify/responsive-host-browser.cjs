@@ -36,20 +36,7 @@ function inkBands(bytes, x0, y0, x1, y1) {
     }
     return { groups, inkRows: rows.length, height: rows.length ? (rows.at(-1) - rows[0] + 1) / scaleY : 0 };
 }
-const files = [
-    'build/cocosair.module.js',
-    'build/bootstrap.js',
-    'src/air/bootstrap.ts',
-    'src/air/app-config.ts',
-    'src/air/ui-kit.ts',
-    'tools/build/screen-layout-patch.cjs',
-    'src/pal/screen-adapter/web/screen-adapter.js',
-    'tools/recipes/board-state.ts',
-    'examples/responsive-board-recipes/index.html',
-    'examples/responsive-board-recipes/model.ts',
-    'examples/responsive-board-recipes/src/main.ts',
-    'tools/verify/responsive-host-browser.cjs',
-];
+const files = ['build/cocosair.module.js', 'src/air/bootstrap.ts', 'src/air/app-config.ts', 'src/air/ui-kit.ts', 'tools/build/screen-layout-patch.cjs', 'src/pal/screen-adapter/web/screen-adapter.js', 'tools/recipes/board-state.ts', 'examples/responsive-board-recipes/index.html', 'examples/responsive-board-recipes/model.ts', 'examples/responsive-board-recipes/src/main.ts', 'tools/verify/responsive-host-browser.cjs'];
 async function run() {
     const option = process.argv.find((v) => v.startsWith('--out='));
     assert(option, '--out=<new.json> required');

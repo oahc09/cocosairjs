@@ -5,8 +5,7 @@ const { launchOptions } = require('./browser-engines.cjs');
 const root = path.resolve(__dirname,'../..'), hash = (f) => crypto.createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex');
 async function main() {
     const arg = process.argv.find((v) => v.startsWith('--out=')); assert(arg,'--out=<new.json> required'); const output = path.resolve(root,arg.slice(6)); assert(!fs.existsSync(output),'new report required');
-    const startedAt = new Date().toISOString(), results = [], files = ['build/bootstrap.js','build/cocosair.module.js','tools/build/effect-json.mjs','examples/shared/shader-blocks.js','tools/debug/agent-session.ts','tools/debug/effect-layout.ts',
-        'test/fixtures/effect-layout/index.html','test/fixtures/effect-layout/main.ts','test/fixtures/effect-layout/spec.json','tools/verify/air-effect-layout-browser.cjs','tools/verify/browser-engines.cjs'];
+    const startedAt = new Date().toISOString(), results = [], files = ['build/cocosair.module.js', 'tools/build/effect-json.mjs', 'examples/shared/shader-blocks.js', 'tools/debug/agent-session.ts', 'tools/debug/effect-layout.ts', 'test/fixtures/effect-layout/index.html', 'test/fixtures/effect-layout/main.ts', 'test/fixtures/effect-layout/spec.json', 'tools/verify/air-effect-layout-browser.cjs', 'tools/verify/browser-engines.cjs'];
     const fingerprints = Object.fromEntries(files.map((f) => [f,hash(f)]));
     const {buildEffectJson} = await import(pathToFileURL(path.join(root,'tools/build/effect-json.mjs')));
     const effect = buildEffectJson(JSON.parse(fs.readFileSync(path.join(root,'test/fixtures/effect-layout/spec.json'),'utf8')));

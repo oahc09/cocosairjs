@@ -1,5 +1,5 @@
 import { copyCanvasRows } from '../../../examples/shared/canvas-texture.js';
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas', designResolution: { width: 480, height: 360, policy: 0 } });
 const { Scene, Node, Camera, Color, Layers, Canvas, createUICanvas, UITransform, Sprite, SpriteFrame,
     Texture2D, ImageAsset, MeshRenderer, Material, utils, primitives, director, game } = await import('/build/cocosair.module.js');

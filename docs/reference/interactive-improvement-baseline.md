@@ -8,24 +8,24 @@
 
 ## 身份字段
 
-| 字段 | 来源 |
-|---|---|
-| `appCommit` / `git.{head,branch,dirty,dirtyDigest}` | 复用 `port-gap-candidate-snapshot.cjs` 的 `collectSnapshot` |
-| `airIdentityInputs.digest` | 同上（AIR 特性/输出目录身份输入） |
-| `groupDigests.{source,config,runner,contracts,artifacts}` | 同上（组摘要漂移定位） |
-| `candidateSnapshotId` | 快照自指纹 |
-| `artifactIdentity.*` | module/dts/npm/min/两 map/bootstrap(.js/.map/.d.ts)/html-source(.js/.d.ts) 逐文件 present/bytes/sha256 |
-| `builtFrom[]` | dev+min 两个 source map 抽样 `sourcesContent` 与盘面逐字节比对（CRLF 归一）；map 缺失记 `UNKNOWN`，不凭 HEAD 臆测 |
+| 字段                                                      | 来源                                                                                                              |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `appCommit` / `git.{head,branch,dirty,dirtyDigest}`       | 复用 `port-gap-candidate-snapshot.cjs` 的 `collectSnapshot`                                                       |
+| `airIdentityInputs.digest`                                | 同上（AIR 特性/输出目录身份输入）                                                                                 |
+| `groupDigests.{source,config,runner,contracts,artifacts}` | 同上（组摘要漂移定位）                                                                                            |
+| `candidateSnapshotId`                                     | 快照自指纹                                                                                                        |
+| `artifactIdentity.*`                                      | module/dts/npm/min/两 map 逐文件 present/bytes/sha256                                                             |
+| `builtFrom[]`                                             | dev+min 两个 source map 抽样 `sourcesContent` 与盘面逐字节比对（CRLF 归一）；map 缺失记 `UNKNOWN`，不凭 HEAD 臆测 |
 
 ## 能力状态词汇（默认生成只允许前四档）
 
-| 状态 | 判定 |
-|---|---|
-| `exported-verified` | bundle 末尾 export 语句命中（别名感知）且 dts 有声明 |
-| `member-declared` | dts 成员声明 + bundle 实现体命中（如 `releaseScene`、`updateSubMesh`） |
-| `declared-only` | 仅 dts 声明 |
-| `unchecked` | 两侧均未定位 |
-| `tested-passed` | **仅** `applyExecutionReport()` 升级产生：执行报告身份与当前一致（SDK SHA + appCommit）、套件 exitCode 0 且 testsPassed==testsTotal 覆盖该 API 的测试文件 |
+| 状态                | 判定                                                                                                                                                      |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `exported-verified` | bundle 末尾 export 语句命中（别名感知）且 dts 有声明                                                                                                      |
+| `member-declared`   | dts 成员声明 + bundle 实现体命中（如 `releaseScene`、`updateSubMesh`）                                                                                    |
+| `declared-only`     | 仅 dts 声明                                                                                                                                               |
+| `unchecked`         | 两侧均未定位                                                                                                                                              |
+| `tested-passed`     | **仅** `applyExecutionReport()` 升级产生：执行报告身份与当前一致（SDK SHA + appCommit）、套件 exitCode 0 且 testsPassed==testsTotal 覆盖该 API 的测试文件 |
 
 测试文件存在只标记 `testAvailable: true`；**永远不**凭文件名升级状态。
 
@@ -48,12 +48,12 @@
 
 ## 缺失证据（如实）
 
-| 项 | 状态 |
-|---|---|
-| 原 21 项原始 JSON（含 17 evidence/dom-repro-report.json） | MISSING（云端目录不可读） |
-| Puzzle50 Oct6 resize 原反例回归 | NOT_RUN（原始反例材料未取得） |
-| 两个私有 Site 入口 HTTP 状态 | UNKNOWN（只读评估时无法由工具读取） |
-| 原任务 1.4 节历史事实 | TASK_DOC_REFERENCE（引用，未独立核验） |
+| 项                                                        | 状态                                   |
+| --------------------------------------------------------- | -------------------------------------- |
+| 原 21 项原始 JSON（含 17 evidence/dom-repro-report.json） | MISSING（云端目录不可读）              |
+| Puzzle50 Oct6 resize 原反例回归                           | NOT_RUN（原始反例材料未取得）          |
+| 两个私有 Site 入口 HTTP 状态                              | UNKNOWN（只读评估时无法由工具读取）    |
+| 原任务 1.4 节历史事实                                     | TASK_DOC_REFERENCE（引用，未独立核验） |
 
 ## 校验（`verifyBaseline`）
 

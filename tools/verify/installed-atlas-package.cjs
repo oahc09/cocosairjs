@@ -19,7 +19,7 @@ exports.prepareInstalledAtlas=async(root)=>{
         const installOutput=run(['install','--offline','--ignore-scripts','--no-audit','--no-fund'],temp);
         const runtime=path.join(temp,'runtime.ts'),bootstrap=path.join(temp,'bootstrap.ts');
         fs.writeFileSync(runtime,`export * from '${packageName}';\n`);
-        fs.writeFileSync(bootstrap,`export { createAirApp } from '${packageName}/bootstrap';\n`);
+        fs.writeFileSync(bootstrap,`export { createAirApp } from '${packageName}';\n`);
         const built=await require('esbuild').build({entryPoints:[bootstrap,runtime],outdir:path.join(temp,'chunks'),entryNames:'[name]',chunkNames:'chunk-[hash]',bundle:true,splitting:true,format:'esm',platform:'browser',target:'es2022',write:false});
         const contents=new Map(built.outputFiles.map((f)=>['/installed/'+path.basename(f.path),f.text]));
         const hash=(bytes)=>crypto.createHash('sha256').update(bytes).digest('hex');

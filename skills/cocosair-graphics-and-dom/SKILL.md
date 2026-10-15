@@ -1,6 +1,6 @@
 ---
 name: cocosair-graphics-and-dom
-description: "Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js/html-source). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets."
+description: "Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets."
 license: MIT
 compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
 allowed-tools: Read Edit Write Bash
@@ -9,7 +9,7 @@ metadata:
   version: "1.0.0"
   last-updated: "2026-10-13"
   keywords: "Cocos AIR, cocosair.js, graphics, and, dom"
-  description_en: "Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js/html-source). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets."
+  description_en: "Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets."
   description_zh: "使用 Graphics、SVG、栅格填充、纹理显示、遮罩、混合和 DOM 覆盖层。用于绘图导出、富填充或实验性 HTML 纹理。"
 ---
 
@@ -42,7 +42,7 @@ Read [references/context.md](references/context.md#related-skills) to select the
 - "make a subtree add/multiply" -> `createAirUIBlendScope(root, mode)` (`src/air/ui-blend.ts:11-55`).
 - "keep a DOM input glued to a UI node" -> `createAirDOMOverlay({ canvas })` then `.attach(...)` (`src/air/dom-overlay.ts:24-83`).
 - "warp a textured UI quad by hand" -> add the `AirUIMesh` component and `setGeometry(...)` (`src/air/ui-mesh.ts:83-118`).
-- "paint a live form as a GPU texture" -> the opt-in `cocosair.js/html-source` subpath (see [html-source.md](references/html-source.md)).
+- "paint a live form as a GPU texture" -> the experimental HTML helpers exported by `cocosair.js` (see [html-source.md](references/html-source.md)).
 
 ## Contracts
 
@@ -67,7 +67,7 @@ Before implementing the relevant path, read its wrong/right examples in [referen
 - [texture-sprite.md](references/texture-sprite.md) - `createAirTextureSprite` borrowed texture, default size/anchor, `refresh()` and `dispose()` ownership.
 - [ui-mesh.md](references/ui-mesh.md) - the `AirUIMesh` renderer and its 3..1024 vertex / 1..1365 triangle geometry bounds.
 - [dom-overlay.md](references/dom-overlay.md) - `createAirDOMOverlay` element borrowing, restore-on-dispose, and planar-ortho affine mapping.
-- [html-source.md](references/html-source.md) - the experimental `cocosair.js/html-source` subpath, direct-child lease, and RGBA8 single-mip texture requirement.
+- [html-source.md](references/html-source.md) - the experimental HTML helpers in the main entry, direct-child lease, and RGBA8 single-mip texture requirement.
 
 ## Canonical docs
 

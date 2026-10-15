@@ -1,4 +1,4 @@
-const entry = new URLSearchParams(location.search).get('entry') || '/build/bootstrap.js';
+const entry = new URLSearchParams(location.search).get('entry') || '/build/cocosair.module.js';
 const safeEntry = await import(entry);
 const { createAirApp } = safeEntry;
 let app, runtime;
@@ -39,7 +39,8 @@ async function start(fail = false) {
     }
     [app] = await Promise.all([first, second]);
     const runtimePath = entry.includes('/npm/') ? '/build/npm/cocosair.module.js' : '/build/cocosair.module.js';
-    runtime = safeEntry.loadRuntime ? await safeEntry.loadRuntime() : await import(runtimePath);
+    runtime = safeEntry.loadRuntime ? await safeEntry.loadRuntime()
+        : safeEntry.Scene ? safeEntry : await import(runtimePath);
     const { Scene, Node, Camera, Material, MeshRenderer, Color, utils, primitives } = runtime;
     const scene = new Scene('SafeStartup'), cameraNode = new Node('Camera');
     cameraNode.setPosition(0, 0, 10); const camera = cameraNode.addComponent(Camera);

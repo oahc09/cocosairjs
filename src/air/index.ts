@@ -39,6 +39,8 @@ export * from './action-state';
 export * from './action-input';
 export * from './ui-kit';
 export * from './ui-mesh';
+export * from './ui-content-size-fitter';
+export * from './ui-pixel-perfect';
 export * from './dom-overlay';
 export * from './texture-sprite';
 export * from './graphics-commands';

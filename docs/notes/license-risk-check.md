@@ -10,15 +10,15 @@
 
 ## 默认 bundle 内嵌的第三方运行时
 
-| 组件 | 许可 | 义务 |
-|---|---|---|
+| 组件                             | 许可                                                                     | 义务                 |
+| -------------------------------- | ------------------------------------------------------------------------ | -------------------- |
 | Spine runtime（`spine-core.js`） | **Spine Runtimes License Agreement 2019-05-01**（Esoteric Software LLC） | **唯一非 MIT**，见下 |
-| DragonBonesJS | MIT | 署名 |
-| Box2D | MIT | 署名 |
-| cannon.js | MIT | 署名 |
-| zlib.js | MIT | 署名 |
-| notepack.io | MIT | 署名 |
-| Cocos PAL（公开 MIT 快照） | MIT | 署名 + NOTICE |
+| DragonBonesJS                    | MIT                                                                      | 署名                 |
+| Box2D                            | MIT                                                                      | 署名                 |
+| cannon.js                        | MIT                                                                      | 署名                 |
+| zlib.js                          | MIT                                                                      | 署名                 |
+| notepack.io                      | MIT                                                                      | 署名                 |
+| Cocos PAL（公开 MIT 快照）       | MIT                                                                      | 署名 + NOTICE        |
 
 ### Spine —— 唯一需要特别注意的项
 
@@ -37,11 +37,11 @@
 
 ## 变体产物（不进默认 bundle）
 
-| 组件 | 许可 | 形态 |
-|---|---|---|
-| Spark 高斯泼溅 `@sparkjsdev/spark` 2.3.1 | MIT | `ships: variant` |
-| **spark-rs WASM + wasm-bindgen glue** | MIT（Rust crate 许可面未转录） | `ships: variant`，**`disposition: pending`** |
-| fflate 0.8.2（SPZ 解压） | MIT | `ships: variant`，不随 npm 包发布 |
+| 组件                                     | 许可                           | 形态                                         |
+| ---------------------------------------- | ------------------------------ | -------------------------------------------- |
+| Spark 高斯泼溅 `@sparkjsdev/spark` 2.3.1 | MIT                            | `ships: variant`                             |
+| **spark-rs WASM + wasm-bindgen glue**    | MIT（Rust crate 许可面未转录） | `ships: variant`，**`disposition: pending`** |
+| fflate 0.8.2（SPZ 解压）                 | MIT                            | `ships: variant`，不随 npm 包发布            |
 
 ### 未闭合项：spark-rs（本次 ATTENTION 的唯一来源）
 
@@ -52,10 +52,10 @@
 
 ## glTF 解码器（`ships: source`，随包发布但不进 bundle）
 
-| 组件 | 许可 | 文件 |
-|---|---|---|
-| meshoptimizer 1.2.0 | MIT | `build/gltf-decoders/meshopt/LICENSE.md` |
-| draco3d 1.5.7 | **Apache-2.0** | `build/gltf-decoders/draco/LICENSE.md`（归属 + 全文） |
+| 组件                          | 许可           | 文件                                                  |
+| ----------------------------- | -------------- | ----------------------------------------------------- |
+| meshoptimizer 1.2.0           | MIT            | `build/gltf-decoders/meshopt/LICENSE.md`              |
+| draco3d 1.5.7                 | **Apache-2.0** | `build/gltf-decoders/draco/LICENSE.md`（归属 + 全文） |
 | Basis Universal（three r168） | **Apache-2.0** | `build/gltf-decoders/basis/LICENSE.md`（归属 + 全文） |
 
 两个 Apache-2.0 组件带归属与 NOTICE 类义务，现由各自 `LICENSE.md`（归属说明 + 全文）满足。
@@ -75,7 +75,7 @@
 - `package.json files[]` 含 `"licenses/"` —— 许可原文随 npm 包发布，满足 Spine 的"再分发附许可"义务。
 - **`docs/THIRD_PARTY_LICENSES.md` 不在 `files[]`**，仅经 `docs/*.md` 间接随包。若它被视为对外许可说明的正典，
   建议显式加入 `files[]`，使其不依赖 `docs/*.md` 的 glob 偶然命中。
-- 不随包发布：`build/cocosair.module.spark.js`、`build/fflate/`。
+- 不随包发布：`build/spark.module.js`、`build/spark-types/`、`build/fflate/`。
 - 元数据缺口（不阻塞，记录在案）：`@cocos/dragonbones-js` 的 npm 包无 `LICENSE` 也无 `license` 字段；
   `@cocos/box2d`、`@cocos/cannon` 无 `license` 字段但包内带 `LICENSE` 文件（门禁按文件逐字节比对）。
 

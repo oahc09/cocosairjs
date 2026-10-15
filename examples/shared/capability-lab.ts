@@ -1,4 +1,4 @@
-import { createAirApp } from 'cocosair/bootstrap';
+import { createAirApp } from 'cocosair';
 
 /** Shared page shell only. Each example owns its native scene and assertions. */
 export async function bootCapabilityLab(name: string) {

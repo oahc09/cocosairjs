@@ -10,7 +10,7 @@
 
 [tarball独立字节复核](../evidence/examples/interactive-engine-improvements/kit-consumer-s2-tarball-audit.json)确认16份来源文件和npm模块在压缩包内逐字节匹配已安装记录。
 
-[15种实际行篡改](../evidence/examples/interactive-engine-improvements/kit-consumer-s2-audit.json)全部拒绝，无新增浏览器。用户用包接入时保持每例index.html DOM、asset相对路径及importmap，把cocosair指向已安装cocosair.js，cocosair-bootstrap指向cocosair.js/bootstrap。原云端参考不在包内，新音轨许可单独记录。限制包括18组教学部件、本地499秒终点、受限切割、解析反射与环境反射区别及当前浏览器受限范围。
+[15种实际行篡改](../evidence/examples/interactive-engine-improvements/kit-consumer-s2-audit.json)全部拒绝，无新增浏览器。用户用包接入时保持每例index.html DOM、asset相对路径及importmap，把cocosair指向已安装cocosair.js主入口。原云端参考不在包内，新音轨许可单独记录。限制包括18组教学部件、本地499秒终点、受限切割、解析反射与环境反射区别及当前浏览器受限范围。
 
 ```powershell
 node tools/examples/interactive-kit.cjs --write

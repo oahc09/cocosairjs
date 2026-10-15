@@ -131,7 +131,7 @@ npm run build:dts      # → build/cocosair.module.d.ts
 
 启动约定：
 
-1. 主入口允许先 import，再创建 canvas；在调用 createAirApp 时通过 canvas 选项指定元素或 selector，通过 pixelRatioCap 指定上限。无需预写全局变量。主入口仍是浏览器模块，只有 bootstrap/html-source 轻入口可无 DOM 导入。
+1. 主入口允许先 import，再创建 canvas；在调用 createAirApp 时通过 canvas 选项指定元素或 selector，通过 pixelRatioCap 指定上限。无需预写全局变量。主入口仍是浏览器模块，不支持无 DOM 的 Node/SSR 导入。
 2. 推荐 DOM 结构是 `#GameDiv` > `#Cocos3dGameContainer` > canvas（ID 可自定义）。启动时补齐缺失包装；已有包装必须属于所选 canvas，否则在绑定前拒绝。容器模式使用显式 screenMode/container 选项。
 
 `#info` 那个 overlay 是本篇特有的，用来把"引擎到底跑在什么上面"显示出来 —— 见第 5 节。
@@ -349,3 +349,11 @@ npm run dev
 ## 下一步
 
 下一篇：[Creating a Scene 创建场景](./creating-a-scene.md) —— 把这个静止立方体变成有相机、有光、会转的最小场景，并解释每一行在干什么。
+
+## package.json 的作用
+
+根 package.json 是 npm 项目与发布包的配置文件：name/version 标识包，scripts 定义 npm 命令，dependencies/devDependencies 声明依赖，engines 说明工具版本要求，main/module/exports 指定运行入口，types/typesVersions 指定 TypeScript 声明，files 控制 npm pack 实际包含的文件。修改源码不会自动更新入口或发布名单；构建与打包脚本按这些约定生成产物。
+
+本仓根文件使用 type: commonjs 供 Node 构建工具运行；build/package.json 使用 type: module 声明生成的 JS 是 ESM；gltf-decoders/package.json 则声明对应第三方文件的 CommonJS 格式。这些文件控制模块解析，不包含引擎实现，也不会自动发布。
+
+可选 Spark 模块使用 npm run build:spark 单独生成，暂不纳入默认 npm files/exports；见[独立模块说明](../reference/spark-optional-entry.md)。

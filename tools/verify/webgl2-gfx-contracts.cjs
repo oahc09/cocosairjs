@@ -46,34 +46,7 @@ async function main() {
     } catch (error) {
         toolingError = String(error);
     }
-    const files = [
-        'build/cocosair.module.js',
-        'build/cocosair.module.min.js',
-        'build/cocosair.module.d.ts',
-        'src/cocos/gfx/webgl2/webgl2-device.ts',
-        'src/cocos/gfx/webgl2/webgl2-commands.ts',
-        'src/cocos/gfx/webgl2/webgl2-texture.ts',
-        'src/cocos/gfx/webgl2/webgl2-gpu-objects.ts',
-        'src/cocos/gfx/webgl2/states/webgl2-sampler.ts',
-        'src/cocos/gfx/base/states/sampler.ts',
-        'src/cocos/gfx/base/define.ts',
-        'src/cocos/gfx/webgl2/webgl2-framebuffer.ts',
-        'src/cocos/gfx/webgl2/webgl2-swapchain.ts',
-        'src/cocos/gfx/webgl2/webgl2-state-cache.ts',
-        'src/cocos/core/math/utils.ts',
-        'build/npm/cocosair.module.js',
-        'build/npm/cocosair.module.min.js',
-        'build/npm/bootstrap.js',
-        'build/cocosair.legacy.d.ts',
-        'build/bootstrap.legacy.d.ts',
-        'tools/debug/probes/webgl2-gfx-contracts/index.html',
-        'tools/debug/probes/webgl2-gfx-contracts/main.js',
-        'tools/verify/webgl2-gfx-contracts.cjs',
-        'tools/verify/browser-engines.cjs',
-        'tools/verify/competitive-example-server.cjs',
-        'tools/verify/webgl2-gfx-controls.cjs',
-        'ai/plans/webgl2-gfx-contract-remediation.md',
-    ];
+    const files = ['build/cocosair.module.js', 'build/cocosair.module.min.js', 'build/cocosair.module.d.ts', 'src/cocos/gfx/webgl2/webgl2-device.ts', 'src/cocos/gfx/webgl2/webgl2-commands.ts', 'src/cocos/gfx/webgl2/webgl2-texture.ts', 'src/cocos/gfx/webgl2/webgl2-gpu-objects.ts', 'src/cocos/gfx/webgl2/states/webgl2-sampler.ts', 'src/cocos/gfx/base/states/sampler.ts', 'src/cocos/gfx/base/define.ts', 'src/cocos/gfx/webgl2/webgl2-framebuffer.ts', 'src/cocos/gfx/webgl2/webgl2-swapchain.ts', 'src/cocos/gfx/webgl2/webgl2-state-cache.ts', 'src/cocos/core/math/utils.ts', 'build/npm/cocosair.module.js', 'build/npm/cocosair.module.min.js', 'build/cocosair.legacy.d.ts', 'tools/debug/probes/webgl2-gfx-contracts/index.html', 'tools/debug/probes/webgl2-gfx-contracts/main.js', 'tools/verify/webgl2-gfx-contracts.cjs', 'tools/verify/browser-engines.cjs', 'tools/verify/competitive-example-server.cjs', 'tools/verify/webgl2-gfx-controls.cjs', 'ai/plans/webgl2-gfx-contract-remediation.md'];
     if (!files.includes(sdk)) files.push(sdk);
     if (controlManifestFile) files.push(controlManifestFile);
     const hash = (file) =>

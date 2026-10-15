@@ -17,6 +17,8 @@ const canvas = document.querySelector<HTMLCanvasElement>('#GameCanvas')!,
 const app = await cc.createAirApp({ canvas, screenMode: 'container', container: host }),
     scope = cc.createSessionScope();
 scope.activate();
+// 浏览器矩阵/规格门禁的 bench 合同：会话探针从 window.__airApp 接入运行时。
+(window as unknown as Record<string, unknown>).__airApp = app;
 const dom = new AbortController(),
     events: Record<string, unknown>[] = [],
     commands: Record<string, unknown>[] = [],
@@ -43,16 +45,16 @@ function own<T extends cc.Mesh | cc.Material>(a: T): T {
     owned.push(a);
     return a;
 }
-const mesh = own(
+let mesh = own(
     cc.utils.createMesh({
         positions: [-0.11, -0.11, 0, 0.11, -0.11, 0, -0.11, 0.11, 0, 0.11, 0.11, 0],
         indices: [0, 1, 2, 1, 3, 2],
     }),
 );
-const material = own(new cc.Material());
+let material = own(new cc.Material());
 material.initialize({ effectName: 'builtin-unlit' });
 material.setProperty('mainColor', new cc.Color(242, 65, 65, 255));
-const green = own(new cc.Material());
+let green = own(new cc.Material());
 green.initialize({ effectName: 'builtin-unlit' });
 green.setProperty('mainColor', new cc.Color(45, 235, 95, 255));
 function node(parent: cc.Node, name: string, mat: cc.Material): cc.Node {
@@ -310,6 +312,63 @@ const deterministic = new URLSearchParams(location.search).get('test') === '1',
     stepClock = deterministic ? cc.createStepClock() : null;
 cc.director.on(cc.Director.EVENT_AFTER_DRAW, afterDraw);
 await app.run(scene);
+// §25 Lifecycle Contract（资源粒度、惰性）：仅 __lifecycle() 调用时才执行一轮
+// 共享 quad mesh 与红/绿两份材质的 真实释放 → 泄漏核对 → 重建并重新绑定全部部件/提示节点。
+// 终态 release()（TIMELINE_DISPOSED/app.close 语义）与音频/会话生命周期不受影响。
+{
+    const { installAssetLifecycle } = await import('../../shared/asset-lifecycle.js');
+    const renderers = (): cc.MeshRenderer[] =>
+        [...parts, ...cueNodes]
+            .map((node) => node.getComponent(cc.MeshRenderer))
+            .filter((r): r is cc.MeshRenderer => r !== null);
+    const heldList = () => [
+        { name: 'timeline-mesh', ref: mesh },
+        { name: 'timeline-material', ref: material },
+        { name: 'timeline-green', ref: green },
+    ];
+    installAssetLifecycle({
+        label: 'interactive-timeline',
+        hold: () => (disposed ? [] : heldList()),
+        release: () => {
+            const retiredMesh = mesh,
+                retiredMaterial = material,
+                retiredGreen = green;
+            for (const renderer of renderers()) {
+                renderer.mesh = null;
+                renderer.setSharedMaterial(null, 0);
+            }
+            mesh = null!;
+            material = null!;
+            green = null!;
+            for (const asset of [retiredMesh, retiredMaterial, retiredGreen]) {
+                asset.decRef();
+                asset.destroy();
+            }
+        },
+        reacquire: async () => {
+            mesh = own(
+                cc.utils.createMesh({
+                    positions: [-0.11, -0.11, 0, 0.11, -0.11, 0, -0.11, 0.11, 0, 0.11, 0.11, 0],
+                    indices: [0, 1, 2, 1, 3, 2],
+                }),
+            );
+            material = own(new cc.Material());
+            material.initialize({ effectName: 'builtin-unlit' });
+            material.setProperty('mainColor', new cc.Color(242, 65, 65, 255));
+            green = own(new cc.Material());
+            green.initialize({ effectName: 'builtin-unlit' });
+            green.setProperty('mainColor', new cc.Color(45, 235, 95, 255));
+            for (const renderer of renderers()) {
+                renderer.mesh = mesh;
+                renderer.setSharedMaterial(
+                    cueNodes.some((n) => n.getComponent(cc.MeshRenderer) === renderer) ? green : material,
+                    0,
+                );
+            }
+            return heldList();
+        },
+    });
+}
 if (stepClock) {
     stepClock.begin();
     await stepClock.step(0);

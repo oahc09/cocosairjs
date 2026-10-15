@@ -5,7 +5,11 @@
         href="data:,"
     /><title>容器就绪与隐藏恢复</title>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js", "cocosair-bootstrap": "/build/bootstrap.js" } }
+        {
+            "imports": {
+                "cocosair": "/build/cocosair.module.js"
+            }
+        }
     </script>
     <style>
         * {
@@ -65,30 +69,33 @@
             white-space: pre-wrap;
         }
     </style>
-    <main>
-        <h1>非零容器就绪后启动</h1>
-        <p>
-            最初隐藏；显示后等待原生布局、相机和提交，截图另证可见。页面不写 screen.windowSize，也没有应用 resize 尺寸
-            workaround。
-        </p>
-        <div>
-            <button id="run">Run</button><button id="report-tab">Report</button><button id="compare-tab">Compare</button
-            ><button id="narrow">窄布局</button><button id="wide">宽布局</button><button id="hide">隐藏</button
-            ><button id="show">显示</button><button id="release">Release</button>
-        </div>
-        <div id="parent">
-            <div id="host" class="hidden">
-                <div id="GameDiv">
-                    <div id="Cocos3dGameContainer"><canvas id="GameCanvas" tabindex="0"></canvas></div>
+    <body>
+        <main>
+            <h1>非零容器就绪后启动</h1>
+            <p>
+                最初隐藏；显示后等待原生布局、相机和提交，截图另证可见。页面不写 screen.windowSize，也没有应用 resize
+                尺寸 workaround。
+            </p>
+            <div>
+                <button id="run">Run</button><button id="report-tab">Report</button
+                ><button id="compare-tab">Compare</button><button id="narrow">窄布局</button
+                ><button id="wide">宽布局</button><button id="hide">隐藏</button><button id="show">显示</button
+                ><button id="release">Release</button>
+            </div>
+            <div id="parent">
+                <div id="host" class="hidden">
+                    <div id="GameDiv">
+                        <div id="Cocos3dGameContainer"><canvas id="GameCanvas" tabindex="0"></canvas></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <section id="report">原始布局记录；不是 Puzzle50 原反例。</section>
-        <section id="compare">旧代次结果不得改写当前页。</section>
-        <pre id="state">等待 Run</pre>
-    </main>
-    <script type="module">
-        if (new URLSearchParams(location.search).get('control') === 'webgl') await import('./src/control.ts');
-        else await import('./src/main.ts');
-    </script>
+            <section id="report">原始布局记录；不是 Puzzle50 原反例。</section>
+            <section id="compare">旧代次结果不得改写当前页。</section>
+            <pre id="state">等待 Run</pre>
+        </main>
+        <script type="module">
+            if (new URLSearchParams(location.search).get('control') === 'webgl') await import('./src/control.ts');
+            else await import('./src/main.ts');
+        </script>
+    </body>
 </html>

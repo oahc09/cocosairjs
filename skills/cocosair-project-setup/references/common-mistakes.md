@@ -41,35 +41,11 @@ import { Button, RigidBody, Skeleton, createAirApp } from 'cocosair.js';
 
 ### [MEDIUM] Expecting deferred loading while statically importing main
 
-Wrong:
+A static import evaluates the browser runtime immediately. When deferred loading is useful, use only an application-owned dynamic import:
 
 ```ts
-import { Scene } from 'cocosair.js';                    // evaluates the engine now
-import { createAirApp } from 'cocosair.js/bootstrap';   // safe, but main has already loaded
+const cc = await import('cocosair.js');
+const app = await cc.createAirApp({ canvas: '#GameCanvas' });
 ```
 
-Correct:
-
-```ts
-import { createAirApp } from 'cocosair.js/bootstrap';
-const app = await createAirApp({ canvas: '#GameCanvas' });
-const cc = await import('cocosair.js'); // obtains the runtime loaded by bootstrap
-```
-
-Bootstrap defers the engine module until startup admission. A static main import is now safe before canvas creation, but it removes deferred loading. Both entry paths use the same startup-time binding and exact promise.
-
-### [MEDIUM] Treating a variant build as the default candidate
-
-Wrong:
-
-```bash
-AIR_FEATURES=air,base,ui npm run build   # no AIR_OUT_DIR: variant bytes overwrite build/cocosair.module.js
-```
-
-Correct:
-
-```bash
-AIR_FEATURES=air,base,ui AIR_OUT_DIR=/tmp/air-variant npm run build   # default build/ untouched
-```
-
-`tools/build/build.cjs` only redirects output when `AIR_OUT_DIR` is set; an `AIR_FEATURES`-only run writes the variant into the tracked default bundle while skipping the default-only side effects (incremental cache, `build/package.json` module markers), so later gates correctly report drift against a bundle that is no longer the default candidate.
+The package exposes only its main entry. Importing main before canvas creation is supported; importing the full engine without browser DOM is not.

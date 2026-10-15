@@ -50,6 +50,7 @@ function copyOutput (outDir) {
                 .replace(/(["'])cc\1/g, '"./cocosair.module"');
             fs.writeFileSync(join(ROOT, 'build', 'cocosair.module.d.ts'), sdk);
             require('./legacy-dom-types.cjs').writeLegacyDomTypes(ROOT);
+            require('./runtime-layout.cjs').removeRetiredEntries(join(ROOT, 'build'));
             return true;
         }
     }

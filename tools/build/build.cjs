@@ -70,7 +70,7 @@ const FEATURES = (process.env.AIR_FEATURES || '')
     .filter(Boolean);
 const spark = process.argv.includes('--spark');
 if (spark && (FEATURES.length || process.argv.includes('--min') || process.argv.includes('system'))) {
-    throw new Error('--spark requires the complete default features and unminified ESM format.');
+    throw new Error('--spark builds a standalone unminified ESM module; AIR_FEATURES/system/min overrides are not supported.');
 }
 // 变体构建（feature 集被覆盖，或产物被 AIR_OUT_DIR 重定向到仓库外）既不共享默认集合的
 // 增量缓存，也不写 build/ 的发布附属产物，避免污染共用工作树里的默认 bundle。
@@ -80,7 +80,7 @@ const VARIANT = spark || FEATURES.length > 0 || OUT !== join(ROOT, 'build');
 // r43 实测：ccbuild 对**未在引擎 cc.config.json 里声明**的 feature 名是静默忽略的——
 // 变体构建 EXIT=0、产物与默认逐字节相同，等于什么都没开（变体取证会整批失效）。
 // 故在构建前先按声明面校验，未声明即失败退出，逼使用者先登记 feature unit。
-const EFFECTIVE = FEATURES.length ? FEATURES : spark ? [...AIR_FEATURES, 'spark'] : AIR_FEATURES;
+const EFFECTIVE = FEATURES.length ? FEATURES : AIR_FEATURES;
 const DECLARED = new Set(Object.keys(require(join(ENGINE, 'cc.config.json')).features || {}));
 const UNDECLARED = EFFECTIVE.filter((f) => !DECLARED.has(f));
 if (UNDECLARED.length) {
@@ -97,6 +97,10 @@ const formatIdx = args.indexOf('--format');
 const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
 
 (async function exec() {
+    if (spark) {
+        await require('./spark-module.cjs').buildSparkModule(OUT);
+        return;
+    }
     const release = await acquireBuildLock(ROOT);
     try {
         // 唯一临时目录：避免 emptyDir 对上一次产物做批量删除（本机 safe-delete shim 会拦截）。
@@ -141,9 +145,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         // 归一化产物名并移动到 build/ 根目录：
         //   ESM  dev: build/cocosair.module.js      min: build/cocosair.module.min.js
         //   SYS  dev: build/cc.js
-        const bundleName = spark
-            ? 'cocosair.module.spark.js'
-            : min
+        const bundleName = min
               ? 'cocosair.module.min.js'
               : moduleFormat === 'esm'
                 ? 'cocosair.module.js'
@@ -189,11 +191,8 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
             }
         }
         console.log('[build] output: ' + relative(ROOT, join(OUT, bundleName)) + (VARIANT ? '  [variant]' : ''));
-        if (moduleFormat === 'esm') {
-            await require('./bootstrap-entry.cjs').buildBootstrapEntry(OUT);
-            console.log('[build] output: ' + relative(ROOT, join(OUT, 'bootstrap.js')) + ' (engine-free safe entry)');
-        }
         if (!VARIANT) {
+            require('./runtime-layout.cjs').removeRetiredEntries(OUT);
             // R1（v051 review）：根 package.json 是 type:commonjs（构建工具链需要），
             // 而 build/ 产物是 ESM。随包在 build/ 内发出 {"type":"module"}，
             // Node 按最近 package.json 解析模块格式，tarball 才能真实 import。

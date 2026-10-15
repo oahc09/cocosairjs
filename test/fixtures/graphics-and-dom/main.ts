@@ -23,7 +23,7 @@ import {
     attachAirSpriteMask,
     type AirGraphicsCommand,
 } from 'cocosair';
-import { createAirHTMLSource, getAirHTMLSourceSupport } from '../../../build/html-source.js';
+import { createAirHTMLSource, getAirHTMLSourceSupport } from '../../../build/cocosair.module.js';
 
 const canvas = document.getElementById('GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });

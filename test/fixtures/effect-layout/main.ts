@@ -1,6 +1,6 @@
 import { createAgentSession } from '../../../tools/debug/agent-session';
 import { prepareEffectForRegistration } from '../../../tools/debug/effect-layout';
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas', diagnostics: 'warnings', designResolution: { width:480, height:360, policy:0 } });
 const { Scene, Node, Camera, Color, Vec4, Texture2D, Material, EffectAsset, MeshRenderer, SkinnedMeshRenderer, Skeleton, Mat4, utils, gfx, director, game, builtinResMgr } = await import('/build/cocosair.module.js');
 const scene = new Scene('EffectLayouts'), cameraNode = new Node('Camera'); scene.addChild(cameraNode); cameraNode.setPosition(0,0,10);

@@ -1,6 +1,6 @@
 ---
 name: cocosair-project-setup
-description: "Set up a Cocos AIR project end to end - install the cocosair.js npm package or build from source, choose among the main entry, cocosair.js/bootstrap and the experimental cocosair.js/html-source, write the importmap and the startup-bound canvas page skeleton, resolve TypeScript declarations on TS 4.9 and TS 5+ via the exports types conditions, map npm scripts to build artifacts, and run AIR_FEATURES/AIR_OUT_DIR variant builds without disturbing the default 26-feature candidate. Use when installing or importing cocosair.js, fixing unresolved-import or wrong-entry errors, wiring a page shell or editor types, or deciding which build command produces which file."
+description: "Set up a Cocos AIR project end to end - install the cocosair.js npm package or build from source, choose among the main entry, cocosair.js and the experimental cocosair.js, write the importmap and the startup-bound canvas page skeleton, resolve TypeScript declarations on TS 4.9 and TS 5+ via the exports types conditions, map npm scripts to build artifacts, and run AIR_FEATURES/AIR_OUT_DIR variant builds without disturbing the default 26-feature candidate. Use when installing or importing cocosair.js, fixing unresolved-import or wrong-entry errors, wiring a page shell or editor types, or deciding which build command produces which file."
 license: MIT
 compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
 allowed-tools: Read Edit Write Bash
@@ -9,7 +9,7 @@ metadata:
   version: "1.0.0"
   last-updated: "2026-10-13"
   keywords: "Cocos AIR, cocosair.js, project, setup"
-  description_en: "Set up a Cocos AIR project end to end - install the cocosair.js npm package or build from source, choose among the main entry, cocosair.js/bootstrap and the experimental cocosair.js/html-source, write the importmap and the startup-bound canvas page skeleton, resolve TypeScript declarations on TS 4.9 and TS 5+ via the exports types conditions, map npm scripts to build artifacts, and run AIR_FEATURES/AIR_OUT_DIR variant builds without disturbing the default 26-feature candidate. Use when installing or importing cocosair.js, fixing unresolved-import or wrong-entry errors, wiring a page shell or editor types, or deciding which build command produces which file."
+  description_en: "Set up a Cocos AIR project end to end - install the cocosair.js npm package or build from source, choose among the main entry, cocosair.js and the experimental cocosair.js, write the importmap and the startup-bound canvas page skeleton, resolve TypeScript declarations on TS 4.9 and TS 5+ via the exports types conditions, map npm scripts to build artifacts, and run AIR_FEATURES/AIR_OUT_DIR variant builds without disturbing the default 26-feature candidate. Use when installing or importing cocosair.js, fixing unresolved-import or wrong-entry errors, wiring a page shell or editor types, or deciding which build command produces which file."
   description_zh: "安装和配置 Cocos AIR 项目，选择包入口、importmap、TypeScript 声明和变体构建。用于安装导入、页面骨架、类型解析或构建产物问题。"
 ---
 
@@ -31,15 +31,15 @@ Read [references/context.md](references/context.md#related-skills) to select the
 
 - "Install from npm in a bundler app" -> `cocosair.js` package exports table in [entries.md](references/entries.md).
 - "Static page, no bundler" -> importmap and skeleton rules in [html-shell.md](references/html-shell.md).
-- "Custom canvas id or options-only DPR" -> the main entry accepts both at createAirApp time, including canvas creation after import. Use bootstrap only when deferred engine loading is useful.
-- "Paint live HTML into a `Texture2D`" -> `cocosair.js/html-source` (engine-free experimental entry) + cocosair-graphics-and-dom.
+- "Custom canvas id or options-only DPR" -> the main entry accepts both at createAirApp time, including canvas creation after import. Use an application-owned dynamic main import when deferred loading is useful.
+- "Paint live HTML into a `Texture2D`" -> `cocosair.js` (experimental HTML helpers in the main entry) + cocosair-graphics-and-dom.
 - "Editor types fail on TypeScript < 5.0" -> `types@<5.0` / `typesVersions` conditions in [entries.md](references/entries.md).
 - "Trim or extend what ships" -> `AIR_FEATURES` variant semantics in [feature-flags.md](references/feature-flags.md); a variant is a different candidate, not the default one.
 - "Which command wrote this file under build/?" -> artifact ownership table in [entries.md](references/entries.md).
 
 ## Contracts
 
-Use `cocosair.js` in bundler apps; `cocosair` is the repository importmap alias. Pass any selected canvas to createAirApp; main and bootstrap share startup admission. Keep variant outputs separate from default builds.
+Use `cocosair.js` in bundler apps; `cocosair` is the repository importmap alias. Pass any selected canvas to createAirApp; repeated main calls share startup admission. Keep variant outputs separate from default builds.
 
 Read [references/contracts.md](references/contracts.md) only when the task needs exact option rules, limits, error behavior or source annotations. Prefer the topic references below for a narrower question.
 
@@ -49,7 +49,7 @@ Before implementing the relevant path, read its wrong/right examples in [referen
 
 - [HIGH] Importing 'cocosair' from the installed package
 - [HIGH] Taking the package surface from src/index.ts
-- [MEDIUM] Using ./bootstrap as an addition to the main entry
+- [MEDIUM] Using removed bootstrap/html-source package subpaths
 - [MEDIUM] Treating a variant build as the default candidate
 
 ## References

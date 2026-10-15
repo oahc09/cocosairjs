@@ -5,7 +5,7 @@ async function main(){
     assert(process.argv[2]?.startsWith('--out='),'--out=<new.json> required');
     const out=path.resolve(root,process.argv[2].slice(6));assert(!fs.existsSync(out),'new report required');
     const playwright=require('playwright'),startedAt=new Date().toISOString(),results=[];
-    const files=['build/cocosair.module.js','build/bootstrap.js','src/air/action-input.ts','src/air/step-clock.ts','src/cocos/input/input.ts','tools/debug/test-input.ts','tools/verify/air-test-input-browser.cjs','tools/verify/browser-engines.cjs','test/fixtures/test-input/index.html','test/fixtures/test-input/main.ts'];
+    const files=['build/cocosair.module.js', 'src/air/action-input.ts', 'src/air/step-clock.ts', 'src/cocos/input/input.ts', 'tools/debug/test-input.ts', 'tools/verify/air-test-input-browser.cjs', 'tools/verify/browser-engines.cjs', 'test/fixtures/test-input/index.html', 'test/fixtures/test-input/main.ts'];
     const fingerprints=Object.fromEntries(files.map((f)=>[f,hash(f)]));
     const built=esbuild.buildSync({entryPoints:[path.join(root,'test/fixtures/test-input/main.ts')],bundle:true,write:false,format:'esm',target:'es2022',external:['/build/*']});
     const server=await startExampleServer(root);

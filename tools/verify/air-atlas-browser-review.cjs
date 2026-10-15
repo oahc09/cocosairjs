@@ -9,10 +9,7 @@ async function main() {
     const output = path.resolve(root,outputArg.slice(6)); assert(!fs.existsSync(output), 'new report required');
     const playwright = require('playwright'), startedAt = new Date().toISOString(), results = [];
     const artifacts = output.replace(/\.json$/, '-artifacts'); fs.mkdirSync(artifacts,{recursive:true});
-    const files = ['build/cocosair.module.js','build/bootstrap.js','src/air/assets/asset-bank.ts',
-        ...fs.readdirSync(path.join(root,'src/air/assets/atlas')).filter((n) => n.endsWith('.ts')).map((n) => 'src/air/assets/atlas/'+n),
-        ...fs.readdirSync(path.join(root,'test/fixtures/atlas-browser-review')).map((n) => 'test/fixtures/atlas-browser-review/'+n),
-        'tools/verify/air-atlas-browser-review.cjs','tools/verify/installed-atlas-package.cjs','tools/verify/browser-engines.cjs'];
+    const files = ['build/cocosair.module.js', 'src/air/assets/asset-bank.ts', ...fs.readdirSync(path.join(root,'src/air/assets/atlas')).filter((n) => n.endsWith('.ts')).map((n) => 'src/air/assets/atlas/'+n), ...fs.readdirSync(path.join(root,'test/fixtures/atlas-browser-review')).map((n) => 'test/fixtures/atlas-browser-review/'+n), 'tools/verify/air-atlas-browser-review.cjs', 'tools/verify/installed-atlas-package.cjs', 'tools/verify/browser-engines.cjs'];
     const fingerprints = Object.fromEntries(files.map((f) => [f,hash(f)]));
     // --installed routes the public probe to chunks built from an offline installed tarball.
     const built = await esbuild.build({ entryPoints: [path.join(root,'test/fixtures/atlas-browser-review/main.ts')], bundle:true, write:false, format:'esm', target:'es2022', platform:'browser', external:['/build/*'],

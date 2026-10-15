@@ -4,11 +4,11 @@
 
 ## 工具与职责
 
-| 工具 | 模式 | 写行为 |
-| --- | --- | --- |
-| [port-gap-candidate-snapshot.cjs](../../tools/verify/port-gap-candidate-snapshot.cjs) | `snapshot` / `check` | 只写显式 `--out`（已存在须 `--force`）；`check` 默认不写盘（`--report-out` 显式才写） |
-| [port-gap-evidence-schema.cjs](../../tools/verify/port-gap-evidence-schema.cjs) | `--report` / `--selftest` | 只读；`--verify-paths` 时额外检查原始输出文件存在 |
-| [port-gap-env-preflight.cjs](../../tools/verify/port-gap-env-preflight.cjs) | `--out` / `--launch-browsers` | 只写显式 `--out`；不安装、不下载、不代启动 |
+| 工具                                                                                  | 模式                          | 写行为                                                                                |
+| ------------------------------------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------- |
+| [port-gap-candidate-snapshot.cjs](../../tools/verify/port-gap-candidate-snapshot.cjs) | `snapshot` / `check`          | 只写显式 `--out`（已存在须 `--force`）；`check` 默认不写盘（`--report-out` 显式才写） |
+| [port-gap-evidence-schema.cjs](../../tools/verify/port-gap-evidence-schema.cjs)       | `--report` / `--selftest`     | 只读；`--verify-paths` 时额外检查原始输出文件存在                                     |
+| [port-gap-env-preflight.cjs](../../tools/verify/port-gap-env-preflight.cjs)           | `--out` / `--launch-browsers` | 只写显式 `--out`；不安装、不下载、不代启动                                            |
 
 三者均未接入 `package.json`（不占 npm script 名），调用方式一律 `node tools/verify/port-gap-*.cjs …`；由统一集成流程决定是否注册。
 
@@ -28,7 +28,7 @@ node tools/verify/port-gap-candidate-snapshot.cjs check --snapshot=<file.json> [
 - 分组指纹：`source`（`src/` 跟踪文件和未忽略的新文件）、`config`（package.json/lock、tsconfig、jest/babel 配置）、`runner`（`tools/verify`、`tools/build`、`tools/debug`、`tools/dev`）、`contracts`（`test/`、`docs/manual/examples/`、`examples/` + browser-matrix 合同）、`artifacts`。非 artifacts 组默认存"顺序无关摘要 + 缺失明细"，`--deep` 追加逐文件条目。新文件路径未变而内容变化同样改变摘要。S17将随npm发货的文档配方及Gallery源/资源纳入contracts：保持runtime字节不变而修改应用源码也必须漂移；既有快照按原记录的范围保留，扩大范围后需重新采集，不能称旧快照仍完整。
 - `artifacts` 始终逐文件记录 `bytes` + `sha256`：unmin/min 及各自 map、`build/cocosair.module.d.ts`、`build/package.json`、`build/npm/**`、`build/gltf-decoders/**`。声明覆盖而当前缺失的产物逐项进 `notRun`（`NOT_RUN`），不视为错误也不静默跳过。
 - `build/npm` 与 decoder 目录按实际文件遍历，包含被 Git 忽略的构建输出。设置 `AIR_OUT_DIR` 时额外记录变体目录的 JS、maps、模块标记和 decoder；独立的 d.ts 仍使用默认路径。
-- 安全入口的 `build/bootstrap.js`、map和`bootstrap.d.ts`也逐项记录；npm副本由实际目录遍历覆盖。变体目录的安全入口同样进入身份。
+- 主运行时 JS/min、对应 map 和 SDK 声明逐项记录；npm 副本由实际目录遍历覆盖。不再记录已移除的独立启动/HTML 产物。历史快照保留采集时身份，不改写为当前 PASS。
 - `loadTarget`：仅显式 `--load-url` 传入时记录（`providedBy:'cli-flag'`）；不推断、不默认。两次对比中 URL 变化计为漂移。
 
 漂移分类：`head` / `worktree`（脏清单增删）/ `airIdentityInputs` / `group`（`changed`/`added`/`removed`，含前后 sha256）/ `loadUrl`。任何漂移都意味着"当轮证据不得归属快照候选"，须重新冻结候选后重采。
@@ -37,22 +37,22 @@ node tools/verify/port-gap-candidate-snapshot.cjs check --snapshot=<file.json> [
 
 校验入口：`node tools/verify/port-gap-evidence-schema.cjs --report=<file.json> [--verify-paths]`；通过 exit 0，拒绝 exit 1 并逐条给出稳定 rule id。报告 schema `port-gap-evidence/1` 必备字段：
 
-| 字段 | 要求 |
-| --- | --- |
-| `gate` | `EG0…EG5` / `AG1` / `AG2` / `AIG` 之一 |
-| `subject` | 验证对象与描述（非空） |
-| `evidenceTypes` | 非空数组，枚举 `SOURCE_CHECKED` / `MODEL_PASS` / `CONTRACT_DOUBLE_PASS` / `ENGINE_HEADLESS_PASS` / `BROWSER_INPUT_PASS` / `BROWSER_RENDER_PASS` / `GPU_MEASURED` / `USER_CONFIRMED` |
-| `execution` | `status` ∈ `PASS` / `FAIL` / `NOT_RUN` / `BLOCKED` / `NOT_APPLICABLE`。PASS/FAIL 必须记录实际 `command`、`cwd`、`startedAt`/`endedAt`、数字 `exitCode`；NOT_RUN/BLOCKED/NOT_APPLICABLE 必须给 `reason`，BLOCKED 另给 `blockedBy` |
-| `failureStage` | FAIL 必填，∈ `infrastructure` / `application` / `engine` / `resource-deployment` / `environment`（失败按 stage 分开，不合并成单一失败） |
-| `attempts[]` | 当轮每次执行一条；最终 PASS 前，FAIL/NOT_RUN 必须给 `supersededBy` 指向更晚的实际补偿。最终 FAIL/NOT_RUN 可如实保留未补偿尝试；若提供补偿链接则仍校验有效性，不能伪造补偿或无声覆盖失败 |
-| `scope` | `declared[]`（非空，或 `totalCases>0`）、`subset`、`completed`、`totalCases` / `measuredCases` / `skippedCases`（非负安全整数，已测加跳过必须等于总数）、`skippedDetail[]`（条数=skippedCases）。`completed:true` 要求非 subset、零 skip 且状态 PASS |
-| `fingerprints` | `candidate` / `source` / `contract` / `runner` / `browser` / `application` 每键显式：`{present:true, sha256(64hex), path, algorithm:'sha256'}` 或 `{present:false, status:'NOT_RUN'/'NOT_CONFIGURED'/'NOT_APPLICABLE', reason}`。不适用也要显式声明，不得缺键 |
-| `method` | 测量/模拟方式：`kind` ∈ `REAL_BROWSER` / `ENGINE_HEADLESS` / `CONTRACT_STATIC` / `SYNTHETIC` / `MODEL` + `detail`。SYNTHETIC/MODEL 的 PASS 必须披露 `limitations`（合成/模型不与真实等同） |
-| `rawOutputs` | PASS/FAIL 必须至少一条 stdout/stderr/截图/日志原始路径；`--verify-paths` 校验文件存在 |
-| `measurements.gpu` | 声明 `GPU_MEASURED` 时必填；GPU 不可用记 `{available:false, unavailableReason}`，`inferred:true` 直接拒绝（不得用替身推断 GPU） |
-| `externalMaterials` | `AG1`/`AG2` 的 PASS 要求 `available:true`；外部材料不可达时保持待材料状态，不生成兼容/验收 PASS |
-| `priorEvidence` | `inherited:true` 的 PASS 要求其 `candidateFingerprint` 与当前 candidate 指纹一致（证据维度不靠排序继承） |
-| `notConfigured[]` | 可选；逐项 `{item, status:'NOT_CONFIGURED', detail}` 披露未配置依赖 |
+| 字段                | 要求                                                                                                                                                                                                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `gate`              | `EG0…EG5` / `AG1` / `AG2` / `AIG` 之一                                                                                                                                                                                                                        |
+| `subject`           | 验证对象与描述（非空）                                                                                                                                                                                                                                        |
+| `evidenceTypes`     | 非空数组，枚举 `SOURCE_CHECKED` / `MODEL_PASS` / `CONTRACT_DOUBLE_PASS` / `ENGINE_HEADLESS_PASS` / `BROWSER_INPUT_PASS` / `BROWSER_RENDER_PASS` / `GPU_MEASURED` / `USER_CONFIRMED`                                                                           |
+| `execution`         | `status` ∈ `PASS` / `FAIL` / `NOT_RUN` / `BLOCKED` / `NOT_APPLICABLE`。PASS/FAIL 必须记录实际 `command`、`cwd`、`startedAt`/`endedAt`、数字 `exitCode`；NOT_RUN/BLOCKED/NOT_APPLICABLE 必须给 `reason`，BLOCKED 另给 `blockedBy`                              |
+| `failureStage`      | FAIL 必填，∈ `infrastructure` / `application` / `engine` / `resource-deployment` / `environment`（失败按 stage 分开，不合并成单一失败）                                                                                                                       |
+| `attempts[]`        | 当轮每次执行一条；最终 PASS 前，FAIL/NOT_RUN 必须给 `supersededBy` 指向更晚的实际补偿。最终 FAIL/NOT_RUN 可如实保留未补偿尝试；若提供补偿链接则仍校验有效性，不能伪造补偿或无声覆盖失败                                                                       |
+| `scope`             | `declared[]`（非空，或 `totalCases>0`）、`subset`、`completed`、`totalCases` / `measuredCases` / `skippedCases`（非负安全整数，已测加跳过必须等于总数）、`skippedDetail[]`（条数=skippedCases）。`completed:true` 要求非 subset、零 skip 且状态 PASS          |
+| `fingerprints`      | `candidate` / `source` / `contract` / `runner` / `browser` / `application` 每键显式：`{present:true, sha256(64hex), path, algorithm:'sha256'}` 或 `{present:false, status:'NOT_RUN'/'NOT_CONFIGURED'/'NOT_APPLICABLE', reason}`。不适用也要显式声明，不得缺键 |
+| `method`            | 测量/模拟方式：`kind` ∈ `REAL_BROWSER` / `ENGINE_HEADLESS` / `CONTRACT_STATIC` / `SYNTHETIC` / `MODEL` + `detail`。SYNTHETIC/MODEL 的 PASS 必须披露 `limitations`（合成/模型不与真实等同）                                                                    |
+| `rawOutputs`        | PASS/FAIL 必须至少一条 stdout/stderr/截图/日志原始路径；`--verify-paths` 校验文件存在                                                                                                                                                                         |
+| `measurements.gpu`  | 声明 `GPU_MEASURED` 时必填；GPU 不可用记 `{available:false, unavailableReason}`，`inferred:true` 直接拒绝（不得用替身推断 GPU）                                                                                                                               |
+| `externalMaterials` | `AG1`/`AG2` 的 PASS 要求 `available:true`；外部材料不可达时保持待材料状态，不生成兼容/验收 PASS                                                                                                                                                               |
+| `priorEvidence`     | `inherited:true` 的 PASS 要求其 `candidateFingerprint` 与当前 candidate 指纹一致（证据维度不靠排序继承）                                                                                                                                                      |
+| `notConfigured[]`   | 可选；逐项 `{item, status:'NOT_CONFIGURED', detail}` 披露未配置依赖                                                                                                                                                                                           |
 
 硬性分离规则（校验器强制）：
 
@@ -72,13 +72,13 @@ node tools/verify/port-gap-candidate-snapshot.cjs check --snapshot=<file.json> [
 
 完整记录：[port-gap-evidence-preflight.json](port-gap-evidence-preflight.json)（schema `port-gap-env-preflight/1`，HEAD `cac42f6e897f…`）。
 
-| 检查项 | 结论 |
-| --- | --- |
-| node / npm / git | v24.14.0 / 11.11.1 / 2.46.2.windows.1 — AVAILABLE |
-| typescript / jest / ts-jest | 4.9.5 / 28.1.3 / 28.0.8（本仓 node_modules）— AVAILABLE |
-| playwright 模块 | **NOT_CONFIGURED**：本仓 node_modules 与 `NODE_PATH` 均不可解析；按纪律不代为安装 |
-| 浏览器二进制缓存 | chromium-1193/1217/1228、firefox-1543、webkit-2311/2336、ffmpeg-1011 存在于 `%LOCALAPPDATA%\ms-playwright` — 文件在、未验证可启动 |
-| 浏览器实际启动 | **NOT_RUN**（模块不可解析；本轮只查环境，不启动引擎、不采证据） |
+| 检查项                      | 结论                                                                                                                              |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| node / npm / git            | v24.14.0 / 11.11.1 / 2.46.2.windows.1 — AVAILABLE                                                                                 |
+| typescript / jest / ts-jest | 4.9.5 / 28.1.3 / 28.0.8（本仓 node_modules）— AVAILABLE                                                                           |
+| playwright 模块             | **NOT_CONFIGURED**：本仓 node_modules 与 `NODE_PATH` 均不可解析；按纪律不代为安装                                                 |
+| 浏览器二进制缓存            | chromium-1193/1217/1228、firefox-1543、webkit-2311/2336、ffmpeg-1011 存在于 `%LOCALAPPDATA%\ms-playwright` — 文件在、未验证可启动 |
+| 浏览器实际启动              | **NOT_RUN**（模块不可解析；本轮只查环境，不启动引擎、不采证据）                                                                   |
 
 结论：Node 侧静态/合同验证通道可用；任何 `EG2`/`EG3` 及三浏览器矩阵在配置 Playwright 工具链前保持 `NOT_RUN`/`NOT_CONFIGURED`，不得引用历史浏览器报告当作本轮 PASS。
 

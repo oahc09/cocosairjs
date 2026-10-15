@@ -8,7 +8,7 @@ Resolve the environment before interpreting a path or running a command. Skill i
 
 - The application root is the user's project; its package manager and build scripts belong to that application.
 - Locate the installed `cocosair.js` package through the application's dependency resolution. Its package root contains `package.json`, `README.md`, shipped `docs/`, `skills/` and declarations under `build/`.
-- Use `cocosair.js`, `cocosair.js/bootstrap` and `cocosair.js/html-source` imports with the application's bundler. The repository alias `cocosair` and `/build/` URLs work only with a matching importmap and server mapping.
+- Use `cocosair.js`, `cocosair.js` and `cocosair.js` imports with the application's bundler. The repository alias `cocosair` and `/build/` URLs work only with a matching importmap and server mapping.
 - `src/`, `tools/`, `examples/`, `AGENTS.md` and Git metadata are not in the npm `files` list. Source annotations in references explain provenance; do not attempt to read those paths relative to the user's app or the host skill directory.
 - Validate with the application's compiler, build and real browser. Repository `verify:*`, `gallery:*` and runtime-build scripts require a source checkout and are not consumer commands.
 - Agent-session factories and `/__debug/` routes require repository development tooling; the runtime does not provide them as package exports.

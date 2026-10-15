@@ -351,7 +351,7 @@ function main() {
         'Invalid browser',
     );
     const explicit = args.find((a) => a.startsWith('--playwright='))?.slice(13);
-    const sdk = args.find((a) => a.startsWith('--sdk='))?.slice(6) || 'build/cocosair.module.spark.js';
+    const sdk = args.find((a) => a.startsWith('--sdk='))?.slice(6) || 'build/spark.module.js';
     assert(/^build\/[a-zA-Z0-9_.-]+\.js$/.test(sdk), 'Invalid SDK path (build/<name>.js only)');
     const readNumber = (prefix, fallback) => {
         const raw = args.find((a) => a.startsWith(prefix))?.slice(prefix.length);
@@ -419,6 +419,7 @@ function main() {
                   .digest('hex')
             : null;
     const fingerprintFiles = [
+        'build/cocosair.module.js',
         sdk,
         `${PROBE_PATH}index.html`,
         `${PROBE_PATH}reference.html`,

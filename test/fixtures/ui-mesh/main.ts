@@ -1,4 +1,4 @@
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas', diagnostics: 'warnings', designResolution: { width: 480, height: 360, policy: 0 } });
 const { Scene, Node, AirUIMesh, Sprite, SpriteFrame, Texture2D, ImageAsset, Material, Color, UITransform, Mask,
     UIOpacity, createUICanvas, game, director } = await import('/build/cocosair.module.js');

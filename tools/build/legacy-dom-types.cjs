@@ -17,7 +17,5 @@ declare global {
 }
 `;
     fs.writeFileSync(path.join(root, 'build', 'cocosair.legacy.d.ts'), declaration);
-    fs.writeFileSync(path.join(root, 'build', 'bootstrap.legacy.d.ts'),
-        "import './cocosair.legacy.js';\nexport * from './bootstrap.js';\n");
 }
 module.exports = { writeLegacyDomTypes };

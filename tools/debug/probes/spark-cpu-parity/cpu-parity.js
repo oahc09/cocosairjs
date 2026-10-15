@@ -2,12 +2,12 @@
  * SPK-13 CPU-parity harness — measurement only, judgement lives in tools/verify/spark-cpu-parity.cjs.
  *
  * Re-runs the port repo's `tests/data-parity.mjs` `cpu-package/*` family against the artifact THIS repo
- * actually ships: the Spark body inside `build/cocosair.module.spark.js` (`cc.sparkRuntime`) compared
+ * actually ships: the Spark body inside `build/spark.module.js` (`cc.sparkRuntime`) compared
  * with the prebuilt upstream package `dist/spark-reference.js`, in a browser. Nothing is rendered: the
  * functions under test are pure CPU bit codecs, so this probe adds no GPU-dependent claim.
  */
 const parameters = new URLSearchParams(location.search);
-const SDK = window.__SPARK_CPU_SDK || parameters.get('sdk') || '/build/cocosair.module.spark.js';
+const SDK = window.__SPARK_CPU_SDK || parameters.get('sdk') || '/build/spark.module.js';
 const REFERENCE = parameters.get('reference') || '/dist/spark-reference.js';
 
 window.__sparkCpuParity = { ready: false, fatal: null, result: null };

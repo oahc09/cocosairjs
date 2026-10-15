@@ -1,6 +1,6 @@
 import { bootCapabilityLab } from '../../shared/capability-lab.js';
 import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
-import { createAirHTMLSource, getAirHTMLSourceSupport } from 'cocosair/html-source';
+import { createAirHTMLSource, getAirHTMLSourceSupport } from 'cocosair';
 
 const lab = await bootCapabilityLab('Experimental HTML texture');
 const { Texture2D, createAirTextureSprite } = lab.cc;

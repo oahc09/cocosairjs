@@ -56,26 +56,7 @@ run('npm install --no-audit --no-fund', { cwd: consumerDir, stdio: 'pipe' });
 const nodeModules = path.join(consumerDir, 'node_modules', 'cocosair');
 
 // 3. Verify installed tree
-const requiredFiles = [
-    'package.json',
-    'build/package.json', // {"type":"module"} — makes the ESM .js entries resolvable
-    'build/npm/cocosair.module.js',
-    'build/npm/cocosair.module.min.js',
-    'build/cocosair.module.d.ts',
-    'build/npm/bootstrap.js',
-    'build/bootstrap.d.ts',
-    'build/bootstrap.legacy.d.ts',
-    'build/cocosair.legacy.d.ts',
-    'build/gltf-decoders/MANIFEST.md',
-    'build/gltf-decoders/meshopt/meshopt_decoder.cjs',
-    'build/gltf-decoders/draco/draco3d.js',
-    'build/gltf-decoders/draco/draco_decoder.wasm',
-    'build/gltf-decoders/basis/basis_transcoder.js',
-    'build/gltf-decoders/basis/basis_transcoder.wasm',
-    'README.md',
-    'LICENSE',
-    'docs/THIRD_PARTY_LICENSES.md',
-];
+const requiredFiles = ['package.json', 'build/package.json', 'build/npm/cocosair.module.js', 'build/npm/cocosair.module.min.js', 'build/cocosair.module.d.ts', 'build/cocosair.legacy.d.ts', 'build/gltf-decoders/MANIFEST.md', 'build/gltf-decoders/meshopt/meshopt_decoder.cjs', 'build/gltf-decoders/draco/draco3d.js', 'build/gltf-decoders/draco/draco_decoder.wasm', 'build/gltf-decoders/basis/basis_transcoder.js', 'build/gltf-decoders/basis/basis_transcoder.wasm', 'README.md', 'LICENSE', 'docs/THIRD_PARTY_LICENSES.md'];
 for (const file of requiredFiles) {
     if (!fs.existsSync(path.join(nodeModules, file))) { failures.push(`missing in installed package: ${file}`); }
 }
@@ -90,24 +71,18 @@ if (fs.existsSync(path.join(nodeModules, 'build', 'package.json'))) {
 }
 
 // 4. Real dynamic import() of the installed entry, with browser globals from jsdom.
-// The safe package subpath must resolve and evaluate before any browser globals exist.
-try {
-    const output = execFileSync(process.execPath, ['--input-type=module', '-e',
-        "import { createAirApp } from 'cocosair/bootstrap'; if (typeof createAirApp !== 'function' || typeof document !== 'undefined') throw new Error('eager bootstrap'); console.log('BOOTSTRAP_NO_DOM_PASS');"],
-        { cwd: consumerDir, encoding: 'utf8', timeout: 30000 });
-    if (!output.includes('BOOTSTRAP_NO_DOM_PASS')) failures.push('safe bootstrap package subpath did not evaluate independently');
-} catch (error) { failures.push(`safe bootstrap package subpath failed: ${String(error.message).slice(0, 300)}`); }
+// Only the main package entry is published; browser globals are installed below.
 try {
     const built = require('esbuild').buildSync({ stdin: {
-        contents: "export { createAirApp } from 'cocosair/bootstrap'; export function loadRuntime() { return import('cocosair'); }", resolveDir: consumerDir, sourcefile: 'bootstrap-consumer.js' },
+        contents: "export async function createAirApp(options) { return (await import('cocosair')).createAirApp(options); } export function loadRuntime() { return import('cocosair'); }", resolveDir: consumerDir, sourcefile: 'bootstrap-consumer.js' },
         bundle: true, write: false, format: 'esm', splitting: true, platform: 'browser', target: 'es2020',
         outdir: path.join(packDir, 'bundled-consumer'), metafile: true });
     bundledConsumer = built;
     const inputs = Object.keys(built.metafile.inputs);
     if (!inputs.some((file) => /build[\\/]npm[\\/]cocosair\.module\.js$/.test(file)) || built.outputFiles.length < 2) {
-        failures.push('safe bootstrap dynamic runtime import is not resolvable by a real consumer bundler');
+        failures.push('application dynamic main import is not resolvable by a real consumer bundler');
     }
-} catch (error) { failures.push(`safe bootstrap consumer bundling failed: ${String(error.message).slice(0, 300)}`); }
+} catch (error) { failures.push(`main-entry consumer bundling failed: ${String(error.message).slice(0, 300)}`); }
 // The engine evaluates browser globals at module scope (SystemInfo reads window.navigator);
 // that is a documented runtime characteristic — the consumer gate must still perform the
 // actual import instead of patching or skipping it.
@@ -140,7 +115,7 @@ try {
         'parseFnt', 'createBitmapFont', 'loadBitmapFont', 'Billboard', 'AirUIMesh',
         'parseAtlasText', 'createAtlasHandle', 'createAtlasSpriteFrame', 'loadAtlas',
         'AirRenderTarget', 'createAirRenderTarget', 'resolveAirTextureFormat', 'validateAirTextureColorContract',
-        'validateAirPrefilteredEnvironment', 'bindAirPrefilteredEnvironment', 'inspectAirMaterial', 'describeAirTextureFormat'];
+        'validateAirPrefilteredEnvironment', 'bindAirPrefilteredEnvironment', 'inspectAirMaterial', 'describeAirTextureFormat', 'createAirHTMLSource', 'getAirHTMLSourceSupport'];
     for (const name of expected) {
         if (typeof mod[name] === 'undefined') { failures.push(`cocosair.${name} is missing from the installed module`); }
     }
@@ -215,7 +190,7 @@ fs.writeFileSync(tsOut, [
     "// @ts-expect-error developer tools are not default runtime exports",
     "import { attachAirRenderQueueObserver } from 'cocosair';",
     "import type { GLTFLoaderOptions, AirAtlasDocument, AirAtlasHandle, AirAtlasLoadOptions } from 'cocosair';",
-    "import { createAirApp as createSafeAirApp } from 'cocosair/bootstrap';",
+    "import { createAirApp as createSafeAirApp } from 'cocosair';",
     "const safeInit = createSafeAirApp({ canvas: '#GameCanvas', pixelRatioCap: 1.5, designResolution: { width: 640, height: 480, policy: 0 } });",
             "const containerInit = createSafeAirApp({ canvas: '#board', screenMode: 'container', container: '#host', pixelRatioCap: 2 }); void containerInit;",
             '// @ts-expect-error screen mode is an explicit public contract',

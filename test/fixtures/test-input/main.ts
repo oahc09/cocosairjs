@@ -1,5 +1,5 @@
 import { createTestInput } from '../../../tools/debug/test-input';
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas', designResolution: { width: 480, height: 360, policy: 0 } });
 const { Scene, Node, Component, UITransform, createUICanvas, Input, input, KeyCode, createActionState, createActionInput, createStepClock } = await import('/build/cocosair.module.js');
 const scene = new Scene('Synthetic and real input'), ui = createUICanvas(scene, 'Canvas', { designWidth: 480, designHeight: 360 });

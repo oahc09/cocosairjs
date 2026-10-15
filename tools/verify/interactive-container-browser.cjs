@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),crypto=require('crypto'),{PNG}=require('pngjs');
 const ROOT=path.resolve(__dirname,'../..'),ENGINES=['chromium','firefox','webkit'],DPRS=[1,1.25,2];
-const INPUTS=['build/cocosair.module.js','build/cocosair.module.d.ts','build/bootstrap.js','examples/interactive-container/index.html','examples/interactive-container/src/main.ts','examples/interactive-container/src/control.ts','tools/verify/interactive-container-browser.cjs','tools/verify/interactive-container-browser.tsconfig.json','tools/verify/browser-engines.cjs','tools/verify/competitive-example-server.cjs'];
+const INPUTS=['build/cocosair.module.js', 'build/cocosair.module.d.ts', 'examples/interactive-container/index.html', 'examples/interactive-container/src/main.ts', 'examples/interactive-container/src/control.ts', 'tools/verify/interactive-container-browser.cjs', 'tools/verify/interactive-container-browser.tsconfig.json', 'tools/verify/browser-engines.cjs', 'tools/verify/competitive-example-server.cjs'];
 const hash=b=>crypto.createHash('sha256').update(b).digest('hex'),fp=p=>{const b=fs.readFileSync(path.resolve(ROOT,p));return {path:p,bytes:b.length,sha256:hash(b)}};
 function checkState(row,s){const errors=[];try{
  if(s.snapshot.originalPuzzle50!=='NOT_RUN')errors.push('reference claim');const r=s.snapshot;

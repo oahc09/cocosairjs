@@ -82,7 +82,7 @@ export function frameObject (camera: Camera, target: Node, fallbackDistance = 6)
 | far plane                                                              | `camera.far = max(camera.far, distance + radius * 1.15)` (never shrinks)                                                                                                                                          | `:56`                |
 | placement                                                              | along the EXISTING view axis (`camNode.worldPosition - center`, degenerate -> `(0,0,1)`), then `setWorldPosition(center + dir * distance)` + `lookAt(center)`                                                     | `:63-73`             |
 
-Parent transforms are respected because all reads/writes are world-space (`worldPosition`, `setWorldPosition`, `lookAt`). Export chain: `src/air/utils/index.ts` -> `src/air/index.ts` -> `src/exports/air.ts` (`export * from '../air'`); declaration in `build/cocosair.module.d.ts` (`export function frameObject(camera: Camera, target: Node, fallbackDistance?: number): void;` currently :56816). Not present in `build/bootstrap.d.ts` or `build/html-source.d.ts`.
+Parent transforms are respected because all reads/writes are world-space (`worldPosition`, `setWorldPosition`, `lookAt`). Export chain: `src/air/utils/index.ts` -> `src/air/index.ts` -> `src/exports/air.ts` (`export * from '../air'`); declaration in `build/cocosair.module.d.ts` (`export function frameObject(camera: Camera, target: Node, fallbackDistance?: number): void;` currently :56816). Not present in `build/cocosair.module.d.ts` or `build/cocosair.module.d.ts`.
 
 ## Oblique near clip plane and clip-space minZ
 

@@ -473,12 +473,13 @@ async function boot() {
         });
         scene.add(spark);
     } else if (mode === 'target') {
-        const sdk = window.__SPARK_PARITY_SDK || parameters.get('sdk') || '/build/cocosair.module.spark.js';
+        const sdk = window.__SPARK_PARITY_SDK || parameters.get('sdk') || '/build/spark.module.js';
         if (!/^\/build\/[a-zA-Z0-9_.-]+\.js$/.test(sdk)) throw new Error('unapproved SDK path: ' + sdk);
         // The engine resolves its canvas at import time (same pre-registration CocosRenderer.create uses).
         globalThis.__CC_CANVAS__ = canvas;
         globalThis.__CCDPR_CAP__ = DPR;
-        cc = await import(sdk);
+        const native = await import('/build/cocosair.module.js');
+        cc = { ...native, ...(await import(sdk)) };
         S = cc.sparkRuntime;
         // The adapter deliberately keeps its three-shaped maths off the flat export surface (SPK-05a),
         // so the constructors are taken from a Spark object instance instead.

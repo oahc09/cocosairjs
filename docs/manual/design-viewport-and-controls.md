@@ -3,7 +3,7 @@
 978×846虚拟舞台使用原生EXACT_FIT。宽高分别拉伸到画布，完整设计矩形保持可见；原生UI相机和触点转换共用同一投影，不需要再写 `uiToDesign`。EXACT_FIT会改变图案长宽比；要求等比时选择SHOW_ALL或NO_BORDER并接受其留白或裁切规则。
 
 ```ts
-import { createAirApp } from 'cocosair.js/bootstrap';
+import { createAirApp } from 'cocosair.js';
 
 const app = await createAirApp({
     canvas: '#GameCanvas',

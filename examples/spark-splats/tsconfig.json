@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "lib": ["ES2022", "DOM"],
+    "baseUrl": "../..",
+    "paths": {
+      "cocosair": ["build/cocosair.legacy.d.ts"],
+      "cocosair-spark": ["build/spark.module.d.ts"]
+    }
+  },
+  "include": ["src/main.ts"]
+}

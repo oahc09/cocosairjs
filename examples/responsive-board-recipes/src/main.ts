@@ -16,7 +16,7 @@ const options = {
 };
 let cc: any, app: any;
 if (query.has('safe')) {
-    const safe = await import('/build/bootstrap.js');
+    const safe = await import('/build/cocosair.module.js');
     app = await safe.createAirApp(options);
     cc = await import('cocosair');
 } else {

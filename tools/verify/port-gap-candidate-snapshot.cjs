@@ -146,19 +146,7 @@ function collectGroup(root, spec, detailed) {
 // ── 构建产物 ────────────────────────────────────────────────────────────────
 
 // 固定清单：unmin/min/map/d.ts + npm 副本 + decoder 资产。缺失如实 MISSING，不视为错误。
-const ARTIFACT_FILES = [
-    'build/cocosair.module.js',
-    'build/cocosair.module.js.map',
-    'build/cocosair.module.min.js',
-    'build/cocosair.module.min.js.map',
-    'build/cocosair.module.d.ts',
-    'build/cocosair.legacy.d.ts',
-    'build/bootstrap.legacy.d.ts',
-    'build/bootstrap.js',
-    'build/bootstrap.js.map',
-    'build/bootstrap.d.ts',
-    'build/package.json',
-];
+const ARTIFACT_FILES = ['build/cocosair.module.js', 'build/cocosair.module.js.map', 'build/cocosair.module.min.js', 'build/cocosair.module.min.js.map', 'build/cocosair.module.d.ts', 'build/cocosair.legacy.d.ts', 'build/package.json'];
 const ARTIFACT_ROOTS = ['build/npm', 'build/gltf-decoders'];
 
 function listArtifactFiles(root, relRoot) {
@@ -186,8 +174,7 @@ function collectArtifacts(root, detailed) {
     const declaredRoots = ARTIFACT_ROOTS.slice();
     if (process.env.AIR_OUT_DIR) {
         const variant = path.resolve(root, process.env.AIR_OUT_DIR);
-        for (const filename of ['cocosair.module.js', 'cocosair.module.js.map', 'cocosair.module.min.js', 'cocosair.module.min.js.map',
-            'bootstrap.js', 'bootstrap.js.map', 'bootstrap.d.ts', 'package.json']) {
+        for (const filename of ['cocosair.module.js', 'cocosair.module.js.map', 'cocosair.module.min.js', 'cocosair.module.min.js.map', 'package.json']) {
             declaredFiles.push(toPosix(path.relative(root, path.join(variant, filename))));
         }
         declaredRoots.push(toPosix(path.relative(root, path.join(variant, 'gltf-decoders'))));

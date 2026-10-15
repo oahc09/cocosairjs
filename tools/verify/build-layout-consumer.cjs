@@ -1,4 +1,4 @@
-/* Build-layout contract: real tarball, isolated entries, old/current TS, clean/upgrade prepack.
+/* Build-layout contract: real tarball, single main entry, old/current TS, clean/upgrade prepack.
  * Writes only temporary consumers, build/npm publish copies and an optional new JSON report.
  * Usage: node tools/verify/build-layout-consumer.cjs --modern-ts=/path/to/tsc [--out=new.json]
  */
@@ -21,7 +21,7 @@ const node = (args, cwd) => run(process.execPath, args, cwd);
 try {
     // The ignored publication copies are disposable, but preserve any unknown file.
     const npmDir = path.join(root, 'build/npm');
-    const bundles = ['cocosair.module.js', 'cocosair.module.min.js', 'bootstrap.js', 'html-source.js'];
+    const bundles = ['cocosair.module.js', 'cocosair.module.min.js'];
     fs.mkdirSync(npmDir, { recursive: true });
     const unknown = fs.readdirSync(npmDir).filter((f) => !bundles.includes(f));
     assert.deepEqual(unknown, [], 'Do not remove unknown publish-directory content');
@@ -51,48 +51,16 @@ try {
         const code = fs.readFileSync(path.join(installed, 'build/npm', bundle), 'utf8');
         assert.ok(!/sourceMappingURL=/.test(code), bundle + ' published without source map URL');
     }
-    checks.push('real-installed-exports-and-four-map-free-copies');
-    for (const entry of ['bootstrap', 'html-source']) {
-        node(
-            [
-                '--input-type=module',
-                '-e',
-                `import { createAirHTMLSource, getAirHTMLSourceSupport } from 'cocosair.js/${entry}'; if (typeof document !== 'undefined' || typeof createAirHTMLSource !== 'function' || typeof getAirHTMLSourceSupport !== 'function') throw Error('entry side effect'); if (getAirHTMLSourceSupport({}).supported !== false) throw Error('unexpected HTML support');`,
-            ],
-            temp,
-        );
-    }
-    checks.push('isolated-node-light-entries');
-    const esbuild = require('esbuild');
-    const html = esbuild.buildSync({
-        stdin: { contents: "export * from 'cocosair.js/html-source';", resolveDir: temp },
-        bundle: true,
-        write: false,
-        format: 'esm',
-        metafile: true,
+    checks.push('real-installed-exports-and-two-map-free-copies');
+    assert.deepEqual(Object.keys(manifest.exports), ['.'], 'only the main package entry');
+    const bundled = require('esbuild').buildSync({
+        stdin: { contents: "export { createAirApp, createAirHTMLSource, getAirHTMLSourceSupport } from 'cocosair.js';", resolveDir: temp },
+        bundle: true, write: false, format: 'esm', platform: 'browser', metafile: true,
     });
-    assert.equal(Object.keys(html.metafile.inputs).filter((f) => f !== '<stdin>').length, 1, 'HTML-only graph');
-    const bootstrap = esbuild.buildSync({
-        stdin: { contents: "export * from 'cocosair.js/bootstrap';", resolveDir: temp },
-        bundle: true,
-        write: false,
-        format: 'esm',
-        splitting: true,
-        outdir: path.join(temp, 'bundled'),
-        metafile: true,
-    });
-    assert.ok(bootstrap.outputFiles.length > 1, 'deferred runtime chunk');
-    const entry = Object.values(bootstrap.metafile.outputs).find((o) => o.entryPoint === '<stdin>');
-    assert.ok(
-        entry.imports.some((i) => i.kind === 'dynamic-import'),
-        'bootstrap retains dynamic runtime import',
-    );
-    checks.push('real-bundler-html-isolation-and-bootstrap-splitting');
+    assert.ok(Object.keys(bundled.metafile.inputs).some(file => /cocosair\.module\.js$/.test(file)));
+    checks.push('main-entry-bundler-resolution');
     const entries = {
-        main: "import { createAirApp, createAirHTMLSource, getAirHTMLSourceSupport } from 'cocosair.js'; void createAirApp; void createAirHTMLSource; void getAirHTMLSourceSupport; const stream = new DecompressionStream('gzip'); void stream;",
-        bootstrap:
-            "import { createAirApp, createAirHTMLSource, getAirHTMLSourceSupport } from 'cocosair.js/bootstrap'; void createAirApp({canvas:'#custom', pixelRatioCap:3}); void createAirHTMLSource; void getAirHTMLSourceSupport; const stream = new DecompressionStream('gzip'); void stream;",
-        html: "import { createAirHTMLSource, getAirHTMLSourceSupport } from 'cocosair.js/html-source'; import type { AirHTMLSourceOptions, AirHTMLTextureTarget } from 'cocosair.js/html-source'; void createAirHTMLSource; void getAirHTMLSourceSupport; declare const options: AirHTMLSourceOptions; declare const target: AirHTMLTextureTarget; void options; void target;",
+        main: "import { createAirApp, createAirHTMLSource, getAirHTMLSourceSupport } from 'cocosair.js'; import type { AirHTMLSourceOptions, AirHTMLTextureTarget } from 'cocosair.js'; void createAirApp; void createAirHTMLSource; void getAirHTMLSourceSupport; declare const options: AirHTMLSourceOptions; declare const target: AirHTMLTextureTarget; void options; void target; const stream = new DecompressionStream('gzip'); void stream;",
     };
     for (const [name, source] of Object.entries(entries)) {
         const file = path.join(temp, name + '.ts');

@@ -1,7 +1,7 @@
 const params = new URLSearchParams(location.search), cap = params.get('cap');
 const beforeBodyStyle = document.body.getAttribute('style'), beforeCanvasCSS = getComputedStyle(document.querySelector('canvas'));
 const bodyBefore = { margin: getComputedStyle(document.body).margin, background: getComputedStyle(document.body).backgroundColor };
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas', diagnostics: 'warnings', ...(cap ? { pixelRatioCap: Number(cap) } : {}),
     designResolution: { width: 978, height: 846, policy: 0 } });
 const { Scene, Node, Sprite, SpriteFrame, Texture2D, ImageAsset, Color, UITransform, Canvas, Vec2, Vec3,

@@ -1,5 +1,5 @@
 const params = new URLSearchParams(location.search);
-const { createAirApp } = await import(params.get('bootstrap') || '/build/bootstrap.js');
+const { createAirApp } = await import(params.get('bootstrap') || '/build/cocosair.module.js');
 const app = await createAirApp({ canvas: '#GameCanvas', diagnostics: 'warnings', designResolution: { width: 480, height: 360, policy: 0 } });
 const { loadAtlas, AssetBank, Scene, Node, Sprite, Texture2D, UITransform, Canvas, createUICanvas, Color, game, director } = await import(params.get('runtime') || '/build/cocosair.module.js');
 const bank = new AssetBank();

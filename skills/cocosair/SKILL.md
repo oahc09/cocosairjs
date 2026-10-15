@@ -27,7 +27,7 @@ app.run(new Scene('Main'));
 app.getScene(); // -> Scene | null
 ```
 
-For a direct main-entry import without a prior bootstrap binding, `#GameCanvas` must already exist in the DOM. For a custom ID, await `cocosair.js/bootstrap` with that canvas before dynamically importing the main entry; bootstrap sets `__CC_CANVAS__` before the screen adapter initializes (startup contract in `README.md` and `AGENTS.md`). Per `build/cocosair.module.d.ts`: `AirAppOptions.canvas` accepts a selector string or an `HTMLCanvasElement`; `createAirApp(options)` returns `Promise<AirApp>`; `run(scene: Scene)` returns void; `getScene()` returns `Scene | null`.
+Use the single `cocosair.js` browser entry. Main may be imported before creating the canvas; pass the selected element and pixelRatioCap to createAirApp. No pre-import canvas/DPR global assignment is required. For lazy loading use an application-owned dynamic main import; bootstrap/html-source are no longer public subpaths.
 
 ## Related skills
 
@@ -55,12 +55,12 @@ Read the relevant README/manual chapter from the located package or checkout. So
 
 1. Original APIs first: use the engine's `Scene`, `Node`, `Camera`, `Component`, `Material`, `Texture2D` and `Sprite`; AIR helpers compose these objects. Do not invent parallel scene, node or material abstractions.
 2. Browser rendering requires WebGL 2 and nothing else; unsupported contexts reject startup with `WEBGL2_REQUIRED`. WebGL 1, Canvas and WebGPU are not supported renderer fallbacks. HEADLESS tests produce no rendered pixels.
-3. Main-entry evaluation needs the engine canvas to exist first. For a custom canvas or startup configuration, import `createAirApp` from `cocosair.js/bootstrap`, await it, then dynamically import the main package. `createAirApp` is exported from both entries: the main `cocosair.js` entry carries it with the full engine surface; `cocosair.js/bootstrap` is the narrow handwritten entry exposing only `createAirApp` plus the `AirApp`/`AirAppOptions` types. Package aliases used by an application may differ from `cocosair.js`.
+3. Use only the browser main entry `cocosair.js`. Main import before canvas creation is supported; pass canvas and pixelRatioCap to createAirApp. For deferred loading, dynamically import the main entry in the application. Startup and HTML texture helpers share the main declarations; there are no bootstrap/html-source package subpaths.
 4. Native material property writes require declared properties and matching value types; `USE_TEXTURE` must match whether the effect samples a texture.
 5. Keep ownership explicit. Detach renderers and bindings before destroying their textures; borrow shared assets and release only resources the feature owns.
 6. Skeletal joints use full paths relative to the skinning root. For glTF decoders and Spine, inspect their documented deployment and license boundaries.
 
-For DOM overlays, SVG, rich fills and sprite masks, read `docs/manual/graphics-and-dom.md` and load cocosair-graphics-and-dom. HTML texture APIs are experimental and live in the opt-in `cocosair.js/html-source` entry; ordinary DOM overlays remain a separate capability.
+For DOM overlays, SVG, rich fills and sprite masks, read `docs/manual/graphics-and-dom.md` and load cocosair-graphics-and-dom. HTML texture APIs are experimental and live in the opt-in `cocosair.js` entry; ordinary DOM overlays remain a separate capability.
 
 ## Contracts
 
@@ -84,7 +84,7 @@ Correct:
 ```html
 <canvas id="GameCanvas"></canvas>
 <script type="module">
-  import { createAirApp } from 'cocosair.js/bootstrap';
+  import { createAirApp } from 'cocosair.js';
   const app = await createAirApp({ canvas: '#GameCanvas' });
   const cc = await import('cocosair.js');
 </script>
@@ -133,7 +133,7 @@ Docs enumerate the engine surface; bundle reachability and browser verification 
 
 ## No route matched
 
-Read the current main-entry declarations and `docs/manual/index.md` from the located package or checkout. Use the bootstrap/HTML declarations for those subpaths. Missing source or sibling skills are environment limitations; use available canonical docs without inventing APIs or a repository root.
+Read the current main-entry declarations and `docs/manual/index.md` from the located package or checkout. Startup and HTML APIs use the same main-entry declarations. Missing source or sibling skills are environment limitations; use available canonical docs without inventing APIs or a repository root.
 
 ## References
 

@@ -1,7 +1,7 @@
 // SPK-13 CPU-parity collector: closes the last 口径替换 in `tools/verify/spark-data-parity.cjs`. The port
 // repo's `tests/data-parity.mjs` compares its own `dist/spark-cocosairjs.js` against its own
 // `dist/spark-reference.js` (package vs package). This gate instead compares the artifact THIS repo ships
-// — the Spark body inside `build/cocosair.module.spark.js`, reachable as `cc.sparkRuntime` — against that
+// — the Spark body inside `build/spark.module.js`, reachable as `cc.sparkRuntime` — against that
 // same frozen upstream reference package, inside a real browser, for the CPU codec families:
 // the full 65536-pattern `fromHalf` sweep, the `toHalf` boundary edges, and 256
 // `setPackedSplat` / `unpackSplat` / `utils.encodeExtSplat` vectors, plus the export-name surface and the
@@ -307,7 +307,7 @@ function main() {
         engines.every((e) => ['chromium', 'firefox', 'webkit'].includes(e)),
         'Invalid browser',
     );
-    const sdk = args.find((a) => a.startsWith('--sdk='))?.slice(6) || 'build/cocosair.module.spark.js';
+    const sdk = args.find((a) => a.startsWith('--sdk='))?.slice(6) || 'build/spark.module.js';
     assert(/^build\/[a-zA-Z0-9_.-]+\.js$/.test(sdk), 'Invalid SDK path (build/<name>.js only)');
     assert(fs.existsSync(path.resolve(root, sdk)), `Missing SDK build: ${sdk}`);
     const portRepo = path.resolve(
@@ -328,6 +328,7 @@ function main() {
     }
     const sha256 = (file) => (fs.existsSync(path.resolve(root, file)) ? sha256File(path.resolve(root, file)) : null);
     const fingerprintFiles = [
+        'build/cocosair.module.js',
         sdk,
         `${PROBE_PATH}index.html`,
         `${PROBE_PATH}cpu-parity.js`,

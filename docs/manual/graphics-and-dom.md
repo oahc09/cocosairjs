@@ -119,7 +119,7 @@ blend.dispose();
 ## 实验性 HTML 纹理
 
 ```ts
-import { getAirHTMLSourceSupport, createAirHTMLSource } from 'cocosair.js/html-source';
+import { getAirHTMLSourceSupport, createAirHTMLSource } from 'cocosair.js';
 
 const support = getAirHTMLSourceSupport(canvas);
 if (support.supported) {
@@ -134,17 +134,17 @@ if (support.supported) {
 
 texture 必须是当前 canvas 对应 WebGL2 设备创建的单 mip RGBA8 原生 Texture2D。调用者持有它；尺寸由源的布局与 resolution 更新。默认 autoUpdate=true；snapshot=true 捕获一次不可变 ElementImage，后续 update 复用快照。
 
-独立子路径没有 eager engine import。未提供浏览器实验 API 时 `AIR_E_HTML_SOURCE_UNSUPPORTED` 在 DOM/纹理修改前抛出。异步上传错误保存在 error，status 为 failed；调用 update 可重试。context lost、元素移出 canvas、零尺寸或非法 GPU 纹理明确失败。
+HTML 纹理接口由完整主引擎导出，不再提供独立子路径。未提供浏览器实验 API 时 `AIR_E_HTML_SOURCE_UNSUPPORTED` 在 DOM/纹理修改前抛出。异步上传错误保存在 error，status 为 failed；调用 update 可重试。context lost、元素移出 canvas、零尺寸或非法 GPU 纹理明确失败。
 
 上传发生在浏览器 paint 事件，临时纹理绑定恢复原值，不改 engine 状态缓存。应用负责将原生场景投影转换为 HTML canvasTransform，并调用 updateElementGeometry 同步命中、焦点和无障碍几何；单纯贴图上传不会自动产生正确交互。实验浏览器限制以实际能力探测为准；普通浏览器可改用 DOM overlay，但这不等同 GPU HTML 纹理。
 
 ## 可运行测试场景
 
-| 示例 | 内容 |
-| --- | --- |
-| [graphics-svg-paints](../../examples/graphics-svg-paints/src/main.ts) | 原生 Graphics、渐变孔洞、非正方形 pattern、SVG 预览/实际下载与像素回环 |
-| [sprite-mask-blend](../../examples/sprite-mask-blend/src/main.ts) | red/alpha、soft/threshold/inverted、原生粒子的 normal/add 对照 |
-| [dom-overlay-texture](../../examples/dom-overlay-texture/src/main.ts) | 真实输入/点击、移动/旋转、锚点、纹理 resize 后 GPU 显示、解绑与资源释放 |
+| 示例                                                                              | 内容                                                                    |
+| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| [graphics-svg-paints](../../examples/graphics-svg-paints/src/main.ts)             | 原生 Graphics、渐变孔洞、非正方形 pattern、SVG 预览/实际下载与像素回环  |
+| [sprite-mask-blend](../../examples/sprite-mask-blend/src/main.ts)                 | red/alpha、soft/threshold/inverted、原生粒子的 normal/add 对照          |
+| [dom-overlay-texture](../../examples/dom-overlay-texture/src/main.ts)             | 真实输入/点击、移动/旋转、锚点、纹理 resize 后 GPU 显示、解绑与资源释放 |
 | [html-texture-experimental](../../examples/html-texture-experimental/src/main.ts) | 实时表单纹理、DOM repaint、不可变 snapshot、普通浏览器 unsupported 分支 |
 
 每页有“运行断言”和“释放资源”。释放后控件禁用；重新测试请重新加载页面。修改展示模式后状态回到 READY，避免把上一次 PASS 当作新模式的结果。

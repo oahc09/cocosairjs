@@ -2,7 +2,7 @@
 
 These are generated copies of five repository examples, shipped with the manual in the local npm tarball. Author sources live under examples/<id>. manifest.json binds every copied byte and the current SDK. Do not edit these copies.
 
-Install the chosen local cocosair.js tarball into a fresh project (offline installation is supported when the tarball is available). Map cocosair to the installed package, and cocosair-bootstrap to cocosair.js/bootstrap, then bundle each src/main.ts with your normal browser bundler. Preserve the corresponding index.html DOM and asset paths. #GameCanvas exists before engine import. The container example delays engine import until its host has positive dimensions.
+Install the chosen local cocosair.js tarball into a fresh project (offline installation is supported when the tarball is available). Map cocosair to the installed cocosair.js main package, then bundle each src/main.ts with your normal browser bundler. Preserve the corresponding index.html DOM and asset paths. Pass the selected canvas to createAirApp; canvas creation after main import is supported. The container example delays engine import until its host has positive dimensions.
 
 Run npm scripts from the SDK repository only; this kit does not install a development toolchain automatically. tools/verify/interactive-kit-consumer.cjs demonstrates an actual offline consumer, installed declarations and package entry resolution without workspace /build fallback.
 

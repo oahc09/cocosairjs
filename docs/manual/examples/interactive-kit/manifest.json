@@ -14,104 +14,104 @@
   "sdk": [
     {
       "path": "build/cocosair.module.js",
-      "bytes": 6631057,
-      "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+      "bytes": 6648919,
+      "sha256": "fbb567157fdb144bad2942780a2b0d77b690d56faaeb8aee9e4cfb9f47684de9"
     },
     {
       "path": "build/cocosair.module.d.ts",
-      "bytes": 3303518,
-      "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+      "bytes": 3374688,
+      "sha256": "9a3a050795ed05f63dd6b022d83fc0632e35e240fe0eac552bfcf7e54eb91345"
     },
     {
       "path": "build/npm/cocosair.module.js",
-      "bytes": 6631013,
-      "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+      "bytes": 6648875,
+      "sha256": "e50ecfd45f3bbdad60721c13838d465f7a5991841cede737441c76c586dadb41"
     }
   ],
   "sources": [
     {
       "path": "examples/interactive-multipass/index.html",
       "kitPath": "interactive-multipass/index.html",
-      "bytes": 1493,
-      "sha256": "68df6e08451bc412b39f8f156aa807fa8fc52f3052b68b0a1cf3bd8524c44f3d"
+      "bytes": 2203,
+      "sha256": "4da3084ebbb3641e6d9a17b3e19a2aeeb304abb08cbe981849654c900fd11ef0"
     },
     {
       "path": "examples/interactive-multipass/src/effects.generated.ts",
       "kitPath": "interactive-multipass/src/effects.generated.ts",
-      "bytes": 12532,
-      "sha256": "d0df6d6739f498bc83d64705ef55bfdd1eb417f3a0e810829fa65e8f43d8d31f"
+      "bytes": 14454,
+      "sha256": "50246e8ffee388a1d6403b375e74a8724e3a0181db800177c48bc5f6668ea704"
     },
     {
       "path": "examples/interactive-multipass/src/main.ts",
       "kitPath": "interactive-multipass/src/main.ts",
-      "bytes": 59839,
-      "sha256": "77973f96b9969cceadbc0a7aaf8654e976906b9d934bd6d9f63a3a04004cda20"
+      "bytes": 67870,
+      "sha256": "075e3b0363b95f3030f2ba423fb363e326babf61698819761ce3b16f435997d3"
     },
     {
       "path": "examples/interactive-geometry/index.html",
       "kitPath": "interactive-geometry/index.html",
-      "bytes": 1567,
-      "sha256": "f4874b792127c7c84e6524ca33cd335b9d0ef6c35a2b4d230e31b362c1080ffb"
+      "bytes": 2385,
+      "sha256": "082d676df9d36ce77bb5053af78e10f704ddb72ee2d9747612039a1a73e020aa"
     },
     {
       "path": "examples/interactive-geometry/src/geometry-contract.ts",
       "kitPath": "interactive-geometry/src/geometry-contract.ts",
-      "bytes": 13465,
-      "sha256": "d1f88bf4da8e0d40c8d20df5ba46eaf40d17bac3e1b084c7dd5fe845744e49d1"
+      "bytes": 13855,
+      "sha256": "b163ad1c6956ebbe6ccddca1595c479458d93d394d1efcdffd312734beacf801"
     },
     {
       "path": "examples/interactive-geometry/src/main.ts",
       "kitPath": "interactive-geometry/src/main.ts",
-      "bytes": 51538,
-      "sha256": "9500356274f94b2e43445fe529169faf2f7f5bffd713f816f503500dce3bed65"
+      "bytes": 59109,
+      "sha256": "40bb64e384a946f481c7726a5a20dc327e61ae6cceafd64760cd4e5e8de9dabf"
     },
     {
       "path": "examples/interactive-input/index.html",
       "kitPath": "interactive-input/index.html",
-      "bytes": 2791,
-      "sha256": "1283dae3cd389a2361fa6a9e07693e39b14ba1d245809d41531e719c9a08581e"
+      "bytes": 4352,
+      "sha256": "3d58efb7514f0992b7f332d8d0deebf0e1ef93f28207bcd81228907050e2224a"
     },
     {
       "path": "examples/interactive-input/src/main.ts",
       "kitPath": "interactive-input/src/main.ts",
-      "bytes": 14084,
-      "sha256": "017ee59e2803a5b71fd328b50db259b8818683a602aa42c366a7535bcf8295a7"
+      "bytes": 18528,
+      "sha256": "7761b8ec4fa125c36fa399f56c338e50aefe48b011adaaf6aad08d231987f6d1"
     },
     {
       "path": "examples/interactive-container/index.html",
       "kitPath": "interactive-container/index.html",
-      "bytes": 1945,
-      "sha256": "3a4a25434577c5fd9c08fee1fcba9f5f19afb10ff631aaf6055af81ee263c577"
+      "bytes": 3086,
+      "sha256": "2ca0ef0dc860713a520e2013296a1b720a8561574f8606d062e6b06c324620d7"
     },
     {
       "path": "examples/interactive-container/src/main.ts",
       "kitPath": "interactive-container/src/main.ts",
-      "bytes": 7519,
-      "sha256": "2f8265a864a26553ae15319ca512933a548b0b33a968bbb72d43a62ff613ce9b"
+      "bytes": 12323,
+      "sha256": "3835859fb0f45bf23c6f207b1ebf948a01739bde9c74d4c91cac28a2477866e7"
     },
     {
       "path": "examples/interactive-container/src/control.ts",
       "kitPath": "interactive-container/src/control.ts",
-      "bytes": 1941,
-      "sha256": "9d758a0af18fbc03c4ea5f0e3f23013aab4e8a700749dc3857ffa8d218a29e58"
+      "bytes": 2513,
+      "sha256": "c6ac1659b17fcec7a962ae54099d12bd8d0af4c0879350d7210232a24d0275b5"
     },
     {
       "path": "examples/interactive-timeline/index.html",
       "kitPath": "interactive-timeline/index.html",
-      "bytes": 2556,
-      "sha256": "da322b29323979a130428338d905426210212083a5c98cba20fb7c57f70cc617"
+      "bytes": 3909,
+      "sha256": "1bd27c17365fb976d5a97ca575f58d1a95b4e8f09e79d4a7aa1748b1b7e93d34"
     },
     {
       "path": "examples/interactive-timeline/src/timeline-contract.ts",
       "kitPath": "interactive-timeline/src/timeline-contract.ts",
-      "bytes": 2521,
-      "sha256": "87af0749be33ea704a7bb9ff6336702dc366ac6148e959eea60a7b9c6b31a265"
+      "bytes": 3254,
+      "sha256": "7cff90b2e238e0c8ebd103911302434242ff127ef582d818c8c9db6c1a16774d"
     },
     {
       "path": "examples/interactive-timeline/src/main.ts",
       "kitPath": "interactive-timeline/src/main.ts",
-      "bytes": 16222,
-      "sha256": "fe171549e7242124954a5d55b4fbdc4e27bc8ee72faa2d0c4dad77f645fd2df9"
+      "bytes": 24641,
+      "sha256": "61fc7c9472cf4de86e3a97a79117ea8ec82d4112b2e70bd1ce2864b35e7b3138"
     },
     {
       "path": "examples/interactive-timeline/assets/original-16s.wav",

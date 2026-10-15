@@ -1,7 +1,7 @@
 const params = new URLSearchParams(location.search), backend = params.get('backend') || 'native';
 const canvas = document.querySelector('canvas');
 if (params.get('canvas') === 'custom') canvas.id = 'ActionCanvas';
-const { createAirApp } = await import('/build/bootstrap.js');
+const { createAirApp } = await import('/build/cocosair.module.js');
 const app = await createAirApp({ canvas });
 const { Scene, KeyCode, createActionState, createActionInput } = await import('/build/cocosair.module.js');
 app.run(new Scene('Action ownership'));

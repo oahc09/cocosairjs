@@ -1,0 +1,19 @@
+{
+  "id": "spark-splats",
+  "version": "1.0.0",
+  "title": "Spark 独立模块",
+  "category": "rendering",
+  "status": "experimental",
+  "specStatus": "draft",
+  "requiresDevTools": false,
+  "apiClaims": ["createAirApp", "Camera", "Node"],
+  "capabilities": ["spark"],
+  "learning": {
+    "goal": "加载独立 Spark 模块并复用主引擎的场景和 gfx 设备",
+    "points": ["两个 ESM 模块共享一个引擎", "程序化 Gaussian Splats", "会话资源释放"]
+  },
+  "effect": {
+    "functional": "360 个程序化泼溅绑定到原生 Node，使用同一主引擎的 Camera、Device 和 framebuffer。",
+    "visual": "中央显示由 360 个 Gaussian Splats 构成的彩色球。"
+  }
+}

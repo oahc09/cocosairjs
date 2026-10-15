@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-13T19:34:31.134Z",
-  "revision": "3167e4e1",
+  "generatedAt": "2026-10-14T23:47:06.708Z",
+  "revision": "8e309822",
   "examples": [
     {
       "dir": "anim-position",
@@ -19338,6 +19338,31 @@
       }
     },
     {
+      "dir": "spark-splats",
+      "id": "spark-splats",
+      "version": "1.0.0",
+      "title": "Spark 独立模块",
+      "category": "rendering",
+      "status": "experimental",
+      "specStatus": "draft",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "加载独立 Spark 模块并复用主引擎的场景和 gfx 设备",
+        "points": [
+          "两个 ESM 模块共享一个引擎",
+          "程序化 Gaussian Splats",
+          "会话资源释放"
+        ]
+      },
+      "effect": {
+        "functional": "360 个程序化泼溅绑定到原生 Node，使用同一主引擎的 Camera、Device 和 framebuffer。",
+        "visual": "中央显示由 360 个 Gaussian Splats 构成的彩色球。"
+      },
+      "capabilities": [
+        "spark"
+      ]
+    },
+    {
       "dir": "sprite-mask-blend",
       "id": "sprite-mask-blend",
       "version": "1.0.0",
@@ -22093,7 +22118,8 @@
       "shader-laser-card",
       "shader-glass-trail",
       "shader-input-dissolve",
-      "shader-driver-pilot"
+      "shader-driver-pilot",
+      "spark-splats"
     ],
     "shader": [
       "shader-custom-gradient",
