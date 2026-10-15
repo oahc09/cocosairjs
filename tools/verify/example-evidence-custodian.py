@@ -46,9 +46,9 @@ def identity(pid):
                     namespace=namespace)
     try:
         before, after = read(), read()
+        # A forward exit is still present, never a successful barrier or proof of physical closure.
         if (any(before[key] != after[key] for key in ['pid', 'ppid', 'pgrp', 'startTicks', 'namespace'])
-                or ((before['state'] in ['Z', 'X'] or after['state'] in ['Z', 'X'])
-                    and before['state'] != after['state'])):
+                or (before['state'] in ['Z', 'X'] and after['state'] not in ['Z', 'X'])):
             raise RuntimeError('Unknown process identity: /proc tuple changed during observation')
         return after
     except (FileNotFoundError, ProcessLookupError):

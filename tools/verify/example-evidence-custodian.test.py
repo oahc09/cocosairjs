@@ -73,6 +73,56 @@ class BarrierIdentityTests(unittest.TestCase):
             with self.subTest(request=request), self.assertRaises(RuntimeError):
                 self.check(request, sequence=2, start=None, rejected=True)
 
+    @staticmethod
+    def stat_row(state, pid=101, ppid=99, pgrp=101, ticks='100'):
+        fields = [state, str(ppid), str(pgrp)] + ['0'] * 16 + [ticks]
+        return str(pid) + ' (cpu) ' + ' '.join(fields)
+
+    def test_forward_terminal_observation_only_produces_failed_barriers(self):
+        for before, after in [('R', 'Z'), ('R', 'X'), ('S', 'Z'), ('Z', 'X')]:
+            with self.subTest(before=before, after=after), \
+                    patch.object(HELPER.pathlib.Path, 'read_text',
+                                 side_effect=[self.stat_row(before), self.stat_row(after)]), \
+                    patch.object(HELPER.os, 'readlink', return_value='pid:[1]'):
+                observed = HELPER.identity(101)
+                self.assertEqual(observed, dict(self.peer, state=after))
+                self.assertEqual(self.check(peer=observed), 'worker-exited')
+                with self.assertRaises(RuntimeError):
+                    self.check(dict(self.stop, phase='start', requestId=1), peer=observed, sequence=0, start=None)
+
+    def test_cpu_wait_keeps_forward_exit_present_until_actual_absence(self):
+        # Exercise the real same()/identity() path used by the unchanged CPU wait loop.
+        with patch.object(HELPER.pathlib.Path, 'read_text', side_effect=[
+                self.stat_row('R'), self.stat_row('Z'), self.stat_row('Z'), self.stat_row('Z'),
+                FileNotFoundError(),
+        ]) as reads, patch.object(HELPER.os, 'readlink', return_value='pid:[1]'), \
+                patch.object(HELPER.os, 'kill') as signals:
+            self.assertIs(HELPER.same(self.peer), True, 'R to Z cannot be called absent')
+            self.assertIs(HELPER.same(self.peer), True, 'an unreaped Z cannot be called closed')
+            self.assertIsNone(HELPER.same(self.peer), 'only the later actual absence ends the wait')
+            self.assertEqual(reads.call_count, 5)
+            signals.assert_not_called()
+
+    def test_forward_exit_does_not_hide_tuple_reuse_or_unknown_observations(self):
+        for change in [dict(pid=102), dict(ticks='101'), dict(ppid=88), dict(pgrp=88)]:
+            with self.subTest(change=change), \
+                    patch.object(HELPER.pathlib.Path, 'read_text',
+                                 side_effect=[self.stat_row('R'), self.stat_row('Z', **change)]), \
+                    patch.object(HELPER.os, 'readlink', return_value='pid:[1]'):
+                with self.assertRaises(RuntimeError):
+                    HELPER.identity(101)
+        with patch.object(HELPER.pathlib.Path, 'read_text', side_effect=[self.stat_row('R'), self.stat_row('Z')]), \
+                patch.object(HELPER.os, 'readlink', side_effect=['pid:[1]', 'pid:[2]']):
+            with self.assertRaisesRegex(RuntimeError, 'tuple changed'):
+                HELPER.identity(101)
+        for before, after in [('Z', 'R'), ('X', 'R'), ('R', '?')]:
+            with self.subTest(before=before, after=after), \
+                    patch.object(HELPER.pathlib.Path, 'read_text',
+                                 side_effect=[self.stat_row(before), self.stat_row(after)]), \
+                    patch.object(HELPER.os, 'readlink', return_value='pid:[1]'):
+                with self.assertRaises(RuntimeError):
+                    HELPER.identity(101)
+
     def test_identity_unknown_is_not_absence(self):
         for error in [PermissionError('denied'), OSError('unreadable')]:
             with self.subTest(error=error), patch.object(HELPER.pathlib.Path, 'read_text', side_effect=error):
@@ -94,7 +144,7 @@ class BarrierIdentityTests(unittest.TestCase):
         fields[19] = '100'
         fields[0] = 'Z'
         exited = '101 (cpu) ' + ' '.join(fields)
-        with patch.object(HELPER.pathlib.Path, 'read_text', side_effect=[first, exited]), \
+        with patch.object(HELPER.pathlib.Path, 'read_text', side_effect=[exited, first]), \
                 patch.object(HELPER.os, 'readlink', return_value='pid:[1]'):
             with self.assertRaisesRegex(RuntimeError, 'tuple changed'):
                 HELPER.identity(101)

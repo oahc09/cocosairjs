@@ -659,7 +659,7 @@ test('late-stop request identity controls run the Python protocol negatives befo
     assert.equal(result.error, undefined);
     assert.equal(result.signal, null);
     assert.equal(result.status, 0, result.stderr);
-    assert.match(result.stderr, /Ran 8 tests/);
+    assert.match(result.stderr, /Ran 11 tests/);
     console.log(result.stderr.trim());
 });
 
