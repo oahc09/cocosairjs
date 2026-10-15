@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>DOM audio cancellation regression</title>
+        <style>
+            body {
+                margin: 0;
+                background: #14232c;
+                color: #e9f5ef;
+                font: 16px system-ui;
+            }
+            #host {
+                width: 640px;
+                height: 280px;
+            }
+            #GameCanvas {
+                width: 100%;
+                height: 100%;
+            }
+            main {
+                padding: 20px;
+            }
+            button {
+                margin: 4px;
+                padding: 12px;
+            }
+            pre {
+                white-space: pre-wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>DOM audio cancellation regression</h1>
+            <p>Isolated SDK candidate. Public Source operations; native media observed separately.</p>
+            <div id="host"><canvas id="GameCanvas"></canvas></div>
+            <div id="buttons"></div>
+            <pre id="status">Preparing…</pre>
+        </main>
+        <script type="module" src="./main.mjs"></script>
+    </body>
+</html>

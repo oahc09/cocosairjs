@@ -9,6 +9,7 @@ on:
 jobs:
   quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
@@ -37,8 +38,26 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --ignore-scripts
+      - name: Check committed complete example evidence before rebuilding
+        run: |
+          node tools/build/prepare-package.cjs
+          sha256sum src/air/spark/generated/spark-runtime.js src/air/spark/generated/spark-runtime.js.map src/air/spark/generated/spark-runtime.d.ts > "$RUNNER_TEMP/committed-spark-tree.sha256"
+          node tools/build/spark-runtime-tree.cjs
+          sha256sum --check "$RUNNER_TEMP/committed-spark-tree.sha256"
+          git diff --exit-code -- src/air/spark/generated
+          EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu" node tools/verify/example-evidence-supervisor.test.cjs
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-workspace.test.ts test/smoke/smoke-example-evidence-campaign.test.ts test/smoke/smoke-example-evidence-publication.test.ts test/smoke/smoke-example-evidence-integration.test.ts test/smoke/smoke-example-specialized-probes.test.ts test/smoke/smoke-example-driver-pixel-diagnostics.test.ts
+          node tools/verify/example-evidence-preflight.cjs
+          node tools/verify/example-evidence-campaign.cjs check
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: example-evidence-cpu-receipts
+          path: ${{ runner.temp }}/example-evidence-cpu/
+          if-no-files-found: ignore
       - run: npm run format:check
       - run: npx prettier --check tools/verify/release-readiness.cjs tools/examples/api-inventory.cjs tools/examples/reconcile-api-claims.cjs tools/examples/coverage-bindings/bind-vector-instance.cjs tools/examples/coverage-bindings/bind-tween-control.cjs tools/examples/coverage-bindings/bind-animation-runtime.cjs tools/examples/coverage-bindings/bind-widget-layout.cjs
+      - run: npx prettier --check "tools/verify/example-evidence*.cjs" tools/verify/example-specialized-probes.cjs tools/verify/driver-pixel-diagnostics.cjs tools/verify/example-workspace.cjs tools/verify/run-example-evidence-campaign.cjs tools/verify/publish-example-evidence.cjs "test/smoke/smoke-example-*.test.ts" AGENTS.md tools/README.md docs/reference/example-evidence-campaign.md docs/reference/verification.md
       - run: npm run typecheck
       - name: Build runtime and declarations
         run: |
@@ -49,13 +68,13 @@ jobs:
           else
             npm run build:all
           fi
+          npm run build:spark
         env:
           # Preserve full JS/map generation; its measured working set exceeds Node's default 2 GiB heap.
           NODE_OPTIONS: --max-old-space-size=4096
       - run: npm run gallery:api
       - run: git diff --exit-code -- docs/example-api-inventory.json
       - run: npm run verify:doc-refs
-      - run: npm run verify:example-chain
       - name: Prepare browser evidence tooling
         run: |
           sha256sum node_modules/typescript/package.json node_modules/@types/node/package.json > "$RUNNER_TEMP/air-type-dependencies.sha256"
@@ -82,6 +101,59 @@ jobs:
           path: |
             output/ci-browser-diagnostic.json
             output/ci-browser-matrix.json
+          if-no-files-found: ignore
+      - name: Collect bounded DOM audio cancellation regression
+        run: xvfb-run --auto-servernum node tools/verify/audio-cancellation/supervise.cjs
+        env:
+          REVIEW_TAG: ci-dom-audio
+          FULL: "0"
+          AUDIO_QA_OUT: output/ci-audio-cancellation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dom-audio-cancellation-diagnostics
+          path: output/ci-audio-cancellation/
+          if-no-files-found: ignore
+      - name: Collect current fixed-snapshot example campaign
+        run: |
+          set -euo pipefail
+          campaign="$RUNNER_TEMP/current-example-campaign"
+          mkdir "$campaign"
+          node tools/verify/example-evidence-preflight.cjs > "$campaign/preflight.json"
+          node tools/verify/example-evidence-campaign.cjs freeze --out="$campaign/freeze.json"
+          node -e 'const f=require(process.argv[1]); process.stdout.write(f.scope.map(e=>e.id).join("\n")+"\n")' "$campaign/freeze.json" > "$campaign/ids.txt"
+          # Each invocation has its own external 139s deadline, 15s startup and 4s close.
+          # Stop on failure; originals are uploaded. No unbounded shared browser or automatic retry.
+          while IFS= read -r id; do
+            xvfb-run --auto-servernum node tools/verify/run-example-evidence-campaign.cjs --freeze="$campaign/freeze.json" --id="$id" --out="$campaign/attempts/$id/1" --execute-authorized
+          done < "$campaign/ids.txt"
+          segments=$(node -e 'const fs=require("fs"),p=require("path");const d=process.argv[1];process.stdout.write(fs.readdirSync(d).filter(x=>x.endsWith(".json")).sort().map(x=>p.join(d,x)).join(","))' "$campaign/segments")
+          node tools/verify/example-evidence-campaign.cjs merge --freeze="$campaign/freeze.json" --segments="$segments" --out="$campaign/merged.json"
+          node tools/verify/publish-example-evidence.cjs --campaign="$campaign/merged.json" --source-dir="$campaign"
+          node tools/verify/example-evidence-campaign.cjs check
+          npm run verify:example-chain
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-snapshot-example-campaign
+          path: ${{ runner.temp }}/current-example-campaign/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: complete-example-evidence
+          path: |
+            docs/evidence/examples-verified.json
+            docs/evidence/example-campaigns/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: example-publication-interruption
+          include-hidden-files: true
+          path: |
+            docs/evidence/.examples-publication-incomplete.json
+            .example-publication-stage-*/
           if-no-files-found: ignore
       - name: Run Jest and verify test discovery
         run: npm run verify:test-inventory

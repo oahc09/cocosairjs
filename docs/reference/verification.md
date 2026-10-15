@@ -34,7 +34,7 @@ npm run verify:perf-lifecycle
 npm run verify:release
 ```
 
-这些命令需要对应浏览器环境及已构建产物。浏览器采集器会重新生成 JSON 和截图；子集结果不得用作全量验收。V1.1 示例、DevTools 和 Gallery 的采集器分别位于 `tools/verify/example-spec-browser.cjs`、`tools/verify/devtools-examples.cjs`、`tools/verify/gallery-artifact.cjs`；按各脚本的参数说明执行完整采集，再生成 API 覆盖报告。
+这些命令需要对应浏览器环境及已构建产物。浏览器采集器会重新生成 JSON 和截图；子集结果不得用作全量验收。普通示例使用 `tools/verify/run-example-evidence-campaign.cjs` 按固定快照逐例采集，再严格合并与发布，见[完整流程](example-evidence-campaign.md)；`example-spec-browser.cjs` 仅是内部受监督 worker。DevTools 和 Gallery 的采集器分别位于 `tools/verify/devtools-examples.cjs`、`tools/verify/gallery-artifact.cjs`。对应范围完整采集后，才能生成 API 覆盖报告。
 
 历史清理不豁免当前候选的完整验收。`verify:release` 会现算候选指纹、以 `coverage-report.cjs --check` 核对库存、规格与逐 API 执行证据，并调用许可门禁；缺失、过时、授权未闭环均阻断发布。发布前还要求工作区干净。单独截图不能替代汇总和指纹检查。
 

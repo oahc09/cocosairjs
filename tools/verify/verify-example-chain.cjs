@@ -19,9 +19,8 @@
  *   V6 采集器身份：runner 字段指向的脚本仍在盘（证据不是手写的旁证）、mode 非空。
  *   V7 时间戳：measuredAt 可解析且不晚于当前时刻（+60 s 容差）⇒ 挡住"未来日期"式的伪造。
  *
- * 刻意**不做**的一件事（边界，别读成"已绑产物"）：本门禁**不**断言证据里的 candidateFingerprint
- * 等于当前树现算值。那条等式一旦进门禁，任何 `src/` 改动都会立刻拖红并要求重采 52 例
- * （≈1.9 h／三引擎更多）⇒ 属 owner 决策面。现算值只作为**信息**打印（`live` 段），不参与退出码。
+ * 新分段协议额外共用严格 campaign validator：完整 scope、当前冻结输入、每次原件/截图与实际终态。
+ * 源码、SDK、合同或采集工具变化必须新建冻结并重新采证，不能替换文件里的指纹。
  *
  * 退出码：0 = 七条全过；1 = 不变量被破坏；2 = 证据文件不可读/不可解析。
  */
@@ -58,6 +57,10 @@ try {
     process.exit(2);
 }
 
+// A single shared validator owns scope, frozen inputs, modes, proof and physical closure validation.
+const campaignValidation = require('./example-evidence-campaign.cjs').validateCampaign(j, { repo: ROOT, evidencePath });
+for (const error of campaignValidation.errors) fail(`campaign: ${error}`);
+
 // V1 完整性标记
 if (j.completed !== true) fail(`V1 completed 必须为 true（实际 ${JSON.stringify(j.completed)}）⇒ 缺标记即 NOT_RUN`);
 if (j.partial !== false) fail(`V1 partial 必须为 false（实际 ${JSON.stringify(j.partial)}）⇒ 子集跑不得当全量回归`);
@@ -84,22 +87,33 @@ for (const r of results) {
 const fps = new Set();
 let missingFp = 0;
 for (const r of results) {
-    if (typeof r.candidateFingerprint !== 'string') { missingFp += 1; continue; }
+    if (typeof r.candidateFingerprint !== 'string') {
+        missingFp += 1;
+        continue;
+    }
     fps.add(r.candidateFingerprint);
-    if (!HEX16.test(r.candidateFingerprint)) fail(`V4 ${r.id} candidateFingerprint 非 16 位十六进制：${r.candidateFingerprint}`);
+    if (!HEX16.test(r.candidateFingerprint))
+        fail(`V4 ${r.id} candidateFingerprint 非 16 位十六进制：${r.candidateFingerprint}`);
     if (!HEX16.test(String(r.sourceFingerprint))) fail(`V4 ${r.id} sourceFingerprint 非 16 位十六进制`);
     if (!HEX.test(String(r.specFingerprint))) fail(`V4 ${r.id} specFingerprint 非十六进制`);
 }
 if (missingFp > 0) fail(`V4 ${missingFp}/${results.length} 条记录缺 candidateFingerprint ⇒ 无法绑定被测字节`);
-if (fps.size > 1) fail(`V4 全表出现 ${fps.size} 个不同 candidateFingerprint（${[...fps].join(', ')}）⇒ 一条链里混了多份候选产物`);
-if (j.candidateFingerprint && !HEX16.test(j.candidateFingerprint)) fail(`V4 文件级 candidateFingerprint 非 16 位十六进制：${j.candidateFingerprint}`);
+if (fps.size > 1)
+    fail(`V4 全表出现 ${fps.size} 个不同 candidateFingerprint（${[...fps].join(', ')}）⇒ 一条链里混了多份候选产物`);
+if (fps.size !== 1 || !fps.has(j.candidateFingerprint)) fail('V4 file/row candidate fingerprints differ');
+if (j.candidateFingerprint && !HEX16.test(j.candidateFingerprint))
+    fail(`V4 文件级 candidateFingerprint 非 16 位十六进制：${j.candidateFingerprint}`);
 
 // V5 API 取证聚合自洽
 const totals = { verified: 0, attested: 0, unproven: 0 };
 for (const r of results) {
     for (const p of r.apiProof || []) {
-        if (!(p.proof in totals)) { fail(`V5 ${r.id} 未知 proof "${p.proof}"（api=${p.api}）`); continue; }
-        if (!ALLOWED_PROOF.has(p.proof)) fail(`V5 ${r.id} proof "${p.proof}" 不在允许集 {verified, attested}（api=${p.api}）`);
+        if (!(p.proof in totals)) {
+            fail(`V5 ${r.id} 未知 proof "${p.proof}"（api=${p.api}）`);
+            continue;
+        }
+        if (!ALLOWED_PROOF.has(p.proof))
+            fail(`V5 ${r.id} proof "${p.proof}" 不在允许集 {verified, attested}（api=${p.api}）`);
         totals[p.proof] += 1;
     }
 }
@@ -119,14 +133,14 @@ const stamp = Date.parse(j.measuredAt);
 if (Number.isNaN(stamp)) fail(`V7 measuredAt 不可解析：${JSON.stringify(j.measuredAt)}`);
 else if (stamp > Date.now() + 60_000) fail(`V7 measuredAt 晚于当前时刻 ⇒ 疑似手写时间戳（${j.measuredAt}）`);
 
-// 信息项（不参与退出码）：当前树现算 candidateFingerprint
+// Diagnostic detail; the strict campaign validator already binds current input bytes.
 let live = { status: 'UNAVAILABLE' };
 try {
     const apiTrace = require(path.join(ROOT, 'tools', 'verify', 'api-trace.cjs'));
     const fp = apiTrace.candidateFingerprint();
     live = { status: 'OK', candidateFingerprint: fp, matchesEvidence: fp === j.candidateFingerprint };
     if (live.matchesEvidence === false) {
-        live.note = '证据所绑定的候选产物 ≠ 当前树 ⇒ 在册结论不可声称"当期"；是否重采属 owner 决策，本门禁不因此判红';
+        live.note = '证据所绑定的候选产物 ≠ 当前树；严格 campaign 校验要求重新采证';
     }
 } catch (e) {
     live = { status: 'UNAVAILABLE', reason: e.message.split('\n')[0] };
@@ -150,15 +164,20 @@ const report = {
 if (outPath) fs.writeFileSync(outPath, JSON.stringify(report, null, 2) + '\n');
 if (asJson) console.log(JSON.stringify(report, null, 2));
 else {
-    console.log(JSON.stringify({
-        ok: report.ok,
-        records: report.records,
-        runPass: `${report.runPass}/${report.runTotal}`,
-        fps: report.distinctCandidateFingerprints.join(','),
-        apiProof: `verified:${totals.verified} attested:${totals.attested} unproven:${totals.unproven}`,
-        live: live.status === 'OK' ? `${live.candidateFingerprint}${live.matchesEvidence ? '==evidence' : '!=evidence'}` : 'UNAVAILABLE',
-        errorCount: errors.length,
-    }));
+    console.log(
+        JSON.stringify({
+            ok: report.ok,
+            records: report.records,
+            runPass: `${report.runPass}/${report.runTotal}`,
+            fps: report.distinctCandidateFingerprints.join(','),
+            apiProof: `verified:${totals.verified} attested:${totals.attested} unproven:${totals.unproven}`,
+            live:
+                live.status === 'OK'
+                    ? `${live.candidateFingerprint}${live.matchesEvidence ? '==evidence' : '!=evidence'}`
+                    : 'UNAVAILABLE',
+            errorCount: errors.length,
+        }),
+    );
     for (const e of errors.slice(0, 20)) console.error(`  ! ${e}`);
 }
 process.exit(errors.length ? 1 : 0);

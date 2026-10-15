@@ -1,8 +1,8 @@
 {
-  "measuredAt": "2026-10-13T19:34:34.610Z",
+  "measuredAt": "2026-10-15T01:04:46.793Z",
   "tool": "tools/examples/spec-compliance-audit.cjs",
   "spec": "ai/example-spec-execution.md",
-  "total": 186,
+  "total": 187,
   "examples": [
     {
       "id": "gltf-draco",
@@ -13,6 +13,18 @@
           "rule": "S25-LIFECYCLE",
           "severity": "warn",
           "detail": "§25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract"
+        }
+      ]
+    },
+    {
+      "id": "html-texture-experimental",
+      "status": "stable",
+      "specStatus": "frozen",
+      "findings": [
+        {
+          "rule": "S11-STALE-EVIDENCE",
+          "severity": "fail",
+          "detail": "§11：证据 specFingerprint 533471c42d45 ≠ 当前 example.json 4ba396ace187（陈旧证据冒充当期通过）"
         }
       ]
     },
@@ -31,12 +43,13 @@
   ],
   "globalFindings": [],
   "summary": {
-    "examples": 186,
-    "withFindings": 2,
-    "fail": 0,
+    "examples": 187,
+    "withFindings": 3,
+    "fail": 1,
     "warn": 2,
     "byRule": {
       "S25-LIFECYCLE": 1,
+      "S11-STALE-EVIDENCE": 1,
       "S6-EFFECT": 1
     },
     "findings": [
@@ -45,6 +58,12 @@
         "rule": "S25-LIFECYCLE",
         "severity": "warn",
         "detail": "§25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract"
+      },
+      {
+        "example": "html-texture-experimental",
+        "rule": "S11-STALE-EVIDENCE",
+        "severity": "fail",
+        "detail": "§11：证据 specFingerprint 533471c42d45 ≠ 当前 example.json 4ba396ace187（陈旧证据冒充当期通过）"
       },
       {
         "example": "starfield-galaxy",

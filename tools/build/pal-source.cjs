@@ -57,6 +57,7 @@ function generate() {
             replace('result.height *= dpr;', 'result.height = Math.round(result.height * dpr);');
         }
         source = patchStartupBinding(source, row.source);
+        source = require('./audio-cancellation-patch.cjs').patchAudioCancellation(source, row.source);
         const result = ts.transpileModule(source, {
             compilerOptions: {
                 target: ts.ScriptTarget.ES2020,
