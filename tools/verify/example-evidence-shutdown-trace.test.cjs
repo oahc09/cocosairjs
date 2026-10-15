@@ -7,7 +7,9 @@ const {
     buildCommand,
     traceArgs,
     createDiagnosticBudget,
+    emptyTraceAllowed,
     SYSCALLS,
+    TRACE_SYSCALLS,
     BOUNDS,
 } = require('./example-evidence-shutdown-trace.cjs');
 
@@ -122,10 +124,19 @@ function parse(lines, options = {}) {
     return { records, failures, result: parser.finish() };
 }
 
-test('six exact syscalls; no exec/process/I/O/stack/fd-path decoding', () => {
+test('live trace selects only four signal syscalls; wait parsing is offline compatibility only', () => {
     const command = buildCommand({ mode: 'cpu', trace: 'on', cpuCase: 'positive', out: '/tmp/diagnostic' });
     const args = traceArgs('/tmp/private.fifo', command);
-    assert.ok(args.includes(`trace=${SYSCALLS.join(',')}`));
+    assert.deepEqual(TRACE_SYSCALLS, ['kill', 'tkill', 'tgkill', 'pidfd_send_signal']);
+    assert.deepEqual(
+        args.filter((arg) => arg.startsWith('trace=')),
+        ['trace=kill,tkill,tgkill,pidfd_send_signal'],
+    );
+    assert.ok(SYSCALLS.includes('wait4') && SYSCALLS.includes('waitid'));
+    assert.equal(
+        args.some((arg) => /wait4|waitid|execve|trace=process/.test(arg)),
+        false,
+    );
     assert.ok(args.includes('signal=SIGTERM,SIGKILL'));
     assert.equal(args.includes('-ff'), false);
     assert.ok(command.args[0].endsWith('/example-evidence-supervisor.cjs'));
@@ -261,6 +272,148 @@ test('unfinished and resumed calls join only the same exact TID and syscall', ()
         assert.equal(parse(lines).result.ok, false);
 });
 
+test('fixed signal terminals and source-defined exit-stop calls never become syscall returns or sender evidence', () => {
+    const terminal = parse('202 1700000000.000002 +++ killed by SIGTERM +++\n');
+    assert.equal(terminal.result.ok, true);
+    assert.equal(terminal.records[0].kind, 'terminal');
+    assert.equal(terminal.records[0].signal, 'SIGTERM');
+    assert.deepEqual(correlate(terminal.records, []), []);
+    assert.equal(Object.hasOwn(terminal.records[0], 'result'), false);
+    const inflight = parse(
+        '202 1700000000.000001 kill(303, SIGTERM <unfinished ...>\n202 1700000000.000002 +++ killed by SIGKILL +++\n',
+    );
+    assert.equal(inflight.result.ok, true);
+    assert.deepEqual(
+        inflight.records.map((row) => row.kind),
+        ['terminated-inflight', 'terminal'],
+    );
+    assert.equal(inflight.records[0].beganLineSequence, 1);
+    assert.equal(inflight.records[0].endedLineSequence, 2);
+    assert.equal(inflight.records[0].beganAt, '1700000000.000001');
+    assert.doesNotMatch(JSON.stringify(inflight.records), /303|"result"|"errno"/);
+    for (const call of [
+        'kill(303, SIGTERM)',
+        'tkill(303, SIGTERM)',
+        'tgkill(303, 304, SIGKILL)',
+        'pidfd_send_signal(7, SIGTERM, NULL, 0)',
+    ]) {
+        const direct = parse(`202 1700000000.000001 ${call} = ?\n`);
+        assert.equal(direct.result.ok, true);
+        assert.equal(direct.records[0].kind, 'syscall-incomplete');
+        assert.equal(Object.hasOwn(direct.records[0], 'result'), false);
+        assert.equal(Object.hasOwn(direct.records[0], 'errno'), false);
+        const syscall = call.slice(0, call.indexOf('('));
+        const resumed = parse(
+            `202 1700000000.000001 ${call.slice(0, -1)} <unfinished ...>\n202 1700000000.000002 <... ${syscall} resumed>) = ?\n202 1700000000.000003 +++ killed by SIGKILL +++\n`,
+        );
+        assert.equal(resumed.result.ok, true);
+        assert.deepEqual(
+            resumed.records.map((row) => row.kind),
+            ['syscall-incomplete', 'terminal'],
+        );
+        assert.equal(resumed.records[0].beganLineSequence, 1);
+        assert.equal(resumed.records[0].endedLineSequence, 2);
+    }
+    for (const lines of [
+        '202 1700000000.000001 kill(303, SIGTERM <unfinished ...>\n',
+        '202 1700000000.000001 kill(303, SIGTERM <unfinished ...>\n203 1700000000.000002 +++ killed by SIGKILL +++\n',
+        '202 1700000000.000001 kill(303, SIGTERM <unfinished ...>\n203 1700000000.000002 <... kill resumed>) = ?\n',
+        '202 1700000000.000001 kill(303, SIGTERM <unfinished ...>\n202 1699999999.000002 +++ killed by SIGKILL +++\n',
+        '202 1700000000.000001 +++ killed by SIGKILL +++\n202 1700000000.000002 +++ killed by SIGKILL +++\n',
+        '202 1700000000.000001 +++ killed by SIGKILL +++\n202 1700000000.000002 kill(303, SIGTERM) = 0\n',
+        '202 1700000000.000001 +++ killed by SIGSEGV +++\n',
+        '202 1700000000.000001 +++ killed by SIGTERM (core dumped) +++\n',
+        '202 1700000000.000001 +++ killed by SIGKILL PRIVATE_TOKEN +++\n',
+        '202 1700000000.000001 +++ exited with 0 +++\n',
+        '202 1700000000.000001 kill(303, SIGTERM, 9) = ?\n',
+        '202 1700000000.000001 kill(303, PRIVATE_TOKEN) = ?\n',
+        '202 1700000000.000001 wait4(303, <unfinished ...>) = ?\n',
+    ]) {
+        const rejected = parse(lines);
+        assert.equal(rejected.result.ok, false, lines);
+        assert.doesNotMatch(JSON.stringify(rejected), /PRIVATE_TOKEN/);
+    }
+});
+
+test('pending and exit-stop state cannot hide malformed parameters or synthesize a later success', () => {
+    const terminal = '202 1700000000.000003 +++ killed by SIGKILL +++\n';
+    for (const prefix of [
+        'kill(303,',
+        'kill(303, SIGTERM, 9',
+        'tgkill(303, SIGTERM',
+        'wait4(-1,',
+        'waitid(P_ALL, 0,',
+    ]) {
+        assert.equal(parse(`202 1700000000.000001 ${prefix} <unfinished ...>\n` + terminal).result.ok, false);
+    }
+    for (const extra of ['kill(303, SIGTERM) = 0', 'tkill(303, SIGTERM) = ?', 'kill(303, SIGTERM <unfinished ...>']) {
+        for (const first of ['kill(303, SIGTERM <unfinished ...>', 'kill(303, SIGTERM) = ?']) {
+            assert.equal(
+                parse(`202 1700000000.000001 ${first}\n202 1700000000.000002 ${extra}\n` + terminal).result.ok,
+                false,
+            );
+        }
+    }
+    assert.equal(
+        parse(
+            '202 1700000000.000001 kill(303, SIGTERM <unfinished ...>\n202 1700000000.000002 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=303, si_uid=1} ---\n' +
+                terminal,
+        ).result.ok,
+        true,
+    );
+});
+
+test('empty selected traces permit only independently closed ordinary UNKNOWN outcomes', () => {
+    const report = {
+        trace: { ...parse('').result, empty: true },
+        physicalClosure: true,
+        original: { ok: true },
+        errors: [],
+        attribution: { status: 'UNKNOWN' },
+    };
+    for (const options of [
+        { mode: 'cpu', cpuCase: 'positive' },
+        { mode: 'cpu', cpuCase: 'browser-nonzero' },
+        { mode: 'target' },
+    ]) {
+        assert.equal(emptyTraceAllowed(options, report, TEST_ROOT), true);
+        for (const changed of [
+            { ...report, physicalClosure: false },
+            { ...report, errors: ['original-closure-incomplete'] },
+            { ...report, original: null },
+            { ...report, trace: { ok: false, empty: true } },
+            { ...report, attribution: { status: 'MATCHED' } },
+        ]) {
+            assert.equal(emptyTraceAllowed(options, changed, TEST_ROOT), false);
+        }
+        assert.equal(emptyTraceAllowed(options, report, null), false);
+        assert.equal(emptyTraceAllowed(options, report, {}), false);
+    }
+    for (const options of [
+        { mode: 'availability' },
+        { mode: 'cpu', cpuCase: 'custodian-delayed-stop-ack' },
+        { mode: 'cpu', cpuCase: 'hang', control: 'wrapper-term' },
+    ]) {
+        assert.equal(emptyTraceAllowed(options, report, TEST_ROOT), false);
+    }
+});
+
+test('input-bound controls require real new bytes after the recorded arm point', () => {
+    const parser = createParser();
+    parser.push(Buffer.from('101 1700000000.000001 kill(202, SIGTERM) = 0\n'));
+    const arm = parser.restrictToCurrentInput();
+    assert.equal(arm.inputBytes, arm.inputLimit);
+    const untouched = parser.finish();
+    assert.equal(untouched.ok, true);
+    assert.equal(untouched.inputBoundTriggeredAtBytes, null);
+    parser.push(Buffer.from('202 1700000000.000002 +++ killed by SIGTERM +++\n'));
+    const triggered = parser.finish();
+    assert.equal(triggered.reason, 'trace-input-bound');
+    assert.equal(triggered.inputBoundArmedAtBytes, arm.inputBytes);
+    assert.ok(triggered.inputBoundTriggeredAtBytes > arm.inputBytes);
+    assert.equal(triggered.inputBytes, triggered.inputBoundTriggeredAtBytes);
+});
+
 test('unknown trace, secrets, comments, unexpected signals, and truncated lines fail without retaining text', () => {
     for (const line of [
         '101 1700000000.000001 execve("PRIVATE_TOKEN", [], []) = 0\n',
@@ -328,6 +481,9 @@ test('PIDFD is opaque, group kill/unknown TID/ambiguous sender never establish a
         { ...syscall, errno: 'EPERM' },
         { ...syscall, errno: undefined },
         { ...syscall, result: null, errno: 'ERESTARTSYS' },
+        { ...syscall, kind: 'terminal' },
+        { ...syscall, kind: 'syscall-incomplete' },
+        { ...syscall, kind: 'terminated-inflight' },
         { ...syscall, callerProcessIdentity: { ...sender, startTicks: '99' } },
         { ...syscall, beganAt: '1700000000.900000' },
         { ...syscall, threadIdentity: { ...syscall.threadIdentity, tgid: 999 } },
@@ -440,6 +596,22 @@ test('control-only bounds cannot be applied to a target or ordinary positive', (
     assert.ok(command.args.includes('--cpu=hang'));
     assert.equal(command.limits.startupMs, 15000);
     assert.equal(command.limits.closeMs, 4000);
+    const bound = buildCommand({
+        mode: 'cpu',
+        cpuCase: 'custodian-delayed-stop-ack',
+        trace: 'on',
+        control: 'trace-input-bound',
+        out: '/tmp/controlled-bound',
+    });
+    assert.ok(bound.args.includes('--cpu=custodian-delayed-stop-ack'));
+    for (const [control, cpuCase] of [
+        ['trace-input-bound', 'hang'],
+        ['wrapper-term', 'custodian-delayed-stop-ack'],
+    ])
+        assert.throws(
+            () => buildCommand({ mode: 'cpu', cpuCase, trace: 'on', control, out: '/tmp/invalid' }),
+            /control-requires/,
+        );
 });
 
 test(
@@ -512,6 +684,16 @@ function assertExpectedControlErrors(report, control) {
     assert.deepEqual([...report.errors].sort(), [expected, 'intentional-wrapper-negative-control'].sort());
     assert.equal(report.trace.ok, control === 'wrapper-term');
     assert.equal(report.trace.reason, control === 'wrapper-term' ? null : 'trace-input-bound');
+    if (control === 'trace-input-bound') {
+        const trace = report.trace;
+        assert.ok(Number.isSafeInteger(trace.inputBoundArmedAtBytes) && trace.inputBoundArmedAtBytes >= 0);
+        assert.equal(trace.inputLimit, trace.inputBoundArmedAtBytes);
+        assert.ok(
+            Number.isSafeInteger(trace.inputBoundTriggeredAtBytes) &&
+                trace.inputBoundTriggeredAtBytes > trace.inputLimit,
+        );
+        assert.ok(trace.inputBytes >= trace.inputBoundTriggeredAtBytes);
+    }
 }
 
 test('live controls reject every unrelated parser or identity failure before another case can start', () => {
@@ -519,9 +701,25 @@ test('live controls reject every unrelated parser or identity failure before ano
         const expected = control === 'wrapper-term' ? 'diagnostic-wrapper-interrupted' : 'trace-input-bound';
         const report = {
             errors: [expected, 'intentional-wrapper-negative-control'],
-            trace: { ok: control === 'wrapper-term', reason: control === 'wrapper-term' ? null : 'trace-input-bound' },
+            trace: {
+                ok: control === 'wrapper-term',
+                reason: control === 'wrapper-term' ? null : 'trace-input-bound',
+                inputBoundArmedAtBytes: 10,
+                inputLimit: 10,
+                inputBoundTriggeredAtBytes: 20,
+                inputBytes: 20,
+            },
         };
         assertExpectedControlErrors(report, control);
+        if (control === 'trace-input-bound') {
+            for (const value of [null, 0, 10, NaN])
+                assert.throws(() =>
+                    assertExpectedControlErrors(
+                        { ...report, trace: { ...report.trace, inputBoundTriggeredAtBytes: value } },
+                        control,
+                    ),
+                );
+        }
         for (const error of [
             'trace-enum-rejected',
             'trace-grammar-rejected',
@@ -715,7 +913,7 @@ test(
                 const args = [
                     path.join(__dirname, 'example-evidence-shutdown-trace.cjs'),
                     '--mode=cpu',
-                    '--case=hang',
+                    `--case=${control === 'wrapper-term' ? 'hang' : 'custodian-delayed-stop-ack'}`,
                     '--trace=on',
                     `--control=${control}`,
                     `--out=${out}`,
@@ -767,6 +965,19 @@ test(
                             assert.equal(report.physicalClosure, true, JSON.stringify(report.errors));
                             assertOriginalControlClosure(out, ready, report);
                             assertExpectedControlErrors(report, control);
+                            if (control === 'trace-input-bound') {
+                                assert.deepEqual(ready.inputBoundArm, {
+                                    inputBytes: report.trace.inputBoundArmedAtBytes,
+                                    inputLimit: report.trace.inputLimit,
+                                });
+                                assert.ok(
+                                    report.events.some(
+                                        (event) =>
+                                            event.type === 'control-input-bound-armed' &&
+                                            event.inputBytes === ready.inputBoundArm.inputBytes,
+                                    ),
+                                );
+                            }
                             assert.ok(
                                 report.events.some(
                                     (event) =>

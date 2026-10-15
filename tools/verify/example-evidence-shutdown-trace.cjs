@@ -20,6 +20,8 @@ const {
 const REPO = path.resolve(__dirname, '../..');
 const SCHEMA = 'example-evidence-shutdown-diagnostic/1';
 const SYSCALLS = Object.freeze(['kill', 'tkill', 'tgkill', 'pidfd_send_signal', 'wait4', 'waitid']);
+// Kernel wait/reap evidence remains in the original Python custody artifacts, not this sidecar filter.
+const TRACE_SYSCALLS = Object.freeze(['kill', 'tkill', 'tgkill', 'pidfd_send_signal']);
 const CPU_CASES = Object.freeze(['positive', 'browser-nonzero', 'custodian-delayed-stop-ack']);
 const BOUNDS = Object.freeze({
     inputBytes: 8 * 1024 * 1024,
@@ -477,6 +479,9 @@ function integer(text) {
     return value;
 }
 function parseCompleted(tid, timestamp, body, beganAt = timestamp) {
+    // v6.8 print_signalled uses signal_set, independently of -qqq/QUIET_EXIT.
+    const terminal = body.match(/^\+\+\+ killed by (SIGTERM|SIGKILL) \+\+\+$/);
+    if (terminal) return { kind: 'terminal', tid, timestamp, signal: terminal[1] };
     body = omitWaitClockAnnotations(body);
     validateGrammar(body);
     const delivery = body.match(/^--- (SIGTERM|SIGKILL) \{(.+)\} ---$/);
@@ -528,12 +533,14 @@ function parseCompleted(tid, timestamp, body, beganAt = timestamp) {
         errno: errno || null,
     };
     const isWait = syscall === 'wait4' || syscall === 'waitid';
+    const exitStop = !isWait && result === '?' && !errno;
     invariant(
-        errno
-            ? RESTART_ERRORS.has(errno)
-                ? isWait && result === '?'
-                : row.result === -1
-            : row.result !== null && (syscall === 'wait4' ? row.result >= 0 : row.result === 0),
+        exitStop ||
+            (errno
+                ? RESTART_ERRORS.has(errno)
+                    ? isWait && result === '?'
+                    : row.result === -1
+                : row.result !== null && (syscall === 'wait4' ? row.result >= 0 : row.result === 0)),
         'trace-return-combination-rejected',
     );
     if (['kill', 'tkill', 'tgkill', 'pidfd_send_signal'].includes(syscall)) {
@@ -568,7 +575,9 @@ function parseCompleted(tid, timestamp, body, beganAt = timestamp) {
             invariant(row.waitExitCode >= 0 && row.waitExitCode <= 255, 'trace-wait-exit-code-range');
         }
     }
-    return row;
+    // v6.8 print_event_exit can end a fully decoded signal call without a syscall return.
+    // Keep no arguments, result or errno, and never expose this as a successful syscall.
+    return exitStop ? { kind: 'syscall-incomplete', tid, timestamp, beganAt, syscall } : row;
 }
 function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => {} } = {}) {
     let buffer = '',
@@ -577,8 +586,12 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
         acceptedLines = 0,
         failed = null,
         rejectedLine = null,
-        inputLimit = bounds.inputBytes;
+        inputLimit = bounds.inputBytes,
+        inputBoundArmedAtBytes = null,
+        inputBoundTriggeredAtBytes = null;
     const pending = new Map();
+    const terminalTids = new Set();
+    const exitStopTids = new Set();
     const fail = (reason) => {
         if (!failed) {
             failed = reason;
@@ -589,7 +602,10 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
         push(bytes) {
             inputBytes += bytes.length;
             if (failed) return;
-            if (inputBytes > inputLimit) return fail('trace-input-bound');
+            if (inputBytes > inputLimit) {
+                inputBoundTriggeredAtBytes = inputBytes;
+                return fail('trace-input-bound');
+            }
             if ([...bytes].some((value) => value > 127 || (value < 32 && value !== 10 && value !== 9)))
                 return fail('trace-non-ascii');
             buffer += bytes.toString('ascii');
@@ -609,29 +625,80 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
                         tid > 0 && Number(timestamp) > 0 && Number(timestamp) < 10000000000,
                         'trace-prefix-range',
                     );
+                    invariant(!terminalTids.has(tid), 'trace-record-after-terminal');
+                    invariant(
+                        !exitStopTids.has(tid) || /^\+\+\+ killed by (SIGTERM|SIGKILL) \+\+\+$/.test(body),
+                        'trace-record-after-exit-stop',
+                    );
                     const start = body.match(
                         /^(kill|tkill|tgkill|pidfd_send_signal|wait4|waitid)\((.*)<unfinished \.\.\.>$/,
                     );
                     if (start) {
                         invariant(!pending.has(tid), 'trace-overlapping-unfinished');
                         validateGrammar(`${start[1]}(${start[2]}`);
-                        pending.set(tid, { syscall: start[1], body: `${start[1]}(${start[2]}`, timestamp });
+                        pending.set(tid, {
+                            syscall: start[1],
+                            body: `${start[1]}(${start[2]}`,
+                            timestamp,
+                            lineSequence: eventCount,
+                        });
                         acceptedLines++;
                         continue;
                     }
                     const resumed = body.match(
                         /^<\.\.\. (kill|tkill|tgkill|pidfd_send_signal|wait4|waitid) resumed>(.*)$/,
                     );
-                    let row;
+                    let row,
+                        beganLineSequence = eventCount;
                     if (resumed) {
                         const previous = pending.get(tid);
                         invariant(previous?.syscall === resumed[1], 'trace-unmatched-resume');
                         pending.delete(tid);
+                        invariant(Number(previous.timestamp) <= Number(timestamp), 'trace-resume-time-reversed');
+                        beganLineSequence = previous.lineSequence;
                         row = parseCompleted(tid, timestamp, previous.body + resumed[2], previous.timestamp);
-                    } else row = parseCompleted(tid, timestamp, body);
+                    } else {
+                        row = parseCompleted(tid, timestamp, body);
+                        invariant(
+                            !pending.has(tid) || ['delivery', 'terminal'].includes(row.kind),
+                            'trace-call-before-resume',
+                        );
+                    }
+                    const rows = [];
+                    if (row.kind === 'terminal') {
+                        const previous = pending.get(tid);
+                        if (previous) {
+                            invariant(Number(previous.timestamp) <= Number(timestamp), 'trace-terminal-time-reversed');
+                            invariant(
+                                TRACE_SYSCALLS.includes(previous.syscall),
+                                'trace-terminal-pending-call-rejected',
+                            );
+                            invariant(
+                                parseCompleted(tid, timestamp, previous.body.trimEnd() + ') = ?', previous.timestamp)
+                                    .kind === 'syscall-incomplete',
+                                'trace-terminal-pending-call-rejected',
+                            );
+                            rows.push({
+                                kind: 'terminated-inflight',
+                                tid,
+                                timestamp,
+                                beganAt: previous.timestamp,
+                                syscall: previous.syscall,
+                                beganLineSequence: previous.lineSequence,
+                                endedLineSequence: eventCount,
+                            });
+                            pending.delete(tid);
+                        }
+                        terminalTids.add(tid);
+                    }
+                    if (row.kind === 'syscall-incomplete') {
+                        row = { ...row, beganLineSequence, endedLineSequence: eventCount };
+                        exitStopTids.add(tid);
+                    }
+                    rows.push(row);
                     acceptedLines++;
                     try {
-                        onRecord({ ...row, lineSequence: eventCount });
+                        for (const item of rows) onRecord({ ...item, lineSequence: eventCount });
                     } catch {
                         fail('trace-record-processing-failed');
                     }
@@ -650,7 +717,9 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
                                 : 'syscall'
                             : /^--- SIG(?:TERM|KILL) /.test(body)
                               ? 'delivery'
-                              : 'unknown',
+                              : /^\+\+\+ killed by /.test(body)
+                                ? 'terminal'
+                                : 'unknown',
                         syscall,
                         hasCommentDelimiter: body.includes('/*') || body.includes('*/'),
                     };
@@ -660,7 +729,10 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
             if (buffer.length > bounds.lineBytes) fail('trace-line-bound');
         },
         restrictToCurrentInput() {
+            invariant(!failed && inputBoundArmedAtBytes === null, 'trace-input-bound-arm-rejected');
             inputLimit = Math.min(inputLimit, inputBytes);
+            inputBoundArmedAtBytes = inputBytes;
+            return { inputBytes, inputLimit };
         },
         finish() {
             if (buffer.length) fail('trace-truncated-line');
@@ -669,6 +741,9 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
                 ok: !failed,
                 reason: failed,
                 inputBytes,
+                inputLimit,
+                inputBoundArmedAtBytes,
+                inputBoundTriggeredAtBytes,
                 eventCount,
                 acceptedLines,
                 rejectedLines: failed ? 1 : 0,
@@ -686,11 +761,11 @@ function buildCommand(options) {
     invariant(
         !options.control ||
             (options.mode === 'cpu' &&
-                options.cpuCase === 'hang' &&
+                ((options.cpuCase === 'hang' && options.control === 'wrapper-term') ||
+                    (options.cpuCase === 'custodian-delayed-stop-ack' && options.control === 'trace-input-bound')) &&
                 options.trace === 'on' &&
-                ['wrapper-term', 'trace-input-bound'].includes(options.control) &&
                 !options.limits),
-        'control-requires-fixed-cpu-hang',
+        'control-requires-fixed-cpu-case',
     );
     if (options.mode === 'availability') {
         invariant(options.trace === 'on', 'availability-requires-trace');
@@ -708,8 +783,7 @@ function buildCommand(options) {
     }
     if (options.mode === 'cpu') {
         invariant(
-            CPU_CASES.includes(options.cpuCase) ||
-                (options.cpuCase === 'hang' && ['wrapper-term', 'trace-input-bound'].includes(options.control)),
+            CPU_CASES.includes(options.cpuCase) || (options.cpuCase === 'hang' && options.control === 'wrapper-term'),
             'unsupported-original-cpu-case',
         );
         return {
@@ -775,7 +849,7 @@ function traceArgs(fifo, command) {
         '-qqq',
         '-ttt',
         '-e',
-        `trace=${SYSCALLS.join(',')}`,
+        `trace=${TRACE_SYSCALLS.join(',')}`,
         '-e',
         'signal=SIGTERM,SIGKILL',
         '-o',
@@ -1169,6 +1243,23 @@ function createDiagnosticBudget(mode, now = () => performance.now()) {
     });
 }
 
+// Zero selected events are valid only for an otherwise fully validated ordinary run.
+// Availability and the known sender control still require real send/delivery proof.
+function emptyTraceAllowed(options, report, rootIdentity) {
+    return (
+        !options.control &&
+        options.mode !== 'availability' &&
+        !(options.mode === 'cpu' && options.cpuCase === 'custodian-delayed-stop-ack') &&
+        validTuple(rootIdentity, true) &&
+        report.trace?.ok === true &&
+        report.trace.empty === true &&
+        report.physicalClosure === true &&
+        report.original !== null &&
+        report.errors.length === 0 &&
+        report.attribution.status === 'UNKNOWN'
+    );
+}
+
 async function runDiagnostic(options) {
     // All preflight work consumes the original external budget; it never starts a fresh timer.
     const budget = createDiagnosticBudget(options.mode);
@@ -1210,6 +1301,7 @@ async function runDiagnostic(options) {
         mode: options.mode,
         cpuCase: options.cpuCase || null,
         traced: options.trace === 'on',
+        traceFilter: options.trace === 'on' ? { syscalls: TRACE_SYSCALLS, signals: ['SIGTERM', 'SIGKILL'] } : null,
         startedAt,
         limits: command.limits,
         externalLimits: budget.limits,
@@ -1276,7 +1368,7 @@ async function runDiagnostic(options) {
         onFailure: cancel,
         onRecord: (record) => {
             const observation =
-                record.kind === 'delivery' || ['kill', 'tkill', 'tgkill', 'pidfd_send_signal'].includes(record.syscall)
+                record.kind === 'delivery' || (record.kind === 'syscall' && TRACE_SYSCALLS.includes(record.syscall))
                     ? observeOwned(record.tid, rootIdentity, frozenImage)
                     : null;
             const thread = observation?.thread || null,
@@ -1460,7 +1552,10 @@ async function runDiagnostic(options) {
                     const innerObservation = inner && observeOwned(inner.pid, rootIdentity, frozenImage);
                     const custodianObservation = inner && observeOwned(inner.ppid, rootIdentity, frozenImage);
                     if (!innerObservation || !custodianObservation) return;
+                    const inputBoundArm =
+                        options.control === 'trace-input-bound' ? parser.restrictToCurrentInput() : null;
                     controlReady = true;
+                    if (inputBoundArm) event('control-input-bound-armed', inputBoundArm);
                     fs.writeFileSync(
                         path.join(options.out, 'control-ready.json'),
                         JSON.stringify({
@@ -1469,11 +1564,11 @@ async function runDiagnostic(options) {
                             innerObservation,
                             custodianObservation,
                             control: options.control,
+                            inputBoundArm,
                         }) + '\n',
                         { flag: 'wx', mode: 0o600 },
                     );
                     event('control-real-start-barrier');
-                    if (options.control === 'trace-input-bound') parser.restrictToCurrentInput();
                 }
             } catch {
                 /* Not ready. The original and external deadlines still apply. */
@@ -1541,7 +1636,7 @@ async function runDiagnostic(options) {
     if (report.traced && !fifoEOF) failure('trace-fifo-eof-missing');
     if (exactPresence(rootIdentity) !== 'ABSENT') failure('original-outer-absence-unproven');
     if (exactPresence(childIdentity) !== 'ABSENT') failure('tracer-absence-unproven');
-    if (report.traced && !records.length) failure('trace-empty-or-unavailable');
+    report.trace.empty = records.length === 0;
     if (!rootIdentity) failure('original-outer-identity-unavailable');
     if (report.traced && sha256(options.strace) !== options.straceSha256) failure('strace-hash-changed');
     if (command.browser && sha256(command.browser.executable) !== command.browser.sha256)
@@ -1710,6 +1805,8 @@ async function runDiagnostic(options) {
             !report.errors.some((reason) =>
                 /closure|close|absence|still-present|fifo|spawn|receipt-unavailable|external-kill/.test(reason),
             );
+    if (report.traced && report.trace.empty && !options.control && !emptyTraceAllowed(options, report, rootIdentity))
+        failure('trace-empty-or-unavailable');
     report.diagnosticComplete = report.errors.length === 0;
     report.status = report.diagnosticComplete ? 'DIAGNOSTIC_COMPLETE' : 'FAIL';
     report.endedAt = new Date().toISOString();
@@ -1745,6 +1842,7 @@ if (require.main === module)
 module.exports = {
     SCHEMA,
     SYSCALLS,
+    TRACE_SYSCALLS,
     CPU_CASES,
     BOUNDS,
     createParser,
@@ -1762,5 +1860,6 @@ module.exports = {
     checkChildrenInterface,
     resolveCachedIdentities,
     createDiagnosticBudget,
+    emptyTraceAllowed,
     runDiagnostic,
 };

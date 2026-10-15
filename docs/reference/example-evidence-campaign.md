@@ -185,13 +185,32 @@ to prove closure stops the job before any target browser. These controls do not
 establish safety after a wrapper or parent SIGKILL; missing closure in that case
 is UNKNOWN and stops the job.
 
-Only an explicit signal/wait syscall list and selected signal deliveries are
-observed. Persist fixed numeric identities, signal and result enums, and bounded
+The TERM control uses the existing hanging CPU fixture. The input-limit control
+uses the existing delayed-stop-ACK fixture, whose original custodian produces a
+real signal syscall. Arm the reduced parser limit before publishing readiness;
+retain the input-byte boundary and require new traced bytes to cross it. A
+control that never triggers its intended cancellation fails. Neither control
+adds a process to the production custody chain.
+
+The live trace observes only `kill`, `tkill`, `tgkill`, and
+`pidfd_send_signal`, plus selected TERM/KILL deliveries. Record that exact filter
+in each diagnostic report. Kernel wait/reap and ECHILD proof continues to come
+from the original custody artifacts; offline compatibility with historical wait
+records does not expand the live filter. Fixed killed-by terminal markers are
+diagnostic observations only: they establish neither a signal sender nor
+physical closure. An unfinished syscall terminated with its own traced thread
+has no inferred return value and cannot establish successful signal delivery.
+Persist fixed numeric identities, signal and result enums, and bounded
 filtered records. Do not retain raw argv, environment values, arbitrary text,
 or address contents. Mark filtered traces as such rather than calling them
 complete raw strace logs. Bind sender and target to their exact PID namespace,
 start ticks and executable-image observations; ambiguous or missing links stay
 UNKNOWN. Process-role hints are not executable authentication.
+A valid four-syscall trace can be empty after a normal close. It remains UNKNOWN
+only when the parser, real traced-root identity, original result classification,
+and complete physical closure all validate. Availability and known-sender
+controls still require their real signal correlation; an empty trace cannot
+satisfy either proof.
 
 Each diagnostic keeps the original attempt deadlines. The whole diagnostic
 phase is bounded to the lesser of 600 seconds and the remaining original job
