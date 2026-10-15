@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T03:43:39.270708+00:00",
+  "generatedAt": "2026-10-15T04:10:06.469726+00:00",
   "suites": [
     {
       "file": "test/smoke/air-content-size-fitter.test.ts",
@@ -4071,6 +4071,55 @@
       ]
     },
     {
+      "file": "test/smoke/smoke-example-specialized-probes.test.ts",
+      "tests": [
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) actual page callbacks isolate observations and retain readback error=false",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) actual page callbacks isolate observations and retain readback error=true",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) both CI entry points run this specialized contract before browser capture",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) collector finally restores the native pacer when readback throws and retains that failure",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) collector retains native restoration timeout rather than reporting success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) non-driver and altered mode/query cannot claim the specialized primary protocol",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) recomputes a complete primary proof and accepts real assets with empty UUIDs",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects GPU canvas absent even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects GPU canvas mismatch even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects actual state differs despite preserved flags even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects after-probe frame goes backwards even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects captured time counterfeit even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects consumer even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects diagnostic never restored even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects driver remains paused even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects errors even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects fake time step even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects fake uniform even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects missing ledger even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects native appended frame predates resume even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects native ledger prefix replaced even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects pacer frame only, no real time even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects pacer new instance even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects pacer stayed paused even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects pixel mismatch even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects probe never paused even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects probe skips diagnostic frame even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects raw absent even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects renderer invalid even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects renderer object replaced even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects renderer refs changed even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects resumed ledger extends past snapshot even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects schema even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects scope identity even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects target not disposed even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects target still attached even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects temporary material retained even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects viewport even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects wrong generation even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) rejects wrong ledger dt even when other flags claim success",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) strict campaign consumer enforces driver absent raw proof",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) strict campaign consumer enforces driver pixel-corrupt raw proof",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) strict campaign consumer enforces driver valid raw proof",
+        "ordinary Driver Pilot specialized proof contract (synthetic CPU only) strict campaign consumer enforces driver validator-absent raw proof"
+      ]
+    },
+    {
       "file": "test/smoke/smoke-example-workspace.test.ts",
       "tests": [
         "Example browser workspace dependency and byte closure about:blank UI frames do not become filesystem dependencies",
@@ -4236,8 +4285,8 @@
     }
   ],
   "totals": {
-    "suites": 198,
-    "tests": 3243,
+    "suites": 199,
+    "tests": 3287,
     "passed": null,
     "failed": null
   }

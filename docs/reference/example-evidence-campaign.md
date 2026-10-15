@@ -93,6 +93,12 @@ node tools/verify/example-evidence-campaign.cjs check \
     --evidence="$CAMPAIGN/merged.json"
 ```
 
+### Example-owned specialized controls
+
+Declared controlled-step or offscreen-render APIs must be exercised through the example's real controls and checked for their effects, not counted by calling exports from the harness. The ordinary Driver Pilot adapter runs only the frozen default holographic primary session. It preserves the existing 11 API claims and records the exact zero/positive step snapshots, per-frame time/uniform ledger, independent linear-pixel oracle, render-target disposal, actual renderer material restoration, and subsequent native-pacer progress. The shared consumer recomputes this raw protocol and rejects missing, mismatched, or non-driver reuse. This limited session does not replace the dedicated multi-engine Driver Pilot acceptance matrix.
+
+Keep synchronous harness observations inside the API tracer's `observing` guard, restored in `finally`; never hold it across an `await` or around real example actions. Restore the native pacer in `finally` and retain any probe or restoration error as a failure. A newly declared control-only API requires a reviewed executable adapter plus effect assertions and negative tests before collecting a fresh full campaign. Do not delete the claim or manufacture invocation counts to satisfy coverage.
+
 The strict validator checks the complete current scope, unique IDs/attempt numbers, exact modes, frozen input hashes, declared validator coverage, recomputed API proof, screenshots, every recorded served response body, raw collector/receipt/log provenance, and actual process/server closure. Unknown schemas, incomplete coverage, duplicate IDs/modes, changed bytes, absent proof, forced exits, or omitted failed attempts cannot publish. A diagnostic merge with `--allow-partial` remains incomplete and is never publishable.
 
 After the full merged campaign passes review, publish it with:

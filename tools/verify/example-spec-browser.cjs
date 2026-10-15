@@ -37,6 +37,7 @@ const { BrowserRuntime } = require(path.join(REPO, 'tools', 'benchmark', 'runner
 const specCommon = require(path.join(REPO, 'tools', 'verify', 'example-spec-common.cjs'));
 const { specFingerprintOf, assetDigestsOf } = specCommon;
 const { prepareExampleWorkspace } = require('./example-workspace.cjs');
+const specializedProbes = require('./example-specialized-probes.cjs');
 const apiTrace = require(path.join(REPO, 'tools', 'verify', 'api-trace.cjs'));
 const readback = require(path.join(REPO, 'tools', 'verify', 'runtime-readback.cjs'));
 const expChecks = require(path.join(REPO, 'tools', 'verify', 'expectation-checks.cjs'));
@@ -1108,11 +1109,33 @@ async function verifyApp(example, workspace, html, spec, prepared) {
             interaction = out.results;
             finalCapture = out.after || specCapture;
         }
+        const probeScope = {
+            id: example.id,
+            mode: prepared.mode || 'primary',
+            query: spec.bench?.entryQuery || '',
+            viewport: spec.bench?.viewport || { width: 480, height: 360 },
+        };
+        const probeContracts = await specializedProbes.collectProbe(runtime.page, probeScope);
+        const specialized =
+            probeContracts == null
+                ? []
+                : (() => {
+                      const verdict = specializedProbes.validateProbe(probeContracts, probeScope);
+                      return [
+                          check(
+                              'driver-primary-probe',
+                              verdict.ok,
+                              verdict.ok
+                                  ? 'real step ledger, uniform/GPU readback, target cleanup and native pacer restoration'
+                                  : verdict.errors.join('; '),
+                          ),
+                      ];
+                  })();
         const lifecycleOut = await runLifecycleChecks(example, runtime, channel, spec);
         const lifecycle = lifecycleOut.results;
         finalCapture = lifecycleOut.after || finalCapture;
 
-        const all = [...results, ...interaction, ...lifecycle];
+        const all = [...results, ...interaction, ...specialized, ...lifecycle];
         // 规格声明却没有执行器跑过的 validator 是证据缺口：必须显式 FAIL，不得静默省略后判 PASS
         const validation = spec.validation || {};
         const declared = new Set([
@@ -1213,6 +1236,7 @@ async function verifyApp(example, workspace, html, spec, prepared) {
             },
             validatorResults: all,
             scenarioProbe,
+            probeContracts,
             networkAssetsScope: 'recorded-server-responses',
             networkAssets: responseEvidence(runtime),
             artifact,

@@ -736,6 +736,21 @@ function checkResult(result, entry, freeze, repo) {
         );
         if (rows.length > 1) invariant(row.query === mode.query, `${entry.id}: mode query/order mismatch`);
         checkValidators(row, mode, rows.length > 1, specs[index]);
+        const specialized = require('./example-specialized-probes.cjs');
+        const probeCheck = specialized.validateProbe(row.probeContracts, {
+            id: entry.id,
+            mode: mode.id,
+            query: mode.query,
+            viewport: mode.viewport,
+        });
+        invariant(probeCheck.ok, `${entry.id}: specialized probe failed: ${probeCheck.errors.join('; ')}`);
+        if (entry.id === specialized.ID)
+            invariant(
+                row.validatorResults.some(
+                    (check) => check.validatorId === 'driver-primary-probe' && check.state === 'PASS',
+                ),
+                `${entry.id}: specialized probe validator missing`,
+            );
         if (!entry.shell)
             invariant(
                 row.instrumentation && row.instrumentation.bytes > 0 && row.instrumentation.hash,

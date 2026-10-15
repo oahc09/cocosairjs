@@ -7,7 +7,11 @@ const test = require('node:test');
 const { superviseAttempt, validateAttemptReceipt, limitsOf } = require('./example-evidence-supervisor.cjs');
 const ROOT = path.resolve(__dirname, '../..');
 const LIMITS = { startupMs: 800, closeMs: 300, innerMs: 1600, abortMs: 1900, forceMs: 2400, finalMs: 2800 };
-const base = fs.mkdtempSync(path.join(os.tmpdir(), 'example-evidence-supervisor-tests-'));
+const base = process.env.EXAMPLE_EVIDENCE_CPU_OUT
+    ? path.resolve(process.env.EXAMPLE_EVIDENCE_CPU_OUT)
+    : fs.mkdtempSync(path.join(os.tmpdir(), 'example-evidence-supervisor-tests-'));
+if (process.env.EXAMPLE_EVIDENCE_CPU_OUT) fs.mkdirSync(base);
+console.log('CPU receipts: ' + base);
 const summaries = [];
 async function run(cpuCase, expectedModes = ['primary']) {
     const dir = path.join(base, cpuCase);
@@ -42,6 +46,18 @@ test('actual CPU subprocess/HTTP lifecycle controls, sequential and bounded', as
         assert.equal(positive.ok, true, JSON.stringify(positive.errors));
         assert.equal(positive.browsers.length, 2);
         assert.equal(positive.servers.length, 2);
+        const ready = fs
+            .readFileSync(positive.output.stdout, 'utf8')
+            .split('\n')
+            .filter((line) => line.startsWith('{'))
+            .map((line) => JSON.parse(line))
+            .filter((row) => row.type === 'cpu-child-ready');
+        assert.equal(ready.length, 2);
+        assert.deepEqual(
+            ready.map((row) => row.pid),
+            positive.browsers.map((row) => row.pid),
+        );
+        assert.ok(ready.every((row) => row.cpuOnly === true && row.marker === 'CPU_CHILD_READY\n'));
         assert.equal(validateAttemptReceipt(positive).ok, false, 'CPU is never production evidence');
         assert.equal(validateAttemptReceipt(positive, { allowCpuDummy: true }).ok, true);
         await assert.rejects(
@@ -79,6 +95,9 @@ test('actual CPU subprocess/HTTP lifecycle controls, sequential and bounded', as
         'missing-browser-close',
         'missing-server-close',
         'missing-ready',
+        'missing-child-ready',
+        'early-child-exit',
+        'wrong-child-ready',
         'missing-browser',
         'missing-server',
         'hang',
@@ -162,6 +181,7 @@ test('actual CPU subprocess/HTTP lifecycle controls, sequential and bounded', as
         );
     });
     await t.test('tampered rows, dropped receipts, reset startup budget and modes are rejected independently', () => {
+        assert.equal(positive?.ok, true, 'Positive control must close both runtimes before mutation testing');
         const mutations = [
             (r) => {
                 r.custody.observation.events[0].utc = 'invalid';

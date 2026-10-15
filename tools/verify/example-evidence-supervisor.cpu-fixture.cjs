@@ -47,11 +47,32 @@ const launcher = {
                 process.exit(${mode === 'browser-nonzero' ? 7 : 0});
             });
             ${mode === 'forced' ? 'process.on("SIGTERM", () => {});' : ''}
+            ${mode === 'early-child-exit' ? 'process.exit(7);' : mode === 'missing-child-ready' ? '' : mode === 'wrong-child-ready' ? "process.stdout.write('WRONG\\n');" : "process.stdout.write('CPU_CHILD_READY\\n');"}
         `,
             ],
             { detached: true, stdio: ['pipe', 'pipe', 'pipe'] },
         );
         const closed = new Promise((resolve) => child.once('close', resolve));
+        // A spawned Node process is not yet an initialized CPU browser. Keep its
+        // cold startup inside the existing startup budget, not the close budget.
+        await new Promise((resolve, reject) => {
+            child.once('error', reject);
+            child.once('exit', () => reject(Error('CPU child exited before readiness')));
+            child.stdout.once('data', (chunk) => {
+                if (chunk.toString() !== 'CPU_CHILD_READY\n') reject(Error('Invalid CPU child readiness'));
+                else {
+                    console.log(
+                        JSON.stringify({
+                            cpuOnly: true,
+                            type: 'cpu-child-ready',
+                            pid: child.pid,
+                            marker: chunk.toString(),
+                        }),
+                    );
+                    resolve();
+                }
+            });
+        });
         if (mode === 'late-launch') await pause(hooks.limits.startupMs + hooks.limits.closeMs);
         return {
             async close() {

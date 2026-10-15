@@ -50,9 +50,15 @@ jobs:
       - name: Validate collector CPU contracts
         run: |
           set -euo pipefail
-          node tools/verify/example-evidence-supervisor.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/supervisor-tests.log"
-          npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-workspace.test.ts test/smoke/smoke-example-evidence-campaign.test.ts test/smoke/smoke-example-evidence-publication.test.ts test/smoke/smoke-example-evidence-integration.test.ts 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/focused-tests.log"
+          EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu" node tools/verify/example-evidence-supervisor.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/supervisor-tests.log"
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-workspace.test.ts test/smoke/smoke-example-evidence-campaign.test.ts test/smoke/smoke-example-evidence-publication.test.ts test/smoke/smoke-example-evidence-integration.test.ts test/smoke/smoke-example-specialized-probes.test.ts 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/focused-tests.log"
           node tools/verify/example-evidence-preflight.cjs > "$RUNNER_TEMP/committed-example-campaign/preflight.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: example-evidence-cpu-receipts
+          path: ${{ runner.temp }}/example-evidence-cpu/
+          if-no-files-found: ignore
       - name: Prepare official Chromium and audio dependencies
         run: |
           set -euo pipefail

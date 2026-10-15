@@ -518,8 +518,11 @@ describe('Committed example evidence workflow safeguards', () => {
 
     test('uploads preserve raw attempts, complete portable evidence and hidden interruption backups', () => {
         const uploads = steps.filter((step: any) => step.uses === 'actions/upload-artifact@v4');
-        expect(uploads).toHaveLength(3);
+        expect(uploads).toHaveLength(4);
         const byName = Object.fromEntries(uploads.map((step: any) => [step.with.name, step]));
+        const cpu = byName['example-evidence-cpu-receipts'];
+        expect(cpu.if).toBe('always()');
+        expect(cpu.with.path).toBe('${{ runner.temp }}/example-evidence-cpu/');
         const raw = byName['committed-example-campaign-raw'];
         expect(raw.if).toBe('always()');
         expect(raw.with.path).toBe('${{ runner.temp }}/committed-example-campaign/');
