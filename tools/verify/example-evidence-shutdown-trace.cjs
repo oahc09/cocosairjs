@@ -74,7 +74,11 @@ const ERRORS = Object.freeze({
     EBADF: 'Bad file descriptor',
     EFAULT: 'Bad address',
     ERESTARTSYS: 'To be restarted if SA_RESTART is set',
+    ERESTARTNOINTR: 'To be restarted',
+    ERESTARTNOHAND: 'To be restarted if no handler',
+    ERESTART_RESTARTBLOCK: 'Interrupted by signal',
 });
+const RESTART_ERRORS = new Set(['ERESTARTSYS', 'ERESTARTNOINTR', 'ERESTARTNOHAND', 'ERESTART_RESTARTBLOCK']);
 const ENUMS = new Set([
     ...SYSCALLS,
     ...SIGNALS,
@@ -410,6 +414,44 @@ function validateGrammar(body) {
     }
 }
 
+// strace v6.8 src/util.c print_ticks/print_clock_t and src/printsiginfo.c:
+// waitid's SIGCHLD si_utime/si_stime may carry a numeric seconds annotation.
+// Validate its exact field location before discarding it; never strip general comments.
+function omitWaitClockAnnotations(body) {
+    if (!body.includes('/')) return body;
+    const call = body.match(/^waitid\((.*)\)(\s+=\s+.*)$/);
+    invariant(call, 'trace-comment-location-rejected');
+    const args = fieldsOf(call[1]);
+    invariant(args.length === 5 && /^\{.*\}$/.test(args[2]), 'trace-comment-location-rejected');
+    const seen = new Set();
+    const info = fieldsOf(args[2].slice(1, -1)).map((field) => {
+        const pair = field.match(/^(si_signo|si_code|si_errno|si_pid|si_uid|si_status|si_utime|si_stime)=(.+)$/);
+        invariant(pair && !seen.has(pair[1]), 'trace-clock-field-rejected');
+        seen.add(pair[1]);
+        if (!['si_utime', 'si_stime'].includes(pair[1])) {
+            invariant(!pair[2].includes('/'), 'trace-comment-location-rejected');
+            return field;
+        }
+        const value = pair[2].match(/^(\d{1,20})(?: \/\* (\d{1,20})\.(\d{1,9}) s \*\/)?$/);
+        invariant(value && BigInt(value[1]) <= 18446744073709551615n, 'trace-clock-annotation-rejected');
+        if (value[2] !== undefined)
+            invariant(BigInt(value[1]) > 0n && BigInt(value[2]) <= BigInt(value[1]), 'trace-clock-annotation-rejected');
+        return `${pair[1]}=${value[1]}`;
+    });
+    invariant(
+        ['si_signo', 'si_code', 'si_pid', 'si_uid', 'si_status', 'si_utime', 'si_stime'].every((name) =>
+            seen.has(name),
+        ) &&
+            info.includes('si_signo=SIGCHLD') &&
+            info.some((field) => /^si_code=CLD_(EXITED|KILLED|DUMPED|TRAPPED|STOPPED|CONTINUED)$/.test(field)),
+        'trace-clock-siginfo-rejected',
+    );
+    args[2] = `{${info.join(', ')}}`;
+    const result = `waitid(${args.join(', ')})${call[2]}`;
+    invariant(!result.includes('/'), 'trace-comment-location-rejected');
+    return result;
+}
+
 function fieldsOf(text) {
     const fields = [],
         stack = [];
@@ -435,6 +477,7 @@ function integer(text) {
     return value;
 }
 function parseCompleted(tid, timestamp, body, beganAt = timestamp) {
+    body = omitWaitClockAnnotations(body);
     validateGrammar(body);
     const delivery = body.match(/^--- (SIGTERM|SIGKILL) \{(.+)\} ---$/);
     if (delivery) {
@@ -464,11 +507,12 @@ function parseCompleted(tid, timestamp, body, beganAt = timestamp) {
         };
     }
     const call = body.match(
-        /^(kill|tkill|tgkill|pidfd_send_signal|wait4|waitid)\((.*)\)\s+=\s+(-?\d+|\?)(?: ([A-Z_]+)(?: \([^)]*\))?)?$/,
+        /^(kill|tkill|tgkill|pidfd_send_signal|wait4|waitid)\((.*)\)\s+=\s+(-?\d+|\?)(?: ([A-Z_]+)(?: \(([^)]*)\))?)?$/,
     );
     invariant(call, 'trace-call-rejected');
-    const [, syscall, args, result, errno] = call;
+    const [, syscall, args, result, errno, description] = call;
     invariant(!errno || Object.hasOwn(ERRORS, errno), 'trace-errno-rejected');
+    invariant(!errno || description === ERRORS[errno], 'trace-errno-description-rejected');
     const fields = fieldsOf(args);
     invariant(
         fields.length === { kill: 2, tkill: 2, tgkill: 3, pidfd_send_signal: 4, wait4: 4, waitid: 5 }[syscall],
@@ -483,6 +527,15 @@ function parseCompleted(tid, timestamp, body, beganAt = timestamp) {
         result: result === '?' ? null : integer(result),
         errno: errno || null,
     };
+    const isWait = syscall === 'wait4' || syscall === 'waitid';
+    invariant(
+        errno
+            ? RESTART_ERRORS.has(errno)
+                ? isWait && result === '?'
+                : row.result === -1
+            : row.result !== null && (syscall === 'wait4' ? row.result >= 0 : row.result === 0),
+        'trace-return-combination-rejected',
+    );
     if (['kill', 'tkill', 'tgkill', 'pidfd_send_signal'].includes(syscall)) {
         const signal = fields[syscall === 'tgkill' ? 2 : 1];
         invariant(SIGNALS.has(signal) || signal === '0', 'trace-signal-rejected');
@@ -507,8 +560,13 @@ function parseCompleted(tid, timestamp, body, beganAt = timestamp) {
         row.target = integer(fields[syscall === 'wait4' ? 0 : 1]);
         row.targetKind = syscall === 'wait4' ? 'pid-or-group' : fields[0];
         row.waitSignal = args.match(/WTERMSIG\(s\) == (SIG[A-Z0-9_]+)/)?.[1] || null;
-        row.waitExitCode = args.match(/WEXITSTATUS\(s\) == (\d+)/)?.[1] ?? null;
-        if (row.waitExitCode !== null) row.waitExitCode = Number(row.waitExitCode);
+        const exitCodes = [...args.matchAll(/\bWEXITSTATUS\(s\) == (-?\d+)(?=[\]}&|\s])/g)];
+        invariant(!args.includes('WEXITSTATUS') || exitCodes.length === 1, 'trace-wait-exit-code-rejected');
+        row.waitExitCode = exitCodes[0]?.[1] ?? null;
+        if (row.waitExitCode !== null) {
+            row.waitExitCode = integer(row.waitExitCode);
+            invariant(row.waitExitCode >= 0 && row.waitExitCode <= 255, 'trace-wait-exit-code-range');
+        }
     }
     return row;
 }
@@ -518,6 +576,7 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
         eventCount = 0,
         acceptedLines = 0,
         failed = null,
+        rejectedLine = null,
         inputLimit = bounds.inputBytes;
     const pending = new Map();
     const fail = (reason) => {
@@ -577,6 +636,24 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
                         fail('trace-record-processing-failed');
                     }
                 } catch (error) {
+                    // A rejection keeps only a fixed shape enum and line number, never the offending token/text.
+                    const body = line.match(/^\d+\s+\d+\.\d{6}\s+(.*)$/)?.[1] || '';
+                    const syscall =
+                        body.match(
+                            /^(?:<\.\.\. )?(kill|tkill|tgkill|pidfd_send_signal|wait4|waitid)(?:\(| resumed>)/,
+                        )?.[1] || null;
+                    rejectedLine = {
+                        lineSequence: eventCount,
+                        shape: syscall
+                            ? body.startsWith('<... ')
+                                ? 'resumed-syscall'
+                                : 'syscall'
+                            : /^--- SIG(?:TERM|KILL) /.test(body)
+                              ? 'delivery'
+                              : 'unknown',
+                        syscall,
+                        hasCommentDelimiter: body.includes('/*') || body.includes('*/'),
+                    };
                     fail(error.message);
                 }
             }
@@ -595,6 +672,7 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
                 eventCount,
                 acceptedLines,
                 rejectedLines: failed ? 1 : 0,
+                rejectedLine,
                 rawStraceRetained: false,
             };
         },
@@ -740,6 +818,7 @@ function correlate(records, identities, knownRoot) {
                 (row) =>
                     row.kind === 'syscall' &&
                     row.result === 0 &&
+                    row.errno === null &&
                     row.signal === delivery.signal &&
                     row.callerProcessIdentity?.pid === delivery.siPid &&
                     exact(row.callerProcessIdentity) &&
@@ -968,6 +1047,7 @@ function knownCpuSender(receipt, records, knownRoot) {
             row.kind === 'syscall' &&
             row.syscall === 'kill' &&
             row.result === 0 &&
+            row.errno === null &&
             row.target === proof.pid &&
             row.signal === 'SIGTERM' &&
             validObservation(row.identityObservation, knownRoot) &&

@@ -152,6 +152,98 @@ test('signal source and wait outcome preserve only fixed numeric/enum fields', (
     assert.equal(data.result.rawStraceRetained, false);
 });
 
+test('official waitid clock annotations are accepted only in their unique siginfo fields and never retained', () => {
+    // strace v6.8 src/util.c print_ticks and tests/clock_t_str.c, not a recovered CI raw line.
+    const body =
+        'waitid(P_ALL, 0, {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=202, si_uid=1001, si_status=0, si_utime=1 /* 0.01 s */, si_stime=200 /* 2.00 s */}, WNOHANG|WEXITED|WNOWAIT, NULL) = 0';
+    const data = parse(`101 1700000000.000001 ${body}\n`);
+    assert.equal(data.result.ok, true);
+    assert.equal(data.records[0].syscall, 'waitid');
+    assert.doesNotMatch(JSON.stringify(data.records), /si_utime|si_stime|1001|0\.01|2\.00|\/\*/);
+    assert.equal(
+        parse(
+            `101 1700000000.000001 waitid(P_ALL, 0, <unfinished ...>\n101 1700000000.000002 <... waitid resumed>${body.slice('waitid(P_ALL, 0, '.length)}\n`,
+        ).result.ok,
+        true,
+    );
+    for (const mutation of [
+        body.replace('0.01 s', 'PRIVATE_TOKEN'),
+        body.replace('0.01 s', '-0.01 s'),
+        body.replace('0.01 s', '1e3 s'),
+        body.replace('0.01 s', '0.0000000001 s'),
+        body.replace('si_utime=1', 'si_utime=18446744073709551616'),
+        body.replace('si_utime=1', 'si_utime=0'),
+        body.replace('si_utime=1', 'si_utime=1, si_utime=1'),
+        body.replace('si_pid=202', 'si_pid=202 /* 0.01 s */'),
+        body.replace('si_signo=SIGCHLD', 'si_signo=SIGTERM'),
+        body.replace('si_code=CLD_EXITED', 'si_code=SI_USER'),
+        body.replace('si_stime=200 /* 2.00 s */', 'si_stime=200 /* 201.00 s */'),
+        body.replace('NULL)', 'NULL /* 0.01 s */)'),
+        'kill(202, SIGTERM) = 0 /* 0.01 s */',
+        'wait4(202, NULL, 0, {si_utime=1 /* 0.01 s */}) = 202',
+    ]) {
+        const rejected = parse(`101 1700000000.000001 ${mutation}\n`);
+        assert.equal(rejected.result.ok, false);
+        assert.equal(rejected.records.length, 0);
+        assert.doesNotMatch(JSON.stringify(rejected), /PRIVATE_TOKEN|18446744073709551616/);
+    }
+    const rejected = parse('101 1700000000.000001 waitid(P_ALL, 0, {PRIVATE_TOKEN=0}, 0, NULL) = 0\n');
+    assert.deepEqual(rejected.result.rejectedLine, {
+        lineSequence: 1,
+        shape: 'syscall',
+        syscall: 'waitid',
+        hasCommentDelimiter: false,
+    });
+    assert.doesNotMatch(JSON.stringify(rejected), /PRIVATE_TOKEN/);
+});
+
+test('syscall success, errno, restart and wait exit statuses cannot contradict each other', () => {
+    const restart = {
+        ERESTARTSYS: 'To be restarted if SA_RESTART is set',
+        ERESTARTNOINTR: 'To be restarted',
+        ERESTARTNOHAND: 'To be restarted if no handler',
+        ERESTART_RESTARTBLOCK: 'Interrupted by signal',
+    };
+    for (const [code, description] of Object.entries(restart)) {
+        for (const call of ['wait4(202, 0x1234, 0, NULL)', 'waitid(P_ALL, 0, 0x1234, WEXITED, NULL)']) {
+            const data = parse(`101 1700000000.000001 ${call} = ? ${code} (${description})\n`);
+            assert.equal(data.result.ok, true);
+            assert.equal(data.records[0].result, null);
+            assert.equal(data.records[0].errno, code);
+            for (const suffix of [
+                `0 ${code} (${description})`,
+                `-1 ${code} (${description})`,
+                `? ${code} (SIGTERM)`,
+                `? ${code}`,
+            ])
+                assert.equal(parse(`101 1700000000.000001 ${call} = ${suffix}\n`).result.ok, false);
+        }
+    }
+    for (const body of [
+        'kill(202, SIGTERM) = 0 EPERM (Operation not permitted)',
+        'kill(202, SIGTERM) = 1',
+        'kill(202, SIGTERM) = -1',
+        'kill(202, SIGTERM) = -1 EPERM (SIGTERM)',
+        'kill(202, SIGTERM) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)',
+        'waitid(P_ALL, 0, {}, WEXITED, NULL) = 1',
+        'wait4(202, NULL, 0, NULL) = -2',
+        'wait4(202, NULL, 0, NULL) = ?',
+        'wait4(202, [{WIFEXITED(s) && WEXITSTATUS(s) == 1000000000000000000000}], 0, NULL) = 202',
+        'wait4(202, [{WIFEXITED(s) && WEXITSTATUS(s) == 256}], 0, NULL) = 202',
+        'wait4(202, [{WIFEXITED(s) && WEXITSTATUS(s) == -1}], 0, NULL) = 202',
+        'wait4(202, [{WIFEXITED(s) && WEXITSTATUS(s) == 1.0}], 0, NULL) = 202',
+    ])
+        assert.equal(parse(`101 1700000000.000001 ${body}\n`).result.ok, false, body);
+    assert.equal(
+        parse('101 1700000000.000001 kill(202, SIGTERM) = -1 EPERM (Operation not permitted)\n').result.ok,
+        true,
+    );
+    assert.equal(
+        parse('101 1700000000.000001 wait4(202, [{WIFEXITED(s) && WEXITSTATUS(s) == 255}], 0, NULL) = 202\n').result.ok,
+        true,
+    );
+});
+
 test('unfinished and resumed calls join only the same exact TID and syscall', () => {
     const data = parse(
         '101 1700000000.000001 wait4(-1, <unfinished ...>\n' +
@@ -206,6 +298,7 @@ test('PIDFD is opaque, group kill/unknown TID/ambiguous sender never establish a
         timestamp: '1700000000.000001',
         beganAt: '1700000000.000001',
         result: 0,
+        errno: null,
         signal: 'SIGTERM',
         target: 202,
         targetKind: 'pid-or-group',
@@ -232,6 +325,9 @@ test('PIDFD is opaque, group kill/unknown TID/ambiguous sender never establish a
         { ...syscall, target: -202 },
         { ...syscall, callerProcessIdentity: null },
         { ...syscall, result: -1 },
+        { ...syscall, errno: 'EPERM' },
+        { ...syscall, errno: undefined },
+        { ...syscall, result: null, errno: 'ERESTARTSYS' },
         { ...syscall, callerProcessIdentity: { ...sender, startTicks: '99' } },
         { ...syscall, beganAt: '1700000000.900000' },
         { ...syscall, threadIdentity: { ...syscall.threadIdentity, tgid: 999 } },
@@ -262,6 +358,24 @@ test('PIDFD is opaque, group kill/unknown TID/ambiguous sender never establish a
     const pidfd = parse('101 1700000000.000001 pidfd_send_signal(7, SIGTERM, NULL, 0) = 0\n');
     assert.equal(pidfd.result.ok, true);
     assert.equal(pidfd.records[0].targetKind, 'pidfd-unknown');
+    const fs = require('node:fs'),
+        path = require('node:path');
+    const root = process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT;
+    const availability = root && path.join(root, 'shutdown-diagnostics-38776059963', 'availability');
+    if (availability && fs.existsSync(path.join(availability, 'diagnostic.json'))) {
+        const original = JSON.parse(fs.readFileSync(path.join(availability, 'diagnostic.json')));
+        const records = fs
+            .readFileSync(path.join(availability, 'filtered-trace.jsonl'), 'utf8')
+            .trim()
+            .split('\n')
+            .map(JSON.parse);
+        const knownRoot = original.events.find((row) => row.type === 'original-outer-observed').identity;
+        const identities = records.flatMap((row) => [row.processIdentity, row.threadIdentity]).filter(Boolean);
+        assert.equal(correlateRaw(records, identities, knownRoot)[0].status, 'CORRELATED_DIAGNOSTIC_ONLY');
+        const changed = structuredClone(records);
+        changed.find((row) => row.kind === 'syscall' && row.syscall === 'kill').errno = 'EPERM';
+        assert.equal(correlateRaw(changed, identities, knownRoot)[0].status, 'UNKNOWN');
+    }
 });
 
 test('reviewer mutation cases reject duplicate siginfo, conflicting signo, extra args and unsafe numbers', () => {
@@ -391,6 +505,54 @@ function requireControlBudget(epoch, now = Date.now()) {
     assert.ok(Number.isSafeInteger(deadline) && deadline > 0, 'explicit global control deadline required');
     assert.ok(deadline * 1000 - now >= 180000, 'insufficient original global budget; no control spawned');
 }
+
+function assertExpectedControlErrors(report, control) {
+    assert.ok(['wrapper-term', 'trace-input-bound'].includes(control));
+    const expected = control === 'wrapper-term' ? 'diagnostic-wrapper-interrupted' : 'trace-input-bound';
+    assert.deepEqual([...report.errors].sort(), [expected, 'intentional-wrapper-negative-control'].sort());
+    assert.equal(report.trace.ok, control === 'wrapper-term');
+    assert.equal(report.trace.reason, control === 'wrapper-term' ? null : 'trace-input-bound');
+}
+
+test('live controls reject every unrelated parser or identity failure before another case can start', () => {
+    for (const control of ['wrapper-term', 'trace-input-bound']) {
+        const expected = control === 'wrapper-term' ? 'diagnostic-wrapper-interrupted' : 'trace-input-bound';
+        const report = {
+            errors: [expected, 'intentional-wrapper-negative-control'],
+            trace: { ok: control === 'wrapper-term', reason: control === 'wrapper-term' ? null : 'trace-input-bound' },
+        };
+        assertExpectedControlErrors(report, control);
+        for (const error of [
+            'trace-enum-rejected',
+            'trace-grammar-rejected',
+            'trace-clock-annotation-rejected',
+            'original-outer-identity-unavailable',
+            'control-original-closure-unavailable',
+            expected,
+        ]) {
+            let nextStarted = false;
+            assert.throws(() => {
+                assertExpectedControlErrors({ ...report, errors: [...report.errors, error] }, control);
+                nextStarted = true;
+            });
+            assert.equal(nextStarted, false);
+        }
+        assert.throws(() => assertExpectedControlErrors({ ...report, errors: [expected] }, control));
+        assert.throws(() =>
+            assertExpectedControlErrors({ ...report, trace: { ok: false, reason: 'trace-enum-rejected' } }, control),
+        );
+    }
+    const fs = require('node:fs'),
+        path = require('node:path');
+    const root = process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT;
+    const oldReport =
+        root && path.join(root, 'shutdown-diagnostics-38776059963', 'live-controls', 'wrapper-term', 'diagnostic.json');
+    if (oldReport && fs.existsSync(oldReport)) {
+        const report = JSON.parse(fs.readFileSync(oldReport));
+        assert.equal(report.physicalClosure, true);
+        assert.throws(() => assertExpectedControlErrors(report, 'wrapper-term'));
+    }
+});
 
 test('missing ready and malformed marker always cancel and await close before returning failure', async () => {
     for (const error of [Error('missing-ready'), SyntaxError('bad-marker')]) {
@@ -604,6 +766,7 @@ test(
                             assert.equal(report.canonicalEligible, false);
                             assert.equal(report.physicalClosure, true, JSON.stringify(report.errors));
                             assertOriginalControlClosure(out, ready, report);
+                            assertExpectedControlErrors(report, control);
                             assert.ok(
                                 report.events.some(
                                     (event) =>
