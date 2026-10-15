@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 206,
+    "modifiedCount": 207,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -8162,8 +8162,8 @@
       "airPath": "src/cocos/audio/audio-source.ts",
       "upstreamPath": "cocos/audio/audio-source.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR audio cancellation: generation-owned play callbacks and clip loads (including A/B/A), immediate old-player teardown on valid clip replacement, source destruction invalidates pending one-shot loads; upstream source/header retained otherwise."
     },
     {
       "airPath": "src/cocos/audio/category.json",
@@ -8233,7 +8233,7 @@
       "upstreamPath": "public-pal/pal/audio/web/player-dom.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; 2026-10-06 PAL generator makes the decorator helper local: top-level this is undefined in ESM, preserving the existing fallback function without changing frozen sources.; AIR selected canvas priority for gesture audio unlock (generated)"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; 2026-10-06 PAL generator makes the decorator helper local: top-level this is undefined in ESM, preserving the existing fallback function without changing frozen sources.; AIR selected canvas priority for gesture audio unlock (generated); DOM-only cancellable play attempts, immediate controls, autoplay-only gesture retries and native media release via tools/build/audio-cancellation-patch.cjs; frozen vendor and shared operation queue unchanged."
     },
     {
       "airPath": "src/pal/audio/web/player-web.js",

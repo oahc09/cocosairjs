@@ -106,7 +106,7 @@
       "format": "esm"
     },
     "src/air/spark/generated/spark-runtime.js": {
-      "bytes": 2753094,
+      "bytes": 2753101,
       "imports": [
         {
           "path": "src/air/spark/spark-api-adapter.ts",

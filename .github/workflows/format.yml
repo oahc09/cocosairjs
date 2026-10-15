@@ -83,6 +83,18 @@ jobs:
             output/ci-browser-diagnostic.json
             output/ci-browser-matrix.json
           if-no-files-found: ignore
+      - name: Collect bounded DOM audio cancellation regression
+        run: xvfb-run --auto-servernum node tools/verify/audio-cancellation/supervise.cjs
+        env:
+          REVIEW_TAG: ci-dom-audio
+          FULL: "0"
+          AUDIO_QA_OUT: output/ci-audio-cancellation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dom-audio-cancellation-diagnostics
+          path: output/ci-audio-cancellation/
+          if-no-files-found: ignore
       - name: Run Jest and verify test discovery
         run: npm run verify:test-inventory
       - run: npm run verify:consumer

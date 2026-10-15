@@ -24,7 +24,7 @@
 
 import { AudioPlayer, OneShotAudio } from 'pal/audio';
 import { ccclass, help, menu, tooltip, type, range, serializable } from 'cc.decorator';
-import { AudioPCMDataView, AudioState } from '../../pal/audio/type';
+import { AudioPCMDataView, AudioState, AudioType } from '../../pal/audio/type';
 import { Component } from '../scene-graph/component';
 import { clamp, warn } from '../core';
 import { AudioClip } from './audio-clip';
@@ -87,12 +87,16 @@ export class AudioSource extends Component {
     private _isLoaded = false;
 
     private _lastSetClip: AudioClip | null = null;
+    private _loadGeneration = 0;
+    private _playGeneration = 0;
+    private _audioDestroyed = false;
 
     constructor () {
         super();
     }
 
     private _resetPlayer (): void {
+        ++this._playGeneration;
         if (this._player) {
             audioManager.removePlaying(this._player);
             this._unregisterListener();
@@ -120,32 +124,31 @@ export class AudioSource extends Component {
     }
     private _syncPlayer (): void {
         const clip = this._clip;
-        if (this._lastSetClip === clip) {
+        if (this._audioDestroyed || this._lastSetClip === clip) {
             return;
         }
-        if (!clip) {
-            this._lastSetClip = null;
-            this._resetPlayer();
-            return;
-        }
-        if (!clip._nativeAsset) {
+        const nativeAsset = clip?._nativeAsset;
+        if (clip && !nativeAsset) {
+            // Preserve the existing player when an invalid clip is supplied.
             // eslint-disable-next-line no-console
             console.error('Invalid audio clip');
             return;
         }
-        // The state of _isloaded cannot be modified if clip is the wrong argument.
-        // Because load is an asynchronous function, if it is called multiple times with the same arguments.
-        // It may cause an illegal state change
-        this._isLoaded = false;
+        const generation = ++this._loadGeneration;
         this._lastSetClip = clip;
+        this._isLoaded = false;
         this._operationsBeforeLoading.length = 0;
-        AudioPlayer.load(clip._nativeAsset.url, {
+        this._cachedCurrentTime = -1;
+        // A new clip owns the source immediately, not only once its load finishes.
+        this._resetPlayer();
+        if (!clip || !nativeAsset) {
+            return;
+        }
+        AudioPlayer.load(nativeAsset.url, {
             audioLoadMode: clip.loadMode,
         }).then((player) => {
-            if (this._lastSetClip !== clip) {
-                // In case the developers set AudioSource.clip concurrently,
-                // we should choose the last one player of AudioClip set to AudioSource.clip
-                // instead of the last loaded one.
+            if (this._audioDestroyed || generation !== this._loadGeneration || this._lastSetClip !== clip) {
+                // Identity alone cannot distinguish the first A from the last A in A -> B -> A.
                 player.destroy();
                 return;
             }
@@ -163,14 +166,17 @@ export class AudioSource extends Component {
         if (!this._hasRegisterListener && this._player) {
             const player = this._player;
             player.onEnded(() => {
+                if (this._player !== player) return;
+                ++this._playGeneration;
                 audioManager.removePlaying(player);
                 this.node?.emit(AudioSourceEventType.ENDED, this);
             });
             player.onInterruptionBegin(() => {
+                if (this._player !== player) return;
                 audioManager.removePlaying(player);
             });
             player.onInterruptionEnd(() => {
-                if (this._player === player) {
+                if (this._player === player && player.state === AudioState.PLAYING) {
                     audioManager.addPlaying(player);
                 }
             });
@@ -267,8 +273,13 @@ export class AudioSource extends Component {
     }
 
     public onDestroy (): void {
+        this._audioDestroyed = true;
+        ++this._loadGeneration;
         this.stop();
-        this.clip = null;// It will trigger _syncPlayer then call resetPlayer
+        this._clip = this._lastSetClip = null;
+        this._isLoaded = false;
+        this._operationsBeforeLoading.length = 0;
+        this._resetPlayer();
     }
     /**
      * @en
@@ -364,6 +375,8 @@ export class AudioSource extends Component {
      * - 直接播放音频，引擎会在下一次发生用户交互时自动播放。
      */
     public play (): void {
+        if (this._audioDestroyed) return;
+        const generation = ++this._playGeneration;
         if (!this._isLoaded && this.clip) {
             this._operationsBeforeLoading.push({ op: AudioOperationType.PLAY, params: null });
             return;
@@ -378,9 +391,15 @@ export class AudioSource extends Component {
         const player = this._player;
         if (player) {
             player.play().then(() => {
-                this.node?.emit(AudioSourceEventType.STARTED, this);
+                if (generation === this._playGeneration && this._player === player
+                    && player.state === AudioState.PLAYING) {
+                    this.node?.emit(AudioSourceEventType.STARTED, this);
+                }
             }).catch((e) => {
-                audioManager.removePlaying(player);
+                // Cancellation of an older play must not untrack a newer play on the same player.
+                if (generation === this._playGeneration && this._player === player) {
+                    audioManager.removePlaying(player);
+                }
             });
             audioManager.addPlaying(player);
         }
@@ -393,6 +412,7 @@ export class AudioSource extends Component {
      * 暂停播放。
      */
     public pause (): void {
+        ++this._playGeneration;
         if (!this._isLoaded && this.clip) {
             this._operationsBeforeLoading.push({ op: AudioOperationType.PAUSE, params: null });
             return;
@@ -408,14 +428,51 @@ export class AudioSource extends Component {
      * 停止播放。
      */
     public stop (): void {
+        // Preserve the original void signature, including consumer subclass overrides.
+        if (this._player?.type === AudioType.DOM_AUDIO || (!this._player && this.clip?.loadMode === AudioType.DOM_AUDIO)) {
+            this.stopAsync().catch((e) => { warn('AudioSource.stop failed', e); });
+            return;
+        }
+        // Other backends retain their original queued stop semantics.
+        ++this._playGeneration;
         if (!this._isLoaded && this.clip) {
             this._operationsBeforeLoading.push({ op: AudioOperationType.STOP, params: null });
             return;
         }
         if (this._player) {
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            this._player.stop().catch((e) => {});
+            this._player.stop().catch((e) => { warn('AudioSource.stop failed', e); });
             audioManager.removePlaying(this._player);
+        }
+    }
+
+    /**
+     * Stop DOM audio and wait until this stop operation completes.
+     * Other loaded backends, or unloaded clips not explicitly requesting DOM audio,
+     * reject with error.code === 'AUDIO_STOP_ASYNC_UNSUPPORTED' without changing playback.
+     * DOM playback is paused and rewound immediately, including an unacknowledged play.
+     * A pending clip load may finish, but playback requested before this call is cancelled.
+     * This promise covers only operations preceding the call: a later play may already
+     * be running when its continuation executes. It does not wait for or emit STARTED.
+     * No player/clip and destroyed sources resolve. Repeated DOM stops are safe.
+     */
+    public async stopAsync (): Promise<void> {
+        if (this._player ? this._player.type !== AudioType.DOM_AUDIO
+            : this.clip && this.clip.loadMode !== AudioType.DOM_AUDIO) {
+            throw Object.assign(new Error('AudioSource.stopAsync supports DOM audio only.'), {
+                code: 'AUDIO_STOP_ASYNC_UNSUPPORTED',
+            });
+        }
+        ++this._playGeneration;
+        if (!this._isLoaded && this.clip) {
+            this._operationsBeforeLoading.length = 0;
+            this._cachedCurrentTime = 0;
+            return;
+        }
+        if (this._player) {
+            const player = this._player;
+            const stopped = player.stop();
+            audioManager.removePlaying(player);
+            return stopped;
         }
     }
 
@@ -428,6 +485,7 @@ export class AudioSource extends Component {
      * @param volumeScale volume scaling factor wrt. current value.
      */
     public playOneShot (clip: AudioClip, volumeScale = 1): void {
+        if (this._audioDestroyed) return;
         if (!clip._nativeAsset) {
             // eslint-disable-next-line no-console
             console.error('Invalid audio clip');
@@ -437,6 +495,10 @@ export class AudioSource extends Component {
         AudioPlayer.loadOneShotAudio(clip._nativeAsset.url, this._volume * volumeScale, {
             audioLoadMode: clip.loadMode,
         }).then((oneShotAudio) => {
+            if (this._audioDestroyed) {
+                oneShotAudio.stop();
+                return;
+            }
             player = oneShotAudio;
             audioManager.discardOnePlayingIfNeeded();
             oneShotAudio.onEnd = (): void => {

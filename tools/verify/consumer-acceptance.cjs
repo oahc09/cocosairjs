@@ -257,6 +257,10 @@ fs.writeFileSync(tsOut, [
     "void v; void opts; void scene; void node; void loader;",
     "void createAirApp; void GLTFAsset; void MeshRenderer; void Camera; void DirectionalLight;",
     "void Animation; void AnimationClip; void Layers;",
+    "import { AudioSource } from 'cocosair';",
+    "class LegacyAudioSource extends AudioSource { override stop(): void { super.stop(); } }",
+    "declare const audioSource: AudioSource; const voidStop: void = audioSource.stop();",
+    "const completedStop: Promise<void> = audioSource.stopAsync(); void completedStop; void voidStop; void LegacyAudioSource;",
 ].join('\n'));
 const consumerTsconfig = path.join(consumerDir, 'tsconfig.json');
 fs.writeFileSync(consumerTsconfig, JSON.stringify({

@@ -1,5 +1,7 @@
 # UPSTREAM
 
+2026-10-14 DOM 音频取消：`tools/build/audio-cancellation-patch.cjs` 在冻结 PAL 生成流程中让 DOM play 具有可取消代际，pause/stop/destroy 不再等待原生 play Promise；取消以 AbortError 结算，迟到回调不能恢复 PLAYING。仅 NotAllowedError 等待选定 canvas 手势，停止或销毁清理重试监听，销毁释放原媒体 src。AudioSource 使用播放与加载代际抑制迟到 STARTED、旧拒绝移除新播放、A→B→A 旧加载污染，并在有效 clip 替换时立即销毁旧播放器。共享 operation-queue、WebAudio/video 与冻结 vendor 原字节保持。自然 EOS 与晚到 play 完成的竞态另有回归；这不声明已查明 WebKit 延迟 Promise 的原因或产品27 epoch5 的历史根因。验收范围见 [音频取消验证](notes/audio-cancellation.md)。
+
 2026-10-14 安全启动：`tools/build/startup-binding-patch.cjs` 在冻结 PAL 生成流程中将 ScreenAdapter 的 DOM 包装、画布解析、事件注册与 Input 单例的 keyboard/mouse/touch 绑定移到显式启动边界；生成器精确校验替换命中数。音频手势恢复选择相同的自定义 canvas。冻结 vendor 与 `src/cocos` 不变。AIR 主入口与延迟入口通过一个 admission/initPromise 启动，options-only canvas/DPR 在 PAL bind 前生效；主入口仍依赖浏览器，不承诺 SSR。
 
 2026-10-14 VideoPlayer 全屏清理：`video-player-impl-web.ts` 对已窗口化的播放器不再调用原生 exitFullscreen；退出 Promise 在 detach/navigation 期间拒绝时更新实际全屏状态并发出诊断，避免未处理 rejection。保留进入全屏、用户手势、原生 DOM 和平台能力边界；不改变冻结上游或压制浏览器错误。

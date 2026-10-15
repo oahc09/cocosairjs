@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "a97a49dbdffc6577",
-  "apiInventoryRevision": "7b13c6eaa768c9f6",
+  "sourceFingerprint": "a484558ded5db738",
+  "apiInventoryRevision": "313031af87550a6a",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -53125,6 +53125,12 @@
       "coverageRequired": false,
       "parent": "AudioSource"
     },
+    "AudioSource.stopAsync": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioSource"
+    },
     "AudioSource.playOneShot": {
       "kind": "method",
       "tier": "supporting",
@@ -53590,6 +53596,216 @@
       "tier": "internal",
       "coverageRequired": false,
       "parent": "AirUIMesh"
+    },
+    "AirContentSizeFitter": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirContentSizeFitter.autoFit": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirContentSizeFitter"
+    },
+    "AirContentSizeFitter.horizontalFit": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirContentSizeFitter"
+    },
+    "AirContentSizeFitter.verticalFit": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirContentSizeFitter"
+    },
+    "AirContentSizeFitter.measure": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirContentSizeFitter"
+    },
+    "AirContentSizeFitter.affectedByScale": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirContentSizeFitter"
+    },
+    "AirContentSizeFitter.markDirty": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirContentSizeFitter"
+    },
+    "AirContentSizeFitter.fitNow": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirContentSizeFitter"
+    },
+    "resolveAirPixelRatio": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "airPixelOrtho": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirPixelGrid": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirPixelGrid.scaleX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelGrid"
+    },
+    "AirPixelGrid.scaleY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelGrid"
+    },
+    "AirPixelGrid.originX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelGrid"
+    },
+    "AirPixelGrid.originY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelGrid"
+    },
+    "AirPixelGrid.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelGrid"
+    },
+    "AirPixelGrid.toPixelX": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelGrid"
+    },
+    "AirPixelGrid.toPixelY": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelGrid"
+    },
+    "AirPixelGrid.roundX": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelGrid"
+    },
+    "AirPixelGrid.roundY": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelGrid"
+    },
+    "AirPixelGrid.snapRect": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelGrid"
+    },
+    "AirPixelPerfect": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirPixelPerfect.snapCamera": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.snapPosition": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.snapSizes": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.pixelRatioOverride": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.referenceHeight": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.rounding": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.camera": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.autoSnap": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.pixelRatio": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.grid": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.snapNow": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.peekGrid": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
+    },
+    "AirPixelPerfect.roundToPixel": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirPixelPerfect"
     },
     "createAirDOMOverlay": {
       "kind": "function",
@@ -57482,6 +57698,2298 @@
       "parent": null
     },
     "CUBEUV_SAMPLING_GLSL": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.clamp": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Vector2": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Vector2.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.isVector2": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.width": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.height": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.set": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.setScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.setComponent": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.getComponent": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.setX": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.setY": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.copy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.add": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.sub": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.multiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.divide": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.addScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.subScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.multiplyScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.divideScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.addVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.subVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.multiplyVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.addScaledVector": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.dot": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.lengthSq": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.length": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.manhattanLength": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.normalize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.setLength": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.distanceToSquared": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.distanceTo": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.manhattanDistanceTo": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.negate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.min": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.max": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.clamp": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.clampScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.clampLength": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.lerp": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.lerpVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.floor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.ceil": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.round": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.roundToZero": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.equals": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.fromArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.toArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.fromBufferAttribute": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.random": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.cross": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.angle": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.angleTo": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.rotateAround": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector2.applyMatrix3": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector2"
+    },
+    "sparkMath.Vector3": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Vector3.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.isVector3": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.set": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setComponent": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.getComponent": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setX": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setY": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setZ": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.copy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.add": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.sub": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.multiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.divide": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.addScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.subScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.multiplyScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.divideScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.addVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.subVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.multiplyVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.addScaledVector": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.dot": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.lengthSq": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.length": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.manhattanLength": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.normalize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setLength": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.distanceToSquared": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.distanceTo": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.manhattanDistanceTo": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.negate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.min": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.max": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.clamp": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.clampScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.clampLength": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.lerp": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.lerpVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.floor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.ceil": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.round": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.roundToZero": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.equals": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.fromArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.toArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.fromBufferAttribute": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.random": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.cross": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.crossVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.applyMatrix3": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.applyMatrix4": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.applyNormalMatrix": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.applyQuaternion": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.applyEuler": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.applyAxisAngle": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.transformDirection": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.project": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.unproject": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setFromMatrixPosition": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setFromMatrixColumn": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setFromMatrix3Column": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setFromMatrixScale": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setFromSphericalCoords": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.setFromCylindricalCoords": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.angleTo": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.projectOnVector": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.projectOnPlane": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector3.reflect": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector3"
+    },
+    "sparkMath.Vector4": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Vector4.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.w": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.isVector4": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.width": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.height": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.set": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.setScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.setComponent": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.getComponent": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.setX": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.setY": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.setZ": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.setW": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.copy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.add": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.sub": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.multiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.divide": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.addScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.subScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.multiplyScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.divideScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.addVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.subVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.multiplyVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.addScaledVector": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.dot": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.lengthSq": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.length": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.manhattanLength": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.normalize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.setLength": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.distanceToSquared": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.distanceTo": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.manhattanDistanceTo": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.negate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.min": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.max": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.clamp": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.clampScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.clampLength": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.lerp": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.lerpVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.floor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.ceil": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.round": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.roundToZero": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.equals": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.fromArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.toArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.fromBufferAttribute": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.random": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.applyMatrix4": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Vector4.setAxisAngleFromQuaternion": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Vector4"
+    },
+    "sparkMath.Quaternion": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Quaternion.isQuaternion": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.w": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.set": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.identity": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.copy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion._onChange": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.setFromEuler": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.setFromAxisAngle": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.setFromRotationMatrix": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.setFromUnitVectors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.multiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.premultiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.multiplyQuaternions": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.dot": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.lengthSq": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.length": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.normalize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.conjugate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.invert": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.angleTo": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.rotateTowards": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.slerp": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.slerpQuaternions": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.equals": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.fromArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Quaternion.toArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Quaternion"
+    },
+    "sparkMath.Euler": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Euler.isEuler": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.order": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.set": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.copy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler._onChange": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.setFromRotationMatrix": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.setFromQuaternion": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.setFromVector3": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.reorder": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.equals": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.fromArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Euler.toArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Euler"
+    },
+    "sparkMath.Matrix2": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Matrix2.isMatrix2": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix2"
+    },
+    "sparkMath.Matrix2.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix2"
+    },
+    "sparkMath.Matrix2.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix2"
+    },
+    "sparkMath.Matrix2.multiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix2"
+    },
+    "sparkMath.Matrix2.premultiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix2"
+    },
+    "sparkMath.Matrix2.multiplyMatrices": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix2"
+    },
+    "sparkMath.Matrix2.multiplyScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix2"
+    },
+    "sparkMath.Matrix2.determinant": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix2"
+    },
+    "sparkMath.Matrix2.invert": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix2"
+    },
+    "sparkMath.Matrix2.transpose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix2"
+    },
+    "sparkMath.Matrix3": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Matrix3.isMatrix3": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.setFromMatrix4": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.getNormalMatrix": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.multiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.premultiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.multiplyMatrices": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.multiplyScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.determinant": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.invert": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.transpose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.extractBasis": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.transposeIntoArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix3.setUvTransform": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix3"
+    },
+    "sparkMath.Matrix4": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Matrix4.isMatrix4": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.copyPosition": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.setFromMatrix3": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.setPosition": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makeTranslation": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makeScale": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makeRotationX": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makeRotationY": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makeRotationZ": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makeRotationAxis": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makeRotationFromQuaternion": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makeRotationFromEuler": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makeBasis": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.extractBasis": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.extractRotation": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.compose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.decompose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.scale": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.getMaxScaleOnAxis": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.multiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.premultiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.multiplyMatrices": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.multiplyScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.determinant": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.invert": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.transpose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.lookAt": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makePerspective": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.Matrix4.makeOrthographic": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Matrix4"
+    },
+    "sparkMath.SRGBColorSpace": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.LinearSRGBColorSpace": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.NoColorSpace": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.SRGBToLinear": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.LinearToSRGB": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.ColorManagement": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Color": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Color.r": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.g": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.b": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.isColor": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.set": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.setRGB": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.setScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.setHex": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.setStyle": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.setHSL": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.copy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.add": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.addScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.multiply": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.multiplyScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.lerp": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.lerpColors": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.equals": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.fromArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.toArray": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.copySRGBToLinear": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.convertSRGBToLinear": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.copyLinearToSRGB": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.convertLinearToSRGB": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.getRGB": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.getHex": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Color.getHexString": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Color"
+    },
+    "sparkMath.Box3": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Box3.min": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.max": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.isBox3": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.set": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.copy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.makeEmpty": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.isEmpty": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.expandByPoint": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.expandByVector": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.expandByScalar": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.setFromPoints": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.setFromCenterAndSize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.getCenter": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.getSize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.containsPoint": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.intersectsBox": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.clampPoint": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.distanceToPoint": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.union": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.intersect": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.translate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.equals": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Box3.applyMatrix4": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Box3"
+    },
+    "sparkMath.Ray": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sparkMath.Ray.origin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.direction": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.set": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.copy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.clone": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.at": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.lookAt": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.recast": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.closestPointToPoint": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.distanceSqToPoint": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.distanceToPoint": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.intersectBox": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.containsOriginInside": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.intersectsBox": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.applyMatrix4": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.Ray.equals": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "sparkMath.Ray"
+    },
+    "sparkMath.MathUtils": {
       "kind": "constant",
       "tier": "supporting",
       "coverageRequired": false,
@@ -71263,1272 +73771,6 @@
       "coverageRequired": false,
       "parent": "__private._cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer"
     },
-    "__private._air_spark_spark_math__Color": {
-      "kind": "class",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": null
-    },
-    "__private._air_spark_spark_math__Color.r": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.g": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.b": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.isColor": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.constructor": {
-      "kind": "constructor",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.set": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.setRGB": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.setScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.setHex": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.setStyle": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.setHSL": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.copy": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.clone": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.add": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.addScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.multiply": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.multiplyScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.lerp": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.lerpColors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.equals": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.fromArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.toArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.copySRGBToLinear": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.convertSRGBToLinear": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.copyLinearToSRGB": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.convertLinearToSRGB": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.getRGB": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.getHex": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Color.getHexString": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Color"
-    },
-    "__private._air_spark_spark_math__Euler": {
-      "kind": "class",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": null
-    },
-    "__private._air_spark_spark_math__Euler.isEuler": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.constructor": {
-      "kind": "constructor",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.x": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.y": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.z": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.order": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.set": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.copy": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.clone": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler._onChange": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.setFromRotationMatrix": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.setFromQuaternion": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.setFromVector3": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.reorder": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.equals": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.fromArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Euler.toArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Euler"
-    },
-    "__private._air_spark_spark_math__Quaternion": {
-      "kind": "class",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": null
-    },
-    "__private._air_spark_spark_math__Quaternion.isQuaternion": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.constructor": {
-      "kind": "constructor",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.x": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.y": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.z": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.w": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.set": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.identity": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.copy": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.clone": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion._onChange": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.setFromEuler": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.setFromAxisAngle": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.setFromRotationMatrix": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.setFromUnitVectors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.multiply": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.premultiply": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.multiplyQuaternions": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.dot": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.lengthSq": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.length": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.normalize": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.conjugate": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.invert": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.angleTo": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.rotateTowards": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.slerp": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.slerpQuaternions": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.equals": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.fromArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Quaternion.toArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Quaternion"
-    },
-    "__private._air_spark_spark_math__Vector3": {
-      "kind": "class",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": null
-    },
-    "__private._air_spark_spark_math__Vector3.x": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.y": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.z": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.isVector3": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.constructor": {
-      "kind": "constructor",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.set": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setComponent": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.getComponent": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setX": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setY": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setZ": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.clone": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.copy": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.add": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.sub": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.multiply": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.divide": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.addScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.subScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.multiplyScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.divideScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.addVectors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.subVectors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.multiplyVectors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.addScaledVector": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.dot": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.lengthSq": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.length": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.manhattanLength": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.normalize": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setLength": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.distanceToSquared": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.distanceTo": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.manhattanDistanceTo": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.negate": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.min": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.max": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.clamp": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.clampScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.clampLength": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.lerp": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.lerpVectors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.floor": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.ceil": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.round": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.roundToZero": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.equals": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.fromArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.toArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.fromBufferAttribute": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.random": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.cross": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.crossVectors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.applyMatrix3": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.applyMatrix4": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.applyNormalMatrix": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.applyQuaternion": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.applyEuler": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.applyAxisAngle": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.transformDirection": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.project": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.unproject": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setFromMatrixPosition": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setFromMatrixColumn": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setFromMatrix3Column": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setFromMatrixScale": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setFromSphericalCoords": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.setFromCylindricalCoords": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.angleTo": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.projectOnVector": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.projectOnPlane": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__Vector3.reflect": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector3"
-    },
-    "__private._air_spark_spark_math__MatrixStorage": {
-      "kind": "class",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": null
-    },
-    "__private._air_spark_spark_math__MatrixStorage.elements": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__MatrixStorage"
-    },
-    "__private._air_spark_spark_math__MatrixStorage.constructor": {
-      "kind": "constructor",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__MatrixStorage"
-    },
-    "__private._air_spark_spark_math__MatrixStorage.set": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__MatrixStorage"
-    },
-    "__private._air_spark_spark_math__MatrixStorage.identity": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__MatrixStorage"
-    },
-    "__private._air_spark_spark_math__MatrixStorage.copy": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__MatrixStorage"
-    },
-    "__private._air_spark_spark_math__MatrixStorage.fromArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__MatrixStorage"
-    },
-    "__private._air_spark_spark_math__MatrixStorage.toArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__MatrixStorage"
-    },
-    "__private._air_spark_spark_math__MatrixStorage.equals": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__MatrixStorage"
-    },
-    "__private._air_spark_spark_math__Matrix3": {
-      "kind": "class",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": null
-    },
-    "__private._air_spark_spark_math__Matrix3.isMatrix3": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.constructor": {
-      "kind": "constructor",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.clone": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.setFromMatrix4": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.getNormalMatrix": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.multiply": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.premultiply": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.multiplyMatrices": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.multiplyScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.determinant": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.invert": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.transpose": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.extractBasis": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.transposeIntoArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix3.setUvTransform": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix3"
-    },
-    "__private._air_spark_spark_math__Matrix4": {
-      "kind": "class",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": null
-    },
-    "__private._air_spark_spark_math__Matrix4.isMatrix4": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.constructor": {
-      "kind": "constructor",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.clone": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.copyPosition": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.setFromMatrix3": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.setPosition": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makeTranslation": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makeScale": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makeRotationX": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makeRotationY": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makeRotationZ": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makeRotationAxis": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makeRotationFromQuaternion": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makeRotationFromEuler": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makeBasis": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.extractBasis": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.extractRotation": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.compose": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.decompose": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.scale": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.getMaxScaleOnAxis": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.multiply": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.premultiply": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.multiplyMatrices": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.multiplyScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.determinant": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.invert": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.transpose": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.lookAt": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makePerspective": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
-    "__private._air_spark_spark_math__Matrix4.makeOrthographic": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Matrix4"
-    },
     "__private._air_spark_spark_api_adapter__EventDispatcher": {
       "kind": "class",
       "tier": "internal",
@@ -72907,360 +74149,6 @@
       "coverageRequired": false,
       "parent": "__private._air_spark_spark_api_adapter__Camera"
     },
-    "__private._air_spark_spark_math__Vector4": {
-      "kind": "class",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": null
-    },
-    "__private._air_spark_spark_math__Vector4.x": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.y": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.z": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.w": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.isVector4": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.constructor": {
-      "kind": "constructor",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.width": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.height": {
-      "kind": "property",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.set": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.setScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.setComponent": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.getComponent": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.setX": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.setY": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.setZ": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.setW": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.clone": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.copy": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.add": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.sub": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.multiply": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.divide": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.addScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.subScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.multiplyScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.divideScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.addVectors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.subVectors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.multiplyVectors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.addScaledVector": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.dot": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.lengthSq": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.length": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.manhattanLength": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.normalize": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.setLength": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.distanceToSquared": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.distanceTo": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.manhattanDistanceTo": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.negate": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.min": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.max": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.clamp": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.clampScalar": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.clampLength": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.lerp": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.lerpVectors": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.floor": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.ceil": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.round": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.roundToZero": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.equals": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.fromArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.toArray": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.fromBufferAttribute": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.random": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.applyMatrix4": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
-    "__private._air_spark_spark_math__Vector4.setAxisAngleFromQuaternion": {
-      "kind": "method",
-      "tier": "internal",
-      "coverageRequired": false,
-      "parent": "__private._air_spark_spark_math__Vector4"
-    },
     "__private._air_spark_spark_api_adapter__Texture": {
       "kind": "class",
       "tier": "internal",
@@ -73632,6 +74520,60 @@
       "tier": "internal",
       "coverageRequired": false,
       "parent": "__private._air_spark_spark_api_adapter__OrthographicCamera"
+    },
+    "__private._air_spark_spark_math__MatrixStorage": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._air_spark_spark_math__MatrixStorage.elements": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.set": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.identity": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.copy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.fromArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.toArray": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
+    },
+    "__private._air_spark_spark_math__MatrixStorage.equals": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._air_spark_spark_math__MatrixStorage"
     },
     "physics.utils.cylinder": {
       "kind": "function",
@@ -80644,9 +81586,9 @@
     "core": 964,
     "important": 283,
     "advanced": 192,
-    "supporting": 8328,
-    "internal": 3511
+    "supporting": 8744,
+    "internal": 3252
   },
-  "totalUnits": 13278,
+  "totalUnits": 13435,
   "coverageRequiredUnits": 1439
 }

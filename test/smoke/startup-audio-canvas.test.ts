@@ -10,7 +10,12 @@ describe('selected canvas audio gesture recovery', () => {
         delete (globalThis as any).__CC_CANVAS__;
     });
     test('DOM playback retry listens to selected custom canvas and detaches on success', async () => {
-        const play = jest.fn().mockRejectedValueOnce(new Error('gesture required')).mockResolvedValue(undefined);
+        const play = jest
+            .fn()
+            .mockImplementationOnce(() =>
+                Promise.reject(Object.assign(new Error('gesture required'), { name: 'NotAllowedError' })),
+            )
+            .mockImplementation(() => Promise.resolve());
         const audio = { play, volume: 1 } as unknown as HTMLAudioElement;
         const instance = new OneShotAudioDOM(audio, 1);
         const played = jest.fn();

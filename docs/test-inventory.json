@@ -1,6 +1,22 @@
 {
-  "generatedAt": "2026-10-14T12:06:09.019Z",
+  "generatedAt": "2026-10-15T01:03:51.739553Z",
   "suites": [
+    {
+      "file": "test/smoke/air-content-size-fitter.test.ts",
+      "tests": [
+        "AirContentSizeFitter a child that lays out later wakes the fitter up through node events",
+        "AirContentSizeFitter a null or invalid measurement leaves the authored size untouched",
+        "AirContentSizeFitter bad fit modes and bad measurers fail with AIR_E_FIT",
+        "AirContentSizeFitter children bounding box respects the container anchor split",
+        "AirContentSizeFitter custom measurer wins over built-ins and separates min from preferred",
+        "AirContentSizeFitter disable stops the chase and re-enable refits from current content",
+        "AirContentSizeFitter inactive and non-UI children are skipped; child scale only counts when affectedByScale",
+        "AirContentSizeFitter sprite frames measure TRIMMED and RAW; CUSTOM contributes nothing",
+        "AirContentSizeFitter the label branch refreshes render data and reports the size Label owns",
+        "AirContentSizeFitter unchanged sizes stay quiet while a real change emits SIZE_CHANGED for upstream Layout",
+        "AirContentSizeFitter update fits only when dirty and autoFit is on"
+      ]
+    },
     {
       "file": "test/smoke/air-dom-texture-blend.test.ts",
       "tests": [
@@ -34,6 +50,99 @@
       "file": "test/smoke/air-pipeline-snapshot.test.ts",
       "tests": [
         "cached GPU pipeline state owns immutable input snapshots across material overrides"
+      ]
+    },
+    {
+      "file": "test/smoke/air-pixel-perfect.test.ts",
+      "tests": [
+        "AirPixelGrid math a buffer smaller than the reference never scales below 1:1",
+        "AirPixelGrid math a degenerate viewport is rejected",
+        "AirPixelGrid math airPixelOrtho converts the ratio back into half sizes",
+        "AirPixelGrid math an automatic half width follows the viewport aspect",
+        "AirPixelGrid math an explicit ratio wins over the automatic one",
+        "AirPixelGrid math an offset viewport with a non-aspect half width snaps on both axes",
+        "AirPixelGrid math automatic ratio rounds the visible height onto an integer scale",
+        "AirPixelGrid math referenceHeight decouples the ratio from the current ortho size",
+        "AirPixelGrid math rounding lands on the nearest boundary and a tie goes up",
+        "AirPixelGrid math rounding mode decides the 1.94 case",
+        "AirPixelGrid math snapRect keeps a corner anchor pinned and never collapses a sub-pixel box",
+        "AirPixelGrid math snapRect puts both edges on the grid without drifting the anchor",
+        "AirPixelGrid math the 1:1 grid is anchored at the framebuffer corner",
+        "AirPixelPerfect a disabled camera is left alone",
+        "AirPixelPerfect a nested component owns its own subtree",
+        "AirPixelPerfect a nested layer finds the camera through its parents",
+        "AirPixelPerfect a nested layer must snap after its parent layer, not before",
+        "AirPixelPerfect a snapped position survives a scale on the parent",
+        "AirPixelPerfect an integer camera scale survives repeated frames without churn",
+        "AirPixelPerfect enable and disable bind the BEFORE_DRAW hook",
+        "AirPixelPerfect fractional positions snap onto the grid and a second pass is a no-op",
+        "AirPixelPerfect inactive children are skipped",
+        "AirPixelPerfect peekGrid reads the live mapping without touching camera or content",
+        "AirPixelPerfect roundToPixel reports the grid it just built",
+        "AirPixelPerfect snapPosition off keeps the layout and still locks the camera",
+        "AirPixelPerfect snapSizes rounds both edges and the extent onto whole pixels",
+        "AirPixelPerfect the camera is discovered through the Canvas and wins over its fractional ortho",
+        "AirPixelPerfect without a camera nothing is claimed and nothing moves"
+      ]
+    },
+    {
+      "file": "test/smoke/audio-cancellation-harness.test.ts",
+      "tests": [
+        "audio browser process ownership does not infer browser ownership from an unrelated wrapper-like command",
+        "audio browser process ownership rejects relative executable paths and ownership changes after an owned spawn",
+        "audio browser process ownership tracks the exact configured default Playwright executable without a local wrapper"
+      ]
+    },
+    {
+      "file": "test/smoke/audio-cancellation.test.ts",
+      "tests": [
+        "audio cancellation and ownership (CPU media doubles) A/B/A loads accept only the last request even when the same clip object returns",
+        "audio cancellation and ownership (CPU media doubles) AbortError rejects without installing gesture retry",
+        "audio cancellation and ownership (CPU media doubles) AudioSource natural ended before fulfilment emits ENDED but never stale STARTED, then replays",
+        "audio cancellation and ownership (CPU media doubles) AudioSource onDestroy invalidates a fulfilled PAL play before its queued STARTED callback runs",
+        "audio cancellation and ownership (CPU media doubles) AudioSource onDestroy suppresses STARTED from late native fulfilment",
+        "audio cancellation and ownership (CPU media doubles) AudioSource pause invalidates a fulfilled PAL play before its queued STARTED callback runs",
+        "audio cancellation and ownership (CPU media doubles) AudioSource pause suppresses STARTED from late native fulfilment",
+        "audio cancellation and ownership (CPU media doubles) AudioSource play-stop-play keeps current manager tracking when the canceled play rejects",
+        "audio cancellation and ownership (CPU media doubles) AudioSource repeated plays emit STARTED only for the latest intent",
+        "audio cancellation and ownership (CPU media doubles) AudioSource stop invalidates a fulfilled PAL play before its queued STARTED callback runs",
+        "audio cancellation and ownership (CPU media doubles) AudioSource stop suppresses STARTED from late native fulfilment",
+        "audio cancellation and ownership (CPU media doubles) NotAllowedError retries remain pending through a rejected gesture, then settle only on native success",
+        "audio cancellation and ownership (CPU media doubles) NotSupportedError rejects without installing gesture retry",
+        "audio cancellation and ownership (CPU media doubles) a stale ended event with native ended=false cannot end a newer play",
+        "audio cancellation and ownership (CPU media doubles) an invalid clip does not destroy the existing valid player",
+        "audio cancellation and ownership (CPU media doubles) an older stopAsync completion does not cancel or certify a later play as stopped",
+        "audio cancellation and ownership (CPU media doubles) canceling an in-flight gesture retry observes its late rejection without installing another retry",
+        "audio cancellation and ownership (CPU media doubles) clip replacement immediately silences old audio; old rejection cannot remove the new player",
+        "audio cancellation and ownership (CPU media doubles) destroy detaches media, gesture, and game interruption listeners",
+        "audio cancellation and ownership (CPU media doubles) destroy during load discards the resolved player and all queued playback",
+        "audio cancellation and ownership (CPU media doubles) destroy during one-shot load prevents late playback and manager registration",
+        "audio cancellation and ownership (CPU media doubles) destroy promptly cancels pending play and physically stops native media before native settlement",
+        "audio cancellation and ownership (CPU media doubles) destroy removes denied-play gesture retry listeners",
+        "audio cancellation and ownership (CPU media doubles) game pause cancels pending play, and an intervening stop prevents game resume replay",
+        "audio cancellation and ownership (CPU media doubles) late native reject cannot revive a canceled player",
+        "audio cancellation and ownership (CPU media doubles) late native resolve cannot revive a canceled player",
+        "audio cancellation and ownership (CPU media doubles) native void-returning play remains supported, and synchronous native failures are observed",
+        "audio cancellation and ownership (CPU media doubles) natural ended before native fulfilment cancels play, keeps INIT, and permits replay",
+        "audio cancellation and ownership (CPU media doubles) one-shot ignores old queued ended after stop/replay but still completes the new natural EOS once",
+        "audio cancellation and ownership (CPU media doubles) one-shot natural EOS before native fulfilment cancels late onPlay and allows a subsequent replay",
+        "audio cancellation and ownership (CPU media doubles) one-shot stop prevents onPlay after a late native reject",
+        "audio cancellation and ownership (CPU media doubles) one-shot stop prevents onPlay after a late native resolve",
+        "audio cancellation and ownership (CPU media doubles) one-shot stop removes a pending autoplay gesture retry",
+        "audio cancellation and ownership (CPU media doubles) pause promptly cancels pending play and physically stops native media before native settlement",
+        "audio cancellation and ownership (CPU media doubles) pause removes denied-play gesture retry listeners",
+        "audio cancellation and ownership (CPU media doubles) play-stop-play does not wait for the old native play, and its late completion leaves the new intent live",
+        "audio cancellation and ownership (CPU media doubles) queued ended cannot change STOPPED to INIT or end a newer live DOM play",
+        "audio cancellation and ownership (CPU media doubles) repeated plays settle superseded promises and ignore their late failure/success",
+        "audio cancellation and ownership (CPU media doubles) stop preserves the native source for replay, while repeated destroy is harmless",
+        "audio cancellation and ownership (CPU media doubles) stop promptly cancels pending play and physically stops native media before native settlement",
+        "audio cancellation and ownership (CPU media doubles) stop remains void; stopAsync without a clip or after destruction resolves",
+        "audio cancellation and ownership (CPU media doubles) stop removes denied-play gesture retry listeners",
+        "audio cancellation and ownership (CPU media doubles) stopAsync during load cancels preceding play without waiting for load or initiating native play",
+        "audio cancellation and ownership (CPU media doubles) stopAsync preserves backend rejection for its caller",
+        "audio cancellation and ownership (CPU media doubles) stopAsync rejects an unloaded non-DOM request without deleting its queued play",
+        "audio cancellation and ownership (CPU media doubles) stopAsync rejects unsupported loaded backend without cancelling its play; legacy stop still delegates",
+        "audio cancellation and ownership (CPU media doubles) stopAsync settles after native stop without waiting for pending play; repeated stops are idempotent"
       ]
     },
     {
@@ -403,7 +512,7 @@
         "IER-00 baseline: file presence is not executed evidence exact 64-digit historical task-doc SHA recorded honestly",
         "IER-00 baseline: file presence is not executed evidence export detection is export-statement based, not arbitrary bundle text",
         "IER-00 baseline: file presence is not executed evidence identity reuses candidate snapshot: HEAD/branch/dirty/group digests",
-        "IER-00 baseline: file presence is not executed evidence min/map/bootstrap/npm/html-source artifact identities provided",
+        "IER-00 baseline: file presence is not executed evidence min/map/npm artifact identities provided",
         "IER-00 baseline: file presence is not executed evidence missing evidence stays explicit, never fabricated",
         "IER-00 baseline: file presence is not executed evidence section 1.2 additions inventoried: prefilter, releaseScene, sessionScope",
         "IER-00 baseline: file presence is not executed evidence verifyBaseline: current-matching report passes; any drift rejected",
@@ -3938,20 +4047,9 @@
     }
   ],
   "totals": {
-    "suites": 190,
-    "tests": 2985,
+    "suites": 194,
+    "tests": 3074,
     "passed": null,
     "failed": null
-  },
-  "verification": {
-    "scope": "additions-only",
-    "fullRunVerified": false,
-    "previousGeneratedAt": "2026-10-13T19:02:48.983Z",
-    "addedSuites": [
-      "test/smoke/startup-admission.test.ts",
-      "test/smoke/startup-audio-canvas.test.ts"
-    ],
-    "addedTestsPassed": 13,
-    "note": "Complete discovery and new suites verified. Older titles preserved; current full Jest execution is not certified."
   }
 }
