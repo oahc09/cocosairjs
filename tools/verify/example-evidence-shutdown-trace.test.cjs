@@ -1986,6 +1986,332 @@ test('control-only bounds cannot be applied to a target or ordinary positive', (
         );
 });
 
+// Synthetic identity/correlation fixtures only, never trace or production evidence.
+function multiTargetAttributionFixture(count = 2) {
+    const sender = { pid: 101, tgid: 101, ppid: 99, startTicks: '42', namespace: 'pid:[1]' };
+    const stop = { type: 'stop-begin', runtimeId: 'r1', eventId: 1, utc: '2023-11-14T22:13:20.001Z' };
+    const exit = { type: 'browser-exit', eventId: 2, code: 0, signal: null, utc: '2023-11-14T22:13:20.003Z' };
+    const close = { ...exit, type: 'browser-close', eventId: 3, utc: '2023-11-14T22:13:20.004Z' };
+    const raw = { adopted: [], events: [] },
+        records = [],
+        identities = [sender],
+        ownedProcesses = [];
+    for (let index = 0; index < count; index++) {
+        const target = {
+            pid: 202 + index,
+            tgid: 202 + index,
+            ppid: 99,
+            startTicks: String(52 + index),
+            namespace: 'pid:[1]',
+        };
+        const observed = { type: 'adopted-child', eventId: 1 + index * 3, elapsedMs: 1, identity: target };
+        const reap = {
+            ...target,
+            type: 'adopted-waitpid',
+            eventId: 2 + index * 3,
+            elapsedMs: 10,
+            utc: '2023-11-14T22:13:20.010Z',
+            rawStatus: 15,
+            code: null,
+            signal: 'SIGTERM',
+        };
+        const absent = {
+            ...target,
+            type: 'adopted-absent',
+            eventId: 3 + index * 3,
+            elapsedMs: 11,
+            utc: '2023-11-14T22:13:20.011Z',
+        };
+        raw.adopted.push({ ...target, observed, reap, absent });
+        raw.events.push(observed, reap, absent);
+        identities.push(target);
+        ownedProcesses.push({
+            ...target,
+            firstObserved: { processDiagnostic: { details: { processType: index === 0 ? 'gpu-process' : 'utility' } } },
+        });
+        records.push({
+            kind: 'syscall',
+            syscall: 'kill',
+            eventId: 1 + index * 2,
+            tid: sender.pid,
+            timestamp: '1700000000.002200',
+            beganAt: '1700000000.002200',
+            signal: 'SIGTERM',
+            result: 0,
+            errno: null,
+            target: target.pid,
+            targetKind: 'pid-or-group',
+            callerProcessIdentity: sender,
+            threadIdentity: sender,
+            identityObservation: observation(sender),
+            targetObservation: observation(target),
+        });
+        records.push({
+            kind: 'delivery',
+            eventId: 2 + index * 2,
+            tid: target.pid,
+            timestamp: '1700000000.005000',
+            signal: 'SIGTERM',
+            siPid: sender.pid,
+            siCode: 'SI_USER',
+            processIdentity: target,
+            threadIdentity: target,
+            identityObservation: observation(target),
+        });
+    }
+    raw.final = { type: 'kernel-final-echild', eventId: count * 3 + 1, elapsedMs: 12, result: 'ECHILD' };
+    raw.events.push(raw.final);
+    const receipt = {
+        custody: { observation: raw },
+        ownedProcesses,
+        browsers: [{ ...sender, runtimeId: 'r1', exit, close }],
+        events: [stop, exit, close],
+    };
+    return { receipt, records, correlations: correlate(records, identities), identities };
+}
+
+test('target attribution reports every signaled descendant and never promotes a partial match', () => {
+    const { targetAttribution } = require('./example-evidence-shutdown-trace.cjs');
+    for (const count of [0, 1, 2, 3]) {
+        const f = multiTargetAttributionFixture(count);
+        const result = targetAttribution(f.receipt, f.records, f.correlations);
+        assert.equal(result.status, count ? 'MATCHED' : 'UNKNOWN');
+        assert.equal(result.targets.length, count);
+        assert.equal(
+            result.targets.every((row) => row.status === 'MATCHED'),
+            true,
+        );
+    }
+    const partial = multiTargetAttributionFixture(3);
+    partial.correlations.pop();
+    const result = targetAttribution(partial.receipt, partial.records, partial.correlations);
+    assert.equal(result.status, 'UNKNOWN');
+    assert.deepEqual(
+        result.targets.map((row) => row.status),
+        ['MATCHED', 'MATCHED', 'UNKNOWN'],
+    );
+    assert.deepEqual(
+        result.targets.map((row) => row.target.pid),
+        [202, 203, 204],
+    );
+    for (const mutate of [
+        (f) => {
+            f.correlations.pop();
+        },
+        (f) => {
+            f.correlations.push(structuredClone(f.correlations[1]));
+        },
+        (f) => {
+            f.records.push(structuredClone(f.records[3]));
+        },
+        (f) => {
+            f.records.push(structuredClone(f.records[2]));
+        },
+        (f) => {
+            f.correlations[1].deliveryEvent = f.correlations[0].deliveryEvent;
+        },
+        (f) => {
+            f.correlations.push({ ...f.correlations[1], target: { ...f.correlations[1].target, startTicks: '999' } });
+        },
+        (f) => {
+            f.receipt.ownedProcesses.push({ ...f.receipt.ownedProcesses[1], startTicks: '999' });
+        },
+
+        (f) => {
+            f.correlations[1].target = { ...f.correlations[1].target, startTicks: '999' };
+        },
+        (f) => {
+            f.correlations[1].target = { ...f.correlations[1].target, namespace: 'pid:[9]' };
+        },
+        (f) => {
+            f.correlations[1].sender = { ...f.correlations[1].sender, startTicks: '999' };
+        },
+        (f) => {
+            f.records[3].siPid = 999;
+        },
+        (f) => {
+            f.records[3].identityObservation.imageAfter = null;
+        },
+        (f) => {
+            f.records[2].targetObservation.imageStable = false;
+            f.records[2].targetObservation.imageAfter = null;
+        },
+        (f) => {
+            f.records[2].kind = 'syscall-incomplete';
+        },
+        (f) => {
+            f.records[2].result = -1;
+            f.records[2].errno = 'ESRCH';
+        },
+        (f) => {
+            f.receipt.ownedProcesses.pop();
+        },
+        (f) => {
+            f.receipt.browsers.push(structuredClone(f.receipt.browsers[0]));
+        },
+        (f) => {
+            f.receipt.events.push(structuredClone(f.receipt.events[0]));
+        },
+        (f) => {
+            f.receipt.browsers[0].close = { ...f.receipt.browsers[0].close, eventId: 99 };
+        },
+    ]) {
+        const f = multiTargetAttributionFixture();
+        mutate(f);
+        assert.equal(targetAttribution(f.receipt, f.records, f.correlations).status, 'UNKNOWN');
+    }
+    const foreignRole = multiTargetAttributionFixture();
+    foreignRole.receipt.ownedProcesses[1].firstObserved.processDiagnostic.details.processType = 'PRIVATE_TOKEN';
+    const neutral = targetAttribution(foreignRole.receipt, foreignRole.records, foreignRole.correlations);
+    assert.equal(neutral.status, 'MATCHED');
+    assert.equal(neutral.targets[1].targetRoleHint, 'unknown');
+    assert.doesNotMatch(JSON.stringify(neutral), /PRIVATE_TOKEN/);
+    const unsupported = multiTargetAttributionFixture();
+    unsupported.receipt.custody.observation.adopted[1].reap.signal = 'SIGKILL';
+    unsupported.receipt.custody.observation.adopted[1].reap.rawStatus = 9;
+    const all = targetAttribution(unsupported.receipt, unsupported.records, unsupported.correlations);
+    assert.equal(all.status, 'UNKNOWN');
+    assert.equal(all.targets.length, 2);
+    assert.equal(all.targets[1].signal, 'SIGKILL');
+    assert.equal(all.targets[1].reason, 'unsupported-signal-outcome');
+    for (const mutate of [
+        (f) => {
+            f.receipt.custody.observation.adopted.push(structuredClone(f.receipt.custody.observation.adopted[0]));
+        },
+        (f) => {
+            f.receipt.custody.observation.adopted[1].pid = 202;
+        },
+        (f) => {
+            delete f.receipt.custody.observation.adopted[1].absent;
+        },
+        (f) => {
+            f.receipt.custody.observation.adopted[1].absent.startTicks = '999';
+        },
+    ]) {
+        const f = multiTargetAttributionFixture();
+        mutate(f);
+        assert.throws(() => targetAttribution(f.receipt, f.records, f.correlations), /target-adopted-closure-invalid/);
+    }
+    const excessive = multiTargetAttributionFixture(BOUNDS.identities + 1);
+    assert.throws(
+        () => targetAttribution(excessive.receipt, excessive.records, excessive.correlations),
+        /target-adopted-closure-invalid/,
+    );
+});
+
+test('target signal times use exact microseconds and do not require delivery before sender close', () => {
+    const { targetAttribution } = require('./example-evidence-shutdown-trace.cjs');
+    for (const [send, delivery, expected] of [
+        ['002200', '005000', 'MATCHED'], // sender close .004 precedes target delivery
+        ['003999', '010999', 'MATCHED'], // last microseconds inside exit/reap receipt precision
+        ['004000', '005000', 'UNKNOWN'], // send is outside sender exit interval
+        ['002200', '011000', 'UNKNOWN'], // delivery is outside target reap interval
+        ['000999', '005000', 'UNKNOWN'], // before sender stop
+        ['002200', '002199', 'UNKNOWN'], // before send
+    ]) {
+        const f = multiTargetAttributionFixture(1);
+        f.records[0].beganAt = f.records[0].timestamp = `1700000000.${send}`;
+        f.records[1].timestamp = `1700000000.${delivery}`;
+        assert.equal(targetAttribution(f.receipt, f.records, f.correlations).status, expected, `${send}/${delivery}`);
+    }
+});
+
+test(
+    'retained dual-descendant target keeps the original failure and requires every exact custody error',
+    { skip: !process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT },
+    () => {
+        const fs = require('node:fs'),
+            path = require('node:path');
+        const { readTargetDiagnostic } = require('./run-example-shutdown-target.cjs');
+        const { expectedOutcome, targetAttribution } = require('./example-evidence-shutdown-trace.cjs');
+        const { validateAttemptReceipt } = require('./example-evidence-supervisor.cjs');
+        const root = path.join(
+            process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT,
+            'shutdown-diagnostics-38816671345/target-0',
+        );
+        if (!fs.existsSync(root)) return;
+        const directory = path.join(root, 'diagnostic/target-diagnostic'),
+            freeze = JSON.parse(fs.readFileSync(path.join(root, 'freeze.json')));
+        const originalReport = fs.readFileSync(path.join(root, 'diagnostic/diagnostic.json'));
+        const originalReceipt = fs.readFileSync(path.join(directory, 'attempt-receipt.json'));
+        const retained = readTargetDiagnostic({
+            directory,
+            freeze,
+            runnerSha256: freeze.inputs.find((row) => row.path === 'tools/verify/run-example-shutdown-target.cjs')
+                .sha256,
+        });
+        const { receipt } = retained;
+        const options = {
+            mode: 'target',
+            diagnosticProfile: receipt.diagnosticProfile,
+            artifactBytes: retained.artifactBytes,
+        };
+        assert.equal(expectedOutcome(receipt, options), true);
+        assert.equal(receipt.ok, false);
+        assert.equal(validateAttemptReceipt(receipt).ok, false);
+        assert.equal(expectedOutcome(receipt, { mode: 'target' }), false);
+        const off = targetAttribution(receipt, [], []);
+        assert.equal(off.status, 'UNKNOWN');
+        assert.deepEqual(
+            off.targets.map((row) => [row.target.pid, row.target.startTicks, row.status]),
+            [
+                [6548, '21493', 'UNKNOWN'],
+                [6610, '21678', 'UNKNOWN'],
+            ],
+        );
+        assert.deepEqual(
+            off.targets.map((row) => row.targetRoleHint),
+            ['gpu-process', 'utility'],
+        );
+        assert.deepEqual(JSON.parse(fs.readFileSync(path.join(root, 'diagnostic/process-identities.json'))), []);
+        for (const mutate of [
+            (r) => {
+                r.custody.observation.errors.pop();
+            },
+            (r) => {
+                r.custody.observation.errors.shift();
+            },
+            (r) => {
+                r.custody.observation.errors.push('unrelated failure');
+            },
+            (r) => {
+                r.custody.observation.errors.push(r.custody.observation.errors[0]);
+            },
+            (r) => {
+                r.custody.observation.adopted.pop();
+            },
+            (r) => {
+                r.custody.observation.adopted.push(structuredClone(r.custody.observation.adopted.at(-1)));
+            },
+            (r) => {
+                delete r.custody.observation.adopted.at(-1).absent;
+            },
+            (r) => {
+                r.custody.observation.adopted.at(-1).reap.rawStatus = 9;
+            },
+            (r) => {
+                r.custody.observation.adopted.at(-1).reap.signal = 'SIGKILL';
+            },
+            (r) => {
+                r.custody.observation.adopted[0].reap.code = 7;
+            },
+            (r) => {
+                r.forced = true;
+            },
+            (r) => {
+                r.timedOut = true;
+            },
+        ]) {
+            const changed = structuredClone(receipt);
+            mutate(changed);
+            assert.equal(expectedOutcome(changed, options), false);
+        }
+        assert.deepEqual(fs.readFileSync(path.join(root, 'diagnostic/diagnostic.json')), originalReport);
+        assert.deepEqual(fs.readFileSync(path.join(directory, 'attempt-receipt.json')), originalReceipt);
+        assert.equal(JSON.parse(originalReport).status, 'FAIL');
+    },
+);
+
 test(
     'retained real receipt classifications and fail-closed mutations',
     { skip: !process.env.EXAMPLE_EVIDENCE_TRACE_FIXTURE_ROOT },

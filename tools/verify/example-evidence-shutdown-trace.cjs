@@ -1581,6 +1581,47 @@ function browserNonzeroAbortEpipe(receipt, bytes) {
     );
 }
 
+// The complete bounded adopted set is authoritative; correlations never select its members.
+function closedTargetChildren(receipt) {
+    const raw = receipt.custody?.observation;
+    if (!raw || !Array.isArray(raw.adopted) || raw.adopted.length > BOUNDS.identities || !Array.isArray(raw.events))
+        return null;
+    const exact = (event, type) =>
+        event?.type === type &&
+        raw.events.filter((row) => row.eventId === event.eventId).length === 1 &&
+        raw.events.some((row) => JSON.stringify(row) === JSON.stringify(event));
+    if (!exact(raw.final, 'kernel-final-echild') || raw.final.result !== 'ECHILD') return null;
+    const seen = new Set();
+    for (const type of ['adopted-child', 'adopted-waitpid', 'adopted-absent'])
+        if (raw.events.filter((row) => row.type === type).length !== raw.adopted.length) return null;
+    for (const row of raw.adopted) {
+        if (
+            !validTuple(row) ||
+            seen.has(row.pid) ||
+            !exact(row.observed, 'adopted-child') ||
+            !same(row.observed.identity, row) ||
+            !exact(row.reap, 'adopted-waitpid') ||
+            !exact(row.absent, 'adopted-absent') ||
+            !same(row, row.reap) ||
+            !same(row, row.absent) ||
+            !(
+                row.observed.eventId < row.reap.eventId &&
+                row.reap.eventId < row.absent.eventId &&
+                row.absent.eventId < raw.final.eventId
+            ) ||
+            ![row.observed, row.reap, row.absent].every((event) => Number.isFinite(event.elapsedMs)) ||
+            !(
+                row.observed.elapsedMs <= row.reap.elapsedMs &&
+                row.reap.elapsedMs <= row.absent.elapsedMs &&
+                row.absent.elapsedMs <= raw.final.elapsedMs
+            )
+        )
+            return null;
+        seen.add(row.pid);
+    }
+    return raw.adopted;
+}
+
 function expectedOutcome(receipt, options) {
     const profile = options.diagnosticProfile;
     if (
@@ -1673,12 +1714,17 @@ function expectedOutcome(receipt, options) {
         ])
             allowed.add(value);
     } else if (options.mode === 'target') {
-        const signaled = raw.adopted.filter((row) => row.reap.signal);
+        const children = closedTargetChildren(receipt);
+        if (!children) return false;
+        const signaled = children.filter((row) => row.reap.signal !== null);
         if (
             receipt.id !== 'collector-dodge' ||
-            signaled.length !== 1 ||
-            signaled[0].reap.signal !== 'SIGTERM' ||
-            signaled[0].reap.rawStatus !== 15 ||
+            !signaled.length ||
+            !children.every((row) =>
+                row.reap.signal === null
+                    ? row.reap.code === 0 && row.reap.rawStatus === 0
+                    : row.reap.signal === 'SIGTERM' && row.reap.code === null && row.reap.rawStatus === 15,
+            ) ||
             !pair(receipt.worker, 124) ||
             !receipt.browsers.length ||
             !receipt.browsers.every((row) => pair(row, 0)) ||
@@ -1694,15 +1740,18 @@ function expectedOutcome(receipt, options) {
             )
         )
             return false;
-        const adoptedFailure = `Adopted child exited uncleanly: ${signaled[0].pid} code=None signal=SIGTERM`;
+        const adoptedFailures = signaled.map(
+            (row) => `Adopted child exited uncleanly: ${row.pid} code=None signal=SIGTERM`,
+        );
+        const expectedRawErrors = [...adoptedFailures, 'Runtime barrier found adopted or unclosed children'];
         if (
-            raw.errors.length !== 2 ||
-            !raw.errors.includes(adoptedFailure) ||
-            !raw.errors.includes('Runtime barrier found adopted or unclosed children')
+            raw.errors.length !== expectedRawErrors.length ||
+            new Set(raw.errors).size !== raw.errors.length ||
+            !expectedRawErrors.every((value) => raw.errors.includes(value))
         )
             return false;
         for (const value of [
-            adoptedFailure,
+            ...adoptedFailures,
             'Custody IPC: kernel barrier rejected',
             'observer-failure: Custody IPC: kernel barrier rejected',
             'worker exited 124',
@@ -1866,49 +1915,148 @@ function knownCpuSender(receipt, records, knownRoot) {
 }
 
 function targetAttribution(receipt, records, correlations) {
-    for (const correlation of correlations) {
-        if (correlation.status !== 'CORRELATED_DIAGNOSTIC_ONLY' || correlation.signal !== 'SIGTERM') continue;
-        const sent = records.find((row) => row.eventId === correlation.syscallEvent);
-        const delivery = records.find((row) => row.eventId === correlation.deliveryEvent);
-        const browser = receipt.browsers.find((row) => same(row, correlation.sender));
-        const adopted = receipt.custody.observation.adopted.find((row) => same(row, correlation.target));
-        const owned = receipt.ownedProcesses.find((row) => same(row, correlation.target));
-        const stop = receipt.events.find((row) => row.type === 'stop-begin' && row.runtimeId === browser?.runtimeId);
-        const stopTime = Date.parse(stop?.utc || stop?.receivedUtc) / 1000;
-        const closeTime = Date.parse(browser?.close?.utc || browser?.close?.receivedUtc) / 1000;
-        const reapTime = Date.parse(adopted?.reap?.utc) / 1000;
-        if (
-            !browser ||
-            !adopted ||
-            sent.syscall !== 'kill' ||
-            !frozenImageMatch(sent.identityObservation) ||
-            !frozenImageMatch(sent.targetObservation) ||
-            !frozenImageMatch(delivery.identityObservation) ||
-            owned?.firstObserved?.processDiagnostic?.details?.processType !== 'gpu-process' ||
-            adopted.reap?.signal !== 'SIGTERM' ||
-            adopted.reap.rawStatus !== 15 ||
-            !adopted.absent ||
-            browser.exit?.code !== 0 ||
-            browser.close?.code !== 0 ||
-            browser.exit.signal ||
-            browser.close.signal ||
-            !Number.isFinite(stopTime) ||
-            !(
-                stopTime <= Number(sent.beganAt) &&
-                Number(delivery.timestamp) <= closeTime &&
-                Number(delivery.timestamp) <= reapTime
+    const children = closedTargetChildren(receipt);
+    invariant(children, 'target-adopted-closure-invalid');
+    const exact = (event, type) =>
+        event?.type === type &&
+        receipt.events.filter((row) => row.eventId === event.eventId).length === 1 &&
+        receipt.events.some((row) => JSON.stringify(row) === JSON.stringify(event));
+    const utcMicros = (value) => {
+        const ms = typeof value === 'string' ? Date.parse(value) : NaN;
+        return Number.isFinite(ms) && new Date(ms).toISOString() === value ? BigInt(ms) * 1000n : null;
+    };
+    const traceMicros = (value) =>
+        typeof value === 'string' && /^\d+\.\d{6}$/.test(value) ? BigInt(value.replace('.', '')) : null;
+    const targets = children
+        .filter((row) => row.reap.signal !== null)
+        .map((adopted) => {
+            const ownedRows = receipt.ownedProcesses.filter((row) => row.pid === adopted.pid);
+            const role =
+                ownedRows.length === 1 ? ownedRows[0].firstObserved?.processDiagnostic?.details?.processType : null;
+            const result = {
+                target: { pid: adopted.pid, startTicks: adopted.startTicks, namespace: adopted.namespace },
+                signal: SIGNALS.has(adopted.reap.signal) ? adopted.reap.signal : 'UNKNOWN',
+                reapEvent: adopted.reap.eventId,
+                absenceEvent: adopted.absent.eventId,
+                targetRoleHint: ['renderer', 'gpu-process', 'utility', 'zygote', 'broker', 'crashpad-handler'].includes(
+                    role,
+                )
+                    ? role
+                    : 'unknown',
+                status: 'UNKNOWN',
+                reason: 'missing-or-ambiguous-correlation',
+            };
+            if (adopted.reap.signal !== 'SIGTERM' || adopted.reap.rawStatus !== 15 || adopted.reap.code !== null)
+                return { ...result, reason: 'unsupported-signal-outcome' };
+            const matches = correlations.filter((row) => row.target?.pid === adopted.pid);
+            if (matches.length !== 1) return result;
+            const correlation = matches[0];
+            if (
+                correlation.status !== 'CORRELATED_DIAGNOSTIC_ONLY' ||
+                correlation.signal !== 'SIGTERM' ||
+                !same(correlation.target, adopted)
             )
-        )
-            continue;
-        return {
-            diagnosticOnly: true,
-            ...correlation,
-            status: 'MATCHED',
-            frozenBrowserImage: true,
-            targetRoleHint: 'gpu-process',
-        };
-    }
-    return { status: 'UNKNOWN', diagnosticOnly: true };
+                return result;
+            if (
+                correlations.filter((row) => row.deliveryEvent === correlation.deliveryEvent).length !== 1 ||
+                correlations.filter((row) => row.syscallEvent === correlation.syscallEvent).length !== 1
+            )
+                return { ...result, reason: 'reused-signal-event' };
+            const sends = records.filter((row) => row.eventId === correlation.syscallEvent);
+            const deliveries = records.filter((row) => row.eventId === correlation.deliveryEvent);
+            const browsers = receipt.browsers.filter((row) => row.pid === correlation.sender?.pid);
+            if (
+                sends.length !== 1 ||
+                deliveries.length !== 1 ||
+                browsers.length !== 1 ||
+                ownedRows.length !== 1 ||
+                !same(ownedRows[0], adopted) ||
+                !same(browsers[0], correlation.sender)
+            )
+                return { ...result, reason: 'ambiguous-event-or-identity' };
+            const sent = sends[0],
+                delivery = deliveries[0],
+                browser = browsers[0];
+            const stops = receipt.events.filter(
+                (row) => row.type === 'stop-begin' && row.runtimeId === browser.runtimeId,
+            );
+            if (
+                stops.length !== 1 ||
+                !exact(stops[0], 'stop-begin') ||
+                !exact(browser.exit, 'browser-exit') ||
+                !exact(browser.close, 'browser-close') ||
+                browser.exit.code !== 0 ||
+                browser.close.code !== 0 ||
+                browser.exit.signal !== null ||
+                browser.close.signal !== null ||
+                !(stops[0].eventId < browser.exit.eventId && browser.exit.eventId < browser.close.eventId)
+            )
+                return { ...result, reason: 'browser-lifecycle-unproven' };
+            if (
+                sent.kind !== 'syscall' ||
+                sent.syscall !== 'kill' ||
+                sent.result !== 0 ||
+                sent.errno !== null ||
+                sent.signal !== 'SIGTERM' ||
+                sent.target !== adopted.pid ||
+                sent.targetKind !== 'pid-or-group' ||
+                delivery.kind !== 'delivery' ||
+                delivery.signal !== 'SIGTERM' ||
+                delivery.siCode !== 'SI_USER' ||
+                delivery.siPid !== browser.pid ||
+                !frozenImageMatch(sent.identityObservation) ||
+                !frozenImageMatch(sent.targetObservation) ||
+                !frozenImageMatch(delivery.identityObservation) ||
+                !same(sent.callerProcessIdentity, browser) ||
+                !fullSame(sent.callerProcessIdentity, sent.identityObservation.process) ||
+                !same(sent.identityObservation.process, browser) ||
+                !same(sent.targetObservation.process, adopted) ||
+                !same(delivery.processIdentity, adopted) ||
+                !fullSame(delivery.processIdentity, delivery.identityObservation.process) ||
+                !same(delivery.identityObservation.process, adopted) ||
+                sent.tid !== sent.threadIdentity?.pid ||
+                !fullSame(sent.threadIdentity, sent.identityObservation.thread) ||
+                delivery.tid !== delivery.threadIdentity?.pid ||
+                !fullSame(delivery.threadIdentity, delivery.identityObservation.thread) ||
+                !fullSame(sent.identityObservation.root, sent.targetObservation.root) ||
+                !fullSame(sent.identityObservation.root, delivery.identityObservation.root)
+            )
+                return { ...result, reason: 'signal-identity-unproven' };
+            const stopTime = utcMicros(stops[0].utc || stops[0].receivedUtc),
+                exitTime = utcMicros(browser.exit.utc || browser.exit.receivedUtc),
+                closeTime = utcMicros(browser.close.utc || browser.close.receivedUtc),
+                reapTime = utcMicros(adopted.reap.utc),
+                began = traceMicros(sent.beganAt),
+                returned = traceMicros(sent.timestamp),
+                delivered = traceMicros(delivery.timestamp);
+            if (
+                [stopTime, exitTime, closeTime, reapTime, began, returned, delivered].includes(null) ||
+                !(
+                    stopTime <= exitTime &&
+                    exitTime <= closeTime &&
+                    stopTime <= began &&
+                    began <= returned &&
+                    returned < exitTime + 1000n &&
+                    began <= delivered &&
+                    delivered < reapTime + 1000n
+                )
+            )
+                return { ...result, reason: 'signal-time-unproven' };
+            return {
+                ...result,
+                status: 'MATCHED',
+                reason: null,
+                sender: { pid: browser.pid, startTicks: browser.startTicks, namespace: browser.namespace },
+                syscallEvent: sent.eventId,
+                deliveryEvent: delivery.eventId,
+                frozenBrowserImage: true,
+            };
+        });
+    return {
+        status: targets.length > 0 && targets.every((row) => row.status === 'MATCHED') ? 'MATCHED' : 'UNKNOWN',
+        diagnosticOnly: true,
+        targets,
+    };
 }
 
 function checkChildrenInterface(read = fs.readFileSync) {

@@ -243,6 +243,17 @@ or address contents. Mark filtered traces as such rather than calling them
 complete raw strace logs. Bind sender and target to their exact PID namespace,
 start ticks and executable-image observations; ambiguous or missing links stay
 UNKNOWN. Process-role hints are not executable authentication.
+Retain a separate attribution entry for every signaled adopted descendant, within
+the existing identity and output bounds. Match each exact descendant independently
+against its own sender, delivery, authenticated executable images, lifecycle, and
+waitpid/absence records. Do not assume a single descendant or require a particular
+role hint. Preserve every unmatched or unsupported case as UNKNOWN. The aggregate
+is MATCHED only when the nonempty full set is matched; one attributed child cannot
+stand in for another. A complete diagnostic can retain an expected, fully closed
+failed attempt, but it never changes that original production failure.
+Use the recorded timestamp precision when checking causality. A send must occur
+within its browser's shutdown lifetime; delivery is bounded by that recipient's
+reap record, rather than an assumed ordering before the sender's close event.
 Sample threads and their children only inside already-proven owned processes.
 Each thread observation must retain its own start ticks, the same process leader,
 namespace, and verified ancestry before and after bounded reads. Threads and
@@ -259,7 +270,8 @@ Each diagnostic keeps its explicitly recorded fixed profile. The whole diagnosti
 phase is bounded to the lesser of 600 seconds and the remaining original job
 budget, with one untraced target control and at most
 six traced target attempts. Do not start another target with fewer than 180
-seconds remaining; stop after the first complete attribution, otherwise retain
+seconds remaining; stop after the first complete attribution of every signaled
+descendant in that attempt, otherwise retain
 UNKNOWN. At least one complete untraced/traced target pair is required; an
 unexecuted or half-finished pair cannot satisfy the diagnostic preflight. Keep
 every attempt, including failed and untraced results. Any missing
