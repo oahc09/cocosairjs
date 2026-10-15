@@ -35,11 +35,16 @@ jobs:
           mkdir -p "$RUNNER_TEMP/committed-example-campaign"
           git rev-parse HEAD > "$RUNNER_TEMP/committed-example-campaign/commit.txt"
           git ls-files -z build | xargs -0 sha256sum > "$RUNNER_TEMP/committed-example-campaign/committed-build.sha256"
+          sha256sum src/air/spark/generated/spark-runtime.js src/air/spark/generated/spark-runtime.js.map src/air/spark/generated/spark-runtime.d.ts > "$RUNNER_TEMP/committed-example-campaign/committed-spark-tree.sha256"
       - name: Hydrate dependencies without rebuilding committed artifacts
         run: |
           set -euo pipefail
           npm ci --ignore-scripts
           node tools/build/prepare-package.cjs
+          # Restore only the ignored generator receipt, rejecting any generated-source byte change.
+          node tools/build/spark-runtime-tree.cjs
+          sha256sum --check "$RUNNER_TEMP/committed-example-campaign/committed-spark-tree.sha256"
+          git diff --exit-code -- src/air/spark/generated
           sha256sum --check "$RUNNER_TEMP/committed-example-campaign/committed-build.sha256"
           git diff --exit-code -- build tools/build/build-number.json package.json package-lock.json
       - name: Validate collector CPU contracts

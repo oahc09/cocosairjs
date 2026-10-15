@@ -1,5 +1,5 @@
-import { nodeRequire } from '../shims';
-// These tests inspect pure collector guards; real esbuild execution is covered by the workspace CPU subprocess tests.
+import { nodeProcess, nodeRequire } from '../shims';
+// Collector imports mock esbuild; clean-checkout regressions invoke real tooling in Node subprocesses.
 jest.mock('esbuild', () => ({}));
 jest.mock('../../tools/verify/browser-engines.cjs', () => ({
     launchOptions: () => ({ executablePath: '/CPU-NO-BROWSER', args: [] }),
@@ -8,6 +8,8 @@ const fs = nodeRequire('fs') as typeof import('fs');
 const path = nodeRequire('path') as typeof import('path');
 const os = nodeRequire('os') as typeof import('os');
 const http = nodeRequire('http') as typeof import('http');
+const cp = nodeRequire('child_process') as typeof import('child_process');
+const crypto = nodeRequire('crypto') as typeof import('crypto');
 const root = path.resolve('.');
 const runtime = nodeRequire(path.join(root, 'tools/benchmark/runner/browser-runtime.cjs'));
 const collector = nodeRequire(path.join(root, 'tools/verify/example-spec-browser.cjs'));
@@ -31,6 +33,82 @@ function put(relative: string, value: string): string {
     fs.writeFileSync(file, value);
     return file;
 }
+function sparkBootstrapCommands(workflowFile: string) {
+    const yaml = nodeRequire('js-yaml');
+    const workflow = yaml.load(fs.readFileSync(path.join(root, workflowFile), 'utf8'), { schema: yaml.JSON_SCHEMA });
+    const lines = Object.values(workflow.jobs)
+        .flatMap((job: any) => job.steps)
+        .filter((step: any) => typeof step.run === 'string')
+        .flatMap((step: any) => step.run.trim().split('\n'));
+    const onlyLine = (predicate: (line: string) => boolean): string => {
+        const matches = lines.filter(predicate);
+        expect(matches).toHaveLength(1);
+        return matches[0];
+    };
+    const snapshot = onlyLine((line) => line.startsWith('sha256sum src/air/spark/generated/'));
+    const generate = onlyLine((line) => line === 'node tools/build/spark-runtime-tree.cjs');
+    const hashGuard = onlyLine(
+        (line) => line.startsWith('sha256sum --check ') && line.includes('committed-spark-tree'),
+    );
+    const diffGuard = onlyLine((line) => line === 'git diff --exit-code -- src/air/spark/generated');
+    expect(lines.indexOf(snapshot)).toBeLessThan(lines.indexOf(generate));
+    expect(lines.indexOf(generate)).toBeLessThan(lines.indexOf(hashGuard));
+    expect(lines.indexOf(hashGuard)).toBeLessThan(lines.indexOf(diffGuard));
+    expect(lines.indexOf(diffGuard)).toBeLessThan(
+        lines.findIndex((line: string) => line.includes('node tools/verify/example-evidence-preflight.cjs')),
+    );
+    return { snapshot, hashGuard, diffGuard };
+}
+function cleanSparkCheckout(name: string) {
+    const repo = path.join(temp, name);
+    const listed = cp.spawnSync(
+        'git',
+        [
+            'ls-files',
+            '-z',
+            '--',
+            'tools/build/spark-runtime-tree.cjs',
+            'vendor/spark',
+            'vendor/spark-rs',
+            'build/fflate',
+            'src/air/spark/generated',
+        ],
+        { cwd: root, encoding: 'utf8' },
+    );
+    expect(listed.status).toBe(0);
+    const files = listed.stdout.split('\0').filter(Boolean);
+    for (const relative of files) {
+        const target = path.join(repo, relative);
+        fs.mkdirSync(path.dirname(target), { recursive: true });
+        fs.copyFileSync(path.join(root, relative), target);
+    }
+    const generatedFiles = files.filter((file) => file.startsWith('src/air/spark/generated/'));
+    expect(generatedFiles).toHaveLength(3);
+    expect(cp.spawnSync('git', ['init', '--quiet'], { cwd: repo }).status).toBe(0);
+    expect(cp.spawnSync('git', ['add', '.'], { cwd: repo }).status).toBe(0);
+    const runnerTemp = path.join(repo, '.runner-temp');
+    fs.mkdirSync(path.join(runnerTemp, 'committed-example-campaign'), { recursive: true });
+    const env = { ...nodeProcess.env, NODE_PATH: path.join(root, 'node_modules'), RUNNER_TEMP: runnerTemp };
+    const options = { cwd: repo, encoding: 'utf8' as const, env, timeout: 30000 };
+    const runGenerator = (...args: string[]) =>
+        cp.spawnSync(nodeProcess.execPath, ['tools/build/spark-runtime-tree.cjs', ...args], options);
+    const runShell = (command: string) => cp.spawnSync('bash', ['-c', 'set -euo pipefail\n' + command], options);
+    const generatedHashes = () =>
+        Object.fromEntries(
+            generatedFiles.map((file) => [
+                file,
+                crypto
+                    .createHash('sha256')
+                    .update(fs.readFileSync(path.join(repo, file)))
+                    .digest('hex'),
+            ]),
+        );
+    expect(fs.existsSync(path.join(repo, 'output/spark-runtime-tree-manifest.json'))).toBe(false);
+    expect(fs.existsSync(path.join(repo, 'node_modules'))).toBe(false);
+    for (const candidate of ['build/cocosair.module.js', 'build/spark.module.js'])
+        expect(fs.existsSync(path.join(repo, candidate))).toBe(false);
+    return { repo, generatedFiles, generatedHashes, runGenerator, runShell };
+}
 describe('Evidence collector integration safeguards', () => {
     test('clean-checkout npm copies are explicitly hydrated without changing committed bundle bytes', () => {
         const cp = nodeRequire('child_process') as typeof import('child_process');
@@ -53,6 +131,80 @@ describe('Evidence collector integration safeguards', () => {
         expect(run('tools/build/prepare-package.cjs').status).toBe(0);
         expect(run('tools/verify/published-artifacts.cjs').status).toBe(0);
         expect(fs.readFileSync(path.join(temp, 'build/cocosair.module.js')).equals(before)).toBe(true);
+    });
+
+    test('clean-checkout Spark manifest bootstrap preserves every tracked generated byte in both workflows', () => {
+        const generatedAtRoots: Record<string, string>[] = [];
+        const manifestsAtRoots: string[] = [];
+        for (const workflow of ['example-evidence', 'format']) {
+            const commands = sparkBootstrapCommands(`.github/workflows/${workflow}.yml`);
+            const checkout = cleanSparkCheckout(workflow);
+            const before = checkout.generatedHashes();
+            expect(commands.snapshot.split(' > ')[0].split(' ').slice(1).sort()).toEqual(
+                [...checkout.generatedFiles].sort(),
+            );
+            const missing = checkout.runGenerator('--check');
+            expect(missing.status).toBe(1);
+            expect(missing.stderr).toContain('output/spark-runtime-tree-manifest.json');
+            expect(checkout.generatedHashes()).toEqual(before);
+            expect(checkout.runShell(commands.snapshot).status).toBe(0);
+            const generated = checkout.runGenerator();
+            expect(generated.status).toBe(0);
+            expect(JSON.parse(generated.stdout).passed).toBe(true);
+            const manifest = fs.readFileSync(
+                path.join(checkout.repo, 'output/spark-runtime-tree-manifest.json'),
+                'utf8',
+            );
+            manifestsAtRoots.push(manifest);
+            expect(manifest).not.toContain(checkout.repo);
+            expect(manifest).not.toContain(root);
+            expect(checkout.generatedHashes()).toEqual(before);
+            generatedAtRoots.push(checkout.generatedHashes());
+            for (const file of checkout.generatedFiles) {
+                const bytes = fs.readFileSync(path.join(checkout.repo, file));
+                expect(bytes.includes(Buffer.from(checkout.repo))).toBe(false);
+                expect(bytes.includes(Buffer.from(root))).toBe(false);
+            }
+            expect(checkout.runShell(commands.hashGuard + '\n' + commands.diffGuard).status).toBe(0);
+            const checked = checkout.runGenerator('--check');
+            expect(checked.status).toBe(0);
+            expect(JSON.parse(checked.stdout).passed).toBe(true);
+        }
+        expect(generatedAtRoots[0]).toEqual(generatedAtRoots[1]);
+        expect(manifestsAtRoots[0]).toBe(manifestsAtRoots[1]);
+    });
+
+    test('both workflow guards reject a bootstrap that repairs corrupted tracked Spark source bytes', () => {
+        for (const workflow of ['example-evidence', 'format']) {
+            const commands = sparkBootstrapCommands(`.github/workflows/${workflow}.yml`);
+            for (const suffix of ['js', 'js.map', 'd.ts']) {
+                const checkout = cleanSparkCheckout(`${workflow}-${suffix}`);
+                const original = checkout.generatedHashes();
+                expect(checkout.runGenerator().status).toBe(0);
+                const file = `src/air/spark/generated/spark-runtime.${suffix}`;
+                fs.appendFileSync(path.join(checkout.repo, file), '\n ');
+                expect(cp.spawnSync('git', ['add', file], { cwd: checkout.repo }).status).toBe(0);
+                const before = checkout.generatedHashes();
+                const manifestPath = path.join(checkout.repo, 'output/spark-runtime-tree-manifest.json');
+                const manifestBefore = fs.readFileSync(manifestPath);
+                expect(checkout.runGenerator('--check').status).toBe(1);
+                expect(checkout.generatedHashes()).toEqual(before);
+                expect(fs.readFileSync(manifestPath).equals(manifestBefore)).toBe(true);
+                expect(checkout.runShell(commands.snapshot).status).toBe(0);
+                expect(checkout.runGenerator().status).toBe(0);
+                expect(checkout.generatedHashes()).not.toEqual(before);
+                expect(checkout.generatedHashes()).toEqual(original);
+                // The generator accepts its repaired output; the workflow must still reject the candidate rewrite.
+                expect(checkout.runGenerator('--check').status).toBe(0);
+                const guarded = checkout.runShell(
+                    commands.hashGuard + '\n' + commands.diffGuard + '\nprintf "preflight would run\\n"',
+                );
+                expect(guarded.status).toBe(1);
+                expect(guarded.stdout).toContain(`${file}: FAILED`);
+                expect(guarded.stdout).not.toContain('preflight would run');
+                expect(checkout.runShell(commands.diffGuard).status).toBe(1);
+            }
+        }
     });
 
     test('current generated source maps match real current inputs', () => {
@@ -275,7 +427,10 @@ describe('Committed example evidence workflow safeguards', () => {
             );
         }
         expect(shell).not.toMatch(/\bnpm\s+run\s+build(?::|\s|$)/);
-        expect(shell.match(/\bnode tools\/build\/[^\s]+/g)).toEqual(['node tools/build/prepare-package.cjs']);
+        expect(shell.match(/\bnode tools\/build\/[^\s]+/g)).toEqual([
+            'node tools/build/prepare-package.cjs',
+            'node tools/build/spark-runtime-tree.cjs',
+        ]);
         expect(shell).not.toMatch(/\bln\s+[^\n]*node_modules/);
     });
 

@@ -41,6 +41,10 @@ jobs:
       - name: Check committed complete example evidence before rebuilding
         run: |
           node tools/build/prepare-package.cjs
+          sha256sum src/air/spark/generated/spark-runtime.js src/air/spark/generated/spark-runtime.js.map src/air/spark/generated/spark-runtime.d.ts > "$RUNNER_TEMP/committed-spark-tree.sha256"
+          node tools/build/spark-runtime-tree.cjs
+          sha256sum --check "$RUNNER_TEMP/committed-spark-tree.sha256"
+          git diff --exit-code -- src/air/spark/generated
           node tools/verify/example-evidence-supervisor.test.cjs
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-workspace.test.ts test/smoke/smoke-example-evidence-campaign.test.ts test/smoke/smoke-example-evidence-publication.test.ts test/smoke/smoke-example-evidence-integration.test.ts
           node tools/verify/example-evidence-preflight.cjs

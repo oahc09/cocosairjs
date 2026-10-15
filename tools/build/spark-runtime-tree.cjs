@@ -174,11 +174,13 @@ function sparkPlugin({ workerMode }) {
         setup(build) {
             // wasm 字节构建期内联（无运行时 fetch）。
             build.onResolve({ filter: /spark_rs_bg\.wasm\?arraybuffer&base64$/ }, () => ({
-                path: path.join(VENDOR_SPARK_RS, 'spark_rs_bg.wasm'),
+                // esbuild includes namespace paths in generated comments. Keep
+                // that identity repository-relative so checkout locations do not change bytes.
+                path: 'vendor/spark-rs/spark_rs_bg.wasm',
                 namespace: 'air-wasm-bytes',
             }));
             build.onLoad({ filter: /.*/, namespace: 'air-wasm-bytes' }, async (args) => ({
-                contents: await fs.promises.readFile(args.path),
+                contents: await fs.promises.readFile(path.resolve(ROOT, args.path)),
                 loader: 'binary',
             }));
             // wasm-bindgen 胶水（冻结，自身无硬编码 wasm 路径）。
@@ -335,11 +337,17 @@ function sparkPlugin({ workerMode }) {
     }
 
     if (checkOnly) {
+        if (!fs.existsSync(OUT_JS)) fail('缺少 ' + rel(OUT_JS));
+        if (!fs.existsSync(OUT_JS + '.map')) fail('缺少 ' + rel(OUT_JS + '.map'));
         if (!fs.existsSync(OUT_DTS)) fail('缺少 ' + rel(OUT_DTS));
         if (!fs.existsSync(MANIFEST)) fail('缺少 ' + rel(MANIFEST));
         const prev = JSON.parse(fs.readFileSync(MANIFEST, 'utf8'));
         const dtsDisk = fs.readFileSync(OUT_DTS, 'utf8');
         const diffs = [];
+        if (!fs.readFileSync(OUT_JS).equals(Buffer.from(jsBytes))) diffs.push('spark-runtime.js disk bytes mismatch');
+        if (!fs.readFileSync(OUT_JS + '.map').equals(Buffer.from(mapOut)))
+            diffs.push('spark-runtime.js.map disk bytes mismatch');
+        if (dtsDisk !== dts) diffs.push('spark-runtime.d.ts disk bytes mismatch');
         if (prev.output.sha256 !== artifact.output.sha256)
             diffs.push(
                 'spark-runtime.js sha256 ' +
@@ -348,6 +356,7 @@ function sparkPlugin({ workerMode }) {
                     artifact.output.sha256.slice(0, 12),
             );
         if (sha256(Buffer.from(dtsDisk)) !== prev.declaration.sha256) diffs.push('spark-runtime.d.ts sha256 mismatch');
+        if (prev.sourcemap.sha256 !== artifact.sourcemap.sha256) diffs.push('spark-runtime.js.map sha256 mismatch');
         if (prev.inputs.length !== artifact.inputs.length)
             diffs.push('inputs ' + prev.inputs.length + ' -> ' + artifact.inputs.length);
         for (const d of diffs) console.error('[spark-runtime-tree] DRIFT ' + d);
