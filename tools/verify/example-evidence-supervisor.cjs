@@ -260,10 +260,52 @@ function validateAttemptReceiptUnchecked(receipt, options = {}) {
             row.leaderPID !== row.empty?.leaderPID ||
             row.leaderStartTicks !== row.firstObserved?.leaderStartTicks ||
             row.leaderStartTicks !== row.empty?.leaderStartTicks ||
+            row.namespace !== row.firstObserved?.namespace ||
+            row.namespace !== row.empty?.namespace ||
             row.namespace !== receipt.worker?.namespace
         )
             fail('owned process group empty receipt missing');
         const members = ownedProcesses.filter((member) => member.firstObserved?.pgrp === row.leaderPID);
+        const leader = ownedProcesses.find(
+            (member) =>
+                member.pid === row.leaderPID &&
+                member.startTicks === row.leaderStartTicks &&
+                member.namespace === row.namespace,
+        );
+        // A /proc scan can see a newly forked browser before its detached setsid.
+        // Keep that first observation intact. Only the existing exact browser-spawn
+        // event may prove the same process later became this group's leader.
+        if (leader && !members.includes(leader)) {
+            const browser = (Array.isArray(receipt.browsers) ? receipt.browsers : []).find(
+                (candidate) =>
+                    candidate?.pid === leader.pid &&
+                    candidate.startTicks === leader.startTicks &&
+                    candidate.namespace === leader.namespace,
+            );
+            const spawn = browser?.spawn;
+            const observed = spawn?.row;
+            if (
+                eventIs(spawn, 'browser-spawn') &&
+                observed?.pid === leader.pid &&
+                observed.startTicks === leader.startTicks &&
+                observed.namespace === leader.namespace &&
+                observed.detached === true &&
+                observed.initial?.pid === leader.pid &&
+                observed.initial.startTicks === leader.startTicks &&
+                observed.initial.pgrp === row.leaderPID &&
+                observed.initial.ppid === receipt.worker?.pid &&
+                leader.firstObserved?.eventId < spawn.eventId &&
+                leader.firstObserved.supervisorElapsedMs <= spawn.supervisorElapsedMs &&
+                spawn.eventId < row.firstObserved?.eventId &&
+                row.firstObserved.eventId < leader.disappearance?.eventId &&
+                leader.disappearance.eventId <= row.empty?.eventId &&
+                spawn.supervisorElapsedMs <= row.firstObserved.supervisorElapsedMs &&
+                row.firstObserved.supervisorElapsedMs <= leader.disappearance.supervisorElapsedMs &&
+                leader.disappearance.supervisorElapsedMs <= row.empty.supervisorElapsedMs
+            )
+                members.push(leader);
+        }
+        if (!leader || !members.includes(leader)) fail('owned process group leader proof missing');
         if (
             !members.length ||
             members.some((member) => !(member.disappearance?.supervisorElapsedMs <= row.empty?.supervisorElapsedMs))

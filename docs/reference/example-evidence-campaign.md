@@ -141,6 +141,14 @@ Download and independently validate the complete portable publication, its exact
 
 The Driver Pilot collector may retain a separate diagnostic replay after its original pixel readback. It must preserve the original pixels, sample locations, dimensions, tolerance, validator failure, and API proof. A replay is interpretable only after the unchanged submitted shader, copied uniform data, and draw state reproduce every original sample byte exactly. Instrumented UV, SDF, and transition values are auxiliary observations from a separately compiled program, never replacement acceptance pixels or evidence that the original compiler evaluated every intermediate identically. Restore all touched GL state and dispose temporary resources; retain diagnostic failures and limitations. Do not hide original GL errors, alter example behavior, or relax a pixel oracle to clear a collection gate.
 
+A process may first be observed by `/proc` between fork and detached process-group
+creation. Preserve that first observation. A later exact browser-spawn event may
+prove the same PID/start-ticks/namespace became its own group leader, provided
+its embedded initial identity and detached group match and the spawn precedes
+group observation. Retain every previously known group member and require all
+exact disappearance events before group-empty. Missing, mismatched, or late
+leader proof must fail; never rewrite an old receipt to repair its verdict.
+
 ## Shutdown signal diagnostics
 
 A signaled adopted process remains a failed campaign attempt under the current

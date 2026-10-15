@@ -1053,7 +1053,44 @@ function checkChildrenInterface(read = fs.readFileSync) {
     }
 }
 
+function createDiagnosticBudget(mode, now = () => performance.now()) {
+    invariant(['availability', 'cpu', 'target'].includes(mode), 'invalid-diagnostic-budget-mode');
+    const origin = now();
+    invariant(Number.isFinite(origin) && origin >= 0, 'invalid-diagnostic-monotonic-clock');
+    let last = origin;
+    const limits = Object.freeze(
+        mode === 'availability' ? { termMs: 4000, killMs: 8000 } : { termMs: 174000, killMs: 178000 },
+    );
+    const elapsedMs = () => {
+        const current = now();
+        invariant(Number.isFinite(current) && current >= last, 'invalid-diagnostic-monotonic-clock');
+        last = current;
+        return current - origin;
+    };
+    const remainingMs = (phase) => {
+        invariant(phase === 'term' || phase === 'kill', 'invalid-diagnostic-deadline-phase');
+        return Math.max(0, Math.floor(limits[`${phase}Ms`] - elapsedMs()));
+    };
+    const requireSpawnBudget = () => {
+        invariant(remainingMs('term') > 0, 'diagnostic-preflight-budget-exhausted');
+    };
+    return Object.freeze({
+        limits,
+        elapsedMs,
+        remainingMs,
+        requireSpawnBudget,
+        startupTimeoutMs: () => {
+            const remaining = remainingMs('term');
+            invariant(remaining > 0, 'diagnostic-preflight-budget-exhausted');
+            return Math.min(2000, remaining);
+        },
+    });
+}
+
 async function runDiagnostic(options) {
+    // All preflight work consumes the original external budget; it never starts a fresh timer.
+    const budget = createDiagnosticBudget(options.mode);
+    const startedAt = new Date().toISOString();
     invariant(process.platform === 'linux', 'linux-required');
     checkChildrenInterface();
     options = { ...options, out: path.resolve(options.out || '') };
@@ -1068,13 +1105,18 @@ async function runDiagnostic(options) {
             /^[a-f0-9]{64}$/.test(options.straceSha256 || '') && sha256(file) === options.straceSha256,
             'strace-hash-mismatch',
         );
-        const version = spawnSync(file, ['--version'], { encoding: 'utf8', timeout: 2000, maxBuffer: 8192 });
+        const version = spawnSync(file, ['--version'], {
+            encoding: 'utf8',
+            timeout: budget.startupTimeoutMs(),
+            maxBuffer: 8192,
+        });
         invariant(
             version.status === 0 && !version.signal && version.stdout.split('\n')[0] === options.straceVersion,
             'strace-version-mismatch',
         );
         tracerIdentity = { sha256: options.straceSha256, version: options.straceVersion };
     }
+    budget.requireSpawnBudget();
     fs.mkdirSync(options.out, { recursive: true, mode: 0o700 });
     invariant(outside(REPO, fs.realpathSync(options.out)), 'diagnostic-output-resolves-inside-repo');
     const report = {
@@ -1086,9 +1128,10 @@ async function runDiagnostic(options) {
         mode: options.mode,
         cpuCase: options.cpuCase || null,
         traced: options.trace === 'on',
-        startedAt: new Date().toISOString(),
+        startedAt,
         limits: command.limits,
-        externalLimits: { termMs: 174000, killMs: 178000 },
+        externalLimits: budget.limits,
+        externalBudgetOrigin: 'runDiagnostic-entry-monotonic',
         bounds: BOUNDS,
         tracerIdentity,
         commandIdentity: { role: command.role, nodeSha256: sha256(process.execPath), toolSha256: sha256(__filename) },
@@ -1110,9 +1153,8 @@ async function runDiagnostic(options) {
         physicalClosure: false,
         attribution: { status: 'UNKNOWN', diagnosticOnly: true },
     };
-    const origin = performance.now();
     const event = (type, values = {}) => {
-        const row = { type, elapsedMs: performance.now() - origin, ...values };
+        const row = { type, elapsedMs: budget.elapsedMs(), ...values };
         report.events.push(row);
         return row;
     };
@@ -1178,7 +1220,10 @@ async function runDiagnostic(options) {
     });
     const fifo = path.join(options.out, 'trace.fifo');
     if (report.traced) {
-        const mkfifo = spawnSync('/usr/bin/mkfifo', ['--mode=600', fifo], { timeout: 2000, maxBuffer: 1024 });
+        const mkfifo = spawnSync('/usr/bin/mkfifo', ['--mode=600', fifo], {
+            timeout: budget.startupTimeoutMs(),
+            maxBuffer: 1024,
+        });
         event('mkfifo-complete', { pid: mkfifo.pid, code: mkfifo.status, signal: mkfifo.signal });
         invariant(mkfifo.status === 0 && !mkfifo.signal, 'mkfifo-failed');
         const entry = fs.lstatSync(fifo);
@@ -1187,6 +1232,7 @@ async function runDiagnostic(options) {
         fifoIdentity = fs.fstatSync(fd);
         invariant(fifoIdentity.dev === entry.dev && fifoIdentity.ino === entry.ino, 'trace-fifo-replaced');
     }
+    budget.requireSpawnBudget();
     const onInterrupt = () => cancel('diagnostic-wrapper-interrupted');
     process.on('SIGTERM', onInterrupt);
     process.on('SIGINT', onInterrupt);
@@ -1352,30 +1398,27 @@ async function runDiagnostic(options) {
             }
         }
     }, 10);
-    const term = setTimeout(() => cancel('external-term-deadline'), options.mode === 'availability' ? 4000 : 174000);
-    const kill = setTimeout(
-        () => {
-            failure('external-kill-deadline');
-            try {
-                if (same(rootIdentity, identity(rootIdentity?.pid))) {
-                    process.kill(rootIdentity.pid, 'SIGKILL');
-                    event('original-outer-signal', { identity: rootIdentity, signal: 'SIGKILL' });
-                }
-            } catch {
-                failure('final-outer-signal-failed');
+    const term = setTimeout(() => cancel('external-term-deadline'), budget.remainingMs('term'));
+    const kill = setTimeout(() => {
+        failure('external-kill-deadline');
+        try {
+            if (same(rootIdentity, identity(rootIdentity?.pid))) {
+                process.kill(rootIdentity.pid, 'SIGKILL');
+                event('original-outer-signal', { identity: rootIdentity, signal: 'SIGKILL' });
             }
-            // A final failed diagnostic must never turn tracer detachment into a successful closure claim.
-            try {
-                if (same(childIdentity, identity(childIdentity?.pid))) {
-                    process.kill(child.pid, 'SIGKILL');
-                    event('tracer-forced-kill');
-                }
-            } catch {
-                failure('final-tracer-signal-failed');
+        } catch {
+            failure('final-outer-signal-failed');
+        }
+        // A final failed diagnostic must never turn tracer detachment into a successful closure claim.
+        try {
+            if (same(childIdentity, identity(childIdentity?.pid))) {
+                process.kill(child.pid, 'SIGKILL');
+                event('tracer-forced-kill');
             }
-        },
-        options.mode === 'availability' ? 8000 : 178000,
-    );
+        } catch {
+            failure('final-tracer-signal-failed');
+        }
+    }, budget.remainingMs('kill'));
     await new Promise((resolve) =>
         child.once('close', (code, signal) => {
             childClosed = true;
@@ -1636,5 +1679,6 @@ module.exports = {
     exactPresence,
     checkChildrenInterface,
     resolveCachedIdentities,
+    createDiagnosticBudget,
     runDiagnostic,
 };

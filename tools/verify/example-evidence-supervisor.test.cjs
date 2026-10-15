@@ -259,6 +259,92 @@ test('actual CPU subprocess/HTTP lifecycle controls, sequential and bounded', as
             JSON.stringify(receipt.lifecycleErrors),
         );
     });
+    await t.test('a detached browser leader may first be observed in its inherited process group', () => {
+        assert.equal(positive?.ok, true, 'Real positive control is required before this synthetic mutation');
+        const copy = () => {
+            const receipt = structuredClone(positive);
+            const browser = receipt.browsers[0];
+            browser.spawn = receipt.events.find((row) => row.eventId === browser.spawn.eventId);
+            const leader = receipt.ownedProcesses.find((row) => row.pid === browser.pid);
+            leader.firstObserved = receipt.events.find((row) => row.eventId === leader.firstObserved.eventId);
+            if (leader.firstObserved.eventId > browser.spawn.eventId) {
+                // Synthetic read ordering only: the original raw positive is never changed.
+                const spawnIndex = browser.spawn.eventId - 1;
+                const observedIndex = leader.firstObserved.eventId - 1;
+                assert.equal(observedIndex, spawnIndex + 1);
+                for (const key of ['eventId', 'supervisorElapsedMs', 'receivedUtc']) {
+                    const previous = browser.spawn[key];
+                    browser.spawn[key] = leader.firstObserved[key];
+                    leader.firstObserved[key] = previous;
+                }
+                receipt.events[spawnIndex] = leader.firstObserved;
+                receipt.events[observedIndex] = browser.spawn;
+            }
+            leader.firstObserved.pgrp = receipt.worker.pid;
+            receipt.events.find((row) => row.eventId === leader.firstObserved.eventId).pgrp = receipt.worker.pid;
+            return receipt;
+        };
+        const withInheritedObservation = copy();
+        assert.equal(validateAttemptReceipt(withInheritedObservation, { allowCpuDummy: true }).ok, true);
+        assert.equal(
+            validateAttemptReceipt(withInheritedObservation).ok,
+            false,
+            'Synthetic CPU remains non-production',
+        );
+        const mutations = [
+            (r) => {
+                r.browsers[0].spawn = null;
+            },
+            (r) => {
+                r.browsers[0].spawn.row.namespace = 'pid:[1]';
+            },
+            (r) => {
+                r.browsers[0].spawn.row.startTicks = '999';
+            },
+            (r) => {
+                r.browsers[0].spawn.row.initial.pid++;
+            },
+            (r) => {
+                r.browsers[0].spawn.row.initial.startTicks = '999';
+            },
+            (r) => {
+                r.browsers[0].spawn.row.initial.pgrp = r.worker.pid;
+            },
+            (r) => {
+                r.browsers[0].spawn.row.initial.ppid = r.worker.pid + 1;
+            },
+            (r) => {
+                r.ownedProcesses.find((row) => row.pid === r.browsers[0].pid).firstObserved.eventId =
+                    r.browsers[0].spawn.eventId;
+            },
+            (r) => {
+                r.browsers[0].spawn.row.detached = false;
+            },
+            (r) => {
+                r.browsers[0].spawn.eventId = r.ownedGroups.find(
+                    (g) => g.leaderPID === r.browsers[0].pid,
+                ).firstObserved.eventId;
+            },
+            (r) => {
+                r.ownedProcesses = r.ownedProcesses.filter((row) => row.pid !== r.browsers[0].pid);
+            },
+            (r) => {
+                const leader = r.ownedProcesses.find((row) => row.pid === r.browsers[0].pid);
+                const group = r.ownedGroups.find((row) => row.leaderPID === leader.pid);
+                leader.disappearance.supervisorElapsedMs = group.empty.supervisorElapsedMs + 1;
+            },
+        ];
+        for (const mutate of mutations) {
+            const receipt = copy();
+            mutate(receipt);
+            const checked = validateAttemptReceipt(receipt, { allowCpuDummy: true });
+            assert.equal(checked.ok, false);
+            assert.ok(
+                checked.errors.includes('owned process group leader proof missing'),
+                JSON.stringify(checked.errors),
+            );
+        }
+    });
     await t.test('tampered rows, dropped receipts, reset startup budget and modes are rejected independently', () => {
         assert.equal(positive?.ok, true, 'Positive control must close both runtimes before mutation testing');
         const mutations = [

@@ -6,9 +6,54 @@ const {
     correlate: correlateRaw,
     buildCommand,
     traceArgs,
+    createDiagnosticBudget,
     SYSCALLS,
     BOUNDS,
 } = require('./example-evidence-shutdown-trace.cjs');
+
+test('external deadlines count all preflight time from one monotonic entry without extending any budget', () => {
+    for (const mode of ['cpu', 'target']) {
+        let now = 123.25;
+        const budget = createDiagnosticBudget(mode, () => now);
+        assert.deepEqual(budget.limits, { termMs: 174000, killMs: 178000 });
+        assert.equal(budget.startupTimeoutMs(), 2000);
+        now += 1900; // version probe
+        assert.equal(budget.startupTimeoutMs(), 2000);
+        now += 1800; // mkfifo
+        now += 400; // hashing and other setup, including work before the first probe
+        budget.requireSpawnBudget();
+        assert.equal(budget.elapsedMs(), 4100);
+        assert.equal(budget.remainingMs('term'), 169900);
+        now += 25; // registering KILL later must not extend its absolute deadline
+        assert.equal(budget.remainingMs('kill'), 173875);
+        now = 123.25 + 174000;
+        let spawned = false;
+        assert.throws(() => {
+            budget.requireSpawnBudget();
+            spawned = true;
+        }, /diagnostic-preflight-budget-exhausted/);
+        assert.equal(spawned, false);
+        assert.throws(() => budget.startupTimeoutMs(), /diagnostic-preflight-budget-exhausted/);
+        assert.equal(budget.remainingMs('term'), 0);
+        assert.equal(budget.remainingMs('kill'), 4000);
+        now += 4001;
+        assert.equal(budget.remainingMs('kill'), 0);
+    }
+    let now = 100;
+    const availability = createDiagnosticBudget('availability', () => now);
+    assert.deepEqual(availability.limits, { termMs: 4000, killMs: 8000 });
+    now += 2500;
+    assert.equal(availability.startupTimeoutMs(), 1500);
+    now += 1499.5;
+    assert.equal(availability.remainingMs('term'), 0); // no rounding up beyond the entry deadline
+    assert.throws(() => availability.requireSpawnBudget(), /diagnostic-preflight-budget-exhausted/);
+    assert.equal(availability.remainingMs('kill'), 4000);
+    now = 99;
+    assert.throws(() => availability.remainingMs('kill'), /invalid-diagnostic-monotonic-clock/);
+    assert.throws(() => createDiagnosticBudget('target', () => NaN), /invalid-diagnostic-monotonic-clock/);
+    assert.throws(() => createDiagnosticBudget('target', () => Infinity), /invalid-diagnostic-monotonic-clock/);
+    assert.throws(() => createDiagnosticBudget('unknown'), /invalid-diagnostic-budget-mode/);
+});
 
 const TEST_ROOT = { pid: 99, tgid: 99, ppid: 1, startTicks: '40', namespace: 'pid:[1]' };
 const correlate = (records, identities) => correlateRaw(records, identities, TEST_ROOT);
