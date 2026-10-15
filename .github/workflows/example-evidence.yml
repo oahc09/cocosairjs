@@ -105,14 +105,16 @@ jobs:
           # These two controls must fail diagnostically while proving actual
           # outer/custodian/tracer closure. They never produce campaign PASS.
           EXAMPLE_EVIDENCE_LIVE_STRACE_CONTROLS=1 EXAMPLE_EVIDENCE_TRACE_DEADLINE_EPOCH="$diagnostic_deadline" EXAMPLE_EVIDENCE_TRACE_CONTROL_OUT="$diagnostic/live-controls" STRACE_PATH="$strace_path" STRACE_SHA256="$strace_sha" STRACE_VERSION="$strace_version" node --test tools/verify/example-evidence-shutdown-trace.test.cjs 2>&1 | tee "$diagnostic/live-controls.log"
-          limits='{"startupMs":800,"closeMs":300,"innerMs":1600,"abortMs":1900,"forceMs":2400,"finalMs":2800}'
+          # Instrumented and uninstrumented diagnostic pairs use the same existing
+          # production DEFAULT_LIMITS (15s startup / 4s close). The separate 46-case
+          # unit suite above retains its original 800ms / 300ms limits.
           for control in positive browser-nonzero custodian-delayed-stop-ack; do
             for trace in off on; do
               if [ "$(( $(date +%s) + 180 ))" -gt "$diagnostic_deadline" ]; then
                 echo 'Diagnostic budget exhausted before required CPU controls.' >&2
                 exit 124
               fi
-              node tools/verify/example-evidence-shutdown-trace.cjs --mode=cpu --case="$control" --trace="$trace" --limits="$limits" --out="$diagnostic/cpu-$control-$trace" --strace="$strace_path" --strace-sha256="$strace_sha" --strace-version="$strace_version"
+              node tools/verify/example-evidence-shutdown-trace.cjs --mode=cpu --case="$control" --trace="$trace" --out="$diagnostic/cpu-$control-$trace" --strace="$strace_path" --strace-sha256="$strace_sha" --strace-version="$strace_version"
             done
           done
           matched=false

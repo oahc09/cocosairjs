@@ -147,6 +147,47 @@ test('live trace selects only four signal syscalls; wait parsing is offline comp
     assert.throws(() => buildCommand({ mode: 'cpu', trace: 'on', cpuCase: 'invented', out: '/tmp/x' }));
 });
 
+test('diagnostic CPU pairs inherit production deadlines without changing the short unit suite', () => {
+    const fs = require('node:fs'),
+        path = require('node:path');
+    const { DEFAULT_LIMITS } = require('./example-evidence-supervisor.cjs');
+    const expected = {
+        startupMs: 15000,
+        closeMs: 4000,
+        innerMs: 120000,
+        abortMs: 125000,
+        forceMs: 133000,
+        finalMs: 139000,
+    };
+    assert.deepEqual(DEFAULT_LIMITS, expected);
+    for (const cpuCase of ['positive', 'browser-nonzero', 'custodian-delayed-stop-ack']) {
+        for (const trace of ['off', 'on']) {
+            const command = buildCommand({ mode: 'cpu', cpuCase, trace, out: '/tmp/default-diagnostic-pair' });
+            assert.deepEqual(command.limits, expected);
+            const limits = command.args.filter((arg) => arg.startsWith('--limits='));
+            assert.equal(limits.length, 1);
+            assert.deepEqual(JSON.parse(limits[0].slice('--limits='.length)), expected);
+        }
+    }
+    const workflow = fs.readFileSync(path.join(__dirname, '../../.github/workflows/example-evidence.yml'), 'utf8');
+    const pair = workflow.match(
+        /for control in positive browser-nonzero custodian-delayed-stop-ack; do([\s\S]*?)\n\s*matched=false/,
+    );
+    assert.ok(pair, 'exact required CPU pair loop must be present');
+    assert.match(pair[1], /for trace in off on; do/);
+    assert.doesNotMatch(pair[1], /--limits(?:=|\s)/, 'diagnostic pairs may not select the short unit deadlines');
+    const commands = pair[1]
+        .split('\n')
+        .filter((line) => line.includes('example-evidence-shutdown-trace.cjs') && line.includes('--mode=cpu'));
+    assert.equal(commands.length, 1);
+    assert.match(commands[0], /--case="\$control" --trace="\$trace"/);
+    const unit = fs.readFileSync(path.join(__dirname, 'example-evidence-supervisor.test.cjs'), 'utf8');
+    assert.match(
+        unit,
+        /const LIMITS = \{ startupMs: 800, closeMs: 300, innerMs: 1600, abortMs: 1900, forceMs: 2400, finalMs: 2800 \};/,
+    );
+});
+
 test('signal source and wait outcome preserve only fixed numeric/enum fields', () => {
     const data = parse(
         '101 1700000000.000001 kill(202, SIGTERM) = 0\n' +

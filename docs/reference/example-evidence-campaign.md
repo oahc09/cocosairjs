@@ -171,6 +171,15 @@ Known-sender CPU controls must retain the original positive and negative
 verdicts, exact exit/stdio-close receipts, and kernel ECHILD before browser
 diagnostics can start.
 
+The traced/untraced diagnostic CPU pairs use the same existing production
+`DEFAULT_LIMITS`: 15-second startup, 4-second close, and the unchanged
+120/125/133/139-second inner/abort/force/final deadlines. Tracing adds observation
+overhead, so these pairs are separate from the original 46-case unit suite,
+which keeps its 800-millisecond startup and 300-millisecond close limits. Retain
+any earlier instrumented short-budget failure as FAIL; a new diagnostic budget
+does not reclassify it. The 600-second phase limit and 180-second remaining-time
+admission check still apply to every pair member.
+
 The tracer wrapper also has two explicit real-process CPU cancellation controls:
 TERM delivered to that wrapper and a parser input-limit cancellation. These must
 remain failed diagnostics while proving outer/custodian/inner identity-linked
