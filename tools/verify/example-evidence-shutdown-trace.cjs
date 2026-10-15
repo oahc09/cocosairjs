@@ -483,6 +483,10 @@ function parseCompleted(tid, timestamp, body, beganAt = timestamp) {
     // v6.8 print_signalled uses signal_set, independently of -qqq/QUIET_EXIT.
     const terminal = body.match(/^\+\+\+ killed by (SIGTERM|SIGKILL) \+\+\+$/);
     if (terminal) return { kind: 'terminal', tid, timestamp, signal: terminal[1] };
+    // v6.8 print_stopped(NULL) emits this without siginfo, including when GETSIGINFO fails.
+    // It is only a no-siginfo stop observation, not delivery, sender, or terminal proof.
+    const groupStop = body.match(/^--- stopped by (SIGTERM|SIGKILL) ---$/);
+    if (groupStop) return { kind: 'stop-without-siginfo', tid, timestamp, signal: groupStop[1] };
     body = omitWaitClockAnnotations(body);
     validateGrammar(body);
     const delivery = body.match(/^--- (SIGTERM|SIGKILL) \{(.+)\} ---$/);
@@ -627,8 +631,11 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
                         'trace-prefix-range',
                     );
                     invariant(!terminalTids.has(tid), 'trace-record-after-terminal');
+                    // A no-siginfo observation does not reopen a syscall after its exit-stop.
                     invariant(
-                        !exitStopTids.has(tid) || /^\+\+\+ killed by (SIGTERM|SIGKILL) \+\+\+$/.test(body),
+                        !exitStopTids.has(tid) ||
+                            /^\+\+\+ killed by (SIGTERM|SIGKILL) \+\+\+$/.test(body) ||
+                            /^--- stopped by (SIGTERM|SIGKILL) ---$/.test(body),
                         'trace-record-after-exit-stop',
                     );
                     const start = body.match(
@@ -661,7 +668,7 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
                     } else {
                         row = parseCompleted(tid, timestamp, body);
                         invariant(
-                            !pending.has(tid) || ['delivery', 'terminal'].includes(row.kind),
+                            !pending.has(tid) || ['delivery', 'stop-without-siginfo', 'terminal'].includes(row.kind),
                             'trace-call-before-resume',
                         );
                     }
@@ -716,11 +723,13 @@ function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => 
                             ? body.startsWith('<... ')
                                 ? 'resumed-syscall'
                                 : 'syscall'
-                            : /^--- SIG(?:TERM|KILL) /.test(body)
-                              ? 'delivery'
-                              : /^\+\+\+ killed by /.test(body)
-                                ? 'terminal'
-                                : 'unknown',
+                            : body.startsWith('--- stopped by ')
+                              ? 'group-stop'
+                              : /^--- SIG(?:TERM|KILL) /.test(body)
+                                ? 'delivery'
+                                : /^\+\+\+ killed by /.test(body)
+                                  ? 'terminal'
+                                  : 'unknown',
                         syscall,
                         hasCommentDelimiter: body.includes('/*') || body.includes('*/'),
                     };
@@ -2211,6 +2220,7 @@ module.exports = {
     buildCommand,
     traceArgs,
     correlate,
+    knownCpuSender,
     receiptIdentities,
     expectedOutcome,
     targetAttribution,

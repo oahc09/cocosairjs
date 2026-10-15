@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const {
     createParser,
     correlate: correlateRaw,
+    knownCpuSender,
     buildCommand,
     traceArgs,
     createDiagnosticBudget,
@@ -404,6 +405,141 @@ test('pending and exit-stop state cannot hide malformed parameters or synthesize
     );
 });
 
+test('source-defined no-siginfo stops retain only a fixed observation, never a delivery or terminal', () => {
+    // strace v6.8 src/strace.c print_stopped(NULL), not a recovered CI raw line.
+    // TE_GROUP_STOP also follows GETSIGINFO failure, so this does not prove a kernel group-stop.
+    for (const signal of ['SIGTERM', 'SIGKILL']) {
+        const data = parse(`202 1700000000.000001 --- stopped by ${signal} ---\n`);
+        assert.equal(data.result.ok, true);
+        assert.deepEqual(data.records, [
+            {
+                kind: 'stop-without-siginfo',
+                tid: 202,
+                timestamp: '1700000000.000001',
+                signal,
+                lineSequence: 1,
+            },
+        ]);
+        assert.deepEqual(correlate(data.records, []), []);
+        assert.equal(data.result.rawStraceRetained, false);
+        const continued = parse(
+            `202 1700000000.000001 --- stopped by ${signal} ---\n` + '202 1700000000.000002 kill(303, SIGTERM) = 0\n',
+        );
+        assert.equal(continued.result.ok, true);
+        assert.deepEqual(
+            continued.records.map((row) => row.kind),
+            ['stop-without-siginfo', 'syscall'],
+        );
+    }
+});
+
+test('no-siginfo stops preserve unfinished calls and cannot bypass terminal or exit-stop guards', () => {
+    const pending = '202 1700000000.000001 kill(303, SIGTERM <unfinished ...>\n';
+    const stop = '202 1700000000.000002 --- stopped by SIGTERM ---\n';
+    const resumed = parse(pending + stop + '202 1700000000.000003 <... kill resumed>) = 0\n');
+    assert.equal(resumed.result.ok, true);
+    assert.deepEqual(
+        resumed.records.map((row) => row.kind),
+        ['stop-without-siginfo', 'syscall'],
+    );
+    assert.equal(resumed.records[1].beganAt, '1700000000.000001');
+    const terminated = parse(pending + stop + '202 1700000000.000003 +++ killed by SIGKILL +++\n');
+    assert.equal(terminated.result.ok, true);
+    assert.deepEqual(
+        terminated.records.map((row) => row.kind),
+        ['stop-without-siginfo', 'terminated-inflight', 'terminal'],
+    );
+    assert.equal(terminated.records[1].beganLineSequence, 1);
+    assert.equal(terminated.records[1].endedLineSequence, 3);
+    for (const lines of [
+        pending + stop,
+        pending + stop + '203 1700000000.000003 <... kill resumed>) = 0\n',
+        pending + stop + '202 1700000000.000003 kill(303, SIGTERM) = 0\n',
+        '202 1700000000.000001 +++ killed by SIGKILL +++\n' + stop,
+        '202 1700000000.000001 kill(303, SIGTERM, 9 <unfinished ...>\n' +
+            stop +
+            '202 1700000000.000003 +++ killed by SIGKILL +++\n',
+    ])
+        assert.equal(parse(lines).result.ok, false);
+});
+
+test('no-siginfo observations after exit-stop never reopen calls or establish terminal closure', () => {
+    for (const began of [
+        '202 1700000000.000001 kill(303, SIGTERM) = ?\n',
+        '202 1700000000.000001 kill(303, SIGTERM <unfinished ...>\n' +
+            '202 1700000000.000002 <... kill resumed>) = ?\n',
+    ]) {
+        const stopped =
+            began +
+            '202 1700000000.000003 --- stopped by SIGTERM ---\n' +
+            '202 1700000000.000004 --- stopped by SIGKILL ---\n';
+        const data = parse(stopped);
+        assert.equal(data.result.ok, true);
+        assert.deepEqual(
+            data.records.map((row) => row.kind),
+            ['syscall-incomplete', 'stop-without-siginfo', 'stop-without-siginfo'],
+        );
+        assert.deepEqual(correlate(data.records, []), []);
+        assert.doesNotMatch(JSON.stringify(data.records), /"(?:result|errno|target|siPid|siCode|physicalClosure)"/);
+        assert.equal(Object.hasOwn(data.result, 'physicalClosure'), false);
+        for (const next of [
+            'kill(303, SIGTERM) = 0',
+            'kill(303, SIGTERM <unfinished ...>',
+            '<... kill resumed>) = 0',
+            '<... kill resumed>) = ?',
+            '--- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=303, si_uid=1} ---',
+            '--- stopped by SIGSTOP ---',
+            '--- stopped by SIGTERM PRIVATE_TOKEN ---',
+        ]) {
+            const rejected = parse(stopped + `202 1700000000.000005 ${next}\n`);
+            assert.equal(rejected.result.ok, false);
+            assert.equal(rejected.result.reason, 'trace-record-after-exit-stop');
+            assert.deepEqual(rejected.records, data.records);
+            assert.doesNotMatch(JSON.stringify(rejected), /PRIVATE_TOKEN/);
+        }
+        const ended = stopped + '202 1700000000.000005 +++ killed by SIGKILL +++\n';
+        const terminal = parse(ended);
+        assert.equal(terminal.result.ok, true);
+        assert.deepEqual(
+            terminal.records.map((row) => row.kind),
+            ['syscall-incomplete', 'stop-without-siginfo', 'stop-without-siginfo', 'terminal'],
+        );
+        const after = parse(ended + '202 1700000000.000006 --- stopped by SIGTERM ---\n');
+        assert.equal(after.result.ok, false);
+        assert.equal(after.result.reason, 'trace-record-after-terminal');
+    }
+});
+
+test('rejected no-siginfo stop variants retain only a fixed family, never their raw tokens', () => {
+    for (const body of [
+        '--- stopped by SIGSTOP ---',
+        '--- stopped by SIGUSR1 ---',
+        '--- stopped by PRIVATE_TOKEN ---',
+        '--- stopped by SIGTERM PRIVATE_TOKEN ---',
+        '--- stopped by SIGTERM {si_pid=101} ---',
+        '--- stopped by SIGTERM (core dumped) ---',
+        '--- stopped by SIGTERM --',
+        '--- stopped by SIGTERM --- PRIVATE_TOKEN',
+        '--- stopped by SIGTERM /* PRIVATE_TOKEN */ ---',
+    ]) {
+        const data = parse(`202 1700000000.000001 ${body}\n`);
+        assert.equal(data.result.ok, false);
+        assert.equal(data.records.length, 0);
+        assert.deepEqual(data.result.rejectedLine, {
+            lineSequence: 1,
+            shape: 'group-stop',
+            syscall: null,
+            hasCommentDelimiter: body.includes('/*'),
+        });
+        assert.doesNotMatch(JSON.stringify(data), /PRIVATE_TOKEN|si_pid|core dumped/);
+    }
+    assert.equal(parse('202 1700000000.000001 --- stopped by SIGTERM ---').result.ok, false);
+    const unknown = parse('202 1700000000.000001 --- PRIVATE_TOKEN SIGTERM ---\n');
+    assert.equal(unknown.result.ok, false);
+    assert.equal(unknown.result.rejectedLine.shape, 'unknown');
+    assert.doesNotMatch(JSON.stringify(unknown), /PRIVATE_TOKEN/);
+});
+
 test('empty selected traces permit only independently closed ordinary UNKNOWN outcomes', () => {
     const report = {
         trace: { ...parse('').result, empty: true },
@@ -514,6 +650,25 @@ test('PIDFD is opaque, group kill/unknown TID/ambiguous sender never establish a
         identityObservation: observation(target),
     };
     assert.equal(correlate([syscall, delivery], [sender, target])[0].status, 'CORRELATED_DIAGNOSTIC_ONLY');
+    const receipt = {
+        worker: target,
+        custody: {
+            observation: {
+                custodian: sender,
+                events: [{ ...target, type: 'cpu-worker-signal', signal: 'SIGTERM', utc: '2023-11-14T22:13:20.001Z' }],
+            },
+        },
+    };
+    assert.equal(knownCpuSender(receipt, [syscall, delivery], TEST_ROOT), true);
+    const stop = parse('202 1700000000.000002 --- stopped by SIGTERM ---\n').records[0];
+    for (const replacement of [stop, { ...delivery, kind: stop.kind }]) {
+        assert.deepEqual(correlate([syscall, replacement], [sender, target]), []);
+        assert.equal(knownCpuSender(receipt, [syscall, replacement], TEST_ROOT), false);
+    }
+    const forgedDelivery = { ...stop, kind: 'delivery' };
+    assert.equal(correlate([syscall, forgedDelivery], [sender, target])[0].status, 'UNKNOWN');
+    assert.equal(knownCpuSender(receipt, [syscall, forgedDelivery], TEST_ROOT), false);
+    assert.equal(knownCpuSender(receipt, [{ ...syscall, kind: stop.kind }, delivery], TEST_ROOT), false);
     for (const changed of [
         { ...syscall, targetKind: 'pidfd-unknown' },
         { ...syscall, target: -202 },

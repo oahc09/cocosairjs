@@ -213,6 +213,9 @@ records does not expand the live filter. Fixed killed-by terminal markers are
 diagnostic observations only: they establish neither a signal sender nor
 physical closure. An unfinished syscall terminated with its own traced thread
 has no inferred return value and cannot establish successful signal delivery.
+The fixed no-siginfo `stopped by SIGTERM` / `stopped by SIGKILL` records are stop
+observations only. They have no sender identity or exit status, cannot establish
+delivery attribution or closure, and do not resolve a pending syscall.
 Persist fixed numeric identities, signal and result enums, and bounded
 filtered records. Do not retain raw argv, environment values, arbitrary text,
 or address contents. Mark filtered traces as such rather than calling them
