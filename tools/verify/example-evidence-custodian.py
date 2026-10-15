@@ -17,6 +17,7 @@ PR_SET_CHILD_SUBREAPER = 36
 PR_GET_CHILD_SUBREAPER = 37
 LIBC = ctypes.CDLL(None, use_errno=True)
 ACTIVE = None
+CURRENT_WORKER_FAILURE = 'Barrier stop rejected: collector worker is not the exact current process'
 
 
 def subreaper(value=None):
@@ -33,11 +34,23 @@ def utc():
 
 
 def identity(pid):
-    try:
+    def read():
         raw = pathlib.Path(f'/proc/{pid}/stat').read_text()
         fields = raw[raw.rfind(')') + 2:].split()
+        namespace = os.readlink(f'/proc/{pid}/ns/pid')
+        if (not raw.startswith(str(pid) + ' (') or len(fields) < 20 or not fields[19].isdigit()
+                or not namespace.startswith('pid:[') or not namespace.endswith(']')
+                or not namespace[5:-1].isdigit() or fields[0] not in ['R', 'S', 'D', 'T', 't', 'K', 'W', 'P', 'I', 'Z', 'X']):
+            raise RuntimeError('Unknown process identity: malformed /proc metadata')
         return dict(pid=pid, state=fields[0], ppid=int(fields[1]), pgrp=int(fields[2]), startTicks=fields[19],
-                    namespace=os.readlink(f'/proc/{pid}/ns/pid'))
+                    namespace=namespace)
+    try:
+        before, after = read(), read()
+        if (any(before[key] != after[key] for key in ['pid', 'ppid', 'pgrp', 'startTicks', 'namespace'])
+                or ((before['state'] in ['Z', 'X'] or after['state'] in ['Z', 'X'])
+                    and before['state'] != after['state'])):
+            raise RuntimeError('Unknown process identity: /proc tuple changed during observation')
+        return after
     except (FileNotFoundError, ProcessLookupError):
         return None
 
@@ -82,6 +95,40 @@ def runtime_identity():
                 python=dict(executablePath=executable, version='Python ' + sys.version.split()[0],
                             sha256=hashlib.sha256(pathlib.Path(executable).read_bytes()).hexdigest()),
                 helper=dict(path=helper, sha256=hashlib.sha256(pathlib.Path(helper).read_bytes()).hexdigest()))
+
+
+def validate_barrier_envelope(request, node_pid, namespace, token, sequence, accepted_start, rejected):
+    if (not isinstance(request, dict) or type(request.get('workerPID')) is not int or request['workerPID'] <= 0
+            or type(request.get('requestId')) is not int or request['requestId'] <= 0
+            or not isinstance(request.get('workerStartTicks'), str) or not request['workerStartTicks'].isdigit()
+            or not isinstance(request.get('runtimeId'), str) or not request['runtimeId'].startswith('runtime-')
+            or not request['runtimeId'][8:].isdigit() or request.get('namespace') != namespace
+            or request.get('nodeSupervisorPID') != node_pid or request.get('token') != token):
+        raise RuntimeError('Barrier request identity or envelope mismatch')
+    if rejected or request['requestId'] != sequence + 1 or request.get('phase') not in ['start', 'stop']:
+        raise RuntimeError('Barrier request sequence or phase mismatch')
+    if request['phase'] == 'stop':
+        if (not accepted_start or accepted_start.get('ok') is not True
+                or accepted_start.get('phase') != 'start' or request['requestId'] != accepted_start['requestId'] + 1
+                or any(request[key] != accepted_start.get(key)
+                       for key in ['workerPID', 'workerStartTicks', 'namespace', 'runtimeId', 'nodeSupervisorPID'])):
+            raise RuntimeError('Barrier stop does not match the most recent successful start')
+    elif accepted_start is not None:
+        raise RuntimeError('Barrier start overlaps an unfinished runtime')
+
+
+def check_barrier_request(request, peer, node_pid, namespace, token, sequence, accepted_start, rejected):
+    """A historical start can correlate only a failure response, never authorize a current barrier."""
+    validate_barrier_envelope(request, node_pid, namespace, token, sequence, accepted_start, rejected)
+    current = (peer and peer['pid'] == request['workerPID'] and peer['ppid'] == node_pid
+               and peer['startTicks'] == request['workerStartTicks'] and peer['namespace'] == namespace)
+    if peer and peer.get('state') not in ['R', 'S', 'D', 'T', 't', 'K', 'W', 'P', 'I', 'Z', 'X']:
+        raise RuntimeError('Unknown process identity: unsupported /proc state')
+    if current and peer['state'] not in ['Z', 'X']:
+        return None
+    if request['phase'] == 'stop':
+        return 'worker-exited' if current else 'worker-absent' if peer is None else 'worker-identity-mismatch'
+    raise RuntimeError('Barrier request is not the exact current collector worker over inherited pipes')
 
 
 def run(config_path, node, supervisor):
@@ -164,7 +211,9 @@ def run(config_path, node, supervisor):
     if config.get('cpuCase') == 'custodian-postspawn-error':
         raise RuntimeError('Intentional CPU post-spawn exception')
     adopted = {}
-    last_request = {}
+    sequence = 0
+    accepted_start = None
+    rejected_stop = False
     drain_started = None
     deadline_aborted = False
     deadline_forced = False
@@ -207,59 +256,104 @@ def run(config_path, node, supervisor):
                     fail(f'Adopted child exited uncleanly: {pid} code={code} signal={sig}')
         return [row for row in adopted.values() if row['reap'] is None]
 
+    def cpu_close_worker_before_reply(request, peer):
+        # CPU-only synchronization: force actual worker disappearance before the next custody observation.
+        current = identity(peer['pid'])
+        if (not current or current['ppid'] != node_process.pid or current['startTicks'] != peer['startTicks']
+                or current['namespace'] != peer['namespace']):
+            raise RuntimeError('CPU delayed response worker identity changed before signal')
+        os.kill(peer['pid'], signal.SIGTERM)
+        event('cpu-worker-signal', cpuOnly=True, pid=peer['pid'], startTicks=peer['startTicks'],
+              namespace=peer['namespace'], ppid=current['ppid'], signal='SIGTERM')
+        stop_deadline = min(elapsed() + limits['closeMs'], limits['finalMs'])
+        while same(peer):
+            if interrupted or elapsed() >= stop_deadline:
+                raise RuntimeError('CPU delayed response worker did not close within the original deadline')
+            time.sleep(0.001)
+        event('cpu-worker-absent-before-ack', cpuOnly=True, pid=peer['pid'], startTicks=peer['startTicks'],
+              namespace=peer['namespace'])
+        marker_path = pathlib.Path(config['out']).parent / 'cpu-drain-ready.json'
+        while not marker_path.exists():
+            if interrupted or elapsed() >= stop_deadline:
+                raise RuntimeError('CPU finalization handshake missed the original deadline')
+            time.sleep(0.001)
+        marker = json.loads(marker_path.read_text())
+        if (marker.get('type') != 'cpu-custody-drain-ready' or marker.get('cpuOnly') is not True
+                or marker.get('nodePID') != node_process.pid or marker.get('nodeStartTicks') != node_row['startTicks']
+                or marker.get('namespace') != peer['namespace'] or marker.get('workerPID') != peer['pid']
+                or marker.get('workerStartTicks') != peer['startTicks'] or marker.get('requestId') != request['requestId']
+                or not isinstance(marker.get('workerCloseEventId'), int)):
+            raise RuntimeError('CPU finalization handshake identity mismatch')
+        event('cpu-drain-ready-observed', cpuOnly=True, marker=marker)
+
+    def write_response(request, proof, **extra):
+        payload = (json.dumps(dict(ok=proof['ok'], token=custody['token'], requestId=request['requestId'],
+            runtimeId=request['runtimeId'], phase=request['phase'], custodianPID=os.getpid(),
+            eventId=proof['eventId'], **extra)) + '\n').encode()
+        if os.write(response_write, payload) != len(payload):
+            raise RuntimeError('Truncated custody response write')
+        return payload
+
     def handle_barrier(data):
+        nonlocal sequence, accepted_start, rejected_stop
         request = json.loads(data)
-        peer_pid = request.get('workerPID')
-        peer = identity(peer_pid) if isinstance(peer_pid, int) else None
-        if (not peer or peer['ppid'] != node_process.pid or peer['namespace'] != report['custodian']['namespace']
-                or request.get('workerStartTicks') != peer['startTicks'] or request.get('namespace') != peer['namespace']
-                or request.get('nodeSupervisorPID') != node_process.pid or request.get('token') != custody['token']):
-            raise RuntimeError('Barrier request is not the exact current collector worker over inherited pipes')
-        request_id = request.get('requestId')
-        if request_id != last_request.get(peer_pid, 0) + 1 or request.get('phase') not in ['start', 'stop']:
-            raise RuntimeError('Barrier request sequence or phase mismatch')
-        last_request[peer_pid] = request_id
+        validate_barrier_envelope(request, node_process.pid, report['custodian']['namespace'],
+                                  custody['token'], sequence, accepted_start, rejected_stop)
+        peer_pid = request['workerPID']
+        peer = identity(peer_pid)
+        reason = check_barrier_request(request, peer, node_process.pid, report['custodian']['namespace'],
+                                       custody['token'], sequence, accepted_start, rejected_stop)
+        if (config.get('cpuCase') in ['custodian-late-stop', 'custodian-late-stop-cancel',
+                                     'custodian-late-stop-deadline'] and request['phase'] == 'stop'):
+            if reason is not None:
+                raise RuntimeError('CPU late-stop control requires an initially current worker')
+            cpu_close_worker_before_reply(request, peer)
+            peer = identity(peer_pid)
+            reason = check_barrier_request(request, peer, node_process.pid, report['custodian']['namespace'],
+                                           custody['token'], sequence, accepted_start, rejected_stop)
+            if reason is None:
+                raise RuntimeError('CPU late-stop control did not establish current-worker rejection')
+        request_id = request['requestId']
+        sequence = request_id
+        if reason is not None:
+            # Preserve the failed request under the original timers. Never count history as a successful barrier.
+            fail(CURRENT_WORKER_FAILURE)
+            proof = event('runtime-custody-rejection', requestId=request_id, workerPID=peer_pid,
+                          workerStartTicks=request['workerStartTicks'], namespace=request['namespace'],
+                          nodeSupervisorPID=node_process.pid, runtimeId=request['runtimeId'], phase='stop',
+                          startEventId=accepted_start['eventId'], reason=reason,
+                          currentState={'worker-absent': 'ABSENT', 'worker-identity-mismatch': 'IDENTITY_MISMATCH',
+                                        'worker-exited': 'EXITED'}[reason], currentPeer=peer,
+                          ok=False, transport='inherited-anonymous-pipes/v1')
+            accepted_start = None
+            rejected_stop = True
+            if config.get('cpuCase') == 'custodian-late-stop-cancel':
+                if not same(node_row):
+                    raise RuntimeError('CPU cancellation target identity changed')
+                os.kill(node_process.pid, signal.SIGTERM)
+                event('cpu-inner-signal', cpuOnly=True, pid=node_process.pid, startTicks=node_row['startTicks'],
+                      namespace=node_row['namespace'], signal='SIGTERM')
+            if config.get('cpuCase') not in ['custodian-late-stop-cancel', 'custodian-late-stop-deadline']:
+                write_response(request, proof, rejection=reason, startEventId=proof['startEventId'],
+                               workerPID=peer_pid, workerStartTicks=request['workerStartTicks'],
+                               namespace=request['namespace'])
+            return
         alive = scan_adopted()
         children = own_children()
         ok = not alive and children == [node_process.pid] and not report['errors'] and subreaper() == 1
         if not ok:
             fail('Runtime barrier found adopted or unclosed children')
         proof = event('runtime-custody-barrier', requestId=request_id, workerPID=peer_pid,
-                      workerStartTicks=peer['startTicks'], runtimeId=request.get('runtimeId'), phase=request['phase'],
+                      workerStartTicks=peer['startTicks'], namespace=peer['namespace'], nodeSupervisorPID=node_process.pid,
+                      runtimeId=request.get('runtimeId'), phase=request['phase'],
                       directChildren=children, observedSubreaper=subreaper(), ok=ok, transport='inherited-anonymous-pipes/v1')
         report['barriers'].append(proof)
+        accepted_start = proof if request['phase'] == 'start' and ok else None
         if config.get('cpuCase') == 'custodian-pipe-eof':
             os.close(response_write)
             raise RuntimeError('Intentional CPU custody pipe EOF')
         if config.get('cpuCase') in ['custodian-delayed-stop-ack', 'custodian-stop-drain-cancel', 'custodian-stop-drain-deadline'] and request['phase'] == 'stop':
-            # CPU-only negative control: the exact worker exits while its validated ACK is in flight.
-            current = identity(peer_pid)
-            if (not current or current['ppid'] != node_process.pid or current['startTicks'] != peer['startTicks']
-                    or current['namespace'] != peer['namespace']):
-                raise RuntimeError('CPU delayed ACK worker identity changed before signal')
-            os.kill(peer_pid, signal.SIGTERM)
-            event('cpu-worker-signal', cpuOnly=True, pid=peer_pid, startTicks=peer['startTicks'],
-                  namespace=peer['namespace'], ppid=current['ppid'], signal='SIGTERM')
-            stop_deadline = min(proof['elapsedMs'] + limits['closeMs'], limits['finalMs'])
-            while same(peer):
-                if interrupted or elapsed() >= stop_deadline:
-                    raise RuntimeError('CPU delayed ACK worker did not close within the original deadline')
-                time.sleep(0.001)
-            event('cpu-worker-absent-before-ack', cpuOnly=True, pid=peer_pid, startTicks=peer['startTicks'],
-                  namespace=peer['namespace'])
-            marker_path = pathlib.Path(config['out']).parent / 'cpu-drain-ready.json'
-            while not marker_path.exists():
-                if interrupted or elapsed() >= stop_deadline:
-                    raise RuntimeError('CPU finalization handshake missed the original deadline')
-                time.sleep(0.001)
-            marker = json.loads(marker_path.read_text())
-            if (marker.get('type') != 'cpu-custody-drain-ready' or marker.get('cpuOnly') is not True
-                    or marker.get('nodePID') != node_process.pid or marker.get('nodeStartTicks') != node_row['startTicks']
-                    or marker.get('namespace') != peer['namespace'] or marker.get('workerPID') != peer_pid
-                    or marker.get('workerStartTicks') != peer['startTicks'] or marker.get('requestId') != request_id
-                    or not isinstance(marker.get('workerCloseEventId'), int)):
-                raise RuntimeError('CPU finalization handshake identity mismatch')
-            event('cpu-drain-ready-observed', cpuOnly=True, marker=marker)
+            cpu_close_worker_before_reply(request, peer)
             if config.get('cpuCase') == 'custodian-stop-drain-cancel':
                 if not same(node_row):
                     raise RuntimeError('CPU cancellation target identity changed')
@@ -269,11 +363,7 @@ def run(config_path, node, supervisor):
             if config.get('cpuCase') != 'custodian-delayed-stop-ack':
                 return  # Cancellation or the existing barrier timer must settle the actual in-flight wait.
         if config.get('cpuCase') != 'custodian-no-ack':
-            payload = (json.dumps(dict(ok=ok, token=custody['token'], requestId=request_id,
-                runtimeId=request.get('runtimeId'), phase=request['phase'], custodianPID=os.getpid(),
-                eventId=proof['eventId'])) + '\n').encode()
-            if os.write(response_write, payload) != len(payload):
-                raise RuntimeError('Truncated custody response write')
+            payload = write_response(request, proof)
             if config.get('cpuCase') == 'custodian-duplicate-ack':
                 os.write(response_write, payload)
         for row in alive:

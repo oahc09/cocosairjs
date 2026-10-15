@@ -1069,6 +1069,176 @@ function browserNonzeroPendingDrain(receipt) {
     );
 }
 
+const CURRENT_WORKER_FAILURE = 'Barrier stop rejected: collector worker is not the exact current process';
+const LATE_STOP_FAILURES = [
+    CURRENT_WORKER_FAILURE,
+    'Custody IPC: kernel barrier rejected',
+    'Custodian did not exit/close cleanly',
+    'Custodian exact identity/exit/stdio close is not clean',
+    'Kernel custody retained failures',
+    'Custody failure event: custody-error',
+];
+
+function originalCustodyBytesValid(receipt, bytes) {
+    try {
+        const artifacts = {};
+        for (const role of ['raw', 'nodeReceipt', 'journal', 'stdout', 'stderr']) {
+            const value = bytes?.[role],
+                reference = receipt.custody.artifacts[role];
+            if (
+                !Buffer.isBuffer(value) ||
+                value.length !== reference.bytes ||
+                crypto.createHash('sha256').update(value).digest('hex') !== reference.sha256
+            )
+                return false;
+            artifacts[role] = ['raw', 'nodeReceipt'].includes(role) ? JSON.parse(value) : value;
+        }
+        return validateCustodyArtifacts(receipt, artifacts).ok;
+    } catch {
+        return false;
+    }
+}
+
+// Only a CPU browser-7 negative control may retain this explicit failed stop response.
+// It never authorizes a historical worker or turns a rejected barrier into successful custody.
+function browserNonzeroRejectedDrain(receipt, bytes) {
+    const raw = receipt.custody?.observation,
+        worker = receipt.worker,
+        wrapper = receipt.custody?.wrapper;
+    if (
+        !raw ||
+        !originalCustodyBytesValid(receipt, bytes) ||
+        raw.barriers.length !== 1 ||
+        JSON.stringify(raw.errors) !== JSON.stringify([CURRENT_WORKER_FAILURE]) ||
+        raw.adopted.length ||
+        raw.events.some((row) => row.type.startsWith('cpu-')) ||
+        wrapper.exit.code !== 1 ||
+        wrapper.close.code !== 1 ||
+        wrapper.exit.signal !== null ||
+        wrapper.close.signal !== null
+    )
+        return false;
+    const pendingReceipt = JSON.parse(bytes.nodeReceipt);
+    if (
+        !pendingReceipt.errors.includes('Custody IPC: kernel barrier rejected') ||
+        !pendingReceipt.lifecycleErrors.includes('Custody IPC: kernel barrier rejected') ||
+        !LATE_STOP_FAILURES.every((value) => receipt.errors.includes(value) && receipt.lifecycleErrors.includes(value))
+    )
+        return false;
+    const runtime = receipt.runtimes[0],
+        browser = receipt.browsers[0],
+        server = receipt.servers[0];
+    const start = raw.barriers[0],
+        inner = raw.innerSupervisor;
+    const proofs = raw.events.filter((row) => row.type === 'runtime-custody-rejection');
+    const failures = raw.events.filter((row) => row.type === 'custody-error');
+    const rejections = receipt.events.filter((row) => row.type === 'custody-barrier-rejected');
+    const settlements = receipt.events.filter((row) => row.type === 'custody-request-settled' && row.phase === 'stop');
+    if (proofs.length !== 1 || failures.length !== 1 || rejections.length !== 1 || settlements.length !== 1)
+        return false;
+    const proof = proofs[0],
+        rejected = rejections[0],
+        settled = settlements[0],
+        failure = failures[0];
+    const exact = (row, events) =>
+        row &&
+        events.filter((value) => value.eventId === row.eventId).length === 1 &&
+        events.some((value) => JSON.stringify(value) === JSON.stringify(row));
+    const localBefore = (a, b) =>
+        exact(a, receipt.events) &&
+        exact(b, receipt.events) &&
+        a.eventId < b.eventId &&
+        a.supervisorElapsedMs < b.supervisorElapsedMs;
+    const sameRequest = (row) =>
+        row.workerPID === worker.pid &&
+        row.workerStartTicks === worker.startTicks &&
+        row.namespace === worker.namespace &&
+        row.runtimeId === runtime.runtimeId;
+    const peer = proof.currentPeer;
+    const currentPeerFields = ['pid', 'state', 'ppid', 'pgrp', 'startTicks', 'namespace'];
+    const completeCurrentPeer =
+        validTuple(peer) &&
+        Object.keys(peer).length === currentPeerFields.length &&
+        currentPeerFields.every((key) => Object.hasOwn(peer, key)) &&
+        ['R', 'S', 'D', 'T', 't', 'K', 'W', 'P', 'I', 'Z', 'X'].includes(peer.state) &&
+        Number.isSafeInteger(peer.pgrp) &&
+        peer.pgrp >= 0 &&
+        peer.pgrp <= 2147483647;
+    const invalidCurrent =
+        proof.reason === 'worker-absent'
+            ? proof.currentState === 'ABSENT' && peer === null
+            : proof.reason === 'worker-exited'
+              ? proof.currentState === 'EXITED' &&
+                completeCurrentPeer &&
+                same(peer, worker) &&
+                peer.ppid === inner.pid &&
+                ['Z', 'X'].includes(peer.state)
+              : proof.reason === 'worker-identity-mismatch' &&
+                proof.currentState === 'IDENTITY_MISMATCH' &&
+                completeCurrentPeer &&
+                peer.pid === worker.pid &&
+                (!same(peer, worker) || peer.ppid !== inner.pid);
+    const pendingFailure = 'Custody barrier remained pending at worker closure';
+    return (
+        invalidCurrent &&
+        exact(start, raw.events) &&
+        start.type === 'runtime-custody-barrier' &&
+        start.phase === 'start' &&
+        start.requestId === 1 &&
+        start.ok === true &&
+        start.observedSubreaper === 1 &&
+        sameRequest(start) &&
+        start.nodeSupervisorPID === inner.pid &&
+        start.transport === 'inherited-anonymous-pipes/v1' &&
+        JSON.stringify(start.directChildren) === JSON.stringify([inner.pid]) &&
+        proof.startEventId === start.eventId &&
+        proof.requestId === 2 &&
+        proof.phase === 'stop' &&
+        proof.ok === false &&
+        sameRequest(proof) &&
+        proof.nodeSupervisorPID === inner.pid &&
+        proof.transport === 'inherited-anonymous-pipes/v1' &&
+        start.eventId < failure.eventId &&
+        failure.eventId < proof.eventId &&
+        start.elapsedMs < failure.elapsedMs &&
+        failure.elapsedMs <= proof.elapsedMs &&
+        failure.message === CURRENT_WORKER_FAILURE &&
+        rejected.source === 'supervisor' &&
+        rejected.ok === false &&
+        rejected.reason === proof.reason &&
+        rejected.requestId === proof.requestId &&
+        rejected.phase === 'stop' &&
+        sameRequest(rejected) &&
+        rejected.custodianPID === wrapper.pid &&
+        rejected.custodyEventId === proof.eventId &&
+        rejected.startEventId === start.eventId &&
+        settled.source === 'supervisor' &&
+        settled.outcome === 'rejected-response' &&
+        settled.requestId === proof.requestId &&
+        settled.runtimeId === runtime.runtimeId &&
+        localBefore(runtime.stopBegin, browser.exit) &&
+        localBefore(browser.exit, browser.close) &&
+        localBefore(browser.close, server.close) &&
+        localBefore(server.close, rejected) &&
+        localBefore(rejected, settled) &&
+        localBefore(worker.exit, worker.close) &&
+        (![...receipt.errors, ...receipt.lifecycleErrors].includes(pendingFailure) ||
+            localBefore(worker.close, rejected)) &&
+        proof.elapsedMs >= server.close.supervisorElapsedMs - 50 &&
+        proof.elapsedMs <= rejected.supervisorElapsedMs + 50 &&
+        Date.parse(server.close.receivedUtc) <= Date.parse(proof.utc) &&
+        Date.parse(proof.utc) <= Date.parse(rejected.receivedUtc) &&
+        Date.parse(settled.receivedUtc) < Date.parse(inner.exit.utc) &&
+        Date.parse(worker.close.receivedUtc) < Date.parse(inner.exit.utc) &&
+        settled.supervisorElapsedMs - runtime.stopBegin.supervisorElapsedMs <= receipt.limits.closeMs &&
+        inner.exit.code === 0 &&
+        inner.exit.signal === null &&
+        inner.exit.elapsedMs < receipt.limits.finalMs &&
+        wrapper.close.elapsedMs < receipt.limits.finalMs &&
+        !receipt.events.some((row) => row.type === 'custody-barrier-ack' && row.phase === 'stop')
+    );
+}
+
 function expectedOutcome(receipt, options) {
     const raw = receipt.custody?.observation;
     const pair = (row, code, signal = null) =>
@@ -1100,16 +1270,20 @@ function expectedOutcome(receipt, options) {
     if (options.mode === 'cpu' && options.cpuCase === 'browser-nonzero') {
         if (
             receipt.cpuCase !== options.cpuCase ||
-            raw.errors.length ||
             !pair(receipt.worker, 124) ||
             receipt.browsers.length !== 1 ||
             !pair(receipt.browsers[0], 7) ||
             !browserNonzeroEventOwnership(receipt)
         )
             return false;
+        const rejectedStop = raw.events.some((row) => row.type === 'runtime-custody-rejection');
+        if (rejectedStop) {
+            if (!browserNonzeroRejectedDrain(receipt, options.artifactBytes)) return false;
+            for (const value of LATE_STOP_FAILURES) allowed.add(value);
+        } else if (raw.errors.length) return false;
         const pendingFailure = 'Custody barrier remained pending at worker closure';
         if ([...receipt.errors, ...receipt.lifecycleErrors].includes(pendingFailure)) {
-            if (!browserNonzeroPendingDrain(receipt)) return false;
+            if (!rejectedStop && !browserNonzeroPendingDrain(receipt)) return false;
             allowed.add(pendingFailure);
         }
         for (const value of [
@@ -1839,7 +2013,8 @@ async function runDiagnostic(options) {
         try {
             const receipt = JSON.parse(fs.readFileSync(receiptFile, 'utf8'));
             report.originalReceiptOK = receipt.ok;
-            const artifacts = {};
+            const artifacts = {},
+                artifactBytes = {};
             for (const role of ['raw', 'nodeReceipt', 'journal', 'stdout', 'stderr']) {
                 const reference = receipt.custody.artifacts[role];
                 const bytes = fs.readFileSync(reference.path);
@@ -1847,6 +2022,7 @@ async function runDiagnostic(options) {
                     bytes.length === reference.bytes && sha256(reference.path) === reference.sha256,
                     'original-custody-artifact-mismatch',
                 );
+                artifactBytes[role] = bytes;
                 artifacts[role] = ['raw', 'nodeReceipt'].includes(role) ? JSON.parse(bytes) : bytes;
             }
             if (!validateCustodyArtifacts(receipt, artifacts).ok) failure('original-custody-artifacts-invalid');
@@ -1871,7 +2047,7 @@ async function runDiagnostic(options) {
                 !receipt.noOwnedProcesses
             )
                 failure('original-closure-incomplete');
-            if (!expectedOutcome(receipt, options)) failure('unexpected-original-outcome');
+            if (!expectedOutcome(receipt, { ...options, artifactBytes })) failure('unexpected-original-outcome');
             if (options.mode === 'target') {
                 const admission = JSON.parse(
                     fs.readFileSync(path.join(path.dirname(receiptFile), 'admission.json'), 'utf8'),

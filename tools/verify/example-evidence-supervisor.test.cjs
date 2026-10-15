@@ -649,3 +649,130 @@ test('a killed custodian cannot issue a final closure or release the same caller
     assert.equal(receipt.custody.observation, null);
     assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true, requireSuccess: false }).ok, false);
 });
+
+test('late-stop request identity controls run the Python protocol negatives before evidence collection', () => {
+    const { spawnSync } = require('node:child_process');
+    const result = spawnSync('python3', ['-B', path.join(__dirname, 'example-evidence-custodian.test.py')], {
+        encoding: 'utf8',
+        timeout: 5000,
+    });
+    assert.equal(result.error, undefined);
+    assert.equal(result.signal, null);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stderr, /Ran 8 tests/);
+    console.log(result.stderr.trim());
+});
+
+test('late-stop responses bind rejection to the active request and cannot reopen a settled drain', () => {
+    const { validCustodyResponse } = require('./example-evidence-supervisor.cjs');
+    const pending = {
+        requestId: 2,
+        runtimeId: 'runtime-1',
+        phase: 'stop',
+        workerPID: 101,
+        workerStartTicks: '100',
+        namespace: 'pid:[1]',
+    };
+    const start = { ...pending, requestId: 1, phase: 'start', eventId: 5 };
+    const response = {
+        ...pending,
+        token: 'private-token',
+        custodianPID: 99,
+        eventId: 9,
+        ok: false,
+        rejection: 'worker-absent',
+        startEventId: 5,
+    };
+    const valid = (value, wait = pending, accepted = start) =>
+        validCustodyResponse(value, wait, 'private-token', 99, accepted);
+    assert.equal(valid(response), true);
+    assert.equal(valid({ ...response, rejection: 'worker-identity-mismatch' }), true);
+    assert.equal(valid({ ...response, rejection: 'worker-exited' }), true);
+    for (const change of [
+        { token: 'wrong' },
+        { requestId: 3 },
+        { runtimeId: 'runtime-2' },
+        { phase: 'start' },
+        { custodianPID: 88 },
+        { eventId: 5 },
+        { eventId: 0 },
+        { ok: true },
+        { rejection: 'unknown' },
+        { startEventId: 4 },
+        { workerPID: 102 },
+        { workerStartTicks: '101' },
+        { namespace: 'pid:[2]' },
+    ])
+        assert.equal(valid({ ...response, ...change }), false, JSON.stringify(change));
+    for (const malformed of [null, [], 1, 'response', false]) assert.equal(valid(malformed), false);
+    assert.equal(valid(response, null), false, 'late/duplicate/cancelled responses never reopen the pending wait');
+    assert.equal(valid(response, pending, null), false);
+    assert.equal(valid(response, pending, { ...start, requestId: 0 }), false);
+    assert.equal(valid(response, pending, { ...start, runtimeId: 'runtime-0' }), false);
+});
+
+test('late-stop rejection keeps failed originals and cancellation bounded by the original deadline', async (t) => {
+    for (const [cpuCase, outcome] of [
+        ['custodian-late-stop', 'rejected-response'],
+        ['custodian-late-stop-cancel', 'SIGTERM'],
+        ['custodian-late-stop-deadline', 'deadline'],
+    ]) {
+        await t.test(cpuCase, async () => {
+            const receipt = await run(cpuCase);
+            const raw = receipt.custody.observation;
+            assert.equal(receipt.ok, false);
+            assert.equal(receipt.forced, false);
+            assert.equal(receipt.worker.exit.signal, 'SIGTERM');
+            assert.deepEqual(raw.errors, ['Barrier stop rejected: collector worker is not the exact current process']);
+            assert.equal(raw.innerSupervisor.exit.code, 0);
+            assert.equal(raw.innerSupervisor.exit.signal, null);
+            assert.equal(raw.final.result, 'ECHILD');
+            assert.equal(receipt.custody.wrapper.exit.code, 1);
+            assert.equal(receipt.custody.wrapper.close.code, 1);
+            assert.equal(raw.barriers.length, 1, 'the rejected stop is never a successful barrier');
+            const proof = raw.events.find((row) => row.type === 'runtime-custody-rejection');
+            assert.ok(proof);
+            assert.equal(proof.ok, false);
+            assert.equal(proof.reason, 'worker-absent');
+            assert.equal(proof.currentState, 'ABSENT');
+            assert.equal(proof.currentPeer, null);
+            assert.equal(proof.startEventId, raw.barriers[0].eventId);
+            assert.equal(proof.requestId, raw.barriers[0].requestId + 1);
+            assert.equal(proof.workerPID, receipt.worker.pid);
+            assert.equal(proof.workerStartTicks, receipt.worker.startTicks);
+            assert.equal(proof.namespace, receipt.worker.namespace);
+            assert.equal(proof.runtimeId, raw.barriers[0].runtimeId);
+            assert.ok(raw.barriers[0].elapsedMs < proof.elapsedMs);
+            const settled = receipt.events.find(
+                (row) => row.type === 'custody-request-settled' && row.phase === 'stop',
+            );
+            assert.equal(settled.outcome, outcome);
+            assert.ok(receipt.worker.close.eventId < settled.eventId);
+            assert.ok(settled.supervisorElapsedMs < LIMITS.finalMs);
+            assert.ok(receipt.custody.wrapper.close.elapsedMs < LIMITS.finalMs);
+            assert.equal(
+                receipt.events.some((row) => row.type === 'custody-barrier-ack' && row.phase === 'stop'),
+                false,
+            );
+            const rejection = receipt.events.filter((row) => row.type === 'custody-barrier-rejected');
+            assert.equal(rejection.length, outcome === 'rejected-response' ? 1 : 0);
+            if (rejection.length) {
+                assert.equal(rejection[0].custodyEventId, proof.eventId);
+                assert.equal(rejection[0].startEventId, proof.startEventId);
+                assert.ok(rejection[0].eventId < settled.eventId);
+                assert.ok(receipt.errors.includes('Custody IPC: kernel barrier rejected'));
+            }
+            const { validateCustodyArtifacts } = require('./example-evidence-supervisor.cjs');
+            const artifacts = Object.fromEntries(
+                Object.entries(receipt.custody.artifacts).map(([role, ref]) => {
+                    const bytes = fs.readFileSync(ref.path);
+                    return [role, ['raw', 'nodeReceipt'].includes(role) ? JSON.parse(bytes) : bytes];
+                }),
+            );
+            assert.equal(artifacts.nodeReceipt.pending, true);
+            assert.equal(artifacts.nodeReceipt.ok, false);
+            assert.equal(validateCustodyArtifacts(receipt, artifacts).ok, true);
+            assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true, requireSuccess: false }).ok, false);
+        });
+    }
+});

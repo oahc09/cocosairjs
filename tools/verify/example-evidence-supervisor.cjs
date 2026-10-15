@@ -57,6 +57,9 @@ const CPU_CASES = [
     'custodian-delayed-stop-ack',
     'custodian-stop-drain-cancel',
     'custodian-stop-drain-deadline',
+    'custodian-late-stop',
+    'custodian-late-stop-cancel',
+    'custodian-late-stop-deadline',
 ];
 const sha256 = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 function stat(pid) {
@@ -564,6 +567,34 @@ function validateCoreReceipt(receipt, options = {}) {
     }
 }
 
+function validCustodyResponse(response, pending, token, custodianPID, acceptedStart) {
+    if (
+        !response ||
+        !pending ||
+        response.token !== token ||
+        response.requestId !== pending.requestId ||
+        response.runtimeId !== pending.runtimeId ||
+        response.phase !== pending.phase ||
+        response.custodianPID !== custodianPID ||
+        !Number.isInteger(response.eventId) ||
+        response.eventId <= 0
+    )
+        return false;
+    if (response.rejection === undefined) return typeof response.ok === 'boolean';
+    return (
+        response.ok === false &&
+        response.phase === 'stop' &&
+        ['worker-absent', 'worker-identity-mismatch', 'worker-exited'].includes(response.rejection) &&
+        acceptedStart?.requestId + 1 === pending.requestId &&
+        acceptedStart.runtimeId === pending.runtimeId &&
+        response.startEventId === acceptedStart.eventId &&
+        response.eventId > response.startEventId &&
+        ['workerPID', 'workerStartTicks', 'namespace'].every(
+            (key) => response[key] === pending[key] && response[key] === acceptedStart[key],
+        )
+    );
+}
+
 async function superviseAttemptInner(options) {
     if (activeWorker) throw Error('Previous attempt worker has not physically closed');
     const requestFD = Number(process.env.EXAMPLE_EVIDENCE_CUSTODIAN_REQUEST_FD);
@@ -875,12 +906,18 @@ async function superviseAttemptInner(options) {
     }
     let custodyPending = null;
     let custodySequence = 0;
+    let custodyAcceptedStart = null;
     let custodyBuffer = '';
     function settleCustody(pending, outcome) {
         if (!pending || custodyPending !== pending) return;
         clearTimeout(pending.timer);
         custodyPending = null;
-        event('custody-request-settled', { requestId: pending.requestId, phase: pending.phase, outcome });
+        event('custody-request-settled', {
+            requestId: pending.requestId,
+            runtimeId: pending.runtimeId,
+            phase: pending.phase,
+            outcome,
+        });
         pending.resolveDrained();
     }
     const custodyToken = process.env.EXAMPLE_EVIDENCE_CUSTODIAN_TOKEN;
@@ -914,19 +951,28 @@ async function superviseAttemptInner(options) {
                 continue;
             }
             const pending = custodyPending;
-            if (
-                !pending ||
-                response.token !== custodyToken ||
-                response.requestId !== pending.requestId ||
-                response.runtimeId !== pending.runtimeId ||
-                response.phase !== pending.phase ||
-                response.custodianPID !== process.ppid ||
-                !Number.isInteger(response.eventId)
-            ) {
+            if (!validCustodyResponse(response, pending, custodyToken, process.ppid, custodyAcceptedStart)) {
                 custodyFailure('unknown, duplicate, late or mismatched response');
                 continue;
             }
-            settleCustody(pending, 'response');
+            if (response.rejection !== undefined) {
+                event('custody-barrier-rejected', {
+                    requestId: response.requestId,
+                    runtimeId: response.runtimeId,
+                    phase: response.phase,
+                    custodianPID: response.custodianPID,
+                    custodyEventId: response.eventId,
+                    startEventId: response.startEventId,
+                    workerPID: response.workerPID,
+                    workerStartTicks: response.workerStartTicks,
+                    namespace: response.namespace,
+                    reason: response.rejection,
+                    ok: false,
+                });
+            }
+            custodyAcceptedStart =
+                response.ok === true && response.phase === 'start' ? { ...pending, eventId: response.eventId } : null;
+            settleCustody(pending, response.rejection === undefined ? 'response' : 'rejected-response');
             if (response.ok !== true) custodyFailure('kernel barrier rejected');
             if (child?.connected)
                 child.send({ exampleCustodyResponse: response }, (error) => {
@@ -976,6 +1022,8 @@ async function superviseAttemptInner(options) {
         });
         const pending = {
             ...request,
+            workerStartTicks: current.startTicks,
+            namespace,
             drained,
             resolveDrained,
             timer: timer(() => {
@@ -1168,9 +1216,14 @@ async function superviseAttemptInner(options) {
         if (custodyPending) {
             fail('Custody barrier remained pending at worker closure');
             if (
-                ['custodian-delayed-stop-ack', 'custodian-stop-drain-cancel', 'custodian-stop-drain-deadline'].includes(
-                    cpuCase,
-                )
+                [
+                    'custodian-delayed-stop-ack',
+                    'custodian-stop-drain-cancel',
+                    'custodian-stop-drain-deadline',
+                    'custodian-late-stop',
+                    'custodian-late-stop-cancel',
+                    'custodian-late-stop-deadline',
+                ].includes(cpuCase)
             ) {
                 const marker = event('cpu-custody-drain-ready', {
                     cpuOnly: true,
@@ -1975,6 +2028,7 @@ if (require.main === module)
         process.exitCode = 1;
     });
 module.exports = {
+    validCustodyResponse,
     SCHEMA_VERSION,
     DEFAULT_LIMITS,
     CPU_CASES,

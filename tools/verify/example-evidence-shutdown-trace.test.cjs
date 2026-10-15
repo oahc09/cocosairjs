@@ -1366,3 +1366,434 @@ test('exact absence distinguishes missing, denied, corrupt, live and reused iden
         assert.equal(validImage(image), false);
     assert.equal(validImage({ dev: 1, ino: 2, size: 3, mtimeMs: 4 }), true);
 });
+
+// Synthetic schema-only originals are rebuilt in memory. They are never browser evidence or published artifacts.
+function rejectedStopSchemaFixture() {
+    const fs = require('node:fs'),
+        os = require('node:os'),
+        path = require('node:path');
+    const fixture = require('./example-evidence-campaign.cpu-fixture.cjs');
+    const { DEFAULT_LIMITS, validateAttemptReceipt } = require('./example-evidence-supervisor.cjs');
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'late-stop-schema-only-'));
+    const startedAt = new Date(Date.now() - 10000).toISOString();
+    const receipt = fixture.makeReceipt(
+        { id: 'cpu-example', shell: false, modes: [{ id: 'primary', viewport: { width: 480, height: 360 } }] },
+        { createdAt: startedAt, runtimeIdentity: fixture.identity, limits: DEFAULT_LIMITS },
+        {
+            report: path.join(directory, 'collector.json'),
+            artifactDir: path.join(directory, 'artifacts'),
+            receipt: path.join(directory, 'attempt-receipt.json'),
+            stdout: path.join(directory, 'worker.stdout.log'),
+            stderr: path.join(directory, 'worker.stderr.log'),
+        },
+        true,
+    );
+    const seen = new Set();
+    const normalize = (value) => {
+        if (!value || typeof value !== 'object' || seen.has(value)) return;
+        seen.add(value);
+        for (const [key, item] of Object.entries(value)) {
+            if (item === 'synthetic-pid-namespace') value[key] = 'pid:[1]';
+            else if (item === 'synthetic-runtime-0') value[key] = 'runtime-1';
+            else normalize(item);
+        }
+    };
+    normalize(receipt);
+    receipt.cpuCase = 'browser-nonzero';
+    receipt.ok = false;
+    const raw = receipt.custody.observation,
+        inner = raw.innerSupervisor,
+        wrapper = receipt.custody.wrapper;
+    const runtime = receipt.runtimes[0],
+        browser = receipt.browsers[0],
+        server = receipt.servers[0];
+    receipt.events = receipt.events.filter(
+        (row) =>
+            !['stop-complete', 'observer-complete'].includes(row.type) &&
+            !(row.type === 'custody-barrier-ack' && row.phase === 'stop'),
+    );
+    runtime.stopComplete = null;
+    runtime.stopBegin.launchId = browser.launchId;
+    for (const row of [browser.exit, browser.close]) {
+        row.code = 7;
+        row.runtimeId = runtime.runtimeId;
+    }
+    server.close.physicalProcess = 'collector-worker';
+    receipt.worker.exit.code = receipt.worker.close.code = 124;
+    let sequence = 0;
+    receipt.events.forEach((row, index) => {
+        row.eventId = index + 1;
+        row.supervisorElapsedMs = (index + 1) * 10;
+        row.receivedUtc = new Date(Date.parse(startedAt) + row.supervisorElapsedMs).toISOString();
+        if (row.source === 'observer') row.sequence = ++sequence;
+    });
+    const last = receipt.events.at(-1).supervisorElapsedMs;
+    raw.events = raw.events.filter((row) => row.eventId <= 5);
+    raw.barriers = [raw.events[4]];
+    const start = raw.barriers[0],
+        ack = receipt.events.find((row) => row.type === 'custody-barrier-ack');
+    start.namespace = receipt.worker.namespace;
+    start.nodeSupervisorPID = inner.pid;
+    start.elapsedMs = ack.supervisorElapsedMs - 1;
+    start.utc = new Date(Date.parse(startedAt) + start.elapsedMs).toISOString();
+    const rawEvent = (type, elapsedMs, values = {}) => {
+        const row = {
+            type,
+            eventId: raw.events.length + 1,
+            elapsedMs,
+            utc: new Date(Date.parse(startedAt) + elapsedMs).toISOString(),
+            ...values,
+        };
+        raw.events.push(row);
+        return row;
+    };
+    const failure = 'Barrier stop rejected: collector worker is not the exact current process';
+    raw.errors = [failure];
+    rawEvent('custody-error', last + 1, { message: failure });
+    const proof = rawEvent('runtime-custody-rejection', last + 2, {
+        requestId: 2,
+        workerPID: receipt.worker.pid,
+        workerStartTicks: receipt.worker.startTicks,
+        namespace: receipt.worker.namespace,
+        nodeSupervisorPID: inner.pid,
+        runtimeId: runtime.runtimeId,
+        phase: 'stop',
+        startEventId: start.eventId,
+        reason: 'worker-absent',
+        currentState: 'ABSENT',
+        currentPeer: null,
+        ok: false,
+        transport: 'inherited-anonymous-pipes/v1',
+    });
+    const nodeEvent = (type, elapsedMs, values = {}) => {
+        const row = {
+            type,
+            source: 'supervisor',
+            eventId: receipt.events.length + 1,
+            supervisorElapsedMs: elapsedMs,
+            receivedUtc: new Date(Date.parse(startedAt) + elapsedMs).toISOString(),
+            ...values,
+        };
+        receipt.events.push(row);
+        return row;
+    };
+    nodeEvent('custody-barrier-rejected', last + 3, {
+        requestId: 2,
+        runtimeId: runtime.runtimeId,
+        phase: 'stop',
+        custodianPID: wrapper.pid,
+        custodyEventId: proof.eventId,
+        startEventId: start.eventId,
+        workerPID: receipt.worker.pid,
+        workerStartTicks: receipt.worker.startTicks,
+        namespace: receipt.worker.namespace,
+        reason: proof.reason,
+        ok: false,
+    });
+    nodeEvent('custody-request-settled', last + 4, {
+        requestId: 2,
+        runtimeId: runtime.runtimeId,
+        phase: 'stop',
+        outcome: 'rejected-response',
+    });
+    inner.exit = rawEvent('inner-supervisor-waitpid', last + 5, { code: 0, signal: null });
+    inner.stdoutEOF = rawEvent('inner-supervisor-stdout-eof', last + 6);
+    inner.stderrEOF = rawEvent('inner-supervisor-stderr-eof', last + 7);
+    raw.final = rawEvent('kernel-final-echild', last + 8, { result: 'ECHILD' });
+    raw.restored = rawEvent('kernel-subreaper-restored', last + 9, { expected: 0, observed: 0 });
+    raw.endedAt = raw.restored.utc;
+    wrapper.exit = {
+        type: 'custodian-exit',
+        code: 1,
+        signal: null,
+        elapsedMs: last + 10,
+        utc: new Date(Date.parse(startedAt) + last + 10).toISOString(),
+    };
+    wrapper.close = {
+        type: 'custodian-stdio-close',
+        code: 1,
+        signal: null,
+        elapsedMs: last + 11,
+        utc: new Date(Date.parse(startedAt) + last + 11).toISOString(),
+    };
+    receipt.endedAt = new Date(Date.parse(startedAt) + last + 12).toISOString();
+    receipt.errors = [
+        failure,
+        'Custody barrier remained pending at worker closure',
+        'Custody IPC: kernel barrier rejected',
+        'Custody IPC: collector disconnected before response',
+        'unclean browser exit: 7/null',
+        'unclean browser close: 7/null',
+        'worker exited 124',
+        'Custodian did not exit/close cleanly',
+    ];
+    receipt.lifecycleErrors = receipt.errors.filter((value) => value !== 'worker exited 124');
+    const structural = validateAttemptReceipt(receipt, { allowCpuDummy: true, requireSuccess: false });
+    receipt.errors.push(...structural.errors);
+    receipt.lifecycleErrors.push(...structural.errors);
+    return { receipt, artifactBytes: rebuildSchemaOriginals(receipt) };
+}
+
+function rebuildSchemaOriginals(receipt) {
+    const crypto = require('node:crypto');
+    const nodeReceipt = structuredClone(receipt);
+    delete nodeReceipt.custody;
+    nodeReceipt.pending = true;
+    nodeReceipt.coreOk = false;
+    nodeReceipt.ok = false;
+    nodeReceipt.output.receipt = receipt.custody.artifacts.nodeReceipt.path;
+    const raw = receipt.custody.observation;
+    const bytes = {
+        raw: Buffer.from(JSON.stringify(raw)),
+        nodeReceipt: Buffer.from(JSON.stringify(nodeReceipt)),
+        journal: Buffer.from(raw.events.map((row) => JSON.stringify(row)).join('\n') + '\n'),
+        stdout: Buffer.from(''),
+        stderr: Buffer.from(''),
+    };
+    for (const [role, value] of Object.entries(bytes)) {
+        receipt.custody.artifacts[role].bytes = value.length;
+        receipt.custody.artifacts[role].sha256 = crypto.createHash('sha256').update(value).digest('hex');
+    }
+    return bytes;
+}
+
+test('late-stop browser-7 diagnostic accepts only a complete rejected failure chain, never production PASS', () => {
+    const { expectedOutcome } = require('./example-evidence-shutdown-trace.cjs');
+    const { validateAttemptReceipt } = require('./example-evidence-supervisor.cjs');
+    const { receipt, artifactBytes } = rejectedStopSchemaFixture();
+    const options = { mode: 'cpu', cpuCase: 'browser-nonzero', artifactBytes };
+    assert.equal(expectedOutcome(receipt, options), true, JSON.stringify(receipt.errors));
+    assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true, requireSuccess: false }).ok, false);
+    assert.equal(expectedOutcome(receipt, { ...options, mode: 'target' }), false);
+    for (const role of ['raw', 'nodeReceipt', 'journal', 'stdout', 'stderr']) {
+        const absent = { ...artifactBytes };
+        delete absent[role];
+        assert.equal(expectedOutcome(receipt, { ...options, artifactBytes: absent }), false, `${role} absent`);
+        assert.equal(
+            expectedOutcome(receipt, {
+                ...options,
+                artifactBytes: {
+                    ...artifactBytes,
+                    [role]: Buffer.concat([artifactBytes[role], Buffer.from('tampered')]),
+                },
+            }),
+            false,
+            `${role} tampered`,
+        );
+    }
+    assert.equal(expectedOutcome(receipt, { mode: 'cpu', cpuCase: 'browser-nonzero' }), false);
+    const proof = (r) => r.custody.observation.events.find((row) => row.type === 'runtime-custody-rejection');
+    const rejected = (r) => r.events.find((row) => row.type === 'custody-barrier-rejected');
+    const settled = (r) => r.events.find((row) => row.type === 'custody-request-settled' && row.phase === 'stop');
+    for (const change of [{ startTicks: 'reused' }, { namespace: 'pid:[2]' }, { ppid: 999 }]) {
+        const changed = structuredClone(receipt);
+        const peer = {
+            pid: changed.worker.pid,
+            startTicks: changed.worker.startTicks,
+            namespace: changed.worker.namespace,
+            ppid: changed.custody.observation.innerSupervisor.pid,
+            state: 'S',
+            pgrp: changed.worker.pid,
+            ...change,
+        };
+        if (change.startTicks) peer.startTicks = '9999';
+        Object.assign(proof(changed), {
+            reason: 'worker-identity-mismatch',
+            currentState: 'IDENTITY_MISMATCH',
+            currentPeer: peer,
+        });
+        rejected(changed).reason = 'worker-identity-mismatch';
+        assert.equal(expectedOutcome(changed, { ...options, artifactBytes: rebuildSchemaOriginals(changed) }), true);
+        assert.equal(validateAttemptReceipt(changed, { allowCpuDummy: true, requireSuccess: false }).ok, false);
+    }
+    for (const state of ['Z', 'X', 'S', '?']) {
+        const changed = structuredClone(receipt);
+        Object.assign(proof(changed), {
+            reason: 'worker-exited',
+            currentState: 'EXITED',
+            currentPeer: {
+                pid: changed.worker.pid,
+                startTicks: changed.worker.startTicks,
+                namespace: changed.worker.namespace,
+                ppid: changed.custody.observation.innerSupervisor.pid,
+                state,
+                pgrp: changed.worker.pid,
+            },
+        });
+        rejected(changed).reason = 'worker-exited';
+        assert.equal(
+            expectedOutcome(changed, { ...options, artifactBytes: rebuildSchemaOriginals(changed) }),
+            ['Z', 'X'].includes(state),
+        );
+    }
+    for (const reason of ['worker-exited', 'worker-identity-mismatch']) {
+        const observed = structuredClone(receipt);
+        Object.assign(proof(observed), {
+            reason,
+            currentState: reason === 'worker-exited' ? 'EXITED' : 'IDENTITY_MISMATCH',
+            currentPeer: {
+                pid: observed.worker.pid,
+                startTicks: reason === 'worker-exited' ? observed.worker.startTicks : '9999',
+                namespace: observed.worker.namespace,
+                ppid: observed.custody.observation.innerSupervisor.pid,
+                state: reason === 'worker-exited' ? 'Z' : 'S',
+                pgrp: observed.worker.pid,
+            },
+        });
+        rejected(observed).reason = reason;
+        for (const pgrp of [0, 2147483647]) {
+            const changed = structuredClone(observed);
+            proof(changed).currentPeer.pgrp = pgrp;
+            assert.equal(
+                expectedOutcome(changed, { ...options, artifactBytes: rebuildSchemaOriginals(changed) }),
+                true,
+                `${reason}: valid pgrp boundary ${pgrp}`,
+            );
+        }
+        for (const pgrp of [undefined, -1, 'oops', 2147483648, 1.5, null]) {
+            const changed = structuredClone(observed);
+            if (pgrp === undefined) delete proof(changed).currentPeer.pgrp;
+            else proof(changed).currentPeer.pgrp = pgrp;
+            assert.equal(
+                expectedOutcome(changed, { ...options, artifactBytes: rebuildSchemaOriginals(changed) }),
+                false,
+                `${reason}: rehashed missing or malformed pgrp ${String(pgrp)}`,
+            );
+        }
+        for (const field of ['state', 'ppid']) {
+            const changed = structuredClone(observed);
+            delete proof(changed).currentPeer[field];
+            assert.equal(
+                expectedOutcome(changed, { ...options, artifactBytes: rebuildSchemaOriginals(changed) }),
+                false,
+                `${reason}: incomplete currentPeer ${field}`,
+            );
+        }
+        const extra = structuredClone(observed);
+        proof(extra).currentPeer.unexpected = true;
+        assert.equal(
+            expectedOutcome(extra, { ...options, artifactBytes: rebuildSchemaOriginals(extra) }),
+            false,
+            `${reason}: only the fixed identity observation fields are accepted`,
+        );
+    }
+    const mutations = [
+        (r) => {
+            proof(r).ok = true;
+        },
+        (r) => {
+            proof(r).reason = 'unknown';
+        },
+        (r) => {
+            proof(r).currentState = 'UNKNOWN';
+        },
+        (r) => {
+            proof(r).currentPeer = { ...r.worker, ppid: r.custody.observation.innerSupervisor.pid };
+        },
+        (r) => {
+            proof(r).startEventId = 4;
+        },
+        (r) => {
+            proof(r).requestId = 3;
+        },
+        (r) => {
+            proof(r).workerPID++;
+        },
+        (r) => {
+            proof(r).workerStartTicks = '1';
+        },
+        (r) => {
+            proof(r).namespace = 'pid:[2]';
+        },
+        (r) => {
+            proof(r).runtimeId = 'runtime-2';
+        },
+        (r) => {
+            proof(r).nodeSupervisorPID++;
+        },
+        (r) => {
+            proof(r).phase = 'start';
+        },
+        (r) => {
+            proof(r).transport = 'untrusted';
+        },
+        (r) => {
+            r.custody.observation.barriers[0].ok = false;
+        },
+        (r) => {
+            r.custody.observation.barriers[0].workerStartTicks = 'old';
+        },
+        (r) => {
+            rejected(r).custodyEventId++;
+        },
+        (r) => {
+            rejected(r).startEventId--;
+        },
+        (r) => {
+            rejected(r).workerStartTicks = 'old';
+        },
+        (r) => {
+            rejected(r).reason = 'unknown';
+        },
+        (r) => {
+            settled(r).outcome = 'response';
+        },
+        (r) => {
+            settled(r).requestId++;
+        },
+        (r) => {
+            settled(r).runtimeId = 'runtime-2';
+        },
+        (r) => {
+            settled(r).supervisorElapsedMs = r.runtimes[0].stopBegin.supervisorElapsedMs + r.limits.closeMs + 1;
+        },
+        (r) => {
+            r.custody.observation.innerSupervisor.exit.code = 1;
+        },
+        (r) => {
+            r.custody.observation.innerSupervisor.stdoutEOF = null;
+        },
+        (r) => {
+            r.custody.wrapper.exit.code = r.custody.wrapper.close.code = 0;
+        },
+        (r) => {
+            r.custody.observation.final.result = 'UNKNOWN';
+        },
+        (r) => {
+            r.custody.observation.errors.push('extra failure');
+        },
+        (r) => {
+            r.errors.push('unrelated assertion');
+        },
+        (r) => {
+            r.errors = r.errors.filter((value) => value !== 'Custody IPC: kernel barrier rejected');
+        },
+        (r) => {
+            r.lifecycleErrors = r.lifecycleErrors.filter((value) => value !== 'Kernel custody retained failures');
+        },
+        (r) => {
+            r.forced = true;
+        },
+        (r) => {
+            r.timedOut = true;
+        },
+        (r) => {
+            r.custody.observation.events = r.custody.observation.events.filter((row) => row !== proof(r));
+        },
+        (r) => {
+            r.events = r.events.filter((row) => row !== rejected(r));
+        },
+        (r) => {
+            r.custody.observation.events.push({ ...proof(r), eventId: 999 });
+        },
+    ];
+    for (const [index, mutate] of mutations.entries()) {
+        const changed = structuredClone(receipt);
+        mutate(changed);
+        assert.equal(
+            expectedOutcome(changed, { ...options, artifactBytes: rebuildSchemaOriginals(changed) }),
+            false,
+            `even rehashed synthetic original mutation ${index} must be rejected`,
+        );
+    }
+});
