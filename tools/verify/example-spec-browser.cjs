@@ -980,7 +980,7 @@ async function runLifecycleChecks(example, runtime, channel, spec) {
         ),
     );
     // 合同跑完后的画面即"当期"截图：验收者看到的与验证器最后一次渲染一致
-    return { results, after: post };
+    return { results, after: post, report };
 }
 
 /** ui-shell（目录页）合同：DOM 选择器渲染 + 零页面错误。 */
@@ -1271,6 +1271,7 @@ async function verifyApp(example, workspace, html, spec, prepared) {
             validatorResults: all,
             scenarioProbe,
             probeContracts,
+            lifecycleReport: lifecycleOut.report || null,
             networkAssetsScope: 'recorded-server-responses',
             networkAssets: responseEvidence(runtime),
             artifact,

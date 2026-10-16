@@ -640,6 +640,66 @@ function createSegment({ freeze, attempts, out, segmentId } = {}) {
     writeImmutable(out, segment);
     return segment;
 }
+function validateLifecycleReport(report) {
+    const prefix = 'resource-released lifecycle report';
+    invariant(report && report.schemaVersion === 'example-asset-lifecycle/1', `${prefix}: missing/unknown schema`);
+    invariant(Number.isSafeInteger(report.held) && report.held > 0, `${prefix}: invalid held count`);
+    invariant(Number.isSafeInteger(report.runs) && report.runs > 0, `${prefix}: missing execution`);
+    invariant(report.released === true && report.reloaded === true, `${prefix}: release/reacquire failed`);
+    invariant(Array.isArray(report.leaked) && report.leaked.length === 0, `${prefix}: leaked resources`);
+    invariant(Array.isArray(report.errors) && report.errors.length === 0, `${prefix}: retained errors`);
+    for (const phase of ['release', 'reacquire']) {
+        const proof = report.settlement?.[phase];
+        invariant(
+            proof &&
+                proof.source === 'director-update-then-draw' &&
+                proof.completed === true &&
+                proof.cycles === 2 &&
+                proof.deadlineMs === 8000 &&
+                Number.isFinite(proof.elapsedMs) &&
+                proof.elapsedMs >= 0 &&
+                proof.elapsedMs < proof.deadlineMs &&
+                Array.isArray(proof.frames) &&
+                proof.frames.length === 2 &&
+                proof.frames.every((frame) => Number.isSafeInteger(frame) && frame >= 0) &&
+                proof.frames[1] > proof.frames[0],
+            `${prefix}: invalid ${phase} engine settlement`,
+        );
+    }
+    invariant(
+        report.settlement.reacquire.frames[0] > report.settlement.release.frames[1],
+        `${prefix}: reacquire must follow release engine cycles`,
+    );
+    const before = report.observations?.released;
+    const after = report.observations?.reacquired;
+    invariant(
+        Array.isArray(before) && before.length === report.held && Array.isArray(after) && after.length > 0,
+        `${prefix}: incomplete resource observations`,
+    );
+    for (const [phase, rows] of [
+        ['released', before],
+        ['reacquired', after],
+    ]) {
+        for (const row of rows) {
+            invariant(
+                row &&
+                    typeof row.name === 'string' &&
+                    row.name.length > 0 &&
+                    typeof row.valid === 'boolean' &&
+                    typeof row.predicate === 'boolean' &&
+                    typeof row.released === 'boolean' &&
+                    (row.refCount === null || (Number.isSafeInteger(row.refCount) && row.refCount >= 0)) &&
+                    (row.passCount === null || (Number.isSafeInteger(row.passCount) && row.passCount >= 0)),
+                `${prefix}: malformed resource observation`,
+            );
+            invariant(row.predicate || row.released === !row.valid, `${prefix}: inconsistent default validity`);
+            invariant(
+                phase === 'released' ? row.released : row.valid && !row.released,
+                `${prefix}: ${phase} resource still invalid`,
+            );
+        }
+    }
+}
 function checkValidators(row, mode, allowApiFailure, spec) {
     invariant(Array.isArray(row.validatorResults) && row.validatorResults.length > 0, `${row.id}: missing validators`);
     const ids = new Set();
@@ -679,6 +739,7 @@ function checkValidators(row, mode, allowApiFailure, spec) {
             .sort((a, b) => a - b);
         invariant(same(expected, actual), `${row.id}: missing/duplicate interaction step ${validator}`);
     }
+    if (ids.has('resource-released')) validateLifecycleReport(row.lifecycleReport);
     const failures = row.validatorResults.filter((v) => v.state !== 'PASS');
     invariant(row.result === (failures.length ? 'FAIL' : 'PASS'), `${row.id}: row result disagrees with validators`);
     invariant(
@@ -1383,6 +1444,7 @@ module.exports = {
     validateCampaign,
     validateRuntimeIdentity,
     inspectSegments,
+    validateLifecycleReport,
     buildPublication,
     validatePublication,
 };

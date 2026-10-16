@@ -7,16 +7,71 @@
  * MaterialInstance 等即时 GPU 资源可保持 CCObject.isValid=true；显式 released() 应检查真实
  * pass/buffer 释放与调用事实，不得修改 _objFlags 或仅返回一个虚假的“已释放”常量。
  */
-import { isValid } from 'cocosair';
+import { isValid, director, Director } from 'cocosair';
 
 function messageOf(error) {
     return String((error && error.message) || error || 'unknown error');
 }
 
-/** CCObject.destroy() 于帧末落地：等两帧 + 短延时，避免把 ToDestroy 误判为泄漏。 */
+/**
+ * CCObject's queue only drains entries present at the start of an engine update.
+ * A node's onDestroy (and GLTFAsset's following microtask) can enqueue assets for
+ * the next update. Browser rAF callbacks do not prove that either update ran.
+ * Count two complete update -> draw cycles, separated by a microtask checkpoint.
+ * Do not step the engine, flush its private queue, or alter resource flags.
+ */
 function settle() {
     return new Promise((resolve) => {
-        requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 250)));
+        const proof = {
+            source: 'director-update-then-draw',
+            frames: [],
+            cycles: 0,
+            completed: false,
+            deadlineMs: 8000,
+        };
+        const startedAt = performance.now();
+        let armed = true;
+        let updatedFrame = null;
+        let done = false;
+        const finish = (completed) => {
+            if (done) return;
+            done = true;
+            clearTimeout(timer);
+            director.off(Director.EVENT_AFTER_UPDATE, onUpdate);
+            director.off(Director.EVENT_AFTER_DRAW, onDraw);
+            proof.completed = completed;
+            proof.elapsedMs = performance.now() - startedAt;
+            resolve(proof);
+        };
+        const withinDeadline = () => {
+            if (performance.now() - startedAt >= proof.deadlineMs) finish(false);
+            return !done;
+        };
+        const onUpdate = () => {
+            if (!withinDeadline() || !armed) return;
+            const frame = director.getTotalFrames();
+            updatedFrame = Number.isSafeInteger(frame) && frame >= 0 ? frame : null;
+        };
+        const onDraw = () => {
+            if (!withinDeadline() || !armed || updatedFrame === null) return;
+            const frame = director.getTotalFrames();
+            if (frame !== updatedFrame || (proof.frames.length && frame <= proof.frames.at(-1))) return;
+            armed = false;
+            updatedFrame = null;
+            proof.frames.push(frame);
+            proof.cycles++;
+            // A same-task manual second frame cannot outrun GLTF's queued release.
+            queueMicrotask(() => {
+                if (!withinDeadline()) return;
+                if (proof.cycles === 2) finish(true);
+                else armed = true;
+            });
+        };
+        const timer = setTimeout(() => finish(false), proof.deadlineMs);
+        // Registered only after release/reacquire resolves: a draw belonging to
+        // an already-started update is never counted as a complete cycle.
+        director.on(Director.EVENT_AFTER_UPDATE, onUpdate);
+        director.on(Director.EVENT_AFTER_DRAW, onDraw);
     });
 }
 
@@ -24,24 +79,31 @@ function ownedList(list) {
     return (list || []).filter((entry) => entry && entry.ref);
 }
 
-function leakedNames(list, errors) {
-    return ownedList(list)
-        .filter((entry) => {
-            if (entry.released === undefined) return isValid(entry.ref);
-            if (typeof entry.released !== 'function') {
-                errors.push(`release check ${entry.name || 'unnamed'}: released must be a function`);
-                return true;
-            }
+function observeOwned(list, errors, phase) {
+    return ownedList(list).map((entry) => {
+        const name = entry.name || 'unnamed';
+        const valid = isValid(entry.ref);
+        const predicate = entry.released !== undefined;
+        let released = !valid;
+        if (predicate) {
             try {
-                const released = entry.released();
+                if (typeof entry.released !== 'function') throw new Error('released must be a function');
+                released = entry.released();
                 if (typeof released !== 'boolean') throw new Error('released must return a boolean');
-                return !released;
             } catch (error) {
-                errors.push(`release check ${entry.name || 'unnamed'}: ${messageOf(error)}`);
-                return true;
+                errors.push(`${phase} check ${name}: ${messageOf(error)}`);
+                released = phase === 'release' ? false : true;
             }
-        })
-        .map((entry) => entry.name || 'unnamed');
+        }
+        return {
+            name,
+            valid,
+            predicate,
+            released,
+            refCount: typeof entry.ref.refCount === 'number' ? entry.ref.refCount : null,
+            passCount: Array.isArray(entry.ref.passes) ? entry.ref.passes.length : null,
+        };
+    });
 }
 
 /**
@@ -53,6 +115,7 @@ function leakedNames(list, errors) {
  */
 export function installAssetLifecycle(contract) {
     const report = {
+        schemaVersion: 'example-asset-lifecycle/1',
         label: contract.label || 'asset-lifecycle',
         held: 0,
         released: false,
@@ -60,6 +123,8 @@ export function installAssetLifecycle(contract) {
         reloaded: false,
         errors: [],
         runs: 0,
+        settlement: { release: null, reacquire: null },
+        observations: { released: [], reacquired: [] },
     };
     window.__lifecycle = async () => {
         report.runs++;
@@ -77,27 +142,19 @@ export function installAssetLifecycle(contract) {
         } catch (error) {
             report.errors.push('release: ' + messageOf(error));
         }
-        await settle();
-        report.leaked = leakedNames(held, report.errors);
+        report.settlement.release = await settle();
+        if (!report.settlement.release.completed) report.errors.push('release: engine settlement deadline');
+        report.observations.released = observeOwned(held, report.errors, 'release');
+        report.leaked = report.observations.released.filter((entry) => !entry.released).map((entry) => entry.name);
         report.released = report.leaked.length === 0;
         try {
             const reacquired = ownedList(await contract.reacquire());
-            await settle();
-            const invalid = reacquired
-                .filter((entry) => {
-                    if (!isValid(entry.ref)) return true;
-                    if (entry.released === undefined) return false;
-                    try {
-                        if (typeof entry.released !== 'function') throw new Error('released must be a function');
-                        const released = entry.released();
-                        if (typeof released !== 'boolean') throw new Error('released must return a boolean');
-                        return released;
-                    } catch (error) {
-                        report.errors.push(`reacquire check ${entry.name || 'unnamed'}: ${messageOf(error)}`);
-                        return true;
-                    }
-                })
-                .map((entry) => entry.name || 'unnamed');
+            report.settlement.reacquire = await settle();
+            if (!report.settlement.reacquire.completed) report.errors.push('reacquire: engine settlement deadline');
+            report.observations.reacquired = observeOwned(reacquired, report.errors, 'reacquire');
+            const invalid = report.observations.reacquired
+                .filter((entry) => !entry.valid || (entry.predicate && entry.released))
+                .map((entry) => entry.name);
             report.reloaded = reacquired.length > 0 && invalid.length === 0;
             if (!report.reloaded) {
                 report.errors.push(

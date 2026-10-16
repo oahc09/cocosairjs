@@ -1,6 +1,6 @@
 # Fixed-snapshot example evidence campaigns
 
-This workflow collects genuine browser results in small, bounded attempts, then publishes one complete, strictly validated campaign. A subset is never a release PASS. The current ordinary-browser scope is **182 examples and 183 sessions**, including the extra interactive-geometry mode. Scope is derived from independent discovery of all example specifications, matched one-to-one against the live manifest before filtering DevTools, rather than a permanent numeric allowlist. Every non-DevTools example and every declared mode must be present; deleting an ID from the manifest or changing only its DevTools flag cannot shrink the campaign. A missing entry page is an error, not a reason to skip its example.
+This **manual milestone workflow** collects genuine browser results in small, bounded attempts, then publishes one complete, strictly validated campaign. A subset is never a release PASS. The current ordinary-browser scope is **182 examples and 183 sessions**, including the extra interactive-geometry mode. Scope is derived from independent discovery of all example specifications, matched one-to-one against the live manifest before filtering DevTools, rather than a permanent numeric allowlist. Every non-DevTools example and every declared mode must be present; deleting an ID from the manifest or changing only its DevTools flag cannot shrink the campaign. A missing entry page is an error, not a reason to skip its example.
 
 The five historical `requiresDevTools` examples remain a separate contract, collected by `tools/verify/devtools-examples.cjs`. Their evidence neither fills ordinary-browser gaps nor becomes current merely because the ordinary campaign passed.
 
@@ -126,22 +126,55 @@ Publication is a guarded multi-file transaction, not an assertion that many file
 
 If publication is interrupted, stop. Keep the guard, immutable package, and retained staging files. Inspect its listed before/after hashes and restore a consistent pre-publication state or complete a reviewed recovery; **never delete the guard merely to clear a gate**. The publisher refuses automatic retries over an incomplete transaction or an existing immutable package. Do not run the old canonical collector as a workaround.
 
-## CI has two separate checks
+## Routine PR checks and manual full evidence
 
-1. **Committed-evidence integrity, before builds:** validate the committed campaign, its complete provenance, frozen scope, metadata delta, and byte identity before a CI build replaces the checked-in candidate. The official `tools/build/prepare-package.cjs` may first generate the ignored npm packaging copies from those committed bytes; it must not rebuild or relabel the candidate. This catches stale or hand-edited committed evidence.
-2. **Fresh CI evidence, after builds:** build the current main runtime, declarations, and Spark artifacts; create a fresh freeze; run the full bounded campaign; strictly merge and publish it into that checkout. Upload the fresh canonical report and its complete provenance together, including failed attempts and interruption diagnostics. Downstream evidence-dependent tests must read this newly collected candidate's evidence.
+The default `Code quality / quality` job is deliberately small for rapid iteration:
 
-Neither layer substitutes for the other. Passing the committed-evidence check does not prove the new CI bundle, and a fresh bundle cannot legitimately reuse committed evidence from its previous build identity. Tests may use clearly labelled synthetic CPU fixtures in disposable directories to verify protocol rejection; these are never production browser evidence.
+- Install dependencies and verify the committed Spark generated sources.
+- Check formatting and types, then build development/minified runtime, source maps,
+  declarations, and the separate Spark bundle.
+- Run focused bootstrap, scene, runtime-asset and audio cancellation unit tests,
+  shader rotation and resource-lifecycle regressions, and the compact shutdown-policy suite.
+- Run five bounded real Chromium examples: `shader-driver-pilot` (the original
+  15 samples / 60 channels / ±2 tolerance), `glass-refraction`, `gltf-viewer`
+  (resource ownership/release), `input` (interaction), and `spark-splats`
+  (the separate runtime bundle).
 
-### Recovering stale committed evidence on an authorized CI runner
+Each example uses the existing strict single-attempt runner, with the production
+15-second startup, four-second close and 139-second final bounds. Failures stop
+the job and retain originals. The five-example results are **partial smoke**,
+never a complete campaign, and are not merged, published or written over canonical
+evidence. A stale canonical report is not a routine PR prerequisite. No full
+three-browser matrix, duplicate supervision suite or external reference checkout
+runs on the default path. Core CI green does not claim complete example coverage.
 
-If the local environment cannot launch the required browser, `.github/workflows/example-evidence.yml` can collect the committed candidate on an official GitHub runner. It checks out the exact same-repository PR head (or the explicit workflow-dispatch revision), has read-only repository permissions and no persisted checkout credentials, and never pushes changes. It installs real dependencies and runs the official package-copy preparation without rebuilding the SDK. All tracked build hashes are recorded before preparation and checked afterward and after collection; source-map and generated-source preflight must also pass.
+### Manual milestone collection
 
-A clean checkout does not contain the ignored `output/spark-runtime-tree-manifest.json` receipt. Before preflight, both workflows snapshot the three committed Spark generated-source files, run the official `tools/build/spark-runtime-tree.cjs` generator, and require all three original SHA-256 values plus the tracked Git diff to remain unchanged. This legitimately regenerates the missing receipt; it does not authorize updating or silently repairing a stale generated source. Never hand-write the receipt or rely on a local ignored output cache being present on CI.
+`.github/workflows/example-evidence.yml` runs only through `workflow_dispatch`.
+Select the intended revision explicitly. The runner checks out that exact revision,
+has read-only repository permissions, keeps no checkout credentials, and never
+pushes changes. It retains the full CPU contract suites and exact discovered scope.
+It installs dependencies and prepares ignored package copies without rebuilding
+the committed SDK; all tracked build hashes are checked before and after collection.
 
-The runner creates its own fresh browser/Python freeze. It first collects HTML, shader-driver, and Spark pilots, with genuine closure and strict admission after each, then collects the remaining exact frozen scope. Every invocation retains the same bounded supervisor and an external 174-second TERM /178-second KILL deadline. The 90-minute job records its budget before checkout and dependency installation; collection stops starting attempts before its 80-minute deadline, reserving time for publication and artifact upload. A failure retains partial originals and prevents publication. Only a successful strict full publication produces the new publication artifact; a failed run must not label the old canonical files as its result.
+A clean checkout lacks the ignored `output/spark-runtime-tree-manifest.json`.
+Both workflows snapshot the three committed Spark generated-source files, run the
+official generator, and require the original SHA-256 values and tracked diff to
+remain unchanged. Do not hand-write this receipt or silently repair stale source.
 
-Download and independently validate the complete portable publication, its exact committed candidate identity, and the permitted promotion-only delta before applying it to the branch. Submit those verified files normally. Do not use this recovery workflow to bypass the quality workflow's committed-evidence gate or to import evidence from rebuilt, different SDK bytes. The next quality run still performs its independent fresh-build collection and full tests.
+The manual runner creates a fresh browser/Python freeze, runs HTML, shader-driver
+and Spark pilots, then every remaining frozen ID/mode. It retains the same
+174-second TERM /178-second KILL outer bound per invocation. Its 90-minute job
+records the budget before installation and stops starting attempts before the
+80-minute deadline to reserve publication/upload time. Every failure retains
+partial originals and prevents publication. Only strict full success creates a
+publication artifact; old canonical files are never relabelled as new results.
+
+Review the complete portable package, exact committed candidate identity and
+promotion-only delta before applying it to a branch in a normal commit. Full
+coverage, release audits, full test discovery and multi-browser validation remain
+explicit milestone work. Historical failures remain historical failures; narrowing
+the default PR gate does not turn them into PASS or bypass strict publication.
 
 ## Auxiliary GPU mismatch diagnostics
 
@@ -328,3 +361,9 @@ failures, outside this recoverable response boundary. Emergency cleanup retains
 the outer raw cause; it must not be labelled a clean receipt. Semantic rejection
 does not renew the close clock: a writer or adopted process still present at the
 original deadline is force-cleaned and the attempt remains failed.
+
+### Resource-release observations
+
+Resource lifecycle checks wait for two completed engine UPDATE-to-DRAW cycles with distinct increasing director frame numbers and a microtask checkpoint between them. Browser requestAnimationFrame callbacks plus a sleep do not establish that deferred engine destruction ran: GLTF root teardown can enqueue asset destruction in a microtask, and capture teardown can enqueue its RenderTexture for the following batch. Each settlement has one fixed eight-second deadline, is also bounded by the existing whole-attempt deadline, and retains its actual frame observations; missing updates, late frames, or still-live owned resources remain failures. Never manually flush the private destroy queue, change object flags, drop resource entries, or replace real cleanup predicates with constants.
+
+The immutable application result retains the complete lifecycle report, including both settlement phases and per-resource release/reacquire observations. Private MaterialInstance ownership must be retired explicitly and verified by its real destroy call and cleared passes; an explicit asset reference must also be balanced. Scene readback uses the non-allocating getRenderMaterial API, including existing per-slot instances, rather than the allocating material getter. These rules do not alter pixel tolerances or make physical browser closure stand in for resource cleanup.

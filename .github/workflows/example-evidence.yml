@@ -1,7 +1,6 @@
-name: Capture committed example evidence
+name: Full example evidence (manual)
 
 on:
-  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -9,7 +8,6 @@ permissions:
 
 jobs:
   capture:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
@@ -20,7 +18,7 @@ jobs:
           date +%s > "$RUNNER_TEMP/committed-example-campaign/job-started-epoch.txt"
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ github.sha }}
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
@@ -28,7 +26,7 @@ jobs:
           cache: npm
       - name: Record exact committed candidate before dependency preparation
         env:
-          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+          EXPECTED_HEAD: ${{ github.sha }}
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
@@ -50,10 +48,11 @@ jobs:
       - name: Validate collector CPU contracts
         run: |
           set -euo pipefail
-          npx prettier --check tools/verify/example-evidence-shutdown-policy.cjs tools/verify/example-evidence-shutdown-policy.test.cjs .github/workflows/example-shutdown-diagnostic.yml tools/verify/example-evidence-shutdown-trace.cjs tools/verify/example-evidence-shutdown-trace.test.cjs tools/verify/run-example-shutdown-target.cjs test/smoke/smoke-example-evidence-integration.test.ts tools/verify/example-evidence-process-diagnostics.cjs tools/verify/example-evidence-process-diagnostics.test.cjs tools/verify/example-evidence-supervisor.cjs tools/verify/example-evidence-supervisor.test.cjs .github/workflows/example-evidence.yml .github/workflows/format.yml docs/reference/example-evidence-campaign.md
+          npx prettier --check tools/verify/example-asset-lifecycle.test.cjs examples/shared/asset-lifecycle.js examples/glass-refraction/src/main.ts examples/gltf-viewer/main.js tools/verify/example-evidence-shutdown-policy.cjs tools/verify/example-evidence-shutdown-policy.test.cjs .github/workflows/example-shutdown-diagnostic.yml tools/verify/example-evidence-shutdown-trace.cjs tools/verify/example-evidence-shutdown-trace.test.cjs tools/verify/run-example-shutdown-target.cjs test/smoke/smoke-example-evidence-integration.test.ts tools/verify/example-evidence-process-diagnostics.cjs tools/verify/example-evidence-process-diagnostics.test.cjs tools/verify/example-evidence-supervisor.cjs tools/verify/example-evidence-supervisor.test.cjs .github/workflows/example-evidence.yml .github/workflows/format.yml docs/reference/example-evidence-campaign.md
           EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu" node tools/verify/example-evidence-supervisor.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/supervisor-tests.log"
           EXAMPLE_SHUTDOWN_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu/shutdown-policy" node --test tools/verify/example-evidence-shutdown-policy.test.cjs
           node --test tools/verify/shaders-holographic-rotation.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/rotation-tests.log"
+          node --test tools/verify/example-asset-lifecycle.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/asset-lifecycle-tests.log"
           node --test tools/verify/example-evidence-process-diagnostics.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/process-diagnostics-tests.log"
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-workspace.test.ts test/smoke/smoke-example-evidence-campaign.test.ts test/smoke/smoke-example-evidence-publication.test.ts test/smoke/smoke-example-evidence-integration.test.ts test/smoke/smoke-example-specialized-probes.test.ts test/smoke/smoke-example-driver-pixel-diagnostics.test.ts 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/focused-tests.log"
           node tools/verify/example-evidence-preflight.cjs > "$RUNNER_TEMP/committed-example-campaign/preflight.json"

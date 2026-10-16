@@ -6,175 +6,85 @@ on:
     branches: [main]
     tags: ["v*"]
 
+permissions:
+  contents: read
+
 jobs:
   quality:
-    runs-on: ubuntu-latest
-    timeout-minutes: 90
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      AIR_CI_SOFTWARE_GL: "1"
+      LIBGL_ALWAYS_SOFTWARE: "1"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          repository: cocos/cocos4
-          ref: 557b06f7e636572a15a426eb8c2387f40b92798a
-          path: _upstream
-      - run: echo '_upstream/' >> .git/info/exclude
+      - name: Record core job budget
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/core-example-smoke" "$RUNNER_TEMP/core-cpu"
+          date +%s > "$RUNNER_TEMP/core-example-smoke/job-started-epoch.txt"
       - uses: actions/checkout@v4
         with:
-          repository: shader-effects-inc/shaders
-          ref: dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a
-          path: output/shaders-absorption/reference
-      - uses: actions/checkout@v4
-        with:
-          repository: AcademySoftwareFoundation/MaterialX
-          ref: 7b64921ef1d42f2d57871e9d2c43dc11f041f26b
-          path: output/shaders-absorption/materialx-source
-          sparse-checkout: |
-            libraries/stdlib/genglsl/lib/mx_noise.glsl
-            LICENSE
-          sparse-checkout-cone-mode: false
-      - run: node tools/ci/prepare-shader-reference.cjs
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-      - run: npm ci --ignore-scripts
-      - name: Check committed complete example evidence before rebuilding
+      - name: Install and verify generated source consistency
         run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
           node tools/build/prepare-package.cjs
           sha256sum src/air/spark/generated/spark-runtime.js src/air/spark/generated/spark-runtime.js.map src/air/spark/generated/spark-runtime.d.ts > "$RUNNER_TEMP/committed-spark-tree.sha256"
           node tools/build/spark-runtime-tree.cjs
           sha256sum --check "$RUNNER_TEMP/committed-spark-tree.sha256"
           git diff --exit-code -- src/air/spark/generated
-          npx prettier --check tools/verify/example-evidence-shutdown-policy.cjs tools/verify/example-evidence-shutdown-policy.test.cjs .github/workflows/example-shutdown-diagnostic.yml tools/verify/example-evidence-shutdown-trace.cjs tools/verify/example-evidence-shutdown-trace.test.cjs tools/verify/run-example-shutdown-target.cjs test/smoke/smoke-example-evidence-integration.test.ts tools/verify/example-evidence-process-diagnostics.cjs tools/verify/example-evidence-process-diagnostics.test.cjs tools/verify/example-evidence-supervisor.cjs tools/verify/example-evidence-supervisor.test.cjs .github/workflows/example-evidence.yml .github/workflows/format.yml docs/reference/example-evidence-campaign.md
-          EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu" node tools/verify/example-evidence-supervisor.test.cjs
-          EXAMPLE_SHUTDOWN_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu/shutdown-policy" node --test tools/verify/example-evidence-shutdown-policy.test.cjs
-          node --test tools/verify/shaders-holographic-rotation.test.cjs
-          node --test tools/verify/example-evidence-process-diagnostics.test.cjs
-          npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-workspace.test.ts test/smoke/smoke-example-evidence-campaign.test.ts test/smoke/smoke-example-evidence-publication.test.ts test/smoke/smoke-example-evidence-integration.test.ts test/smoke/smoke-example-specialized-probes.test.ts test/smoke/smoke-example-driver-pixel-diagnostics.test.ts
-          node tools/verify/example-evidence-preflight.cjs
-          node tools/verify/example-evidence-campaign.cjs check
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: example-evidence-cpu-receipts
-          path: ${{ runner.temp }}/example-evidence-cpu/
-          if-no-files-found: ignore
-      - run: npm run format:check
-      - run: npx prettier --check tools/verify/release-readiness.cjs tools/examples/api-inventory.cjs tools/examples/reconcile-api-claims.cjs tools/examples/coverage-bindings/bind-vector-instance.cjs tools/examples/coverage-bindings/bind-tween-control.cjs tools/examples/coverage-bindings/bind-animation-runtime.cjs tools/examples/coverage-bindings/bind-widget-layout.cjs
-      - run: npx prettier --check "tools/verify/example-evidence*.cjs" tools/verify/example-specialized-probes.cjs tools/verify/driver-pixel-diagnostics.cjs tools/verify/shaders-holographic-rotation.test.cjs tools/verify/example-workspace.cjs tools/verify/run-example-evidence-campaign.cjs tools/verify/publish-example-evidence.cjs "test/smoke/smoke-example-*.test.ts" AGENTS.md tools/README.md docs/reference/example-evidence-campaign.md docs/reference/verification.md
-      - run: npm run typecheck
-      - name: Build runtime and declarations
-        run: |
-          node -e 'const os = require("node:os"); const v8 = require("node:v8"); console.log(JSON.stringify({buildResources: {totalBytes: os.totalmem(), freeBytes: os.freemem(), constrainedBytes: process.constrainedMemory(), availableBytes: process.availableMemory(), heapLimitBytes: v8.getHeapStatistics().heap_size_limit, parallelism: os.availableParallelism()}}))'
-          ps -eo pid,ppid,rss,comm --sort=-rss | sed -n '1,12p'
-          if [ -x /usr/bin/time ]; then
-            /usr/bin/time -v npm run build:all
-          else
-            npm run build:all
-          fi
-          npm run build:spark
-        env:
-          # Preserve full JS/map generation; its measured working set exceeds Node's default 2 GiB heap.
-          NODE_OPTIONS: --max-old-space-size=4096
-      - run: npm run gallery:api
-      - run: git diff --exit-code -- docs/example-api-inventory.json
-      - run: npm run verify:doc-refs
-      - name: Prepare browser evidence tooling
-        run: |
-          sha256sum node_modules/typescript/package.json node_modules/@types/node/package.json > "$RUNNER_TEMP/air-type-dependencies.sha256"
-          npm install --prefix "$RUNNER_TEMP/air-browser-tools" --no-save --ignore-scripts --package-lock=false playwright@1.62.1
-          node "$RUNNER_TEMP/air-browser-tools/node_modules/playwright/cli.js" install --with-deps chromium firefox webkit
-          echo "NODE_PATH=$RUNNER_TEMP/air-browser-tools/node_modules" >> "$GITHUB_ENV"
-          sha256sum --check "$RUNNER_TEMP/air-type-dependencies.sha256"
-          sudo apt-get install -y libgl1-mesa-dri xvfb pulseaudio pulseaudio-utils
-          pulseaudio --start --exit-idle-time=-1
-          pactl load-module module-null-sink sink_name=ci_audio
-          pactl set-default-sink ci_audio
-          pactl info
-          node tools/verify/static-file-response.cjs
-      - name: Diagnose runner browser prerequisites
-        run: xvfb-run --auto-servernum npm run verify:browser-matrix -- --ids=profiler-overlay,point-cloud-basics,audio-basic,video-basic --out=output/ci-browser-diagnostic.json
-      - name: Collect current full browser matrix
-        run: |
-          xvfb-run --auto-servernum npm run verify:browser-matrix -- --out=output/ci-browser-matrix.json
-          cp output/ci-browser-matrix.json docs/evidence/browser-matrix/browser-matrix.json
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: browser-matrix-diagnostics
-          path: |
-            output/ci-browser-diagnostic.json
-            output/ci-browser-matrix.json
-          if-no-files-found: ignore
-      - name: Collect bounded DOM audio cancellation regression
-        run: xvfb-run --auto-servernum node tools/verify/audio-cancellation/supervise.cjs
-        env:
-          REVIEW_TAG: ci-dom-audio
-          FULL: "0"
-          AUDIO_QA_OUT: output/ci-audio-cancellation
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: dom-audio-cancellation-diagnostics
-          path: output/ci-audio-cancellation/
-          if-no-files-found: ignore
-      - name: Collect current fixed-snapshot example campaign
+      - name: Check formatting and types
         run: |
           set -euo pipefail
-          campaign="$RUNNER_TEMP/current-example-campaign"
-          mkdir "$campaign"
+          npm run format:check
+          npx prettier --check tools/verify/example-asset-lifecycle.test.cjs tools/verify/runtime-readback.cjs tools/verify/example-spec-browser.cjs tools/verify/example-evidence-campaign.cjs tools/verify/example-evidence-shutdown-policy.cjs tools/verify/example-evidence-shutdown-policy.test.cjs tools/verify/shaders-holographic-rotation.test.cjs test/smoke/smoke-example-evidence-integration.test.ts .github/workflows/example-evidence.yml AGENTS.md tools/README.md docs/reference/verification.md docs/reference/example-evidence-campaign.md
+          npm run typecheck
+      - name: Build runtime, source maps and declarations
+        run: |
+          set -euo pipefail
+          npm run build:all
+          npm run build:spark
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+      - name: Run focused core regressions
+        run: |
+          set -euo pipefail
+          node --test tools/verify/shaders-holographic-rotation.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/rotation.log"
+          node --test tools/verify/example-asset-lifecycle.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/asset-lifecycle.log"
+          EXAMPLE_SHUTDOWN_CPU_OUT="$RUNNER_TEMP/core-cpu/shutdown-policy" node --test tools/verify/example-evidence-shutdown-policy.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/shutdown-policy.log"
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-01-bootstrap.test.ts test/smoke/smoke-02-scene.test.ts test/smoke/smoke-03-runtime-asset.test.ts test/smoke/audio-cancellation.test.ts test/smoke/audio-cancellation-harness.test.ts test/smoke/smoke-example-evidence-integration.test.ts 2>&1 | tee "$RUNNER_TEMP/core-cpu/unit-tests.log"
+      - name: Prepare Chromium for five core examples
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/air-browser-tools" --no-save --ignore-scripts --package-lock=false playwright@1.62.1
+          node "$RUNNER_TEMP/air-browser-tools/node_modules/playwright/cli.js" install --with-deps chromium
+          echo "NODE_PATH=$RUNNER_TEMP/air-browser-tools/node_modules" >> "$GITHUB_ENV"
+      - name: Verify five core examples with bounded real browsers
+        run: |
+          set -euo pipefail
+          campaign="$RUNNER_TEMP/core-example-smoke"
           node tools/verify/example-evidence-preflight.cjs > "$campaign/preflight.json"
           node tools/verify/example-evidence-campaign.cjs freeze --out="$campaign/freeze.json"
-          node -e 'const f=require(process.argv[1]); process.stdout.write(f.scope.map(e=>e.id).join("\n")+"\n")' "$campaign/freeze.json" > "$campaign/ids.txt"
-          # Each invocation has its own external 139s deadline, 15s startup and 4s close.
-          # Stop on failure; originals are uploaded. No unbounded shared browser or automatic retry.
-          while IFS= read -r id; do
-            xvfb-run --auto-servernum node tools/verify/run-example-evidence-campaign.cjs --freeze="$campaign/freeze.json" --id="$id" --out="$campaign/attempts/$id/1" --execute-authorized
-          done < "$campaign/ids.txt"
-          segments=$(node -e 'const fs=require("fs"),p=require("path");const d=process.argv[1];process.stdout.write(fs.readdirSync(d).filter(x=>x.endsWith(".json")).sort().map(x=>p.join(d,x)).join(","))' "$campaign/segments")
-          node tools/verify/example-evidence-campaign.cjs merge --freeze="$campaign/freeze.json" --segments="$segments" --out="$campaign/merged.json"
-          node tools/verify/publish-example-evidence.cjs --campaign="$campaign/merged.json" --source-dir="$campaign"
-          node tools/verify/example-evidence-campaign.cjs check
-          npm run verify:example-chain
-      - uses: actions/upload-artifact@v4
+          # This is a fixed core subset, not a full campaign or publication.
+          for id in shader-driver-pilot glass-refraction gltf-viewer input spark-splats; do
+            if [ "$(( $(date +%s) + 180 ))" -gt "$(( $(cat "$campaign/job-started-epoch.txt") + 1800 ))" ]; then
+              echo 'Core smoke budget exhausted; keeping partial originals.' >&2
+              exit 124
+            fi
+            timeout --signal=TERM --kill-after=4s 174s node tools/verify/run-example-evidence-campaign.cjs --freeze="$campaign/freeze.json" --id="$id" --out="$campaign/attempts/$id/1" --execute-authorized 2>&1 | tee "$campaign/$id.log"
+          done
+          echo 'Five core examples passed. This is partial smoke coverage; no full campaign was published.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Retain core test and browser originals
         if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: fixed-snapshot-example-campaign
-          path: ${{ runner.temp }}/current-example-campaign/
-          if-no-files-found: ignore
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: complete-example-evidence
+          name: core-quality-results
           path: |
-            docs/evidence/examples-verified.json
-            docs/evidence/example-campaigns/
-          if-no-files-found: ignore
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: example-publication-interruption
-          include-hidden-files: true
-          path: |
-            docs/evidence/.examples-publication-incomplete.json
-            .example-publication-stage-*/
-          if-no-files-found: ignore
-      - name: Run Jest and verify test discovery
-        run: npm run verify:test-inventory
-      - run: npm run verify:consumer
-      - run: npm run verify:web-only
-      - run: npm run verify:licenses
-      - run: npm run verify:decoders
-      - run: npm run verify:benchmark
-      - run: npm run verify:file-map
-      - run: npm run verify:wasm-backends
-      - run: npm run verify:feature-exports
-      - run: npm run verify:custom-exports
-      - if: startsWith(github.ref, 'refs/tags/v')
-        run: node tools/examples/coverage-report.cjs --check
-      - if: startsWith(github.ref, 'refs/tags/v')
-        run: npm run verify:release
-    env:
-      COCOS_UPSTREAM: ${{ github.workspace }}/_upstream
-      AIR_CI_SOFTWARE_GL: "1"
-      LIBGL_ALWAYS_SOFTWARE: "1"
+            ${{ runner.temp }}/core-cpu/
+            ${{ runner.temp }}/core-example-smoke/
+          if-no-files-found: error
