@@ -8,6 +8,7 @@ import json
 import os
 import types
 import unittest
+import sys
 from unittest.mock import patch
 
 SPEC = importlib.util.spec_from_file_location('custodian', pathlib.Path(__file__).with_name('example-evidence-custodian.py'))
@@ -327,5 +328,46 @@ class ShutdownRejectionTests(unittest.TestCase):
             HELPER.ShutdownRejected('close-budget-expired'))))
 
 
+def test_id(value):
+    return value.id().removeprefix('__main__.')
+
+
+def discovered_ids(suite):
+    for item in suite:
+        if isinstance(item, unittest.TestSuite):
+            yield from discovered_ids(item)
+        else:
+            yield test_id(item)
+
+
+class StructuredResult(unittest.TextTestResult):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.started_ids = []
+        self.passed_ids = []
+
+    def startTest(self, value):
+        self.started_ids.append(test_id(value))
+        super().startTest(value)
+
+    def addSuccess(self, value):
+        self.passed_ids.append(test_id(value))
+        super().addSuccess(value)
+
+
 if __name__ == '__main__':
-    unittest.main(verbosity=2)
+    suite = unittest.defaultTestLoader.loadTestsFromModule(sys.modules[__name__])
+    declared = list(discovered_ids(suite))
+    result = unittest.TextTestRunner(verbosity=2, resultclass=StructuredResult).run(suite)
+    summary = dict(
+        schemaVersion='example-custodian-tests/1', declared=declared,
+        started=result.started_ids, passed=result.passed_ids, testsRun=result.testsRun,
+        failures=[test_id(value) for value, _ in result.failures],
+        errors=[test_id(value) for value, _ in result.errors],
+        skipped=[test_id(value) for value, _ in result.skipped],
+        expectedFailures=[test_id(value) for value, _ in result.expectedFailures],
+        unexpectedSuccesses=[test_id(value) for value in result.unexpectedSuccesses],
+        success=result.wasSuccessful(),
+    )
+    print(json.dumps(summary, sort_keys=True), flush=True)
+    sys.exit(0 if result.wasSuccessful() else 1)

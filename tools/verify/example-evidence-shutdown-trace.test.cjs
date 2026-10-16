@@ -1852,6 +1852,41 @@ test('official task capability checks fail on missing, denied or malformed child
 });
 
 test(
+    'thread fixture initialization failure waits for its actual child close before exiting',
+    { timeout: 10000 },
+    async () => {
+        const { Worker } = require('node:worker_threads');
+        const source = require('node:fs').readFileSync(__filename, 'utf8');
+        const section = source.slice(source.lastIndexOf("    'real CPU worker-thread child is found"));
+        const begin = section.indexOf('        const workerCode = `') + '        const workerCode = `'.length;
+        const end = section.indexOf('    `;', begin);
+        assert.ok(begin > 0 && end > begin);
+        const original = section.slice(begin, end);
+        const marker = "const tid = Number(fs.readlinkSync('/proc/thread-self').split('/').at(-1));";
+        assert.equal(original.split(marker).length, 2);
+        const code = original.replace(marker, "throw Error('injected initialization failure');");
+        const worker = new Worker(code, { eval: true });
+        const messages = [];
+        const closed = new Promise((resolve) => worker.once('exit', resolve));
+        worker.on('message', (message) => messages.push(message));
+        worker.on('error', () => {});
+        try {
+            assert.equal(await closed, 1);
+            assert.deepEqual(
+                messages.map((row) => row.type),
+                ['child-closed', 'initialization-error'],
+            );
+            const child = messages[0];
+            assert.ok(child.pid && child.exit && child.close);
+            assert.deepEqual(child.exit, child.close);
+            assert.equal(require('node:fs').existsSync('/proc/' + child.pid), false);
+        } finally {
+            await closed;
+        }
+    },
+);
+
+test(
     'real CPU worker-thread child is found through its nonleader task and physically closes',
     {
         skip: realThreadControlSkip(),
@@ -1866,17 +1901,36 @@ test(
         const fs = require('node:fs');
         const { spawn } = require('node:child_process');
         const child = spawn(process.execPath, ['-e', 'setTimeout(() => {}, 3000)'], { stdio: ['ignore', 'pipe', 'pipe'] });
-        const tid = Number(fs.readlinkSync('/proc/thread-self').split('/').at(-1));
-        let exit;
+        let exit, initializationError;
         child.once('exit', (code, signal) => { exit = { code, signal }; });
-        child.once('close', (code, signal) => { parentPort.postMessage({ type: 'child-closed', exit, close: { code, signal } }); parentPort.close(); });
+        child.once('error', () => { initializationError = true; });
+        child.once('close', (code, signal) => {
+            parentPort.postMessage({ type: 'child-closed', pid: child.pid, exit, close: { code, signal } });
+            if (initializationError) {
+                parentPort.postMessage({ type: 'initialization-error' });
+                process.exitCode = 1;
+            }
+            parentPort.close();
+        });
         parentPort.on('message', () => child.kill('SIGTERM'));
-        parentPort.postMessage({ type: 'ready', tid, processPID: process.pid, childPID: child.pid });
+        let initialized = false;
+        try {
+            const tid = Number(fs.readlinkSync('/proc/thread-self').split('/').at(-1));
+            parentPort.postMessage({ type: 'ready', tid, processPID: process.pid, childPID: child.pid });
+            initialized = true;
+        } catch {
+            initializationError = true;
+        } finally {
+            // Do not let the Worker exit while its subprocess still owns resources.
+            // The existing close listener reports the failure only after true close.
+            if (!initialized) child.kill('SIGTERM');
+        }
     `;
         const rootCode = `
         const { Worker } = require('node:worker_threads');
         const worker = new Worker(${JSON.stringify(workerCode)}, { eval: true });
         worker.on('message', message => process.send(message));
+        worker.on('error', () => { process.exitCode = 1; });
         worker.once('exit', code => { process.send({ type: 'worker-exit', code }, () => process.disconnect()); });
         process.on('message', () => worker.postMessage('stop'));
     `;
@@ -1890,20 +1944,31 @@ test(
             exit = { code, signal };
         });
         const closed = new Promise((resolve) => child.once('close', (code, signal) => resolve({ code, signal })));
-        const ready = await new Promise((resolve, reject) => {
-            child.on('message', (message) => {
-                if (message.type === 'ready') resolve(message);
-            });
-            child.once('error', reject);
-            child.once('exit', () => {
-                if (!messages.some((message) => message.type === 'ready')) reject(Error('fixture exited before ready'));
-            });
-        });
-        const root = identity(child.pid),
-            target = identity(ready.childPID),
-            task = identity(ready.tid);
-        let result;
+        let root, target, task, result;
         try {
+            const ready = await new Promise((resolve, reject) => {
+                const timer = setTimeout(() => settle(Error('fixture readiness deadline')), 6000);
+                const onMessage = (message) => {
+                    if (message.type === 'ready') settle(null, message);
+                    else if (message.type === 'initialization-error') settle(Error('fixture initialization failed'));
+                };
+                const onError = (error) => settle(error);
+                const onExit = () => settle(Error('fixture exited before ready'));
+                function settle(error, value) {
+                    clearTimeout(timer);
+                    child.removeListener('message', onMessage);
+                    child.removeListener('error', onError);
+                    child.removeListener('exit', onExit);
+                    if (error) reject(error);
+                    else resolve(value);
+                }
+                child.on('message', onMessage);
+                child.once('error', onError);
+                child.once('exit', onExit);
+            });
+            root = identity(child.pid);
+            target = identity(ready.childPID);
+            task = identity(ready.tid);
             assert.equal(ready.processPID, child.pid);
             assert.notEqual(ready.tid, child.pid);
             assert.ok(
@@ -1930,7 +1995,7 @@ test(
             );
             assert.ok([...cache.values()].some((row) => row.observation.process.pid === ready.childPID));
         } finally {
-            if (child.connected) child.send('stop');
+            if (child.connected) child.send('stop', () => {});
             const close = await closed;
             assert.deepEqual(exit, { code: 0, signal: null });
             assert.deepEqual(close, exit);
@@ -1942,9 +2007,7 @@ test(
                     (childClose.exit.code === 0 && childClose.exit.signal === null),
             );
             assert.equal(messages.find((message) => message.type === 'worker-exit')?.code, 0);
-            assert.equal(exactPresence(root), 'ABSENT');
-            assert.equal(exactPresence(task), 'ABSENT');
-            assert.equal(exactPresence(target), 'ABSENT');
+            for (const captured of [root, task, target]) if (captured) assert.equal(exactPresence(captured), 'ABSENT');
         }
     },
 );

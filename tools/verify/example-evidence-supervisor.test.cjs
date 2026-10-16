@@ -977,6 +977,57 @@ test('a killed custodian cannot issue a final closure or release the same caller
     assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true, requireSuccess: false }).ok, false);
 });
 
+function assertPythonProtocolSummary(summary) {
+    const required = [
+        'BarrierIdentityTests.test_current_worker_required_for_success',
+        'BarrierIdentityTests.test_absent_worker_only_correlates_failure',
+        'BarrierIdentityTests.test_pid_reuse_namespace_and_parent_mismatch_never_pass',
+        'BarrierIdentityTests.test_exited_worker_is_rejected_and_unknown_state_is_fatal',
+        'BarrierIdentityTests.test_wrong_envelope_unknown_peer_and_old_runtime_are_fatal',
+        'BarrierIdentityTests.test_missing_failed_or_stale_start_cannot_correlate',
+        'BarrierIdentityTests.test_rejected_chain_cannot_reopen_or_repeat',
+        'BarrierIdentityTests.test_forward_terminal_observation_only_produces_failed_barriers',
+        'BarrierIdentityTests.test_cpu_wait_keeps_forward_exit_present_until_actual_absence',
+        'BarrierIdentityTests.test_forward_exit_does_not_hide_tuple_reuse_or_unknown_observations',
+        'BarrierIdentityTests.test_identity_unknown_is_not_absence',
+        'FunctionalOriginalTests.test_regular_file_and_every_read_are_bounded_by_original_deadline',
+        'FunctionalOriginalTests.test_fifo_directory_links_and_escape_cannot_block_or_substitute_original',
+        'FunctionalOriginalTests.test_actual_size_digest_metadata_and_unknown_reads_cannot_be_accepted',
+        'FunctionalOriginalTests.test_atomic_publication_is_complete_and_never_clobbers_an_original',
+        'ShutdownRejectionTests.test_every_lifecycle_rejection_is_explicit_and_never_converts_to_success',
+        'ShutdownRejectionTests.test_stop_evidence_rejection_matrix_and_protocol_boundary',
+        'ShutdownRejectionTests.test_closing_liveness_and_functional_rejections_preserve_unknown',
+        'ShutdownRejectionTests.test_closing_snapshot_matrix_uses_the_actual_observation_boundary',
+    ];
+    const lists = [
+        'declared',
+        'started',
+        'passed',
+        'failures',
+        'errors',
+        'skipped',
+        'expectedFailures',
+        'unexpectedSuccesses',
+    ];
+    assert.deepEqual(Object.keys(summary).sort(), ['schemaVersion', 'testsRun', 'success', ...lists].sort());
+    assert.equal(summary.schemaVersion, 'example-custodian-tests/1');
+    assert.equal(summary.success, true);
+    for (const key of lists) {
+        assert.ok(Array.isArray(summary[key]), key);
+        assert.ok(
+            summary[key].every((value) => typeof value === 'string' && value.length > 0),
+            key,
+        );
+        assert.equal(new Set(summary[key]).size, summary[key].length, `${key} must not repeat an execution`);
+    }
+    assert.ok(Number.isSafeInteger(summary.testsRun) && summary.testsRun > 0);
+    assert.equal(summary.testsRun, summary.declared.length);
+    assert.deepEqual([...summary.started].sort(), [...summary.declared].sort());
+    assert.deepEqual([...summary.passed].sort(), [...summary.declared].sort());
+    for (const name of required) assert.ok(summary.declared.includes(name), `Missing required Python control ${name}`);
+    for (const key of lists.slice(3)) assert.deepEqual(summary[key], [], key);
+}
+
 test('late-stop request identity controls run the Python protocol negatives before evidence collection', () => {
     const { spawnSync } = require('node:child_process');
     const result = spawnSync('python3', ['-B', path.join(__dirname, 'example-evidence-custodian.test.py')], {
@@ -986,9 +1037,167 @@ test('late-stop request identity controls run the Python protocol negatives befo
     assert.equal(result.error, undefined);
     assert.equal(result.signal, null);
     assert.equal(result.status, 0, result.stderr);
-    assert.match(result.stderr, /Ran 15 tests/);
+    const summary = JSON.parse(result.stdout);
+    assertPythonProtocolSummary(summary);
     console.log(result.stderr.trim());
+    console.log(JSON.stringify(summary));
+    for (const mutate of [
+        (value) => {
+            value.testsRun = 0;
+        },
+        (value) => {
+            value.testsRun++;
+        },
+        (value) => {
+            value.started[0] = value.started[1];
+        },
+        (value) => {
+            value.passed.pop();
+        },
+        (value) => {
+            value.success = false;
+        },
+        (value) => {
+            value.declared.pop();
+            value.started.pop();
+            value.passed.pop();
+            value.testsRun--;
+        },
+        ...['failures', 'errors', 'skipped', 'expectedFailures', 'unexpectedSuccesses'].map((key) => (value) => {
+            value[key].push(value.declared[0]);
+        }),
+    ]) {
+        const changed = structuredClone(summary);
+        mutate(changed);
+        assert.throws(() => assertPythonProtocolSummary(changed));
+    }
+    const extended = structuredClone(summary);
+    for (const key of ['declared', 'started', 'passed']) extended[key].push('AdditionalTests.test_new_control');
+    extended.testsRun++;
+    assertPythonProtocolSummary(extended);
 });
+
+test(
+    'CPU launcher owns partial children before readiness and closes every initialization branch once',
+    { timeout: 30000 },
+    async () => {
+        const vm = require('node:vm');
+        const cp = require('node:child_process');
+        const source = fs.readFileSync(path.join(__dirname, 'example-evidence-supervisor.cpu-fixture.cjs'), 'utf8');
+        const launcherSource = source.slice(
+            source.indexOf('const launcher = {'),
+            source.indexOf('hooks.instrumentLauncher(launcher);'),
+        );
+        for (const mode of [
+            'positive',
+            'wrong-child-ready',
+            'early-child-exit',
+            'missing-child-ready',
+            'late-launch',
+            'ownership-error',
+        ]) {
+            const children = [];
+            let owned, releaseLate, lateEntered;
+            const lateReady = new Promise((resolve) => {
+                lateEntered = resolve;
+            });
+            let becameOwned;
+            const ownership = new Promise((resolve) => {
+                becameOwned = resolve;
+            });
+            let timer;
+            const bounded = async (promise) => {
+                try {
+                    return await Promise.race([
+                        promise,
+                        new Promise((_, reject) => {
+                            timer = setTimeout(() => reject(Error('CPU ownership control deadline')), 15000);
+                        }),
+                    ]);
+                } finally {
+                    clearTimeout(timer);
+                }
+            };
+            const launcher = vm.runInNewContext(launcherSource + '\nlauncher;', {
+                mode,
+                process,
+                console: { log() {} },
+                hooks: { limits: LIMITS },
+                pause: () =>
+                    new Promise((resolve) => {
+                        releaseLate = resolve;
+                        lateEntered();
+                    }),
+                cp: {
+                    spawn(...args) {
+                        const child = cp.spawn(...args);
+                        const record = { child, closed: false, endCalls: 0 };
+                        children.push(record);
+                        record.closePromise = new Promise((resolve) =>
+                            child.once('close', (code, signal) => {
+                                record.closed = true;
+                                record.exit = { code, signal };
+                                resolve();
+                            }),
+                        );
+                        const end = child.stdin.end.bind(child.stdin);
+                        child.stdin.end = (...values) => {
+                            record.endCalls++;
+                            return end(...values);
+                        };
+                        return child;
+                    },
+                },
+            });
+            let launch;
+            try {
+                launch = launcher.launch({
+                    cpuOwnBrowser(browser) {
+                        owned = browser;
+                        becameOwned();
+                        if (mode === 'ownership-error') throw Error('CPU owner initialization failed');
+                    },
+                });
+                // Attach a rejection observer before any asynchronous initialization can fail.
+                const outcome = launch.then(
+                    (browser) => ({ browser }),
+                    (error) => ({ error }),
+                );
+                await bounded(ownership);
+                assert.equal(children.length, 1);
+                if (mode === 'late-launch') await bounded(lateReady);
+                if (mode === 'missing-child-ready' || mode === 'late-launch') {
+                    const first = owned.close(),
+                        second = owned.close();
+                    assert.equal(first, second, 'cancellation and runtime finally share one close operation');
+                    await bounded(first);
+                    releaseLate?.();
+                }
+                const result = await bounded(outcome);
+                if (['wrong-child-ready', 'early-child-exit', 'missing-child-ready', 'ownership-error'].includes(mode))
+                    assert.ok(result.error);
+                else assert.equal(result.browser, owned);
+                const first = owned.close(),
+                    second = owned.close();
+                assert.equal(first, second);
+                await bounded(first);
+                assert.equal(children[0].closed, true);
+                assert.ok(children[0].endCalls <= 1, 'no second shutdown write after partial initialization');
+                assert.equal(fs.existsSync(`/proc/${children[0].child.pid}`), false);
+                assert.equal(children[0].child.listenerCount('exit'), 0, 'readiness listeners are detached');
+                assert.equal(children[0].child.stdout.listenerCount('data'), 0);
+            } finally {
+                releaseLate?.();
+                // Register the real handle at spawn, before any read/handshake/assertion.
+                for (const row of children) {
+                    if (!row.closed) row.child.kill('SIGKILL');
+                    await bounded(row.closePromise);
+                }
+                await launch?.catch(() => {});
+            }
+        }
+    },
+);
 
 test('late-stop responses bind rejection to the active request and cannot reopen a settled drain', () => {
     const { validCustodyResponse } = require('./example-evidence-supervisor.cjs');
@@ -1404,27 +1613,27 @@ test(
             child.once('close', (code, signal) => {
                 close = { eventId: 101, code, signal };
             });
-            const raw = fs.readFileSync(`/proc/${child.pid}/stat`, 'utf8');
-            const fields = raw
-                .slice(raw.lastIndexOf(')') + 2)
-                .trim()
-                .split(' ');
-            const tuple = {
-                pid: child.pid,
-                startTicks: fields[19],
-                namespace: fs.readlinkSync(`/proc/${child.pid}/ns/pid`),
-                ppid: Number(fields[1]),
-                pgrp: Number(fields[2]),
-            };
-            const worker = { ...tuple, initial: { ...tuple } };
-            const originalSend = child.send.bind(child);
-            child.send = (...args) => {
-                sends++;
-                return originalSend(...args);
-            };
-            const events = [],
-                errors = [];
             try {
+                const raw = fs.readFileSync(`/proc/${child.pid}/stat`, 'utf8');
+                const fields = raw
+                    .slice(raw.lastIndexOf(')') + 2)
+                    .trim()
+                    .split(' ');
+                const tuple = {
+                    pid: child.pid,
+                    startTicks: fields[19],
+                    namespace: fs.readlinkSync(`/proc/${child.pid}/ns/pid`),
+                    ppid: Number(fields[1]),
+                    pgrp: Number(fields[2]),
+                };
+                const worker = { ...tuple, initial: { ...tuple } };
+                const originalSend = child.send.bind(child);
+                child.send = (...args) => {
+                    sends++;
+                    return originalSend(...args);
+                };
+                const events = [],
+                    errors = [];
                 await once(child, 'message');
                 const deadline = performance.now() + 2000;
                 while (observeAbortWorker(tuple).status !== 'TERMINAL' && performance.now() < deadline)
@@ -1494,21 +1703,21 @@ test(
             child.once('close', (code, signal) => {
                 close = { eventId: 101, code, signal };
             });
-            const raw = fs.readFileSync(`/proc/${child.pid}/stat`, 'utf8');
-            const fields = raw
-                .slice(raw.lastIndexOf(')') + 2)
-                .trim()
-                .split(' ');
-            const tuple = {
-                pid: child.pid,
-                startTicks: fields[19],
-                namespace: fs.readlinkSync(`/proc/${child.pid}/ns/pid`),
-                ppid: Number(fields[1]),
-                pgrp: Number(fields[2]),
-            };
-            const events = [],
-                errors = [];
             try {
+                const raw = fs.readFileSync(`/proc/${child.pid}/stat`, 'utf8');
+                const fields = raw
+                    .slice(raw.lastIndexOf(')') + 2)
+                    .trim()
+                    .split(' ');
+                const tuple = {
+                    pid: child.pid,
+                    startTicks: fields[19],
+                    namespace: fs.readlinkSync(`/proc/${child.pid}/ns/pid`),
+                    ppid: Number(fields[1]),
+                    pgrp: Number(fields[2]),
+                };
+                const events = [],
+                    errors = [];
                 await once(child, 'message');
                 // The peer confirms its disconnect but remains alive until the result is inspected.
                 const deadline = performance.now() + 2000;
