@@ -198,6 +198,41 @@ function writeEvidence(results, done, identity) {
     });
 }
 
+async function stopWithRetainedResult(runtime, output, example, mode) {
+    const record = {
+        schemaVersion: 'example-functional-result/2',
+        id: example.id,
+        mode,
+        completed: !!output,
+        result: output?.result || 'FAIL',
+        measuredAt: new Date().toISOString(),
+        output: output || null,
+    };
+    fs.mkdirSync(ARTIFACT_DIR, { recursive: true });
+    const file = path.join(ARTIFACT_DIR, `${example.id}-${mode.replace(/[^a-z0-9-]/gi, '_')}.functional.json`);
+    const bytes = Buffer.from(JSON.stringify(record, null, 2) + '\n');
+    fs.writeFileSync(file, bytes, { flag: 'wx' });
+    runtime.evidenceFunctionalResult = {
+        path: file,
+        bytes: bytes.length,
+        sha256: crypto.createHash('sha256').update(bytes).digest('hex'),
+        completed: record.completed,
+        result: record.result,
+    };
+    try {
+        await runtime.stop();
+        if (output) output.closure = { schemaVersion: 'example-close-result/2', result: 'CLOSED' };
+    } catch (error) {
+        if (!output) throw error;
+        output.closure = { schemaVersion: 'example-close-result/2', result: 'FAILED', error: String(error) };
+        output.result = 'FAIL';
+        output.errors.push(`Physical close failed: ${String(error)}`);
+    } finally {
+        if (output) output.functionalResult = runtime.evidenceFunctionalResult;
+        sealStoppedEvidence(runtime, output);
+    }
+}
+
 function sealStoppedEvidence(runtime, output) {
     if (!output) return;
     output.networkAssets = responseEvidence(runtime);
@@ -945,7 +980,7 @@ async function runLifecycleChecks(example, runtime, channel, spec) {
         ),
     );
     // 合同跑完后的画面即"当期"截图：验收者看到的与验证器最后一次渲染一致
-    return { results, after: post };
+    return { results, after: post, report };
 }
 
 /** ui-shell（目录页）合同：DOM 选择器渲染 + 零页面错误。 */
@@ -1004,8 +1039,7 @@ async function verifyUiShell(example, workspace, html, specArg, prepared) {
             errors: [...ui.uiErrors, ...runtime.pageErrors.map((e) => e.message)].slice(0, 3),
         });
     } finally {
-        await runtime.stop();
-        sealStoppedEvidence(runtime, output);
+        await stopWithRetainedResult(runtime, output, example, prepared.mode || 'primary');
     }
 }
 
@@ -1237,6 +1271,7 @@ async function verifyApp(example, workspace, html, spec, prepared) {
             validatorResults: all,
             scenarioProbe,
             probeContracts,
+            lifecycleReport: lifecycleOut.report || null,
             networkAssetsScope: 'recorded-server-responses',
             networkAssets: responseEvidence(runtime),
             artifact,
@@ -1248,8 +1283,7 @@ async function verifyApp(example, workspace, html, spec, prepared) {
                 .map((r) => `${r.validatorId}: ${r.detail}`),
         });
     } finally {
-        await runtime.stop();
-        sealStoppedEvidence(runtime, output);
+        await stopWithRetainedResult(runtime, output, example, prepared.mode || 'primary');
     }
 }
 

@@ -1,10 +1,10 @@
 # Cocos AIR 工具
 
-## CI 参考源码准备
+## 可选的参考源码审计
 
-`node tools/ci/prepare-shader-reference.cjs` 要求 `output/shaders-absorption/reference/` 已检出 Shader Effects 的固定提交 `dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a` 并包含原始许可证，MaterialX 固定提交 `7b64921ef1d42f2d57871e9d2c43dc11f041f26b` 位于相邻 `materialx-source/`。它从真实上游文件生成既有采集器所需的三个源码副本及确定性哈希收据，并按已登记 SHA/bytes 复制 MaterialX 噪声和许可证到 `reference/ancestors/`；已有内容不同则拒绝覆盖。它不下载、不执行参考源码，也不生成浏览器 PASS。GitHub Actions 在固定提交 checkout 后调用它。Holographic 的轮廓更正依据使用已入库的专题文档，不依赖某个 worker 的临时笔记。
+`node tools/ci/prepare-shader-reference.cjs` 要求 `output/shaders-absorption/reference/` 已检出 Shader Effects 的固定提交 `dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a` 并包含原始许可证，MaterialX 固定提交 `7b64921ef1d42f2d57871e9d2c43dc11f041f26b` 位于相邻 `materialx-source/`。它从真实上游文件生成既有采集器所需的三个源码副本及确定性哈希收据，并按已登记 SHA/bytes 复制 MaterialX 噪声和许可证到 `reference/ancestors/`；已有内容不同则拒绝覆盖。它不下载、不执行参考源码，也不生成浏览器 PASS。需要该参考审计时，先检出这些固定提交再调用；默认 PR 的构建和核心冒烟不依赖它们。Holographic 的轮廓更正依据使用已入库的专题文档，不依赖某个 worker 的临时笔记。
 
-Code quality 在重建默认包后使用固定 Playwright 工具版本采集三浏览器矩阵，再运行读取当期产物绑定的 Jest 门禁，避免将历史截图指纹改写为当前证据。`pngjs` 是这些 Node/PNG 合同测试的开发依赖，不进入运行时 bundle。
+Code quality 保留构建、类型、格式和核心回归，并使用固定 Playwright Chromium 工具版本运行 Driver、glass-refraction、gltf-viewer、input、Spark 五例。它只生成部分冒烟原件，不检查旧正典作为前置，也不执行全量采集或发布。完整 182 示例通过 `example-evidence.yml` 手动运行；三浏览器矩阵按阶段需要显式执行。`pngjs` 是这些 Node/PNG 合同测试的开发依赖，不进入运行时 bundle。
 
 示例采证使用 [`run-example-evidence-campaign.cjs`](verify/run-example-evidence-campaign.cjs) 的单例有界入口，并遵循[固定快照采证与严格发布流程](../docs/reference/example-evidence-campaign.md)。内部 worker `tools/verify/example-spec-browser.cjs` 的隔离工作区支持 DOM iterable 类型、应用主入口包装和 `.js` 指向 TypeScript 源文件；完整复制跨示例、嵌套模块、参数、recipe 和资产依赖，保留原目录布局，不重写导入或资源路径。规格可用 `bench.startupButtonText` 声明实际启动按钮、`bench.viewport` 声明视口；`bench.apiVariants` 的 `query`、`nodes`、`steps` 声明额外模式，`steps[].drag` 为两个归一化画布坐标。每个模式独立运行全部非 API 检查并保留原始证据，只有真实执行的 API 才能汇总为已执行，截图按模式分别保存。调试入口可从真实 `createAirApp()` 返回值获取；跟踪保留其 Promise 与延迟启动行为。内部 worker 只接受受监督的单 ID，始终输出 partial，不晋级规格。只有完整固定范围的所有模式、原件指纹与真实关闭收据通过严格合并后，才能由专用 publisher 刷新既有 stable 的 promotion；状态保持不变。
 

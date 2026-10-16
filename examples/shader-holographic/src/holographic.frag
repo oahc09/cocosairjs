@@ -82,8 +82,11 @@ void main() {
     float aspect = holo3.y / holo3.z;
     vec2 delta = vec2((v_uv.x - 0.5) * aspect, v_uv.y - 0.5);
     float rad = holo0.y * 0.017453292519943295;
-    float cosR = cos(rad);
-    float sinR = sin(rad);
+    // Trigonometric approximations need not form a unit vector, even at highp.
+    // Keep rotation rigid so a radial error cannot scale the SDF or its pattern domain.
+    vec2 rotationBasis = normalize(vec2(cos(rad), sin(rad)));
+    float cosR = rotationBasis.x;
+    float sinR = rotationBasis.y;
     vec2 f = vec2(delta.x * cosR + delta.y * sinR, delta.y * cosR - delta.x * sinR) / holo0.x;
     vec2 suv = f + 0.5;
     // Pattern coords stick to the (rotated, scaled) shape surface; the seed offsets noise inputs.

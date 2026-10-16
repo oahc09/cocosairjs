@@ -9,18 +9,114 @@ const crypto = require('crypto');
 const { spawn, spawnSync } = require('child_process');
 const { Socket } = require('net');
 const { performance } = require('perf_hooks');
+const { snapshotOwnedProcess } = require('./example-evidence-process-diagnostics.cjs');
 
-const SCHEMA_VERSION = 'example-evidence-attempt/1';
+const SCHEMA_VERSION = 'example-evidence-attempt/2';
 let activeWorker = null;
-const DEFAULT_LIMITS = Object.freeze({
-    startupMs: 15000,
-    closeMs: 4000,
-    innerMs: 120000,
-    abortMs: 125000,
-    forceMs: 133000,
-    finalMs: 139000,
-});
+const DEFAULT_LIMITS = Object.freeze(require('./example-evidence-limits.json'));
+const TARGET_DIAGNOSTIC_LIMITS = Object.freeze({ ...DEFAULT_LIMITS, startupMs: 30000 });
+function validateTargetDiagnosticProfile(profile) {
+    const keys = ['schemaVersion', 'freezeId', 'inputDigest', 'canonicalEligible'];
+    return !!(
+        profile &&
+        typeof profile === 'object' &&
+        !Array.isArray(profile) &&
+        Object.keys(profile).length === keys.length &&
+        keys.every((key) => Object.hasOwn(profile, key)) &&
+        profile.schemaVersion === 'example-shutdown-target-profile/1' &&
+        profile.canonicalEligible === false &&
+        ['freezeId', 'inputDigest'].every(
+            (key) => typeof profile[key] === 'string' && /^[a-f0-9]{64}$/.test(profile[key]),
+        )
+    );
+}
+function createTargetDiagnosticProfile(input) {
+    if (
+        !input ||
+        Object.keys(input).length !== 2 ||
+        !['freezeId', 'inputDigest'].every((key) => Object.hasOwn(input, key))
+    )
+        throw Error('Target diagnostic profile requires exact freezeId and inputDigest');
+    const profile = {
+        schemaVersion: 'example-shutdown-target-profile/1',
+        freezeId: input.freezeId,
+        inputDigest: input.inputDigest,
+        canonicalEligible: false,
+    };
+    if (!validateTargetDiagnosticProfile(profile)) throw Error('Invalid target diagnostic profile');
+    return Object.freeze(profile);
+}
+function targetDiagnosticLimitsMatch(limits) {
+    return !!(
+        limits &&
+        typeof limits === 'object' &&
+        !Array.isArray(limits) &&
+        Object.keys(limits).length === Object.keys(TARGET_DIAGNOSTIC_LIMITS).length &&
+        Object.entries(TARGET_DIAGNOSTIC_LIMITS).every(
+            ([key, value]) => Object.hasOwn(limits, key) && limits[key] === value,
+        )
+    );
+}
+function attemptLimits(options) {
+    if (!Object.hasOwn(options, 'diagnosticProfile')) return limitsOf(options.limits);
+    if (
+        !validateTargetDiagnosticProfile(options.diagnosticProfile) ||
+        !(options.id === 'collector-dodge' || (options.cpuDummy === true && options.id === 'cpu-example'))
+    )
+        throw Error('Invalid target diagnostic profile or target');
+    if (options.limits !== undefined && !targetDiagnosticLimitsMatch(options.limits))
+        throw Error('Target diagnostic limits must be the fixed 30000ms profile');
+    return { ...TARGET_DIAGNOSTIC_LIMITS };
+}
+function diagnosticFields(options) {
+    return Object.hasOwn(options, 'diagnosticProfile')
+        ? { diagnosticProfile: options.diagnosticProfile, canonicalEligible: false }
+        : {};
+}
+function diagnosticBindingErrors(receipt, options = {}, raw, inner) {
+    const observers = (receipt.events || []).filter((event) => event.type === 'observer-start');
+    const proofs = (raw?.events || []).filter((event) => event.type === 'diagnostic-profile');
+    const carriesProfile =
+        [receipt, raw, inner, ...observers].some(
+            (value) => value && (Object.hasOwn(value, 'diagnosticProfile') || value.canonicalEligible === false),
+        ) || proofs.length;
+    if (!Object.hasOwn(options, 'diagnosticProfile'))
+        return carriesProfile ? ['Diagnostic profile is not canonical evidence'] : [];
+    const profile = options.diagnosticProfile;
+    const matches = (value) => validateTargetDiagnosticProfile(value) && stableJson(value) === stableJson(profile);
+    if (
+        !validateTargetDiagnosticProfile(profile) ||
+        !matches(receipt.diagnosticProfile) ||
+        receipt.canonicalEligible !== false ||
+        !targetDiagnosticLimitsMatch(receipt.limits) ||
+        !(receipt.id === 'collector-dodge' || (receipt.cpuDummy === true && receipt.id === 'cpu-example')) ||
+        observers.length !== 1 ||
+        !matches(observers[0].diagnosticProfile) ||
+        !targetDiagnosticLimitsMatch(observers[0].limits)
+    )
+        return ['Target diagnostic profile binding differs'];
+    if (
+        raw &&
+        (!matches(raw.diagnosticProfile) ||
+            raw.canonicalEligible !== false ||
+            proofs.length !== 1 ||
+            !matches(proofs[0].diagnosticProfile) ||
+            !targetDiagnosticLimitsMatch(proofs[0].limits) ||
+            proofs[0].eventId >= raw.innerSupervisor?.spawn?.eventId ||
+            proofs[0].elapsedMs > raw.innerSupervisor?.spawn?.elapsedMs)
+    )
+        return ['Original Python diagnostic profile differs'];
+    if (inner && (!matches(inner.diagnosticProfile) || inner.canonicalEligible !== false))
+        return ['Original Node diagnostic profile differs'];
+    return [];
+}
 const CPU_CASES = [
+    'shutdown-application-fail',
+    'shutdown-double-term',
+    'shutdown-delayed-term',
+    'shutdown-kill',
+    'shutdown-wrong-image',
+    'shutdown-residual',
     'positive',
     'synchronous-compiler',
     'compiler-mode-missing',
@@ -56,6 +152,9 @@ const CPU_CASES = [
     'custodian-delayed-stop-ack',
     'custodian-stop-drain-cancel',
     'custodian-stop-drain-deadline',
+    'custodian-late-stop',
+    'custodian-late-stop-cancel',
+    'custodian-late-stop-deadline',
 ];
 const sha256 = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 function stat(pid) {
@@ -104,6 +203,7 @@ function validateAttemptReceiptUnchecked(receipt, options = {}) {
     const errors = [];
     const fail = (message) => errors.push(message);
     if (!receipt || typeof receipt !== 'object') return { ok: false, errors: ['receipt missing'] };
+    errors.push(...diagnosticBindingErrors(receipt, options));
     const success = options.requireSuccess !== false;
     const command = receipt.command;
     const expectedCollector = receipt.cpuDummy
@@ -136,7 +236,9 @@ function validateAttemptReceiptUnchecked(receipt, options = {}) {
     if (!Array.isArray(receipt.errors) || (success && receipt.errors.length)) fail('attempt errors retained');
     let limits;
     try {
-        limits = limitsOf(receipt.limits);
+        limits = Object.hasOwn(options, 'diagnosticProfile')
+            ? attemptLimits({ ...receipt, diagnosticProfile: options.diagnosticProfile })
+            : limitsOf(receipt.limits);
     } catch (error) {
         fail(error.message);
         limits = DEFAULT_LIMITS;
@@ -259,10 +361,52 @@ function validateAttemptReceiptUnchecked(receipt, options = {}) {
             row.leaderPID !== row.empty?.leaderPID ||
             row.leaderStartTicks !== row.firstObserved?.leaderStartTicks ||
             row.leaderStartTicks !== row.empty?.leaderStartTicks ||
+            row.namespace !== row.firstObserved?.namespace ||
+            row.namespace !== row.empty?.namespace ||
             row.namespace !== receipt.worker?.namespace
         )
             fail('owned process group empty receipt missing');
         const members = ownedProcesses.filter((member) => member.firstObserved?.pgrp === row.leaderPID);
+        const leader = ownedProcesses.find(
+            (member) =>
+                member.pid === row.leaderPID &&
+                member.startTicks === row.leaderStartTicks &&
+                member.namespace === row.namespace,
+        );
+        // A /proc scan can see a newly forked browser before its detached setsid.
+        // Keep that first observation intact. Only the existing exact browser-spawn
+        // event may prove the same process later became this group's leader.
+        if (leader && !members.includes(leader)) {
+            const browser = (Array.isArray(receipt.browsers) ? receipt.browsers : []).find(
+                (candidate) =>
+                    candidate?.pid === leader.pid &&
+                    candidate.startTicks === leader.startTicks &&
+                    candidate.namespace === leader.namespace,
+            );
+            const spawn = browser?.spawn;
+            const observed = spawn?.row;
+            if (
+                eventIs(spawn, 'browser-spawn') &&
+                observed?.pid === leader.pid &&
+                observed.startTicks === leader.startTicks &&
+                observed.namespace === leader.namespace &&
+                observed.detached === true &&
+                observed.initial?.pid === leader.pid &&
+                observed.initial.startTicks === leader.startTicks &&
+                observed.initial.pgrp === row.leaderPID &&
+                observed.initial.ppid === receipt.worker?.pid &&
+                leader.firstObserved?.eventId < spawn.eventId &&
+                leader.firstObserved.supervisorElapsedMs <= spawn.supervisorElapsedMs &&
+                spawn.eventId < row.firstObserved?.eventId &&
+                row.firstObserved.eventId < leader.disappearance?.eventId &&
+                leader.disappearance.eventId <= row.empty?.eventId &&
+                spawn.supervisorElapsedMs <= row.firstObserved.supervisorElapsedMs &&
+                row.firstObserved.supervisorElapsedMs <= leader.disappearance.supervisorElapsedMs &&
+                leader.disappearance.supervisorElapsedMs <= row.empty.supervisorElapsedMs
+            )
+                members.push(leader);
+        }
+        if (!leader || !members.includes(leader)) fail('owned process group leader proof missing');
         if (
             !members.length ||
             members.some((member) => !(member.disappearance?.supervisorElapsedMs <= row.empty?.supervisorElapsedMs))
@@ -307,10 +451,9 @@ function validateAttemptReceiptUnchecked(receipt, options = {}) {
         ['worker-stdio-close', 1],
         ['observer-start', 1],
         ['observer-complete', 1],
-        ...['runtime-start', 'launch-begin', 'runtime-ready', 'stop-begin', 'stop-complete'].map((type) => [
-            type,
-            runtimes.length,
-        ]),
+        ...['runtime-start', 'launch-begin', 'runtime-ready', 'stop-begin', 'close-authorized', 'stop-complete'].map(
+            (type) => [type, runtimes.length],
+        ),
         ...['browser-spawn', 'browser-exit', 'browser-close'].map((type) => [type, browsers.length]),
         ...['server-listen-request', 'server-listening', 'server-close'].map((type) => [type, servers.length]),
     ])
@@ -521,6 +664,265 @@ function validateCoreReceipt(receipt, options = {}) {
     }
 }
 
+function validCustodyResponse(response, pending, token, custodianPID, acceptedStart) {
+    if (
+        !response ||
+        !pending ||
+        response.token !== token ||
+        response.requestId !== pending.requestId ||
+        response.runtimeId !== pending.runtimeId ||
+        response.phase !== pending.phase ||
+        response.custodianPID !== custodianPID ||
+        !Number.isInteger(response.eventId) ||
+        response.eventId <= 0
+    )
+        return false;
+    if (response.rejection === undefined) return typeof response.ok === 'boolean';
+    return (
+        response.ok === false &&
+        ['closing', 'stop'].includes(response.phase) &&
+        ['worker-absent', 'worker-identity-mismatch', 'worker-exited', 'worker-observation-unknown'].includes(
+            response.rejection,
+        ) &&
+        acceptedStart?.requestId + (response.phase === 'closing' ? 1 : 2) === pending.requestId &&
+        acceptedStart.runtimeId === pending.runtimeId &&
+        response.startEventId === acceptedStart.eventId &&
+        response.eventId > response.startEventId &&
+        ['workerPID', 'workerStartTicks', 'namespace'].every(
+            (key) => response[key] === pending[key] && response[key] === acceptedStart[key],
+        )
+    );
+}
+
+// This observation only avoids an IPC message to an exact terminal child. It is never
+// custody authority, permission to signal, or proof that the process has been reaped.
+function observeAbortWorker(worker, io = fs) {
+    const result = { status: 'UNKNOWN', before: null, after: null };
+    try {
+        const read = () => {
+            const raw = io.readFileSync(`/proc/${worker.pid}/stat`, 'utf8');
+            const end = raw.lastIndexOf(')');
+            if (!raw.startsWith(`${worker.pid} (`) || end < 0 || raw[end + 1] !== ' ') throw Error('stat');
+            const fields = raw
+                .slice(end + 2)
+                .trimEnd()
+                .split(' ');
+            if (fields.length < 20 || ![fields[1], fields[2], fields[19]].every((value) => /^\d+$/.test(value)))
+                throw Error('stat fields');
+            return {
+                pid: worker.pid,
+                state: fields[0],
+                ppid: Number(fields[1]),
+                pgrp: Number(fields[2]),
+                startTicks: fields[19],
+                namespace: io.readlinkSync(`/proc/${worker.pid}/ns/pid`),
+            };
+        };
+        result.before = read();
+        result.after = read();
+        if (validAbortObservation(result, worker, 'TERMINAL')) result.status = 'TERMINAL';
+        else if (validAbortObservation(result, worker, 'LIVE')) result.status = 'LIVE';
+    } catch {
+        // Missing, unreadable and malformed metadata are all UNKNOWN here, never absence.
+    }
+    return result;
+}
+
+function validAbortObservation(observation, worker, status = observation?.status) {
+    const states = ['R', 'S', 'D', 'T', 't', 'K', 'W', 'P', 'I', 'Z', 'X'];
+    const terminal = (row) => ['Z', 'X'].includes(row.state);
+    const exact = (row) =>
+        row &&
+        Object.keys(row).length === 6 &&
+        ['pid', 'ppid', 'pgrp'].every(
+            (key) => Number.isSafeInteger(row[key]) && row[key] >= 0 && row[key] <= 2147483647,
+        ) &&
+        row.pid > 0 &&
+        typeof row.startTicks === 'string' &&
+        /^\d+$/.test(row.startTicks) &&
+        typeof row.namespace === 'string' &&
+        /^pid:\[\d+\]$/.test(row.namespace) &&
+        states.includes(row.state) &&
+        ['pid', 'startTicks', 'namespace', 'ppid'].every((key) => row[key] === worker?.[key]);
+    return !!(
+        observation &&
+        exact(observation.before) &&
+        exact(observation.after) &&
+        // The spawn snapshot can precede setsid(). Only these two current groups must agree.
+        observation.before.pgrp === observation.after.pgrp &&
+        (status === 'TERMINAL'
+            ? terminal(observation.after)
+            : status === 'LIVE' && !terminal(observation.before) && !terminal(observation.after))
+    );
+}
+
+function deliverWorkerAbort(options) {
+    return deliverWorkerMessage({ ...options, kind: 'abort' });
+}
+
+function deliverWorkerCustodyResponse(options) {
+    return deliverWorkerMessage({ ...options, kind: 'custody', deadline: options.pending?.deadlineMs });
+}
+
+// Only the two fixed supervisor-to-worker protocols use this lifecycle. No delivery
+// outcome grants custody authority or removes an existing failure.
+function deliverWorkerMessage({
+    kind,
+    response,
+    pending,
+    acceptedStart,
+    token,
+    custodianPID,
+    child,
+    worker,
+    abort,
+    event,
+    fail,
+    closure,
+    observe = observeAbortWorker,
+    now,
+    deadline,
+    schedule = setTimeout,
+    unschedule = clearTimeout,
+}) {
+    // Copy the spawn identity and retain this ChildProcess, not a PID lookup or mutable later target.
+    const target = Object.freeze({
+        pid: worker.pid,
+        startTicks: worker.startTicks,
+        namespace: worker.namespace,
+        ppid: worker.initial?.ppid,
+    });
+    const isAbort = kind === 'abort';
+    const prefix = isAbort ? 'abort-ipc' : 'custody-response-ipc';
+    const label = isAbort ? 'abort IPC' : 'Custody IPC: worker response delivery';
+    const bindingValid =
+        isAbort ||
+        (validCustodyResponse(response, pending, token, custodianPID, acceptedStart) &&
+            pending.workerPID === target.pid &&
+            pending.workerStartTicks === target.startTicks &&
+            pending.namespace === target.namespace &&
+            child.pid === target.pid &&
+            Number.isFinite(deadline));
+    const rejected = !isAbort && bindingValid && response.rejection !== undefined;
+    const binding = {
+        ...(isAbort
+            ? { abortRequestEventId: abort.eventId }
+            : {
+                  requestId: pending?.requestId,
+                  runtimeId: pending?.runtimeId,
+                  phase: pending?.phase,
+                  custodyEventId: response?.eventId,
+                  startEventId: response?.startEventId || null,
+                  rejection: response?.rejection || null,
+              }),
+        workerPID: target.pid,
+        workerStartTicks: target.startTicks,
+        namespace: target.namespace,
+        deadlineMs: deadline,
+    };
+    let resolve,
+        settled = false,
+        sealed = false,
+        timer,
+        send;
+    const drained = new Promise((done) => {
+        resolve = done;
+    });
+    const snapshot = () => {
+        const closed = closure();
+        return {
+            childPID: child.pid,
+            workerExitEventId: closed.exit?.eventId || null,
+            workerCloseEventId: closed.close?.eventId || null,
+            observation: observe(target),
+        };
+    };
+    const settle = (outcome, error = null) => {
+        if (settled) {
+            if (['callback', 'throw'].includes(outcome) && !sealed) {
+                event(`${prefix}-extra-result`, { ...binding, sendEventId: send.eventId, outcome });
+                fail(`${label} result after settlement`);
+                if (error) fail(isAbort ? `abort IPC send failed: ${error}` : `${label}: ${error.message}`);
+            }
+            return;
+        }
+        if (outcome === 'callback' && now() >= deadline) outcome = 'deadline';
+        settled = true;
+        unschedule(timer);
+        event(`${prefix}-result`, {
+            ...binding,
+            sendEventId: send.eventId,
+            outcome,
+            errorCode: error
+                ? ['EPIPE', 'ERR_IPC_CHANNEL_CLOSED'].includes(error.code)
+                    ? error.code
+                    : 'UNKNOWN'
+                : null,
+            failed: !!error,
+            ...snapshot(),
+        });
+        if (error) fail(isAbort ? `abort IPC send failed: ${error}` : `${label}: ${error.message}`);
+        if (outcome !== 'callback') fail(`${label} did not settle: ${outcome}`);
+        resolve();
+    };
+    const initial =
+        !bindingValid || rejected || now() >= deadline
+            ? {
+                  childPID: child.pid,
+                  workerExitEventId: null,
+                  workerCloseEventId: null,
+                  observation: { status: 'UNKNOWN', before: null, after: null },
+              }
+            : snapshot();
+    const expired = now() >= deadline;
+    const skip =
+        child.pid === target.pid &&
+        (initial.workerExitEventId ||
+            initial.workerCloseEventId ||
+            (initial.observation.status === 'TERMINAL' && validAbortObservation(initial.observation, target)));
+    if (!bindingValid || rejected || expired || skip || !child.connected) {
+        event(`${prefix}-skipped`, {
+            ...binding,
+            reason: !bindingValid
+                ? 'invalid-binding'
+                : rejected
+                  ? 'kernel-barrier-rejected'
+                  : expired
+                    ? 'deadline-expired'
+                    : skip
+                      ? 'worker-exited'
+                      : 'ipc-disconnected',
+            ...initial,
+        });
+        if (!bindingValid) fail(`${label}: invalid binding`);
+        else if (expired) fail(`${label} did not settle: deadline`);
+        else if (!isAbort && !rejected) fail('Custody IPC: collector disconnected before response');
+        settled = true;
+        resolve();
+    } else {
+        send = event(`${prefix}-send`, { ...binding, ...initial });
+        timer = schedule(() => settle('deadline'), Math.max(1, deadline - now()));
+        try {
+            if (child.pid !== target.pid) throw Error(`${label} target identity changed`);
+            child.send(
+                isAbort ? { exampleEvidenceAbort: abort.reason } : { exampleCustodyResponse: response },
+                (error) => settle('callback', error),
+            );
+        } catch (error) {
+            settle('throw', error);
+        }
+    }
+    return {
+        drained,
+        cancel: (outcome) => {
+            if (send) settle(outcome);
+        },
+        seal: () => {
+            sealed = true;
+        },
+    };
+}
+
 async function superviseAttemptInner(options) {
     if (activeWorker) throw Error('Previous attempt worker has not physically closed');
     const requestFD = Number(process.env.EXAMPLE_EVIDENCE_CUSTODIAN_REQUEST_FD);
@@ -576,7 +978,7 @@ async function superviseAttemptInner(options) {
             : path.join(fs.realpathSync(path.dirname(file)), path.basename(file));
         if (!outsideRepo(real, repo)) throw Error('Attempt output resolves inside repository');
     }
-    const limits = limitsOf(options.limits);
+    const limits = attemptLimits({ ...options, cpuDummy: !!cpuCase });
     const namespace = namespaceOf();
     if (!namespace) throw Error('Linux /proc process-namespace observation required');
     const expectedModes = options.expectedModes || ['primary'];
@@ -615,6 +1017,7 @@ async function superviseAttemptInner(options) {
         throw Error('Original first-exec startup budget exhausted before worker spawn');
     const origin = performance.now() - elapsedBeforeSpawnMs;
     const receipt = {
+        ...diagnosticFields(options),
         schemaVersion: SCHEMA_VERSION,
         attemptId: options.attemptId || crypto.randomUUID(),
         id,
@@ -655,7 +1058,8 @@ async function superviseAttemptInner(options) {
         finished = false,
         finishing = false,
         abortRequested = false,
-        firstReady = false;
+        firstReady = false,
+        abortDelivery = null;
     let lastObserverSequence = 0;
     let resolveFinished;
     const finishedPromise = new Promise((resolve) => {
@@ -695,6 +1099,8 @@ async function superviseAttemptInner(options) {
                 role,
                 pgrp: row.initial?.pgrp ?? row.pgrp,
                 ppid: row.initial?.ppid ?? row.ppid,
+                // Descriptive, privacy-limited observations only. Never used for ownership or PASS decisions.
+                processDiagnostic: snapshotOwnedProcess(row),
             });
             owned.set(key, { ...row, role, firstObserved, disappearance: null });
         }
@@ -818,24 +1224,39 @@ async function superviseAttemptInner(options) {
         receipt.timedOut ||= timedOut;
         if (abortRequested) return;
         abortRequested = true;
-        event('abort-request', { reason });
-        if (child?.connected)
-            child.send({ exampleEvidenceAbort: reason }, (error) => {
-                if (error && error.code !== 'ERR_IPC_CHANNEL_CLOSED') fail(`abort IPC send failed: ${error}`);
+        const abort = event('abort-request', { reason });
+        if (child)
+            abortDelivery = deliverWorkerAbort({
+                child,
+                worker: receipt.worker,
+                abort,
+                event,
+                fail,
+                closure: () => receipt.worker,
+                now: () => performance.now() - origin,
+                deadline: Math.min(abort.supervisorElapsedMs + limits.closeMs, limits.finalMs),
+                schedule: timer,
             });
         timer(
             () => reclaim('abort cleanup deadline exceeded'),
             Math.min(limits.closeMs * 2, limits.forceMs - (performance.now() - origin)),
         );
     }
+    const custodyDeliveries = [];
     let custodyPending = null;
     let custodySequence = 0;
+    let custodyAcceptedStart = null;
     let custodyBuffer = '';
     function settleCustody(pending, outcome) {
         if (!pending || custodyPending !== pending) return;
         clearTimeout(pending.timer);
         custodyPending = null;
-        event('custody-request-settled', { requestId: pending.requestId, phase: pending.phase, outcome });
+        event('custody-request-settled', {
+            requestId: pending.requestId,
+            runtimeId: pending.runtimeId,
+            phase: pending.phase,
+            outcome,
+        });
         pending.resolveDrained();
     }
     const custodyToken = process.env.EXAMPLE_EVIDENCE_CUSTODIAN_TOKEN;
@@ -869,49 +1290,88 @@ async function superviseAttemptInner(options) {
                 continue;
             }
             const pending = custodyPending;
-            if (
-                !pending ||
-                response.token !== custodyToken ||
-                response.requestId !== pending.requestId ||
-                response.runtimeId !== pending.runtimeId ||
-                response.phase !== pending.phase ||
-                response.custodianPID !== process.ppid ||
-                !Number.isInteger(response.eventId)
-            ) {
+            if (!validCustodyResponse(response, pending, custodyToken, process.ppid, custodyAcceptedStart)) {
                 custodyFailure('unknown, duplicate, late or mismatched response');
                 continue;
             }
-            settleCustody(pending, 'response');
-            if (response.ok !== true) custodyFailure('kernel barrier rejected');
-            if (child?.connected)
-                child.send({ exampleCustodyResponse: response }, (error) => {
-                    if (error) custodyFailure(`worker response delivery: ${error.message}`);
+            if (response.rejection !== undefined) {
+                event('custody-barrier-rejected', {
+                    requestId: response.requestId,
+                    runtimeId: response.runtimeId,
+                    phase: response.phase,
+                    custodianPID: response.custodianPID,
+                    custodyEventId: response.eventId,
+                    startEventId: response.startEventId,
+                    workerPID: response.workerPID,
+                    workerStartTicks: response.workerStartTicks,
+                    namespace: response.namespace,
+                    reason: response.rejection,
+                    ok: false,
                 });
-            else custodyFailure('collector disconnected before response');
+            }
+            if (response.ok !== true) custodyFailure('kernel barrier rejected');
+            // Register synchronously before settling the request and releasing any finish drain.
+            // A proven rejection already says the fixed worker cannot receive an authorized ACK.
+            custodyDeliveries.push(
+                deliverWorkerCustodyResponse({
+                    child,
+                    worker: receipt.worker,
+                    response,
+                    pending,
+                    acceptedStart: custodyAcceptedStart,
+                    token: custodyToken,
+                    custodianPID: process.ppid,
+                    event,
+                    fail: (reason) => requestAbort(reason),
+                    closure: () => receipt.worker,
+                    now: () => performance.now() - origin,
+                    schedule: timer,
+                }),
+            );
+            if (response.phase === 'start' && response.ok === true)
+                custodyAcceptedStart = { ...pending, eventId: response.eventId };
+            else if (response.phase === 'stop' || response.ok !== true) custodyAcceptedStart = null;
+            if (response.phase === 'closing' && response.ok === true) {
+                const runtime = runtimeRows.get(response.runtimeId);
+                if (runtime) runtime.closingProofId = response.eventId;
+            }
+            settleCustody(pending, response.rejection === undefined ? 'response' : 'rejected-response');
         }
     });
     function relayCustody(request) {
-        const current = stat(child.pid);
+        // IPC provenance is the original ChildProcess and its authenticated request sequence.
+        // Only the custodian grants fresh barrier authority; a late message must still retain a failed receipt.
+        const originalWorker = receipt.worker;
         const runtime = runtimeRows.get(request.runtimeId);
         const expectedRuntimeId = `runtime-${runtimeRows.size + 1}`;
         const validPhase =
             request.phase === 'start'
                 ? request.runtimeId === expectedRuntimeId && [...runtimeRows.values()].every((row) => row.stopComplete)
-                : request.phase === 'stop' &&
-                  runtime &&
-                  runtime.stopBegin &&
-                  !runtime.stopComplete &&
-                  [...browserRows.values()]
-                      .filter((row) => row.runtimeId === request.runtimeId)
-                      .every((row) => row.exit && row.close) &&
-                  [...serverRows.values()]
-                      .filter((row) => row.runtimeId === request.runtimeId)
-                      .every((row) => row.close);
+                : request.phase === 'closing'
+                  ? runtime &&
+                    runtime.stopBegin &&
+                    !runtime.closingProofId &&
+                    !runtime.stopComplete &&
+                    [...browserRows.values()].some(
+                        (row) =>
+                            row.runtimeId === request.runtimeId &&
+                            !row.exit &&
+                            !row.close &&
+                            ['pid', 'startTicks', 'namespace'].every((key) => row[key] === request.browser?.[key]),
+                    )
+                  : request.phase === 'stop' &&
+                    runtime &&
+                    runtime.closingProofId &&
+                    runtime.stopBegin &&
+                    !runtime.stopComplete &&
+                    [...browserRows.values()]
+                        .filter((row) => row.runtimeId === request.runtimeId)
+                        .every((row) => row.exit && row.close) &&
+                    [...serverRows.values()]
+                        .filter((row) => row.runtimeId === request.runtimeId)
+                        .every((row) => row.close);
         if (
             custodyPending ||
-            !current ||
-            !sameProcess(receipt.worker) ||
-            current.ppid !== process.pid ||
             request.workerPID !== child.pid ||
             request.token !== custodyToken ||
             request.requestId !== custodySequence + 1 ||
@@ -921,9 +1381,10 @@ async function superviseAttemptInner(options) {
             return;
         }
         custodySequence = request.requestId;
+        const requestedAt = performance.now() - origin;
         const remaining =
-            request.phase === 'stop'
-                ? limits.closeMs - (performance.now() - origin - runtime.stopBegin.supervisorElapsedMs)
+            request.phase !== 'start'
+                ? limits.closeMs - (requestedAt - runtime.stopBegin.supervisorElapsedMs)
                 : limits.closeMs;
         let resolveDrained;
         const drained = new Promise((resolve) => {
@@ -931,6 +1392,9 @@ async function superviseAttemptInner(options) {
         });
         const pending = {
             ...request,
+            workerStartTicks: originalWorker.startTicks,
+            namespace,
+            deadlineMs: Math.min(requestedAt + remaining, limits.finalMs),
             drained,
             resolveDrained,
             timer: timer(() => {
@@ -941,9 +1405,40 @@ async function superviseAttemptInner(options) {
         custodyPending = pending;
         const forwarded = {
             ...request,
-            workerStartTicks: current.startTicks,
+            workerStartTicks: originalWorker.startTicks,
             namespace,
             nodeSupervisorPID: process.pid,
+            deadlineEpochMs: startedEpoch + pending.deadlineMs,
+            ...(request.phase !== 'start'
+                ? {
+                      closeBudget: {
+                          originEventId: runtime.stopBegin.eventId,
+                          originElapsedMs: runtime.stopBegin.supervisorElapsedMs,
+                          deadlineMs: runtime.stopBegin.supervisorElapsedMs + limits.closeMs,
+                      },
+                  }
+                : {}),
+            ...(request.phase === 'stop'
+                ? {
+                      closure: {
+                          browsers: [...browserRows.values()]
+                              .filter((row) => row.runtimeId === request.runtimeId)
+                              .map((row) => ({
+                                  pid: row.pid,
+                                  startTicks: row.startTicks,
+                                  namespace: row.namespace,
+                                  exit: row.exit,
+                                  close: row.close,
+                              })),
+                          servers: [...serverRows.values()]
+                              .filter((row) => row.runtimeId === request.runtimeId)
+                              .map((row) => ({
+                                  serverId: row.serverId,
+                                  close: row.close,
+                              })),
+                      },
+                  }
+                : {}),
         };
         custodyWrite.write(JSON.stringify(forwarded) + '\n', (error) => {
             if (error) custodyFailure(error.message);
@@ -1087,6 +1582,26 @@ async function superviseAttemptInner(options) {
             }
             runtime.stopBegin = entry;
             runtime.stopTimer = timer(() => requestAbort(`${raw.runtimeId} stop deadline`, true), limits.closeMs);
+            // A forked browser child can change role before shutdown. Retain a second identity-bound
+            // observation when stop-begin is received, possibly after shutdown has already begun.
+            // It never accepts a signal or replaces the kernel custody result.
+            for (const row of scanOwned()) {
+                event('owned-process-diagnostic', {
+                    pid: row.pid,
+                    startTicks: row.startTicks,
+                    namespace: row.namespace,
+                    runtimeId: raw.runtimeId,
+                    phase: 'stop-begin-received',
+                    sourceEventId: entry.eventId,
+                    processDiagnostic: snapshotOwnedProcess(row),
+                });
+            }
+        }
+        if (raw.type === 'close-authorized') {
+            if (!runtime || !runtime.closingProofId || runtime.closeAuthorized)
+                requestAbort('invalid close authorization');
+            else runtime.closeAuthorized = entry;
+            if (!raw.healthy) requestAbort('application unhealthy before close');
         }
         if (raw.type === 'stop-complete') {
             if (!runtime || runtime.stopComplete) {
@@ -1103,15 +1618,22 @@ async function superviseAttemptInner(options) {
         if (atDeadline) {
             fail('final worker deadline reached');
             settleCustody(custodyPending, 'final-deadline');
+            abortDelivery?.cancel('final-deadline');
+            for (const delivery of custodyDeliveries) delivery.cancel('final-deadline');
         }
         if (finishing) return;
         finishing = true;
         if (custodyPending) {
             fail('Custody barrier remained pending at worker closure');
             if (
-                ['custodian-delayed-stop-ack', 'custodian-stop-drain-cancel', 'custodian-stop-drain-deadline'].includes(
-                    cpuCase,
-                )
+                [
+                    'custodian-delayed-stop-ack',
+                    'custodian-stop-drain-cancel',
+                    'custodian-stop-drain-deadline',
+                    'custodian-late-stop',
+                    'custodian-late-stop-cancel',
+                    'custodian-late-stop-deadline',
+                ].includes(cpuCase)
             ) {
                 const marker = event('cpu-custody-drain-ready', {
                     cpuOnly: true,
@@ -1132,6 +1654,8 @@ async function superviseAttemptInner(options) {
             // the custodian kill this Node process before its original failure receipt is durable.
             await custodyPending.drained;
         }
+        if (abortDelivery) await abortDelivery.drained;
+        await Promise.all(custodyDeliveries.map((delivery) => delivery.drained));
         receipt.noOwnedProcesses = scanOwned().length === 0;
         receipt.ownedProcesses = [...owned.values()].map(
             ({ pid, startTicks, namespace, role, firstObserved, disappearance }) => ({
@@ -1193,8 +1717,11 @@ async function superviseAttemptInner(options) {
                     }),
             ),
         );
+        abortDelivery?.seal();
+        for (const delivery of custodyDeliveries) delivery.seal();
         receipt.endedAt = new Date().toISOString();
         const structural = validateCoreReceipt(receipt, {
+            ...diagnosticFields(options),
             id,
             expectedModes,
             expectedViewports: options.expectedViewports,
@@ -1203,6 +1730,7 @@ async function superviseAttemptInner(options) {
         });
         for (const error of structural.errors) fail(error);
         const checked = validateCoreReceipt(receipt, {
+            ...diagnosticFields(options),
             id,
             expectedModes,
             expectedViewports: options.expectedViewports,
@@ -1226,6 +1754,8 @@ async function superviseAttemptInner(options) {
     }
     const interrupted = (signal) => {
         requestAbort(`supervisor received ${signal}`);
+        abortDelivery?.cancel(signal);
+        for (const delivery of custodyDeliveries) delivery.cancel(signal);
         if (finishing) settleCustody(custodyPending, signal);
     };
     const onInterrupt = () => interrupted('SIGINT');
@@ -1247,6 +1777,9 @@ async function superviseAttemptInner(options) {
             EXAMPLE_EVIDENCE_SUPERVISED: '1',
             EXAMPLE_EVIDENCE_STARTED_AT: new Date(startedEpoch).toISOString(),
             EXAMPLE_EVIDENCE_LIMITS: JSON.stringify(limits),
+            EXAMPLE_EVIDENCE_DIAGNOSTIC_PROFILE: Object.hasOwn(options, 'diagnosticProfile')
+                ? JSON.stringify(options.diagnosticProfile)
+                : '',
             EXAMPLE_EVIDENCE_CPU_CASE: cpuCase,
             EXAMPLE_EVIDENCE_ID: id,
             EXAMPLE_EVIDENCE_MODES: JSON.stringify(expectedModes),
@@ -1335,18 +1868,19 @@ const stableJson = (value) =>
               )
             : entry;
     });
-function validateCustodyReceipt(receipt) {
+function validateCustodyReceipt(receipt, options = {}) {
     const errors = [];
     const fail = (message) => errors.push(message);
     const custody = receipt.custody;
-    if (receipt.pending !== false || !custody || custody.schemaVersion !== 'example-evidence-custody/1') {
+    if (receipt.pending !== false || !custody || custody.schemaVersion !== 'example-evidence-custody/2') {
         return { ok: false, errors: ['Final kernel custody receipt missing; pending Node receipts cannot pass'] };
     }
     const raw = custody.observation,
         wrapper = custody.wrapper;
-    if (!raw || raw.schemaVersion !== 'example-evidence-custody-observation/1' || !wrapper) {
+    if (!raw || raw.schemaVersion !== 'example-evidence-custody-observation/2' || !wrapper) {
         return { ok: false, errors: ['Kernel custody observation missing'] };
     }
+    errors.push(...diagnosticBindingErrors(receipt, options, raw));
     const eventIs = (event, type) =>
         !!event &&
         event.type === type &&
@@ -1501,8 +2035,10 @@ function validateCustodyReceipt(receipt) {
             row.reap.pid !== row.pid ||
             row.reap.startTicks !== row.startTicks ||
             row.reap.namespace !== row.namespace ||
-            !clean(row.reap) ||
-            row.reap.rawStatus !== 0 ||
+            !(
+                (row.reap.rawStatus === 0 && clean(row.reap)) ||
+                (row.reap.rawStatus === 15 && row.reap.code === null && row.reap.signal === 'SIGTERM')
+            ) ||
             row.absent.pid !== row.pid ||
             row.absent.startTicks !== row.startTicks ||
             row.absent.namespace !== row.namespace ||
@@ -1520,7 +2056,7 @@ function validateCustodyReceipt(receipt) {
     if (
         !Array.isArray(raw.barriers) ||
         raw.barriers.length !== acknowledgements.length ||
-        acknowledgements.length !== receipt.runtimes.length * 2
+        acknowledgements.length !== receipt.runtimes.length * 3
     )
         fail('Per-runtime custody barriers missing');
     if (stableJson(raw.events.filter((event) => event.type === 'runtime-custody-barrier')) !== stableJson(raw.barriers))
@@ -1528,8 +2064,8 @@ function validateCustodyReceipt(receipt) {
     for (const [index, ack] of acknowledgements.entries()) {
         const proof = raw.barriers.find((entry) => entry.eventId === ack.custodyEventId);
         const runtime = receipt.runtimes.find((row) => row.runtimeId === ack.runtimeId);
-        const expectedPhase = index % 2 ? 'stop' : 'start';
-        const expectedRuntime = receipt.runtimes[Math.floor(index / 2)];
+        const expectedPhase = ['start', 'closing', 'stop'][index % 3];
+        const expectedRuntime = receipt.runtimes[Math.floor(index / 3)];
         const closures = [
             ...receipt.browsers
                 .filter((row) => row.runtimeId === ack.runtimeId)
@@ -1556,7 +2092,21 @@ function validateCustodyReceipt(receipt) {
             ack.custodianPID !== wrapper.pid ||
             proof.workerPID !== receipt.worker.pid ||
             proof.workerStartTicks !== receipt.worker.startTicks ||
-            stableJson(proof.directChildren) !== stableJson([node?.pid]) ||
+            (ack.phase === 'closing'
+                ? !Array.isArray(proof.directChildren) ||
+                  !proof.directChildren.includes(node?.pid) ||
+                  new Set(proof.directChildren).size !== proof.directChildren.length ||
+                  proof.directChildren.some(
+                      (pid) =>
+                          pid !== node?.pid &&
+                          !raw.adopted.some(
+                              (row) =>
+                                  row.pid === pid &&
+                                  row.observed.eventId < proof.eventId &&
+                                  row.reap.eventId > proof.eventId,
+                          ),
+                  )
+                : stableJson(proof.directChildren) !== stableJson([node?.pid])) ||
             proof.elapsedMs > ack.supervisorElapsedMs + 50 ||
             (ack.phase === 'start'
                 ? !(ack.supervisorElapsedMs <= runtime?.start.supervisorElapsedMs)
@@ -1567,6 +2117,7 @@ function validateCustodyReceipt(receipt) {
         )
             fail('Custody barrier request/ACK correlation invalid');
     }
+    errors.push(...require('./example-evidence-shutdown-policy.cjs').validateShutdownPolicy(receipt, raw));
     for (const name of ['raw', 'nodeReceipt', 'journal', 'stdout', 'stderr']) {
         const ref = custody.artifacts?.[name];
         if (
@@ -1584,15 +2135,25 @@ function validateAttemptReceipt(receipt, options = {}) {
     const core = validateCoreReceipt(receipt, options);
     let custody;
     try {
-        custody = validateCustodyReceipt(receipt);
+        custody = validateCustodyReceipt(receipt, options);
     } catch (error) {
         custody = { ok: false, errors: [`Malformed custody receipt: ${error.message}`] };
     }
     return { ok: core.ok && custody.ok, errors: [...core.errors, ...custody.errors] };
 }
-function validateCustodyArtifacts(receipt, artifacts) {
+function validateCustodyArtifacts(receipt, artifacts, options = {}) {
     try {
         const errors = [];
+        errors.push(...diagnosticBindingErrors(receipt, options, artifacts.raw, artifacts.nodeReceipt));
+        // Artifact validation is also a default consumer: stripping a profile cannot admit its 30s limits.
+        if (!Object.hasOwn(options, 'diagnosticProfile')) {
+            try {
+                limitsOf(receipt.limits);
+                limitsOf(artifacts.nodeReceipt?.limits);
+            } catch (error) {
+                errors.push(error.message);
+            }
+        }
         if (stableJson(artifacts.raw) !== stableJson(receipt.custody.observation))
             errors.push('Original Python observation differs');
         const inner = artifacts.nodeReceipt;
@@ -1601,6 +2162,8 @@ function validateCustodyArtifacts(receipt, artifacts) {
         const keys = [
             'schemaVersion',
             'attemptId',
+            'diagnosticProfile',
+            'canonicalEligible',
             'id',
             'cpuDummy',
             'cpuCase',
@@ -1666,7 +2229,7 @@ async function superviseAttempt(options) {
             : typeof options.startedAt === 'number'
               ? options.startedAt
               : Date.parse(options.startedAt);
-    const limits = limitsOf(options.limits);
+    const limits = attemptLimits({ ...options, cpuDummy: !!options.cpuCase });
     if (!Number.isFinite(startedEpoch) || startedEpoch > Date.now() || Date.now() - startedEpoch >= limits.startupMs)
         throw Error('Original first-exec startup budget exhausted before worker spawn');
     if (!options.cpuCase && options.executeAuthorized !== true)
@@ -1802,6 +2365,7 @@ async function superviseAttempt(options) {
     for (const [name, file] of Object.entries(paths))
         if (fs.existsSync(file)) artifacts[name] = { path: file, bytes: fs.statSync(file).size, sha256: sha256(file) };
     const receipt = inner || {
+        ...diagnosticFields(options),
         schemaVersion: SCHEMA_VERSION,
         attemptId: options.attemptId || crypto.randomUUID(),
         id: options.id,
@@ -1828,7 +2392,7 @@ async function superviseAttempt(options) {
     receipt.pending = false;
     receipt.output.receipt = finalPath;
     receipt.custody = {
-        schemaVersion: 'example-evidence-custody/1',
+        schemaVersion: 'example-evidence-custody/2',
         runtimeIdentity,
         wrapper,
         artifacts,
@@ -1850,6 +2414,7 @@ async function superviseAttempt(options) {
     }
     receipt.endedAt = new Date().toISOString();
     const structural = validateAttemptReceipt(receipt, {
+        ...diagnosticFields(options),
         id: options.id,
         expectedModes: options.expectedModes,
         expectedViewports: options.expectedViewports,
@@ -1859,6 +2424,7 @@ async function superviseAttempt(options) {
     receipt.lifecycleErrors.push(...structural.errors.filter((error) => !receipt.lifecycleErrors.includes(error)));
     receipt.errors.push(...structural.errors.filter((error) => !receipt.errors.includes(error)));
     const checked = validateAttemptReceipt(receipt, {
+        ...diagnosticFields(options),
         id: options.id,
         expectedModes: options.expectedModes,
         expectedViewports: options.expectedViewports,
@@ -1916,6 +2482,14 @@ if (require.main === module)
         process.exitCode = 1;
     });
 module.exports = {
+    TARGET_DIAGNOSTIC_LIMITS,
+    createTargetDiagnosticProfile,
+    validateTargetDiagnosticProfile,
+    observeAbortWorker,
+    validAbortObservation,
+    deliverWorkerAbort,
+    deliverWorkerCustodyResponse,
+    validCustodyResponse,
     SCHEMA_VERSION,
     DEFAULT_LIMITS,
     CPU_CASES,

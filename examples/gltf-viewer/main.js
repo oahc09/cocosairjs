@@ -114,6 +114,55 @@ function sample(value) {
     animation.pause();
     time.value = String(value);
 }
+// Material instances belong to the instance renderer, not GLTFAsset.materials.
+// Observe only existing instances; the material getter would allocate a new one.
+const destroyedMaterials = new WeakSet();
+function privateMaterials(instance) {
+    const materials = new Set();
+    for (const renderer of instance.root.getComponentsInChildren(MeshRenderer)) {
+        for (let slot = 0; slot < renderer.sharedMaterials.length; slot++) {
+            const rendered = renderer.getRenderMaterial(slot);
+            if (rendered && rendered !== renderer.getSharedMaterial(slot)) {
+                if (rendered.owner !== renderer) throw new Error('Private material owner mismatch');
+                materials.add(rendered);
+            }
+        }
+    }
+    return [...materials];
+}
+function retire(entry, destroyAsset = false) {
+    const { asset, instance } = entry;
+    const materials = privateMaterials(instance);
+    const captureEnabled = capture.enabled;
+    // Restore bindings before destroying the passes, and detach the retired root
+    // before re-enabling capture so it cannot acquire those materials again.
+    capture.enabled = false;
+    try {
+        instance.root.removeFromParent();
+        instance.dispose();
+        for (const material of materials) {
+            material.destroy();
+            destroyedMaterials.add(material);
+        }
+        if (destroyAsset) asset.destroy();
+        asset.decRef(!destroyAsset);
+    } finally {
+        capture.enabled = captureEnabled;
+    }
+}
+function heldCurrent() {
+    if (!current) return [];
+    const { asset, instance } = current;
+    return [
+        { name: 'GLTFAsset(current)', ref: asset, released: () => !asset.isValid && asset.refCount === 0 },
+        { name: 'instance.root', ref: instance.root },
+        ...privateMaterials(instance).map((material, index) => ({
+            name: `private material ${index}`,
+            ref: material,
+            released: () => destroyedMaterials.has(material) && material.passes.length === 0,
+        })),
+    ];
+}
 async function load(name, sourceURL) {
     const ticket = ++loading;
     status.removeAttribute('data-error');
@@ -175,10 +224,7 @@ async function load(name, sourceURL) {
         resetCamera();
         const previous = current;
         current = { asset, instance };
-        if (previous) {
-            previous.instance.dispose();
-            previous.asset.decRef();
-        }
+        if (previous) retire(previous);
         clipSelect.replaceChildren(...instance.animations.map((clip) => new Option(clip.name, clip.name)));
         clipSelect.disabled = instance.animations.length === 0;
         document.documentElement.dataset.animated = String(instance.animations.length > 0);
@@ -194,8 +240,11 @@ async function load(name, sourceURL) {
         report('loaded', status.textContent);
         window.gltfViewer = { asset, instance, sample, name, camera };
     } catch (error) {
-        if (created && current?.instance !== created) created.dispose();
-        if (retained && current?.asset !== retained) retained.decRef();
+        if (created && current?.instance !== created) {
+            retire({ asset: retained, instance: created });
+        } else if (retained && current?.asset !== retained) {
+            retained.decRef();
+        }
         if (ticket !== loading) return;
         status.dataset.error = '';
         status.textContent = error.message;
@@ -283,24 +332,13 @@ if (parameters.has('url')) {
 // §25 Lifecycle Contract：查看器同一入口路径重取当前模型——释放在显示例资产后必须能再次装载并渲染。
 installAssetLifecycle({
     label: 'gltf-viewer',
-    hold: () =>
-        current
-            ? [
-                  { name: 'GLTFAsset(current)', ref: current.asset },
-                  { name: 'instance.root', ref: current.instance.root },
-              ]
-            : [],
+    hold: heldCurrent,
     release: () => {
-        const { asset, instance } = current;
-        instance.dispose();
-        asset.destroy();
+        retire(current, true);
         current = undefined;
     },
     reacquire: async () => {
         await load(modelSelect.value);
-        return [
-            { name: 'GLTFAsset(current)', ref: current.asset },
-            { name: 'instance.root', ref: current.instance.root },
-        ];
+        return heldCurrent();
     },
 });

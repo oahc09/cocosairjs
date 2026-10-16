@@ -12,15 +12,32 @@ const modes = JSON.parse(process.env.EXAMPLE_EVIDENCE_MODES);
 const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const launcher = {
     executablePath: () => process.execPath,
-    async launch() {
+    async launch(options = {}) {
         if (mode === 'missing-browser') return { close: async () => {} };
         const child = cp.spawn(
             process.execPath,
             [
                 '-e',
                 `
+            const managed = [];
+            const shutdownCase = ${JSON.stringify(mode.startsWith('shutdown-') ? mode : '')};
+            if (shutdownCase) {
+                for (let i = 0; i < (shutdownCase === 'shutdown-double-term' ? 2 : 1); i++) {
+                    const executable = shutdownCase === 'shutdown-wrong-image' ? '/bin/sleep' : process.execPath;
+                    const args = shutdownCase === 'shutdown-wrong-image' ? ['30'] : ['-e',
+                        "process.on('SIGTERM', () => { setTimeout(() => { process.removeAllListeners('SIGTERM'); process.kill(process.pid, 'SIGTERM'); }, " +
+                        (shutdownCase === 'shutdown-delayed-term' ? 500 : 100) + "); }); setInterval(() => {}, 1000); process.stdout.write('ready');"];
+                    const owned = require('child_process').spawn(executable, args, {detached:true, stdio:['ignore','pipe','ignore']});
+                    managed.push(owned);
+                }
+            }
             process.stdin.resume();
             process.stdin.on('data', () => {
+                if (shutdownCase) {
+                    for (const owned of managed) if (shutdownCase !== 'shutdown-residual')
+                        process.kill(owned.pid, shutdownCase === 'shutdown-kill' ? 'SIGKILL' : 'SIGTERM');
+                    process.exit(0);
+                }
                 ${
                     mode === 'double-fork-orphan'
                         ? `
@@ -47,20 +64,53 @@ const launcher = {
                 process.exit(${mode === 'browser-nonzero' ? 7 : 0});
             });
             ${mode === 'forced' ? 'process.on("SIGTERM", () => {});' : ''}
-            ${mode === 'early-child-exit' ? 'process.exit(7);' : mode === 'missing-child-ready' ? '' : mode === 'wrong-child-ready' ? "process.stdout.write('WRONG\\n');" : "process.stdout.write('CPU_CHILD_READY\\n');"}
+            ${mode === 'early-child-exit' ? 'process.exit(7);' : mode === 'missing-child-ready' ? '' : mode === 'wrong-child-ready' ? "process.stdout.write('WRONG\\n');" : "if (!shutdownCase) process.stdout.write('CPU_CHILD_READY\\n'); else if (shutdownCase === 'shutdown-wrong-image') setTimeout(() => process.stdout.write('CPU_CHILD_READY\\n'), 30); else Promise.all(managed.map(child => new Promise(resolve => child.stdout.once('data', resolve)))).then(() => process.stdout.write('CPU_CHILD_READY\\n'));"}
         `,
             ],
             { detached: true, stdio: ['pipe', 'pipe', 'pipe'] },
         );
         const closed = new Promise((resolve) => child.once('close', resolve));
-        // A spawned Node process is not yet an initialized CPU browser. Keep its
-        // cold startup inside the existing startup budget, not the close budget.
-        await new Promise((resolve, reject) => {
-            child.once('error', reject);
-            child.once('exit', () => reject(Error('CPU child exited before readiness')));
-            child.stdout.once('data', (chunk) => {
-                if (chunk.toString() !== 'CPU_CHILD_READY\n') reject(Error('Invalid CPU child readiness'));
-                else {
+        let closePromise;
+        let closeError;
+        child.stdin.on('error', (error) => {
+            closeError = error;
+        });
+        const browser = {
+            close() {
+                if (!closePromise)
+                    closePromise = (async () => {
+                        if (mode === 'forced') return new Promise(() => {});
+                        if (child.exitCode === null && child.signalCode === null && !child.stdin.destroyed)
+                            child.stdin.end('close\n');
+                        await closed;
+                        if (closeError) throw closeError;
+                    })();
+                return closePromise;
+            },
+        };
+        // Readiness may reject or never resolve. The creating runtime owns the
+        // actual child immediately, so partial initialization still has cleanup.
+
+        // A spawned Node process is not yet initialized. Every readiness path
+        // shares the same immediately-owned close promise, including cancellation.
+        let initialized = false;
+        let initializationError;
+        try {
+            options.cpuOwnBrowser(browser);
+            await new Promise((resolve, reject) => {
+                const cleanup = () => {
+                    child.removeListener('error', onError);
+                    child.removeListener('exit', onExit);
+                    child.stdout.removeListener('data', onData);
+                };
+                const onError = (error) => {
+                    cleanup();
+                    reject(error);
+                };
+                const onExit = () => onError(Error('CPU child exited before readiness'));
+                const onData = (chunk) => {
+                    if (chunk.toString() !== 'CPU_CHILD_READY\n') return onError(Error('Invalid CPU child readiness'));
+                    cleanup();
                     console.log(
                         JSON.stringify({
                             cpuOnly: true,
@@ -70,17 +120,29 @@ const launcher = {
                         }),
                     );
                     resolve();
-                }
+                };
+                child.once('error', onError);
+                child.once('exit', onExit);
+                child.stdout.once('data', onData);
             });
-        });
-        if (mode === 'late-launch') await pause(hooks.limits.startupMs + hooks.limits.closeMs);
-        return {
-            async close() {
-                if (mode === 'forced') return new Promise(() => {});
-                child.stdin.end('close\n');
-                await closed;
-            },
-        };
+            if (mode === 'late-launch') await pause(hooks.limits.startupMs + hooks.limits.closeMs);
+            initialized = true;
+            return browser;
+        } catch (error) {
+            initializationError = error;
+            throw error;
+        } finally {
+            if (!initialized) {
+                try {
+                    await browser.close();
+                } catch (cleanupError) {
+                    throw new AggregateError(
+                        [initializationError, cleanupError].filter(Boolean),
+                        'CPU initialization and cleanup failed',
+                    );
+                }
+            }
+        }
     },
 };
 hooks.instrumentLauncher(launcher);
@@ -93,7 +155,12 @@ class CpuRuntime {
             this.server = http.createServer((req, res) => res.end('CPU fixture, not rendering evidence'));
             await new Promise((resolve) => this.server.listen(0, '127.0.0.1', resolve));
         }
-        this.browser = await launcher.launch({ executablePath: process.execPath });
+        this.browser = await launcher.launch({
+            executablePath: process.execPath,
+            cpuOwnBrowser: (browser) => {
+                this.pendingBrowser = browser;
+            },
+        });
         this.page = {
             evaluate: async () => ({
                 frames: 2,
@@ -108,7 +175,8 @@ class CpuRuntime {
     async stop() {
         const errors = [];
         try {
-            if (this.browser) await this.browser.close();
+            const ownedBrowser = this.browser || this.pendingBrowser;
+            if (ownedBrowser) await ownedBrowser.close();
             if (mode === 'detached-zombie') await pause(100);
         } catch (error) {
             errors.push(error);
@@ -152,7 +220,7 @@ hooks.instrumentRuntime(CpuRuntime);
             await runtime.stop();
         }
     }
-    if (mode === 'worker-nonzero') process.exitCode = 3;
+    if (mode === 'worker-nonzero' || mode === 'shutdown-application-fail') process.exitCode = 3;
 })().catch((error) => {
     console.error(error.stack);
     process.exitCode = 1;

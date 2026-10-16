@@ -365,6 +365,69 @@ describe('Evidence collector integration safeguards', () => {
     });
 });
 
+test('default quality stays a bounded five-example core gate without requiring full evidence', () => {
+    const yaml = nodeRequire('js-yaml');
+    const text = fs.readFileSync(path.join(root, '.github/workflows/format.yml'), 'utf8');
+    const workflow = yaml.load(text, { schema: yaml.JSON_SCHEMA });
+    expect(Object.keys(workflow.jobs)).toEqual(['quality']);
+    expect(Object.keys(workflow.on).sort()).toEqual(['pull_request', 'push']);
+    expect(workflow.permissions).toEqual({ contents: 'read' });
+    const job = workflow.jobs.quality;
+    expect(job['timeout-minutes']).toBe(35);
+    const checkouts = job.steps.filter((s: any) => s.uses === 'actions/checkout@v4');
+    expect(checkouts).toHaveLength(1);
+    expect(checkouts[0].with.repository).toBeUndefined();
+    expect(checkouts[0].with['persist-credentials']).toBe(false);
+    const runs = job.steps.filter((s: any) => typeof s.run === 'string').map((s: any) => s.run);
+    const shell = runs.join('\n');
+    for (const command of [
+        'npm run format:check',
+        'npm run typecheck',
+        'npm run build:all',
+        'npm run build:spark',
+        'shaders-holographic-rotation.test.cjs',
+        'example-asset-lifecycle.test.cjs',
+        'example-evidence-shutdown-policy.test.cjs',
+        'smoke-01-bootstrap.test.ts',
+        'smoke-02-scene.test.ts',
+        'smoke-03-runtime-asset.test.ts',
+        'audio-cancellation.test.ts',
+        'audio-cancellation-harness.test.ts',
+    ]) {
+        expect(shell).toContain(command);
+    }
+    expect(shell).not.toMatch(
+        /verify:test-inventory|verify:browser-matrix|example-evidence-supervisor\.test|example-evidence-process-diagnostics\.test|example-evidence-shutdown-trace|publish-example-evidence|example-evidence-campaign\.cjs (?:check|merge)|COCOS_UPSTREAM|prepare-shader-reference/,
+    );
+    const smoke = runs.find((run: string) => run.includes('for id in '));
+    expect(smoke).toBeDefined();
+    const ids = smoke
+        .match(/for id in ([^;]+); do/)[1]
+        .trim()
+        .split(/\s+/);
+    expect(ids).toEqual(['shader-driver-pilot', 'glass-refraction', 'gltf-viewer', 'input', 'spark-splats']);
+    for (const id of ids) expect(fs.existsSync(path.join(root, 'examples', id, 'example.json'))).toBe(true);
+    expect(smoke).toContain(
+        'timeout --signal=TERM --kill-after=4s 174s node tools/verify/run-example-evidence-campaign.cjs',
+    );
+    expect(smoke).toContain('--execute-authorized 2>&1 | tee');
+    expect(smoke).toContain(' + 180 ))');
+    expect(smoke).toContain(' + 1800 ))');
+    expect(smoke).not.toMatch(/--startup|--close|--allow-partial|--promote|--attempt=/);
+    expect(shell.indexOf('npm run build:spark')).toBeLessThan(shell.indexOf('example-evidence-campaign.cjs freeze'));
+    expect(shell.indexOf('example-evidence-shutdown-policy.test.cjs')).toBeLessThan(shell.indexOf('playwright@'));
+    for (const run of runs) {
+        expect(run).toMatch(/^set -euo pipefail\n/);
+        expect(run).not.toMatch(/\|\|\s*(?:true|:)|set \+e/);
+    }
+    for (const step of job.steps) expect(step['continue-on-error']).toBeUndefined();
+    const upload = job.steps.filter((s: any) => s.uses === 'actions/upload-artifact@v4');
+    expect(upload).toHaveLength(1);
+    expect(upload[0].if).toBe('always()');
+    expect(upload[0].with.path).toContain('/core-example-smoke/');
+    expect(upload[0].with.path).not.toContain('docs/evidence/');
+});
+
 describe('Committed example evidence workflow safeguards', () => {
     const workflowText = fs.readFileSync(path.join(root, '.github/workflows/example-evidence.yml'), 'utf8');
     const yaml = nodeRequire('js-yaml');
@@ -381,19 +444,17 @@ describe('Committed example evidence workflow safeguards', () => {
         return matches[0].run;
     };
 
-    test('independent PR capture checks out the exact head with read-only credentials', () => {
-        expect(Object.keys(workflow.on).sort()).toEqual(['pull_request', 'workflow_dispatch']);
+    test('manual full capture checks out the selected revision with read-only credentials', () => {
+        expect(Object.keys(workflow.on)).toEqual(['workflow_dispatch']);
         expect(workflow.permissions).toEqual({ contents: 'read' });
         expect(Object.keys(workflow.jobs)).toEqual(['capture']);
         expect(captureJob.needs).toBeUndefined();
         expect(captureJob.permissions).toBeUndefined();
         expect(captureJob['continue-on-error']).toBeUndefined();
-        expect(captureJob.if).toBe(
-            "github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository",
-        );
+        expect(captureJob.if).toBeUndefined();
         const checkouts = steps.filter((step: any) => step.uses?.startsWith('actions/checkout@'));
         expect(checkouts).toHaveLength(1);
-        expect(checkouts[0].with.ref).toBe('${{ github.event.pull_request.head.sha || github.sha }}');
+        expect(checkouts[0].with.ref).toBe('${{ github.sha }}');
         expect(checkouts[0].with['persist-credentials']).toBe(false);
         const identity = steps.find((step: any) => step.env?.EXPECTED_HEAD);
         expect(identity.env.EXPECTED_HEAD).toBe(checkouts[0].with.ref);
@@ -432,10 +493,7 @@ describe('Committed example evidence workflow safeguards', () => {
             'node tools/build/spark-runtime-tree.cjs',
         ]);
         expect(shell).not.toMatch(/\bln\s+[^\n]*node_modules/);
-        for (const filename of ['example-evidence.yml', 'format.yml']) {
-            const workflow = fs.readFileSync(path.join(root, '.github/workflows', filename), 'utf8');
-            expect(workflow).toContain('test/smoke/smoke-example-driver-pixel-diagnostics.test.ts');
-        }
+        expect(workflowText).toContain('test/smoke/smoke-example-driver-pixel-diagnostics.test.ts');
     });
 
     test('one immutable frozen ID list runs the HTML, driver and Spark pilots before every remaining ID', () => {
@@ -474,7 +532,7 @@ describe('Committed example evidence workflow safeguards', () => {
         const capture = runContaining('example-evidence-campaign.cjs freeze');
         const publish = runContaining('node tools/verify/publish-example-evidence.cjs');
         expect(protocol.DEFAULT_LIMITS).toEqual({
-            startupMs: 15000,
+            startupMs: 30000,
             closeMs: 4000,
             innerMs: 120000,
             abortMs: 125000,
@@ -518,12 +576,67 @@ describe('Committed example evidence workflow safeguards', () => {
         for (const run of [capture, publish])
             expect(run).toContain('sha256sum --check "$campaign/committed-build.sha256"');
         expect(shell).not.toMatch(/--allow-partial|--promote|--demote|gallery:manifest/);
+        expect(shell).not.toContain('example-evidence-shutdown-trace.cjs --mode=');
+        expect(shell).not.toContain('diagnostic_deadline=');
+        const manual = yaml.load(
+            fs.readFileSync(path.join(root, '.github/workflows/example-shutdown-diagnostic.yml'), 'utf8'),
+            { schema: yaml.JSON_SCHEMA },
+        );
+        expect(Object.keys(manual.on)).toEqual(['workflow_dispatch']);
+        expect(manual.permissions).toEqual({ contents: 'read' });
+        const manualSteps = Object.values(manual.jobs).flatMap((job: any) => job.steps);
+        const compatibility: any = manualSteps.find((step: any) =>
+            step.run?.includes('Legacy shutdown trace is unavailable'),
+        );
+        expect(compatibility).toBeDefined();
+        expect(manualSteps.indexOf(compatibility)).toBeLessThan(
+            manualSteps.findIndex((step: any) => step.run?.includes('npm ci')),
+        );
+        const compatibilityCheck = cp.spawnSync('bash', ['-c', compatibility.run], {
+            cwd: root,
+            encoding: 'utf8',
+            timeout: 5000,
+        });
+        expect(compatibilityCheck.status).toBe(1);
+        expect(compatibilityCheck.stderr).toContain('Legacy shutdown trace is unavailable for browser-shutdown/2');
+        expect(compatibility.run).not.toMatch(/spawn|execFile|--mode=|playwright/);
+        const diagnosticStep: any = manualSteps.find((step: any) => step.run?.includes('diagnostic_deadline='));
+        const diagnostic = diagnosticStep.run;
+        expect(diagnosticStep['timeout-minutes']).toBe(10);
+        expect(manualSteps.some((step: any) => step.run?.includes('publish-example-evidence'))).toBe(false);
+        expect(diagnostic).toContain('diagnostic_deadline=$(( $(date +%s) + 600 ))');
+        expect(diagnostic).toContain(
+            'diagnostic_deadline=$(( diagnostic_deadline < original_job_deadline ? diagnostic_deadline : original_job_deadline ))',
+        );
+        expect(diagnostic).toContain('if [ "$untraced_completed" -ne 1 ] || [ "$traced_completed" -lt 1 ]; then');
+
+        expect(diagnostic).toContain('for sample in 0 1 2 3 4 5 6; do');
+        expect(diagnostic).toContain('if [ "$(( $(date +%s) + 180 ))" -gt "$diagnostic_deadline" ]; then');
+        expect(diagnostic).toContain('--mode=availability --trace=on');
+        expect(diagnostic).toContain('EXAMPLE_EVIDENCE_LIVE_STRACE_CONTROLS=1');
+        expect(diagnostic).toContain('EXAMPLE_EVIDENCE_TRACE_DEADLINE_EPOCH="$diagnostic_deadline"');
+        expect(diagnostic).toContain('if [ "$(( $(date +%s) + 370 ))" -gt "$diagnostic_deadline" ]; then');
+        expect(diagnostic).toContain('EXAMPLE_EVIDENCE_TRACE_CONTROL_OUT="$diagnostic/live-controls"');
+        expect(diagnostic.indexOf('--mode=availability --trace=on')).toBeLessThan(
+            diagnostic.indexOf('EXAMPLE_EVIDENCE_LIVE_STRACE_CONTROLS=1'),
+        );
+        expect(diagnostic.indexOf('EXAMPLE_EVIDENCE_LIVE_STRACE_CONTROLS=1')).toBeLessThan(
+            diagnostic.indexOf('for sample in 0 1 2 3 4 5 6; do'),
+        );
+        expect(diagnostic).toContain('for control in positive browser-nonzero custodian-delayed-stop-ack; do');
+        expect(diagnostic).toContain('for trace in off on; do');
+        expect(diagnostic).toContain('r.diagnosticComplete!==true||r.canonicalEligible!==false');
+        expect(diagnostic).toContain('[ "$attribution" = MATCHED ]');
+        expect(diagnostic).not.toMatch(/publish-example|campaign\.cjs merge|--allow-partial/);
+        expect(diagnostic).not.toMatch(/sudo|sysctl\s|setcap|seccomp=/);
+        expect(capture).not.toContain('example-shutdown-diagnostics');
     });
 
     test('uploads preserve raw attempts, complete portable evidence and hidden interruption backups', () => {
         const uploads = steps.filter((step: any) => step.uses === 'actions/upload-artifact@v4');
         expect(uploads).toHaveLength(4);
         const byName = Object.fromEntries(uploads.map((step: any) => [step.with.name, step]));
+        expect(byName['example-shutdown-diagnostics']).toBeUndefined();
         const cpu = byName['example-evidence-cpu-receipts'];
         expect(cpu.if).toBe('always()');
         expect(cpu.with.path).toBe('${{ runner.temp }}/example-evidence-cpu/');

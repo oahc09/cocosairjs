@@ -1,6 +1,6 @@
 # Fixed-snapshot example evidence campaigns
 
-This workflow collects genuine browser results in small, bounded attempts, then publishes one complete, strictly validated campaign. A subset is never a release PASS. The current ordinary-browser scope is **182 examples and 183 sessions**, including the extra interactive-geometry mode. Scope is derived from independent discovery of all example specifications, matched one-to-one against the live manifest before filtering DevTools, rather than a permanent numeric allowlist. Every non-DevTools example and every declared mode must be present; deleting an ID from the manifest or changing only its DevTools flag cannot shrink the campaign. A missing entry page is an error, not a reason to skip its example.
+This **manual milestone workflow** collects genuine browser results in small, bounded attempts, then publishes one complete, strictly validated campaign. A subset is never a release PASS. The current ordinary-browser scope is **182 examples and 183 sessions**, including the extra interactive-geometry mode. Scope is derived from independent discovery of all example specifications, matched one-to-one against the live manifest before filtering DevTools, rather than a permanent numeric allowlist. Every non-DevTools example and every declared mode must be present; deleting an ID from the manifest or changing only its DevTools flag cannot shrink the campaign. A missing entry page is an error, not a reason to skip its example.
 
 The five historical `requiresDevTools` examples remain a separate contract, collected by `tools/verify/devtools-examples.cjs`. Their evidence neither fills ordinary-browser gaps nor becomes current merely because the ordinary campaign passed.
 
@@ -68,6 +68,14 @@ The supervised collector fixes `ESBUILD_WORKER_THREADS=0` before the first esbui
 
 The supervisor bounds original invocation-to-readiness, native-frame readiness (or the UI shell's explicit DOM readiness), attempt duration, graceful close, abort, and final stop. Receipts identify the real worker and browser PID/start identity/namespace, native exit and stdio close, and the in-worker HTTP server's listen/close events. A fabricated server process, a timeout flag without physical closure, or a matching screenshot alone is insufficient. A Python parent holds process-local child-subreaper custody so a browser descendant cannot evade ownership by creating a new process group. Inner Node receipts stay provisional until all adopted children have been waited, kernel absence is established, and the custodian has genuinely exited and closed its streams. A runtime-close barrier uses private inherited file descriptors and the existing verified parent/worker IPC channel. It blocks a subsequent mode while an adopted child or zombie remains; unexpected identity, sequence, EOF, or missing acknowledgement fails closed. Raw custody receipts, logs, and provisional receipts are retained with hashes. If the worker exits with a custody acknowledgement in flight, retain the failure, drain only within the original barrier and absolute deadlines, and write the provisional failure receipt before closing the private pipes. Cancellation must still interrupt that drain; a late acknowledgement cannot turn a failed worker into a PASS. Unknown ownership, missing close, forced termination, or a startup deadline failure stops the campaign. Do not lengthen timeouts or wait for natural media end to manufacture a PASS.
 
+An authenticated next stop request can arrive after its previously started worker has exited or changed identity. It remains rejected: the earlier start is correlation evidence, not current identity authority. Return an explicit failed response only for that exact prior-start/request/runtime chain, retain a separate rejection record, and close the chain permanently. This lets the inner supervisor persist its failure receipt within the original deadlines instead of losing it to an immediate custodian kill. Never record the rejected request as a successful barrier, infer absence from an unreadable identity, accept a late response after its pending deadline, or permit another runtime after rejection. Invalid tokens, unknown request origins, and sequence violations retain emergency fail-closed handling. A complete failure receipt and kernel closure still do not satisfy campaign admission.
+
+Abort cleanup retains its original failure. A genuine child exit/close event or an exact, stable terminal-process observation only avoids an unusable IPC send; it does not establish reaping or absence. Preserve the request, target identity, send and asynchronous result chain. Any pending result must settle within the original close and absolute deadlines, including cancellation during finalization. Only the diagnostic CPU `browser-nonzero` control may classify an asynchronous `EPIPE` as an expected secondary failure, and only with that unique sending chain, proof that the same worker had exited or was terminal when the callback ran, and all original failed-receipt and physical-closure evidence. The production attempt remains FAIL. Unknown identities, a still-live worker, synchronous exceptions, other errors, and historical `EPIPE` records without that chain remain rejected.
+
+Apply the same bounded delivery lifecycle to custody-response forwarding. A strictly validated rejection that proves the original worker is no longer authorized is retained with its exact request, worker, and custody event, but is not forwarded to that worker. This skip preserves the root failure; it does not acknowledge a successful stop. Other responses use the same exact child identity and terminal-state guard as abort delivery. Register any asynchronous send before finalization can seal the receipt, and settle it within the original request deadline or cancellation. A rejected response, skipped delivery, or failed send cannot reopen the custody chain or change the attempt to PASS.
+
+Owned-process diagnostics are descriptive only. The supervisor records bounded, identity-checked observations at first ownership and on receipt of a runtime stop-begin event, retaining only fixed executable/role/flag enums. It never publishes raw command lines, arbitrary paths, unknown argument values, or hashes of those private values. A disappeared, reused, unreadable, or already-zombie process remains explicitly unknown; a later adopted-child record may be correlated only by its exact namespace, PID, and start ticks. These observations cannot identify a signal sender or turn a signalled child, failed custody barrier, or incomplete attempt into a PASS.
+
 Each attempt and segment is immutable and remains `partial: true`, `completed: false`. Retain the first failed result even if an explicitly admitted same-input retry later passes. An allowed retry uses the next attempt number and a new directory:
 
 ```bash
@@ -118,23 +126,248 @@ Publication is a guarded multi-file transaction, not an assertion that many file
 
 If publication is interrupted, stop. Keep the guard, immutable package, and retained staging files. Inspect its listed before/after hashes and restore a consistent pre-publication state or complete a reviewed recovery; **never delete the guard merely to clear a gate**. The publisher refuses automatic retries over an incomplete transaction or an existing immutable package. Do not run the old canonical collector as a workaround.
 
-## CI has two separate checks
+## Routine PR checks and manual full evidence
 
-1. **Committed-evidence integrity, before builds:** validate the committed campaign, its complete provenance, frozen scope, metadata delta, and byte identity before a CI build replaces the checked-in candidate. The official `tools/build/prepare-package.cjs` may first generate the ignored npm packaging copies from those committed bytes; it must not rebuild or relabel the candidate. This catches stale or hand-edited committed evidence.
-2. **Fresh CI evidence, after builds:** build the current main runtime, declarations, and Spark artifacts; create a fresh freeze; run the full bounded campaign; strictly merge and publish it into that checkout. Upload the fresh canonical report and its complete provenance together, including failed attempts and interruption diagnostics. Downstream evidence-dependent tests must read this newly collected candidate's evidence.
+The default `Code quality / quality` job is deliberately small for rapid iteration:
 
-Neither layer substitutes for the other. Passing the committed-evidence check does not prove the new CI bundle, and a fresh bundle cannot legitimately reuse committed evidence from its previous build identity. Tests may use clearly labelled synthetic CPU fixtures in disposable directories to verify protocol rejection; these are never production browser evidence.
+- Install dependencies and verify the committed Spark generated sources.
+- Check formatting and types, then build development/minified runtime, source maps,
+  declarations, and the separate Spark bundle.
+- Run focused bootstrap, scene, runtime-asset and audio cancellation unit tests,
+  shader rotation and resource-lifecycle regressions, and the compact shutdown-policy suite.
+- Run five bounded real Chromium examples: `shader-driver-pilot` (the original
+  15 samples / 60 channels / ±2 tolerance), `glass-refraction`, `gltf-viewer`
+  (resource ownership/release), `input` (interaction), and `spark-splats`
+  (the separate runtime bundle).
 
-### Recovering stale committed evidence on an authorized CI runner
+Each example uses the existing strict single-attempt runner, with the production
+30-second infrastructure startup wait, four-second close and 139-second final bounds.
+Startup includes input/runtime checks and process/page initialization; it is not
+a product performance acceptance metric. The shared `example-evidence-limits.json`
+is used by the campaign, supervisor and Python custodian. No retries are added.
+Earlier 15-second timeout originals remain failures. Failures stop
+the job and retain originals. The five-example results are **partial smoke**,
+never a complete campaign, and are not merged, published or written over canonical
+evidence. A stale canonical report is not a routine PR prerequisite. No full
+three-browser matrix, duplicate supervision suite or external reference checkout
+runs on the default path. Core CI green does not claim complete example coverage.
 
-If the local environment cannot launch the required browser, `.github/workflows/example-evidence.yml` can collect the committed candidate on an official GitHub runner. It checks out the exact same-repository PR head (or the explicit workflow-dispatch revision), has read-only repository permissions and no persisted checkout credentials, and never pushes changes. It installs real dependencies and runs the official package-copy preparation without rebuilding the SDK. All tracked build hashes are recorded before preparation and checked afterward and after collection; source-map and generated-source preflight must also pass.
+### Manual milestone collection
 
-A clean checkout does not contain the ignored `output/spark-runtime-tree-manifest.json` receipt. Before preflight, both workflows snapshot the three committed Spark generated-source files, run the official `tools/build/spark-runtime-tree.cjs` generator, and require all three original SHA-256 values plus the tracked Git diff to remain unchanged. This legitimately regenerates the missing receipt; it does not authorize updating or silently repairing a stale generated source. Never hand-write the receipt or rely on a local ignored output cache being present on CI.
+`.github/workflows/example-evidence.yml` runs only through `workflow_dispatch`.
+Select the intended revision explicitly. The runner checks out that exact revision,
+has read-only repository permissions, keeps no checkout credentials, and never
+pushes changes. It retains the full CPU contract suites and exact discovered scope.
+It installs dependencies and prepares ignored package copies without rebuilding
+the committed SDK; all tracked build hashes are checked before and after collection.
 
-The runner creates its own fresh browser/Python freeze. It first collects HTML, shader-driver, and Spark pilots, with genuine closure and strict admission after each, then collects the remaining exact frozen scope. Every invocation retains the same bounded supervisor and an external 174-second TERM /178-second KILL deadline. The 90-minute job records its budget before checkout and dependency installation; collection stops starting attempts before its 80-minute deadline, reserving time for publication and artifact upload. A failure retains partial originals and prevents publication. Only a successful strict full publication produces the new publication artifact; a failed run must not label the old canonical files as its result.
+A clean checkout lacks the ignored `output/spark-runtime-tree-manifest.json`.
+Both workflows snapshot the three committed Spark generated-source files, run the
+official generator, and require the original SHA-256 values and tracked diff to
+remain unchanged. Do not hand-write this receipt or silently repair stale source.
 
-Download and independently validate the complete portable publication, its exact committed candidate identity, and the permitted promotion-only delta before applying it to the branch. Submit those verified files normally. Do not use this recovery workflow to bypass the quality workflow's committed-evidence gate or to import evidence from rebuilt, different SDK bytes. The next quality run still performs its independent fresh-build collection and full tests.
+The manual runner creates a fresh browser/Python freeze, runs HTML, shader-driver
+and Spark pilots, then every remaining frozen ID/mode. It retains the same
+174-second TERM /178-second KILL outer bound per invocation. Its 90-minute job
+records the budget before installation and stops starting attempts before the
+80-minute deadline to reserve publication/upload time. Every failure retains
+partial originals and prevents publication. Only strict full success creates a
+publication artifact; old canonical files are never relabelled as new results.
+
+Review the complete portable package, exact committed candidate identity and
+promotion-only delta before applying it to a branch in a normal commit. Full
+coverage, release audits, full test discovery and multi-browser validation remain
+explicit milestone work. Historical failures remain historical failures; narrowing
+the default PR gate does not turn them into PASS or bypass strict publication.
 
 ## Auxiliary GPU mismatch diagnostics
 
 The Driver Pilot collector may retain a separate diagnostic replay after its original pixel readback. It must preserve the original pixels, sample locations, dimensions, tolerance, validator failure, and API proof. A replay is interpretable only after the unchanged submitted shader, copied uniform data, and draw state reproduce every original sample byte exactly. Instrumented UV, SDF, and transition values are auxiliary observations from a separately compiled program, never replacement acceptance pixels or evidence that the original compiler evaluated every intermediate identically. Restore all touched GL state and dispose temporary resources; retain diagnostic failures and limitations. Do not hide original GL errors, alter example behavior, or relax a pixel oracle to clear a collection gate.
+
+A process may first be observed by `/proc` between fork and detached process-group
+creation. Preserve that first observation. A later exact browser-spawn event may
+prove the same PID/start-ticks/namespace became its own group leader, provided
+its embedded initial identity and detached group match and the spawn precedes
+group observation. Retain every previously known group member and require all
+exact disappearance events before group-empty. Missing, mismatched, or late
+leader proof must fail; never rewrite an old receipt to repair its verdict.
+
+## Shutdown signal diagnostics
+
+The versioned `example-evidence-attempt/2` and `browser-shutdown/2` contract
+separates application measurements from resource closure. Before closing, retain
+the complete immutable application result. An authenticated synchronous closing
+ACK must confirm the live browser and the original functional artifact before
+context/browser shutdown begins. The original four-second budget covers the ACK,
+close operations, and kernel drain together; it is never renewed at a phase change.
+The supervisor preserves its own clock's budget reference, while the custodian
+uses a conservative local remainder. No cross-process sub-millisecond clock
+comparison establishes causality.
+
+Keep every raw waitpid status, exact disappearance, and final ECHILD. Exit-zero
+children require physical collection but no complete pre-close child snapshot.
+A raw SIGTERM can be classified `shutdown-compatible` only for that exact child
+observed live before closing, with its browser ancestry and frozen executable
+image bound to the same identity. Role strings are finite diagnostic enums, not
+an authority or a fixed GPU/audio allowlist. Unknown identity or missing live
+proof cannot earn this classification. It does not prove who sent the signal.
+Page crashes and unexpected browser disconnections latch failures. Parent
+failures, other signals, forced cleanup, unresolved identities, and leftovers
+remain failures. An application assertion failure can have a clean physical
+shutdown; its overall result still fails. Earlier schemas and recorded failures
+are never reinterpreted by this new policy.
+
+The application original must be a bounded, no-follow regular file within its
+attempt. Retain screenshots, probe values, API proofs, and all pre-close HTTP
+observations without replacement; only explicitly defined closing observations
+may be appended. Publish complete originals atomically without clobbering an
+existing record, and wait for the actual writer's terminal receipt before reading.
+
+Signal tracing is an independent manually dispatched troubleshooting workflow.
+It is not a dependency or admission gate for the ordinary complete campaign.
+The retained legacy trace classifier does not support the new shutdown schema.
+Its manual workflow rejects that version before dependency installation or any
+browser/tracer launch. It is temporarily unavailable on this revision; the
+following legacy protocol remains documented for historical originals, not as a
+claim of current diagnostic compatibility.
+The separate shutdown-trace probe runs outside the existing outer supervisor.
+It never replaces the browser executable or inserts a process into the
+Python-to-inner-Node custody channel. Its reports are diagnostic-only with
+`canonicalEligible: false`; they cannot be merged or published as example
+evidence. The ordinary campaign uses another fresh freeze and all original
+182-example / 183-session admission rules.
+
+Run the parser tests first. The official runner then makes one non-privileged,
+self-spawned strace availability probe. A ptrace restriction is a diagnostic
+failure: do not change sysctl, capabilities, seccomp, sandbox flags, or security
+settings to enable tracing. Never retry a denied local probe through escalation.
+Known-sender CPU controls must retain the original positive and negative
+verdicts, exact exit/stdio-close receipts, and kernel ECHILD before browser
+diagnostics can start.
+
+The traced/untraced diagnostic CPU pairs use the same existing production
+`DEFAULT_LIMITS`: now 30-second startup, 4-second close, and the unchanged
+120/125/133/139-second inner/abort/force/final deadlines. Tracing adds observation
+overhead, so these pairs remain separate from lifecycle regression tests.
+The regression fixtures use explicit ready handshakes and a fixed bounded test
+envelope; obsolete 800/300-millisecond cold-start constants are not product
+performance requirements. The current shared startup and close bounds are 30/4 seconds. Retain
+any earlier instrumented short-budget failure as FAIL; a new diagnostic budget
+does not reclassify it. The 600-second phase limit and 180-second remaining-time
+admission check still apply to every pair member.
+
+The target-browser signal investigation uses a separate fixed
+`example-shutdown-target-profile/1` profile for both traced and untraced runs:
+30-second startup, 4-second close, and the same 120/125/133/139-second absolute
+deadlines. Its startup clock begins at the independent runner's entry and includes
+all input and runtime checks. This allows observation overhead; it is not a
+production startup-performance result. The ordinary frozen campaign now has the same 30-second startup bound but still
+rejects diagnostic profiles, including records with their
+labels removed or mismatched original artifacts. Keep earlier 15-second failures
+unchanged.
+
+The independent target runner binds its profile to the ordinary freeze's exact
+input identity and verifies inputs and runtime before and after execution. It
+retains the collector output and full custody originals, but creates no ordinary
+attempt, segment, admission, or publication record. The profile is bound through
+the outer request, Python observation, inner pending receipt, observer, and final
+receipt. Explicit diagnostic validation reuses the existing identity and closure
+rules; unknown profiles or arbitrary deadline overrides fail. Only the dedicated
+signal report may consume this profile, always with `canonicalEligible: false`.
+
+The tracer wrapper also has two explicit real-process CPU cancellation controls:
+TERM delivered to that wrapper and a parser input-limit cancellation. These must
+remain failed diagnostics while proving outer/custodian/inner identity-linked
+closure, adopted-process reaping and absence, final ECHILD, and tracer
+exit/stdio-close plus FIFO EOF. Their retained originals are uploaded separately;
+a missing pending receipt cannot satisfy ordinary campaign admission. The live
+control suite receives the original global deadline, reserves its full two-case
+budget before starting, and rechecks 180 seconds of remaining time before each
+case. A failed case must finish cleanup before the suite stops; it must never
+start its next case while the failed case has unknown closure. A failure
+to prove closure stops the job before any target browser. These controls do not
+establish safety after a wrapper or parent SIGKILL; missing closure in that case
+is UNKNOWN and stops the job.
+
+The TERM control uses the existing hanging CPU fixture. The input-limit control
+uses the existing delayed-stop-ACK fixture, whose original custodian produces a
+real signal syscall. Arm the reduced parser limit before publishing readiness;
+retain the input-byte boundary and require new traced bytes to cross it. A
+control that never triggers its intended cancellation fails. Neither control
+adds a process to the production custody chain.
+
+The live trace observes only `kill`, `tkill`, `tgkill`, and
+`pidfd_send_signal`, plus selected TERM/KILL deliveries. Record that exact filter
+in each diagnostic report. Kernel wait/reap and ECHILD proof continues to come
+from the original custody artifacts; offline compatibility with historical wait
+records does not expand the live filter. Fixed killed-by terminal markers are
+diagnostic observations only: they establish neither a signal sender nor
+physical closure. An unfinished syscall terminated with its own traced thread
+has no inferred return value and cannot establish successful signal delivery.
+The fixed no-siginfo `stopped by SIGTERM` / `stopped by SIGKILL` records are stop
+observations only. They have no sender identity or exit status, cannot establish
+delivery attribution or closure, and do not resolve a pending syscall.
+Persist fixed numeric identities, signal and result enums, and bounded
+filtered records. Do not retain raw argv, environment values, arbitrary text,
+or address contents. Mark filtered traces as such rather than calling them
+complete raw strace logs. Bind sender and target to their exact PID namespace,
+start ticks and executable-image observations; ambiguous or missing links stay
+UNKNOWN. Process-role hints are not executable authentication.
+Retain a separate attribution entry for every signaled adopted descendant, within
+the existing identity and output bounds. Match each exact descendant independently
+against its own sender, delivery, authenticated executable images, lifecycle, and
+waitpid/absence records. Do not assume a single descendant or require a particular
+role hint. Preserve every unmatched or unsupported case as UNKNOWN. The aggregate
+is MATCHED only when the nonempty full set is matched; one attributed child cannot
+stand in for another. A complete diagnostic can retain an expected, fully closed
+failed attempt, but it never changes that original production failure.
+Use the recorded timestamp precision when checking causality. A send must occur
+within its browser's shutdown lifetime; delivery is bounded by that recipient's
+reap record, rather than an assumed ordering before the sender's close event.
+Sample threads and their children only inside already-proven owned processes.
+Each thread observation must retain its own start ticks, the same process leader,
+namespace, and verified ancestry before and after bounded reads. Threads and
+processes share the existing identity/output limits. Missing, reused, changed, or
+unreadable identities cannot establish a sender or recipient; never infer a
+thread identity from its process leader alone.
+A valid four-syscall trace can be empty after a normal close. It remains UNKNOWN
+only when the parser, real traced-root identity, original result classification,
+and complete physical closure all validate. Availability and known-sender
+controls still require their real signal correlation; an empty trace cannot
+satisfy either proof.
+
+Each diagnostic keeps its explicitly recorded fixed profile. The whole diagnostic
+phase is bounded to the lesser of 600 seconds and the remaining original job
+budget, with one untraced target control and at most
+six traced target attempts. Do not start another target with fewer than 180
+seconds remaining; stop after the first complete attribution of every signaled
+descendant in that attempt, otherwise retain
+UNKNOWN. At least one complete untraced/traced target pair is required; an
+unexecuted or half-finished pair cannot satisfy the diagnostic preflight. Keep
+every attempt, including failed and untraced results. Any missing
+physical closure, output overflow, timeout, ptrace failure, or incomplete trace
+ends the diagnostic phase and prevents the ordinary campaign from starting.
+No count of successful repeats can erase an earlier failed attempt.
+
+### Authenticated shutdown rejection and failed originals
+
+A valid private-IPC request can describe an unsuccessful lifecycle: a browser may
+already have exited, a functional original may be unavailable, or an otherwise
+complete browser exit may be nonzero. These observations never authorize closing
+or become a successful barrier. The custodian records a fixed semantic rejection,
+returns `ok: false`, permanently closes that request chain, and lets the existing
+failure cleanup preserve the inner receipt within the original close deadline.
+The raw failure, nonzero exit, and failed final admission remain visible. No case
+name or exit code is promoted to success. Unknown observations remain failed.
+
+Token, sequence, trusted-peer and budget-reference violations are protocol
+failures, outside this recoverable response boundary. Emergency cleanup retains
+the outer raw cause; it must not be labelled a clean receipt. Semantic rejection
+does not renew the close clock: a writer or adopted process still present at the
+original deadline is force-cleaned and the attempt remains failed.
+
+### Resource-release observations
+
+Resource lifecycle checks wait for two completed engine UPDATE-to-DRAW cycles with distinct increasing director frame numbers and a microtask checkpoint between them. Browser requestAnimationFrame callbacks plus a sleep do not establish that deferred engine destruction ran: GLTF root teardown can enqueue asset destruction in a microtask, and capture teardown can enqueue its RenderTexture for the following batch. Each settlement has one fixed eight-second deadline, is also bounded by the existing whole-attempt deadline, and retains its actual frame observations; missing updates, late frames, or still-live owned resources remain failures. Never manually flush the private destroy queue, change object flags, drop resource entries, or replace real cleanup predicates with constants.
+
+The immutable application result retains the complete lifecycle report, including both settlement phases and per-resource release/reacquire observations. Private MaterialInstance ownership must be retired explicitly and verified by its real destroy call and cleared passes; an explicit asset reference must also be balanced. Scene readback uses the non-allocating getRenderMaterial API, including existing per-slot instances, rather than the allocating material getter. These rules do not alter pixel tolerances or make physical browser closure stand in for resource cleanup.

@@ -21,11 +21,13 @@ const CUSTODY_ROLES = Object.freeze(['raw', 'nodeReceipt', 'journal', 'stdout', 
 const REQUIRED_FILES = [
     '.github/workflows/format.yml',
     '.github/workflows/example-evidence.yml',
+    '.github/workflows/example-shutdown-diagnostic.yml',
     'package.json',
     'package-lock.json',
     'examples/files.json',
     'docs/example-api-inventory.json',
     'tools/verify/example-evidence-custodian.py',
+    'tools/verify/example-evidence-limits.json',
     'build/cocosair.module.js',
     'build/cocosair.module.d.ts',
     'build/cocosair.module.js.map',
@@ -52,14 +54,7 @@ const INPUT_TREES = [
 ];
 const OPTIONAL_TREES = ['build/gltf-decoders', 'build/spark-types', 'build/fflate', 'build/devtools'];
 const OPTIONAL_FILES = ['build/package.json', 'build/cocosair.legacy.d.ts', 'build/spark.module.meta.json'];
-const DEFAULT_LIMITS = Object.freeze({
-    startupMs: 15000,
-    closeMs: 4000,
-    innerMs: 120000,
-    abortMs: 125000,
-    forceMs: 133000,
-    finalMs: 139000,
-});
+const DEFAULT_LIMITS = Object.freeze(require('./example-evidence-limits.json'));
 
 function stable(value) {
     if (Array.isArray(value)) return '[' + value.map(stable).join(',') + ']';
@@ -306,15 +301,16 @@ function validateRuntimeIdentity(identity, limits = DEFAULT_LIMITS) {
             HEX64.test(custody.helper.sha256),
         'invalid custody helper identity',
     );
-    for (const key of Object.keys(DEFAULT_LIMITS))
-        invariant(Number.isInteger(limits[key]) && limits[key] > 0, `invalid limit ${key}`);
-    invariant(limits.startupMs <= 15000 && limits.closeMs <= 4000, 'startup/close limits exceed contract');
+    for (const [key, maximum] of Object.entries(DEFAULT_LIMITS))
+        invariant(
+            Number.isInteger(limits[key]) && limits[key] > 0 && limits[key] <= maximum,
+            `limits exceed contract: ${key}`,
+        );
     invariant(
         limits.startupMs < limits.innerMs &&
             limits.innerMs < limits.abortMs &&
             limits.abortMs < limits.forceMs &&
-            limits.forceMs < limits.finalMs &&
-            limits.finalMs <= 300000,
+            limits.forceMs < limits.finalMs,
         'invalid bounded deadline ordering',
     );
 }
@@ -522,6 +518,21 @@ function writeAttempt({ repo = REPO, freeze, report, out }) {
     value.admissionErrors = value.rawCollector ? [] : ['raw collector report absent'];
     value.rawReceipt = reference(report.receipt.output.receipt, out);
     value.logs = ['stdout', 'stderr'].map((stream) => ({ stream, ...reference(report.receipt.output[stream], out) }));
+    value.functionalArtifacts = [];
+    for (const runtime of report.receipt.runtimes || []) {
+        const proof = report.receipt.custody?.observation?.barriers?.find(
+            (event) => event.phase === 'closing' && event.runtimeId === runtime.runtimeId,
+        );
+        const original = proof?.snapshot?.functionalResult;
+        if (!original || !fs.existsSync(original.path)) {
+            value.admissionErrors.push(`functional original missing: ${runtime.runtimeId}`);
+            continue;
+        }
+        const ref = reference(original.path, out);
+        if (ref.bytes !== original.bytes || ref.sha256 !== original.sha256)
+            value.admissionErrors.push('functional original changed');
+        value.functionalArtifacts.push({ runtimeId: runtime.runtimeId, mode: runtime.mode, ...ref });
+    }
     value.custodyArtifacts = {};
     for (const role of CUSTODY_ROLES) {
         const source = report.receipt.custody?.artifacts?.[role];
@@ -547,6 +558,12 @@ function writeAttempt({ repo = REPO, freeze, report, out }) {
     for (const role of CUSTODY_ROLES) {
         const source = report.receipt.custody?.artifacts?.[role];
         if (typeof source?.path === 'string') originFiles.push(path.resolve(source.path));
+    }
+    for (const runtime of report.receipt.runtimes || []) {
+        const proof = report.receipt.custody?.observation?.barriers?.find(
+            (event) => event.phase === 'closing' && event.runtimeId === runtime.runtimeId,
+        );
+        if (proof?.snapshot?.functionalResult?.path) originFiles.push(proof.snapshot.functionalResult.path);
     }
     for (const row of rows) {
         if (row.artifact?.path) originFiles.push(path.resolve(repo, row.artifact.path));
@@ -618,6 +635,66 @@ function createSegment({ freeze, attempts, out, segmentId } = {}) {
     writeImmutable(out, segment);
     return segment;
 }
+function validateLifecycleReport(report) {
+    const prefix = 'resource-released lifecycle report';
+    invariant(report && report.schemaVersion === 'example-asset-lifecycle/1', `${prefix}: missing/unknown schema`);
+    invariant(Number.isSafeInteger(report.held) && report.held > 0, `${prefix}: invalid held count`);
+    invariant(Number.isSafeInteger(report.runs) && report.runs > 0, `${prefix}: missing execution`);
+    invariant(report.released === true && report.reloaded === true, `${prefix}: release/reacquire failed`);
+    invariant(Array.isArray(report.leaked) && report.leaked.length === 0, `${prefix}: leaked resources`);
+    invariant(Array.isArray(report.errors) && report.errors.length === 0, `${prefix}: retained errors`);
+    for (const phase of ['release', 'reacquire']) {
+        const proof = report.settlement?.[phase];
+        invariant(
+            proof &&
+                proof.source === 'director-update-then-draw' &&
+                proof.completed === true &&
+                proof.cycles === 2 &&
+                proof.deadlineMs === 8000 &&
+                Number.isFinite(proof.elapsedMs) &&
+                proof.elapsedMs >= 0 &&
+                proof.elapsedMs < proof.deadlineMs &&
+                Array.isArray(proof.frames) &&
+                proof.frames.length === 2 &&
+                proof.frames.every((frame) => Number.isSafeInteger(frame) && frame >= 0) &&
+                proof.frames[1] > proof.frames[0],
+            `${prefix}: invalid ${phase} engine settlement`,
+        );
+    }
+    invariant(
+        report.settlement.reacquire.frames[0] > report.settlement.release.frames[1],
+        `${prefix}: reacquire must follow release engine cycles`,
+    );
+    const before = report.observations?.released;
+    const after = report.observations?.reacquired;
+    invariant(
+        Array.isArray(before) && before.length === report.held && Array.isArray(after) && after.length > 0,
+        `${prefix}: incomplete resource observations`,
+    );
+    for (const [phase, rows] of [
+        ['released', before],
+        ['reacquired', after],
+    ]) {
+        for (const row of rows) {
+            invariant(
+                row &&
+                    typeof row.name === 'string' &&
+                    row.name.length > 0 &&
+                    typeof row.valid === 'boolean' &&
+                    typeof row.predicate === 'boolean' &&
+                    typeof row.released === 'boolean' &&
+                    (row.refCount === null || (Number.isSafeInteger(row.refCount) && row.refCount >= 0)) &&
+                    (row.passCount === null || (Number.isSafeInteger(row.passCount) && row.passCount >= 0)),
+                `${prefix}: malformed resource observation`,
+            );
+            invariant(row.predicate || row.released === !row.valid, `${prefix}: inconsistent default validity`);
+            invariant(
+                phase === 'released' ? row.released : row.valid && !row.released,
+                `${prefix}: ${phase} resource still invalid`,
+            );
+        }
+    }
+}
 function checkValidators(row, mode, allowApiFailure, spec) {
     invariant(Array.isArray(row.validatorResults) && row.validatorResults.length > 0, `${row.id}: missing validators`);
     const ids = new Set();
@@ -657,6 +734,7 @@ function checkValidators(row, mode, allowApiFailure, spec) {
             .sort((a, b) => a - b);
         invariant(same(expected, actual), `${row.id}: missing/duplicate interaction step ${validator}`);
     }
+    if (ids.has('resource-released')) validateLifecycleReport(row.lifecycleReport);
     const failures = row.validatorResults.filter((v) => v.state !== 'PASS');
     invariant(row.result === (failures.length ? 'FAIL' : 'PASS'), `${row.id}: row result disagrees with validators`);
     invariant(
@@ -965,6 +1043,67 @@ function checkAttempt(attempt, ref, owner, freeze, options) {
         custodyCheck.ok,
         `${report.id}: kernel custody originals invalid: ${(custodyCheck.errors || []).join('; ')}`,
     );
+
+    invariant(
+        Array.isArray(report.functionalArtifacts) &&
+            report.functionalArtifacts.length === report.receipt.runtimes.length,
+        `${report.id}: pre-close application originals missing`,
+    );
+    for (const [index, runtime] of report.receipt.runtimes.entries()) {
+        const ref = report.functionalArtifacts[index];
+        const proof = report.receipt.custody.observation.barriers.find(
+            (event) => event.phase === 'closing' && event.runtimeId === runtime.runtimeId,
+        );
+        const original = proof?.snapshot?.functionalResult;
+        invariant(
+            ref.runtimeId === runtime.runtimeId &&
+                ref.mode === runtime.mode &&
+                original &&
+                ref.path === mappedPath(original.path) &&
+                ref.bytes === original.bytes &&
+                ref.sha256 === original.sha256,
+            `${report.id}: application original origin mismatch`,
+        );
+        const functional = JSON.parse(fs.readFileSync(resolveRef(ref, file, { repo, portable }), 'utf8'));
+        invariant(
+            functional.schemaVersion === 'example-functional-result/2' &&
+                functional.id === report.id &&
+                functional.mode === runtime.mode &&
+                functional.completed === original.completed &&
+                functional.result === original.result,
+            `${report.id}: application original semantic mismatch`,
+        );
+        const row = rawRows[index];
+        invariant(
+            row && same(row.functionalResult, original),
+            `${report.id}: application/close result binding missing`,
+        );
+        const applicationFields = (input) => {
+            const value = JSON.parse(JSON.stringify(input));
+            for (const key of ['closure', 'functionalResult', 'networkAssets', 'errors', 'result']) delete value[key];
+            value.validatorResults = value.validatorResults.filter(
+                (check) => check.validatorId !== 'post-close-no-runtime-error',
+            );
+            return value;
+        };
+        invariant(
+            functional.output &&
+                same(applicationFields(functional.output), applicationFields(row)) &&
+                same(row.errors.slice(0, functional.output.errors.length), functional.output.errors) &&
+                same(
+                    row.networkAssets.slice(0, functional.output.networkAssets.length),
+                    functional.output.networkAssets,
+                ),
+            `${report.id}: pre-close application measurements were discarded or changed`,
+        );
+        if (row.result === 'PASS')
+            invariant(
+                functional.result === 'PASS' &&
+                    row.closure?.schemaVersion === 'example-close-result/2' &&
+                    row.closure.result === 'CLOSED',
+                `${report.id}: application or closure did not pass`,
+            );
+    }
 
     const entry = freeze.scope.find((e) => e.id === report.id);
     invariant(entry, `unknown example ID: ${report.id}`);
@@ -1300,6 +1439,7 @@ module.exports = {
     validateCampaign,
     validateRuntimeIdentity,
     inspectSegments,
+    validateLifecycleReport,
     buildPublication,
     validatePublication,
 };

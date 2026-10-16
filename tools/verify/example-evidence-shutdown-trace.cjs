@@ -1,0 +1,2709 @@
+'use strict';
+/**
+ * Opt-in, Linux-only shutdown diagnosis. Never changes admission, lifecycle, or publication.
+ * strace is outside the ORIGINAL outer Node command. Its private FIFO is consumed in memory;
+ * only fixed numeric/enum fields are retained. Raw strace text is deliberately NOT retained.
+ * Original collector, Python custody, and campaign artifacts remain untouched.
+ */
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const { spawn, spawnSync } = require('node:child_process');
+const { performance } = require('node:perf_hooks');
+const {
+    DEFAULT_LIMITS,
+    TARGET_DIAGNOSTIC_LIMITS,
+    validateTargetDiagnosticProfile,
+    limitsOf,
+    validateAttemptReceipt,
+    validateCustodyArtifacts,
+    validAbortObservation,
+} = require('./example-evidence-supervisor.cjs');
+const { planTargetDiagnostic, readTargetDiagnostic } = require('./run-example-shutdown-target.cjs');
+
+const REPO = path.resolve(__dirname, '../..');
+const SCHEMA = 'example-evidence-shutdown-diagnostic/1';
+const SYSCALLS = Object.freeze(['kill', 'tkill', 'tgkill', 'pidfd_send_signal', 'wait4', 'waitid']);
+// Kernel wait/reap evidence remains in the original Python custody artifacts, not this sidecar filter.
+const TRACE_SYSCALLS = Object.freeze(['kill', 'tkill', 'tgkill', 'pidfd_send_signal']);
+const CPU_CASES = Object.freeze(['positive', 'browser-nonzero', 'custodian-delayed-stop-ack']);
+const BOUNDS = Object.freeze({
+    inputBytes: 8 * 1024 * 1024,
+    outputBytes: 8 * 1024 * 1024,
+    lineBytes: 8192,
+    events: 100000,
+    identities: 256,
+    identityBytes: 1024 * 1024,
+});
+const SIGNALS = new Set([
+    'SIGHUP',
+    'SIGINT',
+    'SIGQUIT',
+    'SIGILL',
+    'SIGTRAP',
+    'SIGABRT',
+    'SIGBUS',
+    'SIGFPE',
+    'SIGKILL',
+    'SIGUSR1',
+    'SIGSEGV',
+    'SIGUSR2',
+    'SIGPIPE',
+    'SIGALRM',
+    'SIGTERM',
+    'SIGSTKFLT',
+    'SIGCHLD',
+    'SIGCONT',
+    'SIGSTOP',
+    'SIGTSTP',
+    'SIGTTIN',
+    'SIGTTOU',
+    'SIGURG',
+    'SIGXCPU',
+    'SIGXFSZ',
+    'SIGVTALRM',
+    'SIGPROF',
+    'SIGWINCH',
+    'SIGIO',
+    'SIGPWR',
+    'SIGSYS',
+    ...Array.from({ length: 32 }, (_, i) => `SIGRT_${i + 1}`),
+]);
+const ERRORS = Object.freeze({
+    ECHILD: 'No child processes',
+    ESRCH: 'No such process',
+    EINTR: 'Interrupted system call',
+    EINVAL: 'Invalid argument',
+    EPERM: 'Operation not permitted',
+    EAGAIN: 'Resource temporarily unavailable',
+    ENOSYS: 'Function not implemented',
+    EBADF: 'Bad file descriptor',
+    EFAULT: 'Bad address',
+    ERESTARTSYS: 'To be restarted if SA_RESTART is set',
+    ERESTARTNOINTR: 'To be restarted',
+    ERESTARTNOHAND: 'To be restarted if no handler',
+    ERESTART_RESTARTBLOCK: 'Interrupted by signal',
+});
+const RESTART_ERRORS = new Set(['ERESTARTSYS', 'ERESTARTNOINTR', 'ERESTARTNOHAND', 'ERESTART_RESTARTBLOCK']);
+const ENUMS = new Set([
+    ...SYSCALLS,
+    ...SIGNALS,
+    ...Object.keys(ERRORS),
+    'NULL',
+    'P_ALL',
+    'P_PID',
+    'P_PGID',
+    'P_PIDFD',
+    'WNOHANG',
+    'WUNTRACED',
+    'WSTOPPED',
+    'WEXITED',
+    'WCONTINUED',
+    'WNOWAIT',
+    '__WALL',
+    '__WCLONE',
+    '__WNOTHREAD',
+    'WIFEXITED',
+    'WEXITSTATUS',
+    'WIFSIGNALED',
+    'WTERMSIG',
+    'WCOREDUMP',
+    'WIFSTOPPED',
+    'WSTOPSIG',
+    'WIFCONTINUED',
+    'SI_USER',
+    'SI_KERNEL',
+    'SI_QUEUE',
+    'SI_TIMER',
+    'SI_MESGQ',
+    'SI_ASYNCIO',
+    'SI_SIGIO',
+    'SI_TKILL',
+    'CLD_EXITED',
+    'CLD_KILLED',
+    'CLD_DUMPED',
+    'CLD_TRAPPED',
+    'CLD_STOPPED',
+    'CLD_CONTINUED',
+    'si_signo',
+    'si_code',
+    'si_pid',
+    'si_uid',
+    'si_status',
+    'si_utime',
+    'si_stime',
+    'si_errno',
+    'si_value',
+    'int',
+    'ptr',
+    's',
+    'ru_utime',
+    'ru_stime',
+    'tv_sec',
+    'tv_usec',
+    'ru_maxrss',
+    'ru_ixrss',
+    'ru_idrss',
+    'ru_isrss',
+    'ru_minflt',
+    'ru_majflt',
+    'ru_nswap',
+    'ru_inblock',
+    'ru_oublock',
+    'ru_msgsnd',
+    'ru_msgrcv',
+    'ru_nsignals',
+    'ru_nvcsw',
+    'ru_nivcsw',
+]);
+const sha256 = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+const invariant = (ok, reason) => {
+    if (!ok) throw Error(reason);
+};
+const outside = (root, file) => {
+    const rel = path.relative(root, file);
+    return rel === '..' || rel.startsWith('../');
+};
+const same = (a, b) => !!a && !!b && a.pid === b.pid && a.startTicks === b.startTicks && a.namespace === b.namespace;
+
+function identity(pid) {
+    try {
+        const fields = fs.readFileSync(`/proc/${pid}/stat`, 'utf8').split(/\) /).slice(1).join(') ').trim().split(' ');
+        const status = fs.readFileSync(`/proc/${pid}/status`, 'utf8');
+        const tgid = Number(status.match(/^Tgid:\s+(\d+)$/m)?.[1]);
+        const row = {
+            pid,
+            startTicks: fields[19],
+            namespace: fs.readlinkSync(`/proc/${pid}/ns/pid`),
+            tgid,
+            ppid: Number(fields[1]),
+        };
+        return /^\d+$/.test(row.startTicks) && Number.isSafeInteger(tgid) && tgid > 0 ? row : null;
+    } catch {
+        return null;
+    }
+}
+
+function exactPresence(expected, io = fs) {
+    if (
+        !expected ||
+        !Number.isSafeInteger(expected.pid) ||
+        expected.pid <= 0 ||
+        !/^\d+$/.test(expected.startTicks || '') ||
+        !/^pid:\[\d+\]$/.test(expected.namespace || '')
+    )
+        return 'UNKNOWN';
+    const read = () => {
+        const raw = io.readFileSync(`/proc/${expected.pid}/stat`, 'utf8');
+        const end = raw.lastIndexOf(')');
+        invariant(raw.startsWith(`${expected.pid} (`) && end >= 0, 'presence-metadata-invalid');
+        const fields = raw
+            .slice(end + 2)
+            .trim()
+            .split(' ');
+        const namespace = io.readlinkSync(`/proc/${expected.pid}/ns/pid`);
+        invariant(
+            fields.length >= 20 && /^\d+$/.test(fields[19]) && /^pid:\[\d+\]$/.test(namespace),
+            'presence-metadata-invalid',
+        );
+        return { pid: expected.pid, startTicks: fields[19], namespace };
+    };
+    try {
+        const before = read(),
+            after = read();
+        if (!same(before, after)) return 'UNKNOWN';
+        return same(expected, after) ? 'PRESENT' : 'ABSENT';
+    } catch (error) {
+        return ['ENOENT', 'ESRCH'].includes(error.code) ? 'ABSENT' : 'UNKNOWN';
+    }
+}
+
+function imageIdentity(pid) {
+    try {
+        const value = fs.statSync(`/proc/${pid}/exe`);
+        return { dev: value.dev, ino: value.ino, size: value.size, mtimeMs: value.mtimeMs };
+    } catch {
+        return null;
+    }
+}
+const validImage = (row) =>
+    !!row &&
+    ['dev', 'ino', 'size'].every((key) => Number.isSafeInteger(row[key]) && row[key] >= 0) &&
+    Number.isFinite(row.mtimeMs) &&
+    row.mtimeMs >= 0;
+const imageSame = (a, b) =>
+    validImage(a) && validImage(b) && ['dev', 'ino', 'size', 'mtimeMs'].every((key) => a[key] === b[key]);
+
+// Only TIDs reported by our own tracer, or a direct target proven by an owned ancestry,
+// are sampled. No global /proc scan, argv, environment, command name, or file path is retained.
+function observeOwned(tid, root, frozenImage) {
+    if (!root || !Number.isSafeInteger(tid) || tid <= 0) return null;
+    const before = identity(tid);
+    if (!before || before.namespace !== root.namespace) return null;
+    const leaderBefore = identity(before.tgid);
+    if (!leaderBefore) return null;
+    const lineage = [];
+    let ancestor = leaderBefore;
+    while (ancestor && lineage.length < 32) {
+        lineage.push(ancestor);
+        if (same(ancestor, root)) break;
+        if (ancestor.ppid <= 1 || ancestor.ppid === root.ppid) return null;
+        ancestor = identity(ancestor.ppid);
+    }
+    if (!same(lineage.at(-1), root)) return null;
+    const imageBefore = imageIdentity(leaderBefore.pid);
+    const imageAfter = imageIdentity(leaderBefore.pid);
+    const leaderAfter = identity(leaderBefore.pid),
+        after = identity(tid);
+    const lineageAfter = lineage.map((row) => identity(row.pid));
+    if (
+        !same(before, after) ||
+        before.tgid !== after.tgid ||
+        before.ppid !== after.ppid ||
+        !same(leaderBefore, leaderAfter) ||
+        leaderBefore.ppid !== leaderAfter.ppid ||
+        !lineage.every((row, index) => same(row, lineageAfter[index]) && row.ppid === lineageAfter[index].ppid)
+    )
+        return null;
+    return {
+        thread: before,
+        process: leaderBefore,
+        threadBefore: before,
+        threadAfter: after,
+        processBefore: leaderBefore,
+        processAfter: leaderAfter,
+        root,
+        lineageAfter,
+        imageBefore,
+        imageAfter,
+        frozenImage,
+        observedAt: Date.now(),
+        doubleChecked: true,
+        ownedLineage: lineage.map((row) => ({
+            pid: row.pid,
+            startTicks: row.startTicks,
+            namespace: row.namespace,
+            ppid: row.ppid,
+        })),
+        frozenBrowserImageMatch: imageSame(imageBefore, imageAfter) && imageSame(imageBefore, frozenImage),
+        imageStable: imageSame(imageBefore, imageAfter),
+    };
+}
+
+function validTuple(row, thread = false) {
+    return (
+        !!row &&
+        Number.isSafeInteger(row.pid) &&
+        row.pid > 0 &&
+        row.pid <= 2147483647 &&
+        typeof row.startTicks === 'string' &&
+        /^\d+$/.test(row.startTicks) &&
+        /^pid:\[\d+\]$/.test(row.namespace || '') &&
+        Number.isSafeInteger(row.ppid) &&
+        row.ppid >= 0 &&
+        row.ppid <= 2147483647 &&
+        (!thread || (Number.isSafeInteger(row.tgid) && row.tgid > 0 && row.tgid <= 2147483647))
+    );
+}
+const fullSame = (a, b) =>
+    validTuple(a, true) && validTuple(b, true) && same(a, b) && a.tgid === b.tgid && a.ppid === b.ppid;
+function validObservation(row, knownRoot = row?.root) {
+    if (
+        !row ||
+        row.doubleChecked !== true ||
+        !validTuple(knownRoot, true) ||
+        !fullSame(row.root, knownRoot) ||
+        !fullSame(row.threadBefore, row.threadAfter) ||
+        !fullSame(row.thread, row.threadBefore) ||
+        !fullSame(row.processBefore, row.processAfter) ||
+        !fullSame(row.process, row.processBefore) ||
+        row.thread.tgid !== row.process.pid ||
+        row.process.tgid !== row.process.pid ||
+        row.thread.namespace !== row.process.namespace ||
+        !Array.isArray(row.ownedLineage) ||
+        !row.ownedLineage.length ||
+        row.ownedLineage.length !== row.lineageAfter?.length ||
+        !same(row.ownedLineage[0], row.process) ||
+        row.ownedLineage[0].ppid !== row.process.ppid ||
+        !same(row.ownedLineage.at(-1), knownRoot) ||
+        row.ownedLineage.at(-1).ppid !== knownRoot.ppid
+    )
+        return false;
+    const seen = new Set();
+    return row.ownedLineage.every((item, index) => {
+        if (
+            !validTuple(item) ||
+            !validTuple(row.lineageAfter[index]) ||
+            !same(item, row.lineageAfter[index]) ||
+            item.ppid !== row.lineageAfter[index].ppid ||
+            item.namespace !== knownRoot.namespace ||
+            seen.has(item.pid) ||
+            (index + 1 < row.ownedLineage.length && item.ppid !== row.ownedLineage[index + 1].pid)
+        )
+            return false;
+        seen.add(item.pid);
+        return true;
+    });
+}
+
+const frozenImageMatch = (row) =>
+    validObservation(row) && imageSame(row.imageBefore, row.imageAfter) && imageSame(row.imageBefore, row.frozenImage);
+
+function taskIds(pid, limit) {
+    const directory = fs.opendirSync(`/proc/${pid}/task`),
+        result = [];
+    try {
+        for (let item; (item = directory.readSync());) {
+            invariant(/^\d+$/.test(item.name), 'identity-task-metadata-invalid');
+            if (result.length >= limit) throw Error('identity-count-bound');
+            result.push(integer(item.name));
+        }
+    } finally {
+        directory.closeSync();
+    }
+    return result;
+}
+function taskChildren(pid, tid, limit) {
+    const file = fs.openSync(`/proc/${pid}/task/${tid}/children`, 'r');
+    try {
+        const bytes = Buffer.alloc(Math.min(BOUNDS.lineBytes, limit) + 1);
+        const size = fs.readSync(file, bytes, 0, bytes.length, null);
+        invariant(size < bytes.length, 'identity-input-bound');
+        return bytes.subarray(0, size).toString('ascii');
+    } finally {
+        fs.closeSync(file);
+    }
+}
+function sameObservedOwnership(a, b) {
+    return (
+        fullSame(a.thread, b.thread) &&
+        fullSame(a.process, b.process) &&
+        fullSame(a.root, b.root) &&
+        a.ownedLineage.length === b.ownedLineage.length &&
+        a.ownedLineage.every(
+            (row, index) => same(row, b.ownedLineage[index]) && row.ppid === b.ownedLineage[index].ppid,
+        )
+    );
+}
+
+// Fixed, descriptive witnesses only. They never restore an invalid cache window.
+function imageFailureWitness(before, after, previous, frozenImage) {
+    const tuple = (row) =>
+        Object.fromEntries(['pid', 'tgid', 'ppid', 'startTicks', 'namespace'].map((key) => [key, row[key]]));
+    const image = (row) =>
+        validImage(row) ? Object.fromEntries(['dev', 'ino', 'size', 'mtimeMs'].map((key) => [key, row[key]])) : null;
+    const observed = (row) => ({
+        observedAt: Number.isFinite(row.observedAt) ? row.observedAt : null,
+        imageBefore: image(row.imageBefore),
+        imageAfter: image(row.imageAfter),
+        imageStable: row.imageStable === true,
+        frozenImage: image(row.frozenImage),
+    });
+    const witness = {
+        reason: 'unknown',
+        thread: tuple(before.thread),
+        process: tuple(before.process),
+        root: tuple(before.root),
+        before: observed(before),
+        after: observed(after),
+        previousPresent: !!previous,
+        previousImage: image(previous?.observation.imageAfter),
+        expectedFrozenImage: image(frozenImage),
+        previousInvalid: !!(previous?.imageChanged || previous?.imageInvalid),
+    };
+    // An old invalid bit has no retained cause. Do not reconstruct it from a later read.
+    if (witness.previousInvalid) return witness;
+    const images = [
+        witness.before.imageBefore,
+        witness.before.imageAfter,
+        witness.after.imageBefore,
+        witness.after.imageAfter,
+    ];
+    if (previous) images.unshift(witness.previousImage);
+    if (images.some((row) => row === null)) witness.reason = 'unavailable';
+    else if (images.some((row) => !imageSame(row, images[0]))) witness.reason = 'changed';
+    // Stable flags or frozen-baseline inconsistencies with unchanged valid exe tuples
+    // remain unknown; they do not establish exec or authorize attribution.
+    return witness;
+}
+
+// Enumerate tasks only under an independently proved owned TGID. Each task's children
+// are read between two complete ownership observations; no global /proc scan is used.
+function sampleOwnedIdentities({
+    root,
+    frozenImage,
+    cache,
+    bounds = BOUNDS,
+    onFailure = () => {},
+    observe = observeOwned,
+    listTasks = taskIds,
+    readChildren = taskChildren,
+    presence = exactPresence,
+    now = Date.now,
+}) {
+    const queue = [root.pid],
+        queued = new Set(queue),
+        visited = new Set(),
+        seenTasks = new Set();
+    let inputBytes = 0,
+        failed = false;
+    const fail = (reason) => {
+        failed = true;
+        onFailure(reason);
+    };
+    const markUnknown = (pid, leader = false) => {
+        for (const value of cache.values()) {
+            if ((leader ? value.observation.process.pid : value.observation.thread.pid) !== pid) continue;
+            const state = presence(value.observation.thread);
+            if (state === 'ABSENT') value.firstAbsentAt ??= now();
+            else value.metadataUnknown = true;
+        }
+    };
+    while (queue.length && !failed) {
+        const pid = queue.shift();
+        if (visited.has(pid)) continue;
+        visited.add(pid);
+        const leader = observe(pid, root, frozenImage);
+        if (!validObservation(leader, root) || leader.thread.pid !== pid || leader.process.pid !== pid) {
+            markUnknown(pid, true);
+            continue;
+        }
+        let tasks;
+        try {
+            tasks = listTasks(pid, bounds.identities - seenTasks.size);
+            invariant(
+                Array.isArray(tasks) && tasks.length <= bounds.identities - seenTasks.size,
+                'identity-count-bound',
+            );
+        } catch (error) {
+            if (error.message === 'identity-count-bound') fail(error.message);
+            else markUnknown(pid, true);
+            continue;
+        }
+        for (const tid of tasks) {
+            if (failed) break;
+            if (!Number.isSafeInteger(tid) || tid <= 0 || tid > 2147483647) {
+                markUnknown(pid, true);
+                continue;
+            }
+            if (seenTasks.has(tid)) continue;
+            if (seenTasks.size >= bounds.identities) {
+                fail('identity-count-bound');
+                break;
+            }
+            seenTasks.add(tid);
+            const before = observe(tid, root, frozenImage);
+            if (
+                !validObservation(before, root) ||
+                !fullSame(before.process, leader.process) ||
+                before.thread.pid !== tid ||
+                before.thread.ppid !== before.process.ppid
+            ) {
+                markUnknown(tid);
+                continue;
+            }
+            let children, after;
+            try {
+                children = readChildren(pid, tid, bounds.identityBytes - inputBytes);
+                invariant(
+                    typeof children === 'string' && /^[\s\d]*$/.test(children),
+                    'identity-children-metadata-invalid',
+                );
+                inputBytes += Buffer.byteLength(children);
+                invariant(
+                    inputBytes <= bounds.identityBytes && Buffer.byteLength(children) <= BOUNDS.lineBytes,
+                    'identity-input-bound',
+                );
+                after = observe(tid, root, frozenImage);
+                invariant(
+                    validObservation(after, root) &&
+                        after.thread.ppid === after.process.ppid &&
+                        fullSame(before.thread, after.thread) &&
+                        fullSame(before.process, after.process) &&
+                        before.ownedLineage.length === after.ownedLineage.length &&
+                        before.ownedLineage.every(
+                            (row, index) =>
+                                same(row, after.ownedLineage[index]) && row.ppid === after.ownedLineage[index].ppid,
+                        ),
+                    'identity-task-changed-during-read',
+                );
+            } catch (error) {
+                if (error.message === 'identity-input-bound') fail(error.message);
+                else markUnknown(tid);
+                continue;
+            }
+            const key = `${tid}:${before.thread.startTicks}:${before.thread.namespace}`;
+            const previous = cache.get(key);
+            if (!previous && cache.size >= bounds.identities) {
+                fail('identity-count-bound');
+                break;
+            }
+            const imageChanged =
+                !before.imageStable ||
+                !after.imageStable ||
+                !imageSame(before.imageBefore, before.imageAfter) ||
+                !imageSame(before.imageAfter, after.imageBefore) ||
+                !imageSame(after.imageBefore, after.imageAfter) ||
+                !(
+                    (before.frozenImage == null && after.frozenImage == null) ||
+                    imageSame(before.frozenImage, after.frozenImage)
+                ) ||
+                (!!frozenImage &&
+                    (!imageSame(before.frozenImage, frozenImage) || !imageSame(after.frozenImage, frozenImage)));
+            const value = previous
+                ? {
+                      ...previous,
+                      lastObservedAt: after.observedAt,
+                      imageChanged:
+                          previous.imageChanged ||
+                          !imageSame(previous.observation.imageAfter, after.imageAfter) ||
+                          imageChanged,
+                      metadataUnknown:
+                          previous.metadataUnknown ||
+                          !sameObservedOwnership(previous.observation, before) ||
+                          !sameObservedOwnership(previous.observation, after),
+                  }
+                : {
+                      observation: before,
+                      firstObservedAt: before.observedAt,
+                      lastObservedAt: after.observedAt,
+                      firstAbsentAt: null,
+                      imageChanged,
+                      metadataUnknown:
+                          !Number.isFinite(before.observedAt) ||
+                          !Number.isFinite(after.observedAt) ||
+                          before.observedAt > after.observedAt,
+                  };
+            value.imageInvalid = value.imageChanged || previous?.imageInvalid === true;
+            value.firstImageFailure =
+                previous?.firstImageFailure ||
+                (value.imageInvalid ? imageFailureWitness(before, after, previous, frozenImage) : null);
+            value.firstImageFailureAt = previous?.firstImageFailure
+                ? previous.firstImageFailureAt
+                : (value.firstImageFailure?.after.observedAt ?? null);
+            cache.set(key, value);
+            if (Buffer.byteLength(JSON.stringify([...cache.values()], null, 2) + '\n') > bounds.identityBytes) {
+                if (previous) cache.set(key, previous);
+                else cache.delete(key);
+                fail('identity-output-bound');
+                break;
+            }
+            for (const text of children.trim().split(/\s+/).filter(Boolean)) {
+                const child = Number(text);
+                if (!Number.isSafeInteger(child) || child <= 0 || child > 2147483647) {
+                    markUnknown(tid);
+                    continue;
+                }
+                if (!queued.has(child)) {
+                    if (queued.size >= bounds.identities) {
+                        fail('identity-count-bound');
+                        break;
+                    }
+                    queued.add(child);
+                    queue.push(child);
+                }
+            }
+        }
+    }
+    for (const value of cache.values()) {
+        const state = presence(value.observation.thread);
+        if (state === 'ABSENT') value.firstAbsentAt ??= now();
+        if (!['PRESENT', 'ABSENT'].includes(state)) value.metadataUnknown = true;
+    }
+    return { ok: !failed, tasks: seenTasks.size, inputBytes };
+}
+
+function cachedObservation(pid, timestamp, cache, receipt) {
+    const candidates = cache.filter((row) => row.observation.thread.pid === pid);
+    if (candidates.length !== 1) return null;
+    const candidate = candidates[0],
+        observed = candidate.observation;
+    const imageFields = ['imageInvalid', 'firstImageFailureAt', 'firstImageFailure'];
+    if (
+        imageFields.some((key) => Object.hasOwn(candidate, key)) &&
+        (!imageFields.every((key) => Object.hasOwn(candidate, key)) ||
+            candidate.imageInvalid !== false ||
+            candidate.firstImageFailureAt !== null ||
+            candidate.firstImageFailure !== null)
+    )
+        return null;
+    if (
+        candidate.metadataUnknown ||
+        candidate.imageChanged ||
+        !imageSame(observed.imageBefore, observed.imageAfter) ||
+        !validObservation(observed) ||
+        observed.thread.pid !== pid
+    )
+        return null;
+    const exactRows = (receipt.ownedProcesses || []).filter((row) => same(row, observed.process));
+    if (exactRows.length !== 1) return null;
+    const adopted = receipt.custody.observation.adopted.find((row) => same(row, observed.process));
+    const browser = receipt.browsers.find((row) => same(row, observed.process));
+    const worker = same(receipt.worker, observed.process) ? receipt.worker : null;
+    const end = adopted?.reap?.utc || browser?.exit?.utc || worker?.exit?.receivedUtc;
+    const at = Number(timestamp) * 1000,
+        ended = Date.parse(end);
+    if (
+        !Number.isFinite(at) ||
+        !Number.isFinite(ended) ||
+        at < candidate.firstObservedAt ||
+        at > ended + 1 ||
+        (candidate.firstAbsentAt !== null && at > candidate.firstAbsentAt)
+    )
+        return null;
+    return {
+        ...observed,
+        resolution: 'live-double-checked-cache-plus-original-exact-lifetime',
+        firstObservedAt: candidate.firstObservedAt,
+        lastObservedAt: candidate.lastObservedAt,
+        originalReapOrExitAt: ended,
+    };
+}
+
+function resolveCachedIdentities(records, cache, receipt) {
+    return records.map((record) => {
+        const row = { ...record };
+        if (row.kind === 'delivery' && !row.identityObservation) {
+            const observed = cachedObservation(row.tid, row.timestamp, cache, receipt);
+            if (observed) {
+                row.identityObservation = observed;
+                row.threadIdentity = observed.thread;
+                row.processIdentity = observed.process;
+            }
+        }
+        if (
+            row.kind === 'syscall' &&
+            ['kill', 'tkill', 'tgkill'].includes(row.syscall) &&
+            !row.targetObservation &&
+            row.target > 0
+        )
+            row.targetObservation = cachedObservation(row.targetTid || row.target, row.beganAt, cache, receipt);
+        return row;
+    });
+}
+
+// No arbitrary strings, comments, filenames, process names, or errno prose are accepted.
+function validateGrammar(body) {
+    let text = body;
+    for (const [code, description] of Object.entries(ERRORS)) text = text.replace(`${code} (${description})`, code);
+    const tokens = text.match(/0x[\da-fA-F]+|-?\d+|[A-Za-z_][A-Za-z_0-9]*|[\s,=\[\]{}()|&*.+?<>-]/g) || [];
+    invariant(tokens.join('') === text, 'trace-grammar-rejected');
+    for (const token of tokens) {
+        if (/^[A-Za-z_]/.test(token)) invariant(ENUMS.has(token), 'trace-enum-rejected');
+    }
+}
+
+// strace v6.8 src/util.c print_ticks/print_clock_t and src/printsiginfo.c:
+// waitid's SIGCHLD si_utime/si_stime may carry a numeric seconds annotation.
+// Validate its exact field location before discarding it; never strip general comments.
+function omitWaitClockAnnotations(body) {
+    if (!body.includes('/')) return body;
+    const call = body.match(/^waitid\((.*)\)(\s+=\s+.*)$/);
+    invariant(call, 'trace-comment-location-rejected');
+    const args = fieldsOf(call[1]);
+    invariant(args.length === 5 && /^\{.*\}$/.test(args[2]), 'trace-comment-location-rejected');
+    const seen = new Set();
+    const info = fieldsOf(args[2].slice(1, -1)).map((field) => {
+        const pair = field.match(/^(si_signo|si_code|si_errno|si_pid|si_uid|si_status|si_utime|si_stime)=(.+)$/);
+        invariant(pair && !seen.has(pair[1]), 'trace-clock-field-rejected');
+        seen.add(pair[1]);
+        if (!['si_utime', 'si_stime'].includes(pair[1])) {
+            invariant(!pair[2].includes('/'), 'trace-comment-location-rejected');
+            return field;
+        }
+        const value = pair[2].match(/^(\d{1,20})(?: \/\* (\d{1,20})\.(\d{1,9}) s \*\/)?$/);
+        invariant(value && BigInt(value[1]) <= 18446744073709551615n, 'trace-clock-annotation-rejected');
+        if (value[2] !== undefined)
+            invariant(BigInt(value[1]) > 0n && BigInt(value[2]) <= BigInt(value[1]), 'trace-clock-annotation-rejected');
+        return `${pair[1]}=${value[1]}`;
+    });
+    invariant(
+        ['si_signo', 'si_code', 'si_pid', 'si_uid', 'si_status', 'si_utime', 'si_stime'].every((name) =>
+            seen.has(name),
+        ) &&
+            info.includes('si_signo=SIGCHLD') &&
+            info.some((field) => /^si_code=CLD_(EXITED|KILLED|DUMPED|TRAPPED|STOPPED|CONTINUED)$/.test(field)),
+        'trace-clock-siginfo-rejected',
+    );
+    args[2] = `{${info.join(', ')}}`;
+    const result = `waitid(${args.join(', ')})${call[2]}`;
+    invariant(!result.includes('/'), 'trace-comment-location-rejected');
+    return result;
+}
+
+function fieldsOf(text) {
+    const fields = [],
+        stack = [];
+    let begin = 0;
+    for (let i = 0; i < text.length; i++) {
+        const character = text[i];
+        if ('({['.includes(character)) stack.push(character);
+        else if (')}]'.includes(character))
+            invariant(stack.pop() === { ')': '(', '}': '{', ']': '[' }[character], 'trace-unbalanced-fields');
+        else if (character === ',' && !stack.length) {
+            fields.push(text.slice(begin, i).trim());
+            begin = i + 1;
+        }
+    }
+    invariant(!stack.length, 'trace-unbalanced-fields');
+    fields.push(text.slice(begin).trim());
+    return fields;
+}
+function integer(text) {
+    invariant(/^-?\d+$/.test(text), 'trace-integer-rejected');
+    const value = Number(text);
+    invariant(Number.isSafeInteger(value) && value >= -2147483648 && value <= 2147483647, 'trace-integer-range');
+    return value;
+}
+function parseCompleted(tid, timestamp, body, beganAt = timestamp) {
+    // v6.8 print_signalled uses signal_set, independently of -qqq/QUIET_EXIT.
+    const terminal = body.match(/^\+\+\+ killed by (SIGTERM|SIGKILL) \+\+\+$/);
+    if (terminal) return { kind: 'terminal', tid, timestamp, signal: terminal[1] };
+    // v6.8 print_stopped(NULL) emits this without siginfo, including when GETSIGINFO fails.
+    // It is only a no-siginfo stop observation, not delivery, sender, or terminal proof.
+    const groupStop = body.match(/^--- stopped by (SIGTERM|SIGKILL) ---$/);
+    if (groupStop) return { kind: 'stop-without-siginfo', tid, timestamp, signal: groupStop[1] };
+    body = omitWaitClockAnnotations(body);
+    validateGrammar(body);
+    const delivery = body.match(/^--- (SIGTERM|SIGKILL) \{(.+)\} ---$/);
+    if (delivery) {
+        const info = new Map();
+        for (const field of fieldsOf(delivery[2])) {
+            const pair = field.match(/^(si_signo|si_code|si_pid|si_uid|si_errno|si_value)=(.+)$/);
+            invariant(pair && !info.has(pair[1]), 'trace-delivery-duplicate-or-unknown-field');
+            info.set(pair[1], pair[2]);
+        }
+        const code = info.get('si_code');
+        invariant(info.get('si_signo') === delivery[1], 'trace-delivery-signo-mismatch');
+        invariant(
+            ['SI_USER', 'SI_TKILL', 'SI_KERNEL', 'SI_QUEUE', 'SI_TIMER', 'SI_MESGQ', 'SI_ASYNCIO', 'SI_SIGIO'].includes(
+                code,
+            ),
+            'trace-delivery-code-missing',
+        );
+        invariant(!['SI_USER', 'SI_TKILL'].includes(code) || info.has('si_pid'), 'trace-delivery-pid-missing');
+        for (const field of ['si_pid', 'si_uid', 'si_errno']) if (info.has(field)) integer(info.get(field));
+        return {
+            kind: 'delivery',
+            tid,
+            timestamp,
+            signal: delivery[1],
+            siPid: info.has('si_pid') ? integer(info.get('si_pid')) : null,
+            siCode: code,
+        };
+    }
+    const call = body.match(
+        /^(kill|tkill|tgkill|pidfd_send_signal|wait4|waitid)\((.*)\)\s+=\s+(-?\d+|\?)(?: ([A-Z_]+)(?: \(([^)]*)\))?)?$/,
+    );
+    invariant(call, 'trace-call-rejected');
+    const [, syscall, args, result, errno, description] = call;
+    invariant(!errno || Object.hasOwn(ERRORS, errno), 'trace-errno-rejected');
+    invariant(!errno || description === ERRORS[errno], 'trace-errno-description-rejected');
+    const fields = fieldsOf(args);
+    invariant(
+        fields.length === { kill: 2, tkill: 2, tgkill: 3, pidfd_send_signal: 4, wait4: 4, waitid: 5 }[syscall],
+        'trace-call-arity',
+    );
+    const row = {
+        kind: 'syscall',
+        tid,
+        timestamp,
+        beganAt,
+        syscall,
+        result: result === '?' ? null : integer(result),
+        errno: errno || null,
+    };
+    const isWait = syscall === 'wait4' || syscall === 'waitid';
+    const exitStop = !isWait && result === '?' && !errno;
+    invariant(
+        exitStop ||
+            (errno
+                ? RESTART_ERRORS.has(errno)
+                    ? isWait && result === '?'
+                    : row.result === -1
+                : row.result !== null && (syscall === 'wait4' ? row.result >= 0 : row.result === 0)),
+        'trace-return-combination-rejected',
+    );
+    if (['kill', 'tkill', 'tgkill', 'pidfd_send_signal'].includes(syscall)) {
+        const signal = fields[syscall === 'tgkill' ? 2 : 1];
+        invariant(SIGNALS.has(signal) || signal === '0', 'trace-signal-rejected');
+        invariant(/^-?\d+$/.test(fields[0]), 'trace-target-rejected');
+        row.signal = signal === '0' ? 0 : signal;
+        row.target = integer(fields[0]);
+        row.targetKind =
+            syscall === 'kill'
+                ? 'pid-or-group'
+                : syscall === 'tkill'
+                  ? 'tid'
+                  : syscall === 'tgkill'
+                    ? 'tgid'
+                    : 'pidfd-unknown';
+        if (syscall === 'tgkill') {
+            invariant(/^\d+$/.test(fields[1]), 'trace-target-tid-rejected');
+            row.targetTid = integer(fields[1]);
+        }
+    } else {
+        if (syscall === 'waitid')
+            invariant(['P_ALL', 'P_PID', 'P_PGID', 'P_PIDFD'].includes(fields[0]), 'trace-wait-selector');
+        row.target = integer(fields[syscall === 'wait4' ? 0 : 1]);
+        row.targetKind = syscall === 'wait4' ? 'pid-or-group' : fields[0];
+        row.waitSignal = args.match(/WTERMSIG\(s\) == (SIG[A-Z0-9_]+)/)?.[1] || null;
+        const exitCodes = [...args.matchAll(/\bWEXITSTATUS\(s\) == (-?\d+)(?=[\]}&|\s])/g)];
+        invariant(!args.includes('WEXITSTATUS') || exitCodes.length === 1, 'trace-wait-exit-code-rejected');
+        row.waitExitCode = exitCodes[0]?.[1] ?? null;
+        if (row.waitExitCode !== null) {
+            row.waitExitCode = integer(row.waitExitCode);
+            invariant(row.waitExitCode >= 0 && row.waitExitCode <= 255, 'trace-wait-exit-code-range');
+        }
+    }
+    // v6.8 print_event_exit can end a fully decoded signal call without a syscall return.
+    // Keep no arguments, result or errno, and never expose this as a successful syscall.
+    return exitStop ? { kind: 'syscall-incomplete', tid, timestamp, beganAt, syscall } : row;
+}
+function createParser({ bounds = BOUNDS, onRecord = () => {}, onFailure = () => {} } = {}) {
+    let buffer = '',
+        inputBytes = 0,
+        eventCount = 0,
+        acceptedLines = 0,
+        failed = null,
+        rejectedLine = null,
+        inputLimit = bounds.inputBytes,
+        inputBoundArmedAtBytes = null,
+        inputBoundTriggeredAtBytes = null;
+    const pending = new Map();
+    const terminalTids = new Set();
+    const exitStopTids = new Set();
+    const fail = (reason) => {
+        if (!failed) {
+            failed = reason;
+            onFailure(reason);
+        }
+    };
+    return {
+        push(bytes) {
+            inputBytes += bytes.length;
+            if (failed) return;
+            if (inputBytes > inputLimit) {
+                inputBoundTriggeredAtBytes = inputBytes;
+                return fail('trace-input-bound');
+            }
+            if ([...bytes].some((value) => value > 127 || (value < 32 && value !== 10 && value !== 9)))
+                return fail('trace-non-ascii');
+            buffer += bytes.toString('ascii');
+            while (buffer.includes('\n') && !failed) {
+                const end = buffer.indexOf('\n'),
+                    line = buffer.slice(0, end);
+                buffer = buffer.slice(end + 1);
+                if (line.length > bounds.lineBytes) return fail('trace-line-bound');
+                if (++eventCount > bounds.events) return fail('trace-event-bound');
+                try {
+                    const prefix = line.match(/^(\d+)\s+(\d+\.\d{6})\s+(.*)$/);
+                    invariant(prefix, 'trace-prefix-rejected');
+                    const tid = integer(prefix[1]),
+                        timestamp = prefix[2],
+                        body = prefix[3];
+                    invariant(
+                        tid > 0 && Number(timestamp) > 0 && Number(timestamp) < 10000000000,
+                        'trace-prefix-range',
+                    );
+                    invariant(!terminalTids.has(tid), 'trace-record-after-terminal');
+                    // A no-siginfo observation does not reopen a syscall after its exit-stop.
+                    invariant(
+                        !exitStopTids.has(tid) ||
+                            /^\+\+\+ killed by (SIGTERM|SIGKILL) \+\+\+$/.test(body) ||
+                            /^--- stopped by (SIGTERM|SIGKILL) ---$/.test(body),
+                        'trace-record-after-exit-stop',
+                    );
+                    const start = body.match(
+                        /^(kill|tkill|tgkill|pidfd_send_signal|wait4|waitid)\((.*)<unfinished \.\.\.>$/,
+                    );
+                    if (start) {
+                        invariant(!pending.has(tid), 'trace-overlapping-unfinished');
+                        validateGrammar(`${start[1]}(${start[2]}`);
+                        pending.set(tid, {
+                            syscall: start[1],
+                            body: `${start[1]}(${start[2]}`,
+                            timestamp,
+                            lineSequence: eventCount,
+                        });
+                        acceptedLines++;
+                        continue;
+                    }
+                    const resumed = body.match(
+                        /^<\.\.\. (kill|tkill|tgkill|pidfd_send_signal|wait4|waitid) resumed>(.*)$/,
+                    );
+                    let row,
+                        beganLineSequence = eventCount;
+                    if (resumed) {
+                        const previous = pending.get(tid);
+                        invariant(previous?.syscall === resumed[1], 'trace-unmatched-resume');
+                        pending.delete(tid);
+                        invariant(Number(previous.timestamp) <= Number(timestamp), 'trace-resume-time-reversed');
+                        beganLineSequence = previous.lineSequence;
+                        row = parseCompleted(tid, timestamp, previous.body + resumed[2], previous.timestamp);
+                    } else {
+                        row = parseCompleted(tid, timestamp, body);
+                        invariant(
+                            !pending.has(tid) || ['delivery', 'stop-without-siginfo', 'terminal'].includes(row.kind),
+                            'trace-call-before-resume',
+                        );
+                    }
+                    const rows = [];
+                    if (row.kind === 'terminal') {
+                        const previous = pending.get(tid);
+                        if (previous) {
+                            invariant(Number(previous.timestamp) <= Number(timestamp), 'trace-terminal-time-reversed');
+                            invariant(
+                                TRACE_SYSCALLS.includes(previous.syscall),
+                                'trace-terminal-pending-call-rejected',
+                            );
+                            invariant(
+                                parseCompleted(tid, timestamp, previous.body.trimEnd() + ') = ?', previous.timestamp)
+                                    .kind === 'syscall-incomplete',
+                                'trace-terminal-pending-call-rejected',
+                            );
+                            rows.push({
+                                kind: 'terminated-inflight',
+                                tid,
+                                timestamp,
+                                beganAt: previous.timestamp,
+                                syscall: previous.syscall,
+                                beganLineSequence: previous.lineSequence,
+                                endedLineSequence: eventCount,
+                            });
+                            pending.delete(tid);
+                        }
+                        terminalTids.add(tid);
+                    }
+                    if (row.kind === 'syscall-incomplete') {
+                        row = { ...row, beganLineSequence, endedLineSequence: eventCount };
+                        exitStopTids.add(tid);
+                    }
+                    rows.push(row);
+                    acceptedLines++;
+                    try {
+                        for (const item of rows) onRecord({ ...item, lineSequence: eventCount });
+                    } catch {
+                        fail('trace-record-processing-failed');
+                    }
+                } catch (error) {
+                    // A rejection keeps only a fixed shape enum and line number, never the offending token/text.
+                    const body = line.match(/^\d+\s+\d+\.\d{6}\s+(.*)$/)?.[1] || '';
+                    const syscall =
+                        body.match(
+                            /^(?:<\.\.\. )?(kill|tkill|tgkill|pidfd_send_signal|wait4|waitid)(?:\(| resumed>)/,
+                        )?.[1] || null;
+                    rejectedLine = {
+                        lineSequence: eventCount,
+                        shape: syscall
+                            ? body.startsWith('<... ')
+                                ? 'resumed-syscall'
+                                : 'syscall'
+                            : body.startsWith('--- stopped by ')
+                              ? 'group-stop'
+                              : /^--- SIG(?:TERM|KILL) /.test(body)
+                                ? 'delivery'
+                                : /^\+\+\+ killed by /.test(body)
+                                  ? 'terminal'
+                                  : 'unknown',
+                        syscall,
+                        hasCommentDelimiter: body.includes('/*') || body.includes('*/'),
+                    };
+                    fail(error.message);
+                }
+            }
+            if (buffer.length > bounds.lineBytes) fail('trace-line-bound');
+        },
+        restrictToCurrentInput() {
+            invariant(!failed && inputBoundArmedAtBytes === null, 'trace-input-bound-arm-rejected');
+            inputLimit = Math.min(inputLimit, inputBytes);
+            inputBoundArmedAtBytes = inputBytes;
+            return { inputBytes, inputLimit };
+        },
+        finish() {
+            if (buffer.length) fail('trace-truncated-line');
+            if (pending.size) fail('trace-unfinished-call');
+            return {
+                ok: !failed,
+                reason: failed,
+                inputBytes,
+                inputLimit,
+                inputBoundArmedAtBytes,
+                inputBoundTriggeredAtBytes,
+                eventCount,
+                acceptedLines,
+                rejectedLines: failed ? 1 : 0,
+                rejectedLine,
+                rawStraceRetained: false,
+            };
+        },
+    };
+}
+
+function buildCommand(options) {
+    invariant(['availability', 'cpu', 'target'].includes(options.mode), 'unsupported-diagnostic-mode');
+    invariant(['on', 'off'].includes(options.trace), 'trace-must-be-on-or-off');
+    invariant(options.mode !== 'target' || !options.limits, 'target-deadlines-cannot-be-overridden');
+    const limits = limitsOf(options.limits);
+    invariant(
+        !options.control ||
+            (options.mode === 'cpu' &&
+                ((options.cpuCase === 'hang' && options.control === 'wrapper-term') ||
+                    (options.cpuCase === 'custodian-delayed-stop-ack' && options.control === 'trace-input-bound')) &&
+                options.trace === 'on' &&
+                !options.limits),
+        'control-requires-fixed-cpu-case',
+    );
+    if (options.mode === 'availability') {
+        invariant(options.trace === 'on', 'availability-requires-trace');
+        return {
+            role: 'availability-node',
+            executable: process.execPath,
+            args: [
+                '-e',
+                // Signal watchers alone do not keep Node alive after the one-shot sender timer.
+                // Retain a handle until the real handler installs the original exit timer.
+                'const keepAlive = setInterval(() => {}, 1000); process.on("SIGTERM", () => { clearInterval(keepAlive); setTimeout(() => process.exit(143), 100); }); setTimeout(() => process.kill(process.pid, "SIGTERM"), 100)',
+            ],
+            limits,
+        };
+    }
+    if (options.mode === 'cpu') {
+        invariant(
+            CPU_CASES.includes(options.cpuCase) || (options.cpuCase === 'hang' && options.control === 'wrapper-term'),
+            'unsupported-original-cpu-case',
+        );
+        return {
+            role: 'original-supervisor-cpu',
+            executable: process.execPath,
+            args: [
+                path.join(REPO, 'tools/verify/example-evidence-supervisor.cjs'),
+                `--cpu=${options.cpuCase}`,
+                '--id=cpu-example',
+                `--repo=${REPO}`,
+                `--out=${path.join(options.out, 'attempt', 'collector.json')}`,
+                `--artifact-dir=${path.join(options.out, 'attempt', 'artifacts')}`,
+                `--limits=${JSON.stringify(limits)}`,
+            ],
+            limits,
+        };
+    }
+    invariant(options.freeze, 'target-requires-independent-freeze');
+    const target = planTargetDiagnostic({
+        freezePath: options.freeze,
+        out: path.join(options.out, 'target-diagnostic'),
+    });
+    const { freeze, freezeFile } = target;
+    invariant(freeze.runtimeIdentity?.playwrightVersion === '1.62.1', 'playwright-pin-mismatch');
+    invariant(
+        /(?:^|\s)151\.0\.7922\.34(?:\s|$)/.test(freeze.runtimeIdentity?.executableVersion || ''),
+        'browser-pin-mismatch',
+    );
+    const browser = freeze.runtimeIdentity.host?.executablePath || freeze.runtimeIdentity.executablePath;
+    invariant(sha256(browser) === freeze.runtimeIdentity.executableSha256, 'browser-hash-mismatch');
+    return {
+        role: 'independent-shutdown-target',
+        executable: process.execPath,
+        args: [
+            path.join(REPO, 'tools/verify/run-example-shutdown-target.cjs'),
+            `--freeze=${freezeFile}`,
+            `--out=${target.output}`,
+            '--execute-authorized',
+        ],
+        limits: TARGET_DIAGNOSTIC_LIMITS,
+        diagnosticProfile: target.profile,
+        freeze,
+        targetDirectory: target.output,
+        runnerSha256: target.source.sha256,
+        browser: {
+            executable: browser,
+            sha256: freeze.runtimeIdentity.executableSha256,
+            version: '151.0.7922.34',
+            playwrightVersion: '1.62.1',
+        },
+        receipt: path.join(target.output, 'attempt-receipt.json'),
+    };
+}
+
+function traceArgs(fifo, command) {
+    return [
+        '-f',
+        '-qqq',
+        '-ttt',
+        '-e',
+        `trace=${TRACE_SYSCALLS.join(',')}`,
+        '-e',
+        'signal=SIGTERM,SIGKILL',
+        '-o',
+        fifo,
+        '--',
+        command.executable,
+        ...command.args,
+    ];
+}
+
+function receiptIdentities(receipt) {
+    const result = [],
+        seen = new Set();
+    const visit = (value) => {
+        if (!value || typeof value !== 'object') return;
+        if (
+            Number.isSafeInteger(value.pid) &&
+            typeof value.startTicks === 'string' &&
+            /^pid:\[\d+\]$/.test(value.namespace || '')
+        ) {
+            const key = `${value.pid}:${value.startTicks}:${value.namespace}`;
+            if (!seen.has(key)) {
+                seen.add(key);
+                result.push({ pid: value.pid, startTicks: value.startTicks, namespace: value.namespace });
+            }
+        }
+        for (const child of Object.values(value)) if (typeof child === 'object') visit(child);
+    };
+    visit(receipt);
+    return result;
+}
+
+function correlate(records, identities, knownRoot) {
+    const exact = (observed) => observed && identities.find((row) => same(row, observed));
+    return records
+        .filter((row) => row.kind === 'delivery')
+        .map((delivery) => {
+            const target = exact(delivery.processIdentity);
+            const candidates = records.filter(
+                (row) =>
+                    row.kind === 'syscall' &&
+                    row.result === 0 &&
+                    row.errno === null &&
+                    row.signal === delivery.signal &&
+                    row.callerProcessIdentity?.pid === delivery.siPid &&
+                    exact(row.callerProcessIdentity) &&
+                    target &&
+                    validObservation(row.identityObservation, knownRoot) &&
+                    validObservation(row.targetObservation, knownRoot) &&
+                    validObservation(delivery.identityObservation, knownRoot) &&
+                    row.tid === row.threadIdentity?.pid &&
+                    fullSame(row.threadIdentity, row.identityObservation.thread) &&
+                    fullSame(row.callerProcessIdentity, row.identityObservation.process) &&
+                    delivery.tid === delivery.threadIdentity?.pid &&
+                    fullSame(delivery.threadIdentity, delivery.identityObservation.thread) &&
+                    fullSame(delivery.processIdentity, delivery.identityObservation.process) &&
+                    (row.syscall === 'kill'
+                        ? row.target === row.targetObservation.process.pid
+                        : row.syscall === 'tkill'
+                          ? row.target === row.targetObservation.thread.pid
+                          : row.target === row.targetObservation.process.pid &&
+                            row.targetTid === row.targetObservation.thread.pid) &&
+                    same(row.identityObservation.root, delivery.identityObservation.root) &&
+                    same(row.targetObservation.root, delivery.identityObservation.root) &&
+                    row.threadIdentity?.tgid === row.callerProcessIdentity.pid &&
+                    row.threadIdentity.namespace === row.callerProcessIdentity.namespace &&
+                    same(row.targetObservation?.process, target) &&
+                    ((row.syscall === 'kill' && delivery.siCode === 'SI_USER') ||
+                        (['tkill', 'tgkill'].includes(row.syscall) && delivery.siCode === 'SI_TKILL')) &&
+                    row.target > 0 &&
+                    row.targetKind !== 'pidfd-unknown' &&
+                    (row.targetKind === 'tid' ? row.target === delivery.tid : row.target === target.pid) &&
+                    (row.targetTid === undefined || row.targetTid === delivery.tid) &&
+                    Number(row.beganAt) <= Number(delivery.timestamp) &&
+                    Number(delivery.timestamp) - Number(row.beganAt) <= 1,
+            );
+            return {
+                deliveryEvent: delivery.eventId,
+                signal: delivery.signal,
+                siPid: delivery.siPid,
+                siCode: delivery.siCode,
+                target: target || 'UNKNOWN',
+                sender: candidates.length === 1 ? exact(candidates[0].callerProcessIdentity) : 'UNKNOWN',
+                syscallEvent: candidates.length === 1 ? candidates[0].eventId : null,
+                status: candidates.length === 1 ? 'CORRELATED_DIAGNOSTIC_ONLY' : 'UNKNOWN',
+            };
+        });
+}
+
+const SECONDARY_FAILURES = new Set([
+    'lifecycle errors retained',
+    'failure event retained: abort-request',
+    'failure event retained: observer-failure',
+    'observer-complete event cardinality invalid',
+    'stop-complete event cardinality invalid',
+    'runtime lifecycle time order invalid',
+    'runtime stop receipt missing or late',
+    'browser exit/stdio close receipt missing or unclean',
+    'in-worker HTTP listen/close receipt missing',
+    'observer completion receipt missing',
+    'attempt errors retained',
+    'worker exit and stdio close receipts are not clean',
+    'Per-runtime custody barriers missing',
+]);
+// Matching an event-log copy alone is insufficient: bind each physical event to its
+// original browser/server row, runtime launch and exact worker namespace.
+function browserNonzeroEventOwnership(receipt) {
+    const raw = receipt.custody?.observation;
+    if (!raw || receipt.runtimes.length !== 1 || receipt.browsers.length !== 1 || receipt.servers.length !== 1)
+        return false;
+    const runtime = receipt.runtimes[0],
+        browser = receipt.browsers[0],
+        server = receipt.servers[0],
+        worker = receipt.worker,
+        stop = runtime.stopBegin;
+    const observerEvent = (row, type) =>
+        row?.type === type &&
+        row.source === 'observer' &&
+        row.cpuDummy === true &&
+        row.workerPID === worker.pid &&
+        row.namespace === worker.namespace &&
+        receipt.events.filter((event) => event.eventId === row.eventId).length === 1 &&
+        receipt.events.some((event) => JSON.stringify(event) === JSON.stringify(row));
+    const browserEvent = (row, type) =>
+        observerEvent(row, type) &&
+        row.pid === browser.pid &&
+        row.runtimeId === browser.runtimeId &&
+        row.launchId === browser.launchId;
+    return (
+        observerEvent(stop, 'stop-begin') &&
+        stop.runtimeId === runtime.runtimeId &&
+        stop.launchId === browser.launchId &&
+        raw.innerSupervisor.namespace === worker.namespace &&
+        raw.custodian.namespace === worker.namespace &&
+        browser.runtimeId === runtime.runtimeId &&
+        typeof browser.launchId === 'string' &&
+        browser.launchId.length > 0 &&
+        browser.launchId === runtime.launch?.launchId &&
+        browserEvent(browser.exit, 'browser-exit') &&
+        browserEvent(browser.close, 'browser-close') &&
+        server.runtimeId === runtime.runtimeId &&
+        typeof server.serverId === 'string' &&
+        server.serverId.length > 0 &&
+        server.ownerPID === worker.pid &&
+        server.physicalProcess === 'collector-worker' &&
+        observerEvent(server.close, 'server-close') &&
+        server.close.serverId === server.serverId &&
+        server.close.runtimeId === server.runtimeId &&
+        server.close.ownerPID === server.ownerPID &&
+        server.close.physicalProcess === server.physicalProcess
+    );
+}
+
+// The browser-nonzero fixture can close its worker before the already-issued stop ACK
+// reaches the inner supervisor. This permits only that retained negative-control failure.
+function browserNonzeroPendingDrain(receipt) {
+    const raw = receipt.custody?.observation;
+    if (!raw || receipt.runtimes.length !== 1 || receipt.browsers.length !== 1 || receipt.servers.length !== 1)
+        return false;
+    const runtime = receipt.runtimes[0],
+        browser = receipt.browsers[0],
+        server = receipt.servers[0];
+    const stop = runtime.stopBegin,
+        worker = receipt.worker,
+        inner = raw.innerSupervisor;
+    const exact = (row, events) =>
+        row &&
+        events.filter((item) => item.eventId === row.eventId).length === 1 &&
+        events.some((item) => JSON.stringify(item) === JSON.stringify(row));
+    const proofs = raw.barriers.filter((row) => row.phase === 'stop');
+    const responses = receipt.events.filter((row) => row.type === 'custody-request-settled' && row.phase === 'stop');
+    if (proofs.length !== 1 || responses.length !== 1) return false;
+    const proof = proofs[0],
+        settled = responses[0];
+    const start = raw.barriers.filter((row) => row.phase === 'start');
+    const localBefore = (a, b) =>
+        exact(a, receipt.events) &&
+        exact(b, receipt.events) &&
+        a.eventId < b.eventId &&
+        Number.isFinite(a.supervisorElapsedMs) &&
+        Number.isFinite(b.supervisorElapsedMs) &&
+        a.supervisorElapsedMs < b.supervisorElapsedMs;
+    const proofTime = Date.parse(proof.utc),
+        settledTime = Date.parse(settled.receivedUtc),
+        innerTime = Date.parse(inner.exit?.utc);
+    return (
+        start.length === 1 &&
+        start[0].requestId === 1 &&
+        proof.requestId === 2 &&
+        settled.requestId === proof.requestId &&
+        proof.runtimeId === runtime.runtimeId &&
+        proof.workerPID === worker.pid &&
+        proof.workerStartTicks === worker.startTicks &&
+        proof.type === 'runtime-custody-barrier' &&
+        proof.ok === true &&
+        proof.observedSubreaper === 1 &&
+        proof.transport === 'inherited-anonymous-pipes/v1' &&
+        JSON.stringify(proof.directChildren) === JSON.stringify([inner.pid]) &&
+        exact(proof, raw.events) &&
+        settled.outcome === 'response' &&
+        localBefore(stop, browser.exit) &&
+        localBefore(browser.exit, browser.close) &&
+        localBefore(browser.close, server.close) &&
+        localBefore(server.close, worker.exit) &&
+        localBefore(worker.exit, worker.close) &&
+        localBefore(worker.close, settled) &&
+        settled.supervisorElapsedMs - stop.supervisorElapsedMs <= receipt.limits.closeMs &&
+        Number.isFinite(proofTime) &&
+        Number.isFinite(settledTime) &&
+        Number.isFinite(innerTime) &&
+        Date.parse(stop.utc) <= proofTime &&
+        proofTime <= settledTime &&
+        settledTime < innerTime &&
+        exact(inner.exit, raw.events) &&
+        inner.exit.code === 0 &&
+        inner.exit.signal === null
+    );
+}
+
+const CURRENT_WORKER_FAILURE = 'Barrier stop rejected: collector worker is not the exact current process';
+const LATE_STOP_FAILURES = [
+    CURRENT_WORKER_FAILURE,
+    'Custody IPC: kernel barrier rejected',
+    'Custodian did not exit/close cleanly',
+    'Custodian exact identity/exit/stdio close is not clean',
+    'Kernel custody retained failures',
+    'Custody failure event: custody-error',
+];
+
+function originalCustodyBytesValid(receipt, bytes) {
+    try {
+        const artifacts = {};
+        for (const role of ['raw', 'nodeReceipt', 'journal', 'stdout', 'stderr']) {
+            const value = bytes?.[role],
+                reference = receipt.custody.artifacts[role];
+            if (
+                !Buffer.isBuffer(value) ||
+                value.length !== reference.bytes ||
+                crypto.createHash('sha256').update(value).digest('hex') !== reference.sha256
+            )
+                return false;
+            artifacts[role] = ['raw', 'nodeReceipt'].includes(role) ? JSON.parse(value) : value;
+        }
+        return validateCustodyArtifacts(receipt, artifacts).ok;
+    } catch {
+        return false;
+    }
+}
+
+// Only a CPU browser-7 negative control may retain this explicit failed stop response.
+// It never authorizes a historical worker or turns a rejected barrier into successful custody.
+function browserNonzeroRejectedDrain(receipt, bytes) {
+    const raw = receipt.custody?.observation,
+        worker = receipt.worker,
+        wrapper = receipt.custody?.wrapper;
+    if (
+        !raw ||
+        !originalCustodyBytesValid(receipt, bytes) ||
+        raw.barriers.length !== 1 ||
+        JSON.stringify(raw.errors) !== JSON.stringify([CURRENT_WORKER_FAILURE]) ||
+        raw.adopted.length ||
+        raw.events.some((row) => row.type.startsWith('cpu-')) ||
+        wrapper.exit.code !== 1 ||
+        wrapper.close.code !== 1 ||
+        wrapper.exit.signal !== null ||
+        wrapper.close.signal !== null
+    )
+        return false;
+    const pendingReceipt = JSON.parse(bytes.nodeReceipt);
+    if (
+        !pendingReceipt.errors.includes('Custody IPC: kernel barrier rejected') ||
+        !pendingReceipt.lifecycleErrors.includes('Custody IPC: kernel barrier rejected') ||
+        !LATE_STOP_FAILURES.every((value) => receipt.errors.includes(value) && receipt.lifecycleErrors.includes(value))
+    )
+        return false;
+    const runtime = receipt.runtimes[0],
+        browser = receipt.browsers[0],
+        server = receipt.servers[0];
+    const start = raw.barriers[0],
+        inner = raw.innerSupervisor;
+    const proofs = raw.events.filter((row) => row.type === 'runtime-custody-rejection');
+    const failures = raw.events.filter((row) => row.type === 'custody-error');
+    const rejections = receipt.events.filter((row) => row.type === 'custody-barrier-rejected');
+    const settlements = receipt.events.filter((row) => row.type === 'custody-request-settled' && row.phase === 'stop');
+    if (proofs.length !== 1 || failures.length !== 1 || rejections.length !== 1 || settlements.length !== 1)
+        return false;
+    const proof = proofs[0],
+        rejected = rejections[0],
+        settled = settlements[0],
+        failure = failures[0];
+    const exact = (row, events) =>
+        row &&
+        events.filter((value) => value.eventId === row.eventId).length === 1 &&
+        events.some((value) => JSON.stringify(value) === JSON.stringify(row));
+    const localBefore = (a, b) =>
+        exact(a, receipt.events) &&
+        exact(b, receipt.events) &&
+        a.eventId < b.eventId &&
+        a.supervisorElapsedMs < b.supervisorElapsedMs;
+    const sameRequest = (row) =>
+        row.workerPID === worker.pid &&
+        row.workerStartTicks === worker.startTicks &&
+        row.namespace === worker.namespace &&
+        row.runtimeId === runtime.runtimeId;
+    const peer = proof.currentPeer;
+    const currentPeerFields = ['pid', 'state', 'ppid', 'pgrp', 'startTicks', 'namespace'];
+    const completeCurrentPeer =
+        validTuple(peer) &&
+        Object.keys(peer).length === currentPeerFields.length &&
+        currentPeerFields.every((key) => Object.hasOwn(peer, key)) &&
+        ['R', 'S', 'D', 'T', 't', 'K', 'W', 'P', 'I', 'Z', 'X'].includes(peer.state) &&
+        Number.isSafeInteger(peer.pgrp) &&
+        peer.pgrp >= 0 &&
+        peer.pgrp <= 2147483647;
+    const invalidCurrent =
+        proof.reason === 'worker-absent'
+            ? proof.currentState === 'ABSENT' && peer === null
+            : proof.reason === 'worker-exited'
+              ? proof.currentState === 'EXITED' &&
+                completeCurrentPeer &&
+                same(peer, worker) &&
+                peer.ppid === inner.pid &&
+                ['Z', 'X'].includes(peer.state)
+              : proof.reason === 'worker-identity-mismatch' &&
+                proof.currentState === 'IDENTITY_MISMATCH' &&
+                completeCurrentPeer &&
+                peer.pid === worker.pid &&
+                (!same(peer, worker) || peer.ppid !== inner.pid);
+    const pendingFailure = 'Custody barrier remained pending at worker closure';
+    return (
+        invalidCurrent &&
+        exact(start, raw.events) &&
+        start.type === 'runtime-custody-barrier' &&
+        start.phase === 'start' &&
+        start.requestId === 1 &&
+        start.ok === true &&
+        start.observedSubreaper === 1 &&
+        sameRequest(start) &&
+        start.nodeSupervisorPID === inner.pid &&
+        start.transport === 'inherited-anonymous-pipes/v1' &&
+        JSON.stringify(start.directChildren) === JSON.stringify([inner.pid]) &&
+        proof.startEventId === start.eventId &&
+        proof.requestId === 2 &&
+        proof.phase === 'stop' &&
+        proof.ok === false &&
+        sameRequest(proof) &&
+        proof.nodeSupervisorPID === inner.pid &&
+        proof.transport === 'inherited-anonymous-pipes/v1' &&
+        start.eventId < failure.eventId &&
+        failure.eventId < proof.eventId &&
+        start.elapsedMs < failure.elapsedMs &&
+        failure.elapsedMs <= proof.elapsedMs &&
+        failure.message === CURRENT_WORKER_FAILURE &&
+        rejected.source === 'supervisor' &&
+        rejected.ok === false &&
+        rejected.reason === proof.reason &&
+        rejected.requestId === proof.requestId &&
+        rejected.phase === 'stop' &&
+        sameRequest(rejected) &&
+        rejected.custodianPID === wrapper.pid &&
+        rejected.custodyEventId === proof.eventId &&
+        rejected.startEventId === start.eventId &&
+        settled.source === 'supervisor' &&
+        settled.outcome === 'rejected-response' &&
+        settled.requestId === proof.requestId &&
+        settled.runtimeId === runtime.runtimeId &&
+        localBefore(runtime.stopBegin, browser.exit) &&
+        localBefore(browser.exit, browser.close) &&
+        localBefore(browser.close, server.close) &&
+        localBefore(server.close, rejected) &&
+        localBefore(rejected, settled) &&
+        localBefore(worker.exit, worker.close) &&
+        (![...receipt.errors, ...receipt.lifecycleErrors].includes(pendingFailure) ||
+            localBefore(worker.close, rejected)) &&
+        proof.elapsedMs >= server.close.supervisorElapsedMs - 50 &&
+        proof.elapsedMs <= rejected.supervisorElapsedMs + 50 &&
+        Date.parse(server.close.receivedUtc) <= Date.parse(proof.utc) &&
+        Date.parse(proof.utc) <= Date.parse(rejected.receivedUtc) &&
+        Date.parse(settled.receivedUtc) < Date.parse(inner.exit.utc) &&
+        Date.parse(worker.close.receivedUtc) < Date.parse(inner.exit.utc) &&
+        settled.supervisorElapsedMs - runtime.stopBegin.supervisorElapsedMs <= receipt.limits.closeMs &&
+        inner.exit.code === 0 &&
+        inner.exit.signal === null &&
+        inner.exit.elapsedMs < receipt.limits.finalMs &&
+        wrapper.close.elapsedMs < receipt.limits.finalMs &&
+        !receipt.events.some((row) => row.type === 'custody-barrier-ack' && row.phase === 'stop')
+    );
+}
+
+const ABORT_EPIPE_FAILURE = 'abort IPC send failed: Error: write EPIPE';
+function browserNonzeroAbortEpipe(receipt, bytes) {
+    if (!originalCustodyBytesValid(receipt, bytes)) return false;
+    const events = receipt.events,
+        worker = receipt.worker;
+    const aborts = events.filter((row) => row.type === 'abort-request');
+    const delivery = events.filter((row) => row.type.startsWith('abort-ipc-'));
+    if (aborts.length !== 1 || delivery.length !== 2) return false;
+    const abort = aborts[0],
+        [send, result] = delivery;
+    const before = (a, b) => a.eventId < b.eventId && a.supervisorElapsedMs < b.supervisorElapsedMs;
+    const target = {
+        pid: worker.pid,
+        startTicks: worker.startTicks,
+        namespace: worker.namespace,
+        ppid: receipt.custody.observation.innerSupervisor.pid,
+    };
+    const bound = (row) =>
+        row.source === 'supervisor' &&
+        row.childPID === worker.pid &&
+        row.abortRequestEventId === abort.eventId &&
+        row.workerPID === worker.pid &&
+        row.workerStartTicks === worker.startTicks &&
+        row.namespace === worker.namespace &&
+        row.deadlineMs === Math.min(abort.supervisorElapsedMs + receipt.limits.closeMs, receipt.limits.finalMs);
+    const exitObserved = result.workerExitEventId === worker.exit.eventId && before(worker.exit, result);
+    const closeObserved = result.workerCloseEventId === worker.close.eventId && before(worker.close, result);
+    const terminalObserved =
+        result.observation?.status === 'TERMINAL' && validAbortObservation(result.observation, target);
+    const nodeReceipt = JSON.parse(bytes.nodeReceipt);
+    return (
+        abort.source === 'supervisor' &&
+        abort.reason === 'unclean browser exit: 7/null' &&
+        before(receipt.browsers[0].exit, abort) &&
+        before(abort, send) &&
+        before(send, result) &&
+        send.type === 'abort-ipc-send' &&
+        result.type === 'abort-ipc-result' &&
+        bound(send) &&
+        bound(result) &&
+        send.workerExitEventId === null &&
+        send.workerCloseEventId === null &&
+        send.observation?.status === 'LIVE' &&
+        validAbortObservation(send.observation, target) &&
+        result.sendEventId === send.eventId &&
+        result.outcome === 'callback' &&
+        result.errorCode === 'EPIPE' &&
+        result.failed === true &&
+        (result.workerExitEventId === null || exitObserved) &&
+        (result.workerCloseEventId === null || closeObserved) &&
+        (!closeObserved || exitObserved) &&
+        (exitObserved || closeObserved || terminalObserved) &&
+        result.supervisorElapsedMs < result.deadlineMs &&
+        Date.parse(result.receivedUtc) < Date.parse(receipt.custody.observation.innerSupervisor.exit.utc) &&
+        [receipt, nodeReceipt].every(
+            (row) => row.errors.includes(ABORT_EPIPE_FAILURE) && row.lifecycleErrors.includes(ABORT_EPIPE_FAILURE),
+        )
+    );
+}
+
+// The complete bounded adopted set is authoritative; correlations never select its members.
+function closedTargetChildren(receipt) {
+    const raw = receipt.custody?.observation;
+    if (!raw || !Array.isArray(raw.adopted) || raw.adopted.length > BOUNDS.identities || !Array.isArray(raw.events))
+        return null;
+    const exact = (event, type) =>
+        event?.type === type &&
+        raw.events.filter((row) => row.eventId === event.eventId).length === 1 &&
+        raw.events.some((row) => JSON.stringify(row) === JSON.stringify(event));
+    if (!exact(raw.final, 'kernel-final-echild') || raw.final.result !== 'ECHILD') return null;
+    const seen = new Set();
+    for (const type of ['adopted-child', 'adopted-waitpid', 'adopted-absent'])
+        if (raw.events.filter((row) => row.type === type).length !== raw.adopted.length) return null;
+    for (const row of raw.adopted) {
+        if (
+            !validTuple(row) ||
+            seen.has(row.pid) ||
+            !exact(row.observed, 'adopted-child') ||
+            !same(row.observed.identity, row) ||
+            !exact(row.reap, 'adopted-waitpid') ||
+            !exact(row.absent, 'adopted-absent') ||
+            !same(row, row.reap) ||
+            !same(row, row.absent) ||
+            !(
+                row.observed.eventId < row.reap.eventId &&
+                row.reap.eventId < row.absent.eventId &&
+                row.absent.eventId < raw.final.eventId
+            ) ||
+            ![row.observed, row.reap, row.absent].every((event) => Number.isFinite(event.elapsedMs)) ||
+            !(
+                row.observed.elapsedMs <= row.reap.elapsedMs &&
+                row.reap.elapsedMs <= row.absent.elapsedMs &&
+                row.absent.elapsedMs <= raw.final.elapsedMs
+            )
+        )
+            return null;
+        seen.add(row.pid);
+    }
+    return raw.adopted;
+}
+
+function expectedOutcome(receipt, options) {
+    const profile = options.diagnosticProfile;
+    if (
+        profile !== undefined &&
+        (options.mode !== 'target' ||
+            !validateTargetDiagnosticProfile(profile) ||
+            !validateTargetDiagnosticProfile(receipt.diagnosticProfile) ||
+            ['schemaVersion', 'freezeId', 'inputDigest', 'canonicalEligible'].some(
+                (key) => profile[key] !== receipt.diagnosticProfile[key],
+            ))
+    )
+        return false;
+    const validation = profile === undefined ? {} : { diagnosticProfile: profile };
+    const raw = receipt.custody?.observation;
+    const pair = (row, code, signal = null) =>
+        row?.exit?.code === code &&
+        row?.close?.code === code &&
+        row.exit.signal === signal &&
+        row.close.signal === signal;
+    if (
+        !raw ||
+        receipt.forced !== false ||
+        receipt.timedOut !== false ||
+        raw.forced !== false ||
+        raw.final?.result !== 'ECHILD' ||
+        !raw.innerSupervisor?.exit ||
+        !raw.innerSupervisor?.stdoutEOF ||
+        !raw.innerSupervisor?.stderrEOF ||
+        !receipt.worker?.exit ||
+        !receipt.worker?.close ||
+        !receipt.custody?.wrapper?.exit ||
+        !receipt.custody?.wrapper?.close ||
+        receipt.noOwnedProcesses !== true ||
+        raw.adopted.some((row) => !row.reap || !row.absent)
+    )
+        return false;
+    if (options.mode === 'cpu' && options.cpuCase === 'positive')
+        return receipt.ok === true && validateAttemptReceipt(receipt, { allowCpuDummy: true }).ok;
+    if (receipt.ok === true) return options.mode === 'target' && validateAttemptReceipt(receipt, validation).ok;
+    const allowed = new Set(SECONDARY_FAILURES);
+    if (options.mode === 'cpu' && options.cpuCase === 'browser-nonzero') {
+        if (
+            receipt.cpuCase !== options.cpuCase ||
+            !pair(receipt.worker, 124) ||
+            receipt.browsers.length !== 1 ||
+            !pair(receipt.browsers[0], 7) ||
+            !browserNonzeroEventOwnership(receipt)
+        )
+            return false;
+        const rejectedStop = raw.events.some((row) => row.type === 'runtime-custody-rejection');
+        if (rejectedStop) {
+            if (!browserNonzeroRejectedDrain(receipt, options.artifactBytes)) return false;
+            for (const value of LATE_STOP_FAILURES) allowed.add(value);
+        } else if (raw.errors.length) return false;
+        if ([...receipt.errors, ...receipt.lifecycleErrors].includes(ABORT_EPIPE_FAILURE)) {
+            if (!rejectedStop || !browserNonzeroAbortEpipe(receipt, options.artifactBytes)) return false;
+            allowed.add(ABORT_EPIPE_FAILURE);
+        }
+        const pendingFailure = 'Custody barrier remained pending at worker closure';
+        if ([...receipt.errors, ...receipt.lifecycleErrors].includes(pendingFailure)) {
+            if (!rejectedStop && !browserNonzeroPendingDrain(receipt)) return false;
+            allowed.add(pendingFailure);
+        }
+        for (const value of [
+            'unclean browser exit: 7/null',
+            'unclean browser close: 7/null',
+            'observer-failure: browser exit is not clean: 7/null',
+            'Custody IPC: collector disconnected before response',
+            'worker exited 124',
+        ])
+            allowed.add(value);
+    } else if (options.mode === 'cpu' && options.cpuCase === 'custodian-delayed-stop-ack') {
+        if (
+            receipt.cpuCase !== options.cpuCase ||
+            raw.errors.length ||
+            !pair(receipt.worker, null, 'SIGTERM') ||
+            !raw.events.some(
+                (row) => row.type === 'cpu-worker-signal' && row.pid === receipt.worker.pid && row.signal === 'SIGTERM',
+            ) ||
+            !receipt.events.some(
+                (row) => row.type === 'custody-request-settled' && row.phase === 'stop' && row.outcome === 'response',
+            )
+        )
+            return false;
+        for (const value of [
+            'Custody barrier remained pending at worker closure',
+            'Custody IPC: collector disconnected before response',
+            'worker ended by signal',
+            'worker exited null',
+        ])
+            allowed.add(value);
+    } else if (options.mode === 'target') {
+        const children = closedTargetChildren(receipt);
+        if (!children) return false;
+        const signaled = children.filter((row) => row.reap.signal !== null);
+        if (
+            receipt.id !== 'collector-dodge' ||
+            !signaled.length ||
+            !children.every((row) =>
+                row.reap.signal === null
+                    ? row.reap.code === 0 && row.reap.rawStatus === 0
+                    : row.reap.signal === 'SIGTERM' && row.reap.code === null && row.reap.rawStatus === 15,
+            ) ||
+            !pair(receipt.worker, 124) ||
+            !receipt.browsers.length ||
+            !receipt.browsers.every((row) => pair(row, 0)) ||
+            !receipt.servers.length ||
+            !receipt.servers.every((row) => row.close) ||
+            !receipt.events.some(
+                (row) => row.type === 'abort-request' && row.reason === 'Custody IPC: kernel barrier rejected',
+            ) ||
+            receipt.events.some(
+                (row) =>
+                    ['abort-request', 'observer-failure'].includes(row.type) &&
+                    row.reason !== 'Custody IPC: kernel barrier rejected',
+            )
+        )
+            return false;
+        const adoptedFailures = signaled.map(
+            (row) => `Adopted child exited uncleanly: ${row.pid} code=None signal=SIGTERM`,
+        );
+        const expectedRawErrors = [...adoptedFailures, 'Runtime barrier found adopted or unclosed children'];
+        if (
+            raw.errors.length !== expectedRawErrors.length ||
+            new Set(raw.errors).size !== raw.errors.length ||
+            !expectedRawErrors.every((value) => raw.errors.includes(value))
+        )
+            return false;
+        for (const value of [
+            ...adoptedFailures,
+            'Custody IPC: kernel barrier rejected',
+            'observer-failure: Custody IPC: kernel barrier rejected',
+            'worker exited 124',
+            `collector report unreadable: Error: ENOENT: no such file or directory, open '${receipt.output.report}'`,
+            'single-example partial collector result missing or failed',
+            'Runtime barrier found adopted or unclosed children',
+            'Custodian did not exit/close cleanly',
+            'Custodian exact identity/exit/stdio close is not clean',
+            'Kernel custody retained failures',
+            'Custody failure event: custody-error',
+            'Adopted child lacks exact waitpid/absence closure',
+        ])
+            allowed.add(value);
+        // This precise regression fails before the collector report is sealed. A different assertion
+        // failure or an unexpected successful collector artifact is not silently accepted here.
+        if (fs.existsSync(receipt.output.report)) return false;
+    } else return false;
+    const structural = validateAttemptReceipt(receipt, {
+        ...validation,
+        allowCpuDummy: options.mode === 'cpu',
+        requireSuccess: false,
+    });
+    return (
+        [...receipt.errors, ...receipt.lifecycleErrors, ...structural.errors].every((message) =>
+            allowed.has(message),
+        ) && physicalReceipt(receipt)
+    );
+}
+
+function physicalReceipt(receipt) {
+    const raw = receipt.custody?.observation;
+    if (!raw) return false;
+    const present = (value, events) =>
+        value && events.some((row) => row.eventId === value.eventId && JSON.stringify(row) === JSON.stringify(value));
+    const beforeFinal = (value) =>
+        present(value, raw.events) && value.eventId < raw.final.eventId && value.elapsedMs <= raw.final.elapsedMs;
+    if (
+        !present(receipt.worker.exit, receipt.events) ||
+        !present(receipt.worker.close, receipt.events) ||
+        receipt.worker.exit.eventId >= receipt.worker.close.eventId ||
+        receipt.worker.exit.code !== receipt.worker.close.code ||
+        receipt.worker.exit.signal !== receipt.worker.close.signal ||
+        !present(raw.final, raw.events) ||
+        raw.final.result !== 'ECHILD' ||
+        !beforeFinal(raw.innerSupervisor.exit) ||
+        !beforeFinal(raw.innerSupervisor.stdoutEOF) ||
+        !beforeFinal(raw.innerSupervisor.stderrEOF) ||
+        receipt.custody.wrapper.exit.elapsedMs < raw.final.elapsedMs ||
+        receipt.custody.wrapper.close.elapsedMs < receipt.custody.wrapper.exit.elapsedMs
+    )
+        return false;
+    return raw.adopted.every(
+        (row) =>
+            beforeFinal(row.reap) &&
+            beforeFinal(row.absent) &&
+            row.reap.eventId < row.absent.eventId &&
+            same(row, row.reap) &&
+            same(row, row.absent),
+    );
+}
+
+function knownCpuSender(receipt, records, knownRoot) {
+    const raw = receipt?.custody?.observation,
+        worker = receipt?.worker;
+    if (!raw || !worker || !Array.isArray(raw.events) || !Array.isArray(receipt.events)) return false;
+    const proofs = raw.events.filter((row) => row.type === 'cpu-worker-signal');
+    if (proofs.length !== 1) return false;
+    const proof = proofs[0];
+    const absences = raw.events.filter((row) => row.type === 'cpu-worker-absent-before-ack');
+    if (absences.length !== 1) return false;
+    const absence = absences[0];
+    if (
+        proof.cpuOnly !== true ||
+        proof.signal !== 'SIGTERM' ||
+        !same(proof, worker) ||
+        absence.cpuOnly !== true ||
+        !same(absence, worker) ||
+        !(proof.eventId < absence.eventId) ||
+        [proof, absence].some((event) => raw.events.filter((row) => row.eventId === event.eventId).length !== 1)
+    )
+        return false;
+    const originalEvent = (event, type) => {
+        const matches = receipt.events.filter((row) => row.type === type);
+        return (
+            event &&
+            event.source === 'supervisor' &&
+            matches.length === 1 &&
+            receipt.events.filter((row) => row.eventId === event.eventId).length === 1 &&
+            JSON.stringify(matches[0]) === JSON.stringify(event)
+        );
+    };
+    const { spawn, exit, close } = worker;
+    if (
+        !originalEvent(spawn, 'worker-spawn') ||
+        !originalEvent(exit, 'worker-exit') ||
+        !originalEvent(close, 'worker-stdio-close') ||
+        !same(spawn, worker) ||
+        exit.code !== null ||
+        exit.signal !== 'SIGTERM' ||
+        close.code !== null ||
+        close.signal !== 'SIGTERM' ||
+        !(spawn.eventId < exit.eventId && exit.eventId < close.eventId)
+    )
+        return false;
+    // strace carries microseconds; ISO receipts truncate to milliseconds. Each ISO
+    // value denotes [ms, ms + 1), not an extra scheduling/delivery grace period.
+    const utcMicros = (value) => {
+        const ms = typeof value === 'string' ? Date.parse(value) : NaN;
+        return Number.isFinite(ms) && new Date(ms).toISOString() === value ? BigInt(ms) * 1000n : null;
+    };
+    const traceMicros = (value) =>
+        typeof value === 'string' && /^\d+\.\d{6}$/.test(value) ? BigInt(value.replace('.', '')) : null;
+    const spawned = utcMicros(spawn.receivedUtc),
+        exited = utcMicros(exit.receivedUtc),
+        closed = utcMicros(close.receivedUtc),
+        proved = utcMicros(proof.utc),
+        absent = utcMicros(absence.utc);
+    if (
+        [spawned, exited, closed, proved, absent].includes(null) ||
+        !(spawned <= exited && exited <= closed && proved <= absent)
+    )
+        return false;
+    const sends = records.filter(
+        (row) =>
+            row.kind === 'syscall' &&
+            row.syscall === 'kill' &&
+            row.result === 0 &&
+            row.errno === null &&
+            row.target === proof.pid &&
+            row.signal === 'SIGTERM' &&
+            validObservation(row.identityObservation, knownRoot) &&
+            row.tid === row.threadIdentity?.pid &&
+            fullSame(row.threadIdentity, row.identityObservation.thread) &&
+            fullSame(row.callerProcessIdentity, row.identityObservation.process) &&
+            same(row.callerProcessIdentity, raw.custodian),
+    );
+    const deliveries = records.filter(
+        (row) =>
+            row.kind === 'delivery' &&
+            row.signal === 'SIGTERM' &&
+            row.siCode === 'SI_USER' &&
+            row.siPid === raw.custodian.pid &&
+            row.tid === worker.pid,
+    );
+    if (sends.length !== 1 || deliveries.length !== 1) return false;
+    const began = traceMicros(sends[0].beganAt),
+        returned = traceMicros(sends[0].timestamp),
+        delivered = traceMicros(deliveries[0].timestamp);
+    // The Python proof is emitted after os.kill returns, not after remote delivery.
+    // Delivery may precede the resumed syscall return or follow the proof; its upper
+    // bound is this exact worker's independently recorded SIGTERM exit. Python may
+    // log the send after Node records exit/close; only its own later absence bounds it.
+    return (
+        ![began, returned, delivered].includes(null) &&
+        spawned <= began &&
+        began <= returned &&
+        returned < proved + 1000n &&
+        began <= delivered &&
+        delivered < exited + 1000n
+    );
+}
+
+function targetAttribution(receipt, records, correlations) {
+    const children = closedTargetChildren(receipt);
+    invariant(children, 'target-adopted-closure-invalid');
+    const exact = (event, type) =>
+        event?.type === type &&
+        receipt.events.filter((row) => row.eventId === event.eventId).length === 1 &&
+        receipt.events.some((row) => JSON.stringify(row) === JSON.stringify(event));
+    const utcMicros = (value) => {
+        const ms = typeof value === 'string' ? Date.parse(value) : NaN;
+        return Number.isFinite(ms) && new Date(ms).toISOString() === value ? BigInt(ms) * 1000n : null;
+    };
+    const traceMicros = (value) =>
+        typeof value === 'string' && /^\d+\.\d{6}$/.test(value) ? BigInt(value.replace('.', '')) : null;
+    const targets = children
+        .filter((row) => row.reap.signal !== null)
+        .map((adopted) => {
+            const ownedRows = receipt.ownedProcesses.filter((row) => row.pid === adopted.pid);
+            const role =
+                ownedRows.length === 1 ? ownedRows[0].firstObserved?.processDiagnostic?.details?.processType : null;
+            const result = {
+                target: { pid: adopted.pid, startTicks: adopted.startTicks, namespace: adopted.namespace },
+                signal: SIGNALS.has(adopted.reap.signal) ? adopted.reap.signal : 'UNKNOWN',
+                reapEvent: adopted.reap.eventId,
+                absenceEvent: adopted.absent.eventId,
+                targetRoleHint: ['renderer', 'gpu-process', 'utility', 'zygote', 'broker', 'crashpad-handler'].includes(
+                    role,
+                )
+                    ? role
+                    : 'unknown',
+                status: 'UNKNOWN',
+                reason: 'missing-or-ambiguous-correlation',
+            };
+            if (adopted.reap.signal !== 'SIGTERM' || adopted.reap.rawStatus !== 15 || adopted.reap.code !== null)
+                return { ...result, reason: 'unsupported-signal-outcome' };
+            const matches = correlations.filter((row) => row.target?.pid === adopted.pid);
+            if (matches.length !== 1) return result;
+            const correlation = matches[0];
+            if (
+                correlation.status !== 'CORRELATED_DIAGNOSTIC_ONLY' ||
+                correlation.signal !== 'SIGTERM' ||
+                !same(correlation.target, adopted)
+            )
+                return result;
+            if (
+                correlations.filter((row) => row.deliveryEvent === correlation.deliveryEvent).length !== 1 ||
+                correlations.filter((row) => row.syscallEvent === correlation.syscallEvent).length !== 1
+            )
+                return { ...result, reason: 'reused-signal-event' };
+            const sends = records.filter((row) => row.eventId === correlation.syscallEvent);
+            const deliveries = records.filter((row) => row.eventId === correlation.deliveryEvent);
+            const browsers = receipt.browsers.filter((row) => row.pid === correlation.sender?.pid);
+            if (
+                sends.length !== 1 ||
+                deliveries.length !== 1 ||
+                browsers.length !== 1 ||
+                ownedRows.length !== 1 ||
+                !same(ownedRows[0], adopted) ||
+                !same(browsers[0], correlation.sender)
+            )
+                return { ...result, reason: 'ambiguous-event-or-identity' };
+            const sent = sends[0],
+                delivery = deliveries[0],
+                browser = browsers[0];
+            const stops = receipt.events.filter(
+                (row) => row.type === 'stop-begin' && row.runtimeId === browser.runtimeId,
+            );
+            if (
+                stops.length !== 1 ||
+                !exact(stops[0], 'stop-begin') ||
+                !exact(browser.exit, 'browser-exit') ||
+                !exact(browser.close, 'browser-close') ||
+                browser.exit.code !== 0 ||
+                browser.close.code !== 0 ||
+                browser.exit.signal !== null ||
+                browser.close.signal !== null ||
+                !(stops[0].eventId < browser.exit.eventId && browser.exit.eventId < browser.close.eventId)
+            )
+                return { ...result, reason: 'browser-lifecycle-unproven' };
+            if (
+                sent.kind !== 'syscall' ||
+                sent.syscall !== 'kill' ||
+                sent.result !== 0 ||
+                sent.errno !== null ||
+                sent.signal !== 'SIGTERM' ||
+                sent.target !== adopted.pid ||
+                sent.targetKind !== 'pid-or-group' ||
+                delivery.kind !== 'delivery' ||
+                delivery.signal !== 'SIGTERM' ||
+                delivery.siCode !== 'SI_USER' ||
+                delivery.siPid !== browser.pid ||
+                !frozenImageMatch(sent.identityObservation) ||
+                !frozenImageMatch(sent.targetObservation) ||
+                !frozenImageMatch(delivery.identityObservation) ||
+                !same(sent.callerProcessIdentity, browser) ||
+                !fullSame(sent.callerProcessIdentity, sent.identityObservation.process) ||
+                !same(sent.identityObservation.process, browser) ||
+                !same(sent.targetObservation.process, adopted) ||
+                !same(delivery.processIdentity, adopted) ||
+                !fullSame(delivery.processIdentity, delivery.identityObservation.process) ||
+                !same(delivery.identityObservation.process, adopted) ||
+                sent.tid !== sent.threadIdentity?.pid ||
+                !fullSame(sent.threadIdentity, sent.identityObservation.thread) ||
+                delivery.tid !== delivery.threadIdentity?.pid ||
+                !fullSame(delivery.threadIdentity, delivery.identityObservation.thread) ||
+                !fullSame(sent.identityObservation.root, sent.targetObservation.root) ||
+                !fullSame(sent.identityObservation.root, delivery.identityObservation.root)
+            )
+                return { ...result, reason: 'signal-identity-unproven' };
+            const stopTime = utcMicros(stops[0].utc || stops[0].receivedUtc),
+                exitTime = utcMicros(browser.exit.utc || browser.exit.receivedUtc),
+                closeTime = utcMicros(browser.close.utc || browser.close.receivedUtc),
+                reapTime = utcMicros(adopted.reap.utc),
+                began = traceMicros(sent.beganAt),
+                returned = traceMicros(sent.timestamp),
+                delivered = traceMicros(delivery.timestamp);
+            if (
+                [stopTime, exitTime, closeTime, reapTime, began, returned, delivered].includes(null) ||
+                !(
+                    stopTime <= exitTime &&
+                    exitTime <= closeTime &&
+                    stopTime <= began &&
+                    began <= returned &&
+                    returned < exitTime + 1000n &&
+                    began <= delivered &&
+                    delivered < reapTime + 1000n
+                )
+            )
+                return { ...result, reason: 'signal-time-unproven' };
+            return {
+                ...result,
+                status: 'MATCHED',
+                reason: null,
+                sender: { pid: browser.pid, startTicks: browser.startTicks, namespace: browser.namespace },
+                syscallEvent: sent.eventId,
+                deliveryEvent: delivery.eventId,
+                frozenBrowserImage: true,
+            };
+        });
+    return {
+        status: targets.length > 0 && targets.every((row) => row.status === 'MATCHED') ? 'MATCHED' : 'UNKNOWN',
+        diagnosticOnly: true,
+        targets,
+    };
+}
+
+function checkChildrenInterface(read = fs.readFileSync) {
+    try {
+        const value = read(`/proc/self/task/${process.pid}/children`, 'utf8');
+        invariant(
+            typeof value === 'string' && Buffer.byteLength(value) <= 8192 && /^\s*(?:\d+\s*)*$/.test(value),
+            'owned-children-interface-unavailable',
+        );
+        for (const word of value.trim().split(/\s+/).filter(Boolean))
+            invariant(
+                Number.isSafeInteger(Number(word)) && Number(word) > 0 && Number(word) <= 2147483647,
+                'owned-children-interface-unavailable',
+            );
+        return true;
+    } catch {
+        throw Error('owned-children-interface-unavailable');
+    }
+}
+
+function createDiagnosticBudget(mode, now = () => performance.now()) {
+    invariant(['availability', 'cpu', 'target'].includes(mode), 'invalid-diagnostic-budget-mode');
+    const origin = now();
+    invariant(Number.isFinite(origin) && origin >= 0, 'invalid-diagnostic-monotonic-clock');
+    let last = origin;
+    const limits = Object.freeze(
+        mode === 'availability' ? { termMs: 4000, killMs: 8000 } : { termMs: 174000, killMs: 178000 },
+    );
+    const elapsedMs = () => {
+        const current = now();
+        invariant(Number.isFinite(current) && current >= last, 'invalid-diagnostic-monotonic-clock');
+        last = current;
+        return current - origin;
+    };
+    const remainingMs = (phase) => {
+        invariant(phase === 'term' || phase === 'kill', 'invalid-diagnostic-deadline-phase');
+        return Math.max(0, Math.floor(limits[`${phase}Ms`] - elapsedMs()));
+    };
+    const requireSpawnBudget = () => {
+        invariant(remainingMs('term') > 0, 'diagnostic-preflight-budget-exhausted');
+    };
+    return Object.freeze({
+        limits,
+        elapsedMs,
+        remainingMs,
+        requireSpawnBudget,
+        startupTimeoutMs: () => {
+            const remaining = remainingMs('term');
+            invariant(remaining > 0, 'diagnostic-preflight-budget-exhausted');
+            return Math.min(2000, remaining);
+        },
+    });
+}
+
+// Zero selected events are valid only for an otherwise fully validated ordinary run.
+// Availability and the known sender control still require real send/delivery proof.
+function emptyTraceAllowed(options, report, rootIdentity) {
+    return (
+        !options.control &&
+        options.mode !== 'availability' &&
+        !(options.mode === 'cpu' && options.cpuCase === 'custodian-delayed-stop-ack') &&
+        validTuple(rootIdentity, true) &&
+        report.trace?.ok === true &&
+        report.trace.empty === true &&
+        report.physicalClosure === true &&
+        report.original !== null &&
+        report.errors.length === 0 &&
+        report.attribution.status === 'UNKNOWN'
+    );
+}
+
+async function runDiagnostic(options) {
+    // All preflight work consumes the original external budget; it never starts a fresh timer.
+    const budget = createDiagnosticBudget(options.mode);
+    const startedAt = new Date().toISOString();
+    invariant(process.platform === 'linux', 'linux-required');
+    checkChildrenInterface();
+    options = { ...options, out: path.resolve(options.out || '') };
+    invariant(options.out && outside(REPO, options.out), 'new-external-output-required');
+    invariant(!fs.existsSync(options.out), 'immutable-diagnostic-directory-exists');
+    const command = buildCommand(options);
+    let tracerIdentity = null;
+    if (options.trace === 'on') {
+        invariant(path.isAbsolute(options.strace || ''), 'absolute-strace-path-required');
+        const file = fs.realpathSync(options.strace);
+        invariant(
+            /^[a-f0-9]{64}$/.test(options.straceSha256 || '') && sha256(file) === options.straceSha256,
+            'strace-hash-mismatch',
+        );
+        const version = spawnSync(file, ['--version'], {
+            encoding: 'utf8',
+            timeout: budget.startupTimeoutMs(),
+            maxBuffer: 8192,
+        });
+        invariant(
+            version.status === 0 && !version.signal && version.stdout.split('\n')[0] === options.straceVersion,
+            'strace-version-mismatch',
+        );
+        tracerIdentity = { sha256: options.straceSha256, version: options.straceVersion };
+    }
+    budget.requireSpawnBudget();
+    fs.mkdirSync(options.out, { recursive: true, mode: 0o700 });
+    invariant(outside(REPO, fs.realpathSync(options.out)), 'diagnostic-output-resolves-inside-repo');
+    const report = {
+        schemaVersion: SCHEMA,
+        purpose: 'diagnostic-only',
+        canonicalEligible: false,
+        rawStraceRetained: false,
+        traceRepresentation: 'fixed-numeric-enum-fields/1',
+        mode: options.mode,
+        cpuCase: options.cpuCase || null,
+        traced: options.trace === 'on',
+        traceFilter: options.trace === 'on' ? { syscalls: TRACE_SYSCALLS, signals: ['SIGTERM', 'SIGKILL'] } : null,
+        startedAt,
+        limits: command.limits,
+        diagnosticProfile: command.diagnosticProfile || null,
+        externalLimits: budget.limits,
+        externalBudgetOrigin: 'runDiagnostic-entry-monotonic',
+        bounds: BOUNDS,
+        tracerIdentity,
+        commandIdentity: {
+            role: command.role,
+            nodeSha256: sha256(process.execPath),
+            toolSha256: sha256(__filename),
+            runnerSha256: command.runnerSha256 || null,
+        },
+        browserIdentity: command.browser
+            ? {
+                  sha256: command.browser.sha256,
+                  version: command.browser.version,
+                  playwrightVersion: command.browser.playwrightVersion,
+              }
+            : null,
+        events: [],
+        errors: [],
+        trace: null,
+        original: null,
+        correlations: [],
+        originalReceiptOK: null,
+        diagnosticComplete: false,
+        control: options.control || null,
+        physicalClosure: false,
+        attribution: { status: 'UNKNOWN', diagnosticOnly: true },
+    };
+    const event = (type, values = {}) => {
+        const row = { type, elapsedMs: budget.elapsedMs(), ...values };
+        report.events.push(row);
+        return row;
+    };
+    const failure = (reason) => {
+        if (!report.errors.includes(reason)) report.errors.push(reason);
+    };
+    const traceFile = fs.openSync(path.join(options.out, 'filtered-trace.jsonl'), 'wx', 0o600);
+    const records = [],
+        identityCache = new Map();
+    let outputBytes = 0,
+        child,
+        rootIdentity,
+        cancelRequested = false,
+        cancellationSent = false,
+        fd = null,
+        fifoIdentity = null;
+    const frozenImage = command.browser
+        ? (() => {
+              const row = fs.statSync(command.browser.executable);
+              return { dev: row.dev, ino: row.ino, size: row.size, mtimeMs: row.mtimeMs };
+          })()
+        : null;
+    const cancel = (reason) => {
+        failure(reason);
+        cancelRequested = true;
+        if (!cancellationSent && same(rootIdentity, identity(rootIdentity?.pid))) {
+            try {
+                process.kill(rootIdentity.pid, 'SIGTERM');
+                cancellationSent = true;
+                event('original-outer-signal', { identity: rootIdentity, signal: 'SIGTERM' });
+            } catch {
+                failure('original-outer-signal-failed');
+            }
+        }
+    };
+    const parser = createParser({
+        onFailure: cancel,
+        onRecord: (record) => {
+            const observation =
+                record.kind === 'delivery' || (record.kind === 'syscall' && TRACE_SYSCALLS.includes(record.syscall))
+                    ? observeOwned(record.tid, rootIdentity, frozenImage)
+                    : null;
+            const thread = observation?.thread || null,
+                leader = observation?.process || null;
+            const row = {
+                ...record,
+                eventId: records.length + 1,
+                threadIdentity: thread,
+                processIdentity: leader,
+                identityObservation: observation,
+            };
+            if (record.kind === 'syscall') {
+                row.callerProcessIdentity = leader;
+                if (['kill', 'tkill', 'tgkill'].includes(record.syscall) && record.target > 0)
+                    row.targetObservation = observeOwned(record.targetTid || record.target, rootIdentity, frozenImage);
+            }
+            const encoded = JSON.stringify(row) + '\n';
+            if (outputBytes + Buffer.byteLength(encoded) > BOUNDS.outputBytes) return cancel('trace-output-bound');
+            outputBytes += Buffer.byteLength(encoded);
+            fs.writeSync(traceFile, encoded);
+            records.push(row);
+        },
+    });
+    const fifo = path.join(options.out, 'trace.fifo');
+    if (report.traced) {
+        const mkfifo = spawnSync('/usr/bin/mkfifo', ['--mode=600', fifo], {
+            timeout: budget.startupTimeoutMs(),
+            maxBuffer: 1024,
+        });
+        event('mkfifo-complete', { pid: mkfifo.pid, code: mkfifo.status, signal: mkfifo.signal });
+        invariant(mkfifo.status === 0 && !mkfifo.signal, 'mkfifo-failed');
+        const entry = fs.lstatSync(fifo);
+        invariant(entry.isFIFO() && !entry.isSymbolicLink(), 'unsafe-trace-fifo');
+        fd = fs.openSync(fifo, fs.constants.O_RDONLY | fs.constants.O_NONBLOCK | fs.constants.O_NOFOLLOW);
+        fifoIdentity = fs.fstatSync(fd);
+        invariant(fifoIdentity.dev === entry.dev && fifoIdentity.ino === entry.ino, 'trace-fifo-replaced');
+    }
+    budget.requireSpawnBudget();
+    const onInterrupt = () => cancel('diagnostic-wrapper-interrupted');
+    process.on('SIGTERM', onInterrupt);
+    process.on('SIGINT', onInterrupt);
+    child = spawn(
+        report.traced ? options.strace : command.executable,
+        report.traced ? traceArgs(fifo, command) : command.args,
+        { cwd: REPO, stdio: ['ignore', 'pipe', 'pipe'] },
+    );
+    const childIdentity = identity(child.pid);
+    event(report.traced ? 'tracer-spawn' : 'original-outer-spawn', { identity: childIdentity });
+    if (!report.traced) rootIdentity = childIdentity;
+    let stdioBytes = 0,
+        childClosed = false,
+        fifoEOF = false;
+    for (const [index, name] of [
+        [1, 'stdout'],
+        [2, 'stderr'],
+    ]) {
+        // Original nested collectors already retain their own raw stdout/stderr. This outer stream
+        // is only counted, never copied into a privacy-bounded trace artifact.
+        child.stdio[index].on('data', (bytes) => {
+            stdioBytes += bytes.length;
+            if (stdioBytes > BOUNDS.inputBytes) cancel('outer-stdio-bound');
+        });
+        child.stdio[index].once('end', () => event(`${report.traced ? 'tracer' : 'outer'}-${name}-eof`));
+    }
+    child.once('error', () => failure('outer-spawn-error'));
+    child.once('exit', (code, signal) => event(report.traced ? 'tracer-exit' : 'outer-exit', { code, signal }));
+    const read = () => {
+        if (fd === null) return;
+        const bytes = Buffer.alloc(65536);
+        // Bound each polling slice as well as the overall stream; keep draining after failure.
+        for (let i = 0; i < 32; i++) {
+            let size;
+            try {
+                size = fs.readSync(fd, bytes, 0, bytes.length, null);
+            } catch (error) {
+                if (error.code !== 'EAGAIN') failure('trace-read-failed');
+                return;
+            }
+            if (!size) {
+                if (childClosed && !fifoEOF) {
+                    fifoEOF = true;
+                    event('trace-fifo-eof');
+                }
+                return;
+            }
+            parser.push(bytes.subarray(0, size));
+        }
+    };
+    const observeRoot = () => {
+        if (!rootIdentity && report.traced && child.pid) {
+            try {
+                const candidates = fs
+                    .readFileSync(`/proc/${child.pid}/task/${child.pid}/children`, 'utf8')
+                    .trim()
+                    .split(/\s+/)
+                    .map(Number)
+                    .filter(Boolean);
+                for (const pid of candidates) {
+                    if (fs.realpathSync(`/proc/${pid}/exe`) !== fs.realpathSync(process.execPath)) continue;
+                    const current = identity(pid),
+                        after = identity(pid);
+                    if (current && same(current, after) && current.ppid === child.pid && current.tgid === pid) {
+                        rootIdentity = current;
+                        event('original-outer-observed', { identity: current });
+                        if (cancelRequested) cancel('cancel-before-root-observed');
+                        break;
+                    }
+                }
+            } catch {
+                /* A short-lived child may vanish. Missing identity remains UNKNOWN. */
+            }
+        }
+    };
+    let lastSample = 0,
+        controlReady = false;
+    const sampleOwned = () => {
+        if (!report.traced || !rootIdentity || Date.now() - lastSample < 25) return;
+        lastSample = Date.now();
+        sampleOwnedIdentities({ root: rootIdentity, frozenImage, cache: identityCache, onFailure: cancel });
+    };
+    const poll = setInterval(() => {
+        observeRoot();
+        read();
+        sampleOwned();
+        if (options.control && !controlReady) {
+            try {
+                const journal = fs.readFileSync(path.join(options.out, 'attempt', 'custodian.events.jsonl'), 'utf8');
+                if (
+                    journal
+                        .split('\n')
+                        .filter(Boolean)
+                        .map(JSON.parse)
+                        .some((row) => row.type === 'runtime-custody-barrier' && row.phase === 'start' && row.ok)
+                ) {
+                    const journalRows = journal.split('\n').filter(Boolean).map(JSON.parse);
+                    const inner = journalRows.find((row) => row.type === 'inner-supervisor-spawn')?.identity;
+                    const innerObservation = inner && observeOwned(inner.pid, rootIdentity, frozenImage);
+                    const custodianObservation = inner && observeOwned(inner.ppid, rootIdentity, frozenImage);
+                    if (!innerObservation || !custodianObservation) return;
+                    const inputBoundArm =
+                        options.control === 'trace-input-bound' ? parser.restrictToCurrentInput() : null;
+                    controlReady = true;
+                    if (inputBoundArm) event('control-input-bound-armed', inputBoundArm);
+                    fs.writeFileSync(
+                        path.join(options.out, 'control-ready.json'),
+                        JSON.stringify({
+                            wrapperPID: process.pid,
+                            originalOuter: rootIdentity,
+                            innerObservation,
+                            custodianObservation,
+                            control: options.control,
+                            inputBoundArm,
+                        }) + '\n',
+                        { flag: 'wx', mode: 0o600 },
+                    );
+                    event('control-real-start-barrier');
+                }
+            } catch {
+                /* Not ready. The original and external deadlines still apply. */
+            }
+        }
+    }, 10);
+    const term = setTimeout(() => cancel('external-term-deadline'), budget.remainingMs('term'));
+    const kill = setTimeout(() => {
+        failure('external-kill-deadline');
+        try {
+            if (same(rootIdentity, identity(rootIdentity?.pid))) {
+                process.kill(rootIdentity.pid, 'SIGKILL');
+                event('original-outer-signal', { identity: rootIdentity, signal: 'SIGKILL' });
+            }
+        } catch {
+            failure('final-outer-signal-failed');
+        }
+        // A final failed diagnostic must never turn tracer detachment into a successful closure claim.
+        try {
+            if (same(childIdentity, identity(childIdentity?.pid))) {
+                process.kill(child.pid, 'SIGKILL');
+                event('tracer-forced-kill');
+            }
+        } catch {
+            failure('final-tracer-signal-failed');
+        }
+    }, budget.remainingMs('kill'));
+    await new Promise((resolve) =>
+        child.once('close', (code, signal) => {
+            childClosed = true;
+            event(report.traced ? 'tracer-stdio-close' : 'outer-stdio-close', { code, signal });
+            resolve();
+        }),
+    );
+    clearInterval(poll);
+    clearTimeout(term);
+    clearTimeout(kill);
+    process.removeListener('SIGTERM', onInterrupt);
+    process.removeListener('SIGINT', onInterrupt);
+    if (fd !== null) {
+        read();
+        fs.closeSync(fd);
+        const entry = fs.lstatSync(fifo);
+        invariant(
+            entry.isFIFO() && entry.dev === fifoIdentity.dev && entry.ino === fifoIdentity.ino,
+            'trace-fifo-replaced',
+        );
+        fs.unlinkSync(fifo);
+    }
+    report.trace = { ...parser.finish(), outputBytes, retainedEvents: records.length };
+    fs.closeSync(traceFile);
+    report.trace.filteredSha256 = sha256(path.join(options.out, 'filtered-trace.jsonl'));
+    // Refresh each exact thread's absence/unknown state after the outer process physically closes.
+    if (report.traced && rootIdentity)
+        sampleOwnedIdentities({ root: rootIdentity, frozenImage, cache: identityCache, onFailure: failure });
+    const cache = [...identityCache.values()];
+    const encodedCache = JSON.stringify(cache, null, 2) + '\n';
+    if (Buffer.byteLength(encodedCache) > BOUNDS.identityBytes) failure('identity-output-bound');
+    else {
+        fs.writeFileSync(path.join(options.out, 'process-identities.json'), encodedCache, { flag: 'wx', mode: 0o600 });
+        report.trace.identityCacheSha256 = sha256(path.join(options.out, 'process-identities.json'));
+    }
+    if (!report.trace.ok) failure(report.trace.reason);
+    const prefix = report.traced ? 'tracer' : 'outer';
+    for (const suffix of ['exit', 'stdio-close', 'stdout-eof', 'stderr-eof'])
+        if (!report.events.some((row) => row.type === `${prefix}-${suffix}`))
+            failure('outer-physical-close-incomplete');
+    if (report.traced && !fifoEOF) failure('trace-fifo-eof-missing');
+    if (exactPresence(rootIdentity) !== 'ABSENT') failure('original-outer-absence-unproven');
+    if (exactPresence(childIdentity) !== 'ABSENT') failure('tracer-absence-unproven');
+    report.trace.empty = records.length === 0;
+    if (!rootIdentity) failure('original-outer-identity-unavailable');
+    if (report.traced && sha256(options.strace) !== options.straceSha256) failure('strace-hash-changed');
+    if (command.browser && sha256(command.browser.executable) !== command.browser.sha256)
+        failure('browser-hash-changed');
+    const receiptFile = command.receipt || path.join(options.out, 'attempt', 'attempt-receipt.json');
+    if (options.control) {
+        failure('intentional-wrapper-negative-control');
+        try {
+            const receipt = JSON.parse(fs.readFileSync(receiptFile, 'utf8'));
+            report.originalReceiptOK = receipt.ok;
+            const raw = receipt.custody.observation;
+            report.missingOriginalRoles = ['raw', 'nodeReceipt', 'journal', 'stdout', 'stderr'].filter(
+                (role) => !receipt.custody.artifacts[role],
+            );
+            for (const reference of Object.values(receipt.custody.artifacts))
+                invariant(
+                    fs.statSync(reference.path).size === reference.bytes && sha256(reference.path) === reference.sha256,
+                    'control-original-artifact-mismatch',
+                );
+            const rawReference = receipt.custody.artifacts.raw,
+                journalReference = receipt.custody.artifacts.journal;
+            const originalRaw = JSON.parse(fs.readFileSync(rawReference.path, 'utf8'));
+            const journal = fs
+                .readFileSync(journalReference.path, 'utf8')
+                .trim()
+                .split('\n')
+                .filter(Boolean)
+                .map(JSON.parse);
+            const exact = (row) =>
+                row &&
+                raw.events.some((item) => item.eventId === row.eventId && JSON.stringify(item) === JSON.stringify(row));
+            const finalBefore = (row) => exact(row) && row.eventId < raw.final.eventId;
+            report.physicalClosure =
+                JSON.stringify(raw) === JSON.stringify(originalRaw) &&
+                sha256(rawReference.path) === rawReference.sha256 &&
+                sha256(journalReference.path) === journalReference.sha256 &&
+                JSON.stringify(journal) === JSON.stringify(raw.events) &&
+                exact(raw.final) &&
+                raw.final.result === 'ECHILD' &&
+                finalBefore(raw.innerSupervisor.exit) &&
+                finalBefore(raw.innerSupervisor.stdoutEOF) &&
+                finalBefore(raw.innerSupervisor.stderrEOF) &&
+                raw.adopted.every(
+                    (row) =>
+                        finalBefore(row.reap) &&
+                        finalBefore(row.absent) &&
+                        same(row, row.reap) &&
+                        same(row, row.absent) &&
+                        row.reap.eventId < row.absent.eventId,
+                ) &&
+                receipt.custody.wrapper.exit?.elapsedMs >= raw.final.elapsedMs &&
+                receipt.custody.wrapper.close?.elapsedMs >= receipt.custody.wrapper.exit.elapsedMs &&
+                !!receipt.custody.wrapper.exit &&
+                !!receipt.custody.wrapper.close &&
+                receiptIdentities(receipt).every((row) => exactPresence(row) === 'ABSENT') &&
+                exactPresence(rootIdentity) === 'ABSENT' &&
+                exactPresence(childIdentity) === 'ABSENT' &&
+                fifoEOF &&
+                ['exit', 'stdio-close', 'stdout-eof', 'stderr-eof'].every((suffix) =>
+                    report.events.some((row) => row.type === `tracer-${suffix}`),
+                ) &&
+                !report.errors.some((reason) =>
+                    [
+                        'external-kill-deadline',
+                        'original-owned-process-still-present',
+                        'outer-physical-close-incomplete',
+                    ].includes(reason),
+                );
+            report.original = {
+                receiptSha256: sha256(receiptFile),
+                ok: receipt.ok,
+                kernelFinal: raw.final?.result || null,
+            };
+        } catch {
+            failure('control-original-closure-unavailable');
+        }
+        if (!report.physicalClosure) failure('control-physical-closure-incomplete');
+    } else if (options.mode !== 'availability') {
+        try {
+            const target =
+                options.mode === 'target'
+                    ? readTargetDiagnostic({
+                          directory: command.targetDirectory,
+                          freeze: command.freeze,
+                          runnerSha256: sha256(command.args[0]),
+                      })
+                    : null;
+            const receipt = target?.receipt || JSON.parse(fs.readFileSync(receiptFile, 'utf8'));
+            report.originalReceiptOK = receipt.ok;
+            const artifacts = {},
+                artifactBytes = {};
+            for (const role of ['raw', 'nodeReceipt', 'journal', 'stdout', 'stderr']) {
+                const reference = receipt.custody.artifacts[role];
+                const bytes = target ? target.artifactBytes[role] : fs.readFileSync(reference.path);
+                invariant(
+                    bytes.length === reference.bytes &&
+                        crypto.createHash('sha256').update(bytes).digest('hex') === reference.sha256,
+                    'original-custody-artifact-mismatch',
+                );
+                artifactBytes[role] = bytes;
+                artifacts[role] = ['raw', 'nodeReceipt'].includes(role) ? JSON.parse(bytes) : bytes;
+            }
+            const validation = command.diagnosticProfile ? { diagnosticProfile: command.diagnosticProfile } : {};
+            if (!validateCustodyArtifacts(receipt, artifacts, validation).ok)
+                failure('original-custody-artifacts-invalid');
+            report.original = {
+                receiptSha256: target
+                    ? crypto.createHash('sha256').update(target.receiptBytes).digest('hex')
+                    : sha256(receiptFile),
+                ok: receipt.ok,
+                forced: receipt.forced,
+                timedOut: receipt.timedOut,
+                workerExit: receipt.worker?.exit || null,
+                workerClose: receipt.worker?.close || null,
+                custodyExit: receipt.custody?.wrapper?.exit || null,
+                custodyClose: receipt.custody?.wrapper?.close || null,
+                kernelFinal: receipt.custody?.observation?.final?.result || null,
+                noOwnedProcesses: receipt.noOwnedProcesses,
+            };
+            if (
+                !report.original.workerExit ||
+                !report.original.workerClose ||
+                !report.original.custodyExit ||
+                !report.original.custodyClose ||
+                report.original.kernelFinal !== 'ECHILD' ||
+                !receipt.noOwnedProcesses
+            )
+                failure('original-closure-incomplete');
+            if (!expectedOutcome(receipt, { ...options, ...validation, artifactBytes }))
+                failure('unexpected-original-outcome');
+            if (options.mode === 'target') {
+                report.original.diagnosticProfile = target.report.diagnosticProfile;
+                report.original.targetReportSha256 = crypto
+                    .createHash('sha256')
+                    .update(target.reportBytes)
+                    .digest('hex');
+                report.original.collectorResult = target.report.collectorResult;
+                report.original.canonicalEligible = false;
+            }
+            const outerClosed = report.events.find((row) => row.type === `${prefix}-stdio-close`);
+            if (outerClosed?.code !== (receipt.ok ? 0 : 1) || outerClosed?.signal)
+                failure('outer-original-exit-mismatch');
+            if (!receiptIdentities(receipt).every((row) => exactPresence(row) === 'ABSENT'))
+                failure('original-owned-absence-unproven');
+            const resolved = resolveCachedIdentities(records, cache, receipt);
+            report.correlations = correlate(resolved, receiptIdentities(receipt), rootIdentity);
+            if (options.mode === 'target')
+                report.attribution = targetAttribution(receipt, resolved, report.correlations);
+            if (options.mode === 'cpu' && options.cpuCase === 'custodian-delayed-stop-ack' && report.traced) {
+                report.cpuKnownSender = {
+                    source: 'original-python-cpu-worker-signal-identity-proof',
+                    established: knownCpuSender(receipt, records, rootIdentity),
+                };
+                if (!report.cpuKnownSender.established) failure('cpu-known-sender-not-established');
+            }
+        } catch {
+            failure('original-receipt-unavailable');
+        }
+    } else {
+        report.correlations = correlate(
+            records,
+            records.flatMap((row) => [row.processIdentity, row.threadIdentity]).filter(Boolean),
+            rootIdentity,
+        );
+        if (!report.correlations.some((row) => row.status === 'CORRELATED_DIAGNOSTIC_ONLY' && row.signal === 'SIGTERM'))
+            failure('availability-sender-not-established');
+        const closed = report.events.find((row) => row.type === 'tracer-stdio-close');
+        if (!closed || !(closed.code === 143 || closed.signal === 'SIGTERM')) failure('availability-exit-mismatch');
+    }
+    if (!options.control)
+        report.physicalClosure =
+            !!rootIdentity &&
+            !report.errors.some((reason) =>
+                /closure|close|absence|still-present|fifo|spawn|receipt-unavailable|external-kill/.test(reason),
+            );
+    if (report.traced && report.trace.empty && !options.control && !emptyTraceAllowed(options, report, rootIdentity))
+        failure('trace-empty-or-unavailable');
+    report.diagnosticComplete = report.errors.length === 0;
+    report.status = report.diagnosticComplete ? 'DIAGNOSTIC_COMPLETE' : 'FAIL';
+    report.endedAt = new Date().toISOString();
+    fs.writeFileSync(path.join(options.out, 'diagnostic.json'), JSON.stringify(report, null, 2) + '\n', {
+        flag: 'wx',
+        mode: 0o600,
+    });
+    return report;
+}
+
+async function main(args) {
+    const value = (name) => args.find((arg) => arg.startsWith(`--${name}=`))?.slice(name.length + 3);
+    const report = await runDiagnostic({
+        mode: value('mode'),
+        trace: value('trace'),
+        out: value('out'),
+        cpuCase: value('case'),
+        control: value('control'),
+        freeze: value('freeze'),
+        strace: value('strace'),
+        straceSha256: value('strace-sha256'),
+        straceVersion: value('strace-version'),
+        limits: value('limits') ? JSON.parse(value('limits')) : undefined,
+    });
+    console.log(JSON.stringify({ status: report.status, canonicalEligible: false, rawStraceRetained: false }));
+    process.exitCode = report.status === 'DIAGNOSTIC_COMPLETE' ? 0 : 1;
+}
+if (require.main === module)
+    main(process.argv.slice(2)).catch(() => {
+        console.error('Shutdown diagnostic failed; no canonical evidence was admitted.');
+        process.exitCode = 1;
+    });
+module.exports = {
+    SCHEMA,
+    SYSCALLS,
+    TRACE_SYSCALLS,
+    CPU_CASES,
+    BOUNDS,
+    createParser,
+    buildCommand,
+    traceArgs,
+    correlate,
+    knownCpuSender,
+    receiptIdentities,
+    expectedOutcome,
+    targetAttribution,
+    physicalReceipt,
+    cachedObservation,
+    sampleOwnedIdentities,
+    observeOwned,
+    identity,
+    validObservation,
+    validImage,
+    exactPresence,
+    checkChildrenInterface,
+    resolveCachedIdentities,
+    createDiagnosticBudget,
+    emptyTraceAllowed,
+    runDiagnostic,
+};

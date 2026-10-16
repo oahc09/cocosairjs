@@ -305,17 +305,32 @@ async function main(): Promise<void> {
         }
     });
     chooseColor('diamond');
-    const held = (): { name: string; ref: object }[] => [
-        { name: 'gem-asset', ref: asset },
-        { name: 'gem-root', ref: instance.root },
-        { name: 'gem-mesh', ref: asset.meshes[0] },
-        { name: 'gem-material', ref: asset.materials[0] },
-        { name: 'capture-texture', ref: capture.sceneColor! },
-    ];
+    const destroyedMaterials = new WeakSet<Material>();
+    const held = (): { name: string; ref: object; released?: () => boolean }[] => {
+        const ownedMaterial = material;
+        const ownedAsset = asset;
+        return [
+            { name: 'gem-asset', ref: ownedAsset, released: () => !ownedAsset.isValid && ownedAsset.refCount === 0 },
+            { name: 'gem-root', ref: instance.root },
+            { name: 'gem-mesh', ref: asset.meshes[0] },
+            { name: 'gem-material', ref: asset.materials[0] },
+            { name: 'capture-texture', ref: capture.sceneColor! },
+            {
+                name: 'gem-material-instance',
+                ref: ownedMaterial,
+                released: () => destroyedMaterials.has(ownedMaterial) && ownedMaterial.passes.length === 0,
+            },
+        ];
+    };
     installAssetLifecycle({
         label: 'glass-refraction',
         hold: held,
         release: () => {
+            // Restore capture bindings while the rendered material still has live passes.
+            capture.enabled = false;
+            instance.root.active = false;
+            material.destroy();
+            destroyedMaterials.add(material);
             captureNode.destroy();
             instance.dispose();
             asset.destroy();
