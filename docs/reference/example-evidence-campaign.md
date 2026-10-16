@@ -311,3 +311,20 @@ every attempt, including failed and untraced results. Any missing
 physical closure, output overflow, timeout, ptrace failure, or incomplete trace
 ends the diagnostic phase and prevents the ordinary campaign from starting.
 No count of successful repeats can erase an earlier failed attempt.
+
+### Authenticated shutdown rejection and failed originals
+
+A valid private-IPC request can describe an unsuccessful lifecycle: a browser may
+already have exited, a functional original may be unavailable, or an otherwise
+complete browser exit may be nonzero. These observations never authorize closing
+or become a successful barrier. The custodian records a fixed semantic rejection,
+returns `ok: false`, permanently closes that request chain, and lets the existing
+failure cleanup preserve the inner receipt within the original close deadline.
+The raw failure, nonzero exit, and failed final admission remain visible. No case
+name or exit code is promoted to success. Unknown observations remain failed.
+
+Token, sequence, trusted-peer and budget-reference violations are protocol
+failures, outside this recoverable response boundary. Emergency cleanup retains
+the outer raw cause; it must not be labelled a clean receipt. Semantic rejection
+does not renew the close clock: a writer or adopted process still present at the
+original deadline is force-cleaned and the attempt remains failed.

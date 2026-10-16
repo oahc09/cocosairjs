@@ -229,5 +229,103 @@ class FunctionalOriginalTests(unittest.TestCase):
         self.assertEqual(json.loads(destination.read_text()), {'complete': True})
 
 
+class ShutdownRejectionTests(unittest.TestCase):
+    def setUp(self):
+        self.browser = dict(pid=102, ppid=101, startTicks='200', namespace='pid:[1]', state='S', pgrp=102)
+        self.budget = dict(originEventId=9, originElapsedMs=100, deadlineMs=4100)
+        self.closing = dict(closeBudget=self.budget, snapshot=dict(browser=self.browser))
+        self.request = dict(closeBudget=self.budget, closure=dict(
+            browsers=[dict(self.browser, exit=dict(code=0, signal=None), close=dict(code=0, signal=None))],
+            servers=[dict(close=dict(type='server-close'))]))
+
+    def rejection(self, reason, action):
+        with self.assertRaises(HELPER.ShutdownRejected) as caught:
+            action()
+        self.assertEqual(caught.exception.reason, reason)
+
+    def test_every_lifecycle_rejection_is_explicit_and_never_converts_to_success(self):
+        for reason in HELPER.ShutdownRejected.REASONS:
+            with self.subTest(reason=reason):
+                self.rejection(reason, lambda: HELPER.shutdown_observation(
+                    'closing-snapshot-unavailable', lambda: (_ for _ in ()).throw(HELPER.ShutdownRejected(reason))))
+        with self.assertRaises(ValueError):
+            HELPER.ShutdownRejected('arbitrary-text')
+        for error in [PermissionError(), OSError(), RuntimeError(), ValueError()]:
+            self.rejection('closing-snapshot-unavailable', lambda: HELPER.shutdown_observation(
+                'closing-snapshot-unavailable', lambda: (_ for _ in ()).throw(error)))
+        with self.assertRaises(TypeError):
+            HELPER.shutdown_observation('closing-snapshot-unavailable', lambda: (_ for _ in ()).throw(TypeError()))
+
+    def test_stop_evidence_rejection_matrix_and_protocol_boundary(self):
+        import copy
+        def check(request=None, closing='original', current=None):
+            return HELPER.stop_shutdown_evidence(self.request if request is None else request,
+                self.closing if closing == 'original' else closing, same_process=lambda _: current)
+        self.assertEqual(check(), self.request['closure'])
+        self.rejection('stop-without-closing', lambda: check(closing=None))
+        for closure in [None, {}, dict(browsers=[], servers=[]), dict(browsers=[None], servers=[{}])]:
+            self.rejection('stop-receipts-incomplete', lambda: check(dict(self.request, closure=closure)))
+        for delta in [dict(pid=103), dict(startTicks='201'), dict(namespace='pid:[2]')]:
+            changed = copy.deepcopy(self.request); changed['closure']['browsers'][0].update(delta)
+            self.rejection('stop-browser-identity-mismatch', lambda: check(changed))
+        for event in ['exit', 'close']:
+            for value in [None, {}, dict(code=7, signal=None), dict(code=None, signal='SIGTERM'), dict(code=0, signal='SIGKILL')]:
+                changed = copy.deepcopy(self.request); changed['closure']['browsers'][0][event] = value
+                self.rejection('stop-browser-exit-failed', lambda: check(changed))
+        self.rejection('stop-browser-still-present', lambda: check(current=self.browser))
+        changed = copy.deepcopy(self.request); changed['closure']['servers'][0]['close'] = None
+        self.rejection('stop-server-not-closed', lambda: check(changed))
+        self.rejection('stop-observation-unavailable', lambda: HELPER.stop_shutdown_evidence(
+            self.request, self.closing, same_process=lambda _: (_ for _ in ()).throw(PermissionError())))
+        changed = copy.deepcopy(self.request); changed['closeBudget']['deadlineMs'] += 1
+        with self.assertRaises(RuntimeError) as caught:
+            check(changed)
+        self.assertNotIsInstance(caught.exception, HELPER.ShutdownRejected)
+
+    def test_closing_liveness_and_functional_rejections_preserve_unknown(self):
+        worker = dict(pid=101)
+        request = dict(browser=self.browser, functionalResult={}, healthy=True)
+        config = dict(out='/tmp/cpu/collector.json', id='cpu-example')
+        for observation in [None, dict(self.browser, state='Z'), dict(self.browser, state='X'),
+                            dict(self.browser, startTicks='999'), dict(self.browser, ppid=99)]:
+            with patch.object(HELPER, 'identity', return_value=observation):
+                self.rejection('closing-browser-not-live', lambda: HELPER.browser_shutdown_snapshot(
+                    request, config, worker, lambda: None))
+        with patch.object(HELPER, 'identity', side_effect=PermissionError()):
+            self.rejection('closing-browser-unavailable', lambda: HELPER.browser_shutdown_snapshot(
+                request, config, worker, lambda: None))
+        with patch.object(HELPER, 'identity', return_value=self.browser), \
+                patch.object(HELPER, 'read_functional_original', side_effect=OSError()):
+            self.rejection('closing-functional-invalid', lambda: HELPER.browser_shutdown_snapshot(
+                request, config, worker, lambda: None))
+
+
+    def test_closing_snapshot_matrix_uses_the_actual_observation_boundary(self):
+        import copy
+        metadata = dict(st_dev=1, st_ino=2, st_size=10, st_mtime_ns=100)
+        image = dict(device=1, inode=2, bytes=10, mtimeNs='100', sha256='a' * 64)
+        functional = dict(path='/tmp/cpu/original.json', bytes=20, sha256='b' * 64, completed=True, result='PASS')
+        value = dict(schemaVersion='example-functional-result/2', id='cpu-example', completed=True, result='PASS')
+        config = dict(id='cpu-example', out='/tmp/cpu/collector.json', _frozenBrowserImage=image, cpuCase='pure')
+        request = dict(browser=self.browser, functionalResult=functional, healthy=True)
+        def invoke(req=None, output=None, final=None, meta=None, deadline=lambda: None):
+            with patch.object(HELPER, 'identity', side_effect=[self.browser, self.browser if final is None else final]), \
+                    patch.object(HELPER, 'read_functional_original', return_value=value if output is None else output), \
+                    patch.object(HELPER.os, 'stat', return_value=types.SimpleNamespace(**(metadata if meta is None else meta))), \
+                    patch.object(HELPER.pathlib.Path, 'iterdir', return_value=[]):
+                return HELPER.shutdown_observation('closing-snapshot-unavailable', lambda: HELPER.browser_shutdown_snapshot(
+                    request if req is None else req, config, dict(pid=101), deadline))
+        self.assertTrue(invoke()['healthy'])
+        self.rejection('closing-functional-invalid', lambda: invoke(output=dict(value, id='other')))
+        self.rejection('closing-image-unverified', lambda: invoke(meta=dict(metadata, st_ino=3)))
+        self.rejection('closing-browser-changed', lambda: invoke(final=dict(self.browser, state='Z')))
+        self.rejection('closing-health-failed', lambda: invoke(req=dict(request, healthy=False)))
+        for field, replacement in [('completed', False), ('result', 'UNKNOWN')]:
+            req = copy.deepcopy(request); req['functionalResult'][field] = replacement
+            self.rejection('closing-health-failed', lambda: invoke(req=req, output=dict(value, **{field: replacement})))
+        self.rejection('close-budget-expired', lambda: invoke(deadline=lambda: (_ for _ in ()).throw(
+            HELPER.ShutdownRejected('close-budget-expired'))))
+
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)

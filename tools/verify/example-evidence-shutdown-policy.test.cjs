@@ -258,3 +258,56 @@ test('shared BrowserRuntime normal stop preserves non-supervised callers and err
         assert.equal(runtime.pageErrors[1].category, 'page-crash');
     }
 });
+
+test('authenticated lifecycle rejection retains complete failed originals instead of killing their writer', async (t) => {
+    for (const mode of ['overlap', 'browser-nonzero']) {
+        await t.test(mode, async () => {
+            const receipt = await attempt(mode);
+            assert.equal(receipt.ok, false);
+            assert.equal(receipt.forced, false);
+            assert.equal(receipt.timedOut, false);
+            const raw = receipt.custody.observation;
+            assert.equal(raw.innerSupervisor.exit.code, 0);
+            assert.equal(raw.innerSupervisor.exit.signal, null);
+            assert.ok(raw.innerSupervisor.stdoutEOF && raw.innerSupervisor.stderrEOF);
+            assert.equal(raw.final.result, 'ECHILD');
+            assert.ok(receipt.custody.artifacts.nodeReceipt, 'the failed inner original is actually published');
+            assert.equal(
+                raw.events.some((event) => event.type === 'owned-signal'),
+                false,
+            );
+            assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true }).ok, false);
+            assert.equal(validateAttemptReceipt(receipt, { allowCpuDummy: true, requireSuccess: false }).ok, false);
+            if (mode === 'browser-nonzero') {
+                assert.equal(receipt.browsers[0].exit.code, 7);
+                assert.equal(receipt.browsers[0].close.code, 7);
+            }
+            const failed = raw.barriers.filter((proof) => proof.ok === false);
+            // A concurrent worker exit may instead use the existing explicit current-worker rejection.
+            assert.ok(failed.length || raw.events.some((event) => event.type === 'runtime-custody-rejection'));
+            for (const proof of failed) {
+                assert.equal(typeof proof.rejectionReason, 'string');
+                assert.equal(proof.snapshot, null);
+                assert.equal(proof.closure, null);
+                assert.equal(
+                    receipt.events.some(
+                        (event) => event.type === 'custody-barrier-ack' && event.custodyEventId === proof.eventId,
+                    ),
+                    false,
+                    'a refusal never becomes a worker success acknowledgement',
+                );
+                if (proof.phase === 'closing') {
+                    assert.equal(
+                        receipt.runtimes.find((runtime) => runtime.runtimeId === proof.runtimeId).closeAuthorized,
+                        undefined,
+                    );
+                }
+                assert.equal(proof.closeBudget.deadlineMs, proof.closeBudget.originElapsedMs + limits.closeMs);
+                assert.equal(
+                    raw.barriers.some((later) => later.eventId > proof.eventId && later.ok),
+                    false,
+                );
+            }
+        });
+    }
+});

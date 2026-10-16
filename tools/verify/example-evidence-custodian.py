@@ -224,18 +224,76 @@ def read_functional_original(functional, root, check_deadline):
             os.close(descriptor)
 
 
+class ShutdownRejected(RuntimeError):
+    """Authenticated lifecycle evidence failed; rejection never grants closing authority."""
+    REASONS = frozenset([
+        'closing-browser-unavailable', 'closing-browser-not-live', 'closing-functional-invalid',
+        'closing-image-unverified', 'closing-snapshot-unavailable', 'closing-browser-changed',
+        'closing-health-failed', 'close-budget-expired', 'stop-without-closing',
+        'stop-receipts-incomplete', 'stop-browser-identity-mismatch', 'stop-browser-exit-failed',
+        'stop-browser-still-present', 'stop-server-not-closed', 'stop-observation-unavailable',
+    ])
+
+    def __init__(self, reason):
+        if reason not in self.REASONS:
+            raise ValueError('Unknown shutdown rejection category')
+        self.reason = reason
+        super().__init__(reason)
+
+
+def shutdown_observation(reason, operation):
+    """Only called after the envelope/current worker/budget are authenticated.
+
+    An unavailable observation remains an explicit FAIL. It does not mean absence,
+    authorize an action, or justify killing the receipt writer before its deadline.
+    Protocol errors and arbitrary programming exceptions remain outside this boundary.
+    """
+    try:
+        return operation()
+    except ShutdownRejected:
+        raise
+    except (OSError, RuntimeError, ValueError):
+        raise ShutdownRejected(reason) from None
+
+
+def stop_shutdown_evidence(request, closing, same_process=same):
+    if not closing:
+        raise ShutdownRejected('stop-without-closing')
+    # A rewritten authority/budget reference is a protocol violation, not a lifecycle result.
+    if request.get('closeBudget') != closing['closeBudget']:
+        raise RuntimeError('Stop changed the original closing budget')
+    closure = request.get('closure')
+    if (not isinstance(closure, dict) or not isinstance(closure.get('browsers'), list)
+            or not isinstance(closure.get('servers'), list) or len(closure['browsers']) != 1
+            or len(closure['servers']) != 1 or not isinstance(closure['browsers'][0], dict)
+            or not isinstance(closure['servers'][0], dict)):
+        raise ShutdownRejected('stop-receipts-incomplete')
+    browser, server = closure['browsers'][0], closure['servers'][0]
+    if not exact_tuple(browser, closing['snapshot']['browser']):
+        raise ShutdownRejected('stop-browser-identity-mismatch')
+    if any(not isinstance(browser.get(name), dict) or browser[name].get('code') != 0
+           or browser[name].get('signal') is not None for name in ['exit', 'close']):
+        raise ShutdownRejected('stop-browser-exit-failed')
+    if shutdown_observation('stop-observation-unavailable', lambda: same_process(browser)):
+        raise ShutdownRejected('stop-browser-still-present')
+    if not server.get('close'):
+        raise ShutdownRejected('stop-server-not-closed')
+    return closure
+
+
 def browser_shutdown_snapshot(request, config, worker, check_deadline):
     """Pre-close live evidence only. Missing child observations never imply a crash or absence."""
     wanted = request.get('browser')
-    browser = identity(wanted['pid']) if isinstance(wanted, dict) and type(wanted.get('pid')) is int else None
+    browser = shutdown_observation('closing-browser-unavailable', lambda: identity(wanted['pid'])) if isinstance(wanted, dict) and type(wanted.get('pid')) is int else None
     if (not exact_tuple(browser, wanted) or browser['ppid'] != worker['pid'] or browser['state'] in ['Z', 'X']):
-        raise RuntimeError('Closing browser is not the exact current live child')
+        raise ShutdownRejected('closing-browser-not-live')
     functional = request.get('functionalResult')
-    value = read_functional_original(functional, pathlib.Path(config['out']).parent, check_deadline)
+    value = shutdown_observation('closing-functional-invalid', lambda: read_functional_original(
+        functional, pathlib.Path(config['out']).parent, check_deadline))
     if (not isinstance(value, dict) or value.get('schemaVersion') != 'example-functional-result/2'
             or value.get('id') != config['id'] or value.get('completed') != functional.get('completed')
             or value.get('result') != functional.get('result')):
-        raise RuntimeError('Closing functional original mismatch')
+        raise ShutdownRejected('closing-functional-invalid')
     frozen = config['_frozenBrowserImage']
     frozen_hash = frozen['sha256']
 
@@ -251,7 +309,7 @@ def browser_shutdown_snapshot(request, config, worker, check_deadline):
 
     image = image_of(browser['pid'])
     if image['sha256'] != frozen_hash:
-        raise RuntimeError('Closing browser executable differs from frozen image')
+        raise ShutdownRejected('closing-image-unverified')
     rows, issues = [], []
     known = {browser['pid']: browser}
     for _ in range(256):
@@ -323,7 +381,9 @@ def browser_shutdown_snapshot(request, config, worker, check_deadline):
     final_browser = identity(browser['pid'])
     if (not exact_tuple(browser, final_browser) or final_browser['state'] in ['Z', 'X']
             or final_browser['ppid'] != worker['pid'] or image_of(browser['pid']) != image):
-        raise RuntimeError('Closing browser changed during snapshot')
+        raise ShutdownRejected('closing-browser-changed')
+    if request.get('healthy') is not True or value.get('completed') is not True or value.get('result') not in ['PASS', 'FAIL']:
+        raise ShutdownRejected('closing-health-failed')
     return dict(browser=final_browser, image=image, candidates=rows, issues=issues, functionalResult=functional,
                 healthy=request.get('healthy') is True, completed=value.get('completed') is True,
                 result=value.get('result'), cpuDummy=bool(config.get('cpuCase')))
@@ -429,6 +489,7 @@ def run(config_path, node, supervisor):
     sequence = 0
     accepted_start = None
     rejected_stop = False
+    rejected_close_deadline = None
     drain_started = None
     deadline_aborted = False
     deadline_forced = False
@@ -527,7 +588,7 @@ def run(config_path, node, supervisor):
         return payload
 
     def handle_barrier(data):
-        nonlocal sequence, accepted_start, rejected_stop
+        nonlocal sequence, accepted_start, rejected_stop, rejected_close_deadline
         request = json.loads(data)
         validate_barrier_envelope(request, node_process.pid, report['custodian']['namespace'],
                                   custody['token'], sequence, accepted_start, rejected_stop)
@@ -591,25 +652,33 @@ def run(config_path, node, supervisor):
                 raise RuntimeError('Closing supervisor budget reference invalid')
         def check_deadline():
             if interrupted or elapsed() >= deadline:
-                raise TimeoutError('Closing original budget expired')
-        if request['phase'] == 'closing':
-            check_deadline()
-            snapshot = browser_shutdown_snapshot(request, config, peer, check_deadline)
-        if request['phase'] == 'stop':
-            if not closing:
-                raise RuntimeError('Stop has no acknowledged closing boundary')
-            if close_budget != closing['closeBudget']:
-                raise RuntimeError('Stop changed the original closing budget')
-            deadline = min(deadline, closing['deadlineMs'])
-            closure = request.get('closure')
-            if (not isinstance(closure, dict) or len(closure.get('browsers', [])) != 1
-                    or len(closure.get('servers', [])) != 1):
-                raise RuntimeError('Stop physical process receipts missing')
-            browser = closure['browsers'][0]
-            if (not exact_tuple(browser, closing['snapshot']['browser'])
-                    or any(browser.get(name, {}).get('code') != 0 or browser.get(name, {}).get('signal') is not None
-                           for name in ['exit', 'close']) or same(browser) or not closure['servers'][0].get('close')):
-                raise RuntimeError('Stop browser/server physical closure is unclean')
+                raise ShutdownRejected('close-budget-expired')
+        try:
+            if request['phase'] == 'closing':
+                check_deadline()
+                snapshot = shutdown_observation('closing-snapshot-unavailable',
+                    lambda: browser_shutdown_snapshot(request, config, peer, check_deadline))
+            if request['phase'] == 'stop':
+                if closing:
+                    deadline = min(deadline, closing['deadlineMs'])
+                check_deadline()
+                closure = stop_shutdown_evidence(request, closing)
+        except ShutdownRejected as rejection:
+            # Failure response and receipt preservation are not a successful close ACK.
+            # This branch never reauthorizes this chain or resets its original clock.
+            fail('Runtime shutdown rejected: ' + rejection.reason)
+            proof = event('runtime-custody-barrier', requestId=request_id, workerPID=peer_pid,
+                workerStartTicks=peer['startTicks'], namespace=peer['namespace'], nodeSupervisorPID=node_process.pid,
+                runtimeId=request['runtimeId'], phase=request['phase'], deadlineMs=deadline, closeBudget=close_budget,
+                directChildren=own_children(), observedSubreaper=subreaper(), ok=False,
+                transport='inherited-anonymous-pipes/v1', snapshot=None, closure=None,
+                rejectionReason=rejection.reason, policy='browser-shutdown/2')
+            report['barriers'].append(proof)
+            accepted_start = None
+            rejected_stop = True
+            rejected_close_deadline = deadline
+            write_response(request, proof)
+            return
         alive = scan_adopted()
         children = own_children()
         if request['phase'] == 'stop':
@@ -695,6 +764,10 @@ def run(config_path, node, supervisor):
                 kill_owned(row, 'Custodian interrupted with adopted child')
             kill_owned(node_row, 'Custodian interrupted with inner supervisor')
             interrupted.clear()
+        if rejected_close_deadline is not None and elapsed() >= rejected_close_deadline:
+            for row in alive:
+                kill_owned(row, 'Rejected shutdown exceeded its original close budget')
+            kill_owned(node_row, 'Rejected shutdown receipt writer exceeded its original close budget')
         if elapsed() >= limits['abortMs'] and not deadline_aborted:
             deadline_aborted = True
             fail('Custodian abort deadline')
