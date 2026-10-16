@@ -52,6 +52,37 @@ describe('fixed-snapshot segmented example evidence', () => {
         expect(rejected.ok).toBe(false);
         expect(rejected.errors.join(' ')).toMatch(/CPU dummy receipt is not production evidence/);
     });
+    test.each(['screenshot', 'probe', 'scene', 'HTTP prefix'])(
+        'final %s cannot replace the immutable pre-close application original',
+        (field) => {
+            expect(() =>
+                complete(state, {
+                    alpha: {
+                        report(report) {
+                            const row = report.result.modeEvidence[0];
+                            if (field === 'screenshot') {
+                                const replacement = row.artifact.path.replace(/\.png$/, '-substituted.png');
+                                fs.copyFileSync(row.artifact.path, replacement);
+                                row.artifact = { ...row.artifact, path: replacement };
+                            }
+                            if (field === 'probe') row.probeContracts = { fabricated: true };
+                            if (field === 'scene') row.sceneObservation = { substituted: true };
+                            if (field === 'HTTP prefix') row.networkAssets = row.networkAssets.slice(1);
+                            report.result.artifact = { ...row.artifact };
+                            report.result.networkAssets = clone(row.networkAssets);
+                            // Re-seal the genuine raw collector bytes, so rejection depends on the application binding.
+                            write(report.receipt.output.report, {
+                                completed: false,
+                                partial: true,
+                                scopePassed: true,
+                                results: [report.result],
+                            });
+                        },
+                    },
+                }),
+            ).toThrow(/pre-close application measurements were discarded or changed/);
+        },
+    );
     test('UI shell legitimately has zero APIs while still proving declared validators and DOM closure', () => {
         const data = complete(state);
         expect(data.results.find((r) => r.id === 'shell').apiProof).toEqual([]);

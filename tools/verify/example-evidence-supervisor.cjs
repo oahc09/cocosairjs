@@ -11,7 +11,7 @@ const { Socket } = require('net');
 const { performance } = require('perf_hooks');
 const { snapshotOwnedProcess } = require('./example-evidence-process-diagnostics.cjs');
 
-const SCHEMA_VERSION = 'example-evidence-attempt/1';
+const SCHEMA_VERSION = 'example-evidence-attempt/2';
 let activeWorker = null;
 const DEFAULT_LIMITS = Object.freeze({
     startupMs: 15000,
@@ -118,6 +118,12 @@ function diagnosticBindingErrors(receipt, options = {}, raw, inner) {
     return [];
 }
 const CPU_CASES = [
+    'shutdown-application-fail',
+    'shutdown-double-term',
+    'shutdown-delayed-term',
+    'shutdown-kill',
+    'shutdown-wrong-image',
+    'shutdown-residual',
     'positive',
     'synchronous-compiler',
     'compiler-mode-missing',
@@ -452,10 +458,9 @@ function validateAttemptReceiptUnchecked(receipt, options = {}) {
         ['worker-stdio-close', 1],
         ['observer-start', 1],
         ['observer-complete', 1],
-        ...['runtime-start', 'launch-begin', 'runtime-ready', 'stop-begin', 'stop-complete'].map((type) => [
-            type,
-            runtimes.length,
-        ]),
+        ...['runtime-start', 'launch-begin', 'runtime-ready', 'stop-begin', 'close-authorized', 'stop-complete'].map(
+            (type) => [type, runtimes.length],
+        ),
         ...['browser-spawn', 'browser-exit', 'browser-close'].map((type) => [type, browsers.length]),
         ...['server-listen-request', 'server-listening', 'server-close'].map((type) => [type, servers.length]),
     ])
@@ -682,9 +687,11 @@ function validCustodyResponse(response, pending, token, custodianPID, acceptedSt
     if (response.rejection === undefined) return typeof response.ok === 'boolean';
     return (
         response.ok === false &&
-        response.phase === 'stop' &&
-        ['worker-absent', 'worker-identity-mismatch', 'worker-exited'].includes(response.rejection) &&
-        acceptedStart?.requestId + 1 === pending.requestId &&
+        ['closing', 'stop'].includes(response.phase) &&
+        ['worker-absent', 'worker-identity-mismatch', 'worker-exited', 'worker-observation-unknown'].includes(
+            response.rejection,
+        ) &&
+        acceptedStart?.requestId + (response.phase === 'closing' ? 1 : 2) === pending.requestId &&
         acceptedStart.runtimeId === pending.runtimeId &&
         response.startEventId === acceptedStart.eventId &&
         response.eventId > response.startEventId &&
@@ -1328,33 +1335,50 @@ async function superviseAttemptInner(options) {
                     schedule: timer,
                 }),
             );
-            custodyAcceptedStart =
-                response.ok === true && response.phase === 'start' ? { ...pending, eventId: response.eventId } : null;
+            if (response.phase === 'start' && response.ok === true)
+                custodyAcceptedStart = { ...pending, eventId: response.eventId };
+            else if (response.phase === 'stop' || response.ok !== true) custodyAcceptedStart = null;
+            if (response.phase === 'closing' && response.ok === true) {
+                const runtime = runtimeRows.get(response.runtimeId);
+                if (runtime) runtime.closingProofId = response.eventId;
+            }
             settleCustody(pending, response.rejection === undefined ? 'response' : 'rejected-response');
         }
     });
     function relayCustody(request) {
-        const current = stat(child.pid);
+        // IPC provenance is the original ChildProcess and its authenticated request sequence.
+        // Only the custodian grants fresh barrier authority; a late message must still retain a failed receipt.
+        const originalWorker = receipt.worker;
         const runtime = runtimeRows.get(request.runtimeId);
         const expectedRuntimeId = `runtime-${runtimeRows.size + 1}`;
         const validPhase =
             request.phase === 'start'
                 ? request.runtimeId === expectedRuntimeId && [...runtimeRows.values()].every((row) => row.stopComplete)
-                : request.phase === 'stop' &&
-                  runtime &&
-                  runtime.stopBegin &&
-                  !runtime.stopComplete &&
-                  [...browserRows.values()]
-                      .filter((row) => row.runtimeId === request.runtimeId)
-                      .every((row) => row.exit && row.close) &&
-                  [...serverRows.values()]
-                      .filter((row) => row.runtimeId === request.runtimeId)
-                      .every((row) => row.close);
+                : request.phase === 'closing'
+                  ? runtime &&
+                    runtime.stopBegin &&
+                    !runtime.closingProofId &&
+                    !runtime.stopComplete &&
+                    [...browserRows.values()].some(
+                        (row) =>
+                            row.runtimeId === request.runtimeId &&
+                            !row.exit &&
+                            !row.close &&
+                            ['pid', 'startTicks', 'namespace'].every((key) => row[key] === request.browser?.[key]),
+                    )
+                  : request.phase === 'stop' &&
+                    runtime &&
+                    runtime.closingProofId &&
+                    runtime.stopBegin &&
+                    !runtime.stopComplete &&
+                    [...browserRows.values()]
+                        .filter((row) => row.runtimeId === request.runtimeId)
+                        .every((row) => row.exit && row.close) &&
+                    [...serverRows.values()]
+                        .filter((row) => row.runtimeId === request.runtimeId)
+                        .every((row) => row.close);
         if (
             custodyPending ||
-            !current ||
-            !sameProcess(receipt.worker) ||
-            current.ppid !== process.pid ||
             request.workerPID !== child.pid ||
             request.token !== custodyToken ||
             request.requestId !== custodySequence + 1 ||
@@ -1366,7 +1390,7 @@ async function superviseAttemptInner(options) {
         custodySequence = request.requestId;
         const requestedAt = performance.now() - origin;
         const remaining =
-            request.phase === 'stop'
+            request.phase !== 'start'
                 ? limits.closeMs - (requestedAt - runtime.stopBegin.supervisorElapsedMs)
                 : limits.closeMs;
         let resolveDrained;
@@ -1375,7 +1399,7 @@ async function superviseAttemptInner(options) {
         });
         const pending = {
             ...request,
-            workerStartTicks: current.startTicks,
+            workerStartTicks: originalWorker.startTicks,
             namespace,
             deadlineMs: Math.min(requestedAt + remaining, limits.finalMs),
             drained,
@@ -1388,9 +1412,40 @@ async function superviseAttemptInner(options) {
         custodyPending = pending;
         const forwarded = {
             ...request,
-            workerStartTicks: current.startTicks,
+            workerStartTicks: originalWorker.startTicks,
             namespace,
             nodeSupervisorPID: process.pid,
+            deadlineEpochMs: startedEpoch + pending.deadlineMs,
+            ...(request.phase !== 'start'
+                ? {
+                      closeBudget: {
+                          originEventId: runtime.stopBegin.eventId,
+                          originElapsedMs: runtime.stopBegin.supervisorElapsedMs,
+                          deadlineMs: runtime.stopBegin.supervisorElapsedMs + limits.closeMs,
+                      },
+                  }
+                : {}),
+            ...(request.phase === 'stop'
+                ? {
+                      closure: {
+                          browsers: [...browserRows.values()]
+                              .filter((row) => row.runtimeId === request.runtimeId)
+                              .map((row) => ({
+                                  pid: row.pid,
+                                  startTicks: row.startTicks,
+                                  namespace: row.namespace,
+                                  exit: row.exit,
+                                  close: row.close,
+                              })),
+                          servers: [...serverRows.values()]
+                              .filter((row) => row.runtimeId === request.runtimeId)
+                              .map((row) => ({
+                                  serverId: row.serverId,
+                                  close: row.close,
+                              })),
+                      },
+                  }
+                : {}),
         };
         custodyWrite.write(JSON.stringify(forwarded) + '\n', (error) => {
             if (error) custodyFailure(error.message);
@@ -1548,6 +1603,12 @@ async function superviseAttemptInner(options) {
                     processDiagnostic: snapshotOwnedProcess(row),
                 });
             }
+        }
+        if (raw.type === 'close-authorized') {
+            if (!runtime || !runtime.closingProofId || runtime.closeAuthorized)
+                requestAbort('invalid close authorization');
+            else runtime.closeAuthorized = entry;
+            if (!raw.healthy) requestAbort('application unhealthy before close');
         }
         if (raw.type === 'stop-complete') {
             if (!runtime || runtime.stopComplete) {
@@ -1818,12 +1879,12 @@ function validateCustodyReceipt(receipt, options = {}) {
     const errors = [];
     const fail = (message) => errors.push(message);
     const custody = receipt.custody;
-    if (receipt.pending !== false || !custody || custody.schemaVersion !== 'example-evidence-custody/1') {
+    if (receipt.pending !== false || !custody || custody.schemaVersion !== 'example-evidence-custody/2') {
         return { ok: false, errors: ['Final kernel custody receipt missing; pending Node receipts cannot pass'] };
     }
     const raw = custody.observation,
         wrapper = custody.wrapper;
-    if (!raw || raw.schemaVersion !== 'example-evidence-custody-observation/1' || !wrapper) {
+    if (!raw || raw.schemaVersion !== 'example-evidence-custody-observation/2' || !wrapper) {
         return { ok: false, errors: ['Kernel custody observation missing'] };
     }
     errors.push(...diagnosticBindingErrors(receipt, options, raw));
@@ -1981,8 +2042,10 @@ function validateCustodyReceipt(receipt, options = {}) {
             row.reap.pid !== row.pid ||
             row.reap.startTicks !== row.startTicks ||
             row.reap.namespace !== row.namespace ||
-            !clean(row.reap) ||
-            row.reap.rawStatus !== 0 ||
+            !(
+                (row.reap.rawStatus === 0 && clean(row.reap)) ||
+                (row.reap.rawStatus === 15 && row.reap.code === null && row.reap.signal === 'SIGTERM')
+            ) ||
             row.absent.pid !== row.pid ||
             row.absent.startTicks !== row.startTicks ||
             row.absent.namespace !== row.namespace ||
@@ -2000,7 +2063,7 @@ function validateCustodyReceipt(receipt, options = {}) {
     if (
         !Array.isArray(raw.barriers) ||
         raw.barriers.length !== acknowledgements.length ||
-        acknowledgements.length !== receipt.runtimes.length * 2
+        acknowledgements.length !== receipt.runtimes.length * 3
     )
         fail('Per-runtime custody barriers missing');
     if (stableJson(raw.events.filter((event) => event.type === 'runtime-custody-barrier')) !== stableJson(raw.barriers))
@@ -2008,8 +2071,8 @@ function validateCustodyReceipt(receipt, options = {}) {
     for (const [index, ack] of acknowledgements.entries()) {
         const proof = raw.barriers.find((entry) => entry.eventId === ack.custodyEventId);
         const runtime = receipt.runtimes.find((row) => row.runtimeId === ack.runtimeId);
-        const expectedPhase = index % 2 ? 'stop' : 'start';
-        const expectedRuntime = receipt.runtimes[Math.floor(index / 2)];
+        const expectedPhase = ['start', 'closing', 'stop'][index % 3];
+        const expectedRuntime = receipt.runtimes[Math.floor(index / 3)];
         const closures = [
             ...receipt.browsers
                 .filter((row) => row.runtimeId === ack.runtimeId)
@@ -2036,7 +2099,21 @@ function validateCustodyReceipt(receipt, options = {}) {
             ack.custodianPID !== wrapper.pid ||
             proof.workerPID !== receipt.worker.pid ||
             proof.workerStartTicks !== receipt.worker.startTicks ||
-            stableJson(proof.directChildren) !== stableJson([node?.pid]) ||
+            (ack.phase === 'closing'
+                ? !Array.isArray(proof.directChildren) ||
+                  !proof.directChildren.includes(node?.pid) ||
+                  new Set(proof.directChildren).size !== proof.directChildren.length ||
+                  proof.directChildren.some(
+                      (pid) =>
+                          pid !== node?.pid &&
+                          !raw.adopted.some(
+                              (row) =>
+                                  row.pid === pid &&
+                                  row.observed.eventId < proof.eventId &&
+                                  row.reap.eventId > proof.eventId,
+                          ),
+                  )
+                : stableJson(proof.directChildren) !== stableJson([node?.pid])) ||
             proof.elapsedMs > ack.supervisorElapsedMs + 50 ||
             (ack.phase === 'start'
                 ? !(ack.supervisorElapsedMs <= runtime?.start.supervisorElapsedMs)
@@ -2047,6 +2124,7 @@ function validateCustodyReceipt(receipt, options = {}) {
         )
             fail('Custody barrier request/ACK correlation invalid');
     }
+    errors.push(...require('./example-evidence-shutdown-policy.cjs').validateShutdownPolicy(receipt, raw));
     for (const name of ['raw', 'nodeReceipt', 'journal', 'stdout', 'stderr']) {
         const ref = custody.artifacts?.[name];
         if (
@@ -2321,7 +2399,7 @@ async function superviseAttempt(options) {
     receipt.pending = false;
     receipt.output.receipt = finalPath;
     receipt.custody = {
-        schemaVersion: 'example-evidence-custody/1',
+        schemaVersion: 'example-evidence-custody/2',
         runtimeIdentity,
         wrapper,
         artifacts,

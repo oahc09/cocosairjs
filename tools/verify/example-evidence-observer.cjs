@@ -1,6 +1,7 @@
 'use strict';
 /** Preload hook for example-evidence-supervisor.cjs. Observes real processes, never supplies validator results. */
 const fs = require('fs');
+const crypto = require('crypto');
 const path = require('path');
 const http = require('http');
 const cp = require('child_process');
@@ -86,6 +87,13 @@ async function custodyBarrier(state, phase, timeoutMs) {
         throw Error('Kernel custody barrier unavailable');
     const requestId = ++custodyRequestId;
     const request = { token, requestId, runtimeId: state.id, phase, workerPID: process.pid };
+    if (phase === 'closing') {
+        request.browser =
+            state.processes[0] &&
+            Object.fromEntries(['pid', 'startTicks', 'namespace'].map((key) => [key, state.processes[0][key]]));
+        request.functionalResult = state.instance.evidenceFunctionalResult;
+        request.healthy = !fatal && !(state.instance.pageErrors || []).length;
+    }
     const response = await new Promise((resolve, reject) => {
         let settled = false;
         const finish = (error, value) => {
@@ -408,7 +416,44 @@ function instrumentRuntime(Runtime) {
         state.stopPromise = (async () => {
             const started = performance.now();
             emit('stop-begin', { runtimeId: state.id, launchId: state.launch?.id, deadlineMs: limits.closeMs });
-            await bounded(callRawStop(state), limits.closeMs, 'runtime.stop exceeds close deadline');
+            if (cpuCase && !this.evidenceFunctionalResult) {
+                const file = path.join(
+                    path.dirname(process.argv.find((arg) => arg.startsWith('--out=')).slice(6)),
+                    `${state.id}.functional.json`,
+                );
+                const bytes = Buffer.from(
+                    JSON.stringify({
+                        schemaVersion: 'example-functional-result/2',
+                        cpuDummy: true,
+                        completed: true,
+                        result: cpuCase === 'shutdown-application-fail' ? 'FAIL' : 'PASS',
+                        id: process.env.EXAMPLE_EVIDENCE_ID,
+                        mode: state.mode,
+                    }) + '\n',
+                );
+                fs.writeFileSync(file, bytes, { flag: 'wx' });
+                this.evidenceFunctionalResult = {
+                    path: file,
+                    bytes: bytes.length,
+                    sha256: crypto.createHash('sha256').update(bytes).digest('hex'),
+                    completed: true,
+                    result: cpuCase === 'shutdown-application-fail' ? 'FAIL' : 'PASS',
+                };
+            }
+            await custodyBarrier(state, 'closing', limits.closeMs - (performance.now() - started));
+            // This assignment occurs only after the matching kernel ACK. Late crashes remain latched.
+            this.evidenceClosingAcknowledged = true;
+            emit('close-authorized', {
+                runtimeId: state.id,
+                launchId: state.launch?.id,
+                healthy: !fatal && !(this.pageErrors || []).length,
+                functionalResult: this.evidenceFunctionalResult,
+            });
+            await bounded(
+                callRawStop(state),
+                limits.closeMs - (performance.now() - started),
+                'runtime.stop exceeds close deadline',
+            );
             while (!physicalClosure(state) && performance.now() - started < limits.closeMs) await pause(10);
             if (!physicalClosure(state)) throw Error('stop lacks physical browser/server closure');
             await custodyBarrier(state, 'stop', limits.closeMs - (performance.now() - started));

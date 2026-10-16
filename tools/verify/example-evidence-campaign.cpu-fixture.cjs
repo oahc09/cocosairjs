@@ -63,7 +63,15 @@ function installSyntheticReceiptValidationSpy(jestApi) {
 }
 
 let receiptSerial = 0;
-function makeReceipt(entry, freeze, output, failed = false, startAt = freeze.createdAt, beforeCustody) {
+function makeReceipt(
+    entry,
+    freeze,
+    output,
+    failed = false,
+    startAt = freeze.createdAt,
+    beforeCustody,
+    applicationResult,
+) {
     const workerPID = 1000 + ++receiptSerial * 10;
     const events = [];
     const namespace = 'synthetic-pid-namespace';
@@ -103,7 +111,7 @@ function makeReceipt(entry, freeze, output, failed = false, startAt = freeze.cre
         event('custody-barrier-ack', {
             runtimeId,
             phase: 'start',
-            requestId: index * 2 + 1,
+            requestId: index * 3 + 1,
             custodianPID: workerPID - 2,
         });
         runtime.start = event('runtime-start', {
@@ -146,13 +154,43 @@ function makeReceipt(entry, freeze, output, failed = false, startAt = freeze.cre
             ...(entry.shell ? { domReady: true, selectorCount: 1, nativeEngineFrames: null } : {}),
         });
         runtime.stopBegin = event('stop-begin', { runtimeId });
+        event('custody-barrier-ack', {
+            runtimeId,
+            phase: 'closing',
+            requestId: index * 3 + 2,
+            custodianPID: workerPID - 2,
+        });
+        const application = applicationResult?.modeEvidence?.[index] ||
+            applicationResult || { id: entry.id, result: 'PASS', apiProof: [], validatorResults: [], errors: [] };
+        const functionalPath = path.join(output.artifactDir, `functional-${index}.json`);
+        const functionalOutput = clone(application);
+        functionalOutput.validatorResults = functionalOutput.validatorResults.filter(
+            (check) => check.validatorId !== 'post-close-no-runtime-error',
+        );
+        write(functionalPath, {
+            schemaVersion: 'example-functional-result/2',
+            id: entry.id,
+            mode: mode.id,
+            completed: true,
+            result: application.result,
+            output: functionalOutput,
+        });
+        const functionalResult = {
+            path: functionalPath,
+            ...campaign.fileDigest(functionalPath),
+            completed: true,
+            result: application.result,
+        };
+        application.functionalResult = functionalResult;
+        application.closure = { schemaVersion: 'example-close-result/2', result: 'CLOSED' };
+        runtime.closeAuthorized = event('close-authorized', { runtimeId, launchId, healthy: true, functionalResult });
         browser.exit = event('browser-exit', { pid: browser.pid, launchId, code: 0, signal: null });
         browser.close = event('browser-close', { pid: browser.pid, launchId, code: 0, signal: null });
         server.close = event('server-close', { serverId, runtimeId, ownerPID: workerPID });
         event('custody-barrier-ack', {
             runtimeId,
             phase: 'stop',
-            requestId: index * 2 + 2,
+            requestId: index * 3 + 3,
             custodianPID: workerPID - 2,
         });
         runtime.stopComplete = event('stop-complete', { runtimeId, durationMs: 40, browserCount: 1, serverCount: 1 });
@@ -243,7 +281,7 @@ function addSyntheticCustody(receipt) {
     const origin = Date.parse(receipt.startedAt);
     const utc = (elapsed) => new Date(origin + elapsed).toISOString();
     const raw = {
-        schemaVersion: 'example-evidence-custody-observation/1',
+        schemaVersion: 'example-evidence-custody-observation/2',
         runtimeIdentity: clone(receipt.runtimeIdentity.custody),
         custodian: { pid: wrapperPID, startTicks: '7000', namespace },
         startedAt: receipt.startedAt,
@@ -265,6 +303,14 @@ function addSyntheticCustody(receipt) {
     const node = { pid: nodePID, ppid: wrapperPID, startTicks: '7100', namespace };
     node.spawn = event('inner-supervisor-spawn', 0.4, { identity: clone(node) });
     raw.innerSupervisor = node;
+    const image = {
+        device: 1,
+        inode: 100,
+        bytes: 1234,
+        mtimeNs: '1234',
+        sha256: receipt.runtimeIdentity.executableSha256,
+    };
+    raw.browserImage = event('frozen-browser-image', 0.5, { image, cpuDummy: true });
     for (const ack of receipt.events.filter((entry) => entry.type === 'custody-barrier-ack')) {
         const proof = event('runtime-custody-barrier', ack.supervisorElapsedMs - 0.1, {
             requestId: ack.requestId,
@@ -276,6 +322,60 @@ function addSyntheticCustody(receipt) {
             observedSubreaper: 1,
             ok: true,
             transport: 'inherited-anonymous-pipes/v1',
+            policy: 'browser-shutdown/2',
+            closeBudget:
+                ack.phase === 'start'
+                    ? null
+                    : {
+                          originEventId: receipt.runtimes.find((row) => row.runtimeId === ack.runtimeId).stopBegin
+                              .eventId,
+                          originElapsedMs: receipt.runtimes.find((row) => row.runtimeId === ack.runtimeId).stopBegin
+                              .supervisorElapsedMs,
+                          deadlineMs:
+                              receipt.runtimes.find((row) => row.runtimeId === ack.runtimeId).stopBegin
+                                  .supervisorElapsedMs + receipt.limits.closeMs,
+                      },
+            deadlineMs:
+                receipt.runtimes.find((row) => row.runtimeId === ack.runtimeId).stopBegin.supervisorElapsedMs +
+                receipt.limits.closeMs,
+            snapshot:
+                ack.phase === 'closing'
+                    ? {
+                          browser: {
+                              ...receipt.browsers.find((row) => row.runtimeId === ack.runtimeId),
+                              state: 'S',
+                              ppid: receipt.worker.pid,
+                              pgrp: receipt.browsers.find((row) => row.runtimeId === ack.runtimeId).pid,
+                          },
+                          image,
+                          candidates: [],
+                          issues: [],
+                          cpuDummy: true,
+                          healthy: true,
+                          completed: true,
+                          result: receipt.runtimes.find((row) => row.runtimeId === ack.runtimeId).closeAuthorized
+                              .functionalResult.result,
+                          functionalResult: receipt.runtimes.find((row) => row.runtimeId === ack.runtimeId)
+                              .closeAuthorized.functionalResult,
+                      }
+                    : null,
+            closure:
+                ack.phase === 'stop'
+                    ? {
+                          browsers: receipt.browsers
+                              .filter((row) => row.runtimeId === ack.runtimeId)
+                              .map((row) => ({
+                                  pid: row.pid,
+                                  startTicks: row.startTicks,
+                                  namespace: row.namespace,
+                                  exit: row.exit,
+                                  close: row.close,
+                              })),
+                          servers: receipt.servers
+                              .filter((row) => row.runtimeId === ack.runtimeId)
+                              .map((row) => ({ serverId: row.serverId, close: row.close })),
+                      }
+                    : null,
         });
         ack.custodyEventId = proof.eventId;
         raw.barriers.push(proof);
@@ -316,7 +416,7 @@ function addSyntheticCustody(receipt) {
     receipt.pending = false;
     receipt.endedAt = utc(last + 8);
     receipt.custody = {
-        schemaVersion: 'example-evidence-custody/1',
+        schemaVersion: 'example-evidence-custody/2',
         runtimeIdentity: clone(receipt.runtimeIdentity.custody),
         wrapper,
         observation: raw,
@@ -477,6 +577,7 @@ function attempt(state, id, options = {}) {
         options.failed,
         state.nextStart || state.freeze.createdAt,
         options.beforeCustody,
+        result,
     );
     state.nextStart = new Date(Date.parse(receipt.endedAt) + 1).toISOString();
     options.receipt?.(receipt);

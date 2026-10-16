@@ -75,3 +75,13 @@ When adding or changing an npm script, update `docs/reference/npm-scripts.md` wi
 - **Example evidence is a frozen, full-scope contract.** Follow [the fixed-snapshot campaign workflow](docs/reference/example-evidence-campaign.md): finish formatting, real dependency installation, fresh main/Spark builds and declarations, and dependency preflight before freezing. Collect bounded, physically closed attempts; retain every raw report, screenshot, response body, receipt, and failed retry. Any source, SDK, example, dependency, contract, or tool change invalidates resume and requires fresh evidence. Never edit fingerprints, reuse historical PASS rows, drop an ID/mode, lower status, or call a partial shard complete to clear a gate. Publish only a strictly validated complete live-manifest campaign through the constrained publisher: existing stable promotion fields may be refreshed from full results, while statuses, draft promotions, manifest time/revision, and all other fields stay unchanged. Its durable incomplete-publication guard is fail-closed and must not be removed to conceal interruption. Keep provenance portable inside the repository. CI validates committed evidence before building and collects new full evidence after building; the separate `requiresDevTools` examples cannot fill ordinary-browser coverage gaps.
 
 - **Controlled example API claims require effect proofs.** If an API is reachable only through an example-owned test control, connect that real control in the collector and validate its time/state/render/resource effects from retained raw observations. Keep harness readbacks out of API execution counts, restore native pacing after controlled steps, and make the shared consumer reject missing or altered proof. A primary-session adapter does not establish a separate multi-browser acceptance matrix. Never satisfy coverage by deleting claims or making unverified harness calls.
+
+### Evidence shutdown contract
+
+Treat application results and physical browser shutdown as separate evidence. Follow
+`docs/reference/example-evidence-campaign.md`: one acknowledged pre-close boundary,
+one original four-second closing budget, immutable raw wait statuses, exact collection
+and ECHILD. A signal alone is not an application failure; only the versioned proof-bound
+shutdown policy may classify it. Preserve old failures. Keep optional signal tracing
+out of the formal 182-example capture dependency chain. CPU fixture scheduling
+budgets are bounded test mechanics, not user-facing performance requirements.

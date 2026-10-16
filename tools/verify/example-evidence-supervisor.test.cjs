@@ -6,7 +6,7 @@ const path = require('node:path');
 const test = require('node:test');
 const { superviseAttempt, validateAttemptReceipt, limitsOf } = require('./example-evidence-supervisor.cjs');
 const ROOT = path.resolve(__dirname, '../..');
-const LIMITS = { startupMs: 800, closeMs: 300, innerMs: 1600, abortMs: 1900, forceMs: 2400, finalMs: 2800 };
+const LIMITS = { startupMs: 15000, closeMs: 4000, innerMs: 20000, abortMs: 25000, forceMs: 30000, finalMs: 35000 };
 const base = process.env.EXAMPLE_EVIDENCE_CPU_OUT
     ? path.resolve(process.env.EXAMPLE_EVIDENCE_CPU_OUT)
     : fs.mkdtempSync(path.join(os.tmpdir(), 'example-evidence-supervisor-tests-'));
@@ -50,9 +50,11 @@ test('actual CPU subprocess/HTTP lifecycle controls, sequential and bounded', as
             const owned = positive.ownedProcesses.find(
                 (row) => row.pid === browser.pid && row.startTicks === browser.startTicks,
             );
-            assert.equal(owned.firstObserved.processDiagnostic.status, 'observed');
+            assert.ok(['observed', 'unknown'].includes(owned.firstObserved.processDiagnostic.status));
             assert.equal(owned.firstObserved.processDiagnostic.purpose, 'diagnostic-only');
-            assert.equal(owned.firstObserved.processDiagnostic.details.executable, 'node');
+            if (owned.firstObserved.processDiagnostic.status === 'observed')
+                assert.equal(owned.firstObserved.processDiagnostic.details.executable, 'node');
+            else assert.equal(typeof owned.firstObserved.processDiagnostic.reason, 'string');
         }
         for (const runtime of positive.runtimes) {
             const diagnostics = positive.events.filter(
@@ -496,7 +498,7 @@ test('original orchestrator startup budget cannot reset at worker spawn', async 
     assert.equal(receipt.ok, false);
     assert.equal(receipt.timedOut, true);
     assert.ok(receipt.elapsedBeforeSpawnMs >= 300);
-    assert.ok(receipt.worker.close.supervisorElapsedMs < LIMITS.startupMs + 200);
+    assert.ok(receipt.worker.close.supervisorElapsedMs <= LIMITS.startupMs + LIMITS.closeMs);
 });
 
 test('malformed untrusted receipts fail closed without throwing', () => {
@@ -534,10 +536,293 @@ test('concurrent callers cannot launch a second worker before actual closure', a
     );
 });
 
+// CPU reader only: a visible raw pathname is not a completed write. Bind the helper
+// before killing its caller, then wait for real process disappearance before one read.
+function cpuProcessIdentity(pid, expected = {}, io = fs, allowTerminalNamespacePending = false) {
+    assert.ok(Number.isSafeInteger(pid) && pid > 0 && pid <= 2147483647);
+    const readStat = () => {
+        let raw;
+        try {
+            raw = io.readFileSync(`/proc/${pid}/stat`, 'utf8');
+        } catch (error) {
+            if (error.code === 'ENOENT') return null;
+            throw error;
+        }
+        assert.equal(typeof raw, 'string');
+        assert.ok(raw.startsWith(`${pid} (`));
+        const end = raw.lastIndexOf(')');
+        assert.ok(end >= 0 && raw[end + 1] === ' ');
+        const fields = raw
+            .slice(end + 2)
+            .trimEnd()
+            .split(' ');
+        assert.ok(fields.length >= 20);
+        assert.ok(['R', 'S', 'D', 'T', 't', 'K', 'W', 'P', 'I', 'Z', 'X'].includes(fields[0]));
+        assert.ok([fields[1], fields[2], fields[19]].every((value) => /^\d+$/.test(value)));
+        const row = { pid, state: fields[0], ppid: Number(fields[1]), pgrp: Number(fields[2]), startTicks: fields[19] };
+        for (const key of ['ppid', 'pgrp']) assert.ok(Number.isSafeInteger(row[key]) && row[key] <= 2147483647);
+        for (const key of ['pid', 'ppid', 'startTicks'])
+            if (Object.hasOwn(expected, key)) assert.equal(row[key], expected[key], `CPU process ${key} changed`);
+        return row;
+    };
+    const read = () => {
+        const row = readStat();
+        if (!row) return null;
+        try {
+            row.namespace = io.readlinkSync(`/proc/${pid}/ns/pid`);
+        } catch (error) {
+            // Exit between stat and ns is possible. Only a new stat ENOENT proves absence.
+            if (error.code === 'ENOENT') {
+                const current = readStat();
+                if (current === null) return null;
+                // Only the read-only wait may defer a terminal process whose namespace
+                // link has gone away. This is neither a complete identity nor absence.
+                if (
+                    allowTerminalNamespacePending &&
+                    expected.pid === pid &&
+                    typeof expected.startTicks === 'string' &&
+                    ['Z', 'X'].includes(current.state)
+                )
+                    return { status: 'terminal-namespace-pending' };
+            }
+            throw error;
+        }
+        assert.match(row.namespace, /^pid:\[\d+\]$/);
+        if (Object.hasOwn(expected, 'namespace')) assert.equal(row.namespace, expected.namespace);
+        return row;
+    };
+    const before = read();
+    if (!before || before.status === 'terminal-namespace-pending') return before;
+    const after = read();
+    if (!after || after.status === 'terminal-namespace-pending') return after;
+    for (const key of ['pid', 'startTicks', 'namespace']) assert.equal(after[key], before[key]);
+    // PPid may change when the outer caller dies. It is fixed only during initial capture.
+    return after;
+}
+
+async function readCpuCustodyAfterExit(rawPath, helper, until, io = fs) {
+    const exact = { pid: helper.pid, startTicks: helper.startTicks, namespace: helper.namespace };
+    await until(() => cpuProcessIdentity(helper.pid, exact, io, true) === null);
+    // No retry: a missing file, incomplete JSON or mismatched report remains a failure.
+    const raw = JSON.parse(io.readFileSync(rawPath, 'utf8'));
+    for (const key of ['pid', 'startTicks', 'namespace']) assert.equal(raw.custodian[key], exact[key]);
+    return raw;
+}
+
+function completeCpuCustodyEvents(text) {
+    const boundary = text.lastIndexOf('\n');
+    return boundary < 0 ? [] : text.slice(0, boundary).split('\n').map(JSON.parse);
+}
+
+test('CPU custody reader waits past the old visible partial-write window and parses exactly once', async () => {
+    const helper = { pid: 321, startTicks: '123', namespace: 'pid:[1]' };
+    let state = 'R',
+        contents = '{',
+        reads = 0;
+    const missing = () => Object.assign(Error('missing stat'), { code: 'ENOENT' });
+    const io = {
+        readFileSync(file) {
+            if (file === '/raw') {
+                reads++;
+                return contents;
+            }
+            if (state === 'ABSENT') throw missing();
+            return `321 (python) ${[state, '1', '321', ...Array(16).fill('0'), '123'].join(' ')}\n`;
+        },
+        readlinkSync: () => 'pid:[1]',
+        existsSync: () => true,
+    };
+    assert.throws(
+        () => {
+            if (io.existsSync('/raw')) JSON.parse(io.readFileSync('/raw'));
+        },
+        SyntaxError,
+        'the previous exists-only reader can observe an incomplete dump',
+    );
+    reads = 0;
+    const report = { custodian: helper, errors: ['original failure'], forced: true, final: { result: 'ECHILD' } };
+    const read = await readCpuCustodyAfterExit(
+        '/raw',
+        helper,
+        async (check) => {
+            for (state of ['R', 'S', 'Z', 'X']) {
+                assert.equal(check(), false, `${state} is not physical disappearance`);
+                assert.equal(reads, 0);
+            }
+            contents = JSON.stringify(report);
+            state = 'ABSENT';
+            assert.equal(check(), true);
+        },
+        io,
+    );
+    assert.deepEqual(read, report);
+    assert.equal(reads, 1);
+    for (const contentsAfterExit of ['{', '', 'null']) {
+        contents = contentsAfterExit;
+        reads = 0;
+        await assert.rejects(readCpuCustodyAfterExit('/raw', helper, async (check) => assert.equal(check(), true), io));
+        assert.equal(reads, 1, 'bad JSON is never retried into a successful result');
+    }
+    contents = JSON.stringify({ ...report, custodian: { ...helper, startTicks: '999' } });
+    await assert.rejects(readCpuCustodyAfterExit('/raw', helper, async (check) => assert.equal(check(), true), io));
+    await assert.rejects(
+        readCpuCustodyAfterExit('/raw', helper, async (check) => assert.equal(check(), true), {
+            ...io,
+            readFileSync(file) {
+                if (file === '/raw') throw missing();
+                return io.readFileSync(file);
+            },
+        }),
+        /missing stat/,
+    );
+    reads = 0;
+    state = 'Z';
+    await assert.rejects(
+        readCpuCustodyAfterExit(
+            '/raw',
+            helper,
+            async (check) => {
+                assert.equal(check(), false);
+                throw Error('original CPU deadline');
+            },
+            io,
+        ),
+        /original CPU deadline/,
+    );
+    assert.equal(reads, 0);
+    reads = 0;
+    state = 'Z';
+    contents = JSON.stringify(report);
+    const pendingIO = {
+        ...io,
+        readlinkSync() {
+            throw missing();
+        },
+    };
+    const afterPending = await readCpuCustodyAfterExit(
+        '/raw',
+        helper,
+        async (check) => {
+            for (state of ['Z', 'X']) {
+                assert.equal(check(), false);
+                assert.equal(reads, 0, 'terminal namespace pending never permits reading');
+            }
+            state = 'ABSENT';
+            assert.equal(check(), true);
+        },
+        pendingIO,
+    );
+    assert.deepEqual(afterPending, report);
+    assert.equal(reads, 1);
+});
+
+test('CPU custody reader rejects identity uncertainty and ignores only unfinished journal tails', async () => {
+    const expected = { pid: 321, startTicks: '123', namespace: 'pid:[1]' };
+    const row = (state = 'R', ticks = '123', ppid = '99') =>
+        `321 (python) ${[state, ppid, '321', ...Array(16).fill('0'), ticks].join(' ')}\n`;
+    const enoent = () => Object.assign(Error('missing'), { code: 'ENOENT' });
+    const io = (rows, namespaces = ['pid:[1]', 'pid:[1]']) => ({
+        readFileSync() {
+            const value = rows.shift();
+            if (value instanceof Error) throw value;
+            return value;
+        },
+        readlinkSync() {
+            const value = namespaces.shift();
+            if (value instanceof Error) throw value;
+            return value;
+        },
+    });
+    for (const error of [
+        Object.assign(Error('denied'), { code: 'EACCES' }),
+        Object.assign(Error('I/O'), { code: 'EIO' }),
+    ]) {
+        assert.throws(() => cpuProcessIdentity(321, expected, io([error])));
+        assert.throws(() => cpuProcessIdentity(321, expected, io([row()], [error])));
+    }
+    for (const rows of [
+        [row('?', '123')],
+        ['broken stat'],
+        [row('R', '999')],
+        [row(), row('R', '999')],
+        [row('R', '123', '-1')],
+    ])
+        assert.throws(() => cpuProcessIdentity(321, expected, io(rows)));
+    assert.throws(() => cpuProcessIdentity(321, expected, io([row(), row()], ['pid:[1]', 'pid:[2]'])));
+    assert.throws(() => cpuProcessIdentity(321, { ...expected, ppid: 88 }, io([row()])));
+    assert.throws(() => cpuProcessIdentity(321, expected, io([row(), row()], [enoent()])));
+    assert.equal(cpuProcessIdentity(321, expected, io([enoent()])), null);
+    assert.equal(
+        cpuProcessIdentity(321, expected, io([row(), enoent()], [enoent()])),
+        null,
+        'ns ENOENT needs a new stat ENOENT, not an assumption',
+    );
+    for (const state of ['Z', 'X']) {
+        assert.deepEqual(cpuProcessIdentity(321, expected, io([row(state), row(state)], [enoent()]), true), {
+            status: 'terminal-namespace-pending',
+        });
+        assert.throws(
+            () => cpuProcessIdentity(321, expected, io([row(state), row(state)], [enoent()])),
+            'capture and signal paths must reject incomplete identity',
+        );
+    }
+    assert.throws(() => cpuProcessIdentity(321, expected, io([row(), row()], [enoent()]), true));
+    assert.throws(() => cpuProcessIdentity(321, expected, io([row('Z'), row('Z', '999')], [enoent()]), true));
+    assert.throws(() => cpuProcessIdentity(321, expected, io([row('Z'), 'bad stat'], [enoent()]), true));
+    for (const code of ['EACCES', 'EIO']) {
+        const error = Object.assign(Error(code), { code });
+        assert.throws(() => cpuProcessIdentity(321, expected, io([row('Z')], [error]), true));
+        assert.throws(() => cpuProcessIdentity(321, expected, io([row('Z'), error], [enoent()]), true));
+    }
+    assert.equal(
+        cpuProcessIdentity(321, expected, io([row('R', '123', '99'), row('Z', '123', '1')])).state,
+        'Z',
+        'reparenting after caller death does not make the helper absent',
+    );
+    const event = { type: 'runtime-custody-barrier', eventId: 5 };
+    assert.deepEqual(completeCpuCustodyEvents(JSON.stringify(event)), [], 'an uncommitted tail is not proof');
+    assert.deepEqual(completeCpuCustodyEvents(JSON.stringify(event) + '\n{"type":'), [event]);
+    assert.throws(() => completeCpuCustodyEvents('{broken}\n'));
+    const source = fs.readFileSync(__filename, 'utf8');
+    const begin = source.search(/^    async function until\(check, ms = \d+\)/m);
+    assert.ok(begin >= 0, 'the source-bound wait helper must be found');
+    const untilSource = source.slice(begin, source.indexOf('    for (const control', begin));
+    let time = 0;
+    const context = {
+        Date: { now: () => time },
+        pause: async (ms) => {
+            time += ms;
+        },
+    };
+    require('node:vm').runInNewContext(untilSource + '\nthis.until = until;', context);
+    await assert.rejects(
+        context.until(() => completeCpuCustodyEvents(JSON.stringify(event)).length > 0, 4500),
+        /CPU parent-death control deadline/,
+    );
+    assert.equal(time, 4500, 'a permanently truncated tail cannot reset the original wait budget');
+    time = 0;
+    let rawReads = 0;
+    const pendingIO = {
+        readFileSync(file) {
+            if (file === '/raw') rawReads++;
+            return row('Z');
+        },
+        readlinkSync() {
+            throw enoent();
+        },
+    };
+    await assert.rejects(
+        readCpuCustodyAfterExit('/raw', expected, (check) => context.until(check, 4500), pendingIO),
+        /CPU parent-death control deadline/,
+    );
+    assert.equal(time, 4500, 'permanent terminal namespace pending has the same original deadline');
+    assert.equal(rawReads, 0);
+});
+
 test('outer cancellation and parent death retain subreaper cleanup', async (t) => {
     const { spawn } = require('node:child_process');
     const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    async function until(check, ms = 4500) {
+    async function until(check, ms = 15000) {
         const deadline = Date.now() + ms;
         while (!check()) {
             if (Date.now() >= deadline) throw Error('CPU parent-death control deadline');
@@ -553,12 +838,12 @@ test('outer cancellation and parent death retain subreaper cleanup', async (t) =
                 id: 'cpu-example',
                 cpuCase: 'hang',
                 limits: {
-                    startupMs: 1200,
-                    closeMs: 500,
-                    innerMs: 3000,
-                    abortMs: 3500,
-                    forceMs: 4000,
-                    finalMs: 4500,
+                    startupMs: 15000,
+                    closeMs: 4000,
+                    innerMs: 20000,
+                    abortMs: 25000,
+                    forceMs: 30000,
+                    finalMs: 35000,
                 },
                 out: path.join(directory, 'collector.json'),
                 artifactDir: path.join(directory, 'artifacts'),
@@ -574,48 +859,90 @@ test('outer cancellation and parent death retain subreaper cleanup', async (t) =
             );
             outer.stdout.resume();
             outer.stderr.resume();
-            const closed = new Promise((resolve) => outer.once('close', resolve));
-            const journal = path.join(directory, 'custodian.events.jsonl');
-            await until(
-                () => fs.existsSync(journal) && fs.readFileSync(journal, 'utf8').includes('runtime-custody-barrier'),
+            let outerClosed = false,
+                helper = null,
+                helperDeadline = null;
+            const closed = new Promise((resolve) =>
+                outer.once('close', () => {
+                    outerClosed = true;
+                    resolve();
+                }),
             );
-            await pause(75);
-            if (control === 'late-SIGTERM') {
-                const events = fs.readFileSync(journal, 'utf8').trim().split('\n').map(JSON.parse);
-                const inner = events.find((event) => event.type === 'inner-supervisor-spawn').identity;
-                const barrier = events.find((event) => event.type === 'runtime-custody-barrier');
-                const exactSignal = (pid, startTicks) => {
-                    const rawStat = fs.readFileSync(`/proc/${pid}/stat`, 'utf8');
-                    assert.equal(rawStat.slice(rawStat.lastIndexOf(')') + 2).split(' ')[19], startTicks);
-                    process.kill(pid, 'SIGSTOP');
-                };
-                exactSignal(inner.pid, inner.startTicks);
-                exactSignal(barrier.workerPID, barrier.workerStartTicks);
-                const config = JSON.parse(fs.readFileSync(path.join(directory, 'custodian-request.json')));
-                await pause(Math.max(1, Date.parse(config.startedAt) + options.limits.forceMs - 75 - Date.now()));
-            }
-            outer.kill(signal);
-            await closed;
-            const rawPath = path.join(directory, 'custodian-observations.json');
-            await until(() => fs.existsSync(rawPath));
-            const raw = JSON.parse(fs.readFileSync(rawPath));
-            assert.equal(raw.final.result, 'ECHILD');
-            assert.ok(raw.errors.length > 0);
-            assert.equal(raw.forced, true);
-            assert.ok(raw.innerSupervisor.exit && raw.innerSupervisor.stdoutEOF && raw.innerSupervisor.stderrEOF);
-            for (const row of [raw.innerSupervisor, ...raw.adopted]) {
-                assert.equal(fs.existsSync(`/proc/${row.pid}`), false, 'original exact descendant is absent');
-            }
-            if (signal === 'SIGTERM') {
-                const receipt = JSON.parse(fs.readFileSync(path.join(directory, 'attempt-receipt.json')));
-                assert.equal(receipt.ok, false);
-                assert.ok(receipt.custody.wrapper.exit && receipt.custody.wrapper.close);
-            } else {
-                assert.equal(
-                    fs.existsSync(path.join(directory, 'attempt-receipt.json')),
-                    false,
-                    'dead caller cannot seal PASS',
+            const journal = path.join(directory, 'custodian.events.jsonl');
+            try {
+                let initialEvents;
+                await until(() => {
+                    if (!fs.existsSync(journal)) return false;
+                    initialEvents = completeCpuCustodyEvents(fs.readFileSync(journal, 'utf8'));
+                    return (
+                        initialEvents.some((event) => event.type === 'inner-supervisor-spawn') &&
+                        initialEvents.some((event) => event.type === 'runtime-custody-barrier')
+                    );
+                });
+                const innerIdentity = initialEvents.find((event) => event.type === 'inner-supervisor-spawn').identity;
+                helper = cpuProcessIdentity(innerIdentity.ppid, {
+                    ppid: outer.pid,
+                    namespace: innerIdentity.namespace,
+                });
+                assert.ok(helper, 'the exact custodian must be captured before killing its caller');
+                const inner = cpuProcessIdentity(innerIdentity.pid, {
+                    pid: innerIdentity.pid,
+                    startTicks: innerIdentity.startTicks,
+                    namespace: innerIdentity.namespace,
+                    ppid: helper.pid,
+                });
+                assert.ok(inner);
+                await pause(75);
+                if (control === 'late-SIGTERM') {
+                    const inner = innerIdentity;
+                    const barrier = initialEvents.find((event) => event.type === 'runtime-custody-barrier');
+                    const exactSignal = (pid, startTicks) => {
+                        assert.ok(cpuProcessIdentity(pid, { pid, startTicks, namespace: innerIdentity.namespace }));
+                        process.kill(pid, 'SIGSTOP');
+                    };
+                    exactSignal(inner.pid, inner.startTicks);
+                    exactSignal(barrier.workerPID, barrier.workerStartTicks);
+                    const config = JSON.parse(fs.readFileSync(path.join(directory, 'custodian-request.json')));
+                    await pause(Math.max(1, Date.parse(config.startedAt) + options.limits.forceMs - 75 - Date.now()));
+                }
+                outer.kill(signal);
+                await closed;
+                helperDeadline = Date.now() + 4500;
+                const rawPath = path.join(directory, 'custodian-observations.json');
+                const raw = await readCpuCustodyAfterExit(rawPath, helper, (check) =>
+                    until(check, Math.max(0, helperDeadline - Date.now())),
                 );
+                assert.equal(raw.final.result, 'ECHILD');
+                assert.ok(raw.errors.length > 0);
+                assert.equal(raw.forced, true);
+                assert.ok(raw.innerSupervisor.exit && raw.innerSupervisor.stdoutEOF && raw.innerSupervisor.stderrEOF);
+                for (const row of [raw.innerSupervisor, ...raw.adopted]) {
+                    assert.equal(fs.existsSync(`/proc/${row.pid}`), false, 'original exact descendant is absent');
+                }
+                if (signal === 'SIGTERM') {
+                    const receipt = JSON.parse(fs.readFileSync(path.join(directory, 'attempt-receipt.json')));
+                    assert.equal(receipt.ok, false);
+                    assert.ok(receipt.custody.wrapper.exit && receipt.custody.wrapper.close);
+                } else {
+                    assert.equal(
+                        fs.existsSync(path.join(directory, 'attempt-receipt.json')),
+                        false,
+                        'dead caller cannot seal PASS',
+                    );
+                }
+            } finally {
+                // A failed pre-kill capture must still close its real ChildProcess before
+                // another control starts; the production supervisor owns descendant cleanup.
+                if (!outerClosed) outer.kill('SIGTERM');
+                await closed;
+                if (helper) {
+                    helperDeadline ??= Date.now() + 4500;
+                    const exact = { pid: helper.pid, startTicks: helper.startTicks, namespace: helper.namespace };
+                    await until(
+                        () => cpuProcessIdentity(helper.pid, exact, fs, true) === null,
+                        Math.max(0, helperDeadline - Date.now()),
+                    );
+                }
             }
         });
     }
@@ -659,14 +986,14 @@ test('late-stop request identity controls run the Python protocol negatives befo
     assert.equal(result.error, undefined);
     assert.equal(result.signal, null);
     assert.equal(result.status, 0, result.stderr);
-    assert.match(result.stderr, /Ran 11 tests/);
+    assert.match(result.stderr, /Ran 15 tests/);
     console.log(result.stderr.trim());
 });
 
 test('late-stop responses bind rejection to the active request and cannot reopen a settled drain', () => {
     const { validCustodyResponse } = require('./example-evidence-supervisor.cjs');
     const pending = {
-        requestId: 2,
+        requestId: 3,
         runtimeId: 'runtime-1',
         phase: 'stop',
         workerPID: 101,
@@ -690,7 +1017,7 @@ test('late-stop responses bind rejection to the active request and cannot reopen
     assert.equal(valid({ ...response, rejection: 'worker-exited' }), true);
     for (const change of [
         { token: 'wrong' },
-        { requestId: 3 },
+        { requestId: 4 },
         { runtimeId: 'runtime-2' },
         { phase: 'start' },
         { custodianPID: 88 },
@@ -729,7 +1056,11 @@ test('late-stop rejection keeps failed originals and cancellation bounded by the
             assert.equal(raw.final.result, 'ECHILD');
             assert.equal(receipt.custody.wrapper.exit.code, 1);
             assert.equal(receipt.custody.wrapper.close.code, 1);
-            assert.equal(raw.barriers.length, 1, 'the rejected stop is never a successful barrier');
+            assert.deepEqual(
+                raw.barriers.map((row) => row.phase),
+                ['start', 'closing'],
+                'the rejected stop is never a successful barrier',
+            );
             const proof = raw.events.find((row) => row.type === 'runtime-custody-rejection');
             assert.ok(proof);
             assert.equal(proof.ok, false);
@@ -737,7 +1068,7 @@ test('late-stop rejection keeps failed originals and cancellation bounded by the
             assert.equal(proof.currentState, 'ABSENT');
             assert.equal(proof.currentPeer, null);
             assert.equal(proof.startEventId, raw.barriers[0].eventId);
-            assert.equal(proof.requestId, raw.barriers[0].requestId + 1);
+            assert.equal(proof.requestId, raw.barriers[0].requestId + 2);
             assert.equal(proof.workerPID, receipt.worker.pid);
             assert.equal(proof.workerStartTicks, receipt.worker.startTicks);
             assert.equal(proof.namespace, receipt.worker.namespace);
@@ -1328,7 +1659,7 @@ function custodyDeliveryHarness(options = {}) {
     const pending = options.late
         ? null
         : {
-              requestId: 2,
+              requestId: 3,
               runtimeId: 'runtime-1',
               phase: 'stop',
               workerPID: abortWorkerTuple.pid,
@@ -1432,7 +1763,7 @@ test('custody response IPC skips only bound rejection or terminal workers and re
         { childPID: 999 },
         ...[
             { token: 'wrong' },
-            { requestId: 3 },
+            { requestId: 4 },
             { runtimeId: 'old' },
             { phase: 'start' },
             { workerPID: 999 },

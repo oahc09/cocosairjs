@@ -145,6 +145,7 @@ class BrowserRuntime {
         this.viewport = viewport;
         this.generation = 0;
         this.pageErrors = [];
+        this.evidenceClosingAcknowledged = false;
         this.server = null;
         this.browser = null;
         this.context = null;
@@ -234,6 +235,10 @@ class BrowserRuntime {
     }
 
     async start(workspace) {
+        this.pageErrors = [];
+        this.evidenceClosingAcknowledged = false;
+        this.evidenceRequiresClosingAck = process.env.EXAMPLE_EVIDENCE_SUPERVISED === '1' && !!workspace.evidenceMode;
+        this.normalStopRequested = false;
         try {
             return await this._start(workspace);
         } catch (error) {
@@ -432,6 +437,7 @@ class BrowserRuntime {
             throw new Error('runtime start cancelled');
         }
         this.browser = browser;
+        browser.on('disconnected', () => this.recordBrowserDisconnected());
         const context = await browser.newContext({
             viewport: this.viewport,
             ...(workspace.evidenceMode ? { serviceWorkers: 'block' } : {}),
@@ -442,7 +448,6 @@ class BrowserRuntime {
             throw new Error('runtime start cancelled');
         }
         this.context = context;
-        this.pageErrors = [];
         if (workspace.evidenceMode) {
             const allowedOrigin = `http://127.0.0.1:${this.port}`;
             await context.route('**/*', async (route) => {
@@ -460,6 +465,7 @@ class BrowserRuntime {
             });
         }
         this.page = await this.context.newPage();
+        this.page.on('crash', () => this.recordPageCrash());
         // 页面错误可见性（dev server Task 13 同语义）：诊断 Benchmark 页面加载失败
         this.page.on('console', (m) => {
             if (m.type() === 'error') {
@@ -620,7 +626,21 @@ class BrowserRuntime {
         return channel;
     }
 
+    recordBrowserDisconnected() {
+        if (!(this.evidenceRequiresClosingAck ? this.evidenceClosingAcknowledged : this.normalStopRequested))
+            this.pageErrors.push({
+                seq: this.pageErrors.length + 1,
+                category: 'unexpected-browser-disconnected',
+                message: 'Browser disconnected before acknowledged closing',
+            });
+    }
+
+    recordPageCrash() {
+        this.pageErrors.push({ seq: this.pageErrors.length + 1, category: 'page-crash', message: 'Page crashed' });
+    }
+
     async stop() {
+        this.normalStopRequested = true;
         ++this.generation;
         const errors = [];
         try {

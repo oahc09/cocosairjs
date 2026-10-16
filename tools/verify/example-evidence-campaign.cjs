@@ -21,6 +21,7 @@ const CUSTODY_ROLES = Object.freeze(['raw', 'nodeReceipt', 'journal', 'stdout', 
 const REQUIRED_FILES = [
     '.github/workflows/format.yml',
     '.github/workflows/example-evidence.yml',
+    '.github/workflows/example-shutdown-diagnostic.yml',
     'package.json',
     'package-lock.json',
     'examples/files.json',
@@ -522,6 +523,21 @@ function writeAttempt({ repo = REPO, freeze, report, out }) {
     value.admissionErrors = value.rawCollector ? [] : ['raw collector report absent'];
     value.rawReceipt = reference(report.receipt.output.receipt, out);
     value.logs = ['stdout', 'stderr'].map((stream) => ({ stream, ...reference(report.receipt.output[stream], out) }));
+    value.functionalArtifacts = [];
+    for (const runtime of report.receipt.runtimes || []) {
+        const proof = report.receipt.custody?.observation?.barriers?.find(
+            (event) => event.phase === 'closing' && event.runtimeId === runtime.runtimeId,
+        );
+        const original = proof?.snapshot?.functionalResult;
+        if (!original || !fs.existsSync(original.path)) {
+            value.admissionErrors.push(`functional original missing: ${runtime.runtimeId}`);
+            continue;
+        }
+        const ref = reference(original.path, out);
+        if (ref.bytes !== original.bytes || ref.sha256 !== original.sha256)
+            value.admissionErrors.push('functional original changed');
+        value.functionalArtifacts.push({ runtimeId: runtime.runtimeId, mode: runtime.mode, ...ref });
+    }
     value.custodyArtifacts = {};
     for (const role of CUSTODY_ROLES) {
         const source = report.receipt.custody?.artifacts?.[role];
@@ -547,6 +563,12 @@ function writeAttempt({ repo = REPO, freeze, report, out }) {
     for (const role of CUSTODY_ROLES) {
         const source = report.receipt.custody?.artifacts?.[role];
         if (typeof source?.path === 'string') originFiles.push(path.resolve(source.path));
+    }
+    for (const runtime of report.receipt.runtimes || []) {
+        const proof = report.receipt.custody?.observation?.barriers?.find(
+            (event) => event.phase === 'closing' && event.runtimeId === runtime.runtimeId,
+        );
+        if (proof?.snapshot?.functionalResult?.path) originFiles.push(proof.snapshot.functionalResult.path);
     }
     for (const row of rows) {
         if (row.artifact?.path) originFiles.push(path.resolve(repo, row.artifact.path));
@@ -965,6 +987,67 @@ function checkAttempt(attempt, ref, owner, freeze, options) {
         custodyCheck.ok,
         `${report.id}: kernel custody originals invalid: ${(custodyCheck.errors || []).join('; ')}`,
     );
+
+    invariant(
+        Array.isArray(report.functionalArtifacts) &&
+            report.functionalArtifacts.length === report.receipt.runtimes.length,
+        `${report.id}: pre-close application originals missing`,
+    );
+    for (const [index, runtime] of report.receipt.runtimes.entries()) {
+        const ref = report.functionalArtifacts[index];
+        const proof = report.receipt.custody.observation.barriers.find(
+            (event) => event.phase === 'closing' && event.runtimeId === runtime.runtimeId,
+        );
+        const original = proof?.snapshot?.functionalResult;
+        invariant(
+            ref.runtimeId === runtime.runtimeId &&
+                ref.mode === runtime.mode &&
+                original &&
+                ref.path === mappedPath(original.path) &&
+                ref.bytes === original.bytes &&
+                ref.sha256 === original.sha256,
+            `${report.id}: application original origin mismatch`,
+        );
+        const functional = JSON.parse(fs.readFileSync(resolveRef(ref, file, { repo, portable }), 'utf8'));
+        invariant(
+            functional.schemaVersion === 'example-functional-result/2' &&
+                functional.id === report.id &&
+                functional.mode === runtime.mode &&
+                functional.completed === original.completed &&
+                functional.result === original.result,
+            `${report.id}: application original semantic mismatch`,
+        );
+        const row = rawRows[index];
+        invariant(
+            row && same(row.functionalResult, original),
+            `${report.id}: application/close result binding missing`,
+        );
+        const applicationFields = (input) => {
+            const value = JSON.parse(JSON.stringify(input));
+            for (const key of ['closure', 'functionalResult', 'networkAssets', 'errors', 'result']) delete value[key];
+            value.validatorResults = value.validatorResults.filter(
+                (check) => check.validatorId !== 'post-close-no-runtime-error',
+            );
+            return value;
+        };
+        invariant(
+            functional.output &&
+                same(applicationFields(functional.output), applicationFields(row)) &&
+                same(row.errors.slice(0, functional.output.errors.length), functional.output.errors) &&
+                same(
+                    row.networkAssets.slice(0, functional.output.networkAssets.length),
+                    functional.output.networkAssets,
+                ),
+            `${report.id}: pre-close application measurements were discarded or changed`,
+        );
+        if (row.result === 'PASS')
+            invariant(
+                functional.result === 'PASS' &&
+                    row.closure?.schemaVersion === 'example-close-result/2' &&
+                    row.closure.result === 'CLOSED',
+                `${report.id}: application or closure did not pass`,
+            );
+    }
 
     const entry = freeze.scope.find((e) => e.id === report.id);
     invariant(entry, `unknown example ID: ${report.id}`);

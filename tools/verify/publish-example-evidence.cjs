@@ -189,6 +189,7 @@ function assertSourceClosure(data, campaignPath, sourceDir) {
                 report.rawReceipt,
                 ...report.logs,
                 ...report.artifacts,
+                ...(report.functionalArtifacts || []),
                 ...Object.values(report.custodyArtifacts),
             ]) {
                 checkedReference(ref, attemptFile, sourceDir);

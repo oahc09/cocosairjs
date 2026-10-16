@@ -157,11 +157,42 @@ leader proof must fail; never rewrite an old receipt to repair its verdict.
 
 ## Shutdown signal diagnostics
 
-A signaled adopted process remains a failed campaign attempt under the current
-custody contract. Chromium can send SIGTERM during normal child-host shutdown,
-but source code, a GPU process-name hint, or temporal proximity alone does not
-identify the sender of a particular signal. Keep historical failures unchanged.
+The versioned `example-evidence-attempt/2` and `browser-shutdown/2` contract
+separates application measurements from resource closure. Before closing, retain
+the complete immutable application result. An authenticated synchronous closing
+ACK must confirm the live browser and the original functional artifact before
+context/browser shutdown begins. The original four-second budget covers the ACK,
+close operations, and kernel drain together; it is never renewed at a phase change.
+The supervisor preserves its own clock's budget reference, while the custodian
+uses a conservative local remainder. No cross-process sub-millisecond clock
+comparison establishes causality.
 
+Keep every raw waitpid status, exact disappearance, and final ECHILD. Exit-zero
+children require physical collection but no complete pre-close child snapshot.
+A raw SIGTERM can be classified `shutdown-compatible` only for that exact child
+observed live before closing, with its browser ancestry and frozen executable
+image bound to the same identity. Role strings are finite diagnostic enums, not
+an authority or a fixed GPU/audio allowlist. Unknown identity or missing live
+proof cannot earn this classification. It does not prove who sent the signal.
+Page crashes and unexpected browser disconnections latch failures. Parent
+failures, other signals, forced cleanup, unresolved identities, and leftovers
+remain failures. An application assertion failure can have a clean physical
+shutdown; its overall result still fails. Earlier schemas and recorded failures
+are never reinterpreted by this new policy.
+
+The application original must be a bounded, no-follow regular file within its
+attempt. Retain screenshots, probe values, API proofs, and all pre-close HTTP
+observations without replacement; only explicitly defined closing observations
+may be appended. Publish complete originals atomically without clobbering an
+existing record, and wait for the actual writer's terminal receipt before reading.
+
+Signal tracing is an independent manually dispatched troubleshooting workflow.
+It is not a dependency or admission gate for the ordinary complete campaign.
+The retained legacy trace classifier does not support the new shutdown schema.
+Its manual workflow rejects that version before dependency installation or any
+browser/tracer launch. It is temporarily unavailable on this revision; the
+following legacy protocol remains documented for historical originals, not as a
+claim of current diagnostic compatibility.
 The separate shutdown-trace probe runs outside the existing outer supervisor.
 It never replaces the browser executable or inserts a process into the
 Python-to-inner-Node custody channel. Its reports are diagnostic-only with
@@ -180,8 +211,10 @@ diagnostics can start.
 The traced/untraced diagnostic CPU pairs use the same existing production
 `DEFAULT_LIMITS`: 15-second startup, 4-second close, and the unchanged
 120/125/133/139-second inner/abort/force/final deadlines. Tracing adds observation
-overhead, so these pairs are separate from the original 46-case unit suite,
-which keeps its 800-millisecond startup and 300-millisecond close limits. Retain
+overhead, so these pairs remain separate from lifecycle regression tests.
+The regression fixtures use explicit ready handshakes and a fixed bounded test
+envelope; obsolete 800/300-millisecond cold-start constants are not product
+performance requirements. Production startup and close limits remain 15/4 seconds. Retain
 any earlier instrumented short-budget failure as FAIL; a new diagnostic budget
 does not reclassify it. The 600-second phase limit and 180-second remaining-time
 admission check still apply to every pair member.

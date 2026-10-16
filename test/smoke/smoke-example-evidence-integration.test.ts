@@ -518,9 +518,34 @@ describe('Committed example evidence workflow safeguards', () => {
         for (const run of [capture, publish])
             expect(run).toContain('sha256sum --check "$campaign/committed-build.sha256"');
         expect(shell).not.toMatch(/--allow-partial|--promote|--demote|gallery:manifest/);
-        const diagnostic = runContaining('diagnostic_deadline=');
-        expect(steps.find((step: any) => step.run === diagnostic)['timeout-minutes']).toBe(10);
-        expect(shell.indexOf(diagnostic)).toBeLessThan(shell.indexOf(capture));
+        expect(shell).not.toContain('example-evidence-shutdown-trace.cjs --mode=');
+        expect(shell).not.toContain('diagnostic_deadline=');
+        const manual = yaml.load(
+            fs.readFileSync(path.join(root, '.github/workflows/example-shutdown-diagnostic.yml'), 'utf8'),
+            { schema: yaml.JSON_SCHEMA },
+        );
+        expect(Object.keys(manual.on)).toEqual(['workflow_dispatch']);
+        expect(manual.permissions).toEqual({ contents: 'read' });
+        const manualSteps = Object.values(manual.jobs).flatMap((job: any) => job.steps);
+        const compatibility: any = manualSteps.find((step: any) =>
+            step.run?.includes('Legacy shutdown trace is unavailable'),
+        );
+        expect(compatibility).toBeDefined();
+        expect(manualSteps.indexOf(compatibility)).toBeLessThan(
+            manualSteps.findIndex((step: any) => step.run?.includes('npm ci')),
+        );
+        const compatibilityCheck = cp.spawnSync('bash', ['-c', compatibility.run], {
+            cwd: root,
+            encoding: 'utf8',
+            timeout: 5000,
+        });
+        expect(compatibilityCheck.status).toBe(1);
+        expect(compatibilityCheck.stderr).toContain('Legacy shutdown trace is unavailable for browser-shutdown/2');
+        expect(compatibility.run).not.toMatch(/spawn|execFile|--mode=|playwright/);
+        const diagnosticStep: any = manualSteps.find((step: any) => step.run?.includes('diagnostic_deadline='));
+        const diagnostic = diagnosticStep.run;
+        expect(diagnosticStep['timeout-minutes']).toBe(10);
+        expect(manualSteps.some((step: any) => step.run?.includes('publish-example-evidence'))).toBe(false);
         expect(diagnostic).toContain('diagnostic_deadline=$(( $(date +%s) + 600 ))');
         expect(diagnostic).toContain(
             'diagnostic_deadline=$(( diagnostic_deadline < original_job_deadline ? diagnostic_deadline : original_job_deadline ))',
@@ -551,11 +576,9 @@ describe('Committed example evidence workflow safeguards', () => {
 
     test('uploads preserve raw attempts, complete portable evidence and hidden interruption backups', () => {
         const uploads = steps.filter((step: any) => step.uses === 'actions/upload-artifact@v4');
-        expect(uploads).toHaveLength(5);
+        expect(uploads).toHaveLength(4);
         const byName = Object.fromEntries(uploads.map((step: any) => [step.with.name, step]));
-        const diagnostic = byName['example-shutdown-diagnostics'];
-        expect(diagnostic.if).toBe('always()');
-        expect(diagnostic.with.path).toBe('${{ runner.temp }}/example-shutdown-diagnostics/');
+        expect(byName['example-shutdown-diagnostics']).toBeUndefined();
         const cpu = byName['example-evidence-cpu-receipts'];
         expect(cpu.if).toBe('always()');
         expect(cpu.with.path).toBe('${{ runner.temp }}/example-evidence-cpu/');

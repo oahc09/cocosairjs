@@ -19,8 +19,25 @@ const launcher = {
             [
                 '-e',
                 `
+            const managed = [];
+            const shutdownCase = ${JSON.stringify(mode.startsWith('shutdown-') ? mode : '')};
+            if (shutdownCase) {
+                for (let i = 0; i < (shutdownCase === 'shutdown-double-term' ? 2 : 1); i++) {
+                    const executable = shutdownCase === 'shutdown-wrong-image' ? '/bin/sleep' : process.execPath;
+                    const args = shutdownCase === 'shutdown-wrong-image' ? ['30'] : ['-e',
+                        "process.on('SIGTERM', () => { setTimeout(() => { process.removeAllListeners('SIGTERM'); process.kill(process.pid, 'SIGTERM'); }, " +
+                        (shutdownCase === 'shutdown-delayed-term' ? 500 : 100) + "); }); setInterval(() => {}, 1000); process.stdout.write('ready');"];
+                    const owned = require('child_process').spawn(executable, args, {detached:true, stdio:['ignore','pipe','ignore']});
+                    managed.push(owned);
+                }
+            }
             process.stdin.resume();
             process.stdin.on('data', () => {
+                if (shutdownCase) {
+                    for (const owned of managed) if (shutdownCase !== 'shutdown-residual')
+                        process.kill(owned.pid, shutdownCase === 'shutdown-kill' ? 'SIGKILL' : 'SIGTERM');
+                    process.exit(0);
+                }
                 ${
                     mode === 'double-fork-orphan'
                         ? `
@@ -47,7 +64,7 @@ const launcher = {
                 process.exit(${mode === 'browser-nonzero' ? 7 : 0});
             });
             ${mode === 'forced' ? 'process.on("SIGTERM", () => {});' : ''}
-            ${mode === 'early-child-exit' ? 'process.exit(7);' : mode === 'missing-child-ready' ? '' : mode === 'wrong-child-ready' ? "process.stdout.write('WRONG\\n');" : "process.stdout.write('CPU_CHILD_READY\\n');"}
+            ${mode === 'early-child-exit' ? 'process.exit(7);' : mode === 'missing-child-ready' ? '' : mode === 'wrong-child-ready' ? "process.stdout.write('WRONG\\n');" : "if (!shutdownCase) process.stdout.write('CPU_CHILD_READY\\n'); else if (shutdownCase === 'shutdown-wrong-image') setTimeout(() => process.stdout.write('CPU_CHILD_READY\\n'), 30); else Promise.all(managed.map(child => new Promise(resolve => child.stdout.once('data', resolve)))).then(() => process.stdout.write('CPU_CHILD_READY\\n'));"}
         `,
             ],
             { detached: true, stdio: ['pipe', 'pipe', 'pipe'] },
@@ -152,7 +169,7 @@ hooks.instrumentRuntime(CpuRuntime);
             await runtime.stop();
         }
     }
-    if (mode === 'worker-nonzero') process.exitCode = 3;
+    if (mode === 'worker-nonzero' || mode === 'shutdown-application-fail') process.exitCode = 3;
 })().catch((error) => {
     console.error(error.stack);
     process.exitCode = 1;

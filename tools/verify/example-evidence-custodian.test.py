@@ -2,6 +2,11 @@
 """Pure CPU protocol tests. No subprocess, signal, subreaper, browser, or tracing is run here."""
 import importlib.util
 import pathlib
+import tempfile
+import hashlib
+import json
+import os
+import types
 import unittest
 from unittest.mock import patch
 
@@ -15,11 +20,11 @@ class BarrierIdentityTests(unittest.TestCase):
         self.peer = dict(pid=101, ppid=99, startTicks='100', namespace='pid:[1]', state='S', pgrp=101)
         self.start = dict(workerPID=101, workerStartTicks='100', namespace='pid:[1]', nodeSupervisorPID=99,
                           runtimeId='runtime-1', phase='start', requestId=1, eventId=5, ok=True)
-        self.stop = dict(self.start, token='private-token', phase='stop', requestId=2)
+        self.stop = dict(self.start, token='private-token', phase='stop', requestId=3)
         self.stop.pop('ok')
         self.stop.pop('eventId')
 
-    def check(self, request=None, peer='default', sequence=1, start='default', rejected=False):
+    def check(self, request=None, peer='default', sequence=2, start='default', rejected=False):
         return HELPER.check_barrier_request(self.stop if request is None else request,
             self.peer if peer == 'default' else peer, 99, 'pid:[1]', 'private-token', sequence,
             self.start if start == 'default' else start, rejected)
@@ -53,7 +58,7 @@ class BarrierIdentityTests(unittest.TestCase):
                         dict(self.stop, token='wrong'), dict(self.stop, nodeSupervisorPID=88),
                         dict(self.stop, workerPID=102), dict(self.stop, workerStartTicks='101'),
                         dict(self.stop, namespace='pid:[2]'), dict(self.stop, requestId=1),
-                        dict(self.stop, requestId=3), dict(self.stop, runtimeId='runtime-2'),
+                        dict(self.stop, requestId=4), dict(self.stop, runtimeId='runtime-2'),
                         dict(self.stop, runtimeId='bad'), dict(self.stop, phase='bogus')]:
             with self.subTest(request=request), self.assertRaises(RuntimeError):
                 self.check(request, peer=None)
@@ -151,6 +156,77 @@ class BarrierIdentityTests(unittest.TestCase):
         for error in [FileNotFoundError(), ProcessLookupError()]:
             with patch.object(HELPER.pathlib.Path, 'read_text', side_effect=error):
                 self.assertIsNone(HELPER.identity(101))
+
+
+class FunctionalOriginalTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory(prefix='bounded-functional-')
+        self.addCleanup(self.temporary.cleanup)
+        self.root = pathlib.Path(self.temporary.name)
+        self.file = self.root / 'original.json'
+        self.content = b'{"result":"PASS"}'
+        self.file.write_bytes(self.content)
+        self.ref = dict(path=str(self.file), bytes=len(self.content), sha256=hashlib.sha256(self.content).hexdigest())
+
+    def read(self, ref=None, check=lambda: None):
+        return HELPER.read_functional_original(self.ref if ref is None else ref, self.root, check)
+
+    def test_regular_file_and_every_read_are_bounded_by_original_deadline(self):
+        checks = []
+        self.assertEqual(self.read(check=lambda: checks.append(True)), {'result': 'PASS'})
+        self.assertGreater(len(checks), 3)
+        with self.assertRaises(TimeoutError), patch.object(HELPER.os, 'open') as opens:
+            self.read(check=lambda: (_ for _ in ()).throw(TimeoutError('original deadline')))
+        opens.assert_not_called()
+        count = 0
+        def expires():
+            nonlocal count
+            count += 1
+            if count == 4:
+                raise TimeoutError('original deadline')
+        with self.assertRaises(TimeoutError):
+            self.read(check=expires)
+
+    def test_fifo_directory_links_and_escape_cannot_block_or_substitute_original(self):
+        fifo = self.root / 'fifo'
+        os.mkfifo(fifo)
+        link = self.root / 'link'
+        link.symlink_to(self.file)
+        directory = self.root / 'directory'
+        directory.mkdir()
+        ancestor = self.root / 'ancestor'
+        ancestor.symlink_to(self.root, target_is_directory=True)
+        for candidate in [fifo, link, directory, ancestor / self.file.name, self.root / '..' / self.file.name]:
+            with self.subTest(candidate=candidate), self.assertRaises((OSError, RuntimeError, ValueError)):
+                self.read(dict(self.ref, path=str(candidate)))
+
+    def test_actual_size_digest_metadata_and_unknown_reads_cannot_be_accepted(self):
+        for delta in [dict(bytes=1), dict(bytes=16777217), dict(bytes=True), dict(sha256='0' * 64)]:
+            with self.subTest(delta=delta), self.assertRaises(RuntimeError):
+                self.read(dict(self.ref, **delta))
+        with open(self.file, 'wb') as stream:
+            stream.truncate(16777217)
+        with self.assertRaises(RuntimeError), patch.object(HELPER.os, 'read') as reads:
+            self.read()
+        reads.assert_not_called()
+        self.file.write_bytes(self.content)
+        before = self.file.stat()
+        keys = ['st_dev', 'st_ino', 'st_mode', 'st_size', 'st_mtime_ns', 'st_ctime_ns']
+        for key in keys:
+            changed = types.SimpleNamespace(**{name: getattr(before, name) + (1 if name == key else 0) for name in keys})
+            with self.subTest(key=key), patch.object(HELPER.os, 'fstat', side_effect=[before, changed]), self.assertRaises(RuntimeError):
+                self.read()
+        for error in [PermissionError('unreadable'), OSError('unknown I/O')]:
+            with self.subTest(error=error), patch.object(HELPER.os, 'read', side_effect=error), self.assertRaises(type(error)):
+                self.read()
+
+    def test_atomic_publication_is_complete_and_never_clobbers_an_original(self):
+        destination = self.root / 'published.json'
+        HELPER.atomic_json_new(destination, {'complete': True})
+        self.assertEqual(json.loads(destination.read_text()), {'complete': True})
+        with self.assertRaises(FileExistsError):
+            HELPER.atomic_json_new(destination, {'complete': False})
+        self.assertEqual(json.loads(destination.read_text()), {'complete': True})
 
 
 if __name__ == '__main__':
