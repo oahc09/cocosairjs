@@ -567,3 +567,41 @@ test('canonical consumer recomputes lifecycle settlement and resource consistenc
         assert.throws(() => validateLifecycleReport(copy), /lifecycle report/);
     }
 });
+
+test('all evidence references to changed lifecycle sources remain bound to actual executable lines', () => {
+    const { resolveSource, codeLines } = require('../examples/spec-evidence.cjs');
+    const { evidenceLineOk } = require('./example-spec-common.cjs');
+    const affected = new Set(
+        [
+            'examples/shared/asset-lifecycle.js',
+            'examples/glass-refraction/src/main.ts',
+            'examples/gltf-viewer/main.js',
+        ].map((file) => path.join(root, file)),
+    );
+    let checked = 0;
+    for (const id of fs.readdirSync(path.join(root, 'examples'))) {
+        const dir = path.join(root, 'examples', id);
+        const file = path.join(dir, 'example.json');
+        if (!fs.existsSync(file)) continue;
+        const spec = JSON.parse(fs.readFileSync(file));
+        for (const evidence of spec.api?.evidence || []) {
+            const source = resolveSource(dir, evidence.source);
+            if (!affected.has(source)) continue;
+            assert.equal(evidenceLineOk(dir, evidence).ok, true, id + ': ' + evidence.api);
+            checked++;
+            if (evidence.api === 'GLTFAsset.destroy') {
+                const line = codeLines(fs.readFileSync(source, 'utf8'))[Number(evidence.sourceLocation.slice(1)) - 1];
+                assert.match(
+                    line,
+                    /\basset\.destroy\(\)/,
+                    'bind the asset call, not a material destroy with the same name',
+                );
+                assert.equal(evidenceLineOk(dir, { ...evidence, sourceLocation: 'L296' }).ok, false);
+            }
+            if (evidence.source === 'shared/asset-lifecycle.js' && evidence.api === 'isValid') {
+                assert.equal(evidenceLineOk(dir, { ...evidence, sourceLocation: 'L30' }).ok, false);
+            }
+        }
+    }
+    assert.ok(checked > 0, 'source-bound references must actually be checked');
+});

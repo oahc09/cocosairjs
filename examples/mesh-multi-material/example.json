@@ -135,7 +135,7 @@
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L30"
+        "sourceLocation": "L85"
       }
     ]
   },
