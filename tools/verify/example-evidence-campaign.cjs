@@ -27,6 +27,7 @@ const REQUIRED_FILES = [
     'examples/files.json',
     'docs/example-api-inventory.json',
     'tools/verify/example-evidence-custodian.py',
+    'tools/verify/example-evidence-limits.json',
     'build/cocosair.module.js',
     'build/cocosair.module.d.ts',
     'build/cocosair.module.js.map',
@@ -53,14 +54,7 @@ const INPUT_TREES = [
 ];
 const OPTIONAL_TREES = ['build/gltf-decoders', 'build/spark-types', 'build/fflate', 'build/devtools'];
 const OPTIONAL_FILES = ['build/package.json', 'build/cocosair.legacy.d.ts', 'build/spark.module.meta.json'];
-const DEFAULT_LIMITS = Object.freeze({
-    startupMs: 15000,
-    closeMs: 4000,
-    innerMs: 120000,
-    abortMs: 125000,
-    forceMs: 133000,
-    finalMs: 139000,
-});
+const DEFAULT_LIMITS = Object.freeze(require('./example-evidence-limits.json'));
 
 function stable(value) {
     if (Array.isArray(value)) return '[' + value.map(stable).join(',') + ']';
@@ -307,15 +301,16 @@ function validateRuntimeIdentity(identity, limits = DEFAULT_LIMITS) {
             HEX64.test(custody.helper.sha256),
         'invalid custody helper identity',
     );
-    for (const key of Object.keys(DEFAULT_LIMITS))
-        invariant(Number.isInteger(limits[key]) && limits[key] > 0, `invalid limit ${key}`);
-    invariant(limits.startupMs <= 15000 && limits.closeMs <= 4000, 'startup/close limits exceed contract');
+    for (const [key, maximum] of Object.entries(DEFAULT_LIMITS))
+        invariant(
+            Number.isInteger(limits[key]) && limits[key] > 0 && limits[key] <= maximum,
+            `limits exceed contract: ${key}`,
+        );
     invariant(
         limits.startupMs < limits.innerMs &&
             limits.innerMs < limits.abortMs &&
             limits.abortMs < limits.forceMs &&
-            limits.forceMs < limits.finalMs &&
-            limits.finalMs <= 300000,
+            limits.forceMs < limits.finalMs,
         'invalid bounded deadline ordering',
     );
 }

@@ -466,7 +466,8 @@ test('actual CPU subprocess/HTTP lifecycle controls, sequential and bounded', as
 });
 test('limits cannot become an unbounded campaign worker', () => {
     assert.throws(() => limitsOf({ finalMs: 43200000 }), /1..139000/);
-    assert.throws(() => limitsOf({ startupMs: 16000 }), /1..15000/);
+    assert.equal(limitsOf({ startupMs: 30000 }).startupMs, 30000);
+    assert.throws(() => limitsOf({ startupMs: 30001 }), /1..30000/);
     assert.throws(() => limitsOf({ abortMs: 119000 }), /Deadline order/);
 });
 
@@ -2094,7 +2095,7 @@ test('custody response IPC registers delivery before releasing the source-bound 
     assert.equal((source.match(/child\.send\(/g) || []).length, 1, 'both fixed protocols share one send site');
 });
 
-test('target diagnostic profile is exact, fixed, opt-in and unavailable to the ordinary CLI', async () => {
+test('target diagnostic profile stays opt-in when ordinary startup has the same bound', async () => {
     const { spawnSync } = require('node:child_process');
     const {
         DEFAULT_LIMITS,
@@ -2105,7 +2106,7 @@ test('target diagnostic profile is exact, fixed, opt-in and unavailable to the o
     const profile = createTargetDiagnosticProfile({ freezeId: 'a'.repeat(64), inputDigest: 'b'.repeat(64) });
     assert.equal(validateTargetDiagnosticProfile(profile), true);
     assert.deepEqual(TARGET_DIAGNOSTIC_LIMITS, { ...DEFAULT_LIMITS, startupMs: 30000 });
-    assert.throws(() => limitsOf(TARGET_DIAGNOSTIC_LIMITS), /1\.\.15000/);
+    assert.deepEqual(limitsOf(TARGET_DIAGNOSTIC_LIMITS), DEFAULT_LIMITS);
     assert.throws(() =>
         createTargetDiagnosticProfile({ freezeId: 'a'.repeat(64), inputDigest: 'b'.repeat(64), extra: 1 }),
     );
@@ -2155,12 +2156,12 @@ test('target diagnostic profile is exact, fixed, opt-in and unavailable to the o
         process.execPath,
         [
             path.join(__dirname, 'example-evidence-supervisor.cjs'),
-            `--limits=${JSON.stringify(TARGET_DIAGNOSTIC_LIMITS)}`,
+            `--limits=${JSON.stringify({ ...DEFAULT_LIMITS, startupMs: 30001 })}`,
         ],
         { encoding: 'utf8', timeout: 5000 },
     );
     assert.equal(cli.status, 1);
-    assert.match(cli.stderr, /1\.\.15000/);
+    assert.match(cli.stderr, /1\.\.30000/);
     const script = `import runpy,json,sys
 m=runpy.run_path(sys.argv[1]); validate=m['validate_diagnostic_config']; data=json.loads(sys.argv[2])
 assert validate({'limits':data['default']}) is None
@@ -2174,9 +2175,10 @@ for key in data['limits']:
  try: validate(dict(valid,limits=dict(data['limits'],**{key:data['limits'][key]-1})))
  except RuntimeError: pass
  else: raise AssertionError('changed limits accepted')
-try: validate({'limits':data['limits']})
+assert validate({'limits':data['limits']}) is None
+try: validate({'limits':dict(data['default'],startupMs=30001)})
 except RuntimeError: pass
-else: raise AssertionError('ordinary 30s accepted')
+else: raise AssertionError('ordinary bound exceeded')
 print('Python diagnostic profile controls passed')`;
     const python = spawnSync(
         'python3',

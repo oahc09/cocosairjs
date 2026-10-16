@@ -13,14 +13,7 @@ const { snapshotOwnedProcess } = require('./example-evidence-process-diagnostics
 
 const SCHEMA_VERSION = 'example-evidence-attempt/2';
 let activeWorker = null;
-const DEFAULT_LIMITS = Object.freeze({
-    startupMs: 15000,
-    closeMs: 4000,
-    innerMs: 120000,
-    abortMs: 125000,
-    forceMs: 133000,
-    finalMs: 139000,
-});
+const DEFAULT_LIMITS = Object.freeze(require('./example-evidence-limits.json'));
 const TARGET_DIAGNOSTIC_LIMITS = Object.freeze({ ...DEFAULT_LIMITS, startupMs: 30000 });
 function validateTargetDiagnosticProfile(profile) {
     const keys = ['schemaVersion', 'freezeId', 'inputDigest', 'canonicalEligible'];

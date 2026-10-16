@@ -465,6 +465,7 @@ function fixture() {
     for (const dir of campaign.INPUT_TREES) write(path.join(repo, dir, 'fixture.txt'), 'synthetic input\n');
     for (const rel of campaign.REQUIRED_FILES)
         write(path.join(repo, rel), rel.endsWith('.json') ? '{}' : `fixture ${rel}\n`);
+    write(path.join(repo, 'tools/verify/example-evidence-limits.json'), campaign.DEFAULT_LIMITS);
     const specs = [specOf('alpha', false, true), specOf('spark-splats'), specOf('shell', true)];
     for (const spec of specs) {
         write(path.join(repo, 'examples', spec.id, 'example.json'), spec);

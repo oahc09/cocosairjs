@@ -108,7 +108,7 @@ jobs:
           # outer/custodian/tracer closure. They never produce campaign PASS.
           EXAMPLE_EVIDENCE_LIVE_STRACE_CONTROLS=1 EXAMPLE_EVIDENCE_TRACE_DEADLINE_EPOCH="$diagnostic_deadline" EXAMPLE_EVIDENCE_TRACE_CONTROL_OUT="$diagnostic/live-controls" STRACE_PATH="$strace_path" STRACE_SHA256="$strace_sha" STRACE_VERSION="$strace_version" node --test tools/verify/example-evidence-shutdown-trace.test.cjs 2>&1 | tee "$diagnostic/live-controls.log"
           # Instrumented and uninstrumented diagnostic pairs use the same existing
-          # production DEFAULT_LIMITS (15s startup / 4s close). CPU contract tests
+          # production DEFAULT_LIMITS (30s startup / 4s close). CPU contract tests
           # use ready handshakes and their own fixed total envelope.
           for control in positive browser-nonzero custodian-delayed-stop-ack; do
             for trace in off on; do

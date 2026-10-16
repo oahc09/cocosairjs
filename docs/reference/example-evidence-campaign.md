@@ -141,7 +141,11 @@ The default `Code quality / quality` job is deliberately small for rapid iterati
   (the separate runtime bundle).
 
 Each example uses the existing strict single-attempt runner, with the production
-15-second startup, four-second close and 139-second final bounds. Failures stop
+30-second infrastructure startup wait, four-second close and 139-second final bounds.
+Startup includes input/runtime checks and process/page initialization; it is not
+a product performance acceptance metric. The shared `example-evidence-limits.json`
+is used by the campaign, supervisor and Python custodian. No retries are added.
+Earlier 15-second timeout originals remain failures. Failures stop
 the job and retain originals. The five-example results are **partial smoke**,
 never a complete campaign, and are not merged, published or written over canonical
 evidence. A stale canonical report is not a routine PR prerequisite. No full
@@ -242,12 +246,12 @@ verdicts, exact exit/stdio-close receipts, and kernel ECHILD before browser
 diagnostics can start.
 
 The traced/untraced diagnostic CPU pairs use the same existing production
-`DEFAULT_LIMITS`: 15-second startup, 4-second close, and the unchanged
+`DEFAULT_LIMITS`: now 30-second startup, 4-second close, and the unchanged
 120/125/133/139-second inner/abort/force/final deadlines. Tracing adds observation
 overhead, so these pairs remain separate from lifecycle regression tests.
 The regression fixtures use explicit ready handshakes and a fixed bounded test
 envelope; obsolete 800/300-millisecond cold-start constants are not product
-performance requirements. Production startup and close limits remain 15/4 seconds. Retain
+performance requirements. The current shared startup and close bounds are 30/4 seconds. Retain
 any earlier instrumented short-budget failure as FAIL; a new diagnostic budget
 does not reclassify it. The 600-second phase limit and 180-second remaining-time
 admission check still apply to every pair member.
@@ -257,8 +261,8 @@ The target-browser signal investigation uses a separate fixed
 30-second startup, 4-second close, and the same 120/125/133/139-second absolute
 deadlines. Its startup clock begins at the independent runner's entry and includes
 all input and runtime checks. This allows observation overhead; it is not a
-production startup-performance result. The ordinary frozen campaign retains its
-15-second limit and rejects diagnostic profiles, including records with their
+production startup-performance result. The ordinary frozen campaign now has the same 30-second startup bound but still
+rejects diagnostic profiles, including records with their
 labels removed or mismatched original artifacts. Keep earlier 15-second failures
 unchanged.
 

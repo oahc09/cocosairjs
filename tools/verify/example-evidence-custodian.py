@@ -13,6 +13,13 @@ import subprocess
 import sys
 import time
 
+DEFAULT_LIMITS = json.loads(pathlib.Path(__file__).with_name('example-evidence-limits.json').read_text())
+if (not isinstance(DEFAULT_LIMITS, dict)
+        or set(DEFAULT_LIMITS) != {'startupMs', 'closeMs', 'innerMs', 'abortMs', 'forceMs', 'finalMs'}
+        or any(type(value) is not int or value <= 0 for value in DEFAULT_LIMITS.values())
+        or not (max(DEFAULT_LIMITS['startupMs'], DEFAULT_LIMITS['closeMs']) < DEFAULT_LIMITS['innerMs']
+                < DEFAULT_LIMITS['abortMs'] < DEFAULT_LIMITS['forceMs'] < DEFAULT_LIMITS['finalMs'])):
+    raise RuntimeError('Invalid shared evidence deadline configuration')
 SCHEMA = 'example-evidence-custody-observation/2'
 PR_SET_CHILD_SUBREAPER = 36
 PR_GET_CHILD_SUBREAPER = 37
@@ -141,7 +148,7 @@ def validate_diagnostic_config(config):
     limits = config['limits']
     profile = config.get('diagnosticProfile')
     if 'diagnosticProfile' in config:
-        expected_limits = dict(startupMs=30000, closeMs=4000, innerMs=120000, abortMs=125000, forceMs=133000, finalMs=139000)
+        expected_limits = dict(DEFAULT_LIMITS, startupMs=30000)
         if (not isinstance(profile, dict) or set(profile) != {'schemaVersion', 'freezeId', 'inputDigest', 'canonicalEligible'}
                 or profile['schemaVersion'] != 'example-shutdown-target-profile/1' or profile['canonicalEligible'] is not False
                 or any(not isinstance(profile[key], str) or len(profile[key]) != 64
@@ -149,8 +156,12 @@ def validate_diagnostic_config(config):
                 or limits != expected_limits or any(type(limits[key]) is not int for key in expected_limits)
                 or not (config.get('id') == 'collector-dodge' or (config.get('cpuCase') and config.get('id') == 'cpu-example'))):
             raise RuntimeError('Custodian target diagnostic profile mismatch')
-    elif type(limits.get('startupMs')) is not int or not 0 < limits['startupMs'] <= 15000:
-        raise RuntimeError('Ordinary custodian startup limit exceeds 15000ms')
+    elif (not isinstance(limits, dict) or set(limits) != set(DEFAULT_LIMITS)
+            or any(type(limits[key]) is not int or not 0 < limits[key] <= maximum
+                   for key, maximum in DEFAULT_LIMITS.items())
+            or not (max(limits['startupMs'], limits['closeMs']) < limits['innerMs']
+                    < limits['abortMs'] < limits['forceMs'] < limits['finalMs'])):
+        raise RuntimeError('Ordinary custodian limits exceed configured bounds or order')
     return profile
 
 

@@ -311,3 +311,56 @@ test('authenticated lifecycle rejection retains complete failed originals instea
         });
     }
 });
+
+test('shared infrastructure startup bound is 30s without changing close or final limits', () => {
+    const { spawnSync } = require('node:child_process');
+    const supervisor = require('./example-evidence-supervisor.cjs');
+    const campaign = require('./example-evidence-campaign.cjs');
+    const config = require('./example-evidence-limits.json');
+    const { identity } = require('./example-evidence-campaign.cpu-fixture.cjs');
+    assert.strictEqual(supervisor.DEFAULT_LIMITS, campaign.DEFAULT_LIMITS);
+    assert.deepEqual(config, {
+        startupMs: 30000,
+        closeMs: 4000,
+        innerMs: 120000,
+        abortMs: 125000,
+        forceMs: 133000,
+        finalMs: 139000,
+    });
+    assert.deepEqual(supervisor.limitsOf(), config);
+    assert.doesNotThrow(() => campaign.validateRuntimeIdentity(identity, config));
+    assert.throws(() => campaign.validateRuntimeIdentity(identity, { ...config, startupMs: 30001 }), /exceed contract/);
+    for (const [key, value] of Object.entries(config)) {
+        assert.throws(() => supervisor.limitsOf({ [key]: value + 1 }));
+        assert.throws(
+            () => campaign.validateRuntimeIdentity(identity, { ...config, [key]: value + 1 }),
+            /limits exceed contract/,
+        );
+        assert.throws(
+            () => campaign.validateRuntimeIdentity(identity, { ...config, [key]: 0 }),
+            /limits exceed contract/,
+        );
+        assert.throws(() => supervisor.limitsOf({ [key]: 0 }));
+    }
+    assert.ok(campaign.REQUIRED_FILES.includes('tools/verify/example-evidence-limits.json'));
+    const script = `import runpy,json,sys
+m=runpy.run_path(sys.argv[1]); d=m['DEFAULT_LIMITS']; validate=m['validate_diagnostic_config']
+assert d==json.loads(sys.argv[2])
+assert validate({'limits':d}) is None
+assert validate({'limits':dict(startupMs=15000,closeMs=4000,innerMs=20000,abortMs=25000,forceMs=30000,finalMs=35000)}) is None
+bad=[{},dict(d,extra=1),dict(d,innerMs=30000)]
+for k,v in d.items():
+ for changed in [0,-1,v+1,str(v),True]:bad.append(dict(d,**{k:changed}))
+ missing=dict(d);del missing[k];bad.append(missing)
+for limits in bad:
+ try:validate({'limits':limits})
+ except RuntimeError:pass
+ else:raise AssertionError('invalid deadline accepted')
+print('Shared Python deadline controls passed')`;
+    const python = spawnSync(
+        'python3',
+        ['-B', '-c', script, path.join(__dirname, 'example-evidence-custodian.py'), JSON.stringify(config)],
+        { encoding: 'utf8', timeout: 5000 },
+    );
+    assert.equal(python.status, 0, python.stdout + python.stderr);
+});

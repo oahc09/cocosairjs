@@ -70,7 +70,7 @@ const matchesReference = (actual, name, bytes) => same(actual, reference(name, b
 
 function targetFreeze(freeze, repo) {
     protocol.validateFreeze(freeze, { repo, checkInputs: false });
-    invariant(same(freeze.limits, DEFAULT_LIMITS), 'ordinary-15s-freeze-required');
+    invariant(same(freeze.limits, DEFAULT_LIMITS), 'ordinary-default-freeze-required');
     invariant(freeze.runtimeIdentity.browserType === 'chromium', 'target-requires-chromium');
     const entries = freeze.scope.filter((row) => row.id === ID);
     invariant(entries.length === 1, 'exact-target-scope-required');

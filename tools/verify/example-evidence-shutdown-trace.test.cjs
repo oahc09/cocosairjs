@@ -175,7 +175,7 @@ test('independent target on/off share only the fixed diagnostic startup profile'
                 buildCommand({ mode: 'cpu', trace, cpuCase: 'positive', out: f.directory }).limits,
                 f.supervisor.DEFAULT_LIMITS,
             );
-        f.freeze.limits.startupMs = 30000;
+        f.freeze.limits.startupMs = 30001;
         f.writeFreeze();
         assert.throws(() => f.runner.planTargetDiagnostic(f.options), /limits exceed contract/);
         for (const extra of ['--limits={}', '--id=alpha', '--startedAt=1', '--diagnosticProfile={}'])
@@ -538,12 +538,12 @@ test('live trace selects only four signal syscalls; wait parsing is offline comp
     assert.throws(() => buildCommand({ mode: 'cpu', trace: 'on', cpuCase: 'invented', out: '/tmp/x' }));
 });
 
-test('diagnostic CPU pairs inherit production deadlines without changing the short unit suite', () => {
+test('legacy manual diagnostic CPU pairs inherit shared deadlines separately from unit limits', () => {
     const fs = require('node:fs'),
         path = require('node:path');
     const { DEFAULT_LIMITS } = require('./example-evidence-supervisor.cjs');
     const expected = {
-        startupMs: 15000,
+        startupMs: 30000,
         closeMs: 4000,
         innerMs: 120000,
         abortMs: 125000,
@@ -560,7 +560,10 @@ test('diagnostic CPU pairs inherit production deadlines without changing the sho
             assert.deepEqual(JSON.parse(limits[0].slice('--limits='.length)), expected);
         }
     }
-    const workflow = fs.readFileSync(path.join(__dirname, '../../.github/workflows/example-evidence.yml'), 'utf8');
+    const workflow = fs.readFileSync(
+        path.join(__dirname, '../../.github/workflows/example-shutdown-diagnostic.yml'),
+        'utf8',
+    );
     const pair = workflow.match(
         /for control in positive browser-nonzero custodian-delayed-stop-ack; do([\s\S]*?)\n\s*matched=false/,
     );
@@ -573,10 +576,12 @@ test('diagnostic CPU pairs inherit production deadlines without changing the sho
     assert.equal(commands.length, 1);
     assert.match(commands[0], /--case="\$control" --trace="\$trace"/);
     const unit = fs.readFileSync(path.join(__dirname, 'example-evidence-supervisor.test.cjs'), 'utf8');
-    assert.match(
-        unit,
-        /const LIMITS = \{ startupMs: 800, closeMs: 300, innerMs: 1600, abortMs: 1900, forceMs: 2400, finalMs: 2800 \};/,
-    );
+    const unitMatch = unit.match(/const LIMITS = (\{[^;]+\});/);
+    assert.ok(unitMatch, 'unit tests retain their explicit bounded configuration');
+    const unitLimits = require('node:vm').runInNewContext('(' + unitMatch[1] + ')');
+    assert.ok(unitLimits.startupMs > 0 && unitLimits.startupMs <= DEFAULT_LIMITS.startupMs);
+    assert.ok(unitLimits.startupMs < unitLimits.innerMs && unitLimits.innerMs < unitLimits.finalMs);
+    assert.ok(unitLimits.finalMs <= DEFAULT_LIMITS.finalMs);
 });
 
 test('signal source and wait outcome preserve only fixed numeric/enum fields', () => {
@@ -2029,7 +2034,7 @@ test('control-only bounds cannot be applied to a target or ordinary positive', (
         out: '/tmp/controlled',
     });
     assert.ok(command.args.includes('--cpu=hang'));
-    assert.equal(command.limits.startupMs, 15000);
+    assert.equal(command.limits.startupMs, 30000);
     assert.equal(command.limits.closeMs, 4000);
     const bound = buildCommand({
         mode: 'cpu',

@@ -532,7 +532,7 @@ describe('Committed example evidence workflow safeguards', () => {
         const capture = runContaining('example-evidence-campaign.cjs freeze');
         const publish = runContaining('node tools/verify/publish-example-evidence.cjs');
         expect(protocol.DEFAULT_LIMITS).toEqual({
-            startupMs: 15000,
+            startupMs: 30000,
             closeMs: 4000,
             innerMs: 120000,
             abortMs: 125000,

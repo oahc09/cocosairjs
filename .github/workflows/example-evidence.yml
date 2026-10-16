@@ -91,7 +91,7 @@ jobs:
           if (new Set(ids).size !== freeze.scope.length || ids.length !== freeze.scope.length) throw Error('Invalid full scope');
           fs.writeFileSync(path.join(root, 'ids.txt'), ids.join('\n') + '\n', {flag: 'wx'});
           NODE
-          # Every ID is a new physical worker with its own 15s startup, 4s close,
+          # Every ID is a new physical worker with its own 30s startup, 4s close,
           # and 120/125/133/139s inner/abort/force/final deadlines. The external
           # 174s TERM /178s KILL is a final fail-closed bound, never a PASS receipt.
           # Leave 180s before the campaign budget ends; never cut across attempts.
